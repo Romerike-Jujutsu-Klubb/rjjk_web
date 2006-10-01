@@ -1,0 +1,9 @@
+<% @title = @information_page.title %>
+
+<p>
+<%=h @information_page.body%>
+</p
+
+<% if user? %>
+<%= link_to 'Rediger', :action => 'rediger', :id => @information_page %>
+<% end %>

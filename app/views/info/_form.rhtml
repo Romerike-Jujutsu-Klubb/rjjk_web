@@ -1,0 +1,24 @@
+<%= error_messages_for 'information_page' %>
+
+<!--[form:information_page]-->
+<p><label for="information_page_parent">Parent</label><br/>
+<%= collection_select(:information_page, :parent_id, @information_pages.insert(0, InformationPage.new(:id => nil, :title => 'Toppside')), :id, :title) %></p>
+
+<p><label for="information_page_title">Title</label><br/>
+<%= text_field 'information_page', 'title'  %></p>
+
+<p><label for="information_page_body">Body</label><br/>
+<%= text_area 'information_page', 'body'  %></p>
+
+<% if @information_page.created_at %>
+<p><label for="information_page_created_at">Created at</label><br/>
+<%=h @information_page.created_at %></p>
+<% end %>
+
+<% if @information_page.updated_at %>
+<p><label for="information_page_updated_at">Updated at</label><br/>
+<%=h @information_page.updated_at %></p>
+<% end %>
+
+<!--[eoform:information_page]-->
+

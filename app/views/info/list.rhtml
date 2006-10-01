@@ -1,0 +1,27 @@
+<h1>Listing information_pages</h1>
+
+<table>
+  <tr>
+  <% for column in InformationPage.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for information_page in @information_pages %>
+  <tr>
+  <% for column in InformationPage.content_columns %>
+    <td><%=h information_page.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => information_page %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => information_page %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => information_page }, :confirm => 'Are you sure?', :post => true %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @information_page_pages.current.previous } if @information_page_pages.current.previous %>
+<%= link_to 'Next page', { :page => @information_page_pages.current.next } if @information_page_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New information_page', :action => 'new' %>
