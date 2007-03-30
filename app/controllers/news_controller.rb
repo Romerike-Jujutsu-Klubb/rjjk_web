@@ -9,7 +9,7 @@ class NewsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @news_item_pages, @news_items = paginate :news_items, :per_page => 10
+    @news_items = NewsItem.find(:all, :order => 'created_at DESC', :limit => 10)
   end
 
   def show
