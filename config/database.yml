@@ -30,6 +30,6 @@ test:
 production:
   adapter: mysql
   database: rjjk_production
-  username: root
-  password: 
+  username: donv
+  password: Gunda42
   host: localhost
