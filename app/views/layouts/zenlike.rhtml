@@ -17,9 +17,7 @@
 	<div id="header">
 		<div id="headercontent">
 			<h1><%=@page_title || 'Romerike Jujutsu Klubb' %></h1>
-			<h2><%=@page_subtitle || 'Norges peneste jujutsu-klubb' %></h2>
-<%= link_to 'New news_item', :controller => 'news', :action => 'new' %>
-
+			<h2><%=@page_subtitle || 'Effektivt selvforsvar siden 1982' %></h2>
 		</div>
 	</div>
 
@@ -59,7 +57,9 @@
 	</div>
 
 	<div id="footer">
-			<div class="left">&copy; 2006 Romrike Jujutsu Klubb. All rights reserved.</div>
+			<div class="left">&copy; 2006 Romerike Jujutsu Klubb. All rights reserved.
+    			<%= link_to 'New news_item', :controller => 'news', :action => 'new' %>
+			</div>
 			<div class="right">Design by <a href="http://www.nodethirtythree.com/">NodeThirtyThree Design</a></div>
 	</div>
 	
