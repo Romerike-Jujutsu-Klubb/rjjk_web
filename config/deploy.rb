@@ -2,6 +2,7 @@ set :application, "rjjk"
 set :repository, "svn+ssh://donv@source.kubosch.no/var/svn/trunk/rjjk_web"
 
 role :app, "www.kubosch.no"
+role :db,  "www.kubosch.no", :primary => true
 
 set :user, "donv"
 

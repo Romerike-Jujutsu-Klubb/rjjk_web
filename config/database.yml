@@ -13,8 +13,8 @@ test:
   host: localhost
 
 production:
-  adapter: mysql
+  adapter: postgresql
   database: rjjk_production
   username: donv
-  password: Gunda42
+#  password:
   host: localhost
