@@ -1,9 +1,15 @@
 <% if not @news_items.empty? %>
     <% @news_item = @news_items[0] %>
 		<!-- Normal content: Stuff that's not going to be put in the left or right column. -->
-		<div id="normalcontent">
+		<div id="normalcontent" class="post">
 			<h3><%=h @news_item.title%></h3>
 			<div class="contentarea">
+				<div class="details">
+<!--
+				Skrevet av <a href="#">Jane Doe</a>
+-->
+   				<%=@news_item.created_at.strftime '%Y-%m-%d %H:%M'%>
+				</div>	
 				<!-- Normal content area start -->
 
 				<img src="/images/pic1.jpg" class="left" alt="A chinese lion statue" />
@@ -33,8 +39,8 @@
 <!--
 						Skrevet av <a href="#">Jane Doe</a>
 -->
-						<%=@news_item.created_at%>
-					</div>	
+        				<%=@news_item.created_at.strftime '%Y-%m-%d %H:%M'%>
+				        </div>	
 						<p><%=h @news_item.body %></p>
 <!--
 						<ul class="controls">

@@ -1,16 +1,16 @@
 module UserSystem
   CONFIG = {
     # Source address for user emails
-    :email_from => '',
+    :email_from => 'uwe@kubosch.no',
 
     # Destination email for system errors
-    :admin_email => '',
+    :admin_email => 'uwe@kubosch.no',
 
     # Sent in emails to users
     :app_url => 'http://localhost:3000/',
 
     # Sent in emails to users
-    :app_name => '',
+    :app_name => 'RJJK\'s Nettsted',
 
     # Email charset
     :mail_charset => 'utf-8',
