@@ -1,4 +1,6 @@
 class NewsController < ApplicationController
+  before_filter :login_required, :except => [ :index, :list, :show ]
+
   def index
     list
     render :action => 'list'

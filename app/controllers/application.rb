@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   include Localization
   include UserSystem
   helper :user
-  model :user
   before_filter :load_layout_model
   live_tree :information_tree, :model => :information_page, :get_item_name_proc => Proc.new {|page| page.title}
 
