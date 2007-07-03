@@ -48,6 +48,7 @@ user_login_form: Brukernavn
 user_email_form: E-Post
 user_password_form: Passord
 user_password_confirmation_form: Passord bekreftelse
+user_role_form: Rolle
 info_login_button: Log på
 info_login_signup_link: Registrer deg
 info_login_forgot_password_link: Glemt passordet mitt

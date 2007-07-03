@@ -46,6 +46,7 @@ user_login_form: Login ID
 user_email_form: Email
 user_password_form: Password
 user_password_confirmation_form: Password confirmation
+user_role_form: Rolle
 user_login_button: Login
 user_login_signup_link: Register for an account
 user_login_forgot_password_link: Forgot my password
