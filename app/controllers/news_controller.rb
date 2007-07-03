@@ -26,9 +26,9 @@ class NewsController < ApplicationController
     @news_item = NewsItem.new(params[:news_item])
     if @news_item.save
       flash[:notice] = 'NewsItem was successfully created.'
-      redirect_to :action => 'list'
+      redirect_to :action => :list
     else
-      render :action => 'new'
+      render :action => :new
     end
   end
 
@@ -40,7 +40,7 @@ class NewsController < ApplicationController
     @news_item = NewsItem.find(params[:id])
     if @news_item.update_attributes(params[:news_item])
       flash[:notice] = 'NewsItem was successfully updated.'
-      redirect_to :action => 'show', :id => @news_item
+      redirect_to :action => :list, :id => @news_item
     else
       render :action => 'edit'
     end

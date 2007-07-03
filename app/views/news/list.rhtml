@@ -13,7 +13,7 @@
 				<!-- Normal content area start -->
 
 				<img src="/images/pic1.jpg" class="left" alt="A chinese lion statue" />
-				<p><%=h @news_item.body %></p>
+				<%=textilize @news_item.body %>
 
 						<ul class="controls">
 <!--
@@ -52,7 +52,7 @@
 -->
         				<%=@news_item.created_at.strftime '%Y-%m-%d %H:%M'%>
 				        </div>	
-						<p><%=h @news_item.body %></p>
+						<%=textilize @news_item.body %>
 
 						<ul class="controls">
 <!--
