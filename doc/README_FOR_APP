@@ -1,18 +1,7 @@
 Use this README file to introduce your application and point to useful places in the API for learning more.
 Run "rake appdoc" to generate API documentation for your models and controllers.
 
-priser:
-voksne: 300 pr. mnd 15.8
-barn  : 260 pr. mnd 15.8
-
-kr 250,- voksne pr år
-kr 170,- junior pr år
-
-styret:
-leder Morten Jacobsen
-medlem Kine Skrimstad
-medlem Per Stian Vikan
-medlem Hans Petter Skolsegg
+Lage kontaktside:
 
 Kontaktpersoner:
 Morten Jacobsen Leder 47326154 mortja@broadpark.no
@@ -20,24 +9,6 @@ Hans Petter Skolsegg hovedinstruktør 92259959 hans.petter.skolsegg@nrk.no
 Harald Løkken hovedinstruktør junior 97743179 h.lokken@hotmail.com
 Atle Riis Myhrvold Kasserer 48147919 riismyh@online.no
 Per Stian Vikan medlemsregister 91118877 psvikan@hotmail.com
-
-
-
-Nøkkelpersoner:
-Uwe Kubosch
-Morten Jacobsen
-Kine Skrimstad 47018465
-Hans Petter Skolsegg
-Harald Løkken
-Marius Frang 95982340
-Rune Wang 98245992
-
-
-Treningstider:
-Tirsdag + torsdag 1745-1845 + 19-20.30
-
-bruker: larseb + rjjk2055
-bruker: ondemannen + Sommer07
 
 admin rolle
 
