@@ -15,6 +15,17 @@
 				<img src="/images/pic1.jpg" class="left" alt="A chinese lion statue" />
 				<p><%=h @news_item.body %></p>
 
+						<ul class="controls">
+<!--
+							<li><a href="#" class="printerfriendly">Printer Friendly</a></li>
+							<li><a href="#" class="comments">Comments (18)</a></li>
+							<li><a href="<%=url_for :action => :show, :id => @news_item %>" class="more">Read More</a></li>				
+-->
+							<% if user? %>
+							<li><a href="<%=url_for :action => :edit, :id => @news_item %>" class="edit">Edit</a></li>				
+							<% end %>
+						</ul>
+
 				<!-- Normal content area end -->
 			</div>
 		</div>
@@ -42,13 +53,18 @@
         				<%=@news_item.created_at.strftime '%Y-%m-%d %H:%M'%>
 				        </div>	
 						<p><%=h @news_item.body %></p>
-<!--
+
 						<ul class="controls">
+<!--
 							<li><a href="#" class="printerfriendly">Printer Friendly</a></li>
 							<li><a href="#" class="comments">Comments (18)</a></li>
 							<li><a href="<%=url_for :action => :show, :id => @news_item %>" class="more">Read More</a></li>				
-						</ul>
 -->
+							<% if user? %>
+							<li><a href="<%=url_for :action => :edit, :id => @news_item %>" class="edit">Edit</a></li>				
+							<% end %>
+						</ul>
+
 					</div>
 				</div>
                 <% end %>

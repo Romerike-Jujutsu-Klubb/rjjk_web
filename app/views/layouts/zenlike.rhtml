@@ -45,8 +45,9 @@
 			<li><a href="#">Blog</a></li>
 			<li><a href="#">Gallery</a></li>
 -->
-			<li><%=link_to 'Om klubben', {:controller => 'info', :action => :om_klubben}, :class => [controller.controller_name, controller.action_name] == ['info', 'om_klubben'] ? 'active' : nil %></li>
-			<li><%=link_to 'Kontakt', {:controller => 'info', :action => :kontakt}, :class => [controller.controller_name, controller.action_name] == ['info', 'kontakt'] ? 'active' : nil %></li>
+			<li><%=menu_item 'Priser', :priser %></li>
+			<li><%=menu_item 'Om klubben', :om_klubben %></li>
+			<li><%=menu_item 'Kontakt', :kontakt %></li>
 		</ul>
 	</div>
 	<div id="menubottom"></div>
@@ -58,7 +59,12 @@
 
 	<div id="footer">
 			<div class="left">&copy; 2006 Romerike Jujutsu Klubb. All rights reserved.
-    			<%= link_to 'New news_item', :controller => 'news', :action => 'new' %>
+    			<% if user? %>
+        			<%= link_to 'New news_item', :controller => 'news', :action => 'new' %>
+        			<%= link_to 'Logout', :controller => 'user', :action => :logout %>
+    			<% else %>
+        			<%= link_to 'Login', :controller => 'user', :action => :login %>
+    			<% end %>
 			</div>
 			<div class="right">Design by <a href="http://www.nodethirtythree.com/">NodeThirtyThree Design</a></div>
 	</div>

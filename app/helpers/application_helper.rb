@@ -4,4 +4,9 @@ module ApplicationHelper
   def user?
     !@session['user'].nil?
   end
+  
+  def menu_item(name, action)
+    link_to name, {:controller => 'info', :action => action}, :class => [controller.controller_name, controller.action_name] == ['info', action.to_s] ? 'active' : nil
+  end
+
 end

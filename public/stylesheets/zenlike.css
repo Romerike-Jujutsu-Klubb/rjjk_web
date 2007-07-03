@@ -152,6 +152,11 @@ background-image: url('/images/icon-comments.gif');
 background-image: url('/images/icon-more.gif');
 }
 
+.post ul.controls li a.edit
+{
+background-image: url('/images/icon-more.gif');
+}
+
 .box
 {
 position: relative;
