@@ -2,7 +2,7 @@
 module ApplicationHelper
   include Localization
   def user?
-    !@session['user'].nil?
+    !session['user'].nil?
   end
   
   def menu_item(name, action)

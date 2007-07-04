@@ -15,8 +15,8 @@ class ApplicationController < ActionController::Base
   private
   
   def load_layout_model
-    @news_items = NewsItem.find_all
-    @information_pages = InformationPage.find_all
+    @news_items = NewsItem.find :all
+    @information_pages = InformationPage.find :all
     @new_pages = InformationPage.find :all, :conditions => "created_at > '#{30.days.ago.iso8601}'"
     if InformationPage.count > 0
       @information_root = InformationPage.find(:first, :order => 'id')
