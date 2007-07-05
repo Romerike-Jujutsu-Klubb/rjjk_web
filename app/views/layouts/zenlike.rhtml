@@ -45,6 +45,9 @@
 			<li><a href="#">Blog</a></li>
 			<li><a href="#">Gallery</a></li>
 -->
+            <% @information_pages.each do |@information_page| %>
+			<li><%=menu_item @information_page.title, :show, @information_page.id %></li>
+			<% end %>
 			<li><%=menu_item 'Trening', :trening %></li>
 			<li><%=menu_item 'Priser', :priser %></li>
 			<li><%=menu_item 'Om klubben', :om_klubben %></li>
@@ -65,6 +68,7 @@
 			<div class="left">&copy; 2006 Romerike Jujutsu Klubb. All rights reserved.
     			<% if user? %>
         			<%= link_to 'Legg til nyhet', :controller => 'news', :action => 'new' %>
+                    <%= link_to 'Ny informasjonsside', :controller => 'info', :action => 'new' %>
         			<%= link_to 'Logout', :controller => 'user', :action => :logout %>
     			<% else %>
         			<%= link_to 'Login', :controller => 'user', :action => :login %>

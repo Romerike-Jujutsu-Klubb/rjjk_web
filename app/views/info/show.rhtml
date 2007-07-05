@@ -1,7 +1,9 @@
 <% @title = @information_page.title %>
 
+<h1><%=h @information_page.title %></h1>
+
 <p>
-<%=h @information_page.body%>
+<%=textilize @information_page.body%>
 </p
 
 <% if user? %>
