@@ -1,6 +1,6 @@
 class InfoController < ApplicationController
   before_filter :store_location
-  before_filter :login_required, :except => [:show, :show_content, :sms, :kontakt]
+  before_filter :login_required, :except => [:show, :show_content, :trening, :priser, :om_klubben, :styret, :nokkelpersoner, :sms, :kontakt]
   
   def index
     unless id = params[:id]
