@@ -1,5 +1,14 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+admin:
+  id: 1000000
+  login: admin
+  salted_password: ef94c16f6c124a4e84cc215c164767bfa25f6e92 # atest
+  salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
+  email: admin@test.com
+  verified: 1
+  role: ADMIN
+  
 bob:
   id: 1000001
   login: bob

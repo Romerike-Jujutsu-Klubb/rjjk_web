@@ -1,9 +1,9 @@
 <h1>Editing news_item</h1>
 
-<%= start_form_tag :action => 'update', :id => @news_item %>
+<% form_tag :action => 'update', :id => @news_item do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
-<%= end_form_tag %>
+<% end %>
 
 <%= link_to 'Show', :action => 'show', :id => @news_item %> |
 <%= link_to 'Back', :action => 'list' %>

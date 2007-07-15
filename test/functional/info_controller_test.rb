@@ -5,7 +5,7 @@ require 'info_controller'
 class InfoController; def rescue_action(e) raise e end; end
 
 class InfoControllerTest < Test::Unit::TestCase
-  fixtures :information_pages
+  fixtures :users, :information_pages
 
   def setup
     @controller = InfoController.new
@@ -15,8 +15,8 @@ class InfoControllerTest < Test::Unit::TestCase
 
   def test_index
     get :index
-    assert_response :success
-    assert_template 'list'
+    assert_response :redirect
+    assert_redirected_to :action => :show, :id => InformationPage.find(1)
   end
 
   def test_list
@@ -39,6 +39,7 @@ class InfoControllerTest < Test::Unit::TestCase
   end
 
   def test_new
+    @request.session['user'] = users(:admin)
     get :new
 
     assert_response :success
@@ -50,25 +51,28 @@ class InfoControllerTest < Test::Unit::TestCase
   def test_create
     num_information_pages = InformationPage.count
 
-    post :create, :information_page => {}
+    @request.session['user'] = users(:admin)
+    post :create, :information_page => {:title => 'an article'}
 
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :action => :show, :id => InformationPage.find_by_title('an article')
 
     assert_equal num_information_pages + 1, InformationPage.count
   end
 
   def test_edit
-    get :edit, :id => 1
+    @request.session['user'] = users(:admin)
+    get :rediger, :id => 1
 
     assert_response :success
-    assert_template 'edit'
+    assert_template 'rediger'
 
     assert_not_nil assigns(:information_page)
     assert assigns(:information_page).valid?
   end
 
   def test_update
+    @request.session['user'] = users(:admin)
     post :update, :id => 1
     assert_response :redirect
     assert_redirected_to :action => 'show', :id => 1
@@ -77,6 +81,7 @@ class InfoControllerTest < Test::Unit::TestCase
   def test_destroy
     assert_not_nil InformationPage.find(1)
 
+    @request.session['user'] = users(:admin)
     post :destroy, :id => 1
     assert_response :redirect
     assert_redirected_to :action => 'list'

@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'user_controller'
+require 'user_notify'
 
 # Raise errors beyond the default web-based presentation
 class UserController; def rescue_action(e) raise e end; end
@@ -269,6 +270,7 @@ class UserControllerTest < Test::Unit::TestCase
     @request.session['return-to'] = "/bogus/location"
 
     post :signup, "user" => { "login" => "newbob", "password" => "newpassword", "password_confirmation" => "wrong" }
+    
     assert_invalid_column_on_record "user", "password"
     assert_success
     

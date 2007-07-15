@@ -5,7 +5,7 @@ require 'news_controller'
 class NewsController; def rescue_action(e) raise e end; end
 
 class NewsControllerTest < Test::Unit::TestCase
-  fixtures :news_items
+  fixtures :users, :news_items
 
   def setup
     @controller = NewsController.new
@@ -39,6 +39,7 @@ class NewsControllerTest < Test::Unit::TestCase
   end
 
   def test_new
+    @request.session['user'] = users(:admin)
     get :new
 
     assert_response :success
@@ -50,7 +51,8 @@ class NewsControllerTest < Test::Unit::TestCase
   def test_create
     num_news_items = NewsItem.count
 
-    post :create, :news_item => {}
+    @request.session['user'] = users(:admin)
+    post :create, :news_item => {:title => 'another news item'}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -59,6 +61,7 @@ class NewsControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
+    @request.session['user'] = users(:admin)
     get :edit, :id => 1
 
     assert_response :success
@@ -69,14 +72,16 @@ class NewsControllerTest < Test::Unit::TestCase
   end
 
   def test_update
+    @request.session['user'] = users(:admin)
     post :update, :id => 1
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+    assert_redirected_to :action => :list, :id => 1
   end
 
   def test_destroy
     assert_not_nil NewsItem.find(1)
 
+    @request.session['user'] = users(:admin)
     post :destroy, :id => 1
     assert_response :redirect
     assert_redirected_to :action => 'list'

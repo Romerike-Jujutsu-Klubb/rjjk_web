@@ -6,6 +6,6 @@
 <%=textilize @information_page.body%>
 </p
 
-<% if user? %>
+<% if admin? %>
 <%= link_to 'Rediger', :action => 'rediger', :id => @information_page %>
 <% end %>

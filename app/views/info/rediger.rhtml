@@ -1,8 +1,8 @@
 <% @title = 'Rediger Informasjonsside' %>
 
-<%= start_form_tag :action => 'update', :id => @information_page %>
+<% form_tag :action => 'update', :id => @information_page do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Lagre' %>
-<%= end_form_tag %>
+<% end %>
 
 <%= link_to 'Vis', :action => 'show', :id => @information_page %>

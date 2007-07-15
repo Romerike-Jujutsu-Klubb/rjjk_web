@@ -1,10 +1,10 @@
 class InfoController < ApplicationController
   before_filter :store_location
-  before_filter :login_required, :except => [:show, :show_content, :trening, :priser, :om_klubben, :styret, :nokkelpersoner, :sms, :kontakt]
+  before_filter :admin_required, :except => [:index, :list, :show, :show_content, :trening, :priser, :om_klubben, :styret, :nokkelpersoner, :kontakt]
   
   def index
     unless id = params[:id]
-      id = InformationPage.find(:first)
+      id = InformationPage.find(:first, :order => 'id')
       unless id
         redirect_to :action => :new
         return

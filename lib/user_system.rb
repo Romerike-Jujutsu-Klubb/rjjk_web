@@ -1,5 +1,6 @@
 module UserSystem
-
+  ADMIN_ROLE = 'ADMIN'
+  
   protected
   
   # overwrite this if you want to restrict access to only a few actions
@@ -11,7 +12,7 @@ module UserSystem
   #    user.login != "bob"
   #  end
   def authorize?(user)
-     user.role == 'ADMIN'
+    true
   end
   
   # overwrite this method if you only want to protect certain actions of the controller
@@ -38,12 +39,12 @@ module UserSystem
   #   
   #   def authorize?(user)
   # 
-  def login_required    
+  def login_required
     if not protect?(action_name)
       return true  
     end
 
-    if user? and authorize?(@session['user'])
+    if user? and authorize?(session['user'])
       return true
     end
 
@@ -65,22 +66,13 @@ module UserSystem
   #   
   #   def authorize?(user)
   # 
-  def login_required    
-    if not protect?(action_name)
-      return true  
-    end
-
-    if user? and authorize?(@session['user'])
+  def admin_required
+    return false unless login_required
+    if user && user.role == ADMIN_ROLE
       return true
     end
-
-    # store current location so that we can 
-    # come back after the user logged in
     store_location
-  
-    # call overwriteable reaction to unauthorized access
     access_denied
-    return false 
   end
 
   # overwrite if you want to have special behavior in case the user is not authorized
@@ -95,33 +87,52 @@ module UserSystem
   # store current uri in  the session.
   # we can return to this location by calling return_location
   def store_location
-    @session['return-to'] = @request.request_uri
+    session['return-to'] = request.request_uri
   end
 
   # move to the last store_location call or to the passed default one
   def redirect_back_or_default(default)
-    if @session['return-to'].nil?
+    if session['return-to'].nil?
       redirect_to default
     else
-      redirect_to_url @session['return-to']
-      @session['return-to'] = nil
+      redirect_to_url session['return-to']
+      session['return-to'] = nil
     end
   end
 
+  def login_from_cookie
+    if token = cookies[:auth_token]
+      user_by_token = User.find_by_security_token(token)
+      if user_by_token
+        session['user'] = User.authenticate_by_token(user_by_token.id, token)
+      end
+    end
+    true
+  end
+  
   def user?
     # First, is the user already authenticated?
-    return true if not @session['user'].nil?
+    return true if not session['user'].nil?
 
     # If not, is the user being authenticated by a token?
-    return false if not @params['user']
-    id = @params['user']['id']
-    key = @params['key']
+    return false if not params['user']
+    id = params['user']['id']
+    key = params['key']
     if id and key
-      @session['user'] = User.authenticate_by_token(id, key)
-      return true if not @session['user'].nil?
+      session['user'] = User.authenticate_by_token(id, key)
+      return true if not session['user'].nil?
     end
 
     # Everything failed
     return false
   end
+  
+  def user
+    session['user']
+  end
+
+  def admin?
+    user? && user.role == ADMIN_ROLE
+  end
+
 end

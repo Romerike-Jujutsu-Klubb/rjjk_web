@@ -8,7 +8,7 @@
 <%= text_field 'information_page', 'title'  %></p>
 
 <p><label for="information_page_body">Body</label><br/>
-<%= text_area 'information_page', 'body'  %></p>
+<%= text_area 'information_page', 'body', :cols => 80 %></p>
 
 <% if @information_page.created_at %>
 <p><label for="information_page_created_at">Created at</label><br/>

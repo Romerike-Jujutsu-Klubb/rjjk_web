@@ -53,7 +53,6 @@
 			<li><%=menu_item 'Om klubben', :om_klubben %></li>
 			<li><%=menu_item 'Styret', :styret %></li>
 			<li><%=menu_item 'Nøkkelpersoner', :nokkelpersoner %></li>
-			<li><%=menu_item 'SMS Tjenester', :sms %></li>
 			<li><%=menu_item 'Kontakt', :kontakt %></li>
 		</ul>
 	</div>
@@ -66,11 +65,12 @@
 
 	<div id="footer">
 			<div class="left">&copy; 2006 Romerike Jujutsu Klubb. All rights reserved.
-    			<% if user? %>
+    			<% if admin? %>
         			<%= link_to 'Legg til nyhet', :controller => 'news', :action => 'new' %>
                     <%= link_to 'Ny informasjonsside', :controller => 'info', :action => 'new' %>
         			<%= link_to 'Logout', :controller => 'user', :action => :logout %>
-    			<% else %>
+    			<% end %>
+    			<% if not user? %>
         			<%= link_to 'Login', :controller => 'user', :action => :login %>
     			<% end %>
 			</div>

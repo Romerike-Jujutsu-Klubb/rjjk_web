@@ -1,12 +1,20 @@
 class UserController < ApplicationController
-  before_filter :login_required
+  before_filter :admin_required, :except => :login
 
+  def list
+    @users = User.find(:all, :order => 'last_name, first_name')
+  end
+  
   def login
     return if generate_blank
     @user = User.new(@params['user'])
-    if @session['user'] = User.authenticate(@params['user']['login'], @params['user']['password'])
+    if session['user'] = User.authenticate(@params['user']['login'], @params['user']['password'])
+      if params[:remember_me] == "1"
+        user.generate_security_token(24*365)
+        cookies[:auth_token] = { :value => user.security_token , :expires => user.token_expiry }
+      end
       flash['notice'] = l(:user_login_succeeded)
-      redirect_back_or_default :action => 'welcome'
+      redirect_back_or_default :controller => 'news', :action => :index
     else
       @login = @params['user']['login']
       flash.now['message'] = l(:user_login_failed)
@@ -35,7 +43,8 @@ class UserController < ApplicationController
   end  
   
   def logout
-    @session['user'] = nil
+    session['user'] = nil
+    cookies.delete(:auth_token)
     redirect_to :action => 'login'
   end
 
@@ -114,7 +123,7 @@ class UserController < ApplicationController
   end
 
   def delete
-    @user = @session['user']
+    @user = session['user']
     begin
       if UserSystem::CONFIG[:delayed_delete]
         User.transaction(@user) do
@@ -134,7 +143,7 @@ class UserController < ApplicationController
   end
 
   def restore_deleted
-    @user = @session['user']
+    @user = session['user']
     @user.deleted = 0
     if not @user.save
       flash.now['notice'] = l(:user_restore_deleted_error, "#{@user['login']}")
@@ -165,7 +174,7 @@ class UserController < ApplicationController
 
   # Generate a template user for certain actions on get
   def generate_blank
-    case @request.method
+    case request.method
     when :get
       @user = User.new
       render
@@ -176,8 +185,8 @@ class UserController < ApplicationController
 
   # Generate a template user for certain actions on get
   def generate_filled_in
-    @user = @session['user']
-    case @request.method
+    @user = session['user']
+    case request.method
     when :get
       render
       return true

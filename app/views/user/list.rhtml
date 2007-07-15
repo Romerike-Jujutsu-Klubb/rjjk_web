@@ -1,0 +1,14 @@
+<table>
+<tr>
+  <td><%=l :last_name%></td>
+  <td><%=l :first_name%></td>
+  <td><%=l :edit%></td>
+</tr>
+<% for @user in @users %>
+<tr>
+  <td><%=h @user.last_name%></td>
+  <td><%=h @user.last_name%></td>
+  <td><%=link_to l(:edit), :action => :edit%></td>
+</tr>
+<% end %>
+</table>
