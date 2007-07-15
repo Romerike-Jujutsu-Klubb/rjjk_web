@@ -16,5 +16,4 @@ production:
   adapter: postgresql
   database: rjjk_production
   username: donv
-  password: mussFinch
-  host: kubosch.no
+  host: localhost
