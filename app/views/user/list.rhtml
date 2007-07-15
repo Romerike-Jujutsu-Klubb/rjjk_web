@@ -2,13 +2,12 @@
 <tr>
   <td><%=l :user_last_name_form%></td>
   <td><%=l :user_first_name_form%></td>
-  <td><%=l :edit%></td>
 </tr>
 <% for @user in @users %>
 <tr>
   <td><%=h @user.last_name%></td>
   <td><%=h @user.first_name%></td>
-  <td><%=link_to l(:edit), :action => :edit%></td>
+  <td><%=link_to l(:user_edit_head), :action => :edit%></td>
 </tr>
 <% end %>
 </table>
