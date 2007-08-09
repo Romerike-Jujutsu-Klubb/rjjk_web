@@ -59,7 +59,8 @@ class UserController < ApplicationController
           flash.now['notice'] = l(:user_updated_password, "#{@user.email}")
         end
       end
-    rescue
+    rescue Exception => e
+      logger.error(e)
       flash.now['message'] = l(:user_change_password_email_error)
     end
   end
