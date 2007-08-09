@@ -11,6 +11,7 @@ class NewsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
+logger.info session['user'].inspect
     @news_items = NewsItem.find(:all, :order => 'created_at DESC', :limit => 10)
   end
 

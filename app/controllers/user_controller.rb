@@ -9,6 +9,7 @@ class UserController < ApplicationController
     return if generate_blank
     @user = User.new(@params['user'])
     if session['user'] = User.authenticate(@params['user']['login'], @params['user']['password'])
+logger.info session['user'].inspect
       if params[:remember_me] == "1"
         user.generate_security_token(24*365)
         cookies[:auth_token] = { :value => user.security_token , :expires => user.token_expiry }
