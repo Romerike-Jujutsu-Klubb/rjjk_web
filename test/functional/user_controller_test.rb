@@ -259,6 +259,11 @@ class UserControllerTest < Test::Unit::TestCase
     get :logout
   end
 
+  def test_forgot_password_input
+    get :forgot_password
+    assert_success
+  end
+
   def test_forgot_password
     do_forgot_password(false, false, false)
     do_forgot_password(false, false, true)
