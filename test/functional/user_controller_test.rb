@@ -259,7 +259,7 @@ class UserControllerTest < Test::Unit::TestCase
     get :logout
   end
 
-  def test_forgot_password_input
+  def test_forgot_password_link
     get :forgot_password
     assert_success
   end
