@@ -1,0 +1,23 @@
+<h1>Medlemsliste</h1>
+
+<table>
+  <tr>
+    <th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
+    <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>
+  </tr>
+  
+<% for member in @members %>
+  <tr>
+    <td><%=h member.last_name %></td>
+    <td><%=h member.first_name %></td>
+    <td><%= link_to 'Rediger', :action => 'edit', :id => member %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Forrige side', { :page => @member_pages.current.previous } if @member_pages.current.previous %>
+<%= link_to 'Neste side', { :page => @member_pages.current.next } if @member_pages.current.next %> 
+
+<br />
+
+<%= link_to 'Nytt medlem', :action => 'new' %>

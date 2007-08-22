@@ -1,0 +1,61 @@
+<h1>E-post lister</h1>
+
+<h2>Aktive seniorer <%=link_to 'Send e-post', "mailto:#{@export_senior_emails * ','}?subject=E-post fra RJJK&body=Din tekst her." %></h2>
+<table>
+  <tr>
+    <th><%= link_to 'E-post', sort_param('listing', :alias => 'epost') %></th>
+	<th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
+    <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>	
+  </tr>
+  
+<% for senior_email in @senior_emails %>
+  <tr>
+	<td><%=h senior_email.email %></td>
+    <td><%=h senior_email.last_name %></td>
+    <td><%=h senior_email.first_name %></td>
+    <td><%= link_to 'Rediger', :action => 'edit', :id => senior_email %></td>
+  </tr>
+<% end %>
+</table>
+
+<h2>Aktive juniorer <%=link_to 'Send e-post', "mailto:#{@export_junior_emails * ','}?subject=E-post fra RJJK&body=Din tekst her." %></h2>
+
+<table>
+  <tr>
+    <th><%= link_to 'E-post', sort_param('listing', :alias => 'epost') %></th>
+	<th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
+    <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>	
+  </tr>
+  
+<% for junior_email in @junior_emails %>
+  <tr>
+	<td><%=h junior_email.email %></td>
+    <td><%=h junior_email.last_name %></td>
+    <td><%=h junior_email.first_name %></td>
+    <td><%= link_to 'Rediger', :action => 'edit', :id => junior_email %></td>
+  </tr>
+<% end %>
+</table>
+
+
+<h2>Tidligere medlemmer <%=link_to 'Send e-post', "mailto:#{@export_old_emails * ','}?subject=E-post fra RJJK&body=Din tekst her." %></h2>
+<table>
+  <tr>
+    <th><%= link_to 'E-post', sort_param('listing', :alias => 'epost') %></th>
+	<th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
+    <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>	
+  </tr>
+  
+<% for old_email in @old_emails %>
+  <tr>
+	<td><%=h old_email.email %></td>
+    <td><%=h old_email.last_name %></td>
+    <td><%=h old_email.first_name %></td>
+    <td><%= link_to 'Rediger', :action => 'edit', :id => old_email %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Nytt medlem', :action => 'new' %>

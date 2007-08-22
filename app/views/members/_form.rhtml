@@ -1,0 +1,102 @@
+<%= error_messages_for 'member' %>
+
+<!--[form:member]-->
+<table>
+	<tr>
+		<td valign="top">
+<p><label for="member_first_name">Fornavn</label><br/>
+<%= text_field 'member', 'first_name'  %></p>
+
+<p><label for="member_last_name">Etternavn</label><br/>
+<%= text_field 'member', 'last_name'  %></p>
+
+<p><label for="member_address">Adresse</label><br/>
+<%= text_field 'member', 'address'  %></p>
+
+<p><label for="member_postal_code">Postnummer</label><br/>
+<%= text_field 'member', 'postal_code'  %></p>
+
+<p><label for="member_email">E-post</label><br/>
+<%= text_field 'member', 'email'  %></p>
+
+<p style="float: left"><label for="member_phone_mobile">Telefon mobil</label><br/>
+<%= text_field 'member', 'phone_mobile', :size => '11' %></p>
+
+<p style="float: right"><label for="member_phone_home">Telefon hjem</label><br/>
+<%= text_field 'member', 'phone_home', :size => '11' %></p>
+
+<br clear="all"/>
+<p><label for="member_phone_work">Telefon arbeid</label><br/>
+<%= text_field 'member', 'phone_work', :size => '11' %></p>
+
+<p><label for="member_birtdate">Fødselsdato</label><br/>
+<%= date_select 'member', 'birtdate', :start_year=>1940 %></p>
+
+<p><label for="member_male">Kjønn</label><br/>
+<%=select "member", "male", [['Mann', true], ['Kvinne', false]] %></p>
+
+		</td>
+		<td valign="top">
+<p><label for="member_joined_on">Innmeldingsdato</label><br/>
+<%= date_select 'member', 'joined_on', :start_year=>1982 %></p>
+
+<p><label for="member_contract_id">Medlemsnummer</label><br/>
+<%= text_field 'member', 'contract_id' %></p>
+
+<p><label for="member_department">Avdeling</label><br/>
+<%=select 'member', 'department', ['Ju Jutsu', 'Aikido'] %></p>
+
+<% if @member.left_on %>
+<p><label for="member_left_on">Utmeldt dato</label><br/>
+<%= date_select 'member', 'left_on'  %></p>
+<% end %>
+
+<p><label for="member_parent_name">Foresattes navn</label><br/>
+<%= text_field 'member', 'parent_name'  %></p>
+
+<p><label for="member_phone_parent">Foresattes telefon</label><br/>
+<%= text_field 'member', 'phone_parent'  %></p>
+
+<p><label for="member_billing_type">Faktureringsmåte</label><br/>
+<%=select 'member', 'billing_type', ['AutoGiro', 'Manuell Giro'] %></p>
+
+<p><label for="member_billing_name">Fakturanavn (hvis annen enn medlem)</label><br/>
+<%= text_field 'member', 'billing_name'  %></p>
+
+<p><label for="member_billing_address">Fakturaadresse</label><br/>
+<%= text_field 'member', 'billing_address'  %></p>
+
+<p><label for="member_billing_postal_code">Fakturapostnummer</label><br/>
+<%= text_field 'member', 'billing_postal_code'  %></p>
+
+		</td>
+
+		<td valign="top">
+<p><label for="member_senior">Aldersgruppe</label><br/>
+<%=select :member, :senior, [['Junior', false], ['Senior', true]] %></p>
+
+<p><label for="member_instructor">Instruktør</label><br/>
+<%=select :member, :instructor, [['Nei', false], ['Ja', true]] %></p>
+
+<p><label for="member_nkf_fee">NKF Hovedklubb</label><br/>
+<%=select :member, :nkf_fee, [['Ja', true], ['Nei', false]] %></p>
+
+<p><label for="member_payment_problem">Betalingsproblem</label><br/>
+<%=select :member, :payment_problem, [['Nei', false], ['Ja', true]] %></p>
+
+<p><label for="member_Kommentar">Kommentar</label><br/>
+<%= text_area 'member', 'comment', :rows => 12 %></p>
+
+		</td>
+
+	</tr>
+</table>
+<!--[eoform:member]-->
+
+<script type="text/JavaScript">
+//<!--
+document.getElementById('member_first_name').focus();
+document.getElementById('member_first_name').select();
+new Effect.ScrollTo("menu")
+//-->
+</script>

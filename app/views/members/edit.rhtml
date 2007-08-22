@@ -1,0 +1,8 @@
+<h1>Editing member</h1>
+
+<% form_tag :action => 'update', :id => @member do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Editer' %>
+<% end %>
+
+<%= link_to 'Tilbake', :action => 'list' %>

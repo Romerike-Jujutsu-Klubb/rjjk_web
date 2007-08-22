@@ -1,0 +1,8552 @@
+
+	<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+   xmlns:x="urn:schemas-microsoft-com:office:excel"
+   xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+   xmlns:html="http://www.w3.org/TR/REC-html40">
+    <Worksheet ss:Name="Sheet1">
+        <ss:Table>
+<Row><ss:Cell><ss:Data ss:Type="String">Kontrakt nummer</ss:Data></ss:Cell>
+<ss:Cell><ss:Data ss:Type="String">Autogiro</ss:Data></ss:Cell>
+<ss:Cell><ss:Data ss:Type="String">Kunde nummer</ss:Data></ss:Cell>
+<ss:Cell><ss:Data ss:Type="String">Navn</ss:Data></ss:Cell>
+<ss:Cell><ss:Data ss:Type="String">CO Adresse</ss:Data></ss:Cell>
+<ss:Cell><ss:Data ss:Type="String">Adresse</ss:Data></ss:Cell>
+<ss:Cell><ss:Data ss:Type="String">Postnr</ss:Data></ss:Cell>
+<ss:Cell><ss:Data ss:Type="String">Poststed</ss:Data></ss:Cell>
+<ss:Cell><ss:Data ss:Type="String">Epost</ss:Data></ss:Cell>
+<ss:Cell><ss:Data ss:Type="String">Telefon privat</ss:Data></ss:Cell>
+</ss:Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2734
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35956
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					&Oslash;YAN URSULA HENNIG
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					EIKEVEIEN 11
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1470
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;RENSKOG
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67909081
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2735
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35961
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SELSAAS JON REIDAR
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					RINGGATA 4C
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					0577
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					OSLO
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					91140407
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2736
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201387
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					MOLDEN KAI
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					STENSRUDBAKKEN 3
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2009
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					NORDBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63839588
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2737
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201388
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					GABRIELSEN SIV E.
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					HARASTIEN 7
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2014
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BLYSTADLIA
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63838546
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2738
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201389
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					LAMBRECHTS MONA
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					NORDBYV 13
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2013
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKJETTEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63841435
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2739
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35966
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					ROGDO KRISTINA
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKOGVEIEN 9
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2005
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&AElig;LINGEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63832592
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2740
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					37553
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					H&Oslash;GLUND RUNE ALEXANDER
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					ILEBR&Aring;TAN 28
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1900
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FETSUND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63882703
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2741
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201390
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					AANDERAA HARALD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&Aring;SOKVEIEN 48
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1900
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FETSUND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63883776
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2742
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201391
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					MIDDELHUIS ROGER
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					H&Oslash;GDAV 4
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY                  
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					middelhu@c2i.net
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64929570
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2743
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201392
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					GRINI HANS
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					PROST REFSUMSVEI 20
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2005
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&AElig;LINGEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63836753
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2744
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201393
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					DYSTLAND ARILD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FELTSPATTVEIEN 29B
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2008
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FJERDINGBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63831468
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2745
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201394
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SOLBERG KJELL
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					MAGNUSGT.3A
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2004
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					LILLESTR&Oslash;M
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63810811
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2746
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201395
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BOTNAN JAN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					NEDRE R&AElig;LINGSVEI 115C
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2005
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&AElig;LINGEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63832351
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2747
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					93201
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					EDSETH STEINAR
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Skogly Gullverket 
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2080
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					EIDSVOLL
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63995822
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2748
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					192
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					HOLM TONE
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FELTSPATTVN.43A
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2008
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FJERDINGBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63839115
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2749
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					197
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					DAHL OLE HALVOR
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					KJENNVEIEN 16B
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1470
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;RENSKOG
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67900190
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2750
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					199
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BJERKE J&Oslash;RGEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKOLEVN.11B
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2005
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&AElig;LINGEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63838974
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2751
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					207
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					REFSUM ANDREAS
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&Oslash;YK&Aring;S TERR.32
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1476
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					RASTA
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2752
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					208
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					INDREEIDE KARL KRISTIAN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					CONRADISGT.8A
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					0559
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					OSLO
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					22041905
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2877
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201445
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FAUSKE TONE
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					VIVELSTADV 2
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3400
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					LIER
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63840697
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2878
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201446
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					HASTHI ANN-MAI
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Torgenholtvn. 9
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2006
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;VENSTAD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63833521
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2943
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201482
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					THORSEN TOVE
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FJELLSTADVEGEN 14
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2009
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					NORDBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63837900
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3039
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					223
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					INGJER LARS
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					HOLMSENSVEI 61
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2010
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					STR&Oslash;MMEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63800108
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3040
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					222
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					IVERSEN ERLEND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					STR&Oslash;MSV 3
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2010
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					STR&Oslash;MMEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63819594
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3041
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201541
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					HULTHIN TOMMY SOLLYST
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					ALINGS&Aring;SV 7
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2013
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKJETTEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					40066006
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3042
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201542
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BARKEN&AElig;S LASSE
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FJELLSTADVN. 34
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2009
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					NORDBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					92641954
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3157
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201592
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					HANSEN TRINE
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					ELGTR&Aring;KKET 1D
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2014
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BLYSTADLIA
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63838057
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3158
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					224
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					WESTBYE ESPEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BEVERVEIEN 42
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2030
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					NANNESTAD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					97566192
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3180
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					37538
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;KKEN HARALD T.
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					ELVEGATA 11B
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2003
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					LILLESTR&Oslash;M
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63815568
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3213
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35960
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FRANG PETTER
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					ELGTR&Aring;KKET 5A
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2014
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BLYSTADLIA
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63839977
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3250
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201630
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					B&Oslash;HLE &Aring;SE
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					CHR.MICHELSENSVEI 68
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1472
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FJELLHAMAR
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67972341
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3307
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35953
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					JACOBSEN STINE LINDREN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					RUDSBERGET 2
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2005
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&AElig;LINGEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					48131631
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3379
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201705
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SOLLI REUATA
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKAUGVEIEN 73
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64928796
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3380
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					257
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BR&Aring;TEN LARS ERLING
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					TORSVEI 8B
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1472
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FJELLHAMAR
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					91735210
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3433
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					259
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					UGLAND TORGEIR
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;KKEVEIEN 50
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2006
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;VENSTAD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					91811197
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3435
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201734
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					S&Oslash;RENSEN TOR HUGO
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					DALEVEIEN 2
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1900
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FETSUND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63884502
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3453
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201741
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					NORDVOLD FINN ERIK
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					APALVEIEN 1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1900
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FETSUND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63884037
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3454
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201742
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					TOMBRE ANNE L.
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKINNSTUDUMPA 27
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2072
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					DAL
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63953432
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3457
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201744
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SIVERTSEN &Aring;SE
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					OSPELUNDV 24
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2070
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&Aring;HOLT
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3531
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201776
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					GR&Oslash;NTJERNET ANN KRISTIN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FURUSETVEIEN 25B
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2000
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					LILLESTR&Oslash;M
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					93451870
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3532
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					269
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					DYSTLAND ARILD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FELTSPATVEIEN 29B
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2008
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FJERDINGBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					91745136
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3533
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					271
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					MIDDELHUIS ROGER
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					H&Oslash;GDAV 4F
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY                  
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					middelhu@c2i.net
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64929570
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3661
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201821
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					HOROWITS S&Oslash;LVI
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					PROST HOLMSVEI 345
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2019
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKEDSMOKORSET
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63876383
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3674
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					277
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					VIKAN PER STIAN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Vangensteinvn.5b
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2005
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&AElig;LINGEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					90874280
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3675
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201825
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					MAYOR ANNETTE
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					TULIPANVEIEN 63
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1475
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FINSTADJORDET
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67971026
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3751
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201842
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					EVJU SISSEL
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					VALLERUD&Aring;SEN 129
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1476
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					RASTA
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67906460
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3752
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201843
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					JOHANSEN LILL LINDAHL
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					LENSMANN KLEVSVEI 15
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2019
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKEDSMOKORSET
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					93017607
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					4117
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201991
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					TALLAKSEN JARLE
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					KARISVEI 205
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2013
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKJETTEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63844471
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					14524
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					202571
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Edvardsen Kjersti Ellefsen
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Gjeddevannsv 1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					mlasseh@start.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					14525
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					202572
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Myksvoll Magne
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					bjerklundsbakken 24
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64929207
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					14526
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					202573
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Bredesen Erik
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sannumvegen 14
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2008
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FJERDINGBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63832722
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					14830
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					285
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Wang Rune
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Blystadringen 2E
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2014
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BLYSTADLIA
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					rune@vogon.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					14831
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					286
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Opheim Noclas
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Skjettenveien 76A
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2013
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKJETTEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					bnopheim@c2i.net
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63002610
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					15081
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					203730
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Dahl Monika K.
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Kjennveien 60
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1470
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;RENSKOG
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67900190
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					15082
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					20000
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Bakke Anne Elisabeth
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					S&oslash;rg&aring;rdsbr&aring;tan 3
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1900
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FETSUND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67903639
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					15083
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					203731
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Jernberg Kristin
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Konvallveien 24C
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					15210
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					203732
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Holm Marianne
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Nygardsvegen 6B
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2008
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FJERDINGBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					marianne.holm@fia.akershus-f.kommune.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63837575
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					19555
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					291
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Boberg Stian Fredric
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Revestien 17
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2014
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BLYSTADLIA
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					stian@speidern.net
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					19556
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204036
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Lambrechts Vibeke
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Alings&aring;svn. 15
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2013
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKJETTEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63840911
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					19557
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					294
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Le Tuan Anh
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Bjerkeliv 10
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2005
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&AElig;LINGEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					latu1@hotmail.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63834943
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					19558
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					295
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sl&aring;ttum Haavard
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Ragnhild J&oslash;lsensv. 32
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2006
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;VENSTAD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					haa-slaa@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63832879
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					19559
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204037
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Lindahl Bj&oslash;rn
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Birkebeinergt. 6B
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2004
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					LILLESTR&Oslash;M
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					bjorn-lindahl@lycos.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					19560
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35956
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					&Oslash;YAN URSULA HENNIG
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					EIKEVEIEN 11
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1470
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;RENSKOG
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67909081
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					19561
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204038
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					S&oslash;rensen Mette
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Landskronavn. 124
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2013
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKJETTEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63842523
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					19562
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204039
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Skaug Petter
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Fredheimveien 15
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					petskaug@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64928687
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					19563
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204040
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					ELIASSEN STEINAR
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BJ&Oslash;RNEFARET 1G
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2014
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BLYSTADLIA
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					92614473
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					19564
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					302
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Simensen S&oslash;lvi
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Nordbyringen 33/41
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1474
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					NORDBYHAGEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					solvisimensen@hotmail.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					19565
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					303
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Basso &Aring;shild
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Nordbyringen 33/40
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1474
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					NORDBYHAGEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					bashild@hotmail.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					19566
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204041
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Berg Tom Kjeld
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Kornstien 60
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2006
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;VENSTAD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					mariberg_@hotmail.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67909894
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					19567
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					305
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Str&oslash;m Tom Erik
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Bekkeveien 26
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1472
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FJELLHAMAR
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					testrom@broadpark.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67977117
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					19568
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204042
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Lund Astrid Helene
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&oslash;sslyngv 7
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2150
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					&Aring;RNES
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					martin@skjeten.org
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					20204
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					308
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sparby J&oslash;rn
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Grevlingveien 1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2014
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BLYSTADLIA
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					20205
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					307
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					S&aelig;tre Garm
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sandsmoen 24
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1903
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					GAN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					garmc3@start.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					20207
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204145
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sundhagen Heidi
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					&Oslash;yg&aring;rdslia 12
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2005
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&AElig;LINGEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					heidi.sundhagen@wella.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63839854
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					21139
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					309
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Nybr&aring;ten Kjell
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Furukollen 14
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					3124
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					T&Oslash;NSBERG                 
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					21140
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					310
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sk&aring;lshegg Tore
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Monkerudveien 49
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1165
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					OSLO                     
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					10794
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35963
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FRANG MARIUS
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					HELLAV 29
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2013
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKJETTEN                 
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63839977
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					10796
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					36282
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					KUBOSCH UWE
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					HOGSTVEIEN 28E
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2006
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;VENSTAD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67901195
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					10825
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					37674
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					GRASMO TORD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					ROENVEIEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1900
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FETSUND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63884147
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					10826
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					203729
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKEDSMO WENCHE
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					LUND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2040
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					KL&Oslash;FTA
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63986106
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					11073
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35952
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					JACOBSEN MORTEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Vestengveien 11
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2007
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					KJELLER
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63811060
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					11074
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35954
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKULSTAD PAUL
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					TOMTESLETTA 2
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2013
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKJETTEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63842569
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					11075
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35957
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					&Oslash;YAN ELLEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					EIKEVEIEN 11
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1470
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;RENSKOG
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67909081
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					11076
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35958
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					&Oslash;YAN ERIK
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					EIKEVEIEN 11
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1470
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;RENSKOG
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67909081
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					11077
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35962
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKOLSEGG HANS PETTER
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					KORSGATA 18
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					0551
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					OSLO
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					22717274
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					11094
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					37537
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					GILJE GEIR
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BL&Aring;STJERNEVEIEN 12
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1475
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FINSTADJORDET
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67976194
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					11169
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201821
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					HOROWITS S&Oslash;LVI
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					PROST HOLMSVEI 345
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2019
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKEDSMOKORSET
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63876383
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					11972
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					DAHL FREDRIK
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					KJENNVN.16B
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1470
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;RENSKOG
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67900190
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					23010
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					312
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Gjesti Anders
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Baglergata 2a
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2004
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					LILLESTR&Oslash;M               
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					anders@elcard.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24837
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204163
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Guttulsr&oslash;d Lene
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Linjevn. 1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2005
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&AElig;LINGEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					lenegutt@hotmail.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63832636
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24838
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201825
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					MAYOR ANNETTE
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					TULIPANVEIEN 63
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1475
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FINSTADJORDET
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67971026
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24126
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					313
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Juland Stein Helge
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Haugev 10 b
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY                  
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					sjuland@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64928689
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24127
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204149
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Byremo Gunleiv
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Nordbyringen 39-43
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1474
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					NORDBYHAGEN              
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					rosa.byremo@chello.n
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67903655
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24129
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204146
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BOLLUM PER
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					KARISVN.79
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2013
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKJETTEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					perbollum@hotmail.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63842588
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24221
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201390
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					AANDERAA HARALD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&Aring;SOKVEIEN 48
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1900
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FETSUND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63883776
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24222
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					317
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Olsen Vidar
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Vardelia 4
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2020
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKEDSMOKORSET            
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					vidar.olsen@meca.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63874356
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24223
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					318
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Pettersen Hanne
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Aamodtskogen 4
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2022
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					GJERDRUM                 
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					hanne.pettersen@edb.com 
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63992066
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24224
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					321
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Meinskar Tommy
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sleng&aring;sen 1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2020
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKEDSMOKORSET            
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					meinskar@yahoo.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24225
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					319
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&oslash;nningen Elin
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					S&oslash;sterveien 20
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1474
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					NORDBYHAGEN              
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67906469
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24872
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204166
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Skogvoll Trine
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Fjellkroken 4
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2022
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					GJERDRUM
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					tls@scandpowerpt.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63991249
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24873
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					201482
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					THORSEN TOVE
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FJELLSTADVEGEN 14
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2009
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					NORDBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63837900
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24517
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					316
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Brix Jasmin
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Dampsagveien 15
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2004
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					LILLESTR&Oslash;M               
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24518
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					294
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Le Tuan Anh
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Bjerkeliv 10
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2005
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&AElig;LINGEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					latu1@hotmail.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63834943
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24618
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204158
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Eriksen Kai
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Elgtr&aring;kket 9d
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2014
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					BLYSTADLIA               
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					kai.eriksen@pulpgrafisk.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63834428
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24619
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204160
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Bj&oslash;rnstad Gro
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Spenningen 13
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2022
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					GJERDRUM                 
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					grobjo@start.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63990616
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24708
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					328
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Kotte Arild J&oslash;ssing
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Elvengvn. 5a
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2007
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					KJELLER
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					24792
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204162
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Winsnes Jarle
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					c/o Ida Andresen
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Kjeld Stubsvei 9
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2010
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					STR&Oslash;MMEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					26119
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204169
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Olsen Trond Inge
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Fiolveien 12
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64927792
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					26120
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204170
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Clemson Rebecca
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Krokengveien 10
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2006
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;VENSTAD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					re-c@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63832024
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					26121
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					337
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Hornkj&oslash;l Tore
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Myrvollveien 15
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2040
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					KL&Oslash;FTA
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					tore.k.h@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63990020
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					26122
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					336
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Johansen Jens-Harald
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Hesteskoen 10
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2050
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					JESSHEIM
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					ondemannen@gmail.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67024679
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					26123
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					335
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Keshmiri Kian
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Riserveien 34
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1930
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					AURSKOG
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					kiankeshmiri@hotmail.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					26370
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204171
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Prestel&oslash;kken Aud Monika
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Hvalsenga 6b
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1900
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FETSUND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					amo-gull@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63884092
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					26371
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204172
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					&Oslash;deg&aring;rd O.
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Birkebeinergata 1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2004
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					LILLESTR&Oslash;M
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63801777
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					26387
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					295
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sl&aring;ttum Haavard
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Ragnhild J&oslash;lsensv. 32
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2006
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;VENSTAD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					haa-slaa@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63832879
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					26388
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					295
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sl&aring;ttum Haavard
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Ragnhild J&oslash;lsensv. 32
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2006
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;VENSTAD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					haa-slaa@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63832879
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					27643
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204173
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Bakke Britt
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					&Oslash;deg&aring;rdsveien 46c
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					l-bakke@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64929325
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					27644
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204174
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Rustad Wenche Freitag
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					&Oslash;vre Skaugveien 30
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					terje.rustad@c2i.net
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64928087
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					27813
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204175
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Wich Heidi
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Lillestr&oslash;mveien 1355
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					hei.wic@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64929337
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					28276
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204176
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					V&aring;g&aring;sar Anne
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Heisshageveien 12
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2015
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					LEIRSUND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					92466790@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63874855
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					28277
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204176
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					V&aring;g&aring;sar Anne
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Heisshageveien 12
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2015
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					LEIRSUND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					92466790@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63874855
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					28278
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204176
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					V&aring;g&aring;sar Anne
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Heisshageveien 12
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2015
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					LEIRSUND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					92466790@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63874855
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					28279
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204180
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					B&aelig;rum Tor Martin
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Engaveien 31
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					tmbaerum@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64928608
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					28280
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204182
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Ekeberg Thomas
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Skaugveien 56
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					heidistroms@hotmail.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64929291
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29339
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204184
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Stormo Roger
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Kurlandsvegen 25
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2006
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;VENSTAD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					roger@webgrafikk.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63831628
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29340
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204186
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					EVENSEN SVEN ERIK
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sennerudveien 29
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1920
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					S&Oslash;RUMSAND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63820635
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29341
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204186
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					EVENSEN SVEN ERIK
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sennerudveien 29
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1920
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					S&Oslash;RUMSAND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63820635
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29361
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204186
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					EVENSEN SVEN ERIK
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sennerudveien 29
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1920
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					S&Oslash;RUMSAND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63820635
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29362
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204189
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Gripp Gunnar
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Vardefoten 50
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2020
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKEDSMOKORSET
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63876854
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29363
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204191
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Martinsen Kristin
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sommerly 12
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1900
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FETSUND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63884175
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29364
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204193
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sannes Hilde
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					K&aring;terudveien 2
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64929349
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29365
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204193
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sannes Hilde
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					K&aring;terudveien 2
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64929349
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29366
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204196
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Holmen Ronnie
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&oslash;ykenveien 381 b
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1389
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					HEGGEDAL
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					ronnie@frilansfotografen.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29367
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204197
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Flores Richard
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Hestehagen 4
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2050
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					JESSHEIM
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					rflores@line.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63009293
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29368
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204198
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Bysting Stein
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					T&oslash;mmerveien 39
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2006
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;VENSTAD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67909802
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29369
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204200
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Korneliussen Solbj&oslash;rg
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Fredheimveien 11
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64928905
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29370
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204202
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Boger Trond
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Rolf Wikstr&oslash;msvei 45
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1472
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FJELLHAMAR
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					t.boger@frisurf.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					67971119
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29371
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204203
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Thomte Bent Erik
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sm&aring;ttaveien 3a
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					linthom@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64927291
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29372
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204205
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Johansen Bente
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Furuveien 13
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					johansen1@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64928216
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29614
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204207
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Pettersen Anita Gjevert
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					lillestr&oslash;mveien 1288
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					roypett@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64929265
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					29615
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204207
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Pettersen Anita Gjevert
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					lillestr&oslash;mveien 1288
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					roypett@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64929265
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					30381
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204210
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Pereira Jacqueline
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Skaugveien 51
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64927275
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					30382
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204212
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Gulbrandsen Tom
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Str&oslash;msveien 41
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2010
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					STR&Oslash;MMEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					kiwiman@bluezone.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					30383
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204213
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Schatvet Ivar
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Sundkroken 9d
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2008
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FJERDINGBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63834530
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					31833
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204215
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Skjemstad Juni M.
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Skaugveien 65
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					jumem@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64928954
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					31834
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204217
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Nyblom Odd
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Skaugveien 38
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64929266
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					31835
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204219
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Khalid Shahid
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Fiolveien 46c
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64929049
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					33094
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204221
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Steen E.V. Ingebrigt
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Trondheimsveien 103
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					0565
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					OSLO
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					engle@a-s-e.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					33095
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204222
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Jara Alvaro Herivan Acchiardo
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&oslash;rdagsrudvei 24
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1472
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FJELLHAMAR
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					33097
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204217
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Nyblom Odd
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Skaugveien 38
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1911
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					FLATEBY
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					64929266
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					33098
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204224
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Eriksen Terje
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Toftesgate 48
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					0556
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					OSLO
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					te@gyldendal.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					22379821
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					33099
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204225
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Skrimstad Kine
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Bekkeveien 7
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2006
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;VENSTAD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					kskrim@gmail.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63830195
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					33100
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204226
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Knutsen Vebj&oslash;rn
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Bekkeveien 7
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2006
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;VENSTAD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					vknutsen@gmail.com
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63830195
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					33680
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204227
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Wold Inger
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					trygve Nilsensveg 19
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1061
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					OSLO
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					22321653
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					33681
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204228
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Olsen B&aring;rd Olav
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&oslash;venstadtorget 17
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2006
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					L&Oslash;VENSTAD
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					boolsen@onlin.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					33718
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204229
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Fredheim Wenche
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					&Aring;svegen 133
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2033
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					&Aring;SGREINA
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					wfre@saferer.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63991510
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35456
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204231
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Suhanthakamar Gnanamanikam
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Blomsterveien 13
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2005
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					R&AElig;LINGEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					andrewsu@bluezone.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63831306
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35457
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204233
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Danielsen Hege
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Hellaveien 8
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2013
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					SKJETTEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					fam.bhg@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					63842586
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35932
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204237
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Pettersen Svanhild
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Engstien 3b
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2010
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					STR&Oslash;MMEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					svanhildp@online.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35933
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204239
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Kerminov Adlan
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Holmsensvei 29a
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2010
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					STR&Oslash;MMEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					35931
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204235
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Olstad Aud Ingrid
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Jonas Liesgt.4
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2213
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					KONGSVINGER
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					62811883
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					36237
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					N
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204241
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Jonassen Martin
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Heggeliveien 7 a
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2015
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					LEIRSUND
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					mj@mj.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					36238
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204242
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					M&oslash;rk  Bj&oslash;rnar
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Peer Gyntsvei 5 a
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2010
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					STR&Oslash;MMEN
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					bjornar.mork@chello.no
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					36339
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					J
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					204244
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Gudmundsen Petter
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Kjellerstuveien 5
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					2007
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					KJELLER
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+</Row>
+
+        </ss:Table>
+    </Worksheet>
+</Workbook>
