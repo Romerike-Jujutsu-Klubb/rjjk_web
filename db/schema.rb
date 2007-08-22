@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 3) do
+ActiveRecord::Schema.define(:version => 4) do
 
   create_table "information_pages", :force => true do |t|
     t.column "parent_id",  :integer
@@ -10,6 +10,35 @@ ActiveRecord::Schema.define(:version => 3) do
     t.column "body",       :text
     t.column "created_at", :datetime
     t.column "updated_at", :datetime
+  end
+
+  create_table "members", :force => true do |t|
+    t.column "first_name",          :string,  :limit => 100, :default => "",    :null => false
+    t.column "last_name",           :string,  :limit => 100, :default => "",    :null => false
+    t.column "senior",              :boolean,                :default => false, :null => false
+    t.column "email",               :string,  :limit => 128
+    t.column "phone_mobile",        :string,  :limit => 32
+    t.column "phone_home",          :string,  :limit => 32
+    t.column "phone_work",          :string,  :limit => 32
+    t.column "phone_parent",        :string,  :limit => 32
+    t.column "birtdate",            :date
+    t.column "male",                :boolean,                                   :null => false
+    t.column "joined_on",           :date
+    t.column "contract_id",         :integer
+    t.column "department",          :string,  :limit => 100
+    t.column "cms_contract_id",     :integer
+    t.column "left_on",             :date
+    t.column "parent_name",         :string,  :limit => 100
+    t.column "address",             :string,  :limit => 100, :default => "",    :null => false
+    t.column "postal_code",         :string,  :limit => 4,                      :null => false
+    t.column "billing_type",        :string,  :limit => 100
+    t.column "billing_name",        :string,  :limit => 100
+    t.column "billing_address",     :string,  :limit => 100
+    t.column "billing_postal_code", :string,  :limit => 4
+    t.column "payment_problem",     :boolean,                                   :null => false
+    t.column "comment",             :string
+    t.column "instructor",          :boolean,                                   :null => false
+    t.column "nkf_fee",             :boolean,                                   :null => false
   end
 
   create_table "news_items", :force => true do |t|
@@ -32,6 +61,10 @@ ActiveRecord::Schema.define(:version => 3) do
     t.column "token_expiry",    :datetime
     t.column "deleted",         :integer,                :default => 0
     t.column "delete_after",    :datetime
+  end
+
+  create_table "weights", :force => true do |t|
+    t.column "weight", :decimal, :precision => 4, :scale => 1
   end
 
 end
