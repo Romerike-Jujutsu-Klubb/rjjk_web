@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  before_filter :admin_required, :except => [:login, :logout, :forgot_password, :change_password]
+  before_filter :admin_required, :except => [:login, :logout, :signup, :forgot_password, :change_password]
 
   def list
     @users = User.find(:all, :order => 'last_name, first_name')
