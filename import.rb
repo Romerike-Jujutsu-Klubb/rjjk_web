@@ -5,14 +5,12 @@ reports = []
   report = File.readlines("Medlemsliste_#{index}.xml").join("\n")
   
   reports[index] = report.scan(/<(?:ss:)?Row>.*?<\/(?:ss:)?Row>/m).map do |xml_row|cells = xml_row.scan(/<ss:Cell>\s*?<ss:Data ss:Type=".*?">\s*?(.*?)\s*?<\/ss:Data>\s*?<\/ss:Cell>/m)
-    cells.map {|cell| cell[0].strip}
+    cells.map {|cell| cell[0].strip.gsub('&AElig;', 'Æ').gsub('&aelig;', 'æ').gsub('&Oslash;', 'Ø').gsub('&oslash;', 'ø').gsub('&Aring;', 'Å').gsub('&aring;', 'å')}
   end
   reports[index].shift
 end
 
-p reports
-
-raise "oops" if reports.find {|report| report && report.size != reports[1].size}
+raise "Report sizes differ" if reports.find {|report| report && report.size != reports[1].size}
 
 puts "reports: #{reports.size-1}"
 puts "rows: #{reports[1].size}"
@@ -24,29 +22,30 @@ reports[1].each_with_index do |row, index|
                            :first_name => reports[3][index][7].split(' ')[1..-1].join(' '),
   :last_name => reports[3][index][7].split(' ').first,
   :senior => (reports[3][index][3].empty? ? true : ((Date.today - Date.strptime(reports[3][index][3], '%d-%m-%Y')) / 365) > 15),
-  :email => '',
-  :phone_mobile => '',
-  :phone_home => '',
-  :phone_work => '',
-  :phone_parent => '',
+  :email => nil,
+  :phone_mobile => nil,
+  :phone_home => nil,
+  :phone_work => nil,
+  :phone_parent => nil,
   :birtdate => (reports[3][index][3].empty? ? nil : Date.strptime(reports[3][index][3], '%d-%m-%Y')),
-  :male => true,
+  :male => reports[3][index][2] == 'M',
   :joined_on => Date.strptime(row[1], '%d-%m-%Y'),
-  :contract_id => '',
-  :department => '',
+  :contract_id => nil,
+  :department => 'Jujutsu',
   :cms_contract_id => row[0],
   :left_on => (row[2].empty? ? nil : Date.strptime(row[2], '%d-%m-%Y')),
-  :parent_name => '',
-  :address => '',
-  :postal_code => '',
-  :billing_type => '',
-  :billing_name => '',
-  :billing_address => '',
-  :billing_postal_code => '',
-  :payment_problem => '',
-  :comment => '',
-  :instructor => '',
-  :nkf_fee => ''
+  :parent_name => nil,
+  :address => reports[2][index][5],
+  :postal_code => reports[2][index][6],
+  :billing_type => nil,
+  :billing_name => nil,
+  :billing_address => nil,
+  :billing_postal_code => nil,
+  :payment_problem => false,
+  :comment => nil,
+  :instructor => false,
+  :nkf_fee => true
   )
+  puts reports[3][index][3]
   member.save!
 end

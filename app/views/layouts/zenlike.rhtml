@@ -78,6 +78,7 @@
     			<% if admin? %>
         			<%= link_to 'Legg til nyhet', :controller => 'news', :action => 'new' %>
                     <%= link_to 'Ny informasjonsside', :controller => 'info', :action => 'new' %>
+                    <%= link_to 'Brukere', :controller => 'user', :action => :list %>
         			<%= link_to 'Logout', :controller => 'user', :action => :logout %>
     			<% end %>
     			<% if not user? %>

@@ -1,0 +1,14 @@
+<br/>
+<br/>
+<% if @incomplete_members %>
+<h2>Medlemmer med feil</h2>
+
+<table>
+<% @incomplete_members.each do |member|%>
+	<tr>
+	  <td><%=link_to "#{member.last_name}, #{member.first_name}", :action => :edit, :id => member.id %></td>
+	</tr>
+<% end %>
+</table>
+
+<% end %>

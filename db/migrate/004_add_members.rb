@@ -28,55 +28,6 @@ class AddMembers < ActiveRecord::Migration
       t.column :instructor,         :boolean, :null => false
       t.column :nkf_fee,            :boolean, :null => false
     end
-    Member.create :first_name => 'Uwe',
-                  :last_name => 'Kubosch',
-                  :senior => true,
-                  :email => 'uwe@kubosch.no',
-                  :phone_mobile => '92206046',
-                  :birtdate => '1970-11-25',
-                  :male => true,
-                  :joined_on => '1986-01-12',
-                  :address => 'Møllesvingen 5',
-                  :postal_code => '2006',
-                  :billing_type => 'AutoGiro',
-                  :payment_problem => false,
-                  :comment => 'Kul kar',
-                  :instructor => true,
-                  :nkf_fee => true
-                  
-    Member.create :first_name => 'Lars',
-                  :last_name => 'Bråten',
-                  :senior => true,
-                  :email => 'lars@bratens.net',
-                  :phone_mobile => '91735210',
-                  :birtdate => '1968-03-24',
-                  :male => true,
-                  :joined_on => '1984-01-12',
-                  :address => 'Torsvei 8b',
-                  :postal_code => '1472',
-                  :billing_type => 'AutoGiro',
-                  :payment_problem => false,
-                  :comment => 'Veldig kul kar',
-                  :instructor => false,
-                  :nkf_fee => true
-                  
-    Member.create :first_name => 'Hans Petter',
-                  :last_name => 'Grimstad',
-                  :senior => true,
-                  :email => 'petter@ptype.net',
-                  :phone_mobile => '',
-                  :birtdate => '1970-06-23',
-                  :male => true,
-                  :joined_on => '1986-01-12',
-                  :left_on => '1986-12-12',
-                  :address => 'Tyrivn 3b',
-                  :postal_code => '1470',
-                  :billing_type => 'AutoGiro',
-                  :payment_problem => false,
-                  :comment => 'Veldig gift kar',
-                  :instructor => false,
-                  :nkf_fee => true
-                  
   end
 
   def self.down

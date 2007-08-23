@@ -1,6 +1,7 @@
 class MembersController < ApplicationController
   before_filter :store_location
   before_filter :admin_required
+  before_filter :find_incomplete
 
   #  add_to_sortable_columns('listing', 
   #    :model => Member, 
@@ -140,5 +141,8 @@ class MembersController < ApplicationController
   def member_count(male, from_age, to_age)
     Member.count(:conditions => "left_on IS NULL AND male = #{male} AND birtdate <= #{year_end(from_age)} AND birtdate >= #{year_start(to_age)}")
   end
-  
+
+  def find_incomplete
+    @incomplete_members = Member.find(:all, :conditions => 'birtdate IS NULL', :order => 'last_name, first_name')
+  end
 end
