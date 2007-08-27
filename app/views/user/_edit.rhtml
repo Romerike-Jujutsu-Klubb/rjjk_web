@@ -7,6 +7,10 @@
     <%= form_input changeable(user, "login"), "login", :size => 30 %><br/>
     <%= form_input changeable(user, "email"), "email" %>
     <% if admin? %>
+	    <tr>
+	    	<td/>
+	    	<td><%="(#{@user.verified? ? 'Bekreftet' : 'Ikke bekreftet'})"%></td>
+	    </tr>
 		<tr class="two_columns">
           <td class="prompt"><label><%=l :user_role%>:</label></td>
           <td class="value">	<%=select :user, :role, [['Bruker', nil], ['Administrator', UserSystem::ADMIN_ROLE]]%></td>

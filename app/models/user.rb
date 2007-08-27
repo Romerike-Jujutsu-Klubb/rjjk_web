@@ -60,7 +60,11 @@ class User < ActiveRecord::Base
     self.password_confirmation = confirm.nil? ? pass : confirm
     @new_password = true
   end
-    
+
+  def admin?
+    role == UserSystem::ADMIN_ROLE
+  end
+  
   protected
 
   attr_accessor :password, :password_confirmation
@@ -111,4 +115,3 @@ class User < ActiveRecord::Base
   validates_length_of :password, { :minimum => 5, :if => :validate_password? }
   validates_length_of :password, { :maximum => 40, :if => :validate_password? }
 end
-
