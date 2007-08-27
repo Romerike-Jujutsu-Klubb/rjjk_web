@@ -5,7 +5,7 @@ require 'members_controller'
 class MembersController; def rescue_action(e) raise e end; end
 
 class MembersControllerTest < Test::Unit::TestCase
-  fixtures :members
+  fixtures :members, :users
   
   def setup
     @controller = MembersController.new
@@ -13,6 +13,7 @@ class MembersControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
     
     @first_id = members(:first).id
+    @request.session['user'] = users(:admin)
   end
   
   def test_index

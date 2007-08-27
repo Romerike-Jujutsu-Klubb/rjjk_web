@@ -99,10 +99,10 @@ class UserControllerTest < Test::Unit::TestCase
     assert_session_has "user"
 
     post :edit, "user" => { "first_name" => "Bob", "form" => "edit" }
-    assert_equal @response.session['user'].first_name, "Bob"
+    assert_equal "Bob", @response.session['user'].first_name
 
     post :edit, "user" => { "first_name" => "", "form" => "edit" }
-    assert_equal @response.session['user'].first_name, ""
+    assert_equal "", @response.session['user'].first_name
 
     get :logout
   end

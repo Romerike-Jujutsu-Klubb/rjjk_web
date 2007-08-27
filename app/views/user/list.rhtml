@@ -7,7 +7,7 @@
 <tr>
   <td><%=h @user.last_name%></td>
   <td><%=h @user.first_name%></td>
-  <td><%=link_to l(:user_edit_head), :action => :edit%></td>
+  <td><%=link_to l(:user_edit_head), :action => :edit, :id => @user%></td>
 </tr>
 <% end %>
 </table>
