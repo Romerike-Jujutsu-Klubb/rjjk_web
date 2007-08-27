@@ -58,7 +58,7 @@ class Member < ActiveRecord::Base
     
     labels = {}
     current_year = nil
-    dates.each_with_index {|date, i| if i % 2 == 0 then labels[i] = date.strftime("%m#{"\n%Y" if date.year != current_year}") ; current_year = date.year end}
+    dates.each_with_index {|date, i| if i % 2 == 0 then labels[i] = (date.year != current_year ? "#{date.strftime("%m")}\n#{date.strftime("%Y")}" : "#{date.strftime("%m")}") ; current_year = date.year end}
     g.labels = labels
     
     # g.draw_vertical_legend
