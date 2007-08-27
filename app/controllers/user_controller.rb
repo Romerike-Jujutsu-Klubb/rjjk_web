@@ -109,6 +109,7 @@ class UserController < ApplicationController
         case form
         when "edit"
           changeable_fields = ['first_name', 'last_name']
+          changeable_fields << 'role' if admin?
           params = @params['user'].delete_if { |k,v| not changeable_fields.include?(k) }
           @user.attributes = params
           @user.save
@@ -186,7 +187,7 @@ class UserController < ApplicationController
 
   # Generate a template user for certain actions on get
   def generate_filled_in
-    @user = session['user']
+    @user = (params[:id] && User.find_by_id(params[:id])) || session['user']
     case request.method
     when :get
       render
