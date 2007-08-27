@@ -29,6 +29,11 @@ class MembersController < ApplicationController
     :order => 'last_name'
     render :action => :list
   end
+
+  def history_graph
+    g = Member.history_graph
+    send_data(g, :disposition => 'inline', :type => 'image/png', :filename => "RJJK_Medlemshistorikk.png")
+  end
   
   def list_inactive
     @member_pages, @members = paginate :members, :per_page => MEMBERS_PER_PAGE,

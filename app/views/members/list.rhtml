@@ -1,5 +1,7 @@
 <h1>Medlemsliste</h1>
 
+<%=image_tag url_for(:action => :history_graph), :title => 'Historikk graf', :style => 'float: right' %>
+
 <table>
   <tr>
     <th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
