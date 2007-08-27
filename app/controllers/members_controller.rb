@@ -1,4 +1,6 @@
 class MembersController < ApplicationController
+  MEMBERS_PER_PAGE = 30
+  
   before_filter :store_location
   before_filter :admin_required
   before_filter :find_incomplete
@@ -22,21 +24,21 @@ class MembersController < ApplicationController
   :redirect_to => { :action => :list }
   
   def list_active
-    @member_pages, @members = paginate :members, :per_page => 10,
+    @member_pages, @members = paginate :members, :per_page => MEMBERS_PER_PAGE,
     :conditions => 'left_on IS NULL',
     :order => 'last_name'
     render :action => :list
   end
   
   def list_inactive
-    @member_pages, @members = paginate :members, :per_page => 10,
+    @member_pages, @members = paginate :members, :per_page => MEMBERS_PER_PAGE,
     :conditions => 'left_on IS NOT NULL',
     :order => 'last_name'
     render :action => :list
   end
   
   def list
-    @member_pages, @members = paginate :members, :per_page => 10,
+    @member_pages, @members = paginate :members, :per_page => MEMBERS_PER_PAGE,
     :order => 'last_name'
   end
   
