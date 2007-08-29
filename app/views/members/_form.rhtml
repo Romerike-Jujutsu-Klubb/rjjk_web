@@ -58,7 +58,7 @@
 <%= text_field 'member', 'phone_parent'  %></p>
 
 <p><label for="member_billing_type">Faktureringsmåte</label><br/>
-<%=select 'member', 'billing_type', ['AutoGiro', 'Manuell Giro'] %></p>
+<%=select 'member', 'billing_type', [['AutoGiro', 'AUTOGIRO'], ['Manuell Giro', 'MANUELL GIRO']] %></p>
 
 <p><label for="member_billing_name">Fakturanavn (hvis annen enn medlem)</label><br/>
 <%= text_field 'member', 'billing_name'  %></p>

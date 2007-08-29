@@ -3,9 +3,9 @@
 `rm -f Medlemsliste_1.xml`
 `wget -i cms_links.txt`
 `rm -f index_kunde.php`
-`mv rapp_egenxls.php?id=460 Medlemsliste_1.xml`
+`mv rapp_egenxls.php?id=475 Medlemsliste_1.xml`
 `mv rapp_egenxls.php?id=461 Medlemsliste_2.xml`
-`mv rapp_egenxls.php?id=462 Medlemsliste_3.xml`
+`mv rapp_egenxls.php?id=476 Medlemsliste_3.xml`
 `mv rapp_egenxls.php?id=464 Medlemsliste_4.xml`
 
 reports = []
@@ -18,7 +18,7 @@ reports = []
   reports[index].shift
 end
 
-raise "Report sizes differ" if reports.find {|report| report && report.size != reports[1].size}
+raise "Report sizes differ: #{reports[1..-1].map{|r|r.size}.join(', ')}" if reports.find {|report| report && report.size != reports[1].size}
 
 puts "reports: #{reports.size-1}"
 puts "rows: #{reports[1].size}"
@@ -35,9 +35,9 @@ reports[1].each_with_index do |row, index|
     :phone_home => reports[4][index][4],
     :phone_work => nil,
     :phone_parent => nil,
-    :birtdate => (reports[3][index][3].empty? ? nil : Date.strptime(reports[3][index][3], '%d-%m-%Y')),
+    :birtdate => (reports[4][index][7].empty? ? nil : Date.strptime(reports[4][index][7], '%d-%m-%Y')),
     :social_sec_no => reports[3][index][4],
-    :male => reports[3][index][2] == 'M',
+    :male => reports[4][index][6] == 'M',
     :joined_on => Date.strptime(row[1], '%d-%m-%Y'),
     :contract_id => reports[3][index][6],
     :department => 'Jujutsu',
