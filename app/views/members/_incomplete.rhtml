@@ -1,7 +1,7 @@
 <br/>
 <br/>
 <% if @incomplete_members %>
-<h2>Medlemmer med feil</h2>
+<h2>Medlemmer uten fødseldato (<%=@incomplete_members.size%>)</h2>
 
 <table>
 <% @incomplete_members.each do |member|%>

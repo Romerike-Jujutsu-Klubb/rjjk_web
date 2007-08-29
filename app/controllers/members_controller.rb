@@ -24,9 +24,8 @@ class MembersController < ApplicationController
   :redirect_to => { :action => :list }
   
   def list_active
-    @member_pages, @members = paginate :members, :per_page => MEMBERS_PER_PAGE,
-    :conditions => 'left_on IS NULL',
-    :order => 'last_name'
+    @member_pages, @members = paginate :members, :per_page => MEMBERS_PER_PAGE, :conditions => 'left_on IS NULL', :order => 'last_name'
+    @member_count = Member.count(:conditions => 'left_on IS NULL')
     render :action => :list
   end
 
@@ -36,15 +35,14 @@ class MembersController < ApplicationController
   end
   
   def list_inactive
-    @member_pages, @members = paginate :members, :per_page => MEMBERS_PER_PAGE,
-    :conditions => 'left_on IS NOT NULL',
-    :order => 'last_name'
+    @member_pages, @members = paginate :members, :per_page => MEMBERS_PER_PAGE, :conditions => 'left_on IS NOT NULL', :order => 'last_name'
+    @member_count = Member.count(:conditions => 'left_on IS NOT NULL')
     render :action => :list
   end
   
   def list
-    @member_pages, @members = paginate :members, :per_page => MEMBERS_PER_PAGE,
-    :order => 'last_name'
+    @member_pages, @members = paginate :members, :per_page => MEMBERS_PER_PAGE, :order => 'last_name'
+    @member_count = Member.count
   end
   
   def new

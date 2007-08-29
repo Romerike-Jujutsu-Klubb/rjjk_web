@@ -13,10 +13,10 @@
 <ss:Cell><ss:Data ss:Type="String">Statuskode</ss:Data></ss:Cell>
 <ss:Cell><ss:Data ss:Type="String">Status beskrivelse</ss:Data></ss:Cell>
 <ss:Cell><ss:Data ss:Type="String">Bindingstid</ss:Data></ss:Cell>
-<ss:Cell><ss:Data ss:Type="String">Frimï¿½ned(er):</ss:Data></ss:Cell>
+<ss:Cell><ss:Data ss:Type="String">Frimåned(er):</ss:Data></ss:Cell>
 <ss:Cell><ss:Data ss:Type="String">Sum kontrakt</ss:Data></ss:Cell>
 <ss:Cell><ss:Data ss:Type="String">Trekk frekvens</ss:Data></ss:Cell>
-<ss:Cell><ss:Data ss:Type="String">Betalings mï¿½te</ss:Data></ss:Cell>
+<ss:Cell><ss:Data ss:Type="String">Betalings måte</ss:Data></ss:Cell>
 </ss:Row>
 <ss:Row>
 <ss:Cell>
@@ -863,7 +863,7 @@
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					02-03-2005
+					03-02-2005
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>

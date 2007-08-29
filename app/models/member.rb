@@ -42,23 +42,27 @@ class Member < ActiveRecord::Base
     g.hide_dots = true
     #g.colors = %w{blue orange}
 
-    #first_date = find(:first, :order => 'joined_on').joined_on
-    first_date = Date.today - (3 * 12 * 30)
+    first_date = find(:first, :order => 'joined_on').joined_on
+    #first_date = Date.today - (8 * 12 * 30)
     dates = []
-    first_date.step(Date.today, 30) {|date| dates << date}
+    Date.today.step(first_date, -14) {|date| dates << date}
+    dates.reverse!
     active_clause = '"joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\' AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
     totals = dates.map {|date| Member.count(:conditions => eval(active_clause))}
-    juniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birtdate IS NULL OR birtdate >= '#{self.senior_birthdate(date)}'")}
+    juniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birtdate IS NOT NULL AND birtdate >= '#{self.senior_birthdate(date)}'")}
     seniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birtdate IS NOT NULL AND birtdate < '#{self.senior_birthdate(date)}'")}
+    others = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birtdate IS NULL")}
     g.data("Totalt", totals)
     g.data("Junior", juniors)
     g.data("Senior", seniors)
+    g.data("Andre", others)
     
     g.minimum_value = 0
     
     labels = {}
     current_year = nil
-    dates.each_with_index {|date, i| if i % 2 == 0 then labels[i] = (date.year != current_year ? "#{date.strftime("%m")}\n#{date.strftime("%Y")}" : "#{date.strftime("%m")}") ; current_year = date.year end}
+    current_month = nil
+    dates.each_with_index {|date, i| if date.month != current_month && [1,8].include?(date.month) then labels[i] = (date.year != current_year ? "#{date.strftime("%m")}\n    #{date.strftime("%Y")}" : "#{date.strftime("%m")}") ; current_year = date.year ; current_month = date.month end}
     g.labels = labels
     
     # g.draw_vertical_legend
