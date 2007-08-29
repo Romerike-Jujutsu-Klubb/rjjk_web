@@ -27,7 +27,7 @@ class Member < ActiveRecord::Base
   end
   
   def self.history_graph
-    size = 640
+    size = 480
     begin
       require 'gruff'
       rescue MissingSourceFile => e
@@ -40,7 +40,7 @@ class Member < ActiveRecord::Base
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     #g.legend_font_size = 14
     g.hide_dots = true
-    #g.colors = %w{blue orange}
+    g.colors = %w{green blue orange red}
 
     first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = Date.today - (8 * 12 * 30)
@@ -49,12 +49,12 @@ class Member < ActiveRecord::Base
     dates.reverse!
     active_clause = '"joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\' AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
     totals = dates.map {|date| Member.count(:conditions => eval(active_clause))}
-    juniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birtdate IS NOT NULL AND birtdate >= '#{self.senior_birthdate(date)}'")}
     seniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birtdate IS NOT NULL AND birtdate < '#{self.senior_birthdate(date)}'")}
+    juniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birtdate IS NOT NULL AND birtdate >= '#{self.senior_birthdate(date)}'")}
     others = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birtdate IS NULL")}
     g.data("Totalt", totals)
-    g.data("Junior", juniors)
     g.data("Senior", seniors)
+    g.data("Junior", juniors)
     g.data("Andre", others)
     
     g.minimum_value = 0
