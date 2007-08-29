@@ -31,7 +31,7 @@ reports[1].each_with_index do |row, index|
     :last_name => reports[3][index][7].split(' ').first,
     :senior => (reports[3][index][3].empty? ? true : ((Date.today - Date.strptime(reports[3][index][3], '%d-%m-%Y')) / 365) > 15),
     :email => reports[2][index][8],
-    :phone_mobile => reports[3][index][5],
+    :phone_mobile => reports[4][index][5],
     :phone_home => reports[4][index][4],
     :phone_work => nil,
     :phone_parent => nil,
