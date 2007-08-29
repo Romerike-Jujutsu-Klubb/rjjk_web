@@ -1,4 +1,5 @@
 class UserController < ApplicationController
+  before_filter :login_required
   before_filter :admin_required, :except => [:welcome, :login, :logout, :signup, :forgot_password, :change_password]
 
   def list
