@@ -1,12 +1,25 @@
 #!/usr/bin/ruby -w
 
-`rm -f Medlemsliste_1.xml`
+report_files = {"Medlemsliste_1" => "475","Medlemsliste_2" => "461",
+"Medlemsliste_3" => "476","Medlemsliste_4" => "464"}
+
+report_files.keys.each do |file|
+  `rm -f #{file}.xml`  
+end
+
+File.open("cms_links.txt", "w") do |file|
+  file.puts "http://cmsnorge.com/cms/login.php?bruker=rjjk&pass=rjjk2055"
+  report_files.values.each do |report_number|
+    file.puts "http://cmsnorge.com/cms/rapp_egenxls.php?id=#{report_number}"
+  end
+end
+
 `wget -i cms_links.txt`
 `rm -f index_kunde.php`
-`mv rapp_egenxls.php?id=475 Medlemsliste_1.xml`
-`mv rapp_egenxls.php?id=461 Medlemsliste_2.xml`
-`mv rapp_egenxls.php?id=476 Medlemsliste_3.xml`
-`mv rapp_egenxls.php?id=464 Medlemsliste_4.xml`
+
+report_files.each do |file, report_number|
+  `mv rapp_egenxls.php?id=#{report_number} #{file}.xml`  
+end
 
 reports = []
  (1..4).each do |index|
@@ -29,7 +42,7 @@ reports[1].each_with_index do |row, index|
   old_values = member.attributes
   new_values = {                           :first_name => reports[3][index][7].split(' ')[1..-1].join(' '),
     :last_name => reports[3][index][7].split(' ').first,
-    :senior => (reports[3][index][3].empty? ? true : ((Date.today - Date.strptime(reports[3][index][3], '%d-%m-%Y')) / 365) > 15),
+    :senior => (reports[4][index][7].empty? ? true : ((Date.today - Date.strptime(reports[4][index][7], '%d-%m-%Y')) / 365) > 15),
     :email => reports[2][index][8],
     :phone_mobile => reports[4][index][5],
     :phone_home => reports[4][index][4],

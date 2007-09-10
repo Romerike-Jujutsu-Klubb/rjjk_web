@@ -67,8 +67,4 @@ ActiveRecord::Schema.define(:version => 5) do
     t.column "delete_after",    :datetime
   end
 
-  create_table "weights", :force => true do |t|
-    t.column "weight", :decimal, :precision => 4, :scale => 1
-  end
-
 end
