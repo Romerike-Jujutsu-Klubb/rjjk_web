@@ -1,9 +1,6 @@
 development:
   adapter: postgresql
   database: rjjk_development
-  username: uwe
-#  password:
-  host: localhost
 
 test:
   adapter: postgresql

@@ -2,14 +2,14 @@
 
 <%=image_tag url_for(:action => :history_graph), :title => 'Historikk graf', :style => 'float: right' %>
 
-<table>
+<table class="members" border="0" cellpadding="5" cellspacing="1">
   <tr>
     <th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
     <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>
   </tr>
   
 <% for member in @members %>
-  <tr>
+  <tr class="<%= cycle('odd', 'even') %>">
     <td><%=h member.last_name %></td>
     <td><%=h member.first_name %></td>
     <td><%= link_to 'Rediger', :action => 'edit', :id => member %></td>

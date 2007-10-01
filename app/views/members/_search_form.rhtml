@@ -1,0 +1,7 @@
+<% form_tag({ :action => "search" }, :method => "get") do %>
+    <div class="form_row">
+      <label for="q">Søk etter:</label>  
+      <%= text_field_tag "q", params[:q] %>
+      <input type="submit" value="Søk" />
+    </div>
+<% end %>

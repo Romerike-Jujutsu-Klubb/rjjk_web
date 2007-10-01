@@ -14,6 +14,26 @@ class MembersController < ApplicationController
   #    :field => 'last_name', 
   #    :alias => 'etternavn') 
   
+  def import
+    # TODO (Lars)
+    #Dette fikk jeg ikke til
+    #RAILS_ENV = production ./script/runner System.import
+  end
+  
+  def search
+    @title = "Søk i medlemsregisteret"
+    if params[:q]
+      query = params[:q]
+      begin
+        @members = Member.find_by_contents(query, :limit => :all)
+        # Sort by last name (requires a spec for each user).
+        @members = @members.sort_by { |member| member.last_name }
+      rescue Ferret::QueryParser::QueryParseException
+        @invalid = true
+      end
+    end
+  end
+  
   def index
     list
     render :action => 'list'

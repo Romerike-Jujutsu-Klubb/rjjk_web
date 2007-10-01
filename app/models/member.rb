@@ -1,4 +1,9 @@
 class Member < ActiveRecord::Base
+  acts_as_ferret :fields => [:first_name,:last_name,:address,:postal_code,
+                             :email, :phone_home, :phone_work, 
+                             :phone_mobile, :phone_parent, :department, 
+                             :billing_type, :comment]
+  
   validates_presence_of :first_name, :last_name, :address, :postal_code
   #validates_presence_of :birthdate, :join_on
   validates_inclusion_of(:payment_problem, :in => [true, false])
@@ -77,6 +82,22 @@ class Member < ActiveRecord::Base
 
   def self.senior_birthdate(date)
     date - (15 * 365)
+  end
+  
+  def age_group    
+    if senior
+      "Senior"
+    else
+      "Junior"
+    end
+  end
+  
+  def gender    
+    if male
+      "Mann"
+    else
+      "Kvinne"
+    end
   end
 
 end

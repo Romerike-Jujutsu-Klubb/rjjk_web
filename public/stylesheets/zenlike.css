@@ -370,3 +370,11 @@ position: absolute;
 right: 2.0em;
 bottom: 1.2em;
 }
+
+table.members tr.even {
+  background: #ddd;
+}
+
+table.members tr.odd {
+  background: #eee;
+}
