@@ -1,11 +1,12 @@
 set :application, "rjjk_web"
-set :repository, "svn+ssh://donv@source.kubosch.no/var/svn/trunk/#{application}"
+set :repository, "svn+ssh://capistrano@source.kubosch.no/var/svn/trunk/#{application}"
 
 role :app, "www.kubosch.no"
 role :db,  "www.kubosch.no", :primary => true
 
-set :user, "donv"
+set :user, "capistrano"
 set :use_sudo, false
+ssh_options[:keys] = %w(/home/lars/workspace/rjjk_web/etc/id_rsa)
 
 namespace :deploy do
   
