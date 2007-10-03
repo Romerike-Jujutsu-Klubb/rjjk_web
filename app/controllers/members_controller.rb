@@ -13,11 +13,11 @@ class MembersController < ApplicationController
   #    :model => Member, 
   #    :field => 'last_name', 
   #    :alias => 'etternavn') 
-  
+
   def import
-    # TODO (Lars)
-    #Dette fikk jeg ikke til
-    #RAILS_ENV = production ./script/runner System.import
+     system('script/runner import.rb -RAILS_ENV="production"')
+     redirect_to :action => :active_contracts
+     return   
   end
   
   def search

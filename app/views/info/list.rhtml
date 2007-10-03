@@ -1,4 +1,4 @@
-<h1>Listing information_pages</h1>
+<h1>Informasjonssider</h1>
 
 <table>
   <tr>
@@ -12,16 +12,16 @@
   <% for column in InformationPage.content_columns %>
     <td><%=h information_page.send(column.name) %></td>
   <% end %>
-    <td><%= link_to 'Show', :action => 'show', :id => information_page %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => information_page %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => information_page }, :confirm => 'Are you sure?', :post => true %></td>
+    <td><%= link_to 'Vis', :action => 'show', :id => information_page %></td>
+    <td><%= link_to 'Rediger', :action => 'rediger', :id => information_page %></td>
+    <td><%= link_to 'Slett', { :action => 'destroy', :id => information_page }, :confirm => 'Er du sikker?', :post => true %></td>
   </tr>
 <% end %>
 </table>
 
-<%= link_to 'Previous page', { :page => @information_page_pages.current.previous } if @information_page_pages.current.previous %>
-<%= link_to 'Next page', { :page => @information_page_pages.current.next } if @information_page_pages.current.next %> 
+<%= link_to 'Forrige side', { :page => @information_page_pages.current.previous } if @information_page_pages.current.previous %>
+<%= link_to 'Neste side', { :page => @information_page_pages.current.next } if @information_page_pages.current.next %> 
 
 <br />
 
-<%= link_to 'New information_page', :action => 'new' %>
+<%= link_to 'Ny side', :action => 'new' %>
