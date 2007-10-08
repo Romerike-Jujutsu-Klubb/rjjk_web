@@ -12,7 +12,7 @@ class CensorsControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
 
-    @first_id = censors(:first).id
+    @first_id = censors(:one).id
   end
 
   def test_index
@@ -52,7 +52,7 @@ class CensorsControllerTest < Test::Unit::TestCase
   def test_create
     num_censors = Censor.count
 
-    post :create, :censor => {}
+    post :create, :censor => {:graduation_id => 1, :member_id => 85}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'

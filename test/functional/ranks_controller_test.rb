@@ -12,7 +12,7 @@ class RanksControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
 
-    @first_id = ranks(:first).id
+    @first_id = ranks(:one).id
   end
 
   def test_index
@@ -52,7 +52,7 @@ class RanksControllerTest < Test::Unit::TestCase
   def test_create
     num_ranks = Rank.count
 
-    post :create, :rank => {}
+    post :create, :rank => {:name => '5.kyu', :colour => 'gult', :position => 1, :martial_art_id => 1}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'

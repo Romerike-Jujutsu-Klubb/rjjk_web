@@ -12,7 +12,7 @@ class MartialArtsControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
 
-    @first_id = martial_arts(:first).id
+    @first_id = martial_arts(:one).id
   end
 
   def test_index
@@ -52,7 +52,7 @@ class MartialArtsControllerTest < Test::Unit::TestCase
   def test_create
     num_martial_arts = MartialArt.count
 
-    post :create, :martial_art => {}
+    post :create, :martial_art => {:name => 'Kei Wa Ryu'}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'

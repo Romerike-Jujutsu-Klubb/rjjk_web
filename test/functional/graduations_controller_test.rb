@@ -12,7 +12,7 @@ class GraduationsControllerTest < Test::Unit::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
 
-    @first_id = graduations(:first).id
+    @first_id = graduations(:one).id
   end
 
   def test_index
@@ -52,7 +52,7 @@ class GraduationsControllerTest < Test::Unit::TestCase
   def test_create
     num_graduations = Graduation.count
 
-    post :create, :graduation => {}
+    post :create, :graduation => {:held_on => '2007-10-07', :martial_art_id => 1}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
