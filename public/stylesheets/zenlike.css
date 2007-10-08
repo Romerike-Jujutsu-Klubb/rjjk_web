@@ -4,6 +4,13 @@
 	http://www.nodethirtythree.com
 
 */
+/*
+	RJJK Colour chart
+	Red:	E20A15
+	Orange:	FFB400
+	L-Blue: 006DB8
+	D-Blue: 00226C
+*/
 
 *
 {
@@ -261,12 +268,13 @@ width: 10.0em;
 
 #search input.submit
 {
-background: #939B00 url('/images/buttonbg.gif') repeat-x;
-border: solid 1px #5F6800;
+/* background: #939B00 url('/images/buttonbg.gif') repeat-x; */
+background: #ffb400;
+border: solid 1px #EC9D48;
 font-weight: bold;
 padding: 0.25em;
 font-size: 0.8em;
-color: #F2F3DE;
+color: #00226C;
 vertical-align: middle;
 }
 
@@ -281,16 +289,17 @@ margin-bottom: 2px;
 #menu
 {
 position: relative;
-background: #7F8400 url('/images/menubg.gif') repeat-x top left;
-height: 3.5em;
-padding: 0em 1.0em 0em 1.0em;
-margin-bottom: 2px;
+/* background: #7F8400 url('/images/menubg.gif') repeat-x top left; */
+background: #ffb400;
+height: 1.3em;
+padding: 0.2em 1.0em 0.2em 1.0em;
+margin-bottom: 0.1em;
 }
 
 #menu ul
 {
-position: absolute;
-top: 1.1em;
+/* position: absolute; */
+top: 0.1em;
 }
 
 #menu ul li
@@ -301,8 +310,9 @@ display: inline;
 
 #menu ul li a
 {
-padding: 0.5em 1.0em 0.9em 1.0em;
-color: #fff;
+color: #006DB8;
+padding: 0.2em 1.0em 0.2em 1.0em;
+/* color: #fff; */
 text-decoration: none;
 }
 
@@ -313,12 +323,15 @@ text-decoration: underline;
 
 #menu ul li a.active
 {
-background: #7F8400 url('/images/menuactive.gif') repeat-x top left;
+/* background: #7F8400 url('/images/menuactive.gif') repeat-x top left;* */
+text-decoration: underline;
+color: #00226C;
 }
 
 #menubottom
 {
 background: #fff url('/images/border1.gif') repeat-x;
+/* background: #E20A15;*/
 height: 14px;
 margin-bottom: 1.5em;
 }

@@ -1,0 +1,27 @@
+<h1>Listing graduations</h1>
+
+<table>
+  <tr>
+  <% for column in Graduation.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for graduation in @graduations %>
+  <tr>
+  <% for column in Graduation.content_columns %>
+    <td><%=h graduation.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => graduation %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => graduation %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => graduation }, :confirm => 'Are you sure?', :method => :post %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @graduation_pages.current.previous } if @graduation_pages.current.previous %>
+<%= link_to 'Next page', { :page => @graduation_pages.current.next } if @graduation_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New graduation', :action => 'new' %>

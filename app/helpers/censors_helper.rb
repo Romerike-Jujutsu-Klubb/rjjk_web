@@ -1,0 +1,2 @@
+module CensorsHelper
+end

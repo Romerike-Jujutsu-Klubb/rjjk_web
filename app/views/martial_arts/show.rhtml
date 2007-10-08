@@ -1,0 +1,8 @@
+<% for column in MartialArt.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @martial_art.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @martial_art %> |
+<%= link_to 'Back', :action => 'list' %>

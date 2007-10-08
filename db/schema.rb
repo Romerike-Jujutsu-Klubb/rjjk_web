@@ -2,7 +2,26 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 5) do
+ActiveRecord::Schema.define(:version => 6) do
+
+  create_table "censors", :force => true do |t|
+    t.column "graduation_id", :integer, :null => false
+    t.column "member_id",     :integer, :null => false
+  end
+
+  create_table "graduates", :force => true do |t|
+    t.column "member_id",       :integer, :null => false
+    t.column "graduation_id",   :integer, :null => false
+    t.column "passed",          :boolean, :null => false
+    t.column "rank_id",         :integer, :null => false
+    t.column "paid_graduation", :boolean, :null => false
+    t.column "paid_belt",       :boolean, :null => false
+  end
+
+  create_table "graduations", :force => true do |t|
+    t.column "held_on",        :date,    :null => false
+    t.column "martial_art_id", :integer, :null => false
+  end
 
   create_table "information_pages", :force => true do |t|
     t.column "parent_id",  :integer
@@ -10,6 +29,10 @@ ActiveRecord::Schema.define(:version => 5) do
     t.column "body",       :text
     t.column "created_at", :datetime
     t.column "updated_at", :datetime
+  end
+
+  create_table "martial_arts", :force => true do |t|
+    t.column "name", :string, :limit => 16, :null => false
   end
 
   create_table "members", :force => true do |t|
@@ -50,6 +73,13 @@ ActiveRecord::Schema.define(:version => 5) do
     t.column "body",       :text
     t.column "created_at", :datetime
     t.column "updated_at", :datetime
+  end
+
+  create_table "ranks", :force => true do |t|
+    t.column "name",           :string,  :limit => 16, :null => false
+    t.column "colour",         :string,  :limit => 16, :null => false
+    t.column "position",       :integer,               :null => false
+    t.column "martial_art_id", :integer,               :null => false
   end
 
   create_table "users", :force => true do |t|
