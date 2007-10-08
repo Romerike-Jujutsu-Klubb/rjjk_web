@@ -49,12 +49,6 @@
             <% @information_pages.each do |@information_page| %>
 			<li><%=menu_item @information_page.title, :action => :show, :id => @information_page.id %></li>
 			<% end %>
-			<!--<li><%=menu_item 'Trening', :action => :trening %></li> -->
-			<li><%=menu_item 'Priser', :action => :priser %></li>
-			<li><%=menu_item 'Om klubben', :action => :om_klubben %></li>
-			<li><%=menu_item 'Styret', :action => :styret %></li>
-			<li><%=menu_item 'Nøkkelpersoner', :action => :nokkelpersoner %></li>
-			<li><%=menu_item 'Kontakt', :action => :kontakt %></li>
 
 			<% if admin? %>
 			<li><%=menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
@@ -81,7 +75,7 @@
 				<% else %>
 	    			<% if admin? %>
     	    			<%= link_to 'Nyheter', :controller => 'news', :action => 'new' %>
-    	                <%= link_to 'Informasjonssider', :controller => 'info', :action => 'list' %>
+    	                <%= link_to 'Ny side', :controller => 'info', :action => 'new' %>
     	                <%= link_to 'Brukere', :controller => 'user', :action => :list %>
     				<% end %>
         			<%= link_to 'Logout', :controller => 'user', :action => :logout %>
