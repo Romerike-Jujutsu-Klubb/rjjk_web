@@ -49,7 +49,8 @@
             <% @information_pages.each do |@information_page| %>
 			<li><%=menu_item @information_page.title, :action => :show, :id => @information_page.id %></li>
 			<% end %>
-
+		</ul>
+	</div>
 			<% if admin? %>
 			<div id="menu">
 			<ul>
