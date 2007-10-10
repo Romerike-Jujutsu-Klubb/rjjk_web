@@ -1,20 +1,22 @@
-<h1>Listing graduations</h1>
+<h1>Graderingsoversikt</h1>
 
-<table>
-  <tr>
-  <% for column in Graduation.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
-  </tr>
+<table WIDTH="400" STYLE="border: 1px solid #000000;" CELLSPACING="0" CELLPADDING="0">
+  <tr STYLE=" background: #e3e3e3;">
+    <th STYLE="border-bottom: 1px solid #000000;">Dato</th>
+    <th STYLE="border-bottom: 1px solid #000000;">Stilart</th>
+	<th STYLE="border-bottom: 1px solid #000000;" COLSPAN="2">&nbsp;</th>
   
 <% for graduation in @graduations %>
   <tr>
-  <% for column in Graduation.content_columns %>
-    <td><%=h graduation.send(column.name) %></td>
-  <% end %>
+  	<td ALIGN="CENTER"><%=h graduation.held_on %></td>
+  	<td ALIGN="CENTER"><%=
+		rs = MartialArt.find(:first, :conditions => [ "id = #{graduation.martial_art_id}" ])
+		h rs.name
+	%></td>
+
     <td><%= link_to 'Show', :action => 'show', :id => graduation %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => graduation %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => graduation }, :confirm => 'Are you sure?', :method => :post %></td>
+    <!-- td>< %= link_to 'Destroy', { :action => 'destroy', :id => graduation }, :confirm => 'Are you sure?', :method => :post % ></td -->
   </tr>
 <% end %>
 </table>

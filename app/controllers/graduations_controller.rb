@@ -1,4 +1,5 @@
 class GraduationsController < ApplicationController
+  MEMBERS_PER_PAGE = 30
   def index
     list
     render :action => 'list'
@@ -9,7 +10,8 @@ class GraduationsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @graduation_pages, @graduations = paginate :graduations, :per_page => 10
+    @graduation_pages, @graduations = paginate :graduations, :per_page => MEMBERS_PER_PAGE,
+                                               :order => 'held_on'
   end
 
   def show

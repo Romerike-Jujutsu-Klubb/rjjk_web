@@ -58,7 +58,7 @@ class CreateRanks < ActiveRecord::Migration
     g[2].censors.create!(:member_id => 81)
     g[2].censors.create!(:member_id => 85)
 
-    g[2].graduates.create!(:member_id => 111, :passed => true, :rank_id => kyu3.id, :paid_graduation => true, :paid_belt => false)
+    g[2].graduates.create!(:member_id => 111, :passed => false, :rank_id => kyu3.id, :paid_graduation => true, :paid_belt => false)
   end
 
   def self.down

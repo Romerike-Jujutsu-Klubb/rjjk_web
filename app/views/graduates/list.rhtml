@@ -1,20 +1,27 @@
 <h1>Listing graduates</h1>
 
-<table>
-  <tr>
-  <% for column in Graduate.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
+<table WIDTH="600" STYLE="border: 1px solid #000000;" CELLSPACING="0" CELLPADDING="0">
+  <tr STYLE=" background: #e3e3e3;">
+    <th STYLE="border-bottom: 1px solid #000000;">Medlem</th>
+    <th STYLE="border-bottom: 1px solid #000000;">Dato</th>
+    <th STYLE="border-bottom: 1px solid #000000;">Grad</th>
+    <th STYLE="border-bottom: 1px solid #000000;">Bestått</th>
+    <th STYLE="border-bottom: 1px solid #000000;">Bet.Grad</th>
+    <th STYLE="border-bottom: 1px solid #000000;">Bet.Belte</th>
+	<th STYLE="border-bottom: 1px solid #000000;" COLSPAN="2">&nbsp;</th>
   </tr>
-  
+
 <% for graduate in @graduates %>
-  <tr>
-  <% for column in Graduate.content_columns %>
-    <td><%=h graduate.send(column.name) %></td>
-  <% end %>
-    <td><%= link_to 'Show', :action => 'show', :id => graduate %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => graduate %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => graduate }, :confirm => 'Are you sure?', :method => :post %></td>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%=h graduate.member.first_name%> <%=h graduate.member.last_name%></td>
+    <td ALIGN="CENTER"><%=graduate.graduation.held_on%></td>
+    <td ALIGN="CENTER"><%=h graduate.rank.name%></td>
+    <td ALIGN="CENTER"><%=yes_no graduate.passed%></td>
+    <td ALIGN="CENTER"><%=yes_no graduate.paid_graduation%></td>
+    <td ALIGN="CENTER"><%=yes_no graduate.paid_belt%></td>
+    <td ALIGN="CENTER"><%= link_to 'Show', :action => 'show', :id => graduate %></td>
+    <td ALIGN="CENTER"><%= link_to 'Edit', :action => 'edit', :id => graduate %></td>
+    <!-- td><%= link_to 'Destroy', { :action => 'destroy', :id => graduate }, :confirm => 'Are you sure?', :method => :post %></td -->
   </tr>
 <% end %>
 </table>
