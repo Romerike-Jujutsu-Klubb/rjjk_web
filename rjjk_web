@@ -8,13 +8,17 @@
 # See how we were called.
 case "$1" in
   start)
-        mongrel_rails start -p 3005 -e production -c /u/apps/rjjk_web/current -d 1>/u/apps/rjjk_web/shared/log/stdout.log 2>/u/apps/rjjk_web/shared/log/stderr.log
+        su - capistrano -c "cd /u/apps/rjjk_web/current;RAILS_ENV=production ruby script/ferret_start"
+        su - capistrano -c "mongrel_rails start -p 3005 -e production -c /u/apps/rjjk_web/current -d 1>/u/apps/rjjk_web/shared/log/stdout.log 2>/u/apps/rjjk_web/shared/log/stderr.log"
         ;;
   stop)
-        mongrel_rails stop -c /u/apps/rjjk_web/current
+        su - capistrano -c "mongrel_rails stop -c /u/apps/rjjk_web/current"
+        su - capistrano -c "cd /u/apps/rjjk_web/current;RAILS_ENV=production ruby script/ferret_stop"
         ;;
   restart)
-        mongrel_rails restart -c /u/apps/rjjk_web/current
+        su - capistrano -c "cd /u/apps/rjjk_web/current;RAILS_ENV=production ruby script/ferret_stop"
+        su - capistrano -c "cd /u/apps/rjjk_web/current;RAILS_ENV=production ruby script/ferret_start"
+        su - capistrano -c "mongrel_rails restart -c /u/apps/rjjk_web/current"
         ;;
   status)
         ps -ef | grep rjjk_web
