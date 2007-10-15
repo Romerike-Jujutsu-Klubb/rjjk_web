@@ -13,6 +13,11 @@ class GraduatesController < ApplicationController
     @graduate_pages, @graduates = paginate :graduates, :per_page => MEMBERS_PER_PAGE
   end
 
+  def list_graduates
+    @graduate_pages, @graduates = paginate :graduates, :conditions => "graduation_id = #{params[:id]}"                              
+    render :action => 'list'
+  end
+
   def show
     @graduate = Graduate.find(params[:id])
   end

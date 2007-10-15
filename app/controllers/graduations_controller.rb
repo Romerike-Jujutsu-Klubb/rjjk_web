@@ -10,8 +10,14 @@ class GraduationsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @graduation_pages, @graduations = paginate :graduations, :per_page => MEMBERS_PER_PAGE,
-                                               :order => 'held_on'
+    @graduations = Graduation.find(:all, :order => 'held_on', :conditions => [ "martial_art_id = 1"])
+    @martial_arts = MartialArt.find(:all)
+
+    @grad_pages, @grad = Hash.new()
+    @martial_arts.collect { |c|
+      tmp = Graduation.find(:all, :order => 'held_on', :conditions => [ "martial_art_id = #{c.id}"])
+    }      
+    # paginate :graduations, :per_page => MEMBERS_PER_PAGE, :order => 'held_on'
   end
 
   def show

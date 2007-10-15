@@ -30,35 +30,197 @@ class CreateRanks < ActiveRecord::Migration
     aik = MartialArt.create!(:name => 'Aikikai')
 
     # Rank.create!(:name => 'ugradert', :colour => 'hvitt', :position => 1)
+    mon10  = kwr.ranks.create!(:name => '10.mon', :colour => '')
+    mon9   = kwr.ranks.create!(:name => '9.mon',  :colour => '')
+    mon8   = kwr.ranks.create!(:name => '8.mon',  :colour => '')
+    mon7   = kwr.ranks.create!(:name => '7.mon',  :colour => '')
+    mon6   = kwr.ranks.create!(:name => '6.mon',  :colour => '')
+    mon5   = kwr.ranks.create!(:name => '5.mon',  :colour => '')
+    mon4   = kwr.ranks.create!(:name => '4.mon',  :colour => '')
+    mon3   = kwr.ranks.create!(:name => '3.mon',  :colour => '')
+    mon2   = kwr.ranks.create!(:name => '2.mon',  :colour => '')
     kyu5   = kwr.ranks.create!(:name => '5.kyu',  :colour => 'gult')
     kyu4   = kwr.ranks.create!(:name => '4.kyu',  :colour => 'oransje')
     kyu3   = kwr.ranks.create!(:name => '3.kyu',  :colour => 'grønt')
     kyu2   = kwr.ranks.create!(:name => '2.kyu',  :colour => 'blått')
     kyu1   = kwr.ranks.create!(:name => '1.kyu',  :colour => 'brunt')
-    shodan = kwr.ranks.create!(:name => 'shodan', :colour => 'svart')
-    nidan  = kwr.ranks.create!(:name => 'nidan',  :colour => 'svart, 2-striper')
-    sandan = kwr.ranks.create!(:name => 'sandan', :colour => 'svart, 3-striper')
+    shodan = kwr.ranks.create!(:name => '1.dan',  :colour => 'svart')
+    nidan  = kwr.ranks.create!(:name => '2.dan',  :colour => 'svart, 2-striper')
+    sandan = kwr.ranks.create!(:name => '3.dan',  :colour => 'svart, 3-striper')
     
+    a6kyu  = aik.ranks.create!(:name => '6.kyu',  :colour => 'hvitt')
+    a5kyu  = aik.ranks.create!(:name => '5.kyu',  :colour => 'hvitt')
+    a4kyu  = aik.ranks.create!(:name => '4.kyu',  :colour => 'hvitt')
+    a3kyu  = aik.ranks.create!(:name => '3.kyu',  :colour => 'hvitt')
+    a2kyu  = aik.ranks.create!(:name => '2.kyu',  :colour => 'hvitt')
+    a1kyu  = aik.ranks.create!(:name => '1.kyu',  :colour => 'hvitt')
+    a1dan  = aik.ranks.create!(:name => '1.dan',  :colour => 'svart')
+    a2dan  = aik.ranks.create!(:name => '2.dan',  :colour => 'svart')
+    a3dan  = aik.ranks.create!(:name => '3.dan',  :colour => 'svart')
+    
+    agd = {
+      '2007-03-22' => {
+        149 => a6kyu.id,
+      },
+    }
+
+    gd = {
+      '1989-07-01' => {
+          85 => shodan.id,
+      },
+      '1991-06-11' => {
+          78 => kyu3.id,
+      },
+      '1993-05-25' => {
+          78 => kyu2.id,
+      },
+      '1994-01-22' => {
+          85 => nidan.id,
+      },
+      '1994-11-17' => {
+          86 => kyu5.id,
+      },
+      '1994-11-24' => {
+          86 => kyu4.id,
+      },
+      '1995-05-30' => {
+          78 => kyu1.id,
+          86 => kyu3.id,
+      },
+      '1995-12-12' => {
+      },
+      '1996-06-04' => {
+          29 => mon10.id,
+          86 => kyu2.id,
+      },
+      '1996-12-10' => {
+          29 => mon9.id,
+          29 => mon8.id,
+      },
+      '1996-12-13' => {
+      },
+      '1997-06-03' => {
+          29 => mon7.id,
+          77 => kyu5.id,
+          81 => kyu5.id,
+          86 => kyu1.id,
+      },
+      '1997-06-06' => {
+      },
+      '1997-07-03' => {
+          78 => shodan.id,
+      },
+      '1997-12-11' => {
+          77 => kyu4.id,
+          81 => kyu4.id,
+      },
+      '1997-12-13' => {
+          29 => mon6.id,
+      },
+      '1998-01-15' => {
+      },
+      '1998-05-28' => {
+          29 => mon5.id,
+          81 => kyu3.id,
+      },
+      '1998-12-10' => {
+          29 => mon4.id,
+          77 => kyu3.id,
+      },
+      '1999-03-02' => {
+      },
+      '1999-06-03' => {
+          29 => mon3.id,
+      },
+      '1999-07-03' => {
+          86 => shodan.id,
+      },
+      '1999-12-09' => {
+          77 => kyu2.id,
+          81 => kyu2.id,
+      },
+      '2000-01-27' => {
+      },
+      '2000-06-08' => {
+          29 => mon2.id,
+      },
+      '2000-06-12' => {
+          29 => kyu5.id,
+      },
+      '2000-06-13' => {
+          29 => kyu4.id,
+      },
+      '2000-06-15' => {
+      },
+      '2000-07-08' => {
+      },
+      '2000-12-05' => {
+      },
+      '2000-12-06' => {
+      },
+      '2000-12-07' => {
+      },
+      '2001-03-17' => {
+          85 => sandan.id,
+      },
+      '2001-03-18' => {
+          86 => nidan.id,
+          78 => nidan.id,
+      },
+      '2001-03-18' => {
+      },
+      '2002-02-26' => {
+          81 => kyu1.id,
+      },
+      '2002-09-01' => {
+      },
+      '2005-01-01' => {
+      },
+      '2005-12-06' => {
+      },
+    }
     g = Array.new()
-    g[0] = kwr.graduations.create!(:held_on => '2006-06-24')
-    g[1] = kwr.graduations.create!(:held_on => '2006-12-15')
-    g[2] = kwr.graduations.create!(:held_on => '2007-06-15')
+    gd.each_key { |d|
+      grd = kwr.graduations.create!(:held_on => d)
+      grd.censors.create!(:member_id => 0)
+      if gd[d]
+        gd[d].each { |a,b|
+          grd.graduates.create!(:member_id => a, :passed => true, :rank_id => b,
+                                :paid_graduation => true, :paid_belt => true)
+        }
+      end
+      g.push(grd)
+    }
+    agd.each_key { |d|
+      agrd = aik.graduations.create!(:held_on => d)
+      agrd.censors.create!(:member_id => 0)
+      if agd[d]
+        agd[d].each { |a,b|
+          agrd.graduates.create!(:member_id => a, :passed => true, :rank_id => b,
+                                :paid_graduation => true, :paid_belt => true)
+        }
+      end
+    }
     
-    g[0].censors.create!(:member_id => 85) # Hans Petter Skolsegg
-    g[0].censors.create!(:member_id => 81) # Morten Jacobsen
+    g[50] = kwr.graduations.create!(:held_on => '2006-06-24')
+    g[51] = kwr.graduations.create!(:held_on => '2006-12-15')
+    g[52] = kwr.graduations.create!(:held_on => '2007-06-15')
+    
+    g[50].censors.create!(:member_id => 85) # Hans Petter Skolsegg
+    g[50].censors.create!(:member_id => 81) # Morten Jacobsen
 
     # Jens-Harald Johansen
-    g[0].graduates.create!(:member_id => 111, :passed => true, :rank_id => kyu5.id, :paid_graduation => true, :paid_belt => true)
+    g[50].graduates.create!(:member_id => 111, :passed => true, :rank_id => kyu5.id, :paid_graduation => true, :paid_belt => true)
     
-    g[1].censors.create!(:member_id => 78) # Uwe Kubosch
-    g[1].censors.create!(:member_id => 29) # Harald T. Løkken
+    g[51].censors.create!(:member_id => 78) # Uwe Kubosch
+    g[51].censors.create!(:member_id => 29) # Harald T. Løkken
     
-    g[1].graduates.create!(:member_id => 111, :passed => true, :rank_id => kyu4.id, :paid_graduation => true, :paid_belt => true)
+    g[51].graduates.create!(:member_id => 111, :passed => true, :rank_id => kyu4.id, :paid_graduation => true, :paid_belt => true)
     
-    g[2].censors.create!(:member_id => 81)
-    g[2].censors.create!(:member_id => 85)
+    g[52].censors.create!(:member_id => 81)
+    g[52].censors.create!(:member_id => 85)
 
-    g[2].graduates.create!(:member_id => 111, :passed => false, :rank_id => kyu3.id, :paid_graduation => true, :paid_belt => false)
+    g[52].graduates.create!(:member_id => 111, :passed => false, :rank_id => kyu3.id, :paid_graduation => true, :paid_belt => false)
   end
 
   def self.down
