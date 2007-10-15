@@ -2579,7 +2579,7 @@
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					
+					15-10-2007
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
@@ -2735,17 +2735,17 @@
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					
+					15-09-2007
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					1
+					905
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					Aktiv
+					Avsluttet kontraktstid er utg&aring;tt
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
@@ -2844,12 +2844,12 @@
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					1
+					905
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					Aktiv
+					Avsluttet kontraktstid er utg&aring;tt
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
@@ -4649,6 +4649,58 @@
 <ss:Row>
 <ss:Cell>
 				<ss:Data ss:Type="String">
+					37650
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					15-10-2007
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Aktiv
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					6
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					150
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					4
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
 					24837
 				</ss:Data>
 			</ss:Cell>
@@ -6120,12 +6172,12 @@
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					1
+					905
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					Aktiv
+					Avsluttet kontraktstid er utg&aring;tt
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
@@ -6167,17 +6219,17 @@
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					
+					15-05-2007
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					1
+					900
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					Aktiv
+					Avsluttet
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
@@ -6224,12 +6276,12 @@
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					1
+					905
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					Aktiv
+					Avsluttet kontraktstid er utg&aring;tt
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
@@ -6531,7 +6583,7 @@
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					
+					15-10-2007
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
@@ -6900,12 +6952,12 @@
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					1
+					18
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					Aktiv
+					Adresse ukjent
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
@@ -6999,7 +7051,7 @@
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					
+					15-10-2007
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
@@ -8044,12 +8096,12 @@
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					1
+					905
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					Aktiv
+					Avsluttet kontraktstid er utg&aring;tt
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
@@ -8351,7 +8403,7 @@
 			</ss:Cell>
 <ss:Cell>
 				<ss:Data ss:Type="String">
-					
+					15-10-2007
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>
@@ -8533,6 +8585,526 @@
 <ss:Cell>
 				<ss:Data ss:Type="String">
 					300
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					4
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					37652
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					15-10-2007
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Aktiv
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					6
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					260
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					5
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					37649
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					15-10-2007
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Aktiv
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					6
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					150
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					4
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					37653
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					15-10-2007
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Aktiv
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					6
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					300
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					5
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					37654
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					15-10-2007
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Aktiv
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					6
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					260
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					5
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					37655
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					15-10-2007
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Aktiv
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					6
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					200
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					5
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					37656
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					15-10-2007
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Aktiv
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					6
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					150
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					4
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					37657
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Aktiv
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					200
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					0
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					5
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					37697
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					15-10-2007
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Aktiv
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					6
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					200
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					5
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					37698
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					15-11-2007
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Aktiv
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					6
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					300
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					4
+				</ss:Data>
+			</ss:Cell>
+</Row>
+<ss:Row>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					37699
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					15-11-2007
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					1
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					Aktiv
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					6
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					
+				</ss:Data>
+			</ss:Cell>
+<ss:Cell>
+				<ss:Data ss:Type="String">
+					260
 				</ss:Data>
 			</ss:Cell>
 <ss:Cell>

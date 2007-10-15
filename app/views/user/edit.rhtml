@@ -1,20 +1,19 @@
 <div title="<%= title_helper %>" class="form">
-  <%= head_helper :error => true %>
+  <%= head_helper 'Edit User', :error => true %>
 
-    <%= start_form_tag_helper %>
+    <% form_tag(url_for(:action => "#{@controller.action_name}")) do %>
       <%= render_partial 'edit', :user => @user, :submit => true %>
-    <%= end_form_tag %>
+    <% end %>
     </br>
-    <%= start_form_tag_helper %>
+    <% form_tag(url_for(:action => "#{@controller.action_name}")) do %>
       <%= render_partial 'password', :submit => true %>
-    <%= end_form_tag %>
+    <% end %>
 
-    <%= start_form_tag_helper %>
+    <% form_tag(url_for(:action => "#{@controller.action_name}")) do %>
       <div class="user_delete">
-        <%= form_input :hidden_field, 'form', :value => 'delete' %>
-    
-        <%= form_input :submit_button, 'delete_account' %>
+        <%= hidden_field 'user', 'form', :value => 'delete' %>
+        <%= submit_tag 'Delete' %>
       </div>
-    <%= end_form_tag %>
+    <% end %>
   </div>
 </div>

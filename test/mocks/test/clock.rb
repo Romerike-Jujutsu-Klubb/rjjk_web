@@ -7,12 +7,12 @@ class Clock
     @@time
   end
 
-  def self.at( epoch )
-    Time.at( epoch )
-  end
-
   def self.advance_by_days( days )
     @@time += (days * 60 *60 * 24)
+  end
+
+  def self.advance_by_seconds( seconds )
+    @@time += seconds
   end
 
 end

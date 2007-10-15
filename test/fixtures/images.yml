@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  name: picture one
+  content_type: image/png
+  content_data: ABCabc
+two:
+  id: 2
+  name: picture two
+  content_type: image/png
+  content_data: ÆØÅæøå

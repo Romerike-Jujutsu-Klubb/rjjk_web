@@ -2,108 +2,11 @@ require 'digest/sha1'
 
 # this model expects a certain database layout and its based on the name/login pattern. 
 class User < ActiveRecord::Base
+  CHANGEABLE_FIELDS = ['first_name', 'last_name', 'email']
+  attr_accessor :password_needs_confirmation
 
-  attr_accessor :new_password
-  
-  def initialize(attributes = nil)
-    super
-    @new_password = false
-  end
-
-  def self.authenticate(login, pass)
-    u = find(:first, :conditions => ["login = ? AND verified = 1 AND deleted = 0", login])
-    return nil if u.nil?
-    find(:first, :conditions => ["login = ? AND salted_password = ? AND verified = 1", login, salted_password(u.salt, hashed(pass))])
-  end
-
-  def self.authenticate_by_token(id, token)
-    # Allow logins for deleted accounts, but only via this method (and
-    # not the regular authenticate call)
-    u = find(:first, :conditions => ["id = ? AND security_token = ?", id, token])
-    return nil if u.nil? or u.token_expired?
-    return nil if false == u.update_expiry
-    u
-  end
-
-  def token_expired?
-    self.security_token and self.token_expiry and (Time.now > self.token_expiry)
-  end
-
-  def update_expiry
-    write_attribute('token_expiry', [self.token_expiry, Time.at(Time.now.to_i + 600 * 1000)].min)
-    write_attribute('authenticated_by_token', true)
-    write_attribute("verified", 1)
-    update_without_callbacks
-  end
-
-  def generate_security_token(hours = nil)
-    if not hours.nil? or self.security_token.nil? or self.token_expiry.nil? or 
-        (Time.now.to_i + token_lifetime / 2) >= self.token_expiry.to_i
-      return new_security_token(hours)
-    else
-      return self.security_token
-    end
-  end
-
-  def set_delete_after
-    hours = UserSystem::CONFIG[:delayed_delete_days] * 24
-    write_attribute('deleted', 1)
-    write_attribute('delete_after', Time.at(Time.now.to_i + hours * 60 * 60))
-
-    # Generate and return a token here, so that it expires at
-    # the same time that the account deletion takes effect.
-    return generate_security_token(hours)
-  end
-
-  def change_password(pass, confirm = nil)
-    self.password = pass
-    self.password_confirmation = confirm.nil? ? pass : confirm
-    @new_password = true
-  end
-
-  def admin?
-    role == UserSystem::ADMIN_ROLE
-  end
-  
-  protected
-
-  attr_accessor :password, :password_confirmation
-
-  def validate_password?
-    @new_password
-  end
-
-  def self.hashed(str)
-    return Digest::SHA1.hexdigest("change-me--#{str}--")[0..39]
-  end
-
-  after_save '@new_password = false'
+  after_save '@password_needs_confirmation = false'
   after_validation :crypt_password
-  def crypt_password
-    if @new_password
-      write_attribute("salt", self.class.hashed("salt-#{Time.now}"))
-      write_attribute("salted_password", self.class.salted_password(salt, self.class.hashed(@password)))
-    end
-  end
-
-  def new_security_token(hours = nil)
-    write_attribute('security_token', self.class.hashed(self.salted_password + Time.now.to_i.to_s + rand.to_s))
-    write_attribute('token_expiry', Time.at(Time.now.to_i + token_lifetime(hours)))
-    update_without_callbacks
-    return self.security_token
-  end
-
-  def token_lifetime(hours = nil)
-    if hours.nil?
-      UserSystem::CONFIG[:security_token_life_hours] * 60 * 60
-    else
-      hours * 60 * 60
-    end
-  end
-
-  def self.salted_password(salt, hashed_password)
-    hashed(salt + hashed_password)
-  end
 
   validates_presence_of :login, :on => :create
   validates_length_of :login, :within => 3..40, :on => :create
@@ -114,4 +17,86 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :validate_password?
   validates_length_of :password, { :minimum => 5, :if => :validate_password? }
   validates_length_of :password, { :maximum => 40, :if => :validate_password? }
+
+  def initialize(attributes = nil)
+    super
+    @password_needs_confirmation = false
+  end
+
+  def self.authenticate(login, pass)
+    u = find( :first, :conditions => ["login = ? AND verified = ? AND deleted = ?", login, true, false])
+    return nil if u.nil?
+    find( :first, :conditions => ["login = ? AND salted_password = ? AND verified = ?", login, salted_password(u.salt, hashed(pass)), true])
+  end
+
+  def self.authenticate_by_token(id, token)
+    # Allow logins for deleted accounts, but only via this method (and
+    # not the regular authenticate call)
+    logger.info "Attempting authorization of #{id} with #{token}"
+    u = find( :first, :conditions => ["id = ? AND security_token = ?", id, token])
+    if u
+      logger.info "Authenticated by token: #{u.inspect}"
+    else
+      logger.info "Not authenticated" if u.nil?
+    end
+    return nil if (u.nil? or u.token_expired?)
+    u.update_attributes :verified => true, :token_expiry => Clock.now
+    return u
+  end
+
+  def token_expired?
+    self.security_token and self.token_expiry and (Clock.now >= self.token_expiry)
+  end
+
+  def generate_security_token
+    if self.security_token.nil? or self.token_expiry.nil? or (Clock.now.to_i + User.token_lifetime / 2) >= self.token_expiry.to_i
+      token = new_security_token
+      return token
+    else
+      return self.security_token
+    end
+  end
+
+  def change_password(pass, confirm = nil)
+    self.password = pass
+    self.password_confirmation = confirm.nil? ? pass : confirm
+    @password_needs_confirmation = true
+  end
+
+  def self.token_lifetime
+    UserSystem::CONFIG[:security_token_life_hours].hours
+  end
+
+
+  protected
+
+  attr_accessor :password, :password_confirmation
+
+  def validate_password?
+    @password_needs_confirmation
+  end
+
+  def self.hashed(str)
+    return Digest::SHA1.hexdigest("change-me--#{str}--")[0..39]
+  end
+
+  def crypt_password
+    if @password_needs_confirmation
+      write_attribute("salt", self.class.hashed("salt-#{Clock.now}"))
+      write_attribute("salted_password", self.class.salted_password(salt, self.class.hashed(@password)))
+    end
+  end
+
+  def new_security_token
+    expiry = Time.at(Clock.now.to_i + User.token_lifetime)
+    write_attribute('security_token', self.class.hashed(self.salted_password + Clock.now.to_i.to_s + rand.to_s))
+    write_attribute('token_expiry', expiry)
+    update_without_callbacks
+    return self.security_token
+  end
+
+  def self.salted_password(salt, hashed_password)
+    hashed(salt + hashed_password)
+  end
 end
+

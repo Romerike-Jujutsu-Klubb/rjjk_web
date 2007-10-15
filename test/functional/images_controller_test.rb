@@ -1,16 +1,18 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'news_controller'
+require 'images_controller'
 
 # Re-raise errors caught by the controller.
-class NewsController; def rescue_action(e) raise e end; end
+class ImagesController; def rescue_action(e) raise e end; end
 
-class NewsControllerTest < Test::Unit::TestCase
-  fixtures :users, :news_items
+class ImagesControllerTest < Test::Unit::TestCase
+  fixtures :images
 
   def setup
-    @controller = NewsController.new
+    @controller = ImagesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+
+    @first_id = images(:one).id
   end
 
   def test_index
@@ -25,69 +27,65 @@ class NewsControllerTest < Test::Unit::TestCase
     assert_response :success
     assert_template 'list'
 
-    assert_not_nil assigns(:news_items)
+    assert_not_nil assigns(:images)
   end
 
   def test_show
-    get :show, :id => 1
+    get :show, :id => @first_id
 
     assert_response :success
-    assert_template 'show'
 
-    assert_not_nil assigns(:news_item)
-    assert assigns(:news_item).valid?
+    assert_not_nil assigns(:image)
+    assert assigns(:image).valid?
   end
 
   def test_new
-    login(:admin)
     get :new
 
     assert_response :success
     assert_template 'new'
 
-    assert_not_nil assigns(:news_item)
+    assert_not_nil assigns(:image)
   end
 
   def test_create
-    num_news_items = NewsItem.count
+    num_images = Image.count
 
-    login(:admin)
-    post :create, :news_item => {:title => 'another news item'}
+    post :create, :image => {:name => 'new file', :content_type => 'image/png', :content_data => 'qwerty'}
 
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
-    assert_equal num_news_items + 1, NewsItem.count
+    assert_equal num_images + 1, Image.count
   end
 
   def test_edit
-    login(:admin)
-    get :edit, :id => 1
+    get :edit, :id => @first_id
 
     assert_response :success
     assert_template 'edit'
 
-    assert_not_nil assigns(:news_item)
-    assert assigns(:news_item).valid?
+    assert_not_nil assigns(:image)
+    assert assigns(:image).valid?
   end
 
   def test_update
-    login(:admin)
-    post :update, :id => 1
+    post :update, :id => @first_id
     assert_response :redirect
-    assert_redirected_to :action => :list, :id => 1
+    assert_redirected_to :action => 'show', :id => @first_id
   end
 
   def test_destroy
-    assert_not_nil NewsItem.find(1)
+    assert_nothing_raised {
+      Image.find(@first_id)
+    }
 
-    login(:admin)
-    post :destroy, :id => 1
+    post :destroy, :id => @first_id
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      NewsItem.find(1)
+      Image.find(@first_id)
     }
   end
 end

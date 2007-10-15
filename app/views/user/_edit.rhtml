@@ -1,23 +1,30 @@
 <div class="user_edit">
-  <%= form_input :hidden_field, 'form', :value => 'edit' %>
-
+  <%= hidden_field 'user', 'form', :value => 'edit' %>
   <table>
-    <%= form_input changeable(user, "first_name"), "first_name" %>
-    <%= form_input changeable(user, "last_name"), "last_name" %>
-    <%= form_input changeable(user, "login"), "login", :size => 30 %><br/>
-    <%= form_input changeable(user, "email"), "email" %>
-    <% if admin? %>
-	    <tr>
-	    	<td/>
-	    	<td><%="(#{@user.verified? ? 'Bekreftet' : 'Ikke bekreftet'})"%></td>
-	    </tr>
-		<tr class="two_columns">
-          <td class="prompt"><label><%=l :user_role%>:</label></td>
-          <td class="value">	<%=select :user, :role, [['Bruker', nil], ['Administrator', UserSystem::ADMIN_ROLE]]%></td>
-        </tr>
-    <% end %>
+    <tr class="two_columns">
+      <td class="prompt"><label>First Name:</label></td>
+      <td class="value"><%= text_field 'user', 'first_name' %></td>
+    </tr>
+    <tr class="two_columns">
+      <td class="prompt"><label>Last Name:</label></td>
+      <td class="value"><%= text_field 'user', 'last_name' %></td>
+    </tr>
+    <tr class="two_columns">
+      <td class="prompt"><label>Login:</label></td>
+      <td class="value">
+        <%= @user.new_record? ? text_field( 'user', 'login' ) : @user.login %>
+      </td>
+    </tr>
+    <tr class="two_columns">
+      <td class="prompt"><label>Email:</label></td>
+      <td class="value"><%= text_field 'user', 'email' %></td>
+    </tr>
     <% if submit %>
-      <%= form_input :submit_button, user.new_record? ? 'signup' : 'change_settings', :class => 'two_columns' %>
+     <tr>
+       <td>
+         <%= submit_tag user.new_record? ? 'signup' : 'change_settings', :class => 'two_columns' %>
+       </td>
+     </tr>
     <% end %>
   </table>
 </div>

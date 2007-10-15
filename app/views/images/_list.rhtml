@@ -1,0 +1,22 @@
+<h1>Bilder</h1>
+
+<table>
+<% for image in @images %>
+  <tr>
+    <td<%=image_tag url_for(:only_path => false, :controller => 'images', :action => :show, :id => image.id), :width => 160, :title => h(image.name), :alt => h(image.name) %></td>
+  </tr>
+  <tr>
+    <td align="center"><%=h image.name %></td>
+  </tr>
+  <tr>
+    <td align="center">
+      <%= link_to 'Rediger', :action => 'edit', :id => image %>
+      <%= link_to 'Slett', { :action => 'destroy', :id => image }, :confirm => 'Are you sure?', :method => :post %>
+	</td>
+  </tr>
+<% end %>
+</table>
+
+<br/>
+
+<%= link_to 'Legg til bilde', :controller => 'images', :action => 'new' %>

@@ -5,7 +5,7 @@ require 'graduations_controller'
 class GraduationsController; def rescue_action(e) raise e end; end
 
 class GraduationsControllerTest < Test::Unit::TestCase
-  fixtures :graduations
+  fixtures :martial_arts, :graduations
 
   def setup
     @controller = GraduationsController.new

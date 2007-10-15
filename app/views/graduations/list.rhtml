@@ -9,10 +9,7 @@
 <% for graduation in @graduations %>
   <tr>
   	<td ALIGN="CENTER"><%=h graduation.held_on %></td>
-  	<td ALIGN="CENTER"><%=
-		rs = MartialArt.find(:first, :conditions => [ "id = #{graduation.martial_art_id}" ])
-		h rs.name
-	%></td>
+  	<td ALIGN="CENTER"><%=h graduation.martial_art.name %></td>
 
     <td><%= link_to 'Show', :action => 'show', :id => graduation %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => graduation %></td>

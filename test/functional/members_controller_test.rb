@@ -13,7 +13,7 @@ class MembersControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
     
     @first_id = members(:first).id
-    @request.session['user'] = users(:admin)
+    login(:admin)
   end
   
   def test_index
@@ -73,7 +73,7 @@ class MembersControllerTest < Test::Unit::TestCase
   def test_update
     post :update, :id => @first_id
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => @first_id
+    assert_redirected_to :action => 'edit', :id => @first_id
   end
   
   def test_destroy

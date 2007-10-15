@@ -1,6 +1,6 @@
 class LoginSugar < ActiveRecord::Migration
   def self.up
-    create_table :users do |t|
+    create_table :users, :force => true do |t|
       t.column :login, :string, :limit => 80, :null => false
       t.column :salted_password, :string, :limit => 40, :null => false
       t.column :email, :string, :limit => 60, :null => false

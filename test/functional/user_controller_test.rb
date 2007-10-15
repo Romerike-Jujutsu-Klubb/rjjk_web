@@ -6,304 +6,263 @@ require 'user_notify'
 class UserController; def rescue_action(e) raise e end; end
 
 class UserControllerTest < Test::Unit::TestCase
-  
-  fixtures :users
-
   self.use_transactional_fixtures = false
+  fixtures :users
 
   def setup
     @controller = UserController.new
-    @request, @response = ActionController::TestRequest.new, ActionController::TestResponse.new
+    @request    = ActionController::TestRequest.new
+    @response   = ActionController::TestResponse.new
     @request.host = "localhost"
     ActionMailer::Base.inject_one_error = false
     ActionMailer::Base.deliveries = []
   end
   
-  def test_auth_bob
-    @request.session['return-to'] = "/bogus/location"
+  def test_login__valid_login__redirects_as_specified
+    @request.session[:return_to] = "/bogus/location"
+    post :login, :user => { :login => "tesla", :password => "atest" }
+    assert_logged_in users(:tesla)
+    assert_response :redirect
+    assert_equal "http://#{@request.host}/bogus/location", @response.redirect_url
+  end
 
-    post :login, "user" => { "login" => "bob", "password" => "atest" }
-    assert_session_has "user"
+  def test_login__valid_login__shows_welcome_as_default
+    post :login, :user => { :login => "tesla", :password => "atest" }
+    assert_logged_in users(:tesla)
+    assert_response :redirect
+    assert_equal @controller.url_for(:action => 'welcome'), @response.redirect_url
+  end
 
-    assert_equal users(:bob), @response.session["user"]
-    
-    assert_redirect_url "http://#{@request.host}/bogus/location"
+  def test_login__wrong_password
+    post :login, :user => { :login => "tesla", :password => "wrong password" }
+    assert_not_logged_in
+    assert_template 'login'
+    assert_contains "Login failed", flash['message']
+  end
+
+  def test_login__wrong_login
+    post :login, :user => { :login => "wrong login", :password => "atest" }
+    assert_not_logged_in
+    assert_template 'login'
+    assert_contains "Login failed", flash['message']
+  end
+
+  def test_login__deleted_user_cant_login
+    post :login, :user => { :login => "deleted_tesla", :password => "atest" }
+    assert_not_logged_in
+    assert_template 'login'
+    assert_contains "Login failed", flash['message']
   end
   
-  def do_test_signup(bad_password, bad_email)
-    @request.session['return-to'] = "/bogus/location"
+  def test_signup
+    post_signup :login => "newuser",
+                :password => "password", :password_confirmation => "password",
+                :email => "newemail@example.com"
+    assert_not_logged_in
+    assert_redirected_to_login
+    assert_equal 1, ActionMailer::Base.deliveries.size
 
-    if not bad_password and not bad_email
-      post :signup, "user" => { "login" => "newbob", "password" => "newpassword", "password_confirmation" => "newpassword", "email" => "newbob@test.com" }
-      assert_session_has_no "user"
-    
-      assert_redirect_url(@controller.url_for(:action => "login"))
-      assert_equal 1, ActionMailer::Base.deliveries.size
-      mail = ActionMailer::Base.deliveries[0]
-      assert_equal "newbob@test.com", mail.to_addrs[0].to_s
-      assert_match /login:\s+\w+\n/, mail.encoded
-      assert_match /password:\s+\w+\n/, mail.encoded
-      mail.encoded =~ /key=(.*?)"/
-      key = $1
-
-      user = User.find_by_email("newbob@test.com")
-      assert_not_nil user
-      assert_equal 0, user.verified
-
-      Clock.time = Time.now
-      # First past the expiration.
-      Clock.advance_by_days 1
-      get :welcome, "user"=> { "id" => "#{user.id}" }, "key" => "#{key}"
-      Clock.time = Time.now
-      user = User.find_by_email("newbob@test.com")
-      assert_equal 0, user.verified
-
-      # Then a bogus key.
-      get :welcome, "user"=> { "id" => "#{user.id}" }, "key" => "boguskey"
-      user = User.find_by_email("newbob@test.com")
-      assert_equal 0, user.verified
-
-      # Now the real one.
-      get :welcome, "user"=> { "id" => "#{user.id}" }, "key" => "#{key}"
-      user = User.find_by_email("newbob@test.com")
-      assert_equal 1, user.verified
-
-      post :login, "user" => { "login" => "newbob", "password" => "newpassword" }
-      assert_session_has "user"
-      get :logout
-    elsif bad_password
-      post :signup, "user" => { "login" => "newbob", "password" => "bad", "password_confirmation" => "bad", "email" => "newbob@test.com" }
-      assert_session_has_no "user"
-      assert_invalid_column_on_record "user", "password"
-      assert_success
-      assert_equal 0, ActionMailer::Base.deliveries.size
-    elsif bad_email
-      ActionMailer::Base.inject_one_error = true
-      post :signup, "user" => { "login" => "newbob", "password" => "newpassword", "password_confirmation" => "newpassword", "email" => "newbob@test.com" }
-      assert_session_has_no "user"
-      assert_equal 0, ActionMailer::Base.deliveries.size
-    else
-      # Invalid test case
-      assert false
-    end
+    mail = ActionMailer::Base.deliveries[0]
+    assert_equal "newemail@example.com", mail.to_addrs[0].to_s
+    assert_match /login:\s+\w+\n/, mail.encoded
+    assert_match /password:\s+\w+\n/, mail.encoded
+    user = User.find_by_email("newemail@example.com")
+    assert_match /user\[id\]=#{user.id}/, mail.encoded
+    assert_match /key=#{user.security_token}/, mail.encoded
+    assert !user.verified
   end
 
-  def test_signup
-    do_test_signup(true, false)
-    do_test_signup(false, true)
-    do_test_signup(false, false)
+
+  def test_signup__cannot_set_arbitrary_attributes
+    post_signup :login => "newuser",
+                :password => "password", :password_confirmation => "password",
+                :email => "skunk@example.com",
+                :verified => '1',
+                :role => 'superadmin'
+    user = User.find_by_email("skunk@example.com")
+    assert !user.verified
+    assert_nil user.role
+  end
+
+  def test_signup__validates_password_min_length
+    post_signup :login => "tesla_rhea", :password => "bad", :password_confirmation => "bad", :email => "someone@example.com"
+    assert_password_validation_fails
+  end
+
+  def test_signup__raises_delivery_errors
+    ActionMailer::Base.inject_one_error = true
+    post_signup :login => "newtesla",
+                :password => "newpassword", :password_confirmation => "newpassword",
+                :email => "newtesla@example.com"
+    assert_not_logged_in
+    assert_equal 0, ActionMailer::Base.deliveries.size
+    assert_contains "confirmation email not sent", flash['message']
+  end
+
+  def test_signup__mismatched_passwords
+    post :signup, :user => { :login => "newtesla", :password => "newpassword", :password_confirmation => "wrong" }
+    user = assigns(:user)
+    assert_equal 1, user.errors.size
+    assert_not_nil user.errors['password']
+  end
+  
+  def test_signup__bad_login
+    post_signup :login => "yo", :password => "newpassword", :password_confirmation => "newpassword"
+    user = assigns(:user)
+    assert_equal 1, user.errors.size
+    assert_not_nil user.errors['login']
+  end
+
+  def test_welcome
+    user = users(:unverified_user)
+    get :welcome, :user=> { :id => user.id }, :key => user.security_token
+    user.reload
+    assert user.verified
+    assert_logged_in( user )
+    assert user.token_expired?
+  end
+
+  def test_welcome__fails_if_expired_token
+    user = users(:unverified_user)
+    Clock.advance_by_days 2 # now past verification deadline
+    get :welcome, :user=> { :id => user.id }, :key => user.security_token
+    user.reload
+    assert !user.verified
+    assert_not_logged_in
+  end
+
+  def test_welcome__fails_if_bad_token
+    user = users(:unverified_user)
+    Clock.time = Time.now # now before deadline, but with bad token
+    get :welcome, :user=> { :id => user.id }, :key => "boguskey"
+    user.reload
+    assert !user.verified
+    assert_not_logged_in
   end
 
   def test_edit
-    post :login, "user" => { "login" => "bob", "password" => "atest" }
-    assert_session_has "user"
-
-    post :edit, "user" => { "first_name" => "Bob", "form" => "edit" }
-    assert_equal "Bob", @response.session['user'].first_name
-
-    post :edit, "user" => { "first_name" => "", "form" => "edit" }
-    assert_equal "", @response.session['user'].first_name
-
-    get :logout
+    tesla = users(:admin)
+    set_logged_in tesla
+    post :edit, :user => { :first_name => "Bob", :form => "edit" }
+    tesla.reload
+    assert_equal "Bob", tesla.first_name
   end
 
   def test_delete
-    # Immediate delete
-    post :login, "user" => { "login" => "deletebob1", "password" => "alongtest" }
-    assert_session_has "user"
-
-    UserSystem::CONFIG[:delayed_delete] = false
+    user = users(:deletable_user)
+    user = users(:admin)
+    set_logged_in user
     post :edit, "user" => { "form" => "delete" }
-    assert_equal 1, ActionMailer::Base.deliveries.size
-
-    assert_session_has_no "user"
-    post :login, "user" => { "login" => "deletebob1", "password" => "alongtest" }
-    assert_session_has_no "user"
-
-    # Now try delayed delete
-    ActionMailer::Base.deliveries = []
-
-    post :login, "user" => { "login" => "deletebob2", "password" => "alongtest" }
-    assert_session_has "user"
-
-    UserSystem::CONFIG[:delayed_delete] = true
-    post :edit, "user" => { "form" => "delete" }
-    assert_equal 1, ActionMailer::Base.deliveries.size
-    mail = ActionMailer::Base.deliveries[0]
-    mail.encoded =~ /user\[id\]=(.*?)&key=(.*?)"/
-    id = $1
-    key = $2
-    post :restore_deleted, "user" => { "id" => "#{id}" }, "key" => "badkey"
-    assert_session_has_no "user"
-
-    # Advance the time past the delete date
-    Clock.advance_by_days UserSystem::CONFIG[:delayed_delete_days]
-    post :restore_deleted, "user" => { "id" => "#{id}" }, "key" => "#{key}"
-    assert_session_has_no "user"
-    Clock.time = Time.now
-
-    post :restore_deleted, "user" => { "id" => "#{id}" }, "key" => "#{key}"
-    assert_session_has "user"
-    get :logout
-  end
-
-  def do_change_password(bad_password, bad_email)
-    ActionMailer::Base.deliveries = []
-    post :login, "user" => { "login" => "bob", "password" => "atest" }
-    assert_session_has "user"
-
-    if not bad_password and not bad_email
-      post :change_password, "user" => { "password" => "changed_password", "password_confirmation" => "changed_password" }
-      assert_equal 1, ActionMailer::Base.deliveries.size
-      mail = ActionMailer::Base.deliveries[0]
-      assert_equal "bob@test.com", mail.to_addrs[0].to_s
-      assert_match /login:\s+\w+\n/, mail.encoded
-      assert_match /password:\s+\w+\n/, mail.encoded
-    elsif bad_password
-      post :change_password, "user" => { "password" => "bad", "password_confirmation" => "bad" }
-      assert_invalid_column_on_record "user", "password"
-      assert_success
-      assert_equal 0, ActionMailer::Base.deliveries.size
-    elsif bad_email
-      ActionMailer::Base.inject_one_error = true
-      post :change_password, "user" => { "password" => "changed_password", "password_confirmation" => "changed_password" }
-      assert_equal 0, ActionMailer::Base.deliveries.size
-    else
-      # Invalid test case
-      assert false
-    end
-
-    get :logout
-    assert_session_has_no "user"
-
-    if not bad_password and not bad_email
-      post :login, "user" => { "login" => "bob", "password" => "changed_password" }
-      assert_session_has "user"
-      post :change_password, "user" => { "password" => "atest", "password_confirmation" => "atest" }
-      get :logout
-    end
-
-    post :login, "user" => { "login" => "bob", "password" => "atest" }
-    assert_session_has "user"
-
-    get :logout
+    user.reload
+    assert user.deleted
+    assert_not_logged_in
   end
 
   def test_change_password
-    do_change_password(false, false)
-    do_change_password(true, false)
-    do_change_password(false, true)
+    user = users(:tesla)
+    set_logged_in user
+    post :change_password, :user => { :password => "changed_password", :password_onfirmation => "changed_password" }
+    assert_equal 1, ActionMailer::Base.deliveries.size
+    mail = ActionMailer::Base.deliveries[0]
+    assert_equal "tesla@example.com", mail.to_addrs[0].to_s
+    assert_match /login:\s+\w+\n/, mail.encoded
+    assert_match /password:\s+\w+\n/, mail.encoded
+    assert_equal user, User.authenticate(user.login, 'changed_password')
   end
 
-  def do_forgot_password(bad_address, bad_email, logged_in)
-    ActionMailer::Base.deliveries = []
-
-    if logged_in
-      post :login, "user" => { "login" => "bob", "password" => "atest" }
-      assert_session_has "user"
-    end
-
-    @request.session['return-to'] = "/bogus/location"
-    if not bad_address and not bad_email
-      post :forgot_password, "user" => { "email" => "bob@test.com" }
-      password = "anewpassword"
-      if logged_in
-        assert_equal 0, ActionMailer::Base.deliveries.size
-        assert_redirect_url(@controller.url_for(:action => "change_password"))
-        post :change_password, "user" => { "password" => "#{password}", "password_confirmation" => "#{password}" }
-      else
-        assert_equal 1, ActionMailer::Base.deliveries.size
-        mail = ActionMailer::Base.deliveries[0]
-        assert_equal "bob@test.com", mail.to_addrs[0].to_s
-        mail.encoded =~ /user\[id\]=(.*?)&key=(.*?)"/
-        id = $1
-        key = $2
-        post :change_password, "user" => { "password" => "#{password}", "password_confirmation" => "#{password}", "id" => "#{id}" }, "key" => "#{key}"
-        assert_session_has "user"
-        get :logout
-      end
-    elsif bad_address
-      post :forgot_password, "user" => { "email" => "bademail@test.com" }
-      assert_equal 0, ActionMailer::Base.deliveries.size
-    elsif bad_email
-      ActionMailer::Base.inject_one_error = true
-      post :forgot_password, "user" => { "email" => "bob@test.com" }
-      assert_equal 0, ActionMailer::Base.deliveries.size
-    else
-      # Invalid test case
-      assert false
-    end
-
-    if not bad_address and not bad_email
-      if logged_in
-        get :logout
-      else
-        assert_redirect_url(@controller.url_for(:action => "login"))
-      end
-      post :login, "user" => { "login" => "bob", "password" => "#{password}" }
-    else
-      # Okay, make sure the database did not get changed
-      if logged_in
-        get :logout
-      end
-      post :login, "user" => { "login" => "bob", "password" => "atest" }
-    end
-
-    assert_session_has "user"
-
-    # Put the old settings back
-    if not bad_address and not bad_email
-      post :change_password, "user" => { "password" => "atest", "password_confirmation" => "atest" }
-    end
-    
-    get :logout
+  def test_change_password__confirms_password
+    set_logged_in users(:tesla)
+    post :change_password, :user => { :password => "bad", :password_confirmation => "bad" }
+    user = assigns(:user)
+    assert_equal 1, user.errors.size
+    assert_not_nil user.errors['password']
+    assert_response :success
+    assert_equal 0, ActionMailer::Base.deliveries.size
   end
 
-  def test_forgot_password_link
-    get :forgot_password
-    assert_success
+  def test_change_password__succeeds_despite_delivery_errors
+    set_logged_in users(:tesla)
+    ActionMailer::Base.inject_one_error = true
+    post :change_password, :user => { :password => "changed_password", :password_confirmation => "changed_password" }
+    assert_equal 0, ActionMailer::Base.deliveries.size
+    assert_equal users(:tesla), User.authenticate(users(:tesla).login, 'changed_password')
   end
 
-  def test_forgot_password
-    do_forgot_password(false, false, false)
-    do_forgot_password(false, false, true)
-    do_forgot_password(true, false, false)
-    do_forgot_password(false, true, false)
+  def test_forgot_password__when_logged_in_redirects_to_change_password
+    user = users(:tesla)
+    set_logged_in user
+    post :forgot_password, :user => { :email => user.email }
+    assert_equal 0, ActionMailer::Base.deliveries.size
+    assert_response :redirect
+    assert_equal @controller.url_for(:action => "change_password"), @response.redirect_url
   end
 
-  def test_bad_signup
-    @request.session['return-to'] = "/bogus/location"
+  def test_forgot_password__requires_valid_email_address
+    post :forgot_password, :user => { :email => "" }
+    assert_equal 0, ActionMailer::Base.deliveries.size
+    assert_match /Please enter a valid email address./, @response.body
+  end
 
-    post :signup, "user" => { "login" => "newbob", "password" => "newpassword", "password_confirmation" => "wrong" }
-    
-    assert_invalid_column_on_record "user", "password"
-    assert_success
-    
-    post :signup, "user" => { "login" => "yo", "password" => "newpassword", "password_confirmation" => "newpassword" }
-    assert_invalid_column_on_record "user", "login"
-    assert_success
+  def test_forgot_password__ignores_unknown_email_address
+    post :forgot_password, :user => { :email => "unknown_email@example.com" }
+    assert_equal 0, ActionMailer::Base.deliveries.size
+  end
 
-    post :signup, "user" => { "login" => "yo", "password" => "newpassword", "password_confirmation" => "wrong" }
-    assert_invalid_column_on_record "user", ["login", "password"]
-    assert_success
+  def test_forgot_password__reports_delivery_error
+    ActionMailer::Base.inject_one_error = true
+    post :forgot_password, :user => { :email => users(:tesla).email }
+    assert_equal 0, ActionMailer::Base.deliveries.size
+    assert_match /Your password could not be emailed/, @response.body
   end
 
   def test_invalid_login
-    post :login, "user" => { "login" => "bob", "password" => "not_correct" }
-     
-    assert_session_has_no "user"
-    
-    assert_template_has "login"
+    post :login, :user => { :login => "tesla", :password => "not_correct" }
+    assert_not_logged_in
+    assert_response :success
+    assert_template 'login'
   end
   
-  def test_login_logoff
-
-    post :login, "user" => { "login" => "bob", "password" => "atest" }
-    assert_session_has "user"
-
+  def test_logout
+    set_logged_in users(:tesla)
     get :logout
-    assert_session_has_no "user"
-
+    assert_not_logged_in
   end
-  
+
+  private
+
+  def set_logged_in( user )
+    @request.session[:user_id] = user.id
+  end
+
+  def assert_logged_in( user )
+    assert_equal user.id, @request.session[:user_id]
+    assert_equal user, assigns(:current_user)
+  end
+
+  def assert_not_logged_in
+    assert_nil @request.session[:user_id]
+    assert_nil assigns(:current_user)
+  end
+
+  def assert_redirected_to_login
+    assert_equal @controller.url_for(:action => "login"), @response.redirect_url
+  end
+
+  def post_signup( user_params )
+    post :signup, "user" => user_params
+  end
+
+  def assert_password_validation_fails
+    user = assigns(:user)
+    assert_equal 1, user.errors.size
+    assert_not_nil user.errors['password']
+    assert_response :success
+    assert_equal 0, ActionMailer::Base.deliveries.size
+  end
+
+  def assert_contains( target, container )
+    assert !container.nil?, %Q( Failed to find "#{target}" in nil String )
+    assert container.include?(target)
+  end
+
 end

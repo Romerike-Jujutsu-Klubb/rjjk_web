@@ -1,13 +1,14 @@
 class Clock
-  def at( *params )
-    Time.at params
+  def self.at( *params )
+    #TODO fix this
+    eval("Time.at #{params.join(',')}")
   end
 
-  def now
+  def self.now
     Time.now
   end
 
-  def time=
-    raise "Cannot set time on real Clock class"
+  def self.time=
+    raise "Cannot set real Clock class"
   end
 end

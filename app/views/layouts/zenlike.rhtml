@@ -51,8 +51,8 @@
 			<% end %>
 		</ul>
 	</div>
-			<% if admin? %>
-			<div id="menu">
+		<% if admin? %>
+		<div id="menu">
 			<ul>
 			<li><%=menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
 			<li><%=menu_item 'Inntekt', :controller => 'members', :action => :income %></li>
@@ -62,8 +62,13 @@
 			<li><%=menu_item 'NKF Rapport', :controller => 'members', :action => :NKF_report %></li>
 			<li><%=menu_item 'Gamle medlemmer', :controller => 'members', :action => :list_inactive %></li>
 			</ul>
-			</div>
-			<% end %>
+		</div>
+		<div id="menu">
+			<ul>
+			<li><%=menu_item 'Graderinger', :controller => 'graduations', :action => :list %></li>
+			</ul>
+		</div>
+		<% end %>
 	<div id="menubottom"></div>
 
 	

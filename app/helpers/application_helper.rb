@@ -5,7 +5,7 @@ module ApplicationHelper
   
   def menu_item(name, options = {})
     options[:controller] ||= 'info'
-    link_to name, {:controller => options[:controller], :action => options[:action], :id => options[:id]}, :class => [controller.controller_name, controller.action_name] == [options[:controller].to_s, options[:action].to_s] ? 'active' : nil
+    link_to name, {:controller => options[:controller], :action => options[:action], :id => options[:id]}, :class => [controller.controller_name, controller.action_name, params[:id].to_s] == [options[:controller].to_s, options[:action].to_s, options[:id].to_s] ? 'active' : nil
   end
     
   def yes_no(bool)    

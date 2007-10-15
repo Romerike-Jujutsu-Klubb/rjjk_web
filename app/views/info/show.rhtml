@@ -3,9 +3,10 @@
 <h1><%=h @information_page.title %></h1>
 
 <p>
-<%=textilize @information_page.body%>
+<%=@information_page.body%>
 </p
 
 <% if admin? %>
-<%= link_to 'Rediger', :action => 'rediger', :id => @information_page %>
+<br clear="all"/>
+<%=link_to 'Rediger', :action => 'rediger', :id => @information_page %>
 <% end %>

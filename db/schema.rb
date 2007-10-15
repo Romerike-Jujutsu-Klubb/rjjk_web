@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 6) do
+ActiveRecord::Schema.define(:version => 8) do
 
   create_table "censors", :force => true do |t|
     t.column "graduation_id", :integer, :null => false
@@ -21,6 +21,12 @@ ActiveRecord::Schema.define(:version => 6) do
   create_table "graduations", :force => true do |t|
     t.column "held_on",        :date,    :null => false
     t.column "martial_art_id", :integer, :null => false
+  end
+
+  create_table "images", :force => true do |t|
+    t.column "name",         :string, :limit => 64, :null => false
+    t.column "content_type", :string,               :null => false
+    t.column "content_data", :binary,               :null => false
   end
 
   create_table "information_pages", :force => true do |t|
@@ -83,18 +89,17 @@ ActiveRecord::Schema.define(:version => 6) do
   end
 
   create_table "users", :force => true do |t|
-    t.column "login",           :string,   :limit => 80,                :null => false
-    t.column "salted_password", :string,   :limit => 40,                :null => false
-    t.column "email",           :string,   :limit => 60,                :null => false
+    t.column "login",           :string,   :limit => 80,                    :null => false
+    t.column "salted_password", :string,   :limit => 40,                    :null => false
+    t.column "email",           :string,   :limit => 60,                    :null => false
     t.column "first_name",      :string,   :limit => 40
     t.column "last_name",       :string,   :limit => 40
-    t.column "salt",            :string,   :limit => 40,                :null => false
-    t.column "verified",        :integer,                :default => 0
+    t.column "salt",            :string,   :limit => 40,                    :null => false
     t.column "role",            :string,   :limit => 40
     t.column "security_token",  :string,   :limit => 40
     t.column "token_expiry",    :datetime
-    t.column "deleted",         :integer,                :default => 0
-    t.column "delete_after",    :datetime
+    t.column "verified",        :boolean,                :default => false
+    t.column "deleted",         :boolean,                :default => false
   end
 
 end

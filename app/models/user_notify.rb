@@ -40,31 +40,6 @@ class UserNotify < ActionMailer::Base
     @body["app_name"] = UserSystem::CONFIG[:app_name].to_s
   end
 
-  def pending_delete(user, url=nil)
-    setup_email(user)
-
-    # Email header info
-    @subject += "Delete user notification"
-
-    # Email body substitutions
-    @body["name"] = "#{user.first_name} #{user.last_name}"
-    @body["url"] = url || UserSystem::CONFIG[:app_url].to_s
-    @body["app_name"] = UserSystem::CONFIG[:app_name].to_s
-    @body["days"] = UserSystem::CONFIG[:delayed_delete_days].to_s
-  end
-
-  def delete(user, url=nil)
-    setup_email(user)
-
-    # Email header info
-    @subject += "Delete user notification"
-
-    # Email body substitutions
-    @body["name"] = "#{user.first_name} #{user.last_name}"
-    @body["url"] = url || UserSystem::CONFIG[:app_url].to_s
-    @body["app_name"] = UserSystem::CONFIG[:app_name].to_s
-  end
-
   def setup_email(user)
     @recipients = "#{user.email}"
     @from       = UserSystem::CONFIG[:email_from].to_s
