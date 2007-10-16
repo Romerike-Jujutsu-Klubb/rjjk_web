@@ -39,9 +39,9 @@ EOH
                      "  <td>#{gr.member.first_name} #{gr.member.last_name}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{gr.graduation.held_on}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{gr.rank.name}</td>\n" <<
-                     "  <td STYLE=\"text-align: center;\">#{ps = gr.passed ? 'Ja' : 'Nei'}</td>\n" <<
-                     "  <td STYLE=\"text-align: center;\">#{ps = gr.paid_graduation ? 'Ja' : 'Nei'}</td>\n" <<
-                     "  <td STYLE=\"text-align: center;\">#{ps = gr.paid_belt ? 'Ja' : 'Nei'}</td>\n" <<
+                     "  <td STYLE=\"text-align: center;\">#{gr.passed ? 'Ja' : 'Nei'}</td>\n" <<
+                     "  <td STYLE=\"text-align: center;\">#{gr.paid_graduation ? 'Ja' : 'Nei'}</td>\n" <<
+                     "  <td STYLE=\"text-align: center;\">#{gr.paid_belt ? 'Ja' : 'Nei'}</td>\n" <<
                      "</tr>\n" 
     end
     render_text rstr << "</table>\n"

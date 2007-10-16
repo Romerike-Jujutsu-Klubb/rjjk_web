@@ -14,6 +14,64 @@
 
 <div id="outer">
 
+	<div id="header">
+		<%=image_tag 'rjjk_logo.png', :style => 'border: 0' %>
+		<div id="headercontent">
+			<h1><%=@page_title || 'Romerike Jujutsu Klubb' %></h1>
+			<h2><%=@page_subtitle || 'Effektivt selvforsvar siden 1982' %></h2>
+		</div>
+	</div>
+
+
+	<form method="get" action="http://www.google.com/search">
+		<div id="search">
+			<input type="hidden" name="as_sitesearch" value="jujutsu.no" />
+			<input type="text" class="text" maxlength="64" name="q" />
+			<input type="submit" class="submit" value="Search" />
+		</div>
+	</form>
+
+
+	<div id="headerpic"></div>
+
+	
+	<div id="menu">
+		<!-- HINT: Set the class of any menu link below to "active" to make it appear active -->
+		<ul>
+<!--
+			<li><a href="#">Home</a></li>
+-->
+			<li><%=link_to 'Nyheter', {:controller => 'news', :action => nil}, :class => controller.class.name == 'NewsController' ? 'active' : nil %></li>
+<!--
+			<li><a href="#">Blog</a></li>
+			<li><a href="#">Gallery</a></li>
+-->
+            <% @information_pages.each do |@information_page| %>
+			<li><%=menu_item @information_page.title, :action => :show, :id => @information_page.id %></li>
+			<% end %>
+		</ul>
+	</div>
+		<% if admin? %>
+		<div id="menu">
+			<ul>
+			<li><%=menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
+			<li><%=menu_item 'Inntekt', :controller => 'members', :action => :income %></li>
+			<li><%=menu_item 'Kontrakter', :controller => 'members', :action => :active_contracts %></li>
+			<li><%=menu_item 'Telefonliste', :controller => 'members', :action => :telephone_list %></li>
+			<li><%=menu_item 'E-postliste', :controller => 'members', :action => :email_list %></li>
+			<li><%=menu_item 'NKF Rapport', :controller => 'members', :action => :NKF_report %></li>
+			<li><%=menu_item 'Gamle medlemmer', :controller => 'members', :action => :list_inactive %></li>
+			</ul>
+		</div>
+		<div id="menu">
+			<ul>
+			<li><%=menu_item 'Graderinger', :controller => 'graduations', :action => :list %></li>
+			</ul>
+		</div>
+		<% end %>
+	<div id="menubottom"></div>
+
+	
 	<div id="content">
         <%= yield %>
 	</div>
@@ -38,21 +96,3 @@
 
 </body>
 </html>
-<!-- !DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title>Graduates: < %= controller.action_name % ></title>
-  < %= stylesheet_link_tag 'scaffold' % >
-</head>
-<body>
-
-<p style="color: green">< %= flash[:notice] % ></p>
-
-< %= yield  % >
-
-</body>
-</html -->
-
