@@ -1,4 +1,7 @@
 class ImagesController < ApplicationController
+  caches_page :show
+  cache_sweeper :image_sweeper, :only => [:update, :destroy]
+  
   def index
     list
     render :action => 'list'
@@ -43,7 +46,7 @@ class ImagesController < ApplicationController
     @image = Image.find(params[:id])
     if @image.update_attributes(params[:image])
       flash[:notice] = 'Image was successfully updated.'
-      redirect_to :action => 'show', :id => @image
+      redirect_to :action => :edit, :id => @image
     else
       render :action => 'edit'
     end

@@ -10,8 +10,8 @@
   </tr>
   <tr>
     <td align="center">
-      <%= link_to 'Rediger', :action => 'edit', :id => image %>
-      <%= link_to 'Slett', { :action => 'destroy', :id => image }, :confirm => 'Are you sure?', :method => :post %>
+      <%= link_to 'Rediger', :controller => 'images', :action => 'edit', :id => image %>
+      <%= link_to 'Slett', { :controller => 'images', :action => 'destroy', :id => image }, :confirm => 'Are you sure?', :method => :post %>
 	</td>
   </tr>
 <% end %>
