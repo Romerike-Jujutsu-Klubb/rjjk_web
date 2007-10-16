@@ -17,6 +17,35 @@ class GraduatesController < ApplicationController
     @graduate_pages, @graduates = paginate :graduates, :conditions => "graduation_id = #{params[:id]}"                              
     render :action => 'list'
   end
+  
+  def test_ajax
+    # VIKTIG: Legg til sjekk av autorisasjon
+    @graduates = Graduate.find(:all, :conditions => "graduation_id = #{params[:id]}")
+    rstr =<<EOH
+<table width="100%" STYLE="border: 1px solid #000000;" cellspacing="0" cellpadding="0">
+  <tr STYLE=" background: #e3e3e3;">
+  <th STYLE="text-align: left; border-bottom: 1px solid #000000;">Medlem</th>
+  <th STYLE="border-bottom: 1px solid #000000;">Dato</th>
+  <th STYLE="border-bottom: 1px solid #000000;">Grad</th>
+  <th STYLE="border-bottom: 1px solid #000000;">Bestått</th>
+  <th STYLE="border-bottom: 1px solid #000000;">Bet.Grad</th>
+  <th STYLE="border-bottom: 1px solid #000000;">Bet.Belte</th>
+  <th STYLE="border-bottom: 1px solid #000000;" COLSPAN="2">&nbsp;</th>
+</tr>
+EOH
+
+    for gr in @graduates
+      rstr = rstr << "<tr>\n" <<
+                     "  <td>#{gr.member.first_name} #{gr.member.last_name}</td>\n" <<
+                     "  <td STYLE=\"text-align: center;\">#{gr.graduation.held_on}</td>\n" <<
+                     "  <td STYLE=\"text-align: center;\">#{gr.rank.name}</td>\n" <<
+                     "  <td STYLE=\"text-align: center;\">#{ps = gr.passed ? 'Ja' : 'Nei'}</td>\n" <<
+                     "  <td STYLE=\"text-align: center;\">#{ps = gr.paid_graduation ? 'Ja' : 'Nei'}</td>\n" <<
+                     "  <td STYLE=\"text-align: center;\">#{ps = gr.paid_belt ? 'Ja' : 'Nei'}</td>\n" <<
+                     "</tr>\n" 
+    end
+    render_text rstr << "</table>\n"
+  end
 
   def show
     @graduate = Graduate.find(params[:id])

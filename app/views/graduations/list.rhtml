@@ -1,6 +1,55 @@
 <h1>Graderingsoversikt</h1>
 <script language="JavaScript1.2">
 <!-- 
+var CONST_AJAX_UNINITIALIZED	= 0;
+var CONST_AJAX_LOADING		= 1;
+var CONST_AJAX_RH_RECEIVED	= 2;
+var CONST_AJAX_SOME_RB_RECEIVED	= 3;
+var CONST_AJAX_COMPLETE		= 4;
+var CONST_AJAX_HTTP_OK		= 200;
+var CONST_AJAX_JAVA_ERROR	= 500;
+
+var firefox = document.getElementById && !document.all;
+
+function initAjax() {
+	var xmlHttp;
+	try {				// Firefox, Opera 8.0+, Safari
+		xmlHttp = new XMLHttpRequest();
+	} catch (e) {
+		try {			// Internet Explorer 6.x
+			xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try {		// Internet Explorer 5.x
+				xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (e) {
+				alert("Your browser does not support AJAX!");
+				return false;
+			}
+		}
+	}
+	return xmlHttp;
+}
+
+// Sets and replace content in referenced object
+function setObjectData(ref, file) {
+	var xmlHttp = initAjax();
+	var obj = document.getElementById(ref);
+	
+	if(xmlHttp) {
+		xmlHttp.onreadystatechange=function() {
+			if(xmlHttp.readyState == CONST_AJAX_COMPLETE) {
+					if(xmlHttp.status == CONST_AJAX_HTTP_OK) {
+						obj.innerHTML = xmlHttp.responseText;
+					} else {
+						obj.innerHTML = "An error occurred. Response status: " + xmlHttp.status;
+					}
+			}
+		}
+		xmlHttp.open("GET", file, true);
+		xmlHttp.send(null);
+	}
+}
+
 function changeStyle(dd) {
 	var myIndex = dd.selectedIndex
 	var myId = dd.options[myIndex].value;
@@ -13,11 +62,18 @@ function changeStyle(dd) {
 	
 	var obj = document.getElementById('ma_grad_' + myId);
 	obj.style.display = '';
+	changeGraduationData();
+}
+function changeGraduationData(dd) {
+	var myIndex = document.getElementById('grader').selectedIndex;
+	var myId = document.getElementById('grader').options[myIndex].value;
+	setObjectData('results','/graduates/test_ajax/'+myId);
+	
 }
 -->
 </script>
 
-<table WIDTH="400" STYLE="border: 1px solid #000000;" CELLSPACING="0" CELLPADDING="0">
+<table WIDTH="600" CELLSPACING="0" CELLPADDING="0">
   <tr STYLE=" background: #e3e3e3;">
     <th STYLE="border-bottom: 1px solid #000000;">Stilart</th>
     <th STYLE="border-bottom: 1px solid #000000;">Dato for gradering</th>
@@ -27,53 +83,39 @@ function changeStyle(dd) {
 	<td colspan="2">&nbsp;</td>
   </tr>
   <tr>
-	<td ALIGN="center">
 	<form name="ma_form">
-	<select name="ma" onChange='changeStyle(this.form.ma);' id="held_on_id" name="held_on[id]">
-	<% for ma in @martial_arts %>
-		<%= '<option value="' << ma.id.to_s << '">' << ma.name << '</option>' %>
-	<% end %>
-	</select></td>
-  	<td ALIGN="center">
+	<td ALIGN="center">
+		<select name="ma" onChange='changeStyle(this.form.ma);' id="held_on_id">
+		<% for ma in @martial_arts %>
+			<%= '<option value="' << ma.id.to_s << '">' << ma.name << '</option>' %>
+		<% end %>
+		</select>
+	</td>
+	<td ALIGN="center">
   		<% for ma in @martial_arts %>
 			<%= '<div id="ma_grad_' << ma.id.to_s << '" STYLE="display: ' << (none = ma.id == 1?'':'none') << ';">' %>
-  			<%= select("martial_art", "id", Graduation.find(:all, :order => 'held_on',
-				:conditions => "martial_art_id = #{ma.id.to_s}").collect {
-					|c| [c.held_on,c.id] if c.martial_art_id == ma.id
-			}) %>
+			<select id="grader" onChange="changeGraduationData();">
+  			<% for grd in Graduation.find(:all, :order => 'held_on', :conditions => "martial_art_id = #{ma.id.to_s}") %>
+				<%= "<option value='#{grd.id}'>#{grd.held_on}</option>" %>
+			<% end %>
+			</select>
 			</div>
 		<% end %>
-	</form></td>
+	</td>
+	</form>
 </tr>
 <tr>
 	<td colspan="2">&nbsp;</td>
 </tr>
 <tr>
-	<td colspan="2">
-		<div id="results" STYLE="display: none;">
-			<table width="100%" cellspacing="0<" cellpadding="0">
-<% for graduation in @graduations %>
-  <tr>
-  	<td ALIGN="CENTER"><%=h graduation.held_on %></td>
-  	<td ALIGN="CENTER"><%=h graduation.martial_art.name %></td>
-
-    <td>
-    	<!-- %= link_to 'Show', :action => 'show', :id => graduation % -->
-		<%= menu_item 'List', :controller => 'graduates', :action => :list_graduates, :id => graduation.id %>
-	</td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => graduation %></td>
-    <!-- td>< %= link_to 'Destroy', { :action => 'destroy', :id => graduation }, :confirm => 'Are you sure?', :method => :post % ></td -->
-  </tr>
-<% end %>
-			</table>
-		</div>
+	<td colspan="2" ALIGN="center">
+		<div id="results"></div>
 	</td>
 </tr>
 </table>
-
-<!-- %= link_to 'Previous page', { :page => @graduation_pages.current.previous } if @graduation_pages.current.previous % >
-< %= link_to 'Next page', { :page => @graduation_pages.current.next } if @graduation_pages.current.next % --> 
-
 <br />
 
 <%= link_to 'New graduation', :action => 'new' %>
+<SCRIPT Language="JavaScript1.2">
+	changeGraduationData();
+</SCRIPT>
