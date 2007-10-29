@@ -1,13 +1,13 @@
 <h1>Graderingsoversikt</h1>
 <script language="JavaScript1.2">
 <!-- 
-var CONST_AJAX_UNINITIALIZED	= 0;
-var CONST_AJAX_LOADING		= 1;
-var CONST_AJAX_RH_RECEIVED	= 2;
-var CONST_AJAX_SOME_RB_RECEIVED	= 3;
-var CONST_AJAX_COMPLETE		= 4;
-var CONST_AJAX_HTTP_OK		= 200;
-var CONST_AJAX_JAVA_ERROR	= 500;
+var CONST_AJAX_UNINITIALIZED    = 0;
+var CONST_AJAX_LOADING		    = 1;
+var CONST_AJAX_RH_RECEIVED	    = 2;
+var CONST_AJAX_SOME_RB_RECEIVED = 3;
+var CONST_AJAX_COMPLETE	        = 4;
+var CONST_AJAX_HTTP_OK          = 200;
+var CONST_AJAX_JAVA_ERROR       = 500;
 
 var firefox = document.getElementById && !document.all;
 
@@ -41,7 +41,7 @@ function setObjectData(ref, file) {
 					if(xmlHttp.status == CONST_AJAX_HTTP_OK) {
 						obj.innerHTML = xmlHttp.responseText;
 					} else {
-						obj.innerHTML = "An error occurred. Response status: " + xmlHttp.status;
+						obj.innerHTML = "Det oppstod en feil (" + xmlHttp.status + ")";
 					}
 			}
 		}
@@ -73,7 +73,7 @@ function changeGraduationData(dd) {
 
 	var myIndex = document.getElementById('grader_' +objId).selectedIndex;
 	var myId = document.getElementById('grader_' + objId).options[myIndex].value;
-	setObjectData('results','/graduates/test_ajax/'+myId);
+	setObjectData('results','/graduates/list_graduations_by_member/'+myId);
 }
 -->
 </script>
