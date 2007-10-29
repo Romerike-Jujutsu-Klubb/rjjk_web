@@ -1,0 +1,52 @@
+<h1>Resultat fra import (<%=@new_members.size%> nye og <%=@updated_members.size%> endrede)</h1>
+
+<%=image_tag url_for(:action => :history_graph), :title => 'Historikk graf', :style => 'float: right' %>
+
+<% unless @new_members.empty? %>
+<table class="members" border="0" cellpadding="5" cellspacing="1">
+  <tr>
+    <th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
+    <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>
+  </tr>
+  
+<% for member in @new_members %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%=h member.last_name %></td>
+    <td><%=h member.first_name %></td>
+    <td><%= link_to 'Rediger', :action => 'edit', :id => member %></td>
+  </tr>
+<% end %>
+</table>
+<% end %>
+
+<% unless @updated_members.empty? %>
+<table class="members" border="0" cellpadding="5" cellspacing="1">
+  <tr>
+    <th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
+    <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>
+    <th colspan="2">Endringer</th>
+  </tr>
+  
+<% for member, old_values in @updated_members %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td colspan="2"><%=link_to h(member.name) %></td>
+    <td align="right">Fra -&gt;</td>
+    <td>Til</td>
+  </tr>
+  <% for k, v in old_values %>
+  <tr>
+  	<td/>
+	<td>
+		<%=k%>
+	</td>
+	<td align="right">
+		<%=v%> -&gt;
+	</td>
+	<td align="left">
+		<%=member[k]%>
+	</td>
+  </tr>
+  <% end %>
+<% end %>
+</table>
+<% end %>

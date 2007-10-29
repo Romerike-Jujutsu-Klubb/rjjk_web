@@ -35,9 +35,11 @@ class CmsImport
     puts "reports: #{reports.size-1}"
     puts "rows: #{reports[1].size}"
     
+    @new_members = []
+    @updated_members = []
      (0...reports[1].size).each do |index|
       member = Member.find_by_cms_contract_id(reports[1][index][0])
-      member = Member.new if member.nil?
+      member = Member.new(:department => 'Jujutsu') if member.nil?
       old_values = member.attributes
       new_values = {
         :first_name => reports[3][index][7].split(' ')[1..-1].join(' '),
@@ -53,7 +55,6 @@ class CmsImport
         :male => reports[4][index][6] == 'M',
         :joined_on => reports[1][index][1].empty? ? nil : Date.strptime(reports[1][index][1], '%d-%m-%Y'),
         :contract_id => reports[3][index][6],
-        :department => 'Jujutsu',
         :cms_contract_id => reports[1][index][0],
         :left_on => (reports[1][index][2].empty? ? nil : Date.strptime(reports[1][index][2], '%d-%m-%Y')),
         :parent_name => (reports[2][index][3] != reports[3][index][7] ? reports[2][index][3] : nil),
@@ -73,13 +74,20 @@ class CmsImport
       }
       changes = new_values.clone.delete_if {|k, v| v.to_s == old_values[k.to_s].to_s}
       if changes.size > 0
+        if member.new_record?
+          @new_members << member
+        else
+          old_values = {}
+          changes.keys.each {|k| old_values[k] = member[k]}
+          @updated_members << [member, old_values]
+        end
         message = "#{member.new_record? ? 'Adding' : 'Updating'} member: #{member.first_name} #{member.last_name}\n#{changes.inspect}"
-        puts message
         Member.logger.info message
         member.update_attributes(changes)
         member.save!
       end
     end
+    return @new_members, @updated_members
   end
   
 end

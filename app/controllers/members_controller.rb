@@ -15,9 +15,7 @@ class MembersController < ApplicationController
   #    :alias => 'etternavn') 
   
   def import
-    CmsImport.import
-    redirect_to :action => :active_contracts
-    return   
+    @new_members, @updated_members = CmsImport.import
   end
   
   def search
