@@ -1,4 +1,4 @@
-<%=image_tag url_for(:action => :show, :id => @image.id), :style => 'float: right; width: 50%'%>
+<%=image_tag url_for(:action => :show, :id => @image.id, :format => @image.format), :style => 'float: right; width: 50%'%>
 <%= error_messages_for 'image' %>
 
 <!--[form:image]-->
