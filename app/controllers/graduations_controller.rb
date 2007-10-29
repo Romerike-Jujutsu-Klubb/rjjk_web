@@ -1,5 +1,8 @@
 class GraduationsController < ApplicationController
   MEMBERS_PER_PAGE = 30
+  
+  before_filter :admin_required
+
   def index
     list
     render :action => 'list'

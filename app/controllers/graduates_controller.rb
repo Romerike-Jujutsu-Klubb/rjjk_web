@@ -1,5 +1,8 @@
 class GraduatesController < ApplicationController
   MEMBERS_PER_PAGE = 30
+
+  before_filter :admin_required
+
   def index
     list
     render :action => 'list'
@@ -10,7 +13,11 @@ class GraduatesController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @graduate_pages, @graduates = paginate :graduates, :per_page => MEMBERS_PER_PAGE
+    if !params[:id]
+      @graduate_pages, @graduates = paginate :graduates, :per_page => MEMBERS_PER_PAGE
+    else
+      @graduate_pages, @graduates = paginate :graduates, :per_page => MEMBERS_PER_PAGE, :conditions => "member_id = #{params[:id]}", :order => 'rank_id'
+    end
   end
 
   def list_graduates
@@ -18,8 +25,7 @@ class GraduatesController < ApplicationController
     render :action => 'list'
   end
   
-  def test_ajax
-    # VIKTIG: Legg til sjekk av autorisasjon
+  def list_graduations_by_member
     @graduates = Graduate.find(:all, :conditions => "graduation_id = #{params[:id]}")
     rstr =<<EOH
 <table width="100%" STYLE="border: 1px solid #000000;" cellspacing="0" cellpadding="0">
@@ -42,6 +48,7 @@ EOH
                      "  <td STYLE=\"text-align: center;\">#{gr.passed ? 'Ja' : 'Nei'}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{gr.paid_graduation ? 'Ja' : 'Nei'}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{gr.paid_belt ? 'Ja' : 'Nei'}</td>\n" <<
+                     "  <td STYLE=\"text-align: center;\"><A HREF='/graduates/list/" << gr.member.id.to_s << "'>Graderingsoversikt</A></td>\n" <<
                      "</tr>\n" 
     end
     render_text rstr << "</table>\n"
