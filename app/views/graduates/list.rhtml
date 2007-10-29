@@ -1,4 +1,4 @@
-<h1>Listing graduates</h1>
+<h1>Graderingsoversikt</h1>
 
 <table WIDTH="600" STYLE="border: 1px solid #000000;" CELLSPACING="0" CELLPADDING="0">
   <tr STYLE=" background: #e3e3e3;">
@@ -8,7 +8,7 @@
     <th STYLE="border-bottom: 1px solid #000000;">Bestått</th>
     <th STYLE="border-bottom: 1px solid #000000;">Bet.Grad</th>
     <th STYLE="border-bottom: 1px solid #000000;">Bet.Belte</th>
-	<th STYLE="border-bottom: 1px solid #000000;" COLSPAN="2">&nbsp;</th>
+	<!-- th STYLE="border-bottom: 1px solid #000000;">&nbsp;</th -->
   </tr>
 
 <% for graduate in @graduates %>
@@ -19,8 +19,8 @@
     <td ALIGN="CENTER"><%=yes_no graduate.passed%></td>
     <td ALIGN="CENTER"><%=yes_no graduate.paid_graduation%></td>
     <td ALIGN="CENTER"><%=yes_no graduate.paid_belt%></td>
-    <td ALIGN="CENTER"><%= link_to 'Show', :action => 'show', :id => graduate %></td>
-    <td ALIGN="CENTER"><%= link_to 'Edit', :action => 'edit', :id => graduate %></td>
+    <!-- td ALIGN="CENTER">< %= link_to 'Show', :action => 'show', :id => graduate % ></td -->
+    <!-- td ALIGN="CENTER">< %= link_to 'Edit', :action => 'edit', :id => graduate % ></td -->
     <!-- td><%= link_to 'Destroy', { :action => 'destroy', :id => graduate }, :confirm => 'Are you sure?', :method => :post %></td -->
   </tr>
 <% end %>
