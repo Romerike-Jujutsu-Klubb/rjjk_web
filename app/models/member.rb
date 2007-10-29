@@ -52,7 +52,7 @@ class Member < ActiveRecord::Base
     dates = []
     Date.today.step(first_date, -14) {|date| dates << date}
     dates.reverse!
-    active_clause = '"joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\' AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
+    active_clause = '"(joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
     totals = dates.map {|date| Member.count(:conditions => eval(active_clause))}
     seniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birtdate IS NOT NULL AND birtdate < '#{self.senior_birthdate(date)}'")}
     juniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birtdate IS NOT NULL AND birtdate >= '#{self.senior_birthdate(date)}'")}
@@ -73,6 +73,7 @@ class Member < ActiveRecord::Base
     # g.draw_vertical_legend
     
     #g.maximum_value = (g.maximum_value.to_s[0..0].to_i + 1) * (10**Math::log10(g.maximum_value.to_i).to_i) if g.maximum_value > 0
+    g.marker_count = g.maximum_value / 10
     g.to_blob
   end
 

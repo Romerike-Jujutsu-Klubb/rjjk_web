@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 8) do
+ActiveRecord::Schema.define(:version => 9) do
 
   create_table "censors", :force => true do |t|
     t.column "graduation_id", :integer, :null => false
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(:version => 8) do
     t.column "comment",              :string
     t.column "instructor",           :boolean,                                   :null => false
     t.column "nkf_fee",              :boolean,                                   :null => false
-    t.column "social_sec_no",        :string,  :limit => 6
+    t.column "social_sec_no",        :string,  :limit => 11
     t.column "account_no",           :string,  :limit => 16
     t.column "billing_phone_home",   :string,  :limit => 32
     t.column "billing_phone_mobile", :string,  :limit => 32

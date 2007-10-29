@@ -4,4 +4,9 @@ class Image < ActiveRecord::Base
     self.content_data = file.read
     self.content_type = file.content_type
   end
+  
+  def format
+    name.split('.').last
+  end
+  
 end

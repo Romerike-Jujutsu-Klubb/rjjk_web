@@ -4,7 +4,7 @@ class MembersController < ApplicationController
   before_filter :store_location
   before_filter :admin_required
   before_filter :find_incomplete
-
+  
   #  add_to_sortable_columns('listing', 
   #    :model => Member, 
   #    :field => 'first_name', 
@@ -13,11 +13,11 @@ class MembersController < ApplicationController
   #    :model => Member, 
   #    :field => 'last_name', 
   #    :alias => 'etternavn') 
-
+  
   def import
-     system('script/runner import.rb -RAILS_ENV="production"')
-     redirect_to :action => :active_contracts
-     return   
+    CmsImport.import
+    redirect_to :action => :active_contracts
+    return   
   end
   
   def search
@@ -28,7 +28,7 @@ class MembersController < ApplicationController
         @members = Member.find_by_contents(query, :limit => :all)
         # Sort by last name (requires a spec for each user).
         @members = @members.sort_by { |member| member.last_name }
-      rescue Ferret::QueryParser::QueryParseException
+        rescue Ferret::QueryParser::QueryParseException
         @invalid = true
       end
     end
@@ -48,7 +48,7 @@ class MembersController < ApplicationController
     @member_count = Member.count(:conditions => 'left_on IS NULL')
     render :action => :list
   end
-
+  
   def history_graph
     g = Member.history_graph
     send_data(g, :disposition => 'inline', :type => 'image/png', :filename => "RJJK_Medlemshistorikk.png")
@@ -166,7 +166,7 @@ class MembersController < ApplicationController
   def member_count(male, from_age, to_age)
     Member.count(:conditions => "left_on IS NULL AND male = #{male} AND birtdate <= #{year_end(from_age)} AND birtdate >= #{year_start(to_age)}")
   end
-
+  
   def find_incomplete
     @incomplete_members = Member.find(:all, :conditions => 'birtdate IS NULL', :order => 'last_name, first_name')
   end
