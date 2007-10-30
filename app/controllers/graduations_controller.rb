@@ -3,6 +3,18 @@ class GraduationsController < ApplicationController
   
   before_filter :admin_required
 
+  def import
+    @imported, @unknown = GraduationsImport.import
+    STDERR.puts @imported.size
+    lines = String.new()
+    @imported.each {|k,v|
+      v.each {|x,y|
+        lines << k.to_s << " " << x << " " << y << "<br>"
+      }
+    }
+    render_text lines
+  end
+
   def index
     list
     render :action => 'list'
