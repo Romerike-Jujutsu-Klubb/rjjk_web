@@ -4,6 +4,8 @@ class Member < ActiveRecord::Base
                              :phone_mobile, :phone_parent, :department, 
                              :billing_type, :comment]
   
+  has_many :graduates
+
   validates_presence_of :first_name, :last_name, :address, :postal_code
   #validates_presence_of :birthdate, :join_on
   validates_inclusion_of(:payment_problem, :in => [true, false])
@@ -15,6 +17,23 @@ class Member < ActiveRecord::Base
     Member.find(:all, :conditions => "left_on IS NULL", :order => 'last_name, first_name')
   end
   
+  def current_grade
+    @grade = graduates.sort_by {|g| g.graduation.held_on}.last
+    if !@grade
+      if senior?
+        if department == "Jujutsu"
+          "5.kyu"
+        else
+          "6.kyu"
+      end
+    else
+      "10.mon"
+      end
+    else
+      @grade.rank.name
+    end
+  end
+
   def fee
     if instructor?
       0
