@@ -12,6 +12,16 @@ class GraduatesController < ApplicationController
   verify :method => :post, :only => [ :destroy, :create, :update ],
          :redirect_to => { :action => :list }
 
+  def show_last_grade
+    @members = Member.find(:all)
+    @all_grades = @members.map {|m| m.current_grade}
+    @grade_counts = {}
+    @all_grades.each {|g|
+      @grade_counts[g] ||= 0
+      @grade_counts[g] += 1
+    }
+  end
+  
   def list
     if !params[:id]
       @graduate_pages, @graduates = paginate :graduates, :per_page => MEMBERS_PER_PAGE
