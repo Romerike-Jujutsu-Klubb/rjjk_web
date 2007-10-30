@@ -39,7 +39,7 @@ class CmsImport
     @updated_members = []
      (0...reports[1].size).each do |index|
       member = Member.find_by_cms_contract_id(reports[1][index][0])
-      member = Member.new(:department => 'Jujutsu') if member.nil?
+      member = Member.new(:department => 'Jujutsu', :instructor => false) if member.nil?
       old_values = member.attributes
       new_values = {
         :first_name => reports[3][index][7].split(' ')[1..-1].join(' '),
@@ -69,7 +69,6 @@ class CmsImport
         :account_no => reports[3][index][5],
         :payment_problem => false,
         :comment => reports[1][index][4],
-        :instructor => false,
         :nkf_fee => true
       }
       changes = new_values.clone.delete_if {|k, v| v.to_s == old_values[k.to_s].to_s}
