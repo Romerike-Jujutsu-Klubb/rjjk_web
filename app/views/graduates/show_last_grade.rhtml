@@ -1,0 +1,15 @@
+<h1>Graderingsoversikt (<%=h @all_grades.size %> medlemmer)</h1>
+
+<table WIDTH="600" STYLE="border: 1px solid #000000;" CELLSPACING="0" CELLPADDING="0">
+  <tr STYLE=" background: #e3e3e3;">
+    <th STYLE="border-bottom: 1px solid #000000;"></th>
+    <th STYLE="border-bottom: 1px solid #000000;">Grad</th>
+  </tr>
+
+<% for rank, val in @grade_counts %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%=h rank %></td>
+    <td ALIGN="CENTER"><%= val%></td>
+  </tr>
+<% end %>
+</table>
