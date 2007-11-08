@@ -2,7 +2,7 @@ class GraduationsImport < ActiveRecord::Migration
   def self.import
     STDERR.puts "Importing C:/stuff/workspace/gradering.csv"
     @data = {}
-    IO.read("C:/stuff/workspace/gradering.csv").each {|s_line|
+    IO.read("./gradering.csv").each {|s_line|
       csv = s_line.chomp.split(';')
       if csv[2] == 0
         @unknown[csv[0]] ||= {}
@@ -73,9 +73,12 @@ class GraduationsImport < ActiveRecord::Migration
     @data.each {|k,v|
       v.each {|x,y|
         next if x == 0
-        mid = Rank.find(:first, :conditions => ['name LIKE ?', y])
-        next if !mid
-        STDERR.puts "#{k} => #{x} => #{y} => #{mid.id}"
+        rnk = Rank.find(:first, :conditions => ['name LIKE ?', y])
+        next if !rnk
+        grd = kwr.graduations.create!(:held_on => k)
+        grd.graduates.create!(:member_id => x, :passed => true, :rank_id => rnk.id,
+                              :paid_graduation => true, :paid_belt => true)
+        #STDERR.puts "#{k} => #{x} => #{y} => #{mid.id}"
       }
     }
 
