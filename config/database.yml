@@ -5,9 +5,6 @@ development:
 test:
   adapter: postgresql
   database: rjjk_test
-  username: root
-  password:
-  host: localhost
 
 production:
   adapter: postgresql
