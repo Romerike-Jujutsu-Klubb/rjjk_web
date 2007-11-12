@@ -54,6 +54,7 @@ class MembersControllerTest < Test::Unit::TestCase
       :nkf_fee => true
     }
     
+    assert_equal [], assigns(:member).errors.to_a
     assert_response :redirect
     assert_redirected_to :action => 'list'
     

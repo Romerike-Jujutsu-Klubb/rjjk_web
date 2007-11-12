@@ -53,5 +53,5 @@ unverified_user:
   email: unverified_user@example.com
   verified: false
   security_token: random_token_string
-  token_expiry: <%= (Clock.now + 1.day).strftime("%Y-%m-%d %H:%M:%S") %> # for mysql, add .strftime("%y-%m-%d %H:%M:%S")
+  token_expiry: <%=(Clock.now + User.token_lifetime).strftime("%Y-%m-%d %H:%M:%S") %>
   deleted: false

@@ -5,7 +5,7 @@ require 'graduations_controller'
 class GraduationsController; def rescue_action(e) raise e end; end
 
 class GraduationsControllerTest < Test::Unit::TestCase
-  fixtures :martial_arts, :graduations
+  fixtures :users, :martial_arts, :graduations
 
   def setup
     @controller = GraduationsController.new
@@ -13,6 +13,7 @@ class GraduationsControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
 
     @first_id = graduations(:one).id
+    login(:admin)
   end
 
   def test_index

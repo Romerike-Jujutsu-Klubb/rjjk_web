@@ -46,19 +46,19 @@ class UserTest < Test::Unit::TestCase
     assert_not_nil token
     user.reload
     assert_equal token, user.security_token
-    assert_equal (Clock.now + User.token_lifetime).to_i, user.token_expiry.to_i
+    assert_equal((Clock.now + User.token_lifetime).to_i, user.token_expiry.to_i)
   end
 
   def test_generate_security_token__reuses_token_when_not_stale
     user = users(:unverified_user)
-    Clock.time = Clock.now + User.token_lifetime/2 - 1
+    Clock.advance_by_seconds((User.token_lifetime/2))
     assert_equal user.security_token, user.generate_security_token 
   end
 
   def test_generate_security_token__generates_new_token_when_getting_stale
     user = users(:unverified_user)
-    Clock.time = Clock.now + User.token_lifetime/2
-    assert_not_equal user.security_token, user.generate_security_token 
+    Clock.advance_by_seconds(1.second + User.token_lifetime/2)
+    assert_not_equal user.security_token, user.generate_security_token
   end
 
   def test_change_password__disallowed_passwords

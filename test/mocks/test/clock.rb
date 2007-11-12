@@ -8,7 +8,7 @@ class Clock
   end
 
   def self.advance_by_days( days )
-    @@time += (days * 60 *60 * 24)
+    @@time += (days * 60 * 60 * 24)
   end
 
   def self.advance_by_seconds( seconds )

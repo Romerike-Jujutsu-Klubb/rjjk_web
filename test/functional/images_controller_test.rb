@@ -72,7 +72,7 @@ class ImagesControllerTest < Test::Unit::TestCase
   def test_update
     post :update, :id => @first_id
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => @first_id
+    assert_redirected_to :action => :edit, :id => @first_id
   end
 
   def test_destroy

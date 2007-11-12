@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   end
 
   def generate_security_token
-    if self.security_token.nil? or self.token_expiry.nil? or (Clock.now.to_i + User.token_lifetime / 2) >= self.token_expiry.to_i
+    if self.security_token.nil? or self.token_expiry.nil? or (remaining_token_lifetime < (User.token_lifetime / 2))
       token = new_security_token
       return token
     else
@@ -67,7 +67,10 @@ class User < ActiveRecord::Base
     UserSystem::CONFIG[:security_token_life_hours].hours
   end
 
-
+  def remaining_token_lifetime
+    self.token_expiry.to_i - Clock.now.to_i
+  end
+  
   protected
 
   attr_accessor :password, :password_confirmation

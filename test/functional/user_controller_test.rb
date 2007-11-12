@@ -124,7 +124,7 @@ class UserControllerTest < Test::Unit::TestCase
 
   def test_welcome__fails_if_expired_token
     user = users(:unverified_user)
-    Clock.advance_by_days 2 # now past verification deadline
+    Clock.advance_by_seconds User.token_lifetime # now past verification deadline
     get :welcome, :user=> { :id => user.id }, :key => user.security_token
     user.reload
     assert !user.verified

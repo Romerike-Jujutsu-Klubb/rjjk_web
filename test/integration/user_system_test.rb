@@ -24,13 +24,13 @@ class UserSystemTest < ActionController::IntegrationTest
 
     mail = ActionMailer::Base.deliveries[0]
     assert_equal "newemail@example.com", mail.to_addrs[0].to_s
-    assert_match /login:\s+\w+\n/, mail.encoded
-    assert_match /password:\s+\w+\n/, mail.encoded
+    assert_match(/login:\s+\w+\n/, mail.encoded)
+    assert_match(/password:\s+\w+\n/, mail.encoded)
     mail.encoded =~ /user\[id\]=(\d+)&key=(.*?)"/
     id = $1
     key = $2
 
-    Clock.advance_by_days 2 # now past verification deadline
+    Clock.advance_by_seconds User.token_lifetime # now past verification deadline
 
     get url_for( :controller => 'user', :action => 'welcome'),
         :user=> { :id => id }, :key => key
