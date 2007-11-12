@@ -22,6 +22,7 @@ class InfoController < ApplicationController
   end
 
   def show
+    raise "Error for test"
     @information_page = InformationPage.find(params[:id])
   end
 
