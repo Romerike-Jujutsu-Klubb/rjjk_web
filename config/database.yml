@@ -1,10 +1,10 @@
 development:
   adapter: postgresql
-  database: rjjk_development
+  database: rjjk_web_development
 
 test:
   adapter: postgresql
-  database: rjjk_test
+  database: rjjk_web_test
 
 production:
   adapter: postgresql
