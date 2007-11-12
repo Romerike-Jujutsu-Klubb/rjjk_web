@@ -49,6 +49,107 @@ function setObjectData(ref, file) {
 		xmlHttp.send(null);
 	}
 }
+function callAjaxObject(file, object) {
+	var xmlHttp = initAjax();
+	
+	if (object != null) {
+	}
+	if(xmlHttp) {
+		xmlHttp.onreadystatechange=function() {
+			if(xmlHttp.readyState == CONST_AJAX_COMPLETE) {
+					if(xmlHttp.status != CONST_AJAX_HTTP_OK) {
+						obj.innerHTML = "Det oppstod en feil (" + xmlHttp.status + ")";
+					}
+			}
+		}
+		xmlHttp.open("POST", file, true);
+		xmlHttp.send(null);
+	}
+}
+
+function show_glist(file) {
+	var	tlist = document.getElementById('glist');
+	var debug = document.getElementById('debug');
+	var xmlHttp = initAjax();
+	
+	if(xmlHttp) {
+		xmlHttp.onreadystatechange=function() {
+			if(xmlHttp.readyState == CONST_AJAX_COMPLETE) {
+					if(xmlHttp.status == CONST_AJAX_HTTP_OK) {
+						tlist.innerHTML = xmlHttp.responseText;
+					} else {
+						debug.innerHTML = "Det oppstod en feil (" + xmlHttp.status + ")";
+					}
+			}
+		}
+		xmlHttp.open("GET", file, true);
+		xmlHttp.send(null);
+	}
+}
+
+function add_censor(c_id){
+	var pvalues;
+	
+	var maObj = document.getElementById('held_on_id');
+	var maIdent = maObj.selectedIndex;
+	var grObj = document.getElementById('grader_' + maObj.options[maIdent].value);
+	var grIdent = grObj.selectedIndex;
+	
+	pvalues = "graduation_id=" + grObj.options[grIdent].value + "&" +
+	          "member_id=" + c_id;
+
+	var xmlHttp = initAjax();
+	var debug = document.getElementById("debug");
+	
+	if(xmlHttp) {
+		xmlHttp.onreadystatechange=function() {
+			if(xmlHttp.readyState == CONST_AJAX_COMPLETE) {
+					if(xmlHttp.status != CONST_AJAX_HTTP_OK) {
+						alert("Det oppstod en feil (" + xmlHttp.status + ")");
+						debug.innerHTML = "<font color='#ff0000'>" + 
+						                  xmlHttp.responseText + "</font>";
+					} else {
+						debug.innerHTML += xmlHttp.responseText + "<br>";
+					}
+			}
+		}
+		xmlHttp.open("POST", "/censors/add_new_censor", true);
+		xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+		xmlHttp.send(pvalues);
+	}
+}
+
+function add_graduate(c_id){
+	var pvalues;
+	
+	var maObj = document.getElementById('held_on_id');
+	var maIdent = maObj.selectedIndex;
+	var grObj = document.getElementById('grader_' + maObj.options[maIdent].value);
+	var grIdent = grObj.selectedIndex;
+	
+	pvalues = "graduation_id=" + grObj.options[grIdent].value + "&" +
+	          "member_id=" + c_id;
+
+	var xmlHttp = initAjax();
+	var debug = document.getElementById("debug");
+	
+	if(xmlHttp) {
+		xmlHttp.onreadystatechange=function() {
+			if(xmlHttp.readyState == CONST_AJAX_COMPLETE) {
+					if(xmlHttp.status != CONST_AJAX_HTTP_OK) {
+						alert("Det oppstod en feil (" + xmlHttp.status + ")");
+						debug.innerHTML = "<font color='#ff0000'>" + 
+						                  xmlHttp.responseText + "</font>";
+					} else {
+						debug.innerHTML += xmlHttp.responseText + "<br>";
+					}
+			}
+		}
+		xmlHttp.open("POST", "/graduates/add_new_graduate", true);
+		xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+		xmlHttp.send(pvalues);
+	}
+}
 
 function changeStyle() {
 	var obj = document.getElementById('held_on_id')
@@ -75,13 +176,27 @@ function changeGraduationData(dd) {
 	var myId = document.getElementById('grader_' + objId).options[myIndex].value;
 	setObjectData('results','/graduates/list_graduations_by_member/'+myId);
 }
+function deleteGraduation() {
+	var maObj = document.getElementById('held_on_id');
+	var maIdent = maObj.selectedIndex;
+	var grObj = document.getElementById('grader_' + maObj.options[maIdent].value);
+	var grIdent = grObj.selectedIndex;
+	if (confirm('Er du sikker på at du vil slette gradering for ' + grObj.options[grIdent].text + '?')) {
+		callAjaxObject('/graduations/destroy/' + grObj.options[grIdent].value, null);
+		grObj.remove(grIdent);
+		grObj.selectedIndex = 0;
+		changeStyle();
+	}
+}
 -->
 </script>
 
 <%= button_to 'Importer data fra CSV', :action => 'import'%>
 
+<table border="0" WIDTH="1024" CELLSPACING="0" CELLPADDING="0">
+	<tr><td valign="top" WIDTH="600">
 <table STYLE="border-top: 1px solid #000000;" WIDTH="600" CELLSPACING="0" CELLPADDING="0">
-  <tr STYLE=" background: #e3e3e3;">
+  <tr STYLE="background: #e3e3e3;">
     <th STYLE="border-bottom: 1px solid #000000;">Stilart</th>
     <th STYLE="border-bottom: 1px solid #000000;">Dato for gradering</th>
 	<th STYLE="border-bottom: 1px solid #000000;" COLSPAN="2">&nbsp;</th>
@@ -111,18 +226,41 @@ function changeGraduationData(dd) {
 	</td>
 	</form>
 </tr>
-<tr>
-	<td colspan="2">&nbsp;</td>
-</tr>
+<tr><td colspan="2">&nbsp;</td></tr>
 <tr>
 	<td colspan="2" ALIGN="center">
 		<div id="results"></div>
 	</td>
 </tr>
-</table>
-<br />
+<tr><td colspan="2"2>&nbsp;</td></tr>
+<tr><td colspan="2" align="center" width="100%">
+	<table STYLE="border-top: 1px solid #000000;border-bottom: 1px solid #000000;" CELLPADDING="0" CELLSPACING="0" border="0" width="100%">
+	<tr STYLE="background: #e3e3e3;"><TD HEIGHT="2" COLSPAN="4"></TD></tr>
+	<tr STYLE="background: #e3e3e3;">
+	<td align="left"><%= link_to 'Registrer ny gradering', :action => 'new' %></td>
+	<td align="center">
+		<!-- a href="#" onClick="add_censor('/censors/add_new_censor');">Legg til sensor</a -->
+		<a href="#" onClick="show_glist('/censors/list_instructors');">Legg til sensor</a>
+		<!--  %= link_to 'Legg til sensor', :controller => 'censors', :action => 'new' % -->
+		</td>
+	<td align="center">
+		<a href="#" onClick="show_glist('/graduates/list_potential_graduates');">Legg til medlemmer</a>
+		<!-- %= link_to 'Legg til medlemmer', :action => 'new' % -->
+		</td>
+	<td align="right"><A HREF="#" onClick='deleteGraduation();'>Fjern gradering</A></td>
+	</tr>
+		<tr STYLE="background: #e3e3e3;"><TD HEIGHT="2" COLSPAN="4"></TD></tr>
 
-<%= link_to 'New graduation', :action => 'new' %>
+	</table></td></tr>
+<tr><td colspan="2"><div id="debug"></div></td></tr>
+</table>
+</td>
+<td WIDTH="8">&nbsp;</td>
+<td valign="top" align="center"><DIV ID="glist"></DIV></td>
+</tr>
+</table>
+<br/>
+
 <SCRIPT Language="JavaScript1.2">
 	changeGraduationData();
 </SCRIPT>

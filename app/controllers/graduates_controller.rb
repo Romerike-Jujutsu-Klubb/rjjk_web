@@ -24,9 +24,9 @@ class GraduatesController < ApplicationController
   
   def list
     if !params[:id]
-      @graduate_pages, @graduates = paginate :graduates, :per_page => MEMBERS_PER_PAGE
+      @graduates = Graduate.find(:all, :conditions => "member_id > 0", :order => 'member_id, rank_id DESC')
     else
-      @graduate_pages, @graduates = paginate :graduates, :per_page => MEMBERS_PER_PAGE, :conditions => "member_id = #{params[:id]}", :order => 'rank_id'
+      @graduates = Graduate.find(:all, :conditions => "member_id = #{params[:id]}", :order => 'rank_id')
     end
   end
 
@@ -49,17 +49,33 @@ class GraduatesController < ApplicationController
   <th STYLE="border-bottom: 1px solid #000000;" COLSPAN="2">&nbsp;</th>
 </tr>
 EOH
-
     for gr in @graduates
+      mbr = Member.find(:first, :conditions => [ "cms_contract_id = ?", gr.member_id])
       rstr = rstr << "<tr>\n" <<
-                     "  <td>#{gr.member.first_name} #{gr.member.last_name}</td>\n" <<
+                     "  <td>#{mbr.first_name} #{mbr.last_name}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{gr.graduation.held_on}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{gr.rank.name}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{gr.passed ? 'Ja' : 'Nei'}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{gr.paid_graduation ? 'Ja' : 'Nei'}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{gr.paid_belt ? 'Ja' : 'Nei'}</td>\n" <<
-                     "  <td STYLE=\"text-align: center;\"><A HREF='/graduates/list/" << gr.member.id.to_s << "'>Graderingsoversikt</A></td>\n" <<
+                     "  <td STYLE=\"text-align: center;\"><A HREF='/graduates/list/" << gr.member_id.to_s << "'>Graderingsoversikt</A></td>\n" <<
                      "</tr>\n" 
+    end
+    render_text rstr << "</table>\n"
+  end
+
+  def list_potential_graduates
+    @instructors = Member.find(:all, :conditions => "left_on IS NULL", :order => 'last_name, first_name')
+    rstr =<<EOH
+    <table STYLE="border-top: 1px solid #000000;" width="100%" CELLPADDING="0" CELLSPACING="0">
+      <tr STYLE="background: #e3e3e3;"><td STYLE="border-bottom: 1px solid #000000;" colspan="2"><B>Medlemmer</B></td><tr>
+EOH
+    for instr in @instructors
+      rstr = rstr << "<tr>" <<
+             "<td><a href='#' onClick='add_graduate(" + instr.cms_contract_id.to_s + ");'>" <<
+             instr.last_name << ", " << instr.first_name << "</a></td>" <<
+             "<td>" << instr.department << "</td>"
+             "</tr>\n"
     end
     render_text rstr << "</table>\n"
   end
@@ -71,6 +87,14 @@ EOH
   def new
     @graduate = Graduate.new
   end
+  
+  def add_new_graduate
+    gid = params[:graduation_id].to_i
+    mid = params[:member_id].to_i
+    Censor.create!(:graduation_id => gid, :member_id => mid)
+    render_text "Added new sensor to graduation #{gid} #{mid}" 
+  end
+
 
   def create
     @graduate = Graduate.new(params[:graduate])

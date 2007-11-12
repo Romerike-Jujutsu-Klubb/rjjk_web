@@ -11,14 +11,28 @@
 	<!-- th STYLE="border-bottom: 1px solid #000000;">&nbsp;</th -->
   </tr>
 
+<%
+	prv_name = 0
+	style = 'STYLE="background: #c3c3c3;"'
+%>
 <% for graduate in @graduates %>
+	<% mbr = Member.find(:first, :conditions => ["cms_contract_id = ?", graduate.member_id]) %>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td><%=h graduate.member.first_name%> <%=h graduate.member.last_name%></td>
-    <td ALIGN="CENTER"><%=graduate.graduation.held_on%></td>
-    <td ALIGN="CENTER"><%=h graduate.rank.name%></td>
-    <td ALIGN="CENTER"><%=yes_no graduate.passed%></td>
-    <td ALIGN="CENTER"><%=yes_no graduate.paid_graduation%></td>
-    <td ALIGN="CENTER"><%=yes_no graduate.paid_belt%></td>
+  	<% if prv_name == mbr.id %>
+    	<td>&nbsp;</td>
+		<% style = "" %>
+	<% else %>
+		<%
+			prv_name = mbr.id
+			style = 'STYLE="background: #c3c3c3;"'
+		%>
+    	<td <%= style %>><%=h mbr.first_name << " " << mbr.last_name %></td>
+	<% end %>
+    <td <%= style %> ALIGN="CENTER"><%=graduate.graduation.held_on%></td>
+    <td <%= style %> ALIGN="CENTER"><%=h graduate.rank.name%></td>
+    <td <%= style %> ALIGN="CENTER"><%=yes_no graduate.passed%></td>
+    <td <%= style %> ALIGN="CENTER"><%=yes_no graduate.paid_graduation%></td>
+    <td <%= style %> ALIGN="CENTER"><%=yes_no graduate.paid_belt%></td>
     <!-- td ALIGN="CENTER">< %= link_to 'Show', :action => 'show', :id => graduate % ></td -->
     <!-- td ALIGN="CENTER">< %= link_to 'Edit', :action => 'edit', :id => graduate % ></td -->
     <!-- td><%= link_to 'Destroy', { :action => 'destroy', :id => graduate }, :confirm => 'Are you sure?', :method => :post %></td -->
@@ -26,9 +40,9 @@
 <% end %>
 </table>
 
-<%= link_to 'Previous page', { :page => @graduate_pages.current.previous } if @graduate_pages.current.previous %>
-<%= link_to 'Next page', { :page => @graduate_pages.current.next } if @graduate_pages.current.next %> 
+<!-- %= link_to 'Previous page', { :page => @graduate_pages.current.previous } if @graduate_pages.current.previous % >
+< %= link_to 'Next page', { :page => @graduate_pages.current.next } if @graduate_pages.current.next % --> 
 
 <br />
 
-<%= link_to 'New graduate', :action => 'new' %>
+<%= link_to 'Legg til medlemmer', :action => 'new' %>
