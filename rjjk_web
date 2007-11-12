@@ -4,24 +4,33 @@
 #
 # chkconfig: 345 88 12
 # description: RJJK web application
+# pidfile: /u/apps/$app/shared/log/mongrel.pid
+
+. /etc/rc.d/init.d/functions
+
+app=rjjk_web
+user=capistrano
+port=3005
+pidfile=${PIDFILE-/u/apps/$app/shared/log/mongrel.pid}
 
 # See how we were called.
 case "$1" in
   start)
-        su - capistrano -c "cd /u/apps/rjjk_web/current;RAILS_ENV=production ruby script/ferret_start"
-        su - capistrano -c "mongrel_rails start -p 3005 -e production -c /u/apps/rjjk_web/current -d 1>/u/apps/rjjk_web/shared/log/stdout.log 2>/u/apps/rjjk_web/shared/log/stderr.log"
+        su - $user -c "cd /u/apps/$app/current;RAILS_ENV=production ruby script/ferret_start"
+        su - $user -c "mongrel_rails start -p $port -e production -c /u/apps/$app/current -d 1>/u/apps/$app/shared/log/stdout.log 2>/u/apps/$app/shared/log/stderr.log"
         ;;
   stop)
-        su - capistrano -c "mongrel_rails stop -c /u/apps/rjjk_web/current"
-        su - capistrano -c "cd /u/apps/rjjk_web/current;RAILS_ENV=production ruby script/ferret_stop"
+        su - $user -c "mongrel_rails stop -c /u/apps/$app/current"
+        su - $user -c "cd /u/apps/$app/current;RAILS_ENV=production ruby script/ferret_stop"
+        rm -f ${pidfile}
         ;;
   restart)
-        su - capistrano -c "cd /u/apps/rjjk_web/current;RAILS_ENV=production ruby script/ferret_stop"
-        su - capistrano -c "cd /u/apps/rjjk_web/current;RAILS_ENV=production ruby script/ferret_start"
-        su - capistrano -c "mongrel_rails restart -c /u/apps/rjjk_web/current"
+        su - $user -c "cd /u/apps/$app/current;RAILS_ENV=production ruby script/ferret_stop"
+        su - $user -c "cd /u/apps/$app/current;RAILS_ENV=production ruby script/ferret_start"
+        su - $user -c "mongrel_rails restart -c /u/apps/$app/current"
         ;;
   status)
-        ps -ef | grep rjjk_web
+        ps -ef | grep $app
         ;;
   *)
         echo $"Usage: $prog {start|stop|restart|status}"
