@@ -128,7 +128,8 @@ function add_graduate(c_id){
 	var grIdent = grObj.selectedIndex;
 	
 	pvalues = "graduation_id=" + grObj.options[grIdent].value + "&" +
-	          "member_id=" + c_id;
+	          "member_id=" + c_id + "&" +
+			  "martial_arts_id=" + maObj.options[maIdent].value;
 
 	var xmlHttp = initAjax();
 	var debug = document.getElementById("debug");
@@ -142,6 +143,7 @@ function add_graduate(c_id){
 						                  xmlHttp.responseText + "</font>";
 					} else {
 						debug.innerHTML += xmlHttp.responseText + "<br>";
+						changeGraduationData();
 					}
 			}
 		}
@@ -155,6 +157,7 @@ function changeStyle() {
 	var obj = document.getElementById('held_on_id')
 	var myIndex = obj.selectedIndex;
 	var myId = obj.options[myIndex].value;
+	
 	for(var i = 0; i < obj.length; i++) {
 		var tmp = null;
 		if(tmp = document.getElementById('ma_grad_' + obj.options[i].value)) {
@@ -171,10 +174,14 @@ function changeGraduationData(dd) {
 	var obj = document.getElementById('held_on_id')
 	var objIndex = obj.selectedIndex;
 	var objId = obj.options[objIndex].value;
-
+	
 	var myIndex = document.getElementById('grader_' +objId).selectedIndex;
-	var myId = document.getElementById('grader_' + objId).options[myIndex].value;
-	setObjectData('results','/graduates/list_graduations_by_member/'+myId);
+	try {
+		var myId = document.getElementById('grader_' + objId).options[myIndex].value;
+		setObjectData('results','/graduates/list_graduations_by_member/'+myId);
+	} catch(e) {
+		document.getElementById('results').innerHTML = ""
+	}
 }
 function deleteGraduation() {
 	var maObj = document.getElementById('held_on_id');
@@ -186,6 +193,17 @@ function deleteGraduation() {
 		grObj.remove(grIdent);
 		grObj.selectedIndex = 0;
 		changeStyle();
+	}
+}
+function saveGraduateInfo(member_id, grad_id) {
+	var showObj = document.getElementById(member_id + "_" + grad_id + "_view");
+	var editObj = document.getElementById(member_id + "_" + grad_id + "_edit");
+	if(showObj.style.display == '') {
+		showObj.style.display = 'none';
+		editObj.style.display = '';
+	} else {
+		editObj.style.display = 'none';
+		showObj.style.display = '';
 	}
 }
 -->
@@ -237,7 +255,9 @@ function deleteGraduation() {
 	<table STYLE="border-top: 1px solid #000000;border-bottom: 1px solid #000000;" CELLPADDING="0" CELLSPACING="0" border="0" width="100%">
 	<tr STYLE="background: #e3e3e3;"><TD HEIGHT="2" COLSPAN="4"></TD></tr>
 	<tr STYLE="background: #e3e3e3;">
-	<td align="left"><%= link_to 'Registrer ny gradering', :action => 'new' %></td>
+	<td align="left">
+		<%= link_to 'Registrer ny gradering', :action => 'new' %>
+	</td>
 	<td align="center">
 		<!-- a href="#" onClick="add_censor('/censors/add_new_censor');">Legg til sensor</a -->
 		<a href="#" onClick="show_glist('/censors/list_instructors');">Legg til sensor</a>

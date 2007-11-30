@@ -8,12 +8,20 @@
     <th STYLE="border-bottom: 1px solid #000000;">Bestått</th>
     <th STYLE="border-bottom: 1px solid #000000;">Bet.Grad</th>
     <th STYLE="border-bottom: 1px solid #000000;">Bet.Belte</th>
+    <th STYLE="border-bottom: 1px solid #000000;">Stilart</th>
 	<!-- th STYLE="border-bottom: 1px solid #000000;">&nbsp;</th -->
   </tr>
 
 <%
 	prv_name = 0
 	style = 'STYLE="background: #c3c3c3;"'
+
+	@martial_art = MartialArt.find(:all)
+	def department_name(ma_id)
+		for ma in @martial_art
+			return ma.name if ma.id == ma_id
+		end
+	end
 %>
 <% for graduate in @graduates %>
 	<% mbr = Member.find(:first, :conditions => ["cms_contract_id = ?", graduate.member_id]) %>
@@ -33,6 +41,7 @@
     <td <%= style %> ALIGN="CENTER"><%=yes_no graduate.passed%></td>
     <td <%= style %> ALIGN="CENTER"><%=yes_no graduate.paid_graduation%></td>
     <td <%= style %> ALIGN="CENTER"><%=yes_no graduate.paid_belt%></td>
+    <td <%= style %> ALIGN="CENTER"><%= department_name(graduate.rank.martial_art_id) %></td>
     <!-- td ALIGN="CENTER">< %= link_to 'Show', :action => 'show', :id => graduate % ></td -->
     <!-- td ALIGN="CENTER">< %= link_to 'Edit', :action => 'edit', :id => graduate % ></td -->
     <!-- td><%= link_to 'Destroy', { :action => 'destroy', :id => graduate }, :confirm => 'Are you sure?', :method => :post %></td -->

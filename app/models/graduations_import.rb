@@ -1,6 +1,6 @@
 class GraduationsImport < ActiveRecord::Migration
   def self.import
-    STDERR.puts "Importing C:/stuff/workspace/gradering.csv"
+    STDERR.puts "Importing ./gradering.csv"
     @data = {}
     IO.read("./gradering.csv").each {|s_line|
       csv = s_line.chomp.split(';')
