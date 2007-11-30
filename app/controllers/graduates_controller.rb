@@ -38,7 +38,7 @@ class GraduatesController < ApplicationController
   def rank_select(ma_id, member_id, row_id)
     rstr = rsel = String.new()
     @mranks = Rank.find(:all, :conditions => "martial_art_id = #{ma_id}")
-    rstr << "\n<SELECT STYLE='width: 72px; height: 16px;' NAME='rank_row_#{member_id}' ID='rank_row_#{member_id}'>\n"
+    rstr << "\n<SELECT STYLE='width: 72px; height: 18px;' NAME='rank_row_#{member_id}' ID='rank_row_#{member_id}'>\n"
     for rank in @mranks
       rsel = row_id == rank.id ? "SELECTED" : "" 
       rstr << "<OPTION #{rsel} VALUE='#{rank.id}'>#{rank.name}</OPTION>\n"
@@ -50,7 +50,7 @@ class GraduatesController < ApplicationController
     rstr = String.new()
     nsel = !sid ? "SELECTED" : ""
     ysel = sid ? "SELECTED" : ""
-    rstr << "\n<SELECT NAME='#{cid}_row_#{member_id}' STYLE='width: 56px; height: 16px; text-align: top;' ID='#{cid}_row_#{member_id}'>\n"
+    rstr << "\n<SELECT NAME='#{cid}_row_#{member_id}' STYLE='width: 56px; height: 18px;' ID='#{cid}_row_#{member_id}'>\n"
     rstr << "<OPTION #{nsel} VALUE='0'>Nei</OPTION>\n"
     rstr << "<OPTION #{ysel} VALUE='1'>Ja</OPTION>\n"
     rstr << "</SELECT>\n"
@@ -81,7 +81,7 @@ EOH
                      "  <td STYLE=\"text-align: center;\">#{gr.paid_belt ? 'Ja' : 'Nei'}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\"><A HREF='/graduates/list/" << gr.member_id.to_s << "'>Oversikt</A></td>\n" <<
                      "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>Endre</A></td>\n" <<
-                     "  <td STYLE=\"text-align: center;\"><A HREF='/graduates/list/" << gr.member_id.to_s << "'>Slett</A></td>\n" <<
+                     "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='removeGraduate(#{gr.id})'>Slett</A></td>\n" <<
                      "</tr>\n" 
       rstr = rstr << "<tr id='#{gr.member_id}_#{gr.graduation.id}_edit' STYLE='display: none;'>\n" <<
                      "  <td>#{mbr.first_name} #{mbr.last_name}</td>\n" <<
@@ -117,6 +117,24 @@ EOH
     render_text rstr << "</table>\n"
   end
 
+  def update_graduate
+    member_id = params[:member_id].to_i
+    rank_id = params[:rank_id].to_i 
+    graduate_id = params[:grad_id].to_i
+    passed = params[:passed].to_i 
+    paid = params[:paid].to_i
+    paid_belt = params[:paid_belt].to_i
+    
+    begin
+      @graduate = Graduate.find(:first, :conditions => [ "graduation_id = ? AND member_id = ?", graduate_id, member_id])
+      @graduate.update_attributes!(:rank_id => rank_id, :passed => passed, :paid_graduation => paid,
+                                  :paid_belt => paid_belt )
+      render_text "Endret graderingsinfo for medlems #{member_id}"
+    rescue StandardError
+      render_text "Det oppstod en feil ved endring av medlem #{member_id}:<P>" + $! + "</P>"
+    end
+  end
+  
   def show
     @graduate = Graduate.find(params[:id])
   end
@@ -133,7 +151,7 @@ EOH
     rank = Rank.find(:first, :conditions => [ "martial_art_id = ?", aid])
     Graduate.create!(:graduation_id => gid, :member_id => mid, :passed => false,
                      :rank_id => rank.id, :paid_graduation => false, :paid_belt => false)
-    render_text "Added new graduate to graduation #{gid} #{mid}" 
+    render_text " " 
   end
 
 

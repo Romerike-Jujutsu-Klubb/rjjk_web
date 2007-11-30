@@ -21,10 +21,10 @@ class CensorsController < ApplicationController
       <tr STYLE="background: #e3e3e3;"><td STYLE="border-bottom: 1px solid #000000;" colspan="2"><B>Instrukt&oslash;rer</B></td><tr>
 EOH
     for instr in @instructors
+      nm = instr.first_name << " " << instr.last_name
       rstr = rstr << "<tr>" <<
-             "<td><a href='#' onClick='add_censor(" + instr.cms_contract_id.to_s + ");'>" <<
-             instr.first_name << " " << instr.last_name << "</a></td>" <<
-             "<td>" << instr.department << "</td>"
+             "<td><a href='#' onClick='add_censor(" + instr.cms_contract_id.to_s + ",\"" + nm + "\");'>" <<
+             nm << "</a></td>" << "<td>" << instr.department << "</td>"
              "</tr>"
     end
     render_text rstr << "</table>\n"
@@ -41,8 +41,9 @@ EOH
   def add_new_censor
     gid = params[:graduation_id].to_i
     mid = params[:member_id].to_i
+    name = params[:name]
     Censor.create!(:graduation_id => gid, :member_id => mid)
-    render_text "Added new sensor to graduation #{gid} #{mid}" 
+    render_text "Added #{name} as new sensor to graduation" 
   end
 
   def create

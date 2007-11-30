@@ -87,7 +87,7 @@ function show_glist(file) {
 	}
 }
 
-function add_censor(c_id){
+function add_censor(c_id, name){
 	var pvalues;
 	
 	var maObj = document.getElementById('held_on_id');
@@ -96,7 +96,7 @@ function add_censor(c_id){
 	var grIdent = grObj.selectedIndex;
 	
 	pvalues = "graduation_id=" + grObj.options[grIdent].value + "&" +
-	          "member_id=" + c_id;
+	          "member_id=" + c_id + "&name=" + name;
 
 	var xmlHttp = initAjax();
 	var debug = document.getElementById("debug");
@@ -109,7 +109,7 @@ function add_censor(c_id){
 						debug.innerHTML = "<font color='#ff0000'>" + 
 						                  xmlHttp.responseText + "</font>";
 					} else {
-						debug.innerHTML += xmlHttp.responseText + "<br>";
+						debug.innerHTML = xmlHttp.responseText + "<br>";
 					}
 			}
 		}
@@ -127,9 +127,9 @@ function add_graduate(c_id){
 	var grObj = document.getElementById('grader_' + maObj.options[maIdent].value);
 	var grIdent = grObj.selectedIndex;
 	
-	pvalues = "graduation_id=" + grObj.options[grIdent].value + "&" +
-	          "member_id=" + c_id + "&" +
-			  "martial_arts_id=" + maObj.options[maIdent].value;
+	pvalues = "graduation_id=" + grObj.options[grIdent].value+
+	          "&member_id=" + c_id +
+			  "&martial_arts_id=" + maObj.options[maIdent].value;
 
 	var xmlHttp = initAjax();
 	var debug = document.getElementById("debug");
@@ -142,7 +142,7 @@ function add_graduate(c_id){
 						debug.innerHTML = "<font color='#ff0000'>" + 
 						                  xmlHttp.responseText + "</font>";
 					} else {
-						debug.innerHTML += xmlHttp.responseText + "<br>";
+						debug.innerHTML = xmlHttp.responseText + "<br>";
 						changeGraduationData();
 					}
 			}
@@ -195,15 +195,56 @@ function deleteGraduation() {
 		changeStyle();
 	}
 }
+function removeGraduate(id) {
+	if (confirm('Er du sikker på at du vil slette personen ?')) {
+		callAjaxObject('/graduates/destroy/' + id, null);
+		changeStyle();
+	}
+}
 function saveGraduateInfo(member_id, grad_id) {
 	var showObj = document.getElementById(member_id + "_" + grad_id + "_view");
 	var editObj = document.getElementById(member_id + "_" + grad_id + "_edit");
 	if(showObj.style.display == '') {
+		// Edit
 		showObj.style.display = 'none';
 		editObj.style.display = '';
 	} else {
+		// Save
 		editObj.style.display = 'none';
 		showObj.style.display = '';
+		var rrObj = document.getElementById('rank_row_' + member_id);
+		var rrVal = rrObj.value;
+		var prObj = document.getElementById('passed_row_' + member_id);
+		var prVal = prObj.value;
+		var pgObj = document.getElementById('paid_grad_row_' + member_id);
+		var pgVal = pgObj.value;
+		var pbObj = document.getElementById('paid_belt_row_' + member_id);
+		var pbVal = pbObj.value;
+
+		pvalues = "member_id=" + member_id + "&rank_id=" + rrVal +
+		          "&passed=" + prVal + "&" + "paid=" + pgVal +
+				  "&paid_belt=" + pbVal + "&grad_id=" + grad_id;
+	
+		var xmlHttp = initAjax();
+		var debug = document.getElementById("debug");
+		debug.InnerHTML += 'Saving ' + member_id + ' ' + rrVal + ' ' +
+		                   prVal + ' ' + pgVal + ' ' + pbVal;
+		if(xmlHttp) {
+			xmlHttp.onreadystatechange=function() {
+				if(xmlHttp.readyState == CONST_AJAX_COMPLETE) {
+						if(xmlHttp.status != CONST_AJAX_HTTP_OK) {
+							debug.innerHTML = "<font color='#ff0000'>" + 
+											  xmlHttp.responseText + "</font>";
+						} else {
+							debug.innerHTML = xmlHttp.responseText + "<br>";
+							changeGraduationData();
+						}
+				}
+			}
+			xmlHttp.open("POST", "/graduates/update_graduate", true);
+			xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+			xmlHttp.send(pvalues);
+		}
 	}
 }
 -->
