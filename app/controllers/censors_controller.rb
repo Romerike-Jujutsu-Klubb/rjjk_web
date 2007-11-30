@@ -18,13 +18,16 @@ class CensorsController < ApplicationController
     @instructors = Member.find(:all, :conditions => "left_on IS NULL AND instructor = true", :order => 'last_name, first_name')
     rstr =<<EOH
     <table STYLE="border-top: 1px solid #000000;" CELLPADDING="0" CELLSPACING="0" width="100%">
-      <tr STYLE="background: #e3e3e3;"><td STYLE="border-bottom: 1px solid #000000;" colspan="2"><B>Instrukt&oslash;rer</B></td><tr>
+      <tr STYLE="background: #e3e3e3;">
+        <td STYLE="border-bottom: 1px solid #000000;"><B>Instrukt&oslash;rer</B></td>
+        <td ALIGN="right" STYLE="border-bottom: 1px solid #000000;"><A HREF="#" onClick="document.getElementById('glist').style.display='none';">X</A></td>
+      </tr>
 EOH
     for instr in @instructors
       nm = instr.first_name << " " << instr.last_name
       rstr = rstr << "<tr>" <<
              "<td><a href='#' onClick='add_censor(" + instr.cms_contract_id.to_s + ",\"" + nm + "\");'>" <<
-             nm << "</a></td>" << "<td>" << instr.department << "</td>"
+             nm << "</a></td>" << "<td ALIGN=right>" << instr.department << "</td>"
              "</tr>"
     end
     render_text rstr << "</table>\n"

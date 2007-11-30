@@ -104,7 +104,7 @@ EOH
     <table STYLE="border-top: 1px solid #000000;" width="100%" CELLPADDING="0" CELLSPACING="0">
       <tr STYLE="background: #e3e3e3;">
         <td STYLE="border-bottom: 1px solid #000000;"><B>Medlemmer</B></td>
-        <td STYLE="border-bottom: 1px solid #000000;" ALIGN="right">X</td>
+        <td STYLE="border-bottom: 1px solid #000000;" ALIGN="right"><A HREF="#" onClick="document.getElementById('glist').style.display='none';">X</A></td>
       </td><tr>
 EOH
     for instr in @instructors
