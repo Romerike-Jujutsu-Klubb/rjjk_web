@@ -21,7 +21,7 @@ margin: 0em;
 body
 {
 background: #000000 url('/images/bg1.jpg');
-padding: 35px 0px 35px 0px;
+padding: 15px 0px 15px 0px;
 }
 
 body,input
@@ -205,7 +205,7 @@ position: relative;
 	(so it'll take up 82% of the browser window's width). You can set it to a different percentage
 	value (70%, 90%, etc.) or even a pixel value (760px, 800px, etc.) to enforce a fixed width.
 */
-width: 82%;
+width: 90%;
 border: solid 7px #fff;
 background-color: #fff;
 margin: 0 auto;
@@ -390,4 +390,9 @@ table.members tr.even {
 
 table.members tr.odd {
   background: #eee;
+}
+
+#scrollbar {
+	background-attachment: scroll;
+	scrollbar-arrow-color: #ff00FF;
 }

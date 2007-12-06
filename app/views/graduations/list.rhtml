@@ -71,6 +71,7 @@ function show_glist(file) {
 	var	tlist = document.getElementById('glist');
 	var debug = document.getElementById('debug');
 	var xmlHttp = initAjax();
+	tlist.style.display = '';
 	
 	if(xmlHttp) {
 		xmlHttp.onreadystatechange=function() {
@@ -316,12 +317,13 @@ function saveGraduateInfo(member_id, grad_id) {
 <tr><td colspan="2"><div id="debug"></div></td></tr>
 </table>
 </td>
-<td WIDTH="8">&nbsp;</td>
-<td valign="top" align="center"><DIV ID="glist"></DIV></td>
+<td WIDTH="4">&nbsp;</td>
+<td valign="top" align="center">
+	<DIV ID="glist"></DIV>
+</td>
 </tr>
 </table>
 <br/>
-
 <SCRIPT Language="JavaScript1.2">
 	changeGraduationData();
 </SCRIPT>

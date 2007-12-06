@@ -24,14 +24,21 @@ class GraduatesController < ApplicationController
   
   def list
     if !params[:id]
+      @graduate_pages = paginate :graduates, :conditions => "member_id > 0", :order => 'member_id, rank_id DESC'
       @graduates = Graduate.find(:all, :conditions => "member_id > 0", :order => 'member_id, rank_id DESC')
     else
+      @graduate_pages = paginate :graduates, :conditions => "member_id = #{params[:id]}", :order => 'rank_id'
       @graduates = Graduate.find(:all, :conditions => "member_id = #{params[:id]}", :order => 'rank_id')
     end
   end
 
   def list_graduates
-    @graduate_pages, @graduates = paginate :graduates, :conditions => "graduation_id = #{params[:id]}"                              
+    if params[:id]
+      @graduate_pages, @graduates = paginate :graduates, :per_page => MEMBERS_PER_PAGE, :conditions => "graduation_id = #{params[:id]}", :order => "rank_id,passed"
+    else
+      @graduate_pages = paginate :graduates, :conditions => "member_id > 0", :order => "member_id,rank_id,passed"
+      @graduates = Graduate.find(:all, :conditions => "member_id > 0", :order => "member_id,rank_id,passed")
+    end
     render :action => 'list'
   end
 
@@ -57,12 +64,46 @@ class GraduatesController < ApplicationController
   end
 
   def list_graduations_by_member
-    @graduates = Graduate.find(:all, :conditions => "graduation_id = #{params[:id]}")
-    rstr =<<EOH
+    @censors = Censor.find(:all, :conditions => "graduation_id = #{params[:id]}")
+    @graduates = Graduate.find(:all, :conditions => ["graduation_id = ? AND member_id != 0", params[:id]],
+                               :order => 'rank_id, passed, paid_graduation, paid_belt asc')
+
+    ccnt = 0
+    cmax = 4
+    rstr =<<EOC
+<table width="100%" STYLE="border: 1px solid #000000;" cellspacing="0" cellpadding="0">
+  <tr STYLE=" background: #e3e3e3;">
+    <th STYLE="text-align: left; border-bottom: 1px solid #000000;" COLSPAN="#{cmax*2}">Sensor</th>
+  </tr>
+EOC
+    for cen in @censors
+      mbr = Member.find(:first, :conditions => ["cms_contract_id = ?", cen.member_id])
+      nm = "<td width=23%>#{mbr.first_name} #{mbr.last_name}</td><td width=2%><a href=# onClick=''>x</a></td>\n"
+      if ccnt == 0
+        rstr << "<tr>" << nm
+      elsif ccnt == (cmax - 1)
+        rstr << nm << "</tr>\n"
+        ccnt = -1
+      else
+        rstr << nm
+      end
+      ccnt = ccnt + 1
+    end
+    if ccnt != (cmax - 1)
+      while ccnt < cmax
+        rstr << "<td colspan=2>&nbsp;</td>\n"
+        ccnt = ccnt + 1
+      end
+      rstr << "</tr>\n"
+    end
+    rstr << "</table>\n"
+    
+    rstr << "<br>"
+
+    rstr << <<EOH
 <table width="100%" STYLE="border: 1px solid #000000;" cellspacing="0" cellpadding="0">
   <tr STYLE=" background: #e3e3e3;">
   <th STYLE="text-align: left; border-bottom: 1px solid #000000;">Medlem</th>
-  <!-- th STYLE="border-bottom: 1px solid #000000;">Dato</th -->
   <th STYLE="border-bottom: 1px solid #000000;">Grad</th>
   <th STYLE="border-bottom: 1px solid #000000;">Bestått</th>
   <th STYLE="border-bottom: 1px solid #000000;">Bet.Grad</th>
@@ -74,7 +115,6 @@ EOH
       mbr = Member.find(:first, :conditions => [ "cms_contract_id = ?", gr.member_id])
       rstr = rstr << "<tr id='#{gr.member_id}_#{gr.graduation.id}_view'>\n" <<
                      "  <td>#{mbr.first_name} #{mbr.last_name}</td>\n" <<
-                     #"  <td STYLE=\"text-align: center;\">#{gr.graduation.held_on}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{gr.rank.name}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{gr.passed ? 'Ja' : 'Nei'}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{gr.paid_graduation ? 'Ja' : 'Nei'}</td>\n" <<
@@ -101,20 +141,22 @@ EOH
   def list_potential_graduates
     @instructors = Member.find(:all, :conditions => "left_on IS NULL", :order => 'last_name, first_name')
     rstr =<<EOH
-    <table STYLE="border-top: 1px solid #000000;" width="100%" CELLPADDING="0" CELLSPACING="0">
-      <tr STYLE="background: #e3e3e3;">
-        <td STYLE="border-bottom: 1px solid #000000;"><B>Medlemmer</B></td>
-        <td STYLE="border-bottom: 1px solid #000000;" ALIGN="right"><A HREF="#" onClick="document.getElementById('glist').style.display='none';">X</A></td>
+    <div style="height:256px; width:350px; overflow:auto; overflow-x:hidden;">
+    <table STYLE="height: 128px;" width="100%" CELLPADDING="0" CELLSPACING="0">
+      <tr>
+        <td STYLE="background: #e3e3e3;border-top: 1px solid #000000;border-bottom: 1px solid #000000;"><B>Medlemmer</B></td>
+        <td STYLE="background: #e3e3e3;border-top: 1px solid #000000;border-bottom: 1px solid #000000;" ALIGN="right"><A HREF="#" onClick="document.getElementById('glist').style.display='none';">X</A></td>
+        <td width=20>&nbsp;</td>
       </td><tr>
 EOH
     for instr in @instructors
       rstr = rstr << "<tr>" <<
-             "<td><a href='#' onClick='add_graduate(" + instr.cms_contract_id.to_s + ");'>" <<
+             "<td align=left><a href='#' onClick='add_graduate(" + instr.cms_contract_id.to_s + ");'>" <<
              instr.last_name << ", " << instr.first_name << "</a></td>" <<
              "<td ALIGN='right'>" << instr.department << "</td>"
-             "</tr>\n"
+             "<td>&nbsp;</td></tr>\n"
     end
-    render_text rstr << "</table>\n"
+    render_text rstr << "</table>\n</div>\n"
   end
 
   def update_graduate

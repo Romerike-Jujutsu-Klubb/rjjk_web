@@ -17,10 +17,12 @@ class CensorsController < ApplicationController
   def list_instructors
     @instructors = Member.find(:all, :conditions => "left_on IS NULL AND instructor = true", :order => 'last_name, first_name')
     rstr =<<EOH
-    <table STYLE="border-top: 1px solid #000000;" CELLPADDING="0" CELLSPACING="0" width="100%">
-      <tr STYLE="background: #e3e3e3;">
-        <td STYLE="border-bottom: 1px solid #000000;"><B>Instrukt&oslash;rer</B></td>
-        <td ALIGN="right" STYLE="border-bottom: 1px solid #000000;"><A HREF="#" onClick="document.getElementById('glist').style.display='none';">X</A></td>
+    <div style="height:256px; width:350px; overflow:auto; overflow-x:hidden;">
+    <table STYLE="height: 128px;" CELLPADDING="0" CELLSPACING="0" width="100%">
+      <tr>
+        <td STYLE="border-top: 1px solid #000000;background: #e3e3e3;border-bottom: 1px solid #000000;"><B>Instrukt&oslash;rer</B></td>
+        <td ALIGN="right" STYLE="border-top: 1px solid #000000;background: #e3e3e3;border-bottom: 1px solid #000000;"><A HREF="#" onClick="document.getElementById('glist').style.display='none';">X</A></td>
+        <td width=20>&nbsp;</td>
       </tr>
 EOH
     for instr in @instructors
@@ -30,7 +32,7 @@ EOH
              nm << "</a></td>" << "<td ALIGN=right>" << instr.department << "</td>"
              "</tr>"
     end
-    render_text rstr << "</table>\n"
+    render_text rstr << "</table>\n</div>\n"
   end
 
   def show
