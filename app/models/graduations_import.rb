@@ -70,12 +70,17 @@ class GraduationsImport < ActiveRecord::Migration
     a2dan  = aik.ranks.create!(:name => '2.dan',  :colour => 'svart')
     a3dan  = aik.ranks.create!(:name => '3.dan',  :colour => 'svart')
 
+    hgrad = Hash.new()
+    
     @data.each {|k,v|
       v.each {|x,y|
         next if x == 0
         rnk = Rank.find(:first, :conditions => ['name LIKE ?', y])
         next if !rnk
-        grd = kwr.graduations.create!(:held_on => k)
+        if !hgrad[k]
+          hgrad[k] = kwr.graduations.create!(:held_on => k)
+        end
+        grd = hgrad[k]
         grd.graduates.create!(:member_id => x, :passed => true, :rank_id => rnk.id,
                               :paid_graduation => true, :paid_belt => true)
         #STDERR.puts "#{k} => #{x} => #{y} => #{mid.id}"
