@@ -41,7 +41,8 @@ function setObjectData(ref, file) {
 					if(xmlHttp.status == CONST_AJAX_HTTP_OK) {
 						obj.innerHTML = xmlHttp.responseText;
 					} else {
-						obj.innerHTML = "Det oppstod en feil (" + xmlHttp.status + ")";
+						obj.innerHTML = "<font color='#ff0000'>" + 
+						                "Det oppstod en feil (" + xmlHttp.status + ")</font>";
 					}
 			}
 		}
@@ -58,13 +59,19 @@ function callAjaxObject(file, object) {
 		xmlHttp.onreadystatechange=function() {
 			if(xmlHttp.readyState == CONST_AJAX_COMPLETE) {
 					if(xmlHttp.status != CONST_AJAX_HTTP_OK) {
-						obj.innerHTML = "Det oppstod en feil (" + xmlHttp.status + ")";
+						obj.innerHTML = "<font color='#ff0000'>" + 
+						                "Det oppstod en feil (" + xmlHttp.status + ")</font>";
 					}
 			}
 		}
 		xmlHttp.open("POST", file, true);
 		xmlHttp.send(null);
 	}
+}
+
+function hide_glist() {
+	var tlist = document.getElementById('glist');
+	tlist.innerHTML = '<img src="/images/kubinage.png">';
 }
 
 function show_glist(file) {
@@ -79,7 +86,8 @@ function show_glist(file) {
 					if(xmlHttp.status == CONST_AJAX_HTTP_OK) {
 						tlist.innerHTML = xmlHttp.responseText;
 					} else {
-						debug.innerHTML = "Det oppstod en feil (" + xmlHttp.status + ")";
+						debug.innerHTML = "<font color='#ff0000'>" + 
+						                  "Det oppstod en feil (" + xmlHttp.status + ")</font>";
 					}
 			}
 		}
@@ -108,7 +116,7 @@ function add_censor(c_id, name){
 					if(xmlHttp.status != CONST_AJAX_HTTP_OK) {
 						alert("Det oppstod en feil (" + xmlHttp.status + ")");
 						debug.innerHTML = "<font color='#ff0000'>" + 
-						                  xmlHttp.responseText + "</font>";
+						                  "Det oppstod en feil (" + xmlHttp.status + ")</font>";
 					} else {
 						debug.innerHTML = xmlHttp.responseText + "<br>";
 					}
@@ -139,9 +147,8 @@ function add_graduate(c_id){
 		xmlHttp.onreadystatechange=function() {
 			if(xmlHttp.readyState == CONST_AJAX_COMPLETE) {
 					if(xmlHttp.status != CONST_AJAX_HTTP_OK) {
-						alert("Det oppstod en feil (" + xmlHttp.status + ")");
 						debug.innerHTML = "<font color='#ff0000'>" + 
-						                  xmlHttp.responseText + "</font>";
+						                  "Det oppstod en feil (" + xmlHttp.status + ")</font>";
 					} else {
 						debug.innerHTML = xmlHttp.responseText + "<br>";
 						changeGraduationData();
@@ -235,7 +242,7 @@ function saveGraduateInfo(member_id, grad_id) {
 				if(xmlHttp.readyState == CONST_AJAX_COMPLETE) {
 						if(xmlHttp.status != CONST_AJAX_HTTP_OK) {
 							debug.innerHTML = "<font color='#ff0000'>" + 
-											  xmlHttp.responseText + "</font>";
+						                      "Det oppstod en feil (" + xmlHttp.status + ")</font>"; 
 						} else {
 							debug.innerHTML = xmlHttp.responseText + "<br>";
 							changeGraduationData();
@@ -301,15 +308,12 @@ function saveGraduateInfo(member_id, grad_id) {
 		<%= link_to 'Registrer ny gradering', :action => 'new' %>
 	</td>
 	<td align="center">
-		<!-- a href="#" onClick="add_censor('/censors/add_new_censor');">Legg til sensor</a -->
-		<a href="#" onClick="show_glist('/censors/list_instructors');">Legg til sensor</a>
-		<!--  %= link_to 'Legg til sensor', :controller => 'censors', :action => 'new' % -->
+		<A HREF="#" onClick="show_glist('/censors/list_instructors');">Legg til sensor</a>
 		</td>
 	<td align="center">
-		<a href="#" onClick="show_glist('/graduates/list_potential_graduates');">Legg til medlemmer</a>
-		<!-- %= link_to 'Legg til medlemmer', :action => 'new' % -->
-		</td>
-	<td align="right"><A HREF="#" onClick='deleteGraduation();'>Fjern gradering</A></td>
+		<A HREF="#" onClick="show_glist('/graduates/list_potential_graduates');">Legg til medlemmer</a>
+	</td><td align="right">
+		<A HREF="#" onClick='deleteGraduation();'>Fjern gradering</A></td>
 	</tr>
 		<tr STYLE="background: #e3e3e3;"><TD HEIGHT="2" COLSPAN="4"></TD></tr>
 
@@ -319,7 +323,7 @@ function saveGraduateInfo(member_id, grad_id) {
 </td>
 <td WIDTH="4">&nbsp;</td>
 <td valign="top" align="center">
-	<DIV ID="glist"></DIV>
+	<DIV ID="glist"><img src="/images/kubinage.png"></DIV>
 </td>
 </tr>
 </table>

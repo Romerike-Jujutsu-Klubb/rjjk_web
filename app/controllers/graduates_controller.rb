@@ -145,7 +145,7 @@ EOH
     <table STYLE="height: 128px;" width="100%" CELLPADDING="0" CELLSPACING="0">
       <tr>
         <td STYLE="background: #e3e3e3;border-top: 1px solid #000000;border-bottom: 1px solid #000000;"><B>Medlemmer</B></td>
-        <td STYLE="background: #e3e3e3;border-top: 1px solid #000000;border-bottom: 1px solid #000000;" ALIGN="right"><A HREF="#" onClick="document.getElementById('glist').style.display='none';">X</A></td>
+        <td STYLE="background: #e3e3e3;border-top: 1px solid #000000;border-bottom: 1px solid #000000;" ALIGN="right"><A HREF="#" onClick="hide_glist();">X</A></td>
         <td width=20>&nbsp;</td>
       </td><tr>
 EOH

@@ -21,7 +21,7 @@ class CensorsController < ApplicationController
     <table STYLE="height: 128px;" CELLPADDING="0" CELLSPACING="0" width="100%">
       <tr>
         <td STYLE="border-top: 1px solid #000000;background: #e3e3e3;border-bottom: 1px solid #000000;"><B>Instrukt&oslash;rer</B></td>
-        <td ALIGN="right" STYLE="border-top: 1px solid #000000;background: #e3e3e3;border-bottom: 1px solid #000000;"><A HREF="#" onClick="document.getElementById('glist').style.display='none';">X</A></td>
+        <td ALIGN="right" STYLE="border-top: 1px solid #000000;background: #e3e3e3;border-bottom: 1px solid #000000;"><A HREF="#" onClick="hide_glist();">X</A></td>
         <td width=20>&nbsp;</td>
       </tr>
 EOH
