@@ -93,7 +93,7 @@ class Member < ActiveRecord::Base
     
     # g.draw_vertical_legend
     
-    #g.maximum_value = (g.maximum_value.to_s[0..0].to_i + 1) * (10**Math::log10(g.maximum_value.to_i).to_i) if g.maximum_value > 0
+    g.maximum_value = (g.maximum_value.to_s[0..0].to_i + 1) * (10**Math::log10(g.maximum_value.to_i).to_i) if g.maximum_value > 0
     g.marker_count = g.maximum_value / 10
     g.to_blob
   end
