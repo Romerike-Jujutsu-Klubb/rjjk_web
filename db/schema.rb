@@ -102,8 +102,4 @@ ActiveRecord::Schema.define(:version => 9) do
     t.column "deleted",         :boolean,                :default => false
   end
 
-  create_table "weights", :force => true do |t|
-    t.column "weight", :decimal, :precision => 4, :scale => 1
-  end
-
 end
