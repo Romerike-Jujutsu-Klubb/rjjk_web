@@ -47,8 +47,12 @@ EOH
     gid = params[:graduation_id].to_i
     mid = params[:member_id].to_i
     name = params[:name]
-    Censor.create!(:graduation_id => gid, :member_id => mid)
-    render_text "Added #{name} as new sensor to graduation" 
+    if Censor.find(:first, :conditions => "member_id = #{mid} AND graduation_id = #{gid}")
+      render_text "Censor already exists"
+    else
+      Censor.create!(:graduation_id => gid, :member_id => mid)
+      render_text "Added #{name} as new sensor to graduation"
+    end
   end
 
   def create

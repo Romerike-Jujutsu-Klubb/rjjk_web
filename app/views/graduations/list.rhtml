@@ -118,7 +118,8 @@ function add_censor(c_id, name){
 						debug.innerHTML = "<font color='#ff0000'>" + 
 						                  "Det oppstod en feil (" + xmlHttp.status + ")</font>";
 					} else {
-						debug.innerHTML = xmlHttp.responseText + "<br>";
+						//debug.innerHTML = xmlHttp.responseText + "<br>";
+						changeGraduationData();
 					}
 			}
 		}
@@ -178,7 +179,7 @@ function changeStyle() {
 
 	changeGraduationData();
 }
-function changeGraduationData(dd) {
+function changeGraduationData() {
 	var obj = document.getElementById('held_on_id')
 	var objIndex = obj.selectedIndex;
 	var objId = obj.options[objIndex].value;
@@ -203,12 +204,20 @@ function deleteGraduation() {
 		changeStyle();
 	}
 }
-function removeGraduate(id) {
-	if (confirm('Er du sikker på at du vil slette personen ?')) {
+function removeGraduate(id, name) {
+	if (confirm('Er du sikker på at du vil slette ' + name + ' fra denne graderingen ?')) {
 		callAjaxObject('/graduates/destroy/' + id, null);
 		changeStyle();
 	}
 }
+
+function removeCensor(id, name) {
+	if (confirm('Er du sikker på at du vil slette ' + name + ' som sensor fra denne graderingen ?')) {
+		callAjaxObject('/censors/destroy/' + id, null);
+		changeStyle();
+	}
+}
+
 function saveGraduateInfo(member_id, grad_id) {
 	var showObj = document.getElementById(member_id + "_" + grad_id + "_view");
 	var editObj = document.getElementById(member_id + "_" + grad_id + "_edit");
@@ -254,6 +263,30 @@ function saveGraduateInfo(member_id, grad_id) {
 			xmlHttp.send(pvalues);
 		}
 	}
+}
+
+function cancelSaveGraduateInfo(member_id, grad_id) {
+	var showObj = document.getElementById(member_id + "_" + grad_id + "_view");
+	var editObj = document.getElementById(member_id + "_" + grad_id + "_edit");
+	
+	if(showObj.style.display == '') {
+		// Edit
+		showObj.style.display = 'none';
+		editObj.style.display = '';
+	} else {
+		// Save
+		editObj.style.display = 'none';
+		showObj.style.display = '';
+		var rrObj = document.getElementById('rank_row_' + member_id);
+		rrObj.reset;
+		var prObj = document.getElementById('passed_row_' + member_id);
+		prObj.reset;
+		var pgObj = document.getElementById('paid_grad_row_' + member_id);
+		pgObj.reset;
+		var pbObj = document.getElementById('paid_belt_row_' + member_id);
+		pbObj.reset;
+	}
+	//changeGraduationData();
 }
 -->
 </script>

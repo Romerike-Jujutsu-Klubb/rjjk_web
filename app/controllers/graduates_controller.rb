@@ -78,7 +78,8 @@ class GraduatesController < ApplicationController
 EOC
     for cen in @censors
       mbr = Member.find(:first, :conditions => ["cms_contract_id = ?", cen.member_id])
-      nm = "<td width=23%>#{mbr.first_name} #{mbr.last_name}</td><td width=2%><a href=# onClick=''>x</a></td>\n"
+      nm = "<td width=23%>#{mbr.first_name} #{mbr.last_name}</td>" <<
+           "<td width=2%><a href=# onClick='removeCensor(#{cen.id}, \"#{mbr.first_name} #{mbr.last_name}\");'>x</a></td>\n"
       if ccnt == 0
         rstr << "<tr>" << nm
       elsif ccnt == (cmax - 1)
@@ -98,7 +99,11 @@ EOC
     end
     rstr << "</table>\n"
     
-    rstr << "<br>"
+    if @censors.size < 1
+      rstr = ""
+    else
+      rstr << "<br>"
+    end
 
     rstr << <<EOH
 <table width="100%" STYLE="border: 1px solid #000000;" cellspacing="0" cellpadding="0">
@@ -121,7 +126,7 @@ EOH
                      "  <td STYLE=\"text-align: center;\">#{gr.paid_belt ? 'Ja' : 'Nei'}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\"><A HREF='/graduates/list/" << gr.member_id.to_s << "'>Oversikt</A></td>\n" <<
                      "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>Endre</A></td>\n" <<
-                     "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='removeGraduate(#{gr.id})'>Slett</A></td>\n" <<
+                     "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='removeGraduate(#{gr.id},\"#{mbr.first_name} #{mbr.last_name}\")'>Slett</A></td>\n" <<
                      "</tr>\n" 
       rstr = rstr << "<tr id='#{gr.member_id}_#{gr.graduation.id}_edit' STYLE='display: none;'>\n" <<
                      "  <td>#{mbr.first_name} #{mbr.last_name}</td>\n" <<
@@ -132,7 +137,7 @@ EOH
                      "  <td STYLE=\"text-align: center;\">#{yes_no_select('paid_belt', gr.paid_belt, gr.member_id)}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">&nbsp;</td>\n" <<
                      "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>Lagre</A></td>\n" <<
-                     "  <td STYLE=\"text-align: center;\">&nbsp;</td>\n" <<
+                     "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='cancelSaveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>Avbryt</A></td>\n" <<
                      "</tr>\n" 
     end
     render_text rstr << "</table>\n"
