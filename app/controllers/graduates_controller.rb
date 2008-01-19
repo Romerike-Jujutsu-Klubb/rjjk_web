@@ -79,7 +79,9 @@ EOC
     for cen in @censors
       mbr = Member.find(:first, :conditions => ["cms_contract_id = ?", cen.member_id])
       nm = "<td width=23%>#{mbr.first_name} #{mbr.last_name}</td>" <<
-           "<td width=2%><a href=# onClick='removeCensor(#{cen.id}, \"#{mbr.first_name} #{mbr.last_name}\");'>x</a></td>\n"
+           "<td width=2%><a href=# onClick='removeCensor(#{cen.id}, " <<
+           "\"#{mbr.first_name} #{mbr.last_name}\");'>" <<
+           "<IMG SRC=\"/images/button-delete-16x16.png\" STYLE=\"border: 0;\" ALT=\"Slett sensor\"></a></td>\n"
       if ccnt == 0
         rstr << "<tr>" << nm
       elsif ccnt == (cmax - 1)
@@ -124,9 +126,12 @@ EOH
                      "  <td STYLE=\"text-align: center;\">#{gr.passed ? 'Ja' : 'Nei'}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{gr.paid_graduation ? 'Ja' : 'Nei'}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{gr.paid_belt ? 'Ja' : 'Nei'}</td>\n" <<
-                     "  <td STYLE=\"text-align: center;\"><A HREF='/graduates/list/" << gr.member_id.to_s << "'>Oversikt</A></td>\n" <<
-                     "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>Endre</A></td>\n" <<
-                     "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='removeGraduate(#{gr.id},\"#{mbr.first_name} #{mbr.last_name}\")'>Slett</A></td>\n" <<
+                     "  <td STYLE=\"text-align: center;\"><A HREF='/graduates/list/" << gr.member_id.to_s << "'>" <<
+                     "<IMG SRC=\"/images/button-view-16x16.png\" STYLE=\"border: 0;\" ALT=\"Oversikt\"></A></td>\n" <<
+                     "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>" <<
+                     "<IMG SRC=\"/images/button-edit-16x16.png\" STYLE=\"border: 0;\" ALT=\"Endre\"></A></td>\n" <<
+                     "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='removeGraduate(#{gr.id},\"#{mbr.first_name} #{mbr.last_name}\")'>" <<
+                     "<IMG SRC=\"/images/button-delete-16x16.png\" STYLE=\"border: 0;\" ALT=\"Slett\"></A></td>\n" <<
                      "</tr>\n" 
       rstr = rstr << "<tr id='#{gr.member_id}_#{gr.graduation.id}_edit' STYLE='display: none;'>\n" <<
                      "  <td>#{mbr.first_name} #{mbr.last_name}</td>\n" <<
@@ -136,8 +141,10 @@ EOH
                      "  <td STYLE=\"text-align: center;\">#{yes_no_select('paid_grad', gr.paid_graduation, gr.member_id)}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{yes_no_select('paid_belt', gr.paid_belt, gr.member_id)}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">&nbsp;</td>\n" <<
-                     "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>Lagre</A></td>\n" <<
-                     "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='cancelSaveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>Avbryt</A></td>\n" <<
+                     "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>" <<
+                     "<IMG SRC=\"/images/button-ok-16x16.png\" STYLE=\"border: 0;\" ALT=\"Lagre\"></A></td>\n" <<
+                     "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='cancelSaveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>" <<
+                     "<IMG SRC=\"/images/button-cancel-16x16.png\" STYLE=\"border: 0;\" ALT=\"Avbryt\"></A></td>\n" <<
                      "</tr>\n" 
     end
     render_text rstr << "</table>\n"
