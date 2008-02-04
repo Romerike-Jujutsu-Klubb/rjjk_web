@@ -11,3 +11,9 @@ gem install ferret
 Linker til utviklingsverktøy:
 
 http://aptana.com/
+
+DEPLOYMENT:
+
+gem install capistrano
+
+Add a reference to your private key in config/deploy.rb
