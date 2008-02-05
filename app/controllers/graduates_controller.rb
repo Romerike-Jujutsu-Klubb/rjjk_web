@@ -151,9 +151,9 @@ EOH
   end
 
   def list_potential_graduates
-    @instructors = Member.find(:all, :conditions => "left_on IS NULL", :order => 'last_name, first_name')
+    @grads = Member.find(:all, :conditions => "left_on IS NULL", :order => 'last_name, first_name')
     rstr =<<EOH
-    <div style="height:256px; width:350px; overflow:auto; overflow-x:hidden;">
+    <div style="height:256px; width:284px; overflow:auto; overflow-x:hidden;">
     <table STYLE="height: 128px;" width="100%" CELLPADDING="0" CELLSPACING="0">
       <tr>
         <td STYLE="background: #e3e3e3;border-top: 1px solid #000000;border-bottom: 1px solid #000000;"><B>Medlemmer</B></td>
@@ -161,12 +161,14 @@ EOH
         <td width=20>&nbsp;</td>
       </td><tr>
 EOH
-    for instr in @instructors
-      rstr = rstr << "<tr>" <<
-             "<td align=left><a href='#' onClick='add_graduate(" + instr.cms_contract_id.to_s + ");'>" <<
-             instr.last_name << ", " << instr.first_name << "</a></td>" <<
-             "<td ALIGN='right'>" << instr.department << "</td>"
-             "<td>&nbsp;</td></tr>\n"
+    for grad in @grads
+      ln = grad.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') 
+      fn = grad.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
+      rstr << "<tr>" <<
+              "<td align=left><a href='#' onClick='add_graduate(" + grad.cms_contract_id.to_s + ");'>" <<
+              "#{ln}, #{fn}</a></td>" <<
+              "<td ALIGN='right'>" << grad.department <<
+              "<td>&nbsp;</td></tr>\n"
     end
     render_text rstr << "</table>\n</div>\n"
   end

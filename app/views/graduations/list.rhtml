@@ -40,6 +40,7 @@ function setObjectData(ref, file) {
 			if(xmlHttp.readyState == CONST_AJAX_COMPLETE) {
 					if(xmlHttp.status == CONST_AJAX_HTTP_OK) {
 						obj.innerHTML = xmlHttp.responseText;
+						debug.innerHTML = ""; 
 					} else {
 						obj.innerHTML = "<font color='#ff0000'>" + 
 						                "Det oppstod en feil (" + xmlHttp.status + ")</font>";
@@ -61,6 +62,8 @@ function callAjaxObject(file, object) {
 					if(xmlHttp.status != CONST_AJAX_HTTP_OK) {
 						obj.innerHTML = "<font color='#ff0000'>" + 
 						                "Det oppstod en feil (" + xmlHttp.status + ")</font>";
+					} else {
+						debug.innerHTML = ""; 
 					}
 			}
 		}
@@ -85,6 +88,7 @@ function show_glist(file) {
 			if(xmlHttp.readyState == CONST_AJAX_COMPLETE) {
 					if(xmlHttp.status == CONST_AJAX_HTTP_OK) {
 						tlist.innerHTML = xmlHttp.responseText;
+						debug.innerHTML = ""; 
 					} else {
 						debug.innerHTML = "<font color='#ff0000'>" + 
 						                  "Det oppstod en feil (" + xmlHttp.status + ")</font>";
@@ -118,8 +122,8 @@ function add_censor(c_id, name){
 						debug.innerHTML = "<font color='#ff0000'>" + 
 						                  "Det oppstod en feil (" + xmlHttp.status + ")</font>";
 					} else {
-						//debug.innerHTML = xmlHttp.responseText + "<br>";
 						changeGraduationData();
+						debug.innerHTML = ""; 
 					}
 			}
 		}
@@ -291,9 +295,10 @@ function cancelSaveGraduateInfo(member_id, grad_id) {
 -->
 </script>
 
-<%= button_to 'Importer data fra CSV', :action => 'import'%>
+<!-- %= button_to 'Importer data fra CSV', :action => 'import'% -->
+<P>
 
-<table border="0" WIDTH="1024" CELLSPACING="0" CELLPADDING="0">
+<table border="0" WIDTH="768" CELLSPACING="0" CELLPADDING="0">
 	<tr><td valign="top" WIDTH="600">
 <table STYLE="border-top: 1px solid #000000;" WIDTH="600" CELLSPACING="0" CELLPADDING="0">
   <tr STYLE="background: #e3e3e3;">
@@ -360,6 +365,8 @@ function cancelSaveGraduateInfo(member_id, grad_id) {
 </td>
 </tr>
 </table>
+
+</P>
 <br/>
 <SCRIPT Language="JavaScript1.2">
 	changeGraduationData();

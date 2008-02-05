@@ -17,7 +17,7 @@ class CensorsController < ApplicationController
   def list_instructors
     @instructors = Member.find(:all, :conditions => "left_on IS NULL AND instructor = true", :order => 'last_name, first_name')
     rstr =<<EOH
-    <div style="height:256px; width:350px; overflow:auto; overflow-x:hidden;">
+    <div style="height:256px; width:284px; overflow: auto; overflow-x: hidden;">
     <table STYLE="height: 128px;" CELLPADDING="0" CELLSPACING="0" width="100%">
       <tr>
         <td STYLE="border-top: 1px solid #000000;background: #e3e3e3;border-bottom: 1px solid #000000;"><B>Instrukt&oslash;rer</B></td>
@@ -26,7 +26,11 @@ class CensorsController < ApplicationController
       </tr>
 EOH
     for instr in @instructors
-      nm = instr.first_name << " " << instr.last_name
+      #ln = instr.last_name.index(/\s+/) ? instr.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') : instr.last_name.capitalize 
+      #fn = instr.first_name.index(/\s+/) ? instr.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') : instr.first_name.capitalize
+      fn = instr.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
+      ln = instr.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') 
+      nm = fn << " " << ln
       rstr = rstr << "<tr>" <<
              "<td><a href='#' onClick='add_censor(" + instr.cms_contract_id.to_s + ",\"" + nm + "\");'>" <<
              nm << "</a></td>" << "<td ALIGN=right>" << instr.department << "</td>"
