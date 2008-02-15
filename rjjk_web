@@ -20,11 +20,11 @@ START_FERRET_CMD="cd $APP_DIR ; RAILS_ENV=production ruby script/ferret_start"
 STOP_FERRET_CMD="cd $APP_DIR ; RAILS_ENV=production ruby script/ferret_stop"
 RESTART_CMD="mongrel_rails restart -c $APP_DIR"
 
+USER=`whoami`
+
 run() {
 	cmd=$1
 	if [ "$USER" != "$RUN_AS_USER" ]; then
-		whoami
-		env
 		echo Running as $USER
         echo su - $RUN_AS_USER -c "$cmd"
         su - $RUN_AS_USER -c "$cmd"
