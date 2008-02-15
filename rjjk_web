@@ -24,6 +24,7 @@ run() {
 	cmd=$1
 	if [ "$USER" != "$RUN_AS_USER" ]; then
 		whoami
+		env
 		echo Running as $USER
         echo su - $RUN_AS_USER -c "$cmd"
         su - $RUN_AS_USER -c "$cmd"
