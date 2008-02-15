@@ -8,26 +8,44 @@
 
 . /etc/rc.d/init.d/functions
 
-app=rjjk_web
-user=capistrano
-port=3005
-pidfile=${PIDFILE-/u/apps/$app/shared/log/mongrel.pid}
+APP=rjjk_web
+RUN_AS_USER=capistrano
+PORT=3005
+APP_DIR=/u/apps/$APP/current
+pidfile=${PIDFILE-/u/apps/$APP/shared/log/mongrel.pid}
+
+START_FERRET_CMD="cd $APP_DIR;RAILS_ENV=production ruby script/ferret_start"
+START_CMD="mongrel_rails start -p $PORT -e production -c $APP_DIR -d 1>/u/apps/$APP/shared/log/stdout.log 2>/u/apps/$APP/shared/log/stderr.log"
+STOP_CMD="mongrel_rails stop -c $APP_DIR"
+STOP_FERRET_CMD="cd $APP_DIR;RAILS_ENV=production ruby script/ferret_stop"
+RESTART_CMD="mongrel_rails restart -c $APP_DIR"
+
+run() {
+	cmd=$1
+	if [ "$USER" != "$RUN_AS_USER" ]; then
+        echo su -c "$cmd" - $RUN_AS_USER
+        su -c "$cmd" - $RUN_AS_USER
+    else
+    	echo $cmd
+        $cmd
+    fi
+}
 
 # See how we were called.
 case "$1" in
   start)
-        su - $user -c "cd /u/apps/$app/current;RAILS_ENV=production ruby script/ferret_start"
-        su - $user -c "mongrel_rails start -p $port -e production -c /u/apps/$app/current -d 1>/u/apps/$app/shared/log/stdout.log 2>/u/apps/$app/shared/log/stderr.log"
+    run "$START_FERRET_CMD"
+    run "$START_CMD"
         ;;
   stop)
-        su - $user -c "mongrel_rails stop -c /u/apps/$app/current"
-        su - $user -c "cd /u/apps/$app/current;RAILS_ENV=production ruby script/ferret_stop"
-        rm -f ${pidfile}
+    run "$STOP_FERRET_CMD"
+    run "$STOP_CMD"
+    rm -f ${pidfile}
         ;;
   restart)
-        su - $user -c "cd /u/apps/$app/current;RAILS_ENV=production ruby script/ferret_stop"
-        su - $user -c "cd /u/apps/$app/current;RAILS_ENV=production ruby script/ferret_start"
-        su - $user -c "mongrel_rails restart -c /u/apps/$app/current"
+    run "$STOP_FERRET_CMD"
+    run "$START_FERRET_CMD"
+    run "$RESTART_CMD"
         ;;
   status)
         ps -ef | grep $app
