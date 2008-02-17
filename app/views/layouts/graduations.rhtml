@@ -38,17 +38,29 @@
 	<div id="menu">
 		<!-- HINT: Set the class of any menu link below to "active" to make it appear active -->
 		<ul>
-<!--
-			<li><a href="#">Home</a></li>
--->
 			<li><%=link_to 'Nyheter', {:controller => 'news', :action => nil}, :class => controller.class.name == 'NewsController' ? 'active' : nil %></li>
-<!--
-			<li><a href="#">Blog</a></li>
-			<li><a href="#">Gallery</a></li>
--->
-            <% @information_pages.each do |@information_page| %>
-			<li><%=menu_item @information_page.title, :action => :show, :id => @information_page.id %></li>
-			<% end %>
+            <%
+			# Endret fremvisningsmetoden slik at vi tar høyde for maks 1024 pixel oppløsning
+            # Dersom antall pixler overstiger 1024 lages det en ny meny linje for de neste meny punktene
+			# Verdiforklaring:
+			#	64 * 2 pixel buffer på høyre og venstre side av rammen
+			#		Denne må endres dersom størrelsen på rammebuffer endres i zenlike.css
+			#	størrelse av navn på meny punkt * 10 gir ca skjermlengde av navnet
+			#		Denne må endres dersom man endrer font størrelse eller font type endres i zenlike.css
+			# Hvis denne endres, husk å endre zenlike.rhtml i app/views/layouts
+			msz = 64 * 2
+			@information_pages.each do |ipg|
+				msz += ipg.title.size * 10
+				if msz <= 1024
+			%>
+					<li><%=menu_item ipg.title, :action => :show, :id => ipg.id %></li>
+			<%  else %>
+					<% msz = 64 * 2 %>
+					</ul></div>
+					<div id="menu"><ul>
+					<li><%=menu_item ipg.title, :action => :show, :id => ipg.id %></li>
+			<%  end
+			end %>
 		</ul>
 	</div>
 		<% if admin? %>
