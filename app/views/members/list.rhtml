@@ -8,10 +8,14 @@
     <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>
   </tr>
   
-<% for member in @members %>
+<%
+	for member in @members
+		fn = member.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
+		ln = member.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') 
+%>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td><%=h member.last_name %></td>
-    <td><%=h member.first_name %></td>
+    <td><%=h ln %></td>
+    <td><%=h fn %></td>
     <td><%= link_to 'Rediger', :action => 'edit', :id => member %></td>
   </tr>
 <% end %>
