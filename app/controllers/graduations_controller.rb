@@ -25,7 +25,7 @@ class GraduationsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @graduations = Graduation.find(:all, :order => 'held_on', :conditions => [ "martial_art_id = 1"])
+    @graduations = Graduation.find(:all, :order => 'held_on DESC', :conditions => [ "martial_art_id = 1"])
     @martial_arts = MartialArt.find(:all)
 
     @grad_pages, @grad = Hash.new()

@@ -71,6 +71,10 @@ class User < ActiveRecord::Base
     self.token_expiry.to_i - Clock.now.to_i
   end
   
+  def admin?
+    role == UserSystem::ADMIN_ROLE
+  end
+  
   protected
 
   attr_accessor :password, :password_confirmation

@@ -147,9 +147,9 @@ EOH
                      "  <td STYLE=\"text-align: center;\">#{yes_no_select('paid_belt', gr.paid_belt, gr.member_id)}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">&nbsp;</td>\n" <<
                      "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>" <<
-                     "<IMG SRC=\"/images/button-ok-16x16.png\" STYLE=\"border: 0;\" ALT=\"Lagre\"></A></td>\n" <<
+                     "<IMG SRC=\"/images/button-ok-16x16.png\" STYLE=\"border: 0;\" title=\"Lagre\" ALT=\"Lagre\"></A></td>\n" <<
                      "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='cancelSaveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>" <<
-                     "<IMG SRC=\"/images/button-cancel-16x16.png\" STYLE=\"border: 0;\" ALT=\"Avbryt\"></A></td>\n" <<
+                     "<IMG SRC=\"/images/button-cancel-16x16.png\" STYLE=\"border: 0;\" title=\"Avbryt\" ALT=\"Avbryt\"></A></td>\n" <<
                      "</tr>\n" 
     end
     render_text rstr << "</table>\n"

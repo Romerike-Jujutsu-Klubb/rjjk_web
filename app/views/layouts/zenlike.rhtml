@@ -96,7 +96,7 @@
         			<%= link_to 'Login', :controller => 'user', :action => :login %>
 				<% else %>
 	    			<% if admin? %>
-    	    			<%= link_to 'Nyheter', :controller => 'news', :action => 'new' %>
+    	    			<%= link_to 'Ny nyhet', :controller => 'news', :action => 'new' %>
     	                <%= link_to 'Ny side', :controller => 'info', :action => 'new' %>
     	                <%= link_to 'Brukere', :controller => 'user', :action => :list %>
     				<% end %>
