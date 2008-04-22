@@ -34,6 +34,7 @@ class NewsController < ApplicationController
 
   def edit
     @news_item = NewsItem.find(params[:id])
+    @images = Image.find(:all)
   end
 
   def update
