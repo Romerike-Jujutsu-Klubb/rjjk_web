@@ -2,6 +2,18 @@
 
 === Features
 
+* Migrated to Rails 2.1.0
+
+=== Internal
+
+* Replaced formerly built-in pagination with will_paginate plugin.
+* Installed formerly built-in acts_as_tree plugin.
+
+
+== 2008-06-03 Uwe
+
+=== Features
+
 * Fixed "Remember me" for login.
 * Updated CMS import for the new API
 

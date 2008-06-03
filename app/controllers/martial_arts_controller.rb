@@ -9,7 +9,7 @@ class MartialArtsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @martial_art_pages, @martial_arts = paginate :martial_arts, :per_page => 10
+    @martial_arts = MartialArt.paginate :page => params[:page], :per_page => 10
   end
 
   def show

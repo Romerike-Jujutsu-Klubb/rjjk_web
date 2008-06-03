@@ -24,10 +24,8 @@ class GraduatesController < ApplicationController
   
 	def list
 		if !params[:id]
-			@graduate_pages = paginate :graduates, :conditions => "member_id > 0", :order => 'member_id, rank_id DESC'
 			@graduates = Graduate.find(:all, :conditions => "member_id > 0", :order => 'member_id, rank_id DESC')
 		else
-			@graduate_pages = paginate :graduates, :conditions => "member_id = #{params[:id]}", :order => 'rank_id'
 			@graduates = Graduate.find(:all, :conditions => "member_id = #{params[:id]}", :order => 'rank_id')
 		end
 	end

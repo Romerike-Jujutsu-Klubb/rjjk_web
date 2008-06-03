@@ -82,7 +82,7 @@ module Localization
   ActionMailer::Base.module_eval <<-EOL
   private
   def render_message(method_name, body)
-    initialize_template_class(body).render_file(method_name + "_#{CONFIG[:default_language]}")
+    render :file => method_name + "_#{CONFIG[:default_language]}", :body => body
   end
   EOL
 end

@@ -18,7 +18,7 @@ class InfoController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @information_page_pages, @information_pages = paginate :information_pages, :per_page => 10
+    @information_pages = InformationPage.paginate :page => params[:page], :per_page => 10
   end
 
   def show

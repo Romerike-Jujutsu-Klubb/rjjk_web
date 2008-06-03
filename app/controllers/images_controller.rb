@@ -12,7 +12,7 @@ class ImagesController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @image_pages, @images = paginate :images, :per_page => 10
+    @images = Image.paginate :page => params[:page], :per_page => 10
   end
 
   def show

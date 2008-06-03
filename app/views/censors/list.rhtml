@@ -19,8 +19,7 @@
 <% end %>
 </table>
 
-<%= link_to 'Previous page', { :page => @censor_pages.current.previous } if @censor_pages.current.previous %>
-<%= link_to 'Next page', { :page => @censor_pages.current.next } if @censor_pages.current.next %> 
+<%= will_paginate @censors %> 
 
 <br />
 

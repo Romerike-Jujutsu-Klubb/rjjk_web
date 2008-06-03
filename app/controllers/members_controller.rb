@@ -59,7 +59,7 @@ class MembersController < ApplicationController
   end
   
   def list
-    @member_pages, @members = paginate :members, :per_page => MEMBERS_PER_PAGE, :order => 'last_name'
+    @members = Member.paginate :page => params[:page], :per_page => MEMBERS_PER_PAGE, :order => 'last_name'
     @member_count = Member.count
   end
   

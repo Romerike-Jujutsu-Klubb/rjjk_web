@@ -5,10 +5,11 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '1.2.6'
+RAILS_GEM_VERSION = '2.1.0'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
+require 'environments/localization_environment'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence those specified here
@@ -39,6 +40,7 @@ Rails::Initializer.run do |config|
   # config.active_record.default_timezone = :utc
   
   # See Rails::Configuration for more options
+  config.action_controller.session = { :session_key => "_myapp_session", :secret => "Norges peneste jujutsu klubb. Man må like å lide!" }
 end
 
 # Add new inflection rules using the following format 
@@ -51,7 +53,6 @@ end
 # end
 
 # Include your application configuration below
-require 'environments/localization_environment'
 require 'localization'
 Localization::load_localized_strings
 require 'environments/user_environment'

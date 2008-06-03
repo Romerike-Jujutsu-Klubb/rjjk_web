@@ -19,8 +19,7 @@
 <% end %>
 </table>
 
-<%= link_to 'Forrige side', { :page => @information_page_pages.current.previous } if @information_page_pages.current.previous %>
-<%= link_to 'Neste side', { :page => @information_page_pages.current.next } if @information_page_pages.current.next %> 
+<%= will_paginate @information_pages %> 
 
 <br />
 

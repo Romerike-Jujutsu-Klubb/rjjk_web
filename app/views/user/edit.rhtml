@@ -2,7 +2,7 @@
   <%= head_helper 'Edit User', :error => true %>
 
     <% form_tag(url_for(:action => "#{@controller.action_name}")) do %>
-      <%= render_partial 'edit', :user => @user, :submit => true %>
+      <%= render :partial => 'edit', :locals => {:user => @user, :submit => true} %>
     <% end %>
     </br>
     <% form_tag(url_for(:action => "#{@controller.action_name}")) do %>

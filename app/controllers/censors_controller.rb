@@ -11,7 +11,7 @@ class CensorsController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @censor_pages, @censors = paginate :censors, :per_page => 10
+    @censors = Censor.paginate :page => params[:page], :per_page => 10
   end
   
   def list_instructors
