@@ -8,7 +8,7 @@
 
 * Replaced formerly built-in pagination with will_paginate plugin.
 * Installed formerly built-in acts_as_tree plugin.
-
+* Fixed restart script a bit.
 
 == 2008-06-03 Uwe
 

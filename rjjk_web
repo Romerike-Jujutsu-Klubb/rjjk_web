@@ -4,17 +4,18 @@
 #
 # chkconfig: 345 88 12
 # description: RJJK web application
-# pidfile: /u/apps/$app/shared/log/mongrel.pid
+# pidfile: /u/apps/$APP/shared/log/mongrel.pid
 
 . /etc/rc.d/init.d/functions
 
 APP=rjjk_web
 RUN_AS_USER=capistrano
 PORT=3005
-APP_DIR=/u/apps/$APP/current
 pidfile=${PIDFILE-/u/apps/$APP/shared/log/mongrel.pid}
+APP_DIR="/u/apps/$APP/current"
+LOG_DIR="/u/apps/$APP/shared/log"
 
-START_CMD="mongrel_rails start -p $PORT -e production -c $APP_DIR -d 1>/u/apps/$APP/shared/log/stdout.log 2>/u/apps/$APP/shared/log/stderr.log"
+START_CMD="mongrel_rails start -p $PORT -e production -c $APP_DIR -d 1>$LOG_DIR/stdout.log 2>$LOG_DIR/stderr.log"
 STOP_CMD="mongrel_rails stop -c $APP_DIR"
 START_FERRET_CMD="cd $APP_DIR ; RAILS_ENV=production ruby script/ferret_start"
 STOP_FERRET_CMD="cd $APP_DIR ; RAILS_ENV=production ruby script/ferret_stop"
@@ -48,7 +49,9 @@ case "$1" in
   restart)
     run "$STOP_FERRET_CMD"
     run "$START_FERRET_CMD"
-    run "$RESTART_CMD"
+    run "$STOP_CMD"
+    rm -f ${pidfile}
+    run "$START_CMD"
         ;;
   status)
         ps -ef | grep $app
