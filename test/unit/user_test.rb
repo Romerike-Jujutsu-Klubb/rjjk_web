@@ -7,7 +7,7 @@ class UserTest < Test::Unit::TestCase
   def test_authenticate
     assert_equal users(:tesla), User.authenticate(users(:tesla).login, "atest")
     assert_nil User.authenticate("nontesla", "atest")
-    assert_nil User.authenticate(users(:tesla), "wrong password")
+    assert_nil User.authenticate(users(:tesla).login, "wrong password")
   end
 
   def test_authenticate_by_token

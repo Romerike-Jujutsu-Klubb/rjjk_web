@@ -35,7 +35,7 @@ class NewsController < ApplicationController
 
   def edit
     @news_item = NewsItem.find(params[:id])
-    @images = Image.find(:all)
+    @images = Image.find(:all, :select => 'id, name')
   end
 
   def update

@@ -1,6 +1,6 @@
 <h1>E-post lister</h1>
 
-<h2>Aktive seniorer <%=link_to 'Send e-post', "mailto:#{@export_senior_emails * ','}?subject=E-post fra RJJK&body=Din tekst her." %></h2>
+<h2>Aktive seniorer <%=link_to 'Send e-post', "mailto:#{@export_senior_emails * ','}?subject=[RJJK] Melding fra RJJK&body=Din tekst her." %></h2>
 <table>
   <tr>
     <th><%= link_to 'E-post', sort_param('listing', :alias => 'epost') %></th>

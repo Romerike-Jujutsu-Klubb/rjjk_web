@@ -10,12 +10,18 @@ class UserController < ApplicationController
   
   def login
     return if generate_blank_form
+    remember_me = params.delete(:remember_me)
     @user = User.new(params['user'])
     user = User.authenticate(params['user']['login'], params['user']['password'])
     if user
       @current_user = user
       session[:user_id] = user.id
       flash['notice'] = 'Login succeeded'
+      if remember_me && remember_me == '1'
+        user.generate_security_token
+        cookies[:autologin] = {:value => user.id.to_s, :expires =>90.days.from_now}
+        cookies[:token]     = {:value => user.security_token, :expires =>90.days.from_now}
+      end
       redirect_back_or_default :action => 'welcome'
     else
       @login = params['user']['login']
@@ -173,7 +179,7 @@ class UserController < ApplicationController
 
   # Generate a template user for certain actions on get
   def generate_filled_in
-    @user = @current_user || User.find_by_id( session[:user_id] )
+    @user = (params[:id] && User.find_by_id(params[:id])) || @current_user || User.find_by_id(session[:user_id])
     case request.method
     when :get
       render

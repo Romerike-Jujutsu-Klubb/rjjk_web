@@ -1,0 +1,14 @@
+== 2008-06-03 Uwe
+
+=== Features
+
+* Fixed "Remember me" for login.
+* Updated CMS import for the new API
+
+=== Fixes
+
+* Speedup of news editing by not loading image content when listing available images.
+* Fixed use of images in news items.
+* Fixed wrong listing of grauations.
+* Prefixed subject of email with [RJJK] for better filtering.
+* Fixed all tests!

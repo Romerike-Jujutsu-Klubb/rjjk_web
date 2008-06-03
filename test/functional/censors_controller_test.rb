@@ -5,7 +5,7 @@ require 'censors_controller'
 class CensorsController; def rescue_action(e) raise e end; end
 
 class CensorsControllerTest < Test::Unit::TestCase
-  fixtures :censors
+  fixtures :users, :censors
 
   def setup
     @controller = CensorsController.new
@@ -13,6 +13,7 @@ class CensorsControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
 
     @first_id = censors(:one).id
+    login(:admin)
   end
 
   def test_index

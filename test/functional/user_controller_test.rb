@@ -26,6 +26,29 @@ class UserControllerTest < Test::Unit::TestCase
     assert_equal "http://#{@request.host}/bogus/location", @response.redirect_url
   end
 
+  def test_login_with_remember_me
+    post :login, :user => { :login => "tesla", :password => "atest"}, :remember_me => '1'
+    
+    assert_logged_in users(:tesla)
+    assert_response :redirect
+    assert_equal @controller.url_for(:controller => 'user', :action => :welcome), @response.redirect_url
+    assert_cookie :autologin, :value => '1000001'
+    assert_cookie :token
+    assert_not_equal 'random_token_string', cookies['token'].value
+    assert_equal false, User.find(1000001).token_expired?
+    assert_not_equal 'random_token_string', User.find(1000001).security_token
+  end
+  
+  def test_autologin_with_token
+    @request.cookies['autologin'] = CGI::Cookie.new('autologin', '1000001')
+    @request.cookies['token']     = CGI::Cookie.new('token'    , 'random_token_string')
+#    @request.cookies['autologin'] = '1000001'
+#    @request.cookies['token'] = 'random_token_string'
+    get :welcome
+    assert_logged_in users(:tesla)
+    assert_response :ok
+  end
+  
   def test_login__valid_login__shows_welcome_as_default
     post :login, :user => { :login => "tesla", :password => "atest" }
     assert_logged_in users(:tesla)

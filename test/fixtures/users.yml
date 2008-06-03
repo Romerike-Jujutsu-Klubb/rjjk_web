@@ -17,6 +17,8 @@ tesla:
   email: tesla@example.com
   verified: true
   deleted: false
+  security_token: random_token_string
+  token_expiry: <%=(Clock.now + User.token_lifetime/3).strftime("%Y-%m-%d %H:%M:%S") %>
 
 long_user:
   id: 1000003
