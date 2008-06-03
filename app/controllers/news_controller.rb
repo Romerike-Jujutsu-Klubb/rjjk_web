@@ -20,7 +20,7 @@ class NewsController < ApplicationController
 
   def new
     @news_item = NewsItem.new
-    @images = Image.find(:all)
+    @images = Image.find(:all, :select => 'id, name')
   end
 
   def create
