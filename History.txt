@@ -12,3 +12,4 @@
 * Fixed wrong listing of grauations.
 * Prefixed subject of email with [RJJK] for better filtering.
 * Fixed all tests!
+* Widened TinyMCE editor area.
