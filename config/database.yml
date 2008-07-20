@@ -9,5 +9,3 @@ test:
 production:
   adapter: postgresql
   database: rjjk_production
-  username: donv
-  host: localhost
