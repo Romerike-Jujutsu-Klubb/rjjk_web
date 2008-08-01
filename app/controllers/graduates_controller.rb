@@ -75,8 +75,8 @@ class GraduatesController < ApplicationController
   </tr>
 EOC
     for cen in @censors
-      fn = cen.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
-      ln = cen.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') 
+      fn = cen.member.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
+      ln = cen.member.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') 
       nm = "<td width=23%>#{fn} #{ln}</td>" <<
            "<td width=2%><a href=# onClick='removeCensor(#{cen.id}, " <<
            "\"#{fn} #{ln}\");'>" <<
