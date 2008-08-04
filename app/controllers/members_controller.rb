@@ -42,7 +42,7 @@ class MembersController < ApplicationController
   :redirect_to => { :action => :list }
   
   def list_active
-    @member_pages, @members = paginate :members, :per_page => MEMBERS_PER_PAGE, :conditions => 'left_on IS NULL', :order => 'last_name'
+    @members = Member.paginate :page => params[:page], :per_page => MEMBERS_PER_PAGE, :conditions => 'left_on IS NULL', :order => 'last_name'
     @member_count = Member.count(:conditions => 'left_on IS NULL')
     render :action => :list
   end

@@ -148,7 +148,8 @@ EOH
                      "<IMG SRC=\"/images/button-cancel-16x16.png\" STYLE=\"border: 0;\" title=\"Avbryt\" ALT=\"Avbryt\"></A></td>\n" <<
                      "</tr>\n" 
     end
-    render_text rstr << "</table>\n"
+    rstr << "</table>\n"
+    render :text => rstr
   end
   
   def list_potential_graduates
@@ -173,7 +174,8 @@ EOH
       #"<td ALIGN='right'>" << grad.department <<
 			        "<td>&nbsp;</td></tr>\n"
     end
-    render_text rstr << "</table>\n</div>\n"
+    rstr << "</table>\n</div>\n"
+    render :text => rstr
   end
   
   def update_graduate
@@ -210,7 +212,7 @@ EOH
     rank = Rank.find(:first, :conditions => [ "martial_art_id = ?", aid])
     Graduate.create!(:graduation_id => gid, :member_id => mid, :passed => false,
                      :rank_id => rank.id, :paid_graduation => false, :paid_belt => false)
-    render_text " " 
+    render :text =>" " 
   end
   
   

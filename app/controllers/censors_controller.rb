@@ -36,7 +36,8 @@ EOH
              nm << "</a></td>" << "<td ALIGN=right>" << instr.department << "</td>"
              "</tr>"
     end
-    render_text rstr << "</table>\n</div>\n"
+    rstr << "</table>\n</div>\n"
+    render :text => rstr
   end
 
   def show
