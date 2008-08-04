@@ -322,7 +322,7 @@ function cancelSaveGraduateInfo(member_id, grad_id) {
   		<% for ma in @martial_arts %>
 			<%= '<div id="ma_grad_' << ma.id.to_s << '" STYLE="display: ' << (none = ma.id == 1?'':'none') << ';">' %>
 			<%= '<select id="grader_' << ma.id.to_s << '" onChange="changeGraduationData();">' %>
-  			<% for grd in Graduation.find(:all, :order => 'held_on', :conditions => "martial_art_id = #{ma.id.to_s}") %>
+  			<% for grd in Graduation.find(:all, :order => 'held_on DESC', :conditions => "martial_art_id = #{ma.id.to_s}") %>
 				<%= "<option value='#{grd.id}'>#{grd.held_on}</option>" %>
 			<% end %>
 			</select>
