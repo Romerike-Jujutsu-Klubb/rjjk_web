@@ -61,18 +61,19 @@ class CmsImport
       member = Member.new(:department => 'Jujutsu', :instructor => false) if member.nil?
       old_values = member.attributes
       new_contract_birthdate = (detail_fields[38].empty? || detail_fields[38] == '--' ? nil : Date.strptime(detail_fields[38], '%d%m%y'))
+      phone_pattern = '(?:\d| )+'
       new_values = {
         :first_name => fields[3].split(' ')[1..-1].join(' '),
         :last_name => fields[3].split(' ').first,
         :birtdate => new_contract_birthdate,
         :senior => (new_contract_birthdate.nil? ? true : ((Date.today - new_contract_birthdate) / 365) > 15),
-        :email => detail_fields[41] =~ /<br \/>(.*?)(e-post)<br \/>/ && $1,
-        :phone_mobile => detail_fields[41] =~ /<br \/>(.*?) (mobil)<br \/>/ && $1,
-        :phone_home => detail_fields[41] =~ /<br \/>(.*?) (privat)<br \/>/ && $1,
+        :email => detail_fields[41] =~ /([^>]*)\s*\(e-post\)<br \/>/ && ($1.strip != '--' ? $1.strip : nil),
+        :phone_mobile => detail_fields[41] =~ /(#{phone_pattern})\s*\(mobil\)/ && $1.gsub(' ', ''),
+        :phone_home => detail_fields[41] =~ /(#{phone_pattern})\s*\(privat\)/ && $1.gsub(' ', ''),
         :phone_work => nil,
         :phone_parent => nil,
         :social_sec_no => old_values[:social_security_number],
-        :male => detail_fields =~ /^M/,
+        :male => (detail_fields[43] =~ /^M$/) == 0,
         :joined_on => detail_fields[58].empty? ? nil : Date.strptime(detail_fields[58], '%d.%m.%Y'),
         :contract_id => detail_fields[8],
         :cms_contract_id => detail_fields[11],

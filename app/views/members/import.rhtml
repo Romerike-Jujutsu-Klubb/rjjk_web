@@ -29,9 +29,10 @@
   
 <% for member, old_values in @updated_members %>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td colspan="2"><%=link_to h(member.name) %></td>
-    <td align="right">Fra -&gt;</td>
-    <td>Til</td>
+    <td colspan="2"><%=link_to h(member.name), :action => :edit, :id => member.id %></td>
+    <td align="right">Fra</td>
+    <td align="center">-&gt;</td>
+    <td align="left">Til</td>
   </tr>
   <% for k, v in old_values %>
   <tr>
@@ -39,12 +40,9 @@
 	<td>
 		<%=k%>
 	</td>
-	<td align="right">
-		<%=v%> -&gt;
-	</td>
-	<td align="left">
-		<%=member[k]%>
-	</td>
+	<td align="right"><%=v%></td>
+	<td align="center">-&gt;</td>
+	<td align="left"><%=member[k]%></td>
   </tr>
   <% end %>
 <% end %>
