@@ -44,7 +44,7 @@ class CmsImport
         cells = body.scan(/<td.*?>(.*?)<\/td>/m)
         cells.map! {|cell| cell[0]}
         cells.map! {|cell| cell.gsub(/<a.*?>(.*?)<\/a>/, '\1')}
-        cells.map! {|cell| cell.gsub(/<b.*?>(.*?)<\/b>/, '\1')}
+        cells.map! {|cell| cell.gsub(/<b>(.*?)<\/b>/, '\1')}
         cells.map! {|cell| cell.gsub(/ <br \/>$/, '')}
         cells.map! {|cell| cell.gsub('&nbsp;', '')}
         cells.map! {|cell| cell.strip.gsub('&AElig;', 'Æ').gsub('&aelig;', 'æ').gsub('&Oslash;', 'Ø').gsub('&oslash;', 'ø').gsub('&Aring;', 'Å').gsub('&aring;', 'å')}
@@ -62,6 +62,12 @@ class CmsImport
       old_values = member.attributes
       new_contract_birthdate = (detail_fields[38].empty? || detail_fields[38] == '--' ? nil : Date.strptime(detail_fields[38], '%d%m%y'))
       phone_pattern = '(?:\d| )+'
+      debitor_contact_pattern = /(.*?)<br \/>Att: <br \/>(.*?)<br \/>(\d*?) (.*?)/
+      contract_contact_pattern = /(.*?)<br \/>(.*?)<br \/>(.*?) .*?<br \/>/
+p detail_fields[29]
+p detail_fields[29] =~ debitor_contact_pattern && $1
+p detail_fields[29] =~ debitor_contact_pattern && $2
+p detail_fields[29] =~ debitor_contact_pattern && $3
       new_values = {
         :first_name => fields[3].split(' ')[1..-1].join(' '),
         :last_name => fields[3].split(' ').first,
@@ -78,13 +84,13 @@ class CmsImport
         :contract_id => detail_fields[8],
         :cms_contract_id => detail_fields[11],
         :left_on => (detail_fields[64].empty? ? nil : Date.strptime(detail_fields[64], '%d.%m.%Y')),
-        :parent_name => detail_fields[29] =~ /(.*?)<b>Att:/ && $1,
-        :address => detail_fields[29] =~ /Att: <br \/>(.*?)<br \/>/ && $1,
-        :postal_code => detail_fields[29] =~ /Att: <br \/>(.*?)<br \/>(.*?) .*?<br \/>/ && $2,
+        :parent_name => detail_fields[29] =~ debitor_contact_pattern && $1,
+        :address => detail_fields[41] =~ contract_contact_pattern && $2,
+        :postal_code => detail_fields[41] =~ contract_contact_pattern && $3,
         :billing_type => detail_fields[79],
-        :billing_name => detail_fields[29] =~ /(.*?)<b>Att:/ && $1,
-#        :billing_address => reports[2][index][5],
-#        :billing_postal_code => reports[2][index][6],
+        :billing_name => detail_fields[29] =~ debitor_contact_pattern && $1,
+        :billing_address => detail_fields[29] =~ debitor_contact_pattern && $2,
+        :billing_postal_code => detail_fields[29] =~ debitor_contact_pattern && $3,
 #        :billing_phone_home => reports[2][index][9],
 #        :billing_phone_mobile => reports[3][index][1],
 #        :account_no => reports[3][index][5],

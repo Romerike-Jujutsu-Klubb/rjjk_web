@@ -12,6 +12,7 @@ class Member < ActiveRecord::Base
   validates_inclusion_of(:male, :in => [true, false])
   validates_length_of :postal_code, :is => 4
   validates_length_of :billing_postal_code, :is => 4, :if => :billing_postal_code
+  validates_uniqueness_of :cms_contract_id
   
   def self.find_active()
     Member.find(:all, :conditions => "left_on IS NULL", :order => 'last_name, first_name')

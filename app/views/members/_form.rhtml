@@ -30,7 +30,11 @@
 <%= text_field 'member', 'phone_work', :size => '11' %></p>
 
 <p><label for="member_birtdate">Fødselsdato</label><br/>
-<%= date_select 'member', 'birtdate', :start_year=>1940 %></p>
+<% if @member.birtdate%>
+<%=date_select 'member', 'birtdate', :start_year=>1940 %></p>
+<% else %>
+Ikke registrert.
+<% end %>
 
 <p><label for="member_male">Kjønn</label><br/>
 <%=select "member", "male", [['Mann', true], ['Kvinne', false]] %></p>
@@ -46,9 +50,11 @@
 <p><label for="member_department">Avdeling</label><br/>
 <%=select 'member', 'department', ['Jujutsu', 'Aikido'] %></p>
 
-<% if @member.left_on %>
 <p><label for="member_left_on">Utmeldt dato</label><br/>
+<% if @member.left_on %>
 <%= date_select 'member', 'left_on'  %></p>
+<% else %>
+Fremdeles aktiv.
 <% end %>
 
 <p><label for="member_parent_name">Foresattes navn</label><br/>
@@ -58,7 +64,7 @@
 <%= text_field 'member', 'phone_parent'  %></p>
 
 <p><label for="member_billing_type">Faktureringsmåte</label><br/>
-<%=select 'member', 'billing_type', [['AutoGiro', 'AUTOGIRO'], ['Manuell Giro', 'MANUELL GIRO']] %></p>
+<%=select 'member', 'billing_type', [['AutoGiro', 'AUTOGIRO'], ['Manuell Giro', 'MANUELL GIRO'], ['AvtaleGiro', 'AvtaleGiro'], [@member.billing_type, @member.billing_type]].uniq.sort %></p>
 
 <p><label for="member_billing_name">Fakturanavn (hvis annen enn medlem)</label><br/>
 <%= text_field 'member', 'billing_name'  %></p>
