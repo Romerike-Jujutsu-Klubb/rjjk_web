@@ -15,7 +15,7 @@ class Member < ActiveRecord::Base
   validates_uniqueness_of :cms_contract_id
   
   def self.find_active()
-    Member.find(:all, :conditions => "left_on IS NULL", :order => 'last_name, first_name')
+    Member.find(:all, :conditions => "left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)", :order => 'last_name, first_name')
   end
   
   def current_grade

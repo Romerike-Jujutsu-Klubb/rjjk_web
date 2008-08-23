@@ -15,6 +15,12 @@
     <td><%=h member.first_name %></td>
     <td><%= link_to 'Rediger', :action => 'edit', :id => member %></td>
   </tr>
+  <% for k, v in member.attributes %>
+  <tr>
+	<td><%=k%></td>
+	<td align="left"><%=v%></td>
+  </tr>
+  <% end %>
 <% end %>
 </table>
 <% end %>

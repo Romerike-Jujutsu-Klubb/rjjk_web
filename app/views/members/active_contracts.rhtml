@@ -8,6 +8,7 @@
 
 <table class="members" border="0" cellpadding="5" cellspacing="1">
   <tr class="header">
+    <th><%= link_to 'CMS ID', sort_param('listing', :alias => 'cmd_id') %></th>
     <th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
     <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>
     <th><%= link_to 'Kontingent', sort_param('listing', :alias => 'kontingent') %></th>
@@ -25,6 +26,7 @@
   <% total += member.fee %>
   <% nkf_total += member.nkf_fee %>
   <tr class="<%= cycle('odd', 'even') %>">
+    <td><%=h member.cms_contract_id %></td>
     <td><%=h member.last_name %></td>
     <td><%=h member.first_name %></td>
     <td align="right"><%=member.fee %></td>

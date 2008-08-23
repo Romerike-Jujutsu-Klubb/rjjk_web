@@ -1,34 +1,19 @@
 require 'net/http'
 require 'uri'
+require 'erb'
 
 class CmsImport
   def self.import
     url = URI.parse('http://62.92.243.194:8000/')
 
-    import_rows = nil
+    cms_contract_ids = nil
     user_responses = {}
     user_fields = {}
 
     Net::HTTP.start(url.host, url.port) {|http|
-      login_form_response = http.get('/WebDebtCollection/')
-      login_form_fields = login_form_response.body.scan /<input .*?name="(.*?)".*?value="(.*?)".*?>/
-      login_form_fields += [['txtUsername', 'rjjk'], ['txtPassword', 'rjjk2055']]
-      login_params = login_form_fields.map{|field|"#{field[0]}=#{ERB::Util.url_encode field[1]}"}.join('&')
-      login_response = http.post('/WebDebtCollection/Default.aspx', login_params)
-      #header = login_response.header
-      #cookie = header['set-cookie']
-      #puts
-      #puts login_response.body
-      #puts
-      raise "Wrong URL" unless login_response.code == "200"
-      session_cookie = login_response['set-cookie']
-      raise "Missing session cookie" unless session_cookie
-      #puts "Cookie:"
-      #p session_cookie
-      #session_cookie_class = login_response['set-cookie'].class
-      list_response = http.get("/WebDebtCollection/generic.aspx?cat=1&o=1&g=con", {'Cookie' => session_cookie})
-    
-      active_members_report = list_response.body
+      session_cookie = login http
+      active_members_response = http.get("/WebDebtCollection/generic.aspx?cat=1&o=1&g=con", {'Cookie' => session_cookie})
+      active_members_report = active_members_response.body
       import_rows = active_members_report.scan(/<tr.*?>.*?<\/tr>/m).map do |row|
         cells = row.scan(/<td.*?>(.*?)<\/td>/m)
         cells.map! {|cell| cell[0]}
@@ -36,9 +21,24 @@ class CmsImport
         cells.map! {|cell| cell.strip.gsub('&AElig;', 'Æ').gsub('&aelig;', 'æ').gsub('&Oslash;', 'Ø').gsub('&oslash;', 'ø').gsub('&Aring;', 'Å').gsub('&aring;', 'å')}
       end
       import_rows.shift
-    
-      import_rows.each do |fields|
-        cms_contract_id = fields[1]
+      cms_contract_ids = import_rows.map{|r|r[1]}
+      puts "Found #{cms_contract_ids.size} active members"
+
+      contracts_report_pattern = %q{<tr><td class="report_drilled_cell" style="width:4%; text-align:center;">(.*?)</td><td class="report_drilled_cell" style="width:4%; text-align:center;">(.*?)</td><td class="report_drilled_cell" style="width:5%; text-align:center;">(.*?)</td><td class="report_drilled_cell" style="width:14%; text-align:left;">(.*?)</td><td class="report_drilled_cell" style="width:12%; text-align:left;">(.*?)</td><td class="report_drilled_cell" style="width:4%; text-align:left;">(.*?)</td><td class="report_drilled_cell" style="width:7%; text-align:left;">(.*?)</td><td class="report_drilled_cell" style="width:6%; text-align:left;">(.*?)</td><td class="report_drilled_cell" style="width:9%; text-align:left;">(.*?)</td><td class="report_drilled_cell" style="width:4%; text-align:center;">(.*?)</td><td class="report_drilled_cell" style="width:5%; text-align:center;">(.*?)</td><td class="report_drilled_cell" style="width:5%; text-align:center;">(.*?)</td><td class="report_drilled_cell" style="width:6%; text-align:left;">(.*?)</td><td class="report_drilled_cell" style="width:9%; text-align:center;">(.*?)</td><td class="report_drilled_cell" style="width:6%; text-align:left;">(.*?)</td></tr>}
+      all_contracts_response = http.get("/WebDebtCollection/reporting/contracts.aspx", {'Cookie' => session_cookie})
+      event_target = 'btnRefresh'
+      event_argument = ''
+      view_state = all_contracts_response.body.scan(/<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="(.*?)" \/>/)[0][0]
+      previous_page = all_contracts_response.body.scan(/<input type="hidden" name="__PREVIOUSPAGE" id="__PREVIOUSPAGE" value="(.*?)" \/>/)[0][0]
+      event_validation = all_contracts_response.body.scan(/<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="(.*?)" \/>/)[0][0]
+
+      all_contracts_response = http.post("/WebDebtCollection/reporting/contracts.aspx?update=true", "__EVENTTARGET=#{event_target}&__EVENTARGUMENT=#{event_argument}&__VIEWSTATE=#{ERB::Util.url_encode view_state}&txtRegFromDate=1.1.1981&txtRegToDate=#{Date.today.strftime '%d.%m.%Y'}&txtAgeFrom=&txtAgeTo=&drpGender=0&drpCurrentStatus=0&drpArt=0&drpParti=0&__PREVIOUSPAGE=#{ERB::Util.url_encode previous_page}&__EVENTVALIDATION=#{ERB::Util.url_encode event_validation}", {'Cookie' => session_cookie, 'Content-Type' => 'application/x-www-form-urlencoded', 'Referer' => 'http://62.92.243.194:8000/WebDebtCollection/reporting/contracts.aspx?update=true'})
+
+      all_contracts_lines = all_contracts_response.body.scan /#{contracts_report_pattern}/
+      cms_contract_ids = all_contracts_lines.map{|l| l[9]}
+      puts "Found #{cms_contract_ids.size} members"
+
+      cms_contract_ids.each do |cms_contract_id|
         user_responses[cms_contract_id] = http.get("/WebDebtCollection/generic.aspx?det=#{cms_contract_id}&o=1&g=con", {'Cookie' => session_cookie})
         body = user_responses[cms_contract_id].body
         cells = body.scan(/<td.*?>(.*?)<\/td>/m)
@@ -52,10 +52,11 @@ class CmsImport
       end
     }
 
+    puts "Found #{cms_contract_ids.size} members"
+    puts "Found #{cms_contract_ids.select {|m| user_fields[m][64].empty?}.size} active members"
     @new_members = []
     @updated_members = []
-    import_rows.each do |fields|
-      cms_contract_id = fields[1]
+    cms_contract_ids.each do |cms_contract_id|
       detail_fields = user_fields[cms_contract_id]
       member = Member.find_by_cms_contract_id(cms_contract_id)
       member = Member.new(:department => 'Jujutsu', :instructor => false) if member.nil?
@@ -64,13 +65,9 @@ class CmsImport
       phone_pattern = '(?:\d| )+'
       debitor_contact_pattern = /(.*?)<br \/>Att: <br \/>(.*?)<br \/>(\d*?) (.*?)/
       contract_contact_pattern = /(.*?)<br \/>(.*?)<br \/>(.*?) .*?<br \/>/
-p detail_fields[29]
-p detail_fields[29] =~ debitor_contact_pattern && $1
-p detail_fields[29] =~ debitor_contact_pattern && $2
-p detail_fields[29] =~ debitor_contact_pattern && $3
       new_values = {
-        :first_name => fields[3].split(' ')[1..-1].join(' '),
-        :last_name => fields[3].split(' ').first,
+        :first_name => detail_fields[41] =~ contract_contact_pattern && $1.split(' ')[1..-1].map{|n|n.capitalize}.join(' '),
+        :last_name => detail_fields[41] =~ contract_contact_pattern && $1.split(' ').first.capitalize,
         :birtdate => new_contract_birthdate,
         :senior => (new_contract_birthdate.nil? ? true : ((Date.today - new_contract_birthdate) / 365) > 15),
         :email => detail_fields[41] =~ /([^>]*)\s*\(e-post\)<br \/>/ && ($1.strip != '--' ? $1.strip : nil),
@@ -114,6 +111,20 @@ p detail_fields[29] =~ debitor_contact_pattern && $3
       end
     end
     return @new_members, @updated_members
+  end
+  
+  private
+  
+  def self.login http
+    login_form_response = http.get '/WebDebtCollection/'
+    login_form_fields = login_form_response.body.scan /<input .*?name="(.*?)".*?value="(.*?)".*?>/
+    login_form_fields = login_form_fields + [['txtUsername', 'rjjk'], ['txtPassword', 'rjjk2055']]
+    login_params = login_form_fields.map {|field| "#{field[0]}=#{ERB::Util.url_encode field[1]}"}.join '&'
+    login_response = http.post('/WebDebtCollection/Default.aspx', login_params)
+    raise "Wrong URL" unless login_response.code == "200"
+    session_cookie = login_response['set-cookie']
+    raise "Missing session cookie" unless session_cookie
+    session_cookie
   end
   
 end
