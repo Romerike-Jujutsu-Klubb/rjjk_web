@@ -1,4 +1,8 @@
 class Member < ActiveRecord::Base
+  MEMBERS_PER_PAGE = 30
+  ACTIVE_CONDITIONS = "left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)"
+    
+
   acts_as_ferret :fields => [:first_name,:last_name,:address,:postal_code,
                              :email, :phone_home, :phone_work, 
                              :phone_mobile, :phone_parent, :department, 
@@ -14,8 +18,16 @@ class Member < ActiveRecord::Base
   validates_length_of :billing_postal_code, :is => 4, :if => :billing_postal_code
   validates_uniqueness_of :cms_contract_id
   
-  def self.find_active()
-    Member.find(:all, :conditions => "left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)", :order => 'last_name, first_name')
+  def self.find_active
+    Member.find(:all, :conditions => ACTIVE_CONDITIONS, :order => 'last_name, first_name')
+  end
+  
+  def self.paginate_active(page)
+    paginate :page => page, :per_page => MEMBERS_PER_PAGE, :conditions => ACTIVE_CONDITIONS, :order => 'last_name'
+  end
+  
+  def self.count_active
+    count :conditions => ACTIVE_CONDITIONS 
   end
   
   def current_grade

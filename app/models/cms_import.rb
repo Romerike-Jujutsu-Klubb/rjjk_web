@@ -61,7 +61,7 @@ class CmsImport
       member = Member.find_by_cms_contract_id(cms_contract_id)
       member = Member.new(:department => 'Jujutsu', :instructor => false) if member.nil?
       old_values = member.attributes
-      new_contract_birthdate = (detail_fields[38].empty? || detail_fields[38] == '--' ? nil : Date.strptime(detail_fields[38], '%d%m%y'))
+      p new_contract_birthdate = (detail_fields[38].empty? || detail_fields[38] == '--' ? nil : Date.strptime(detail_fields[38], '%d%m%y'))
       phone_pattern = '(?:\d| )+'
       debitor_contact_pattern = /(.*?)<br \/>Att: <br \/>(.*?)<br \/>(\d*?) (.*?)/
       contract_contact_pattern = /(.*?)<br \/>(.*?)<br \/>(.*?) .*?<br \/>/
@@ -75,7 +75,7 @@ class CmsImport
         :phone_home => detail_fields[41] =~ /(#{phone_pattern})\s*\(privat\)/ && $1.gsub(' ', ''),
         :phone_work => nil,
         :phone_parent => nil,
-        :social_sec_no => old_values[:social_security_number],
+        :social_sec_no => old_values[:social_sec_no] || (new_contract_birthdate && new_contract_birthdate.strftime('%d%m%y')),
         :male => (detail_fields[43] =~ /^M$/) == 0,
         :joined_on => detail_fields[58].empty? ? nil : Date.strptime(detail_fields[58], '%d.%m.%Y'),
         :contract_id => detail_fields[8],

@@ -1,6 +1,4 @@
 class MembersController < ApplicationController
-  MEMBERS_PER_PAGE = 30
-  
   before_filter :store_location
   before_filter :admin_required
   before_filter :find_incomplete
@@ -42,8 +40,8 @@ class MembersController < ApplicationController
   :redirect_to => { :action => :list }
   
   def list_active
-    @members = Member.paginate :page => params[:page], :per_page => MEMBERS_PER_PAGE, :conditions => 'left_on IS NULL', :order => 'last_name'
-    @member_count = Member.count(:conditions => 'left_on IS NULL')
+    @members = Member.paginate_active(params[:page])
+    @member_count = Member.count_active
     render :action => :list
   end
   
@@ -53,13 +51,13 @@ class MembersController < ApplicationController
   end
   
   def list_inactive
-    @member_pages, @members = paginate :members, :per_page => MEMBERS_PER_PAGE, :conditions => 'left_on IS NOT NULL', :order => 'last_name'
+    @members = Member.paginate :page => params[:page], :per_page => Member::MEMBERS_PER_PAGE, :conditions => 'left_on IS NOT NULL', :order => 'last_name'
     @member_count = Member.count(:conditions => 'left_on IS NOT NULL')
     render :action => :list
   end
   
   def list
-    @members = Member.paginate :page => params[:page], :per_page => MEMBERS_PER_PAGE, :order => 'last_name'
+    @members = Member.paginate :page => params[:page], :per_page => Member::MEMBERS_PER_PAGE, :order => 'last_name'
     @member_count = Member.count
   end
   
@@ -154,18 +152,18 @@ class MembersController < ApplicationController
   private
   
   def year_end(offset=0)
-    Date.parse((Date.today.year - offset).to_s + '-12-31').strftime('%Y-%M-%D')    
+    Date.parse((Date.today.year - offset).to_s + '-12-31').strftime('%Y-%m-%d')    
   end
   
   def year_start(offset=0)
-    Date.parse((Date.today.year - offset).to_s + '-01-01').strftime('%Y-%M-%D')    
+    Date.parse((Date.today.year - offset).to_s + '-01-01').strftime('%Y-%m-%d')    
   end  
   
   def member_count(male, from_age, to_age)
-    Member.count(:conditions => "left_on IS NULL AND male = #{male} AND birtdate <= #{year_end(from_age)} AND birtdate >= #{year_start(to_age)}")
+    Member.count(:conditions => "left_on IS NULL AND male = #{male} AND birtdate <= '#{year_end(from_age)}' AND birtdate >= '#{year_start(to_age)}'")
   end
   
   def find_incomplete
-    @incomplete_members = Member.find(:all, :conditions => 'birtdate IS NULL', :order => 'last_name, first_name')
+    @incomplete_members = Member.find_active.select {|m| m.birtdate.nil?}
   end
 end
