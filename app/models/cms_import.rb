@@ -66,8 +66,8 @@ class CmsImport
       debitor_contact_pattern = /(.*?)<br \/>Att: <br \/>(.*?)<br \/>(\d*?) (.*?)/
       contract_contact_pattern = /(.*?)<br \/>(.*?)<br \/>(.*?) .*?<br \/>/
       new_values = {
-        :first_name => detail_fields[41] =~ contract_contact_pattern && $1.split(' ')[1..-1].map{|n|n.capitalize}.join(' '),
-        :last_name => detail_fields[41] =~ contract_contact_pattern && $1.split(' ').first.capitalize,
+        :first_name => detail_fields[41] =~ contract_contact_pattern && $1.split(' ')[1..-1].map{|n| n.split('-').map{|n2|n2.capitalize}.join('-')}.join(' '),
+        :last_name => detail_fields[41] =~ contract_contact_pattern && $1.split(' ').first.split('-').map {|n| n.capitalize}.join('-'),
         :birtdate => new_contract_birthdate,
         :senior => (new_contract_birthdate.nil? ? true : ((Date.today - new_contract_birthdate) / 365) > 15),
         :email => detail_fields[41] =~ /([^>]*)\s*\(e-post\)<br \/>/ && ($1.strip != '--' ? $1.strip : nil),

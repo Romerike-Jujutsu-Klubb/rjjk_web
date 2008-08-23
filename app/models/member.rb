@@ -6,7 +6,7 @@ class Member < ActiveRecord::Base
   
   has_many :graduates
 
-  validates_presence_of :first_name, :last_name, :address, :postal_code
+  validates_presence_of :first_name, :last_name, :address, :postal_code, :cms_contract_id
   #validates_presence_of :birthdate, :join_on
   validates_inclusion_of(:payment_problem, :in => [true, false])
   validates_inclusion_of(:male, :in => [true, false])
