@@ -2,27 +2,37 @@
   <%= hidden_field 'user', 'form', :value => 'edit' %>
   <table>
     <tr class="two_columns">
-      <td class="prompt"><label>First Name:</label></td>
-      <td class="value"><%= text_field 'user', 'first_name' %></td>
-    </tr>
-    <tr class="two_columns">
-      <td class="prompt"><label>Last Name:</label></td>
-      <td class="value"><%= text_field 'user', 'last_name' %></td>
-    </tr>
-    <tr class="two_columns">
-      <td class="prompt"><label>Login:</label></td>
+      <td class="prompt"><label>Brukernavn:</label></td>
       <td class="value">
         <%= @user.new_record? ? text_field( 'user', 'login' ) : @user.login %>
       </td>
     </tr>
     <tr class="two_columns">
-      <td class="prompt"><label>Email:</label></td>
+      <td class="prompt"><label>Fornavn:</label></td>
+      <td class="value"><%= text_field 'user', 'first_name' %></td>
+    </tr>
+    <tr class="two_columns">
+      <td class="prompt"><label>Etternavn:</label></td>
+      <td class="value"><%= text_field 'user', 'last_name' %></td>
+    </tr>
+    <tr class="two_columns">
+      <td class="prompt"><label>E-post:</label></td>
       <td class="value"><%= text_field 'user', 'email' %></td>
     </tr>
+<% if admin? %>
+    <tr class="two_columns">
+      <td class="prompt"><label>Bekreftet:</label></td>
+      <td class="value"><%=select 'user', 'verified', [['Nei', false], ['Ja', true]] %></td>
+    </tr>
+    <tr class="two_columns">
+      <td class="prompt"><label>Rolle:</label></td>
+      <td class="value"><%=select 'user', 'role', [['Medlem', nil], ['Administrator', UserSystem::ADMIN_ROLE]] %></td>
+    </tr>
+<% end %>
     <% if submit %>
      <tr>
        <td>
-         <%= submit_tag user.new_record? ? 'signup' : 'change_settings', :class => 'two_columns' %>
+         <%= submit_tag user.new_record? ? 'Meld inn' : 'Lagre', :class => 'two_columns' %>
        </td>
      </tr>
     <% end %>

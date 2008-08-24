@@ -65,8 +65,8 @@ module UserSystem
   
   def authenticated_user?
     if session[:user_id]
-      @current_user = User.find_by_id(session[:user_id])
-      return false if @current_user.nil? 
+      self.current_user = User.find_by_id(session[:user_id])
+      return false if current_user.nil? 
       return true
     end
     
@@ -102,7 +102,7 @@ module UserSystem
       cookie_user ||= User.authenticate(cookie_value, '')
       if cookie_user
         @current_user = cookie_user
-        session[:user_id] = cookie_user.id
+        self.current_user = cookie_user
         return cookie_user
       end
     end
@@ -113,7 +113,7 @@ module UserSystem
     key = params['key']
     if id and key
       @current_user = User.authenticate_by_token(id, key)
-      session[:user_id] = @current_user ? @current_user.id : nil
+      self.current_user = @current_user
       return true if not @current_user.nil?
     end
     
@@ -122,11 +122,21 @@ module UserSystem
   end
   
   def user
-    @current_user
+    current_user
   end
   
   def admin?
-    user? && user.role == ADMIN_ROLE
+    current_user && current_user.role == ADMIN_ROLE
   end
   
+  def current_user
+    Thread.current[:user]
+  end
+  
+  def current_user= user
+    puts "login: #{user.login}"
+    session[:user_id] = user && user.id if @session
+    Thread.current[:user] = user
+  end
+
 end

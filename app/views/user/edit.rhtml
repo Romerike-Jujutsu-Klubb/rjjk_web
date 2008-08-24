@@ -6,13 +6,13 @@
     <% end %>
     </br>
     <% form_tag(url_for(:action => "#{@controller.action_name}")) do %>
-      <%= render_partial 'password', :submit => true %>
+      <%= render :partial => 'password', :locals =>  {:submit => true} %>
     <% end %>
 
     <% form_tag(url_for(:action => "#{@controller.action_name}")) do %>
       <div class="user_delete">
         <%= hidden_field 'user', 'form', :value => 'delete' %>
-        <%= submit_tag 'Delete' %>
+        <%= submit_tag 'Slett bruker' %>
       </div>
     <% end %>
   </div>

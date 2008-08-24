@@ -2,6 +2,8 @@ require 'digest/sha1'
 
 # this model expects a certain database layout and its based on the name/login pattern. 
 class User < ActiveRecord::Base
+  include UserSystem
+  
   CHANGEABLE_FIELDS = ['first_name', 'last_name', 'email']
   attr_accessor :password_needs_confirmation
 
@@ -18,6 +20,12 @@ class User < ActiveRecord::Base
   validates_length_of :password, { :minimum => 5, :if => :validate_password? }
   validates_length_of :password, { :maximum => 40, :if => :validate_password? }
 
+  def validate
+    if role && (user.nil? || user.role.nil?)
+      errors.add(:role, 'Bare administratorer kan gi administratorrettigheter.') 
+    end
+  end
+  
   def initialize(attributes = nil)
     super
     @password_needs_confirmation = false

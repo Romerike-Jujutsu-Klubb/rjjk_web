@@ -3,7 +3,7 @@ class UserController < ApplicationController
   before_filter :admin_required, :except => [:welcome, :login, :logout, :signup, :forgot_password, :change_password]
 
   skip_before_filter :authenticate_user, :only => [ :login, :signup, :forgot_password ]
-
+  
   def list
     @users = User.find(:all, :order => 'last_name, first_name')
   end
@@ -28,16 +28,16 @@ class UserController < ApplicationController
       flash['message'] = 'Login failed'
     end
   end
-
+  
   def signup
     return if generate_blank_form
     @user = User.new(
-      :login => params['user'][:login],
-      :password => params['user'][:password],
-      :password_confirmation => params['user'][:password_confirmation],
-      :email => params['user'][:email],
-      :first_name => params['user'][:first_name],
-      :last_name => params['user'][:last_name]
+                     :login => params['user'][:login],
+    :password => params['user'][:password],
+    :password_confirmation => params['user'][:password_confirmation],
+    :email => params['user'][:email],
+    :first_name => params['user'][:first_name],
+    :last_name => params['user'][:last_name]
     )
     begin
       User.transaction do
@@ -62,7 +62,7 @@ class UserController < ApplicationController
     @current_user = nil
     redirect_to :action => 'login'
   end
-
+  
   def change_password
     return if generate_filled_in
     params['user'].delete('form')
@@ -79,18 +79,18 @@ class UserController < ApplicationController
     rescue Exception => ex
       report_exception ex
     end
-
+    
   end
-
+  
   def forgot_password
     if authenticated_user?
       flash['message'] = 'You are currently logged in. You may change your password now.'
       redirect_to :action => 'change_password'
       return
     end
-
+    
     return if generate_blank_form
-
+    
     if params['user']['email'].empty?
       flash.now['message'] = 'Please enter a valid email address.'
     elsif (user = User.find_by_email(params['user']['email'])).nil?
@@ -115,22 +115,27 @@ class UserController < ApplicationController
       end
     end
   end
-
+  
   def edit
     return if generate_filled_in
     if params['user']['form']
       form = params['user'].delete('form')
       begin
         case form
-        when "edit"
+          when "edit"
           unclean_params = params['user']
-          user_params = unclean_params.delete_if { |k,v| not User::CHANGEABLE_FIELDS.include?(k) }
+          if user.admin?
+            user_params = unclean_params
+          else
+            user_params = unclean_params.delete_if { |k,v| not User::CHANGEABLE_FIELDS.include?(k) }
+          end
           @user.attributes = user_params
-          @user.save
-          flash.now['notice'] = "User has been updated."
-        when "change_password"
+          if @user.save
+            flash.now['notice'] = "User has been updated."
+          end
+          when "change_password"
           change_password
-        when "delete"
+          when "delete"
           delete
         else
           raise "unknown edit action"
@@ -141,7 +146,7 @@ class UserController < ApplicationController
       end
     end
   end
-
+  
   def delete
     @user = @current_user || User.find_by_id( session[:user_id] )
     begin
@@ -152,12 +157,12 @@ class UserController < ApplicationController
       redirect_back_or_default :action => 'welcome'
     end
   end
-
+  
   def welcome
   end
-
+  
   protected
-
+  
   def protect?(action)
     if ['login', 'signup', 'forgot_password'].include?(action)
       return false
@@ -165,32 +170,32 @@ class UserController < ApplicationController
       return true
     end
   end
-
+  
   # Generate a template user for certain actions on get
   def generate_blank_form
     case request.method
-    when :get
+      when :get
       @user = User.new
       render
       return true
     end
     return false
   end
-
+  
   # Generate a template user for certain actions on get
   def generate_filled_in
     @user = (params[:id] && User.find_by_id(params[:id])) || @current_user || User.find_by_id(session[:user_id])
     case request.method
-    when :get
+      when :get
       render
       return true
     end
     return false
   end
-
+  
   def report_exception( ex )
     logger.warn ex
     logger.warn ex.backtrace.join("\n")
   end
-
+  
 end
