@@ -35,20 +35,4 @@ class CreateRanks < ActiveRecord::Migration
     drop_table :martial_arts
   end
   
-  class MartialArt < ActiveRecord::Base
-    has_many :ranks
-    has_many :graduations
-    has_many :censors
-  end
-  
-  class Rank < ActiveRecord::Base
-    acts_as_list :scope => :martial_art_id
-  end
-  class Graduation < ActiveRecord::Base
-    has_many :censors
-    has_many :graduates
-  end
-  class Censor < ActiveRecord::Base ;end
-  class Graduate < ActiveRecord::Base ;end
-  
 end

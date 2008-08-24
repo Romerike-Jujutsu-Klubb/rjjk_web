@@ -58,10 +58,10 @@ class CmsImport
     @updated_members = []
     cms_contract_ids.each do |cms_contract_id|
       detail_fields = user_fields[cms_contract_id]
-      member = Member.find_by_cms_contract_id(cms_contract_id)
-      member = Member.new(:department => 'Jujutsu', :instructor => false) if member.nil?
+      member = CmsMember.find_by_cms_contract_id(cms_contract_id)
+      member = CmsMember.new(:department => 'Jujutsu', :instructor => false) if member.nil?
       old_values = member.attributes
-      p new_contract_birthdate = (detail_fields[38].empty? || detail_fields[38] == '--' ? nil : Date.strptime(detail_fields[38], '%d%m%y'))
+      new_contract_birthdate = (detail_fields[38].empty? || detail_fields[38] == '--' ? nil : Date.strptime(detail_fields[38], '%d%m%y'))
       phone_pattern = '(?:\d| )+'
       debitor_contact_pattern = /(.*?)<br \/>Att: <br \/>(.*?)<br \/>(\d*?) (.*?)/
       contract_contact_pattern = /(.*?)<br \/>(.*?)<br \/>(.*?) .*?<br \/>/
@@ -105,7 +105,7 @@ class CmsImport
           @updated_members << [member, old_values]
         end
         message = "#{member.new_record? ? 'Adding' : 'Updating'} member: #{member.first_name} #{member.last_name}\n#{changes.inspect}"
-        Member.logger.info message
+        CmsMember.logger.info message
         member.update_attributes(changes)
         member.save!
       end
