@@ -1,14 +1,18 @@
 <h1 style="font-family:Arial, Helvetica, sans-serif">Oppmøteliste <%=@department%> <%=@level%></h1>
 
-<table style="font-family:Arial, Helvetica, sans-serif" border="1" cellpadding="5" cellspacing="1">
+<style type="text/css">
+body {font-family:Arial, Helvetica, sans-serif}
+th {background: lightgray}
+</style>
+<table border="1" cellspacing="0" width="100%">
   <tr>
     <th>Navn</th>
 <% first_tuesday = Date.today - Date.today.wday + 2%>
 
 <% weeks = 5 %>
 <% weeks.times do |i| %>
-    <td><%=(first_tuesday + (i*7)).strftime('%d/%m')%></td>
-    <td><%=(first_tuesday + 2 + (i*7)).strftime('%d/%m')%></td>
+    <th><%=(first_tuesday + (i*7)).strftime('%d/%m')%></th>
+    <th><%=(first_tuesday + 2 + (i*7)).strftime('%d/%m')%></th>
 <% end %>
   </tr>
   
