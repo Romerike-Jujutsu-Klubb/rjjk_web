@@ -48,7 +48,7 @@ Ikke registrert.
 <%= text_field 'member', 'contract_id' %></p>
 
 <p><label for="member_department">Avdeling</label><br/>
-<%=select 'member', 'department', ['Jujutsu', 'Aikido'] %></p>
+<%=select 'member', 'department', Member::DEPARTMENTS %></p>
 
 <p><label for="member_left_on">Utmeldt dato</label><br/>
 <% if @member.left_on %>

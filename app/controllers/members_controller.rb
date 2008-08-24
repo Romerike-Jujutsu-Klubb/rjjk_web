@@ -60,6 +60,30 @@ class MembersController < ApplicationController
     @members = Member.paginate :page => params[:page], :per_page => Member::MEMBERS_PER_PAGE, :order => 'last_name'
     @member_count = Member.count
   end
+
+  def attendance_form_index
+    @groups = []
+    Member::DEPARTMENTS.sort.each do |d| 
+      ['Senior', 'Junior'].each do |level|
+         @groups << {:department => d, :level => level}
+      end
+    end
+  end
+  
+  def attendance_form
+    @members = Member.find_active
+    if params[:department]
+      @department = params[:department]
+      @members.delete_if {|m| m.department != params[:department]}
+    end
+    if params[:level]
+      @level = params[:level]
+      senior = @level == 'Senior'
+      @members.delete_if {|m| m.senior == senior}
+    end
+    @members = @members.sort_by {|m| [m.first_name, m.last_name]}
+    render :layout => :print
+  end
   
   def new
     @member = Member.new

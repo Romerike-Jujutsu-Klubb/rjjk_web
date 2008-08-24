@@ -1,4 +1,5 @@
 class Member < ActiveRecord::Base
+  DEPARTMENTS = ['Jujutsu', 'Aikido']
   MEMBERS_PER_PAGE = 30
   ACTIVE_CONDITIONS = "left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)"
     

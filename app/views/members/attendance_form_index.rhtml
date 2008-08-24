@@ -1,0 +1,7 @@
+<h1>Oppmøtelister</h1>
+
+<ul>
+<% for group in @groups %>
+    <li><%=link_to "#{h group[:department]} #{h group[:level]}", :action => :attendance_form, :department => group[:department], :level => group[:level]%></li>
+<% end %>
+</ul>

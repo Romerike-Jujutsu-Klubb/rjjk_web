@@ -22,7 +22,7 @@
 <% if admin? %>
     <tr class="two_columns">
       <td class="prompt"><label>Bekreftet:</label></td>
-      <td class="value"><%=select 'user', 'verified', [['Nei', false], ['Ja', true]] %></td>
+      <td class="value"><%=select 'user', 'verified', [['Nei', false], ['Ja', true]] %> <%=link_to 'Send e-post med login link', {:action => :forgot_password, :user => {:email => @user.email}}, :method => :post %></td>
     </tr>
     <tr class="two_columns">
       <td class="prompt"><label>Rolle:</label></td>

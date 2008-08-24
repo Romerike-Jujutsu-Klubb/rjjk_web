@@ -1,7 +1,7 @@
 class UserController < ApplicationController
   before_filter :authenticate_user
   before_filter :admin_required, :except => [:welcome, :login, :logout, :signup, :forgot_password, :change_password]
-
+  
   skip_before_filter :authenticate_user, :only => [ :login, :signup, :forgot_password ]
   
   def list
@@ -27,6 +27,14 @@ class UserController < ApplicationController
       @login = params['user']['login']
       flash['message'] = 'Login failed'
     end
+  end
+  
+  def send_login_email
+    user = User.find(params[:id])
+    key = user.generate_security_token
+    url = url_for(:action => 'welcome')
+    url += "?user[id]=#{user.id}&key=#{key}"
+    UserNotify.deliver_signup(user, user.password, url)
   end
   
   def signup
@@ -83,7 +91,7 @@ class UserController < ApplicationController
   end
   
   def forgot_password
-    if authenticated_user?
+    if authenticated_user? and not admin?
       flash['message'] = 'You are currently logged in. You may change your password now.'
       redirect_to :action => 'change_password'
       return
