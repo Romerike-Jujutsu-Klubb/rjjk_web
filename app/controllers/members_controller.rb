@@ -79,7 +79,7 @@ class MembersController < ApplicationController
     if params[:level]
       @level = params[:level]
       senior = @level == 'Senior'
-      @members.delete_if {|m| m.senior == senior}
+      @members.delete_if {|m| m.senior != senior}
     end
     @members = @members.sort_by {|m| [m.first_name, m.last_name]}
     render :layout => :print

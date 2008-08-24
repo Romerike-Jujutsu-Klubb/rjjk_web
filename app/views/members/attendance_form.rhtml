@@ -1,25 +1,33 @@
-<h1>Medlemsliste <%=@department%> <%=@level%> (<%=@members.size%>)</h1>
+<h1 style="font-family:Arial, Helvetica, sans-serif">Oppmøteliste <%=@department%> <%=@level%></h1>
 
-<table border="1" cellpadding="5" cellspacing="1">
+<table style="font-family:Arial, Helvetica, sans-serif" border="1" cellpadding="5" cellspacing="1">
   <tr>
-    <th>Fornavn</th>
-    <th>Etternavn</th>
+    <th>Navn</th>
 <% first_tuesday = Date.today - Date.today.wday + 2%>
 
 <% weeks = 5 %>
 <% weeks.times do |i| %>
-    <td> <%=(first_tuesday + (i*7)).strftime('%d/%m')%> </td>
-    <td> <%=(first_tuesday + 2 + (i*7)).strftime('%d/%m')%> </td>
+    <td><%=(first_tuesday + (i*7)).strftime('%d/%m')%></td>
+    <td><%=(first_tuesday + 2 + (i*7)).strftime('%d/%m')%></td>
 <% end %>
   </tr>
   
 <% for member in @members %>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td><%=h member.first_name %></td>
-    <td><%=h member.last_name %></td>
+    <td><%=h member.first_name %> <%=h member.last_name %></td>
 <% (2*weeks).times do %>
     <td>&nbsp;</td>
 <% end %>
   </tr>
 <% end %>
+
+<% (20-@members.size).times do %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%='&nbsp;' * 25 %></td>
+<% (2*weeks).times do %>
+    <td>&nbsp;</td>
+<% end %>
+  </tr>
+<% end %>
+
 </table>
