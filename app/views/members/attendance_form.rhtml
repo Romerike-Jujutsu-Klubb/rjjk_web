@@ -4,12 +4,15 @@
 body {font-family:Arial, Helvetica, sans-serif}
 th {background: lightgray}
 </style>
+
+<% first_tuesday = Date.today - Date.today.wday + 2%>
+<% weeks = 5 %>
+
 <table border="1" cellspacing="0" width="100%">
   <tr>
     <th>Navn</th>
-<% first_tuesday = Date.today - Date.today.wday + 2%>
-
-<% weeks = 5 %>
+    <th>Grad</th>
+    <th>F.Dato</th>
 <% weeks.times do |i| %>
     <th><%=(first_tuesday + (i*7)).strftime('%d/%m')%></th>
     <th><%=(first_tuesday + 2 + (i*7)).strftime('%d/%m')%></th>
@@ -19,6 +22,8 @@ th {background: lightgray}
 <% for member in @members %>
   <tr class="<%= cycle('odd', 'even') %>">
     <td><%=h member.first_name %> <%=h member.last_name %></td>
+    <td><%=h member.current_rank %>&nbsp;</td>
+    <td><%=h member.birthdate %>&nbsp;</td>
 <% (2*weeks).times do %>
     <td>&nbsp;</td>
 <% end %>

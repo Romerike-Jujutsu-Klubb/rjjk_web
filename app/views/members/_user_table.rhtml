@@ -13,7 +13,7 @@
     	<td><%=h member.department %></td>
 		<td><%=h member.age_group %></td>
 		<td><%=h yes_no(member.instructor) %></td>	
-		<td><%=h member.email %></td>
+		<td><a href="mailto:<%=h member.email%>"><%=h member.email%></a></td>
 		<td><%=h member.phone_mobile %></td>	
     	<td><%= link_to 'Rediger', :action => 'edit', :id => member %></td>
   	</tr>

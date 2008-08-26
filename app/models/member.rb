@@ -2,15 +2,15 @@ class Member < ActiveRecord::Base
   DEPARTMENTS = ['Jujutsu', 'Aikido']
   MEMBERS_PER_PAGE = 30
   ACTIVE_CONDITIONS = "left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)"
-    
-
+  
+  
   acts_as_ferret :fields => [:first_name,:last_name,:address,:postal_code,
-                             :email, :phone_home, :phone_work, 
-                             :phone_mobile, :phone_parent, :department, 
-                             :billing_type, :comment]
+  :email, :phone_home, :phone_work, 
+  :phone_mobile, :phone_parent, :department, 
+  :billing_type, :comment]
   
   has_many :graduates
-
+  
   validates_presence_of :first_name, :last_name, :address, :postal_code, :cms_contract_id
   #validates_presence_of :birthdate, :join_on
   validates_inclusion_of(:payment_problem, :in => [true, false])
@@ -32,6 +32,10 @@ class Member < ActiveRecord::Base
   end
   
   def current_grade
+    current_rank
+  end
+  
+  def current_rank
     @grade = graduates.sort_by {|g| g.graduation.held_on}.last
     if !@grade
       if senior?
@@ -39,15 +43,15 @@ class Member < ActiveRecord::Base
           "5.kyu"
         else
           "6.kyu"
-      end
-    else
+        end
+      else
       "10.mon"
       end
     else
       @grade.rank.name
     end
   end
-
+  
   def fee
     if instructor?
       0
@@ -70,7 +74,7 @@ class Member < ActiveRecord::Base
     size = 480
     begin
       require 'gruff'
-      rescue MissingSourceFile => e
+    rescue MissingSourceFile => e
       return File.read("public/images/rails.png")
     end
     
@@ -81,7 +85,7 @@ class Member < ActiveRecord::Base
     #g.legend_font_size = 14
     g.hide_dots = true
     g.colors = %w{green blue orange red}
-
+    
     first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = Date.today - (8 * 12 * 30)
     dates = []
@@ -103,41 +107,45 @@ class Member < ActiveRecord::Base
     current_year = nil
     current_month = nil
     dates.each_with_index {|date, i| if date.month != current_month && [1,8].include?(date.month) then labels[i] = (date.year != current_year ? "#{date.strftime("%m")}\n    #{date.strftime("%Y")}" : "#{date.strftime("%m")}") ; current_year = date.year ; current_month = date.month end}
-    g.labels = labels
+      g.labels = labels
+      
+      # g.draw_vertical_legend
+      
+      g.maximum_value = (g.maximum_value.to_s[0..0].to_i + 1) * (10**Math::log10(g.maximum_value.to_i).to_i) if g.maximum_value > 0
+      g.marker_count = g.maximum_value / 10
+      g.to_blob
+    end
     
-    # g.draw_vertical_legend
+    def self.was_senior?(date)
+      birthdate.nil? or ((date - birthdate) / 365) > 15
+    end
     
-    g.maximum_value = (g.maximum_value.to_s[0..0].to_i + 1) * (10**Math::log10(g.maximum_value.to_i).to_i) if g.maximum_value > 0
-    g.marker_count = g.maximum_value / 10
-    g.to_blob
-  end
-
-  def self.was_senior?(date)
-    birthdate.nil? or ((date - birthdate) / 365) > 15
-  end
-
-  def self.senior_birthdate(date)
-    date - (15 * 365)
-  end
-  
-  def age_group    
-    if senior
+    def self.senior_birthdate(date)
+      date - (15 * 365)
+    end
+    
+    def age_group    
+      if senior
       "Senior"
-    else
+      else
       "Junior"
+      end
     end
-  end
-  
-  def gender    
-    if male
+    
+    def gender    
+      if male
       "Mann"
-    else
+      else
       "Kvinne"
+      end
     end
-  end
-
-  def name
+    
+    def name
     "#{first_name} #{last_name}"
+    end
+    
+    def birthdate
+      birtdate
+    end
+    
   end
-
-end

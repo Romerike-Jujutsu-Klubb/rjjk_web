@@ -4,6 +4,7 @@ require 'erb'
 
 class CmsImport
   def self.import
+    start = Time.now
     url = URI.parse('http://62.92.243.194:8000/')
 
     cms_contract_ids = nil
@@ -53,7 +54,7 @@ class CmsImport
     }
 
     puts "Found #{cms_contract_ids.size} members"
-    puts "Found #{cms_contract_ids.select {|m| user_fields[m][64].empty?}.size} active members"
+    puts "Found #{cms_contract_ids.select {|m| left_on = user_fields[m][64] ; left_on.empty? || (Date.strptime(left_on, '%d.%m.%Y') >= Date.today)}.size} active members"
     @new_members = []
     @updated_members = []
     cms_contract_ids.each do |cms_contract_id|
@@ -110,6 +111,9 @@ class CmsImport
         member.save!
       end
     end
+    stop = Time.now
+    duration = (stop-start).round
+    puts "Import took #{'%d:%02d' % [duration / 60, duration % 60]}"
     return @new_members, @updated_members
   end
   

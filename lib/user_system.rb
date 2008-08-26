@@ -134,7 +134,6 @@ module UserSystem
   end
   
   def current_user= user
-    puts "login: #{user.login}"
     session[:user_id] = user && user.id if @session
     Thread.current[:user] = user
   end
