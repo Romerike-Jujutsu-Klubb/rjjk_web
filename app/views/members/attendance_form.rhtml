@@ -33,7 +33,7 @@ th {background: lightgray}
 <% (20-@members.size).times do %>
   <tr class="<%= cycle('odd', 'even') %>">
     <td><%='&nbsp;' * 25 %></td>
-<% (2*weeks).times do %>
+<% (2 + 2*weeks).times do %>
     <td>&nbsp;</td>
 <% end %>
   </tr>
