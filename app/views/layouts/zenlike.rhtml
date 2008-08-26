@@ -5,7 +5,9 @@
 <title>Romerike Jujutsu Klubb</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
-<%= stylesheet_link_tag 'zenlike', :media => 'screen' %>
+<%=javascript_include_tag "prototype" %>
+<%=stylesheet_link_tag 'zenlike', :media => 'screen' %>
+<%=stylesheet_link_tag 'zenlike_adaption', :media => 'screen' %>
 </head>
 
 <body>
@@ -22,14 +24,19 @@
 		</div>
 	</div>
 
+	<div id="member_search">
+		<% if admin? %>
+			<%=render :partial => '/members/search_form'%>
+		<% end %>
+	</div>
 
-	<form method="get" action="http://www.google.com/search">
-		<div id="search">
+	<div id="search">
+		<form method="get" action="http://www.google.com/search">
 			<input type="hidden" name="as_sitesearch" value="jujutsu.no" />
 			<input type="text" class="text" maxlength="64" name="q" />
-			<input type="submit" class="submit" value="Search" />
-		</div>
-	</form>
+			<input type="submit" class="submit" value="Søk" />
+		</form>
+	</div>
 
 
 	<div id="headerpic"></div>

@@ -1,0 +1,31 @@
+#member_search
+{
+position: absolute;
+top: 3.5em;
+right: 2.0em;
+padding-right: 0.0em;
+}
+
+#member_search input.text
+{
+margin-right: 0.5em;
+vertical-align: middle;
+border-top: solid 1px #000000;
+border-right: 0px;
+border-bottom: solid 1px #777777;
+border-left: 0px;
+padding: 0.15em;
+width: 10.0em;
+}
+
+#member_search input.submit
+{
+/* background: #939B00 url('/images/buttonbg.gif') repeat-x; */
+background: #ffb400;
+border: solid 1px #EC9D48;
+font-weight: bold;
+padding: 0.25em;
+font-size: 0.8em;
+color: #00226C;
+vertical-align: middle;
+}

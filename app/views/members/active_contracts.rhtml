@@ -1,10 +1,8 @@
 <h1>Aktive Kontrakter (<%=@members.size%>)</h1>
 
 <%= button_to 'Importer data fra CMS', :action => 'import'%>
-<%= render :partial => 'search_form'%>
-<% if @invalid %>
-	<p>Ugyldige tegn i søk.</p>
-<% end %>
+
+<%=render :partial => 'search_form'%>
 
 <table class="members" border="0" cellpadding="5" cellspacing="1">
   <tr class="header">
