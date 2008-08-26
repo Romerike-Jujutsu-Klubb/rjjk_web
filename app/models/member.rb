@@ -36,8 +36,8 @@ class Member < ActiveRecord::Base
   end
   
   def current_rank
-    @grade = graduates.sort_by {|g| g.graduation.held_on}.last
-    if !@grade
+    @graduate = graduates.sort_by {|g| g.graduation.held_on}.last
+    if !@graduate
       if senior?
         if department == "Jujutsu"
           "5.kyu"
@@ -48,7 +48,7 @@ class Member < ActiveRecord::Base
       "10.mon"
       end
     else
-      @grade.rank.name
+      "#{@graduate.rank.name} (#{@graduate.graduation.held_on})"
     end
   end
   

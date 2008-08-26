@@ -1,13 +1,16 @@
 <%= error_messages_for 'rank' %>
 
 <!--[form:rank]-->
-<p><label for="rank_name">Name</label><br/>
+<p><label for="rank_martial_art_id">Stil</label><br/>
+<%=select 'rank', 'martial_art_id', @martial_arts.map{|ma| [ma.name, ma.id]} %></p>
+
+<p><label for="rank_name">Navn</label><br/>
 <%= text_field 'rank', 'name'  %></p>
 
-<p><label for="rank_colour">Colour</label><br/>
+<p><label for="rank_colour">Farge</label><br/>
 <%= text_field 'rank', 'colour'  %></p>
 
-<p><label for="rank_position">Position</label><br/>
+<p><label for="rank_position">Posisjon</label><br/>
 <%= text_field 'rank', 'position'  %></p>
 <!--[eoform:rank]-->
 

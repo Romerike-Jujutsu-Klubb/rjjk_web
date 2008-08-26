@@ -32,7 +32,7 @@ EOH
       ln = instr.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') 
       nm = fn << " " << ln
       rstr = rstr << "<tr>" <<
-             "<td><a href='#' onClick='add_censor(" + instr.cms_contract_id.to_s + ",\"" + nm + "\");'>" <<
+             "<td><a href='#' onClick='add_censor(" + instr.id.to_s + ",\"" + nm + "\");'>" <<
              nm << "</a></td>" << "<td ALIGN=right>" << instr.department << "</td>"
              "</tr>"
     end
@@ -53,10 +53,10 @@ EOH
     mid = params[:member_id].to_i
     name = params[:name]
     if Censor.find(:first, :conditions => "member_id = #{mid} AND graduation_id = #{gid}")
-      render_text "Censor already exists"
+      render :text => "Censor already exists"
     else
       Censor.create!(:graduation_id => gid, :member_id => mid)
-      render_text "Added #{name} as new sensor to graduation"
+      render :text => "Added #{name} as new sensor to graduation"
     end
   end
 

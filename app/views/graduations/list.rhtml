@@ -34,6 +34,7 @@ function initAjax() {
 function setObjectData(ref, file) {
 	var xmlHttp = initAjax();
 	var obj = document.getElementById(ref);
+	var debug = document.getElementById('debug');
 	
 	if(xmlHttp) {
 		xmlHttp.onreadystatechange=function() {

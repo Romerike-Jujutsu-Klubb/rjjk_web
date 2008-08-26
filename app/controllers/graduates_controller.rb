@@ -75,12 +75,13 @@ class GraduatesController < ApplicationController
   </tr>
 EOC
     for cen in @censors
-      fn = cen.member.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
-      ln = cen.member.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') 
-      nm = "<td width=23%>#{fn} #{ln}</td>" <<
+      fn = cen.member && cen.member.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
+      ln = cen.member && cen.member.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
+      name = "#{fn} #{ln}"
+      nm = "<td width=23%>#{name}</td>" <<
            "<td width=2%><a href=# onClick='removeCensor(#{cen.id}, " <<
-           "\"#{fn} #{ln}\");'>" <<
-           "<IMG SRC=\"/images/button-delete-16x16.png\" STYLE=\"border: 0;\" ALT=\"Slett sensor\"></a></td>\n"
+           "\"#{name}\");'>" <<
+           "<IMG SRC=\"/images/button-delete-16x16.png\" STYLE=\"border: 0;\" title=\"Slett sensor #{name}\" ALT=\"Slett sensor #{name}\"></a></td>\n"
       if ccnt == 0
         rstr << "<tr>" << nm
       elsif ccnt == (cmax - 1)
@@ -118,7 +119,7 @@ EOC
 </tr>
 EOH
     for gr in @graduates
-      mbr = Member.find(:first, :conditions => [ "cms_contract_id = ?", gr.member_id])
+      mbr = Member.find(:first, :conditions => [ "id = ?", gr.member_id])
       fn = mbr.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
       ln = mbr.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') 
       rstr = rstr << "<tr id='#{gr.member_id}_#{gr.graduation.id}_view'>\n" <<
@@ -154,7 +155,7 @@ EOH
   
   def list_potential_graduates
     @grads = Member.find(:all, :conditions => "left_on IS NULL", :order => 'last_name, first_name',
-    :select => 'last_name, first_name, cms_contract_id, department')
+    :select => 'last_name, first_name, id, department')
     rstr =<<EOH
 <div style="height:256px; width:256px; overflow:auto; overflow-x:hidden;">
 	<table WIDTH="256" CELLPADDING="0" CELLSPACING="0">
@@ -168,7 +169,7 @@ EOH
       ln = grad.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
       fn = grad.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
       rstr << "<tr>" <<
-			        "<td align=left><a href='#' onClick='add_graduate(" + grad.cms_contract_id.to_s + ");'>" <<
+			        "<td align=left><a href='#' onClick='add_graduate(" + grad.id.to_s + ");'>" <<
 			        "#{ln}, #{fn}</a></td>" <<
 			        "<td ALIGN='right'>&nbsp;" <<
       #"<td ALIGN='right'>" << grad.department <<
@@ -190,9 +191,9 @@ EOH
       @graduate = Graduate.find(:first, :conditions => [ "graduation_id = ? AND member_id = ?", graduate_id, member_id])
       @graduate.update_attributes!(:rank_id => rank_id, :passed => passed, :paid_graduation => paid,
                                    :paid_belt => paid_belt )
-      render_text "Endret graderingsinfo for medlem. <!-- #{member_id} -->"
+      render :text => "Endret graderingsinfo for medlem. <!-- #{member_id} -->"
     rescue StandardError
-      render_text "Det oppstod en feil ved endring av medlem #{member_id}:<P>" + $! + "</P>"
+      render :text => "Det oppstod en feil ved endring av medlem #{member_id}:<P>" + $! + "</P>"
     end
   end
   
@@ -210,6 +211,7 @@ EOH
     aid = params[:martial_arts_id].to_i
     
     rank = Rank.find(:first, :conditions => [ "martial_art_id = ?", aid])
+    raise "Unable to find martial art with id = #{aid}" unless rank
     Graduate.create!(:graduation_id => gid, :member_id => mid, :passed => false,
                      :rank_id => rank.id, :paid_graduation => false, :paid_belt => false)
     render :text =>" " 

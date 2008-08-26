@@ -12,7 +12,7 @@ class GraduationsController < ApplicationController
         lines << k.to_s << " " << x << " " << y << "<br>"
       }
     }
-    render_text lines
+    render :text => lines
   end
 
   def index

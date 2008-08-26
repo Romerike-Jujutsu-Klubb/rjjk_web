@@ -1,4 +1,6 @@
 class RanksController < ApplicationController
+  before_filter :admin_required
+
   def index
     list
     render :action => 'list'
@@ -18,6 +20,7 @@ class RanksController < ApplicationController
 
   def new
     @rank = Rank.new
+    @martial_arts = MartialArt.find(:all, :order => 'name')
   end
 
   def create
@@ -26,12 +29,14 @@ class RanksController < ApplicationController
       flash[:notice] = 'Rank was successfully created.'
       redirect_to :action => 'list'
     else
+      @martial_arts = MartialArt.find(:all, :order => 'name')
       render :action => 'new'
     end
   end
 
   def edit
     @rank = Rank.find(params[:id])
+    @martial_arts = MartialArt.find(:all, :order => 'name')
   end
 
   def update
