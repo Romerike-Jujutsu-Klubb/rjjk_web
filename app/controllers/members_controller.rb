@@ -86,7 +86,7 @@ class MembersController < ApplicationController
   end
   
   def new
-    @member = Member.new
+    @member ||= Member.new
     @groups = Group.find(:all, :include => :martial_art, :order => 'martial_arts.name, groups.name')
   end
   
@@ -98,6 +98,7 @@ class MembersController < ApplicationController
       flash[:notice] = 'Medlem opprettet.'
       redirect_to :action => 'list'
     else
+      new
       render :action => 'new'
     end
   end

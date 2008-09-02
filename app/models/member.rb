@@ -20,7 +20,7 @@ class Member < ActiveRecord::Base
   validates_inclusion_of(:male, :in => [true, false])
   validates_length_of :postal_code, :is => 4, :if => Proc.new {|m|m.postal_code && !m.postal_code.empty?}
   validates_length_of :billing_postal_code, :is => 4, :if => Proc.new{|m|m.billing_postal_code && !m.billing_postal_code.empty?}
-  validates_uniqueness_of :cms_contract_id
+  validates_uniqueness_of :cms_contract_id, :if => :cms_contract_id
   
   def self.find_active
     Member.find(:all, :conditions => ACTIVE_CONDITIONS, :order => 'last_name, first_name')
