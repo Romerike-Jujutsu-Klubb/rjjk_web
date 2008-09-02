@@ -38,8 +38,8 @@ class Member < ActiveRecord::Base
     current_rank
   end
   
-  def current_rank
-    @graduate = graduates.sort_by {|g| g.graduation.held_on}.last
+  def current_rank(martial_art)
+    @graduate = graduates.select{|g|g.rank.martial_art == martial_art}.sort_by {|g| g.graduation.held_on}.last
 #    @graduate && "#{@graduate.rank.name} (#{@graduate.graduation.held_on})"
     @graduate && @graduate.rank
   end

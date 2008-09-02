@@ -77,11 +77,11 @@ class MembersController < ApplicationController
       else
         @group = Group.find(params[:group_id])
         @members = @group.members
+        @members = @members.sort_by {|m| [m.current_rank(@group.martial_art) ? -m.current_rank(@group.martial_art).position : 99, m.first_name, m.last_name]}
       end
     else
       @members = []
     end
-    @members = @members.sort_by {|m| [m.current_rank ? -m.current_rank.position : 99, m.first_name, m.last_name]}
     render :layout => :print
   end
   

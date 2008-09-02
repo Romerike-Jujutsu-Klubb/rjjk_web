@@ -11,7 +11,7 @@
 	<% for graduate in @member.graduates.sort_by{|g|g.graduation.held_on} %>
 	<tr>
 		<td><%=graduate.graduation.held_on%></td>
-		<td><%=graduate.rank.name%></td>
+		<td><%=graduate.rank.martial_art.name%> <%=graduate.rank.name%></td>
 		<td><%=yes_no graduate.passed%></td>
 		<td><%=yes_no graduate.paid_graduation%></td>
 		<td><%=yes_no graduate.paid_belt%></td>
