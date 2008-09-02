@@ -42,7 +42,7 @@ class GraduatesController < ApplicationController
   
   def rank_select(ma_id, member_id, row_id)
     rstr = rsel = String.new()
-    @mranks = Rank.find(:all, :conditions => "martial_art_id = #{ma_id}")
+    @mranks = Rank.find(:all, :conditions => "martial_art_id = #{ma_id}", :order => 'position')
     rstr << "\n<SELECT STYLE='width: 72px; height: 18px;' NAME='rank_row_#{member_id}' ID='rank_row_#{member_id}'>\n"
     for rank in @mranks
       rsel = row_id == rank.id ? "SELECTED" : "" 
