@@ -29,12 +29,9 @@
 <p><label for="member_phone_work">Telefon arbeid</label><br/>
 <%= text_field 'member', 'phone_work', :size => '11' %></p>
 
-<p><label for="member_birthdate">Fødselsdato</label><br/>
-<% if @member.new_record? || @member.birthdate%>
-<%=date_select 'member', 'birthdate', :start_year=>1940 %></p>
-<% else %>
-Ikke registrert.
-<% end %>
+<p><label for="member_birthdate">Fødselsdato (format yyyy-mm-dd)</label><br/>
+<%=text_field 'member', 'birthdate' %>
+</p>
 
 <p><label for="member_male">Kjønn</label><br/>
 <%=select "member", "male", [['Mann', true], ['Kvinne', false]] %></p>

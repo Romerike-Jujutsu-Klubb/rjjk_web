@@ -1,6 +1,6 @@
 <h1>Editing member</h1>
 
-<table id="graduations" align="right">
+<table id="graduations" align="right" border="1">
 	<tr>
 		<th>Dato</th>
 		<th>Grad</th>
@@ -17,6 +17,11 @@
 		<td><%=yes_no graduate.paid_belt%></td>
 	</tr>
 	<% end %>
+	<tr>
+		<td colspan="10" align="center">
+			<%=link_to 'Graderinger', :controller => 'graduations'%>
+		</td>
+	</tr>
 </table>
 
 <% form_tag :action => 'update', :id => @member do %>
