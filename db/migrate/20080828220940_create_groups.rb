@@ -8,16 +8,16 @@ class CreateGroups < ActiveRecord::Migration
       
       t.timestamps
     end
-    #    create_table :groups_members, :id => false do |t|
-    #      t.integer :group_id, :null => false
-    #      t.integer :member_id, :null => false
-    #
-    #      t.timestamps
-    #    end
+    create_table :groups_members, :id => false do |t|
+      t.integer :group_id, :null => false
+      t.integer :member_id, :null => false
+      
+      t.timestamps
+    end
     keiwaryu = MartialArt.find_by_name('Kei Wa Ryu')
     aikikai = MartialArt.find_by_name('Aikikai')
     raise "MArtial Arts not found" if keiwaryu.nil? || aikikai.nil?
-        Group.create! :martial_art_id => keiwaryu.id, :name => 'Aspiranter', :from_age => 6, :to_age => 9
+    Group.create! :martial_art_id => keiwaryu.id, :name => 'Aspiranter', :from_age => 6, :to_age => 9
     j = Group.create! :martial_art_id => keiwaryu.id, :name => 'Juniorer', :from_age => 10, :to_age => 14
     s = Group.create! :martial_art_id => keiwaryu.id, :name => 'Seniorer', :from_age => 14, :to_age => 999
     a = Group.create! :martial_art_id => aikikai.id, :name => 'Seniorer', :from_age => 14, :to_age => 999
