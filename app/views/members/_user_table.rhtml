@@ -10,7 +10,7 @@
   	<tr class="<%= cycle('odd', 'even') %>">
     	<td><%=h member.last_name %></td>
     	<td><%=h member.first_name %></td>
-    	<td><%=h member.department %></td>
+    	<td><%=h member.martial_arts.map{|ma|ma.name}.join(', ') %></td>
 		<td><%=h member.age_group %></td>
 		<td><%=h yes_no(member.instructor) %></td>	
 		<td><a href="mailto:<%=h member.email%>"><%=h member.email%></a></td>

@@ -1,21 +1,25 @@
-<h1 style="font-family:Arial, Helvetica, sans-serif">Oppmøteliste <%=@martial_art && @martial_art.name%> <%=@group && @group.name%></h1>
+<h1 style="font-family:Arial, Helvetica, sans-serif">Oppmøteliste <%=@group && @group.martial_art.name%> <%=@group && @group.name%> <%=h Date::MONTHNAMES[Date.today.mon] %></h1>
 
 <style type="text/css">
 body {font-family:Arial, Helvetica, sans-serif}
 th {background: lightgray}
 </style>
 
-<% first_tuesday = Date.today - Date.today.wday + 2%>
-<% weeks = 5 %>
+<% weekdays = @group ? (['J', 'S'].include?(@group.name[0].chr) ? [2,4] : [5]) : [2,4,5] %>
+<% first_date = Date.new(Date.today.year, Date.today.month, 1) %>
+<% last_date = Date.new(Date.today.year, Date.today.month, -1) %>
+<% dates = (first_date..last_date).select{|d|weekdays.include? d.wday} %>
+<% birthdate_missing = @members.find{|m|m.birthdate.nil?} %>
 
 <table border="1" cellspacing="0" width="100%">
   <tr>
     <th>Navn</th>
     <th>Grad</th>
+<% if birthdate_missing %>
     <th>F.Dato</th>
-<% weeks.times do |i| %>
-    <th><%=(first_tuesday + (i*7)).strftime('%d/%m')%></th>
-    <th><%=(first_tuesday + 2 + (i*7)).strftime('%d/%m')%></th>
+<% end %>
+<% dates.each do |d| %>
+    <th><%=d.strftime('%d/%m')%></th>
 <% end %>
   </tr>
   
@@ -23,8 +27,10 @@ th {background: lightgray}
   <tr class="<%= cycle('odd', 'even') %>">
     <td><%=h member.first_name %> <%=h member.last_name %></td>
     <td><%=h member.current_rank %>&nbsp;</td>
+<% if birthdate_missing %>
     <td><%=h member.birthdate %>&nbsp;</td>
-<% (2*weeks).times do %>
+<% end %>
+<% dates.each do |d| %>
     <td>&nbsp;</td>
 <% end %>
   </tr>
@@ -33,7 +39,11 @@ th {background: lightgray}
 <% (20-@members.size).times do %>
   <tr class="<%= cycle('odd', 'even') %>">
     <td><%='&nbsp;' * 25 %></td>
-<% (2 + 2*weeks).times do %>
+    <td>&nbsp;</td>
+<% if birthdate_missing %>
+    <td>&nbsp;</td>
+<% end %>
+<% dates.each do |d| %>
     <td>&nbsp;</td>
 <% end %>
   </tr>
