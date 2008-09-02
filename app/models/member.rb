@@ -137,7 +137,8 @@ class Member < ActiveRecord::Base
       birthdate && ((Date.today - birthdate).to_i / 365) # TODO: What about leap years?
     end
     
-    def age_group    
+    def age_group
+      return nil unless age
       if age >= JUNIOR_AGE_LIMIT
         "Senior"
       else
