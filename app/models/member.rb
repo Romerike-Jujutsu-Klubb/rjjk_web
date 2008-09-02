@@ -68,7 +68,7 @@ class Member < ActiveRecord::Base
   end
   
   def senior?
-    age >= JUNIOR_AGE_LIMIT
+    birthdate && (age >= JUNIOR_AGE_LIMIT)
   end
   
   def nkf_fee
@@ -134,7 +134,7 @@ class Member < ActiveRecord::Base
     end
     
     def age
-      (Date.today - birthdate).to_i / 365 # TODO: What about leap years?
+      birthdate && ((Date.today - birthdate).to_i / 365) # TODO: What about leap years?
     end
     
     def age_group    
