@@ -28,7 +28,7 @@
     <td><%=h member.last_name %></td>
     <td><%=h member.first_name %></td>
     <td align="right"><%=member.fee %></td>
-	<td><%=h member.department %></td>
+	<td><%=h member.groups.map{|g|g.martial_art.family}.join(', ') %></td>
 	<td><%=h member.age_group %></td>
 	<td><%=h yes_no(member.instructor) %></td>	
 	<td><%=h member.email %></td>

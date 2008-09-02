@@ -8,7 +8,7 @@
 		<th>Betalt gradering</th>
 		<th>Betalt belte</th>
 	</tr>
-	<% for graduate in @member.graduates %>
+	<% for graduate in @member.graduates.sort_by{|g|g.graduation.held_on} %>
 	<tr>
 		<td><%=graduate.graduation.held_on%></td>
 		<td><%=graduate.rank.name%></td>

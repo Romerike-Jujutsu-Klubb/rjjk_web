@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080902132010) do
+ActiveRecord::Schema.define(:version => 20080902204348) do
 
   create_table "censors", :force => true do |t|
     t.integer "graduation_id", :null => false
@@ -73,11 +73,11 @@ ActiveRecord::Schema.define(:version => 20080902132010) do
   end
 
   create_table "groups_members", :id => false, :force => true do |t|
-    t.integer  "group_id",   :null => false
-    t.integer  "member_id",  :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "group_id",  :null => false
+    t.integer "member_id", :null => false
   end
+
+  add_index "groups_members", ["group_id", "member_id"], :name => "index_groups_members_on_group_id_and_member_id", :unique => true
 
   create_table "images", :force => true do |t|
     t.string "name",         :limit => 64, :null => false
@@ -96,11 +96,6 @@ ActiveRecord::Schema.define(:version => 20080902132010) do
   create_table "martial_arts", :force => true do |t|
     t.string "name",   :limit => 16, :null => false
     t.string "family", :limit => 16, :null => false
-  end
-
-  create_table "martial_arts_members", :id => false, :force => true do |t|
-    t.integer "martial_art_id", :null => false
-    t.integer "member_id",      :null => false
   end
 
   create_table "members", :force => true do |t|
@@ -143,7 +138,7 @@ ActiveRecord::Schema.define(:version => 20080902132010) do
 
   create_table "ranks", :force => true do |t|
     t.string  "name",           :limit => 16, :null => false
-    t.string  "colour",         :limit => 32, :null => false
+    t.string  "colour",         :limit => 48, :null => false
     t.integer "position",                     :null => false
     t.integer "martial_art_id",               :null => false
   end
@@ -176,9 +171,6 @@ ActiveRecord::Schema.define(:version => 20080902132010) do
   add_foreign_key "groups_members", ["member_id"], "members", ["id"], :name => "groups_members_member_id_fkey"
 
   add_foreign_key "information_pages", ["parent_id"], "information_pages", ["id"], :name => "information_pages_parent_id_fkey"
-
-  add_foreign_key "martial_arts_members", ["martial_art_id"], "martial_arts", ["id"], :name => "martial_arts_members_martial_art_id_fkey"
-  add_foreign_key "martial_arts_members", ["member_id"], "members", ["id"], :name => "martial_arts_members_member_id_fkey"
 
   add_foreign_key "ranks", ["martial_art_id"], "martial_arts", ["id"], :name => "ranks_martial_art_id_fkey"
 

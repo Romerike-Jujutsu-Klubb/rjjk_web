@@ -1,6 +1,7 @@
 <h1>E-post lister</h1>
 
-<h2>Aktive seniorer <%=link_to 'Send e-post', "mailto:#{@export_senior_emails * ','}?subject=[RJJK] Melding fra RJJK&body=Din tekst her." %></h2>
+<% for group in @groups %>
+<h2>Aktive <%=group.martial_art.family%> <%=group.name%> <%=link_to 'Send e-post', "mailto:#{group.members.map{|m|m.email}.uniq * ','}?subject=[RJJK] Melding fra RJJK&body=Din tekst her." %></h2>
 <table>
   <tr>
     <th><%= link_to 'E-post', sort_param('listing', :alias => 'epost') %></th>
@@ -8,18 +9,22 @@
     <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>	
   </tr>
   
-<% for senior_email in @senior_emails %>
+<% for member in group.members %>
   <tr>
-	<td><%=h senior_email.email %></td>
-    <td><%=h senior_email.last_name %></td>
-    <td><%=h senior_email.first_name %></td>
-    <td><%= link_to 'Rediger', :action => 'edit', :id => senior_email %></td>
+	<td><%=h member.email %></td>
+    <td><%=h member.last_name %></td>
+    <td><%=h member.first_name %></td>
+    <td><%= link_to 'Rediger', :action => 'edit', :id => member.id %></td>
   </tr>
 <% end %>
 </table>
+<br/>
+<br/>
+<% end %>
 
-<h2>Aktive juniorer <%=link_to 'Send e-post', "mailto:#{@export_junior_emails * ','}?subject=E-post fra RJJK&body=Din tekst her." %></h2>
 
+
+<h2>Tidligere medlemmer <%=link_to 'Send e-post', "mailto:#{@former_members.map{|m|m.email}.compact.uniq * ','}?subject=E-post fra RJJK&body=Din tekst her." %></h2>
 <table>
   <tr>
     <th><%= link_to 'E-post', sort_param('listing', :alias => 'epost') %></th>
@@ -27,35 +32,12 @@
     <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>	
   </tr>
   
-<% for junior_email in @junior_emails %>
+<% for member in @former_members %>
   <tr>
-	<td><%=h junior_email.email %></td>
-    <td><%=h junior_email.last_name %></td>
-    <td><%=h junior_email.first_name %></td>
-    <td><%= link_to 'Rediger', :action => 'edit', :id => junior_email %></td>
+	<td><%=h member.email %></td>
+    <td><%=h member.last_name %></td>
+    <td><%=h member.first_name %></td>
+    <td><%= link_to 'Rediger', :action => 'edit', :id => member.id %></td>
   </tr>
 <% end %>
 </table>
-
-
-<h2>Tidligere medlemmer <%=link_to 'Send e-post', "mailto:#{@export_old_emails * ','}?subject=E-post fra RJJK&body=Din tekst her." %></h2>
-<table>
-  <tr>
-    <th><%= link_to 'E-post', sort_param('listing', :alias => 'epost') %></th>
-	<th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
-    <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>	
-  </tr>
-  
-<% for old_email in @old_emails %>
-  <tr>
-	<td><%=h old_email.email %></td>
-    <td><%=h old_email.last_name %></td>
-    <td><%=h old_email.first_name %></td>
-    <td><%= link_to 'Rediger', :action => 'edit', :id => old_email %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'Nytt medlem', :action => 'new' %>

@@ -11,7 +11,6 @@ class Member < ActiveRecord::Base
   ]
   
   has_many :graduates
-  has_and_belongs_to_many :martial_arts
   has_and_belongs_to_many :groups
   
   validates_presence_of :first_name, :last_name

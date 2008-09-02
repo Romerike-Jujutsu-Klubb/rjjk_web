@@ -24,7 +24,7 @@ class MembersController < ApplicationController
         @members = Member.find_by_contents(query, :limit => :all)
         # Sort by last name (requires a spec for each user).
         @members = @members.sort_by { |member| member.last_name }
-        rescue Ferret::QueryParser::QueryParseException
+      rescue Ferret::QueryParser::QueryParseException
         @invalid = true
       end
     end
@@ -60,25 +60,26 @@ class MembersController < ApplicationController
     @members = Member.paginate :page => params[:page], :per_page => Member::MEMBERS_PER_PAGE, :order => 'first_name, last_name'
     @member_count = Member.count
   end
-
+  
   def attendance_form_index
     @groups = []
     MartialArt.find(:all, :order => :family).each do |ma| 
       ma.groups.each do |group|
-         @groups << {:martial_art => ma, :group => group}
+        @groups << group
       end
     end
   end
   
   def attendance_form
-    @members = Member.find_active
-    if params[:martial_art_id]
-      @martial_art = MartialArt.find(params[:martial_art_id])
-      @members.delete_if {|m| !m.martial_arts.empty? && !m.martial_arts.include?(@martial_art)}
-    end
     if params[:group_id]
-      @group = Group.find(params[:group_id])
-      @members = @members.select {|m| m.groups.include? @group}
+      if params[:group_id] == 'others'
+        @members = Member.find(:all, :conditions => 'id NOT in (SELECT DISTINCT member_id FROM groups_members)')
+      else
+        @group = Group.find(params[:group_id])
+        @members = @group.members
+      end
+    else
+      @members = []
     end
     @members = @members.sort_by {|m| [m.first_name, m.last_name]}
     render :layout => :print
@@ -135,22 +136,12 @@ class MembersController < ApplicationController
   end
   
   def telephone_list
-    @senior_tels = Member.find(:all, :conditions => 'left_on IS NULL AND senior = true')
-    @junior_tels = Member.find(:all, :conditions => 'left_on IS NULL AND senior = false')
+    @groups = Group.find(:all, :include => :members)
   end
   
   def email_list
-    @senior_emails = Member.find(:all, :conditions => 'left_on IS NULL AND senior = true')
-    @junior_emails = Member.find(:all, :conditions => 'left_on IS NULL AND senior = false')
-    @old_emails    = Member.find(:all, :conditions => 'left_on IS NOT NULL')
-    
-    seniors = Member.find(:all,  :conditions => 'left_on IS NULL AND senior = true')
-    juniors = Member.find(:all, :conditions => 'left_on IS NULL AND senior = false')
-    old = Member.find(:all, :conditions => 'left_on IS NOT NULL')
-    
-    @export_senior_emails = seniors.map {|member| member.email}.compact
-    @export_junior_emails = juniors.map {|member| member.email}.compact
-    @export_old_emails = old.map {|member| member.email}.compact
+    @groups = Group.find(:all, :include => :members)
+    @former_members = Member.find(:all, :conditions => 'left_on IS NOT NULL')
   end
   
   def export_emails

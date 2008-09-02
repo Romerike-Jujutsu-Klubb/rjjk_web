@@ -2,6 +2,7 @@
 
 <ul>
 <% for group in @groups %>
-    <li><%=link_to "#{h group[:martial_art].name} #{h group[:group].name}", :action => :attendance_form, :martial_art_id => group[:martial_art].id, :group_id => group[:group].id%></li>
+    <li><%=link_to "#{h group.martial_art.name} #{h group.name}", :action => :attendance_form, :group_id => group.id%></li>
 <% end %>
+    <li><%=link_to "Andre", :action => :attendance_form, :group_id => 'others' %></li>
 </ul>
