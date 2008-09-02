@@ -10,6 +10,7 @@
 <% for rank in @ranks %>
   <tr>
     <td><%=h rank.position %></td>
+    <td><%=h rank.martial_art.name %></td>
     <td><%=h rank.name %></td>
     <td><%=h rank.colour %></td>
     <td><%= link_to 'Rediger', :action => 'edit', :id => rank %></td>

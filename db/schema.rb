@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080828220940) do
+ActiveRecord::Schema.define(:version => 20080902132010) do
 
   create_table "censors", :force => true do |t|
     t.integer "graduation_id", :null => false
@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(:version => 20080828220940) do
 
   create_table "ranks", :force => true do |t|
     t.string  "name",           :limit => 16, :null => false
-    t.string  "colour",         :limit => 16, :null => false
+    t.string  "colour",         :limit => 32, :null => false
     t.integer "position",                     :null => false
     t.integer "martial_art_id",               :null => false
   end
