@@ -81,7 +81,7 @@ class MembersController < ApplicationController
     else
       @members = []
     end
-    @members = @members.sort_by {|m| [m.first_name, m.last_name]}
+    @members = @members.sort_by {|m| [m.current_rank ? -m.current_rank.position : 99, m.first_name, m.last_name]}
     render :layout => :print
   end
   

@@ -26,7 +26,7 @@ th {background: lightgray}
 <% for member in @members %>
   <tr class="<%= cycle('odd', 'even') %>">
     <td><%=h member.first_name %> <%=h member.last_name %></td>
-    <td><%=h member.current_rank %>&nbsp;</td>
+    <td><%=h member.current_rank && member.current_rank.name %>&nbsp;</td>
 <% if birthdate_missing %>
     <td><%=h member.birthdate %>&nbsp;</td>
 <% end %>

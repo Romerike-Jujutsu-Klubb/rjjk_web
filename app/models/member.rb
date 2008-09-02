@@ -40,20 +40,8 @@ class Member < ActiveRecord::Base
   
   def current_rank
     @graduate = graduates.sort_by {|g| g.graduation.held_on}.last
-    
-    #    if !@graduate
-    #      if senior?
-    #        if department == "Jujutsu"
-    #          "5.kyu"
-    #        else
-    #          "6.kyu"
-    #        end
-    #      else
-    #      "10.mon"
-    #      end
-    #    else
-    @graduate && "#{@graduate.rank.name} (#{@graduate.graduation.held_on})"
-    #    end
+#    @graduate && "#{@graduate.rank.name} (#{@graduate.graduation.held_on})"
+    @graduate && @graduate.rank
   end
   
   def fee
