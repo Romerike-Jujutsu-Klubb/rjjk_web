@@ -86,6 +86,7 @@ class MembersController < ApplicationController
   
   def new
     @member = Member.new
+    @groups = Group.find(:all, :include => :martial_art, :order => 'martial_arts.name, groups.name')
   end
   
   def create
