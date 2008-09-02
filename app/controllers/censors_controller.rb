@@ -15,7 +15,7 @@ class CensorsController < ApplicationController
   end
   
   def list_instructors
-    @instructors = Member.find(:all, :conditions => "left_on IS NULL AND instructor = true", :order => 'last_name, first_name')
+    @instructors = Member.find(:all, :conditions => "left_on IS NULL AND instructor = true", :order => 'first_name, last_name')
     rstr =<<EOH
     <div style="height:256px; width:284px; overflow: auto; overflow-x: hidden;">
     <table STYLE="height: 128px;" CELLPADDING="0" CELLSPACING="0" width="100%">
@@ -26,14 +26,12 @@ class CensorsController < ApplicationController
       </tr>
 EOH
     for instr in @instructors
-      #ln = instr.last_name.index(/\s+/) ? instr.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') : instr.last_name.capitalize 
-      #fn = instr.first_name.index(/\s+/) ? instr.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') : instr.first_name.capitalize
       fn = instr.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
       ln = instr.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') 
       nm = fn << " " << ln
       rstr = rstr << "<tr>" <<
              "<td><a href='#' onClick='add_censor(" + instr.id.to_s + ",\"" + nm + "\");'>" <<
-             nm << "</a></td>" << "<td ALIGN=right>" << instr.martial_arts.map{|ma|ma.name}.join(', ') << "</td>"
+             nm << "</a></td>" << "<td ALIGN=right>" << instr.groups.map{|g|g.martial_art.name}.uniq.sort.join(', ') << "</td>"
              "</tr>"
     end
     rstr << "</table>\n</div>\n"
