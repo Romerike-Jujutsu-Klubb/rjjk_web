@@ -29,9 +29,9 @@
 <p><label for="member_phone_work">Telefon arbeid</label><br/>
 <%= text_field 'member', 'phone_work', :size => '11' %></p>
 
-<p><label for="member_birtdate">Fødselsdato</label><br/>
-<% if @member.birtdate%>
-<%=date_select 'member', 'birtdate', :start_year=>1940 %></p>
+<p><label for="member_birthdate">Fødselsdato</label><br/>
+<% if @member.new_record? || @member.birthdate%>
+<%=date_select 'member', 'birthdate', :start_year=>1940 %></p>
 <% else %>
 Ikke registrert.
 <% end %>
@@ -47,8 +47,8 @@ Ikke registrert.
 <p><label for="member_contract_id">Medlemsnummer</label><br/>
 <%= text_field 'member', 'contract_id' %></p>
 
-<p><label for="member_department">Avdeling</label><br/>
-<%=select 'member', 'department', Member::DEPARTMENTS %></p>
+<p><label for="member_martial_arts">Stiler</label><br/>
+<%=select_tag("martial_art_ids[]", options_for_select(MartialArt.find(:all).collect { |ma| [ma.name, ma.id] }, @member.martial_arts.collect { |ma| ma.id}), {:multiple=>true, :size=>3})%></p>
 
 <p><label for="member_left_on">Utmeldt dato</label><br/>
 <% if @member.left_on %>
@@ -64,7 +64,7 @@ Fremdeles aktiv.
 <%= text_field 'member', 'phone_parent'  %></p>
 
 <p><label for="member_billing_type">Faktureringsmåte</label><br/>
-<%=select 'member', 'billing_type', [['AutoGiro', 'AUTOGIRO'], ['Manuell Giro', 'MANUELL GIRO'], ['AvtaleGiro', 'AvtaleGiro'], [@member.billing_type, @member.billing_type]].uniq.sort %></p>
+<%=select 'member', 'billing_type', [['AutoGiro', 'AUTOGIRO'], ['Manuell Giro', 'MANUELL GIRO'], ['AvtaleGiro', 'AvtaleGiro'], @member.billing_type && [@member.billing_type, @member.billing_type]].compact.uniq.sort %></p>
 
 <p><label for="member_billing_name">Fakturanavn (hvis annen enn medlem)</label><br/>
 <%= text_field 'member', 'billing_name'  %></p>
@@ -78,8 +78,8 @@ Fremdeles aktiv.
 		</td>
 
 		<td valign="top">
-<p><label for="member_senior">Aldersgruppe</label><br/>
-<%=select :member, :senior, [['Junior', false], ['Senior', true]] %></p>
+<p><label for="member_groups">Grupper</label><br/>
+<%=select_tag("group_ids[]", options_for_select(@groups.map{|g| ["#{g.martial_art.name} #{g.name}", g.id]}, @member.groups.map{|g| g.id}), {:multiple=>true, :size=>5})%></p>
 
 <p><label for="member_instructor">Instruktør</label><br/>
 <%=select :member, :instructor, [['Nei', false], ['Ja', true]] %></p>
@@ -98,11 +98,3 @@ Fremdeles aktiv.
 	</tr>
 </table>
 <!--[eoform:member]-->
-
-<script type="text/JavaScript">
-//<!--
-document.getElementById('member_first_name').focus();
-document.getElementById('member_first_name').select();
-new Effect.ScrollTo("menu")
-//-->
-</script>

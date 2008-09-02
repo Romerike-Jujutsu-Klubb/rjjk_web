@@ -33,7 +33,7 @@ EOH
       nm = fn << " " << ln
       rstr = rstr << "<tr>" <<
              "<td><a href='#' onClick='add_censor(" + instr.id.to_s + ",\"" + nm + "\");'>" <<
-             nm << "</a></td>" << "<td ALIGN=right>" << instr.department << "</td>"
+             nm << "</a></td>" << "<td ALIGN=right>" << instr.martial_arts.map{|ma|ma.name}.join(', ') << "</td>"
              "</tr>"
     end
     rstr << "</table>\n</div>\n"

@@ -129,11 +129,11 @@ EOH
                      "  <td STYLE=\"text-align: center;\">#{gr.paid_graduation ? 'Ja' : 'Nei'}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\">#{gr.paid_belt ? 'Ja' : 'Nei'}</td>\n" <<
                      "  <td STYLE=\"text-align: center;\"><A HREF=\"/graduates/list/\"" << gr.member_id.to_s << "'>" <<
-                     "<IMG SRC=\"/images/button-view-16x16.png\" STYLE=\"border: 0;\" ALT=\"Oversikt\"></A></td>\n" <<
+                     "<IMG SRC=\"/images/button-view-16x16.png\" STYLE=\"border: 0;\" title=\"Oversikt\" ALT=\"Oversikt\"></A></td>\n" <<
                      "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>" <<
-                     "<IMG SRC=\"/images/button-edit-16x16.png\" STYLE=\"border: 0;\" ALT=\"Endre\"></A></td>\n" <<
+                     "<IMG SRC=\"/images/button-edit-16x16.png\" STYLE=\"border: 0;\" title=\"Endre\" ALT=\"Endre\"></A></td>\n" <<
                      "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='removeGraduate(#{gr.id},\"#{fn} #{ln}\")'>" <<
-                     "<IMG SRC=\"/images/button-delete-16x16.png\" STYLE=\"border: 0;\" ALT=\"Slett\"></A></td>\n" <<
+                     "<IMG SRC=\"/images/button-delete-16x16.png\" STYLE=\"border: 0;\" title=\"Slett\" ALT=\"Slett\"></A></td>\n" <<
                      "</tr>\n" 
       rstr = rstr << "<tr id='#{gr.member_id}_#{gr.graduation.id}_edit' STYLE='display: none;'>\n" <<
                      "  <td>#{fn} #{ln}</td>\n" <<
@@ -154,8 +154,8 @@ EOH
   end
   
   def list_potential_graduates
-    @grads = Member.find(:all, :conditions => "left_on IS NULL", :order => 'last_name, first_name',
-    :select => 'last_name, first_name, id, department')
+    @grads = Member.find(:all, :conditions => "left_on IS NULL", :order => 'first_name, last_name',
+    :select => 'first_name, last_name, id')
     rstr =<<EOH
 <div style="height:256px; width:256px; overflow:auto; overflow-x:hidden;">
 	<table WIDTH="256" CELLPADDING="0" CELLSPACING="0">
@@ -170,9 +170,8 @@ EOH
       fn = grad.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
       rstr << "<tr>" <<
 			        "<td align=left><a href='#' onClick='add_graduate(" + grad.id.to_s + ");'>" <<
-			        "#{ln}, #{fn}</a></td>" <<
+			        "#{fn} #{ln}</a></td>" <<
 			        "<td ALIGN='right'>&nbsp;" <<
-      #"<td ALIGN='right'>" << grad.department <<
 			        "<td>&nbsp;</td></tr>\n"
     end
     rstr << "</table>\n</div>\n"

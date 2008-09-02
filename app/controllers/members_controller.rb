@@ -57,29 +57,28 @@ class MembersController < ApplicationController
   end
   
   def list
-    @members = Member.paginate :page => params[:page], :per_page => Member::MEMBERS_PER_PAGE, :order => 'last_name'
+    @members = Member.paginate :page => params[:page], :per_page => Member::MEMBERS_PER_PAGE, :order => 'first_name, last_name'
     @member_count = Member.count
   end
 
   def attendance_form_index
     @groups = []
-    Member::DEPARTMENTS.sort.each do |d| 
-      ['Senior', 'Junior'].each do |level|
-         @groups << {:department => d, :level => level}
+    MartialArt.find(:all, :order => :family).each do |ma| 
+      ma.groups.each do |group|
+         @groups << {:martial_art => ma, :group => group}
       end
     end
   end
   
   def attendance_form
     @members = Member.find_active
-    if params[:department]
-      @department = params[:department]
-      @members.delete_if {|m| m.department != params[:department]}
+    if params[:martial_art_id]
+      @martial_art = MartialArt.find(params[:martial_art_id])
+      @members.delete_if {|m| !m.martial_arts.empty? && !m.martial_arts.include?(@martial_art)}
     end
-    if params[:level]
-      @level = params[:level]
-      senior = @level == 'Senior'
-      @members.delete_if {|m| m.senior != senior}
+    if params[:group_id]
+      @group = Group.find(params[:group_id])
+      @members = @members.select {|m| m.groups.include? @group}
     end
     @members = @members.sort_by {|m| [m.first_name, m.last_name]}
     render :layout => :print
@@ -91,6 +90,8 @@ class MembersController < ApplicationController
   
   def create
     @member = Member.new(params[:member])
+    @member.martial_arts = MartialArt.find(params[:martial_art_ids]) if params[:martial_art_ids]
+    @member.groups = Group.find(params[:group_ids]) if params[:group_ids]
     if @member.save
       flash[:notice] = 'Medlem opprettet.'
       redirect_to :action => 'list'
@@ -101,10 +102,13 @@ class MembersController < ApplicationController
   
   def edit
     @member = Member.find(params[:id])
+    @groups = Group.find(:all, :include => :martial_art, :order => 'martial_arts.name, groups.name')
   end
   
   def update
     @member = Member.find(params[:id])
+    @member.martial_arts = MartialArt.find(params[:martial_art_ids]) if params[:martial_art_ids]
+    @member.groups = Group.find(params[:group_ids]) if params[:group_ids]
     if @member.update_attributes(params[:member])
       flash[:notice] = 'Medlemmet oppdatert.'
       redirect_to :action => :edit, :id => @member
@@ -184,10 +188,10 @@ class MembersController < ApplicationController
   end  
   
   def member_count(male, from_age, to_age)
-    Member.count(:conditions => "left_on IS NULL AND male = #{male} AND birtdate <= '#{year_end(from_age)}' AND birtdate >= '#{year_start(to_age)}'")
+    Member.count(:conditions => "left_on IS NULL AND male = #{male} AND birthdate <= '#{year_end(from_age)}' AND birthdate >= '#{year_start(to_age)}'")
   end
   
   def find_incomplete
-    @incomplete_members = Member.find_active.select {|m| m.birtdate.nil?}
+    @incomplete_members = Member.find_active.select {|m| m.birthdate.nil?}
   end
 end

@@ -4,8 +4,9 @@
 
 <table class="members" border="0" cellpadding="5" cellspacing="1">
   <tr>
-    <th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
-    <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>
+    <th align="left"><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>
+    <th align="left"><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
+    <th align="left"><%= link_to 'Grad', sort_param('listing', :alias => 'grad') %></th>
   </tr>
   
 <%
@@ -14,8 +15,9 @@
 		ln = member.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') 
 %>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td><%=h ln %></td>
     <td><%=h fn %></td>
+    <td><%=h ln %></td>
+    <td><%=h member.current_rank %></td>
     <td><%= link_to 'Rediger', :action => 'edit', :id => member %></td>
   </tr>
 <% end %>

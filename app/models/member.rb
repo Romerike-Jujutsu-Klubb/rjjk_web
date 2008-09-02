@@ -1,22 +1,26 @@
 class Member < ActiveRecord::Base
-  DEPARTMENTS = ['Jujutsu', 'Aikido']
+  JUNIOR_AGE_LIMIT = 15
   MEMBERS_PER_PAGE = 30
   ACTIVE_CONDITIONS = "left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)"
   
-  
-  acts_as_ferret :fields => [:first_name,:last_name,:address,:postal_code,
+  acts_as_ferret :fields => [
+  :first_name,:last_name,:address,:postal_code,
   :email, :phone_home, :phone_work, 
   :phone_mobile, :phone_parent, :department, 
-  :billing_type, :comment]
+  :billing_type, :comment
+  ]
   
   has_many :graduates
+  has_and_belongs_to_many :martial_arts
+  has_and_belongs_to_many :groups
   
-  validates_presence_of :first_name, :last_name, :address, :postal_code, :cms_contract_id
-  #validates_presence_of :birthdate, :join_on
+  validates_presence_of :first_name, :last_name
+  # validates_presence_of :address, :postal_code, :cms_contract_id
+  # validates_presence_of :birthdate, :join_on
   validates_inclusion_of(:payment_problem, :in => [true, false])
   validates_inclusion_of(:male, :in => [true, false])
-  validates_length_of :postal_code, :is => 4
-  validates_length_of :billing_postal_code, :is => 4, :if => :billing_postal_code
+  validates_length_of :postal_code, :is => 4, :if => Proc.new {|m|m.postal_code && !m.postal_code.empty?}
+  validates_length_of :billing_postal_code, :is => 4, :if => Proc.new{|m|m.billing_postal_code && !m.billing_postal_code.empty?}
   validates_uniqueness_of :cms_contract_id
   
   def self.find_active
@@ -24,7 +28,7 @@ class Member < ActiveRecord::Base
   end
   
   def self.paginate_active(page)
-    paginate :page => page, :per_page => MEMBERS_PER_PAGE, :conditions => ACTIVE_CONDITIONS, :order => 'last_name'
+    paginate :page => page, :per_page => MEMBERS_PER_PAGE, :conditions => ACTIVE_CONDITIONS, :order => 'first_name, last_name'
   end
   
   def self.count_active
@@ -37,19 +41,20 @@ class Member < ActiveRecord::Base
   
   def current_rank
     @graduate = graduates.sort_by {|g| g.graduation.held_on}.last
-    if !@graduate
-      if senior?
-        if department == "Jujutsu"
-          "5.kyu"
-        else
-          "6.kyu"
-        end
-      else
-      "10.mon"
-      end
-    else
-      "#{@graduate.rank.name} (#{@graduate.graduation.held_on})"
-    end
+    
+    #    if !@graduate
+    #      if senior?
+    #        if department == "Jujutsu"
+    #          "5.kyu"
+    #        else
+    #          "6.kyu"
+    #        end
+    #      else
+    #      "10.mon"
+    #      end
+    #    else
+    @graduate && "#{@graduate.rank.name} (#{@graduate.graduation.held_on})"
+    #    end
   end
   
   def fee
@@ -60,6 +65,10 @@ class Member < ActiveRecord::Base
     else
       260 + nkf_fee
     end
+  end
+  
+  def senior?
+    age >= JUNIOR_AGE_LIMIT
   end
   
   def nkf_fee
@@ -93,9 +102,9 @@ class Member < ActiveRecord::Base
     dates.reverse!
     active_clause = '"(joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
     totals = dates.map {|date| Member.count(:conditions => eval(active_clause))}
-    seniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birtdate IS NOT NULL AND birtdate < '#{self.senior_birthdate(date)}'")}
-    juniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birtdate IS NOT NULL AND birtdate >= '#{self.senior_birthdate(date)}'")}
-    others = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birtdate IS NULL")}
+    seniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birthdate IS NOT NULL AND birthdate < '#{self.senior_birthdate(date)}'")}
+    juniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birthdate IS NOT NULL AND birthdate >= '#{self.senior_birthdate(date)}'")}
+    others = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birthdate IS NULL")}
     g.data("Totalt", totals)
     g.data("Senior", seniors)
     g.data("Junior", juniors)
@@ -117,35 +126,35 @@ class Member < ActiveRecord::Base
     end
     
     def self.was_senior?(date)
-      birthdate.nil? or ((date - birthdate) / 365) > 15
+      birthdate.nil? or ((date - birthdate) / 365) > JUNIOR_AGE_LIMIT
     end
     
     def self.senior_birthdate(date)
-      date - (15 * 365)
+      date - (JUNIOR_AGE_LIMIT * 365)
+    end
+    
+    def age
+      (Date.today - birthdate).to_i / 365 # TODO: What about leap years?
     end
     
     def age_group    
-      if senior
-      "Senior"
+      if age >= JUNIOR_AGE_LIMIT
+        "Senior"
       else
-      "Junior"
+        "Junior"
       end
     end
     
     def gender    
       if male
-      "Mann"
+        "Mann"
       else
-      "Kvinne"
+        "Kvinne"
       end
     end
     
     def name
-    "#{first_name} #{last_name}"
-    end
-    
-    def birthdate
-      birtdate
+      "#{first_name} #{last_name}"
     end
     
   end
