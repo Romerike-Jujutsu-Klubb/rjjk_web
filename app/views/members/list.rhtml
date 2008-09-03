@@ -17,7 +17,7 @@
   <tr class="<%= cycle('odd', 'even') %>">
     <td><%=h fn %></td>
     <td><%=h ln %></td>
-    <td><%=h member.current_rank %></td>
+    <td><%=h(member.current_rank && member.current_rank.name) %></td>
     <td><%= link_to 'Rediger', :action => 'edit', :id => member %></td>
   </tr>
 <% end %>
