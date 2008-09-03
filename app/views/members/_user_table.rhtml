@@ -3,15 +3,20 @@
 <p>Fant <%= (@members.size) %> treff.</p>
 <table class="members" border="0" cellpadding="5" cellspacing="1">
   <tr class="header">
-    <th>Etternavn</th> <th>Fornavn</th><th>Avdeling</th><th>Parti</th><th>Instruktør</th>
-	<th>E-post</th><th>Mobil</th>
+    <th>Etternavn</th>
+	<th>Fornavn</th>
+	<th>Avdeling</th>
+	<th>Parti</th>
+	<th>Instruktør</th>
+	<th>E-post</th>
+	<th>Mobil</th>
   </tr>
   <% @members.each do |member| %>
   	<tr class="<%= cycle('odd', 'even') %>">
     	<td><%=h member.last_name %></td>
     	<td><%=h member.first_name %></td>
     	<td><%=h member.groups.map{|g|g.martial_art.family}.uniq.sort.join(', ') %></td>
-		<td><%=h member.age_group %></td>
+		<td><%=h member.groups.map{|g|g.name} * ', ' %></td>
 		<td><%=h yes_no(member.instructor) %></td>	
 		<td><a href="mailto:<%=h member.email%>"><%=h member.email%></a></td>
 		<td><%=h member.phone_mobile %></td>	
