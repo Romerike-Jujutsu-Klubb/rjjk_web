@@ -2,7 +2,14 @@
 
 <ul>
 <% for group in @groups %>
-    <li><%=link_to "#{h group.martial_art.name} #{h group.name}", :action => :attendance_form, :group_id => group.id%></li>
+    <li>
+    	<%="#{h group.martial_art.name} #{h group.name}"%>
+    	<%=link_to "#{Date::MONTHNAMES[Date.today.mon]}", :action => :attendance_form, :group_id => group.id%>
+    	<%=link_to "#{Date::MONTHNAMES[Date.today.mon - 1]}", :action => :attendance_form, :group_id => group.id, :date => Date.new(Date.today.year, Date.today.month - 1).strftime('%Y-%m')%>
+    	<%=link_to "#{Date::MONTHNAMES[Date.today.mon + 1]}", :action => :attendance_form, :group_id => group.id, :date => Date.new(Date.today.year, Date.today.month + 1).strftime('%Y-%m')%>
+    </li>
 <% end %>
-    <li><%=link_to "Andre", :action => :attendance_form, :group_id => 'others' %></li>
+    <li>
+    	<%=link_to "Andre", :action => :attendance_form, :group_id => 'others' %>
+	</li>
 </ul>

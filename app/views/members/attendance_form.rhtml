@@ -1,4 +1,4 @@
-<h1 style="font-family:Arial, Helvetica, sans-serif">Oppmøteliste <%=@group && @group.martial_art.name%> <%=@group && @group.name%> <%=h Date::MONTHNAMES[Date.today.mon] %></h1>
+<h1 style="font-family:Arial, Helvetica, sans-serif">Oppmøteliste <%=@group && @group.martial_art.name%> <%=@group && @group.name%> <%=h Date::MONTHNAMES[@date.mon] %></h1>
 
 <style type="text/css">
 body {font-family:Arial, Helvetica, sans-serif}
@@ -6,8 +6,8 @@ th {background: lightgray}
 </style>
 
 <% weekdays = @group ? (['J', 'S'].include?(@group.name[0].chr) ? [2,4] : [5]) : [2,4,5] %>
-<% first_date = Date.new(Date.today.year, Date.today.month, 1) %>
-<% last_date = Date.new(Date.today.year, Date.today.month, -1) %>
+<% first_date = Date.new(@date.year, @date.month, 1) %>
+<% last_date = Date.new(@date.year, @date.month, -1) %>
 <% dates = (first_date..last_date).select{|d|weekdays.include? d.wday} %>
 <% birthdate_missing = @members.find{|m|m.birthdate.nil?} %>
 

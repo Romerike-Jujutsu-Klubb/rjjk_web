@@ -82,6 +82,10 @@ class MembersController < ApplicationController
     else
       @members = []
     end
+    if params[:date]
+      @date = Date.parse(params[:date])
+    end
+    @date ||= Date.today
     render :layout => :print
   end
   
