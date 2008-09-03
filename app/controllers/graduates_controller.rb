@@ -205,14 +205,22 @@ EOH
   end
   
   def add_new_graduate
-    gid = params[:graduation_id].to_i
-    mid = params[:member_id].to_i
-    aid = params[:martial_arts_id].to_i
+    gid = params[:graduation_id]
+    mid = params[:member_id]
+    aid = params[:martial_arts_id]
+
+    ma = MartialArt.find(aid)
+    member = Member.find(mid)
+    if member.current_rank
+      next_rank = Rank.find(:first, :conditions => ['martial_art_id = ? AND position = ?', ma, member.current_rank.position + 1])
+    else
+      next_rank = ma.ranks.first
+    end
+    # rank = Rank.find(:first, :conditions => [ "martial_art_id = ?", aid])
+    raise "Unable to find rank for martial art with id = #{aid}" unless next_rank
     
-    rank = Rank.find(:first, :conditions => [ "martial_art_id = ?", aid])
-    raise "Unable to find martial art with id = #{aid}" unless rank
     Graduate.create!(:graduation_id => gid, :member_id => mid, :passed => false,
-                     :rank_id => rank.id, :paid_graduation => false, :paid_belt => false)
+                     :rank_id => next_rank.id, :paid_graduation => false, :paid_belt => false)
     render :text =>" " 
   end
   
