@@ -70,7 +70,6 @@ class CmsImport
         :first_name => detail_fields[41] =~ contract_contact_pattern && $1.split(' ')[1..-1].map{|n| n.split('-').map{|n2|n2.capitalize}.join('-')}.join(' '),
         :last_name => detail_fields[41] =~ contract_contact_pattern && $1.split(' ').first.split('-').map {|n| n.capitalize}.join('-'),
         :birthdate => new_contract_birthdate,
-        :senior => (new_contract_birthdate.nil? ? true : ((Date.today - new_contract_birthdate) / 365) > 15),
         :email => detail_fields[41] =~ /([^>]*)\s*\(e-post\)<br \/>/ && ($1.strip != '--' ? $1.strip : nil),
         :phone_mobile => detail_fields[41] =~ /(#{phone_pattern})\s*\(mobil\)/ && $1.gsub(' ', ''),
         :phone_home => detail_fields[41] =~ /(#{phone_pattern})\s*\(privat\)/ && $1.gsub(' ', ''),
