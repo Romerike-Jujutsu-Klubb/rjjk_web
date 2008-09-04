@@ -31,6 +31,10 @@ class User < ActiveRecord::Base
     @password_needs_confirmation = false
   end
 
+  def self.find_administrators
+    find(:all, :conditions => ['role = ?', UserSystem::ADMIN_ROLE])
+  end
+  
   def self.authenticate(login, pass)
     u = find( :first, :conditions => ["login = ? AND verified = ? AND deleted = ?", login, true, false])
     return nil if u.nil?

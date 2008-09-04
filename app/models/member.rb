@@ -33,7 +33,7 @@ class Member < ActiveRecord::Base
   def self.count_active
     count :conditions => ACTIVE_CONDITIONS 
   end
-  
+
   def current_rank(martial_art = nil)
     @graduate = graduates.select{|g|martial_art.nil? || g.rank.martial_art == martial_art}.sort_by {|g| g.graduation.held_on}.last
     @graduate && @graduate.rank

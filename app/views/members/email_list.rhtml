@@ -1,43 +1,12 @@
-<h1>E-post lister</h1>
+<h1>E-postlister</h1>
 
+<ul>
 <% for group in @groups %>
-<h2>Aktive <%=group.martial_art.family%> <%=group.name%> <%=link_to 'Send e-post', "mailto:#{group.members.map{|m|m.email}.uniq * ','}?subject=[RJJK] Melding fra RJJK&body=Din tekst her." %></h2>
-<table>
-  <tr>
-    <th><%= link_to 'E-post', sort_param('listing', :alias => 'epost') %></th>
-	<th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
-    <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>	
-  </tr>
-  
-<% for member in group.members %>
-  <tr>
-	<td><%=h member.email %></td>
-    <td><%=h member.last_name %></td>
-    <td><%=h member.first_name %></td>
-    <td><%= link_to 'Rediger', :action => 'edit', :id => member.id %></td>
-  </tr>
+	<% emails = group.members.map{|m|m.email}.compact.uniq %>
+	<% missing_emails = group.members.size - emails.size %>
+	<li>Aktive <%=group.martial_art.family%> <%=group.name%> <%=link_to 'Send e-post', "mailto:#{emails * ','}?subject=[RJJK] Melding fra RJJK&body=Din tekst her." %> (<%=emails.size%>stk<%=", #{missing_emails} mangler" if missing_emails.nonzero?%>)</li>
 <% end %>
-</table>
-<br/>
-<br/>
-<% end %>
-
-
-
-<h2>Tidligere medlemmer <%=link_to 'Send e-post', "mailto:#{@former_members.map{|m|m.email}.compact.uniq * ','}?subject=E-post fra RJJK&body=Din tekst her." %></h2>
-<table>
-  <tr>
-    <th><%= link_to 'E-post', sort_param('listing', :alias => 'epost') %></th>
-	<th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
-    <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>	
-  </tr>
-  
-<% for member in @former_members %>
-  <tr>
-	<td><%=h member.email %></td>
-    <td><%=h member.last_name %></td>
-    <td><%=h member.first_name %></td>
-    <td><%= link_to 'Rediger', :action => 'edit', :id => member.id %></td>
-  </tr>
-<% end %>
-</table>
+	<% former_emails = @former_members.map{|m|m.email}.compact.uniq %>
+	<li>Administratorer <%=link_to 'Send e-post', "mailto:#{@administrator_emails * ','}?subject=[RJJK][Administratorer] Ditt emne her&body=Din tekst her." %> (<%=@administrator_emails.size%> stk<%=", #{@missing_administrator_emails} mangler" if @missing_administrator_emails.nonzero? %>)</h2>
+	<li>Tidligere medlemmer <%=link_to 'Send e-post', "mailto:#{former_emails * ','}?subject=E-post fra RJJK&body=Din tekst her." %> (<%=former_emails.size%> stk, <%=@former_members.size - former_emails.size%> mangler)</h2>
+</ul>

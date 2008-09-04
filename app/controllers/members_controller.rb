@@ -147,6 +147,9 @@ class MembersController < ApplicationController
   def email_list
     @groups = Group.find(:all, :include => :members)
     @former_members = Member.find(:all, :conditions => 'left_on IS NOT NULL')
+    @administrators = User.find_administrators
+    @administrator_emails = @administrators.map{|m|m.email}.compact.uniq
+    @missing_administrator_emails = @administrators.size - @administrator_emails.size
   end
   
   def export_emails
