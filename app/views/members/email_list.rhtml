@@ -1,12 +1,24 @@
 <h1>E-postlister</h1>
 
-<ul>
+<table>
 <% for group in @groups %>
 	<% emails = group.members.map{|m|m.email}.compact.uniq %>
 	<% missing_emails = group.members.size - emails.size %>
-	<li>Aktive <%=group.martial_art.family%> <%=group.name%> <%=link_to 'Send e-post', "mailto:#{emails * ','}?subject=[RJJK] Melding fra RJJK&body=Din tekst her." %> (<%=emails.size%>stk<%=", #{missing_emails} mangler" if missing_emails.nonzero?%>)</li>
+	<tr>
+		<td>Aktive <%=group.martial_art.family%> <%=group.name%></td>
+		<td><%=link_to 'Send e-post', "mailto:#{emails * ','}?subject=[RJJK] Melding fra RJJK&body=Din tekst her." %></td>
+		<td>(<%=emails.size%>stk<%=", #{missing_emails} mangler" if missing_emails.nonzero?%>)</td>
+	</tr>
 <% end %>
 	<% former_emails = @former_members.map{|m|m.email}.compact.uniq %>
-	<li>Administratorer <%=link_to 'Send e-post', "mailto:#{@administrator_emails * ','}?subject=[RJJK][Administratorer] Ditt emne her&body=Din tekst her." %> (<%=@administrator_emails.size%> stk<%=", #{@missing_administrator_emails} mangler" if @missing_administrator_emails.nonzero? %>)</h2>
-	<li>Tidligere medlemmer <%=link_to 'Send e-post', "mailto:#{former_emails * ','}?subject=E-post fra RJJK&body=Din tekst her." %> (<%=former_emails.size%> stk, <%=@former_members.size - former_emails.size%> mangler)</h2>
-</ul>
+	<tr>
+		<td>Administratorer</td>
+		<td><%=link_to 'Send e-post', "mailto:#{@administrator_emails * ','}?subject=[RJJK][Administratorer] Ditt emne her&body=Din tekst her." %></td>
+		<td>(<%=@administrator_emails.size%> stk<%=", #{@missing_administrator_emails} mangler" if @missing_administrator_emails.nonzero? %>)</td>
+	</tr>
+	<tr>
+		<td>Tidligere medlemmer</td>
+		<td><%=link_to 'Send e-post', "mailto:#{former_emails * ','}?subject=E-post fra RJJK&body=Din tekst her." %></td>
+		<td>(<%=former_emails.size%> stk, <%=@former_members.size - former_emails.size%> mangler)</td>
+	</tr>
+</table>
