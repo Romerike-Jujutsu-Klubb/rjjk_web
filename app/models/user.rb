@@ -117,5 +117,10 @@ class User < ActiveRecord::Base
   def self.salted_password(salt, hashed_password)
     hashed(salt + hashed_password)
   end
+  
+  def name
+    "#{first_name} #{last_name}"
+  end
+
 end
 

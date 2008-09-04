@@ -5,9 +5,7 @@
 			<h3><%=h @news_item.title%></h3>
 			<div class="contentarea">
 				<div class="details">
-<!--
-				Skrevet av <a href="#">Jane Doe</a>
--->
+				<%="Skrevet av #{@news_item.creator.name}" if @news_item.creator%></a>
    				<%=@news_item.created_at.strftime '%Y-%m-%d %H:%M'%>
 				</div>	
 				<!-- Normal content area start -->
@@ -48,9 +46,7 @@
 					<h4><%=h @news_item.title %></h4>
 					<div class="contentarea">
 						<div class="details">
-<!--
-						Skrevet av <a href="#">Jane Doe</a>
--->
+						<%="Skrevet av #{@news_item.creator.name}" if @news_item.creator%></a>
         				<%=@news_item.created_at.strftime '%Y-%m-%d %H:%M'%>
 				        </div>	
 						<%=textilize @news_item.body %>

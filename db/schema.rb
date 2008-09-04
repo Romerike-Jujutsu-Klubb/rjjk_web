@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080902204348) do
+ActiveRecord::Schema.define(:version => 20080904191730) do
 
   create_table "censors", :force => true do |t|
     t.integer "graduation_id", :null => false
@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(:version => 20080902204348) do
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "created_by"
   end
 
   create_table "ranks", :force => true do |t|
@@ -171,6 +172,8 @@ ActiveRecord::Schema.define(:version => 20080902204348) do
   add_foreign_key "groups_members", ["member_id"], "members", ["id"], :name => "groups_members_member_id_fkey"
 
   add_foreign_key "information_pages", ["parent_id"], "information_pages", ["id"], :name => "information_pages_parent_id_fkey"
+
+  add_foreign_key "news_items", ["created_by"], "users", ["id"], :name => "news_items_created_by_fkey"
 
   add_foreign_key "ranks", ["martial_art_id"], "martial_arts", ["id"], :name => "ranks_martial_art_id_fkey"
 
