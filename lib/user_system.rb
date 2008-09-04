@@ -62,14 +62,18 @@ module UserSystem
   def user?
     authenticated_user?
   end
-  
-  def authenticated_user?
+
+  def store_current_user_in_thread
     if session[:user_id]
       self.current_user = User.find_by_id(session[:user_id])
-      return false if current_user.nil? 
-      return true
     end
-    
+    true
+  end
+  
+  def authenticated_user?
+    store_current_user_in_thread
+    return true if current_user
+
     if cookie = cookies[:autologin]
       cookie_value = case cookie
         when String: # Development

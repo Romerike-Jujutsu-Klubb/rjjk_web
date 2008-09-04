@@ -1,4 +1,5 @@
 class InfoController < ApplicationController
+  before_filter :store_current_user_in_thread
   before_filter :store_location
   before_filter :admin_required, :except => [:index, :list, :show, :show_content, :trening, :priser, :om_klubben, :styret, :nokkelpersoner, :kontakt]
   

@@ -3,10 +3,13 @@
 <h1><%=h @information_page.title %></h1>
 
 <p>
-<%=@information_page.body%>
-</p
+	<%=@information_page.body%>
+</p>
 
 <% if admin? %>
 <br clear="all"/>
-<%=link_to 'Rediger', :action => 'rediger', :id => @information_page %>
+
+<div align="right">
+	<%=link_to 'Rediger', {:action => 'rediger', :id => @information_page} %>
+</div>
 <% end %>
