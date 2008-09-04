@@ -15,19 +15,17 @@
 <% if @information_page.created_at %>
 <div style="float: left; margin-right: 1em;">
 <p><label for="information_page_created_at">Opprettet</label><br/>
-<%=h @information_page.created_at %></p>
+<%=h @information_page.created_at.strftime('%Y-%m-%d %H:%M') %></p>
 </div>
 <% end %>
 
 <% if @information_page.updated_at %>
 <p><label for="information_page_updated_at">Oppdatert</label><br/>
-<%=h @information_page.updated_at %></p>
+<%=h @information_page.updated_at.strftime('%Y-%m-%d %H:%M') %></p>
 <% end %>
 
-<br clear="left" />
-
 <p><label for="information_page_body">Innhold</label><br/>
-<%= text_area 'information_page', 'body', :cols => 80, :class => 'tiny_mce' %></p>
+<%= text_area 'information_page', 'body', :cols => 80, :rows => 24, :class => 'tiny_mce' %></p>
 
 <!--[eoform:information_page]-->
 
