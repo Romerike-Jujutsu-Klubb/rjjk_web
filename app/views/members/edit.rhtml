@@ -1,6 +1,5 @@
-<h1>Editing member</h1>
-
-<table id="graduations" align="right" border="1">
+<div id="graduations" style="float: right">
+<table border="1">
 	<tr>
 		<th>Dato</th>
 		<th>Grad</th>
@@ -23,6 +22,10 @@
 		</td>
 	</tr>
 </table>
+</div>
+
+
+<h1>Editing member</h1>
 
 <% form_tag :action => 'update', :id => @member do %>
   <%= render :partial => 'form' %>

@@ -170,11 +170,11 @@ class MembersController < ApplicationController
   end
   
   def active_contracts
-    @members = Member.find_active
+    @members = CmsMember.find_active
   end
   
   def income
-    @members = Member.find_active  
+    @members = CmsMember.find_active  
   end
   
   private

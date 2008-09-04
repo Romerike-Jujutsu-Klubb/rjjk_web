@@ -23,7 +23,7 @@ class Member < ActiveRecord::Base
   validates_uniqueness_of :cms_contract_id, :if => :cms_contract_id
   
   def self.find_active
-    Member.find(:all, :conditions => ACTIVE_CONDITIONS, :order => 'last_name, first_name')
+    find(:all, :conditions => ACTIVE_CONDITIONS, :order => 'last_name, first_name')
   end
   
   def self.paginate_active(page)
@@ -43,9 +43,9 @@ class Member < ActiveRecord::Base
     if instructor?
       0
     elsif senior?
-      300 + nkf_fee
+      300 + nkf_fee_amount
     else
-      260 + nkf_fee
+      260 + nkf_fee_amount
     end
   end
   
@@ -53,7 +53,7 @@ class Member < ActiveRecord::Base
     birthdate && (age >= JUNIOR_AGE_LIMIT)
   end
   
-  def nkf_fee
+  def nkf_fee_amount
     if senior?
      (nkf_fee? ? (279.0 / 12).ceil : 0)
     else

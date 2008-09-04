@@ -1,6 +1,8 @@
-<h1>Aktive Kontrakter (<%=@members.size%>)</h1>
+<div style="float: right">
+	<%=button_to 'Importer data fra CMS', :action => 'import'%>
+</div>
 
-<%= button_to 'Importer data fra CMS', :action => 'import'%>
+<h1>Aktive Kontrakter (<%=@members.size%>)</h1>
 
 <%=render :partial => 'search_form'%>
 
@@ -9,27 +11,17 @@
     <th><%= link_to 'CMS ID', sort_param('listing', :alias => 'cmd_id') %></th>
     <th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
     <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>
-    <th><%= link_to 'Kontingent', sort_param('listing', :alias => 'kontingent') %></th>
-	<th>Avdeling</th>
-	<th>Parti</th>
 	<th>Instruktør</th>
 	<th>E-post</th>
 	<th>Mobil</th>
 	<th></th>
   </tr>
   
-<% total = 0 %>
-<% nkf_total = 0 %>
 <% for member in @members %>
-  <% total += member.fee %>
-  <% nkf_total += member.nkf_fee %>
   <tr class="<%= cycle('odd', 'even') %>">
     <td><%=h member.cms_contract_id %></td>
     <td><%=h member.last_name %></td>
     <td><%=h member.first_name %></td>
-    <td align="right"><%=member.fee %></td>
-	<td><%=h member.groups.map{|g|g.martial_art.family}.join(', ') %></td>
-	<td><%=h member.age_group %></td>
 	<td><%=h yes_no(member.instructor) %></td>	
 	<td><%=h member.email %></td>
 	<td><%=h member.phone_mobile %></td>
@@ -37,19 +29,6 @@
     <td><%= link_to 'Rediger', :action => 'edit', :id => member %></td>
   </tr>
 <% end %>
-<tr><td colspan="5"><hr/></td></tr>
-  <tr>
-    <td colspan="2">Totalt</td>
-    <td align="right"><%=total %></td>
-  </tr>
-  <tr>
-    <td colspan="2">Satt av til NKF</td>
-    <td align="right"><%=nkf_total %></td>
-  </tr>
-  <tr>
-    <td colspan="2">Disponibelt</td>
-    <td align="right"><%=total - nkf_total %></td>
-  </tr>
 </table>
 
 <%= link_to 'Nytt medlem', :action => 'new' %>
