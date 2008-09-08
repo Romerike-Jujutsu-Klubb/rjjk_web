@@ -359,7 +359,6 @@ function changedType(t) {
 	d.getElementById('shockwave_options').style.display = 'none';
 	d.getElementById('wmp_options').style.display = 'none';
 	d.getElementById('rmp_options').style.display = 'none';
-	alert(t);
 	d.getElementById(t + '_options').style.display = 'block';
 }
 
