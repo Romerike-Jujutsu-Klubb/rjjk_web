@@ -20,7 +20,7 @@ class NewsController < ApplicationController
 
   def new
     @news_item = NewsItem.new
-    @images = Image.find(:all, :select => 'id, name')
+    @images = Image.find(:all, :conditions => "name NOT LIKE '%.MP4'", :select => 'id, name')
   end
 
   def create
@@ -35,7 +35,7 @@ class NewsController < ApplicationController
 
   def edit
     @news_item = NewsItem.find(params[:id])
-    @images = Image.find(:all, :select => 'id, name')
+    @images = Image.find(:all, :conditions => "name NOT LIKE '%.MP4'", :select => 'id, name')
   end
 
   def update

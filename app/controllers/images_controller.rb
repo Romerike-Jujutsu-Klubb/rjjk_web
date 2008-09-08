@@ -58,12 +58,12 @@ class ImagesController < ApplicationController
   end
   
   def image_list
-    @images = Image.find(:all)
+    @images = Image.find(:all, :conditions => "name NOT LIKE '%.MP4'", :order => 'UPPER(name)')
     render :layout => false
   end
 
   def media_list
-    @media = Image.find(:all, :conditions => "name LIKE '%.MP4'")
+    @media = Image.find(:all, :conditions => "name LIKE '%.MP4'", :order => 'UPPER(name)')
     render :layout => false
   end
 

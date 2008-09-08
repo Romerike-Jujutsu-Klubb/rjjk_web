@@ -1,8 +1,12 @@
-<%=image_tag(url_for(:action => :show, :id => @image.id, :format => @image.format), :style => 'float: right; width: 50%') if @image.name%>
+<%=image_tag(url_for(:action => :show, :id => @image.id, :format => @image.format), :style => 'float: right; width: 45%') if @image.name%>
 <%= error_messages_for 'image' %>
 
 <!--[form:image]-->
-<p><label for="image_content_data">Content data</label><br/>
-<%=file_field 'image', 'file'  %></p>
+<p><label for="image_name">Navn</label><br/>
+<%=text_field 'image', 'name'  %></p>
+</p>
+
+<p><label for="image_content_data">Bilde</label><br/>
+<%=file_field 'image', 'file', :style => 'width: 45%' %></p>
 </p>
 <!--[eoform:image]-->
