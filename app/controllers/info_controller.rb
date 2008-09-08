@@ -34,7 +34,7 @@ class InfoController < ApplicationController
   def new
     @information_page = InformationPage.new
     @information_page.parent_id = params[:parent_id]
-    @images = Image.find(:all)
+    @images = Image.find(:all, :conditions => "name NOT LIKE '%.MP4'")
   end
 
   def create
@@ -49,7 +49,7 @@ class InfoController < ApplicationController
 
   def rediger
     @information_page = InformationPage.find(params[:id])
-    @images = Image.find(:all)
+    @images = Image.find(:all, :conditions => "name NOT LIKE '%.MP4'")
   end
 
   def update
