@@ -56,4 +56,15 @@ class ImagesController < ApplicationController
     Image.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
+  
+  def image_list
+    @images = Image.find(:all)
+    render :layout => false
+  end
+
+  def media_list
+    @media = Image.find(:all, :conditions => "name LIKE '%.MP4'")
+    render :layout => false
+  end
+
 end

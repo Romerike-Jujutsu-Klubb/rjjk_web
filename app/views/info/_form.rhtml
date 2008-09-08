@@ -2,7 +2,7 @@
 
 <%= error_messages_for 'information_page' %>
 
-<div style="float: right; height: 100%">
+<div style="float: right; width: 240px; height: 680px; overflow:auto">
   <%=render :partial => '/images/list' %>
 </div>
 
@@ -25,7 +25,7 @@
 <% end %>
 
 <p><label for="information_page_body">Innhold</label><br/>
-<%= text_area 'information_page', 'body', :cols => 120, :rows => 36, :class => 'tiny_mce' %></p>
+<%= text_area 'information_page', 'body', :cols => 100, :rows => 36, :class => 'tiny_mce' %></p>
 
 <!--[eoform:information_page]-->
 
