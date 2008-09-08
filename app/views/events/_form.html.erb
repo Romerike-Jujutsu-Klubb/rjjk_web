@@ -1,0 +1,25 @@
+<%=render :partial => '/tiny_mce' %>
+
+<% form_for(@event) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :start_tidspunkt %><br />
+    <%= f.datetime_select :start_at %>
+  </p>
+  <p>
+    <%= f.label :slutt_tidspunkt %><br />
+    <%= f.datetime_select :end_at %>
+  </p>
+  <p>
+    <%= f.label :beskrivelse %><br />
+    <%= f.text_area :description, :class => 'tiny_mce' %>
+  </p>
+  <p>
+    <%= f.submit "Lagre" %>
+  </p>
+<% end %>

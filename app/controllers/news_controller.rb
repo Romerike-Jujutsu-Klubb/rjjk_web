@@ -12,6 +12,7 @@ class NewsController < ApplicationController
 
   def list
     @news_items = NewsItem.find(:all, :order => 'created_at DESC', :limit => 10)
+    @events = Event.find(:all, :order => 'start_at', :limit => 5)
   end
 
   def show

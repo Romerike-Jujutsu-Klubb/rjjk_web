@@ -77,15 +77,23 @@
 			<!-- Secondary content area start -->
 			
 			<!-- HINT: Set any div's class to "box" to encapsulate it in (you guessed it) a box -->
-<!--
+
+<% for event in @events %>
 			<div class="box">
-				<h4>Blandit Veroeros</h4>
+				<h4><%=event.name%></h4>
+				<%=event.start_at.strftime('%Y-%m-%d')%>
+				<%=" - #{event.end_at.strftime('%Y-%m-%d')}" if event.end_at%>
+				<%=link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin?%>
 				<div class="contentarea">
+<!--
 					<img src="/images/pic2.jpg" class="left" alt="Random foliage" />
-					<p>Sed etiam et lorem ipsum nulla vero et lobortis felis sed etiam. Lorem ipsum sit amet dolore. Nulla facilisi. Sed tortor. Aenean felis. Quisque eros etiam <a href="#">sed commodo</a>.</p>
+-->
+					<p><%=event.description%></p>
 				</div>
 			</div>
-		
+<% end %>
+
+<!--		
 			<div>
 				<h4>Nullam Dolore</h4>
 				<div class="contentarea">
