@@ -59,7 +59,7 @@
 			msz = 64 * 2
 			@information_pages.each do |ipg|
 				msz += ipg.title.size * 12
-				if msz <= 1024
+				if msz <= 800
 			%>
 					<li><%=menu_item ipg.title, :action => :show, :id => ipg.id %></li>
 			<%  else %>
@@ -79,11 +79,11 @@
 			<li><%=menu_item 'CMS-Kontrakter', :controller => 'members', :action => :active_contracts %></li>
 			<li><%=menu_item 'Telefonliste', :controller => 'members', :action => :telephone_list %></li>
 			<li><%=menu_item 'E-postlister', :controller => 'members', :action => :email_list %></li>
-			<li><%=menu_item 'NKF Rapport', :controller => 'members', :action => :NKF_report %></li>
 			</ul>
 		</div>
 		<div id="menu">
 			<ul>
+			<li><%=menu_item 'NKF Rapport', :controller => 'members', :action => :NKF_report %></li>
 			<li><%=menu_item 'Gamle medlemmer', :controller => 'members', :action => :list_inactive %></li>
 			<li><%=menu_item 'Versjon', :controller => 'info', :action => :versjon %></li>
 			</ul>
