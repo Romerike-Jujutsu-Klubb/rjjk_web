@@ -1,0 +1,23 @@
+<p>
+  <b>Group:</b>
+  <%=h @group_schedule.group_id %>
+</p>
+
+<p>
+  <b>Weekday:</b>
+  <%=h @group_schedule.weekday %>
+</p>
+
+<p>
+  <b>Start at:</b>
+  <%=h @group_schedule.start_at %>
+</p>
+
+<p>
+  <b>End at:</b>
+  <%=h @group_schedule.end_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_group_schedule_path(@group_schedule) %> |
+<%= link_to 'Back', group_schedules_path %>

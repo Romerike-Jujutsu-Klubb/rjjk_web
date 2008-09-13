@@ -1,7 +1,13 @@
 <%= error_messages_for 'member' %>
 
 <!--[form:member]-->
-<table style="float: left">
+<style type="text/css">
+table#spaced td {
+  padding: 0.5em;
+}
+</style>
+
+<table id="spaced" style="float: left" cellpadding="20px">
 	<tr>
 		<td valign="top">
 <p><label for="member_first_name">Fornavn</label><br/>
@@ -57,8 +63,15 @@ Fremdeles aktiv.
 <p><label for="member_phone_parent">Foresattes telefon</label><br/>
 <%= text_field 'member', 'phone_parent'  %></p>
 
-<p><label for="member_billing_type">Faktureringsmåte</label><br/>
-<%=select 'member', 'billing_type', [['AutoGiro', 'AUTOGIRO'], ['Manuell Giro', 'MANUELL GIRO'], ['AvtaleGiro', 'AvtaleGiro'], @member.billing_type && [@member.billing_type, @member.billing_type]].compact.uniq.sort %></p>
+<p style="float: left"><label for="member_billing_type">Faktureringsmåte</label><br/>
+  <%=select 'member', 'billing_type', [['AutoGiro', 'AUTOGIRO'], ['Manuell Giro', 'MANUELL GIRO'], ['AvtaleGiro', 'AvtaleGiro'], @member.billing_type && [@member.billing_type, @member.billing_type]].compact.uniq.sort %>
+</p>
+
+<p style="float: right"><label for="member_account_no">Kontonummer</label><br/>
+  <%=text_field 'member', 'account_no', :size => 11 %>
+</p>
+
+<br clear="all"/>
 
 <p><label for="member_billing_name">Fakturanavn (hvis annen enn medlem)</label><br/>
 <%= text_field 'member', 'billing_name'  %></p>
@@ -72,8 +85,12 @@ Fremdeles aktiv.
 		</td>
 
 		<td valign="top">
-<p><label for="member_groups">Grupper</label><br/>
-<%=select_tag("group_ids[]", options_for_select(@groups.map{|g| ["#{g.martial_art.name} #{g.name}", g.id]}, @member.groups.map{|g| g.id}), {:multiple=>true, :size=>5})%></p>
+<p>
+<% @groups.each do |g| %>
+  <%=check_box_tag "member_group_ids[#{g.id}]", g.id, @member.groups.include?(g) %>
+  <label for="member_group_ids[<%=g.id%>]"><%="#{g.martial_art.name} #{g.name}"%></label><br/>
+<% end %>
+</p>
 
 <p><label for="member_instructor">Instruktør</label><br/>
 <%=select :member, :instructor, [['Nei', false], ['Ja', true]] %></p>
@@ -84,8 +101,11 @@ Fremdeles aktiv.
 <p><label for="member_payment_problem">Betalingsproblem</label><br/>
 <%=select :member, :payment_problem, [['Nei', false], ['Ja', true]] %></p>
 
+<p><label for="member_rfid">RFID</label><br/>
+<%=text_field 'member', 'rfid' %></p>
+
 <p><label for="member_Kommentar">Kommentar</label><br/>
-<%= text_area 'member', 'comment', :rows => 12 %></p>
+<%=text_area 'member', 'comment', :cols => 47, :rows => 12 %></p>
 
 		</td>
 

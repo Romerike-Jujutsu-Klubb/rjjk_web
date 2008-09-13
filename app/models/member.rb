@@ -21,6 +21,7 @@ class Member < ActiveRecord::Base
   validates_length_of :postal_code, :is => 4, :if => Proc.new {|m|m.postal_code && !m.postal_code.empty?}
   validates_length_of :billing_postal_code, :is => 4, :if => Proc.new{|m|m.billing_postal_code && !m.billing_postal_code.empty?}
   validates_uniqueness_of :cms_contract_id, :if => :cms_contract_id
+  validates_uniqueness_of :rfid, :if => :rfid
   
   def self.find_active
     find(:all, :conditions => ACTIVE_CONDITIONS, :order => 'last_name, first_name')
@@ -33,7 +34,7 @@ class Member < ActiveRecord::Base
   def self.count_active
     count :conditions => ACTIVE_CONDITIONS 
   end
-
+  
   def current_rank(martial_art = nil)
     @graduate = graduates.select{|g|martial_art.nil? || g.rank.martial_art == martial_art}.sort_by {|g| g.graduation.held_on}.last
     @graduate && @graduate.rank

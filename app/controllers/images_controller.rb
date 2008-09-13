@@ -63,7 +63,8 @@ class ImagesController < ApplicationController
   end
 
   def media_list
-    @media = Image.find(:all, :conditions => "name LIKE '%.MP4'", :order => 'UPPER(name)')
+    media_extensions = %w{mp4 mov flv}
+    @media = Image.find(:all, :conditions => media_extensions.map{|e|"UPPER(name) LIKE '%.#{e.upcase}'"}.join(' OR '), :order => 'UPPER(name)')
     render :layout => false
   end
 

@@ -1,0 +1,26 @@
+<h1>Listing groups</h1>
+
+<table>
+  <tr>
+    <th>Martial art</th>
+    <th>Name</th>
+    <th>From age</th>
+    <th>To age</th>
+  </tr>
+
+<% for group in @groups %>
+  <tr>
+    <td><%=h group.martial_art_id %></td>
+    <td><%=h group.name %></td>
+    <td><%=h group.from_age %></td>
+    <td><%=h group.to_age %></td>
+    <td><%= link_to 'Show', group %></td>
+    <td><%= link_to 'Edit', edit_group_path(group) %></td>
+    <td><%= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New group', new_group_path %>

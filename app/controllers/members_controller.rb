@@ -115,7 +115,11 @@ class MembersController < ApplicationController
   def update
     @member = Member.find(params[:id])
     @member.martial_arts = MartialArt.find(params[:martial_art_ids]) if params[:martial_art_ids]
-    @member.groups = Group.find(params[:group_ids]) if params[:group_ids]
+    if params[:member_group_ids]
+      @member.groups = Group.find(params[:member_group_ids].keys)
+    else
+      @member.groups = []
+    end
     if @member.update_attributes(params[:member])
       flash[:notice] = 'Medlemmet oppdatert.'
       redirect_to :action => :edit, :id => @member

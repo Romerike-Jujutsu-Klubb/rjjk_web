@@ -1,14 +1,14 @@
 class UpdateLoginSugar < ActiveRecord::Migration
   def self.up
       add_column :users, :verified_tmp, :boolean, :default => false
-      execute('UPDATE users SET verified_tmp = true WHERE verified = 1')
-      execute('UPDATE users SET verified_tmp = false WHERE verified = 0')
+      add_column :users, :deleted_tmp, :boolean, :default => false
+
+      User.find(:all).each{|u| User.update(u.id, :verified_tmp => u.verified == 1)}
+      User.find(:all).each{|u| User.update(u.id, :deleted_tmp => u.deleted == 1)}
+
       remove_column :users, :verified
       rename_column :users, :verified_tmp, :verified
 
-      add_column :users, :deleted_tmp, :boolean, :default => false
-      execute('UPDATE users SET deleted_tmp = true WHERE deleted = 1')
-      execute('UPDATE users SET deleted_tmp = false WHERE deleted = 0')
       remove_column :users, :deleted
       rename_column :users, :deleted_tmp, :deleted
 
@@ -20,4 +20,6 @@ class UpdateLoginSugar < ActiveRecord::Migration
       change_column :users, :deleted, :integer, :default => 0
       change_column :users, :verified, :integer, :default => 0
   end
+  
+  class User < ActiveRecord::Base ; end
 end

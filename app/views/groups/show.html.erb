@@ -1,0 +1,23 @@
+<p>
+  <b>Martial art:</b>
+  <%=h @group.martial_art_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @group.name %>
+</p>
+
+<p>
+  <b>From age:</b>
+  <%=h @group.from_age %>
+</p>
+
+<p>
+  <b>To age:</b>
+  <%=h @group.to_age %>
+</p>
+
+
+<%= link_to 'Edit', edit_group_path(@group) %> |
+<%= link_to 'Back', groups_path %>
