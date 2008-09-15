@@ -16,4 +16,12 @@ module ApplicationHelper
     end
   end
   
+  def t(time)
+    time && time.strftime('%H:%M')
+  end
+  
+  def wday(wday_index)
+    %w{Søndag Mandag Tirsdag Onsdag Torsdag Fredag Lørdag}[wday_index]
+  end
+  
 end

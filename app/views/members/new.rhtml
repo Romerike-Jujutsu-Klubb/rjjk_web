@@ -1,6 +1,6 @@
 <h1>Registrere nytt medlem</h1>
 
-<% form_tag :action => 'create' do %>
+<% form_tag({:action => 'create'}, {:multipart => true}) do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Lagre', :id => 'save' %>
   <%= link_to 'Tilbake', :action => 'list' %>

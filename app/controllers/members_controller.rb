@@ -181,6 +181,14 @@ class MembersController < ApplicationController
     @members = CmsMember.find_active  
   end
   
+  def image_thumbnail
+    @member = Member.find(params[:id])
+    send_data(@member.image,
+        :disposition => 'inline',
+        :type => @member.image_content_type,
+        :filename => @member.image_name)
+  end
+
   private
   
   def year_end(offset=0)

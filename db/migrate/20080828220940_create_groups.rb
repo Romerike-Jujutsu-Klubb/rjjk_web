@@ -16,20 +16,21 @@ class CreateGroups < ActiveRecord::Migration
     end
     keiwaryu = MartialArt.find_by_name('Kei Wa Ryu')
     aikikai = MartialArt.find_by_name('Aikikai')
-    raise "MArtial Arts not found" if keiwaryu.nil? || aikikai.nil?
-    Group.create! :martial_art_id => keiwaryu.id, :name => 'Aspiranter', :from_age => 6, :to_age => 9
-    j = Group.create! :martial_art_id => keiwaryu.id, :name => 'Juniorer', :from_age => 10, :to_age => 14
-    s = Group.create! :martial_art_id => keiwaryu.id, :name => 'Seniorer', :from_age => 14, :to_age => 999
-    a = Group.create! :martial_art_id => aikikai.id, :name => 'Seniorer', :from_age => 14, :to_age => 999
-    Member.find(:all).each do |m|
-      m.martial_arts.each do |ma|
-        if ma == aikikai
-          group = a
-        else
-          group = m.senior ? s : j
+    if keiwaryu && aikikai
+      Group.create! :martial_art_id => keiwaryu.id, :name => 'Aspiranter', :from_age => 6, :to_age => 9
+      j = Group.create! :martial_art_id => keiwaryu.id, :name => 'Juniorer', :from_age => 10, :to_age => 14
+      s = Group.create! :martial_art_id => keiwaryu.id, :name => 'Seniorer', :from_age => 14, :to_age => 999
+      a = Group.create! :martial_art_id => aikikai.id, :name => 'Seniorer', :from_age => 14, :to_age => 999
+      Member.find(:all).each do |m|
+        m.martial_arts.each do |ma|
+          if ma == aikikai
+            group = a
+          else
+            group = m.senior ? s : j
+          end
+          puts "Adding #{m.name} to #{group.martial_art.name} #{group.name}"
+          m.groups << group
         end
-        puts "Adding #{m.name} to #{group.martial_art.name} #{group.name}"
-        m.groups << group
       end
     end
     remove_column :cms_members, :senior

@@ -141,4 +141,15 @@ class Member < ActiveRecord::Base
       "#{first_name} #{last_name}"
     end
     
+    def image_file=(file)
+      return if file == ""
+      self.image = file.read
+      self.image_name = file.original_filename
+      self.image_content_type = file.content_type
+    end
+    
+    def image_format
+      image_name.split('.').last
+    end
+    
   end

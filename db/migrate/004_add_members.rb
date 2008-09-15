@@ -27,6 +27,8 @@ class AddMembers < ActiveRecord::Migration
       t.column :comment,            :string
       t.column :instructor,         :boolean, :null => false
       t.column :nkf_fee,            :boolean, :null => false
+      
+      t.timestamps
     end
   end
 

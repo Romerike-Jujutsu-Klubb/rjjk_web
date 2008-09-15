@@ -11,8 +11,10 @@ require 'yaml'
 
 def dump(model_plural)
   model_class = eval model_plural.to_s.singularize.camelize
+  models = model_class.find(:all)
+  models.each{|m| m.image = m.image} if models.size > 0 && models[0].respond_to?(:image)
   File.open("#{EXPORT_DIR}/#{model_plural}.yml", 'w') do |outfile|
-    outfile << YAML.dump(model_class.find(:all))
+    outfile << YAML.dump(models)
   end
 end
 

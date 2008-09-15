@@ -27,6 +27,7 @@ class GroupsController < ApplicationController
   # GET /groups/new.xml
   def new
     @group = Group.new
+    @martial_arts = MartialArt.find(:all)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -37,6 +38,7 @@ class GroupsController < ApplicationController
   # GET /groups/1/edit
   def edit
     @group = Group.find(params[:id])
+    @martial_arts = MartialArt.find(:all)
   end
 
   # POST /groups

@@ -2,21 +2,20 @@
 
 <table>
   <tr>
-    <th>Group</th>
-    <th>Weekday</th>
-    <th>Start at</th>
-    <th>End at</th>
+    <th align="left">Gruppe</th>
+    <th>Ukedag</th>
+    <th>Start</th>
+    <th>Slutt</th>
   </tr>
 
 <% for group_schedule in @group_schedules %>
   <tr>
-    <td><%=h group_schedule.group_id %></td>
-    <td><%=h group_schedule.weekday %></td>
-    <td><%=h group_schedule.start_at %></td>
-    <td><%=h group_schedule.end_at %></td>
-    <td><%= link_to 'Show', group_schedule %></td>
-    <td><%= link_to 'Edit', edit_group_schedule_path(group_schedule) %></td>
-    <td><%= link_to 'Destroy', group_schedule, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%=h group_schedule.group.full_name %></td>
+    <td align="center"><%=wday group_schedule.weekday %></td>
+    <td><%=t group_schedule.start_at %></td>
+    <td><%=t group_schedule.end_at %></td>
+    <td><%= link_to 'Redigèr', edit_group_schedule_path(group_schedule) %></td>
+    <td><%= link_to 'Slett', group_schedule, :confirm => 'Sikker?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

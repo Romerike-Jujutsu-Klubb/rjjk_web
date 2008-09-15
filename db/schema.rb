@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080911200000) do
+ActiveRecord::Schema.define(:version => 20080914063756) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -157,6 +157,9 @@ ActiveRecord::Schema.define(:version => 20080911200000) do
     t.string  "billing_phone_home",   :limit => 32
     t.string  "billing_phone_mobile", :limit => 32
     t.string  "rfid",                 :limit => 25
+    t.binary  "image"
+    t.string  "image_name",           :limit => 64
+    t.string  "image_content_type",   :limit => 32
   end
 
   create_table "news_items", :force => true do |t|

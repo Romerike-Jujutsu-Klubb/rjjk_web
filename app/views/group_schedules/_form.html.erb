@@ -7,7 +7,7 @@
   </p>
   <p>
     <%= f.label :weekday %><br />
-    <%= f.select :weekday, [['Mandag', 1], ['Tirsdag', 2], ['Onsdag', 3], ['Torsdag', 4], ['Fredag', 5], ['Lørdag', 6], ['Søndag', 7]] %>
+    <%= f.select :weekday, [['Mandag', 1], ['Tirsdag', 2], ['Onsdag', 3], ['Torsdag', 4], ['Fredag', 5], ['Lørdag', 6], ['Søndag', 0]] %>
   </p>
   <p>
     <%= f.label :start_at %><br />
@@ -18,8 +18,7 @@
     <%= f.time_select :end_at %>
   </p>
   <p>
-    <%= f.submit "Create" %>
+    <%= f.submit "Lagre" %>
+	<%= link_to 'Tilbake', group_schedules_path %>
   </p>
 <% end %>
-
-<%= link_to 'Back', group_schedules_path %>

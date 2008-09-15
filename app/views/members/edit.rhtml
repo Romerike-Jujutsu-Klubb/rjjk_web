@@ -4,16 +4,16 @@
 		<th>Dato</th>
 		<th>Grad</th>
 		<th>Bestått</th>
-		<th>Betalt gradering</th>
-		<th>Betalt belte</th>
+		<th>Betalt<br/>gradering</th>
+		<th>Betalt<br/>belte</th>
 	</tr>
 	<% for graduate in @member.graduates.sort_by{|g|g.graduation.held_on} %>
 	<tr>
 		<td><%=graduate.graduation.held_on%></td>
 		<td><%=graduate.rank.martial_art.name%> <%=graduate.rank.name%></td>
-		<td><%=yes_no graduate.passed%></td>
-		<td><%=yes_no graduate.paid_graduation%></td>
-		<td><%=yes_no graduate.paid_belt%></td>
+		<td align="center"><%=yes_no graduate.passed%></td>
+		<td align="center"><%=yes_no graduate.paid_graduation%></td>
+		<td align="center"><%=yes_no graduate.paid_belt%></td>
 	</tr>
 	<% end %>
 	<tr>
@@ -27,7 +27,7 @@
 
 <h1>Redigèr Medlem</h1>
 
-<% form_tag :action => 'update', :id => @member do %>
+<% form_tag({:action => 'update', :id => @member}, {:multipart => true}) do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Lagre', :id => 'save' %>
   <%= link_to 'Tilbake', :action => 'list' %>
