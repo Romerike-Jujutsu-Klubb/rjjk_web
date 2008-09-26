@@ -21,7 +21,7 @@ class Member < ActiveRecord::Base
   validates_length_of :postal_code, :is => 4, :if => Proc.new {|m|m.postal_code && !m.postal_code.empty?}
   validates_length_of :billing_postal_code, :is => 4, :if => Proc.new{|m|m.billing_postal_code && !m.billing_postal_code.empty?}
   validates_uniqueness_of :cms_contract_id, :if => :cms_contract_id
-  validates_uniqueness_of :rfid, :if => :rfid
+  validates_uniqueness_of :rfid, :if => Proc.new{|r| r.rfid and not r.rfid.empty?}
   
   def self.find_active
     find(:all, :conditions => ACTIVE_CONDITIONS, :order => 'last_name, first_name')

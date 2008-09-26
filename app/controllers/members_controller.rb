@@ -124,6 +124,7 @@ class MembersController < ApplicationController
       flash[:notice] = 'Medlemmet oppdatert.'
       redirect_to :action => :edit, :id => @member
     else
+      @groups = Group.find(:all, :include => :martial_art, :order => 'martial_arts.name, groups.name')
       render :action => 'edit'
     end
   end
