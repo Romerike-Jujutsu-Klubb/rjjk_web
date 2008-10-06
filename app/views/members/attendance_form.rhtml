@@ -5,7 +5,7 @@ body {font-family:Arial, Helvetica, sans-serif}
 th {background: lightgray}
 </style>
 
-<% weekdays = @group.group_schedules.map{|gs| gs.weekday} %>
+<% weekdays = @group && @group.group_schedules.map{|gs| gs.weekday} || [2,4] %>
 <% first_date = Date.new(@date.year, @date.month, 1) %>
 <% last_date = Date.new(@date.year, @date.month, -1) %>
 <% dates = (first_date..last_date).select{|d|weekdays.include? d.wday} %>
