@@ -60,7 +60,7 @@ class CmsImport
     cms_contract_ids.each do |cms_contract_id|
       detail_fields = user_fields[cms_contract_id]
       member = CmsMember.find_by_cms_contract_id(cms_contract_id)
-      member = CmsMember.new(:department => 'Jujutsu', :instructor => false) if member.nil?
+      member = CmsMember.new(:instructor => false) if member.nil?
       old_values = member.attributes
       new_contract_birthdate = (detail_fields[38].empty? || detail_fields[38] == '--' ? nil : Date.strptime(detail_fields[38], '%d%m%y'))
       phone_pattern = '(?:\d| )+'
