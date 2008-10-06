@@ -1,4 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
+  map.connect ':controller/create', :action => 'create'
+
+  map.resources :attendances
   map.resources :events
   map.resources :group_schedules
   map.resources :groups

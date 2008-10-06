@@ -11,6 +11,7 @@ class Member < ActiveRecord::Base
   ]
   
   has_many :graduates
+  has_many :attendances
   has_and_belongs_to_many :groups
   
   validates_presence_of :first_name, :last_name

@@ -5,7 +5,7 @@ body {font-family:Arial, Helvetica, sans-serif}
 th {background: lightgray}
 </style>
 
-<% weekdays = @group ? (['J', 'S'].include?(@group.name[0].chr) ? [2,4] : [5]) : [2,4,5] %>
+<% weekdays = @group.group_schedules.map{|gs| gs.weekday} %>
 <% first_date = Date.new(@date.year, @date.month, 1) %>
 <% last_date = Date.new(@date.year, @date.month, -1) %>
 <% dates = (first_date..last_date).select{|d|weekdays.include? d.wday} %>
@@ -31,7 +31,14 @@ th {background: lightgray}
     <td><%=h member.birthdate %>&nbsp;</td>
 <% end %>
 <% dates.each do |d| %>
-    <td>&nbsp;</td>
+	<% group_schedule = @group.group_schedules.to_a.find{|gs| gs.weekday == d.wday}%>
+	<% attendance = member.attendances.select{|a| a.date == d}.first %>
+	<% if attendance %>
+    <td align="center">V</td>
+	<% else %>
+    <td id="attendance_<%=member.id%>_<%=d.day%>" align="center" onclick="<%= remote_function(:update => "attendance_#{member.id}_#{d.day}",
+      :url => { :controller => :attendances, :action => :create, :attendance => {:member_id => member.id, :group_schedule_id => group_schedule.id, :year => d.year, :week => d.cweek } }) %>">&nbsp;</td>
+	<% end %>
 <% end %>
   </tr>
 <% end %>

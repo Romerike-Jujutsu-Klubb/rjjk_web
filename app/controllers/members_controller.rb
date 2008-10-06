@@ -86,7 +86,7 @@ class MembersController < ApplicationController
       @date = Date.parse(params[:date])
     end
     @date ||= Date.today
-    render :layout => :print
+    render :layout => 'print'
   end
   
   def new
