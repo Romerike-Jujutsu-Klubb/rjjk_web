@@ -1,0 +1,10 @@
+Ting å gjøre:
+
+* Lage et avstemmingsbilde mellom vårt medlemsregister og CMS listen
+** Sende purring til CMS for alle medlemmer markert som "fryst".
+   Disse skal meldes ut med "kontrakt til" satt til utmeldingsdato.
+** Sjekke at medlemslisten vår og CMS har de samme medlemmene.
+** Sjekke at detaljene for hvert medlem stemmer overens.
+** Sjekke at alle medlemmene har riktig pris.
+** Tillate oppretting av medlemmer i vårt register basert på ny kontrakt fra CMS-registeret.
+** Tillate oppretting av medlem fra CMS kontrakt.

@@ -59,6 +59,9 @@ table#spaced td {
 <p><label for="member_contract_id">Medlemsnummer</label><br/>
 <%= text_field 'member', 'contract_id' %></p>
 
+<p><label for="member_cms_contract_id">CMS Kontraktnummer</label><br/>
+<%= text_field 'member', 'cms_contract_id' %></p>
+
 <p><label for="member_left_on">Utmeldt dato</label><br/>
 <% if @member.left_on %>
 <%= date_select 'member', 'left_on'  %></p>

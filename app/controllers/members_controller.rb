@@ -107,6 +107,21 @@ class MembersController < ApplicationController
     end
   end
   
+  def create_from_cms_member
+    cms_member = CmsMember.find(params[:cms_member_id])
+    attributes = cms_member.attributes
+    attributes.delete('created_at')
+    attributes.delete('updated_at')
+    @member = Member.new(attributes)
+    if @member.save
+      flash[:notice] = 'Medlem opprettet.'
+      redirect_to :action => :edit, :id => @member.id
+    else
+      new
+      render :action => 'new'
+    end
+  end
+  
   def edit
     @member = Member.find(params[:id])
     @groups = Group.find(:all, :include => :martial_art, :order => 'martial_arts.name, groups.name')
@@ -188,6 +203,13 @@ class MembersController < ApplicationController
         :disposition => 'inline',
         :type => @member.image_content_type,
         :filename => @member.image_name)
+  end
+
+  def cms_comparison
+    @cms_members = CmsMember.find_active
+    @members = Member.find_active
+    
+    @new_cms_members = @cms_members.select{|cmsm| @members.find{|m| m.cms_contract_id == cmsm.cms_contract_id}.nil?}
   end
 
   private
