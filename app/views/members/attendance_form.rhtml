@@ -26,11 +26,12 @@ th {background: lightgray}
 <% for member in @members %>
   <tr class="<%= cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
     <td><%=h member.first_name %> <%=h member.last_name %></td>
-    <td><%=h member.current_rank(@group.martial_art) && member.current_rank(@group.martial_art).name %>&nbsp;</td>
+    <td><%=h @group && member.current_rank(@group.martial_art) && member.current_rank(@group.martial_art).name %>&nbsp;</td>
 <% if birthdate_missing %>
     <td><%=h member.birthdate %>&nbsp;</td>
 <% end %>
 <% dates.each do |d| %>
+	<% if @group %>
 	<% group_schedule = @group.group_schedules.to_a.find{|gs| gs.weekday == d.wday}%>
 	<% attendance = member.attendances.select{|a| a.date == d}.first %>
 	<% if attendance %>
@@ -39,6 +40,9 @@ th {background: lightgray}
 	<% else %>
     <td id="attendance_<%=member.id%>_<%=d.day%>" align="center" onclick="<%= remote_function(:update => "attendance_#{member.id}_#{d.day}",
       :url => { :controller => :attendances, :action => :create, :attendance => {:member_id => member.id, :group_schedule_id => group_schedule.id, :year => d.year, :week => d.cweek } }) %>">&nbsp;</td>
+	<% end %>
+	<% else %>
+    <td>&nbsp;</td>
 	<% end %>
 <% end %>
   </tr>

@@ -12,6 +12,10 @@ class CmsMember < ActiveRecord::Base
     find(:all, :conditions => ACTIVE_CONDITIONS, :order => 'last_name, first_name')
   end
   
+  def self.find_inactive
+    find(:all, :conditions => "not (#{ACTIVE_CONDITIONS})", :order => 'last_name, first_name')
+  end
+  
   def fee
     if instructor?
       0

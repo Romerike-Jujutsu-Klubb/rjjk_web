@@ -208,8 +208,10 @@ class MembersController < ApplicationController
   def cms_comparison
     @cms_members = CmsMember.find_active
     @members = Member.find_active
+    @inactive_cms_members = CmsMember.find_inactive
     
     @new_cms_members = @cms_members.select{|cmsm| @members.find{|m| m.cms_contract_id == cmsm.cms_contract_id}.nil?}
+    @new_inactive_members = @members.select{|m| cmsm = @inactive_cms_members.find{|cmsm| cmsm.cms_contract_id == m.cms_contract_id} && m.left_on = cmsm.left_on}
   end
 
   private

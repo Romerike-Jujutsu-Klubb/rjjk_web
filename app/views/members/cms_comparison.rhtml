@@ -29,3 +29,32 @@
   </tr>
 <% end %>
 </table>
+
+<br/>
+
+
+<h2>Medlemmer utmeldt fra CMS (<%=@new_inactive_members.size%>)</h2>
+
+<table class="members" border="0" cellpadding="5" cellspacing="1">
+  <tr>
+    <th align="left">Meld ut</th>
+    <th align="left">CMS Kontrakt</th>
+    <th align="left">Fornavn</th>
+    <th align="left">Etternavn</th>
+    <th align="left">Fødselsdato</th>
+  </tr>
+  
+<%
+	for member in @new_inactive_members
+		fn = member.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
+		ln = member.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') 
+%>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%=link_to 'Meld ut', {:controller => :members, :action => :update, :id => member.id, :member => {:left_on => member.left_on.strftime('%Y-%m-%d')}}, :method => :post %></td>
+    <td><%=member.cms_contract_id %></td>
+    <td><%=h fn %></td>
+    <td><%=h ln %></td>
+    <td><%=member.birthdate %></td>
+  </tr>
+<% end %>
+</table>
