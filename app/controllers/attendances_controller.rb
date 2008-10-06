@@ -84,7 +84,13 @@ class AttendancesController < ApplicationController
     @attendance.destroy
     
     respond_to do |format|
-      format.html { redirect_to(attendances_url) }
+      format.html do 
+        if (request.xhr?)
+          render :text => ''
+        else
+          redirect_to(attendances_url) 
+        end
+      end
       format.xml  { head :ok }
     end
   end

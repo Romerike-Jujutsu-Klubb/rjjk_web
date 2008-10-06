@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/create', :action => 'create'
+  map.connect ':controller/destroy', :action => 'destroy'
 
   map.resources :attendances
   map.resources :events
