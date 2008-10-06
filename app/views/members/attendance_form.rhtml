@@ -24,7 +24,7 @@ th {background: lightgray}
   </tr>
   
 <% for member in @members %>
-  <tr class="<%= cycle('odd', 'even') %>">
+  <tr class="<%= cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
     <td><%=h member.first_name %> <%=h member.last_name %></td>
     <td><%=h member.current_rank(@group.martial_art) && member.current_rank(@group.martial_art).name %>&nbsp;</td>
 <% if birthdate_missing %>
