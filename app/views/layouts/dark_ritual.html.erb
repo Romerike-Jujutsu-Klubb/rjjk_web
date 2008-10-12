@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
+<meta name="description" content="description"/>
+<meta name="keywords" content="keywords"/> 
+<meta name="author" content="author"/> 
+<%=stylesheet_link_tag 'dark_ritual', :media => 'screen' %>
+<title>Romerike Jujutsu Klubb</title>
+</head>
+
+<body>
+
+<div class="container">
+
+	<div class="header">Romerike Jujutsu Klubb</div>
+
+	<div class="main_right">
+
+		<div class="padded">
+			<%=image_tag 'rjjk_logo_&_txt_320.png', :style => 'width: 100%; border: 0' %>
+
+			<% for event in @events %>
+				<h1><%=event.name%></h1>
+				<%=event.start_at.strftime('%Y-%m-%d')%>
+				<%=" - #{event.end_at.strftime('%Y-%m-%d')}" if event.end_at%>
+				<%=link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin?%>
+				<p><%=event.description%></p>
+			<% end %>
+
+   			<% if admin? %>
+            	<%=link_to 'Ny hendelse', :controller => 'events', :action => 'new' %>
+   			<% end %>
+		</div>
+
+	</div>
+
+	<div class="subnav">
+
+		<ul>
+			<li><%=link_to 'Forside', '/' %></li>
+		</ul>
+
+		<h1>Oversikt</h1>
+		<ul>
+			<% @information_pages.each do |page| %>
+			<li>
+				<%=link_to page.title, :controller => :info, :action => :show, :id => page.id%>
+				<%#=link_to 'ned', :controller => :info, :action => :move_down, :id => page.id%>
+			</li>
+			<% end %>
+		</ul>
+
+		<% if not user? %>
+   			<li><%=link_to 'Login', :controller => 'user', :action => :login %></li>
+		<% else %>
+   			<li><%=link_to 'Logout', :controller => 'user', :action => :logout %></li>
+		<% end %>
+
+   			<% if admin? %>
+		<h1>Administrasjon</h1>
+		<ul>
+   			<li><%= link_to 'Ny nyhet', :controller => 'news', :action => 'new' %></li>
+            <li><%= link_to 'Ny side', :controller => 'info', :action => 'new' %></li>
+            <li><%= link_to 'Ny hendelse', :controller => 'events', :action => 'new' %></li>
+            <li><%= link_to 'Brukere', :controller => 'user', :action => :list %></li>
+			<% end %>
+		</ul>
+
+
+		<% if admin? %>
+		<h1>Medlemsreg.</h1>
+		<ul>
+			<li><%=menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
+			<li><%=menu_item 'Inntekt', :controller => 'members', :action => :income %></li>
+			<li><%=menu_item 'CMS-Kontrakter', :controller => 'members', :action => :active_contracts %></li>
+			<li><%=menu_item 'CMS Avstemming', :controller => 'members', :action => :cms_comparison %></li>
+			<li><%=menu_item 'Telefonliste', :controller => 'members', :action => :telephone_list %></li>
+			<li><%=menu_item 'E-postlister', :controller => 'members', :action => :email_list %></li>
+			<li><%=menu_item 'NKF Rapport', :controller => 'members', :action => :NKF_report %></li>
+			<li><%=menu_item 'Gamle medlemmer', :controller => 'members', :action => :list_inactive %></li>
+			<li><%=menu_item 'Versjon', :controller => 'info', :action => :versjon %></li>
+			<li><%=menu_item 'Graderinger', :controller => 'graduations' %></li>
+			<li><%=menu_item 'Stiler', :controller => 'martial_arts' %></li>
+			<li><%=menu_item 'Grader', :controller => 'ranks' %></li>
+			<li><%=menu_item 'Grupper', :controller => 'groups' %></li>
+			<li><%=menu_item 'Treninger', :controller => 'group_schedules' %></li>
+			<li><%=menu_item 'Oppmøtelister', :controller => 'members', :action => :attendance_form_index %></li>
+		</ul>
+		<% end %>
+
+<!--
+		<h1>Third and last</h1>
+		<ul>
+			<li><a href="index.html">sociis natoque</a></li>
+			<li><a href="index.html">magna sed purus</a></li>
+			<li><a href="index.html">tincidunt</a></li>
+			<li><a href="index.html">consequat molestie</a></li>
+		</ul>
+-->
+
+	</div>
+		
+	<div class="main">
+
+		<div class="padded">
+          <%= yield %>
+		</div>
+
+	</div>
+	
+	<div class="clearer"><span></span></div>
+
+	<div class="footer">
+		
+		<span class="left">&copy; 2008 <a href="http://jujutsu.no/">Romerike Jujutsu Klubb</a>. Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> &amp; <a href="http://validator.w3.org/check?uri=referer">XHTML</a></span>
+		
+		<span class="right">Template design by <a href="http://templates.arcsin.se">Arcsin</a></span>
+		
+		<div class="clearer"><span></span></div>
+
+	</div>
+
+</div>
+
+</body>
+
+</html>

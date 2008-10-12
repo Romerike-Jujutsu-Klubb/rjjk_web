@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080914063756) do
+ActiveRecord::Schema.define(:version => 20081012193524) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(:version => 20080914063756) do
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position"
   end
 
   create_table "martial_arts", :force => true do |t|
@@ -191,14 +192,14 @@ ActiveRecord::Schema.define(:version => 20080914063756) do
     t.boolean  "deleted",                       :default => false
   end
 
-  add_foreign_key "attendances", ["member_id"], "members", ["id"], :name => "attendances_member_id_fkey"
   add_foreign_key "attendances", ["group_schedule_id"], "group_schedules", ["id"], :name => "attendances_group_schedule_id_fkey"
+  add_foreign_key "attendances", ["member_id"], "members", ["id"], :name => "attendances_member_id_fkey"
 
   add_foreign_key "censors", ["graduation_id"], "graduations", ["id"], :name => "censors_graduation_id_fkey"
   add_foreign_key "censors", ["member_id"], "members", ["id"], :name => "censors_member_id_fkey"
 
-  add_foreign_key "graduates", ["member_id"], "members", ["id"], :name => "graduates_member_id_fkey"
   add_foreign_key "graduates", ["graduation_id"], "graduations", ["id"], :name => "graduates_graduation_id_fkey"
+  add_foreign_key "graduates", ["member_id"], "members", ["id"], :name => "graduates_member_id_fkey"
   add_foreign_key "graduates", ["rank_id"], "ranks", ["id"], :name => "graduates_rank_id_fkey"
 
   add_foreign_key "graduations", ["martial_art_id"], "martial_arts", ["id"], :name => "graduations_martial_art_id_fkey"
@@ -207,6 +208,7 @@ ActiveRecord::Schema.define(:version => 20080914063756) do
 
   add_foreign_key "groups", ["martial_art_id"], "martial_arts", ["id"], :name => "groups_martial_art_id_fkey"
 
+  add_foreign_key "groups_members", ["group_id"], "groups", ["id"], :name => "groups_members_group_id_fkey"
   add_foreign_key "groups_members", ["member_id"], "members", ["id"], :name => "groups_members_member_id_fkey"
 
   add_foreign_key "information_pages", ["parent_id"], "information_pages", ["id"], :name => "information_pages_parent_id_fkey"

@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
   include Localization
   include UserSystem
   session :session_key => '_rjjk_web_session_id'
-  layout 'zenlike'
+  # layout 'zenlike'
+  layout 'dark_ritual'
   helper :user
 
   before_filter :login_from_cookie
@@ -15,6 +16,7 @@ class ApplicationController < ActionController::Base
   
   def load_layout_model
     @information_pages = InformationPage.roots
+    @events = Event.find(:all, :order => 'start_at', :limit => 5)
   end
   
 end

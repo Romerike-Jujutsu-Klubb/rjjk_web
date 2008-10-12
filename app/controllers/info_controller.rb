@@ -26,6 +26,13 @@ class InfoController < ApplicationController
     @information_page = InformationPage.find(params[:id])
   end
 
+  def move_down
+    @information_page = InformationPage.find(params[:id])
+    @information_page.move_lower
+    @information_page.save!
+    render :action => :show
+  end
+
   def show_content
     @information_page = InformationPage.find(params[:id])
     render :action => :show, :layout => false
@@ -35,6 +42,7 @@ class InfoController < ApplicationController
     @information_page = InformationPage.new
     @information_page.parent_id = params[:parent_id]
     @images = Image.find(:all, :conditions => "name NOT LIKE '%.MP4'", :select => 'id, name')
+    render :layout => 'print'
   end
 
   def create
@@ -50,6 +58,7 @@ class InfoController < ApplicationController
   def rediger
     @information_page = InformationPage.find(params[:id])
     @images = Image.find(:all, :conditions => "name NOT LIKE '%.MP4'", :select => 'id, name')
+    render :layout => 'print'
   end
 
   def update

@@ -2,7 +2,7 @@ class UserController < ApplicationController
   before_filter :authenticate_user
   before_filter :admin_required, :except => [:welcome, :login, :logout, :signup, :forgot_password, :change_password]
   
-  skip_before_filter :authenticate_user, :only => [ :login, :signup, :forgot_password ]
+  skip_before_filter :authenticate_user, :only => [ :login, :logout, :signup, :forgot_password ]
   
   def list
     @users = User.find(:all, :order => 'last_name, first_name')
@@ -68,7 +68,10 @@ class UserController < ApplicationController
   def logout
     session[:user_id] = nil
     @current_user = nil
-    redirect_to :action => 'login'
+    self.current_user = nil
+    cookies[:autologin] = {:value => '', :expires =>0.days.from_now}
+    cookies[:token]     = {:value => '', :expires =>0.days.from_now}
+    redirect_to '/'
   end
   
   def change_password

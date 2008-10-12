@@ -6,7 +6,7 @@
 	<%=@information_page.body%>
 </p>
 
-<% if admin? %>
+<% if user? || admin? %>
 <br clear="all"/>
 
 <div align="right">

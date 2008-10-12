@@ -6,7 +6,7 @@
 			<div class="contentarea">
 				<div class="details">
 				<%="Skrevet av #{@news_item.creator.name}" if @news_item.creator%></a>
-   				<%=@news_item.created_at.strftime '%Y-%m-%d %H:%M'%>
+   				<%=@news_item.created_at.strftime '%Y-%m-%d'%>
 				</div>	
 				<!-- Normal content area start -->
 <!--
@@ -48,7 +48,7 @@
 					<div class="contentarea">
 						<div class="details">
 						<%="Skrevet av #{@news_item.creator.name}" if @news_item.creator%></a>
-        				<%=@news_item.created_at.strftime '%Y-%m-%d %H:%M'%>
+        				<%=@news_item.created_at.strftime '%Y-%m-%d'%>
 				        </div>	
 						<%=textilize @news_item.body %>
 
@@ -79,6 +79,7 @@
 			
 			<!-- HINT: Set any div's class to "box" to encapsulate it in (you guessed it) a box -->
 
+<!--
 <% for event in @events %>
 			<div class="box">
 				<h4><%=event.name%></h4>
@@ -86,13 +87,11 @@
 				<%=" - #{event.end_at.strftime('%Y-%m-%d')}" if event.end_at%>
 				<%=link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin?%>
 				<div class="contentarea">
-<!--
-					<img src="/images/pic2.jpg" class="left" alt="Random foliage" />
--->
 					<p><%=event.description%></p>
 				</div>
 			</div>
 <% end %>
+-->
 
 <!--		
 			<div>
