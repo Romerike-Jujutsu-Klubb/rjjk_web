@@ -30,47 +30,47 @@ color: #00226C;
 vertical-align: middle;
 }
 
-.post .details
+.details
 {
 font-size: 0.8em;
 color: #787878;
 margin-bottom: 1em;
 }
 
-.post ul.controls
+ul.controls
 {
 clear: both;
 }
 
-.post ul.controls li
+ul.controls li
 {
 display: inline;
 font-size: 0.8em;
 }
 
-.post ul.controls li a
+ul.controls li a
 {
 background-repeat: no-repeat;
 background-position: left;
 padding: 0em 1.0em 0em 20px;
 }
 
-.post ul.controls li a.printerfriendly
+ul.controls li a.printerfriendly
 {
 background-image: url('/images/icon-printerfriendly.gif');
 }
 
-.post ul.controls li a.comments
+ul.controls li a.comments
 {
 background-image: url('/images/icon-comments.gif');
 }
 
-.post ul.controls li a.more
+ul.controls li a.more
 {
 background-image: url('/images/icon-more.gif');
 }
 
-.post ul.controls li a.edit
+ul.controls li a.edit
 {
 background-image: url('/images/icon-more.gif');
 }
