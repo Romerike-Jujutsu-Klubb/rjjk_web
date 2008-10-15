@@ -36,6 +36,7 @@ class NewsController < ApplicationController
   def edit
     @news_item = NewsItem.find(params[:id])
     @images = Image.find(:all, :conditions => "name NOT LIKE '%.MP4'", :select => 'id, name')
+    render :layout => 'admin'
   end
 
   def update
