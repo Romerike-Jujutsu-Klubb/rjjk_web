@@ -22,7 +22,7 @@ class UserController < ApplicationController
         cookies[:autologin] = {:value => user.id.to_s, :expires =>90.days.from_now}
         cookies[:token]     = {:value => user.security_token, :expires =>90.days.from_now}
       end
-      redirect_back_or_default :action => 'welcome'
+      redirect_back_or_default '/'
     else
       @login = params['user']['login']
       flash['message'] = 'Login failed'
