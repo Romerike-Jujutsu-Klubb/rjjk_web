@@ -49,7 +49,7 @@ class AttendancesController < ApplicationController
         flash[:notice] = 'Attendance was successfully created.'
         format.html do 
           if (request.xhr?)
-            render :text => 'V'
+            render :text => '<img src="/images/accept.png"/>'
           else
             redirect_to(@attendance) 
           end

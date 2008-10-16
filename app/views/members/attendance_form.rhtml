@@ -25,7 +25,7 @@ th {background: lightgray}
   
 <% for member in @members %>
   <tr class="<%= cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
-    <td><%=h member.first_name %> <%=h member.last_name %></td>
+    <td onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'"><%=h member.first_name %> <%=h member.last_name %></td>
     <td><%=h @group && member.current_rank(@group.martial_art) && member.current_rank(@group.martial_art).name %>&nbsp;</td>
 <% if birthdate_missing %>
     <td><%=h member.birthdate %>&nbsp;</td>
@@ -36,7 +36,7 @@ th {background: lightgray}
 	<% attendance = member.attendances.select{|a| a.date == d}.first %>
 	<% if attendance %>
     <td id="attendance_<%=member.id%>_<%=d.day%>" align="center" onclick="<%= remote_function(:update => "attendance_#{member.id}_#{d.day}",
-      :url => { :controller => :attendances, :action => :destroy, :id => attendance.id }) %>">V</td>
+      :url => { :controller => :attendances, :action => :destroy, :id => attendance.id }) %>"><%=image_tag 'accept.png'%></td>
 	<% else %>
     <td id="attendance_<%=member.id%>_<%=d.day%>" align="center" onclick="<%= remote_function(:update => "attendance_#{member.id}_#{d.day}",
       :url => { :controller => :attendances, :action => :create, :attendance => {:member_id => member.id, :group_schedule_id => group_schedule.id, :year => d.year, :week => d.cweek } }) %>">&nbsp;</td>

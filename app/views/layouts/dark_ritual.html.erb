@@ -8,6 +8,7 @@
 <meta name="keywords" content="keywords"/> 
 <meta name="author" content="author"/> 
 <%=javascript_include_tag "prototype" %>
+<%=javascript_include_tag "effects" %>
 <link href="<%=url_for(:controller => 'stylesheets', :action => 'dark_ritual', :format => 'css', :width => @content_width)%>" media="screen" rel="stylesheet" type="text/css" />
 <%=stylesheet_link_tag 'dark_ritual_adaption', :media => 'screen' %>
 <title>Romerike Jujutsu Klubb</title>
@@ -53,13 +54,13 @@
 				<%#=link_to 'ned', :controller => :info, :action => :move_down, :id => page.id%>
 			</li>
 			<% end %>
-		</ul>
 
 		<% if not user? %>
    			<li><%=link_to 'Login', :controller => 'user', :action => :login %></li>
 		<% else %>
    			<li><%=link_to 'Logout', :controller => 'user', :action => :logout %></li>
 		<% end %>
+		</ul>
 
    			<% if admin? %>
 		<h1>Administrasjon</h1>
