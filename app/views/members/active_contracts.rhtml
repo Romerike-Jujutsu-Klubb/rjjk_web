@@ -16,19 +16,17 @@
 	<th>Instruktør</th>
 	<th>E-post</th>
 	<th>Mobil</th>
-	<th></th>
   </tr>
   
 <% for member in @members %>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td><%=h member.cms_contract_id %></td>
+    <td><%=link_to h(member.cms_contract_id), :action => 'edit', :id => member %></td>
     <td><%=h member.last_name %></td>
     <td><%=h member.first_name %></td>
 	<td><%=h yes_no(member.instructor) %></td>	
 	<td><%=h member.email %></td>
 	<td><%=h member.phone_mobile %></td>
 	<td><%=h member.gender %></td>	
-    <td><%= link_to 'Rediger', :action => 'edit', :id => member %></td>
   </tr>
 <% end %>
 </table>
