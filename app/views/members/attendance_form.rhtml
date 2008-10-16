@@ -4,7 +4,7 @@
 <% first_date = Date.new(@date.year, @date.month, 1) %>
 <% last_date = Date.new(@date.year, @date.month, -1) %>
 <% dates = (first_date..last_date).select{|d|weekdays.include? d.wday} %>
-<% birthdate_missing = @members.find{|m|m.birthdate.nil?} %>
+<% birthdate_missing = @members.empty? || @members.find{|m|m.birthdate.nil?} %>
 
 <table width="100%">
   <thead>
