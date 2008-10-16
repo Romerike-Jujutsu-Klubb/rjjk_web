@@ -53,7 +53,10 @@ h1,h2,h3 {color: #994;}
 /* misc */
 .clearer {clear: both;}
 .main_right .padded {padding: 6px 2px 6px 16px;}
-.main .padded {padding: 18px 24px;}
+.main .padded {
+	margin: 18px 24px;
+	background: #F7F7F7;
+}
 .meta {font-size: 0.8em; color: #666;}
 .left {float: left;}
 .right {float: right;}
@@ -61,10 +64,10 @@ h1,h2,h3 {color: #994;}
 /* structure */
 .container {
 	font-size: 1.2em;
-	background: url(/images/dark_ritual/bgcontainer.png) repeat-y;
+	background: url(/images/dark_ritual/bgcontainer_<%=@content_width%>.png) repeat-y;
 	margin: 0 auto;
 /*	width: 840px;*/
-	width: 900px;
+	width: <%=@content_width + 360%>px;
 	border: 12px solid #222;
 }
 
@@ -72,7 +75,7 @@ h1,h2,h3 {color: #994;}
 .header {
 	float: left;
 /*	width: 640px;*/
-	width: 700px;
+	width: <%=@content_width + 160%>px;
 	background: url(/images/dark_ritual/header.png) no-repeat;
 	font: normal 2.4em Verdana,sans-serif;
 	line-height: 150px;
@@ -88,7 +91,7 @@ h1,h2,h3 {color: #994;}
 	height: 50px;
 	text-align: center;
 /*	width: 639px;*/
-	width: 699px;
+	width: <%=@content_width + 159%>px;
 }
 .subnav {
 	float: left;
@@ -97,12 +100,15 @@ h1,h2,h3 {color: #994;}
 .main {
 	float: left;
 /*	width: 480px;*/
-	width: 540px;
+	width: <%=@content_width%>px;
+	height: 100%;
 }
 .main_right {
 	float: right;
 	width: 200px;
+	height: 100%;
 	color: #CCC;
+	background: #222222;
 }
 
 /* sub-navigation */

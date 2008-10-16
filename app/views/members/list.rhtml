@@ -15,10 +15,9 @@
 		ln = member.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') 
 %>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td><%=h fn %></td>
+    <td><%=link_to h(fn), :action => 'edit', :id => member %></td>
     <td><%=h ln %></td>
     <td><%=h(member.current_rank && member.current_rank.name) %></td>
-    <td><%= link_to 'Rediger', :action => 'edit', :id => member %></td>
   </tr>
 <% end %>
 </table>

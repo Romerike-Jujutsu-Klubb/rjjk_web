@@ -1,4 +1,6 @@
 class AttendancesController < ApplicationController
+  before_filter :admin_required
+
   # GET /attendances
   # GET /attendances.xml
   def index

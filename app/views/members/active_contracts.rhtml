@@ -1,13 +1,15 @@
+<% @content_width = 1024 %>
+
 <div style="float: right">
 	<%=button_to 'Importer data fra CMS', :action => 'import'%>
 </div>
 
-<h1>Aktive Kontrakter (<%=@members.size%>)</h1>
+<h2>Aktive Kontrakter (<%=@members.size%>)</h2>
 
 <%=render :partial => 'search_form'%>
 
 <table class="members" border="0" cellpadding="5" cellspacing="1">
-  <tr class="header">
+  <tr>
     <th><%= link_to 'CMS ID', sort_param('listing', :alias => 'cmd_id') %></th>
     <th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
     <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>

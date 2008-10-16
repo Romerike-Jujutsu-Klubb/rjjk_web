@@ -7,7 +7,8 @@
 <meta name="description" content="description"/>
 <meta name="keywords" content="keywords"/> 
 <meta name="author" content="author"/> 
-<%=stylesheet_link_tag 'dark_ritual', :media => 'screen' %>
+<%=javascript_include_tag "prototype" %>
+<link href="<%=url_for(:controller => 'stylesheets', :action => 'dark_ritual', :format => 'css', :width => @content_width)%>" media="screen" rel="stylesheet" type="text/css" />
 <%=stylesheet_link_tag 'dark_ritual_adaption', :media => 'screen' %>
 <title>Romerike Jujutsu Klubb</title>
 </head>
