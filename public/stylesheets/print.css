@@ -5,6 +5,9 @@ table {
 	border-color: black black black black;
 	border-collapse: collapse;
 }
+
+thead {display: table-header-group;}
+
 th {
 	border-width: thin thin thin thin;
 	padding: 1px 1px 1px 1px;
