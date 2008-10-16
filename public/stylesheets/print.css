@@ -1,0 +1,21 @@
+table {
+	border-width: thin thin thin thin;
+	border-spacing: 0px;
+	border-style: solid solid solid solid;
+	border-color: black black black black;
+	border-collapse: collapse;
+}
+th {
+	border-width: thin thin thin thin;
+	padding: 1px 1px 1px 1px;
+	border-style: solid solid solid solid;
+	border-color: gray gray gray gray;
+	-moz-border-radius: 0px 0px 0px 0px;
+}
+td {
+	border-width: thin thin thin thin;
+	padding: 1px 1px 1px 1px;
+	border-style: solid solid solid solid;
+	border-color: gray gray gray gray;
+	-moz-border-radius: 0px 0px 0px 0px;
+}
