@@ -1,10 +1,12 @@
-<h1>Avstemming med CMS</h1>
+<h2>Avstemming med CMS</h2>
 
-<br/>
+<% if @new_inactive_members.size == 0 && @new_cms_members.size == 0 %>
+Ingen avvik funnet mot CMS.
+<% end %>
 
-<h2>Nye medlemmer fra CMS (<%=@new_cms_members.size%>)</h2>
+<% if @new_cms_members.size > 0 %>
 
-<%=image_tag url_for(:action => :history_graph), :title => 'Historikk graf', :style => 'float: right' %>
+<h3>Nye medlemmer fra CMS (<%=@new_cms_members.size%>)</h3>
 
 <table class="members" border="0" cellpadding="5" cellspacing="1">
   <tr>
@@ -32,6 +34,9 @@
 
 <br/>
 
+<% end %>
+
+<% if @new_inactive_members.size > 0 %>
 
 <h2>Medlemmer utmeldt fra CMS (<%=@new_inactive_members.size%>)</h2>
 
@@ -58,3 +63,5 @@
   </tr>
 <% end %>
 </table>
+
+<% end %>
