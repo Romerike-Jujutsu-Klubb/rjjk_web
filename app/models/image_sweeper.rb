@@ -13,6 +13,7 @@ class ImageSweeper < ActionController::Caching::Sweeper
   
   def expire_image(image)
     expire_page(:controller => 'images', :action => 'show', :id => image.id, :format => image.format)
+    expire_page(:controller => 'images', :action => 'inline', :id => image.id, :format => image.format)
   end
   
 end

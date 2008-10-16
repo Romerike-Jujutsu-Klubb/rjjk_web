@@ -3,7 +3,7 @@
 <table>
 <% for image in @images.sort_by{|i|i.name.upcase} %>
   <tr>
-    <td<%=image_tag url_for(:only_path => false, :controller => 'images', :action => :show, :id => image.id, :format => image.format), :width => 160, :title => h(image.name), :alt => h(image.name) %></td>
+    <td<%=image_tag url_for(:only_path => false, :controller => 'images', :action => :inline, :id => image.id, :format => image.format), :width => 160, :title => h(image.name), :alt => h(image.name) %></td>
   </tr>
   <tr>
     <td align="center"><%=h image.name %></td>

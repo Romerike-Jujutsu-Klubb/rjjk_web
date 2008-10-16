@@ -1,5 +1,8 @@
+require 'rubygems'
+require 'RMagick'
+
 class ImagesController < ApplicationController
-  caches_page :show
+  caches_page :show, :inline
   cache_sweeper :image_sweeper, :only => [:update, :destroy]
   
   def index
@@ -18,6 +21,15 @@ class ImagesController < ApplicationController
   def show
     @image = Image.find(params[:id])
     send_data(@image.content_data,
+        :disposition => 'inline',
+        :type => @image.content_type,
+        :filename => @image.name)
+  end
+
+  def inline
+    @image = Image.find(params[:id])
+    image = Magick::Image.from_blob(@image.content_data).first
+    send_data(image.thumbnail(492.0 / image.columns).to_blob,
         :disposition => 'inline',
         :type => @image.content_type,
         :filename => @image.name)
