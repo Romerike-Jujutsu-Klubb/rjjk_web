@@ -7,16 +7,12 @@
 </div>
 
 <!--[form:information_page]-->
-<div style="float: left; margin-right: 1em;">
 <p><label for="information_page_title">Tittel</label><br/>
-<%= text_field 'information_page', 'title'  %></p>
-</div>
+<%=text_field 'information_page', 'title'  %></p>
 
 <% if @information_page.created_at %>
-<div style="float: left; margin-right: 1em;">
 <p><label for="information_page_created_at">Opprettet</label><br/>
 <%=h @information_page.created_at.strftime('%Y-%m-%d %H:%M') %></p>
-</div>
 <% end %>
 
 <% if @information_page.updated_at %>
@@ -25,7 +21,6 @@
 <% end %>
 
 <p><label for="information_page_body">Innhold</label><br/>
-<%= text_area 'information_page', 'body', :cols => 100, :rows => 36, :class => 'tiny_mce' %></p>
+<%=text_area 'information_page', 'body', :cols => 100, :rows => 36, :class => 'tiny_mce' %></p>
 
 <!--[eoform:information_page]-->
-
