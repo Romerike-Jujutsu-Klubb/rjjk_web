@@ -1,0 +1,106 @@
+<%  headers["Content-Type"] = "application/vnd.ms-excel"
+    headers["Content-Disposition"] = 'attachment; filename="export.xml"'
+-%>
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>Romerike Jujutsu Klubb</Author>
+  <Created><%=Time.now.iso8601%></Created>
+  <LastSaved><%=Time.now.iso8601%></LastSaved>
+  <Version>11.5606</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>9075</WindowHeight>
+  <WindowWidth>12390</WindowWidth>
+  <WindowTopX>90</WindowTopX>
+  <WindowTopY>45</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Top"/>
+  </Style>
+  <Style ss:ID="title">
+   <Font x:Family="Swiss" ss:Size="24" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="header">
+   <Font x:Family="Swiss" ss:Size="14" ss:Bold="1"/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="CMS Kontrakter">
+  <Table ss:ExpandedColumnCount="256" x:FullColumns="1"
+   x:FullRows="1">
+   <Column ss:AutoFitWidth="1" ss:Width="100"/>
+   <Column ss:AutoFitWidth="1" ss:Width="90"/>
+   <Column ss:AutoFitWidth="1" ss:Width="120"/>
+   <Column ss:AutoFitWidth="1" ss:Width="200"/>
+   <Column ss:AutoFitWidth="1" ss:Width="60"/>
+   <Column ss:AutoFitWidth="1" ss:Width="45"/>
+   <Column ss:AutoFitWidth="1" ss:Width="90"/>
+   <Column ss:AutoFitWidth="1" ss:Width="90"/>
+   <Row>
+    <Cell ss:StyleID="title" ss:MergeAcross="6"><Data ss:Type="String">CMS Kontrakter</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="6.5625">
+    <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data></Cell>
+   </Row>
+
+   <Row ss:AutoFitHeight="0" ss:Height="19.875">
+   <% %w{Fornavn Etternavn Adresse_1 Adresse_2 Postnr Fødselsdato Kjønn_(M/K) Høyde_(cm) E-post_1 E-post_2_(Faktura) Mobiltlf. Stilart Avdeling Parti Innmeldt Utmeldt Medl.status Medl.kategori Rab.%_(Kontr.type) Satsnr_(Kontr.type) NAIS-nr KID Foresatt/betaler}.each do |header| %>
+    <Cell ss:StyleID="header"><Data ss:Type="String"><%=header%></Data></Cell>
+   <% end %>
+   </Row>
+   
+<% for cms_member in @cms_members %>
+   <Row>
+    <Cell><Data ss:Type="String"><%=cms_member.first_name%></Data></Cell>
+    <Cell><Data ss:Type="String"><%=cms_member.last_name%></Data></Cell>
+    <Cell><Data ss:Type="String"><%=cms_member.address%></Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String"><%=cms_member.postal_code%></Data></Cell>
+    <Cell><Data ss:Type="String"><%=cms_member.birthdate%></Data></Cell>
+    <Cell><Data ss:Type="String"><%=cms_member.male ? 'M' : 'K'%></Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String"><%=cms_member.email%></Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+   </Row>
+
+  <% end %>
+
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Layout x:Orientation="Landscape"/>
+   </PageSetup>
+   <FitToPage/>
+   <Print>
+    <ValidPrinterInfo/>
+    <PaperSizeIndex>9</PaperSizeIndex>
+    <Scale>97</Scale>
+    <HorizontalResolution>600</HorizontalResolution>
+    <VerticalResolution>600</VerticalResolution>
+   </Print>
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>3</ActiveRow>
+     <ActiveCol>1</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

@@ -189,10 +189,6 @@ class MembersController < ApplicationController
               :filename => "Epostliste.csv")
   end
   
-  def active_contracts
-    @members = CmsMember.find_active
-  end
-  
   def income
     @members = CmsMember.find_active  
   end

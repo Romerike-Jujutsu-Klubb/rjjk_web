@@ -1,7 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
+  map.connect ':controller/active_contracts', :action => 'active_contracts'
+  map.connect ':controller/excel_export', :action => 'excel_export'
   map.connect ':controller/create', :action => 'create'
   map.connect ':controller/destroy', :action => 'destroy'
 
+  map.resources :cms_members
   map.resources :attendances
   map.resources :events
   map.resources :group_schedules
