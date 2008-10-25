@@ -12,10 +12,6 @@ class MembersController < ApplicationController
   #    :field => 'last_name', 
   #    :alias => 'etternavn') 
   
-  def import
-    @new_members, @updated_members = CmsImport.import
-  end
-  
   def search
     @title = "Søk i medlemsregisteret"
     if params[:q]

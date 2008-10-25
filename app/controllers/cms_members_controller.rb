@@ -92,4 +92,8 @@ class CmsMembersController < ApplicationController
     render :layout => false
   end
   
+  def import
+    @new_members, @updated_members = CmsImport.import
+  end
+  
 end
