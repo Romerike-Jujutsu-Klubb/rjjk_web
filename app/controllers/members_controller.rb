@@ -57,6 +57,11 @@ class MembersController < ApplicationController
     @member_count = Member.count
   end
   
+  def excel_export
+    @members = Member.find(:all)
+    render :layout => false
+  end
+  
   def attendance_form_index
     @groups = []
     MartialArt.find(:all, :order => :family).each do |ma| 
