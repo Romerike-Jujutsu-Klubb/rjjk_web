@@ -1,6 +1,6 @@
 <h2>Avstemming med CMS</h2>
 
-<% if @new_inactive_members.size == 0 && @new_cms_members.size == 0 %>
+<% if @new_inactive_members.size == 0 && @new_cms_members.size == 0 && @members_not_in_cms.size == 0 %>
 Ingen avvik funnet mot CMS.
 <% end %>
 
@@ -57,6 +57,35 @@ Ingen avvik funnet mot CMS.
   <tr class="<%= cycle('odd', 'even') %>">
     <td><%=link_to 'Meld ut', {:controller => :members, :action => :update, :id => member.id, :member => {:left_on => member.left_on.strftime('%Y-%m-%d')}}, :method => :post %></td>
     <td><%=member.cms_contract_id %></td>
+    <td><%=h fn %></td>
+    <td><%=h ln %></td>
+    <td><%=member.birthdate %></td>
+  </tr>
+<% end %>
+</table>
+
+<% end %>
+
+
+<% if @members_not_in_cms.size > 0 %>
+<br/>
+<br/>
+
+<h2>Medlemmer ikke i CMS (<%=@members_not_in_cms.size%>)</h2>
+
+<table class="members" border="0" cellpadding="5" cellspacing="1">
+  <tr>
+    <th align="left">Fornavn</th>
+    <th align="left">Etternavn</th>
+    <th align="left">Fødselsdato</th>
+  </tr>
+  
+<%
+	for member in @members_not_in_cms
+		fn = member.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
+		ln = member.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') 
+%>
+  <tr class="<%= cycle('odd', 'even') %>">
     <td><%=h fn %></td>
     <td><%=h ln %></td>
     <td><%=member.birthdate %></td>
