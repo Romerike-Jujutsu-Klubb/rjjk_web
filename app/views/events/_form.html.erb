@@ -1,5 +1,10 @@
 <%=render :partial => '/tiny_mce' %>
 
+<%=javascript_include_tag "CalendarPopup" %>
+<script language="JavaScript">
+var cal = new CalendarPopup();
+</script>
+
 <% form_for(@event) do |f| %>
   <%= f.error_messages %>
 
@@ -7,13 +12,15 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </p>
-  <p>
+  <p style="float: left; margin-right: 1em">
     <%= f.label :start_tidspunkt %><br />
-    <%= f.datetime_select :start_at %>
+    <%= f.text_field :start_at, :size => 10 %>
+	<a href="#" onclick="cal.select(document.forms[0].event_start_at,'anchor1','yyyy-MM-dd'); return false;" name="anchor1" id="anchor1">Velg</a>
   </p>
   <p>
     <%= f.label :slutt_tidspunkt %><br />
-    <%= f.datetime_select :end_at %>
+    <%= f.text_field :end_at, :size => 10 %>
+	<a href="#" onclick="cal.select(document.forms[0].event_end_at,'end_at_anchor','yyyy-MM-dd', (document.forms[0].event_end_at.value=='') ? document.forms[0].event_start_at.value:null); return false;" name="end_at_anchor" id="end_at_anchor">Velg</a>
   </p>
   <p>
     <%= f.label :beskrivelse %><br />
