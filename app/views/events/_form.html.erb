@@ -14,12 +14,12 @@ var cal = new CalendarPopup();
   </p>
   <p style="float: left; margin-right: 1em">
     <%= f.label :start_tidspunkt %><br />
-    <%= f.text_field :start_at, :size => 10 %>
+    <%= f.text_field :start_at, :value => @event.start_at.strftime('%Y-%m-%d'), :size => 12 %>
 	<a href="#" onclick="cal.select(document.forms[0].event_start_at,'anchor1','yyyy-MM-dd'); return false;" name="anchor1" id="anchor1">Velg</a>
   </p>
   <p>
     <%= f.label :slutt_tidspunkt %><br />
-    <%= f.text_field :end_at, :size => 10 %>
+    <%= f.text_field :end_at, :value => @event.end_at.strftime('%Y-%m-%d'), :size => 12 %>
 	<a href="#" onclick="cal.select(document.forms[0].event_end_at,'end_at_anchor','yyyy-MM-dd', (document.forms[0].event_end_at.value=='') ? document.forms[0].event_start_at.value:null); return false;" name="end_at_anchor" id="end_at_anchor">Velg</a>
   </p>
   <p>

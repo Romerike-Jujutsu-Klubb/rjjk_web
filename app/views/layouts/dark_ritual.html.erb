@@ -34,7 +34,9 @@
 			<% end %>
 
    			<% if admin? %>
-            	<%=link_to 'Ny hendelse', :controller => 'events', :action => 'new' %>
+				<ul class="controls">
+            		<li><%=link_to 'Ny hendelse', {:controller => 'events', :action => 'new'}, :class => :edit %></li>
+				</ul>
    			<% end %>
 		</div>
 
