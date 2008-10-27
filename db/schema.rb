@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081012193524) do
+ActiveRecord::Schema.define(:version => 20081027220110) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20081012193524) do
     t.string   "billing_phone_mobile", :limit => 32
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "kid",                  :limit => 64
   end
 
   create_table "events", :force => true do |t|

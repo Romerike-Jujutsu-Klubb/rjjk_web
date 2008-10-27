@@ -152,5 +152,9 @@ class Member < ActiveRecord::Base
     def image_format
       image_name.split('.').last
     end
+   
+    def cms_member
+      CmsMember.find_by_cms_contract_id(cms_contract_id)
+    end
     
   end

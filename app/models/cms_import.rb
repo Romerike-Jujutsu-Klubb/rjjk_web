@@ -94,6 +94,7 @@ class CmsImport
         :payment_problem => false,
 #        :comment => reports[1][index][4],
         :nkf_fee => detail_fields[106] == 'J',
+        :kid => detail_fields[88],
       }
       changes = new_values.clone.delete_if {|k, v| v.to_s == old_values[k.to_s].to_s}
       if changes.size > 0
