@@ -60,15 +60,17 @@
     <Cell ss:StyleID="header"><Data ss:Type="String">Familie</Data></Cell>
    </Row>
    
-<% for member in @members %>
+<% for member in @members -%>
    <Row>
    	<% columns.each do |column| -%>
-    <Cell><Data ss:Type="String"><%=column.name == 'male' ? (member.male ? 'M' : 'K') : member.send(column.name.to_sym)%></Data></Cell>
+	<% value = member.send(column.name.to_sym) -%>
+    <Cell><Data ss:Type="<%=value.is_a?(Date) ? 'Date' : 'String'%>"><%=column.name == 'male' ? (member.male ? 'M' : 'K') : value%></Data></Cell>
 	<% end -%>
     <Cell><Data ss:Type="String"><%=h member.groups[0] && member.groups[0].martial_art.name%></Data></Cell>
     <Cell><Data ss:Type="String"><%=h member.groups[0] && member.groups[0].martial_art.family%></Data></Cell>
+    <Cell><Data ss:Type="Numeric"><%=member.groups[0] && member.groups[0].id%></Data></Cell>
    </Row>
-<% end %>
+<% end -%>
 
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
