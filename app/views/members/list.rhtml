@@ -1,4 +1,4 @@
-<h1>Medlemsliste (<%=@member_count%>)</h1>
+<h1>Medlemsliste (<%=@member_count%>) (<%=link_to 'Excel', :action => :excel_export%>)</h1>
 
 <%=image_tag url_for(:action => :history_graph), :title => 'Historikk graf', :style => 'float: right' %>
 

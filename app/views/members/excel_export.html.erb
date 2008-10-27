@@ -1,7 +1,7 @@
 <%  headers["Content-Type"] = "application/vnd.ms-excel"
-    headers["Content-Disposition"] = 'attachment; filename="export.xml"'
+    headers["Content-Disposition"] = 'attachment; filename="members.xml"'
 -%>
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <?mso-application progid="Excel.Sheet"?>
 <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
  xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -45,26 +45,26 @@
    <Column ss:AutoFitWidth="1" ss:Width="90"/>
    <Column ss:AutoFitWidth="1" ss:Width="90"/>
    <Row>
-    <Cell ss:StyleID="title" ss:MergeAcross="6"><Data ss:Type="String">CMS Kontrakter</Data></Cell>
+    <Cell ss:StyleID="title" ss:MergeAcross="6"><Data ss:Type="String">Medlemmer <%=Date.today%></Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="6.5625">
     <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data></Cell>
    </Row>
 
    <Row ss:AutoFitHeight="0" ss:Height="19.875">
-   <% %w{Fornavn Etternavn Adresse_1 Adresse_2 Postnr Fødselsdato Kjønn_(M/K) Høyde_(cm) E-post_1 E-post_2_(Faktura) Mobiltlf. Stilart Avdeling Parti Innmeldt Utmeldt Medl.status Medl.kategori Rab.%_(Kontr.type) Satsnr_(Kontr.type) NAIS-nr KID Foresatt/betaler}.each do |header| %>
-    <Cell ss:StyleID="header"><Data ss:Type="String"><%=header%></Data></Cell>
+   <% columns = Member.columns.select{|c| c.name !~ /^image/} %>
+   <% columns.each do |column| %>
+    <Cell ss:StyleID="header"><Data ss:Type="String"><%=column.name%></Data></Cell>
    <% end %>
    </Row>
    
 <% for member in @members %>
    <Row>
-   	<% Member.columns.each do |column| %>
-    <Cell><Data ss:Type="String"><%=member.send(column.name)%></Data></Cell>
-	<% end %>
+   	<% columns.each do |column| -%>
+    <Cell><Data ss:Type="String"><%=column.name == 'male' ? (member.male ? 'M' : 'K') : member.send(column.name.to_sym)%></Data></Cell>
+	<% end -%>
    </Row>
-
-  <% end %>
+<% end %>
 
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">

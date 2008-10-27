@@ -58,7 +58,7 @@ class MembersController < ApplicationController
   end
   
   def excel_export
-    @members = Member.find(:all)
+    @members = Member.find_active
     render :layout => false
   end
   
