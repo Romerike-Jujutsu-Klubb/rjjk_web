@@ -30,7 +30,7 @@
 <% dates.each do |d| %>
 	<% if @group %>
 	<% group_schedule = @group.group_schedules.to_a.find{|gs| gs.weekday == d.wday}%>
-	<% attendance = member.attendances.select{|a| a.date == d}.first %>
+	<% attendance = member.attendances.select{|a| a.group_schedule == group_schedule && a.date == d}.first %>
 	<% if attendance %>
     <td id="attendance_<%=member.id%>_<%=d.day%>" align="center" onclick="<%= remote_function(:update => "attendance_#{member.id}_#{d.day}",
       :url => { :controller => :attendances, :action => :destroy, :id => attendance.id }) %>"><%=image_tag 'accept.png'%></td>
