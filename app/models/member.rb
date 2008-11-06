@@ -63,8 +63,7 @@ class Member < ActiveRecord::Base
     end
   end
   
-  def self.history_graph
-    size = 480
+  def self.history_graph(size = 480)
     begin
       require 'gruff'
     rescue MissingSourceFile => e
@@ -79,8 +78,8 @@ class Member < ActiveRecord::Base
     g.hide_dots = true
     g.colors = %w{green blue orange red}
     
-    first_date = find(:first, :order => 'joined_on').joined_on
-    #first_date = Date.today - (8 * 12 * 30)
+    #first_date = find(:first, :order => 'joined_on').joined_on
+    first_date = 5.years.ago.to_date
     dates = []
     Date.today.step(first_date, -14) {|date| dates << date}
     dates.reverse!
@@ -104,7 +103,8 @@ class Member < ActiveRecord::Base
       
       # g.draw_vertical_legend
       
-      g.maximum_value = (g.maximum_value.to_s[0..0].to_i + 1) * (10**Math::log10(g.maximum_value.to_i).to_i) if g.maximum_value > 0
+      precision = 1
+      g.maximum_value = (g.maximum_value.to_s[0..precision].to_i + 1) * (10**(Math::log10(g.maximum_value.to_i).to_i - precision)) if g.maximum_value > 0
       g.marker_count = g.maximum_value / 10
       g.to_blob
     end

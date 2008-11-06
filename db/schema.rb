@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081027220110) do
+ActiveRecord::Schema.define(:version => 20081106172825) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(:version => 20081027220110) do
     t.binary  "image"
     t.string  "image_name",           :limit => 64
     t.string  "image_content_type",   :limit => 32
+    t.string  "kid",                  :limit => 64
   end
 
   create_table "news_items", :force => true do |t|

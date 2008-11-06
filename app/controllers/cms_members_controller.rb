@@ -1,4 +1,6 @@
 class CmsMembersController < ApplicationController
+  before_filter :admin_required
+
   # GET /cms_members
   # GET /cms_members.xml
   def index

@@ -25,6 +25,10 @@
 		<div class="padded">
 			<%=image_tag 'rjjk_logo_&_txt_320.png', :style => 'width: 100%; border: 0' %>
 
+			<% if admin? %>
+			<%=link_to image_tag(url_for(:controller => :members, :action => :history_graph, :size => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :members, :action => :history_graph, :size => 1024 %>
+			<% end %>
+
 			<% for event in @events %>
 				<h1><%=event.name%></h1>
 				<%=event.start_at.strftime('%Y-%m-%d')%>
@@ -79,6 +83,7 @@
 		<h1>Medlemsreg.</h1>
 		<ul>
 			<li><%=menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
+			<li><%=menu_item 'Oppmøtelister', :controller => 'members', :action => :attendance_form_index %></li>
 			<li><%=menu_item 'Inntekt', :controller => 'members', :action => :income %></li>
 			<li><%=menu_item 'CMS-Kontrakter', :controller => 'cms_members', :action => :active_contracts %></li>
 			<li><%=menu_item 'CMS Avstemming', :controller => 'members', :action => :cms_comparison %></li>
@@ -92,7 +97,6 @@
 			<li><%=menu_item 'Grader', :controller => 'ranks' %></li>
 			<li><%=menu_item 'Grupper', :controller => 'groups' %></li>
 			<li><%=menu_item 'Treninger', :controller => 'group_schedules' %></li>
-			<li><%=menu_item 'Oppmøtelister', :controller => 'members', :action => :attendance_form_index %></li>
 		</ul>
 		<% end %>
 

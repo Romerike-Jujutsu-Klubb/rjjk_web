@@ -62,7 +62,7 @@ class CmsImport
       member = CmsMember.find_by_cms_contract_id(cms_contract_id)
       member = CmsMember.new(:instructor => false) if member.nil?
       old_values = member.attributes
-      new_contract_birthdate = (detail_fields[38].empty? || detail_fields[38] == '--' ? nil : Date.strptime(detail_fields[38], '%d%m%y'))
+      new_contract_birthdate = (detail_fields[38].empty? || detail_fields[38] == '--' ? nil : Date.strptime(detail_fields[38], detail_fields[38].size == 6 ? '%d%m%y' : '%d%m%Y'))
       phone_pattern = '(?:\d| )+'
       debitor_contact_pattern = /(.*?)<br \/>Att: <br \/>(.*?)<br \/>(\d*?) (.*?)/
       contract_contact_pattern = /(.*?)<br \/>(.*?)<br \/>(.*?) .*?<br \/>/

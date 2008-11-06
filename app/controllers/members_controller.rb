@@ -42,7 +42,11 @@ class MembersController < ApplicationController
   end
   
   def history_graph
+    if params[:size] && params[:size].to_i <= 1280
+    g = Member.history_graph params[:size].to_i
+    else
     g = Member.history_graph
+    end
     send_data(g, :disposition => 'inline', :type => 'image/png', :filename => "RJJK_Medlemshistorikk.png")
   end
   
