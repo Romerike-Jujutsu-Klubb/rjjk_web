@@ -49,7 +49,7 @@ input.half {width: 7.5em;}
 
 <p><label for="member_birthdate">Fødselsdato (format yyyy-mm-dd)</label><br/>
 <%=text_field 'member', 'birthdate', :class => :half %>
-<%=((Date.today - @member.birthdate.to_date) / 365).to_i %> år
+<%="#{((Date.today - @member.birthdate.to_date) / 365).to_i} år" if @member.birthdate %>
 </p>
 
 <p><label for="member_male">Kjønn</label><br/>
