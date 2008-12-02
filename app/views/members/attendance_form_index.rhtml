@@ -1,15 +1,25 @@
 <h1>Oppmøtelister</h1>
 
-<ul>
+<table>
 <% for group in @groups %>
-    <li>
+    <tr>
+    	<td>
     	<%="#{h group.martial_art.name} #{h group.name}"%>
-    	<%=link_to "#{Date::MONTHNAMES[Date.today.mon]}", :action => :attendance_form, :group_id => group.id%>
-    	<%=link_to "#{Date::MONTHNAMES[Date.today.month > 1 ? Date.today.mon - 1 : 12]}", :action => :attendance_form, :group_id => group.id, :date => Date.new(Date.today.month > 1 ? Date.today.year : Date.today.year - 1, Date.today.month > 1 ? Date.today.month - 1 : 12).strftime('%Y-%m')%>
-    	<%=link_to "#{Date::MONTHNAMES[Date.today.month < 12 ? Date.today.mon + 1 : 1]}", :action => :attendance_form, :group_id => group.id, :date => Date.new(Date.today.month < 12 ? Date.today.year : Date.today.year + 1, Date.today.month < 12 ? Date.today.month + 1 : 1).strftime('%Y-%m')%>
-    </li>
+		</td>
+		<td>
+    	<%=link_to l(Date::MONTHNAMES[Date.today.month > 1 ? Date.today.mon - 1 : 12]), :action => :attendance_form, :group_id => group.id, :date => Date.new(Date.today.month > 1 ? Date.today.year : Date.today.year - 1, Date.today.month > 1 ? Date.today.month - 1 : 12).strftime('%Y-%m')%>
+		</td>
+		<td>
+    	<%=link_to l(Date::MONTHNAMES[Date.today.mon]), :action => :attendance_form, :group_id => group.id%>
+		</td>
+		<td>
+    	<%=link_to l(Date::MONTHNAMES[Date.today.month < 12 ? Date.today.mon + 1 : 1]), :action => :attendance_form, :group_id => group.id, :date => Date.new(Date.today.month < 12 ? Date.today.year : Date.today.year + 1, Date.today.month < 12 ? Date.today.month + 1 : 1).strftime('%Y-%m')%>
+		</td>
+    </tr>
 <% end %>
-    <li>
+    <tr>
+    	<td>
     	<%=link_to "Andre", :action => :attendance_form, :group_id => 'others' %>
-	</li>
-</ul>
+		</td>
+	</tr>
+</table>

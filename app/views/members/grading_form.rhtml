@@ -23,9 +23,9 @@
     <td><%=image_tag(url_for(:action => :image_thumbnail, :id => member.id), :width => '80px') if member.image %></td>
     <td nowrap="true" onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'"><%=h member.first_name %><br/>
 	<%=h member.last_name %><br/>
-    <%=h @group && member.current_rank(@group.martial_art) && member.current_rank(@group.martial_art).name %>&nbsp;<br/>
-    F: <%=h member.birthdate %>&nbsp;<br/>
-    G: <%=h member.graduates.last && member.graduates.last.graduation.held_on %>&nbsp;<br/>
+    <%=member.birthdate && "#{member.age} år" %>&nbsp;<br/>
+    <%=@group && member.current_rank(@group.martial_art) && member.current_rank(@group.martial_art).name || 'Ugradert' %> siden<br/>
+    <%=member.graduates.last && member.graduates.last.graduation.held_on || member.joined_on %>&nbsp;<br/>
     Treninger: <%=member.attendances.count%></td>
 	<td width="45%" style="height: 10em">&nbsp;</td>
 	<td width="45%" style="height: 10em">&nbsp;</td>

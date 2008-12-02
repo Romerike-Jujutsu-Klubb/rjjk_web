@@ -1,4 +1,4 @@
-<h1 style="font-family:Arial, Helvetica, sans-serif">Oppmøteliste <%=@group && @group.martial_art.name%> <%=@group && @group.name%> <%=h Date::MONTHNAMES[@date.mon] %></h1>
+<h1 style="font-family:Arial, Helvetica, sans-serif">Oppmøteliste <%=@group && @group.martial_art.name%> <%=@group && @group.name%> <%=l Date::MONTHNAMES[@date.mon] %></h1>
 
 <% weekdays = @group && @group.group_schedules.map{|gs| gs.weekday} || [2,4] %>
 <% first_date = Date.new(@date.year, @date.month, 1) %>

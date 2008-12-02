@@ -10,6 +10,9 @@ active_record_errors_wrong_length: is the wrong length (should be %d characters)
 active_record_errors_taken: has already been taken
 active_record_errors_not_a_number: is not a number
 
+December: December
+January: January
+
 # Controller
 user_login_succeeded: Login successful
 user_login_failed: Login unsuccessful
