@@ -70,7 +70,7 @@ input.half {width: 7.5em;}
 <% if @member.left_on %>
 <%= date_select 'member', 'left_on'  %></p>
 <% else %>
-Fremdeles aktiv.
+Fremdeles aktiv. <%=link_to 'Meld ut', {:action => :update, :id => @member.id, :member => {:left_on => Date.today}}, :method => :post %>
 <% end %>
 
 <p><label for="member_parent_name">Foresattes navn</label><br/>
