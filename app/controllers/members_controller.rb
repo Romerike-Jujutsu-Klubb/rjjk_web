@@ -216,6 +216,30 @@ class MembersController < ApplicationController
     @members_not_in_cms = @members.select{|m| @cms_members.find{|cmsm| cmsm.cms_contract_id == m.cms_contract_id}.nil?}
   end
 
+  def grading_form_index
+    @groups = []
+    MartialArt.find(:all, :order => :family).each do |ma| 
+      ma.groups.each do |group|
+        @groups << group
+      end
+    end
+  end
+  
+  def grading_form
+    if params[:group_id]
+      if params[:group_id] == 'others'
+        @members = Member.find(:all, :conditions => 'id NOT in (SELECT DISTINCT member_id FROM groups_members) AND left_on IS NULL')
+      else
+        @group = Group.find(params[:group_id])
+        @members = @group.members
+        @members = @members.sort_by {|m| [m.current_rank(@group.martial_art) ? -m.current_rank(@group.martial_art).position : 99, m.first_name, m.last_name]}
+      end
+    else
+      @members = []
+    end
+    render :layout => 'print'
+  end
+  
   private
   
   def year_end(offset=0)

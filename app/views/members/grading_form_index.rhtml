@@ -1,0 +1,12 @@
+<h1>Graderingsskjema</h1>
+
+<ul>
+<% for group in @groups %>
+    <li>
+    	<%=link_to "#{h group.martial_art.name} #{h group.name}", :action => :grading_form, :group_id => group.id %>
+    </li>
+<% end %>
+    <li>
+    	<%=link_to "Andre", :action => :grading_form, :group_id => 'others' %>
+	</li>
+</ul>

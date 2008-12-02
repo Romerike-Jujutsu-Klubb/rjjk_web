@@ -7,10 +7,12 @@
 <meta name="description" content="description"/>
 <meta name="keywords" content="keywords"/> 
 <meta name="author" content="author"/> 
+<%=javascript_include_tag :defaults %>
 <%=javascript_include_tag "prototype" %>
 <%=javascript_include_tag "effects" %>
 <link href="<%=url_for(:controller => 'stylesheets', :action => 'dark_ritual', :format => 'css', :width => @content_width)%>" media="screen" rel="stylesheet" type="text/css" />
 <%=stylesheet_link_tag 'dark_ritual_adaption', :media => 'screen' %>
+<%=stylesheet_link_tag 'lightwindow' %>
 <title>Romerike Jujutsu Klubb</title>
 </head>
 
@@ -97,6 +99,7 @@
 			<li><%=menu_item 'Grader', :controller => 'ranks' %></li>
 			<li><%=menu_item 'Grupper', :controller => 'groups' %></li>
 			<li><%=menu_item 'Treninger', :controller => 'group_schedules' %></li>
+			<li><%=menu_item 'Graderingsoversikt', :controller => 'members', :action => :grading_form_index %></li>
 		</ul>
 		<% end %>
 
