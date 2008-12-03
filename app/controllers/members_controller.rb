@@ -101,11 +101,10 @@ class MembersController < ApplicationController
   
   def create
     @member = Member.new(params[:member])
-    @member.martial_arts = MartialArt.find(params[:martial_art_ids]) if params[:martial_art_ids]
-    @member.groups = Group.find(params[:group_ids]) if params[:group_ids]
+    update_memberships
     if @member.save
       flash[:notice] = 'Medlem opprettet.'
-      redirect_to :action => 'list'
+      redirect_to :action => :edit, :id => @member.id
     else
       new
       render :action => 'new'
@@ -134,12 +133,7 @@ class MembersController < ApplicationController
   
   def update
     @member = Member.find(params[:id])
-    @member.martial_arts = MartialArt.find(params[:martial_art_ids]) if params[:martial_art_ids]
-    if params[:member_group_ids]
-      @member.groups = Group.find(params[:member_group_ids].keys)
-    else
-      @member.groups = []
-    end
+    update_memberships
     if @member.update_attributes(params[:member])
       flash[:notice] = 'Medlemmet oppdatert.'
       redirect_to :action => :edit, :id => @member
@@ -257,4 +251,14 @@ class MembersController < ApplicationController
   def find_incomplete
     @incomplete_members = Member.find_active.select {|m| m.birthdate.nil?}
   end
+  
+  def update_memberships
+    @member.martial_arts = MartialArt.find(params[:martial_art_ids]) if params[:martial_art_ids]
+    if params[:member_group_ids]
+      @member.groups = Group.find(params[:member_group_ids].keys)
+    else
+      @member.groups = []
+    end
+  end
+
 end
