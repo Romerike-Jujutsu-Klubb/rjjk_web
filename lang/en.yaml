@@ -12,6 +12,7 @@ active_record_errors_not_a_number: is not a number
 
 December: December
 January: January
+October: October
 
 # Controller
 user_login_succeeded: Login successful
