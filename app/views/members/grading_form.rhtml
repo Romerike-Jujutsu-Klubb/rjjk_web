@@ -20,7 +20,7 @@
   <tbody>
 <% for member in @members %>
   <tr class="<%=cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
-    <td><%=image_tag(url_for(:action => :image_thumbnail, :id => member.id), :width => '80px') if member.image %></td>
+    <td><%=image_tag(url_for(:action => :image_thumbnail, :id => member.id, :format => member.image_format), :width => '80px') if member.image %></td>
     <td nowrap="true" onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'"><%=h member.first_name %><br/>
 	<%=h member.last_name %><br/>
     <%=member.birthdate && "#{member.age} år" %>&nbsp;<br/>

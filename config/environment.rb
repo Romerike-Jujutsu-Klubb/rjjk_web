@@ -53,7 +53,11 @@ end
 # end
 
 # Include your application configuration below
+
+require 'rubygems'
+
 require 'localization'
 Localization::load_localized_strings
 require 'environments/user_environment'
 require 'csv'
+require 'RMagick'

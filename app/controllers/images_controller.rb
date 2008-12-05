@@ -1,6 +1,3 @@
-require 'rubygems'
-require 'RMagick'
-
 class ImagesController < ApplicationController
   caches_page :show, :inline
   cache_sweeper :image_sweeper, :only => [:update, :destroy]

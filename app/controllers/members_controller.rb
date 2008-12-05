@@ -3,6 +3,9 @@ class MembersController < ApplicationController
   before_filter :admin_required
   before_filter :find_incomplete
   
+  caches_page :image_thumbnail
+  cache_sweeper :member_image_sweeper, :only => [:update, :destroy]
+
   #  add_to_sortable_columns('listing', 
   #    :model => Member, 
   #    :field => 'first_name', 
@@ -194,10 +197,16 @@ class MembersController < ApplicationController
   
   def image_thumbnail
     @member = Member.find(params[:id])
-    send_data(@member.image,
+    if @member.image
+    image = Magick::Image.from_blob(@member.image).first
+    thumbnail = image.thumbnail(160.0 / image.rows).to_blob
+    send_data(thumbnail,
         :disposition => 'inline',
         :type => @member.image_content_type,
         :filename => @member.image_name)
+    else
+      render :text => 'Bilde mangler'
+    end
   end
 
   def cms_comparison
