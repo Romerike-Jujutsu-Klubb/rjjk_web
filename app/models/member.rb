@@ -35,12 +35,29 @@ class Member < ActiveRecord::Base
   def self.count_active
     count :conditions => ACTIVE_CONDITIONS 
   end
-  
-  def current_rank(martial_art = nil)
-    @graduate = graduates.select{|g|martial_art.nil? || g.rank.martial_art == martial_art}.sort_by {|g| g.graduation.held_on}.last
-    @graduate && @graduate.rank
+
+  def current_graduate(martial_art)
+    graduates.select{|g|martial_art.nil? || g.rank.martial_art == martial_art}.sort_by {|g| g.graduation.held_on}.last
   end
   
+  def current_rank(martial_art = nil)
+    graduate = self.current_graduate(martial_art)
+    graduate && graduate.rank
+  end
+  
+  def current_rank_date(martial_art = nil)
+    graduate = self.current_graduate(martial_art)
+    graduate && graduate.graduation.held_on || joined_on
+  end
+
+  def current_rank_age(martial_art = nil)
+    date = current_rank_date
+    days = (Date.today - date).to_i
+    years = (Date.today - date).to_i / 365
+    months = (days - (years * 365)) / 30
+    "#{"#{years} år" if years > 0} #{"#{months} mnd" if years == 0 || months > 0}" # TODO: What about leap years etc?
+  end
+    
   def fee
     if instructor?
       0

@@ -5,6 +5,7 @@
 </style>
 
 <table style="page-break-inside: avoid" width="100%">
+<!--
   <thead>
   <tr>
     <th></th>
@@ -17,18 +18,20 @@
     <th>Kan bli bedre</th>
   </tr>
   </thead>
+-->
   <tbody>
-<% for member in @members %>
-  <tr class="<%=cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
-    <td><%=image_tag(url_for(:action => :image_thumbnail, :id => member.id, :format => member.image_format), :width => '80px') if member.image %></td>
-    <td nowrap="true" onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'"><%=h member.first_name %><br/>
+<% per_page = 8 %>
+<%@members.each_with_index do |member, i| %>
+  <tr <%='style="page-break-before: always"' if i % per_page == (per_page - 1)%> onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';" onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'">
+    <td><%=image_tag(url_for(:action => :image_thumbnail, :id => member.id, :format => member.image_format), :width => '120px') if member.image %></td>
+    <td nowrap="true"><%=h member.first_name %><br/>
 	<%=h member.last_name %><br/>
     <%=member.birthdate && "#{member.age} år" %>&nbsp;<br/>
-    <%=@group && member.current_rank(@group.martial_art) && member.current_rank(@group.martial_art).name || 'Ugradert' %> siden<br/>
-    <%=member.graduates.last && member.graduates.last.graduation.held_on || member.joined_on %>&nbsp;<br/>
+    <%=@group && member.current_rank(@group.martial_art) && member.current_rank(@group.martial_art).name || 'Ugradert' %> i
+    <%=member.current_rank_age%>&nbsp;<br/>
     Treninger: <%=member.attendances.count%></td>
-	<td width="45%" style="height: 10em">&nbsp;</td>
-	<td width="45%" style="height: 10em">&nbsp;</td>
+	<td width="45%" style="height: 8em">&nbsp;</td>
+	<td width="45%" style="height: 8em">&nbsp;</td>
   </tr>
 <% end %>
 
