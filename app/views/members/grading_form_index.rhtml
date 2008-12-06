@@ -1,12 +1,29 @@
 <h1>Graderingsskjema</h1>
 
-<ul>
+<style type="text/css">
+	td { padding-right: 1em }
+</style>
+
+<table>
 <% for group in @groups %>
-    <li>
-    	<%=link_to "#{h group.martial_art.name} #{h group.name}", :action => :grading_form, :group_id => group.id %>
-    </li>
+    <tr>
+    	<td>
+    		<%="#{h group.martial_art.name} #{h group.name}" %>
+		</td>
+		<td>
+    		<%=link_to "Alle", :action => :grading_form, :group_id => group.id %>
+		</td>
+		<td>
+   			<%=link_to "Nybegynnere", :action => :grading_form, :group_id => group.id, :rank_ids => @ranks[group][:beginners] %>
+		</td>
+		<td>
+   			<%=link_to "Videregående", :action => :grading_form, :group_id => group.id, :rank_ids => @ranks[group][:advanced] %>
+		</td>
+    </tr>
 <% end %>
-    <li>
-    	<%=link_to "Andre", :action => :grading_form, :group_id => 'others' %>
-	</li>
-</ul>
+    <tr>
+    	<td>
+    		<%=link_to "Andre", :action => :grading_form, :group_id => 'others' %>
+		</td>
+	</tr>
+</table>

@@ -1,4 +1,5 @@
 <h1 style="font-family:Arial, Helvetica, sans-serif">Gradringsskjema <%=@group && @group.martial_art.name%> <%=@group && @group.name%></h1>
+<h2><%=@members.map{|m| m.current_rank(@group.martial_art) ? m.current_rank(@group.martial_art).name : 'Ugraderte'}.uniq.join(' + ')%> (<%=@members.size%> stk)</h2>
 
 <style type="text/css">
 	table {page-break-inside: avoid;}

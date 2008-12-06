@@ -199,7 +199,7 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id])
     if @member.image
     image = Magick::Image.from_blob(@member.image).first
-    thumbnail = image.thumbnail(160.0 / image.rows).to_blob
+    thumbnail = image.crop_resized(120, 160).to_blob
     send_data(thumbnail,
         :disposition => 'inline',
         :type => @member.image_content_type,
@@ -221,9 +221,15 @@ class MembersController < ApplicationController
 
   def grading_form_index
     @groups = []
+    @ranks = {}
     MartialArt.find(:all, :order => :family).each do |ma| 
       ma.groups.each do |group|
         @groups << group
+        @ranks[group] = {}
+        group_ranks = group.members.map{|m| m.current_rank(ma)}.sort_by{|r| r ? r.position : -99}.map{|r| r ? r.id : 'nil'}
+        midle = (group_ranks.size - 1) / 2
+        @ranks[group][:beginners] = group_ranks[0..midle].uniq
+        @ranks[group][:advanced]  = group_ranks[midle..-1].uniq[1..-1] || []
       end
     end
   end
@@ -235,7 +241,13 @@ class MembersController < ApplicationController
       else
         @group = Group.find(params[:group_id])
         @members = @group.members
-        @members = @members.sort_by {|m| [m.current_rank(@group.martial_art) ? -m.current_rank(@group.martial_art).position : 99, m.first_name, m.last_name]}
+        if rank_ids = params[:rank_ids]
+          include_unranked = rank_ids.delete('nil')
+          ranks = Rank.find(rank_ids)
+          ranks << nil if include_unranked
+          @members = @members.select {|m| ranks.include? m.current_rank(@group.martial_art)}
+        end
+        @members = @members.sort_by {|m| [m.current_rank(@group.martial_art) ? m.current_rank(@group.martial_art).position : -1, m.first_name, m.last_name]}
       end
     else
       @members = []

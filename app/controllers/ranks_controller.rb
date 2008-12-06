@@ -11,7 +11,7 @@ class RanksController < ApplicationController
          :redirect_to => { :action => :list }
 
   def list
-    @ranks = Rank.paginate :page => params[:page], :per_page => 10, :order => 'martial_art_id, position'
+    @ranks = Rank.paginate :page => params[:page], :per_page => 20, :order => 'martial_art_id, position'
   end
 
   def show

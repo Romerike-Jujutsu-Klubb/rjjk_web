@@ -41,7 +41,7 @@ module LiveTree
             if options[:model_class_name] != nil
                 model = options[:model_class_name]
             else
-                model = Inflector.camelize(options[:model])
+                model = ActiveSupport::Inflector.camelize(options[:model])
             end
             self.const_set("LIVE_TREE_OPTIONS_" + name.to_s.upcase, options);
             code = "" +
