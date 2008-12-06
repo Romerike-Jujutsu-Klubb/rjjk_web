@@ -247,7 +247,7 @@ class MembersController < ApplicationController
           ranks << nil if include_unranked
           @members = @members.select {|m| ranks.include? m.current_rank(@group.martial_art)}
         end
-        @members = @members.sort_by {|m| [m.current_rank(@group.martial_art) ? m.current_rank(@group.martial_art).position : -1, m.first_name, m.last_name]}
+        @members = @members.sort_by {|m| [m.current_rank(@group.martial_art) ? m.current_rank(@group.martial_art).position : -99, m.first_name, m.last_name]}
       end
     else
       @members = []
