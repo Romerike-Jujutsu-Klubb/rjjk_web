@@ -3,9 +3,9 @@ class MembersController < ApplicationController
   before_filter :admin_required
   before_filter :find_incomplete
   
-  caches_page :image_thumbnail
+  caches_page :image, :image_thumbnail
   cache_sweeper :member_image_sweeper, :only => [:update, :destroy]
-
+  
   #  add_to_sortable_columns('listing', 
   #    :model => Member, 
   #    :field => 'first_name', 
@@ -46,9 +46,9 @@ class MembersController < ApplicationController
   
   def history_graph
     if params[:size] && params[:size].to_i <= 1280
-    g = Member.history_graph params[:size].to_i
+      g = Member.history_graph params[:size].to_i
     else
-    g = Member.history_graph
+      g = Member.history_graph
     end
     send_data(g, :disposition => 'inline', :type => 'image/png', :filename => "RJJK_Medlemshistorikk.png")
   end
@@ -195,20 +195,32 @@ class MembersController < ApplicationController
     @members = CmsMember.find_active  
   end
   
-  def image_thumbnail
+  def image
     @member = Member.find(params[:id])
     if @member.image
-    image = Magick::Image.from_blob(@member.image).first
-    thumbnail = image.crop_resized(120, 160).to_blob
-    send_data(thumbnail,
-        :disposition => 'inline',
-        :type => @member.image_content_type,
-        :filename => @member.image_name)
+      send_data(@member.image,
+                :disposition => 'inline',
+      :type => @member.image_content_type,
+      :filename => @member.image_name)
     else
       render :text => 'Bilde mangler'
     end
   end
-
+  
+  def image_thumbnail
+    @member = Member.find(params[:id])
+    if @member.image
+      image = Magick::Image.from_blob(@member.image).first
+      thumbnail = image.crop_resized(120, 160).to_blob
+      send_data(thumbnail,
+                :disposition => 'inline',
+      :type => @member.image_content_type,
+      :filename => @member.image_name)
+    else
+      render :text => 'Bilde mangler'
+    end
+  end
+  
   def cms_comparison
     @cms_members = CmsMember.find_active
     @members = Member.find_active
@@ -218,7 +230,7 @@ class MembersController < ApplicationController
     @new_inactive_members = @members.select{|m| cmsm = @inactive_cms_members.find{|cmsm| cmsm.cms_contract_id == m.cms_contract_id} && m.left_on == cmsm.left_on}
     @members_not_in_cms = @members.select{|m| @cms_members.find{|cmsm| cmsm.cms_contract_id == m.cms_contract_id}.nil?}
   end
-
+  
   def grading_form_index
     @groups = []
     @ranks = {}
@@ -281,5 +293,5 @@ class MembersController < ApplicationController
       @member.groups = []
     end
   end
-
+  
 end
