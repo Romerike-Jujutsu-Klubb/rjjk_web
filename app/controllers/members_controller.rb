@@ -234,11 +234,11 @@ class MembersController < ApplicationController
   def grading_form_index
     @groups = []
     @ranks = {}
-    MartialArt.find(:all, :order => :family).each do |ma| 
+    MartialArt.find(:all, :order => :family, :include => :groups).each do |ma| 
       ma.groups.each do |group|
         @groups << group
         @ranks[group] = {}
-        group_ranks = group.members.map{|m| m.current_rank(ma)}.sort_by{|r| r ? r.position : -99}.map{|r| r ? r.id : 'nil'}
+        group_ranks = group.members.find(:all, :select => 'id').map{|m| m.current_rank(ma)}.sort_by{|r| r ? r.position : -99}.map{|r| r ? r.id : 'nil'}
         midle = (group_ranks.size - 1) / 2
         @ranks[group][:beginners] = group_ranks[0..midle].uniq
         @ranks[group][:advanced]  = group_ranks[midle..-1].uniq[1..-1] || []
