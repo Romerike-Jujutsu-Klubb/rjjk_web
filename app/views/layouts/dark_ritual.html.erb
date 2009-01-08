@@ -26,7 +26,10 @@
 
 		<div class="padded">
 			<%=image_tag 'rjjk_logo_&_txt_320.png', :style => 'width: 100%; border: 0' %>
-
+			<div style="width: 100%; text-align: center">
+				<%=link_to 'Bli medlem!', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :target=> '_blank' %>
+				<%=link_to 'Log på NKF', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login', :target=> '_blank' %>
+			</div>
 			<% if admin? %>
 			<%=link_to image_tag(url_for(:controller => :members, :action => :history_graph, :size => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :members, :action => :history_graph, :size => 1024 %>
 			<% end %>
