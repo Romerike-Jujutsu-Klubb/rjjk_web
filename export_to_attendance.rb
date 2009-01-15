@@ -1,7 +1,8 @@
 #!/usr/bin/ruby
 
 PROJECT_DIR = File.expand_path(File.dirname(__FILE__))
-EXPORT_DIR = '/media/Lexar'
+#EXPORT_DIR = '/media/Lexar'
+EXPORT_DIR = '/media/USBBOOT'
 
 $: << PROJECT_DIR
 
@@ -18,7 +19,7 @@ def dump(model_plural)
   end
 end
 
-if File.exists? '/media/Lexar'
+if File.exists? EXPORT_DIR
   dump :members
   dump :martial_arts
   dump :groups

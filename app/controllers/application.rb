@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   private
   
   def load_layout_model
-    @information_pages = InformationPage.roots
+    @information_pages = InformationPage.roots.select{|ip| ip.visible?}
     @events = Event.find(:all, :conditions => ['end_at >= ?', Time.now], :order => 'start_at', :limit => 5)
   end
   

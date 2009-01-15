@@ -1,4 +1,8 @@
+<% @content_width = 1024 %>
+
 <h1>Medlemsliste (<%=@member_count%>) (<%=link_to 'Excel', :action => :excel_export%>)</h1>
+
+<%=render :partial => '/members/search_form'%>
 
 <table class="members" border="0" cellpadding="5" cellspacing="1">
   <tr>

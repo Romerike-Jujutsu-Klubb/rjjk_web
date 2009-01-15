@@ -167,7 +167,7 @@ class Member < ActiveRecord::Base
     end
     
     def image_format
-      image_name.split('.').last
+      image_name && image_name.split('.').last
     end
    
     def cms_member

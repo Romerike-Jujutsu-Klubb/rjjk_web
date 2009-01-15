@@ -1,6 +1,15 @@
+<% @content_width = 1024 %>
+
 <h1>E-postlister</h1>
 
 <table>
+	<% emails = @groups.map{|g| g.members.map{|m|m.email}}.flatten.compact.sort.uniq %>
+	<% missing_emails = @groups.inject(0){|sum, g| sum += g.members.size} - emails.size %>
+	<tr>
+		<td>Alle aktive medlemmer</td>
+		<td><%=link_to 'Send e-post', "mailto:#{emails * ','}?subject=[RJJK] Melding fra RJJK&body=Din tekst her." %></td>
+		<td>(<%=emails.size%>stk<%=", #{missing_emails} mangler adresse" if missing_emails.nonzero?%>)</td>
+	</tr>
 <% for group in @groups %>
 	<% emails = group.members.map{|m|m.email}.compact.uniq %>
 	<% missing_emails = group.members.size - emails.size %>
