@@ -4,6 +4,13 @@
 	td { padding-right: 1em }
 </style>
 
+
+<% [[:grading_form, :betaling], [:grading_form_for_censor, :sensorer]].each do |action, title| %>
+
+<br/>
+
+<h3>For <%=title%></h3>
+
 <table>
 <% for group in @groups %>
     <tr>
@@ -11,19 +18,21 @@
     		<%="#{h group.martial_art.name} #{h group.name}" %>
 		</td>
 		<td>
-    		<%=link_to "Alle", :action => :grading_form, :group_id => group.id %>
+    		<%=link_to "Alle", :action => action, :group_id => group.id %>
 		</td>
 		<td>
-   			<%=link_to "Nybegynnere", :action => :grading_form, :group_id => group.id, :rank_ids => @ranks[group][:beginners] %>
+   			<%=link_to "Nybegynnere", :action => action, :group_id => group.id, :rank_ids => @ranks[group][:beginners] %>
 		</td>
 		<td>
-   			<%=link_to "Videregående", :action => :grading_form, :group_id => group.id, :rank_ids => @ranks[group][:advanced] %>
+   			<%=link_to "Videregående", :action => action, :group_id => group.id, :rank_ids => @ranks[group][:advanced] %>
 		</td>
     </tr>
 <% end %>
     <tr>
     	<td>
-    		<%=link_to "Andre", :action => :grading_form, :group_id => 'others' %>
+    		<%=link_to "Andre", :action => action, :group_id => 'others' %>
 		</td>
 	</tr>
 </table>
+
+<% end %>

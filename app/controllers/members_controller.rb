@@ -266,6 +266,10 @@ class MembersController < ApplicationController
     end
     render :layout => 'print'
   end
+
+  def grading_form_for_censor
+    grading_form
+  end
   
   private
   
