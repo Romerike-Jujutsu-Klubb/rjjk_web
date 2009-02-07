@@ -209,9 +209,7 @@ class MembersController < ApplicationController
   
   def image_thumbnail
     @member = Member.find(params[:id])
-    if @member.image
-      image = Magick::Image.from_blob(@member.image).first
-      thumbnail = image.crop_resized(120, 160).to_blob
+    if thumbnail = @member.thumbnail
       send_data(thumbnail,
                 :disposition => 'inline',
       :type => @member.image_content_type,

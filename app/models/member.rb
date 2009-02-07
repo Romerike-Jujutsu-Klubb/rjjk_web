@@ -169,7 +169,13 @@ class Member < ActiveRecord::Base
     def image_format
       image_name && image_name.split('.').last
     end
-   
+
+    def thumbnail(x = 120, y = 160)
+      return unless self.image
+      magick_image = Magick::Image.from_blob(self.image).first
+      thumbnail = magick_image.crop_resized(x, y).to_blob
+    end
+
     def cms_member
       CmsMember.find_by_cms_contract_id(cms_contract_id)
     end
