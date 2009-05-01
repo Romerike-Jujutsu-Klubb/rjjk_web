@@ -32,7 +32,8 @@ class NkfMembersController < ApplicationController
       if @nkf_member.update_attributes(params[:nkf_member])
         flash[:notice] = 'NkfMember was successfully updated.'
         # redirect_to(@nkf_member)
-        redirect_to nkf_members_path
+        # redirect_to nkf_members_path
+        redirect_to :action => :comparison, :id => 0
       else
         render :action => "edit"
       end
