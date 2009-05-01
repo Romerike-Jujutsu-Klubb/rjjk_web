@@ -19,13 +19,14 @@ class MembersController < ApplicationController
     @title = "Søk i medlemsregisteret"
     if params[:q]
       query = params[:q]
-      begin
+#      begin
         @members = Member.find_by_contents(query, :limit => :all)
         # Sort by last name (requires a spec for each user).
         @members = @members.sort_by { |member| member.last_name }
-      rescue Ferret::QueryParser::QueryParseException
-        @invalid = true
-      end
+      #rescue Ferret::QueryParser::QueryParseException
+ #     rescue
+  #      @invalid = true
+   #   end
     end
   end
   

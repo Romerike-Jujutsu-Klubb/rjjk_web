@@ -1,0 +1,74 @@
+<% @content_width = 1024 %>
+
+<style>
+	a {text-decoration: none}
+</style>
+
+<% if @orphan_nkf_members.size > 0 %>
+<h1>Nye medlemmer fra NKF-registeret</h1>
+
+<table>
+  <tr>
+    <th>Ledige medlemmer</th>
+    <th align="left">Navn</th>
+  </tr>
+
+<% for nkf_member in @orphan_nkf_members %>
+  <tr>
+  	<td>
+		<% form_for nkf_member do |f| %>
+			<%=f.select :member_id, [['', '']] + NkfMember.find_free_members.map{|m| [m.name, m.id]} %>
+			<%=f.submit t(:connect) %>
+		<% end %>
+  	</td>
+    <td><%=link_to "#{nkf_member.fornavn} #{nkf_member.etternavn}", :controller => :members, :action => :new_from_nkf_member, :id => nkf_member.id %></td>
+  </tr>
+<% end %>
+</table>
+<br/>
+<br/>
+<% end %>
+
+
+<h1>Endringer NKF Medlemsregister => Vårt medlemsregister</h1>
+
+<table>
+  <tr>
+    <th align="left" colspan="4">Navn</th>
+  </tr>
+
+<% @members.each do |member| %>
+  <tr>
+    <td colspan="2"><%=link_to "#{member.name}", :controller => :members, :action => :edit, :id => member.id %></td>
+	<td></td>
+    <td><%=link_to "#{member.nkf_member.fornavn} #{member.nkf_member.etternavn}", :controller => :nkf_members, :action => :show, :id => member.nkf_member.id %></td>
+  </tr>
+  <% member.changes.each do |k, v| %>
+  <tr>
+	<td><%=k%>:</td>
+	<td align="right"><%=v[0]%></td>
+	<td> <%=link_to '=>', :action => :update_member, :id => member.id, :member => {k => v[1]} %> </td>
+	<td><%=v[1]%></td>
+  </tr>
+  <% end %>
+  <tr><td>&nbsp;</td></tr>
+<% end %>
+</table>
+
+<% if @orphan_members.size > 0 %>
+<h1>Medlemmer som ikke er i NKF-registeret</h1>
+
+<table>
+  <tr>
+    <th align="left" colspan="4">Navn</th>
+  </tr>
+
+<% for member in @orphan_members %>
+  <tr>
+    <td><%=link_to "#{member.name}", :controller => :members, :action => :edit, :id => member.id %></td>
+  </tr>
+<% end %>
+</table>
+<br/>
+<br/>
+<% end %>

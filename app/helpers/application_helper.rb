@@ -1,6 +1,4 @@
-# Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  include Localization
   include UserSystem
   
   def menu_item(name, options = {})
@@ -17,6 +15,7 @@ module ApplicationHelper
   end
   
   def t(time)
+    return super if time.is_a? Symbol
     time && time.strftime('%H:%M')
   end
   

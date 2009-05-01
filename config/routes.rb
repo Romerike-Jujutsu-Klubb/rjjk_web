@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :nkf_members
+
   map.connect ':controller/active_contracts', :action => 'active_contracts'
   map.connect ':controller/create', :action => 'create'
   map.connect ':controller/destroy', :action => 'destroy'
@@ -28,6 +30,8 @@ ActionController::Routing::Routes.draw do |map|
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'
   map.connect ':controller/service.wsdl', :action => 'wsdl'
+
+  map.connect 'documents/*path_info', :controller => 'documents', :action => 'webdav'
 
   # Install the default route as the lowest priority.
   map.connect ':controller/:action/:id.:format'

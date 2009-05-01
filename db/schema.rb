@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090115164235) do
+ActiveRecord::Schema.define(:version => 20090427180754) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(:version => 20090115164235) do
     t.datetime "updated_at"
   end
 
-  add_index "attendances", ["group_schedule_id", "member_id", "week", "year"], :name => "index_attendances_on_member_id_and_group_schedule_id_and_year_a", :unique => true
+  add_index "attendances", ["member_id", "group_schedule_id", "year", "week"], :name => "index_attendances_on_member_id_and_group_schedule_id_and_year_a", :unique => true
 
   create_table "censors", :force => true do |t|
     t.integer "graduation_id", :null => false
@@ -59,6 +59,12 @@ ActiveRecord::Schema.define(:version => 20090115164235) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "kid",                  :limit => 64
+  end
+
+  create_table "documents", :force => true do |t|
+    t.binary   "content",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "events", :force => true do |t|
@@ -174,6 +180,49 @@ ActiveRecord::Schema.define(:version => 20090115164235) do
     t.integer  "created_by"
   end
 
+  create_table "nkf_members", :force => true do |t|
+    t.integer  "member_id"
+    t.integer  "medlemsnummer"
+    t.string   "etternavn"
+    t.string   "fornavn"
+    t.string   "adresse_1"
+    t.string   "adresse_2"
+    t.string   "adresse_3"
+    t.string   "postnr"
+    t.string   "sted"
+    t.string   "fodselsdato"
+    t.string   "telefon"
+    t.string   "telefon_arbeid"
+    t.string   "mobil"
+    t.string   "epost"
+    t.string   "epost_faktura"
+    t.string   "yrke"
+    t.string   "medlemsstatus"
+    t.string   "medlemskategori"
+    t.string   "medlemskategori_navn"
+    t.string   "kont_sats"
+    t.string   "kont_belop"
+    t.string   "kontraktstype"
+    t.string   "kontraktsbelop"
+    t.string   "rabatt"
+    t.string   "gren_stilart_avd_parti___gren_stilart_avd_parti"
+    t.string   "sist_betalt_dato"
+    t.string   "betalt_t_o_m__dato"
+    t.string   "konkurranseomrade_id"
+    t.string   "konkurranseomrade_navn"
+    t.string   "klubb_id"
+    t.string   "klubb"
+    t.integer  "hovedmedlem_id"
+    t.string   "hovedmedlem_navn"
+    t.string   "innmeldtdato"
+    t.string   "innmeldtarsak"
+    t.string   "utmeldtdato"
+    t.string   "utmeldtarsak"
+    t.string   "antall_etiketter_1"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "ranks", :force => true do |t|
     t.string  "name",            :limit => 16, :null => false
     t.string  "colour",          :limit => 48, :null => false
@@ -195,30 +244,5 @@ ActiveRecord::Schema.define(:version => 20090115164235) do
     t.boolean  "verified",                      :default => false
     t.boolean  "deleted",                       :default => false
   end
-
-  add_foreign_key "attendances", ["group_schedule_id"], "group_schedules", ["id"], :name => "attendances_group_schedule_id_fkey"
-  add_foreign_key "attendances", ["member_id"], "members", ["id"], :name => "attendances_member_id_fkey"
-
-  add_foreign_key "censors", ["graduation_id"], "graduations", ["id"], :name => "censors_graduation_id_fkey"
-  add_foreign_key "censors", ["member_id"], "members", ["id"], :name => "censors_member_id_fkey"
-
-  add_foreign_key "graduates", ["graduation_id"], "graduations", ["id"], :name => "graduates_graduation_id_fkey"
-  add_foreign_key "graduates", ["member_id"], "members", ["id"], :name => "graduates_member_id_fkey"
-  add_foreign_key "graduates", ["rank_id"], "ranks", ["id"], :name => "graduates_rank_id_fkey"
-
-  add_foreign_key "graduations", ["martial_art_id"], "martial_arts", ["id"], :name => "graduations_martial_art_id_fkey"
-
-  add_foreign_key "group_schedules", ["group_id"], "groups", ["id"], :name => "group_schedules_group_id_fkey"
-
-  add_foreign_key "groups", ["martial_art_id"], "martial_arts", ["id"], :name => "groups_martial_art_id_fkey"
-
-  add_foreign_key "groups_members", ["group_id"], "groups", ["id"], :name => "groups_members_group_id_fkey"
-  add_foreign_key "groups_members", ["member_id"], "members", ["id"], :name => "groups_members_member_id_fkey"
-
-  add_foreign_key "information_pages", ["parent_id"], "information_pages", ["id"], :name => "information_pages_parent_id_fkey"
-
-  add_foreign_key "news_items", ["created_by"], "users", ["id"], :name => "news_items_created_by_fkey"
-
-  add_foreign_key "ranks", ["martial_art_id"], "martial_arts", ["id"], :name => "ranks_martial_art_id_fkey"
 
 end

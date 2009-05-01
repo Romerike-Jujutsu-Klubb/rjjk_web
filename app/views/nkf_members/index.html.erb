@@ -1,0 +1,106 @@
+<% @content_width = 1024 %>
+
+<h1>Listing nkf_members</h1>
+
+<table>
+  <tr>
+    <th>Medlemsnummer</th>
+    <th>Medlemsnummer NKF</th>
+    <th>Fornavn</th>
+    <th>Etternavn</th>
+    <th>Adresse 1</th>
+    <th>Adresse 2</th>
+    <th>Adresse 3</th>
+    <th>Postnr</th>
+    <th>Sted</th>
+    <th>Fodselsdato</th>
+    <th>Telefon</th>
+    <th>Telefon arbeid</th>
+    <th>Mobil</th>
+    <th>Epost</th>
+    <th>Epost faktura</th>
+    <th>Yrke</th>
+    <th>Medlemsstatus</th>
+    <th>Medlemskategori</th>
+    <th>Medlemskategori navn</th>
+    <th>Kont sats</th>
+    <th>Kont belop</th>
+    <th>Kontraktstype</th>
+    <th>Kontraktsbelop</th>
+    <th>Rabatt</th>
+    <th>Gren stilart avd parti   gren stilart avd parti</th>
+    <th>Sist betalt dato</th>
+    <th>Betalt t o m  dato</th>
+    <th>Konkurranseomrade</th>
+    <th>Konkurranseomrade navn</th>
+    <th>Klubb</th>
+    <th>Klubb</th>
+    <th>Hovedmedlem</th>
+    <th>Hovedmedlem navn</th>
+    <th>Innmeldtdato</th>
+    <th>Innmeldtarsak</th>
+    <th>Utmeldtdato</th>
+    <th>Utmeldtarsak</th>
+    <th>Antall etiketter 1</th>
+  </tr>
+
+<% @nkf_members.each do |nkf_member| %>
+  <tr>
+    <td>
+    	<% if nkf_member.member_id %>
+	    	<%=h nkf_member.member_id %>
+	    	<%=link_to "#{nkf_member.member.name}", :controller => :members, :action => :edit, :id => nkf_member.member %>
+		<% else %>
+			<% form_for nkf_member do |f| %>
+				<%=f.select :member_id, [['', '']] + NkfMember.find_free_members.map{|m| [m.name, m.id]} %>
+				<%=f.submit :connect %>
+			<% end %>
+		<% end %>
+	</td>
+    <td><%=h nkf_member.medlemsnummer %></td>
+    <td><%=h nkf_member.fornavn %></td>
+    <td><%=h nkf_member.etternavn %></td>
+    <td><%=h nkf_member.adresse_1 %></td>
+    <td><%=h nkf_member.adresse_2 %></td>
+    <td><%=h nkf_member.adresse_3 %></td>
+    <td><%=h nkf_member.postnr %></td>
+    <td><%=h nkf_member.sted %></td>
+    <td><%=h nkf_member.fodselsdato %></td>
+    <td><%=h nkf_member.telefon %></td>
+    <td><%=h nkf_member.telefon_arbeid %></td>
+    <td><%=h nkf_member.mobil %></td>
+    <td><%=h nkf_member.epost %></td>
+    <td><%=h nkf_member.epost_faktura %></td>
+    <td><%=h nkf_member.yrke %></td>
+    <td><%=h nkf_member.medlemsstatus %></td>
+    <td><%=h nkf_member.medlemskategori %></td>
+    <td><%=h nkf_member.medlemskategori_navn %></td>
+    <td><%=h nkf_member.kont_sats %></td>
+    <td><%=h nkf_member.kont_belop %></td>
+    <td><%=h nkf_member.kontraktstype %></td>
+    <td><%=h nkf_member.kontraktsbelop %></td>
+    <td><%=h nkf_member.rabatt %></td>
+    <td><%=h nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti %></td>
+    <td><%=h nkf_member.sist_betalt_dato %></td>
+    <td><%=h nkf_member.betalt_t_o_m__dato %></td>
+    <td><%=h nkf_member.konkurranseomrade_id %></td>
+    <td><%=h nkf_member.konkurranseomrade_navn %></td>
+    <td><%=h nkf_member.klubb_id %></td>
+    <td><%=h nkf_member.klubb %></td>
+    <td><%=h nkf_member.hovedmedlem_id %></td>
+    <td><%=h nkf_member.hovedmedlem_navn %></td>
+    <td><%=h nkf_member.innmeldtdato %></td>
+    <td><%=h nkf_member.innmeldtarsak %></td>
+    <td><%=h nkf_member.utmeldtdato %></td>
+    <td><%=h nkf_member.utmeldtarsak %></td>
+    <td><%=h nkf_member.antall_etiketter_1 %></td>
+    <td><%= link_to 'Show', nkf_member %></td>
+    <td><%= link_to 'Edit', edit_nkf_member_path(nkf_member) %></td>
+    <td><%= link_to 'Destroy', nkf_member, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New nkf_member', new_nkf_member_path %>

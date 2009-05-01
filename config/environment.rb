@@ -5,11 +5,10 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '~>2.1.0'
+RAILS_GEM_VERSION = '~>2.3.2'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
-require 'environments/localization_environment'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence those specified here
@@ -41,6 +40,12 @@ Rails::Initializer.run do |config|
   
   # See Rails::Configuration for more options
   config.action_controller.session = { :session_key => "_myapp_session", :secret => "Norges peneste jujutsu klubb. Man må like å lide!" }
+  
+  config.gem 'rmagick4j', :lib => false
+  config.gem 'jdbc-postgres', :lib => false
+  config.gem 'activerecord-jdbcpostgresql-adapter', :lib => false
+  config.gem 'RedCloth'
+  config.gem 'gruff'
 end
 
 # Add new inflection rules using the following format 
@@ -54,10 +59,26 @@ end
 
 # Include your application configuration below
 
-require 'rubygems'
-
-require 'localization'
-Localization::load_localized_strings
-require 'environments/user_environment'
+require 'config/environments/user_environment'
 require 'csv'
-require 'RMagick'
+
+# FIXME(uwe): fix for activerecord-jdbc-adapter 0.9.  report bugs, remove fixes when fixed in jruby-postgres adaptor
+module ::JdbcSpec::PostgreSQL
+  def change_column_null(table_name, column_name, null, default = nil)
+    unless null || default.nil?
+      execute("UPDATE #{quote_table_name(table_name)} SET #{quote_column_name(column_name)}=#{quote(default)} WHERE #{quote_column_name(column_name)} IS NULL")
+    end
+    execute("ALTER TABLE #{quote_table_name(table_name)} ALTER #{quote_column_name(column_name)} #{null ? 'DROP' : 'SET'} NOT NULL")
+  end
+
+  def add_column(table_name, column_name, type, options = {})
+    default = options[:default]
+    notnull = options[:null] == false
+
+    # Add the column.
+    execute("ALTER TABLE #{quote_table_name(table_name)} ADD COLUMN #{quote_column_name(column_name)} #{type_to_sql(type, options[:limit], options[:precision], options[:scale])}")
+
+    change_column_default(table_name, column_name, default) if options_include_default?(options)
+    change_column_null(table_name, column_name, false, default) if notnull
+  end
+end

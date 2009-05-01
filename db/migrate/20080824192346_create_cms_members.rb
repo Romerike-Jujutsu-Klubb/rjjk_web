@@ -34,8 +34,9 @@ class CreateCmsMembers < ActiveRecord::Migration
       
       t.timestamps
     end
-    
-    execute 'INSERT INTO cms_members SELECT * FROM members'
+    columns = (Member.column_names - ['id', 'created_at', 'updated_at']).sort.join(', ')
+    cms_columns = (CmsMember.column_names - ['id', 'created_at', 'updated_at']).sort.join(', ')
+    execute "INSERT INTO cms_members(#{cms_columns}) (SELECT #{columns} FROM members)"
   end
   
   def self.down

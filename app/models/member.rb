@@ -3,16 +3,17 @@ class Member < ActiveRecord::Base
   MEMBERS_PER_PAGE = 30
   ACTIVE_CONDITIONS = "left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)"
   
-  acts_as_ferret :fields => [
-  :first_name,:last_name,:address,:postal_code,
-  :email, :phone_home, :phone_work, 
-  :phone_mobile, :phone_parent, :department, 
-  :billing_type, :comment
-  ]
+#  acts_as_ferret :fields => [
+#  :first_name,:last_name,:address,:postal_code,
+#  :email, :phone_home, :phone_work, 
+#  :phone_mobile, :phone_parent, :department, 
+#  :billing_type, :comment
+#  ]
   
   has_many :graduates
   has_many :attendances
   has_and_belongs_to_many :groups
+  has_one :nkf_member
   
   validates_presence_of :first_name, :last_name
   # validates_presence_of :address, :postal_code, :cms_contract_id
@@ -36,6 +37,13 @@ class Member < ActiveRecord::Base
     count :conditions => ACTIVE_CONDITIONS 
   end
 
+  def self.find_by_contents(query, options = {})
+    find(:all, {
+      :conditions => ['UPPER(first_name) LIKE ? OR UPPER(last_name) LIKE ?', *([query.upcase] * 2)],
+      :order => 'first_name, last_name',
+    }.update(options))
+  end
+  
   def current_graduate(martial_art)
     graduates.select{|g|martial_art.nil? || g.rank.martial_art == martial_art}.sort_by {|g| g.graduation.held_on}.last
   end
@@ -173,7 +181,7 @@ class Member < ActiveRecord::Base
     def thumbnail(x = 120, y = 160)
       return unless self.image
       magick_image = Magick::Image.from_blob(self.image).first
-      thumbnail = magick_image.crop_resized(x, y).to_blob
+      return magick_image.crop_resized(x, y).to_blob
     end
 
     def cms_member
