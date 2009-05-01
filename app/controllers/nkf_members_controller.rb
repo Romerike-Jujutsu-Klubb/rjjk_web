@@ -47,6 +47,7 @@ class NkfMembersController < ApplicationController
   FIELD_MAP = {
     :fornavn => :first_name,
     :etternavn => :last_name,
+    :fodselsdato => :birthdate,
     :utmeldtdato => :left_on,
   }
 

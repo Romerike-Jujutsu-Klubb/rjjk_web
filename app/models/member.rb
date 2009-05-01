@@ -1,5 +1,6 @@
 class Member < ActiveRecord::Base
   JUNIOR_AGE_LIMIT = 15
+  ASPIRANT_AGE_LIMIT = 10
   MEMBERS_PER_PAGE = 30
   ACTIVE_CONDITIONS = "left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)"
   
@@ -101,22 +102,25 @@ class Member < ActiveRecord::Base
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     #g.legend_font_size = 14
     g.hide_dots = true
-    g.colors = %w{green blue orange red}
+    g.colors = %w{blue blue green orange red}
     
     #first_date = find(:first, :order => 'joined_on').joined_on
-    first_date = 5.years.ago.to_date
+    #first_date = 5.years.ago.to_date
+    first_date = Date.civil(2007, 01, 01)
     dates = []
     Date.today.step(first_date, -14) {|date| dates << date}
     dates.reverse!
     active_clause = '"(joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
     totals = dates.map {|date| Member.count(:conditions => eval(active_clause))}
     seniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birthdate IS NOT NULL AND birthdate < '#{self.senior_birthdate(date)}'")}
-    juniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birthdate IS NOT NULL AND birthdate >= '#{self.senior_birthdate(date)}'")}
+    juniors = dates.map {|date| Member.count(:conditions => ["(#{eval active_clause}) AND birthdate IS NOT NULL AND birthdate BETWEEN ? AND ?", self.senior_birthdate(date), self.junior_birthdate(date)])}
+    aspirants = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birthdate IS NOT NULL AND birthdate >= '#{self.junior_birthdate(date)}'")}
     others = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birthdate IS NULL")}
     g.data("Totalt", totals)
     g.data("Senior", seniors)
     g.data("Junior", juniors)
-    g.data("Andre", others)
+    g.data("Aspiranter", aspirants)
+    g.data("Uten fødselsdato", others)
     
     g.minimum_value = 0
     
@@ -139,7 +143,11 @@ class Member < ActiveRecord::Base
     end
     
     def self.senior_birthdate(date)
-      date - (JUNIOR_AGE_LIMIT * 365)
+      date - JUNIOR_AGE_LIMIT.years
+    end
+    
+    def self.junior_birthdate(date)
+      date - ASPIRANT_AGE_LIMIT.years
     end
     
     def age
