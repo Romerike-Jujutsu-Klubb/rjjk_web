@@ -26,7 +26,8 @@ class ImagesController < ApplicationController
   def inline
     @image = Image.find(params[:id])
     image = Magick::Image.from_blob(@image.content_data).first
-    send_data(image.thumbnail(492.0 / image.columns).to_blob,
+    ratio = 492.0 / image.columns
+    send_data(image.crop_resized!(492, image.rows * ratio).to_blob,
         :disposition => 'inline',
         :type => @image.content_type,
         :filename => @image.name)
