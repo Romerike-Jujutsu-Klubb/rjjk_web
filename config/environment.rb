@@ -41,6 +41,7 @@ Rails::Initializer.run do |config|
   # See Rails::Configuration for more options
   config.action_controller.session = { :session_key => "_myapp_session", :secret => "Norges peneste jujutsu klubb. Man må like å lide!" }
   
+  config.gem 'jruby-openssl', :lib => false
   config.gem 'rmagick4j', :lib => false
   config.gem 'jdbc-postgres', :lib => false
   config.gem 'activerecord-jdbcpostgresql-adapter', :lib => false

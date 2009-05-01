@@ -11,3 +11,4 @@ test:
 production:
   adapter: postgresql
   database: rjjk_production
+  username: capistrano
