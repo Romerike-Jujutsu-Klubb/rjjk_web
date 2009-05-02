@@ -18,7 +18,7 @@ class Member < ActiveRecord::Base
   validates_inclusion_of :male, :in => [true, false]
   validates_inclusion_of :nkf_fee, :in => [true, false]
   validates_inclusion_of :payment_problem, :in => [true, false]
-  validates_presence_of :postal_code
+  #validates_presence_of :postal_code
   validates_length_of :postal_code, :is => 4, :if => Proc.new {|m|m.postal_code && !m.postal_code.empty?}
   validates_uniqueness_of :rfid, :if => Proc.new{|r| r.rfid and not r.rfid.empty?}
   
