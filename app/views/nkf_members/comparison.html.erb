@@ -4,6 +4,8 @@
 	a {text-decoration: none}
 </style>
 
+<div id="notice"><%=flash[:notice]%></div>
+
 <% if @orphan_nkf_members.size > 0 %>
 <h1>Nye medlemmer fra NKF-registeret (<%=@orphan_nkf_members.size%>)</h1>
 
@@ -21,7 +23,8 @@
 			<%=f.submit t(:connect) %>
 		<% end %>
   	</td>
-    <td><%=link_to "#{nkf_member.fornavn} #{nkf_member.etternavn}", :controller => :members, :action => :new_from_nkf_member, :id => nkf_member.id %></td>
+    <td><%=link_to "#{nkf_member.fornavn} #{nkf_member.etternavn}", :action => :show, :id => nkf_member.id %></td>
+    <td><%=button_to t(:create), :controller => :nkf_members, :action => :create_member, :id => nkf_member.id %></td>
   </tr>
 <% end %>
 </table>

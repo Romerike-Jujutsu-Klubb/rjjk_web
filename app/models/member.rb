@@ -4,26 +4,22 @@ class Member < ActiveRecord::Base
   MEMBERS_PER_PAGE = 30
   ACTIVE_CONDITIONS = "left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)"
   
-#  acts_as_ferret :fields => [
-#  :first_name,:last_name,:address,:postal_code,
-#  :email, :phone_home, :phone_work, 
-#  :phone_mobile, :phone_parent, :department, 
-#  :billing_type, :comment
-#  ]
-  
   has_many :graduates
   has_many :attendances
   has_and_belongs_to_many :groups
   has_one :nkf_member
   
-  validates_presence_of :first_name, :last_name
-  # validates_presence_of :address, :postal_code, :cms_contract_id
-  # validates_presence_of :birthdate, :join_on
-  validates_inclusion_of(:payment_problem, :in => [true, false])
-  validates_inclusion_of(:male, :in => [true, false])
-  validates_length_of :postal_code, :is => 4, :if => Proc.new {|m|m.postal_code && !m.postal_code.empty?}
+  # validates_presence_of :address, :cms_contract_id
   validates_length_of :billing_postal_code, :is => 4, :if => Proc.new{|m|m.billing_postal_code && !m.billing_postal_code.empty?}
+  # validates_presence_of :birthdate, :join_on
   validates_uniqueness_of :cms_contract_id, :if => :cms_contract_id
+  validates_presence_of :first_name, :last_name
+  validates_inclusion_of :instructor, :in => [true, false]
+  validates_inclusion_of :male, :in => [true, false]
+  validates_inclusion_of :nkf_fee, :in => [true, false]
+  validates_inclusion_of :payment_problem, :in => [true, false]
+  validates_presence_of :postal_code
+  validates_length_of :postal_code, :is => 4, :if => Proc.new {|m|m.postal_code && !m.postal_code.empty?}
   validates_uniqueness_of :rfid, :if => Proc.new{|r| r.rfid and not r.rfid.empty?}
   
   def self.find_active

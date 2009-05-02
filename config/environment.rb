@@ -38,6 +38,8 @@ Rails::Initializer.run do |config|
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
   
+  config.i18n.default_locale = :nb
+  
   # See Rails::Configuration for more options
   config.action_controller.session = { :session_key => "_myapp_session", :secret => "Norges peneste jujutsu klubb. Man må like å lide!" }
   
