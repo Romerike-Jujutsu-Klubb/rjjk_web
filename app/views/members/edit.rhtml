@@ -33,7 +33,7 @@
   <%= render :partial => 'form' %>
   <%= submit_tag 'Lagre', :id => 'save' %>
   <%= link_to 'Tilbake', :action => 'list' %>
-  <%= link_to 'Til CMS avstemming', :action => :cms_comparison %>
+  <%= link_to 'Til NKF avstemming', :controller => :nkf_members, :action => :comparison, :id => 0 %>
 <% end %>
 
 <script type="text/JavaScript">
