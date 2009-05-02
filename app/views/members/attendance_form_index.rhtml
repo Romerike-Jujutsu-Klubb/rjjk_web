@@ -7,13 +7,13 @@
     	<%="#{h group.martial_art.name} #{h group.name}"%>
 		</td>
 		<td>
-    	<%=link_to l(Date::MONTHNAMES[Date.today.month > 1 ? Date.today.mon - 1 : 12]), :action => :attendance_form, :group_id => group.id, :date => Date.new(Date.today.month > 1 ? Date.today.year : Date.today.year - 1, Date.today.month > 1 ? Date.today.month - 1 : 12).strftime('%Y-%m')%>
+    	<%=link_to t(Date::MONTHNAMES[Date.today.month > 1 ? Date.today.mon - 1 : 12]), :action => :attendance_form, :group_id => group.id, :date => Date.new(Date.today.month > 1 ? Date.today.year : Date.today.year - 1, Date.today.month > 1 ? Date.today.month - 1 : 12).strftime('%Y-%m')%>
 		</td>
 		<td>
-    	<%=link_to l(Date::MONTHNAMES[Date.today.mon]), :action => :attendance_form, :group_id => group.id%>
+    	<%=link_to t(Date::MONTHNAMES[Date.today.mon]), :action => :attendance_form, :group_id => group.id%>
 		</td>
 		<td>
-    	<%=link_to l(Date::MONTHNAMES[Date.today.month < 12 ? Date.today.mon + 1 : 1]), :action => :attendance_form, :group_id => group.id, :date => Date.new(Date.today.month < 12 ? Date.today.year : Date.today.year + 1, Date.today.month < 12 ? Date.today.month + 1 : 1).strftime('%Y-%m')%>
+    	<%=link_to t(Date::MONTHNAMES[Date.today.month < 12 ? Date.today.mon + 1 : 1]), :action => :attendance_form, :group_id => group.id, :date => Date.new(Date.today.month < 12 ? Date.today.year : Date.today.year + 1, Date.today.month < 12 ? Date.today.month + 1 : 1).strftime('%Y-%m')%>
 		</td>
     </tr>
 <% end %>

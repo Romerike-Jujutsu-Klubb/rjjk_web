@@ -14,6 +14,11 @@ module ApplicationHelper
     end
   end
   
+  def l(time)
+    return t(time) if time.is_a?(Symbol) || time.is_a?(String)
+    super
+  end
+  
   def t(time)
     return super if time.is_a?(Symbol) || time.is_a?(String)
     time && time.strftime('%H:%M')
