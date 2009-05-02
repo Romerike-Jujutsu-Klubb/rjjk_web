@@ -112,6 +112,7 @@ class Member < ActiveRecord::Base
     juniors = dates.map {|date| Member.count(:conditions => ["(#{eval active_clause}) AND birthdate IS NOT NULL AND birthdate BETWEEN ? AND ?", self.senior_birthdate(date), self.junior_birthdate(date)])}
     aspirants = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birthdate IS NOT NULL AND birthdate >= '#{self.junior_birthdate(date)}'")}
     others = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birthdate IS NULL")}
+    0.upto(others.size){|i| others[i] = nil if others[i] == 0 && others[i - 1].to_i == 0}
     g.data("Totalt", totals)
     g.data("Senior", seniors)
     g.data("Junior", juniors)
