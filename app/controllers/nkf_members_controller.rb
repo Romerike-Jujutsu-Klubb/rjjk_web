@@ -97,6 +97,11 @@ class NkfMembersController < ApplicationController
     redirect_to :action => :comparison, :id => 0
   end
   
+  def import
+    flash[:notice] = NkfMemberImport.import
+    redirect_to :action => :comparison, :id => 0
+  end
+  
   private
   
   def convert_attributes(attributes)

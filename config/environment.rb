@@ -41,7 +41,7 @@ Rails::Initializer.run do |config|
   config.i18n.default_locale = :nb
   
   # See Rails::Configuration for more options
-  config.action_controller.session = { :session_key => "_myapp_session", :secret => "Norges peneste jujutsu klubb. Man må like å lide!" }
+  config.action_controller.session = { :session_key => "_rjjk_web_session", :secret => "Norges peneste jujutsu klubb. Man må like å lide!" }
   
   config.gem 'jruby-openssl', :lib => false
   config.gem 'rmagick4j', :lib => false
