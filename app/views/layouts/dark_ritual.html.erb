@@ -33,7 +33,7 @@
 				<%=link_to 'Log på NKF', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login', :target=> '_blank' %>
 			</div>
 			<% if admin? %>
-			<%=link_to image_tag(url_for(:controller => :members, :action => :history_graph, :size => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :members, :action => :history_graph, :size => 1024 %>
+			<%=link_to image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :members, :action => :history_graph, :format => :png, :id => 1024 %>
 			<br/>
 			<br/>
 			<% end %>
