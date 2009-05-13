@@ -43,7 +43,11 @@
 			<% for event in @events %>
 				<h3><%=event.name%></h3>
 				<%=event.start_at.strftime('%Y-%m-%d %H:%M')%>
-				<%=" - #{event.end_at.strftime('%Y-%m-%d %H:%M')}" if event.end_at && event.end_at.to_date != event.start_at.to_date %>
+				<% if event.end_at %>
+				-
+				<%=event.end_at.strftime('%Y-%m-%d') if event.end_at.to_date != event.start_at.to_date %>
+				<%=event.end_at.strftime('%H:%M') %>
+				<% end %>
 				<%=link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin?%>
 				<p><%=event.description%></p>
 			<% end %>
