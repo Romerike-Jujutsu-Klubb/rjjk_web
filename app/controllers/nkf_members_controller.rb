@@ -52,6 +52,7 @@ class NkfMembersController < ApplicationController
     :innmeldtdato => :joined_on,
     :postnr => :postal_code,
     :utmeldtdato => :left_on,
+    :epost => :email,
   }
   
   def comparison
