@@ -23,7 +23,9 @@ class InfoController < ApplicationController
   end
 
   def show
-    @information_page = InformationPage.find(params[:id])
+    @information_page ||= InformationPage.find_by_title(params[:id])
+    @information_page ||= InformationPage.find_by_id(params[:id].to_i)
+    raise "Unknown page" unless @information_page
   end
 
   def move_down
