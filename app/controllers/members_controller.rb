@@ -3,8 +3,8 @@ class MembersController < ApplicationController
   before_filter :admin_required
   before_filter :find_incomplete
   
-  caches_page :image, :image_thumbnail
-  cache_sweeper :member_image_sweeper, :only => [:update, :destroy]
+  caches_page :image, :image_thumbnail, :history_graph
+  cache_sweeper :member_image_sweeper, :only => [:create, :update, :destroy]
   
   #  add_to_sortable_columns('listing', 
   #    :model => Member, 

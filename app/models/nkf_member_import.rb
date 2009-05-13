@@ -19,6 +19,8 @@ class NkfMemberImport
       html_search_body = html_search_response.body
       process_response 'html search', html_search_response
       download_codes = html_search_body.scan /Download27\('(.*?)'\)/
+
+      raise download_codes.inspect unless download_codes && download_codes[0] && download_codes[0][0]
       
       members_response = http.get('http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=' + download_codes[0][0], cookie_header)
       members_body = members_response.body
