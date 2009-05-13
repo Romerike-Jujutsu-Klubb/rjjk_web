@@ -34,12 +34,16 @@
 			</div>
 			<% if admin? %>
 			<%=link_to image_tag(url_for(:controller => :members, :action => :history_graph, :size => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :members, :action => :history_graph, :size => 1024 %>
+			<br/>
+			<br/>
 			<% end %>
 
+			<h2>Kommende hendelser:</h2>
+			<br/>
 			<% for event in @events %>
-				<h1><%=event.name%></h1>
-				<%=event.start_at.strftime('%Y-%m-%d')%>
-				<%=" - #{event.end_at.strftime('%Y-%m-%d')}" if event.end_at && event.end_at.to_date != event.start_at.to_date %>
+				<h3><%=event.name%></h3>
+				<%=event.start_at.strftime('%Y-%m-%d %H:%M')%>
+				<%=" - #{event.end_at.strftime('%Y-%m-%d %H:%M')}" if event.end_at && event.end_at.to_date != event.start_at.to_date %>
 				<%=link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin?%>
 				<p><%=event.description%></p>
 			<% end %>
