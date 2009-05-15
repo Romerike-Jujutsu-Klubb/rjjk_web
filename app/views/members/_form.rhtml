@@ -1,3 +1,8 @@
+<%=javascript_include_tag "CalendarPopup" %>
+<script language="JavaScript">
+var cal = new CalendarPopup();
+</script>
+
 <%= error_messages_for 'member' %>
 
 <!--[form:member]-->
@@ -67,11 +72,9 @@ input.half {width: 7.5em;}
 <%= text_field 'member', 'cms_contract_id', :class => :half %></p>
 
 <p><label for="member_left_on">Utmeldt dato</label><br/>
-<% if @member.left_on %>
-<%= date_select 'member', 'left_on'  %></p>
-<% else %>
-Fremdeles aktiv. <%=link_to 'Meld ut', {:action => :update, :id => @member.id, :member => {:left_on => Date.today}}, :method => :post %>
-<% end %>
+<%=text_field :member, :left_on, :value => @member.left_on && @member.left_on.strftime('%Y-%m-%d'), :size => 10 %>
+<a href="#" onclick="cal.select(document.forms[0].member_left_on,'anchor1','yyyy-MM-dd'); return false;" name="anchor1" id="anchor1">Velg</a>
+</p>
 
 <p><label for="member_parent_name">Foresattes navn</label><br/>
 <%= text_field 'member', 'parent_name', :class => :full %></p>
