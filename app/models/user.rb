@@ -1,4 +1,5 @@
 require 'digest/sha1'
+require 'clock'
 
 # this model expects a certain database layout and its based on the name/login pattern. 
 class User < ActiveRecord::Base
