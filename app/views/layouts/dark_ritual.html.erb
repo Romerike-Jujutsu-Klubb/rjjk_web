@@ -81,7 +81,7 @@
 		<ul>
 			<% @information_pages.each do |page| %>
 			<li>
-				<%=link_to page.title + (page.visible? ? '' : '(skjult)'), :controller => :info, :action => :show, :id => page.title%>
+				<%=link_to page.title + (page.visible? ? '' : ' (skjult)'), :controller => :info, :action => :show, :id => page.title%>
 				<%#=link_to 'ned', :controller => :info, :action => :move_down, :id => page.id%>
 			</li>
 			<% end %>
