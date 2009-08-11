@@ -5,7 +5,7 @@
 <p>
   <%=h @event.start_at.strftime('%Y-%m-%d') %>
   <% if @event.end_at %>
-  	- <%=h @event.end_at %>
+  	- <%=h @event.end_at.strftime('%Y-%m-%d') %>
   <% end %>
 </p>
 
