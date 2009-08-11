@@ -1,23 +1,22 @@
+<% @title = @event.name %>
+
+<h1><%=h @event.name %></h1>
+
 <p>
-  <b>Name:</b>
-  <%=h @event.name %>
+  <%=h @event.start_at.strftime('%Y-%m-%d') %>
+  <% if @event.end_at %>
+  	- <%=h @event.end_at %>
+  <% end %>
 </p>
 
 <p>
-  <b>Start at:</b>
-  <%=h @event.start_at %>
+  <%=@event.description %>
 </p>
 
-<p>
-  <b>End at:</b>
-  <%=h @event.end_at %>
-</p>
+<% if user? || admin? %>
+<br clear="all"/>
 
-<p>
-  <b>Description:</b>
-  <%=h @event.description %>
-</p>
-
-
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+<ul class="controls">
+  <li><%=link_to 'Rediger', {:action => :edit, :id => @event}, :class => :edit %></li>
+</ul>
+<% end %>

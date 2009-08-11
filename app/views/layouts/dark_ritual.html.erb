@@ -41,15 +41,25 @@
 			<h2>Kommende hendelser:</h2>
 			<br/>
 			<% for event in @events %>
-				<h3><%=event.name%></h3>
-				<%=event.start_at.strftime('%Y-%m-%d %H:%M')%>
+				<h3><%=link_to event.name, :controller => :events, :action => :show, :id => event.id%></h3>
+				<% if event.start_at.min != 0 || event.start_at.hour != 0 %>
+				  <%=event.start_at.strftime('%Y-%m-%d %H:%M')%>
+				<% else %>
+				  <%=event.start_at.strftime('%Y-%m-%d')%>
+				<% end %>
 				<% if event.end_at %>
 				-
 				<%=event.end_at.strftime('%Y-%m-%d') if event.end_at.to_date != event.start_at.to_date %>
-				<%=event.end_at.strftime('%H:%M') %>
+				<%=event.end_at.strftime('%H:%M') if event.end_at.hour != 0 || event.end_at.min != 0%>
 				<% end %>
 				<%=link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin?%>
-				<p><%=event.description%></p>
+				
+				<p><%=ingress = event.description.slice(/^.*?<\/p>/)%></p>
+   				<% if event.description != ingress%>
+					<ul class="controls">
+            			<li><%=link_to 'Les mer', {:controller => :events, :action => :show, :id => event.id}, :class => :edit %></li>
+					</ul>
+   				<% end %>
 			<% end %>
 
    			<% if admin? %>
@@ -71,7 +81,7 @@
 		<ul>
 			<% @information_pages.each do |page| %>
 			<li>
-				<%=link_to page.title, :controller => :info, :action => :show, :id => page.title%>
+				<%=link_to page.title + ('(skjult)' unless page.visible?) + admin?.to_s, :controller => :info, :action => :show, :id => page.title%>
 				<%#=link_to 'ned', :controller => :info, :action => :move_down, :id => page.id%>
 			</li>
 			<% end %>
@@ -84,18 +94,22 @@
 		</ul>
 
    			<% if admin? %>
-		<h1>Administrasjon</h1>
+		<%=link_to_function("<h1>Administrasjon</h1>") do |page|
+    		page.visual_effect(:toggle_blind, :admin_menu)
+  		end%>
+		<div id="admin_menu">
 		<ul>
    			<li><%= link_to 'Ny nyhet', :controller => 'news', :action => 'new' %></li>
             <li><%= link_to 'Ny side', :controller => 'info', :action => 'new' %></li>
             <li><%= link_to 'Ny hendelse', :controller => 'events', :action => 'new' %></li>
             <li><%= link_to 'Brukere', :controller => 'user', :action => :list %></li>
-			<% end %>
 		</ul>
+		</div>
 
-
-		<% if admin? %>
-		<h1>Medlemsreg.</h1>
+		<%=link_to_function("<h1>Medlemsreg.</h1>") do |page|
+    		page.visual_effect(:toggle_blind, :members_menu)
+  		end%>
+		<div id="members_menu">
 		<ul>
 			<li><%=menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
 			<li><%=menu_item 'Oppmøtelister', :controller => 'members', :action => :attendance_form_index %></li>
@@ -118,6 +132,10 @@
 			-->
 			<li><%=menu_item 'Versjon', :controller => 'info', :action => :versjon %></li>
 		</ul>
+		</div>
+		<%=javascript_tag update_page {|page|
+    		page.visual_effect(:toggle_blind, :members_menu, :duration => 0)
+  		}%>
 		<% end %>
 
 <!--

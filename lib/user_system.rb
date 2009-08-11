@@ -53,7 +53,7 @@ module UserSystem
     if token = cookies[:auth_token]
       user_by_token = User.find_by_security_token(token)
       if user_by_token
-        session['user'] = User.authenticate_by_token(user_by_token.id, token)
+        self.current_user = User.authenticate_by_token(user_by_token.id, token)
       end
     end
     true
@@ -71,7 +71,6 @@ module UserSystem
   end
   
   def authenticated_user?
-    store_current_user_in_thread
     return true if current_user
 
     if cookie = cookies[:autologin]
