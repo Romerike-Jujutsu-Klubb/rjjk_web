@@ -132,44 +132,46 @@ ActiveRecord::Schema.define(:version => 20090427180754) do
   end
 
   create_table "martial_arts", :force => true do |t|
-    t.string "name",   :limit => 16, :null => false
-    t.string "family", :limit => 16, :null => false
+    t.string "name",   :limit => 16,                 :null => false
+    t.string "family", :limit => 16, :default => "", :null => false
   end
 
   create_table "members", :force => true do |t|
-    t.string  "first_name",           :limit => 100, :default => "", :null => false
-    t.string  "last_name",            :limit => 100, :default => "", :null => false
-    t.string  "email",                :limit => 128
-    t.string  "phone_mobile",         :limit => 32
-    t.string  "phone_home",           :limit => 32
-    t.string  "phone_work",           :limit => 32
-    t.string  "phone_parent",         :limit => 32
-    t.date    "birthdate"
-    t.boolean "male",                                                :null => false
-    t.date    "joined_on"
-    t.integer "contract_id"
-    t.integer "cms_contract_id"
-    t.date    "left_on"
-    t.string  "parent_name",          :limit => 100
-    t.string  "address",              :limit => 100, :default => "", :null => false
-    t.string  "postal_code",          :limit => 4,                   :null => false
-    t.string  "billing_type",         :limit => 100
-    t.string  "billing_name",         :limit => 100
-    t.string  "billing_address",      :limit => 100
-    t.string  "billing_postal_code",  :limit => 4
-    t.boolean "payment_problem",                                     :null => false
-    t.string  "comment"
-    t.boolean "instructor",                                          :null => false
-    t.boolean "nkf_fee",                                             :null => false
-    t.string  "social_sec_no",        :limit => 11
-    t.string  "account_no",           :limit => 16
-    t.string  "billing_phone_home",   :limit => 32
-    t.string  "billing_phone_mobile", :limit => 32
-    t.string  "rfid",                 :limit => 25
-    t.binary  "image"
-    t.string  "image_name",           :limit => 64
-    t.string  "image_content_type",   :limit => 32
-    t.string  "kid",                  :limit => 64
+    t.string   "first_name",           :limit => 100, :default => "", :null => false
+    t.string   "last_name",            :limit => 100, :default => "", :null => false
+    t.string   "email",                :limit => 128
+    t.string   "phone_mobile",         :limit => 32
+    t.string   "phone_home",           :limit => 32
+    t.string   "phone_work",           :limit => 32
+    t.string   "phone_parent",         :limit => 32
+    t.date     "birthdate"
+    t.boolean  "male",                                                :null => false
+    t.date     "joined_on"
+    t.integer  "contract_id"
+    t.integer  "cms_contract_id"
+    t.date     "left_on"
+    t.string   "parent_name",          :limit => 100
+    t.string   "address",              :limit => 100, :default => "", :null => false
+    t.string   "postal_code",          :limit => 4,                   :null => false
+    t.string   "billing_type",         :limit => 100
+    t.string   "billing_name",         :limit => 100
+    t.string   "billing_address",      :limit => 100
+    t.string   "billing_postal_code",  :limit => 4
+    t.boolean  "payment_problem",                                     :null => false
+    t.string   "comment"
+    t.boolean  "instructor",                                          :null => false
+    t.boolean  "nkf_fee",                                             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "social_sec_no",        :limit => 11
+    t.string   "account_no",           :limit => 16
+    t.string   "billing_phone_home",   :limit => 32
+    t.string   "billing_phone_mobile", :limit => 32
+    t.string   "rfid",                 :limit => 25
+    t.binary   "image"
+    t.string   "image_name",           :limit => 64
+    t.string   "image_content_type",   :limit => 32
+    t.string   "kid",                  :limit => 64
   end
 
   create_table "news_items", :force => true do |t|
@@ -228,7 +230,7 @@ ActiveRecord::Schema.define(:version => 20090427180754) do
     t.string  "colour",          :limit => 48, :null => false
     t.integer "position",                      :null => false
     t.integer "martial_art_id",                :null => false
-    t.integer "standard_months",               :null => false
+    t.integer "standard_months"
   end
 
   create_table "users", :force => true do |t|

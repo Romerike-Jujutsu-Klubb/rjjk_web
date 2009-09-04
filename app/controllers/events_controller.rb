@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_filter :admin_required
+  before_filter :admin_required, :except => [:index, :show]
   
   def index
     @events = Event.find(:all)
