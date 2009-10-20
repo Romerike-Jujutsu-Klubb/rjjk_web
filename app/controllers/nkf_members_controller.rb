@@ -1,6 +1,8 @@
 class NkfMembersController < ApplicationController
   before_filter :admin_required
   
+  cache_sweeper :member_image_sweeper, :only => [:create_member]
+
   def index
     @nkf_members = NkfMember.all :order => 'fornavn, etternavn'
   end

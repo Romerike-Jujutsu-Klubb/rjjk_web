@@ -2,8 +2,6 @@ require 'user_system'
 
 class ApplicationController < ActionController::Base
   include UserSystem
-  session :session_key => '_rjjk_web_session_id'
-  # layout 'zenlike'
   layout 'dark_ritual'
   helper :user
 

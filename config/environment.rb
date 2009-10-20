@@ -49,7 +49,6 @@ Rails::Initializer.run do |config|
   config.gem 'activerecord-jdbcpostgresql-adapter', :lib => false
   config.gem 'RedCloth'
   config.gem 'gruff'
-  config.gem 'mongrel'
 end
 
 # Add new inflection rules using the following format 
