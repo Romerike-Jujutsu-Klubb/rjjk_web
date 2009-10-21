@@ -62,26 +62,26 @@ end
 
 # Include your application configuration below
 
-require 'config/environments/user_environment'
+require '/config/environments/user_environment'
 require 'csv'
 
 # FIXME(uwe): fix for activerecord-jdbc-adapter 0.9.  report bugs, remove fixes when fixed in jruby-postgres adaptor
-module ::JdbcSpec::PostgreSQL
-  def change_column_null(table_name, column_name, null, default = nil)
-    unless null || default.nil?
-      execute("UPDATE #{quote_table_name(table_name)} SET #{quote_column_name(column_name)}=#{quote(default)} WHERE #{quote_column_name(column_name)} IS NULL")
-    end
-    execute("ALTER TABLE #{quote_table_name(table_name)} ALTER #{quote_column_name(column_name)} #{null ? 'DROP' : 'SET'} NOT NULL")
-  end
-
-  def add_column(table_name, column_name, type, options = {})
-    default = options[:default]
-    notnull = options[:null] == false
-
-    # Add the column.
-    execute("ALTER TABLE #{quote_table_name(table_name)} ADD COLUMN #{quote_column_name(column_name)} #{type_to_sql(type, options[:limit], options[:precision], options[:scale])}")
-
-    change_column_default(table_name, column_name, default) if options_include_default?(options)
-    change_column_null(table_name, column_name, false, default) if notnull
-  end
-end
+#module ::JdbcSpec::PostgreSQL
+#  def change_column_null(table_name, column_name, null, default = nil)
+#    unless null || default.nil?
+#      execute("UPDATE #{quote_table_name(table_name)} SET #{quote_column_name(column_name)}=#{quote(default)} WHERE #{quote_column_name(column_name)} IS NULL")
+#    end
+#    execute("ALTER TABLE #{quote_table_name(table_name)} ALTER #{quote_column_name(column_name)} #{null ? 'DROP' : 'SET'} NOT NULL")
+#  end
+#
+#  def add_column(table_name, column_name, type, options = {})
+#    default = options[:default]
+#    notnull = options[:null] == false
+#
+#    # Add the column.
+#    execute("ALTER TABLE #{quote_table_name(table_name)} ADD COLUMN #{quote_column_name(column_name)} #{type_to_sql(type, options[:limit], options[:precision], options[:scale])}")
+#
+#    change_column_default(table_name, column_name, default) if options_include_default?(options)
+#    change_column_null(table_name, column_name, false, default) if notnull
+#  end
+#end
