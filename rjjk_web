@@ -15,11 +15,11 @@ pidfile=${PIDFILE-/u/apps/$APP/shared/log/glassfish.pid}
 APP_DIR="/u/apps/$APP/current"
 LOG_DIR="/u/apps/$APP/shared/log"
 
-START_CMD="cd $APP_DIR ; . use_jruby.sh ; jruby --server -S glassfish -d -p $PORT -e production -P $pidfile --runtimes-max 4 $APP_DIR 1>$LOG_DIR/stdout.log 2>$LOG_DIR/stderr.log"
+START_CMD="jruby --server -S glassfish -d -p $PORT -e production -P $pidfile --runtimes-max 4 $APP_DIR 1>$LOG_DIR/stdout.log 2>$LOG_DIR/stderr.log"
 STOP_CMD="kill `cat $pidfile`"
 
-export JRUBY_HOME=/usr/local/jruby
-export export PATH=$JRUBY_HOME/bin:$PATH
+cd $APP_DIR
+. use_jruby.sh
 
 USER=`whoami`
 
