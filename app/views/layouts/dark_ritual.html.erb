@@ -1,3 +1,4 @@
+require "nkf"
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
@@ -20,42 +21,52 @@
 
 <div class="container">
 
-	<div class="header">Romerike Jujutsu Klubb</div>
+	<div class="header">Romerike Jujutsu Klubb
+		<br/>
+		<span style="font-size: 10pt; text-align: center">
+			<%=link_to 'Log på NKF', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login', :target=> '_blank', :style => 'margin-right: 50px' %>
+			<%=link_to 'Bli medlem!', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :target=> '_blank' %>
+		</span>
+	</div>
 
 	<div class="main_right">
 
 		<div class="padded">
 			<%=image_tag 'rjjk_logo_&_txt_320.png', :style => 'width: 100%; border: 0' %>
-			<div style="width: 100%; text-align: center">
-				<%=link_to 'Bli medlem!', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :target=> '_blank' %>
-			</div>
-			<div style="width: 100%; text-align: center">
-				<%=link_to 'Log på NKF', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login', :target=> '_blank' %>
-			</div>
 			<% if admin? %>
 			<%=link_to image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :members, :action => :history_graph, :format => :png, :id => 1024 %>
 			<br/>
 			<br/>
 			<% end %>
 
-			<h2>Kommende hendelser:</h2>
+			<h2>Terminliste:</h2>
 			<br/>
 			<% for event in @events %>
-				<h3><%=link_to event.name, :controller => :events, :action => :show, :id => event.id%></h3>
-				<% if event.start_at.min != 0 || event.start_at.hour != 0 %>
-				  <%=event.start_at.strftime('%Y-%m-%d %H:%M')%>
+				<% ingress = event.description.slice(/^.*?<\/p>/)%>
+				<% if ingress %>
+				<h3><%=link_to event.name, :controller => :events, :action => :show, :id => event.id%>
 				<% else %>
-				  <%=event.start_at.strftime('%Y-%m-%d')%>
+				  <%=event.name %>
+				<% end %>
+				<% if event.start_at.min != 0 || event.start_at.hour != 0 %>
+				  <%=event.start_at.strftime('%d/%m %H:%M')%>
+				<% else %>
+				  <%=event.start_at.strftime('%d/%m')%>
 				<% end %>
 				<% if event.end_at %>
 				-
 				<%=event.end_at.strftime('%Y-%m-%d') if event.end_at.to_date != event.start_at.to_date %>
 				<%=event.end_at.strftime('%H:%M') if event.end_at.hour != 0 || event.end_at.min != 0%>
 				<% end %>
+				</h3>
 				<%=link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin?%>
 				
-				<p><%=ingress = event.description.slice(/^.*?<\/p>/)%></p>
-   				<% if event.description != ingress%>
+				<% if ingress %>
+				<p>
+					<%=ingress%>
+				</p>
+				<% end %>
+   				<% if ingress && event.description.size > ingress.size %>
 					<ul class="controls">
             			<li><%=link_to 'Les mer', {:controller => :events, :action => :show, :id => event.id}, :class => :edit %></li>
 					</ul>
