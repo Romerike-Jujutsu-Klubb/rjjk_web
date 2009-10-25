@@ -11,6 +11,7 @@ nb:
   active_record_errors_taken: has already been taken
   active_record_errors_not_a_number: is not a number  
   April: April
+  August: August
   connect: Koble
   create: Opprett
   December: Desember
