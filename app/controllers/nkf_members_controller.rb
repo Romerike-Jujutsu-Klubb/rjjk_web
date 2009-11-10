@@ -48,13 +48,19 @@ class NkfMembersController < ApplicationController
   end
   
   FIELD_MAP = {
+    :epost => :email,
     :etternavn => :last_name,
     :fodselsdato => :birthdate,
     :fornavn => :first_name,
     :innmeldtdato => :joined_on,
     :postnr => :postal_code,
+    :rabatt => nil,
+    :telefon => :phone_home,
+    :telefon_arbeid => :phone_work,
+    :updated_at => nil,
+    :utmeldtarsak => nil,
     :utmeldtdato => :left_on,
-    :epost => :email,
+    :yrke => nil,
   }
   
   def comparison
@@ -64,7 +70,6 @@ class NkfMembersController < ApplicationController
     nkf_members = NkfMember.all :conditions => 'member_id IS NOT NULL', :order => 'fornavn, etternavn'
     nkf_members.each do |nkfm|
       new_attributes = convert_attributes(nkfm.attributes)
-      p new_attributes
       member = nkfm.member
       member.attributes = new_attributes
       if member.changed?
@@ -117,7 +122,7 @@ class NkfMembersController < ApplicationController
           end
           new_attributes[FIELD_MAP[k.to_sym]] = v
         else
-          puts "Ignoring attribute: #{k}"
+          # Ignoring attribute
         end
       else
         puts "Unknown attribute: #{k}"
