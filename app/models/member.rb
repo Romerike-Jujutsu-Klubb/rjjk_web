@@ -98,7 +98,7 @@ class Member < ActiveRecord::Base
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     #g.legend_font_size = 14
     g.hide_dots = true
-    g.colors = %w{blue blue green orange red}
+    g.colors = %w{black blue green orange red}
     
     #first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = 5.years.ago.to_date
@@ -108,13 +108,17 @@ class Member < ActiveRecord::Base
     dates.reverse!
     active_clause = '"(joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
     totals = dates.map {|date| Member.count(:conditions => eval(active_clause))}
-    seniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birthdate IS NOT NULL AND birthdate < '#{self.senior_birthdate(date)}'")}
+    # seniors = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birthdate IS NOT NULL AND birthdate < '#{self.senior_birthdate(date)}'")}
+    seniors_ad = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birthdate IS NOT NULL AND birthdate < '#{self.senior_birthdate(date)}' AND martial_arts.name = 'Aikikai'", :include => {:groups => :martial_art})}
+    seniors_jj = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birthdate IS NOT NULL AND birthdate < '#{self.senior_birthdate(date)}' AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')", :include => {:groups => :martial_art})}
     juniors = dates.map {|date| Member.count(:conditions => ["(#{eval active_clause}) AND birthdate IS NOT NULL AND birthdate BETWEEN ? AND ?", self.senior_birthdate(date), self.junior_birthdate(date)])}
     aspirants = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birthdate IS NOT NULL AND birthdate >= '#{self.junior_birthdate(date)}'")}
     others = dates.map {|date| Member.count(:conditions => "(#{eval active_clause}) AND birthdate IS NULL")}
     0.upto(others.size){|i| others[i] = nil if others[i] == 0 && others[i - 1].to_i == 0}
     g.data("Totalt", totals)
-    g.data("Senior", seniors)
+    # g.data("Seniorer", seniors)
+    g.data("Aikido", seniors_ad)
+    g.data("Senior", seniors_jj)
     g.data("Junior", juniors)
     g.data("Aspiranter", aspirants)
     g.data("Uten fødselsdato", others)
