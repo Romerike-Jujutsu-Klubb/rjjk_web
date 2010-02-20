@@ -1,5 +1,5 @@
 set :application, "rjjk_web"
-set :repository, "svn+ssh://capistrano@kubosch.no/var/svn/trunk/#{application}"
+set :repository, "svn+ssh://capistrano@source.kubosch.no/var/svn/trunk/#{application}"
 
 role :app, "kubosch.no"
 role :db,  "kubosch.no", :primary => true
