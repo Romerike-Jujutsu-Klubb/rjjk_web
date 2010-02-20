@@ -88,7 +88,7 @@ class NkfMembersController < ApplicationController
     
     if member = Member.create!(attributes)
       nkf_member.update_attributes! :member_id => member.id
-      flash[:notice] = 'Member was successfully created.'
+      flash[:notice] = t(:member_created)
     else
       flash[:notice] = 'Member creation failed.'
     end

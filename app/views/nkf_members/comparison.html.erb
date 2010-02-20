@@ -6,9 +6,8 @@
 
 <div style="float: right">
   <%=link_to 'Hent nye oppdateringer fra NKF', :action => :import, :id => 0 %>
+  <div id="notice"><%=flash[:notice]%></div>
 </div>
-
-<div id="notice"><%=flash[:notice]%></div>
 
 <% if @orphan_nkf_members.empty? && @orphan_members.empty? && @members.empty?%>
 Det er ingen innkommende endringer fra NKF medlemsregister.
@@ -16,21 +15,26 @@ Det er ingen innkommende endringer fra NKF medlemsregister.
 
 <% if @orphan_nkf_members.size > 0 %>
 <h1>Nye medlemmer fra NKF-registeret (<%=@orphan_nkf_members.size%>)</h1>
+<br/>
 
 <table>
   <tr>
+<% unless @orphan_members.empty? %>
     <th>Ledige medlemmer</th>
+<% end %>
     <th align="left">Navn</th>
   </tr>
 
 <% for nkf_member in @orphan_nkf_members %>
   <tr>
+<% unless @orphan_members.empty? %>
   	<td>
 		<% form_for nkf_member do |f| %>
-			<%=f.select :member_id, [['', '']] + NkfMember.find_free_members.map{|m| [m.name, m.id]} %>
+			<%=f.select :member_id, [['', '']] + @orphan_members.map{|m| [m.name, m.id]} %>
 			<%=f.submit t(:connect) %>
 		<% end %>
   	</td>
+<% end %>
     <td><%=link_to "#{nkf_member.fornavn} #{nkf_member.etternavn}", :action => :show, :id => nkf_member.id %></td>
     <td><%=button_to t(:create), :controller => :nkf_members, :action => :create_member, :id => nkf_member.id %></td>
   </tr>

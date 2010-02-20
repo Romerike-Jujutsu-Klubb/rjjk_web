@@ -36,6 +36,7 @@ class NkfMemberImport
     import_rows.each do |row|
       attributes = {}
       columns.each_with_index do |column, i|
+        next if ['alder'].include? column
         attributes[column] = row[i]
       end
       record = NkfMember.find_by_medlemsnummer(row[0]) || NkfMember.new
@@ -115,8 +116,6 @@ class NkfMemberImport
       @cookies << cookie_value unless cookie_value =~ /^.*?=$/
     end
     @cookies.uniq!
-    puts "#{@cookies.size}:"
-    pp @cookies
   end
   
   def self.cookie_header
@@ -125,17 +124,7 @@ class NkfMemberImport
   end
   
   def self.process_response(title, response)
-    puts '#' * 80
-    puts "#{title}: #{response.code.inspect}"
-    puts '*' * 80
-    response.each_header do |h|
-      p h
-    end
-    puts '*' * 80
-    puts @iconv.iconv(response.body)
-    puts '*' * 80
     store_cookie(response)
-    
     if response.code == '302'
       puts "Following redirect to #{response['location']}"
       url = URI.parse(response['location'])
