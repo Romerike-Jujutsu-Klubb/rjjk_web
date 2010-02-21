@@ -48,13 +48,41 @@ class NkfMembersController < ApplicationController
   end
   
   FIELD_MAP = {
+    :adresse_1 => :address,
+    :adresse_2 => nil,
+    :adresse_3 => nil,
+    :antall_etiketter_1 => nil,
+    :betalt_t_o_m__dato => nil,
+    :created_at => nil,
     :epost => :email,
+    :epost_faktura => nil,
     :etternavn => :last_name,
     :fodselsdato => :birthdate,
     :fornavn => :first_name,
+    :gren_stilart_avd_parti___gren_stilart_avd_parti => nil,
+    :hovedmedlem_id => nil,
+    :hovedmedlem_navn => nil,
+    :id => nil,
+    :innmeldtarsak => nil,
     :innmeldtdato => :joined_on,
+    :klubb => nil,
+    :klubb_id => nil,
+    :konkurranseomrade_id => nil,
+    :konkurranseomrade_navn => nil,
+    :kont_belop => nil,
+    :kont_sats => nil,
+    :kontraktsbelop => nil,
+    :kontraktstype => nil,
+    :medlemskategori => nil,
+    :medlemskategori_navn => nil,
+    :medlemsnummer => nil,
+    :medlemsstatus => nil,
+    :member_id => nil,
+    :mobil => :phone_mobile,
     :postnr => :postal_code,
     :rabatt => nil,
+    :sist_betalt_dato => nil,
+    :sted => nil,
     :telefon => :phone_home,
     :telefon_arbeid => :phone_work,
     :updated_at => nil,
@@ -125,7 +153,7 @@ class NkfMembersController < ApplicationController
           # Ignoring attribute
         end
       else
-        puts "Unknown attribute: #{k}"
+        logger.error "Unknown attribute: #{k}"
       end
     end
     return new_attributes

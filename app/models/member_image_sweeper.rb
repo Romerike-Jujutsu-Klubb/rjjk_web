@@ -2,7 +2,6 @@ class MemberImageSweeper < ActionController::Caching::Sweeper
   observe Member
   
   def after_create(member)
-    5.times{puts '*' * 80}
     expire_image(member)
   end
   
