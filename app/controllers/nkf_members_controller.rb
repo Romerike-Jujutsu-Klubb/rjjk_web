@@ -48,8 +48,8 @@ class NkfMembersController < ApplicationController
   end
   
   FIELD_MAP = {
-    :adresse_1 => :address,
-    :adresse_2 => nil,
+    :adresse_1 => nil,
+    :adresse_2 => :address,
     :adresse_3 => nil,
     :antall_etiketter_1 => nil,
     :betalt_t_o_m__dato => nil,
