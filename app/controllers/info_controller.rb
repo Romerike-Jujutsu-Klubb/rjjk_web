@@ -73,7 +73,7 @@ class InfoController < ApplicationController
 
   def destroy
     InformationPage.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    redirect_to :controller => :news, :action => :index
   end
   
 end

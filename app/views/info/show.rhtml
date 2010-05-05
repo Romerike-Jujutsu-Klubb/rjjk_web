@@ -11,5 +11,6 @@
 
 <ul class="controls">
   <li><%=link_to 'Rediger', {:action => 'rediger', :id => @information_page}, :class => :edit %></li>
+  <li><%=link_to 'Slett', {:action => 'destroy', :id => @information_page}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
 </ul>
 <% end %>
