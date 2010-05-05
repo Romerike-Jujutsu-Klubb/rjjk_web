@@ -59,6 +59,10 @@ module UserSystem
     true
   end
   
+  def clear_user
+    Thread.current[:user] = nil
+  end
+  
   def user?
     authenticated_user?
   end

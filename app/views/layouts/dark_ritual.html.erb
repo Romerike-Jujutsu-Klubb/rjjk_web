@@ -24,7 +24,7 @@ require "nkf"
 	<div class="header">Romerike Jujutsu Klubb
 		<br/>
 		<span style="font-size: 10pt; text-align: center">
-			<%=link_to 'Log på NKF', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login', :target=> '_blank', :style => 'margin-right: 50px' %>
+			<%=link_to 'Logg på NKF', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login', :target=> '_blank', :style => 'margin-right: 50px' %>
 			<%=link_to 'Bli medlem!', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :target=> '_blank' %>
 		</span>
 	</div>
@@ -39,8 +39,6 @@ require "nkf"
 			<br/>
 			<% end %>
 
-			<h2>Terminliste:</h2>
-			<br/>
 			<% for event in @events %>
 				<% ingress = event.description.slice(/^.*?<\/p>/)%>
 				<h3>

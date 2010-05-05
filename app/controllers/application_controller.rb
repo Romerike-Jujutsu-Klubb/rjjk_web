@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_filter :store_current_user_in_thread
   before_filter :load_layout_model
   live_tree :information_tree, :model => :information_page, :get_item_name_proc => Proc.new {|page| page.title}
+  after_filter :clear_user
 
   private
   
