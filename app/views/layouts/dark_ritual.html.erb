@@ -41,7 +41,8 @@ require "nkf"
 			<% end %>
 
 			<% for event in @events %>
-				<% ingress = event.description.slice(/^.*?<\/p>/)%>
+				<% ingress = event.description.slice(/^.*?<\/p>/).try(:chomp, '</p>') %>
+				<% ingress = nil if ingress.blank? %>
 				<h3>
 				<% if ingress %>
 					<%=link_to event.name, :controller => :events, :action => :show, :id => event.id%>
