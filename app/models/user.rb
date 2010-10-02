@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   validates_length_of :password, { :maximum => 40, :if => :validate_password? }
 
   def validate
-    if role && (user.nil? || user.role.nil?)
+    if role_changed? && (user.nil? || user.role.nil?)
       errors.add(:role, 'Bare administratorer kan gi administratorrettigheter.') 
     end
   end

@@ -39,7 +39,7 @@
 	  <% date_totals[d] ||= 0 %>
 	  <% date_totals[d] += 1 %>
     <td id="attendance_<%=member.id%>_<%=d.day%>" align="center" onclick="<%= remote_function(:update => "attendance_#{member.id}_#{d.day}",
-      :url => { :controller => :attendances, :action => :destroy, :id => attendance.id }) %>">
+      :url => { :controller => :attendances, :action => :destroy, :id => attendance.id}, :method => :delete) %>">
 		<%=params[:x] ? 'X' : image_tag('accept.png')%>
 	</td>
 	<% else %>
