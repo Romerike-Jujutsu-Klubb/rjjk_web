@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
@@ -22,16 +22,16 @@
 	<div class="header">Romerike Jujutsu Klubb
 		<br/>
 		<span style="font-size: 10pt; text-align: center">
-			<%=link_to 'Logg på NKF', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login', :target=> '_blank', :style => 'margin-right: 50px' %>
-			<%=link_to 'Bli medlem!', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :target=> '_blank' %>
-			<%=link_to 'FaceBook', 'http://www.facebook.com/home.php#!/pages/Romerike-Jujutsu-Klubb/260684570923?ref=ts', :target=> '_blank' %>
+			<%=link_to 'Logg på NKF', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login', :onclick => 'return !window.open(this.href)', :style => 'margin-right: 50px' %>
+			<%=link_to 'Bli medlem!', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)' %>
+			<%=link_to 'FaceBook', 'http://www.facebook.com/home.php#!/pages/Romerike-Jujutsu-Klubb/260684570923?ref=ts', :onclick => 'return !window.open(this.href)' %>
 		</span>
 	</div>
 
 	<div class="main_right">
 
 		<div class="padded">
-			<%=image_tag 'rjjk_logo_&_txt_320.png', :style => 'width: 100%; border: 0' %>
+			<%=image_tag 'rjjk_logo_&_txt_320.png', :style => 'width: 182px; height: 181px; border: 0' %>
 			<% if admin? %>
 			<%=link_to image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :members, :action => :history_graph, :format => :png, :id => 1024 %>
 			<br/>
