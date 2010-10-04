@@ -6,4 +6,9 @@ class Group < ActiveRecord::Base
   def full_name
     "#{martial_art.name} #{name}"
   end
+  
+  def contains_age(age)
+    age >= from_age && age <= to_age
+  end
+  
 end

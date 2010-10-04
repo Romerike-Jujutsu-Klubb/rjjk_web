@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090427180754) do
+ActiveRecord::Schema.define(:version => 20101003062628) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -180,6 +180,23 @@ ActiveRecord::Schema.define(:version => 20090427180754) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "created_by"
+  end
+
+  create_table "nkf_member_trials", :force => true do |t|
+    t.string   "medlems_type", :limit => 16, :null => false
+    t.string   "etternavn",    :limit => 32, :null => false
+    t.string   "fornavn",      :limit => 32, :null => false
+    t.date     "fodtdato",                   :null => false
+    t.integer  "alder",                      :null => false
+    t.string   "postnr",       :limit => 4,  :null => false
+    t.string   "sted",         :limit => 32, :null => false
+    t.string   "adresse",      :limit => 64, :null => false
+    t.string   "epost",        :limit => 64, :null => false
+    t.string   "mobil",        :limit => 16, :null => false
+    t.boolean  "res_sms",                    :null => false
+    t.date     "reg_dato",                   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "nkf_members", :force => true do |t|

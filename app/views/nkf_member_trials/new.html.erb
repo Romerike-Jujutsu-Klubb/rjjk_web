@@ -1,0 +1,59 @@
+<h1>New nkf_member_trial</h1>
+
+<% form_for(@nkf_member_trial) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :medlems_type %><br />
+    <%= f.text_field :medlems_type %>
+  </p>
+  <p>
+    <%= f.label :etternavn %><br />
+    <%= f.text_field :etternavn %>
+  </p>
+  <p>
+    <%= f.label :fornavn %><br />
+    <%= f.text_field :fornavn %>
+  </p>
+  <p>
+    <%= f.label :fodtdato %><br />
+    <%= f.date_select :fodtdato %>
+  </p>
+  <p>
+    <%= f.label :alder %><br />
+    <%= f.text_field :alder %>
+  </p>
+  <p>
+    <%= f.label :postnr %><br />
+    <%= f.text_field :postnr %>
+  </p>
+  <p>
+    <%= f.label :sted %><br />
+    <%= f.text_field :sted %>
+  </p>
+  <p>
+    <%= f.label :adresse %><br />
+    <%= f.text_field :adresse %>
+  </p>
+  <p>
+    <%= f.label :epost %><br />
+    <%= f.text_field :epost %>
+  </p>
+  <p>
+    <%= f.label :mobil %><br />
+    <%= f.text_field :mobil %>
+  </p>
+  <p>
+    <%= f.label :res_sms %><br />
+    <%= f.check_box :res_sms %>
+  </p>
+  <p>
+    <%= f.label :reg_dato %><br />
+    <%= f.date_select :reg_dato %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', nkf_member_trials_path %>

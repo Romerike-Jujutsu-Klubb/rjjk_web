@@ -107,7 +107,7 @@ input.half {width: 7.5em;}
 <p>
 <% @groups.each do |g| %>
   <%=check_box_tag "member_group_ids[#{g.id}]", g.id, @member.groups.include?(g) %>
-  <label for="member_group_ids[<%=g.id%>]"><%="#{g.martial_art.name} #{g.name}"%></label><br/>
+  <label for="member_group_ids_<%=g.id%>" <%='style="font-weight: bold"' if g.contains_age(@member.age)%> ><%="#{g.martial_art.name} #{g.name}"%></label><br/>
 <% end %>
 </p>
 

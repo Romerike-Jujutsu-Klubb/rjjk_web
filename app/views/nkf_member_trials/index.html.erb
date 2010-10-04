@@ -1,0 +1,42 @@
+<h1>Listing nkf_member_trials</h1>
+
+<table>
+  <tr>
+    <th>Medlems type</th>
+    <th>Etternavn</th>
+    <th>Fornavn</th>
+    <th>Fodtdato</th>
+    <th>Alder</th>
+    <th>Postnr</th>
+    <th>Sted</th>
+    <th>Adresse</th>
+    <th>Epost</th>
+    <th>Mobil</th>
+    <th>Res sms</th>
+    <th>Reg dato</th>
+  </tr>
+
+<% @nkf_member_trials.each do |nkf_member_trial| %>
+  <tr>
+    <td><%=h nkf_member_trial.medlems_type %></td>
+    <td><%=h nkf_member_trial.etternavn %></td>
+    <td><%=h nkf_member_trial.fornavn %></td>
+    <td><%=h nkf_member_trial.fodtdato %></td>
+    <td><%=h nkf_member_trial.alder %></td>
+    <td><%=h nkf_member_trial.postnr %></td>
+    <td><%=h nkf_member_trial.sted %></td>
+    <td><%=h nkf_member_trial.adresse %></td>
+    <td><%=h nkf_member_trial.epost %></td>
+    <td><%=h nkf_member_trial.mobil %></td>
+    <td><%=h nkf_member_trial.res_sms %></td>
+    <td><%=h nkf_member_trial.reg_dato %></td>
+    <td><%= link_to 'Show', nkf_member_trial %></td>
+    <td><%= link_to 'Edit', edit_nkf_member_trial_path(nkf_member_trial) %></td>
+    <td><%= link_to 'Destroy', nkf_member_trial, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New nkf_member_trial', new_nkf_member_trial_path %>

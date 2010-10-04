@@ -1,0 +1,29 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  medlems_type: MyString
+  etternavn: MyString
+  fornavn: MyString
+  fodtdato: 2010-10-03
+  alder: 1
+  postnr: MyString
+  sted: MyString
+  adresse: MyString
+  epost: MyString
+  mobil: MyString
+  res_sms: false
+  reg_dato: 2010-10-03
+
+two:
+  medlems_type: MyString
+  etternavn: MyString
+  fornavn: MyString
+  fodtdato: 2010-10-03
+  alder: 1
+  postnr: MyString
+  sted: MyString
+  adresse: MyString
+  epost: MyString
+  mobil: MyString
+  res_sms: false
+  reg_dato: 2010-10-03

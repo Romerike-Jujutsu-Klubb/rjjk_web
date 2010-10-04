@@ -54,6 +54,22 @@
   </tr>
 <% end %>
 
+<% if @trials %>
+  <% @trials.each do |trial| %>
+    <tr class="<%=cycle('odd', 'even') %>">
+      <td><%="#{trial.fornavn} #{trial.etternavn}"%></td>
+	  <td align="center">prøvetid til <%=(trial.reg_dato + 14).strftime('%Y-%m-%d')%></td>
+  <% if birthdate_missing %>
+      <td>&nbsp;</td>
+  <% end %>
+  <% dates.each do |d| %>
+      <td>&nbsp;</td>
+  <% end %>
+      <td>&nbsp;</td>
+    </tr>
+  <% end %>
+<% end %>
+
 <% 10.times do %>
   <tr class="<%=cycle('odd', 'even') %>">
     <td colspan="2"><%='&nbsp;' * 35 %></td>
