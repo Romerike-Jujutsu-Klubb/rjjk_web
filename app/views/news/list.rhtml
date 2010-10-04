@@ -5,23 +5,18 @@
 			<h3><%=h @news_item.title%></h3>
 			<div class="contentarea">
 				<div class="details">
-				<%="Skrevet av #{@news_item.creator.name}" if @news_item.creator%></a>
+				<%="Skrevet av #{@news_item.creator.name}" if @news_item.creator%>
    				<%=@news_item.created_at.strftime '%Y-%m-%d'%>
 				</div>	
 				<!-- Normal content area start -->
 				<%=textilize @news_item.body %>
 
+						<% if user? %>
 						<ul class="controls">
-<!--
-							<li><a href="#" class="printerfriendly">Printer Friendly</a></li>
-							<li><a href="#" class="comments">Comments (18)</a></li>
-							<li><a href="<%=url_for :action => :show, :id => @news_item %>" class="more">Read More</a></li>				
--->
-							<% if user? %>
 							<li><a href="<%=url_for :action => :edit, :id => @news_item %>" class="edit">Redigèr</a></li>
 							<li><%=link_to 'Slett', {:action => :destroy, :id => @news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>				
-							<% end %>
 						</ul>
+						<% end %>
 
 				<!-- Normal content area end -->
 			</div>
@@ -44,22 +39,17 @@
 					<h4><%=h @news_item.title %></h4>
 					<div class="contentarea">
 						<div class="details">
-						<%="Skrevet av #{@news_item.creator.name}" if @news_item.creator%></a>
+						<%="Skrevet av #{@news_item.creator.name}" if @news_item.creator%>
         				<%=@news_item.created_at.strftime '%Y-%m-%d'%>
 				        </div>	
 						<%=textilize @news_item.body %>
 
+						<% if user? %>
 						<ul class="controls">
-<!--
-							<li><a href="#" class="printerfriendly">Printer Friendly</a></li>
-							<li><a href="#" class="comments">Comments (18)</a></li>
-							<li><a href="<%=url_for :action => :show, :id => @news_item %>" class="more">Read More</a></li>				
--->
-							<% if user? %>
 							<li><a href="<%=url_for :action => :edit, :id => @news_item %>" class="edit">Redigèr</a></li>				
 							<li><%=link_to 'Slett', {:action => :destroy, :id => @news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>				
-							<% end %>
 						</ul>
+						<% end %>
 
 					</div>
 				</div>

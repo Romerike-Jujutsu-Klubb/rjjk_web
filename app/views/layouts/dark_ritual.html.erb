@@ -39,7 +39,7 @@
 			<% end %>
 
 			<% for event in @events %>
-				<% ingress = event.description.slice(/^.*?<\/p>/).try(:chomp, '</p>') %>
+				<% ingress = event.ingress %>
 				<% ingress = nil if ingress.blank? %>
 				<h3>
 				<% if ingress %>
@@ -61,9 +61,7 @@
 				<%=link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin?%>
 				
 				<% if ingress %>
-				<p>
-					<%=ingress%>
-				</p>
+				  <%=ingress%>
 				<% end %>
    				<% if ingress && event.description.size > ingress.size %>
 					<ul class="controls">
