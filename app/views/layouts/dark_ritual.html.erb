@@ -102,9 +102,9 @@
 		</ul>
 
    			<% if admin? %>
-		<%=link_to_function("<h1>Administrasjon</h1>") do |page|
+		<h1><%=link_to_function("Administrasjon") do |page|
     		page.visual_effect(:toggle_blind, :admin_menu)
-  		end%>
+  		end%></h1>
 		<div id="admin_menu">
 		<ul>
    			<li><%= link_to 'Ny nyhet', :controller => 'news', :action => 'new' %></li>
