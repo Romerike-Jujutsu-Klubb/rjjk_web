@@ -87,7 +87,7 @@ class MembersController < ApplicationController
         @group = Group.find(params[:group_id])
         @members = @group.members
         @members = @members.sort_by {|m| [m.current_rank(@group.martial_art) ? -m.current_rank(@group.martial_art).position : 99, m.first_name, m.last_name]}
-        @trials = NkfMemberTrial.all(:conditions => ['alder BETWEEN ? AND ?', @group.from_age, @group.to_age])
+        @trials = NkfMemberTrial.all(:conditions => ['alder BETWEEN ? AND ?', @group.from_age, @group.to_age], :order => 'reg_dato')
       end
     else
       @members = []
