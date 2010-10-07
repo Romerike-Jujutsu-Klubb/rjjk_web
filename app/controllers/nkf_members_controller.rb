@@ -88,6 +88,7 @@ class NkfMembersController < ApplicationController
     :updated_at => nil,
     :utmeldtarsak => nil,
     :utmeldtdato => :left_on,
+    :ventekid => nil,
     :yrke => nil,
   }
   

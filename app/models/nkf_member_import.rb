@@ -17,21 +17,63 @@ class NkfMemberImport
 
     url = URI.parse(front_page_url)
     Net::HTTP.start(url.host, url.port) do |http|
-      search_url = '/portal/page/portal/ks_utv/ks_reg_medladm?f_informasjon=skjul&f_utvalg=vis&frm_27_v01=&frm_27_v02=&frm_27_v03=&frm_27_v04=40001062&frm_27_v05=1&frm_27_v06=1&frm_27_v07=1034&frm_27_v10=162&frm_27_v12=O&frm_27_v13=&frm_27_v15=Romerike%20Jujutsu%20Klubb&frm_27_v16=Stasjonsvn.%2017&frm_27_v17=P.b.%20157&frm_27_v18=2011&frm_27_v20=47326154&frm_27_v21=&frm_27_v22=post%40jujutsu.no&frm_27_v23=70350537706&frm_27_v24=&frm_27_v25=http%3A%2F%2Fjujutsu.no%2F&frm_27_v26=&frm_27_v27=N&frm_27_v29=0&frm_27_v30=&frm_27_v31=&frm_27_v32=&frm_27_v33=&frm_27_v34=%3D&frm_27_v35=&frm_27_v36=&frm_27_v37=-1&frm_27_v38=&frm_27_v39=&frm_27_v40=&frm_27_v41=&frm_27_v42=&frm_27_v44=%3D&frm_27_v45=%3D&frm_27_v46=11&frm_27_v47=11&frm_27_v48=&frm_27_v49=N&frm_27_v50=134002.PNG&frm_27_v53=-1&frm_27_v54=&p_ks_reg_medladm_action=SEARCH&p_mode=&p_page_search='
+      search_url = '/portal/page/portal/ks_utv/ks_reg_medladm?f_informasjon=skjul&f_utvalg=vis&frm_27_v04=40001062&frm_27_v05=1&frm_27_v06=1&frm_27_v07=1034&frm_27_v10=162&frm_27_v12=O&frm_27_v15=Romerike%20Jujutsu%20Klubb&frm_27_v16=Stasjonsvn.%2017&frm_27_v17=P.b.%20157&frm_27_v18=2011&frm_27_v20=47326154&frm_27_v22=post%40jujutsu.no&frm_27_v23=70350537706&frm_27_v25=http%3A%2F%2Fjujutsu.no%2F&frm_27_v27=N&frm_27_v29=0&frm_27_v34=%3D&frm_27_v37=-1&frm_27_v44=%3D&frm_27_v45=%3D&frm_27_v46=11&frm_27_v47=11&frm_27_v49=N&frm_27_v50=134002.PNG&frm_27_v53=-1&p_ks_reg_medladm_action=SEARCH&p_page_search='
       logger.debug "Fetching #{search_url}"
       html_search_response = http.get(search_url, cookie_header.update('Content-Type' => 'application/octet-stream'))
       html_search_body = html_search_response.body
       process_response 'html search', html_search_response
       download_codes = html_search_body.scan /Download27\('(.*?)'\)/
+      detail_codes = html_search_body.scan(/edit_click27\('(.*?)'\)/).map{|dc| dc[0]}
+      more_pages = html_search_body.scan(/<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)<\/a>/).map{|r| r[0]}
+      more_pages.each do |p|
+        more_search_url = search_url + p
+        logger.debug "Fetching #{more_search_url}"
+        more_search_response = http.get(more_search_url, cookie_header.update('Content-Type' => 'application/octet-stream'))
+        more_search_body = more_search_response.body
+        process_response 'more search', more_search_response
+        detail_codes += more_search_body.scan(/edit_click27\('(.*?)'\)/).map{|dc| dc[0]}
+      end
 
       raise download_codes.inspect unless download_codes && download_codes[0] && download_codes[0][0]
-      
+
       members_url = 'http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=' + download_codes[0][0]
       logger.debug "Getting #{members_url}"
       members_response = http.get(members_url, cookie_header)
       members_body = members_response.body
       process_response 'members', members_response
-      import_rows = members_body.split("\n").map{|line| @iconv.iconv(line.chomp).split(';')}
+      import_rows = members_body.split("\n").map{|line| @iconv.iconv(line.chomp).split(';', -1)[0..-2]}
+
+      import_rows[0] << 'ventekid'
+
+      detail_codes.each do |dc|
+        logger.debug "Getting details #{dc}"
+        details_url = "http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_medlprofil?p_cr_par=" + dc
+        logger.debug "Getting #{details_url}"
+        begin
+          details_response = http.get(details_url, cookie_header)
+        rescue EOFError, SystemCallError
+          logger.error $!.message
+          retry
+        end
+        details_body = details_response.body
+        process_response 'details', details_response
+        if details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+)">/
+          member_id = $1
+          if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
+            active = true
+          else
+            active = false
+          end
+          if details_body =~ /<span class="kid_1">(\d+)<\/span><span class="kid_2">(\d+)<\/span>/
+            waiting_kid = "#$1#$2"
+          end
+          raise "Both Active status and waiting kid was found" if active && waiting_kid
+          raise "Neither active status nor waiting kid was found" if !active && !waiting_kid
+          import_rows.find{|ir| ir[0] == member_id} << waiting_kid
+        else
+          raise "Could not find member id"
+        end
+      end
 
       trial_url = 'http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + download_codes[0][0]
       logger.debug "Getting #{trial_url}"
@@ -56,7 +98,7 @@ class NkfMemberImport
     import_rows.each do |row|
       attributes = {}
       columns.each_with_index do |column, i|
-        next if ['alder'].include? column
+        next if column == 'alder'
         attributes[column] = row[i]
       end
       record = NkfMember.find_by_medlemsnummer(row[0]) || NkfMember.new
@@ -71,7 +113,7 @@ class NkfMemberImport
         if record.save
           @changes << record.changes
         else
-          puts "ERROR: #{record.errors.to_a.join(', ')}"
+          logger.error "ERROR: #{record.errors.to_a.join(', ')}"
           @error_records << record
         end
       end
@@ -97,7 +139,7 @@ class NkfMemberImport
         if record.save
           @changes << record.changes
         else
-          puts "ERROR: #{record.errors.to_a.join(', ')}"
+          logger.error "ERROR: #{record.errors.to_a.join(', ')}"
           @error_records << record
         end
       end
@@ -113,7 +155,12 @@ class NkfMemberImport
     url = URI.parse('http://nkfwww.kampsport.no/')
     login_content = nil
     Net::HTTP.start(url.host, url.port) do |http|
-      login_form_response = http.get '/portal/page/portal/ks_utv/st_login', cookie_header
+      begin
+        login_form_response = http.get '/portal/page/portal/ks_utv/st_login', cookie_header
+      rescue EOFError, SystemCallError
+        logger.error $!.message
+        retry
+      end
       login_content = login_form_response.body
       process_response 'login form', login_form_response
     end
@@ -169,7 +216,7 @@ class NkfMemberImport
   def self.process_response(title, response)
     store_cookie(response)
     if response.code == '302'
-      puts "Following redirect to #{response['location']}"
+      logger.debug "Following redirect to #{response['location']}"
       url = URI.parse(response['location'])
       Net::HTTP.start(url.host, url.port) do |http|
         redirect_response = http.get "#{url.path}?#{url.query}", cookie_header

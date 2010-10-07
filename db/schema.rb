@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101003062628) do
+ActiveRecord::Schema.define(:version => 20101007195030) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -240,6 +240,7 @@ ActiveRecord::Schema.define(:version => 20101003062628) do
     t.string   "antall_etiketter_1"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ventekid",                                        :limit => 20
   end
 
   create_table "ranks", :force => true do |t|

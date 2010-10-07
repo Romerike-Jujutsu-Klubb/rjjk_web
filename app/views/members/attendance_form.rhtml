@@ -25,7 +25,14 @@
 <% for member in @members %>
   <tr class="<%=cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
     <td onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'"><%=h member.first_name %> <%=h member.last_name %></td>
-    <td><%=h @group && member.current_rank(@group.martial_art) && member.current_rank(@group.martial_art).name %>&nbsp;</td>
+    <td>
+    	<% if @group %>
+    	  <%=h member.current_rank(@group.martial_art).try(:name) %>
+		<% else %>
+		  &nbsp;
+		<% end %>
+		<%="Mangler kontrakt: #{member.nkf_member.ventekid}" if member.nkf_member.ventekid %>
+	</td>
 <% if birthdate_missing %>
     <td><%=h member.birthdate %>&nbsp;</td>
 <% end %>
