@@ -124,6 +124,7 @@ class NkfMemberImport
     header_fields = member_trial_rows.shift
     columns = header_fields.map{|f| field2column(f)}
     logger.debug "Found #{member_trial_rows.size} member trials"
+    NkfMemberTrial.delete_all
     member_trial_rows.each do |row|
       attributes = {}
       columns.each_with_index do |column, i|
