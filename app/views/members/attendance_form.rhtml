@@ -31,7 +31,7 @@
 		<% else %>
 		  &nbsp;
 		<% end %>
-		<%="Mangler kontrakt: #{member.nkf_member.ventekid}" if member.nkf_member.ventekid && member.nkf_member.ventekid !~ /^333000000004/ %>
+		<%="<br/>Mangler kontrakt<br/>#{member.nkf_member.ventekid}" if member.nkf_member.ventekid && member.nkf_member.ventekid !~ /^333000000004/ %>
 	</td>
 <% if birthdate_missing %>
     <td><%=h member.birthdate %>&nbsp;</td>
