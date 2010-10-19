@@ -34,13 +34,13 @@
         <br/><%=member.nkf_member.epost%><br/><%=member.nkf_member.ventekid %>
 	  <% end %>
     </td>
-    <td>
+    <td nowrap="true">
     	<% if @group %>
     	  <%=h member.current_rank(@group.martial_art).try(:name) %>
 		<% else %>
 		  &nbsp;
 		<% end %>
-		<%="<br/>Mangler kontrakt" if missing_contract %>
+		<%="<br/>Mangler kontrakt<br/>Innmeldt: #{member.joined_on.strftime('%Y-%m-%d')}" if missing_contract %>
 	</td>
 <% if birthdate_missing %>
     <td><%=h member.birthdate %>&nbsp;</td>
@@ -79,7 +79,7 @@
       	<%="#{trial.fornavn} #{trial.etternavn}"%><br/>
       	<%=trial.epost%>
       </td>
-	  <td align="center">
+	  <td align="center" nowrap="true">
 	  	Prøvetid til<br/>
 		<%=(trial.reg_dato + 14).strftime('%Y-%m-%d')%>
 	  	<%="<br/>Mangler kontrakt!" if missing_contract %>
