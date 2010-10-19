@@ -135,6 +135,7 @@ class Member < ActiveRecord::Base
       
       precision = 1
       g.maximum_value = (g.maximum_value.to_s[0..precision].to_i + 1) * (10**(Math::log10(g.maximum_value.to_i).to_i - precision)) if g.maximum_value > 0
+      g.maximum_value = [100, g.maximum_value].max
       g.marker_count = g.maximum_value / 10
       g.to_blob
     end
