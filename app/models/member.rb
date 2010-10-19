@@ -35,8 +35,8 @@ class Member < ActiveRecord::Base
   end
 
   def self.find_by_contents(query, options = {})
-    find(:all, {
-      :conditions => ['UPPER(first_name) LIKE ? OR UPPER(last_name) LIKE ?', *([query.upcase] * 2)],
+    all({
+      :conditions => ['UPPER(first_name) LIKE ? OR UPPER(last_name) LIKE ?', *(["%#{query.upcase}%"] * 2)],
       :order => 'first_name, last_name',
     }.update(options))
   end

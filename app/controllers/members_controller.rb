@@ -19,14 +19,8 @@ class MembersController < ApplicationController
     @title = "Søk i medlemsregisteret"
     if params[:q]
       query = params[:q]
-#      begin
-        @members = Member.find_by_contents(query, :limit => :all)
-        # Sort by last name (requires a spec for each user).
-        @members = @members.sort_by { |member| member.last_name }
-      #rescue Ferret::QueryParser::QueryParseException
- #     rescue
-  #      @invalid = true
-   #   end
+      @members = Member.find_by_contents(query, :limit => :all)
+      @members = @members.sort_by { |member| member.last_name }
     end
   end
   
@@ -266,7 +260,7 @@ class MembersController < ApplicationController
     end
     render :layout => 'print'
   end
-
+  
   def grading_form_for_censor
     grading_form
   end
