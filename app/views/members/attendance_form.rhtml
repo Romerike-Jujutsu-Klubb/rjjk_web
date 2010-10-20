@@ -82,7 +82,7 @@
 	  <td align="center" nowrap="true">
 	  	Prøvetid til<br/>
 		<%=(trial.reg_dato + 14).strftime('%Y-%m-%d')%>
-	  	<%="<br/>Mangler kontrakt!" if missing_contract %>
+	  	<%="<br/>Mangler kontrakt" if missing_contract %>
       </td>
   <% if birthdate_missing %>
       <td>&nbsp;</td>
