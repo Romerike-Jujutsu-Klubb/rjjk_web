@@ -6,7 +6,7 @@
 <% dates = (first_date..last_date).select{|d|weekdays.include? d.wday} %>
 <% birthdate_missing = @members.empty? || @members.find{|m|m.birthdate.nil?} %>
 <% date_totals = {} %>
-<% blank_lines = 41 %>
+<% blank_lines = 43 %>
 
 <table width="100%">
   <thead>
