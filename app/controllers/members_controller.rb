@@ -269,6 +269,7 @@ class MembersController < ApplicationController
     member = Member.find(params[:id])
     @name = "#{member.first_name} #{member.last_name}"
     @email = member.email
+    render :layout => 'print'
   end
   
   def trial_missing_contract
