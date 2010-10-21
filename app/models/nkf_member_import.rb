@@ -22,6 +22,7 @@ class NkfMemberImport
       html_search_response = http.get(search_url, cookie_header.update('Content-Type' => 'application/octet-stream'))
       html_search_body = html_search_response.body
       process_response 'html search', html_search_response
+      extra_function_code = html_search_body.scan(/start_tilleggsfunk27\('(.*?)'\)/)[0][0]
       download_codes = html_search_body.scan /Download27\('(.*?)'\)/
       detail_codes = html_search_body.scan(/edit_click27\('(.*?)'\)/).map{|dc| dc[0]}
       more_pages = html_search_body.scan(/<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)<\/a>/).map{|r| r[0]}
@@ -75,12 +76,56 @@ class NkfMemberImport
         end
       end
 
-      trial_url = 'http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + download_codes[0][0]
+      trial_csv_url = 'http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + download_codes[0][0]
+      logger.debug "Getting #{trial_csv_url}"
+      member_trials_csv_response = http.get(trial_csv_url, cookie_header)
+      member_trials_csv_body = member_trials_csv_response.body
+      process_response 'member trials csv', member_trials_csv_response
+      member_trial_rows = member_trials_csv_body.split("\n").map{|line| @iconv.iconv(line.chomp).split(';')}
+
+      trial_url = 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_cr_par=' + extra_function_code
       logger.debug "Getting #{trial_url}"
       member_trials_response = http.get(trial_url, cookie_header)
       member_trials_body = member_trials_response.body
       process_response 'member trials', member_trials_response
-      member_trial_rows = member_trials_body.split("\n").map{|line| @iconv.iconv(line.chomp).split(';')}
+      
+      trial_ids = member_trials_body.scan(/edit_click28\('(.*?)'\)/).map{|tid| tid[0]}
+      
+      member_trial_rows[0] << 'tid'
+      member_trial_rows[0] << 'epost_faktura'
+
+      trial_ids.each_with_index do |tid, i|
+        logger.debug "Getting details #{tid}"
+        trial_details_url = "http://nkfwww.kampsport.no/portal/page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=" + extra_function_code
+        logger.debug "Getting #{trial_details_url}"
+        begin
+          trial_details_response = http.get(trial_details_url, cookie_header)
+        rescue EOFError, SystemCallError
+          logger.error $!.message
+          retry
+        end
+        trial_details_body = trial_details_response.body
+        process_response 'trial details', trial_details_response
+        if trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
+          first_name = $1
+          if trial_details_body =~ /name="frm_28_v09" value="(.*?)"/
+            last_name = Iconv.conv('UTF8', 'ISO8859-1', $1)
+            if trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
+              invoice_email = $1
+              trial_row = member_trial_rows.find{|ir| ir[1] == last_name && ir[2] == first_name}
+              trial_row << tid
+              trial_row << (invoice_email.blank? ? nil : invoice_email)
+            else
+              raise "Could not find first name"
+            end
+          else
+            raise "Could not find last name"
+          end
+        else
+          raise "Could not find invoice email"
+        end
+      end
+
     end
     
     import_member_rows(import_rows)

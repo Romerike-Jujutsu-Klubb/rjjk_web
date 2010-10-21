@@ -77,7 +77,7 @@
     <tr class="<%=cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
       <td>
       	<%="#{trial.fornavn} #{trial.etternavn}"%><br/>
-      	<%=trial.epost%>
+      	<%=trial.epost_faktura || trial.epost%>
       </td>
 	  <td align="center" nowrap="true">
 	  	Prøvetid til<br/>
@@ -109,7 +109,7 @@
 <% end %>
 
   <tr class="<%=cycle('odd', 'even') %>">
-    <td colspan="2">Totalt <%=@members.size%></td>
+    <td colspan="2">Totalt <%=(@members.size + @trials.size)%></td>
 <% if birthdate_missing %>
     <td>&nbsp;</td>
 <% end %>
