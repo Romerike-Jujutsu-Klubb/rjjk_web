@@ -265,6 +265,20 @@ class MembersController < ApplicationController
     grading_form
   end
   
+  def missing_contract
+    member = Member.find(params[:id])
+    @name = member.first_name
+    @email = member.email
+  end
+  
+  def trial_missing_contract
+    trial = NkfMemberTrial.find(params[:id])
+    @name = trial.fornavn
+    @email = trial.epost
+    @trial = true
+    render :missing_contract, :layout => :print
+  end
+  
   private
   
   def year_end(offset=0)

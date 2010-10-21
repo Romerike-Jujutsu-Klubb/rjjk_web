@@ -40,7 +40,7 @@
 		<% else %>
 		  &nbsp;
 		<% end %>
-		<%="<br/>Mangler kontrakt<br/>Innmeldt: #{member.joined_on.strftime('%Y-%m-%d')}" if missing_contract %>
+		<%="<br/>#{link_to 'Mangler kontrakt', :action => :missing_contract, :id => member.id}<br/>Innmeldt: #{member.joined_on.strftime('%Y-%m-%d')}" if missing_contract %>
 	</td>
 <% if birthdate_missing %>
     <td><%=h member.birthdate %>&nbsp;</td>
@@ -82,7 +82,7 @@
 	  <td align="center" nowrap="true">
 	  	Prøvetid til<br/>
 		<%=(trial.reg_dato + 14).strftime('%Y-%m-%d')%>
-	  	<%="<br/>Mangler kontrakt" if missing_contract %>
+	  	<%="<br/>#{link_to 'Mangler kontrakt', :action => :trial_missing_contract, :id => trial.id}" if missing_contract %>
       </td>
   <% if birthdate_missing %>
       <td>&nbsp;</td>
