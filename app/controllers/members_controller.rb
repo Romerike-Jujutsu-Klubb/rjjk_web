@@ -41,9 +41,9 @@ class MembersController < ApplicationController
   
   def history_graph
     if params[:id] && params[:id].to_i <= 1280
-      g = Member.history_graph params[:id].to_i
+      g = MemberHistoryGraph.history_graph params[:id].to_i
     else
-      g = Member.history_graph
+      g = MemberHistoryGraph.history_graph
     end
     send_data(g, :disposition => 'inline', :type => 'image/png', :filename => "RJJK_Medlemshistorikk.png")
   end
@@ -278,6 +278,13 @@ class MembersController < ApplicationController
     @email = trial.epost_faktura || trial.epost
     @trial = true
     render :missing_contract, :layout => 'print'
+  end
+  
+  def add_group
+    @member = Member.find(params[:id])
+    @member.groups << Group.find(params[:group_id])
+    @member.save!
+    redirect_to :controller => :nkf_members, :action => :comparison, :id => 0
   end
   
   private

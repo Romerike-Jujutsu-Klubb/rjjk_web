@@ -60,13 +60,29 @@ Det er ingen innkommende endringer fra NKF medlemsregister.
     <td><%=link_to "#{member.nkf_member.fornavn} #{member.nkf_member.etternavn}", :controller => :nkf_members, :action => :show, :id => member.nkf_member.id %></td>
   </tr>
   <% member.changes.each do |k, v| %>
-  <tr>
-	<td><%=k%>:</td>
-	<td align="right"><%=v[0]%></td>
-	<td> <%=link_to '=>', :action => :update_member, :id => member.id, :member => {k => v[1]} %> </td>
-	<td><%=v[1]%></td>
-  </tr>
+    <tr>
+	  <td><%=k%>:</td>
+	  <td align="right"><%=v[0]%></td>
+	  <td> <%=link_to '=>', :action => :update_member, :id => member.id, :member => {k => v[1]} %> </td>
+	  <td><%=v[1]%></td>
+    </tr>
   <% end %>
+  <% nkf_group_names = [member.nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti.split('/')[3]] %>
+  <% (nkf_group_names - member.groups.map{|g| g.name}).each do |gn| %>
+    <% if group = @groups.find{|g| g.name == gn} %>
+    <tr>
+	  <td>Group:</td>
+	  <td/>
+	  <td> <%=link_to '=>', {:controller => :members, :action => :add_group, :id => member.id, :group_id => group.id}, :method => :post %> </td>
+	  <td><%=gn%></td>
+    </tr>
+	<% else %>
+	<tr>
+		<td>Unknown group: <%=gn.inspect%></td>
+	</tr>
+    <% end %>
+  <% end %>
+  
   <tr><td>&nbsp;</td></tr>
 <% end %>
 </table>
