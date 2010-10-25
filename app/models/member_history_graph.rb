@@ -81,58 +81,12 @@ class MemberHistoryGraph
     birthdate.nil? or ((date - birthdate) / 365) > JUNIOR_AGE_LIMIT
   end
     
-    def self.senior_birthdate(date)
-      date - JUNIOR_AGE_LIMIT.years
-    end
-    
-    def self.junior_birthdate(date)
-      date - ASPIRANT_AGE_LIMIT.years
-    end
-    
-    def age
-      birthdate && ((Date.today - birthdate).to_i / 365) # TODO: What about leap years?
-    end
-    
-    def age_group
-      return nil unless age
-      if age >= JUNIOR_AGE_LIMIT
-        "Senior"
-      else
-        "Junior"
-      end
-    end
-    
-    def gender    
-      if male
-        "Mann"
-      else
-        "Kvinne"
-      end
-    end
-    
-    def name
-      "#{first_name} #{last_name}"
-    end
-    
-    def image_file=(file)
-      return if file == ""
-      self.image = file.read
-      self.image_name = file.original_filename
-      self.image_content_type = file.content_type
-    end
-    
-    def image_format
-      image_name && image_name.split('.').last
-    end
-
-    def thumbnail(x = 120, y = 160)
-      return unless self.image
-      magick_image = Magick::Image.from_blob(self.image).first
-      return magick_image.crop_resized(x, y).to_blob
-    end
-
-    def cms_member
-      CmsMember.find_by_cms_contract_id(cms_contract_id)
-    end
-    
+  def self.senior_birthdate(date)
+    date - JUNIOR_AGE_LIMIT.years
   end
+    
+  def self.junior_birthdate(date)
+    date - ASPIRANT_AGE_LIMIT.years
+  end
+    
+end
