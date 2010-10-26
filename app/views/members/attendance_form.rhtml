@@ -3,20 +3,20 @@
 <% weekdays = @group && @group.group_schedules.map{|gs| gs.weekday} || [2,4] %>
 <% first_date = Date.new(@date.year, @date.month, 1) %>
 <% last_date = Date.new(@date.year, @date.month, -1) %>
-<% dates = (first_date..last_date).select{|d|weekdays.include? d.wday} %>
-<% birthdate_missing = @members.empty? || @members.find{|m|m.birthdate.nil?} %>
-<% date_totals = {} %>
-<% blank_lines = 42 %>
+<% @dates = (first_date..last_date).select{|d|weekdays.include? d.wday} %>
+<% @birthdate_missing = @members.empty? || @members.find{|m|m.birthdate.nil?} %>
+<% @date_totals = {} %>
+<% @blank_lines = 42 %>
 
 <table width="100%">
   <thead>
   <tr>
     <th>Navn</th>
     <th>Grad</th>
-<% if birthdate_missing %>
+<% if @birthdate_missing %>
     <th>F.Dato</th>
 <% end %>
-<% dates.each do |d| %>
+<% @dates.each do |d| %>
     <th><%=d.strftime('%d/%m')%></th>
 <% end %>
     <th>Totalt</th>
@@ -24,55 +24,17 @@
   </thead>
   <tbody>
 
+<% for member in @instructors %>
+<%=render :partial => 'attendance_row', :locals => {:member => member}%>
+<% end %>
+
 <% for member in @members %>
-  <% missing_contract = member.nkf_member.ventekid && member.nkf_member.ventekid !~ /^333000000004/ && member.joined_on < 30.days.ago.to_date %>
-  <% blank_lines -= (missing_contract ? 3 : 1) %>
-  <tr class="<%=cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
-    <td nowrap="true" onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'">
-      <%=h member.first_name %> <%=h member.last_name %>
-      <% if missing_contract %>
-        <br/><%=member.nkf_member.epost%><br/><%=member.nkf_member.ventekid %>
-	  <% end %>
-    </td>
-    <td nowrap="true">
-    	<% if @group %>
-    	  <%=h member.current_rank(@group.martial_art).try(:name) %>
-		<% else %>
-		  &nbsp;
-		<% end %>
-		<%="<br/>#{link_to 'Mangler kontrakt', :action => :missing_contract, :id => member.id}<br/>Innmeldt: #{member.joined_on.strftime('%Y-%m-%d')}" if missing_contract %>
-	</td>
-<% if birthdate_missing %>
-    <td><%=h member.birthdate %>&nbsp;</td>
-<% end %>
-<% member_total = 0 %>
-<% dates.each do |d| %>
-	<% if @group %>
-	<% group_schedule = @group.group_schedules.to_a.find{|gs| gs.weekday == d.wday}%>
-	<% attendance = member.attendances.select{|a| a.group_schedule == group_schedule && a.date == d}.first %>
-	<% if attendance %>
-	  <% member_total += 1 %>
-	  <% date_totals[d] ||= 0 %>
-	  <% date_totals[d] += 1 %>
-    <td id="attendance_<%=member.id%>_<%=d.day%>" align="center" onclick="<%= remote_function(:update => "attendance_#{member.id}_#{d.day}",
-      :url => { :controller => :attendances, :action => :destroy, :id => attendance.id}, :method => :delete) %>">
-		<%=params[:x] ? 'X' : image_tag('accept.png')%>
-	</td>
-	<% else %>
-    <td id="attendance_<%=member.id%>_<%=d.day%>" align="center" onclick="<%= remote_function(:update => "attendance_#{member.id}_#{d.day}",
-      :url => { :controller => :attendances, :action => :create, :attendance => {:member_id => member.id, :group_schedule_id => group_schedule.id, :year => d.year, :week => d.cweek } }) %>">&nbsp;</td>
-	<% end %>
-	<% else %>
-    <td>&nbsp;</td>
-	<% end %>
-<% end %>
-    <td align="center"><%=member_total if member_total > 0%></td>
-  </tr>
+<%=render :partial => 'attendance_row', :locals => {:member => member}%>
 <% end %>
 
   <% @trials.each do |trial| %>
     <% missing_contract = (trial.reg_dato + 14) < Date.today %>
-    <% blank_lines -= (missing_contract ? 3 : 2) %>
+    <% @blank_lines -= (missing_contract ? 3 : 2) %>
     <tr class="<%=cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
       <td>
       	<%="#{trial.fornavn} #{trial.etternavn}"%><br/>
@@ -83,23 +45,23 @@
 		<%=(trial.reg_dato + 14).strftime('%Y-%m-%d')%>
 	  	<%="<br/>#{link_to 'Mangler kontrakt', :action => :trial_missing_contract, :id => trial.id}" if missing_contract %>
       </td>
-  <% if birthdate_missing %>
+  <% if @birthdate_missing %>
       <td>&nbsp;</td>
   <% end %>
-  <% dates.each do |d| %>
+  <% @dates.each do |d| %>
       <td>&nbsp;</td>
   <% end %>
       <td>&nbsp;</td>
     </tr>
   <% end %>
 
-<% blank_lines.times do %>
+<% @blank_lines.times do %>
   <tr class="<%=cycle('odd', 'even') %>">
     <td colspan="2"><%='&nbsp;' * 35 %></td>
-<% if birthdate_missing %>
+<% if @birthdate_missing %>
     <td>&nbsp;</td>
 <% end %>
-<% dates.each do |d| %>
+<% @dates.each do |d| %>
     <td>&nbsp;</td>
 <% end %>
     <td>&nbsp;</td>
@@ -108,13 +70,13 @@
 
   <tr class="<%=cycle('odd', 'even') %>">
     <td colspan="2">Totalt <%=(@members.size + @trials.size)%></td>
-<% if birthdate_missing %>
+<% if @birthdate_missing %>
     <td>&nbsp;</td>
 <% end %>
-<% dates.each do |d| %>
-    <td align="center"><%=date_totals[d]%></td>
+<% @dates.each do |d| %>
+    <td align="center"><%=@date_totals[d]%></td>
 <% end %>
-    <td align="center"><%=date_totals.values.inject{|total,value| total + value}%></td>
+    <td align="center"><%=@date_totals.values.inject{|total,value| total + value}%></td>
   </tr>
 
   <tbody>
@@ -129,10 +91,10 @@
   <tr>
     <th>Navn</th>
     <th>Grad</th>
-<% if birthdate_missing %>
+<% if @birthdate_missing %>
     <th>F.Dato</th>
 <% end %>
-<% dates.each do |d| %>
+<% @dates.each do |d| %>
     <th><%=d.strftime('%d/%m')%></th>
 <% end %>
     <th>Totalt</th>
@@ -141,46 +103,15 @@
   <tbody>
 
 <% for member in @passive_members %>
-  <% missing_contract = member.nkf_member.ventekid && member.nkf_member.ventekid !~ /^333000000004/ && member.joined_on < 30.days.ago.to_date %>
-  <% blank_lines -= (missing_contract ? 3 : 1) %>
-  <tr class="<%=cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
-    <td nowrap="true" onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'">
-      <%=h member.first_name %> <%=h member.last_name %>
-      <% if missing_contract %>
-        <br/><%=member.nkf_member.epost%><br/><%=member.nkf_member.ventekid %>
-	  <% end %>
-    </td>
-    <td nowrap="true">
-    	<% if @group %>
-    	  <%=h member.current_rank(@group.martial_art).try(:name) %>
-		<% else %>
-		  &nbsp;
-		<% end %>
-		<%="<br/>#{link_to 'Mangler kontrakt', :action => :missing_contract, :id => member.id}<br/>Innmeldt: #{member.joined_on.strftime('%Y-%m-%d')}" if missing_contract %>
-	</td>
-<% if birthdate_missing %>
-    <td><%=h member.birthdate %>&nbsp;</td>
-<% end %>
-<% member_total = 0 %>
-<% dates.each do |d| %>
-	<% if @group %>
-	<% group_schedule = @group.group_schedules.to_a.find{|gs| gs.weekday == d.wday}%>
-    <td id="attendance_<%=member.id%>_<%=d.day%>" align="center" onclick="<%= remote_function(:update => "attendance_#{member.id}_#{d.day}",
-      :url => { :controller => :attendances, :action => :create, :attendance => {:member_id => member.id, :group_schedule_id => group_schedule.id, :year => d.year, :week => d.cweek } }) %>">&nbsp;</td>
-	<% else %>
-    <td>&nbsp;</td>
-	<% end %>
-<% end %>
-    <td align="center"></td>
-  </tr>
+<%=render :partial => 'attendance_row', :locals => {:member => member}%>
 <% end %>
 
   <tr class="<%=cycle('odd', 'even') %>">
     <td colspan="2">Totalt <%=@passive_members.size%></td>
-<% if birthdate_missing %>
+<% if @birthdate_missing %>
     <td>&nbsp;</td>
 <% end %>
-<% dates.each do |d| %>
+<% @dates.each do |d| %>
     <td align="center"></td>
 <% end %>
     <td align="center"></td>
