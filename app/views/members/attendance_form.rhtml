@@ -8,25 +8,12 @@
 <% @date_totals = {} %>
 <% @blank_lines = 42 %>
 
-<table width="100%">
-  <thead>
-  <tr>
-    <th>Navn</th>
-    <th>Grad</th>
-<% if @birthdate_missing %>
-    <th>F.Dato</th>
-<% end %>
-<% @dates.each do |d| %>
-    <th><%=d.strftime('%d/%m')%></th>
-<% end %>
-    <th>Totalt</th>
-  </tr>
-  </thead>
-  <tbody>
-
+<%=render :partial => 'attendance_form_header'%>
 <% for member in @instructors %>
 <%=render :partial => 'attendance_row', :locals => {:member => member}%>
 <% end %>
+
+<tr style="border-left: hidden ; border-right: hidden"><td colspan="<%=3 + @dates.size + (@birthdate_missing ? 1 : 0)%>">&nbsp;</td></tr>
 
 <% for member in @members %>
 <%=render :partial => 'attendance_row', :locals => {:member => member}%>
@@ -86,22 +73,7 @@
 
 <h2 style="page-break-before:always">Passive medlemmer</h2>
 
-<table width="100%">
-  <thead>
-  <tr>
-    <th>Navn</th>
-    <th>Grad</th>
-<% if @birthdate_missing %>
-    <th>F.Dato</th>
-<% end %>
-<% @dates.each do |d| %>
-    <th><%=d.strftime('%d/%m')%></th>
-<% end %>
-    <th>Totalt</th>
-  </tr>
-  </thead>
-  <tbody>
-
+<%=render :partial => 'attendance_form_header'%>
 <% for member in @passive_members %>
 <%=render :partial => 'attendance_row', :locals => {:member => member}%>
 <% end %>
