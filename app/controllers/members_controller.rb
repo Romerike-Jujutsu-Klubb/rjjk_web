@@ -90,7 +90,7 @@ class MembersController < ApplicationController
       @members = []
       @trials = []
     end
-    @passive_members = @members.select{|m| m.attendances.select{|a| a.year == Date.today.year}.empty?}
+    @passive_members = @members.select{|m| m.attendances.select{|a| Date.commercial(a.year, a.week) > Date.today - 92}.empty?}
     @members -= @passive_members
     if params[:date]
       @date = Date.parse(params[:date])
