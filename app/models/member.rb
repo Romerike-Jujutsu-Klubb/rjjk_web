@@ -35,8 +35,9 @@ class Member < ActiveRecord::Base
   end
   
   def self.find_by_contents(query, options = {})
+    search_fields = [:first_name, :last_name, :email]
     all({
-      :conditions => ['UPPER(first_name) LIKE ? OR UPPER(last_name) LIKE ?', *(["%#{query.upcase}%"] * 2)],
+      :conditions => [search_fields.map{|c| "UPPER(#{c}) LIKE ?"}.join(' OR '), *(["%#{query.upcase}%"] * search_fields.size)],
       :order => 'first_name, last_name',
     }.update(options))
   end

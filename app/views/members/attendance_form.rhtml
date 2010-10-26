@@ -1,4 +1,4 @@
-<h1 style="font-family:Arial, Helvetica, sans-serif">Oppmøteliste <%=@group && @group.martial_art.name%> <%=@group && @group.name%> <%=l Date::MONTHNAMES[@date.mon] %> <%=@date.year%></h1>
+<h1 style="font-family:Arial, Helvetica, sans-serif">Oppmøteliste <%=@group && @group.name%> <%=l Date::MONTHNAMES[@date.mon] %> <%=@date.year%></h1>
 
 <% weekdays = @group && @group.group_schedules.map{|gs| gs.weekday} || [2,4] %>
 <% first_date = Date.new(@date.year, @date.month, 1) %>
@@ -6,7 +6,7 @@
 <% dates = (first_date..last_date).select{|d|weekdays.include? d.wday} %>
 <% birthdate_missing = @members.empty? || @members.find{|m|m.birthdate.nil?} %>
 <% date_totals = {} %>
-<% blank_lines = 43 %>
+<% blank_lines = 42 %>
 
 <table width="100%">
   <thead>
@@ -70,7 +70,6 @@
   </tr>
 <% end %>
 
-<% if @trials %>
   <% @trials.each do |trial| %>
     <% missing_contract = (trial.reg_dato + 14) < Date.today %>
     <% blank_lines -= (missing_contract ? 3 : 2) %>
@@ -93,7 +92,6 @@
       <td>&nbsp;</td>
     </tr>
   <% end %>
-<% end %>
 
 <% blank_lines.times do %>
   <tr class="<%=cycle('odd', 'even') %>">
@@ -117,6 +115,75 @@
     <td align="center"><%=date_totals[d]%></td>
 <% end %>
     <td align="center"><%=date_totals.values.inject{|total,value| total + value}%></td>
+  </tr>
+
+  <tbody>
+</table>
+
+
+
+<h2 style="page-break-before:always">Passive medlemmer</h2>
+
+<table width="100%">
+  <thead>
+  <tr>
+    <th>Navn</th>
+    <th>Grad</th>
+<% if birthdate_missing %>
+    <th>F.Dato</th>
+<% end %>
+<% dates.each do |d| %>
+    <th><%=d.strftime('%d/%m')%></th>
+<% end %>
+    <th>Totalt</th>
+  </tr>
+  </thead>
+  <tbody>
+
+<% for member in @passive_members %>
+  <% missing_contract = member.nkf_member.ventekid && member.nkf_member.ventekid !~ /^333000000004/ && member.joined_on < 30.days.ago.to_date %>
+  <% blank_lines -= (missing_contract ? 3 : 1) %>
+  <tr class="<%=cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
+    <td nowrap="true" onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'">
+      <%=h member.first_name %> <%=h member.last_name %>
+      <% if missing_contract %>
+        <br/><%=member.nkf_member.epost%><br/><%=member.nkf_member.ventekid %>
+	  <% end %>
+    </td>
+    <td nowrap="true">
+    	<% if @group %>
+    	  <%=h member.current_rank(@group.martial_art).try(:name) %>
+		<% else %>
+		  &nbsp;
+		<% end %>
+		<%="<br/>#{link_to 'Mangler kontrakt', :action => :missing_contract, :id => member.id}<br/>Innmeldt: #{member.joined_on.strftime('%Y-%m-%d')}" if missing_contract %>
+	</td>
+<% if birthdate_missing %>
+    <td><%=h member.birthdate %>&nbsp;</td>
+<% end %>
+<% member_total = 0 %>
+<% dates.each do |d| %>
+	<% if @group %>
+	<% group_schedule = @group.group_schedules.to_a.find{|gs| gs.weekday == d.wday}%>
+    <td id="attendance_<%=member.id%>_<%=d.day%>" align="center" onclick="<%= remote_function(:update => "attendance_#{member.id}_#{d.day}",
+      :url => { :controller => :attendances, :action => :create, :attendance => {:member_id => member.id, :group_schedule_id => group_schedule.id, :year => d.year, :week => d.cweek } }) %>">&nbsp;</td>
+	<% else %>
+    <td>&nbsp;</td>
+	<% end %>
+<% end %>
+    <td align="center"></td>
+  </tr>
+<% end %>
+
+  <tr class="<%=cycle('odd', 'even') %>">
+    <td colspan="2">Totalt <%=@passive_members.size%></td>
+<% if birthdate_missing %>
+    <td>&nbsp;</td>
+<% end %>
+<% dates.each do |d| %>
+    <td align="center"></td>
+<% end %>
+    <td align="center"></td>
   </tr>
 
   <tbody>
