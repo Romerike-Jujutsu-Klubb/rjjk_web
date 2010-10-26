@@ -56,7 +56,7 @@
 <% end %>
 
   <tr class="<%=cycle('odd', 'even') %>">
-    <td colspan="2">Totalt <%=(@members.size + @trials.size)%></td>
+    <td colspan="2">Totalt <%=(@instructors.select{|m| m.groups.include?(@group)}.size + @members.size + @trials.size)%></td>
 <% if @birthdate_missing %>
     <td>&nbsp;</td>
 <% end %>
