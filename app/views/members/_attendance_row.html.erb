@@ -9,7 +9,7 @@
     </td>
     <td nowrap="true">
     	<% if @group %>
-    	  <%=h member.current_rank(@group.martial_art).try(:name) %>
+    	  <%=h member.current_rank(@group.martial_art).try(:colour) %>
 		<% else %>
 		  &nbsp;
 		<% end %>
