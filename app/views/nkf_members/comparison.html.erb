@@ -67,7 +67,7 @@ Det er ingen innkommende endringer fra NKF medlemsregister.
 	  <td><%=v[1]%></td>
     </tr>
   <% end %>
-  <% nkf_group_names = [member.nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti.split('/')[3]] %>
+  <% nkf_group_names = member.nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /).map{|n| n.split('/')[3]} %>
   <% member_groups = member.groups.map{|g| g.name} %>
   <% (nkf_group_names - member_groups).each do |gn| %>
     <% if group = @groups.find{|g| g.name == gn} %>
