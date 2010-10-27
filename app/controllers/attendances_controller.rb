@@ -98,4 +98,14 @@ class AttendancesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def history_graph
+    if params[:id] && params[:id].to_i <= 1280
+      g = AttendanceHistoryGraph.new.history_graph params[:id].to_i
+    else
+      g = AttendanceHistoryGraph.new.history_graph
+    end
+    send_data(g, :disposition => 'inline', :type => 'image/png', :filename => "RJJK_Oppmøtehistorikk.png")
+  end
+  
 end
