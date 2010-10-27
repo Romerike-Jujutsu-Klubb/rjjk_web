@@ -74,10 +74,14 @@ class MembersController < ApplicationController
   end
   
   def attendance_form
+    if params[:date]
+      @date = Date.parse(params[:date])
+    end
+    @date ||= Date.today
     if params[:group_id]
       if params[:group_id] == 'others'
         @instructors = []
-        @members = Member.find(:all, :conditions => 'id NOT in (SELECT DISTINCT member_id FROM groups_members) AND left_on IS NULL')
+        @members = Member.find(:all, :conditions => ['id NOT in (SELECT DISTINCT member_id FROM groups_members) AND (left_on IS NULL OR left_on > ?)', @date])
         @trials = []
       else
         @group = Group.find(params[:group_id])
@@ -94,10 +98,6 @@ class MembersController < ApplicationController
     @members -= @instructors
     @passive_members = @members.select{|m| m.attendances.select{|a| (@group.nil? || a.group_schedule.group_id == @group.id) && Date.commercial(a.year, a.week) > Date.today - 92}.empty?}
     @members -= @passive_members
-    if params[:date]
-      @date = Date.parse(params[:date])
-    end
-    @date ||= Date.today
     render :layout => 'print'
   end
   
