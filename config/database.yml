@@ -1,7 +1,6 @@
 development:
-  adapter: jdbcpostgresql
+  adapter: postgresql
   database: rjjk_web_development
-  host: localhost
   username: uwe
 
 test:

@@ -1,7 +1,7 @@
 class AttendanceImageSweeper < ActionController::Caching::Sweeper
   observe Attendance
   
-  def after_create(attendace)
+  def after_create(attendance)
     expire_image(attendance)
   end
   
