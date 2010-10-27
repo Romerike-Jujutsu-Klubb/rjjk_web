@@ -25,7 +25,7 @@ module ApplicationHelper
   end
   
   def wday(wday_index)
-    %w{Søndag Mandag Tirsdag Onsdag Torsdag Fredag Lørdag}[wday_index]
+    %w{Søndag Mandag Tirsdag Onsdag Torsdag Fredag Lørdag Søndag}[wday_index]
   end
   
 end
