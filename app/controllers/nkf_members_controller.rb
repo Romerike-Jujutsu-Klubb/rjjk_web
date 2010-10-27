@@ -103,7 +103,7 @@ class NkfMembersController < ApplicationController
       member = nkfm.member
       member.attributes = new_attributes
       nkf_group_names = [member.nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti.split('/')[3]].compact
-      if member.changed? || (nkf_group_names - member.groups.map{|g| g.name}).size > 0
+      if member.changed? || (nkf_group_names.sort != member.groups.map{|g| g.name}.sort)
         @members << nkfm.member
       end
     end
