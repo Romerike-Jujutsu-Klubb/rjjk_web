@@ -89,7 +89,7 @@ Det er ingen innkommende endringer fra NKF medlemsregister.
     <tr>
 	  <td>Group:</td>
 	  <td><%=gn%>(<%=member.attendances.by_group_id(group.id).size%>)</td>
-	  <td> <%=link_to '<=', {:controller => :members, :action => :remove_group, :id => member.id, :group_id => group.id}, :method => :post %> </td>
+	  <td> <%=link_to '=>', {:controller => :members, :action => :remove_group, :id => member.id, :group_id => group.id}, :method => :post %> </td>
 	  <td/>
     </tr>
 	<% else %>
