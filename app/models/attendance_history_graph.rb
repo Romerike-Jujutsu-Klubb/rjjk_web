@@ -24,7 +24,7 @@ class AttendanceHistoryGraph
     Date.today.step(first_date, -7) {|date| weeks << [date.cwyear, date.cweek]}
     weeks.reverse!
     totals = Array.new(weeks.size, 0)
-    Group.all.each do |group|
+    Group.all(:order => 'martial_art_id, from_age DESC').each do |group|
       values = weeks.map{|w| Attendance.by_group_id(group.id).find_all_by_year_and_week(w[0], w[1]).size}
       g.data(group.name, values)
       (0...weeks.size).each do |i|
