@@ -1,5 +1,6 @@
 class Attendance < ActiveRecord::Base
   named_scope :by_group_id, lambda { |group_id| { :conditions => ['group_schedules.group_id = ?', group_id], :include => :group_schedule }}
+  named_scope :last_months, lambda { |count| { :conditions => ['(year = ? AND week >= ?) OR year > ?', count.months.ago.year, count.months.ago.to_date.cweek, count.months.ago.year]}}
 
   belongs_to :member
   belongs_to :group_schedule
