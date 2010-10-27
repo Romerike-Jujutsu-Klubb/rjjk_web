@@ -88,7 +88,7 @@ Det er ingen innkommende endringer fra NKF medlemsregister.
     <% if group = @groups.find{|g| g.name == gn} %>
     <tr>
 	  <td>Group:</td>
-	  <td><%=gn%>(<%=member.attendances.by_group_id(group.id).last_months(3).size%>)</td>
+	  <td><%=gn%>(<%=member.attendances.by_group_id(group.id).last_months(6).size%>)</td>
 	  <td> <%=link_to '=>', {:controller => :members, :action => :remove_group, :id => member.id, :group_id => group.id}, :method => :post %> </td>
 	  <td/>
     </tr>
