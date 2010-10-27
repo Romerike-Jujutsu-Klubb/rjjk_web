@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :trial_attendances
+
   map.connect ':controller/active_contracts', :action => 'active_contracts'
   map.connect ':controller/create', :action => 'create'
   map.connect ':controller/destroy', :action => 'destroy'

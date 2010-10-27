@@ -1,0 +1,2 @@
+module TrialAttendancesHelper
+end

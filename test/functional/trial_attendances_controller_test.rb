@@ -1,0 +1,45 @@
+require 'test_helper'
+
+class TrialAttendancesControllerTest < ActionController::TestCase
+  test "should get index" do
+    get :index
+    assert_response :success
+    assert_not_nil assigns(:trial_attendances)
+  end
+
+  test "should get new" do
+    get :new
+    assert_response :success
+  end
+
+  test "should create trial_attendance" do
+    assert_difference('TrialAttendance.count') do
+      post :create, :trial_attendance => { }
+    end
+
+    assert_redirected_to trial_attendance_path(assigns(:trial_attendance))
+  end
+
+  test "should show trial_attendance" do
+    get :show, :id => trial_attendances(:one).to_param
+    assert_response :success
+  end
+
+  test "should get edit" do
+    get :edit, :id => trial_attendances(:one).to_param
+    assert_response :success
+  end
+
+  test "should update trial_attendance" do
+    put :update, :id => trial_attendances(:one).to_param, :trial_attendance => { }
+    assert_redirected_to trial_attendance_path(assigns(:trial_attendance))
+  end
+
+  test "should destroy trial_attendance" do
+    assert_difference('TrialAttendance.count', -1) do
+      delete :destroy, :id => trial_attendances(:one).to_param
+    end
+
+    assert_redirected_to trial_attendances_path
+  end
+end
