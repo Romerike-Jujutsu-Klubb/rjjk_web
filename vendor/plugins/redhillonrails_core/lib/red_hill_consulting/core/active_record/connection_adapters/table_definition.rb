@@ -1,3 +1,5 @@
+require 'red_hill_consulting/core/active_record/connection_adapters/foreign_key_definition'
+
 module RedHillConsulting::Core::ActiveRecord::ConnectionAdapters
   module TableDefinition
     def self.included(base)
