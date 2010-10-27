@@ -11,7 +11,7 @@
     <th><%= link_to 'Jobb', sort_param('listing', :alias => 'phone_work') %></th>
   </tr>
   
-<% for member in group.members %>
+<% for member in group.members.active(Date.today) %>
   <tr>
     <td><%=h member.last_name %></td>
     <td><%=h member.first_name %></td>

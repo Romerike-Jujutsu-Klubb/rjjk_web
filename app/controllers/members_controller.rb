@@ -240,7 +240,7 @@ class MembersController < ApplicationController
       ma.groups.each do |group|
         @groups << group
         @ranks[group] = {}
-        group_ranks = group.members.find(:all, :select => 'id').map{|m| m.current_rank(ma)}.sort_by{|r| r ? r.position : -99}.map{|r| r ? r.id : 'nil'}
+        group_ranks = group.members.active(Date.today).find(:all, :select => 'id').map{|m| m.current_rank(ma)}.sort_by{|r| r ? r.position : -99}.map{|r| r ? r.id : 'nil'}
         midle = (group_ranks.size - 1) / 2
         @ranks[group][:beginners] = group_ranks[0..midle].uniq
         @ranks[group][:advanced]  = group_ranks[midle..-1].uniq[1..-1] || []
@@ -254,7 +254,7 @@ class MembersController < ApplicationController
         @members = Member.find(:all, :conditions => 'id NOT in (SELECT DISTINCT member_id FROM groups_members) AND left_on IS NULL')
       else
         @group = Group.find(params[:group_id])
-        @members = @group.members
+        @members = @group.members.active(Date.today)
         if rank_ids = params[:rank_ids]
           include_unranked = rank_ids.delete('nil')
           ranks = Rank.find(rank_ids)
