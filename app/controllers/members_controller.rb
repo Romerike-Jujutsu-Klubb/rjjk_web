@@ -95,7 +95,7 @@ class MembersController < ApplicationController
       @members = []
       @trials = []
     end
-    @members -= @instructors
+    @instructors -= @members
     @passive_members = @members.select{|m| m.attendances.select{|a| (@group.nil? || a.group_schedule.group_id == @group.id) && Date.commercial(a.year, a.week) > Date.today - 92}.empty?}
     @members -= @passive_members
     render :layout => 'print'
@@ -291,7 +291,12 @@ class MembersController < ApplicationController
   def add_group
     @member = Member.find(params[:id])
     @member.groups << Group.find(params[:group_id])
-    @member.save!
+    redirect_to :controller => :nkf_members, :action => :comparison, :id => 0
+  end
+  
+  def remove_group
+    @member = Member.find(params[:id])
+    @member.groups.delete(Group.find(params[:group_id]))
     redirect_to :controller => :nkf_members, :action => :comparison, :id => 0
   end
   
