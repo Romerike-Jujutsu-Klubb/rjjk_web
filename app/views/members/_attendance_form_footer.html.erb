@@ -1,0 +1,10 @@
+  <tr class="<%=cycle('odd', 'even') %>">
+    <td colspan="2">Totalt <%=@member_count%></td>
+<% if @birthdate_missing %>
+    <td>&nbsp;</td>
+<% end %>
+<% @dates.each do |d| %>
+    <td align="center"><%=@date_totals[d]%></td>
+<% end %>
+    <td align="center"><%=@date_totals.values.inject{|total,value| total + value}%></td>
+  </tr>

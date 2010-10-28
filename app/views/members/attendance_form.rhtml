@@ -5,21 +5,28 @@
 <% last_date = Date.new(@date.year, @date.month, -1) %>
 <% @dates = (first_date..last_date).select{|d|weekdays.include? d.wday} %>
 <% @birthdate_missing = @members.empty? || @members.find{|m|m.birthdate.nil?} %>
+<% @member_count = 0 %>
 <% @date_totals = {} %>
 <% @blank_lines = 42 %>
 
 <%=render :partial => 'attendance_form_header'%>
 <% for member in @instructors %>
-<%=render :partial => 'attendance_row', :locals => {:member => member}%>
+  <%=render :partial => 'attendance_row', :locals => {:member => member}%>
 <% end %>
+
+<%=render :partial => 'attendance_form_footer' %>
+
+<% @member_count = 0 %>
+<% @date_totals = {} %>
 
 <tr style="border-left: hidden ; border-right: hidden"><td colspan="<%=3 + @dates.size + (@birthdate_missing ? 1 : 0)%>">&nbsp;</td></tr>
 
-<% for member in @members %>
-<%=render :partial => 'attendance_row', :locals => {:member => member}%>
-<% end %>
+  <% for member in @members %>
+    <%=render :partial => 'attendance_row', :locals => {:member => member}%>
+  <% end %>
 
   <% @trials.each do |trial| %>
+    <% @member_count += 1 %>
     <% missing_contract = (trial.reg_dato + 14) < Date.today %>
     <% @blank_lines -= (missing_contract ? 3 : 2) %>
     <tr class="<%=cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
@@ -35,8 +42,8 @@
   <% if @birthdate_missing %>
       <td>&nbsp;</td>
   <% end %>
-<% member_trial_total = 0 %>
-<% @dates.each do |d| %>
+  <% member_trial_total = 0 %>
+  <% @dates.each do |d| %>
 	<% if @group %>
 	<% group_schedule = @group.group_schedules.to_a.find{|gs| gs.weekday == d.wday}%>
 	<% trial_attendance = trial.trial_attendances.select{|a| a.group_schedule == group_schedule && a.date == d}.first %>
@@ -45,9 +52,9 @@
 	  <% @date_totals[d] ||= 0 %>
 	  <% @date_totals[d] += 1 %>
     <td id="trial_attendance_<%=trial.id%>_<%=d.day%>" align="center" onclick="<%= remote_function(:update => "trial_attendance_#{trial.id}_#{d.day}",
-      :url => { :controller => :trial_attendances, :action => :destroy, :id => trial_attendance.id}, :method => :delete) %>">
-		<%=params[:x] ? 'X' : image_tag('accept.png')%>
-	</td>
+        :url => { :controller => :trial_attendances, :action => :destroy, :id => trial_attendance.id}, :method => :delete) %>">
+		  <%=params[:x] ? 'X' : image_tag('accept.png')%>
+    </td>
 	<% else %>
     <td id="trial_attendance_<%=trial.id%>_<%=d.day%>" align="center" onclick="<%= remote_function(:update => "trial_attendance_#{trial.id}_#{d.day}",
       :url => { :controller => :trial_attendances, :action => :create, :trial_attendance => {:nkf_member_trial_id => trial.id, :group_schedule_id => group_schedule.id, :year => d.year, :week => d.cweek } }) %>">&nbsp;</td>
@@ -55,7 +62,7 @@
 	<% else %>
     <td>&nbsp;</td>
 	<% end %>
-<% end %>
+  <% end %>
     <td align="center"><%=member_trial_total if member_trial_total > 0%></td>
     </tr>
   <% end %>
@@ -73,16 +80,7 @@
   </tr>
 <% end %>
 
-  <tr class="<%=cycle('odd', 'even') %>">
-    <td colspan="2">Totalt <%=(@instructors.select{|m| m.groups.include?(@group)}.size + @members.size + @trials.size)%></td>
-<% if @birthdate_missing %>
-    <td>&nbsp;</td>
-<% end %>
-<% @dates.each do |d| %>
-    <td align="center"><%=@date_totals[d]%></td>
-<% end %>
-    <td align="center"><%=@date_totals.values.inject{|total,value| total + value}%></td>
-  </tr>
+<%=render :partial => 'attendance_form_footer' %>
 
   <tbody>
 </table>
