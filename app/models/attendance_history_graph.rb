@@ -42,8 +42,8 @@ class AttendanceHistoryGraph
       end
     end
 
-    averages = totals.each_with_index.map{|t, i| totals_sessions[i] > 0 ? t / totals_sessions[i] : nil}
-    g.data("Gjennomsnitt", averages)
+    # averages = totals.each_with_index.map{|t, i| totals_sessions[i] > 0 ? t / totals_sessions[i] : nil}
+    # g.data("Gjennomsnitt", averages)
     g.data("Totalt", totals)
     
     g.minimum_value = 0
