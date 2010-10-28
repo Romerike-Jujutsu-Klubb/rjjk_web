@@ -9,12 +9,13 @@
 <% @date_totals = {} %>
 <% @blank_lines = 42 %>
 
-<%=render :partial => 'attendance_form_header'%>
-<% for member in @instructors %>
-  <%=render :partial => 'attendance_row', :locals => {:member => member}%>
+<% unless @instructors.empty? %>
+  <%=render :partial => 'attendance_form_header'%>
+  <% for member in @instructors %>
+    <%=render :partial => 'attendance_row', :locals => {:member => member}%>
+  <% end %>
+  <%=render :partial => 'attendance_form_footer' %>
 <% end %>
-
-<%=render :partial => 'attendance_form_footer' %>
 
 <% @member_count = 0 %>
 <% @date_totals = {} %>
