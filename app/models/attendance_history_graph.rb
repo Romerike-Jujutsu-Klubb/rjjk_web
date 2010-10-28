@@ -1,7 +1,11 @@
 class AttendanceHistoryGraph
   def initialize()
   end
-  
+
+  def logger
+    Rails.logger
+  end
+
   def history_graph(size = 480)
     begin
       require 'gruff'
@@ -19,7 +23,7 @@ class AttendanceHistoryGraph
     
     #first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = 5.years.ago.to_date
-    first_date = Date.civil(2010, 8, 01)
+    first_date = Date.civil(2007, 1, 01)
     weeks = []
     Date.today.step(first_date, -7) {|date| weeks << [date.cwyear, date.cweek]}
     weeks.reverse!
@@ -28,13 +32,18 @@ class AttendanceHistoryGraph
     Group.all(:order => 'martial_art_id, from_age DESC').each do |group|
       attendances = weeks.map{|w| Attendance.by_group_id(group.id).find_all_by_year_and_week(*w)}
       sessions = attendances.map{|ats| ats.map{|a| a.group_schedule_id}.uniq.size}
-      values = weeks.each_with_index.map{|w, i| sessions[i] > 0 ? attendances.size / sessions[i] : nil}
-      g.data(group.name, values)
-      (0...weeks.size).each do |i|
-        totals[i] = totals[i].to_i + values[i] if values[i]
+      values = weeks.each_with_index.map{|w, i| sessions[i] > 0 ? attendances[i].size / sessions[i] : nil}
+      if values.any?{|v| v}
+        g.data(group.name, values)
+        (0...weeks.size).each do |i|
+          totals[i] = totals[i].to_i + values[i] if values[i]
+          totals_sessions[i] += sessions[i]
+        end
       end
     end
 
+    averages = totals.each_with_index.map{|t, i| totals_sessions[i] > 0 ? t / totals_sessions[i] : nil}
+    g.data("Gjennomsnitt", averages)
     g.data("Totalt", totals)
     
     g.minimum_value = 0
