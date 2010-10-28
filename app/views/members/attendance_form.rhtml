@@ -9,18 +9,18 @@
 <% @date_totals = {} %>
 <% @blank_lines = 42 %>
 
+<%=render :partial => 'attendance_form_header'%>
+
 <% unless @instructors.empty? %>
-  <%=render :partial => 'attendance_form_header'%>
   <% for member in @instructors %>
     <%=render :partial => 'attendance_row', :locals => {:member => member}%>
   <% end %>
   <%=render :partial => 'attendance_form_footer' %>
+  <tr style="border-left: hidden ; border-right: hidden"><td colspan="<%=3 + @dates.size + (@birthdate_missing ? 1 : 0)%>">&nbsp;</td></tr>
 <% end %>
 
 <% @member_count = 0 %>
 <% @date_totals = {} %>
-
-<tr style="border-left: hidden ; border-right: hidden"><td colspan="<%=3 + @dates.size + (@birthdate_missing ? 1 : 0)%>">&nbsp;</td></tr>
 
   <% for member in @members %>
     <%=render :partial => 'attendance_row', :locals => {:member => member}%>
