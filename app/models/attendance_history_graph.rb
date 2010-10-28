@@ -51,7 +51,13 @@ class AttendanceHistoryGraph
     labels = {}
     current_year = nil
     current_week = nil
-    weeks.each_with_index {|week, i| if week[1] != current_week && [1,27].include?(week[1]) then labels[i] = (week[0] != current_year ? "#{week[1]}\n    #{week[0]}" : "#{week[1]}") ; current_year = week[0] ; current_week = week[1] end}
+    weeks.each_with_index do |week, i|
+      if totals[i] && (current_week.nil? || (week[1] != current_week && [1,27].include?(week[1])))
+        labels[i] = week[0] != current_year ? "#{week[1]}\n    #{week[0]}" : week[1].to_s
+        current_year = week[0]
+        current_week = week[1]
+      end
+    end
     g.labels = labels
       
     # g.draw_vertical_legend
