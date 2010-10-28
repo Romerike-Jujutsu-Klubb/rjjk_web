@@ -96,7 +96,7 @@ class MembersController < ApplicationController
       @trials = []
     end
     @instructors -= @members
-    @passive_members = @members.select{|m| m.attendances.select{|a| (@group.nil? || a.group_schedule.group_id == @group.id) && Date.commercial(a.year, a.week) > Date.today - 92}.empty?}
+    @passive_members = @members.select{|m| m.attendances.select{|a| (@group.nil? || a.group_schedule.group_id == @group.id) && a.date <= (@date + 31) && a.date > (@date - 92)}.empty?}
     @members -= @passive_members
     render :layout => 'print'
   end
