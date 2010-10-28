@@ -89,7 +89,7 @@
 
 
 
-<h2 style="page-break-before:always">Passive medlemmer #{@group.try(:name)} <%=l Date::MONTHNAMES[@date.mon] %> <%=@date.year%></h2>
+<h2 style="page-break-before:always">Passive medlemmer <%=@group.try(:name)%> <%=l Date::MONTHNAMES[@date.mon] %> <%=@date.year%></h2>
 
 <%=render :partial => 'attendance_form_header'%>
 <% for member in @passive_members %>
