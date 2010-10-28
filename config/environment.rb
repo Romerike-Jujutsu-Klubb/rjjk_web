@@ -16,5 +16,6 @@ Rails::Initializer.run do |config|
   config.gem 'gruff'
 end
 
-require '/config/environments/user_environment'
+#require '/config/environments/user_environment'
+require 'config/environments/user_environment'
 require 'csv'
