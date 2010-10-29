@@ -179,15 +179,18 @@ class NkfMemberImport
     logger.debug "Found #{member_trial_rows.size} member trials"
     tid_col_idx = header_fields.index 'tid'
     email_col_idx = header_fields.index 'epost'
-    missing_trials = NkfMemberTrial.all :conditions => ['tid NOT IN (?)', member_trial_rows.map{|t| t[tid_col_idx]}.join(',')]
+    missing_trials = NkfMemberTrial.all :conditions => ['tid NOT IN (?)', member_trial_rows.map{|t| t[tid_col_idx]}]
     missing_trials.each do |t|
       if m = Member.find_by_email(t.epost)
         t.trial_attendances.each do |ta|
-          m.attendances << Attendance.new ta.attributes
+          attrs = ta.attributes
+          attrs.delete_if{|k, v| ['id', 'created_at', 'updated_at'].include? k}
+          attrs['member_id'] = attrs.delete('nkf_member_trial_id')
+          m.attendances << Attendance.new(attrs)
           ta.destroy
         end
+        t.destroy
       end
-      t.destroy
     end
     member_trial_rows.each do |row|
       attributes = {}
