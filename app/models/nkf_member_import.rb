@@ -23,7 +23,7 @@ class NkfMemberImport
       html_search_body = html_search_response.body
       process_response 'html search', html_search_response
       extra_function_code = html_search_body.scan(/start_tilleggsfunk27\('(.*?)'\)/)[0][0]
-      download_codes = html_search_body.scan /Download27\('(.*?)'\)/
+      session_id = html_search_body.scan(/Download27\('(.*?)'\)/)[0][0]
       detail_codes = html_search_body.scan(/edit_click27\('(.*?)'\)/).map{|dc| dc[0]}
       more_pages = html_search_body.scan(/<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)<\/a>/).map{|r| r[0]}
       more_pages.each do |p|
@@ -35,9 +35,21 @@ class NkfMemberImport
         detail_codes += more_search_body.scan(/edit_click27\('(.*?)'\)/).map{|dc| dc[0]}
       end
 
-      raise download_codes.inspect unless download_codes && download_codes[0] && download_codes[0][0]
+      raise "Could not find session id" unless session_id
 
-      members_url = 'http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=' + download_codes[0][0]
+      import_rows = get_member_rows(http, session_id, detail_codes)
+      member_trial_rows = get_member_trial_rows(http, session_id, extra_function_code)
+    end
+    
+    import_member_rows(import_rows)
+    import_member_trials(member_trial_rows)
+    return "#{@changes.size} records imported, #{@error_records.size} failed, #{import_rows.size - @changes.size - @error_records.size} skipped\n"
+  end
+  
+  private
+
+  def self.get_member_rows(http, session_id, detail_codes)
+      members_url = 'http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=' + session_id
       logger.debug "Getting #{members_url}"
       members_response = http.get(members_url, cookie_header)
       members_body = members_response.body
@@ -75,8 +87,11 @@ class NkfMemberImport
           raise "Could not find member id"
         end
       end
-
-      trial_csv_url = 'http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + download_codes[0][0]
+      import_rows
+  end
+  
+  def self.get_member_trial_rows(http, session_id, extra_function_code)
+      trial_csv_url = 'http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + session_id
       logger.debug "Getting #{trial_csv_url}"
       member_trials_csv_response = http.get(trial_csv_url, cookie_header)
       member_trials_csv_body = member_trials_csv_response.body
@@ -125,15 +140,8 @@ class NkfMemberImport
           raise "Could not find invoice email"
         end
       end
-
-    end
-    
-    import_member_rows(import_rows)
-    import_member_trials(member_trial_rows)
-    return "#{@changes.size} records imported, #{@error_records.size} failed, #{import_rows.size - @changes.size - @error_records.size} skipped\n"
+      member_trial_rows
   end
-  
-  private
   
   def self.import_member_rows(import_rows)  
     raise "Unknown format: #{import_rows && import_rows[0] && import_rows[0][0]}" unless import_rows && import_rows[0] && import_rows[0][0] == 'Medlemsnummer'
@@ -169,7 +177,18 @@ class NkfMemberImport
     header_fields = member_trial_rows.shift
     columns = header_fields.map{|f| field2column(f)}
     logger.debug "Found #{member_trial_rows.size} member trials"
-    # NkfMemberTrial.delete_all
+    tid_col_idx = header_fields.index 'tid'
+    email_col_idx = header_fields.index 'epost'
+    missing_trials = NkfMemberTrial.all :conditions => ['tid NOT IN (?)', member_trial_rows.map{|t| t[tid_col_idx]}.join(',')]
+    missing_trials.each do |t|
+      if m = Member.find_by_email(t.epost)
+        t.trial_attendances.each do |ta|
+          m.attendances << Attendance.new ta.attributes
+          ta.destroy
+        end
+      end
+      t.destroy
+    end
     member_trial_rows.each do |row|
       attributes = {}
       columns.each_with_index do |column, i|
