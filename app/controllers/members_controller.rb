@@ -281,10 +281,9 @@ class MembersController < ApplicationController
   end
   
   def trial_missing_contract
-    trial = NkfMemberTrial.find(params[:id])
-    @name = "#{trial.fornavn} #{trial.etternavn}"
-    @email = trial.epost_faktura || trial.epost
-    @trial = true
+    @trial = NkfMemberTrial.find(params[:id])
+    @name = "#{@trial.fornavn} #{@trial.etternavn}"
+    @email = @trial.epost_faktura || @trial.epost
     render :missing_contract, :layout => 'print'
   end
   
