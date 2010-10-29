@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101027061727) do
+ActiveRecord::Schema.define(:version => 20101029093611) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -199,6 +199,7 @@ ActiveRecord::Schema.define(:version => 20101027061727) do
     t.datetime "updated_at"
     t.integer  "tid",                         :null => false
     t.string   "epost_faktura", :limit => 64
+    t.string   "stilart",       :limit => 64, :null => false
   end
 
   create_table "nkf_members", :force => true do |t|

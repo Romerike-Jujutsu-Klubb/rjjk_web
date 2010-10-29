@@ -108,6 +108,7 @@ class NkfMemberImport
       
       member_trial_rows[0] << 'tid'
       member_trial_rows[0] << 'epost_faktura'
+      member_trial_rows[0] << 'stilart'
 
       trial_ids.each_with_index do |tid, i|
         logger.debug "Getting details #{tid}"
@@ -127,9 +128,15 @@ class NkfMemberImport
             last_name = Iconv.conv('UTF8', 'ISO8859-1', $1)
             if trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
               invoice_email = $1
-              trial_row = member_trial_rows.find{|ir| ir[1] == last_name && ir[2] == first_name}
-              trial_row << tid
-              trial_row << (invoice_email.blank? ? nil : invoice_email)
+              if trial_details_body =~ /<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren\/stilart -<\/option>.*<option selected value=".*?">(.*?)<\/option>.*<\/select>/
+                martial_art = $1
+                trial_row = member_trial_rows.find{|ir| ir[1] == last_name && ir[2] == first_name}
+                trial_row << tid
+                trial_row << (invoice_email.blank? ? nil : invoice_email)
+                trial_row << martial_art
+              else
+                raise "Could not find martial art"
+              end
             else
               raise "Could not find first name"
             end
@@ -181,16 +188,17 @@ class NkfMemberImport
     email_col_idx = header_fields.index 'epost'
     missing_trials = NkfMemberTrial.all :conditions => ['tid NOT IN (?)', member_trial_rows.map{|t| t[tid_col_idx]}]
     missing_trials.each do |t|
-      if m = Member.find_by_email(t.epost)
-        t.trial_attendances.each do |ta|
+      m = Member.find_by_email(t.epost)
+      t.trial_attendances.each do |ta|
+        if m
           attrs = ta.attributes
           attrs.delete_if{|k, v| ['id', 'created_at', 'updated_at'].include? k}
           attrs['member_id'] = attrs.delete('nkf_member_trial_id')
           m.attendances << Attendance.new(attrs)
-          ta.destroy
         end
-        t.destroy
+        ta.destroy
       end
+      t.destroy
     end
     member_trial_rows.each do |row|
       attributes = {}
