@@ -128,7 +128,7 @@ class NkfMemberImport
             last_name = Iconv.conv('UTF8', 'ISO8859-1', $1)
             if trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
               invoice_email = $1
-              if trial_details_body =~ /<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren\/stilart -<\/option>.*<option selected value=".*?">(.*?)<\/option>.*<\/select>/
+              if trial_details_body =~ /<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren\/stilart -<\/option>.*?<option selected value="\d+">([^<]*)<\/option>.*<\/select>/
                 martial_art = $1
                 trial_row = member_trial_rows.find{|ir| ir[1] == last_name && ir[2] == first_name}
                 trial_row << tid
