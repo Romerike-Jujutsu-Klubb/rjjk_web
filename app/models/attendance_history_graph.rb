@@ -25,7 +25,7 @@ class AttendanceHistoryGraph
     #first_date = 5.years.ago.to_date
     first_date = Date.civil(2007, 1, 01)
     weeks = []
-    Date.today.step(first_date, -14){|date| weeks << [date.cwyear, date.cweek]}
+    Date.today.step(first_date, -28){|date| weeks << [date.cwyear, date.cweek]}
     weeks.reverse!
     totals = Array.new(weeks.size - 1, nil)
     totals_sessions = Array.new(weeks.size - 1, 0)
