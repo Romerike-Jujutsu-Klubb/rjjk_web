@@ -25,19 +25,19 @@ class AttendanceHistoryGraph
     #first_date = 5.years.ago.to_date
     first_date = Date.civil(2007, 1, 01)
     weeks = []
-    Date.today.step(first_date, -7) {|date| weeks << [date.cwyear, date.cweek]}
+    Date.today.step(first_date, -14){|date| weeks << [date.cwyear, date.cweek]}
     weeks.reverse!
-    totals = Array.new(weeks.size, nil)
-    totals_sessions = Array.new(weeks.size, 0)
+    totals = Array.new(weeks.size - 1, nil)
+    totals_sessions = Array.new(weeks.size - 1, 0)
     Group.all(:order => 'martial_art_id, from_age DESC').each do |group|
-      attendances = weeks.map{|w| Attendance.by_group_id(group.id).find_all_by_year_and_week(*w)}
+      attendances = weeks.each_cons(2).map{|w1, w2| Attendance.by_group_id(group.id).all(:conditions => ['(year > ? OR (year = ? AND week > ?)) AND (year < ? OR (year = ? AND week <= ?))', w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]])}
       sessions = attendances.map{|ats| ats.map{|a| a.group_schedule_id}.uniq.size}
-      values = weeks.each_with_index.map{|w, i| sessions[i] > 0 ? attendances[i].size / sessions[i] : nil}
+      values = weeks[1..-1].each_with_index.map{|w, i| sessions[i] > 0 ? attendances[i].size / sessions[i] : nil}
       if values.any?{|v| v}
         g.data(group.name, values)
-        (0...weeks.size).each do |i|
+        sessions.each_with_index do |session, i|
           totals[i] = totals[i].to_i + values[i] if values[i]
-          totals_sessions[i] += sessions[i]
+          totals_sessions[i] += session
         end
       end
     end
