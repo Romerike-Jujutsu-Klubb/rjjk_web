@@ -31,7 +31,7 @@ class AttendanceHistoryGraph
     totals_sessions = Array.new(weeks.size - 1, 0)
     Group.all(:order => 'martial_art_id, from_age DESC').each do |group|
       attendances = weeks.each_cons(2).map{|w1, w2| Attendance.by_group_id(group.id).all(:conditions => ['(year > ? OR (year = ? AND week > ?)) AND (year < ? OR (year = ? AND week <= ?))', w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]])}
-      sessions = attendances.map{|ats| ats.map{|a| a.group_schedule_id}.uniq.size}
+      sessions = attendances.map{|ats| ats.map{|a| [a.group_schedule_id, a.year, a.week]}.uniq.size}
       values = attendances.each_with_index.map{|a, i| sessions[i] > 0 ? a.size / sessions[i] : nil}
       if values.any?{|v| v}
         g.data(group.name, values)
