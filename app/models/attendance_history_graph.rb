@@ -39,6 +39,7 @@ class AttendanceHistoryGraph
           totals[i] = totals[i].to_i + values[i] if values[i]
           totals_sessions[i] += session
         end
+        g.maximum_value = [g.maximum_value, values.compact.max].max
       end
     end
 
@@ -62,9 +63,6 @@ class AttendanceHistoryGraph
       
     # g.draw_vertical_legend
       
-    precision = 1
-    # g.maximum_value = (g.maximum_value.to_s[0..precision].to_i + 1) * (10**(Math::log10(g.maximum_value.to_i).to_i - precision)) if g.maximum_value > 0
-    g.maximum_value = [10, totals.compact.max].max
     g.maximum_value = g.maximum_value + 10 - g.maximum_value % 10
     g.marker_count = g.maximum_value / 10
     g.to_blob
