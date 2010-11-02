@@ -5,11 +5,10 @@
 
 <p>
 <% if @trial %>
-	<%=@name%> sin prøvetid er nå over, og vi savner en medlemskontrakt.
+	<%=@name%> sin prøvetid er nå over, og vi savner en medlemskontrakt (AvtaleGiro avtale).
 <% else %>
-	Vi savner en medlemskontrakt for <b><%=@name%></b>.
+	Vi savner en medlemskontrakt (AvtaleGiro avtale) for <b><%=@name%></b>.
 <% end %>
-	<br/>
 	En kontrakt er sendt til følgende e-postadresse:
 </p>
 
@@ -17,7 +16,8 @@
 
 <p>
 	Hvis e-postadressen er feil, vennligst fyll inn riktig adresse og gi til medlemsansvarlig
-	<b>Uwe Kubosch</b> eller til en <b>instruktør</b>:
+	<b>Uwe Kubosch</b> eller til en <b>instruktør</b>.<br/>
+	<b>BRUK BLOKKBOKSTAVER</b>:
 </p>
 
 <p>
@@ -31,6 +31,12 @@
 	vennligst sjekk om den har havnet i din <b>Spam</b> / <b>Junk</b> mappe.
 	Hvis du ikke finner e-posten, snakk med <b>Uwe Kubosch</b>, så sender vi en ny.
 </p>
+
+<% unless @trial %>
+<p>
+	Hvis du har mottatt en faktura på e-post, finner du medlemskontrakten på baksiden av fakturaen.
+</p>
+<% end %>
 
 <p>
   Når du har mottatt en medlemskontrakt, vennligst skriv den ut,

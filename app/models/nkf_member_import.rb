@@ -22,7 +22,9 @@ class NkfMemberImport
       html_search_response = http.get(search_url, cookie_header.update('Content-Type' => 'application/octet-stream'))
       html_search_body = html_search_response.body
       process_response 'html search', html_search_response
-      extra_function_code = html_search_body.scan(/start_tilleggsfunk27\('(.*?)'\)/)[0][0]
+      extra_function_codes = html_search_body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
+      raise html_search_body if extra_function_codes.empty?
+      extra_function_code = extra_function_codes[0][0]
       session_id = html_search_body.scan(/Download27\('(.*?)'\)/)[0][0]
       detail_codes = html_search_body.scan(/edit_click27\('(.*?)'\)/).map{|dc| dc[0]}
       more_pages = html_search_body.scan(/<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)<\/a>/).map{|r| r[0]}
@@ -258,7 +260,7 @@ class NkfMemberImport
     Net::HTTP.start(url.host, url.port) do |http|
       login_form_fields = login_content.scan /<input .*?name="(.*?)".*?value ?="(.*?)".*?>/
       login_form_fields.delete_if{|f| ['site2pstoretoken', 'ssousername', 'password'].include? f[0]}
-      login_form_fields += [['site2pstoretoken', token], ['ssousername', '40001062'], ['password', 'CokaBrus42']]
+      login_form_fields += [['site2pstoretoken', token], ['ssousername', '40001062'], ['password', 'edcvfr23']]
       login_params = login_form_fields.map {|field| "#{field[0]}=#{ERB::Util.url_encode field[1]}"}.join '&'
       login_response = http.post('/pls/orasso/orasso.wwsso_app_admin.ls_login', login_params, cookie_header)
       process_response 'login', login_response
