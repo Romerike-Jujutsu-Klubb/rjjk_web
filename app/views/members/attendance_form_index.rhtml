@@ -11,7 +11,7 @@
 				<% start_date = Date.parse('2009-08-01')
 				   months = (Date.today.year - start_date.year) * 12 + Date.today.mon - start_date.mon + 1
 				%>
-				<% options = (0..months).map{|i| ["#{t Date::MONTHNAMES[(8 + i) % 12]} #{2009 + (8 + i) / 12}", url_for(:action => :attendance_form, :group_id => group.id, :date => (start_date + i.months).strftime('%Y-%m-01'))]}.reverse %>
+				<% options = (0..months).map{|i| ["#{t Date::MONTHNAMES[1 + (7 + i) % 12]} #{2009 + (8 + i) / 12}", url_for(:action => :attendance_form, :group_id => group.id, :date => (start_date + i.months).strftime('%Y-%m-01'))]}.reverse %>
     			<%=select :group_name, :month, [[nil, nil]] + options, {}, :onchange => "document.location = options[selectedIndex].value" %>
 			</form>
 		</td>

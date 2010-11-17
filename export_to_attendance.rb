@@ -3,6 +3,7 @@
 PROJECT_DIR = File.expand_path(File.dirname(__FILE__))
 #EXPORT_DIR = '/media/Lexar'
 EXPORT_DIR = '/media/USBBOOT'
+#EXPORT_DIR = '/tmp'
 
 $: << PROJECT_DIR
 
