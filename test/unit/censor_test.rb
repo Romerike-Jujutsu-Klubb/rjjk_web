@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class CensorTest < Test::Unit::TestCase
+class CensorTest < ActiveSupport::TestCase
   fixtures :censors
 
   # Replace this with your real tests.

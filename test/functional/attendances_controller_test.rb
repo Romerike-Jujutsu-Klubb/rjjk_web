@@ -1,6 +1,8 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 class AttendancesControllerTest < ActionController::TestCase
+  fixtures :attendances
+  
   def test_should_get_index
     get :index
     assert_response :success

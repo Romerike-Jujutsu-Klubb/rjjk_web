@@ -4,7 +4,7 @@ require 'ranks_controller'
 # Re-raise errors caught by the controller.
 class RanksController; def rescue_action(e) raise e end; end
 
-class RanksControllerTest < Test::Unit::TestCase
+class RanksControllerTest < ActionController::TestCase
   fixtures :ranks
 
   def setup

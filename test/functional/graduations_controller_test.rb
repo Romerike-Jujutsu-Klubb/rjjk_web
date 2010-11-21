@@ -4,7 +4,7 @@ require 'graduations_controller'
 # Re-raise errors caught by the controller.
 class GraduationsController; def rescue_action(e) raise e end; end
 
-class GraduationsControllerTest < Test::Unit::TestCase
+class GraduationsControllerTest < ActionController::TestCase
   fixtures :users, :martial_arts, :graduations
 
   def setup

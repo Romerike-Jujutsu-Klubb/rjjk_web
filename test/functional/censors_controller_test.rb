@@ -4,7 +4,7 @@ require 'censors_controller'
 # Re-raise errors caught by the controller.
 class CensorsController; def rescue_action(e) raise e end; end
 
-class CensorsControllerTest < Test::Unit::TestCase
+class CensorsControllerTest < ActionController::TestCase
   fixtures :users, :censors
 
   def setup

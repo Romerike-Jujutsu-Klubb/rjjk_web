@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class MartialArtTest < Test::Unit::TestCase
+class MartialArtTest < ActiveSupport::TestCase
   fixtures :martial_arts
 
   # Replace this with your real tests.

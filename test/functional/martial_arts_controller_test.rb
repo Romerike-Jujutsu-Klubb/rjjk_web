@@ -4,7 +4,7 @@ require 'martial_arts_controller'
 # Re-raise errors caught by the controller.
 class MartialArtsController; def rescue_action(e) raise e end; end
 
-class MartialArtsControllerTest < Test::Unit::TestCase
+class MartialArtsControllerTest < ActionController::TestCase
   fixtures :martial_arts
 
   def setup

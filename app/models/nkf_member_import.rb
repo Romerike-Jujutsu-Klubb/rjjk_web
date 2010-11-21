@@ -260,7 +260,7 @@ class NkfMemberImport
     Net::HTTP.start(url.host, url.port) do |http|
       login_form_fields = login_content.scan /<input .*?name="(.*?)".*?value ?="(.*?)".*?>/
       login_form_fields.delete_if{|f| ['site2pstoretoken', 'ssousername', 'password'].include? f[0]}
-      login_form_fields += [['site2pstoretoken', token], ['ssousername', '40001062'], ['password', 'edcvfr23']]
+      login_form_fields += [['site2pstoretoken', token], ['ssousername', '40001062'], ['password', 'CokaBrus42']]
       login_params = login_form_fields.map {|field| "#{field[0]}=#{ERB::Util.url_encode field[1]}"}.join '&'
       login_response = http.post('/pls/orasso/orasso.wwsso_app_admin.ls_login', login_params, cookie_header)
       process_response 'login', login_response

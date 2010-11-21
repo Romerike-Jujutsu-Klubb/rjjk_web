@@ -6,6 +6,7 @@ development:
 test:
   adapter: postgresql
   database: rjjk_web_test
+  username: uwe
 
 production:
   adapter: postgresql

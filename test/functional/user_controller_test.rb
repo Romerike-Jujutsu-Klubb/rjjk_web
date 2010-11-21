@@ -5,7 +5,7 @@ require 'user_notify'
 # Raise errors beyond the default web-based presentation
 class UserController; def rescue_action(e) raise e end; end
 
-class UserControllerTest < Test::Unit::TestCase
+class UserControllerTest < ActionController::TestCase
   self.use_transactional_fixtures = false
   fixtures :users
 

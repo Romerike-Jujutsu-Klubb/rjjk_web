@@ -2,7 +2,7 @@ module RedHillConsulting::Core::ActiveRecord::ConnectionAdapters
   module PostgresqlAdapter
     def self.included(base)
       base.class_eval do
-        alias_method_chain :indexes, :redhillonrails_core
+#        alias_method_chain :indexes, :redhillonrails_core
       end
     end
 

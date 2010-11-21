@@ -51,12 +51,14 @@ class AttendanceHistoryGraph
     
     labels = {}
     current_year = nil
-    current_week = nil
+    current_month = nil
     weeks.each_with_index do |week, i|
-      if totals[i] && (current_week.nil? || (week[1] != current_week && [1,27].include?(week[1]))  || week[0] != current_year)
-        labels[i] = week[0] != current_year ? "#{week[1]}\n    #{week[0]}" : week[1].to_s
-        current_year = week[0]
-        current_week = week[1]
+      year = week[0]
+      month = Date.commercial(week[0], week[1], 2).mon
+      if totals[i] && (current_month.nil? || ((month - current_month > 1) && [1,8].include?(month)) || year != current_year)
+        labels[i] = year != current_year ? "#{month}\n    #{year}" : month.to_s
+        current_year = year
+        current_month = month
       end
     end
     g.labels = labels
@@ -64,7 +66,7 @@ class AttendanceHistoryGraph
     # g.draw_vertical_legend
       
     g.maximum_value = g.maximum_value + 10 - g.maximum_value % 10
-    g.marker_count = g.maximum_value / 10
+    g.marker_count = g.maximum_value / 5
     g.to_blob
   end
     

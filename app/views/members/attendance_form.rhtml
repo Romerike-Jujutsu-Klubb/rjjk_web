@@ -29,11 +29,12 @@
 <% @trials.each do |trial| %>
     <% @member_count += 1 %>
     <% missing_contract = (trial.reg_dato + 14) < Date.today %>
-    <% @blank_lines -= 3 %>
+    <% @blank_lines -= missing_contract ? 3 : 2 %>
     <tr class="<%=cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
       <td>
       	<%="#{trial.fornavn} #{trial.etternavn}"%><br/>
-      	<% message = "Hei #{trial.fornavn}!%0A%0A
+        <% if missing_contract %>
+      	    <% message = "Hei #{trial.fornavn}!%0A%0A
 For en stund siden registrerte du deg hos Romerike Jujutsu Klubb, men vi har ikke sett så mye til deg i deg siste.  Kanskje du kommer på neste trening?%0A
 Treningstidene er%0A
 %0A
@@ -51,8 +52,10 @@ For tiden trener vi på ...%0A
 og neste sosiale samling er ...%0A
 Gradering er ..." %>
       	<%=link_to trial.epost_faktura || trial.epost, "mailto:#{trial.epost_faktura || trial.epost}?subject=Innmelding Romerike Jujutsu Klubb&body=#{message}" %><br>
+            <% end %>
       	<%=trial.stilart.chomp('(Ingen stilartstilknytning)')%>
       </td>
+      <td>&nbsp;</td>
 	  <td align="center" nowrap="true">
 	  	Prøvetid til<br/>
 		<%=(trial.reg_dato + 14).strftime('%Y-%m-%d')%>
@@ -88,7 +91,7 @@ Gradering er ..." %>
 
 <% @blank_lines.times do %>
   <tr class="<%=cycle('odd', 'even') %>">
-    <td colspan="2"><%='&nbsp;' * 35 %></td>
+    <td colspan="3"><%='&nbsp;' * 35 %></td>
 <% if @birthdate_missing %>
     <td>&nbsp;</td>
 <% end %>

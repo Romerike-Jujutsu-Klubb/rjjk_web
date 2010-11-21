@@ -4,7 +4,7 @@ require 'members_controller'
 # Re-raise errors caught by the controller.
 class MembersController; def rescue_action(e) raise e end; end
 
-class MembersControllerTest < Test::Unit::TestCase
+class MembersControllerTest < ActionController::TestCase
   fixtures :members, :users
   
   def setup
