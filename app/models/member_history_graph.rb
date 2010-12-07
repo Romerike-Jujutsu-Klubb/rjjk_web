@@ -1,7 +1,7 @@
 class MemberHistoryGraph
   JUNIOR_AGE_LIMIT = 15
   ASPIRANT_AGE_LIMIT = 10
-  ACTIVE_CLAUSE = '"nkf_members.kontraktsbelop > 0 AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
+  ACTIVE_CLAUSE = '"NOT EXISTS (SELECT kontraktsbelop FROM nkf_members WHERE member_id = members.id AND kontraktsbelop <= 0) AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
   
   def self.history_graph(size = 480)
     begin
@@ -24,7 +24,7 @@ class MemberHistoryGraph
     dates = []
     Date.today.step(first_date, -14) {|date| dates << date}
     dates.reverse!
-    others = dates.map {|date| Member.count(:conditions => "(#{eval ACTIVE_CLAUSE}) AND birthdate IS NULL", :joins => :nkf_member)}
+    others = dates.map {|date| Member.count(:conditions => "(#{eval ACTIVE_CLAUSE}) AND birthdate IS NULL")}
     0.upto(others.size){|i| others[i] = nil if others[i] == 0 && others[i - 1].to_i == 0}
     g.data("Totalt", totals(dates))
     g.data("Aikido Seniorer", seniors_ad(dates))
@@ -52,45 +52,40 @@ class MemberHistoryGraph
   end
     
   def self.totals(dates)
-    dates.map {|date| Member.count(:conditions => eval(ACTIVE_CLAUSE), :joins => :nkf_member)}
+    dates.map {|date| Member.count(:conditions => eval(ACTIVE_CLAUSE))}
   end
     
   def self.seniors_jj(dates)
     dates.map {|date| Member.count(
         :conditions => "(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate < '#{self.senior_birthdate(date)}' AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')",
-        :include => {:groups => :martial_art},
-        :joins => :nkf_member
+        :include => {:groups => :martial_art}
     )}
   end
 
   def self.juniors_jj(dates)
     dates.map {|date| Member.count(
         :conditions => ["(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate BETWEEN ? AND ? AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')", self.senior_birthdate(date), self.junior_birthdate(date)],
-        :include => {:groups => :martial_art},
-        :joins => :nkf_member
+        :include => {:groups => :martial_art}
     )}
   end
   
   def self.seniors_ad(dates)
     dates.map {|date| Member.count(
         :conditions => "(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate < '#{self.senior_birthdate(date)}' AND martial_arts.name = 'Aikikai'",
-        :include => {:groups => :martial_art},
-        :joins => :nkf_member
+        :include => {:groups => :martial_art}
     )}
   end
   
   def self.juniors_ad(dates)
     dates.map {|date| Member.count(
         :conditions => "(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate >= '#{self.senior_birthdate(date)}' AND martial_arts.name = 'Aikikai'",
-        :include => {:groups => :martial_art},
-        :joins => :nkf_member
+        :include => {:groups => :martial_art}
     )}
   end
   
   def self.aspirants(dates)
     dates.map {|date| Member.count(
-        :conditions => "(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate >= '#{self.junior_birthdate(date)}'",
-        :joins => :nkf_member
+        :conditions => "(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate >= '#{self.junior_birthdate(date)}'"
     )}
   end
   
