@@ -69,15 +69,15 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="activerecord-jdbcpostgresql-adapter" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
-    </requirement>
-    <requirement>
-      <requirement>
         <dependency name="activerecord-jdbcpostgresql-adapter" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="false" />
       </requirement>
       <source from="Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="activerecord-jdbcpostgresql-adapter" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source manual="true" />
     </requirement>
     <requirement>
       <requirement>
