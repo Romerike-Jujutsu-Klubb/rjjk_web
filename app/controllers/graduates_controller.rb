@@ -154,7 +154,8 @@ EOH
   end
   
   def list_potential_graduates
-    @grads = Member.find(:all, :conditions => ["left_on IS NULL OR left_on >= ?", Date.today - 180], :order => 'first_name, last_name',
+    graduation = Graduation.find(params[:graduation_id])
+    @grads = Member.find(:all, :conditions => ["joined_on <= ? AND left_on IS NULL OR left_on >= ?", graduation.held_on, graduation.held_on], :order => 'first_name, last_name',
     :select => 'first_name, last_name, id')
     rstr =<<EOH
 <div style="height:256px; width:256px; overflow:auto; overflow-x:hidden;">

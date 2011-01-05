@@ -143,6 +143,7 @@ class NkfMemberImport
               raise "Could not find first name"
             end
           else
+            logger.error trial_details_body
             raise "Could not find last name"
           end
         else
@@ -186,6 +187,7 @@ class NkfMemberImport
     header_fields = member_trial_rows.shift
     columns = header_fields.map{|f| field2column(f)}
     logger.debug "Found #{member_trial_rows.size} member trials"
+    logger.debug "Columns: #{columns.inspect}"
     tid_col_idx = header_fields.index 'tid'
     email_col_idx = header_fields.index 'epost'
     missing_trials = NkfMemberTrial.all :conditions => ['tid NOT IN (?)', member_trial_rows.map{|t| t[tid_col_idx]}]

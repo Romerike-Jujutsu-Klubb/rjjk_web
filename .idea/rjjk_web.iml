@@ -69,15 +69,15 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="activerecord-jdbcpostgresql-adapter" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="false" />
-      </requirement>
-      <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
         <dependency name="activerecord-jdbcpostgresql-adapter" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <source manual="true" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="activerecord-jdbcpostgresql-adapter" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="false" />
+      </requirement>
+      <source from="Gemfile" />
     </requirement>
     <requirement>
       <requirement>
@@ -178,12 +178,6 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="jdbc-postgres" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="false" />
-      </requirement>
-      <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
         <dependency name="jdbc-postgres" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <source manual="true" />
@@ -191,6 +185,12 @@
       <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activerecord-jdbcpostgresql-adapter-0.9.2/lib/active_record/connection_adapters/jdbcpostgresql_adapter.rb" />
       <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/lib/active_record/connection_adapters/postgresql_adapter.rb" />
       <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activerecord-jdbcpostgresql-adapter-0.9.2/lib/active_record/connection_adapters/jdbcpostgresql_adapter.rb" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="jdbc-postgres" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="false" />
+      </requirement>
+      <source from="Gemfile" />
     </requirement>
     <requirement>
       <requirement>
@@ -422,6 +422,8 @@
     <orderEntry type="library" scope="PROVIDED" name="[gem] activesupport (v2.3.10, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activesupport-2.3.10)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord (v2.3.10, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activerecord-2.3.10)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] rack (v1.1.0, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/rack-1.1.0)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord-jdbcpostgresql-adapter (v1.0.3, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activerecord-jdbcpostgresql-adapter-1.0.3-java)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord-jdbc-adapter (v1.0.3, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activerecord-jdbc-adapter-1.0.3-java)" level="application" />
   </component>
 </module>
 

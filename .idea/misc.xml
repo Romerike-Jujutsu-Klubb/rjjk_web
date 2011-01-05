@@ -6,7 +6,7 @@
   <component name="ProjectResources">
     <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="JRuby SDK 1.5.1-p249" project-jdk-type="JRUBY_SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="JRuby SDK 1.5.6-p249" project-jdk-type="JRUBY_SDK" />
   <component name="SvnBranchConfigurationManager">
     <option name="myConfigurationMap">
       <map>

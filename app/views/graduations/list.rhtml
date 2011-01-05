@@ -352,7 +352,7 @@ function cancelSaveGraduateInfo(member_id, grad_id) {
 		<A HREF="#" onClick="show_glist('/censors/list_instructors');">Legg til sensor</a>
 		</td>
 	<td align="center">
-		<A HREF="#" onClick="show_glist('/graduates/list_potential_graduates');">Legg til medlemmer</a>
+		<A HREF="#" onClick="show_glist('/graduates/list_potential_graduates?graduation_id=' + $('grader_1').options($('grader_1').selectedIndex).value);">Legg til medlemmer</a>
 	</td><td align="right">
 		<A HREF="#" onClick='deleteGraduation();'>Fjern gradering</A></td>
 	</tr>
