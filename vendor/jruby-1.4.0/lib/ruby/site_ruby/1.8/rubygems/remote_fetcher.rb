@@ -1,9 +1,6 @@
-require 'net/http'
-require 'stringio'
-require 'time'
-require 'uri'
-
 require 'rubygems'
+require 'rubygems/user_interaction'
+require 'uri'
 
 ##
 # RemoteFetcher handles the details of fetching gems and gem information from
@@ -56,6 +53,11 @@ class Gem::RemoteFetcher
   # * <tt>:no_proxy</tt>: ignore environment variables and _don't_ use a proxy
 
   def initialize(proxy = nil)
+    require 'net/http'
+    require 'stringio'
+    require 'time'
+    require 'uri'
+
     Socket.do_not_reverse_lookup = true
 
     @connections = {}
@@ -75,20 +77,24 @@ class Gem::RemoteFetcher
   # always replaced.
 
   def download(spec, source_uri, install_dir = Gem.dir)
+    Gem.ensure_gem_subdirectories(install_dir) rescue nil
+
     if File.writable?(install_dir)
       cache_dir = File.join install_dir, 'cache'
     else
       cache_dir = File.join(Gem.user_dir, 'cache')
     end
 
-    gem_file_name = "#{spec.full_name}.gem"
+    gem_file_name = spec.file_name
     local_gem_path = File.join cache_dir, gem_file_name
 
     FileUtils.mkdir_p cache_dir rescue nil unless File.exist? cache_dir
 
    # Always escape URI's to deal with potential spaces and such
     unless URI::Generic === source_uri
-      source_uri = URI.parse(URI.escape(source_uri))
+      source_uri = URI.parse(URI.const_defined?(:DEFAULT_PARSER) ?
+                             URI::DEFAULT_PARSER.escape(source_uri) :
+                             URI.escape(source_uri))
     end
 
     scheme = source_uri.scheme
@@ -138,12 +144,18 @@ class Gem::RemoteFetcher
       say "Using local gem #{local_gem_path}" if
         Gem.configuration.really_verbose
     when nil then # TODO test for local overriding cache
+      source_path = if Gem.win_platform? && source_uri.scheme &&
+                       !source_uri.path.include?(':') then
+                      "#{source_uri.scheme}:#{source_uri.path}"
+                    else
+                      source_uri.path
+                    end
+
+      source_path = unescape source_path
+
       begin
-        if Gem.win_platform? && source_uri.scheme && !source_uri.path.include?(':')
-          FileUtils.cp URI.unescape(source_uri.scheme + ':' + source_uri.path), local_gem_path
-        else
-          FileUtils.cp URI.unescape(source_uri.path), local_gem_path
-        end
+        FileUtils.cp source_path, local_gem_path unless
+          File.expand_path(source_path) == File.expand_path(local_gem_path)
       rescue Errno::EACCES
         local_gem_path = source_uri.to_s
       end
@@ -233,7 +245,7 @@ class Gem::RemoteFetcher
       ]
     end
 
-    connection_id = net_http_args.join ':'
+    connection_id = [Thread.current.object_id, *net_http_args].join ':'
     @connections[connection_id] ||= Net::HTTP.new(*net_http_args)
     connection = @connections[connection_id]
 
@@ -246,6 +258,8 @@ class Gem::RemoteFetcher
     connection.start unless connection.started?
 
     connection
+  rescue Errno::EHOSTDOWN => e
+    raise FetchError.new(e.message, uri)
   end
 
   ##
@@ -303,7 +317,7 @@ class Gem::RemoteFetcher
       request.basic_auth uri.user, uri.password
     end
 
-    ua = "RubyGems/#{Gem::RubyGemsVersion} #{Gem::Platform.local}"
+    ua = "RubyGems/#{Gem::VERSION} #{Gem::Platform.local}"
     ua << " Ruby/#{RUBY_VERSION} (#{RUBY_RELEASE_DATE}"
     ua << " patchlevel #{RUBY_PATCHLEVEL}" if defined? RUBY_PATCHLEVEL
     ua << ")"
@@ -317,6 +331,8 @@ class Gem::RemoteFetcher
       request.add_field 'If-Modified-Since', last_modified.rfc2822
     end
 
+    yield request if block_given?
+
     connection = connection_for uri
 
     retried = false
@@ -324,10 +340,43 @@ class Gem::RemoteFetcher
 
     begin
       @requests[connection.object_id] += 1
-      response = connection.request request
-      say "#{request.method} #{response.code} #{response.message}: #{uri}" if
+
+      say "#{request.method} #{uri}" if
         Gem.configuration.really_verbose
+
+      file_name = File.basename(uri.path)
+      # perform download progress reporter only for gems
+      if request.response_body_permitted? && file_name =~ /\.gem$/
+        reporter = ui.download_reporter
+        response = connection.request(request) do |incomplete_response|
+          if Net::HTTPOK === incomplete_response
+            reporter.fetch(file_name, incomplete_response.content_length)
+            downloaded = 0
+            data = ''
+
+            incomplete_response.read_body do |segment|
+              data << segment
+              downloaded += segment.length
+              reporter.update(downloaded)
+            end
+            reporter.done
+            if incomplete_response.respond_to? :body=
+              incomplete_response.body = data
+            else
+              incomplete_response.instance_variable_set(:@body, data)
+            end
+          end
+        end
+      else
+        response = connection.request request
+      end
+
+      say "#{response.code} #{response.message}" if
+        Gem.configuration.really_verbose
+
     rescue Net::HTTPBadResponse
+      say "bad response" if Gem.configuration.really_verbose
+
       reset connection
 
       raise FetchError.new('too many bad responses', uri) if bad_response
@@ -337,7 +386,9 @@ class Gem::RemoteFetcher
     # HACK work around EOFError bug in Net::HTTP
     # NOTE Errno::ECONNABORTED raised a lot on Windows, and make impossible
     # to install gems.
-    rescue EOFError, Errno::ECONNABORTED, Errno::ECONNRESET
+    rescue EOFError, Timeout::Error,
+           Errno::ECONNABORTED, Errno::ECONNRESET, Errno::EPIPE
+
       requests = @requests[connection.object_id]
       say "connection reset after #{requests} requests, retrying" if
         Gem.configuration.really_verbose

@@ -28,8 +28,8 @@ class Gem::Commands::UpdateCommand < Gem::Command
     end
 
     add_local_remote_options
-
     add_platform_option
+    add_prerelease_option "as update targets"
   end
 
   def arguments # :nodoc:
@@ -51,12 +51,12 @@ class Gem::Commands::UpdateCommand < Gem::Command
       say "Updating RubyGems"
 
       unless options[:args].empty? then
-        fail "No gem names are allowed with the --system option"
+        raise "No gem names are allowed with the --system option"
       end
 
       rubygems_update = Gem::Specification.new
       rubygems_update.name = 'rubygems-update'
-      rubygems_update.version = Gem::Version.new Gem::RubyGemsVersion
+      rubygems_update.version = Gem::Version.new Gem::VERSION
       hig['rubygems-update'] = rubygems_update
 
       options[:user_install] = false
@@ -181,11 +181,11 @@ class Gem::Commands::UpdateCommand < Gem::Command
         end
       end
 
-      matching_gems = spec_tuples.select do |(name, version, platform),|
+      matching_gems = spec_tuples.select do |(name, _, platform),|
         name == l_name and Gem::Platform.match platform
       end
 
-      highest_remote_gem = matching_gems.sort_by do |(name, version),|
+      highest_remote_gem = matching_gems.sort_by do |(_, version),|
         version
       end.last
 

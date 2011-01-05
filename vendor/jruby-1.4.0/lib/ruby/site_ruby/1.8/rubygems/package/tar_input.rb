@@ -1,7 +1,11 @@
+# -*- coding: iso-8859-1 -*-
 #++
 # Copyright (C) 2004 Mauricio Julio Fernández Pradier
 # See LICENSE.txt for additional licensing information.
 #--
+
+require "yaml"
+require "zlib"
 
 class Gem::Package::TarInput
 
@@ -199,7 +203,8 @@ class Gem::Package::TarInput
   # times.  And that's the way it is.
 
   def zipped_stream(entry)
-    if defined? Rubinius then
+    if defined? Rubinius or defined? Maglev then
+      # these implementations have working Zlib
       zis = Zlib::GzipReader.new entry
       dis = zis.read
       is = StringIO.new(dis)

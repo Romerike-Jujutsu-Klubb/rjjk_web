@@ -1,4 +1,3 @@
-require 'fileutils'
 require 'rubygems/command'
 require 'rubygems/format'
 require 'rubygems/installer'
@@ -74,7 +73,7 @@ revert the gem.
     say "Restoring gem(s) to pristine condition..."
 
     specs.each do |spec|
-      gem = Dir[File.join(Gem.dir, 'cache', "#{spec.full_name}.gem")].first
+      gem = Dir[File.join(Gem.dir, 'cache', spec.file_name)].first
 
       if gem.nil? then
         alert_error "Cached gem for #{spec.full_name} not found, use `gem install` to restore"

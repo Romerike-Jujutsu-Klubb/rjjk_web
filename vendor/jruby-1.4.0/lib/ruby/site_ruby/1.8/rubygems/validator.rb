@@ -4,18 +4,14 @@
 # See LICENSE.txt for permissions.
 #++
 
-require 'find'
-
-require 'rubygems/digest/md5'
 require 'rubygems/format'
 require 'rubygems/installer'
 
-# Load test-unit 2.x if it's a gem
 begin
-   Gem.activate('test-unit')
+  gem 'test-unit'
 rescue Gem::LoadError
-   # Ignore - use the test-unit library that's part of the standard library
-end   
+  # Ignore - use the test-unit library that's part of the standard library
+end
 
 ##
 # Validator performs various gem file and gem database validation
@@ -23,6 +19,11 @@ end
 class Gem::Validator
 
   include Gem::UserInteraction
+
+  def initialize
+    require 'find'
+    require 'digest'
+  end
 
   ##
   # Given a gem file's contents, validates against its own MD5 checksum
@@ -40,7 +41,7 @@ class Gem::Validator
     sum_data = gem_data.gsub(/MD5SUM = "([a-z0-9]+)"/,
                              "MD5SUM = \"#{"F" * 32}\"")
 
-    unless Gem::MD5.hexdigest(sum_data) == $1.to_s then
+    unless Digest::MD5.hexdigest(sum_data) == $1.to_s then
       raise Gem::VerificationError, 'invalid checksum for gem file'
     end
   end
@@ -93,9 +94,8 @@ class Gem::Validator
       next unless gems.include? gem_spec.name unless gems.empty?
 
       install_dir = gem_spec.installation_path
-      gem_path = File.join(install_dir, "cache", gem_spec.full_name) + ".gem"
-      spec_path = File.join(install_dir, "specifications",
-                            gem_spec.full_name) + ".gemspec"
+      gem_path = File.join install_dir, "cache", gem_spec.file_name
+      spec_path = File.join install_dir, "specifications", gem_spec.spec_name
       gem_directory = gem_spec.full_gem_path
 
       unless File.directory? gem_directory then
@@ -139,8 +139,8 @@ class Gem::Validator
               next unless data # HACK `gem check -a mkrf`
 
               open File.join(gem_directory, entry['path']), Gem.binary_mode do |f|
-                unless Gem::MD5.hexdigest(f.read).to_s ==
-                    Gem::MD5.hexdigest(data).to_s then
+                unless Digest::MD5.hexdigest(f.read).to_s ==
+                    Digest::MD5.hexdigest(data).to_s then
                   errors[gem_name][entry['path']] = "Modified from original"
                 end
               end

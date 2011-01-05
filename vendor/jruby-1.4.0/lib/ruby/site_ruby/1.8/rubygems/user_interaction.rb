@@ -112,6 +112,7 @@ module Gem::UserInteraction
    :alert_error,
    :alert_warning,
    :ask,
+   :ask_for_password,
    :ask_yes_no,
    :choose_from_list,
    :say,
@@ -215,6 +216,50 @@ class Gem::StreamUI
     result = @ins.gets
     result.chomp! if result
     result
+  end
+
+  ##
+  # Ask for a password. Does not echo response to terminal.
+
+  def ask_for_password(question)
+    return nil if not @ins.tty?
+
+    @outs.print(question + "  ")
+    @outs.flush
+
+    Gem.win_platform? ? ask_for_password_on_windows : ask_for_password_on_unix
+  end
+
+  ##
+  # Asks for a password that works on windows. Ripped from the Heroku gem.
+
+  def ask_for_password_on_windows
+    require "Win32API"
+    char = nil
+    password = ''
+
+    while char = Win32API.new("crtdll", "_getch", [ ], "L").Call do
+      break if char == 10 || char == 13 # received carriage return or newline
+      if char == 127 || char == 8 # backspace and delete
+        password.slice!(-1, 1)
+      else
+        password << char.chr
+      end
+    end
+
+    puts
+    password
+  end
+
+  ##
+  # Asks for a password that works on unix
+
+  def ask_for_password_on_unix
+    system "stty -echo"
+    password = @ins.gets
+    password.chomp! if password
+    system "stty echo"
+    password
   end
 
   ##
@@ -367,6 +412,76 @@ class Gem::StreamUI
     end
   end
 
+  ##
+  # Return a download reporter object chosen from the current verbosity
+
+  def download_reporter(*args)
+    case Gem.configuration.verbose
+    when nil, false
+      SilentDownloadReporter.new(@outs, *args)
+    else
+      VerboseDownloadReporter.new(@outs, *args)
+    end
+  end
+
+  ##
+  # An absolutely silent download reporter.
+
+  class SilentDownloadReporter
+    def initialize(out_stream, *args)
+    end
+
+    def fetch(filename, filesize)
+    end
+
+    def update(current)
+    end
+
+    def done
+    end
+  end
+
+  ##
+  # A progress reporter that prints out messages about the current progress.
+
+  class VerboseDownloadReporter
+    attr_reader :file_name, :total_bytes, :progress
+
+    def initialize(out_stream, *args)
+      @out = out_stream
+      @progress = 0
+    end
+
+    def fetch(file_name, total_bytes)
+      @file_name, @total_bytes = file_name, total_bytes
+      update_display(false)
+    end
+
+    def update(bytes)
+      new_progress = ((bytes.to_f * 100) / total_bytes.to_f).ceil
+      return if new_progress == @progress
+
+      @progress = new_progress
+      update_display
+    end
+
+    def done
+      @progress = 100
+      update_display(true, true)
+    end
+
+    private
+
+    def update_display(show_progress = true, new_line = false)
+      return unless @out.tty?
+      if show_progress
+        @out.print "\rFetching: %s (%3d%%)" % [@file_name, @progress]
+      else
+        @out.print "Fetching: %s" % @file_name
+      end
+      @out.puts if new_line
+    end
+  end
 end
 
 ##

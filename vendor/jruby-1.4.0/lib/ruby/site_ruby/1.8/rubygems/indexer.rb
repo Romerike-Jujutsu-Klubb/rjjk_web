@@ -1,7 +1,3 @@
-require 'fileutils'
-require 'tmpdir'
-require 'zlib'
-
 require 'rubygems'
 require 'rubygems/format'
 
@@ -57,8 +53,12 @@ class Gem::Indexer
   # Create an indexer that will index the gems in +directory+.
 
   def initialize(directory, options = {})
+    require 'fileutils'
+    require 'tmpdir'
+    require 'zlib'
+
     unless ''.respond_to? :to_xs then
-      fail "Gem::Indexer requires that the XML Builder library be installed:" \
+      raise "Gem::Indexer requires that the XML Builder library be installed:" \
            "\n\tgem install builder"
     end
 
@@ -320,7 +320,7 @@ class Gem::Indexer
     <title>#{rss_title}</title>
     <link>http://#{rss_host}</link>
     <description>Recently released gems from http://#{rss_host}</description>
-    <generator>RubyGems v#{Gem::RubyGemsVersion}</generator>
+    <generator>RubyGems v#{Gem::VERSION}</generator>
     <docs>http://cyber.law.harvard.edu/rss/rss.html</docs>
         HEADER
 
@@ -350,7 +350,7 @@ class Gem::Indexer
         end
 
         index.sort_by { |_, spec| [-spec.date.to_i, spec] }.each do |_, spec|
-          gem_path = CGI.escapeHTML "http://#{@rss_gems_host}/gems/#{spec.full_name}.gem"
+          gem_path = CGI.escapeHTML "http://#{@rss_gems_host}/gems/#{spec.file_name}"
           size = File.stat(spec.loaded_from).size rescue next
 
           description = spec.description || spec.summary || ''
