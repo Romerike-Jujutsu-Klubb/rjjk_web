@@ -2,32 +2,34 @@ GEM
   remote: http://rubygems.org/
   specs:
     RedCloth (4.2.3-java)
-    actionmailer (2.3.5)
-      actionpack (= 2.3.5)
-    actionpack (2.3.5)
-      activesupport (= 2.3.5)
-      rack (~> 1.0.0)
-    activerecord (2.3.5)
-      activesupport (= 2.3.5)
+    actionmailer (2.3.10)
+      actionpack (= 2.3.10)
+    actionpack (2.3.10)
+      activesupport (= 2.3.10)
+      rack (~> 1.1.0)
+    activerecord (2.3.10)
+      activesupport (= 2.3.10)
     activerecord-jdbc-adapter (1.0.2-java)
     activerecord-jdbcpostgresql-adapter (1.0.2-java)
       activerecord-jdbc-adapter (= 1.0.2)
       jdbc-postgres (~> 8.4.0)
-    activeresource (2.3.5)
-      activesupport (= 2.3.5)
-    activesupport (2.3.5)
+    activeresource (2.3.10)
+      activesupport (= 2.3.10)
+    activesupport (2.3.10)
     bouncy-castle-java (1.5.0145.2)
+    glassfish (1.0.2-java)
+      rack (>= 0.4.0)
     gruff (0.3.6)
     jdbc-postgres (8.4.702-java)
     jruby-openssl (0.7.2)
       bouncy-castle-java
-    rack (1.0.1)
-    rails (2.3.5)
-      actionmailer (= 2.3.5)
-      actionpack (= 2.3.5)
-      activerecord (= 2.3.5)
-      activeresource (= 2.3.5)
-      activesupport (= 2.3.5)
+    rack (1.1.0)
+    rails (2.3.10)
+      actionmailer (= 2.3.10)
+      actionpack (= 2.3.10)
+      activerecord (= 2.3.10)
+      activeresource (= 2.3.10)
+      activesupport (= 2.3.10)
       rake (>= 0.8.3)
     rake (0.8.7)
     rmagick4j (0.3.7)
@@ -38,8 +40,9 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   activerecord-jdbcpostgresql-adapter
+  glassfish
   gruff
   jdbc-postgres
   jruby-openssl
-  rails (= 2.3.5)
+  rails (~> 2.3.10)
   rmagick4j
