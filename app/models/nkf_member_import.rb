@@ -122,12 +122,12 @@ class NkfMemberImport
           logger.error $!.message
           retry
         end
-        trial_details_body = trial_details_response.body
+        trial_details_body = @iconv.iconv(trial_details_response.body)
         process_response 'trial details', trial_details_response
         if trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
           first_name = $1
           if trial_details_body =~ /name="frm_28_v09" value="(.*?)"/
-            last_name = Iconv.conv('UTF8', 'ISO8859-1', $1)
+            last_name = $1
             if trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
               invoice_email = $1
               if trial_details_body =~ /<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren\/stilart -<\/option>.*?<option selected value="\d+">([^<]*)<\/option>.*<\/select>/
