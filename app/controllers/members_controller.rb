@@ -47,7 +47,16 @@ class MembersController < ApplicationController
     end
     send_data(g, :disposition => 'inline', :type => 'image/png', :filename => "RJJK_Medlemshistorikk.png")
   end
-  
+
+  def grade_history_graph
+    if params[:id] && params[:id].to_i <= 1280
+      g = MemberGradeHistoryGraph.history_graph params[:id].to_i
+    else
+      g = MemberGradeHistoryGraph.history_graph
+    end
+    send_data(g, :disposition => 'inline', :type => 'image/png', :filename => "RJJK_MedlemsGradsHistorikk.png")
+  end
+
   def list_inactive
     @members = Member.paginate :page => params[:page], :per_page => Member::MEMBERS_PER_PAGE, :conditions => 'left_on IS NOT NULL', :order => 'last_name'
     @member_count = Member.count(:conditions => 'left_on IS NOT NULL')
