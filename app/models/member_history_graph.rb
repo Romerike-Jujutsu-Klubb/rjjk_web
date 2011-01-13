@@ -27,6 +27,7 @@ class MemberHistoryGraph
     others = dates.map {|date| Member.count(:conditions => "(#{eval ACTIVE_CLAUSE}) AND birthdate IS NULL")}
     0.upto(others.size){|i| others[i] = nil if others[i] == 0 && others[i - 1].to_i == 0}
     g.data("Totalt", totals(dates))
+    g.data("Totalt Jujutsu", totals_jj(dates))
     g.data("Aikido Seniorer", seniors_ad(dates))
     g.data("Aikido Juniorer", juniors_ad(dates))
     g.data("Grizzly", seniors_jj(dates))
@@ -54,7 +55,14 @@ class MemberHistoryGraph
   def self.totals(dates)
     dates.map {|date| Member.count(:conditions => eval(ACTIVE_CLAUSE))}
   end
-    
+
+  def self.totals_jj(dates)
+    dates.map {|date| Member.count(
+        :conditions => "(#{eval ACTIVE_CLAUSE}) AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')",
+        :include => {:groups => :martial_art}
+    )}
+  end
+
   def self.seniors_jj(dates)
     dates.map {|date| Member.count(
         :conditions => "(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate < '#{self.senior_birthdate(date)}' AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')",
