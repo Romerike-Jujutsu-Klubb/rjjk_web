@@ -16,7 +16,7 @@ class MemberHistoryGraph
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     #g.legend_font_size = 14
     g.hide_dots = true
-    g.colors = %w{black blue lightblue green orange red}
+    g.colors = %w{gray blue brown orange black lightblue green red}
     
     #first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = 5.years.ago.to_date
@@ -28,11 +28,11 @@ class MemberHistoryGraph
     0.upto(others.size){|i| others[i] = nil if others[i] == 0 && others[i - 1].to_i == 0}
     g.data("Totalt", totals(dates))
     g.data("Totalt Jujutsu", totals_jj(dates))
-    g.data("Aikido Seniorer", seniors_ad(dates))
-    g.data("Aikido Juniorer", juniors_ad(dates))
     g.data("Grizzly", seniors_jj(dates))
     g.data("Tiger", juniors_jj(dates))
     g.data("Panda", aspirants(dates))
+    g.data("Aikido Seniorer", seniors_ad(dates))
+    g.data("Aikido Juniorer", juniors_ad(dates))
     g.data("Uten fødselsdato", others)
     
     g.minimum_value = 0
