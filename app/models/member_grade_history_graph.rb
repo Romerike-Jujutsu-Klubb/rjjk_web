@@ -21,7 +21,7 @@ class MemberGradeHistoryGraph
     dates = []
     Date.today.step(first_date, -14) {|date| dates << date}
     dates.reverse!
-    MartialArt.find_by_name('Kei Wa Ryu').ranks[0..1].each do |rank|
+    MartialArt.find_by_name('Kei Wa Ryu').ranks[0..0].each do |rank|
       g.data(rank.name, totals(rank, dates))
     end
 
@@ -46,7 +46,7 @@ class MemberGradeHistoryGraph
         :conditions => eval(ACTIVE_CLAUSE)
 #        :include => {:graduates => {:graduation => :martial_art}}
       )
-      ranks = active_members.select{|m| m.graduates.select{|g| g.graduation.martial_art.name =='Kei Wa Ryu'}.sort_by{|g| g.graduation.held_on}.last.try(:rank) == rank}.size
+      ranks = 1 # active_members.select{|m| m.graduates.select{|g| g.graduation.martial_art.name =='Kei Wa Ryu'}.sort_by{|g| g.graduation.held_on}.last.try(:rank) == rank}.size
       logger.debug "Active members: #{active_members.size}, ranks: #{ranks}"
     end
   end
