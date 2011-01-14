@@ -43,11 +43,11 @@ class MemberGradeHistoryGraph
   def self.totals(rank, dates)
     dates.map do |date|
       active_members = Member.all(
-        :conditions => eval(ACTIVE_CLAUSE),
-        :include => {:graduates => {:graduation => :martial_art}}
+        :conditions => eval(ACTIVE_CLAUSE)
+#        :include => {:graduates => {:graduation => :martial_art}}
       )
-      logger.debug "Active members: #{active_members.size}"
-      active_members.select{|m| m.graduates.select{|g| g.graduation.martial_art.name =='Kei Wa Ryu'}.sort_by{|g| g.graduation.held_on}.last.try(:rank) == rank}.size
+      ranks = active_members.select{|m| m.graduates.select{|g| g.graduation.martial_art.name =='Kei Wa Ryu'}.sort_by{|g| g.graduation.held_on}.last.try(:rank) == rank}.size
+      logger.debug "Active members: #{active_members.size}, ranks: #{ranks}"
     end
   end
 
