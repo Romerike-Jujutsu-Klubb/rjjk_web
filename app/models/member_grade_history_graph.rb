@@ -51,7 +51,7 @@ class MemberGradeHistoryGraph
     end
   end
 
-  def logger
+  def self.logger
     Rails.logger
   end
   
