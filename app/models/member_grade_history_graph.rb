@@ -13,7 +13,7 @@ class MemberGradeHistoryGraph
     g.title = "Fordeling av grader"
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     g.hide_dots = true
-    g.colors = %w{yellow yellow orange orange green green yellow yellow orange orange green green blue blue brown brown yellow orange green blue brown black black black}
+    g.colors = %w{yellow yellow orange orange green green yellow yellow orange orange green green blue blue brown yellow orange green blue brown black black black}[-8..-1]
     
     #first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = 5.years.ago.to_date
@@ -21,7 +21,7 @@ class MemberGradeHistoryGraph
     dates = []
     Date.today.step(first_date, -14) {|date| dates << date}
     dates.reverse!
-    MartialArt.find_by_name('Kei Wa Ryu').ranks[0..0].each do |rank|
+    MartialArt.find_by_name('Kei Wa Ryu').ranks[-8..-1].each do |rank|
       g.data(rank.name, totals(rank, dates))
     end
 
@@ -35,7 +35,7 @@ class MemberGradeHistoryGraph
       
     precision = 1
     g.maximum_value = (g.maximum_value.to_s[0..precision].to_i + 1) * (10**(Math::log10(g.maximum_value.to_i).to_i - precision)) if g.maximum_value > 0
-    g.maximum_value = [100, g.maximum_value].max
+    g.maximum_value = [10, g.maximum_value].max
     g.marker_count = g.maximum_value / 10
     g.to_blob
   end
@@ -43,11 +43,13 @@ class MemberGradeHistoryGraph
   def self.totals(rank, dates)
     dates.map do |date|
       active_members = Member.all(
-        :conditions => eval(ACTIVE_CLAUSE)
-#        :include => {:graduates => {:graduation => :martial_art}}
+          :select => (Member.column_names - ['image']).join(','),
+        :conditions => eval(ACTIVE_CLAUSE),
+        :include => {:graduates => {:graduation => :martial_art}}
       )
-      ranks = 1 # active_members.select{|m| m.graduates.select{|g| g.graduation.martial_art.name =='Kei Wa Ryu'}.sort_by{|g| g.graduation.held_on}.last.try(:rank) == rank}.size
+      ranks = active_members.select{|m| m.graduates.select{|g| g.graduation.martial_art.name =='Kei Wa Ryu'}.sort_by{|g| g.graduation.held_on}.last.try(:rank) == rank}.size
       logger.debug "Active members: #{active_members.size}, ranks: #{ranks}"
+      ranks
     end
   end
 
