@@ -2,6 +2,7 @@ class GraduatesController < ApplicationController
   MEMBERS_PER_PAGE = 30
   
   before_filter :admin_required
+  cache_sweeper :grade_history_image_sweeper, :only => [:create, :update, :destroy]
   
   def index
     list
