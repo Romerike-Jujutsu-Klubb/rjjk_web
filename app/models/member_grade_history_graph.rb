@@ -27,7 +27,7 @@ class MemberGradeHistoryGraph
       if sums
         sums = sums.zip(rank_totals){|s, t| s + t}
       else
-        sums =rank_totals
+        sums = rank_totals
       end
       g.data(rank.name, sums)
     end
