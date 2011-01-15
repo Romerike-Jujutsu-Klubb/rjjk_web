@@ -15,7 +15,7 @@ class MemberGradeHistoryGraph
     g.title = "Fordeling av grader"
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     g.hide_dots = true
-    g.colors = %w{yellow yellow orange orange green green yellow yellow orange orange green green blue blue brown yellow orange green blue brown black black black}.reverse[-ranks.size..-1]
+    g.colors = %w{yellow yellow orange orange green green yellow yellow orange orange green green blue blue brown yellow orange green blue brown black black black}[-ranks.size..-1].reverse
     
     #first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = 5.years.ago.to_date
