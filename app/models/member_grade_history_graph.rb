@@ -22,10 +22,10 @@ class MemberGradeHistoryGraph
     Date.today.step(first_date, -14) {|date| dates << date}
     dates.reverse!
     sums = nil
-    MartialArt.find_by_name('Kei Wa Ryu').ranks[-8..-1].each do |rank|
+    MartialArt.find_by_name('Kei Wa Ryu').ranks[0..-1].each do |rank|
       rank_totals = totals(rank, dates)
       if sums
-        sums = sums.zip(rank_totals){|s, t| s + t}
+        sums = sums.zip(rank_totals).map{|s, t| s + t}
       else
         sums = rank_totals
       end
