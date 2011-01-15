@@ -19,7 +19,7 @@ class AttendanceHistoryGraph
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     #g.legend_font_size = 14
     g.hide_dots = true
-    g.colors = %w{darkblue blue lightblue green orange red black}
+    g.colors = %w{blue orange black}
     
     #first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = 5.years.ago.to_date
