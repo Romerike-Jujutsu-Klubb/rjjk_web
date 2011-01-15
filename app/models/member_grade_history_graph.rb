@@ -8,14 +8,14 @@ class MemberGradeHistoryGraph
       return File.read("public/images/rails.png")
     end
 
-    ranks = MartialArt.find_by_name('Kei Wa Ryu').ranks[-8..-1]
+    ranks = MartialArt.find_by_name('Kei Wa Ryu').ranks[-8..-1].reverse
 
     g = Gruff::Line.new(size)
     g.theme_37signals
     g.title = "Fordeling av grader"
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     g.hide_dots = true
-    g.colors = %w{yellow yellow orange orange green green yellow yellow orange orange green green blue blue brown yellow orange green blue brown black black black}[-ranks.size..-1]
+    g.colors = %w{yellow yellow orange orange green green yellow yellow orange orange green green blue blue brown yellow orange green blue brown black black black}.reverse[-ranks.size..-1]
     
     #first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = 5.years.ago.to_date
