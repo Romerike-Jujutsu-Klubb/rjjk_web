@@ -90,7 +90,7 @@
       <file leaf-file-name="member_grade_history_graph.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/member_grade_history_graph.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="50" selection-start="1009" selection-end="1009" vertical-scroll-proportion="0.05263158">
+            <state line="27" column="15" selection-start="1099" selection-end="1099" vertical-scroll-proportion="0.13157895">
               <folding />
             </state>
           </provider>
@@ -849,7 +849,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/member_grade_history_graph.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="50" selection-start="1009" selection-end="1009" vertical-scroll-proportion="0.05263158">
+        <state line="27" column="15" selection-start="1099" selection-end="1099" vertical-scroll-proportion="0.13157895">
           <folding />
         </state>
       </provider>
