@@ -33,10 +33,8 @@ class MemberGradeHistoryGraph
     dates.each_with_index {|date, i| if date.month != current_month && [1,8].include?(date.month) then labels[i] = (date.year != current_year ? "#{date.strftime("%m")}\n    #{date.strftime("%Y")}" : "#{date.strftime("%m")}") ; current_year = date.year ; current_month = date.month end}
     g.labels = labels
       
-    precision = 1
-    g.maximum_value = (g.maximum_value.to_s[0..precision].to_i + 1) * (10**(Math::log10(g.maximum_value.to_i).to_i - precision)) if g.maximum_value > 0
-    g.maximum_value = [10, g.maximum_value].max
-    g.marker_count = g.maximum_value / 10
+    g.maximum_value = 10
+    g.marker_count = 5
     g.to_blob
   end
     
