@@ -22,7 +22,7 @@ class MemberGradeHistoryGraph
     Date.today.step(first_date, -14) {|date| dates << date}
     dates.reverse!
     sums = nil
-    MartialArt.find_by_name('Kei Wa Ryu').ranks[0..-1].each do |rank|
+    MartialArt.find_by_name('Kei Wa Ryu').ranks[-8..-1].each do |rank|
       rank_totals = totals(rank, dates)
       if sums
         sums.zip(rank_totals){|s, t| s + t}
@@ -40,8 +40,8 @@ class MemberGradeHistoryGraph
     dates.each_with_index {|date, i| if date.month != current_month && [1,8].include?(date.month) then labels[i] = (date.year != current_year ? "#{date.strftime("%m")}\n    #{date.strftime("%Y")}" : "#{date.strftime("%m")}") ; current_year = date.year ; current_month = date.month end}
     g.labels = labels
       
-    g.maximum_value = 10
-    g.marker_count = 5
+    g.maximum_value = 20
+    g.marker_count = 4
     g.to_blob
   end
     
