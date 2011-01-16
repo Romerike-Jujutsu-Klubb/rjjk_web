@@ -1,5 +1,5 @@
 class MemberGradeHistoryGraph
-  ACTIVE_CLAUSE = '"(joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
+  ACTIVE_CLAUSE = '"NOT EXISTS (SELECT kontraktsbelop FROM nkf_members WHERE member_id = members.id AND kontraktsbelop <= 0) AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
   
   def self.history_graph(size = 480)
     begin
