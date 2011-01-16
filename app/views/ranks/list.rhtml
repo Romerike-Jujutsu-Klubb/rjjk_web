@@ -7,6 +7,7 @@
     <th>Posisjon</th>
     <th>Navn</th>
     <th>Farge</th>
+    <th>Måneder</th>
   </tr>
   
 <% for rank in @ranks %>
@@ -15,6 +16,7 @@
     <td><%=h rank.martial_art.name %></td>
     <td><%=h rank.name %></td>
     <td><%=h rank.colour %></td>
+    <td><%=h rank.standard_months %></td>
     <td><%= link_to 'Rediger', :action => 'edit', :id => rank %></td>
 <!--
     <td><%= link_to 'Slett', { :action => 'destroy', :id => rank }, :confirm => 'Are you sure?', :method => :post %></td>

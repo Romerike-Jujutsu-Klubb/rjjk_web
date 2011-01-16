@@ -35,8 +35,9 @@ class RanksController < ApplicationController
   end
 
   def edit
-    @rank = Rank.find(params[:id])
+    @rank ||= Rank.find(params[:id])
     @martial_arts = MartialArt.find(:all, :order => 'name')
+    render :action => 'edit'
   end
 
   def update
@@ -45,7 +46,7 @@ class RanksController < ApplicationController
       flash[:notice] = 'Rank was successfully updated.'
       redirect_to :action => 'show', :id => @rank
     else
-      render :action => 'edit'
+      edit
     end
   end
 
