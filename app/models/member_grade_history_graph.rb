@@ -20,8 +20,8 @@ class MemberGradeHistoryGraph
     #first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = 5.years.ago.to_date
     first_date = Date.civil(2007, 01, 01)
-    dates = []
-    Date.today.step(first_date, -14) {|date| dates << date}
+    dates = [first_date - 14]
+    Date.today.step(first_date, -14){|date| dates << date}
     dates.reverse!
     sums = nil
     ranks.each do |rank|
@@ -48,7 +48,7 @@ class MemberGradeHistoryGraph
   end
     
   def self.totals(rank, dates)
-    dates.each_slice(2).map do |from_date, to_date|
+    dates.each_cons(2).map do |from_date, to_date|
       active_members = Member.all(
           :select => (Member.column_names - ['image']).join(','),
         :conditions => eval(ACTIVE_CLAUSE),
