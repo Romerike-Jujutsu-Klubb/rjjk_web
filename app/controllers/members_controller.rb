@@ -252,7 +252,7 @@ class MembersController < ApplicationController
         group_ranks = group.members.active(Date.today).find(:all, :select => 'id').map{|m| m.current_rank(ma)}.sort_by{|r| r ? r.position : -99}.map{|r| r ? r.id : 'nil'}
         midle = (group_ranks.size - 1) / 2
         @ranks[group][:beginners] = group_ranks[0..midle].uniq
-        @ranks[group][:advanced]  = group_ranks[midle..-1].uniq[1..-1] || []
+        @ranks[group][:advanced]  = (group_ranks[midle..-1] || []).uniq[1..-1] || []
       end
     end
   end
