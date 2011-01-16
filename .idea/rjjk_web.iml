@@ -130,12 +130,6 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="glassfish" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
         <dependency name="gruff" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <source from="Gemfile" />
@@ -379,6 +373,18 @@
       </requirement>
       <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/actionmailer-2.3.5/lib/action_mailer/vendor/tmail.rb" />
       <source from="vendor/jruby/lib/ruby/gems/1.8/gems/actionmailer-2.3.5/lib/action_mailer/vendor/tmail.rb" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="trinidad" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
+        <dependency name="trinidad_daemon_extension" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="Gemfile" />
     </requirement>
     <requirement>
       <requirement>
