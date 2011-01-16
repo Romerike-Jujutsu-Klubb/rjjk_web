@@ -1,5 +1,5 @@
 class MemberGradeHistoryGraph
-  ACTIVE_CLAUSE = '"EXISTS (SELECT id FROM attendances WHERE member_id = members.id AND (year > #{from_date.cwyear} OR (year = #{from_date.cwyear} AND week >= #{from_date.cweek})) AND (year < #{to_date.cwyear} OR (year = #{to_date.cwyear} AND week <= #{to_date.cweek}))) AND (joined_on IS NULL OR joined_on <= \'#{to_date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{to_date.strftime(\'%Y-%m-%d\')}\')"'
+  ACTIVE_CLAUSE = '"EXISTS (SELECT id FROM attendances WHERE member_id = members.id AND (year > #{prev_date.cwyear} OR (year = #{prev_date.cwyear} AND week >= #{prev_date.cweek})) AND (year < #{next_date.cwyear} OR (year = #{next_date.cwyear} AND week <= #{next_date.cweek}))) AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
   
   def self.history_graph(size = 480)
     begin
@@ -22,6 +22,7 @@ class MemberGradeHistoryGraph
     first_date = Date.civil(2007, 01, 01)
     dates = [first_date - 14]
     Date.today.step(first_date, -14){|date| dates << date}
+    dates << dates.last + 14
     dates.reverse!
     sums = nil
     ranks.each do |rank|
@@ -48,13 +49,13 @@ class MemberGradeHistoryGraph
   end
     
   def self.totals(rank, dates)
-    dates.each_cons(2).map do |from_date, to_date|
+    dates.each_cons(3).map do |prev_date, date, next_date|
       active_members = Member.all(
           :select => (Member.column_names - ['image']).join(','),
         :conditions => eval(ACTIVE_CLAUSE),
         :include => {:graduates => {:graduation => :martial_art}}
       )
-      ranks = active_members.select{|m| m.graduates.select{|g| g.graduation.martial_art.name =='Kei Wa Ryu' && g.graduation.held_on <= to_date}.sort_by{|g| g.graduation.held_on}.last.try(:rank) == rank}.size
+      ranks = active_members.select{|m| m.graduates.select{|g| g.graduation.martial_art.name =='Kei Wa Ryu' && g.graduation.held_on <= date}.sort_by{|g| g.graduation.held_on}.last.try(:rank) == rank}.size
       logger.debug "Active members: #{active_members.size}, ranks: #{ranks}"
       ranks
     end
