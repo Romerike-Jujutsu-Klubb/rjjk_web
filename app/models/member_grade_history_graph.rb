@@ -1,5 +1,5 @@
 class MemberGradeHistoryGraph
-  ACTIVE_CLAUSE = '"NOT EXISTS (SELECT kontraktsbelop FROM nkf_members WHERE member_id = members.id AND kontraktsbelop <= 0) AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
+  ACTIVE_CLAUSE = '"EXISTS (SELECT id FROM attendances WHERE member_id = members.id AND (year > #{from_date.cwyear} OR (year = #{from_date.cwyear} AND week >= #{from_date.cweek})) AND (year < #{to_date.cwyear} OR (year = #{to_date.cwyear} AND week <= #{to_date.cweek}))) AND (joined_on IS NULL OR joined_on <= \'#{to_date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{to_date.strftime(\'%Y-%m-%d\')}\')"'
   
   def self.history_graph(size = 480)
     begin
@@ -8,7 +8,7 @@ class MemberGradeHistoryGraph
       return File.read("public/images/rails.png")
     end
 
-    ranks = MartialArt.find_by_name('Kei Wa Ryu').ranks[-8..-1].reverse
+    ranks = MartialArt.find_by_name('Kei Wa Ryu').ranks[(RAILS_ENV == 'production' ? -8 : 0)..-1].reverse
 
     g = Gruff::Line.new(size)
     g.theme_37signals
@@ -48,13 +48,13 @@ class MemberGradeHistoryGraph
   end
     
   def self.totals(rank, dates)
-    dates.map do |date|
+    dates.each_slice(2).map do |from_date, to_date|
       active_members = Member.all(
           :select => (Member.column_names - ['image']).join(','),
         :conditions => eval(ACTIVE_CLAUSE),
         :include => {:graduates => {:graduation => :martial_art}}
       )
-      ranks = active_members.select{|m| m.graduates.select{|g| g.graduation.martial_art.name =='Kei Wa Ryu'}.sort_by{|g| g.graduation.held_on}.last.try(:rank) == rank}.size
+      ranks = active_members.select{|m| m.graduates.select{|g| g.graduation.martial_art.name =='Kei Wa Ryu' && g.graduation.held_on <= to_date}.sort_by{|g| g.graduation.held_on}.last.try(:rank) == rank}.size
       logger.debug "Active members: #{active_members.size}, ranks: #{ranks}"
       ranks
     end
