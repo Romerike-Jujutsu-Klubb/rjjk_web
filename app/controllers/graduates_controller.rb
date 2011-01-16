@@ -222,8 +222,8 @@ EOH
     # rank = Rank.find(:first, :conditions => [ "martial_art_id = ?", aid])
     raise "Unable to find rank for martial art with id = #{aid}" unless next_rank
 
-    Graduate.create!(:graduation_id => gid, :member_id => mid, :passed => false,
-                     :rank_id       => next_rank.id, :paid_graduation => false, :paid_belt => false)
+    Graduate.create!(:graduation_id => gid, :member_id => mid, :passed => true,
+                     :rank_id       => next_rank.id, :paid_graduation => true, :paid_belt => true)
     render :text =>" "
   end
 
