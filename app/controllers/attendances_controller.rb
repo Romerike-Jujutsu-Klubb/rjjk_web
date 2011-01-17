@@ -3,7 +3,8 @@ class AttendancesController < ApplicationController
 
   caches_page :history_graph
   cache_sweeper :attendance_image_sweeper, :only => [:create, :update, :destroy]
-  
+  cache_sweeper :grade_history_image_sweeper, :only => [:create, :update, :destroy]
+
   # GET /attendances
   # GET /attendances.xml
   def index
