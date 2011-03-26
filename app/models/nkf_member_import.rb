@@ -205,7 +205,6 @@ class NkfMemberImport
       t.destroy
     end
     member_trial_rows.each do |row|
-      logger.debug row.inspect
       attributes = {}
       columns.each_with_index do |column, i|
         column = 'medlems_type' if column == 'type'
