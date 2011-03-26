@@ -37,7 +37,7 @@ class MemberHistoryGraph
     g.data("Grizzly", seniors_jj(dates))
     g.data("Tiger", juniors_jj(dates))
     g.data("Panda", aspirants(dates))
-    g.data("Aikido Seniorer", seniors_ad(dates))
+    g.data("Aikido Seniorer", seniors_ad(dates).without_consecutive_zeros)
     g.data("Aikido Juniorer", juniors_ad(dates).without_consecutive_zeros)
     g.data("Uten fødselsdato", others)
     
