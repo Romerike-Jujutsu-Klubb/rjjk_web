@@ -17,12 +17,11 @@ GEM
       activesupport (= 2.3.10)
     activesupport (2.3.10)
     bouncy-castle-java (1.5.0145.2)
-    glassfish (1.0.2-java)
-      rack (>= 0.4.0)
     gruff (0.3.6)
     jdbc-postgres (8.4.702-java)
     jruby-openssl (0.7.2)
       bouncy-castle-java
+    jruby-rack (1.0.6)
     rack (1.1.0)
     rails (2.3.10)
       actionmailer (= 2.3.10)
@@ -33,6 +32,12 @@ GEM
       rake (>= 0.8.3)
     rake (0.8.7)
     rmagick4j (0.3.7)
+    trinidad (1.0.5)
+      jruby-rack (>= 1.0.2)
+      trinidad_jars (>= 0.3.0)
+    trinidad_daemon_extension (0.2.5)
+      trinidad_jars (>= 0.1.1)
+    trinidad_jars (1.0.0)
 
 PLATFORMS
   java
@@ -40,9 +45,10 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   activerecord-jdbcpostgresql-adapter
-  glassfish
   gruff
   jdbc-postgres
   jruby-openssl
   rails (~> 2.3.10)
   rmagick4j
+  trinidad
+  trinidad_daemon_extension
