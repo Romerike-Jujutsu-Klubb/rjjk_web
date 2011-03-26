@@ -30,8 +30,6 @@ class MemberHistoryGraph
     dates = []
     Date.today.step(first_date, -14) {|date| dates << date}
     dates.reverse!
-    others = dates.map {|date| Member.count(:conditions => "(#{eval ACTIVE_CLAUSE}) AND birthdate IS NULL")}
-    0.upto(others.size){|i| others[i] = nil if others[i] == 0 && others[i - 1].to_i == 0}
     g.data("Totalt", totals(dates))
     g.data("Totalt Jujutsu", totals_jj(dates))
     g.data("Grizzly", seniors_jj(dates))
@@ -39,8 +37,9 @@ class MemberHistoryGraph
     g.data("Panda", aspirants(dates))
     g.data("Aikido Seniorer", seniors_ad(dates).without_consecutive_zeros)
     g.data("Aikido Juniorer", juniors_ad(dates).without_consecutive_zeros)
-    g.data("Uten fødselsdato", others)
-    
+    # g.data("Uten fødselsdato", dates.map {|date| Member.count(:conditions => "(#{eval ACTIVE_CLAUSE}) AND birthdate IS NULL")}.without_consecutive_zeros)
+    g.data("Prøvetid", dates.map{|d| NkfMemberTrial.count(:conditions => ["reg_dato <= ?", d])}.without_consecutive_zeros)
+
     g.minimum_value = 0
     
     labels = {}
