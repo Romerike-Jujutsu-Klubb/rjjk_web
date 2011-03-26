@@ -1,6 +1,6 @@
 class Array
   def without_consecutive_zeros
-    each_with_index{|v, i| self[i] = (v > 0 || self[i-1].to_i > 0 || self[i+1] > 0 ? v : nil)}
+    each_with_index{|v, i| self[i] = (v > 0 || self[i-1].to_i > 0 || self[i+1].to_i > 0 ? v : nil)}
   end
 end
 
