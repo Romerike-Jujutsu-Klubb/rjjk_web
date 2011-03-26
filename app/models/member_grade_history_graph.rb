@@ -19,7 +19,7 @@ class MemberGradeHistoryGraph
     
     #first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = 5.years.ago.to_date
-    first_date = Date.civil(2007, 01, 01)
+    first_date = Date.civil(2009, 01, 01)
     dates = []
     Date.today.step(first_date, -14){|date| dates << date}
     dates.reverse!
