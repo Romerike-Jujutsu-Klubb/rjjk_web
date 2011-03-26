@@ -11,7 +11,7 @@
 APP=rjjk_web
 RUN_AS_USER=capistrano
 PORT=3005
-pidfile=${PIDFILE-/u/apps/$APP/shared/log/glassfish.pid}
+pidfile=${PIDFILE-/u/apps/$APP/shared/log/server.pid}
 APP_DIR="/u/apps/$APP/current"
 LOG_DIR="/u/apps/$APP/shared/log"
 
