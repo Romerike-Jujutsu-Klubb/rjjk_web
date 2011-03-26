@@ -1,3 +1,9 @@
+class Array
+  def without_consecutive_zeros
+    self.map.with_index{|c, i| c > 0 || values[i-1].to_i > 0 || values[i+1] > 0 ? v : nil}
+  end
+end
+
 class MemberHistoryGraph
   JUNIOR_AGE_LIMIT = 15
   ASPIRANT_AGE_LIMIT = 10
@@ -32,7 +38,7 @@ class MemberHistoryGraph
     g.data("Tiger", juniors_jj(dates))
     g.data("Panda", aspirants(dates))
     g.data("Aikido Seniorer", seniors_ad(dates))
-    g.data("Aikido Juniorer", juniors_ad(dates))
+    g.data("Aikido Juniorer", juniors_ad(dates)).without_consecutive_zeros
     g.data("Uten fødselsdato", others)
     
     g.minimum_value = 0
