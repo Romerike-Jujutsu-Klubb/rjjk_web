@@ -18,115 +18,9 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="RedCloth" version="4.1.1" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/rails-2.3.5/guides/rails_guides.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/rails-2.3.5/guides/rails_guides.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="actionmailer" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/actionpack-2.3.5/test/controller/assert_select_test.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/actionpack-2.3.5/test/controller/assert_select_test.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="actionpack" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/plugins/will_paginate/test/boot.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="actionpack" version="2.3" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/rails-2.3.5/guides/rails_guides.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/rails-2.3.5/guides/rails_guides.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="activerecord" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/lib/jdbc_adapter.rb" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/test/jdbc_common.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/lib/jdbc_adapter.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/test/jdbc_common.rb" />
-      <source from="vendor/plugins/will_paginate/test/boot.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="activerecord" version="1.15.4.7794" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/plugins/acts_as_list/test/list_test.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="activerecord-jdbc-adapter" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activerecord-jdbcpostgresql-adapter-0.9.2/lib/active_record/connection_adapters/jdbcpostgresql_adapter.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activerecord-jdbcpostgresql-adapter-0.9.2/lib/active_record/connection_adapters/jdbcpostgresql_adapter.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
         <dependency name="activerecord-jdbcpostgresql-adapter" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="false" />
       </requirement>
       <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="activerecord-jdbcpostgresql-adapter" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="activesupport" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/rails-2.3.5/lib/rails_generator.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/rails-2.3.5/lib/rails_generator.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="addressable" version="2.0" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activerecord-2.3.5/examples/performance.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activerecord-2.3.5/examples/performance.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="builder" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/1.8/rubygems/indexer.rb" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/1.8/rubygems/indexer.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="builder" version="2.1.2" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/vendor.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/vendor.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="echoe" version="3.0.1" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/RedCloth-4.2.2-universal-java/Rakefile" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/RedCloth-4.2.2-universal-java/Rakefile" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="faker" version="0.3.1" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activerecord-2.3.5/examples/performance.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activerecord-2.3.5/examples/performance.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="flexmock" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/rake-0.8.7/test/rake_test_setup.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/rake-0.8.7/test/rake_test_setup.rb" />
     </requirement>
     <requirement>
       <requirement>
@@ -136,68 +30,9 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="hoe" version="2.0.0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/rspec-1.3.0/Rakefile" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/rspec-1.3.0/Rakefile" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="i18n" version="0.1.3" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/vendor.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/vendor.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="jdbc-derby" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/lib/active_record/connection_adapters/derby_adapter.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/lib/active_record/connection_adapters/derby_adapter.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="jdbc-h2" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/lib/active_record/connection_adapters/h2_adapter.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/lib/active_record/connection_adapters/h2_adapter.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="jdbc-hsqldb" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/lib/active_record/connection_adapters/hsqldb_adapter.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/lib/active_record/connection_adapters/hsqldb_adapter.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="jdbc-mysql" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/lib/active_record/connection_adapters/mysql_adapter.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/lib/active_record/connection_adapters/mysql_adapter.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
         <dependency name="jdbc-postgres" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="false" />
       </requirement>
       <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="jdbc-postgres" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source manual="true" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/lib/active_record/connection_adapters/postgresql_adapter.rb" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activerecord-jdbcpostgresql-adapter-0.9.2/lib/active_record/connection_adapters/jdbcpostgresql_adapter.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/lib/active_record/connection_adapters/postgresql_adapter.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activerecord-jdbcpostgresql-adapter-0.9.2/lib/active_record/connection_adapters/jdbcpostgresql_adapter.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="jdbc-sqlite3" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/lib/active_record/connection_adapters/sqlite3_adapter.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activerecord-jdbc-adapter-0.9.2/lib/active_record/connection_adapters/sqlite3_adapter.rb" />
     </requirement>
     <requirement>
       <requirement>
@@ -207,172 +42,15 @@
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="jruby-openssl" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/asn1.rb" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/bn.rb" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/cipher.rb" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/config.rb" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/netscape.rb" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/pkcs7.rb" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/pkey.rb" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/random.rb" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/ssl.rb" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/x509.rb" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/shared/jruby/openssl/gem.rb" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/asn1.rb" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/bn.rb" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/cipher.rb" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/config.rb" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/netscape.rb" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/pkcs7.rb" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/pkey.rb" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/random.rb" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/ssl.rb" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/shared/jruby/openssl/autoloads/x509.rb" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/shared/jruby/openssl/gem.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="memcache-client" version="1.7.4" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/vendor.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/vendor.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="merb-core" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/glassfish-1.0.2-universal-java/lib/jruby/rack/merb.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/glassfish-1.0.2-universal-java/lib/jruby/rack/merb.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="mocha" version="0.9.7" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/actionpack-2.3.5/test/abstract_unit.rb" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/test_case.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/actionpack-2.3.5/test/abstract_unit.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/test_case.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="rack" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/glassfish-1.0.2-universal-java/lib/jruby/rack/rackup.rb" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/glassfish-1.0.2-universal-java/lib/rack/adapter/rails.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/glassfish-1.0.2-universal-java/lib/jruby/rack/rackup.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/glassfish-1.0.2-universal-java/lib/rack/adapter/rails.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="rack" version="1.0.1" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/actionpack-2.3.5/lib/action_controller.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/actionpack-2.3.5/lib/action_controller.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="rails" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/bin/rails" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/rails-2.3.5/environments/boot.rb" />
-      <source from="vendor/jruby/bin/rails" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/rails-2.3.5/environments/boot.rb" />
-      <source from="vendor/plugins/will_paginate/test/boot.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
         <dependency name="rails" version="2.3.10" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
       </requirement>
       <source from="Gemfile" />
     </requirement>
     <requirement>
       <requirement>
-        <dependency name="rake" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/bin/rake" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/1.8/rubygems/package_task.rb" />
-      <source from="vendor/jruby/bin/rake" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/1.8/rubygems/package_task.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="rbench" version="0.2.3" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activerecord-2.3.5/examples/performance.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activerecord-2.3.5/examples/performance.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="rdoc" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/1.8/rubygems/commands/setup_command.rb" />
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/1.8/rubygems/doc_manager.rb" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/1.8/rubygems/commands/setup_command.rb" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/1.8/rubygems/doc_manager.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
         <dependency name="rmagick4j" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="false" />
       </requirement>
       <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="rspec" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/bin/spec" />
-      <source from="vendor/jruby/bin/spec" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="ruby-openid" version="2" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/rack-1.0.1/lib/rack/auth/openid.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/rack-1.0.1/lib/rack/auth/openid.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="ruby-prof" version="0.6.1" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/testing/performance.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/testing/performance.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="session" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/rake-0.8.7/test/functional.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/rake-0.8.7/test/functional.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="sources" version="0.0.1" bound="GREATER" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/site_ruby/1.8/rubygems.rb" />
-      <source from="vendor/jruby/lib/ruby/site_ruby/1.8/rubygems.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="test-unit" version="1.2.3" bound="EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/rspec-1.3.0/lib/spec/interop/test.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/rspec-1.3.0/lib/spec/interop/test.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="text-format" version="0.6.3" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/actionmailer-2.3.5/lib/action_mailer/vendor/text_format.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/actionmailer-2.3.5/lib/action_mailer/vendor/text_format.rb" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="tmail" version="1.2.3" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/actionmailer-2.3.5/lib/action_mailer/vendor/tmail.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/actionmailer-2.3.5/lib/action_mailer/vendor/tmail.rb" />
     </requirement>
     <requirement>
       <requirement>
@@ -385,13 +63,6 @@
         <dependency name="trinidad_daemon_extension" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <source from="Gemfile" />
-    </requirement>
-    <requirement>
-      <requirement>
-        <dependency name="tzinfo" version="0.3.12" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
-      </requirement>
-      <source from="vendor/jruby-1.4.0/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/vendor.rb" />
-      <source from="vendor/jruby/lib/ruby/gems/1.8/gems/activesupport-2.3.5/lib/active_support/vendor.rb" />
     </requirement>
   </component>
   <component name="NewModuleRootManager">
@@ -444,6 +115,12 @@
     <orderEntry type="library" scope="PROVIDED" name="[gem] actionmailer (v2.3.5, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/actionmailer-2.3.5)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] glassfish (v1.0.3, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/glassfish-1.0.3-universal-java)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] jdbc-postgres (v9.0.801, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jdbc-postgres-9.0.801)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] trinidad (v1.0.4, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/trinidad-1.0.4)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] trinidad_daemon_extension (v0.2.4, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/trinidad_daemon_extension-0.2.4)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] jruby-rack (v1.0.5, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jruby-rack-1.0.5)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] trinidad_jars (v0.3.3, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/trinidad_jars-0.3.3)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] trinidad (v1.0.5, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/trinidad-1.0.5)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] jdbc-mysql (v5.1.13, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jdbc-mysql-5.1.13)" level="application" />
   </component>
 </module>
 
