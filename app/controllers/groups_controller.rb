@@ -22,7 +22,7 @@ class GroupsController < ApplicationController
   # GET /groups/yaml
   def yaml
     @groups = Group.find(:all)
-    render :text => @groups.to_yaml, :content_type => 'text/yaml'
+    render :text => @groups.to_yaml, :content_type => 'text/yaml', :layout => false
   end
   
   # GET /groups/1
