@@ -9,9 +9,22 @@ class GroupsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @groups }
+      format.yaml  { render :text => @groups.to_yaml, :content_type => 'text/yaml' }
     end
   end
 
+  # GET /groups/xml
+  def index
+    @groups = Group.find(:all)
+    render :xml => @groups
+  end
+
+  # GET /groups/yaml
+  def yaml
+    @groups = Group.find(:all)
+    render :text => @groups.to_yaml, :content_type => 'text/yaml'
+  end
+  
   # GET /groups/1
   # GET /groups/1.xml
   def show
