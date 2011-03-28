@@ -14,7 +14,7 @@ class GroupsController < ApplicationController
   end
 
   # GET /groups/xml
-  def index
+  def xml
     @groups = Group.find(:all)
     render :xml => @groups
   end
