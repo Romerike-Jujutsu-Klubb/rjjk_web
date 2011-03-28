@@ -1,6 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :trial_attendances
-
   map.connect ':controller/active_contracts', :action => 'active_contracts'
   map.connect ':controller/create', :action => 'create'
   map.connect ':controller/destroy', :action => 'destroy'
@@ -14,6 +12,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :groups
   map.resources :nkf_members
   map.resources :nkf_member_trials
+  map.resources :trial_attendances
 
   map.connect '', :controller => "welcome"
   map.connect ':controller/service.wsdl', :action => 'wsdl'
@@ -22,4 +21,5 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id.:format'
   map.connect ':controller/:action.:format'
   map.connect ':controller/:action/:id'
+  map.connect ':controller/:action'
 end
