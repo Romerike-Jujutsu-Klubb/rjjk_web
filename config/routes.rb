@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/destroy', :action => 'destroy'
   map.connect ':controller/excel_export', :action => 'excel_export'
   map.connect ':controller/history_graph', :action => 'history_graph'
+  map.connect ':controller/yaml', :action => 'yaml'
 
   map.resources :attendances
   map.resources :cms_members
