@@ -13,12 +13,6 @@ class GroupsController < ApplicationController
     end
   end
 
-  # GET /groups/xml
-  def xml
-    @groups = Group.find(:all)
-    render :xml => @groups
-  end
-
   # GET /groups/yaml
   def yaml
     @groups = Group.find(:all)
