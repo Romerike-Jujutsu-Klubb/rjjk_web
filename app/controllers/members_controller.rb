@@ -32,10 +32,6 @@ class MembersController < ApplicationController
   # GET /members/yaml
   def yaml
     @members = Member.find_active
-    @members.each do |m|
-      m.image = nil
-      m.attendances = []
-    end
     render :text => @members[0..1].to_yaml, :content_type => 'text/yaml', :layout => false
   end
   
