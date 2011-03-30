@@ -32,7 +32,7 @@ class MembersController < ApplicationController
   # GET /members/yaml
   def yaml
     @members = Member.find_active
-    render :text => @members[0..1].to_yaml, :content_type => 'text/yaml', :layout => false
+    render :text => @members.to_yaml, :content_type => 'text/yaml', :layout => false
   end
   
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
