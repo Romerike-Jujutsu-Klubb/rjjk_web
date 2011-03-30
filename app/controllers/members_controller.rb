@@ -33,7 +33,7 @@ class MembersController < ApplicationController
   def yaml
     @members = Member.find_active
     @members.each{|m| m['image'] = nil}
-    render :text => @members.to_yaml, :content_type => 'text/yaml', :layout => false
+    render :text => @members.map{|m| m.attributes}.to_yaml, :content_type => 'text/yaml', :layout => false
   end
   
   # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
