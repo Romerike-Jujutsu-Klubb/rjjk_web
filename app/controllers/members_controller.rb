@@ -32,6 +32,7 @@ class MembersController < ApplicationController
   # GET /members/yaml
   def yaml
     @members = Member.find_active
+    @members.each{|m| m['image'] = nil}
     render :text => @members.to_yaml, :content_type => 'text/yaml', :layout => false
   end
   

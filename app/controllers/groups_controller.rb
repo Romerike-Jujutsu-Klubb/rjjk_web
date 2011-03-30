@@ -16,7 +16,7 @@ class GroupsController < ApplicationController
   # GET /groups/yaml
   def yaml
     @groups = Group.find(:all)
-    @groups.each{|g| g['members'] = g.members.find(:select => :id, :conditions => 'left_on IS NULL').map{|m| m.id}}
+    @groups.each{|g| g['members'] = g.members.map{|m| m.id}}
     render :text => @groups.map{|g| g.attributes}.to_yaml, :content_type => 'text/yaml', :layout => false
   end
   
