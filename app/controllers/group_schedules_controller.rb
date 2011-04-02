@@ -1,6 +1,5 @@
 class GroupSchedulesController < ApplicationController
   before_filter :admin_required
-
   # GET /group_schedules
   # GET /group_schedules.xml
   def index
@@ -10,6 +9,12 @@ class GroupSchedulesController < ApplicationController
       format.html # index.html.erb
       format.xml  { render :xml => @group_schedules }
     end
+  end
+
+  # GET /group_schedules/yaml
+  def yaml
+    @group_schedules = GroupSchedule.all
+    render :text => @group_schedules.to_yaml, :content_type => 'text/yaml', :layout => false
   end
 
   # GET /group_schedules/1
