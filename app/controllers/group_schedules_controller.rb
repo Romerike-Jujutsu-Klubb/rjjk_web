@@ -14,7 +14,7 @@ class GroupSchedulesController < ApplicationController
   # GET /group_schedules/yaml
   def yaml
     @group_schedules = GroupSchedule.all
-    render :text => @group_schedules.to_yaml, :content_type => 'text/yaml', :layout => false
+    render :text => @group_schedules.map{|gs| gs.attributes}.to_yaml, :content_type => 'text/yaml', :layout => false
   end
 
   # GET /group_schedules/1
