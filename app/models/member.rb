@@ -136,5 +136,9 @@ class Member < ActiveRecord::Base
   def cms_member
     CmsMember.find_by_cms_contract_id(cms_contract_id)
   end
-  
+
+  def invoice_email
+    nkf_member.epost_faktura.blank? ? email : nkf_member.epost_faktura
+  end
+
 end

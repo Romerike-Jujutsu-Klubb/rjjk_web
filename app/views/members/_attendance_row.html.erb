@@ -5,7 +5,7 @@
     <td nowrap="true" onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'">
       <%=h member.first_name %> <%=h member.last_name %>
       <% if missing_contract %>
-        <br/><%=member.nkf_member.epost%><br/><%=member.nkf_member.ventekid %>
+        <br/><%=member.invoice_email%><br/><%=member.nkf_member.ventekid %>
 	  <% end %>
     </td>
     <td nowrap="true" align="right">
