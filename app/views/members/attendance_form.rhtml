@@ -52,11 +52,10 @@ Gradering er ..." %>
             <%= link_to trial.epost_faktura || trial.epost, "mailto:#{trial.epost_faktura || trial.epost}?subject=Innmelding Romerike Jujutsu Klubb&body=#{message}" %>
             <br>
         <% end %>
-        <%= trial.stilart.chomp('(Ingen stilartstilknytning)') %>
       </td>
       <td>&nbsp;</td>
       <td align="center" nowrap="true">
-        Prøvetid til<br/>
+        Prøvetid til
         <%= (trial.reg_dato + 14).strftime('%Y-%m-%d') %>
         <%= "<br/>#{link_to 'Mangler kontrakt', :action => :trial_missing_contract, :id => trial.id}" if missing_contract %>
       </td>
