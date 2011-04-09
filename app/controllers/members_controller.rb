@@ -292,7 +292,7 @@ class MembersController < ApplicationController
   def missing_contract
     member = Member.find(params[:id])
     @name = "#{member.first_name} #{member.last_name}"
-    @email = member.email
+    @email = member.nkf_member.epost_faktura
     render :layout => 'print'
   end
   
