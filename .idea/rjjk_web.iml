@@ -121,6 +121,8 @@
     <orderEntry type="library" scope="PROVIDED" name="[gem] jdbc-mysql (v5.1.13, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jdbc-mysql-5.1.13)" level="application" />
     <orderEntry type="library" name="[gem] rspec (v1.3.0, null)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] jdbc-mysql (v5.0.4, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jdbc-mysql-5.0.4)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] trinidad_daemon_extension (v0.2.5, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/trinidad_daemon_extension-0.2.5)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] jruby-openssl (v0.7.3, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jruby-openssl-0.7.3)" level="application" />
   </component>
 </module>
 
