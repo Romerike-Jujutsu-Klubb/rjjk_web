@@ -89,7 +89,10 @@ class Member < ActiveRecord::Base
   end
   
   def age
-    birthdate && ((Date.today - birthdate).to_i / 365) # TODO: What about leap years?
+    return nil unless birthdate
+    age = Date.today.year - birthdate.year
+    age -= 1 if Date.today < birthdate + age.years
+    age
   end
   
   def age_group

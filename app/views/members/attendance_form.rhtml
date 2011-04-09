@@ -38,7 +38,7 @@
         <br/>
         <% if missing_contract %>
             <% message = "Hei #{trial.fornavn}!%0A%0A
-For en stund siden registrerte du deg hos Romerike Jujutsu Klubb, men vi har ikke sett så mye til deg i deg siste.  Kanskje du kommer på neste trening?%0A
+For en stund siden registrerte du deg hos Romerike Jujutsu Klubb, men vi har ikke sett så mye til deg i det siste.  Kanskje du kommer på neste trening?%0A
 Treningstidene er%0A
 %0A
 Panda       (6-9 år): Torsdag 17.45 - 18.45%0A
@@ -53,7 +53,9 @@ Gradering er ..." %>
             <br>
         <% end %>
       </td>
-      <td>&nbsp;</td>
+      <td nowrap="true" align="right">
+          <%=h trial.age %>
+      </td>
       <td align="center" nowrap="true">
         Prøvetid til
         <%= (trial.reg_dato + 14).strftime('%Y-%m-%d') %>
