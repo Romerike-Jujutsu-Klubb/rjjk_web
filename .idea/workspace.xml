@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/groups_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/groups_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/members_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/members_controller.rb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,28 +27,34 @@
   <component name="DisabledGemRequirementsHolder">
     <module name="rjjk_web">
       <requirement>
-        <dependency name="rdoc" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+        <dependency name="rbench" version="0.2.3" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
-        <dependency name="addressable" version="2.0" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
+        <dependency name="ruby-prof" version="0.6.1" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
-        <dependency name="jdbc-h2" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+        <dependency name="memcache-client" version="1.7.4" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
         <dependency name="text-format" version="0.6.3" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
-        <dependency name="ruby-openid" version="2" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
+        <dependency name="addressable" version="2.0" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
+      </requirement>
+      <requirement>
+        <dependency name="test-unit" version="1.2.3" bound="EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <requirement>
+        <dependency name="jdbc-hsqldb" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <requirement>
+        <dependency name="jdbc-sqlite3" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
         <dependency name="tmail" version="1.2.3" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
-        <dependency name="session" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <requirement>
-        <dependency name="jdbc-hsqldb" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+        <dependency name="rdoc" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
         <dependency name="echoe" version="3.0.1" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
@@ -57,28 +63,22 @@
         <dependency name="faker" version="0.3.1" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
-        <dependency name="rbench" version="0.2.3" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
-      </requirement>
-      <requirement>
-        <dependency name="flexmock" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <requirement>
-        <dependency name="ruby-prof" version="0.6.1" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+        <dependency name="ruby-openid" version="2" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
         <dependency name="merb-core" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
-        <dependency name="memcache-client" version="1.7.4" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <requirement>
-        <dependency name="test-unit" version="1.2.3" bound="EQUAL" git="false" path="false" doRequire="true" />
+        <dependency name="jdbc-h2" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
         <dependency name="sources" version="0.0.1" bound="GREATER" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
-        <dependency name="jdbc-sqlite3" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+        <dependency name="session" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <requirement>
+        <dependency name="flexmock" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
     </module>
   </component>
@@ -87,10 +87,73 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="attendances_controller.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="attendances_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/attendances_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
+            <state line="109" column="0" selection-start="2874" selection-end="2874" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="members_controller.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/controllers/members_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="106" column="140" selection-start="3852" selection-end="3852" vertical-scroll-proportion="0.5731707">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="schema.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/db/schema.rb">
+          <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="attendance_form.rhtml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/members/attendance_form.rhtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="133" column="0" selection-start="5636" selection-end="5636" vertical-scroll-proportion="-24.714285">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="attendance_history_graph.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/attendance_history_graph.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="34" column="0" selection-start="1149" selection-end="1149" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="trial_attendance.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/trial_attendance.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="0" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="attendance.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/attendance.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="20" selection-start="38" selection-end="178" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="member_history_graph.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/member_history_graph.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="0" selection-start="241" selection-end="241" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -114,7 +177,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/views/ranks/_form.rhtml" />
         <option value="$PROJECT_DIR$/app/views/ranks/list.rhtml" />
         <option value="$PROJECT_DIR$/app/controllers/ranks_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/rank.rb" />
@@ -123,13 +185,14 @@
         <option value="$PROJECT_DIR$/app/controllers/attendances_controller.rb" />
         <option value="$PROJECT_DIR$/rjjk_web" />
         <option value="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/members_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/member_grade_history_graph.rb" />
-        <option value="$PROJECT_DIR$/app/models/attendance_history_graph.rb" />
         <option value="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
         <option value="$PROJECT_DIR$/config/environments/development.rb" />
         <option value="$PROJECT_DIR$/app/models/member_history_graph.rb" />
         <option value="$PROJECT_DIR$/app/views/members/attendance_form.rhtml" />
+        <option value="$PROJECT_DIR$/app/models/trial_attendance.rb" />
+        <option value="$PROJECT_DIR$/app/models/attendance_history_graph.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/members_controller.rb" />
       </list>
     </option>
   </component>
@@ -174,8 +237,65 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Favorites" />
       <pane id="RailsProjectView">
         <subPane>
@@ -191,16 +311,15 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="org.jetbrains.plugins.ruby.settings.RubyIdeSdkConfigurable" />
+    <property name="recentsLimit" value="5" />
     <property name="RailsGeneratorsPopup.hiddenIncluded" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -652,15 +771,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1600" height="1178" extended-state="6" />
+    <frame x="4" y="22" width="1916" height="1178" extended-state="6" />
     <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293247" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26131117" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26131117" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2018053" sideWeight="0.38688827" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2040707" sideWeight="0.35272393" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2018053" sideWeight="0.34441367" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2040707" sideWeight="0.37857804" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47553092" sideWeight="0.9978506" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -669,7 +789,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293247" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293247" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293247" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -691,7 +810,7 @@
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Removed Aikido from member trial email." />
+    <option name="LAST_COMMIT_MESSAGE" value="* Display trial attendances in attendance graph" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -720,31 +839,13 @@
     <MESSAGE value="* Fixing NKF member import" />
     <MESSAGE value="* Fxing graphs" />
     <MESSAGE value="* Removed Aikido from member trial email." />
+    <MESSAGE value="* Do not display table for passive members if it is empty" />
+    <MESSAGE value="* Display trial attendances in attendance graph" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/rjjk_web">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="48" selection-start="307" selection-end="307" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/schema.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="194" column="24" selection-start="9451" selection-end="9459" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/nkf_member_trial.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/members_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="59" selection-start="284" selection-end="284" vertical-scroll-proportion="0.14785992" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/nkf_members_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="72" selection-start="158" selection-end="158" vertical-scroll-proportion="0.072704084" />
@@ -755,11 +856,6 @@
         <state line="12" column="60" selection-start="597" selection-end="597" vertical-scroll-proportion="0.29081634" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/member_history_graph.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="80" selection-start="124" selection-end="124" vertical-scroll-proportion="0.050131924" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="7" selection-start="499" selection-end="559" vertical-scroll-proportion="0.32036316" />
@@ -768,11 +864,6 @@
     <entry file="file://$PROJECT_DIR$/app/models/member_grade_history_graph.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="21" column="32" selection-start="1221" selection-end="1221" vertical-scroll-proportion="0.52638525" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/attendance_history_graph.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="32" selection-start="613" selection-end="613" vertical-scroll-proportion="0.6266491" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/nkf_member_import.rb">
@@ -790,19 +881,65 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/members/attendance_form.rhtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="0" selection-start="1957" selection-end="1957" vertical-scroll-proportion="1.130137" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/members/_attendance_row.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="71" selection-start="656" selection-end="656" vertical-scroll-proportion="0.18219177" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/members/attendance_form.rhtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="133" column="0" selection-start="5636" selection-end="5636" vertical-scroll-proportion="-24.714285">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/attendance.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="20" selection-start="38" selection-end="178" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/trial_attendance.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/attendance_history_graph.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="0" selection-start="1149" selection-end="1149" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/member_history_graph.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="0" selection-start="241" selection-end="241" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/attendances_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="109" column="0" selection-start="2874" selection-end="2874" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/schema.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/members_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="106" column="140" selection-start="3852" selection-end="3852" vertical-scroll-proportion="0.5731707">
+          <folding />
+        </state>
       </provider>
     </entry>
   </component>
