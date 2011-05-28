@@ -17,7 +17,7 @@ class CensorsController < ApplicationController
   def list_instructors
     @instructors = Member.find(:all, :conditions => "left_on IS NULL AND instructor = true", :order => 'first_name, last_name')
     rstr =<<EOH
-    <div style="height:256px; width:284px; overflow: auto; overflow-x: hidden;">
+    <div style="height:512px; width:284px; overflow: auto; overflow-x: hidden;">
     <table STYLE="height: 128px;" CELLPADDING="0" CELLSPACING="0" width="100%">
       <tr>
         <td STYLE="border-top: 1px solid #000000;background: #e3e3e3;border-bottom: 1px solid #000000;"><B>Instrukt&oslash;rer</B></td>
@@ -31,7 +31,7 @@ EOH
       nm = fn << " " << ln
       rstr = rstr << "<tr>" <<
              "<td><a href='#' onClick='add_censor(" + instr.id.to_s + ",\"" + nm + "\");'>" <<
-             nm << "</a></td>" << "<td ALIGN=right>" << instr.groups.map{|g|g.martial_art.name}.uniq.sort.join(', ') << "</td>"
+             nm << "</a></td>"
              "</tr>"
     end
     rstr << "</table>\n</div>\n"
