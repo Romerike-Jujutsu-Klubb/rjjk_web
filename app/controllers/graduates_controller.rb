@@ -161,7 +161,7 @@ EOH
                              :select           => 'first_name, last_name, id')
     @grads.delete_if{|g| graduation.graduates.map(&:member).include? g}
     rstr       =<<EOH
-<div style="height:256px; width:256px; overflow:auto; overflow-x:hidden;">
+<div style="height:512px; width:256px; overflow:auto; overflow-x:hidden;">
 	<table WIDTH="256" CELLPADDING="0" CELLSPACING="0">
 	<tr>
 		<td STYLE="background: #e3e3e3;border-top: 1px solid #000000;border-bottom: 1px solid #000000;"<B>Medlemmer</B></td>
