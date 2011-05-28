@@ -2,7 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Certificates_Kei Wa Ryu_2010-12-09.pdf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/graduations/Sertifikat_Kei_Wa_Ryu.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.generators" afterPath="$PROJECT_DIR$/.idea/.generators" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/rjjk_web.iml" afterPath="$PROJECT_DIR$/.idea/rjjk_web.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/graduations_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/graduations_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/graduation.rb" afterPath="$PROJECT_DIR$/app/models/graduation.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/graduations/list.rhtml" afterPath="$PROJECT_DIR$/app/views/graduations/list.rhtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/locales/en.yml" afterPath="$PROJECT_DIR$/config/locales/en.yml" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,58 +38,58 @@
   <component name="DisabledGemRequirementsHolder">
     <module name="rjjk_web">
       <requirement>
-        <dependency name="rbench" version="0.2.3" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
-      </requirement>
-      <requirement>
-        <dependency name="text-format" version="0.6.3" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+        <dependency name="jdbc-hsqldb" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
         <dependency name="memcache-client" version="1.7.4" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
-        <dependency name="flexmock" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+        <dependency name="jdbc-h2" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
         <dependency name="echoe" version="3.0.1" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
-        <dependency name="faker" version="0.3.1" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
-      </requirement>
-      <requirement>
-        <dependency name="sources" version="0.0.1" bound="GREATER" git="false" path="false" doRequire="true" />
-      </requirement>
-      <requirement>
-        <dependency name="addressable" version="2.0" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
-      </requirement>
-      <requirement>
-        <dependency name="jdbc-h2" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <requirement>
-        <dependency name="session" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <requirement>
-        <dependency name="tmail" version="1.2.3" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
-      </requirement>
-      <requirement>
-        <dependency name="test-unit" version="1.2.3" bound="EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <requirement>
-        <dependency name="rdoc" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+        <dependency name="merb-core" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
         <dependency name="ruby-openid" version="2" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
-        <dependency name="jdbc-hsqldb" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
-      </requirement>
-      <requirement>
         <dependency name="jdbc-sqlite3" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
-        <dependency name="merb-core" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+        <dependency name="session" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <requirement>
+        <dependency name="test-unit" version="1.2.3" bound="EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <requirement>
+        <dependency name="text-format" version="0.6.3" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <requirement>
+        <dependency name="rdoc" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <requirement>
+        <dependency name="rbench" version="0.2.3" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
+      </requirement>
+      <requirement>
+        <dependency name="tmail" version="1.2.3" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
+      </requirement>
+      <requirement>
+        <dependency name="faker" version="0.3.1" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
+      </requirement>
+      <requirement>
+        <dependency name="addressable" version="2.0" bound="LATEST_IN_BRANCH" git="false" path="false" doRequire="true" />
       </requirement>
       <requirement>
         <dependency name="ruby-prof" version="0.6.1" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <requirement>
+        <dependency name="flexmock" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <requirement>
+        <dependency name="sources" version="0.0.1" bound="GREATER" git="false" path="false" doRequire="true" />
       </requirement>
     </module>
   </component>
@@ -86,73 +98,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="_attendance_row.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/members/_attendance_row.html.erb">
+      <file leaf-file-name="graduations_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/graduations_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="715" selection-end="715" vertical-scroll-proportion="0.0">
+            <state line="76" column="78" selection-start="2024" selection-end="2024" vertical-scroll-proportion="-44.851852">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="missing_contract.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/members/missing_contract.html.erb">
+      <file leaf-file-name="graduates_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="8" selection-start="486" selection-end="486" vertical-scroll-proportion="0.0">
+            <state line="174" column="52" selection-start="8496" selection-end="8525" vertical-scroll-proportion="-14.777778">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="members_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/members_controller.rb">
+      <file leaf-file-name="list.rhtml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/graduations/list.rhtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="294" column="33" selection-start="9928" selection-end="9928" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="attendances_controller.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/controllers/attendances_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="7" selection-start="743" selection-end="743" vertical-scroll-proportion="0.5565912">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="attendance_form.rhtml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/members/attendance_form.rhtml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="20" selection-start="2417" selection-end="2417" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nkf_member_trial.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/nkf_member_trial.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="0" selection-start="83" selection-end="183" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="member.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/member.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="140" column="46" selection-start="3998" selection-end="3998" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="schema.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db/schema.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="219" column="29" selection-start="10399" selection-end="10412" vertical-scroll-proportion="0.0">
+            <state line="169" column="68" selection-start="4931" selection-end="4931" vertical-scroll-proportion="0.7486111">
               <folding />
             </state>
           </provider>
@@ -176,14 +143,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
-        <option value="$PROJECT_DIR$/app/models/graduate.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/attendances_controller.rb" />
-        <option value="$PROJECT_DIR$/rjjk_web" />
-        <option value="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" />
-        <option value="$PROJECT_DIR$/app/models/member_grade_history_graph.rb" />
-        <option value="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
-        <option value="$PROJECT_DIR$/config/environments/development.rb" />
         <option value="$PROJECT_DIR$/app/models/member_history_graph.rb" />
         <option value="$PROJECT_DIR$/app/models/trial_attendance.rb" />
         <option value="$PROJECT_DIR$/app/models/attendance_history_graph.rb" />
@@ -192,6 +151,14 @@
         <option value="$PROJECT_DIR$/app/models/member.rb" />
         <option value="$PROJECT_DIR$/app/controllers/members_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/members/_attendance_row.html.erb" />
+        <option value="$PROJECT_DIR$/Gemfile" />
+        <option value="$PROJECT_DIR$/app/models/graduation.rb" />
+        <option value="$PROJECT_DIR$/app/models/rank.rb" />
+        <option value="$PROJECT_DIR$/config/locales/en.yml" />
+        <option value="$PROJECT_DIR$/app/helpers/application_helper.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/graduations_controller.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
+        <option value="$PROJECT_DIR$/app/views/graduations/list.rhtml" />
       </list>
     </option>
   </component>
@@ -229,6 +196,20 @@
     </navigator>
     <panes>
       <pane id="Favorites" />
+      <pane id="RailsProjectView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="org.jetbrains.plugins.ruby.rails.projectView.v2.nodes.RailsProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="org.jetbrains.plugins.ruby.rails.projectView.v2.nodes.RailsModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -244,6 +225,56 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="locales" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -282,29 +313,15 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="RailsProjectView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="org.jetbrains.plugins.ruby.rails.projectView.v2.nodes.RailsProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="org.jetbrains.plugins.ruby.rails.projectView.v2.nodes.RailsModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.lastSelected" value="org.jetbrains.plugins.ruby.settings.RubyIdeSdkConfigurable" />
     <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="org.jetbrains.plugins.ruby.settings.RubyIdeSdkConfigurable" />
     <property name="RailsGeneratorsPopup.hiddenIncluded" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -545,6 +562,13 @@
       <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
       <method />
     </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
+      <JSRemoteDebuggerConfigurationSettings>
+        <option name="engineId" />
+        <option name="fileUrl" />
+      </JSRemoteDebuggerConfigurationSettings>
+      <method />
+    </configuration>
     <configuration default="true" type="CucumberRunConfigurationType" factoryName="Cucumber">
       <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
       <module name="" />
@@ -761,17 +785,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1600" height="1178" extended-state="6" />
-    <editor active="true" />
+    <frame x="-1548" y="0" width="1548" height="1200" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26131117" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2606335" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21663442" sideWeight="0.62419206" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26617745" sideWeight="0.2606335" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21663442" sideWeight="0.10710988" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26617745" sideWeight="0.4714932" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47553092" sideWeight="0.9978506" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33393666" sideWeight="0.9978506" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Properties" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3293247" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -842,84 +866,114 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config/environment.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/graduation.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="2" column="21" selection-start="85" selection-end="85" vertical-scroll-proportion="-1.4074074">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
+    <entry file="file://$PROJECT_DIR$/app/models/graduate.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/attendance.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="20" selection-start="38" selection-end="178" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/trial_attendance.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/attendance_history_graph.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="0" selection-start="1149" selection-end="1149" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/member_history_graph.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="241" selection-end="241" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/members/_attendance_form_footer.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/members/_form.rhtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="95" selection-start="3261" selection-end="3273" vertical-scroll-proportion="0.59863013" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/members/_attendance_row.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="715" selection-end="715" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/members/missing_contract.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="8" selection-start="486" selection-end="486" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/members_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="294" column="33" selection-start="9928" selection-end="9928" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/members/attendance_form.rhtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="20" selection-start="2417" selection-end="2417" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/nkf_member_trial.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="0" selection-start="83" selection-end="183" vertical-scroll-proportion="0.0" />
+        <state line="2" column="0" selection-start="36" selection-end="61" vertical-scroll-proportion="-1.4074074">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/member.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="46" selection-start="3998" selection-end="3998" vertical-scroll-proportion="0.0" />
+        <state line="140" column="46" selection-start="3998" selection-end="3998" vertical-scroll-proportion="-19.148148">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/db/schema.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="219" column="29" selection-start="10399" selection-end="10412" vertical-scroll-proportion="0.0" />
+        <state line="219" column="29" selection-start="10399" selection-end="10412" vertical-scroll-proportion="7.740741">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/attendances_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/rank.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="7" selection-start="743" selection-end="743" vertical-scroll-proportion="0.5565912">
+        <state line="4" column="35" selection-start="146" selection-end="146" vertical-scroll-proportion="-2.8148148">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/helpers/user_helper.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/locales/en.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="12" selection-start="701" selection-end="701" vertical-scroll-proportion="-10.555555">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/members/grading_form_index.rhtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/members/attendance_form_index.rhtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="8" selection-start="120" selection-end="135" vertical-scroll-proportion="-3.5185184">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/helpers/graduations_helper.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="29" selection-end="29" vertical-scroll-proportion="0.05757576">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/helpers/application_helper.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="13" selection-start="611" selection-end="611" vertical-scroll-proportion="-14.777778">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/locales/nb.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="9" selection-start="682" selection-end="689" vertical-scroll-proportion="-9.185185">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/graduations_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="76" column="78" selection-start="2024" selection-end="2024" vertical-scroll-proportion="-44.851852">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="174" column="52" selection-start="8496" selection-end="8525" vertical-scroll-proportion="-14.777778">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/graduations/list.rhtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="169" column="68" selection-start="4931" selection-end="4931" vertical-scroll-proportion="0.7486111">
           <folding />
         </state>
       </provider>
