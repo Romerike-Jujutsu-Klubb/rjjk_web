@@ -167,6 +167,7 @@ function add_graduate(c_id){
 		xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 		xmlHttp.send(pvalues);
 	}
+    document.getElementById('potential_graduate_' + c_id).replace('');
 }
 
 function changeStyle() {
@@ -191,10 +192,11 @@ function changeGraduationData() {
 	var objIndex = obj.selectedIndex;
 	var objId = obj.options[objIndex].value;
 	
-	var myIndex = document.getElementById('grader_' +objId).selectedIndex;
+	var myIndex = document.getElementById('grader_' + objId).selectedIndex;
 	try {
 		var myId = document.getElementById('grader_' + objId).options[myIndex].value;
-		setObjectData('results','/graduates/list_graduations_by_member/'+myId);
+		setObjectData('results', '/graduates/list_graduations_by_member/' + myId);
+        document.getElementById('certificates_link').href = '<%=url_for(:action => :certificates, :id => '')%>' + myId;
 	} catch(e) {
 		document.getElementById('results').innerHTML = ""
 	}
@@ -307,7 +309,7 @@ function cancelSaveGraduateInfo(member_id, grad_id) {
   <tr STYLE="background: #e3e3e3;">
     <th STYLE="border-bottom: 1px solid #000000;">Stilart</th>
     <th STYLE="border-bottom: 1px solid #000000;">Dato for gradering</th>
-	<th STYLE="border-bottom: 1px solid #000000;" COLSPAN="2">&nbsp;</th>
+	<th STYLE="border-bottom: 1px solid #000000;">Diplomer</th>
   </tr>
   <tr>
 	<td colspan="2">&nbsp;</td>
@@ -333,15 +335,16 @@ function cancelSaveGraduateInfo(member_id, grad_id) {
 		<% end %>
 	</td>
 	</form>
+    <td align="center"><%=link_to 'Diplomer', {:action => :certificates, :id => ''}, :id => :certificates_link %></td>
 </tr>
-<tr><td colspan="2">&nbsp;</td></tr>
+<tr><td colspan="3">&nbsp;</td></tr>
 <tr>
-	<td colspan="2" ALIGN="center">
+	<td colspan="3" ALIGN="center">
 		<div id="results"></div>
 	</td>
 </tr>
-<tr><td colspan="2"2>&nbsp;</td></tr>
-<tr><td colspan="2" align="center" width="100%">
+<tr><td colspan="3">&nbsp;</td></tr>
+<tr><td colspan="3" align="center" width="100%">
 	<table STYLE="border-top: 1px solid #000000;border-bottom: 1px solid #000000;" CELLPADDING="0" CELLSPACING="0" border="0" width="100%">
 	<tr STYLE="background: #e3e3e3;"><TD HEIGHT="2" COLSPAN="4"></TD></tr>
 	<tr STYLE="background: #e3e3e3;">
@@ -359,7 +362,7 @@ function cancelSaveGraduateInfo(member_id, grad_id) {
 		<tr STYLE="background: #e3e3e3;"><TD HEIGHT="2" COLSPAN="4"></TD></tr>
 
 	</table></td></tr>
-<tr><td colspan="2"><div id="debug"></div></td></tr>
+<tr><td colspan="3"><div id="debug"></div></td></tr>
 </table>
 </td>
 <td WIDTH="4">&nbsp;</td>

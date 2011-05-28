@@ -8,6 +8,6 @@ gem 'jdbc-postgres', :require => false
 gem 'activerecord-jdbcpostgresql-adapter', :require => false
 gem 'RedCloth'
 gem 'gruff'
-# gem 'glassfish'
 gem 'trinidad'
 gem 'trinidad_daemon_extension'
+gem 'prawn'

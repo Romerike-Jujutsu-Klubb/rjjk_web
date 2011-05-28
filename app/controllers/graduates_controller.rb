@@ -80,8 +80,8 @@ EOC
       fn   = cen.member && cen.member.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
       ln   = cen.member && cen.member.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
       name = "#{fn} #{ln}"
-      nm   = "<td width=23%>#{name}</td>" <<
-          "<td width=2%><a href=# onClick='removeCensor(#{cen.id}, " <<
+      nm   = "<td style='padding-left: 1em' width=25% nowrap='true'>#{name}" <<
+          "<a href=# onClick='removeCensor(#{cen.id}, " <<
           "\"#{name}\");'>" <<
           "<IMG SRC=\"/images/button-delete-16x16.png\" STYLE=\"border: 0;\" title=\"Slett sensor #{name}\" ALT=\"Slett sensor #{name}\"></a></td>\n"
       if ccnt == 0
@@ -159,6 +159,7 @@ EOH
     graduation = Graduation.find(params[:graduation_id])
     @grads     = Member.find(:all, :conditions => ["joined_on <= ? AND left_on IS NULL OR left_on >= ?", graduation.held_on, graduation.held_on], :order => 'first_name, last_name',
                              :select           => 'first_name, last_name, id')
+    @grads.delete_if{|g| graduation.graduates.map(&:member).include? g}
     rstr       =<<EOH
 <div style="height:256px; width:256px; overflow:auto; overflow-x:hidden;">
 	<table WIDTH="256" CELLPADDING="0" CELLSPACING="0">
@@ -171,8 +172,8 @@ EOH
     for grad in @grads
       ln = grad.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
       fn = grad.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
-      rstr << "<tr>" <<
-          "<td align=left><a href='#' onClick='add_graduate(" + grad.id.to_s + ");'>" <<
+      rstr << "<tr id='potential_graduate_#{grad.id}'>" <<
+          "<td align=left><a href='#' onClick='add_graduate(#{grad.id});'>" <<
           "#{fn} #{ln}</a></td>" <<
           "<td ALIGN='right'>&nbsp;" <<
           "<td>&nbsp;</td></tr>\n"
