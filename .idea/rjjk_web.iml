@@ -79,56 +79,30 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] rake (v0.8.7, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/rake-0.8.7)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] hoe (v2.6.2, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/hoe-2.6.2)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] rmagick4j (v0.3.7, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/rmagick4j-0.3.7)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] tzinfo (v0.3.23, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/tzinfo-0.3.23)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] bouncy-castle-java (v1.5.0145.2, /Users/uwe/.bundle/jruby/1.8/gems/bouncy-castle-java-1.5.0145.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] i18n (v0.4.2, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/i18n-0.4.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] jruby-openssl (v0.7.2, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jruby-openssl-0.7.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] builder (v2.1.2, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/builder-2.1.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord-jdbcpostgresql-adapter (v1.0.2, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activerecord-jdbcpostgresql-adapter-1.0.2-java)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rack (v1.0.1, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/rack-1.0.1)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord-jdbc-adapter (v1.0.2, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activerecord-jdbc-adapter-1.0.2-java)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] mocha (v0.9.8, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/mocha-0.9.8)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] jdbc-postgres (v8.4.702, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jdbc-postgres-8.4.702-java)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] RedCloth (v4.2.3, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/RedCloth-4.2.3-universal-java)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rubyforge (v2.0.4, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/rubyforge-2.0.4)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] gruff (v0.3.6, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/gruff-0.3.6)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] jdbc-derby (v10.6.2.1, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jdbc-derby-10.6.2.1-java)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] arel (v2.0.2, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/arel-2.0.2)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] bundler (v1.0.5, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/bundler-1.0.5)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rack-test (v0.5.6, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/rack-test-0.5.6)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] erubis (v2.6.6, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/erubis-2.6.6)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] mail (v2.2.9, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/mail-2.2.9)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rack-mount (v0.6.13, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/rack-mount-0.6.13)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rack (v1.2.1, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/rack-1.2.1)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rails (v2.3.10, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/rails-2.3.10)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] actionpack (v2.3.10, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/actionpack-2.3.10)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] actionmailer (v2.3.10, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/actionmailer-2.3.10)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activeresource (v2.3.10, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activeresource-2.3.10)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activesupport (v2.3.10, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activesupport-2.3.10)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord (v2.3.10, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activerecord-2.3.10)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rack (v1.1.0, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/rack-1.1.0)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord-jdbcpostgresql-adapter (v1.0.3, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activerecord-jdbcpostgresql-adapter-1.0.3-java)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord-jdbc-adapter (v1.0.3, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activerecord-jdbc-adapter-1.0.3-java)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] actionpack (v2.3.5, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/actionpack-2.3.5)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activesupport (v2.3.5, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activesupport-2.3.5)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activeresource (v2.3.5, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activeresource-2.3.5)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord (v2.3.5, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activerecord-2.3.5)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] rails (v2.3.5, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/rails-2.3.5)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] actionmailer (v2.3.5, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/actionmailer-2.3.5)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] glassfish (v1.0.3, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/glassfish-1.0.3-universal-java)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] jdbc-postgres (v9.0.801, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jdbc-postgres-9.0.801)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] trinidad (v1.0.4, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/trinidad-1.0.4)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] trinidad_daemon_extension (v0.2.4, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/trinidad_daemon_extension-0.2.4)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] jruby-rack (v1.0.5, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jruby-rack-1.0.5)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] trinidad_jars (v0.3.3, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/trinidad_jars-0.3.3)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] trinidad (v1.0.5, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/trinidad-1.0.5)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] jdbc-mysql (v5.1.13, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jdbc-mysql-5.1.13)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] jdbc-mysql (v5.0.4, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jdbc-mysql-5.0.4)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] trinidad_daemon_extension (v0.2.5, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/trinidad_daemon_extension-0.2.5)" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="[gem] jruby-openssl (v0.7.3, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jruby-openssl-0.7.3)" level="application" />
-    <orderEntry type="library" name="[gem] rspec (v1.3.0, null)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] trinidad_daemon_extension (v0.2.8, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/trinidad_daemon_extension-0.2.8)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] rails (v2.3.11, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/rails-2.3.11)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] ttfunk (v1.0.1, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/ttfunk-1.0.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] trinidad_jars (v1.0.1, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/trinidad_jars-1.0.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activesupport (v2.3.11, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activesupport-2.3.11)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord-jdbc-adapter (v1.1.1, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activerecord-jdbc-adapter-1.1.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] prawn (v0.11.1, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/prawn-0.11.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] actionpack (v2.3.11, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/actionpack-2.3.11)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activeresource (v2.3.11, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activeresource-2.3.11)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] trinidad (v1.2.0, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/trinidad-1.2.0)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] jruby-rack (v1.0.9, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jruby-rack-1.0.9)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord-jdbcpostgresql-adapter (v1.1.1, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activerecord-jdbcpostgresql-adapter-1.1.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] jruby-openssl (v0.7.4, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/jruby-openssl-0.7.4)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] actionmailer (v2.3.11, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/actionmailer-2.3.11)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] pdf-reader (v0.9.2, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/pdf-reader-0.9.2)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] activerecord (v2.3.11, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/activerecord-2.3.11)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] RedCloth (v4.2.7, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/RedCloth-4.2.7-java)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] bundler (v1.0.13, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/bundler-1.0.13)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] Ascii85 (v1.0.1, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/Ascii85-1.0.1)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] rack (v1.1.2, /Library/Frameworks/JRuby.framework/Gems/1.8/gems/rack-1.1.2)" level="application" />
   </component>
 </module>
 
