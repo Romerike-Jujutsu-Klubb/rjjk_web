@@ -85,6 +85,9 @@ class GraduationsController < ApplicationController
         text "#{graduate.rank.name} #{graduate.rank.colour}", :size => 18, :align => :center
         move_down 16
         text "#{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}", :size => 18, :align => :center
+        unless graduate.member.groups[0].name == 'Grizzly'
+          draw_text graduate.member.groups[0].name, :at => [120, 300], :size => 18
+        end
         start_new_page :template => template
       end
     end
