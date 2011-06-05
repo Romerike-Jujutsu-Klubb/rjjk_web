@@ -82,7 +82,7 @@ class GraduationsController < ApplicationController
         move_down 300
         text graduate.member.name, :size => 18, :align => :center
         move_down 16
-        text "#{graduate.rank.name} #{graduate.rank.colour.downcase}", :size => 18, :align => :center
+        text "#{graduate.rank.name} #{graduate.rank.colour}", :size => 18, :align => :center
         move_down 16
         text "#{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}", :size => 18, :align => :center
         start_new_page :template => template
