@@ -44,7 +44,7 @@ class RanksController < ApplicationController
     @rank = Rank.find(params[:id])
     if @rank.update_attributes(params[:rank])
       flash[:notice] = 'Rank was successfully updated.'
-      redirect_to :action => 'show', :id => @rank
+      redirect_to :action => :index
     else
       edit
     end
