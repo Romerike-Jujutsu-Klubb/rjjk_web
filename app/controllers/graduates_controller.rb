@@ -125,7 +125,7 @@ EOH
       fn   = mbr.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
       ln   = mbr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
       rstr = rstr << "<tr id='#{gr.member_id}_#{gr.graduation.id}_view'>\n" <<
-          "  <td>#{fn} #{ln}</td>\n" <<
+          "  <td valign='top'>#{fn} #{ln}</td>\n" <<
           "  <td STYLE=\"text-align: left;\">#{gr.rank.name} #{gr.rank.colour}</td>\n" <<
           "  <td STYLE=\"text-align: center;\">#{gr.passed ? 'Ja' : 'Nei'}</td>\n" <<
           "  <td STYLE=\"text-align: center;\">#{gr.paid_graduation ? 'Ja' : 'Nei'}</td>\n" <<
