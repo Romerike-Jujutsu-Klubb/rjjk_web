@@ -78,7 +78,7 @@ class GraduationsController < ApplicationController
 
     pdf = Prawn::Document.new :template => template do
       date = graduation.held_on
-      graduation.graduates.each do |graduate|
+      graduation.graduates.sort_by{|g| -g.rank.position}.each do |graduate|
         move_down 300
         text graduate.member.name, :size => 18, :align => :center
         move_down 16
