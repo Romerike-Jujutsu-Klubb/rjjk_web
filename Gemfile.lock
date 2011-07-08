@@ -18,6 +18,9 @@ GEM
       activesupport (= 2.3.11)
     activesupport (2.3.11)
     bouncy-castle-java (1.5.0146.1)
+    daemons (1.1.0)
+    delayed_job (2.0.3)
+      daemons
     gruff (0.3.6)
     jdbc-postgres (9.0.801)
     jruby-openssl (0.7.4)
@@ -52,6 +55,7 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   activerecord-jdbcpostgresql-adapter
+  delayed_job
   gruff
   jdbc-postgres
   jruby-openssl
