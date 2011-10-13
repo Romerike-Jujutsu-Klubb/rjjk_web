@@ -4,7 +4,7 @@ require 'erb'
 require 'pp'
 
 class NkfMemberImport
-  CONCURRENT_REQUESTS = 4
+  CONCURRENT_REQUESTS = 8
   extend MonitorMixin
 
   def self.import
