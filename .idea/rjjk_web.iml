@@ -78,30 +78,33 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="rails (v2.3.11, jruby-1.6.4-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="bundler (v1.0.21, jruby-1.6.4-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="trinidad_daemon_extension (v0.2.8, jruby-1.6.4-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rmagick4j (v0.3.7, jruby-1.6.4-p330) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="trinidad_jars (v1.0.1, jruby-1.6.4-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activesupport (v2.3.11, jruby-1.6.4-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="Ascii85 (v1.0.1, jruby-1.6.4-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="ttfunk (v1.0.2, jruby-1.6.4-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="activeresource (v2.3.11, jruby-1.6.4-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="trinidad (v1.2.0, jruby-1.6.4-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rack (v1.1.2, jruby-1.6.4-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="jruby-openssl (v0.7.4, jruby-1.6.4-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="jdbc-postgres (v9.0.801, jruby-1.6.4-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="activerecord (v2.3.11, jruby-1.6.4-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rails (v2.3.11, jruby-1.6.4-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="trinidad_jars (v1.0.1, jruby-1.6.4-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="prawn (v0.12.0, jruby-1.6.4-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rake (v0.9.0, jruby-1.6.4-p330) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="bundler (v1.0.18, jruby-1.6.4-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="pdf-reader (v0.10.0, jruby-1.6.4-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activerecord-jdbc-adapter (v1.1.1, jruby-1.6.4-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bouncy-castle-java (v1.5.0146.1, jruby-1.6.4-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="actionpack (v2.3.11, jruby-1.6.4-p330) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="activeresource (v2.3.11, jruby-1.6.4-p330) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="trinidad (v1.2.0, jruby-1.6.4-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jruby-rack (v1.0.9, jruby-1.6.4-p330) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="rack (v1.1.2, jruby-1.6.4-p330) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="jruby-openssl (v0.7.4, jruby-1.6.4-p330) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="activerecord-jdbcpostgresql-adapter (v1.1.1, jruby-1.6.4-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="daemons (v1.1.0, jruby-1.6.4-p330) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="actionmailer (v2.3.11, jruby-1.6.4-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="activerecord-jdbcpostgresql-adapter (v1.1.1, jruby-1.6.4-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="delayed_job (v2.0.3, jruby-1.6.4-p330) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="jdbc-postgres (v9.0.801, jruby-1.6.4-p330) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="activerecord (v2.3.11, jruby-1.6.4-p330) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="RedCloth (v4.2.7, jruby-1.6.4-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="actionmailer (v2.3.11, jruby-1.6.4-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="gruff (v0.3.6, jruby-1.6.4-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="RedCloth (v4.2.7, jruby-1.6.4-p330) [gem]" level="application" />
   </component>
   <component name="RModuleSettingsStorage">
     <LOAD_PATH number="0" />

@@ -2,65 +2,69 @@ require 'net/http'
 require 'uri'
 require 'erb'
 require 'pp'
-  
+
 class NkfMemberImport
   def self.import
-    @changes = []
+    @changes       = []
     @error_records = []
-    
+
     @iconv = Iconv.new('UTF8', 'ISO-8859-1')
-        
+
+    front_page_url = login
+    url = URI.parse(front_page_url)
     import_rows = nil
     member_trial_rows = nil
     
-    front_page_url = login
-
-    url = URI.parse(front_page_url)
     Net::HTTP.start(url.host, url.port) do |http|
       search_url = '/portal/page/portal/ks_utv/ks_reg_medladm?f_informasjon=skjul&f_utvalg=vis&frm_27_v04=40001062&frm_27_v05=1&frm_27_v06=1&frm_27_v07=1034&frm_27_v10=162&frm_27_v12=O&frm_27_v15=Romerike%20Jujutsu%20Klubb&frm_27_v16=Stasjonsvn.%2017&frm_27_v17=P.b.%20157&frm_27_v18=2011&frm_27_v20=47326154&frm_27_v22=post%40jujutsu.no&frm_27_v23=70350537706&frm_27_v25=http%3A%2F%2Fjujutsu.no%2F&frm_27_v27=N&frm_27_v29=0&frm_27_v34=%3D&frm_27_v37=-1&frm_27_v44=%3D&frm_27_v45=%3D&frm_27_v46=11&frm_27_v47=11&frm_27_v49=N&frm_27_v50=134002.PNG&frm_27_v53=-1&p_ks_reg_medladm_action=SEARCH&p_page_search='
       logger.debug "Fetching #{search_url}"
       html_search_response = http.get(search_url, cookie_header.update('Content-Type' => 'application/octet-stream'))
-      html_search_body = html_search_response.body
+      html_search_body     = html_search_response.body
       process_response 'html search', html_search_response
       extra_function_codes = html_search_body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
       raise html_search_body if extra_function_codes.empty?
       extra_function_code = extra_function_codes[0][0]
-      session_id = html_search_body.scan(/Download27\('(.*?)'\)/)[0][0]
-      detail_codes = html_search_body.scan(/edit_click27\('(.*?)'\)/).map{|dc| dc[0]}
-      more_pages = html_search_body.scan(/<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)<\/a>/).map{|r| r[0]}
+      session_id          = html_search_body.scan(/Download27\('(.*?)'\)/)[0][0]
+      detail_codes        = html_search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
+      more_pages          = html_search_body.scan(/<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)<\/a>/).map { |r| r[0] }
       more_pages.each do |p|
         more_search_url = search_url + p
         logger.debug "Fetching #{more_search_url}"
         more_search_response = http.get(more_search_url, cookie_header.update('Content-Type' => 'application/octet-stream'))
-        more_search_body = more_search_response.body
+        more_search_body     = more_search_response.body
         process_response 'more search', more_search_response
-        detail_codes += more_search_body.scan(/edit_click27\('(.*?)'\)/).map{|dc| dc[0]}
+        detail_codes += more_search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
       end
 
       raise "Could not find session id" unless session_id
 
-      import_rows = get_member_rows(http, session_id, detail_codes)
-      member_trial_rows = get_member_trial_rows(http, session_id, extra_function_code)
+      import_rows       = get_member_rows(url, session_id, detail_codes)
+      member_trial_rows = get_member_trial_rows(url, session_id, extra_function_code)
     end
-    
+
     import_member_rows(import_rows)
     import_member_trials(member_trial_rows)
     return "#{@changes.size} records imported, #{@error_records.size} failed, #{import_rows.size - @changes.size - @error_records.size} skipped\n"
   end
-  
+
   private
 
-  def self.get_member_rows(http, session_id, detail_codes)
+  def self.get_member_rows(url, session_id, detail_codes)
+    import_rows = nil
+    Net::HTTP.start(url.host, url.port) do |http|
       members_url = 'http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=' + session_id
       logger.debug "Getting #{members_url}"
       members_response = http.get(members_url, cookie_header)
-      members_body = members_response.body
+      members_body     = members_response.body
       process_response 'members', members_response
-      import_rows = members_body.split("\n").map{|line| @iconv.iconv(line.chomp).split(';', -1)[0..-2]}
+      import_rows = members_body.split("\n").map { |line| @iconv.iconv(line.chomp).split(';', -1)[0..-2] }
+    end
 
-      import_rows[0] << 'ventekid'
+    import_rows[0] << 'ventekid'
 
-      detail_codes.each do |dc|
+    threads = detail_codes.map do |dc|
+      #Thread.start do
+      Net::HTTP.start(url.host, url.port) do |http|
         logger.debug "Getting details #{dc}"
         details_url = "http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_medlprofil?p_cr_par=" + dc
         logger.debug "Getting #{details_url}"
@@ -72,7 +76,7 @@ class NkfMemberImport
         end
         details_body = details_response.body
         process_response 'details', details_response
-        if details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+)">/
+        if details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
           member_id = $1
           if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
             active = true
@@ -84,30 +88,35 @@ class NkfMemberImport
           end
           raise "Both Active status and waiting kid was found" if active && waiting_kid
           raise "Neither active status nor waiting kid was found" if !active && !waiting_kid
-          import_rows.find{|ir| ir[0] == member_id} << waiting_kid
+          import_rows.find { |ir| ir[0] == member_id } << waiting_kid
         else
-          raise "Could not find member id"
+          raise "Could not find member id:\n#{details_body}"
         end
       end
-      import_rows
+      #end
+    end
+    # threads.each { |t| t.join }
+    import_rows
   end
-  
-  def self.get_member_trial_rows(http, session_id, extra_function_code)
-      trial_csv_url = 'http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + session_id
-      logger.debug "Getting #{trial_csv_url}"
+
+  def self.get_member_trial_rows(url, session_id, extra_function_code)
+    trial_csv_url = 'http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + session_id
+    logger.debug "Getting #{trial_csv_url}"
+    member_trial_rows = nil
+    Net::HTTP.start(url.host, url.port) do |http|
       member_trials_csv_response = http.get(trial_csv_url, cookie_header)
-      member_trials_csv_body = member_trials_csv_response.body
+      member_trials_csv_body     = member_trials_csv_response.body
       process_response 'member trials csv', member_trials_csv_response
-      member_trial_rows = member_trials_csv_body.split("\n").map{|line| @iconv.iconv(line.chomp).split(';')}
+      member_trial_rows = member_trials_csv_body.split("\n").map { |line| @iconv.iconv(line.chomp).split(';') }
 
       trial_url = 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_cr_par=' + extra_function_code
       logger.debug "Getting #{trial_url}"
       member_trials_response = http.get(trial_url, cookie_header)
-      member_trials_body = member_trials_response.body
+      member_trials_body     = member_trials_response.body
       process_response 'member trials', member_trials_response
-      
-      trial_ids = member_trials_body.scan(/edit_click28\('(.*?)'\)/).map{|tid| tid[0]}
-      
+
+      trial_ids = member_trials_body.scan(/edit_click28\('(.*?)'\)/).map { |tid| tid[0] }
+
       member_trial_rows[0] << 'tid'
       member_trial_rows[0] << 'epost_faktura'
       member_trial_rows[0] << 'stilart'
@@ -132,7 +141,7 @@ class NkfMemberImport
               invoice_email = $1
               if trial_details_body =~ /<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren\/stilart -<\/option>.*?<option selected value="\d+">([^<]*)<\/option>.*<\/select>/
                 martial_art = $1
-                trial_row = member_trial_rows.find{|ir| ir.size < member_trial_rows[0].size && ir[1] == last_name && ir[2] == first_name}
+                trial_row   = member_trial_rows.find { |ir| ir.size < member_trial_rows[0].size && ir[1] == last_name && ir[2] == first_name }
                 trial_row << tid
                 trial_row << (invoice_email.blank? ? nil : invoice_email)
                 trial_row << martial_art
@@ -150,13 +159,14 @@ class NkfMemberImport
           raise "Could not find invoice email"
         end
       end
-      member_trial_rows
+    end
+    member_trial_rows
   end
-  
-  def self.import_member_rows(import_rows)  
+
+  def self.import_member_rows(import_rows)
     raise "Unknown format: #{import_rows && import_rows[0] && import_rows[0][0]}" unless import_rows && import_rows[0] && import_rows[0][0] == 'Medlemsnummer'
     header_fields = import_rows.shift
-    columns = header_fields.map{|f| field2column(f)}
+    columns       = header_fields.map { |f| field2column(f) }
     logger.debug "Found #{import_rows.size} active members"
     import_rows.each do |row|
       attributes = {}
@@ -182,21 +192,21 @@ class NkfMemberImport
       end
     end
   end
-  
-  def self.import_member_trials(member_trial_rows)  
+
+  def self.import_member_trials(member_trial_rows)
     header_fields = member_trial_rows.shift
-    columns = header_fields.map{|f| field2column(f)}
+    columns       = header_fields.map { |f| field2column(f) }
     logger.debug "Found #{member_trial_rows.size} member trials"
     logger.debug "Columns: #{columns.inspect}"
-    tid_col_idx = header_fields.index 'tid'
-    email_col_idx = header_fields.index 'epost'
-    missing_trials = NkfMemberTrial.all :conditions => ['tid NOT IN (?)', member_trial_rows.map{|t| t[tid_col_idx]}]
+    tid_col_idx    = header_fields.index 'tid'
+    email_col_idx  = header_fields.index 'epost'
+    missing_trials = NkfMemberTrial.all :conditions => ['tid NOT IN (?)', member_trial_rows.map { |t| t[tid_col_idx] }]
     missing_trials.each do |t|
       m = Member.find_by_email(t.epost)
       t.trial_attendances.each do |ta|
         if m
           attrs = ta.attributes
-          attrs.delete_if{|k, v| ['id', 'created_at', 'updated_at'].include? k}
+          attrs.delete_if { |k, v| ['id', 'created_at', 'updated_at'].include? k }
           attrs['member_id'] = attrs.delete('nkf_member_trial_id')
           m.attendances << Attendance.new(attrs)
         end
@@ -213,9 +223,9 @@ class NkfMemberImport
         end
         attributes[column] = row[i]
       end
-      record = NkfMemberTrial.find_by_tid(row[columns.index('tid')])
-      record ||= NkfMemberTrial.find_by_reg_dato_and_fornavn_and_etternavn(row[columns.index('reg_dato')], row[columns.index('fornavn')], row[columns.index('etternavn')])
-      record ||= NkfMemberTrial.new
+      record            = NkfMemberTrial.find_by_tid(row[columns.index('tid')])
+      record            ||= NkfMemberTrial.find_by_reg_dato_and_fornavn_and_etternavn(row[columns.index('reg_dato')], row[columns.index('fornavn')], row[columns.index('etternavn')])
+      record            ||= NkfMemberTrial.new
       record.attributes = attributes
       if record.changed?
         if record.save
@@ -227,14 +237,14 @@ class NkfMemberImport
       end
     end
   end
-  
+
   def self.field2column(field_name)
     field_name.gsub('ø', 'o').gsub('Ø', 'O').gsub('å', 'a').gsub('Å', 'A').gsub(/[ -.\/]/, '_').downcase
   end
-  
+
   def self.login
-    @cookies = []
-    url = URI.parse('http://nkfwww.kampsport.no/')
+    @cookies      = []
+    url           = URI.parse('http://nkfwww.kampsport.no/')
     login_content = nil
     Net::HTTP.start(url.host, url.port) do |http|
       begin
@@ -246,35 +256,35 @@ class NkfMemberImport
       login_content = login_form_response.body
       process_response 'login form', login_form_response
     end
-    
-    url = URI.parse('http://nkfwww.kampsport.no/')
+
+    url   = URI.parse('http://nkfwww.kampsport.no/')
     token = nil
     Net::HTTP.start(url.host, url.port) do |http|
       token_response = http.get '/portal/pls/portal/portal.wwptl_login.show_site2pstoretoken?p_url=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpls%2Fportal%2Fmyports.st_login_proc.set_language%3Fref_path%3D7513_ST_LOGIN_463458038&p_cancel=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpage%2Fportal%2Fks_utv%2Fst_login', cookie_header
-      token_body = token_response.body
+      token_body     = token_response.body
       process_response 'token', token_response
       token_fields = token_body.scan /<input .*?name="(.*?)".*?value ?="(.*?)".*?>/i
-      token = token_fields.find{|t| t[0] == 'site2pstoretoken'}[1]
-      
+      token        = token_fields.find { |t| t[0] == 'site2pstoretoken' }[1]
+
       create_response = http.get "/portal/pls/portal/myports.st_login_proc.create_user?CreUser=40001062", cookie_header
       process_response 'create', create_response
     end
-    
+
     url = URI.parse('http://nkflogin.kampsport.no/')
     Net::HTTP.start(url.host, url.port) do |http|
       login_form_fields = login_content.scan /<input .*?name="(.*?)".*?value ?="(.*?)".*?>/
-      login_form_fields.delete_if{|f| ['site2pstoretoken', 'ssousername', 'password'].include? f[0]}
+      login_form_fields.delete_if { |f| ['site2pstoretoken', 'ssousername', 'password'].include? f[0] }
       login_form_fields += [['site2pstoretoken', token], ['ssousername', '40001062'], ['password', 'CokaBrus42']]
-      login_params = login_form_fields.map {|field| "#{field[0]}=#{ERB::Util.url_encode field[1]}"}.join '&'
-      login_response = http.post('/pls/orasso/orasso.wwsso_app_admin.ls_login', login_params, cookie_header)
+      login_params      = login_form_fields.map { |field| "#{field[0]}=#{ERB::Util.url_encode field[1]}" }.join '&'
+      login_response    = http.post('/pls/orasso/orasso.wwsso_app_admin.ls_login', login_params, cookie_header)
       process_response 'login', login_response
       raise "Wrong URL: #{login_response.code}" unless login_response.code == "302"
       raise "Missing session cookie" if @cookies.empty?
       return login_response['location']
     end
-    
+
   end
-  
+
   def self.store_cookie(response)
     return unless response['set-cookie']
     header = response['set-cookie']
@@ -283,18 +293,18 @@ class NkfMemberImport
       cookie_value = cookie.strip.slice(/^.*?;/).chomp(';')
       if cookie_value =~ /^(.*?)=(.*)$/
         name = $1
-        @cookies.delete_if{|c| c =~ /^#{name}=/}
+        @cookies.delete_if { |c| c =~ /^#{name}=/ }
       end
       @cookies << cookie_value unless cookie_value =~ /^.*?=$/
     end
     @cookies.uniq!
   end
-  
+
   def self.cookie_header
     return {} if @cookies.empty?
     {'Cookie' => @cookies.join(';')}
   end
-  
+
   def self.process_response(title, response)
     store_cookie(response)
     if response.code == '302'
@@ -306,7 +316,7 @@ class NkfMemberImport
       end
     end
   end
-  
+
   def self.logger
     ActiveRecord::Base.logger
   end
