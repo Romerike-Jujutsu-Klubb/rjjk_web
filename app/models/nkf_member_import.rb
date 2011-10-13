@@ -4,43 +4,55 @@ require 'erb'
 require 'pp'
 
 class NkfMemberImport
+  CONCURRENT_REQUESTS = 1
+  extend MonitorMixin
+
   def self.import
     @changes       = []
     @error_records = []
 
     @iconv = Iconv.new('UTF8', 'ISO-8859-1')
 
-    front_page_url = login
-    url = URI.parse(front_page_url)
-    import_rows = nil
-    member_trial_rows = nil
-    
+    front_page_url   = login
+    url              = URI.parse(front_page_url)
+    html_search_body = nil
+
+    search_url = '/portal/page/portal/ks_utv/ks_reg_medladm?f_informasjon=skjul&f_utvalg=vis&frm_27_v04=40001062&frm_27_v05=1&frm_27_v06=1&frm_27_v07=1034&frm_27_v10=162&frm_27_v12=O&frm_27_v15=Romerike%20Jujutsu%20Klubb&frm_27_v16=Stasjonsvn.%2017&frm_27_v17=P.b.%20157&frm_27_v18=2011&frm_27_v20=47326154&frm_27_v22=post%40jujutsu.no&frm_27_v23=70350537706&frm_27_v25=http%3A%2F%2Fjujutsu.no%2F&frm_27_v27=N&frm_27_v29=0&frm_27_v34=%3D&frm_27_v37=-1&frm_27_v44=%3D&frm_27_v45=%3D&frm_27_v46=11&frm_27_v47=11&frm_27_v49=N&frm_27_v50=134002.PNG&frm_27_v53=-1&p_ks_reg_medladm_action=SEARCH&p_page_search='
+    logger.debug "Fetching #{search_url}"
     Net::HTTP.start(url.host, url.port) do |http|
-      search_url = '/portal/page/portal/ks_utv/ks_reg_medladm?f_informasjon=skjul&f_utvalg=vis&frm_27_v04=40001062&frm_27_v05=1&frm_27_v06=1&frm_27_v07=1034&frm_27_v10=162&frm_27_v12=O&frm_27_v15=Romerike%20Jujutsu%20Klubb&frm_27_v16=Stasjonsvn.%2017&frm_27_v17=P.b.%20157&frm_27_v18=2011&frm_27_v20=47326154&frm_27_v22=post%40jujutsu.no&frm_27_v23=70350537706&frm_27_v25=http%3A%2F%2Fjujutsu.no%2F&frm_27_v27=N&frm_27_v29=0&frm_27_v34=%3D&frm_27_v37=-1&frm_27_v44=%3D&frm_27_v45=%3D&frm_27_v46=11&frm_27_v47=11&frm_27_v49=N&frm_27_v50=134002.PNG&frm_27_v53=-1&p_ks_reg_medladm_action=SEARCH&p_page_search='
-      logger.debug "Fetching #{search_url}"
       html_search_response = http.get(search_url, cookie_header.update('Content-Type' => 'application/octet-stream'))
       html_search_body     = html_search_response.body
       process_response 'html search', html_search_response
-      extra_function_codes = html_search_body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
-      raise html_search_body if extra_function_codes.empty?
-      extra_function_code = extra_function_codes[0][0]
-      session_id          = html_search_body.scan(/Download27\('(.*?)'\)/)[0][0]
-      detail_codes        = html_search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
-      more_pages          = html_search_body.scan(/<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)<\/a>/).map { |r| r[0] }
-      more_pages.each do |p|
-        more_search_url = search_url + p
-        logger.debug "Fetching #{more_search_url}"
-        more_search_response = http.get(more_search_url, cookie_header.update('Content-Type' => 'application/octet-stream'))
-        more_search_body     = more_search_response.body
-        process_response 'more search', more_search_response
-        detail_codes += more_search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
-      end
-
-      raise "Could not find session id" unless session_id
-
-      import_rows       = get_member_rows(url, session_id, detail_codes)
-      member_trial_rows = get_member_trial_rows(url, session_id, extra_function_code)
     end
+    extra_function_codes = html_search_body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
+    raise html_search_body if extra_function_codes.empty?
+    extra_function_code = extra_function_codes[0][0]
+    session_id          = html_search_body.scan(/Download27\('(.*?)'\)/)[0][0]
+    detail_codes        = html_search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
+    more_pages          = html_search_body.scan(/<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)<\/a>/).map { |r| r[0] }
+    more_pages.each_slice(CONCURRENT_REQUESTS) do |page_numbers|
+      threads = page_numbers.map do |p|
+        Thread.start do
+          more_search_url = search_url + p
+          logger.debug "Fetching #{more_search_url}"
+          more_search_body = nil
+          Net::HTTP.start(url.host, url.port) do |http|
+            more_search_response = http.get(more_search_url, cookie_header.update('Content-Type' => 'application/octet-stream'))
+            more_search_body     = more_search_response.body
+            process_response 'more search', more_search_response
+          end
+          synchronize do
+            detail_codes += more_search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
+          end
+        end
+      end
+      threads.each(&:join)
+    end
+
+    raise "Could not find session id" unless session_id
+
+    import_rows       = get_member_rows(url, session_id, detail_codes)
+    member_trial_rows = get_member_trial_rows(url, session_id, extra_function_code)
 
     import_member_rows(import_rows)
     import_member_trials(member_trial_rows)
@@ -171,7 +183,7 @@ class NkfMemberImport
     import_rows.each do |row|
       attributes = {}
       columns.each_with_index do |column, i|
-        next if column == 'alder'
+        next if ['alder', 'avtalegiro', 'dan_graderingsserifikat', 'forbundskontingent', 'foresatte'].include? column
         attributes[column] = row[i]
       end
       record = NkfMember.find_by_medlemsnummer(row[0]) || NkfMember.new
