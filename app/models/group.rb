@@ -8,6 +8,7 @@ class Group < ActiveRecord::Base
   end
   
   def contains_age(age)
+    return false if age.nil?
     age >= from_age && age <= to_age
   end
   
