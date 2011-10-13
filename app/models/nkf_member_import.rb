@@ -4,7 +4,7 @@ require 'erb'
 require 'pp'
 
 class NkfMemberImport
-  CONCURRENT_REQUESTS = 1
+  CONCURRENT_REQUESTS = 4
   extend MonitorMixin
 
   def self.import
@@ -74,103 +74,116 @@ class NkfMemberImport
 
     import_rows[0] << 'ventekid'
 
-    threads = detail_codes.map do |dc|
-      #Thread.start do
-      Net::HTTP.start(url.host, url.port) do |http|
-        logger.debug "Getting details #{dc}"
-        details_url = "http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_medlprofil?p_cr_par=" + dc
-        logger.debug "Getting #{details_url}"
-        begin
-          details_response = http.get(details_url, cookie_header)
-        rescue EOFError, SystemCallError
-          logger.error $!.message
-          retry
-        end
-        details_body = details_response.body
-        process_response 'details', details_response
-        if details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
-          member_id = $1
-          if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
-            active = true
-          else
-            active = false
+    detail_codes.each_slice(CONCURRENT_REQUESTS) do |detail_code_slice|
+      threads = detail_code_slice.map do |dc|
+        Thread.start do
+          Net::HTTP.start(url.host, url.port) do |http|
+            logger.debug "Getting details #{dc}"
+            details_url = "http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_medlprofil?p_cr_par=" + dc
+            logger.debug "Getting #{details_url}"
+            begin
+              details_response = http.get(details_url, cookie_header)
+            rescue EOFError, SystemCallError
+              logger.error $!.message
+              retry
+            end
+            details_body = details_response.body
+            process_response 'details', details_response
+            if details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
+              member_id = $1
+              if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
+                active = true
+              else
+                active = false
+              end
+              if details_body =~ /<span class="kid_1">(\d+)<\/span><span class="kid_2">(\d+)<\/span>/
+                waiting_kid = "#$1#$2"
+              end
+              raise "Both Active status and waiting kid was found" if active && waiting_kid
+              raise "Neither active status nor waiting kid was found" if !active && !waiting_kid
+              import_rows.find { |ir| ir[0] == member_id } << waiting_kid
+            else
+              raise "Could not find member id:\n#{details_body}"
+            end
           end
-          if details_body =~ /<span class="kid_1">(\d+)<\/span><span class="kid_2">(\d+)<\/span>/
-            waiting_kid = "#$1#$2"
-          end
-          raise "Both Active status and waiting kid was found" if active && waiting_kid
-          raise "Neither active status nor waiting kid was found" if !active && !waiting_kid
-          import_rows.find { |ir| ir[0] == member_id } << waiting_kid
-        else
-          raise "Could not find member id:\n#{details_body}"
         end
       end
-      #end
+      threads.each { |t| t.join }
     end
-    # threads.each { |t| t.join }
     import_rows
   end
 
   def self.get_member_trial_rows(url, session_id, extra_function_code)
     trial_csv_url = 'http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + session_id
     logger.debug "Getting #{trial_csv_url}"
-    member_trial_rows = nil
+    member_trials_csv_body = nil
     Net::HTTP.start(url.host, url.port) do |http|
       member_trials_csv_response = http.get(trial_csv_url, cookie_header)
       member_trials_csv_body     = member_trials_csv_response.body
       process_response 'member trials csv', member_trials_csv_response
-      member_trial_rows = member_trials_csv_body.split("\n").map { |line| @iconv.iconv(line.chomp).split(';') }
+    end
+    member_trial_rows = member_trials_csv_body.split("\n").map { |line| @iconv.iconv(line.chomp).split(';') }
 
+    member_trials_body = nil
+    Net::HTTP.start(url.host, url.port) do |http|
       trial_url = 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_cr_par=' + extra_function_code
       logger.debug "Getting #{trial_url}"
       member_trials_response = http.get(trial_url, cookie_header)
       member_trials_body     = member_trials_response.body
       process_response 'member trials', member_trials_response
+    end
 
-      trial_ids = member_trials_body.scan(/edit_click28\('(.*?)'\)/).map { |tid| tid[0] }
+    trial_ids = member_trials_body.scan(/edit_click28\('(.*?)'\)/).map { |tid| tid[0] }
 
-      member_trial_rows[0] << 'tid'
-      member_trial_rows[0] << 'epost_faktura'
-      member_trial_rows[0] << 'stilart'
+    member_trial_rows[0] << 'tid'
+    member_trial_rows[0] << 'epost_faktura'
+    member_trial_rows[0] << 'stilart'
 
-      trial_ids.each_with_index do |tid, i|
-        logger.debug "Getting details #{tid}"
-        trial_details_url = "http://nkfwww.kampsport.no/portal/page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=" + extra_function_code
-        logger.debug "Getting #{trial_details_url}"
-        begin
-          trial_details_response = http.get(trial_details_url, cookie_header)
-        rescue EOFError, SystemCallError
-          logger.error $!.message
-          retry
-        end
-        trial_details_body = @iconv.iconv(trial_details_response.body)
-        process_response 'trial details', trial_details_response
-        if trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
-          first_name = $1
-          if trial_details_body =~ /name="frm_28_v09" value="(.*?)"/
-            last_name = $1
-            if trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
-              invoice_email = $1
-              if trial_details_body =~ /<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren\/stilart -<\/option>.*?<option selected value="\d+">([^<]*)<\/option>.*<\/select>/
-                martial_art = $1
-                trial_row   = member_trial_rows.find { |ir| ir.size < member_trial_rows[0].size && ir[1] == last_name && ir[2] == first_name }
-                trial_row << tid
-                trial_row << (invoice_email.blank? ? nil : invoice_email)
-                trial_row << martial_art
+    trial_ids.each_slice(CONCURRENT_REQUESTS) do |trial_ids_slice|
+      threads = trial_ids_slice.each.with_index.map do |tid, i|
+        Thread.start do
+          logger.debug "Getting details #{tid}"
+          trial_details_url = "http://nkfwww.kampsport.no/portal/page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=" + extra_function_code
+          logger.debug "Getting #{trial_details_url}"
+          trial_details_body = nil
+          Net::HTTP.start(url.host, url.port) do |http|
+            begin
+              trial_details_response = http.get(trial_details_url, cookie_header)
+            rescue EOFError, SystemCallError
+              logger.error $!.message
+              retry
+            end
+            trial_details_body = @iconv.iconv(trial_details_response.body)
+            process_response 'trial details', trial_details_response
+          end
+          if trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
+            first_name = $1
+            if trial_details_body =~ /name="frm_28_v09" value="(.*?)"/
+              last_name = $1
+              if trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
+                invoice_email = $1
+                if trial_details_body =~ /<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren\/stilart -<\/option>.*?<option selected value="\d+">([^<]*)<\/option>.*<\/select>/
+                  martial_art = $1
+                  trial_row   = member_trial_rows.find { |ir| ir.size < member_trial_rows[0].size && ir[1] == last_name && ir[2] == first_name }
+                  trial_row << tid
+                  trial_row << (invoice_email.blank? ? nil : invoice_email)
+                  trial_row << martial_art
+                else
+                  raise "Could not find martial art"
+                end
               else
-                raise "Could not find martial art"
+                raise "Could not find first name"
               end
             else
-              raise "Could not find first name"
+              logger.error trial_details_body
+              raise "Could not find last name"
             end
           else
-            logger.error trial_details_body
-            raise "Could not find last name"
+            raise "Could not find invoice email"
           end
-        else
-          raise "Could not find invoice email"
         end
       end
+      threads.each(&:join)
     end
     member_trial_rows
   end
