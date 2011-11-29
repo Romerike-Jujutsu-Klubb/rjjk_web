@@ -5,9 +5,11 @@ require 'pp'
 
 class NkfMemberImport
   CONCURRENT_REQUESTS = 8
-  extend MonitorMixin
+  include MonitorMixin
+  attr_reader :changes, :error_records, :import_rows
 
-  def self.import
+  def initialize
+    super
     @changes       = []
     @error_records = []
 
@@ -51,17 +53,16 @@ class NkfMemberImport
 
     raise "Could not find session id" unless session_id
 
-    import_rows       = get_member_rows(url, session_id, detail_codes)
+    @import_rows       = get_member_rows(url, session_id, detail_codes)
     member_trial_rows = get_member_trial_rows(url, session_id, extra_function_code)
 
-    import_member_rows(import_rows)
+    import_member_rows(@import_rows)
     import_member_trials(member_trial_rows)
-    return "#{@changes.size} records imported, #{@error_records.size} failed, #{import_rows.size - @changes.size - @error_records.size} skipped\n"
   end
 
   private
 
-  def self.get_member_rows(url, session_id, detail_codes)
+  def get_member_rows(url, session_id, detail_codes)
     import_rows = nil
     Net::HTTP.start(url.host, url.port) do |http|
       members_url = 'http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=' + session_id
@@ -113,7 +114,7 @@ class NkfMemberImport
     import_rows
   end
 
-  def self.get_member_trial_rows(url, session_id, extra_function_code)
+  def get_member_trial_rows(url, session_id, extra_function_code)
     trial_csv_url = 'http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + session_id
     logger.debug "Getting #{trial_csv_url}"
     member_trials_csv_body = nil
@@ -188,7 +189,7 @@ class NkfMemberImport
     member_trial_rows
   end
 
-  def self.import_member_rows(import_rows)
+  def import_member_rows(import_rows)
     raise "Unknown format: #{import_rows && import_rows[0] && import_rows[0][0]}" unless import_rows && import_rows[0] && import_rows[0][0] == 'Medlemsnummer'
     header_fields = import_rows.shift
     columns       = header_fields.map { |f| field2column(f) }
@@ -218,7 +219,7 @@ class NkfMemberImport
     end
   end
 
-  def self.import_member_trials(member_trial_rows)
+  def import_member_trials(member_trial_rows)
     header_fields = member_trial_rows.shift
     columns       = header_fields.map { |f| field2column(f) }
     logger.debug "Found #{member_trial_rows.size} member trials"
@@ -263,11 +264,11 @@ class NkfMemberImport
     end
   end
 
-  def self.field2column(field_name)
+  def field2column(field_name)
     field_name.gsub('ø', 'o').gsub('Ø', 'O').gsub('å', 'a').gsub('Å', 'A').gsub(/[ -.\/]/, '_').downcase
   end
 
-  def self.login
+  def login
     @cookies      = []
     url           = URI.parse('http://nkfwww.kampsport.no/')
     login_content = nil
@@ -310,7 +311,7 @@ class NkfMemberImport
 
   end
 
-  def self.store_cookie(response)
+  def store_cookie(response)
     return unless response['set-cookie']
     header = response['set-cookie']
     header.gsub! /expires=.{3},/, ''
@@ -325,12 +326,12 @@ class NkfMemberImport
     @cookies.uniq!
   end
 
-  def self.cookie_header
+  def cookie_header
     return {} if @cookies.empty?
     {'Cookie' => @cookies.join(';')}
   end
 
-  def self.process_response(title, response)
+  def process_response(title, response)
     store_cookie(response)
     if response.code == '302'
       logger.debug "Following redirect to #{response['location']}"
@@ -342,7 +343,7 @@ class NkfMemberImport
     end
   end
 
-  def self.logger
+  def logger
     ActiveRecord::Base.logger
   end
 

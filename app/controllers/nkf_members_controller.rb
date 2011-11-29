@@ -137,7 +137,10 @@ class NkfMembersController < ApplicationController
   end
   
   def import
-    flash[:notice] = NkfMemberImport.import
+    import = NkfMemberImport.new
+    flash[:notice] = "#{import.changes.size} records imported, #{import.error_records.size} failed, #{import.import_rows.size - import.changes.size - import.error_records.size} skipped" +
+        (import.error_records.any? ? "<br>#{import.error_records.inspect}" : '')
+
     redirect_to :action => :comparison, :id => 0
   end
   
