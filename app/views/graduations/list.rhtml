@@ -214,11 +214,11 @@ function deleteGraduation() {
 }
 function removeGraduate(id, name) {
 	if (confirm('Er du sikker på at du vil slette ' + name + ' fra denne graderingen ?')) {
-		callAjaxObject('/graduates/destroy/' + id, null);
         alert('graduate_' + id + '_view');
         alert(document.getElementById('graduate' + id + '_view'));
         document.getElementById('graduate_' + id + '_view').replace('');
         document.getElementById('graduate_' + id + '_edit').replace('');
+		callAjaxObject('/graduates/destroy/' + id, null);
 		changeStyle();
 	}
 }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/graduations/list.rhtml" afterPath="$PROJECT_DIR$/app/views/graduations/list.rhtml" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -88,10 +88,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="graduates_controller.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="graduates_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="127" column="91" selection-start="5029" selection-end="5029" vertical-scroll-proportion="0.37058824">
+            <state line="136" column="82" selection-start="5955" selection-end="5969" vertical-scroll-proportion="-21.115385">
               <folding />
             </state>
           </provider>
@@ -133,10 +133,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="list.rhtml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="list.rhtml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/graduations/list.rhtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="217" column="24" selection-start="6671" selection-end="6671" vertical-scroll-proportion="-8.925926">
+            <state line="220" column="0" selection-start="6851" selection-end="6851" vertical-scroll-proportion="0.5625">
               <folding />
             </state>
           </provider>
@@ -188,10 +188,10 @@
         <option value="$PROJECT_DIR$/app/models/rank.rb" />
         <option value="$PROJECT_DIR$/config/trinidad.rb" />
         <option value="$PROJECT_DIR$/config/environment.rb" />
-        <option value="$PROJECT_DIR$/app/views/graduations/list.rhtml" />
         <option value="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
         <option value="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
+        <option value="$PROJECT_DIR$/app/views/graduations/list.rhtml" />
       </list>
     </option>
   </component>
@@ -1099,13 +1099,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/graduations/list.rhtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="217" column="24" selection-start="6671" selection-end="6671" vertical-scroll-proportion="-8.925926">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/member.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="90" column="9" selection-start="2999" selection-end="2999" vertical-scroll-proportion="-65.76923">
@@ -1129,7 +1122,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="91" selection-start="5029" selection-end="5029" vertical-scroll-proportion="0.37058824">
+        <state line="136" column="82" selection-start="5955" selection-end="5969" vertical-scroll-proportion="-21.115385">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/graduations/list.rhtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="220" column="0" selection-start="6851" selection-end="6851" vertical-scroll-proportion="0.5625">
           <folding />
         </state>
       </provider>
