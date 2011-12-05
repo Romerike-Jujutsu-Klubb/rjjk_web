@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/rank.rb" afterPath="$PROJECT_DIR$/app/models/rank.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/ranks_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/ranks_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/ranks/edit.rhtml" afterPath="$PROJECT_DIR$/app/views/ranks/edit.rhtml" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -142,19 +143,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ranks_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ranks_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/ranks_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="6" selection-start="336" selection-end="336" vertical-scroll-proportion="0.0">
+            <state line="13" column="66" selection-start="407" selection-end="407" vertical-scroll-proportion="0.3595342">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rank.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="rank.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/rank.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="101" selection-start="180" selection-end="180" vertical-scroll-proportion="0.11062591">
+            <state line="4" column="101" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -162,6 +163,15 @@
       </file>
       <file leaf-file-name="edit.rhtml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/ranks/edit.rhtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="22" selection-start="132" selection-end="132" vertical-scroll-proportion="-2.7142856">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="new.rhtml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/ranks/new.rhtml">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
               <folding />
@@ -202,10 +212,11 @@
         <option value="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/members/grading_form_for_censor.rhtml" />
         <option value="$PROJECT_DIR$/db/migrate/20111205171636_add_group_id_to_ranks.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/ranks_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/ranks/_form.rhtml" />
         <option value="$PROJECT_DIR$/app/views/ranks/list.rhtml" />
         <option value="$PROJECT_DIR$/app/models/rank.rb" />
+        <option value="$PROJECT_DIR$/app/views/ranks/edit.rhtml" />
+        <option value="$PROJECT_DIR$/app/controllers/ranks_controller.rb" />
       </list>
     </option>
   </component>
@@ -1050,16 +1061,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/ranks/edit.rhtml">
+    <entry file="file://$PROJECT_DIR$/app/views/ranks/_form.rhtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="8" column="0" selection-start="309" selection-end="309" vertical-scroll-proportion="-5.428571">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/ranks/_form.rhtml">
+    <entry file="file://$PROJECT_DIR$/app/models/rank.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="309" selection-end="309" vertical-scroll-proportion="-5.428571">
+        <state line="4" column="101" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1071,16 +1082,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/ranks_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/views/ranks/edit.rhtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="6" selection-start="336" selection-end="336" vertical-scroll-proportion="0.0">
+        <state line="4" column="22" selection-start="132" selection-end="132" vertical-scroll-proportion="-2.7142856">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/rank.rb">
+    <entry file="file://$PROJECT_DIR$/app/views/ranks/new.rhtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="101" selection-start="180" selection-end="180" vertical-scroll-proportion="0.11062591">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/ranks_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="66" selection-start="407" selection-end="407" vertical-scroll-proportion="0.3595342">
           <folding />
         </state>
       </provider>
