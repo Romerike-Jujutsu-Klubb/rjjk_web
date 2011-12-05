@@ -56,17 +56,18 @@ function setObjectData(ref, file) {
 }
 function callAjaxObject(file, object) {
 	var xmlHttp = initAjax();
-	
-	if (object != null) {
-	}
+    var debug = document.getElementById('debug');
+
 	if(xmlHttp) {
 		xmlHttp.onreadystatechange=function() {
 			if(xmlHttp.readyState == CONST_AJAX_COMPLETE) {
 					if(xmlHttp.status != CONST_AJAX_HTTP_OK) {
-						obj.innerHTML = "<font color='#ff0000'>" + 
+						debug.innerHTML = "<font color='#ff0000'>" +
 						                "Det oppstod en feil (" + xmlHttp.status + ")</font>";
 					} else {
 						debug.innerHTML = ""; 
+                        document.getElementById(c_id + '_72_view').replace('');
+                        document.getElementById(c_id + '_72_edit').replace('');
 					}
 			}
 		}
