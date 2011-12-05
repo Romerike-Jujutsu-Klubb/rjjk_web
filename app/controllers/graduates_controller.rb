@@ -227,7 +227,8 @@ EOH
     ma     = MartialArt.find(aid)
     member = Member.find(mid)
     if member.current_rank
-      next_rank = Rank.find(:first, :conditions => ['martial_art_id = ? AND position = ?', ma, member.current_rank.position + 1])
+      next_rank = ma.ranks.select{|r| r.position > member.current_rank.position && member.age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(member.age)}.first
+      next_rank ||= Rank.find(:first, :conditions => ['martial_art_id = ? AND position = ?', ma, member.current_rank.position + 1])
     else
       next_rank = ma.ranks.select{|r| member.age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(member.age)}.first
       next_rank ||= Rank.first
