@@ -8,6 +8,7 @@
     <th>Posisjon</th>
     <th align="right">Navn</th>
     <th align="left">Beltebeskrivelse</th>
+    <th align="left">Gruppe</th>
     <th>Måneder</th>
   </tr>
   
@@ -17,6 +18,7 @@
     <td align="center"><%=h rank.position %></td>
     <td align="right"><%=h rank.name %></td>
     <td><%=h rank.colour %></td>
+    <td><%=h rank.group.name %></td>
     <td align="center"><%=h rank.standard_months %></td>
     <td><%= link_to 'Rediger', :action => 'edit', :id => rank %></td>
 <!--

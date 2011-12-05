@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/ranks_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/ranks_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/ranks/_form.rhtml" afterPath="$PROJECT_DIR$/app/views/ranks/_form.rhtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/ranks/list.rhtml" afterPath="$PROJECT_DIR$/app/views/ranks/list.rhtml" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -126,10 +124,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_form.rhtml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="_form.rhtml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/ranks/_form.rhtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="309" selection-end="309" vertical-scroll-proportion="0.23065251">
+            <state line="8" column="0" selection-start="309" selection-end="309" vertical-scroll-proportion="-5.428571">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="list.rhtml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/ranks/list.rhtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="23" selection-start="470" selection-end="470" vertical-scroll-proportion="0.57663125">
               <folding />
             </state>
           </provider>
@@ -178,7 +185,6 @@
         <option value="$PROJECT_DIR$/app/controllers/censors_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/rank.rb" />
         <option value="$PROJECT_DIR$/app/controllers/graduations_controller.rb" />
-        <option value="$PROJECT_DIR$/app/views/ranks/list.rhtml" />
         <option value="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/app/views/members/missing_contract.html.erb" />
@@ -190,6 +196,7 @@
         <option value="$PROJECT_DIR$/db/migrate/20111205171636_add_group_id_to_ranks.rb" />
         <option value="$PROJECT_DIR$/app/controllers/ranks_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/ranks/_form.rhtml" />
+        <option value="$PROJECT_DIR$/app/views/ranks/list.rhtml" />
       </list>
     </option>
   </component>
@@ -1054,7 +1061,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/ranks/_form.rhtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="309" selection-end="309" vertical-scroll-proportion="0.23065251">
+        <state line="8" column="0" selection-start="309" selection-end="309" vertical-scroll-proportion="-5.428571">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/ranks/list.rhtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="23" selection-start="470" selection-end="470" vertical-scroll-proportion="0.57663125">
           <folding />
         </state>
       </provider>
