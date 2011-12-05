@@ -226,9 +226,13 @@ EOH
     if member.current_rank
       next_rank = Rank.find(:first, :conditions => ['martial_art_id = ? AND position = ?', ma, member.current_rank.position + 1])
     else
+      p member.current_rank
+      p member
+      p ma.ranks
+      p ma.ranks.select{|r| member.age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(member.age)}
+      p ma.ranks.select{|r| member.age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(member.age)}.first
       next_rank = ma.ranks.select{|r| member.age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(member.age)}.first
     end
-    # rank = Rank.find(:first, :conditions => [ "martial_art_id = ?", aid])
     raise "Unable to find rank for martial art with id = #{aid}" unless next_rank
 
     Graduate.create!(:graduation_id => gid, :member_id => mid, :passed => true,
