@@ -6,6 +6,7 @@ Rails::Initializer.run do |config|
   config.time_zone                 = 'UTC'
   config.i18n.default_locale       = :nb
   config.action_controller.session = {:key => "_rjjk_web_session", :secret => "Norges peneste jujutsu klubb. Man må like å lide!"}
+  config.logger = Logger.new(config.log_path, 4, 1024**2)
 end
 
 require 'config/environments/user_environment'
