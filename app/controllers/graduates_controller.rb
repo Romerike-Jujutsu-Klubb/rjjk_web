@@ -124,7 +124,7 @@ EOH
       mbr  = Member.find(:first, :conditions => ["id = ?", gr.member_id])
       fn   = mbr.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
       ln   = mbr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
-      rstr = rstr << "<tr id='#{gr.member_id}_#{gr.graduation.id}_view'>\n" <<
+      rstr = rstr << "<tr id='graduate_#{gr.id}_view'>\n" <<
           "  <td valign='top'>#{fn} #{ln}</td>\n" <<
           "  <td STYLE=\"text-align: left;\">#{gr.rank.name} #{gr.rank.colour}</td>\n" <<
           "  <td STYLE=\"text-align: center;\">#{gr.passed ? 'Ja' : 'Nei'}</td>\n" <<
@@ -137,7 +137,7 @@ EOH
           "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='removeGraduate(#{gr.id},\"#{fn} #{ln}\")'>" <<
           "<IMG SRC=\"/images/button-delete-16x16.png\" STYLE=\"border: 0;\" title=\"Slett\" ALT=\"Slett\"></A></td>\n" <<
           "</tr>\n"
-      rstr = rstr << "<tr id='#{gr.member_id}_#{gr.graduation.id}_edit' STYLE='display: none;'>\n" <<
+      rstr = rstr << "<tr id='graduate_#{gr.id}_edit' STYLE='display: none;'>\n" <<
           "  <td>#{fn} #{ln}</td>\n" <<
           #"  <td STYLE=\"text-align: center;\">#{gr.graduation.held_on}</td>\n" <<
       "  <td STYLE=\"text-align: center;\">#{rank_select(gr.graduation.martial_art_id, gr.member_id, gr.rank.id)}</td>\n" <<
