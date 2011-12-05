@@ -91,8 +91,10 @@
       <file leaf-file-name="graduates_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="230" column="0" selection-start="10451" selection-end="10451" vertical-scroll-proportion="0.31470588">
-              <folding />
+            <state line="229" column="30" selection-start="10570" selection-end="10570" vertical-scroll-proportion="0.29607844">
+              <folding>
+                <marker date="1323118204000" expanded="true" signature="10246:10869" placeholder="if ... end" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -100,7 +102,7 @@
       <file leaf-file-name="member.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/member.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="1.0">
+            <state line="90" column="9" selection-start="2999" selection-end="2999" vertical-scroll-proportion="-13.230769">
               <folding />
             </state>
           </provider>
@@ -304,6 +306,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="graduations" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1044,13 +1064,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/member.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="1.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/rank.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="96" selection-start="359" selection-end="359" vertical-scroll-proportion="0.0">
@@ -1105,10 +1118,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/member.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="90" column="9" selection-start="2999" selection-end="2999" vertical-scroll-proportion="-13.230769">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="230" column="0" selection-start="10451" selection-end="10451" vertical-scroll-proportion="0.31470588">
-          <folding />
+        <state line="229" column="30" selection-start="10570" selection-end="10570" vertical-scroll-proportion="0.29607844">
+          <folding>
+            <marker date="1323118204000" expanded="true" signature="10246:10869" placeholder="if ... end" />
+          </folding>
         </state>
       </provider>
     </entry>
