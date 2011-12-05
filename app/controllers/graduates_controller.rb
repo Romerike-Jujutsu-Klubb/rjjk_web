@@ -170,13 +170,13 @@ EOH
 	</td><tr>
 EOH
     Group.all(:order => :from_age).each do |group|
+      members = @grads.select{|m| m.groups.include? group}
       rstr << "<tr id='group_#{group.id}'>" <<
           "<th align=left><a href='#' onClick='#{members.map{|m| "add_graduate(#{m.id});"}}'>" <<
           "#{group.name}</a></th>" <<
           "<th ALIGN='right'>&nbsp;" <<
           "<th>&nbsp;</th></tr>\n"
-      for grad in @grads
-        next unless grad.groups.include? group
+      for grad in members
         ln = grad.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
         fn = grad.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
         rstr << "<tr id='potential_graduate_#{grad.id}'>" <<
