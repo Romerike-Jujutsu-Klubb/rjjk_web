@@ -109,7 +109,7 @@
       <file leaf-file-name="rank.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/rank.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="67" selection-start="330" selection-end="330" vertical-scroll-proportion="0.14353164">
+            <state line="8" column="83" selection-start="346" selection-end="346" vertical-scroll-proportion="0.14353164">
               <folding />
             </state>
           </provider>
@@ -1037,7 +1037,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/rank.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="67" selection-start="330" selection-end="330" vertical-scroll-proportion="0.14353164">
+        <state line="8" column="83" selection-start="346" selection-end="346" vertical-scroll-proportion="0.14353164">
           <folding />
         </state>
       </provider>
