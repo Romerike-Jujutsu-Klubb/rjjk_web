@@ -230,9 +230,9 @@ function removeCensor(id, name) {
 	}
 }
 
-function saveGraduateInfo(member_id, grad_id) {
-	var showObj = document.getElementById(member_id + "_" + grad_id + "_view");
-	var editObj = document.getElementById(member_id + "_" + grad_id + "_edit");
+function saveGraduateInfo(graduate_id) {
+	var showObj = document.getElementById("graduate_" + graduate_id + "_view");
+	var editObj = document.getElementById("graduate_" + graduate_id + "_edit");
 	if(showObj.style.display == '') {
 		// Edit
 		showObj.style.display = 'none';
@@ -241,22 +241,22 @@ function saveGraduateInfo(member_id, grad_id) {
 		// Save
 		editObj.style.display = 'none';
 		showObj.style.display = '';
-		var rrObj = document.getElementById('rank_row_' + member_id);
+		var rrObj = document.getElementById('rank_row_' + graduate_id);
 		var rrVal = rrObj.value;
-		var prObj = document.getElementById('passed_row_' + member_id);
+		var prObj = document.getElementById('passed_row_' + graduate_id);
 		var prVal = prObj.value;
-		var pgObj = document.getElementById('paid_grad_row_' + member_id);
+		var pgObj = document.getElementById('paid_grad_row_' + graduate_id);
 		var pgVal = pgObj.value;
-		var pbObj = document.getElementById('paid_belt_row_' + member_id);
+		var pbObj = document.getElementById('paid_belt_row_' + graduate_id);
 		var pbVal = pbObj.value;
 
-		pvalues = "member_id=" + member_id + "&rank_id=" + rrVal +
+		pvalues = "graduate_id=" + graduate_id + "&rank_id=" + rrVal +
 		          "&passed=" + prVal + "&" + "paid=" + pgVal +
-				  "&paid_belt=" + pbVal + "&grad_id=" + grad_id;
+				  "&paid_belt=" + pbVal;
 	
 		var xmlHttp = initAjax();
 		var debug = document.getElementById("debug");
-		debug.InnerHTML += 'Saving ' + member_id + ' ' + rrVal + ' ' +
+		debug.InnerHTML += 'Saving ' + graduate_id + ' ' + rrVal + ' ' +
 		                   prVal + ' ' + pgVal + ' ' + pbVal;
 		if(xmlHttp) {
 			xmlHttp.onreadystatechange=function() {

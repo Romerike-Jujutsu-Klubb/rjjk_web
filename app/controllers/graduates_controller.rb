@@ -52,11 +52,11 @@ class GraduatesController < ApplicationController
     rstr << "</SELECT>\n"
   end
 
-  def yes_no_select(cid, sid, member_id)
+  def yes_no_select(cid, sid, graduate_id)
     rstr = String.new()
     nsel = !sid ? "SELECTED" : ""
     ysel = sid ? "SELECTED" : ""
-    rstr << "\n<SELECT NAME='#{cid}_row_#{member_id}' STYLE='width: 56px; height: 18px;' ID='#{cid}_row_#{member_id}'>\n"
+    rstr << "\n<SELECT NAME='#{cid}_row_#{graduate_id}' STYLE='width: 56px; height: 18px;' ID='#{cid}_row_#{graduate_id}'>\n"
     rstr << "<OPTION #{nsel} VALUE='0'>Nei</OPTION>\n"
     rstr << "<OPTION #{ysel} VALUE='1'>Ja</OPTION>\n"
     rstr << "</SELECT>\n"
@@ -132,7 +132,7 @@ EOH
           "  <td STYLE=\"text-align: center;\">#{gr.paid_belt ? 'Ja' : 'Nei'}</td>\n" <<
           "  <td STYLE=\"text-align: center;\"><A HREF=\"/graduates/list/\"" << gr.member_id.to_s << "'>" <<
           "<IMG SRC=\"/images/button-view-16x16.png\" STYLE=\"border: 0;\" title=\"Oversikt\" ALT=\"Oversikt\"></A></td>\n" <<
-          "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>" <<
+          "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.id})'>" <<
           "<IMG SRC=\"/images/button-edit-16x16.png\" STYLE=\"border: 0;\" title=\"Endre\" ALT=\"Endre\"></A></td>\n" <<
           "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='removeGraduate(#{gr.id},\"#{fn} #{ln}\")'>" <<
           "<IMG SRC=\"/images/button-delete-16x16.png\" STYLE=\"border: 0;\" title=\"Slett\" ALT=\"Slett\"></A></td>\n" <<
@@ -140,14 +140,14 @@ EOH
       rstr = rstr << "<tr id='graduate_#{gr.id}_edit' STYLE='display: none;'>\n" <<
           "  <td>#{fn} #{ln}</td>\n" <<
           #"  <td STYLE=\"text-align: center;\">#{gr.graduation.held_on}</td>\n" <<
-      "  <td STYLE=\"text-align: center;\">#{rank_select(gr.graduation.martial_art_id, gr.member_id, gr.rank.id)}</td>\n" <<
-          "  <td STYLE=\"text-align: center;\">#{yes_no_select('passed', gr.passed, gr.member_id)}</td>\n" <<
-          "  <td STYLE=\"text-align: center;\">#{yes_no_select('paid_grad', gr.paid_graduation, gr.member_id)}</td>\n" <<
-          "  <td STYLE=\"text-align: center;\">#{yes_no_select('paid_belt', gr.paid_belt, gr.member_id)}</td>\n" <<
+      "  <td STYLE=\"text-align: center;\">#{rank_select(gr.graduation.martial_art_id, gr.id, gr.rank.id)}</td>\n" <<
+          "  <td STYLE=\"text-align: center;\">#{yes_no_select('passed', gr.passed, gr.id)}</td>\n" <<
+          "  <td STYLE=\"text-align: center;\">#{yes_no_select('paid_grad', gr.paid_graduation, gr.id)}</td>\n" <<
+          "  <td STYLE=\"text-align: center;\">#{yes_no_select('paid_belt', gr.paid_belt, gr.id)}</td>\n" <<
           "  <td STYLE=\"text-align: center;\">&nbsp;</td>\n" <<
-          "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>" <<
+          "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.id})'>" <<
           "<IMG SRC=\"/images/button-ok-16x16.png\" STYLE=\"border: 0;\" title=\"Lagre\" ALT=\"Lagre\"></A></td>\n" <<
-          "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='cancelSaveGraduateInfo(#{gr.member_id},#{gr.graduation.id})'>" <<
+          "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='cancelSaveGraduateInfo(#{gr.id})'>" <<
           "<IMG SRC=\"/images/button-cancel-16x16.png\" STYLE=\"border: 0;\" title=\"Avbryt\" ALT=\"Avbryt\"></A></td>\n" <<
           "</tr>\n"
     end
@@ -191,20 +191,19 @@ EOH
   end
 
   def update_graduate
-    member_id   = params[:member_id].to_i
+    graduate_id = params[:graduate_id].to_i
     rank_id     = params[:rank_id].to_i
-    graduate_id = params[:grad_id].to_i
     passed      = params[:passed].to_i
     paid        = params[:paid].to_i
     paid_belt   = params[:paid_belt].to_i
 
     begin
-      @graduate = Graduate.find(:first, :conditions => ["graduation_id = ? AND member_id = ?", graduate_id, member_id])
+      @graduate = Graduate.find(graduate_id)
       @graduate.update_attributes!(:rank_id   => rank_id, :passed => passed, :paid_graduation => paid,
                                    :paid_belt => paid_belt)
-      render :text => "Endret graderingsinfo for medlem. <!-- #{member_id} -->"
+      render :text => "Endret graderingsinfo for medlem. <!-- #{@graduate.member_id} -->"
     rescue StandardError
-      render :text => "Det oppstod en feil ved endring av medlem #{member_id}:<P>" + $! + "</P>"
+      render :text => "Det oppstod en feil ved endring av medlem #{@graduate.member_id}:<P>" + $! + "</P>"
     end
   end
 
