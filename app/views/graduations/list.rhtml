@@ -243,17 +243,19 @@ function saveGraduateInfo(graduate_id) {
 		showObj.style.display = '';
 		var rrObj = document.getElementById('rank_row_' + graduate_id);
 		var rrVal = rrObj.value;
-		var prObj = document.getElementById('passed_row_' + graduate_id);
-		var prVal = prObj.value;
-		var pgObj = document.getElementById('paid_grad_row_' + graduate_id);
-		var pgVal = pgObj.value;
-		var pbObj = document.getElementById('paid_belt_row_' + graduate_id);
-		var pbVal = pbObj.value;
+//		var prObj = document.getElementById('passed_row_' + graduate_id);
+//		var prVal = prObj.value;
+//		var pgObj = document.getElementById('paid_grad_row_' + graduate_id);
+//		var pgVal = pgObj.value;
+//		var pbObj = document.getElementById('paid_belt_row_' + graduate_id);
+//		var pbVal = pbObj.value;
 
-		pvalues = "graduate_id=" + graduate_id + "&rank_id=" + rrVal +
-		          "&passed=" + prVal + "&" + "paid=" + pgVal +
-				  "&paid_belt=" + pbVal;
-	
+//        pvalues = "graduate_id=" + graduate_id + "&rank_id=" + rrVal +
+//      		          "&passed=" + prVal + "&" + "paid=" + pgVal +
+//      				  "&paid_belt=" + pbVal;
+
+        pvalues = "graduate_id=" + graduate_id + "&rank_id=" + rrVal;
+
 		var xmlHttp = initAjax();
 		var debug = document.getElementById("debug");
 		debug.InnerHTML += 'Saving ' + graduate_id + ' ' + rrVal + ' ' +
@@ -291,12 +293,12 @@ function cancelSaveGraduateInfo(graduate_id) {
 		showObj.style.display = '';
 		var rrObj = document.getElementById('rank_row_' + graduate_id);
 		rrObj.reset;
-		var prObj = document.getElementById('passed_row_' + graduate_id);
-		prObj.reset;
-		var pgObj = document.getElementById('paid_grad_row_' + graduate_id);
-		pgObj.reset;
-		var pbObj = document.getElementById('paid_belt_row_' + graduate_id);
-		pbObj.reset;
+//		var prObj = document.getElementById('passed_row_' + graduate_id);
+//		prObj.reset;
+//		var pgObj = document.getElementById('paid_grad_row_' + graduate_id);
+//		pgObj.reset;
+//		var pbObj = document.getElementById('paid_belt_row_' + graduate_id);
+//		pbObj.reset;
 	}
 	//changeGraduationData();
 }

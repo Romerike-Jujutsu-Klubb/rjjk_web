@@ -114,9 +114,11 @@ EOC
   <tr STYLE=" background: #e3e3e3;">
   <th STYLE="text-align: left; border-bottom: 1px solid #000000;">Medlem</th>
   <th STYLE="border-bottom: 1px solid #000000;">Grad</th>
+  <!--
   <th STYLE="border-bottom: 1px solid #000000;">Bestått</th>
   <th STYLE="border-bottom: 1px solid #000000;">Bet.Grad</th>
   <th STYLE="border-bottom: 1px solid #000000;">Bet.Belte</th>
+  -->
   <th STYLE="border-bottom: 1px solid #000000;" COLSPAN="4">&nbsp;</th>
 </tr>
 EOH
@@ -127,9 +129,9 @@ EOH
       rstr = rstr << "<tr id='graduate_#{gr.id}_view' style=\"vertical-align: top;\">\n" <<
           "  <td valign='top'>#{fn} #{ln} #{"(<font color=\"red\">#{mbr.age} år</font>)" if mbr.age < gr.rank.minimum_age || !(gr.rank.group.from_age..gr.rank.group.to_age).include?(mbr.age)}</td>\n" <<
           "  <td STYLE=\"text-align: left;\">#{gr.rank.name} #{gr.rank.colour}</td>\n" <<
-          "  <td STYLE=\"text-align: center;\">#{gr.passed ? 'Ja' : 'Nei'}</td>\n" <<
+          "<!--  <td STYLE=\"text-align: center;\">#{gr.passed ? 'Ja' : 'Nei'}</td>\n" <<
           "  <td STYLE=\"text-align: center;\">#{gr.paid_graduation ? 'Ja' : 'Nei'}</td>\n" <<
-          "  <td STYLE=\"text-align: center;\">#{gr.paid_belt ? 'Ja' : 'Nei'}</td>\n" <<
+          "  <td STYLE=\"text-align: center;\">#{gr.paid_belt ? 'Ja' : 'Nei'}</td> -->\n" <<
           "  <td STYLE=\"text-align: center;\"><A HREF=\"/graduates/list/\"" << gr.member_id.to_s << "'>" <<
           "<IMG SRC=\"/images/button-view-16x16.png\" STYLE=\"border: 0;\" title=\"Oversikt\" ALT=\"Oversikt\"></A></td>\n" <<
           "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.id})'>" <<
@@ -141,9 +143,9 @@ EOH
           "  <td>#{fn} #{ln}</td>\n" <<
           #"  <td STYLE=\"text-align: center;\">#{gr.graduation.held_on}</td>\n" <<
       "  <td STYLE=\"text-align: center;\">#{rank_select(gr.graduation.martial_art_id, gr.id, gr.rank.id)}</td>\n" <<
-          "  <td STYLE=\"text-align: center;\">#{yes_no_select('passed', gr.passed, gr.id)}</td>\n" <<
+          "<!--  <td STYLE=\"text-align: center;\">#{yes_no_select('passed', gr.passed, gr.id)}</td>\n" <<
           "  <td STYLE=\"text-align: center;\">#{yes_no_select('paid_grad', gr.paid_graduation, gr.id)}</td>\n" <<
-          "  <td STYLE=\"text-align: center;\">#{yes_no_select('paid_belt', gr.paid_belt, gr.id)}</td>\n" <<
+          "  <td STYLE=\"text-align: center;\">#{yes_no_select('paid_belt', gr.paid_belt, gr.id)}</td> -->\n" <<
           "  <td STYLE=\"text-align: center;\">&nbsp;</td>\n" <<
           "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.id})'>" <<
           "<IMG SRC=\"/images/button-ok-16x16.png\" STYLE=\"border: 0;\" title=\"Lagre\" ALT=\"Lagre\"></A></td>\n" <<
@@ -194,14 +196,15 @@ EOH
   def update_graduate
     graduate_id = params[:graduate_id].to_i
     rank_id     = params[:rank_id].to_i
-    passed      = params[:passed].to_i
-    paid        = params[:paid].to_i
-    paid_belt   = params[:paid_belt].to_i
+    #passed      = params[:passed].to_i
+    #paid        = params[:paid].to_i
+    #paid_belt   = params[:paid_belt].to_i
 
     begin
       @graduate = Graduate.find(graduate_id)
-      @graduate.update_attributes!(:rank_id   => rank_id, :passed => passed, :paid_graduation => paid,
-                                   :paid_belt => paid_belt)
+      #@graduate.update_attributes!(:rank_id   => rank_id, :passed => passed, :paid_graduation => paid,
+      #                             :paid_belt => paid_belt)
+      @graduate.update_attributes!(:rank_id   => rank_id)
       render :text => "Endret graderingsinfo for medlem. <!-- #{@graduate.member_id} -->"
     rescue StandardError
       render :text => "Det oppstod en feil ved endring av medlem #{@graduate.member_id}:<P>" + $! + "</P>"

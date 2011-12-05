@@ -7,10 +7,12 @@
     <th STYLE="border-bottom: 1px solid #000000;">Medlem</th>
     <th STYLE="border-bottom: 1px solid #000000;">Dato</th>
     <th STYLE="border-bottom: 1px solid #000000;">Grad</th>
+    <!--
     <th STYLE="border-bottom: 1px solid #000000;">Bestått</th>
     <th STYLE="border-bottom: 1px solid #000000;">Bet.Grad</th>
     <th STYLE="border-bottom: 1px solid #000000;">Bet.Belte</th>
     <th STYLE="border-bottom: 1px solid #000000;">Stilart</th>
+    -->
 	<!-- th STYLE="border-bottom: 1px solid #000000;">&nbsp;</th -->
   </tr>
 
@@ -40,9 +42,11 @@
 	<% end %>
     <td <%= style %> ALIGN="CENTER"><%=graduate.graduation.held_on%></td>
     <td <%= style %> ALIGN="CENTER"><%=h graduate.rank.name%></td>
+    <!--
     <td <%= style %> ALIGN="CENTER"><%=yes_no graduate.passed%></td>
     <td <%= style %> ALIGN="CENTER"><%=yes_no graduate.paid_graduation%></td>
     <td <%= style %> ALIGN="CENTER"><%=yes_no graduate.paid_belt%></td>
+    -->
     <td <%= style %> ALIGN="CENTER"><%= department_name(graduate.rank.martial_art_id) %></td>
     <!-- td ALIGN="CENTER">< %= link_to 'Show', :action => 'show', :id => graduate % ></td -->
     <!-- td ALIGN="CENTER">< %= link_to 'Edit', :action => 'edit', :id => graduate % ></td -->
