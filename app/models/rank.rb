@@ -6,7 +6,7 @@ class Rank < ActiveRecord::Base
   validates_uniqueness_of :position, :scope => :martial_art_id
 
   def minimum_age
-    group.from_age + (group.ranks.select{|r| r.position < self.postion}.inject{|r| r.standard_months.to_f} / 12.0)
+    group.from_age + (group.ranks.select{|r| r.position < self.position}.inject{|r| r.standard_months.to_f} / 12.0)
   end
 
 end
