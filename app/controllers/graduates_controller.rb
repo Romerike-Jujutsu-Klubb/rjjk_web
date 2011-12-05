@@ -157,10 +157,10 @@ EOH
 
   def list_potential_graduates
     graduation = Graduation.find(params[:graduation_id])
-    @grads     = Member.find(:all, :conditions => ["joined_on <= ? AND left_on IS NULL OR left_on >= ?", graduation.held_on, graduation.held_on], :order => 'first_name, last_name',
-                             :select           => 'first_name, last_name, id')
-    @grads.delete_if{|g| graduation.graduates.map(&:member).include? g}
-    rstr       =<<EOH
+    @grads = Member.find(:all, :conditions => ["joined_on <= ? AND left_on IS NULL OR left_on >= ?", graduation.held_on, graduation.held_on], :order => 'first_name, last_name',
+                         :select => 'first_name, last_name, id')
+    @grads.delete_if { |g| graduation.graduates.map(&:member).include? g }
+    rstr =<<EOH
 <div style="height:512px; width:256px; overflow:auto; overflow-x:hidden;">
 	<table WIDTH="256" CELLPADDING="0" CELLSPACING="0">
 	<tr>
@@ -169,14 +169,21 @@ EOH
 		<td width=20>&nbsp;</td>
 	</td><tr>
 EOH
-    for grad in @grads
-      ln = grad.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
-      fn = grad.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
-      rstr << "<tr id='potential_graduate_#{grad.id}'>" <<
-          "<td align=left><a href='#' onClick='add_graduate(#{grad.id});'>" <<
-          "#{fn} #{ln}</a></td>" <<
-          "<td ALIGN='right'>&nbsp;" <<
-          "<td>&nbsp;</td></tr>\n"
+    @grads.group_by(&:group).each do |group, members|
+      rstr << "<tr id='group_#{group.id}'>" <<
+          "<th align=left><a href='#' onClick='#{members.map{|m| "add_graduate(#{m.id});"}}'>" <<
+          "#{group.name}</a></th>" <<
+          "<th ALIGN='right'>&nbsp;" <<
+          "<th>&nbsp;</th></tr>\n"
+      for grad in members
+        ln = grad.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
+        fn = grad.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
+        rstr << "<tr id='potential_graduate_#{grad.id}'>" <<
+            "<td align=left><a href='#' onClick='add_graduate(#{grad.id});'>" <<
+            "#{fn} #{ln}</a></td>" <<
+            "<td ALIGN='right'>&nbsp;" <<
+            "<td>&nbsp;</td></tr>\n"
+      end
     end
     rstr << "</table>\n</div>\n"
     render :text => rstr

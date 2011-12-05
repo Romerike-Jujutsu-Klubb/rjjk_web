@@ -3,7 +3,6 @@
 <% form_tag :action => 'update', :id => @rank do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Save' %>
+  <%= link_to 'Show', :action => 'show', :id => @rank %> |
+  <%= link_to 'Back', :action => 'list' %>
 <% end %>
-
-<%= link_to 'Show', :action => 'show', :id => @rank %> |
-<%= link_to 'Back', :action => 'list' %>
