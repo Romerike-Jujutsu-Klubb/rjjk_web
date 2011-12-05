@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -88,13 +88,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="graduates_controller.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="graduates_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="229" column="30" selection-start="10570" selection-end="10570" vertical-scroll-proportion="0.29607844">
-              <folding>
-                <marker date="1323118204000" expanded="true" signature="10246:10869" placeholder="if ... end" />
-              </folding>
+            <state line="229" column="30" selection-start="10570" selection-end="10570" vertical-scroll-proportion="-11.615385">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="nkf_members_controller.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/controllers/nkf_members_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="141" column="111" selection-start="4328" selection-end="4328" vertical-scroll-proportion="0.3876953">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -180,7 +187,6 @@
         <option value="$PROJECT_DIR$/app/views/members/missing_contract.html.erb" />
         <option value="$PROJECT_DIR$/app/views/members/list.rhtml" />
         <option value="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/members/grading_form_for_censor.rhtml" />
         <option value="$PROJECT_DIR$/db/migrate/20111205171636_add_group_id_to_ranks.rb" />
         <option value="$PROJECT_DIR$/app/views/ranks/_form.rhtml" />
@@ -194,6 +200,7 @@
         <option value="$PROJECT_DIR$/config/environment.rb" />
         <option value="$PROJECT_DIR$/app/views/graduations/list.rhtml" />
         <option value="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" />
       </list>
     </option>
   </component>
@@ -939,11 +946,6 @@
         <state line="107" column="0" selection-start="4039" selection-end="4039" vertical-scroll-proportion="4.6326814" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/nkf_members_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="149" column="23" selection-start="4443" selection-end="4443" vertical-scroll-proportion="0.36155915" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/nkf_member_import.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="65" column="21" selection-start="3029" selection-end="3029" vertical-scroll-proportion="0.025537634" />
@@ -1127,10 +1129,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="229" column="30" selection-start="10570" selection-end="10570" vertical-scroll-proportion="0.29607844">
-          <folding>
-            <marker date="1323118204000" expanded="true" signature="10246:10869" placeholder="if ... end" />
-          </folding>
+        <state line="229" column="30" selection-start="10570" selection-end="10570" vertical-scroll-proportion="-11.615385">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/nkf_members_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="141" column="111" selection-start="4328" selection-end="4328" vertical-scroll-proportion="0.3876953">
+          <folding />
         </state>
       </provider>
     </entry>
