@@ -277,9 +277,9 @@ function saveGraduateInfo(graduate_id) {
 	}
 }
 
-function cancelSaveGraduateInfo(member_id, grad_id) {
-	var showObj = document.getElementById(member_id + "_" + grad_id + "_view");
-	var editObj = document.getElementById(member_id + "_" + grad_id + "_edit");
+function cancelSaveGraduateInfo(graduate_id) {
+	var showObj = document.getElementById('graduate_' + graduate_id + "_view");
+	var editObj = document.getElementById('graduate_' + graduate_id + "_edit");
 	
 	if(showObj.style.display == '') {
 		// Edit
@@ -289,13 +289,13 @@ function cancelSaveGraduateInfo(member_id, grad_id) {
 		// Save
 		editObj.style.display = 'none';
 		showObj.style.display = '';
-		var rrObj = document.getElementById('rank_row_' + member_id);
+		var rrObj = document.getElementById('rank_row_' + graduate_id);
 		rrObj.reset;
-		var prObj = document.getElementById('passed_row_' + member_id);
+		var prObj = document.getElementById('passed_row_' + graduate_id);
 		prObj.reset;
-		var pgObj = document.getElementById('paid_grad_row_' + member_id);
+		var pgObj = document.getElementById('paid_grad_row_' + graduate_id);
 		pgObj.reset;
-		var pbObj = document.getElementById('paid_belt_row_' + member_id);
+		var pbObj = document.getElementById('paid_belt_row_' + graduate_id);
 		pbObj.reset;
 	}
 	//changeGraduationData();
