@@ -171,6 +171,7 @@ EOH
 EOH
     Group.all(:order => :from_age).each do |group|
       members = @grads.select{|m| m.groups.include? group}
+      next if members.empty?
       rstr << "<tr id='group_#{group.id}'>" <<
           "<th align=left><a href='#' onClick='#{members.map{|m| "add_graduate(#{m.id});"}}'>" <<
           "#{group.name}</a></th>" <<
