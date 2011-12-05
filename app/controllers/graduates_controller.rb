@@ -124,7 +124,7 @@ EOH
       mbr  = Member.find(:first, :conditions => ["id = ?", gr.member_id])
       fn   = mbr.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
       ln   = mbr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
-      rstr = rstr << "<tr id='graduate_#{gr.id}_view'>\n" <<
+      rstr = rstr << "<tr id='graduate_#{gr.id}_view' style=\"vertical-align: top;\">\n" <<
           "  <td valign='top'>#{fn} #{ln}</td>\n" <<
           "  <td STYLE=\"text-align: left;\">#{gr.rank.name} #{gr.rank.colour}</td>\n" <<
           "  <td STYLE=\"text-align: center;\">#{gr.passed ? 'Ja' : 'Nei'}</td>\n" <<

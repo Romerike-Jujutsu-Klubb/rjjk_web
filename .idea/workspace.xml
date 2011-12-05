@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/nkf_member_import.rb" afterPath="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -88,28 +88,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="graduates_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="graduates_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="229" column="30" selection-start="10570" selection-end="10570" vertical-scroll-proportion="-11.615385">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nkf_members_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/nkf_members_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="141" column="123" selection-start="4340" selection-end="4340" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nkf_member_import.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/models/nkf_member_import.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="205" column="0" selection-start="9744" selection-end="9744" vertical-scroll-proportion="0.23747495">
+            <state line="126" column="68" selection-start="4914" selection-end="4914" vertical-scroll-proportion="0.35196078">
               <folding />
             </state>
           </provider>
@@ -207,9 +189,9 @@
         <option value="$PROJECT_DIR$/config/trinidad.rb" />
         <option value="$PROJECT_DIR$/config/environment.rb" />
         <option value="$PROJECT_DIR$/app/views/graduations/list.rhtml" />
-        <option value="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
       </list>
     </option>
   </component>
@@ -1124,20 +1106,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="229" column="30" selection-start="10570" selection-end="10570" vertical-scroll-proportion="-11.615385">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/nkf_members_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="141" column="123" selection-start="4340" selection-end="4340" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/member.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="90" column="9" selection-start="2999" selection-end="2999" vertical-scroll-proportion="-65.76923">
@@ -1148,6 +1116,20 @@
     <entry file="file://$PROJECT_DIR$/app/models/nkf_member_import.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="205" column="0" selection-start="9744" selection-end="9744" vertical-scroll-proportion="0.23747495">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/nkf_members_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="141" column="123" selection-start="4340" selection-end="4340" vertical-scroll-proportion="0.3876953">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="126" column="68" selection-start="4914" selection-end="4914" vertical-scroll-proportion="0.35196078">
           <folding />
         </state>
       </provider>
