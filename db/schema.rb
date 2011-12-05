@@ -9,15 +9,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101119183635) do
+ActiveRecord::Schema.define(:version => 20111205171636) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :limit => 10, :null => false
     t.integer  "group_schedule_id", :limit => 10, :null => false
     t.integer  "year",              :limit => 10, :null => false
     t.integer  "week",              :limit => 10, :null => false
-    t.datetime "created_at",        :limit => 29
-    t.datetime "updated_at",        :limit => 29
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "censors", :force => true do |t|
@@ -54,24 +54,24 @@ ActiveRecord::Schema.define(:version => 20101119183635) do
     t.string   "account_no",           :limit => 16
     t.string   "billing_phone_home",   :limit => 32
     t.string   "billing_phone_mobile", :limit => 32
-    t.datetime "created_at",           :limit => 29
-    t.datetime "updated_at",           :limit => 29
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "kid",                  :limit => 64
   end
 
   create_table "documents", :force => true do |t|
     t.binary   "content",    :limit => 2147483647, :null => false
-    t.datetime "created_at", :limit => 29
-    t.datetime "updated_at", :limit => 29
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "events", :force => true do |t|
-    t.string   "name",        :limit => 64,         :null => false
-    t.datetime "start_at",    :limit => 29,         :null => false
-    t.datetime "end_at",      :limit => 29
-    t.text     "description", :limit => 2147483647
-    t.datetime "created_at",  :limit => 29
-    t.datetime "updated_at",  :limit => 29
+    t.string   "name",        :limit => 64, :null => false
+    t.datetime "start_at",                  :null => false
+    t.datetime "end_at"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "graduates", :force => true do |t|
@@ -91,10 +91,10 @@ ActiveRecord::Schema.define(:version => 20101119183635) do
   create_table "group_schedules", :force => true do |t|
     t.integer  "group_id",   :limit => 10, :null => false
     t.integer  "weekday",    :limit => 10, :null => false
-    t.time     "start_at",   :limit => 15, :null => false
-    t.time     "end_at",     :limit => 15, :null => false
-    t.datetime "created_at", :limit => 29
-    t.datetime "updated_at", :limit => 29
+    t.time     "start_at",                 :null => false
+    t.time     "end_at",                   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "groups", :force => true do |t|
@@ -102,8 +102,8 @@ ActiveRecord::Schema.define(:version => 20101119183635) do
     t.string   "name",                         :null => false
     t.integer  "from_age",       :limit => 10, :null => false
     t.integer  "to_age",         :limit => 10, :null => false
-    t.datetime "created_at",     :limit => 29
-    t.datetime "updated_at",     :limit => 29
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "groups_members", :id => false, :force => true do |t|
@@ -121,17 +121,17 @@ ActiveRecord::Schema.define(:version => 20101119183635) do
 
   create_table "information_pages", :force => true do |t|
     t.integer  "parent_id",  :limit => 10
-    t.string   "title",      :limit => 32,         :null => false
-    t.text     "body",       :limit => 2147483647
-    t.datetime "created_at", :limit => 29
-    t.datetime "updated_at", :limit => 29
+    t.string   "title",      :limit => 32, :null => false
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "position",   :limit => 10
     t.boolean  "hidden"
   end
 
   create_table "martial_arts", :force => true do |t|
-    t.string "name",   :limit => 16,                 :null => false
-    t.string "family", :limit => 16, :default => "", :null => false
+    t.string "name",   :limit => 16, :null => false
+    t.string "family", :limit => 16, :null => false
   end
 
   create_table "members", :force => true do |t|
@@ -159,8 +159,8 @@ ActiveRecord::Schema.define(:version => 20101119183635) do
     t.string   "comment"
     t.boolean  "instructor",                                                 :null => false
     t.boolean  "nkf_fee",                                                    :null => false
-    t.datetime "created_at",           :limit => 29
-    t.datetime "updated_at",           :limit => 29
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "social_sec_no",        :limit => 11
     t.string   "account_no",           :limit => 16
     t.string   "billing_phone_home",   :limit => 32
@@ -173,10 +173,10 @@ ActiveRecord::Schema.define(:version => 20101119183635) do
   end
 
   create_table "news_items", :force => true do |t|
-    t.string   "title",      :limit => 64,         :null => false
-    t.text     "body",       :limit => 2147483647
-    t.datetime "created_at", :limit => 29
-    t.datetime "updated_at", :limit => 29
+    t.string   "title",      :limit => 64, :null => false
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "created_by", :limit => 10
   end
 
@@ -193,8 +193,8 @@ ActiveRecord::Schema.define(:version => 20101119183635) do
     t.string   "mobil",         :limit => 16, :null => false
     t.boolean  "res_sms",                     :null => false
     t.date     "reg_dato",                    :null => false
-    t.datetime "created_at",    :limit => 29
-    t.datetime "updated_at",    :limit => 29
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "tid",           :limit => 10, :null => false
     t.string   "epost_faktura", :limit => 64
     t.string   "stilart",       :limit => 64, :null => false
@@ -241,8 +241,8 @@ ActiveRecord::Schema.define(:version => 20101119183635) do
     t.string   "utmeldtdato"
     t.string   "utmeldtarsak"
     t.string   "antall_etiketter_1"
-    t.datetime "created_at",                                      :limit => 29
-    t.datetime "updated_at",                                      :limit => 29
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "ventekid",                                        :limit => 20
   end
 
@@ -252,6 +252,7 @@ ActiveRecord::Schema.define(:version => 20101119183635) do
     t.integer "position",        :limit => 10, :null => false
     t.integer "martial_art_id",  :limit => 10, :null => false
     t.integer "standard_months", :limit => 10
+    t.integer "group_id",        :limit => 10
   end
 
   create_table "trial_attendances", :force => true do |t|
@@ -259,8 +260,8 @@ ActiveRecord::Schema.define(:version => 20101119183635) do
     t.integer  "group_schedule_id",   :limit => 10, :null => false
     t.integer  "year",                :limit => 10, :null => false
     t.integer  "week",                :limit => 10, :null => false
-    t.datetime "created_at",          :limit => 29
-    t.datetime "updated_at",          :limit => 29
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
@@ -272,7 +273,7 @@ ActiveRecord::Schema.define(:version => 20101119183635) do
     t.string   "salt",            :limit => 40,                    :null => false
     t.string   "role",            :limit => 40
     t.string   "security_token",  :limit => 40
-    t.datetime "token_expiry",    :limit => 29
+    t.datetime "token_expiry"
     t.boolean  "verified",                      :default => false
     t.boolean  "deleted",                       :default => false
   end
