@@ -21,6 +21,7 @@ class RanksController < ApplicationController
   def new
     @rank = Rank.new
     @martial_arts = MartialArt.find(:all, :order => 'name')
+    @groups = Group.find(:all, :order => 'from_age')
   end
 
   def create
@@ -37,6 +38,7 @@ class RanksController < ApplicationController
   def edit
     @rank ||= Rank.find(params[:id])
     @martial_arts = MartialArt.find(:all, :order => 'name')
+    @groups = Group.find(:all, :order => 'from_age')
     render :action => 'edit'
   end
 
