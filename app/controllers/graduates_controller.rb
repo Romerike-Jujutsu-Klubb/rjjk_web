@@ -226,7 +226,7 @@ EOH
     if member.current_rank
       next_rank = Rank.find(:first, :conditions => ['martial_art_id = ? AND position = ?', ma, member.current_rank.position + 1])
     else
-      next_rank = ma.ranks.first
+      next_rank = ma.ranks.include(:group).where('? BETWEEN groups.from_age AND groups.to_age', member.age).all.select{|r| member.age >= r.minimum_age}.first
     end
     # rank = Rank.find(:first, :conditions => [ "martial_art_id = ?", aid])
     raise "Unable to find rank for martial art with id = #{aid}" unless next_rank
