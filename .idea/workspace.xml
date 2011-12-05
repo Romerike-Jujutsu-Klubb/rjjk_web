@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/graduations/list.rhtml" afterPath="$PROJECT_DIR$/app/views/graduations/list.rhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/environment.rb" afterPath="$PROJECT_DIR$/config/environment.rb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -137,7 +136,7 @@
       <file leaf-file-name="list.rhtml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/graduations/list.rhtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="218" column="32" selection-start="6741" selection-end="6741" vertical-scroll-proportion="0.5176817">
+            <state line="218" column="37" selection-start="6751" selection-end="6751" vertical-scroll-proportion="0.5176817">
               <folding />
             </state>
           </provider>
@@ -1088,7 +1087,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/graduations/list.rhtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="218" column="32" selection-start="6741" selection-end="6741" vertical-scroll-proportion="0.5176817">
+        <state line="218" column="37" selection-start="6751" selection-end="6751" vertical-scroll-proportion="0.5176817">
           <folding />
         </state>
       </provider>
