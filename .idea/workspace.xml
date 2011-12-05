@@ -100,7 +100,7 @@
       <file leaf-file-name="list.rhtml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/graduates/list.rhtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="29" selection-end="29" vertical-scroll-proportion="0.03766105">
+            <state line="4" column="15" selection-start="73" selection-end="73" vertical-scroll-proportion="0.0753221">
               <folding />
             </state>
           </provider>
@@ -1188,7 +1188,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/graduates/list.rhtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="29" selection-end="29" vertical-scroll-proportion="0.03766105">
+        <state line="4" column="15" selection-start="73" selection-end="73" vertical-scroll-proportion="0.0753221">
           <folding />
         </state>
       </provider>
