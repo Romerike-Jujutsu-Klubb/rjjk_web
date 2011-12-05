@@ -132,8 +132,8 @@ EOH
           "<!--  <td STYLE=\"text-align: center;\">#{gr.passed ? 'Ja' : 'Nei'}</td>\n" <<
           "  <td STYLE=\"text-align: center;\">#{gr.paid_graduation ? 'Ja' : 'Nei'}</td>\n" <<
           "  <td STYLE=\"text-align: center;\">#{gr.paid_belt ? 'Ja' : 'Nei'}</td> -->\n" <<
-          "  <td STYLE=\"text-align: center;\"><A HREF=\"/graduates/list/\"" << gr.member_id.to_s << "'>" <<
-          "<IMG SRC=\"/images/button-view-16x16.png\" STYLE=\"border: 0;\" title=\"Oversikt\" ALT=\"Oversikt\"></A></td>\n" <<
+          "<!--  <td STYLE=\"text-align: center;\"><A HREF=\"/graduates/list/\"" << gr.member_id.to_s << "'>" <<
+          "<IMG SRC=\"/images/button-view-16x16.png\" STYLE=\"border: 0;\" title=\"Oversikt\" ALT=\"Oversikt\"></A></td> -->\n" <<
           "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.id})'>" <<
           "<IMG SRC=\"/images/button-edit-16x16.png\" STYLE=\"border: 0;\" title=\"Endre\" ALT=\"Endre\"></A></td>\n" <<
           "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='removeGraduate(#{gr.id},\"#{fn} #{ln}\")'>" <<

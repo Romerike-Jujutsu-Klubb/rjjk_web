@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/graduates/list.rhtml" afterPath="$PROJECT_DIR$/app/views/graduates/list.rhtml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/graduations/list.rhtml" afterPath="$PROJECT_DIR$/app/views/graduations/list.rhtml" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -90,10 +88,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="graduates_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="graduates_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="207" column="0" selection-start="9810" selection-end="9810" vertical-scroll-proportion="-18.615385">
+            <state line="135" column="124" selection-start="5765" selection-end="5765" vertical-scroll-proportion="0.2755511">
               <folding />
             </state>
           </provider>
@@ -153,10 +151,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="list.rhtml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="list.rhtml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/graduations/list.rhtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="247" column="45" selection-start="7754" selection-end="7754" vertical-scroll-proportion="0.3504016">
+            <state line="247" column="45" selection-start="7754" selection-end="7754" vertical-scroll-proportion="-12.464286">
               <folding />
             </state>
           </provider>
@@ -220,8 +218,8 @@
         <option value="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
         <option value="$PROJECT_DIR$/app/views/graduates/list.rhtml" />
-        <option value="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/graduations/list.rhtml" />
+        <option value="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
       </list>
     </option>
   </component>
@@ -1181,16 +1179,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/views/graduations/list.rhtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="207" column="0" selection-start="9810" selection-end="9810" vertical-scroll-proportion="-18.615385">
+        <state line="247" column="45" selection-start="7754" selection-end="7754" vertical-scroll-proportion="-12.464286">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/graduations/list.rhtml">
+    <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="247" column="45" selection-start="7754" selection-end="7754" vertical-scroll-proportion="0.3504016">
+        <state line="135" column="124" selection-start="5765" selection-end="5765" vertical-scroll-proportion="0.2755511">
           <folding />
         </state>
       </provider>
