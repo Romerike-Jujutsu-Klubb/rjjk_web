@@ -127,7 +127,7 @@
       <file leaf-file-name="list_graduations_by_member.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="237" selection-start="3067" selection-end="3067" vertical-scroll-proportion="0.36180124">
+            <state line="71" column="0" selection-start="3176" selection-end="3176" vertical-scroll-proportion="0.6863354">
               <folding />
             </state>
           </provider>
@@ -1253,7 +1253,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="237" selection-start="3067" selection-end="3067" vertical-scroll-proportion="0.36180124">
+        <state line="71" column="0" selection-start="3176" selection-end="3176" vertical-scroll-proportion="0.6863354">
           <folding />
         </state>
       </provider>

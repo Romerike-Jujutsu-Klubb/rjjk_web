@@ -70,7 +70,7 @@
                       <br/>Har ingen grad fra før.
                   <% end %>
                   <br/><font color="red">Anbefalt neste grad er <%= next_rank.name %>.</font>
-            <% end %>
+              <% end %>
               <% future_graduates = mbr.future_graduates(@graduation) %>
               <% future_graduates.select{|fg| fg.rank.position < gr.rank.position}.each do |fg| %>
                 <br/>(konflikt: <%=link_to %Q{<font color="red">#{fg.rank.name} #{fg.graduation.held_on}</font>}, :controller => :graduations, :action => :index, :id => fg.graduation.id %>)
