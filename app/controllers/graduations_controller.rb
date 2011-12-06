@@ -16,6 +16,7 @@ class GraduationsController < ApplicationController
   end
 
   def index
+    @graduation = Graduation.find(params[:id]) if params[:id]
     list
     render :action => 'list'
   end

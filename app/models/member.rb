@@ -69,15 +69,22 @@ class Member < ActiveRecord::Base
     age = self.age(graduation.held_on)
     ma = graduation.martial_art
     current_rank = current_rank(ma, graduation.held_on)
-    future_ranks = graduates.select { |g| g.graduation.martial_art == ma && g.graduation.held_on >= graduation.held_on }.map(&:rank)
     if current_rank
-      next_rank = ma.ranks.select { |r| !future_ranks.include?(r) && r.position > current_rank.position &&
+      next_rank = ma.ranks.select { |r| !future_ranks(graduation).include?(r) && r.position > current_rank.position &&
           age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age) }.first
       next_rank ||= Rank.find(:first, :conditions => ['martial_art_id = ? AND position = ?', ma, current_rank.position + 1])
     end
     next_rank ||= ma.ranks.select { |r| age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age) }.first
     next_rank ||= Rank.first
     next_rank
+  end
+
+  def future_graduates(graduation)
+    graduates.select { |g| g.graduation.martial_art == graduation.martial_art && g.graduation.held_on >= graduation.held_on }
+  end
+
+  def future_ranks(graduation)
+    future_graduates(graduation).map(&:rank)
   end
 
   def fee

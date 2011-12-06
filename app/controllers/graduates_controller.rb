@@ -128,7 +128,6 @@ EOH
     aid    = params[:martial_arts_id]
 
     graduation = Graduation.find(gid)
-    ma     = MartialArt.find(aid)
     member = Member.find(mid)
     next_rank = member.next_rank(graduation)
     raise "Unable to find rank for martial art with id = #{aid}" unless next_rank

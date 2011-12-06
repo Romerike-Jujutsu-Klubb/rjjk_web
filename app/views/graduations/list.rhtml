@@ -322,7 +322,7 @@ function cancelSaveGraduateInfo(graduate_id) {
 	<td ALIGN="center">
 		<select name="ma" id="held_on_id" onChange='changeStyle();'>
 		<% for ma in @martial_arts %>
-			<%= '<option value="' << ma.id.to_s << '">' << ma.name << '</option>' %>
+			<option value="<%=ma.id%>" <%='SELECTED' if ma == @graduation.try(:martial_art) %>><%=ma.name%></option>
 		<% end %>
 		</select>
 	</td>
@@ -330,8 +330,8 @@ function cancelSaveGraduateInfo(graduate_id) {
   		<% for ma in @martial_arts %>
 			<%= '<div id="ma_grad_' << ma.id.to_s << '" STYLE="display: ' << (none = ma.id == 1?'':'none') << ';">' %>
 			<%= '<select id="grader_' << ma.id.to_s << '" onChange="changeGraduationData();">' %>
-  			<% for grd in Graduation.find(:all, :order => 'held_on DESC', :conditions => "martial_art_id = #{ma.id.to_s}") %>
-				<%= "<option value='#{grd.id}'>#{grd.held_on}</option>" %>
+  			<% for grd in ma.graduations.reverse %>
+				<option value='<%=grd.id%>' <%='SELECTED' if grd == @graduation %>><%=grd.held_on%></option>
 			<% end %>
 			</select>
 			</div>
