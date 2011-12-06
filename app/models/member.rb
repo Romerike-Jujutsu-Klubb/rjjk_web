@@ -64,7 +64,21 @@ class Member < ActiveRecord::Base
     months = (days - (years * 365)) / 30
     "#{"#{years} år" if years > 0} #{"#{months} mnd" if years == 0 || months > 0}" # TODO: What about leap years etc?
   end
-  
+
+  def next_rank(ma, graduation)
+    current_rank = current_rank(ma, graduation.held_on)
+    future_ranks = graduates.select{|g| g.graduation.martial_art == ma && g.graduation.held_on >= graduation.held_on}.map(&:rank)
+    logger.error self
+    logger.error current_rank
+    logger.error current_rank.try(:position)
+    if current_rank
+      next_rank = ma.ranks.select{|r| !future_ranks.include?(r) && r.position > current_rank.position && age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age)}.first
+      next_rank ||= Rank.find(:first, :conditions => ['martial_art_id = ? AND position = ?', ma, current_rank.position + 1])
+    end
+    next_rank ||= ma.ranks.select{|r| age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age)}.first
+    next_rank ||= Rank.first
+  end
+
   def fee
     if instructor?
       0

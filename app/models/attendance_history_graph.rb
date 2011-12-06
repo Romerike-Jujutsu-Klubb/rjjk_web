@@ -67,7 +67,8 @@ class AttendanceHistoryGraph
     g.labels = labels
       
     # g.draw_vertical_legend
-      
+
+    g.maximum_value ||= 0
     g.maximum_value = g.maximum_value + 10 - g.maximum_value % 10
     g.marker_count = g.maximum_value / 5
     g.to_blob

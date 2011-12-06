@@ -130,17 +130,7 @@ EOH
     graduation = Graduation.find(gid)
     ma     = MartialArt.find(aid)
     member = Member.find(mid)
-    current_rank = member.current_rank(ma, graduation.held_on)
-    future_ranks = member.graduates.select{|g| g.graduation.martial_art == ma && g.graduation.held_on >= graduation.held_on}.map(&:rank)
-    logger.error member
-    logger.error current_rank
-    logger.error current_rank.try(:position)
-    if current_rank
-      next_rank = ma.ranks.select{|r| r.position > current_rank.position && member.age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(member.age)}.first
-      next_rank ||= Rank.find(:first, :conditions => ['martial_art_id = ? AND position = ?', ma, current_rank.position + 1])
-    end
-    next_rank ||= ma.ranks.select{|r| member.age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(member.age)}.first
-    next_rank ||= Rank.first
+    next_rank = member.next_rank(ma, graduation)
     raise "Unable to find rank for martial art with id = #{aid}" unless next_rank
 
     Graduate.create!(:graduation_id => gid, :member_id => mid, :passed => true,
