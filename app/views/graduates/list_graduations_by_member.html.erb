@@ -86,7 +86,7 @@
               <SELECT STYLE='width: 72px; height: 18px;' NAME='rank_row_<%= member_id %>' ID='rank_row_<%= member_id %>'>
                 <% for rank in @mranks %>
                     <%= rsel = row_id == rank.id ? "SELECTED" : "" %>
-                    <OPTION <%= rsel %> VALUE='<%= rank.id %>' <% 'style="font-weight: bold"' if rank == mbr.next_rank(gr.graduation.martial_art, gr.graduation)%> ><%= rank.name %></OPTION>
+                    <OPTION <%= rsel %> VALUE='<%= rank.id %>' <% 'style="font-weight: bold"' if rank == mbr.next_rank(gr.graduation)%> ><%= rank.name %></OPTION>
                 <% end %>
               </SELECT>
             </td>

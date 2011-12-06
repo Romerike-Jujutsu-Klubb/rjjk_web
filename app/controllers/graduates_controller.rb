@@ -130,7 +130,7 @@ EOH
     graduation = Graduation.find(gid)
     ma     = MartialArt.find(aid)
     member = Member.find(mid)
-    next_rank = member.next_rank(ma, graduation)
+    next_rank = member.next_rank(graduation)
     raise "Unable to find rank for martial art with id = #{aid}" unless next_rank
 
     Graduate.create!(:graduation_id => gid, :member_id => mid, :passed => true,

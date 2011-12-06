@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/attendance_history_graph.rb" afterPath="$PROJECT_DIR$/app/models/attendance_history_graph.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/member.rb" afterPath="$PROJECT_DIR$/app/models/member.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb" afterPath="$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb" />
     </list>
@@ -94,25 +93,16 @@
       <file leaf-file-name="graduates_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="132" column="27" selection-start="5224" selection-end="5233" vertical-scroll-proportion="-7.9615383">
+            <state line="132" column="33" selection-start="5234" selection-end="5234" vertical-scroll-proportion="-7.9615383">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="member.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="member.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/member.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="148" column="10" selection-start="4706" selection-end="4706" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="attendance_history_graph.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/models/attendance_history_graph.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="70" column="23" selection-start="2617" selection-end="2617" vertical-scroll-proportion="0.6459627">
+            <state line="71" column="0" selection-start="2927" selection-end="2927" vertical-scroll-proportion="0.484985">
               <folding />
             </state>
           </provider>
@@ -130,7 +120,7 @@
       <file leaf-file-name="list_graduations_by_member.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="88" column="48" selection-start="4470" selection-end="4470" vertical-scroll-proportion="0.0">
+            <state line="88" column="119" selection-start="4541" selection-end="4541" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -187,10 +177,10 @@
         <option value="$PROJECT_DIR$/app/views/graduates/list.rhtml" />
         <option value="$PROJECT_DIR$/app/views/graduations/list.rhtml" />
         <option value="$PROJECT_DIR$/app/models/member_history_graph.rb" />
+        <option value="$PROJECT_DIR$/app/models/attendance_history_graph.rb" />
         <option value="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb" />
         <option value="$PROJECT_DIR$/app/models/member.rb" />
-        <option value="$PROJECT_DIR$/app/models/attendance_history_graph.rb" />
       </list>
     </option>
   </component>
@@ -1181,30 +1171,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/attendance_history_graph.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="70" column="23" selection-start="2617" selection-end="2617" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="132" column="27" selection-start="5224" selection-end="5233" vertical-scroll-proportion="-7.9615383">
+        <state line="132" column="33" selection-start="5234" selection-end="5234" vertical-scroll-proportion="-7.9615383">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="48" selection-start="4470" selection-end="4470" vertical-scroll-proportion="0.0">
+        <state line="88" column="119" selection-start="4541" selection-end="4541" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/member.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="148" column="10" selection-start="4706" selection-end="4706" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/attendance_history_graph.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="23" selection-start="2617" selection-end="2617" vertical-scroll-proportion="0.6459627">
+        <state line="71" column="0" selection-start="2927" selection-end="2927" vertical-scroll-proportion="0.484985">
           <folding />
         </state>
       </provider>
