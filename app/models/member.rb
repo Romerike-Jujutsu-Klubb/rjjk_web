@@ -75,7 +75,7 @@ class Member < ActiveRecord::Base
       next_rank ||= Rank.find(:first, :conditions => ['martial_art_id = ? AND position = ?', ma, current_rank.position + 1])
     end
     next_rank ||= ma.ranks.select { |r| age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age) }.first
-    next_rank ||= Rank.first
+    next_rank ||= ma.ranks.first
     next_rank
   end
 

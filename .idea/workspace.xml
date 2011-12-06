@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb" afterPath="$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/member.rb" afterPath="$PROJECT_DIR$/app/models/member.rb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -106,10 +106,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="member.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="member.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/member.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="103" selection-start="3520" selection-end="3520" vertical-scroll-proportion="0.0">
+            <state line="78" column="0" selection-start="3365" selection-end="3365" vertical-scroll-proportion="0.53881985">
               <folding />
             </state>
           </provider>
@@ -124,19 +124,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="list_graduations_by_member.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="list_graduations_by_member.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="71" column="0" selection-start="3176" selection-end="3176" vertical-scroll-proportion="0.6863354">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="httpserver.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file:///Library/Frameworks/JRuby.framework/Versions/1.6.5/lib/ruby/1.8/webrick/httpserver.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="0" selection-start="1996" selection-end="1996" vertical-scroll-proportion="0.0">
+            <state line="71" column="0" selection-start="3176" selection-end="3176" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -196,8 +187,8 @@
         <option value="$PROJECT_DIR$/app/models/martial_art.rb" />
         <option value="$PROJECT_DIR$/app/controllers/graduations_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/graduations/list.rhtml" />
-        <option value="$PROJECT_DIR$/app/models/member.rb" />
         <option value="$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb" />
+        <option value="$PROJECT_DIR$/app/models/member.rb" />
       </list>
     </option>
   </component>
@@ -1237,13 +1228,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/member.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="103" selection-start="3520" selection-end="3520" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Frameworks/JRuby.framework/Versions/1.6.5/lib/ruby/1.8/webrick/httpserver.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="64" column="0" selection-start="1996" selection-end="1996" vertical-scroll-proportion="0.0">
@@ -1253,7 +1237,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="0" selection-start="3176" selection-end="3176" vertical-scroll-proportion="0.6863354">
+        <state line="71" column="0" selection-start="3176" selection-end="3176" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/member.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="78" column="0" selection-start="3365" selection-end="3365" vertical-scroll-proportion="0.53881985">
           <folding />
         </state>
       </provider>
