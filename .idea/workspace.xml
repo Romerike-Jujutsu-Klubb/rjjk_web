@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/member.rb" afterPath="$PROJECT_DIR$/app/models/member.rb" />
     </list>
     <ignored path="rjjk_web.iws" />
@@ -91,7 +92,7 @@
       <file leaf-file-name="graduates_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="238" column="4" selection-start="10988" selection-end="10988" vertical-scroll-proportion="-25.923077">
+            <state line="230" column="0" selection-start="10560" selection-end="10560" vertical-scroll-proportion="-20.076923">
               <folding />
             </state>
           </provider>
@@ -118,7 +119,7 @@
       <file leaf-file-name="member.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/member.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="118" selection-start="2031" selection-end="2031" vertical-scroll-proportion="0.6389713">
+            <state line="47" column="94" selection-start="2007" selection-end="2007" vertical-scroll-proportion="0.33333334">
               <folding />
             </state>
           </provider>
@@ -1182,14 +1183,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="238" column="4" selection-start="10988" selection-end="10988" vertical-scroll-proportion="-25.923077">
+        <state line="230" column="0" selection-start="10560" selection-end="10560" vertical-scroll-proportion="-20.076923">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/member.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="118" selection-start="2031" selection-end="2031" vertical-scroll-proportion="0.6389713">
+        <state line="47" column="94" selection-start="2007" selection-end="2007" vertical-scroll-proportion="0.33333334">
           <folding />
         </state>
       </provider>
