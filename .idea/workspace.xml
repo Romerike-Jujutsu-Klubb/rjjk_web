@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/member.rb" afterPath="$PROJECT_DIR$/app/models/member.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb" afterPath="$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -102,7 +100,7 @@
       <file leaf-file-name="member.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/member.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="71" column="0" selection-start="2927" selection-end="2927" vertical-scroll-proportion="0.484985">
+            <state line="72" column="19" selection-start="2985" selection-end="2985" vertical-scroll-proportion="0.35885885">
               <folding />
             </state>
           </provider>
@@ -1194,7 +1192,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/member.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="0" selection-start="2927" selection-end="2927" vertical-scroll-proportion="0.484985">
+        <state line="72" column="19" selection-start="2985" selection-end="2985" vertical-scroll-proportion="0.35885885">
           <folding />
         </state>
       </provider>

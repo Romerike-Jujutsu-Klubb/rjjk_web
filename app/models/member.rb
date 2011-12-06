@@ -66,6 +66,7 @@ class Member < ActiveRecord::Base
   end
 
   def next_rank(graduation)
+    age = self.age(graduation.held_on)
     ma = graduation.martial_art
     current_rank = current_rank(ma, graduation.held_on)
     future_ranks = graduates.select{|g| g.graduation.martial_art == ma && g.graduation.held_on >= graduation.held_on}.map(&:rank)
@@ -75,6 +76,7 @@ class Member < ActiveRecord::Base
     end
     next_rank ||= ma.ranks.select{|r| age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age)}.first
     next_rank ||= Rank.first
+    next_rank
   end
 
   def fee
@@ -99,10 +101,10 @@ class Member < ActiveRecord::Base
     end
   end
   
-  def age
+  def age(date = Date.today)
     return nil unless birthdate
-    age = Date.today.year - birthdate.year
-    age -= 1 if Date.today < birthdate + age.years
+    age = date.year - birthdate.year
+    age -= 1 if date < birthdate + age.years
     age
   end
   
