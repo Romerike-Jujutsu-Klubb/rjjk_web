@@ -65,7 +65,7 @@
               <% current_graduate = mbr.current_graduate(@graduation.martial_art, @graduation.held_on) %>
               <% if next_rank && gr.rank != next_rank %>
                   <% if current_graduate %>
-                      <br/>Har <%=current_graduate.rank.name %> fra <%= link_to %Q{<font color="red">#{current_graduate.graduation.held_on}</font>}, :controller => :graduations, :action => :index, :id => current_graduate.graduation.id %>)
+                      <br/>Har <%=current_graduate.rank.name %> fra <%= link_to %Q{<font color="red">#{current_graduate.graduation.held_on}</font>}, :controller => :graduations, :action => :index, :id => current_graduate.graduation.id %>
                   <% else %>
                       <br/>Har ingen grad fra før.
                   <% end %>
