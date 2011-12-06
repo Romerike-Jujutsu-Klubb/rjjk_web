@@ -45,7 +45,7 @@ class Member < ActiveRecord::Base
   end
   
   def current_graduate(martial_art)
-    graduates.select{|g|martial_art.nil? || g.rank.martial_art == martial_art}.sort_by {|g| g.rank.position}.last
+    graduates.select{|g| g.graduation.held_on > Date.today && (martial_art.nil? || g.rank.martial_art == martial_art)}.sort_by {|g| g.rank.position}.last
   end
   
   def current_rank(martial_art = nil)
