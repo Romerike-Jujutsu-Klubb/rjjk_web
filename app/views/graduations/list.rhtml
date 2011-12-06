@@ -256,8 +256,8 @@ function saveGraduateInfo(graduate_id) {
 
 		var xmlHttp = initAjax();
 		var debug = document.getElementById("debug");
-		debug.InnerHTML += 'Saving ' + graduate_id + ' ' + rrVal + ' ' +
-		                   prVal + ' ' + pgVal + ' ' + pbVal;
+//        debug.InnerHTML += 'Saving ' + graduate_id + ' ' + rrVal + ' ' + prVal + ' ' + pgVal + ' ' + pbVal;
+        debug.InnerHTML += 'Saving ' + graduate_id + ' ' + rrVal;
 		if(xmlHttp) {
 			xmlHttp.onreadystatechange=function() {
 				if(xmlHttp.readyState == CONST_AJAX_COMPLETE) {

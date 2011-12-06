@@ -1,0 +1,107 @@
+<% if @censors.any? %>
+    <% cmax = 4 %>
+
+    <table width="100%" STYLE="border: 1px solid #000000;" cellspacing="0" cellpadding="0">
+      <tr STYLE=" background: #e3e3e3;">
+        <th style="text-align: left; border-bottom: 1px solid #000000;" colspan="<%= cmax*2 %>">Sensor</th>
+      </tr>
+
+      <% @censors.each_with_index do |cen, i|
+          fn = cen.member && cen.member.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
+          ln = cen.member && cen.member.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
+          name = "#{fn} #{ln}"
+
+          if i % cmax == 0 %>
+              <tr>
+          <% end %>
+
+          <td style='padding-left: 1em' width=25% nowrap='true'>
+            <%= name %>
+            <a href="#" onClick='removeCensor(<%=cen.id%>, "<%=name%>");'>
+              <img src="/images/button-delete-16x16.png" style="border: 0;" title="Slett sensor <%= name %>" ALT="Slett sensor <%= name %>"></a>
+          </td>
+
+          <% if i % cmax == (cmax - 1) %>
+              </tr>
+          <% end %>
+      <% end %>
+      <% if @censors.size % cmax > 0 %>
+          <% (cmax - @censors.size).times do %>
+              <td colspan=2>&nbsp;</td>
+          <% end %>
+          </tr>
+      <% end %>
+
+    </table>
+    <br/>
+<% end %>
+
+<% if @graduates.any? %>
+    <table width="100%" STYLE="border: 1px solid #000000;" cellspacing="0" cellpadding="0">
+      <tr STYLE=" background: #e3e3e3;">
+        <th STYLE="text-align: left; border-bottom: 1px solid #000000;">Medlem</th>
+        <th STYLE="border-bottom: 1px solid #000000;">Grad</th>
+        <!--
+        <th STYLE="border-bottom: 1px solid #000000;">Bestått</th>
+        <th STYLE="border-bottom: 1px solid #000000;">Bet.Grad</th>
+        <th STYLE="border-bottom: 1px solid #000000;">Bet.Belte</th>
+        -->
+        <th STYLE="border-bottom: 1px solid #000000;" COLSPAN="4">&nbsp;</th>
+      </tr>
+
+      <%
+         for gr in @graduates
+             mbr = Member.find(:first, :conditions => ["id = ?", gr.member_id])
+             fn = mbr.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
+             ln = mbr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
+      %>
+          <tr id='graduate_<%= gr.id %>_view' style="vertical-align: top;">
+            <td valign='top'>
+              <%= fn %> <%= ln %> <%= "(<font color=\"red\">#{mbr.age} år</font>)" if mbr.age < gr.rank.minimum_age || !(gr.rank.group.from_age..gr.rank.group.to_age).include?(mbr.age) %>
+            </td>
+            <td STYLE="text-align: left;">
+              <%= gr.rank.name %> <%= gr.rank.colour %>
+              <% current_graduate = mbr.current_graduate(@graduation.martial_art, @graduation.held_on) %>
+              <% if current_graduate && gr.rank.position != current_graduate.rank.position + 1%>
+                (<font color="red"><%=current_graduate.rank.name%> <%=current_graduate.graduation.held_on%></font>)
+              <% end %>
+            </td>
+
+            <!--  <td STYLE="text-align: center;"><%= gr.passed ? 'Ja' : 'Nei' %></td>
+        <td STYLE="text-align: center;"><%= gr.paid_graduation ? 'Ja' : 'Nei' %></td>
+        <td STYLE="text-align: center;"><%= gr.paid_belt ? 'Ja' : 'Nei' %></td>
+        <td STYLE="text-align: center;"><A HREF="/graduates/list/<%= gr.member_id %>">
+      <IMG SRC="/images/button-view-16x16.png" STYLE="border: 0;" title="Oversikt" ALT="Oversikt"></A></td> -->
+
+            <td STYLE="text-align: center;"><A HREF='#' onClick='saveGraduateInfo(<%=gr.id%>)'>
+              <IMG SRC="/images/button-edit-16x16.png" STYLE="border: 0;" title="Endre" ALT="Endre"></A></td>
+            <td STYLE="text-align: center;"><A HREF='#' onClick='removeGraduate(<%=gr.id%>,"<%=fn%> <%=ln%>")'>
+              <IMG SRC="/images/button-delete-16x16.png" STYLE="border: 0;" title="Slett" ALT="Slett"></A></td>
+          </tr>
+          <tr id='graduate_<%= gr.id %>_edit' STYLE='display: none;'>
+            <td><%= fn %> <%= ln %></td>
+            <td STYLE="text-align: center;">
+              <% ma_id, member_id, row_id = gr.graduation.martial_art_id, gr.id, gr.rank.id %>
+              <% @mranks = Rank.find(:all, :conditions => "martial_art_id = #{ma_id}", :order => 'position') %>
+              <SELECT STYLE='width: 72px; height: 18px;' NAME='rank_row_<%= member_id %>' ID='rank_row_<%= member_id %>'>
+                <% for rank in @mranks %>
+                    <%= rsel = row_id == rank.id ? "SELECTED" : "" %>
+                    <OPTION <%= rsel %> VALUE='<%= rank.id %>'><%= rank.name %></OPTION>
+                <% end %>
+              </SELECT>
+            </td>
+
+            <!--  <td STYLE=\"text-align: center;\">#{yes_no_select('passed', gr.passed, gr.id)}</td>
+       <td STYLE=\"text-align: center;\">#{yes_no_select('paid_grad', gr.paid_graduation, gr.id)}</td>
+       <td STYLE=\"text-align: center;\">#{yes_no_select('paid_belt', gr.paid_belt, gr.id)}</td> -->
+
+            <td STYLE="text-align: center;">&nbsp;</td>
+            <td STYLE="text-align: center;"><A HREF='#' onClick='saveGraduateInfo(<%=gr.id%>)'>
+              <IMG SRC="/images/button-ok-16x16.png" STYLE="border: 0;" title="Lagre" ALT="Lagre"></A></td>
+            <td STYLE="text-align: center;"><A HREF='#' onClick='cancelSaveGraduateInfo(<%=gr.id%>)'>
+              <IMG SRC="/images/button-cancel-16x16.png" STYLE="border: 0;" title="Avbryt" ALT="Avbryt"></A></td>
+          </tr>
+
+      <% end %>
+    </table>
+<% end %>

@@ -44,13 +44,12 @@ class Member < ActiveRecord::Base
     }.update(options))
   end
   
-  def current_graduate(martial_art)
-    graduates.select{|g| g.graduation.held_on > Date.today && (martial_art.nil? || g.rank.martial_art == martial_art)}.sort_by {|g| g.rank.position}.last
+  def current_graduate(martial_art, date = Date.today)
+    graduates.select{|g| g.graduation.held_on < date && (martial_art.nil? || g.rank.martial_art == martial_art)}.sort_by {|g| g.rank.position}.last
   end
   
-  def current_rank(martial_art = nil)
-    graduate = self.current_graduate(martial_art)
-    graduate && graduate.rank
+  def current_rank(martial_art = nil, date = Date.today)
+    current_graduate(martial_art, date).try(:rank)
   end
   
   def current_rank_date(martial_art = nil)

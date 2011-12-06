@@ -40,9 +40,6 @@ class MemberHistoryGraph
     # g.data("Uten fødselsdato", dates.map {|date| Member.count(:conditions => "(#{eval ACTIVE_CLAUSE}) AND birthdate IS NULL")}.without_consecutive_zeros)
     g.data("Prøvetid", dates.map{|d| NkfMemberTrial.count(:conditions => ["reg_dato <= ?", d])}.without_consecutive_zeros)
 
-    ActiveRecord::Base.logger.debug dates.map{|d| NkfMemberTrial.count(:conditions => ["reg_dato <= ?", d])}.inspect
-    ActiveRecord::Base.logger.debug dates.map{|d| NkfMemberTrial.count(:conditions => ["reg_dato <= ?", d])}.without_consecutive_zeros.inspect
-
     g.minimum_value = 0
     
     labels = {}

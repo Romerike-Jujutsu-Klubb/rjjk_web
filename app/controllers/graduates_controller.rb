@@ -41,17 +41,6 @@ class GraduatesController < ApplicationController
     render :action => 'list'
   end
 
-  def rank_select(ma_id, member_id, row_id)
-    rstr    = rsel = String.new()
-    @mranks = Rank.find(:all, :conditions => "martial_art_id = #{ma_id}", :order => 'position')
-    rstr << "\n<SELECT STYLE='width: 72px; height: 18px;' NAME='rank_row_#{member_id}' ID='rank_row_#{member_id}'>\n"
-    for rank in @mranks
-      rsel = row_id == rank.id ? "SELECTED" : ""
-      rstr << "<OPTION #{rsel} VALUE='#{rank.id}'>#{rank.name}</OPTION>\n"
-    end
-    rstr << "</SELECT>\n"
-  end
-
   def yes_no_select(cid, sid, graduate_id)
     rstr = String.new()
     nsel = !sid ? "SELECTED" : ""
@@ -63,98 +52,12 @@ class GraduatesController < ApplicationController
   end
 
   def list_graduations_by_member
-    @censors   = Censor.find(:all, :conditions => "graduation_id = #{params[:id]}")
+    @graduation = Graduation.find(params[:id])
+    @censors   = Censor.find(:all, :conditions => "graduation_id = #{@graduation.id}")
     @graduates = Graduate.find(:all, :conditions => ["graduation_id = ? AND member_id != 0", params[:id]],
                                :order            => 'ranks.position DESC, passed, paid_graduation, paid_belt asc',
                                :include          => :rank)
-
-    ccnt       = 0
-    cmax       = 4
-    rstr       =<<EOC
-<table width="100%" STYLE="border: 1px solid #000000;" cellspacing="0" cellpadding="0">
-  <tr STYLE=" background: #e3e3e3;">
-    <th STYLE="text-align: left; border-bottom: 1px solid #000000;" COLSPAN="#{cmax*2}">Sensor</th>
-  </tr>
-EOC
-    for cen in @censors
-      fn   = cen.member && cen.member.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
-      ln   = cen.member && cen.member.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
-      name = "#{fn} #{ln}"
-      nm   = "<td style='padding-left: 1em' width=25% nowrap='true'>#{name}" <<
-          "<a href=# onClick='removeCensor(#{cen.id}, " <<
-          "\"#{name}\");'>" <<
-          "<IMG SRC=\"/images/button-delete-16x16.png\" STYLE=\"border: 0;\" title=\"Slett sensor #{name}\" ALT=\"Slett sensor #{name}\"></a></td>\n"
-      if ccnt == 0
-        rstr << "<tr>" << nm
-      elsif ccnt == (cmax - 1)
-        rstr << nm << "</tr>\n"
-        ccnt = -1
-      else
-        rstr << nm
-      end
-      ccnt = ccnt + 1
-    end
-    if ccnt != (cmax - 1)
-      while ccnt < cmax
-        rstr << "<td colspan=2>&nbsp;</td>\n"
-        ccnt = ccnt + 1
-      end
-      rstr << "</tr>\n"
-    end
-    rstr << "</table>\n"
-
-    if @censors.size < 1
-      rstr = ""
-    else
-      rstr << "<br>"
-    end
-
-    rstr << <<EOH
-<table width="100%" STYLE="border: 1px solid #000000;" cellspacing="0" cellpadding="0">
-  <tr STYLE=" background: #e3e3e3;">
-  <th STYLE="text-align: left; border-bottom: 1px solid #000000;">Medlem</th>
-  <th STYLE="border-bottom: 1px solid #000000;">Grad</th>
-  <!--
-  <th STYLE="border-bottom: 1px solid #000000;">Bestått</th>
-  <th STYLE="border-bottom: 1px solid #000000;">Bet.Grad</th>
-  <th STYLE="border-bottom: 1px solid #000000;">Bet.Belte</th>
-  -->
-  <th STYLE="border-bottom: 1px solid #000000;" COLSPAN="4">&nbsp;</th>
-</tr>
-EOH
-    for gr in @graduates
-      mbr  = Member.find(:first, :conditions => ["id = ?", gr.member_id])
-      fn   = mbr.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
-      ln   = mbr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
-      rstr = rstr << "<tr id='graduate_#{gr.id}_view' style=\"vertical-align: top;\">\n" <<
-          "  <td valign='top'>#{fn} #{ln} #{"(<font color=\"red\">#{mbr.age} år</font>)" if mbr.age < gr.rank.minimum_age || !(gr.rank.group.from_age..gr.rank.group.to_age).include?(mbr.age)}</td>\n" <<
-          "  <td STYLE=\"text-align: left;\">#{gr.rank.name} #{gr.rank.colour}</td>\n" <<
-          "<!--  <td STYLE=\"text-align: center;\">#{gr.passed ? 'Ja' : 'Nei'}</td>\n" <<
-          "  <td STYLE=\"text-align: center;\">#{gr.paid_graduation ? 'Ja' : 'Nei'}</td>\n" <<
-          "  <td STYLE=\"text-align: center;\">#{gr.paid_belt ? 'Ja' : 'Nei'}</td> -->\n" <<
-          "<!--  <td STYLE=\"text-align: center;\"><A HREF=\"/graduates/list/\"" << gr.member_id.to_s << "'>" <<
-          "<IMG SRC=\"/images/button-view-16x16.png\" STYLE=\"border: 0;\" title=\"Oversikt\" ALT=\"Oversikt\"></A></td> -->\n" <<
-          "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.id})'>" <<
-          "<IMG SRC=\"/images/button-edit-16x16.png\" STYLE=\"border: 0;\" title=\"Endre\" ALT=\"Endre\"></A></td>\n" <<
-          "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='removeGraduate(#{gr.id},\"#{fn} #{ln}\")'>" <<
-          "<IMG SRC=\"/images/button-delete-16x16.png\" STYLE=\"border: 0;\" title=\"Slett\" ALT=\"Slett\"></A></td>\n" <<
-          "</tr>\n"
-      rstr = rstr << "<tr id='graduate_#{gr.id}_edit' STYLE='display: none;'>\n" <<
-          "  <td>#{fn} #{ln}</td>\n" <<
-          #"  <td STYLE=\"text-align: center;\">#{gr.graduation.held_on}</td>\n" <<
-      "  <td STYLE=\"text-align: center;\">#{rank_select(gr.graduation.martial_art_id, gr.id, gr.rank.id)}</td>\n" <<
-          "<!--  <td STYLE=\"text-align: center;\">#{yes_no_select('passed', gr.passed, gr.id)}</td>\n" <<
-          "  <td STYLE=\"text-align: center;\">#{yes_no_select('paid_grad', gr.paid_graduation, gr.id)}</td>\n" <<
-          "  <td STYLE=\"text-align: center;\">#{yes_no_select('paid_belt', gr.paid_belt, gr.id)}</td> -->\n" <<
-          "  <td STYLE=\"text-align: center;\">&nbsp;</td>\n" <<
-          "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='saveGraduateInfo(#{gr.id})'>" <<
-          "<IMG SRC=\"/images/button-ok-16x16.png\" STYLE=\"border: 0;\" title=\"Lagre\" ALT=\"Lagre\"></A></td>\n" <<
-          "  <td STYLE=\"text-align: center;\"><A HREF='#' onClick='cancelSaveGraduateInfo(#{gr.id})'>" <<
-          "<IMG SRC=\"/images/button-cancel-16x16.png\" STYLE=\"border: 0;\" title=\"Avbryt\" ALT=\"Avbryt\"></A></td>\n" <<
-          "</tr>\n"
-    end
-    rstr << "</table>\n"
-    render :text => rstr
+    render :layout => false
   end
 
   def list_potential_graduates
@@ -224,15 +127,20 @@ EOH
     mid    = params[:member_id]
     aid    = params[:martial_arts_id]
 
+    graduation = Graduation.find(gid)
     ma     = MartialArt.find(aid)
     member = Member.find(mid)
-    if member.current_rank
-      next_rank = ma.ranks.select{|r| r.position > member.current_rank.position && member.age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(member.age)}.first
-      next_rank ||= Rank.find(:first, :conditions => ['martial_art_id = ? AND position = ?', ma, member.current_rank.position + 1])
-    else
-      next_rank = ma.ranks.select{|r| member.age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(member.age)}.first
-      next_rank ||= Rank.first
+    current_rank = member.current_rank(ma, graduation.held_on)
+    future_ranks = member.graduates.select{|g| g.graduation.martial_art == ma && g.graduation.held_on >= graduation.held_on}.map(&:rank)
+    logger.error member
+    logger.error current_rank
+    logger.error current_rank.try(:position)
+    if current_rank
+      next_rank = ma.ranks.select{|r| r.position > current_rank.position && member.age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(member.age)}.first
+      next_rank ||= Rank.find(:first, :conditions => ['martial_art_id = ? AND position = ?', ma, current_rank.position + 1])
     end
+    next_rank ||= ma.ranks.select{|r| member.age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(member.age)}.first
+    next_rank ||= Rank.first
     raise "Unable to find rank for martial art with id = #{aid}" unless next_rank
 
     Graduate.create!(:graduation_id => gid, :member_id => mid, :passed => true,
