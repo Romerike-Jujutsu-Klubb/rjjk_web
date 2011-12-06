@@ -80,7 +80,7 @@ class Member < ActiveRecord::Base
   end
 
   def future_graduates(graduation)
-    graduates.select { |g| g.graduation.martial_art == graduation.martial_art && g.graduation.held_on >= graduation.held_on }
+    graduates.select { |g| g.graduation.martial_art == graduation.martial_art && g.graduation.held_on > graduation.held_on }
   end
 
   def future_ranks(graduation)
