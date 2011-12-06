@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/member.rb" afterPath="$PROJECT_DIR$/app/models/member.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb" afterPath="$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -97,10 +97,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="member.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="member.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/member.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="73" column="0" selection-start="3001" selection-end="3001" vertical-scroll-proportion="0.3018018">
+            <state line="73" column="0" selection-start="3001" selection-end="3001" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -115,10 +115,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="list_graduations_by_member.html.erb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="list_graduations_by_member.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="88" column="119" selection-start="4541" selection-end="4541" vertical-scroll-proportion="0.0">
+            <state line="87" column="32" selection-start="4384" selection-end="4384" vertical-scroll-proportion="0.521021">
               <folding />
             </state>
           </provider>
@@ -177,8 +177,8 @@
         <option value="$PROJECT_DIR$/app/models/member_history_graph.rb" />
         <option value="$PROJECT_DIR$/app/models/attendance_history_graph.rb" />
         <option value="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
-        <option value="$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb" />
         <option value="$PROJECT_DIR$/app/models/member.rb" />
+        <option value="$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb" />
       </list>
     </option>
   </component>
@@ -1183,16 +1183,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/models/member.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="119" selection-start="4541" selection-end="4541" vertical-scroll-proportion="0.0">
+        <state line="73" column="0" selection-start="3001" selection-end="3001" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/member.rb">
+    <entry file="file://$PROJECT_DIR$/app/views/graduates/list_graduations_by_member.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="0" selection-start="3001" selection-end="3001" vertical-scroll-proportion="0.3018018">
+        <state line="87" column="32" selection-start="4384" selection-end="4384" vertical-scroll-proportion="0.521021">
           <folding />
         </state>
       </provider>

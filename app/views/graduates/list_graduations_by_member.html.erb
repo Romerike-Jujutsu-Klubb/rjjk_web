@@ -80,15 +80,14 @@
           </tr>
           <tr id='graduate_<%= gr.id %>_edit' STYLE='display: none;'>
             <td><%= fn %> <%= ln %></td>
-            <td STYLE="text-align: center;">
+            <td style="text-align: center;">
               <% ma_id, member_id, row_id = gr.graduation.martial_art_id, gr.id, gr.rank.id %>
               <% @mranks = Rank.find(:all, :conditions => "martial_art_id = #{ma_id}", :order => 'position') %>
-              <SELECT STYLE='width: 72px; height: 18px;' NAME='rank_row_<%= member_id %>' ID='rank_row_<%= member_id %>'>
+              <select style='width: 72px; height: 18px;' name='rank_row_<%= member_id %>' id='rank_row_<%= member_id %>'>
                 <% for rank in @mranks %>
-                    <%= rsel = row_id == rank.id ? "SELECTED" : "" %>
-                    <OPTION <%= rsel %> VALUE='<%= rank.id %>' <% 'style="font-weight: bold"' if rank == mbr.next_rank(gr.graduation)%> ><%= rank.name %></OPTION>
+                    <option <%='SELECTED' if row_id == rank.id%> VALUE='<%= rank.id %>' <% 'style="font-weight: bold"' if rank == mbr.next_rank(gr.graduation)%> ><%= rank.name %></option>
                 <% end %>
-              </SELECT>
+              </select>
             </td>
 
             <!--  <td STYLE=\"text-align: center;\">#{yes_no_select('passed', gr.passed, gr.id)}</td>
