@@ -91,7 +91,7 @@
       <file leaf-file-name="graduates_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="229" column="83" selection-start="10466" selection-end="10466" vertical-scroll-proportion="0.48496994">
+            <state line="238" column="0" selection-start="10984" selection-end="10984" vertical-scroll-proportion="0.6753507">
               <folding />
             </state>
           </provider>
@@ -1188,7 +1188,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="229" column="83" selection-start="10466" selection-end="10466" vertical-scroll-proportion="0.48496994">
+        <state line="238" column="0" selection-start="10984" selection-end="10984" vertical-scroll-proportion="0.6753507">
           <folding />
         </state>
       </provider>
