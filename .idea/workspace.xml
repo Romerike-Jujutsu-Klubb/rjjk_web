@@ -100,7 +100,7 @@
       <file leaf-file-name="member.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/member.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="19" selection-start="2985" selection-end="2985" vertical-scroll-proportion="0.35885885">
+            <state line="73" column="0" selection-start="3001" selection-end="3001" vertical-scroll-proportion="0.3018018">
               <folding />
             </state>
           </provider>
@@ -1192,7 +1192,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/member.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="19" selection-start="2985" selection-end="2985" vertical-scroll-proportion="0.35885885">
+        <state line="73" column="0" selection-start="3001" selection-end="3001" vertical-scroll-proportion="0.3018018">
           <folding />
         </state>
       </provider>
