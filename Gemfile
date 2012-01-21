@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.10'
+gem 'rails', '~>3.0.10'
 
 gem 'jruby-openssl', :require => false
 gem 'rmagick4j', :require => false
