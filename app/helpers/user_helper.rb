@@ -7,7 +7,7 @@ module UserHelper
   }.freeze unless defined? DEFAULT_HEAD_OPTIONS 
 
   def title_helper
-    "#{@controller.controller_class_name} #{@controller.action_name}"
+    "#{controller.class.name} #{controller.action_name}"
   end
 
   def head_helper(label, options = {})
@@ -30,7 +30,7 @@ module UserHelper
        s = s + error
      end
    end
-   return s
+   return s.html_safe
   end
 
 end

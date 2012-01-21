@@ -185,7 +185,7 @@ class UserController < ApplicationController
   # Generate a template user for certain actions on get
   def generate_blank_form
     case request.method
-      when :get
+      when 'GET'
       @user = User.new
       render
       return true
@@ -197,7 +197,7 @@ class UserController < ApplicationController
   def generate_filled_in
     @user = (params[:id] && User.find_by_id(params[:id])) || @current_user || User.find_by_id(session[:user_id])
     case request.method
-      when :get
+      when 'GET'
       render
       return true
     end

@@ -1,6 +1,7 @@
 require 'user_system'
 
 class ApplicationController < ActionController::Base
+  protect_from_forgery
   include UserSystem
   layout 'dark_ritual'
   helper :user
@@ -12,7 +13,7 @@ class ApplicationController < ActionController::Base
   after_filter :clear_user
 
   private
-  
+
   def load_layout_model
     @information_pages = InformationPage.roots
     if not admin?
@@ -20,5 +21,5 @@ class ApplicationController < ActionController::Base
     end
     @events = Event.find(:all, :conditions => ['(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)', Date.today, Date.today], :order => 'start_at', :limit => 5)
   end
-  
+
 end
