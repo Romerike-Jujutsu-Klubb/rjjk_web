@@ -1,5 +1,7 @@
 RjjkWeb::Application.routes.draw do
-  match '/news', :controller => 'news', :action => 'index'
+  match 'stylesheets/dark_ritual/:width.:format', :controller => 'stylesheets', :action => 'dark_ritual'
+  match 'stylesheets/dark_ritual.:format', :controller => 'stylesheets', :action => 'dark_ritual'
+  match ':controller', :action => 'index'
   match ':controller/active_contracts', :action => 'active_contracts'
   match ':controller/create', :action => 'create'
   match ':controller/destroy', :action => 'destroy'
