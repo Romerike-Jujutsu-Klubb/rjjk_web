@@ -79,7 +79,7 @@
 				<%=link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin?%>
 				
 				<% if ingress %>
-				  <%=ingress%>
+				  <%=ingress.html_safe%>
 				<% end %>
    				<% if ingress && event.description.size > ingress.size %>
 					<ul class="controls">
