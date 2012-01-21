@@ -3,6 +3,7 @@ require 'user_system'
 class ApplicationController < ActionController::Base
   protect_from_forgery
   include UserSystem
+  include ActionController::Caching::Sweeping if defined?(JRUBY_VERSION)
   layout 'dark_ritual'
   helper :user
 
