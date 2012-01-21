@@ -9,7 +9,6 @@ set :use_sudo, false
 #ssh_options[:keys] = %w(/home/lars/workspace/rjjk_web/etc/id_rsa)
 
 namespace :deploy do
-  
   desc "The spinner task is used by :cold_deploy to start the application up"
   task :spinner, :roles => :app do
     send(run_method, "/sbin/service #{application} start")

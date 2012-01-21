@@ -12,6 +12,7 @@ gem 'trinidad'
 gem 'trinidad_daemon_extension'
 gem 'prawn'
 gem 'delayed_job'
+gem 'dynamic_form'
 
 group :development do
   gem 'rdoc'

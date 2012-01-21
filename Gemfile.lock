@@ -2,6 +2,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     Ascii85 (1.0.1)
+    RedCloth (4.2.7)
     RedCloth (4.2.7-java)
     abstract (1.0.0)
     actionmailer (3.0.10)
@@ -40,6 +41,7 @@ GEM
     daemons (1.1.0)
     delayed_job (2.0.3)
       daemons
+    dynamic_form (1.1.4)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     gruff (0.3.6)
@@ -106,6 +108,7 @@ DEPENDENCIES
   RedCloth
   activerecord-jdbcpostgresql-adapter
   delayed_job
+  dynamic_form
   gruff
   jdbc-postgres
   jruby-openssl

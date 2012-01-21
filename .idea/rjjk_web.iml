@@ -95,6 +95,7 @@
     <orderEntry type="library" scope="PROVIDED" name="bundler (v1.1.rc, jruby-1.6.5-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="daemons (v1.1.0, jruby-1.6.5-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="delayed_job (v2.0.3, jruby-1.6.5-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="dynamic_form (v1.1.4, jruby-1.6.5-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="erubis (v2.6.6, jruby-1.6.5-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="gruff (v0.3.6, jruby-1.6.5-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="i18n (v0.5.0, jruby-1.6.5-p330) [gem]" level="application" />
