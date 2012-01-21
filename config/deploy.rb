@@ -1,3 +1,5 @@
+require "bundler/capistrano"
+
 set :application, "rjjk_web"
 set :repository, "svn+ssh://capistrano@source.kubosch.no/var/svn/trunk/#{application}"
 
