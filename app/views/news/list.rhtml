@@ -9,7 +9,7 @@
    				<%=@news_item.created_at.strftime '%Y-%m-%d'%>
 				</div>	
 				<!-- Normal content area start -->
-				<%=textilize @news_item.body %>
+				<%=textilize(@news_item.body).html_safe %>
 
 						<% if user? %>
 						<ul class="controls">
