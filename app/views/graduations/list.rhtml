@@ -194,7 +194,7 @@ function changeGraduationData() {
 	var myIndex = document.getElementById('grader_' + objId).selectedIndex;
 	try {
 		var myId = document.getElementById('grader_' + objId).options[myIndex].value;
-		setObjectData('results', '/graduates/list_graduations_by_member/' + myId);
+		setObjectData('results', '/graduations/list_graduates/' + myId);
         document.getElementById('certificates_link').href = '<%=url_for(:action => :certificates, :id => '')%>' + myId;
 	} catch(e) {
 		document.getElementById('results').innerHTML = ""
@@ -329,7 +329,7 @@ function cancelSaveGraduateInfo(graduate_id) {
 	<td ALIGN="center">
   		<% for ma in @martial_arts %>
 			<%= '<div id="ma_grad_' << ma.id.to_s << '" STYLE="display: ' << (none = ma.id == 1?'':'none') << ';">' %>
-			<%= '<select id="grader_' << ma.id.to_s << '" onChange="changeGraduationData();">' %>
+			<select id="grader_<%=ma.id%>" onChange="window.location = '<%=url_for(:id => '')%>' + options[selectedIndex].value">
   			<% for grd in ma.graduations.reverse %>
 				<option value='<%=grd.id%>' <%='SELECTED' if grd == @graduation %>><%=grd.held_on%></option>
 			<% end %>
@@ -343,7 +343,7 @@ function cancelSaveGraduateInfo(graduate_id) {
 <tr><td colspan="3">&nbsp;</td></tr>
 <tr>
 	<td colspan="3" ALIGN="center">
-		<div id="results"></div>
+		<div id="results"><%=render :partial => 'list_graduates' %></div>
 	</td>
 </tr>
 <tr><td colspan="3">&nbsp;</td></tr>
@@ -376,7 +376,3 @@ function cancelSaveGraduateInfo(graduate_id) {
 </table>
 
 </P>
-<br/>
-<SCRIPT Language="JavaScript1.2">
-	changeGraduationData();
-</SCRIPT>

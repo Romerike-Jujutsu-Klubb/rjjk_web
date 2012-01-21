@@ -5,21 +5,19 @@
 	<tr>
 		<th>Dato</th>
 		<th>Grad</th>
-		<th>Bestått</th>
-		<th>Betalt<br/>gradering</th>
-		<th>Betalt<br/>belte</th>
+		<th>Tid før grad</th>
+		<th>Treninger</th>
 	</tr>
 	<% for graduate in @member.graduates.sort_by{|g|g.graduation.held_on} %>
 	<tr>
 		<td><%=graduate.graduation.held_on%></td>
 		<td><%=graduate.rank.martial_art.name%> <%=graduate.rank.name%></td>
-		<td align="center"><%=yes_no graduate.passed%></td>
-		<td align="center"><%=yes_no graduate.paid_graduation%></td>
-		<td align="center"><%=yes_no graduate.paid_belt%></td>
+		<td align="center"><%=graduate.training_duration %> (<%=graduate.rank.standard_months %>)  mnd</td>
+		<td align="center"><%=graduate.training_attendances %></td>
 	</tr>
 	<% end %>
 	<tr>
-		<td colspan="10" align="center">
+		<td colspan="4" align="center">
 			<%=link_to 'Graderinger', :controller => 'graduations'%>
 		</td>
 	</tr>

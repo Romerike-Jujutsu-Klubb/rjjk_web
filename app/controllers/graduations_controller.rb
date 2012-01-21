@@ -16,7 +16,11 @@ class GraduationsController < ApplicationController
   end
 
   def index
-    @graduation = Graduation.find(params[:id]) if params[:id]
+    if params[:id].blank?
+      redirect_to(:id => Graduation.last(:order => :held_on))
+      return
+    end
+    @graduation = Graduation.find(params[:id])
     list
     render :action => 'list'
   end
@@ -33,6 +37,7 @@ class GraduationsController < ApplicationController
     @martial_arts.collect { |c|
       tmp = Graduation.find(:all, :order => 'held_on DESC', :conditions => ["martial_art_id = #{c.id}"])
     }
+    load_graduates
   end
 
   def show
@@ -86,14 +91,29 @@ class GraduationsController < ApplicationController
         text "#{graduate.rank.name} #{graduate.rank.colour}", :size => 18, :align => :center
         move_down 16
         text "#{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}", :size => 18, :align => :center
-        unless graduate.member.groups[0].name == 'Grizzly'
-          draw_text graduate.member.groups[0].name, :at => [120, 300], :size => 18
+        unless graduate.rank.group.name == 'Grizzly'
+          draw_text graduate.rank.group.name, :at => [120, 300], :size => 18
         end
         start_new_page :template => template
       end
     end
 
     send_data pdf.render, :type => "text/pdf", :filename => filename, :disposition => 'attachment'
+  end
+
+  def list_graduates
+    load_graduates
+    render :partial => 'list_graduates'
+  end
+
+  private
+
+  def load_graduates
+    @graduation = Graduation.find(params[:id])
+    @censors   = Censor.find(:all, :conditions => "graduation_id = #{@graduation.id}")
+    @graduates = Graduate.find(:all, :conditions => ["graduation_id = ? AND member_id != 0", params[:id]],
+                               :order            => 'ranks.position DESC, members.first_name, members.last_name',
+                               :include          => [:graduation, :member, :rank])
   end
 
 end

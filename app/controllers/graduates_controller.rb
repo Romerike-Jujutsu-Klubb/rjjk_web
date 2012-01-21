@@ -51,15 +51,6 @@ class GraduatesController < ApplicationController
     rstr << "</SELECT>\n"
   end
 
-  def list_graduations_by_member
-    @graduation = Graduation.find(params[:id])
-    @censors   = Censor.find(:all, :conditions => "graduation_id = #{@graduation.id}")
-    @graduates = Graduate.find(:all, :conditions => ["graduation_id = ? AND member_id != 0", params[:id]],
-                               :order            => 'ranks.position DESC, passed, paid_graduation, paid_belt asc',
-                               :include          => :rank)
-    render :layout => false
-  end
-
   def list_potential_graduates
     graduation = Graduation.find(params[:graduation_id])
     @grads = Member.find(:all, :conditions => ["joined_on <= ? AND left_on IS NULL OR left_on >= ?", graduation.held_on, graduation.held_on], :order => 'first_name, last_name',

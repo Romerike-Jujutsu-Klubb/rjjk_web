@@ -27,6 +27,8 @@ GEM
     jruby-openssl (0.7.4)
       bouncy-castle-java
     jruby-rack (1.0.9)
+    json (1.6.4)
+    json (1.6.4-java)
     pdf-reader (0.10.0)
       Ascii85 (~> 1.0.0)
     prawn (0.12.0)
@@ -41,6 +43,8 @@ GEM
       activesupport (= 2.3.11)
       rake (>= 0.8.3)
     rake (0.9.0)
+    rdoc (3.12)
+      json (~> 1.4)
     rmagick4j (0.3.7)
     trinidad (1.2.0)
       jruby-rack (>= 1.0.9)
@@ -63,6 +67,7 @@ DEPENDENCIES
   jruby-openssl
   prawn
   rails (~> 2.3.10)
+  rdoc
   rmagick4j
   trinidad
   trinidad_daemon_extension

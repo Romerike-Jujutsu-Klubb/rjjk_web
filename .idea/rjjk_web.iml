@@ -95,11 +95,13 @@
     <orderEntry type="library" scope="PROVIDED" name="jdbc-postgres (v9.0.801, jruby-1.6.5-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jruby-openssl (v0.7.4, jruby-1.6.5-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jruby-rack (v1.0.9, jruby-1.6.5-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="json (v1.6.4, jruby-1.6.5-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="pdf-reader (v0.10.0, jruby-1.6.5-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="prawn (v0.12.0, jruby-1.6.5-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack (v1.1.2, jruby-1.6.5-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rails (v2.3.11, jruby-1.6.5-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rake (v0.9.0, jruby-1.6.5-p330) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rdoc (v3.12, jruby-1.6.5-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rmagick4j (v0.3.7, jruby-1.6.5-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="trinidad (v1.2.0, jruby-1.6.5-p330) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="trinidad_daemon_extension (v0.2.8, jruby-1.6.5-p330) [gem]" level="application" />

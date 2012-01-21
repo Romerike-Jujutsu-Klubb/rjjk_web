@@ -39,7 +39,7 @@
 <% if @graduates.any? %>
     <table width="100%" STYLE="border: 1px solid #000000;" cellspacing="0" cellpadding="0">
       <tr STYLE=" background: #e3e3e3;">
-        <th STYLE="text-align: left; border-bottom: 1px solid #000000;">Medlem</th>
+        <th STYLE="text-align: left; border-bottom: 1px solid #000000;">Medlem (<%=@graduates.size%>)</th>
         <th STYLE="border-bottom: 1px solid #000000;">Grad</th>
         <!--
         <th STYLE="border-bottom: 1px solid #000000;">Bestått</th>
@@ -56,8 +56,13 @@
              ln = mbr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
       %>
           <tr id='graduate_<%= gr.id %>_view' style="vertical-align: top;">
+            <% below_minimum_age = mbr.age < gr.rank.minimum_age %>
+            <% not_in_age_group = !(gr.rank.group.from_age..gr.rank.group.to_age).include?(mbr.age) %>
             <td valign='top'>
-              <%= fn %> <%= ln %> <%= "(<font color=\"red\">#{mbr.age} år</font>)" if mbr.age < gr.rank.minimum_age || !(gr.rank.group.from_age..gr.rank.group.to_age).include?(mbr.age) %>
+              <%=link_to "#{fn} #{ln}", :controller => :members, :action => :edit, :id => mbr.id %>
+              <% if below_minimum_age || not_in_age_group %>
+                  (<span style="color: red; white-space: nowrap"><%=mbr.age %> år</span>)
+              <% end %>
             </td>
             <td STYLE="text-align: left;">
               <%= gr.rank.name %> <%= gr.rank.colour %>
@@ -71,9 +76,35 @@
                   <% end %>
                   <br/><font color="red">Anbefalt neste grad er <%= next_rank.name %>.</font>
               <% end %>
+              <% if below_minimum_age %>
+                  <br/><span style="color: red">Aldersgrense for <%=gr.rank.name%> er <%=gr.rank.minimum_age%> år.</span>
+              <% elsif not_in_age_group %>
+                  <br/><span style="color: red">Aldergruppe for <%=gr.rank.name%> er <%=gr.rank.group.from_age%>-<%=gr.rank.group.to_age%> år.</span>
+              <% end %>
               <% future_graduates = mbr.future_graduates(@graduation) %>
               <% future_graduates.select{|fg| fg.rank.position < gr.rank.position}.each do |fg| %>
                 <br/>(konflikt: <%=link_to %Q{<font color="red">#{fg.rank.name} #{fg.graduation.held_on}</font>}, :controller => :graduations, :action => :index, :id => fg.graduation.id %>)
+              <% end %>
+              <% if gr.training_attendances == 0 %>
+                  <br/><span style="color: red">Har ikke vært på trening siden <%=current_graduate ? 'forrige gradering' : 'innmelding'%>.</span>
+              <% elsif gr.training_attendances < gr.minimum_attendances %>
+                      <br/>Har bare vært på <span style="color: red"><%=gr.training_attendances %> trening<%='er' if gr.training_attendances > 1 %></span> siden <%=current_graduate ? 'forrige gradering' : 'innmelding'%>.
+                      <br/>Minimum er <%=gr.minimum_attendances %> av <%=gr.registered_trainings %> registrerte treninger.
+              <% end %>
+
+              <!--
+              <br/><%#=gr.training_period %>
+              <br/>gr.planned_trainings: <%#=gr.planned_trainings %>
+              <br/>gr.registered_trainings: <%#=gr.registered_trainings %>
+              <br/>gr.registration_percentage : <%#=(100 * gr.registration_percentage).round unless gr.planned_trainings == 0 %>
+              <br/>gr.training_attendances: <%#=gr.training_attendances %>
+              <br/>gr.minimum_attendances : <%#=gr.minimum_attendances %>
+              <br/>gr.rank.minimum_attendances: <%#=gr.rank.minimum_attendances%>
+              <br/>gr.rank.minimum_attendances * gr.registration_percentage: <%#=gr.rank.minimum_attendances * gr.registration_percentage%>
+              -->
+
+              <% if gr.member.left_on && gr.member.left_on < gr.graduation.held_on %>
+                  <br/><span style="color: red">Deltakeren er utmeldt.</span>
               <% end %>
             </td>
 
