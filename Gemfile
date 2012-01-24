@@ -24,6 +24,7 @@ gem 'acts_as_list'
 gem 'acts_as_tree'
 gem 'will_paginate'
 gem 'prototype-rails'
+gem 'uglifier'
 
 group :development do
   gem 'rdoc'

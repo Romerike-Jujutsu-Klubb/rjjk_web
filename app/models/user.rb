@@ -88,6 +88,10 @@ class User < ActiveRecord::Base
     role == UserSystem::ADMIN_ROLE
   end
   
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   protected
 
   attr_accessor :password, :password_confirmation
@@ -119,9 +123,5 @@ class User < ActiveRecord::Base
     hashed(salt + hashed_password)
   end
   
-  def name
-    "#{first_name} #{last_name}"
-  end
-
 end
 
