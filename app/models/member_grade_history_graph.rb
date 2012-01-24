@@ -8,7 +8,7 @@ class MemberGradeHistoryGraph
       return File.read("public/images/rails.png")
     end
 
-    ranks = MartialArt.find_by_name('Kei Wa Ryu').ranks[(RAILS_ENV == 'production' ? -8 : 0)..-1].reverse
+    ranks = MartialArt.find_by_name('Kei Wa Ryu').ranks[(Rails.env == 'production' ? -8 : 0)..-1].reverse
 
     g = Gruff::Line.new(size)
     g.theme_37signals
