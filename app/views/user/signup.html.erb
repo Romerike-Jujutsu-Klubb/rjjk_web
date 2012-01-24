@@ -2,7 +2,7 @@
   <%= head_helper 'Sign Up', :error => true %>
 
   <div class="form-padding">
-    <%=form_tag(url_for(:action => "#{@controller.action_name}")) do %>
+    <%=form_tag(url_for(:action => "#{controller.action_name}")) do %>
       <%=render :partial => 'edit', :locals => {:user => @user, :submit => false} %></br>
       <%=render :partial => 'password', :locals => {:submit => false} %>
       
