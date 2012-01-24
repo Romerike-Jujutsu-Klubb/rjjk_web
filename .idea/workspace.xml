@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/rjjk_web.iml" afterPath="$PROJECT_DIR$/.idea/rjjk_web.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/stylesheets_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/stylesheets_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/graduations/_list_graduates.html.erb" afterPath="$PROJECT_DIR$/app/views/graduations/_list_graduates.html.erb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -100,10 +98,37 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dark_ritual.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="dark_ritual.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="100" selection-start="572" selection-end="572" vertical-scroll-proportion="0.3398374">
+            <state line="11" column="100" selection-start="572" selection-end="572" vertical-scroll-proportion="-7.464286">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="list.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/graduations/list.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="223" column="21" selection-start="6812" selection-end="6824" vertical-scroll-proportion="-3.2777777">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="list_graduates.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/graduations/list_graduates.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_list_graduates.html.erb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/graduations/_list_graduates.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="114" column="42" selection-start="6318" selection-end="6318" vertical-scroll-proportion="0.36256325">
               <folding />
             </state>
           </provider>
@@ -148,7 +173,6 @@
         <option value="$PROJECT_DIR$/app/views/images/edit.html.erb" />
         <option value="$PROJECT_DIR$/app/views/images/new.html.erb" />
         <option value="$PROJECT_DIR$/app/views/graduations/list.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/graduations/_list_graduates.html.erb" />
         <option value="$PROJECT_DIR$/app/views/members/attendance_form.html.erb" />
         <option value="$PROJECT_DIR$/test/functional/censors_controller_test.rb" />
         <option value="$PROJECT_DIR$/test/fixtures/censors.yml" />
@@ -158,6 +182,7 @@
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/app/controllers/stylesheets_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/graduations/_list_graduates.html.erb" />
       </list>
     </option>
   </component>
@@ -254,7 +279,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="layouts" />
+              <option name="myItemId" value="graduations" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -953,7 +978,11 @@
       <created>1327401073101</created>
       <updated>1327401073101</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="* Oppdaterte til Rails 3.1&#10;">
+      <created>1327401585101</created>
+      <updated>1327401585101</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1061,20 +1090,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/attendances/new.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="25" selection-end="25" vertical-scroll-proportion="-1.3571428">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/censors/edit.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="25" selection-end="25" vertical-scroll-proportion="-1.3571428">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/censors/new.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="0" selection-start="20" selection-end="20" vertical-scroll-proportion="-1.3571428">
@@ -1171,23 +1186,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/graduations/list.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="228" column="1" selection-start="7008" selection-end="7008" vertical-scroll-proportion="0.46737212">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/graduations/show.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/graduations/_list_graduates.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="72" selection-start="4036" selection-end="4036" vertical-scroll-proportion="0.6894309">
           <folding />
         </state>
       </provider>
@@ -1271,7 +1272,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="100" selection-start="572" selection-end="572" vertical-scroll-proportion="0.3398374">
+        <state line="11" column="100" selection-start="572" selection-end="572" vertical-scroll-proportion="-7.464286">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/graduations/_form.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/graduations/list.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="223" column="21" selection-start="6812" selection-end="6824" vertical-scroll-proportion="-3.2777777">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/graduations/list_graduates.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/graduations/_list_graduates.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="114" column="42" selection-start="6318" selection-end="6318" vertical-scroll-proportion="0.36256325">
           <folding />
         </state>
       </provider>
