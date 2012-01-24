@@ -68,15 +68,15 @@ class UserTest < ActiveSupport::TestCase
 
     u.change_password("tiny")
     assert !u.save     
-    assert u.errors.invalid?('password')
+    assert u.errors['password'].any?
 
     u.change_password("hugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehuge")
     assert !u.save     
-    assert u.errors.invalid?('password')
+    assert u.errors['password'].any?
         
     u.change_password("")
     assert !u.save    
-    assert u.errors.invalid?('password')
+    assert u.errors['password'].any?
         
     u.change_password("a_s3cure_p4ssword")
     assert u.save     
@@ -90,20 +90,19 @@ class UserTest < ActiveSupport::TestCase
 
     u.login = "x"
     assert !u.save     
-    assert u.errors.invalid?(:login)
-    
+    assert u.errors[:login].any?
+
     u.login = "hugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahug"
     assert !u.save     
-    assert u.errors.invalid?(:login)
+    assert u.errors[:login].any?
 
     u.login = ""
     assert !u.save
-    assert u.errors.invalid?(:login)
+    assert u.errors[:login].any?
 
     u.login = "oktesla"
     assert u.save
     assert u.errors.empty?
-      
   end
 
   def test_create

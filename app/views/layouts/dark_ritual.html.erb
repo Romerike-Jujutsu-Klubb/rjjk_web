@@ -6,7 +6,7 @@
 <meta name="description" content="description"/>
 <meta name="keywords" content="keywords"/> 
 <meta name="author" content="author"/> 
-<%=javascript_include_tag :defaults %>
+<%#=javascript_include_tag :defaults %>
 <%=javascript_include_tag "prototype" %>
 <%=javascript_include_tag "effects" %>
 <link href="<%=url_for(:controller => 'stylesheets', :action => 'dark_ritual', :format => 'css', :width => @content_width)%>" media="screen" rel="stylesheet" type="text/css" />
@@ -119,23 +119,23 @@
 		<% end %>
 		</ul>
 
-   			<% if admin? %>
+      <% if admin? %>
 		<h1><%=link_to_function("Administrasjon") do |page|
     		page.visual_effect(:toggle_blind, :admin_menu)
   		end%></h1>
-		<div id="admin_menu">
-		<ul>
-   			<li><%= link_to 'Ny nyhet', :controller => 'news', :action => 'new' %></li>
-            <li><%= link_to 'Ny side', :controller => 'info', :action => 'new' %></li>
-            <li><%= link_to 'Ny hendelse', :controller => 'events', :action => 'new' %></li>
-            <li><%= link_to 'Brukere', :controller => 'user', :action => :list %></li>
-		</ul>
-		</div>
+          <div id="admin_menu">
+            <ul>
+              <li><%= link_to 'Ny nyhet', :controller => 'news', :action => 'new' %></li>
+              <li><%= link_to 'Ny side', :controller => 'info', :action => 'new' %></li>
+              <li><%= link_to 'Ny hendelse', :controller => 'events', :action => 'new' %></li>
+              <li><%= link_to 'Brukere', :controller => 'user', :action => :list %></li>
+            </ul>
+          </div>
 
 		<%=link_to_function("<h1>Medlemsreg.</h1>".html_safe) do |page|
     		page.visual_effect(:toggle_blind, :members_menu)
   		end%>
-		<div id="members_menu">
+          <div id="members_menu">
 		<ul>
 			<li><%=menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
 			<li><%=menu_item 'Oppmøtelister', :controller => 'members', :action => :attendance_form_index %></li>

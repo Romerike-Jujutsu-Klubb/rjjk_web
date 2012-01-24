@@ -1,7 +1,11 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+panda:
+  name: Panda
+  martial_art: keiwaryu
+  from_age: 6
+  to_age: 9
 
-# one:
-#   column: value
-#
-# two:
-#   column: value
+tiger:
+  name: Tiger
+  martial_art: keiwaryu
+  from_age: 10
+  to_age: 14

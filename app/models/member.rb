@@ -4,7 +4,7 @@ class Member < ActiveRecord::Base
   MEMBERS_PER_PAGE = 30
   ACTIVE_CONDITIONS = "left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)"
 
-  named_scope :active, lambda { |date| {:conditions => ['left_on IS NULL OR left_on > ?', date]} }
+  scope :active, lambda { |date| {:conditions => ['left_on IS NULL OR left_on > ?', date]} }
 
   has_many :graduates
   has_many :attendances

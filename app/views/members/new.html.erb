@@ -1,0 +1,17 @@
+<% @content_width = 1024 %>
+
+<h1>Registrere nytt medlem</h1>
+
+<%=form_tag({:action => 'create'}, {:id => :form, :multipart => true}) do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Lagre', :id => 'save' %>
+  <%= link_to 'Tilbake', :action => 'list' %>
+<% end %>
+
+<script type="text/JavaScript">
+//<!--
+document.getElementById('member_first_name').focus();
+document.getElementById('member_first_name').select();
+new Effect.ScrollTo("form")
+//-->
+</script>

@@ -1,6 +1,7 @@
 class TrialAttendance < ActiveRecord::Base
-  named_scope :by_group_id, lambda { |group_id| { :conditions => ['group_schedules.group_id = ?', group_id], :include => :group_schedule }}
+  scope :by_group_id, lambda { |group_id| { :conditions => ['group_schedules.group_id = ?', group_id], :include => :group_schedule }}
 
+  belongs_to :nkf_member_trial
   belongs_to :group_schedule
 
   def date

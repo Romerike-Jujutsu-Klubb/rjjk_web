@@ -1,18 +1,18 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
 one:
   medlems_type: MyString
   etternavn: MyString
   fornavn: MyString
   fodtdato: 2010-10-03
   alder: 1
-  postnr: MyString
+  postnr: 1234
   sted: MyString
   adresse: MyString
   epost: MyString
   mobil: MyString
   res_sms: false
   reg_dato: 2010-10-03
+  tid: 1
+  stilart: Jujutsu
 
 two:
   medlems_type: MyString
@@ -20,10 +20,12 @@ two:
   fornavn: MyString
   fodtdato: 2010-10-03
   alder: 1
-  postnr: MyString
+  postnr: 4321
   sted: MyString
   adresse: MyString
   epost: MyString
   mobil: MyString
   res_sms: false
   reg_dato: 2010-10-03
+  tid: 2
+  stilart: Aikido

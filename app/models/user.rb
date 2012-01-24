@@ -111,7 +111,7 @@ class User < ActiveRecord::Base
     expiry = Time.at(Clock.now.to_i + User.token_lifetime)
     write_attribute('security_token', self.class.hashed(self.salted_password + Clock.now.to_i.to_s + rand.to_s))
     write_attribute('token_expiry', expiry)
-    update_without_callbacks
+    update
     return self.security_token
   end
 

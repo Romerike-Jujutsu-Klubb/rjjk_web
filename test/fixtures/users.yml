@@ -1,5 +1,3 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
 admin:
   id: 1000000
   login: admin
@@ -18,7 +16,7 @@ tesla:
   verified: true
   deleted: false
   security_token: random_token_string
-  token_expiry: <%=(Clock.now + User.token_lifetime/3).strftime("%Y-%m-%d %H:%M:%S") %>
+  token_expiry: <%=(Clock.now + User.token_lifetime/3).utc.strftime("%Y-%m-%d %H:%M:%S") %>
 
 long_user:
   id: 1000003
@@ -55,5 +53,5 @@ unverified_user:
   email: unverified_user@example.com
   verified: false
   security_token: random_token_string
-  token_expiry: <%=(Clock.now + User.token_lifetime).strftime("%Y-%m-%d %H:%M:%S") %>
+  token_expiry: <%=(Clock.now + User.token_lifetime).utc.strftime("%Y-%m-%d %H:%M:%S") %>
   deleted: false

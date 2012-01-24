@@ -19,7 +19,7 @@ a {color: #682;}
 a:hover {color: #9A6;}
 
 body {
-	background: #333 url(/images/dark_ritual/bg.gif);
+	background: #333 url(<%= asset_path 'dark_ritual/bg.gif' %>);
 	color: #333;
 	font: normal 82.5% "Lucida Sans Unicode",sans-serif;
 	margin: 3% 0;
@@ -32,7 +32,7 @@ p,ul {
 ul {margin-left: 1.2em;}
 
 li {list-style: none;}
-.main li {list-style-image: url(/images/dark_ritual/li.gif);}
+.main li {list-style-image: url(<%= asset_path 'dark_ritual/li.gif' %>);}
 
 h1 {font-size: 1.2em;}
 
@@ -64,7 +64,7 @@ h1,h2,h3 {color: #994;}
 /* structure */
 .container {
 	font-size: 1.2em;
-	background: url(/images/dark_ritual/bgcontainer_<%=@content_width%>.png) repeat-y;
+	background: url(<%= asset_path "dark_ritual/bgcontainer_#{@content_width}.png" %>) repeat-y;
 	margin: 0 auto;
 	width: <%=@content_width + 360%>px;
 	border: 12px solid #222;
@@ -75,7 +75,7 @@ h1,h2,h3 {color: #994;}
 	float: left;
 	width: <%=@content_width + 160%>px;
 	height: 100px;
-	background: url(/images/dark_ritual/header_<%=@content_width%>.png) no-repeat;
+	background: url(<%= asset_path "dark_ritual/header_#{@content_width}.png" %>) no-repeat;
 	font: normal 2.4em Verdana,sans-serif;
 	text-align: center;	
 	padding-top: 50px;
@@ -147,7 +147,7 @@ h1,h2,h3 {color: #994;}
 
 /* footer */
 .footer {
-	background: url(/images/dark_ritual/bgfooter.gif) repeat-x;
+	background: url(<%= asset_path 'dark_ritual/bgfooter.gif' %>) repeat-x;
 	color: #CCC;
 	font-size: 0.9em;
 	line-height: 39px;

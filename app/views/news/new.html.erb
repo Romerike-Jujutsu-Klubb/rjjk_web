@@ -1,0 +1,10 @@
+<% @content_width = 1024 %>
+
+<h1>Ny nyhet</h1>
+
+<%=form_tag :action => 'create' do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag "Lagre" %>
+	<%= link_to 'Avbryt', :action => 'list' %>
+<% end %>
+

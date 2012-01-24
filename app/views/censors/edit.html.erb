@@ -1,0 +1,9 @@
+<h1>Editing censor</h1>
+
+<%=form_tag :action => 'update', :id => @censor do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Edit' %>
+<% end %>
+
+<%= link_to 'Show', :action => 'show', :id => @censor %> |
+<%= link_to 'Back', :action => 'list' %>

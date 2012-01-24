@@ -9,4 +9,6 @@ class AddFamilyToMartialArt < ActiveRecord::Migration
   def self.down
     remove_column :martial_arts, :family
   end
+
+  class MartialArt < ActiveRecord::Base ; end
 end

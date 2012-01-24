@@ -1,10 +1,11 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
@@ -12,17 +13,19 @@
 ActiveRecord::Schema.define(:version => 20111205171636) do
 
   create_table "attendances", :force => true do |t|
-    t.integer  "member_id",         :limit => 10, :null => false
-    t.integer  "group_schedule_id", :limit => 10, :null => false
-    t.integer  "year",              :limit => 10, :null => false
-    t.integer  "week",              :limit => 10, :null => false
+    t.integer  "member_id",         :null => false
+    t.integer  "group_schedule_id", :null => false
+    t.integer  "year",              :null => false
+    t.integer  "week",              :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "attendances", ["member_id", "group_schedule_id", "year", "week"], :name => "ix_attendances_on_member_id_et_group_schedule_id_et_year_et_wee", :unique => true
+
   create_table "censors", :force => true do |t|
-    t.integer "graduation_id", :limit => 10, :null => false
-    t.integer "member_id",     :limit => 10, :null => false
+    t.integer "graduation_id", :null => false
+    t.integer "member_id",     :null => false
   end
 
   create_table "cms_members", :force => true do |t|
@@ -36,8 +39,8 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
     t.date     "birthdate"
     t.boolean  "male",                                                :null => false
     t.date     "joined_on"
-    t.integer  "contract_id",          :limit => 10
-    t.integer  "cms_contract_id",      :limit => 10
+    t.integer  "contract_id"
+    t.integer  "cms_contract_id"
     t.date     "left_on"
     t.string   "parent_name",          :limit => 100
     t.string   "address",              :limit => 100, :default => "", :null => false
@@ -60,7 +63,7 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
   end
 
   create_table "documents", :force => true do |t|
-    t.binary   "content",    :limit => 2147483647, :null => false
+    t.binary   "content",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -75,57 +78,57 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
   end
 
   create_table "graduates", :force => true do |t|
-    t.integer "member_id",       :limit => 10, :null => false
-    t.integer "graduation_id",   :limit => 10, :null => false
-    t.boolean "passed",                        :null => false
-    t.integer "rank_id",         :limit => 10, :null => false
-    t.boolean "paid_graduation",               :null => false
-    t.boolean "paid_belt",                     :null => false
+    t.integer "member_id",       :null => false
+    t.integer "graduation_id",   :null => false
+    t.boolean "passed",          :null => false
+    t.integer "rank_id",         :null => false
+    t.boolean "paid_graduation", :null => false
+    t.boolean "paid_belt",       :null => false
   end
 
   create_table "graduations", :force => true do |t|
-    t.date    "held_on",                      :null => false
-    t.integer "martial_art_id", :limit => 10, :null => false
+    t.date    "held_on",        :null => false
+    t.integer "martial_art_id", :null => false
   end
 
   create_table "group_schedules", :force => true do |t|
-    t.integer  "group_id",   :limit => 10, :null => false
-    t.integer  "weekday",    :limit => 10, :null => false
-    t.time     "start_at",                 :null => false
-    t.time     "end_at",                   :null => false
+    t.integer  "group_id",   :null => false
+    t.integer  "weekday",    :null => false
+    t.time     "start_at",   :null => false
+    t.time     "end_at",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "groups", :force => true do |t|
-    t.integer  "martial_art_id", :limit => 10, :null => false
-    t.string   "name",                         :null => false
-    t.integer  "from_age",       :limit => 10, :null => false
-    t.integer  "to_age",         :limit => 10, :null => false
+    t.integer  "martial_art_id", :null => false
+    t.string   "name",           :null => false
+    t.integer  "from_age",       :null => false
+    t.integer  "to_age",         :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "groups_members", :id => false, :force => true do |t|
-    t.integer "group_id",  :limit => 10, :null => false
-    t.integer "member_id", :limit => 10, :null => false
+    t.integer "group_id",  :null => false
+    t.integer "member_id", :null => false
   end
 
   add_index "groups_members", ["group_id", "member_id"], :name => "index_groups_members_on_group_id_and_member_id", :unique => true
 
   create_table "images", :force => true do |t|
-    t.string "name",         :limit => 64,         :null => false
-    t.string "content_type",                       :null => false
-    t.binary "content_data", :limit => 2147483647, :null => false
+    t.string "name",         :limit => 64, :null => false
+    t.string "content_type",               :null => false
+    t.binary "content_data",               :null => false
   end
 
   create_table "information_pages", :force => true do |t|
-    t.integer  "parent_id",  :limit => 10
+    t.integer  "parent_id"
     t.string   "title",      :limit => 32, :null => false
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "position",   :limit => 10
+    t.integer  "position"
     t.boolean  "hidden"
   end
 
@@ -135,30 +138,30 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
   end
 
   create_table "members", :force => true do |t|
-    t.string   "first_name",           :limit => 100,        :default => "", :null => false
-    t.string   "last_name",            :limit => 100,        :default => "", :null => false
+    t.string   "first_name",           :limit => 100, :default => "", :null => false
+    t.string   "last_name",            :limit => 100, :default => "", :null => false
     t.string   "email",                :limit => 128
     t.string   "phone_mobile",         :limit => 32
     t.string   "phone_home",           :limit => 32
     t.string   "phone_work",           :limit => 32
     t.string   "phone_parent",         :limit => 32
     t.date     "birthdate"
-    t.boolean  "male",                                                       :null => false
+    t.boolean  "male",                                                :null => false
     t.date     "joined_on"
-    t.integer  "contract_id",          :limit => 10
-    t.integer  "cms_contract_id",      :limit => 10
+    t.integer  "contract_id"
+    t.integer  "cms_contract_id"
     t.date     "left_on"
     t.string   "parent_name",          :limit => 100
-    t.string   "address",              :limit => 100,        :default => "", :null => false
-    t.string   "postal_code",          :limit => 4,                          :null => false
+    t.string   "address",              :limit => 100, :default => "", :null => false
+    t.string   "postal_code",          :limit => 4,                   :null => false
     t.string   "billing_type",         :limit => 100
     t.string   "billing_name",         :limit => 100
     t.string   "billing_address",      :limit => 100
     t.string   "billing_postal_code",  :limit => 4
-    t.boolean  "payment_problem",                                            :null => false
+    t.boolean  "payment_problem",                                     :null => false
     t.string   "comment"
-    t.boolean  "instructor",                                                 :null => false
-    t.boolean  "nkf_fee",                                                    :null => false
+    t.boolean  "instructor",                                          :null => false
+    t.boolean  "nkf_fee",                                             :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "social_sec_no",        :limit => 11
@@ -166,7 +169,7 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
     t.string   "billing_phone_home",   :limit => 32
     t.string   "billing_phone_mobile", :limit => 32
     t.string   "rfid",                 :limit => 25
-    t.binary   "image",                :limit => 2147483647
+    t.binary   "image"
     t.string   "image_name",           :limit => 64
     t.string   "image_content_type",   :limit => 32
     t.string   "kid",                  :limit => 64
@@ -177,7 +180,7 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "created_by", :limit => 10
+    t.integer  "created_by"
   end
 
   create_table "nkf_member_trials", :force => true do |t|
@@ -185,7 +188,7 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
     t.string   "etternavn",     :limit => 32, :null => false
     t.string   "fornavn",       :limit => 32, :null => false
     t.date     "fodtdato",                    :null => false
-    t.integer  "alder",         :limit => 10, :null => false
+    t.integer  "alder",                       :null => false
     t.string   "postnr",        :limit => 4,  :null => false
     t.string   "sted",          :limit => 32, :null => false
     t.string   "adresse",       :limit => 64, :null => false
@@ -195,7 +198,7 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
     t.date     "reg_dato",                    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "tid",           :limit => 10, :null => false
+    t.integer  "tid",                         :null => false
     t.string   "epost_faktura", :limit => 64
     t.string   "stilart",       :limit => 64, :null => false
   end
@@ -203,8 +206,8 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
   add_index "nkf_member_trials", ["tid"], :name => "index_nkf_member_trials_on_tid", :unique => true
 
   create_table "nkf_members", :force => true do |t|
-    t.integer  "member_id",                                       :limit => 10
-    t.integer  "medlemsnummer",                                   :limit => 10
+    t.integer  "member_id"
+    t.integer  "medlemsnummer"
     t.string   "etternavn"
     t.string   "fornavn"
     t.string   "adresse_1"
@@ -225,7 +228,6 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
     t.string   "kont_sats"
     t.string   "kont_belop"
     t.string   "kontraktstype"
-    t.integer  "kontraktsbelop",                                  :limit => 10
     t.string   "rabatt"
     t.string   "gren_stilart_avd_parti___gren_stilart_avd_parti"
     t.string   "sist_betalt_dato"
@@ -234,7 +236,7 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
     t.string   "konkurranseomrade_navn"
     t.string   "klubb_id"
     t.string   "klubb"
-    t.integer  "hovedmedlem_id",                                  :limit => 10
+    t.integer  "hovedmedlem_id"
     t.string   "hovedmedlem_navn"
     t.string   "innmeldtdato"
     t.string   "innmeldtarsak"
@@ -244,25 +246,28 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "ventekid",                                        :limit => 20
+    t.integer  "kontraktsbelop"
   end
 
   create_table "ranks", :force => true do |t|
     t.string  "name",            :limit => 16, :null => false
     t.string  "colour",          :limit => 48, :null => false
-    t.integer "position",        :limit => 10, :null => false
-    t.integer "martial_art_id",  :limit => 10, :null => false
-    t.integer "standard_months", :limit => 10
-    t.integer "group_id",        :limit => 10
+    t.integer "position",                      :null => false
+    t.integer "martial_art_id",                :null => false
+    t.integer "standard_months",               :null => false
+    t.integer "group_id",                      :null => false
   end
 
   create_table "trial_attendances", :force => true do |t|
-    t.integer  "nkf_member_trial_id", :limit => 10, :null => false
-    t.integer  "group_schedule_id",   :limit => 10, :null => false
-    t.integer  "year",                :limit => 10, :null => false
-    t.integer  "week",                :limit => 10, :null => false
+    t.integer  "nkf_member_trial_id", :null => false
+    t.integer  "group_schedule_id",   :null => false
+    t.integer  "year",                :null => false
+    t.integer  "week",                :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "trial_attendances", ["nkf_member_trial_id", "group_schedule_id", "year", "week"], :name => "ix_trial_attendances__nkf_member_trial_group_schedule_year_week", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "login",           :limit => 80,                    :null => false

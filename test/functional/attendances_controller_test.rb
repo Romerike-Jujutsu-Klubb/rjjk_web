@@ -3,6 +3,11 @@ require File.dirname(__FILE__) + '/../test_helper'
 class AttendancesControllerTest < ActionController::TestCase
   fixtures :attendances
   
+  def setup
+    super
+    login(:admin)
+  end
+
   def test_should_get_index
     get :index
     assert_response :success
@@ -16,7 +21,8 @@ class AttendancesControllerTest < ActionController::TestCase
 
   def test_should_create_attendance
     assert_difference('Attendance.count') do
-      post :create, :attendance => { }
+      post :create, :attendance => {:member_id => 'first', :group_schedule_id => 'one', :year => 2011, :week => 42}
+      assert_no_errors(:attendance)
     end
 
     assert_redirected_to attendance_path(assigns(:attendance))

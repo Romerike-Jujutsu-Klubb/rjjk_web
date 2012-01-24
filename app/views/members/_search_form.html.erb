@@ -1,0 +1,14 @@
+<%=form_tag({ :controller => :members, :action => "search" }, :method => "get") do %>
+    <div class="form_row">
+      <label for="q">Søk etter:</label>  
+      <%=text_field_tag "q", params[:q] || 'Medlem', :class => :text %>
+      <input type="submit" value="Søk" class="submit" />
+    </div>
+<% end %>
+<%=javascript_tag update_page {|page|
+	page[:q].select
+	page[:q].focus
+} %>
+<% if @invalid %>
+	<p>Ugyldige tegn i søk.</p>
+<% end %>

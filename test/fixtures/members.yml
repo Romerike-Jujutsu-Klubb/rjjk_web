@@ -1,9 +1,7 @@
 first:
-  id: 1
   male: true
   first_name: Lars
   last_name: Bråten
-  senior: true
   address: Torsvei 8b
   postal_code: 1472
   payment_problem: false
@@ -11,11 +9,9 @@ first:
   nkf_fee: true
 
 two:
-  id: 2
   male: false
   first_name: Uwe
   last_name: Kubosch
-  senior: true
   address: Møllesvingen 5
   postal_code: 2006
   payment_problem: false

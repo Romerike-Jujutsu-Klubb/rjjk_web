@@ -1,6 +1,7 @@
 class MakeKontraktsbelopInteger < ActiveRecord::Migration
   def self.up
-    change_column :nkf_members, :kontraktsbelop, :integer
+    remove_column :nkf_members, :kontraktsbelop
+    add_column :nkf_members, :kontraktsbelop, :integer
   end
 
   def self.down

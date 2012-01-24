@@ -51,7 +51,7 @@
 	    	<%=h nkf_member.member_id %>
 	    	<%=link_to "#{nkf_member.member.name}", :controller => :members, :action => :edit, :id => nkf_member.member %>
 		<% else %>
-			<% form_for nkf_member do |f| %>
+			<%=form_for nkf_member do |f| %>
 				<%=f.select :member_id, [['', '']] + NkfMember.find_free_members.map{|m| [m.name, m.id]} %>
 				<%=f.submit :connect %>
 			<% end %>

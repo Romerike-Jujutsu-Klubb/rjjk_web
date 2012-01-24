@@ -1,14 +1,17 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 one:
   id: 1
   name: '5.kyu'
   colour: 'gult'
   position: 1
-  martial_art_id: 1
+  martial_art: keiwaryu
+  standard_months: 6
+  group: panda
+
 two:
   id: 2
   name: '4.kyu'
   colour: 'oransje'
   position: 2
-  martial_art_id: 1
-  
+  martial_art: keiwaryu
+  standard_months: 6
+  group: tiger
