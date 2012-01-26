@@ -17,8 +17,11 @@
 		<% else %>
 		  &nbsp;
 		<% end %>
-		<%="<br/>#{link_to 'Mangler kontrakt', :action => :missing_contract, :id => member.id}<br/>Innmeldt: #{member.joined_on.strftime('%Y-%m-%d')}" if missing_contract %>
-	</td>
+      <% if missing_contract %>
+          <br/><%= link_to 'Mangler kontrakt', :action => :missing_contract, :id => member.id %>
+          <br/>Innmeldt: <%= member.joined_on.strftime('%Y-%m-%d') %>
+      <% end %>
+    </td>
 <% if @birthdate_missing %>
     <td><%=h member.birthdate %>&nbsp;</td>
 <% end %>
@@ -33,7 +36,7 @@
 	  <% @date_totals[d] += 1 %>
     <td id="attendance_<%=member.id%>_<%=d.day%>" align="center" onclick="<%= remote_function(:update => "attendance_#{member.id}_#{d.day}",
       :url => { :controller => :attendances, :action => :destroy, :id => attendance.id}, :method => :delete) %>">
-		<%=params[:x] ? 'X' : image_tag('accept.png')%>
+		<%=params[:x] ? 'X' : image_tag('accept.png').html_safe%>
 	</td>
 	<% else %>
     <td id="attendance_<%=member.id%>_<%=d.day%>" align="center" onclick="<%= remote_function(:update => "attendance_#{member.id}_#{d.day}",
