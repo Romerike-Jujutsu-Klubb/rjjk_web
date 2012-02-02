@@ -48,7 +48,7 @@ class TrialAttendancesController < ApplicationController
       if @trial_attendance.save
         format.html {
           if (request.xhr?)
-            render :text => '<img src="/images/accept.png"/>'
+            render :text => '<img src="/assets/accept.png"/>'
           else
             redirect_to(@trial_attendance, :notice => 'TrialAttendance was successfully created.')
           end

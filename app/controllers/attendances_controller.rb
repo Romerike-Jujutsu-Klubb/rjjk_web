@@ -54,7 +54,7 @@ class AttendancesController < ApplicationController
         format.html do 
           if (request.xhr?)
             flash.clear
-            render :text => '<img src="/images/accept.png"/>'
+            render :text => '<img src="/assets/accept.png"/>'.html_safe
           else
             redirect_to(@attendance) 
           end
