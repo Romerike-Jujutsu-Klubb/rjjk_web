@@ -14,7 +14,7 @@
   <% end %>
   <tr>
     <th>Totalt</th>
-    <th><%=@by_group.size %></th>
+    <th><%=@by_group.inject(0){|sum, (rank, graduates)| sum + graduates.size} %></th>
   </tr>
 </table>
 
@@ -32,6 +32,6 @@
   <% end %>
   <tr>
     <th>Totalt</th>
-    <th><%=@by_rank.size %></th>
+    <th><%=@by_rank.inject(0){|sum, (rank, graduates)| sum + graduates.size} %></th>
   </tr>
 </table>

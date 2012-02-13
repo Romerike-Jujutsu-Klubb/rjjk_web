@@ -137,7 +137,7 @@
       <file leaf-file-name="annual_summary.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/graduates/annual_summary.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="19" selection-start="698" selection-end="698" vertical-scroll-proportion="0.8422425">
+            <state line="16" column="20" selection-start="347" selection-end="347" vertical-scroll-proportion="0.3963494">
               <folding />
             </state>
           </provider>
@@ -1062,7 +1062,11 @@
       <created>1329165141103</created>
       <updated>1329165141103</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="* La inn rapport for årlig graderingsoversikt">
+      <created>1329165390102</created>
+      <updated>1329165390102</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1332,7 +1336,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/graduates/annual_summary.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="19" selection-start="698" selection-end="698" vertical-scroll-proportion="0.8422425">
+        <state line="16" column="20" selection-start="347" selection-end="347" vertical-scroll-proportion="0.3963494">
           <folding />
         </state>
       </provider>
