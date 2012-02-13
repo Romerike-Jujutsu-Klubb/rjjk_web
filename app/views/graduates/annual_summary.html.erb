@@ -6,10 +6,10 @@
     <th>Gruppe</th>
     <th>Antall</th>
   </tr>
-  <% @by_group.each do |group, graduates| %>
+  <% @by_group.keys.sort_by{|g| g.from_age}.each do |group| %>
       <tr>
         <th><%= group.name %></th>
-        <th><%= graduates.size %></th>
+        <th><%=@by_group[group].size %></th>
       </tr>
   <% end %>
   <tr>
