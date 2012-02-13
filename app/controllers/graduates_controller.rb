@@ -24,11 +24,18 @@ class GraduatesController < ApplicationController
   end
 
   def list
-    if !params[:id]
-      @graduates = Graduate.find(:all, :conditions => "member_id > 0", :order => 'member_id, rank_id DESC')
+    if params[:id]
+      @graduates = Graduate.all(:conditions => "member_id = #{params[:id]}", :order => 'rank_id')
     else
-      @graduates = Graduate.find(:all, :conditions => "member_id = #{params[:id]}", :order => 'rank_id')
+      @graduates = Graduate.all(:conditions => "member_id > 0", :order => 'member_id, rank_id DESC')
     end
+  end
+
+  def annual_summary
+    @year = params[:id]
+    @graduates = Graduate.includes(:graduation).where("DATE_PART('YEAR', graduations.held_on) = ?", @year).order('rank_id').all
+    @by_group = @graduates.group_by{|gr| gr.rank.group}
+    @by_rank = @graduates.group_by{|gr| gr.rank}
   end
 
   def list_graduates

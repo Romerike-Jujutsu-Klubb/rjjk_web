@@ -1,38 +1,52 @@
 <h1>Graderingsskjema</h1>
 
 <style type="text/css">
-	td { padding-right: 1em }
+    td {
+        padding-right: 1em
+    }
 </style>
 
 
 <% [[:grading_form, :betaling], [:grading_form_for_censor, :sensorer]].each do |action, title| %>
 
-<br/>
+    <br/>
 
-<h3>For <%=title%></h3>
+    <h3>For <%= title %></h3>
 
-<table>
-<% for group in @groups %>
-    <tr>
-    	<td>
-    		<%="#{h group.martial_art.name} #{h group.name}" %>
-		</td>
-		<td>
-    		<%=link_to "Alle", :action => action, :group_id => group.id %>
-		</td>
-		<td>
-   			<%=link_to "Nybegynnere", :action => action, :group_id => group.id, :rank_ids => @ranks[group][:beginners] %>
-		</td>
-		<td>
-   			<%=link_to "Videregående", :action => action, :group_id => group.id, :rank_ids => @ranks[group][:advanced] %>
-		</td>
-    </tr>
-<% end %>
-    <tr>
-    	<td>
-    		<%=link_to "Andre", :action => action, :group_id => 'others' %>
-		</td>
-	</tr>
-</table>
+    <table>
+      <% for group in @groups %>
+          <tr>
+            <td>
+              <%= "#{h group.martial_art.name} #{h group.name}" %>
+            </td>
+            <td>
+              <%= link_to "Alle", :action => action, :group_id => group.id %>
+            </td>
+            <td>
+              <%= link_to "Nybegynnere", :action => action, :group_id => group.id, :rank_ids => @ranks[group][:beginners] %>
+            </td>
+            <td>
+              <%= link_to "Videregående", :action => action, :group_id => group.id, :rank_ids => @ranks[group][:advanced] %>
+            </td>
+          </tr>
+      <% end %>
+      <tr>
+        <td>
+          <%= link_to "Andre", :action => action, :group_id => 'others' %>
+        </td>
+      </tr>
+      <tr>
+        <td>Årsoversikt</td>
+        <td>
+          <%= link_to Date.today.cwyear, :controller => :graduates, :action => :annual_summary, :id => Date.today.cwyear %>
+        </td>
+        <td>
+          <%= link_to Date.today.cwyear - 1, :controller => :graduates, :action => :annual_summary, :id => Date.today.cwyear - 1 %>
+        </td>
+        <td>
+          <%= link_to Date.today.cwyear - 2, :controller => :graduates, :action => :annual_summary, :id => Date.today.cwyear - 2 %>
+        </td>
+      </tr>
+    </table>
 
 <% end %>

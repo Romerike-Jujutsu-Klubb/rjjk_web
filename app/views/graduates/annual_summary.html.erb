@@ -1,0 +1,29 @@
+<h1>Oversikt graderinger <%= @year %></h1>
+
+<h2>Fordelt på grupper</h2>
+<table border="1">
+  <tr>
+    <th>Gruppe</th>
+    <th>Antall</th>
+  </tr>
+  <% @by_group.each do |group, graduates| %>
+      <tr>
+        <th><%= group.name %></th>
+        <th><%= graduates.size %></th>
+      </tr>
+  <% end %>
+</table>
+
+<h2>Fordelt på grader</h2>
+<table border="1">
+  <tr>
+    <th>Grad</th>
+    <th>Antall</th>
+  </tr>
+  <% @by_rank.keys.sort_by{|r| r.position}.each do |rank| %>
+      <tr>
+        <th><%= rank.name %></th>
+        <th><%= @by_rank[rank].size %></th>
+      </tr>
+  <% end %>
+</table>
