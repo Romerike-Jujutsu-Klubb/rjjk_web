@@ -12,6 +12,10 @@
         <th><%= graduates.size %></th>
       </tr>
   <% end %>
+  <tr>
+    <th>Totalt</th>
+    <th><%=@by_group.size %></th>
+  </tr>
 </table>
 
 <h2>Fordelt på grader</h2>
@@ -26,4 +30,8 @@
         <th><%= @by_rank[rank].size %></th>
       </tr>
   <% end %>
+  <tr>
+    <th>Totalt</th>
+    <th><%=@by_rank.size %></th>
+  </tr>
 </table>
