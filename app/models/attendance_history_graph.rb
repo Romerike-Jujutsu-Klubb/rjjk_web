@@ -23,7 +23,7 @@ class AttendanceHistoryGraph
     
     #first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = 5.years.ago.to_date
-    first_date = Date.civil(2009, 1, 01)
+    first_date = Date.civil(2010, 8, 01)
     weeks = []
     Date.today.step(first_date, -28){|date| weeks << [date.cwyear, date.cweek]}
     weeks.reverse!
