@@ -6,9 +6,10 @@
 <meta name="description" content="description"/>
 <meta name="keywords" content="keywords"/> 
 <meta name="author" content="author"/> 
-<%#=javascript_include_tag :defaults %>
 <%=javascript_include_tag "prototype" %>
 <%=javascript_include_tag "effects" %>
+<%=csrf_meta_tag %>
+
 <link href="<%=url_for(:controller => 'stylesheets', :action => 'dark_ritual', :format => 'css', :id => @content_width)%>" media="screen" rel="stylesheet" type="text/css" />
 <%=stylesheet_link_tag 'dark_ritual_adaption', :media => 'screen' %>
 <%=stylesheet_link_tag 'lightwindow' %>

@@ -117,7 +117,7 @@ function add_censor(c_id, name){
 	var debug = document.getElementById("debug");
 	
 	if(xmlHttp) {
-		xmlHttp.onreadystatechange=function() {
+		xmlHttp.onreadystatechange = function() {
 			if(xmlHttp.readyState == CONST_AJAX_COMPLETE) {
 					if(xmlHttp.status != CONST_AJAX_HTTP_OK) {
 						alert("Det oppstod en feil (" + xmlHttp.status + ")");
@@ -131,6 +131,14 @@ function add_censor(c_id, name){
 		}
 		xmlHttp.open("POST", "/censors/add_new_censor", true);
 		xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        var csrf_meta_tag = $$('meta[name=csrf-token]')[0];
+
+        if (csrf_meta_tag) {
+          var header = 'X-CSRF-Token',
+              token = csrf_meta_tag.readAttribute('content');
+
+          xmlHttp.setRequestHeader(header,  token);
+        }
 		xmlHttp.send(pvalues);
 	}
 }

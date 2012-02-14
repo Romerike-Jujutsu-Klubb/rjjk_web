@@ -20,7 +20,7 @@ width: 10.0em;
 
 #member_search input.submit
 {
-/* background: #939B00 url('/images/buttonbg.gif') repeat-x; */
+/* background: #939B00 url('/assets/buttonbg.gif') repeat-x; */
 background: #ffb400;
 border: solid 1px #EC9D48;
 font-weight: bold;
@@ -57,20 +57,20 @@ padding: 0em 1.0em 0em 20px;
 
 ul.controls li a.printerfriendly
 {
-background-image: url('/images/icon-printerfriendly.gif');
+background-image: url('/assets/icon-printerfriendly.gif');
 }
 
 ul.controls li a.comments
 {
-background-image: url('/images/icon-comments.gif');
+background-image: url('/assets/icon-comments.gif');
 }
 
 ul.controls li a.more
 {
-background-image: url('/images/icon-more.gif');
+background-image: url('/assets/icon-more.gif');
 }
 
 ul.controls li a.edit
 {
-background-image: url('/images/icon-more.gif');
+background-image: url('/assets/icon-more.gif');
 }
