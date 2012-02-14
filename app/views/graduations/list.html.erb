@@ -102,6 +102,17 @@ function show_glist(file) {
 	}
 }
 
+function add_csrf_header(request) {
+    var csrf_meta_tag = $$('meta[name=csrf-token]')[0];
+
+    if (csrf_meta_tag) {
+      var header = 'X-CSRF-Token',
+          token = csrf_meta_tag.readAttribute('content');
+
+      request.setRequestHeader(header,  token);
+    }
+}
+
 function add_censor(c_id, name){
 	var pvalues;
 	
@@ -131,14 +142,7 @@ function add_censor(c_id, name){
 		}
 		xmlHttp.open("POST", "/censors/add_new_censor", true);
 		xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-        var csrf_meta_tag = $$('meta[name=csrf-token]')[0];
-
-        if (csrf_meta_tag) {
-          var header = 'X-CSRF-Token',
-              token = csrf_meta_tag.readAttribute('content');
-
-          xmlHttp.setRequestHeader(header,  token);
-        }
+        add_csrf_header(xmlHttp);
 		xmlHttp.send(pvalues);
 	}
 }
@@ -172,6 +176,7 @@ function add_graduate(c_id){
 		}
 		xmlHttp.open("POST", "/graduates/add_new_graduate", true);
 		xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        add_csrf_header(xmlHttp);
 		xmlHttp.send(pvalues);
 	}
     document.getElementById('potential_graduate_' + c_id).replace('');

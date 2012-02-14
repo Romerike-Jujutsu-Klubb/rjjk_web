@@ -79,7 +79,7 @@
               <% if below_minimum_age %>
                   <br/><span style="color: red">Aldersgrense for <%=gr.rank.name%> er <%=gr.rank.minimum_age%> år.</span>
               <% elsif not_in_age_group %>
-                  <br/><span style="color: red">Aldergruppe for <%=gr.rank.name%> er <%=gr.rank.group.from_age%>-<%=gr.rank.group.to_age%> år.</span>
+                  <br/><span style="color: red">Aldersgruppe for <%=gr.rank.name%> er <%=gr.rank.group.from_age%>-<%=gr.rank.group.to_age%> år.</span>
               <% end %>
               <% future_graduates = mbr.future_graduates(@graduation) %>
               <% future_graduates.select{|fg| fg.rank.position < gr.rank.position}.each do |fg| %>
