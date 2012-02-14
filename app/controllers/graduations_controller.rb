@@ -52,7 +52,7 @@ class GraduationsController < ApplicationController
     @graduation = Graduation.new(params[:graduation])
     if @graduation.save
       flash[:notice] = 'Graduation was successfully created.'
-      redirect_to :action => 'list'
+      redirect_to :action => :index
     else
       render :action => 'new'
     end
