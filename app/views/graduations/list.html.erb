@@ -285,6 +285,7 @@ function saveGraduateInfo(graduate_id) {
 			}
 			xmlHttp.open("POST", "/graduates/update_graduate", true);
 			xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            add_csrf_header(xmlHttp);
 			xmlHttp.send(pvalues);
 		}
 	}
