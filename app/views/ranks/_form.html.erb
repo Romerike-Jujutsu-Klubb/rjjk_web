@@ -4,7 +4,7 @@
 <p><label for="rank_martial_art_id">Stil</label><br/>
 <%=select 'rank', 'martial_art_id', @martial_arts.map{|ma| [ma.name, ma.id]} %></p>
 
-<p><label for="rank_group_id">Stil</label><br/>
+<p><label for="rank_group_id">Gruppe</label><br/>
 <%=select 'rank', 'group_id', @groups.map{|g| [g.name, g.id]} %></p>
 
 <p><label for="rank_name">Navn</label><br/>
