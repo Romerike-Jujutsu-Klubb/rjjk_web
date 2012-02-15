@@ -86,15 +86,6 @@
                 <br/>(konflikt: <%=link_to %Q{<font color="red">#{fg.rank.name} #{fg.graduation.held_on}</font>}.html_safe, :controller => :graduations, :action => :index, :id => fg.graduation.id %>)
               <% end %>
 
-              <br/>
-              registered trainings: <%=gr.registered_trainings %><br/>
-              training_period: <%= gr.training_period %><br/>
-              attendances: <%= gr.training_attendances %><br/>
-              graduate min: <%= gr.minimum_attendances %><br/>
-              rank minimum: <%= gr.rank.minimum_attendances %><br/>
-              reg. perc.: <%= gr.registration_percentage * 100 %>%<br/>
-              rank min age: <%= gr.rank.minimum_age %><br/>
-              
               <% if gr.training_attendances == 0 %>
                   <br/><span style="color: red">Har ikke vært på trening siden <%=current_graduate ? 'forrige gradering' : 'innmelding'%> (<%=gr.training_start_date%>).</span>
               <% elsif gr.training_attendances < gr.minimum_attendances %>
@@ -103,17 +94,6 @@
                            <% if gr.minimum_attendances <= gr.registered_trainings %>av <%=gr.registered_trainings %><% end %>
                            registrerte treninger.
               <% end %>
-
-              <!--
-              <br/><%#=gr.training_period %>
-              <br/>gr.planned_trainings: <%#=gr.planned_trainings %>
-              <br/>gr.registered_trainings: <%#=gr.registered_trainings %>
-              <br/>gr.registration_percentage : <%#=(100 * gr.registration_percentage).round unless gr.planned_trainings == 0 %>
-              <br/>gr.training_attendances: <%#=gr.training_attendances %>
-              <br/>gr.minimum_attendances : <%#=gr.minimum_attendances %>
-              <br/>gr.rank.minimum_attendances: <%#=gr.rank.minimum_attendances%>
-              <br/>gr.rank.minimum_attendances * gr.registration_percentage: <%#=gr.rank.minimum_attendances * gr.registration_percentage%>
-              -->
 
               <% if gr.member.left_on && gr.member.left_on < gr.graduation.held_on %>
                   <br/><span style="color: red">Deltakeren er utmeldt.</span>
