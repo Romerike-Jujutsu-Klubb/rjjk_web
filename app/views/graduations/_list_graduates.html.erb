@@ -99,7 +99,9 @@
                   <br/><span style="color: red">Har ikke vært på trening siden <%=current_graduate ? 'forrige gradering' : 'innmelding'%> (<%=gr.training_start_date%>).</span>
               <% elsif gr.training_attendances < gr.minimum_attendances %>
                       <br/>Har bare vært på <span style="color: red"><%=gr.training_attendances %> trening<%='er' if gr.training_attendances > 1 %></span> siden <%=current_graduate ? 'forrige gradering' : 'innmelding'%> (<%=gr.training_start_date%>).
-                      <br/>Minimum er <%=gr.minimum_attendances %> av <%=gr.registered_trainings %> registrerte treninger.
+                      <br/>Minimum er <%=gr.minimum_attendances %>
+                           <% if gr.minimum_attendances <= gr.registered_trainings %>av <%=gr.registered_trainings %><% end %>
+                           registrerte treninger.
               <% end %>
 
               <!--
