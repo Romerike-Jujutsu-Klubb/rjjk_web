@@ -200,6 +200,7 @@ function changeStyle() {
 
 	changeGraduationData();
 }
+
 function changeGraduationData() {
 	var obj = document.getElementById('held_on_id')
 	var objIndex = obj.selectedIndex;
@@ -214,6 +215,7 @@ function changeGraduationData() {
 		document.getElementById('results').innerHTML = ""
 	}
 }
+
 function deleteGraduation() {
 	var maObj = document.getElementById('held_on_id');
 	var maIdent = maObj.selectedIndex;
@@ -226,6 +228,7 @@ function deleteGraduation() {
 		changeStyle();
 	}
 }
+
 function removeGraduate(id, name) {
 	if (confirm('Er du sikker på at du vil slette ' + name + ' fra denne graderingen ?')) {
         document.getElementById('graduate_' + id + '_view').replace('');
