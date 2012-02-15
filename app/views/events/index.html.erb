@@ -15,7 +15,7 @@
     <td><%=h event.name %></td>
     <td><%=h event.start_at %></td>
     <td><%=h event.end_at %></td>
-    <td><%=h event.description %></td>
+    <td><%=h event.description.html_safe %></td>
     <td><%= link_to 'Show', event %></td>
     <td><%= link_to 'Edit', edit_event_path(event) %></td>
     <td><%= link_to 'Destroy', event, :confirm => 'Are you sure?', :method => :delete %></td>
