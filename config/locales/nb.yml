@@ -107,7 +107,7 @@ nb:
   activerecord:
     errors:
       template:
-        header: "Kunne ikke lagre {{model}} på grunn av {{count}} feil."
+        header: "Kunne ikke lagre %{model} på grunn av %{count} feil."
         body: "Det oppstod problemer i følgende felt:"
       # The values :model, :attribute and :value are always available for interpolation
       # The value :count is available when applicable. Can be used for pluralization.
@@ -131,7 +131,7 @@ nb:
         less_than_or_equal_to: "må være mindre enn eller lik {{count}}"
         odd: "må være oddetall"
         even: "må være partall"
-        
+
       # You can define own errors for models or model attributes.
       # The values :model, :attribute and :value are always available for interpolation.
       #
@@ -145,13 +145,13 @@ nb:
       # Will define custom blank validation message for User model and
       # custom blank validation message for login attribute of User model.
       models:
-        
+
     # Translate model names. Used in Model.human_name().
     models:
 
     # Translate model attribute names. Used in Model.human_attribute_name(attribute).
-    attributes:  
-  
+    attributes:
+
   # Controller
   user_login_succeeded: Login successful
   user_login_failed: Login unsuccessful

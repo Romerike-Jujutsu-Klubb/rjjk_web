@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   before_filter :admin_required, :except => [:index, :show]
   
   def index
-    @events = Event.find(:all)
+    @events = Event.all
   end
   
   def show
@@ -22,7 +22,7 @@ class EventsController < ApplicationController
     
     if @event.save
       flash[:notice] = 'Event was successfully created.'
-      redirect_to :controller => :welcome
+      redirect_to(@event)
     else
       render :action => "new"
     end

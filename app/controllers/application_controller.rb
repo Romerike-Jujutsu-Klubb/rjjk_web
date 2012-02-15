@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     if not admin?
       @information_pages = @information_pages.select{|ip| ip.visible?}
     end
-    @events = Event.find(:all, :conditions => ['(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)', Date.today, Date.today], :order => 'start_at', :limit => 5)
+    @events = Event.all(:conditions => ['(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)', Date.today, Date.today], :order => 'start_at', :limit => 5)
   end
 
 end
