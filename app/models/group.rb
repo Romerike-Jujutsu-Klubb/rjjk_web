@@ -20,12 +20,10 @@ class Group < ActiveRecord::Base
 
   def registered_trainings_in_period(period)
     return 0 if group_schedules.empty?
-    Attendance.count(
-        :select => 'DISTINCT(group_schedule_id, year, week)',
-        :conditions => [
-            'group_schedule_id IN (?) AND (year > ? OR (year = ? AND week >= ?)) AND (year < ? OR (year = ? AND week <= ?))',
-            group_schedules.map(&:id), *([[period.first.year]*2, period.first.cweek, [period.last.year]*2, period.last.cweek]).flatten]
-    )
+    Attendance.
+        group('group_schedule_id, year, week').
+        where(*['group_schedule_id IN (?) AND (year > ? OR (year = ? AND week >= ?)) AND (year < ? OR (year = ? AND week <= ?))', group_schedules.map(&:id), *([[period.first.year]*2, period.first.cweek, [period.last.year]*2, period.last.cweek]).flatten]).
+        count.inject(0){|sum, (k, v)| sum + v}
   end
 
 end
