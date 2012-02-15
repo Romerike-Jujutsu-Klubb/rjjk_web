@@ -4,13 +4,13 @@
 <% for image in @images.sort_by{|i|i.name.upcase} %>
   <tr>
     <td>
-    	<%=lightwindow_link_to(
+    	<%=link_to_redbox(
         image_tag(url_for(:only_path => false, :controller => 'images', :action => :inline, :id => image.id, :format => image.format), :width => 160, :title => h(image.name), :alt => h(image.name)),
 		{:controller => 'images', :action => 'show', :id => image.id}, :title => h(image.name),
         :author=>"RJJK",
         :caption => h(image.name)
       	) %>
-    	<%=lightwindow_link_to(
+    	<%=link_to_redbox(
         'Light',
 		{:controller => 'images', :action => 'show', :id => image.id}, :title => h(image.name),
         :author=>"RJJK",

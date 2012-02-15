@@ -1,5 +1,8 @@
+require 'redbox_helper'
+
 module ApplicationHelper
   include UserSystem
+  include RedboxHelper
 
   def menu_item(name, options = {})
     options[:controller] ||= 'info'
