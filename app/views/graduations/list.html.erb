@@ -356,7 +356,7 @@ function cancelSaveGraduateInfo(graduate_id) {
 		<% end %>
 	</td>
 	</form>
-    <td align="center"><%=link_to 'Diplomer', {:action => :certificates, :id => ''}, :id => :certificates_link %></td>
+    <td align="center"><%=link_to 'Diplomer', {:action => :certificates, :id => @graduation.id}, :id => :certificates_link %></td>
 </tr>
 <tr><td colspan="3">&nbsp;</td></tr>
 <tr>
