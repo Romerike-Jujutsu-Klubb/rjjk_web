@@ -70,6 +70,7 @@ function callAjaxObject(file, object) {
 			}
 		}
 		xmlHttp.open("POST", file, true);
+        add_csrf_header(xmlHttp);
 		xmlHttp.send(null);
 	}
 }
