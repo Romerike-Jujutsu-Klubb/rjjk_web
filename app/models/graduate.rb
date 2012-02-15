@@ -31,7 +31,7 @@ class Graduate < ActiveRecord::Base
   end
 
   def registration_percentage
-    return 100 if planned_trainings == 0
+    return 1 if planned_trainings == 0
     registered_trainings.to_f / planned_trainings
   end
 
