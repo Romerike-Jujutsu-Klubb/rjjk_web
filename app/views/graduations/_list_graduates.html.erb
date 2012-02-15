@@ -86,9 +86,9 @@
                 <br/>(konflikt: <%=link_to %Q{<font color="red">#{fg.rank.name} #{fg.graduation.held_on}</font>}, :controller => :graduations, :action => :index, :id => fg.graduation.id %>)
               <% end %>
               <% if gr.training_attendances == 0 %>
-                  <br/><span style="color: red">Har ikke vært på trening siden <%=current_graduate ? "forrige gradering (#{gr.training_start_date})" : 'innmelding'%>.</span>
+                  <br/><span style="color: red">Har ikke vært på trening siden <%=current_graduate ? 'forrige gradering' : 'innmelding'%> (<%=gr.training_start_date%>).</span>
               <% elsif gr.training_attendances < gr.minimum_attendances %>
-                      <br/>Har bare vært på <span style="color: red"><%=gr.training_attendances %> trening<%='er' if gr.training_attendances > 1 %></span> siden <%=current_graduate ? 'forrige gradering' : 'innmelding'%>.
+                      <br/>Har bare vært på <span style="color: red"><%=gr.training_attendances %> trening<%='er' if gr.training_attendances > 1 %></span> siden <%=current_graduate ? 'forrige gradering' : 'innmelding'%> (<%=gr.training_start_date%>).
                       <br/>Minimum er <%=gr.minimum_attendances %> av <%=gr.registered_trainings %> registrerte treninger.
               <% end %>
 
