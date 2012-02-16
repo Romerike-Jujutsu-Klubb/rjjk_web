@@ -9,7 +9,7 @@ class MemberGradeHistoryGraph
     end
 
     ranks = MartialArt.find_by_name('Kei Wa Ryu').ranks.reverse
-    ranks = ranks.last(8) if Rails.env == 'production'
+    ranks = ranks.first(8) if Rails.env == 'production'
 
     g = Gruff::Line.new(size)
     g.theme_37signals
