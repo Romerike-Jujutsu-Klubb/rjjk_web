@@ -12,6 +12,7 @@
   </tr>
   <% for group in @groups %>
       <% emails = group.members.active(Date.today).map { |m| m.email }.compact.uniq %>
+      <% next if emails.empty? %>
       <% missing_emails = group.members.active(Date.today).size - emails.size %>
       <tr>
         <td>Aktive <%= group.martial_art.family %> <%= group.name %></td>
