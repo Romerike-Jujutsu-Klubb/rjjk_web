@@ -82,7 +82,7 @@ class MembersController < ApplicationController
   
   def attendance_form_index
     @groups = []
-    MartialArt.find(:all, :order => :family).each do |ma| 
+    MartialArt.all(:order => :family).each do |ma|
       ma.groups.each do |group|
         @groups << group
       end
@@ -119,7 +119,7 @@ class MembersController < ApplicationController
   
   def new
     @member ||= Member.new
-    @groups = Group.find(:all, :include => :martial_art, :order => 'martial_arts.name, groups.name')
+    @groups = Group.all(:include => :martial_art, :order => 'martial_arts.name, groups.name')
   end
   
   def create
@@ -151,7 +151,7 @@ class MembersController < ApplicationController
   
   def edit
     @member = Member.find(params[:id])
-    @groups = Group.find(:all, :include => :martial_art, :order => 'martial_arts.name, groups.name')
+    @groups = Group.all(:include => :martial_art, :order => 'martial_arts.name, groups.name')
   end
   
   def update
@@ -161,7 +161,7 @@ class MembersController < ApplicationController
       flash[:notice] = 'Medlemmet oppdatert.'
       redirect_to :action => :edit, :id => @member
     else
-      @groups = Group.find(:all, :include => :martial_art, :order => 'martial_arts.name, groups.name')
+      @groups = Group.all(:include => :martial_art, :order => 'martial_arts.name, groups.name')
       render :action => 'edit'
     end
   end
@@ -183,12 +183,12 @@ class MembersController < ApplicationController
   end
   
   def telephone_list
-    @groups = Group.find(:all, :include => :members)
+    @groups = Group.all(:include => :members)
   end
   
   def email_list
-    @groups = Group.find(:all, :include => :members)
-    @former_members = Member.find(:all, :conditions => 'left_on IS NOT NULL')
+    @groups = Group.all(:include => :members)
+    @former_members = Member.all(:conditions => 'left_on IS NOT NULL')
     @administrators = User.find_administrators
     @administrator_emails = @administrators.map{|m|m.email}.compact.uniq
     @missing_administrator_emails = @administrators.size - @administrator_emails.size
@@ -252,11 +252,11 @@ class MembersController < ApplicationController
   def grading_form_index
     @groups = []
     @ranks = {}
-    MartialArt.find(:all, :order => :family, :include => :groups).each do |ma| 
+    MartialArt.all(:order => :family, :include => :groups).each do |ma|
       ma.groups.each do |group|
         @groups << group
         @ranks[group] = {}
-        group_ranks = group.members.active(Date.today).find(:all, :select => 'id').map{|m| m.current_rank(ma)}.sort_by{|r| r ? r.position : -99}.map{|r| r ? r.id : 'nil'}
+        group_ranks = group.members.active(Date.today).all(:select => 'id').map{|m| m.current_rank(ma)}.sort_by{|r| r ? r.position : -99}.map{|r| r ? r.id : 'nil'}
         midle = (group_ranks.size - 1) / 2
         @ranks[group][:beginners] = group_ranks[0..midle].uniq
         @ranks[group][:advanced]  = (group_ranks[midle..-1] || []).uniq[1..-1] || []

@@ -58,7 +58,7 @@ class MemberGradeHistoryGraph
         :include => {:graduates => {:graduation => :martial_art}}
       )
       ranks = active_members.select{|m| m.graduates.select{|g| g.graduation.martial_art.name =='Kei Wa Ryu' && g.graduation.held_on <= date}.sort_by{|g| g.graduation.held_on}.last.try(:rank) == rank}.size
-      logger.debug "Active members: #{active_members.size}, ranks: #{ranks}"
+      logger.debug "#{prev_date} #{date} #{next_date} Active members: #{active_members.size}, ranks: #{ranks}"
       ranks
     end
   end
