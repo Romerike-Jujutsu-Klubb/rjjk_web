@@ -13,11 +13,11 @@
   <% for group in @groups %>
       <% emails = group.members.active(Date.today).map { |m| m.email }.compact.uniq %>
       <% next if emails.empty? %>
-      <% missing_emails = group.members.active(Date.today).size - emails.size %>
+      <% missing_emails = group.members.active(Date.today).select{|m| m.email.blank?} %>
       <tr>
         <td>Aktive <%= group.martial_art.family %> <%= group.name %></td>
         <td><%= link_to 'Send e-post', "mailto:#{emails * ','}?subject=[RJJK] Melding fra RJJK&body=Din tekst her." %></td>
-        <td>(<%= emails.size %>stk<%= ", #{missing_emails} mangler adresse" if missing_emails.nonzero? %>)</td>
+        <td>(<%= emails.size %>stk<%= ", #{missing_emails.size} mangler adresse" if missing_emails.any? %>)</td>
       </tr>
   <% end %>
   <tr>

@@ -11,7 +11,7 @@ class NewsController < ApplicationController
   #       :redirect_to => { :action => :list }
 
   def list
-    @news_items = NewsItem.find(:all, :order => 'created_at DESC', :limit => 10)
+    @news_items = NewsItem.all(:order => 'created_at DESC', :limit => 10)
   end
 
   def show
@@ -20,7 +20,7 @@ class NewsController < ApplicationController
 
   def new
     @news_item = NewsItem.new
-    @images = Image.find(:all, :conditions => "name NOT LIKE '%.MP4'", :select => 'id, name')
+    @images = Image.all(:conditions => "name NOT LIKE '%.MP4'", :select => 'id, name')
   end
 
   def create
@@ -35,7 +35,7 @@ class NewsController < ApplicationController
 
   def edit
     @news_item = NewsItem.find(params[:id])
-    @images = Image.find(:all, :conditions => "name NOT LIKE '%.MP4'", :select => 'id, name')
+    @images = Image.all(:conditions => "name NOT LIKE '%.MP4'", :select => 'id, name')
   end
 
   def update
