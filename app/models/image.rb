@@ -2,7 +2,9 @@ class Image < ActiveRecord::Base
   def file=(file)
     return if file == ""
     self.name = file.original_filename if name.blank?
-    file.binmode
+    logger.info file.tempfile.to_s
+    logger.info `ls -l #{file.tempfile}`
+    file.tempfile.binmode
     file.rewind
     self.content_data = file.read
     self.content_type = file.content_type
@@ -21,17 +23,4 @@ class Image < ActiveRecord::Base
     data
   end
 
-end
-
-module ActionDispatch
-  module Http
-    class UploadedFile
-      def binmode
-        puts
-        puts "Setting binmode"
-        puts
-        @tempfile.binmode
-      end
-    end
-  end
 end
