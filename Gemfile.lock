@@ -61,7 +61,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.17.2)
-    multi_json (1.0.4)
+    multi_json (1.1.0)
     pdf-reader (1.0.0)
       Ascii85 (~> 1.0.0)
       ruby-rc4
@@ -101,7 +101,7 @@ GEM
     redbox (1.0.4)
     rmagick4j (0.3.7)
     ruby-rc4 (0.1.5)
-    simple_workflow (0.0.6)
+    simple_workflow (0.1.0)
       rails (>= 2.3.2)
     sprockets (2.0.3)
       hike (~> 1.2)
