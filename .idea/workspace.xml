@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/image.rb" afterPath="$PROJECT_DIR$/app/models/image.rb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -89,37 +89,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="_form.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/images/_form.html.erb">
+      <file leaf-file-name="image.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/models/image.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="0" selection-start="677" selection-end="677" vertical-scroll-proportion="-13.571428">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Gemfile.lock" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Gemfile.lock">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-2.2972972">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_list.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/images/_list.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="13" selection-start="679" selection-end="679" vertical-scroll-proportion="-8.821428">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="images_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/images_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="7" selection-start="714" selection-end="714" vertical-scroll-proportion="0.0">
+            <state line="14" column="52" selection-start="348" selection-end="348" vertical-scroll-proportion="0.3783784">
               <folding />
             </state>
           </provider>
@@ -165,11 +138,11 @@
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
         <option value="$PROJECT_DIR$/app/views/images/_list.html.erb" />
-        <option value="$PROJECT_DIR$/app/models/image.rb" />
         <option value="$PROJECT_DIR$/app/controllers/images_controller.rb" />
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/app/views/images/_form.html.erb" />
         <option value="$PROJECT_DIR$/Gemfile.lock" />
+        <option value="$PROJECT_DIR$/app/models/image.rb" />
       </list>
     </option>
   </component>
@@ -237,6 +210,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1143,7 +1148,11 @@
       <created>1329618686101</created>
       <updated>1329618686101</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="* Fikset bildeopplasting">
+      <created>1329619756102</created>
+      <updated>1329619756102</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1356,13 +1365,6 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/image.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="59" selection-start="355" selection-end="355" vertical-scroll-proportion="0.3783784">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/images/pdficon_large.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1394,30 +1396,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/images_controller.rb">
+    <entry file="file://$PROJECT_DIR$/Gemfile.lock">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="7" selection-start="714" selection-end="714" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/images/_list.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="13" selection-start="679" selection-end="679" vertical-scroll-proportion="-8.821428">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-2.2972972">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/images/_form.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="0" selection-start="677" selection-end="677" vertical-scroll-proportion="-13.571428">
+        <state line="20" column="0" selection-start="677" selection-end="677" vertical-scroll-proportion="0.56296295">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile.lock">
+    <entry file="file://$PROJECT_DIR$/app/views/images/_list.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-2.2972972">
+        <state line="13" column="13" selection-start="679" selection-end="679" vertical-scroll-proportion="0.37311178">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/images_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="7" selection-start="714" selection-end="714" vertical-scroll-proportion="0.21906117">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/image.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="52" selection-start="348" selection-end="348" vertical-scroll-proportion="0.3783784">
           <folding />
         </state>
       </provider>

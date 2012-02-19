@@ -12,7 +12,7 @@ class Image < ActiveRecord::Base
 
   def content_data
     data = super
-    return eval("\"#{data}\"") if data =~ /^\\377\\330\\377/
+    return eval("\"#{data}\"") if data =~ /JFIF|Exif/
     data
   end
 
