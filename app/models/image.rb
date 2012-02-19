@@ -3,6 +3,7 @@ class Image < ActiveRecord::Base
     return if file == ""
     self.name = file.original_filename if name.blank?
     file.binmode
+    file.rewind
     self.content_data = file.read
     self.content_type = file.content_type
     logger.info ""
@@ -26,6 +27,9 @@ module ActionDispatch
   module Http
     class UploadedFile
       def binmode
+        puts
+        puts "Setting binmode"
+        puts
         @tempfile.binmode
       end
     end
