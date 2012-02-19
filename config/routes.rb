@@ -4,7 +4,6 @@ RjjkWeb::Application.routes.draw do
   match 'stylesheets/dark_ritual.:format', :controller => 'stylesheets', :action => 'dark_ritual'
   match ':controller/active_contracts', :action => 'active_contracts'
   match ':controller/create', :action => 'create'
-  match ':controller/destroy', :action => 'destroy'
   match ':controller/excel_export', :action => 'excel_export'
   match ':controller/yaml', :action => 'yaml'
 

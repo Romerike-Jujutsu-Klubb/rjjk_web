@@ -65,7 +65,7 @@ class ImagesController < ApplicationController
 
   def destroy
     Image.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    back_or_redirect_to :action => 'list'
   end
   
   def image_list
