@@ -2,9 +2,12 @@ class Image < ActiveRecord::Base
   def file=(file)
     return if file == ""
     self.name = file.original_filename if name.blank?
+    file.binmode
     self.content_data = file.read
     self.content_type = file.content_type
+    logger.info ""
     logger.info "Stored image: #{content_data.size} bytes"
+    logger.info ""
   end
   
   def format
@@ -17,4 +20,14 @@ class Image < ActiveRecord::Base
     data
   end
 
+end
+
+module ActionDispatch
+  module Http
+    class UploadedFile
+      def binmode
+        @tempfile.binmode
+      end
+    end
+  end
 end
