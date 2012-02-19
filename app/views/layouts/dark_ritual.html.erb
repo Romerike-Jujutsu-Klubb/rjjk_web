@@ -12,22 +12,25 @@
   <%= javascript_include_tag :rails %>
   <%= csrf_meta_tag %>
 
-  <link href="<%=url_for(:controller => 'stylesheets', :action => 'dark_ritual', :format => 'css', :id => @content_width)%>" media="screen" rel="stylesheet" type="text/css" />
-<%=stylesheet_link_tag 'dark_ritual_adaption', :media => 'screen' %>
-<%=stylesheet_link_tag 'lightwindow' %>
-<title>Romerike Jujutsu Klubb</title>
+  <link href="<%= url_for(:controller => 'stylesheets', :action => 'dark_ritual', :format => 'css', :id => @content_width) %>" media="screen" rel="stylesheet" type="text/css"/>
+  <%= stylesheet_link_tag 'dark_ritual_adaption', :media => 'screen' %>
+  <%= stylesheet_link_tag 'lightwindow' %>
+  <title>Romerike Jujutsu Klubb</title>
 
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-20693372-1']);
-  _gaq.push(['_trackPageview']);
+  <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-20693372-1']);
+      _gaq.push(['_trackPageview']);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
+      (function () {
+          var ga = document.createElement('script');
+          ga.type = 'text/javascript';
+          ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(ga, s);
+      })();
+  </script>
 
 </head>
 
@@ -35,17 +38,22 @@
 
 <div class="container">
 
-	<div class="header">Romerike Jujutsu Klubb
-		<br/>
-      <span style="background: white; border: 1px solid yellow; font-size: 10pt"><%= flash[:notice] %></span>
-		<span style="font-size: 10pt; text-align: center">
-			<%=link_to 'Logg på NKF', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login', :onclick => 'return !window.open(this.href)', :style => 'margin-right: 50px' %>
-			<%=link_to 'FaceBook', 'http://www.facebook.com/home.php#!/pages/Romerike-Jujutsu-Klubb/260684570923?ref=ts', :onclick => 'return !window.open(this.href)' %>
-          <%=link_to 'Bli medlem!', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)' %>
-		</span>
-	</div>
+  <div class="header">
+    Romerike Jujutsu Klubb<br/>
 
-	<div class="main_right">
+    <% if flash[:notice] %>
+        <div style="width: 45% ; height: 3em ; background: white; margin-left: 1em ; border: 1px solid yellow; font-size: 10pt ; float: left">
+          <%= flash[:notice] %>
+        </div>
+    <% end %>
+    <span style="font-size: 10pt; text-align: center">
+      <%= link_to 'Logg på NKF', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login', :onclick => 'return !window.open(this.href)', :style => 'margin-right: 50px' %>
+      <%= link_to 'FaceBook', 'http://www.facebook.com/home.php#!/pages/Romerike-Jujutsu-Klubb/260684570923?ref=ts', :onclick => 'return !window.open(this.href)' %>
+      <%= link_to 'Bli medlem!', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)' %>
+	</span>
+  </div>
+
+  <div class="main_right">
 
 		<div class="padded">
       <%=image_tag 'rjjk_logo_&_txt_320.png', :style => 'width: 182px; height: 181px; border: 0' %>
