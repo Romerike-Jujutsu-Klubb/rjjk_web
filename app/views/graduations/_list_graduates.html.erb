@@ -56,7 +56,7 @@
              ln = mbr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
       %>
           <tr id='graduate_<%= gr.id %>_view' style="vertical-align: top;">
-            <% below_minimum_age = mbr.age < gr.rank.minimum_age %>
+            <% below_minimum_age = mbr.age && mbr.age < gr.rank.minimum_age %>
             <% not_in_age_group = !(gr.rank.group.from_age..gr.rank.group.to_age).include?(mbr.age) %>
             <td valign='top'>
               <%=link_to "#{fn} #{ln}", :controller => :members, :action => :edit, :id => mbr.id %>

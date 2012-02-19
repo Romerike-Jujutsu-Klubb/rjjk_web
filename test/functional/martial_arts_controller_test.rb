@@ -12,7 +12,8 @@ class MartialArtsControllerTest < ActionController::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
 
-    @first_id = martial_arts(:one).id
+    @first_id = martial_arts(:keiwaryu).id
+    login(:admin)
   end
 
   def test_index

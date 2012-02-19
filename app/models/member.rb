@@ -13,7 +13,7 @@ class Member < ActiveRecord::Base
 
   # validates_presence_of :address, :cms_contract_id
   validates_length_of :billing_postal_code, :is => 4, :if => Proc.new { |m| m.billing_postal_code && !m.billing_postal_code.empty? }
-  # validates_presence_of :birthdate, :join_on
+  validates_presence_of :birthdate, :joined_on
   validates_uniqueness_of :cms_contract_id, :if => :cms_contract_id
   validates_presence_of :first_name, :last_name
   validates_inclusion_of :instructor, :in => [true, false]
@@ -72,9 +72,9 @@ class Member < ActiveRecord::Base
     if current_rank
       next_rank = ma.ranks.select { |r| !future_ranks(graduation).include?(r) && r.position > current_rank.position &&
           age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age) }.first
-      next_rank ||= Rank.find(:first, :conditions => ['martial_art_id = ? AND position = ?', ma, current_rank.position + 1])
+      next_rank ||= Rank.first(:conditions => ['martial_art_id = ? AND position = ?', ma, current_rank.position + 1])
     end
-    next_rank ||= ma.ranks.select { |r| age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age) }.first
+    next_rank ||= ma.ranks.select { |r| age.nil? || (age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age))}.first
     next_rank ||= ma.ranks.first
     next_rank
   end

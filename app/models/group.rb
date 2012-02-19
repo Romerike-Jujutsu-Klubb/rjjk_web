@@ -4,6 +4,8 @@ class Group < ActiveRecord::Base
   has_many :group_schedules
   has_many :ranks, :order => :position
 
+  validates_presence_of :martial_art
+
   def full_name
     "#{martial_art.name} #{name}"
   end

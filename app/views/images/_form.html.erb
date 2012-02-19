@@ -1,12 +1,18 @@
-<%=image_tag(url_for(:action => :show, :id => @image.id, :format => @image.format), :style => 'float: right; width: 45%') if @image.name%>
-<%= error_messages_for 'image' %>
+<%= form_for @image do |f| %>
+    <div style="float: right; width: 45%; text-align: center">
+      <%=image_tag(url_for(:action => :show, :id => @image.id, :format => @image.format), :style => 'width: 100%') if @image.name %>
+      (<%= @image.content_data.size / 1024 %>KB)
+    </div>
+    <%= error_messages_for 'image' %>
 
-<!--[form:image]-->
-<p><label for="image_name">Navn</label><br/>
-<%=text_field 'image', 'name'  %></p>
-</p>
+    <p><%= f.label :name, 'Navn' %><br/>
+      <%= f.text_field :name %>
+    </p>
 
-<p><label for="image_content_data">Bilde</label><br/>
-<%=file_field 'image', 'file', :style => 'width: 45%' %></p>
-</p>
-<!--[eoform:image]-->
+    <p><%= f.label :file, 'Bilde' %><br/>
+      <%= f.file_field :file, :style => 'width: 45%' %>
+    </p>
+
+    <%= f.submit 'Lagre' %>
+    <%= back_or_link_to 'Tilbake', :action => 'list' %>
+<% end %>

@@ -1,6 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GroupsControllerTest < ActionController::TestCase
+  def setup
+    login(:admin)
+  end
+
   def test_should_get_index
     get :index
     assert_response :success
@@ -21,23 +25,23 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   def test_should_show_group
-    get :show, :id => groups(:one).id
+    get :show, :id => groups(:panda).id
     assert_response :success
   end
 
   def test_should_get_edit
-    get :edit, :id => groups(:one).id
+    get :edit, :id => groups(:panda).id
     assert_response :success
   end
 
   def test_should_update_group
-    put :update, :id => groups(:one).id, :group => { }
+    put :update, :id => groups(:panda).id, :group => { }
     assert_redirected_to group_path(assigns(:group))
   end
 
   def test_should_destroy_group
     assert_difference('Group.count', -1) do
-      delete :destroy, :id => groups(:one).id
+      delete :destroy, :id => groups(:panda).id
     end
 
     assert_redirected_to groups_path

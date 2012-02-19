@@ -3,7 +3,7 @@ class GroupSchedulesController < ApplicationController
   # GET /group_schedules
   # GET /group_schedules.xml
   def index
-    @group_schedules = GroupSchedule.find(:all).sort_by{|gs| [gs.weekday == 0 ? 7 : gs.weekday, gs.start_at, gs.end_at]}
+    @group_schedules = GroupSchedule.all.sort_by{|gs| [gs.weekday == 0 ? 7 : gs.weekday, gs.start_at, gs.end_at]}
 
     respond_to do |format|
       format.html # index.html.erb
@@ -31,11 +31,11 @@ class GroupSchedulesController < ApplicationController
   # GET /group_schedules/new
   # GET /group_schedules/new.xml
   def new
-    @group_schedule = GroupSchedule.new
-    @groups = Group.find(:all)
+    @group_schedule ||= GroupSchedule.new
+    @groups = Group.all
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html {render :action => "new"}
       format.xml  { render :xml => @group_schedule }
     end
   end
@@ -43,7 +43,7 @@ class GroupSchedulesController < ApplicationController
   # GET /group_schedules/1/edit
   def edit
     @group_schedule = GroupSchedule.find(params[:id])
-    @groups = Group.find(:all)
+    @groups = Group.all
   end
 
   # POST /group_schedules
@@ -57,7 +57,7 @@ class GroupSchedulesController < ApplicationController
         format.html { redirect_to(@group_schedule) }
         format.xml  { render :xml => @group_schedule, :status => :created, :location => @group_schedule }
       else
-        format.html { render :action => "new" }
+        format.html { new }
         format.xml  { render :xml => @group_schedule.errors, :status => :unprocessable_entity }
       end
     end

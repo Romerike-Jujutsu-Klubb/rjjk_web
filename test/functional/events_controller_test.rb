@@ -1,6 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class EventsControllerTest < ActionController::TestCase
+  def setup
+    login(:admin)
+  end
+
   def test_should_get_index
     get :index
     assert_response :success
@@ -14,7 +18,8 @@ class EventsControllerTest < ActionController::TestCase
 
   def test_should_create_event
     assert_difference('Event.count') do
-      post :create, :event => { }
+      post :create, :event => {:name => 'Stuff', :start_at => '2012-02-18'}
+      assert_no_errors :event
     end
 
     assert_redirected_to event_path(assigns(:event))

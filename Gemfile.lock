@@ -17,6 +17,7 @@ GEM
       rack-mount (~> 0.8.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.0.3)
+    active_record_foreign_keys (1.0.0)
     activemodel (3.1.3)
       activesupport (= 3.1.3)
       builder (~> 3.0.0)
@@ -48,6 +49,8 @@ GEM
     erubis (2.7.0)
     execjs (1.3.0)
       multi_json (~> 1.0)
+    foreign_key_migrations (0.3.0)
+      activerecord (>= 1.15.0)
     gruff (0.3.6)
     hike (1.2.1)
     i18n (0.6.0)
@@ -101,6 +104,8 @@ GEM
     redbox (1.0.4)
     rmagick4j (0.3.7)
     ruby-rc4 (0.1.5)
+    simple_workflow (0.0.6)
+      rails (>= 2.3.2)
     sprockets (2.0.3)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -130,11 +135,13 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth
+  active_record_foreign_keys
   activerecord-jdbcpostgresql-adapter
   acts_as_list
   acts_as_tree
   delayed_job (~> 2.1)
   dynamic_form
+  foreign_key_migrations
   gruff
   jruby-openssl (!= 0.7.6)
   prawn
@@ -143,6 +150,7 @@ DEPENDENCIES
   rdoc
   redbox (~> 1.0.4)
   rmagick4j
+  simple_workflow
   tinymce-rails
   trinidad
   trinidad_daemon_extension

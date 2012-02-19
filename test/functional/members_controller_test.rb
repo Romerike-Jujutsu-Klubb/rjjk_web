@@ -46,7 +46,6 @@ class MembersControllerTest < ActionController::TestCase
     post :create, :member => { :male => true,
       :first_name => 'Lars',
       :last_name => 'Bråten',
-      :senior => true,
       :address => 'Torsvei 8b',
       :postal_code => 1472,
       :payment_problem => false,

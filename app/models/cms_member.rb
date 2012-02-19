@@ -1,9 +1,8 @@
 class CmsMember < ActiveRecord::Base
   ACTIVE_CONDITIONS = "left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)"
   
-  validates_presence_of :first_name, :last_name, :address, :postal_code, :cms_contract_id
-  validates_inclusion_of(:payment_problem, :in => [true, false])
-  validates_inclusion_of(:male, :in => [true, false])
+  validates_presence_of :address, :first_name, :last_name, :postal_code
+  validates_inclusion_of(:instructor, :male, :nkf_fee, :payment_problem, :in => [true, false])
   validates_length_of :postal_code, :is => 4
   validates_length_of :billing_postal_code, :is => 4, :if => :billing_postal_code
   validates_uniqueness_of :cms_contract_id

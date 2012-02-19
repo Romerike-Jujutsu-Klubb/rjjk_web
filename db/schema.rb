@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
     t.datetime "updated_at"
   end
 
-  add_index "attendances", ["member_id", "group_schedule_id", "year", "week"], :name => "ix_attendances_on_member_id_et_group_schedule_id_et_year_et_wee", :unique => true
+  add_index "attendances", ["member_id", "group_schedule_id", "year", "week"], :name => "index_attendances_on_member_id_and_group_schedule_id_and_year_a", :unique => true
 
   create_table "censors", :force => true do |t|
     t.integer "graduation_id", :null => false
@@ -138,41 +138,39 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
   end
 
   create_table "members", :force => true do |t|
-    t.string   "first_name",           :limit => 100, :default => "", :null => false
-    t.string   "last_name",            :limit => 100, :default => "", :null => false
-    t.string   "email",                :limit => 128
-    t.string   "phone_mobile",         :limit => 32
-    t.string   "phone_home",           :limit => 32
-    t.string   "phone_work",           :limit => 32
-    t.string   "phone_parent",         :limit => 32
-    t.date     "birthdate"
-    t.boolean  "male",                                                :null => false
-    t.date     "joined_on"
-    t.integer  "contract_id"
-    t.integer  "cms_contract_id"
-    t.date     "left_on"
-    t.string   "parent_name",          :limit => 100
-    t.string   "address",              :limit => 100, :default => "", :null => false
-    t.string   "postal_code",          :limit => 4,                   :null => false
-    t.string   "billing_type",         :limit => 100
-    t.string   "billing_name",         :limit => 100
-    t.string   "billing_address",      :limit => 100
-    t.string   "billing_postal_code",  :limit => 4
-    t.boolean  "payment_problem",                                     :null => false
-    t.string   "comment"
-    t.boolean  "instructor",                                          :null => false
-    t.boolean  "nkf_fee",                                             :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "social_sec_no",        :limit => 11
-    t.string   "account_no",           :limit => 16
-    t.string   "billing_phone_home",   :limit => 32
-    t.string   "billing_phone_mobile", :limit => 32
-    t.string   "rfid",                 :limit => 25
-    t.binary   "image"
-    t.string   "image_name",           :limit => 64
-    t.string   "image_content_type",   :limit => 32
-    t.string   "kid",                  :limit => 64
+    t.string  "first_name",           :limit => 100, :default => "", :null => false
+    t.string  "last_name",            :limit => 100, :default => "", :null => false
+    t.string  "email",                :limit => 128
+    t.string  "phone_mobile",         :limit => 32
+    t.string  "phone_home",           :limit => 32
+    t.string  "phone_work",           :limit => 32
+    t.string  "phone_parent",         :limit => 32
+    t.date    "birthdate"
+    t.boolean "male",                                                :null => false
+    t.date    "joined_on"
+    t.integer "contract_id"
+    t.integer "cms_contract_id"
+    t.date    "left_on"
+    t.string  "parent_name",          :limit => 100
+    t.string  "address",              :limit => 100, :default => "", :null => false
+    t.string  "postal_code",          :limit => 4,                   :null => false
+    t.string  "billing_type",         :limit => 100
+    t.string  "billing_name",         :limit => 100
+    t.string  "billing_address",      :limit => 100
+    t.string  "billing_postal_code",  :limit => 4
+    t.boolean "payment_problem",                                     :null => false
+    t.string  "comment"
+    t.boolean "instructor",                                          :null => false
+    t.boolean "nkf_fee",                                             :null => false
+    t.string  "social_sec_no",        :limit => 11
+    t.string  "account_no",           :limit => 16
+    t.string  "billing_phone_home",   :limit => 32
+    t.string  "billing_phone_mobile", :limit => 32
+    t.string  "rfid",                 :limit => 25
+    t.binary  "image"
+    t.string  "image_name",           :limit => 64
+    t.string  "image_content_type",   :limit => 32
+    t.string  "kid",                  :limit => 64
   end
 
   create_table "news_items", :force => true do |t|
@@ -228,6 +226,7 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
     t.string   "kont_sats"
     t.string   "kont_belop"
     t.string   "kontraktstype"
+    t.integer  "kontraktsbelop"
     t.string   "rabatt"
     t.string   "gren_stilart_avd_parti___gren_stilart_avd_parti"
     t.string   "sist_betalt_dato"
@@ -246,7 +245,6 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "ventekid",                                        :limit => 20
-    t.integer  "kontraktsbelop"
   end
 
   create_table "ranks", :force => true do |t|
@@ -255,7 +253,7 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
     t.integer "position",                      :null => false
     t.integer "martial_art_id",                :null => false
     t.integer "standard_months",               :null => false
-    t.integer "group_id",                      :null => false
+    t.integer "group_id"
   end
 
   create_table "trial_attendances", :force => true do |t|
@@ -266,8 +264,6 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "trial_attendances", ["nkf_member_trial_id", "group_schedule_id", "year", "week"], :name => "ix_trial_attendances__nkf_member_trial_group_schedule_year_week", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "login",           :limit => 80,                    :null => false

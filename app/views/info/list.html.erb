@@ -1,16 +1,18 @@
+<% @content_width = 1024 %>
+
 <h1>Informasjonssider</h1>
 
 <table>
-  <tr>
+  <tr valign="top">
   <% for column in InformationPage.content_columns %>
     <th><%= column.human_name %></th>
   <% end %>
   </tr>
   
 <% for information_page in @information_pages %>
-  <tr>
+  <tr valign="top">
   <% for column in InformationPage.content_columns %>
-    <td><%=h information_page.send(column.name) %></td>
+    <td><%=h information_page.send(column.name).to_s.html_safe %></td>
   <% end %>
     <td><%= link_to 'Vis', :action => 'show', :id => information_page %></td>
     <td><%= link_to 'Rediger', :action => 'rediger', :id => information_page %></td>
@@ -19,7 +21,7 @@
 <% end %>
 </table>
 
-<%= will_paginate @information_pages %> 
+<%= will_paginate @information_pages %>
 
 <br />
 

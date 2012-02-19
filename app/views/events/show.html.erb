@@ -10,7 +10,7 @@
 </p>
 
 <p>
-  <%=@event.description.html_safe %>
+  <%=@event.description.try(:html_safe) %>
 </p>
 
 <% if user? || admin? %>

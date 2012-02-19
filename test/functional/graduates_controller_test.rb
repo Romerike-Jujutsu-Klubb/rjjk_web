@@ -36,9 +36,7 @@ class GraduatesControllerTest < ActionController::TestCase
     
     assert_response :success
     assert_template 'show'
-    
-    assert_not_nil assigns(:graduate)
-    assert assigns(:graduate).valid?
+    assert_no_errors :graduate
   end
   
   def test_new
@@ -49,32 +47,31 @@ class GraduatesControllerTest < ActionController::TestCase
     
     assert_not_nil assigns(:graduate)
   end
-  
+
   def test_create
     num_graduates = Graduate.count
-    
+
     post :create, :graduate => {:member_id => 1, :graduation_id => 1,
-      :passed => true, :rank_id => 1,
-      :paid_graduation => true, :paid_belt => true}
-    
+                                :passed => true, :rank_id => 1,
+                                :paid_graduation => true, :paid_belt => true}
+    assert_no_errors :graduate
     assert_response :redirect
     assert_redirected_to :action => 'list'
-    
+
     assert_equal num_graduates + 1, Graduate.count
   end
-  
+
   def test_edit
     get :edit, :id => @first_id
     
     assert_response :success
     assert_template 'edit'
-    
-    assert_not_nil assigns(:graduate)
-    assert assigns(:graduate).valid?
+    assert_no_errors :graduate
   end
   
   def test_update
     post :update, :id => @first_id
+    assert_no_errors :graduate
     assert_response :redirect
     assert_redirected_to :action => 'show', :id => @first_id
   end

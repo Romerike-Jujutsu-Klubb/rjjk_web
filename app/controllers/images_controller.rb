@@ -7,10 +7,6 @@ class ImagesController < ApplicationController
     render :action => 'list'
   end
 
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  #verify :method => :post, :only => [ :destroy, :create, :update ],
-  #       :redirect_to => { :action => :list }
-
   def list
     @images = Image.paginate :page => params[:page], :per_page => 10
   end
@@ -25,7 +21,12 @@ class ImagesController < ApplicationController
 
   def inline
     @image = Image.find(params[:id])
-    image = Magick::Image.from_blob(@image.content_data).first
+    begin
+       image = Magick::Image.from_blob(@image.content_data).first
+    rescue java.lang.NullPointerException
+      redirect_to '/assets/pdficon_large.png'
+      return
+    end
     ratio = 492.0 / image.columns
     send_data(image.crop_resized!(492, image.rows * ratio).to_blob,
         :disposition => 'inline',
@@ -41,10 +42,9 @@ class ImagesController < ApplicationController
     @image = Image.new(params[:image])
     if @image.save
       flash[:notice] = 'Image was successfully created.'
-      #redirect_to :action => 'list'
-      redirect_to :controller => 'info', :action => 'list'
+      back_or_redirect_to :action => :index
     else
-      render :action => 'new'
+      render :action => :new
     end
   end
 
@@ -56,8 +56,9 @@ class ImagesController < ApplicationController
     @image = Image.find(params[:id])
     if @image.update_attributes(params[:image])
       flash[:notice] = 'Image was successfully updated.'
-      redirect_to :action => :edit, :id => @image
+      back_or_redirect_to :action => :edit, :id => @image
     else
+      flash[:notice] = 'Image not updated.'
       render :action => 'edit'
     end
   end
@@ -68,13 +69,13 @@ class ImagesController < ApplicationController
   end
   
   def image_list
-    @images = Image.find(:all, :conditions => "name NOT LIKE '%.MP4'", :order => 'UPPER(name)')
+    @images = Image.all(:conditions => "name NOT LIKE '%.MP4'", :order => 'UPPER(name)')
     render :layout => false
   end
 
   def media_list
     media_extensions = %w{mp4 mov flv}
-    @media = Image.find(:all, :conditions => media_extensions.map{|e|"UPPER(name) LIKE '%.#{e.upcase}'"}.join(' OR '), :order => 'UPPER(name)')
+    @media = Image.all(:conditions => media_extensions.map{|e|"UPPER(name) LIKE '%.#{e.upcase}'"}.join(' OR '), :order => 'UPPER(name)')
     render :layout => false
   end
 

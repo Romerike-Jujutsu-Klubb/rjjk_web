@@ -1,10 +1,7 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 one:
-  id: 1
   held_on: '2007-10-08'
-  martial_art_id: 1
+  martial_art: keiwaryu
 two:
-  id: 2
   held_on: '2007-10-09'
-  martial_art_id: 2
+  martial_art: keiwaryu
   

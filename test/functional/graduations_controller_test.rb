@@ -18,17 +18,14 @@ class GraduationsControllerTest < ActionController::TestCase
 
   def test_index
     get :index
-    assert_response :success
-    assert_template 'list'
+    assert_response :redirect
+    assert_redirected_to :id => graduations(:two)
   end
 
-  def test_list
-    get :list
-
+  def test_index_with_id
+    get :index, :id => graduations(:one)
     assert_response :success
-    assert_template 'list'
-
-    assert_not_nil assigns(:graduations)
+    assert_template 'index'
   end
 
   def test_show
@@ -53,10 +50,11 @@ class GraduationsControllerTest < ActionController::TestCase
   def test_create
     num_graduations = Graduation.count
 
-    post :create, :graduation => {:held_on => '2007-10-07', :martial_art_id => 1}
+    post :create, :graduation => {:held_on => '2007-10-07', :martial_art_id => martial_arts(:keiwaryu).id}
 
+    assert_no_errors :graduation
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :action => :index
 
     assert_equal num_graduations + 1, Graduation.count
   end

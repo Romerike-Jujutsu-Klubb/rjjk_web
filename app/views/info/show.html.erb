@@ -3,7 +3,7 @@
 <h1><%=h @information_page.title %></h1>
 
 <p>
-	<%=@information_page.body.html_safe%>
+	<%=@information_page.body.try(:html_safe)%>
 </p>
 
 <% if user? || admin? %>

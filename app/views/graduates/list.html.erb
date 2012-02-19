@@ -28,7 +28,7 @@
 	end
 %>
 <% for graduate in @graduates %>
-	<% mbr = Member.find(:first, :conditions => ["id = ?", graduate.member_id]) %>
+	<% mbr = Member.find_by_id(graduate.member_id) %>
   <tr class="<%= cycle('odd', 'even') %>">
   	<% if prv_name == mbr.id %>
     	<td>&nbsp;</td>

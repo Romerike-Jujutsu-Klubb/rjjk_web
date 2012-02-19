@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   validates_presence_of :start_at
 
   def ingress
-    description.slice(/^.*?<\/p>/)
+    description.try(:slice, /^.*?<\/p>/)
   end
   
 end

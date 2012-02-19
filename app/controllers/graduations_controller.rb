@@ -21,21 +21,12 @@ class GraduationsController < ApplicationController
       return
     end
     @graduation = Graduation.find(params[:id])
-    list
-    render :action => 'list'
-  end
-
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  #verify :method      => :post, :only => [:destroy, :create, :update],
-  #       :redirect_to => {:action => :list}
-
-  def list
-    @graduations  = Graduation.find(:all, :order => 'held_on DESC', :conditions => ["martial_art_id = 1"])
-    @martial_arts = MartialArt.find(:all)
+    @graduations  = Graduation.all(:order => 'held_on DESC', :conditions => ["martial_art_id = 1"])
+    @martial_arts = MartialArt.all
 
     @grad_pages, @grad = Hash.new()
     @martial_arts.collect { |c|
-      tmp = Graduation.find(:all, :order => 'held_on DESC', :conditions => ["martial_art_id = #{c.id}"])
+      tmp = Graduation.all(:order => 'held_on DESC', :conditions => ["martial_art_id = #{c.id}"])
     }
     load_graduates
   end
@@ -110,8 +101,8 @@ class GraduationsController < ApplicationController
 
   def load_graduates
     @graduation = Graduation.find(params[:id])
-    @censors   = Censor.find(:all, :conditions => "graduation_id = #{@graduation.id}")
-    @graduates = Graduate.find(:all, :conditions => ["graduation_id = ? AND member_id != 0", params[:id]],
+    @censors   = Censor.all(:conditions => "graduation_id = #{@graduation.id}")
+    @graduates = Graduate.all(:conditions => ["graduation_id = ? AND member_id != 0", params[:id]],
                                :order            => 'ranks.position DESC, members.first_name, members.last_name',
                                :include          => [:graduation, :member, :rank])
   end

@@ -1,35 +1,34 @@
-<h1>Bilder</h1>
+<div align="center">
+  <%= detour_to 'Legg til bilde', :controller => 'images', :action => 'new' %>
+</div>
 
-<table>
-<% for image in @images.sort_by{|i|i.name.upcase} %>
-  <tr>
-    <td>
-    	<%=link_to_redbox(
-        image_tag(url_for(:only_path => false, :controller => 'images', :action => :inline, :id => image.id, :format => image.format), :width => 160, :title => h(image.name), :alt => h(image.name)),
-		{:controller => 'images', :action => 'show', :id => image.id}, :title => h(image.name),
-        :author=>"RJJK",
-        :caption => h(image.name)
-      	) %>
-    	<%=link_to_redbox(
-        'Light',
-		{:controller => 'images', :action => 'show', :id => image.id}, :title => h(image.name),
-        :author=>"RJJK",
-        :caption => h(image.name)
-      	) %>
-	</td>
-  </tr>
-  <tr>
-    <td align="center"><%=h image.name %></td>
-  </tr>
-  <tr>
-    <td align="center">
-      <%= link_to 'Rediger', :controller => 'images', :action => 'edit', :id => image %>
-      <%= link_to 'Slett', { :controller => 'images', :action => 'destroy', :id => image }, :confirm => 'Are you sure?', :method => :post %>
-	</td>
-  </tr>
-<% end %>
+<table border="1">
+  <% for image in @images.sort_by { |i| i.name.upcase } %>
+      <tr>
+        <td align="center">
+          <%=link_to_redbox(
+                      image_tag(url_for(:only_path => false, :controller => 'images', :action => :inline, :id => image.id, :format => image.format), :width => 160, :title => h(image.name), :alt => h(image.name)),
+                      {:controller => 'images', :action => 'show', :id => image.id}, :title => h(image.name),
+                      :author => "RJJK",
+                      :caption => h(image.name)
+              ) %>
+          <br/>
+          <%=image.name %> (<%= image.content_data.size / 1024 %>KB)<br/>
+          <%=image.content_type %><br/>
+          <%=link_to_redbox(
+                      'Vis',
+                      {:controller => 'images', :action => 'show', :id => image.id},
+                      :title => h(image.name), :author => "RJJK", :caption => h(image.name)
+              ) %>
+          <%= detour_to 'Rediger', :controller => 'images', :action => 'edit', :id => image %>
+          <%= detour_to 'Slett', {:controller => 'images', :action => 'destroy', :id => image}, :confirm => 'Are you sure?', :method => :post %>
+        </td>
+      </tr>
+  <% end %>
 </table>
 
 <br/>
 
-<%= link_to 'Legg til bilde', :controller => 'images', :action => 'new' %>
+<div align="center">
+  <%= detour_to 'Legg til bilde', :controller => 'images', :action => 'new' %>
+</div>

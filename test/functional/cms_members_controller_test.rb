@@ -1,6 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CmsMembersControllerTest < ActionController::TestCase
+  def setup
+    login(:admin)
+  end
+
   def test_should_get_index
     get :index
     assert_response :success
@@ -14,7 +18,11 @@ class CmsMembersControllerTest < ActionController::TestCase
 
   def test_should_create_cms_member
     assert_difference('CmsMember.count') do
-      post :create, :cms_member => { }
+      post :create, :cms_member => {
+          :address => 'and', :first_name => 'me', :instructor => false, :last_name => 'myself', :nkf_fee => false,
+          :postal_code => 'IIII', :cms_contract_id => '666', :payment_problem => false, :male => true
+      }
+      assert_no_errors :cms_member
     end
 
     assert_redirected_to cms_member_path(assigns(:cms_member))
@@ -32,6 +40,7 @@ class CmsMembersControllerTest < ActionController::TestCase
 
   def test_should_update_cms_member
     put :update, :id => cms_members(:one).id, :cms_member => { }
+    assert_no_errors :cms_member
     assert_redirected_to cms_member_path(assigns(:cms_member))
   end
 
