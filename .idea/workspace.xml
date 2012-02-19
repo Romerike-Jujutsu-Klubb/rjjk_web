@@ -92,7 +92,7 @@
       <file leaf-file-name="image.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/image.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="51" selection-start="347" selection-end="347" vertical-scroll-proportion="0.3783784">
+            <state line="6" column="50" selection-start="256" selection-end="256" vertical-scroll-proportion="0.16216215">
               <folding />
             </state>
           </provider>
@@ -1156,7 +1156,11 @@
       <created>1329620996101</created>
       <updated>1329620996101</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="* Fikset bildeopplasting">
+      <created>1329621164101</created>
+      <updated>1329621164101</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1430,7 +1434,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/image.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="51" selection-start="347" selection-end="347" vertical-scroll-proportion="0.3783784">
+        <state line="6" column="50" selection-start="256" selection-end="256" vertical-scroll-proportion="0.16216215">
           <folding />
         </state>
       </provider>

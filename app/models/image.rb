@@ -4,6 +4,7 @@ class Image < ActiveRecord::Base
     self.name = file.original_filename if name.blank?
     self.content_data = file.read
     self.content_type = file.content_type
+    logger.info "Stored image: #{content_data.size} bytes"
   end
   
   def format
@@ -12,7 +13,7 @@ class Image < ActiveRecord::Base
 
   def content_data
     data = super
-    return eval("\"#{data}\"") if data =~ /^\\3(77|30)/
+    return eval("%Q{#{data}}") if data =~ /^\\3(77|30)/
     data
   end
 
