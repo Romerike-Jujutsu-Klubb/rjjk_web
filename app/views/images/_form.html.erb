@@ -1,8 +1,10 @@
 <%= form_for @image do |f| %>
-    <div style="float: right; width: 45%; text-align: center">
-      <%=image_tag(url_for(:action => :show, :id => @image.id, :format => @image.format), :style => 'width: 100%') if @image.name %>
-      (<%= @image.content_data.size / 1024 %>KB)
-    </div>
+    <% unless @image.new_record? %>
+        <div style="float: right; width: 45%; text-align: center">
+          <%= image_tag(url_for(:action => :show, :id => @image.id, :format => @image.format), :style => 'width: 100%') if @image.name %>
+          (<%= @image.content_data.size / 1024 %>KB)
+        </div>
+    <% end %>
     <%= error_messages_for 'image' %>
 
     <p><%= f.label :name, 'Navn' %><br/>
