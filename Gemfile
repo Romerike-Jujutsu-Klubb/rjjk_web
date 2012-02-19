@@ -2,12 +2,13 @@ source 'http://rubygems.org'
 
 gem 'rails', '~>3.1.3'
 
-gem 'jruby-openssl', '!=0.7.6'
-gem 'rmagick4j', :require => false
+gem 'jruby-openssl'
+gem 'rmagick4j'
 gem 'activerecord-jdbcpostgresql-adapter'
 gem 'RedCloth'
 gem 'gruff'
 gem 'trinidad'
+gem 'jruby-rack', '!=1.1.2', '!=1.1.3'
 gem 'trinidad_daemon_extension'
 gem 'prawn'
 gem 'delayed_job', '~>2.1'
