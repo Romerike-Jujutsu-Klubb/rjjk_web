@@ -7,14 +7,16 @@
   <meta name="keywords" content="keywords"/>
   <meta name="author" content="author"/>
   <%= javascript_include_tag :application %>
-  <%= javascript_include_tag :prototype %>
-  <%= javascript_include_tag :effects %>
+  <%= javascript_include_tag :jquery %>
   <%= javascript_include_tag :rails %>
+  <%= javascript_include_tag :redbox %>
   <%= csrf_meta_tag %>
 
   <link href="<%= url_for(:controller => 'stylesheets', :action => 'dark_ritual', :format => 'css', :id => @content_width) %>" media="screen" rel="stylesheet" type="text/css"/>
   <%= stylesheet_link_tag 'dark_ritual_adaption', :media => 'screen' %>
   <%= stylesheet_link_tag 'lightwindow' %>
+  <%= stylesheet_link_tag 'redbox' %>
+
   <title>Romerike Jujutsu Klubb</title>
 
   <script type="text/javascript">
@@ -130,9 +132,7 @@
 		</ul>
 
       <% if admin? %>
-		<h1><%=link_to_function("Administrasjon") do |page|
-    		page.visual_effect(:toggle_blind, :admin_menu)
-  		end%></h1>
+		<h1>Administrasjon</h1>
           <div id="admin_menu">
             <ul>
               <li><%= link_to 'Ny nyhet', :controller => 'news', :action => 'new' %></li>
@@ -142,12 +142,11 @@
             </ul>
           </div>
 
-		<%=link_to_function("<h1>Medlemsreg.</h1>".html_safe) do |page|
-    		page.visual_effect(:toggle_blind, :members_menu)
-  		end%>
+          <h1>Medlemsreg.</h1>
+
           <div id="members_menu">
-		<ul>
-			<li><%=menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
+            <ul>
+            <li><%=menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
 			<li><%=menu_item 'Oppmøtelister', :controller => 'members', :action => :attendance_form_index %></li>
 			<li><%=menu_item 'Graderingsoversikt', :controller => 'members', :action => :grading_form_index %></li>
 			<li><%=menu_item 'NKF Avstemming', :controller => 'nkf_members', :action => :comparison, :id => 0 %></li>
@@ -169,9 +168,6 @@
 			<li><%=menu_item 'Versjon', :controller => 'info', :action => :versjon %></li>
 		</ul>
 		</div>
-		<%=javascript_tag update_page {|page|
-#    		page.visual_effect(:toggle_blind, :members_menu, :duration => 0)
-  		}%>
 		<% end %>
 
 <!--

@@ -8,9 +8,8 @@
         <td align="center">
           <%=link_to_redbox(
                       image_tag(url_for(:only_path => false, :controller => 'images', :action => :inline, :id => image.id, :format => image.format), :width => 160, :title => h(image.name), :alt => h(image.name)),
-                      {:controller => 'images', :action => 'show', :id => image.id}, :title => h(image.name),
-                      :author => "RJJK",
-                      :caption => h(image.name)
+                      {:controller => 'images', :action => 'show', :id => image.id},
+                      :title => h(image.name), :author => "RJJK", :caption => h(image.name)
               ) %>
           <br/>
           <%=image.name %> (<%= image.content_data.size / 1024 %>KB)<br/>
