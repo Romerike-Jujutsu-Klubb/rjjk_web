@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111205171636) do
+ActiveRecord::Schema.define(:version => 20120220203755) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
     t.string  "phone_parent",         :limit => 32
     t.date    "birthdate"
     t.boolean "male",                                                :null => false
-    t.date    "joined_on"
+    t.date    "joined_on",                                           :null => false
     t.integer "contract_id"
     t.integer "cms_contract_id"
     t.date    "left_on"
@@ -245,6 +245,7 @@ ActiveRecord::Schema.define(:version => 20111205171636) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "ventekid",                                        :limit => 20
+    t.string   "kjonn",                                           :limit => 6,  :null => false
   end
 
   create_table "ranks", :force => true do |t|

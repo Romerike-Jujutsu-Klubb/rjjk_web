@@ -8,6 +8,11 @@ class NkfMembersController < ApplicationController
   end
   
   def show
+    if params[:id] && respond_to?(params[:id])
+      send params[:id]
+      render :action => params[:id]
+      return
+    end
     @nkf_member = NkfMember.find(params[:id])
   end
   
@@ -65,6 +70,7 @@ class NkfMembersController < ApplicationController
     :id => nil,
     :innmeldtarsak => nil,
     :innmeldtdato => :joined_on,
+    :kjonn => :male,
     :klubb => nil,
     :klubb_id => nil,
     :konkurranseomrade_id => nil,
@@ -93,7 +99,7 @@ class NkfMembersController < ApplicationController
   }
   
   def comparison
-    @orphan_nkf_members = NkfMember.find(:all, :conditions => 'member_id IS NULL', :order => 'fornavn, etternavn')
+    @orphan_nkf_members = NkfMember.all(:conditions => 'member_id IS NULL', :order => 'fornavn, etternavn')
     @orphan_members = NkfMember.find_free_members
     @groups = Group.all :order => 'from_age DESC, to_age DESC'
     @members = []
@@ -153,6 +159,8 @@ class NkfMembersController < ApplicationController
         if FIELD_MAP[k.to_sym]
           if v =~ /^\s*(\d{2}).(\d{2}).(\d{4})\s*$/
             v = "#$3-#$2-#$1"
+          elsif v =~ /Mann|Kvinne/
+            v = v == 'Mann'
           end
           new_attributes[FIELD_MAP[k.to_sym]] = v
         else

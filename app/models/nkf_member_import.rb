@@ -39,7 +39,12 @@ class NkfMemberImport
           logger.debug "Fetching #{more_search_url}"
           more_search_body = nil
           Net::HTTP.start(url.host, url.port) do |http|
-            more_search_response = http.get(more_search_url, cookie_header.update('Content-Type' => 'application/octet-stream'))
+            begin
+              more_search_response = http.get(more_search_url, cookie_header.update('Content-Type' => 'application/octet-stream'))
+            rescue Timeout::Error
+              logger.error $!
+              retry
+            end
             more_search_body     = more_search_response.body
             process_response 'more search', more_search_response
           end
@@ -84,12 +89,15 @@ class NkfMemberImport
             logger.debug "Getting #{details_url}"
             begin
               details_response = http.get(details_url, cookie_header)
-            rescue EOFError, SystemCallError
+              details_body = details_response.body
+              process_response 'details', details_response
+              raise Timeout::Error if details_body =~ /ks_medlprofil timed out/
+            rescue EOFError, SystemCallError, Timeout::Error
               logger.error $!.message
+              logger.info 'Retrying'
               retry
             end
-            details_body = details_response.body
-            process_response 'details', details_response
+
             if details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
               member_id = $1
               if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
@@ -197,7 +205,7 @@ class NkfMemberImport
     import_rows.each do |row|
       attributes = {}
       columns.each_with_index do |column, i|
-        next if ['alder', 'avtalegiro', 'dan_graderingsserifikat', 'forbundskontingent', 'foresatte'].include? column
+        next if ['aktivitetsomrade_id', 'aktivitetsomrade_navn', 'alder', 'avtalegiro', 'dan_graderingsserifikat', 'forbundskontingent', 'foresatte'].include? column
         attributes[column] = row[i]
       end
       record = NkfMember.find_by_medlemsnummer(row[0]) || NkfMember.new
@@ -207,7 +215,12 @@ class NkfMemberImport
           attributes['member_id'] = member.id
         end
       end
-      record.attributes = attributes
+      begin
+        record.attributes = attributes
+      rescue ActiveRecord::UnknownAttributeError
+        logger.error attributes.inspect
+        raise
+      end
       if record.changed?
         if record.save
           @changes << record.changes
