@@ -10,7 +10,7 @@ class NkfMembersController < ApplicationController
   def show
     if params[:id] && respond_to?(params[:id])
       send params[:id]
-      render :action => params[:id]
+      render :action => params[:id] unless response_body
       return
     end
     @nkf_member = NkfMember.find(params[:id])

@@ -4,7 +4,7 @@
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/nkf_members/comparison.html.erb" afterPath="$PROJECT_DIR$/app/views/nkf_members/comparison.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/member_grade_history_graph.rb" afterPath="$PROJECT_DIR$/app/models/member_grade_history_graph.rb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -90,21 +90,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="nkf_members_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="nkf_members_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/nkf_members_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="100" column="0" selection-start="2488" selection-end="2488" vertical-scroll-proportion="0.0">
+            <state line="12" column="56" selection-start="390" selection-end="390" vertical-scroll-proportion="0.33043477">
               <folding>
-                <element signature="e#3674#3692#0" expanded="true" />
+                <element signature="e#3695#3713#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="comparison.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="comparison.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/nkf_members/comparison.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="77" selection-start="178" selection-end="178" vertical-scroll-proportion="0.20090635">
+            <state line="7" column="77" selection-start="178" selection-end="178" vertical-scroll-proportion="-4.75">
               <folding />
             </state>
           </provider>
@@ -124,7 +124,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/models/member.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20120218162221_make_members_joined_on_required.rb" />
         <option value="/Library/Frameworks/JRuby.framework/Gems/1.8/gems/redhillonrails_core-1.2.0/lib/redhillonrails_core/active_record/connection_adapters/postgresql_adapter.rb" />
         <option value="$PROJECT_DIR$/copy_production_to_development.sh" />
@@ -153,8 +152,9 @@
         <option value="$PROJECT_DIR$/db/migrate/20120220203755_add_kjonn_to_nkf_members.rb" />
         <option value="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
-        <option value="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/nkf_members/comparison.html.erb" />
+        <option value="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" />
+        <option value="$PROJECT_DIR$/app/models/member_grade_history_graph.rb" />
       </list>
     </option>
   </component>
@@ -336,6 +336,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="nkf_members" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1348,7 +1366,11 @@
       <created>1329773281101</created>
       <updated>1329773281101</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="* Fikset NKF import">
+      <created>1329775019101</created>
+      <updated>1329775019102</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1456,11 +1478,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/redbox.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file:///Library/Frameworks/JRuby.framework/Gems/1.8/gems/redbox-1.0.4/rails/install.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
@@ -1619,19 +1636,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/nkf_members_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/views/nkf_members/comparison.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="0" selection-start="2488" selection-end="2488" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#3674#3692#0" expanded="true" />
-          </folding>
+        <state line="7" column="77" selection-start="178" selection-end="178" vertical-scroll-proportion="-4.75">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/nkf_members/comparison.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/models/member_grade_history_graph.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="77" selection-start="178" selection-end="178" vertical-scroll-proportion="0.20090635">
+        <state line="11" column="27" selection-start="710" selection-end="710" vertical-scroll-proportion="0.261708">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/nkf_members_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="56" selection-start="390" selection-end="390" vertical-scroll-proportion="0.33043477">
+          <folding>
+            <element signature="e#3695#3713#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

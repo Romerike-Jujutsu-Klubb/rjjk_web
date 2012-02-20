@@ -9,14 +9,14 @@ class MemberGradeHistoryGraph
     end
 
     ranks = MartialArt.find_by_name('Kei Wa Ryu').ranks.reverse
-    ranks = ranks.first(8) if Rails.env == 'production'
+    ranks = ranks.first(8)
 
     g = Gruff::Line.new(size)
     g.theme_37signals
     g.title = "Fordeling av grader"
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     g.hide_dots = true
-    g.colors = %w{yellow yellow orange orange green green yellow yellow orange orange green green blue blue brown yellow orange green blue brown black black black}[-ranks.size..-1].reverse
+    g.colors = %w{yellow yellow orange orange green green blue blue yellow yellow orange orange green green blue blue brown yellow orange green blue brown black black black}.last(ranks.size).reverse
     
     #first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = 5.years.ago.to_date
