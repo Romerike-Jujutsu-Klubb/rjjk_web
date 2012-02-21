@@ -62,7 +62,7 @@
       <% if admin? %>
           <%= link_to image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :members, :action => :history_graph, :format => :png, :id => 1024 %>
           <%= link_to image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :attendances, :action => :history_graph, :format => :png, :id => 1024 %>
-          <%#= link_to image_tag(url_for(:controller => :members, :action => :grade_history_graph, :format => :png, :id => 182), :title => 'Historikk over grader', :style => 'width: 100%; border: 0'), :controller => :members, :action => :grade_history_graph, :format => :png, :id => 1024 %>
+          <%= link_to image_tag(url_for(:controller => :members, :action => :grade_history_graph, :format => :png, :id => 182), :title => 'Historikk over grader', :style => 'width: 100%; border: 0'), :controller => :members, :action => :grade_history_graph, :format => :png, :id => 1024 %>
           <br/>
           <br/>
       <% end %>
