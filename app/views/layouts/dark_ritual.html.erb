@@ -57,50 +57,51 @@
 
   <div class="main_right">
 
-		<div class="padded">
-      <%=image_tag 'rjjk_logo_&_txt_320.png', :style => 'width: 182px; height: 181px; border: 0' %>
-      <%=link_to image_tag('http://romerikeaikido.org/Bilder/san_gen-logo-rak.jpg', :style => 'width: 182px; height: 182px; border: 0'), 'http://romerikeaikido.org/', :target => :blank %>
-			<% if admin? %>
-              <%=link_to image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :members, :action => :history_graph, :format => :png, :id => 1024 %>
-              <%=link_to image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :attendances, :action => :history_graph, :format => :png, :id => 1024 %>
-              <%=link_to image_tag(url_for(:controller => :members, :action => :grade_history_graph, :format => :png, :id => 182), :title => 'Historikk over grader', :style => 'width: 100%; border: 0'), :controller => :members, :action => :grade_history_graph, :format => :png, :id => 1024 %>
-              <br/>
-              <br/>
-			<% end %>
+    <div class="padded">
+      <%= image_tag 'rjjk_logo_&_txt_320.png', :style => 'width: 182px; height: 181px; border: 0' %>
+      <% if admin? %>
+          <%= link_to image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :members, :action => :history_graph, :format => :png, :id => 1024 %>
+          <%= link_to image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :attendances, :action => :history_graph, :format => :png, :id => 1024 %>
+          <%#= link_to image_tag(url_for(:controller => :members, :action => :grade_history_graph, :format => :png, :id => 182), :title => 'Historikk over grader', :style => 'width: 100%; border: 0'), :controller => :members, :action => :grade_history_graph, :format => :png, :id => 1024 %>
+          <br/>
+          <br/>
+      <% end %>
 
-			<% for event in @events %>
-				<% ingress = event.ingress %>
-				<% ingress = nil if ingress.blank? %>
-				<h3>
-				<% if ingress %>
-					<%=link_to event.name, :controller => :events, :action => :show, :id => event.id%>
-				<% else %>
-				  <%=event.name %>
-				<% end %>
-				<% if event.start_at.min != 0 || event.start_at.hour != 0 %>
-				  <%=event.start_at.strftime('%d/%m %H:%M')%>
-				<% else %>
-				  <%=event.start_at.strftime('%d/%m')%>
-				<% end %>
-				<% if event.end_at %>
-				-
-				<%=event.end_at.strftime('%Y-%m-%d') if event.end_at.to_date != event.start_at.to_date %>
-				<%=event.end_at.strftime('%H:%M') if event.end_at.hour != 0 || event.end_at.min != 0%>
-				<% end %>
-				</h3>
-				<%=link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin?%>
-				
-				<% if ingress %>
-				  <%=ingress.html_safe%>
-				<% end %>
-   				<% if ingress && event.description.size > ingress.size %>
-					<ul class="controls">
-            			<li><%=link_to 'Les mer', {:controller => :events, :action => :show, :id => event.id}, :class => :edit %></li>
-					</ul>
-   				<% end %>
-			<% end %>
+      <%= link_to image_tag('http://romerikeaikido.org/Bilder/san_gen-logo-rak.jpg', :style => 'width: 182px; height: 182px; border: 0'), 'http://romerikeaikido.org/', :target => :blank %>
 
-   			<% if admin? %>
+      <% for event in @events %>
+          <% ingress = event.ingress %>
+          <% ingress = nil if ingress.blank? %>
+          <h3>
+            <% if ingress %>
+                <%= link_to event.name, :controller => :events, :action => :show, :id => event.id %>
+            <% else %>
+                <%= event.name %>
+            <% end %>
+            <% if event.start_at.min != 0 || event.start_at.hour != 0 %>
+                <%= event.start_at.strftime('%d/%m %H:%M') %>
+            <% else %>
+                <%= event.start_at.strftime('%d/%m') %>
+            <% end %>
+            <% if event.end_at %>
+                -
+                <%= event.end_at.strftime('%Y-%m-%d') if event.end_at.to_date != event.start_at.to_date %>
+                <%= event.end_at.strftime('%H:%M') if event.end_at.hour != 0 || event.end_at.min != 0 %>
+            <% end %>
+          </h3>
+          <%= link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin? %>
+
+          <% if ingress %>
+              <%= ingress.html_safe %>
+          <% end %>
+          <% if ingress && event.description.size > ingress.size %>
+              <ul class="controls">
+                <li><%= link_to 'Les mer', {:controller => :events, :action => :show, :id => event.id}, :class => :edit %></li>
+              </ul>
+          <% end %>
+      <% end %>
+
+      <% if admin? %>
 				<ul class="controls">
             		<li><%=link_to 'Ny hendelse', {:controller => 'events', :action => 'new'}, :class => :edit %></li>
 				</ul>

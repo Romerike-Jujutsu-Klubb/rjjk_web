@@ -9,7 +9,7 @@ tinyMCE.init({
 	theme_advanced_buttons1_add: "fontselect,fontsizeselect,forecolor,backcolor,cut,copy,paste,search",
 	theme_advanced_buttons2_add_before: "tablecontrols,separator,iespell,media,advhr,separator,html",
 	theme_advanced_buttons2_add: "separator,replace",
-	theme_advanced_buttons3: "",
+    theme_advanced_buttons3_add : "preview",
 	plugin_insertdate_dateFormat: "%Y-%m-%d",
 	plugin_insertdate_timeFormat: "%H:%M:%S",
 	extended_valid_elements: "a[name|href|target|title|onclick],br[clear],img[class|src|border|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name|style],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
@@ -17,5 +17,8 @@ tinyMCE.init({
 	external_image_list_url: "/images/image_list.js",
 	media_external_list_url: "/images/media_list.js",
 	media_types: "flash=swf,flv;shockwave=dcr;qt=mov,MOV,qt,mpg,mp3,mp4,MP4,mpeg;wmp=avi,wmv,wm,asf,asx,wmx,wvx;rmp=rm,ra,ram",
+    plugin_preview_width: "1024",
+    plugin_preview_height: "768",
+    plugin_preview_pageurl: "../preview.html"
 });
 </script>
