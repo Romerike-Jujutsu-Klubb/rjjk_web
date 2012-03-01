@@ -1,51 +1,56 @@
-  <% @member_count += 1 %>
-  <% missing_contract = member.billing_type != 'MANUELL GIRO' && member.nkf_member.ventekid && member.nkf_member.ventekid !~ /^333000000004/ && member.joined_on < 61.days.ago.to_date %>
-  <% @blank_lines -= (missing_contract ? 3 : 1) %>
-  <tr class="<%=cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
-    <td nowrap="true" onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'">
-      <%=h member.first_name %> <%=h member.last_name %>
-      <% if missing_contract %>
-        <br/><%=member.invoice_email%><br/><%=member.nkf_member.ventekid %>
-	  <% end %>
-    </td>
-    <td nowrap="true" align="right">
-        <%=h member.age %>
-	</td>
-    <td nowrap="true">
-    	<% if @group %>
-    	  <%=h member.current_rank(@group.martial_art).try(:colour) %>
-		<% else %>
-		  &nbsp;
-		<% end %>
-      <% if missing_contract %>
-          <br/><%= link_to 'Mangler kontrakt', :action => :missing_contract, :id => member.id %>
-          <br/>Innmeldt: <%= member.joined_on.strftime('%Y-%m-%d') %>
+<% @member_count += 1 %>
+<% missing_contract = member.billing_type != 'MANUELL GIRO' && member.nkf_member.ventekid && member.nkf_member.ventekid !~ /^333000000004/ && member.joined_on < 61.days.ago.to_date %>
+<% @blank_lines -= (missing_contract ? 3 : 1) %>
+<tr class="<%= cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
+  <td nowrap="true" onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'">
+    <%= h member.first_name %> <%= h member.last_name %>
+    <% if missing_contract %>
+        <br/><%= member.invoice_email %>
+        <br/><%= member.nkf_member.ventekid %>
+    <% end %>
+  </td>
+  <td nowrap="true" align="right">
+    <%= h member.age %>
+  </td>
+  <td nowrap="true">
+    <% if @group %>
+        <%= h member.current_rank(@group.martial_art).try(:colour) %>
+    <% else %>
+        &nbsp;
+    <% end %>
+    <% if missing_contract %>
+        <br/><%= link_to 'Mangler kontrakt', :action => :missing_contract, :id => member.id %>
+        <br/>Innmeldt: <%= member.joined_on.strftime('%Y-%m-%d') %>
+    <% end %>
+  </td>
+  <% if @birthdate_missing %>
+      <td><%= h member.birthdate %>&nbsp;</td>
+  <% end %>
+  <% member_total = 0 %>
+  <% @dates.each do |d| %>
+      <% if @group %>
+          <% group_schedule = @group.group_schedules.to_a.find { |gs| gs.weekday == d.cwday } %>
+          <% attendance = member.attendances.select { |a| a.group_schedule_id == group_schedule.id && a.date == d }.first %>
+          <td id="attendance_<%= member.id %>_<%= d.day %>" align="center">
+          <% if attendance %>
+              <% member_total += 1 %>
+              <% @date_totals[d] ||= 0 %>
+              <% @date_totals[d] += 1 %>
+                <%= render :partial => 'attendance_delete_link', :locals => {:attendance => attendance} %>
+          <% else %>
+                <%= render :partial => 'attendance_create_link', :locals => {:member_id => member.id, :group_schedule_id => group_schedule.id, :date => d} %>
+          <% end %>
+          </td>
+
+          <%= javascript_tag do %>
+            $("#attendance_<%=member.id%>_<%=d.day%>").bind("ajax:complete", function(et, e){
+              $(this).html(e.responseText);
+            });
+          <% end %>
+      <% else %>
+          <td>&nbsp;</td>
       <% end %>
-    </td>
-<% if @birthdate_missing %>
-    <td><%=h member.birthdate %>&nbsp;</td>
-<% end %>
-<% member_total = 0 %>
-<% @dates.each do |d| %>
-	<% if @group %>
-	<% group_schedule = @group.group_schedules.to_a.find{|gs| gs.weekday == d.cwday}%>
-	<% attendance = member.attendances.select{|a| a.group_schedule_id == group_schedule.id && a.date == d}.first %>
-	<% if attendance %>
-	  <% member_total += 1 %>
-	  <% @date_totals[d] ||= 0 %>
-	  <% @date_totals[d] += 1 %>
-    <td id="attendance_<%=member.id%>_<%=d.day%>" align="center" onclick="<%=remote_function(:update => "attendance_#{member.id}_#{d.day}",
-      :url => { :controller => :attendances, :action => :destroy, :id => attendance.id}, :method => :delete) %>">
-		<%=params[:x] ? 'X' : image_tag('accept.png').html_safe%>
-	</td>
-	<% else %>
-    <td id="attendance_<%=member.id%>_<%=d.day%>" align="center" onclick="<%= remote_function(:update => "attendance_#{member.id}_#{d.day}",
-      :url => { :controller => :attendances, :action => :create, :attendance => {:member_id => member.id, :group_schedule_id => group_schedule.id, :year => d.year, :week => d.cweek } }) %>">&nbsp;</td>
-	<% end %>
-	<% else %>
-    <td>&nbsp;</td>
-	<% end %>
-<% end %>
-    <% half_year_total = member.attendances.select{|a| a.date >= (@dates.last - (6 * 30))}.size %>
-    <td align="center"><%="#{member_total}/#{half_year_total}" if half_year_total > 0%></td>
-  </tr>
+  <% end %>
+  <% half_year_total = member.attendances.select { |a| a.date >= (@dates.last - (6 * 30)) }.size %>
+  <td align="center"><%= "#{member_total}/#{half_year_total}" if half_year_total > 0 %></td>
+</tr>

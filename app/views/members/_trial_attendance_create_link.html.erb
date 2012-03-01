@@ -1,0 +1,1 @@
+<%= link_to '&nbsp;&nbsp;&nbsp;&nbsp;'.html_safe, {:controller => :trial_attendances, :action => :create, :trial_attendance => {:nkf_member_trial_id => nkf_member_trial_id, :group_schedule_id => group_schedule_id, :year => date.year, :week => date.cweek}}, :remote => true, :style => 'text-decoration: none' %>

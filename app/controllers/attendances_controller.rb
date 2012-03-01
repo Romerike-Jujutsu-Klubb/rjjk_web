@@ -54,7 +54,7 @@ class AttendancesController < ApplicationController
         format.html do 
           if (request.xhr?)
             flash.clear
-            render :text => '<img src="/assets/accept.png"/>'.html_safe
+            render :partial => '/members/attendance_delete_link', :locals => {:attendance => @attendance}
           else
             redirect_to(@attendance) 
           end
@@ -94,7 +94,7 @@ class AttendancesController < ApplicationController
       format.html do 
         if (request.xhr?)
           flash.clear
-          render :text => ''
+          render :partial => '/members/attendance_create_link', :locals => {:member_id => @attendance.member_id, :group_schedule_id => @attendance.group_schedule_id, :date => @attendance.date}
         else
           redirect_to(attendances_url) 
         end

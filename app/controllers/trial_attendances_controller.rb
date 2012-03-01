@@ -48,7 +48,7 @@ class TrialAttendancesController < ApplicationController
       if @trial_attendance.save
         format.html {
           if (request.xhr?)
-            render :text => '<img src="/assets/accept.png"/>'
+            render :partial => '/members/trial_attendance_delete_link', :locals => {:trial_attendance => @trial_attendance}
           else
             redirect_to(@trial_attendance, :notice => 'TrialAttendance was successfully created.')
           end
@@ -86,7 +86,7 @@ class TrialAttendancesController < ApplicationController
     respond_to do |format|
       format.html do
         if (request.xhr?)
-          render :text => ''
+          render :partial => '/members/trial_attendance_create_link', :locals => {:nkf_member_trial_id => @trial_attendance.nkf_member_trial_id, :group_schedule_id => @trial_attendance.group_schedule_id, :date => @trial_attendance.date}
         else
           redirect_to(trial_attendances_url)
         end
