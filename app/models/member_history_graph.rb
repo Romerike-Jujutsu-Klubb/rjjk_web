@@ -8,7 +8,8 @@ class MemberHistoryGraph
   JUNIOR_AGE_LIMIT = 15
   ASPIRANT_AGE_LIMIT = 10
   ACTIVE_CLAUSE = '"NOT EXISTS (SELECT kontraktsbelop FROM nkf_members WHERE member_id = members.id AND kontraktsbelop <= 0) AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
-  
+  NON_PAYING_CLAUSE = '"EXISTS (SELECT kontraktsbelop FROM nkf_members WHERE member_id = members.id AND kontraktsbelop <= 0) AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
+
   def self.history_graph(size = 480)
     begin
       require 'gruff'
@@ -22,7 +23,7 @@ class MemberHistoryGraph
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     #g.legend_font_size = 14
     g.hide_dots = true
-    g.colors = %w{gray blue brown orange black lightblue green red}
+    g.colors = %w{gray blue brown orange black lightblue green red yellow}
     
     #first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = 5.years.ago.to_date
@@ -32,13 +33,14 @@ class MemberHistoryGraph
     dates.reverse!
     g.data("Totalt", totals(dates))
     g.data("Totalt Jujutsu", totals_jj(dates))
-    g.data("Grizzly", seniors_jj(dates))
+    g.data("Voksne", seniors_jj(dates))
     g.data("Tiger", juniors_jj(dates))
     g.data("Panda", aspirants(dates))
     g.data("Aikido Seniorer", seniors_ad(dates).without_consecutive_zeros)
     g.data("Aikido Juniorer", juniors_ad(dates).without_consecutive_zeros)
     # g.data("Uten fødselsdato", dates.map {|date| Member.count(:conditions => "(#{eval ACTIVE_CLAUSE}) AND birthdate IS NULL")}.without_consecutive_zeros)
     g.data("Prøvetid", dates.map{|d| NkfMemberTrial.count(:conditions => ["reg_dato <= ?", d])}.without_consecutive_zeros)
+    g.data("Gratis", gratis(dates))
 
     g.minimum_value = 0
     
@@ -59,6 +61,10 @@ class MemberHistoryGraph
     
   def self.totals(dates)
     dates.map {|date| Member.count(:conditions => eval(ACTIVE_CLAUSE))}
+  end
+
+  def self.gratis(dates)
+    dates.map {|date| Member.count(:conditions => eval(NON_PAYING_CLAUSE))}
   end
 
   def self.totals_jj(dates)
