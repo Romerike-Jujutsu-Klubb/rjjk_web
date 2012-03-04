@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~>3.1.3'
+gem 'rails', '~>3.2.2'
 
 gem 'jruby-openssl'
 gem 'rmagick4j'
@@ -8,7 +8,7 @@ gem 'activerecord-jdbcpostgresql-adapter'
 gem 'RedCloth'
 gem 'gruff'
 gem 'trinidad'
-gem 'jruby-rack', '1.1.1' # Remove version limitation when 1.1.4 is out
+gem 'jruby-rack'
 gem 'trinidad_daemon_extension'
 gem 'prawn'
 gem 'delayed_job', '~>2.1'
