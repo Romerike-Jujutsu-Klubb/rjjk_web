@@ -16,7 +16,7 @@ namespace :deploy do
     send(run_method, "/sbin/service #{application} start")
   end
   
-  desc "Restart the mongrel server"
+  desc "Restart the service"
   task :restart, :roles => :app do
     send(run_method, "/sbin/service #{application} restart")
   end
