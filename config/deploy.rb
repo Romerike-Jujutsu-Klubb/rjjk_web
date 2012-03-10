@@ -10,6 +10,8 @@ set :user, "capistrano"
 set :use_sudo, false
 #ssh_options[:keys] = %w(/home/lars/workspace/rjjk_web/etc/id_rsa)
 
+set :jruby_opts, '--1.9'
+
 namespace :deploy do
   desc "The spinner task is used by :cold_deploy to start the application up"
   task :spinner, :roles => :app do
