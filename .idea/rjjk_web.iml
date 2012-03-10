@@ -93,7 +93,7 @@
     <orderEntry type="library" scope="PROVIDED" name="arel (v3.0.2, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bouncy-castle-java (v1.5.0146.1, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.0.0, jruby-1.6.7-p357) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="bundler (v1.0.22, jruby-1.6.7-p357) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="bundler (v1.1.0, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="coffee-rails (v3.2.2, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="coffee-script (v2.2.0, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="coffee-script-source (v1.2.0, jruby-1.6.7-p357) [gem]" level="application" />

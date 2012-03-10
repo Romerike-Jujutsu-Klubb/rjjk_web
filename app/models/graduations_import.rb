@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class GraduationsImport < ActiveRecord::Migration
   def self.import
     STDERR.puts "Importing ./gradering.csv"
