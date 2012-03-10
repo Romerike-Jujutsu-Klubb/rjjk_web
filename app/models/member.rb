@@ -1,8 +1,15 @@
+# encoding: UTF-8
 class Member < ActiveRecord::Base
   JUNIOR_AGE_LIMIT = 15
   ASPIRANT_AGE_LIMIT = 10
   MEMBERS_PER_PAGE = 30
   ACTIVE_CONDITIONS = "left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)"
+
+  acts_as_gmappable :check_process => :prevent_geocoding
+
+  def prevent_geocoding
+    address.blank? || (!latitude.blank? && !longitude.blank?)
+  end
 
   scope :active, lambda { |date| {:conditions => ['left_on IS NULL OR left_on > ?', date]} }
 
@@ -44,6 +51,11 @@ class Member < ActiveRecord::Base
         }.update(options))
   end
 
+  # describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
+  def gmaps4rails_address
+    "#{self.address}, #{self.postal_code}, Norway"
+  end
+
   def current_graduate(martial_art, date = Date.today)
     graduates.select { |g| g.graduation.held_on < date && (martial_art.nil? || g.rank.martial_art == martial_art) }.sort_by { |g| g.rank.position }.last
   end
@@ -74,7 +86,7 @@ class Member < ActiveRecord::Base
           age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age) }.first
       next_rank ||= Rank.first(:conditions => ['martial_art_id = ? AND position = ?', ma, current_rank.position + 1])
     end
-    next_rank ||= ma.ranks.select { |r| age.nil? || (age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age))}.first
+    next_rank ||= ma.ranks.select { |r| age.nil? || (age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age)) }.first
     next_rank ||= ma.ranks.first
     next_rank
   end

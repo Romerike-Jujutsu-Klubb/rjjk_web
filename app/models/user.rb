@@ -4,7 +4,7 @@ require 'clock'
 # this model expects a certain database layout and its based on the name/login pattern. 
 class User < ActiveRecord::Base
   include UserSystem
-  
+
   CHANGEABLE_FIELDS = ['first_name', 'last_name', 'email']
   attr_accessor :password_needs_confirmation
 
@@ -23,10 +23,10 @@ class User < ActiveRecord::Base
 
   def validate
     if role_changed? && (user.nil? || user.role.nil?)
-      errors.add(:role, 'Bare administratorer kan gi administratorrettigheter.') 
+      errors.add(:role, 'Bare administratorer kan gi administratorrettigheter.')
     end
   end
-  
+
   def initialize(attributes = nil)
     super
     @password_needs_confirmation = false
@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   def self.find_administrators
     find(:all, :conditions => ['role = ?', UserSystem::ADMIN_ROLE])
   end
-  
+
   def self.authenticate(login, pass)
     u = find( :first, :conditions => ["login = ? AND verified = ? AND deleted = ?", login, true, false])
     return nil if u.nil?
@@ -83,11 +83,11 @@ class User < ActiveRecord::Base
   def remaining_token_lifetime
     self.token_expiry.to_i - Clock.now.to_i
   end
-  
+
   def admin?
     role == UserSystem::ADMIN_ROLE
   end
-  
+
   def name
     "#{first_name} #{last_name}"
   end
@@ -122,6 +122,6 @@ class User < ActiveRecord::Base
   def self.salted_password(salt, hashed_password)
     hashed(salt + hashed_password)
   end
-  
+
 end
 

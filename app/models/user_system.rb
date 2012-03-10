@@ -31,7 +31,7 @@ module UserSystem
     return true if authenticated_user?
     session[:return_to] = request.path
     access_denied
-    return false 
+    false
   end
   
   #   before_filter :admin_required
@@ -99,22 +99,22 @@ module UserSystem
 
     if cookie = cookies[:autologin]
       cookie_value = case cookie
-        when String: # Development
+        when String # Development
         cookies[:autologin]
-        when Hash:  # Production
+        when Hash  # Production
         cookies[:autologin][:value].first
-        when Array:  # Not sure why this happens in development...
+        when Array  # Not sure why this happens in development...
         cookies[:autologin].first
       else
         raise "Unknown cookie class: #{cookie.class}\n#{cookie.inspect}"
       end
       
       token = cookies[:token] && case cookies[:token]
-        when String: # Development
+        when String # Development
         cookies[:token]
-        when Hash:   # Production
+        when Hash   # Production
         cookies[:token][:value].first
-        when Array:  # Not sure why this happens in development...
+        when Array  # Not sure why this happens in development...
         cookies[:token].first
       else
         raise "Unknown cookie class: #{cookie.class}"
@@ -145,7 +145,7 @@ module UserSystem
     end
     
     # Everything failed
-    return false
+    false
   end
   
   def user

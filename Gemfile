@@ -8,10 +8,9 @@ gem 'activerecord-jdbcpostgresql-adapter'
 gem 'RedCloth'
 gem 'gruff'
 gem 'trinidad'
-gem 'jruby-rack'
 gem 'trinidad_daemon_extension'
 gem 'prawn'
-gem 'delayed_job', '~>2.1'
+gem 'rufus-scheduler'
 gem 'dynamic_form'
 gem 'redbox', '~> 1.0.4'
 
@@ -27,9 +26,16 @@ gem 'acts_as_list'
 gem 'acts_as_tree'
 gem 'will_paginate'
 gem 'jquery-rails'
-gem 'uglifier'
 gem 'tinymce-rails'
 gem 'simple_workflow'
+gem 'gmaps4rails'
+
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'therubyrhino'
+  gem 'uglifier'
+end
 
 group :development do
   gem 'rdoc'

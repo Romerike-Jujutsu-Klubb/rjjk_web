@@ -1,105 +1,106 @@
 <% if not @news_items.empty? %>
     <% @news_item = @news_items[0] %>
-		<!-- Normal content: Stuff that's not going to be put in the left or right column. -->
-		<div id="normalcontent" class="post">
-			<h3><%=h @news_item.title%></h3>
-			<div class="contentarea">
-				<div class="details">
-				<%="Skrevet av #{@news_item.creator.name}" if @news_item.creator%>
-   				<%=@news_item.created_at.strftime '%Y-%m-%d'%>
-				</div>	
-				<!-- Normal content area start -->
-				<%=textilize(@news_item.body.strip).html_safe %>
+    <!-- Normal content: Stuff that's not going to be put in the left or right column. -->
+    <div id="normalcontent" class="post">
+      <h3><%= h @news_item.title %></h3>
+      <div class="contentarea">
+        <div class="details">
+          <%= "Skrevet av #{@news_item.creator.name}" if @news_item.creator %>
+          <%= @news_item.created_at.strftime '%Y-%m-%d' %>
+        </div>
+        <!-- Normal content area start -->
+        <%= textilize(@news_item.body.strip).html_safe %>
 
-						<% if user? %>
-						<ul class="controls">
-							<li><a href="<%=url_for :action => :edit, :id => @news_item %>" class="edit">Redigèr</a></li>
-							<li><%=link_to 'Slett', {:action => :destroy, :id => @news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>				
-						</ul>
-						<% end %>
+        <% if user? %>
+            <ul class="controls">
+              <li><a href="<%= url_for :action => :edit, :id => @news_item %>" class="edit">Redigèr</a></li>
+              <li><%= link_to 'Slett', {:action => :destroy, :id => @news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
+            </ul>
+        <% end %>
 
-				<!-- Normal content area end -->
-			</div>
-		</div>
-
-	
-		<div class="divider1"></div>
+        <!-- Normal content area end -->
+      </div>
+    </div>
 
 
-		<!-- Primary content: Stuff that goes in the primary content column (by default, the left column) -->
-		<div id="primarycontainer">
-			<div id="primarycontent">
-				<!-- Primary content area start -->
+    <div class="divider1"></div>
 
-                <% @news_items[1..5].each_with_index do |@news_item, i| %>		
-                <% if i > 0 %>
-				<div class="divider2"></div>
-                <% end %>		
-				<div class="post">
-					<h4><%=h @news_item.title %></h4>
-					<div class="contentarea">
-						<div class="details">
-						<%="Skrevet av #{@news_item.creator.name}" if @news_item.creator%>
-        				<%=@news_item.created_at.strftime '%Y-%m-%d'%>
-				        </div>	
-						<%=textilize(@news_item.body.strip).html_safe %>
 
-						<% if user? %>
-						<ul class="controls">
-							<li><a href="<%=url_for :action => :edit, :id => @news_item %>" class="edit">Redigèr</a></li>				
-							<li><%=link_to 'Slett', {:action => :destroy, :id => @news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>				
-						</ul>
-						<% end %>
+    <!-- Primary content: Stuff that goes in the primary content column (by default, the left column) -->
+    <div id="primarycontainer">
+      <div id="primarycontent">
+        <!-- Primary content area start -->
 
-					</div>
-				</div>
+        <% @news_items[1..5].each_with_index do |news_item, i| %>
+            <% if i > 0 %>
+                <div class="divider2"></div>
+            <% end %>
+            <div class="post">
+              <h4><%= h news_item.title %></h4>
+
+              <div class="contentarea">
+                <div class="details">
+                  <%= "Skrevet av #{news_item.creator.name}" if news_item.creator %>
+                  <%= news_item.created_at.strftime '%Y-%m-%d' %>
+                </div>
+                <%= textilize(news_item.body.strip).html_safe %>
+
+                <% if user? %>
+                    <ul class="controls">
+                      <li><a href="<%= url_for :action => :edit, :id => news_item %>" class="edit">Redigèr</a></li>
+                      <li><%= link_to 'Slett', {:action => :destroy, :id => news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
+                    </ul>
                 <% end %>
 
-				<!-- Primary content area end -->
-			</div>
-		</div>
+              </div>
+            </div>
+        <% end %>
 
-		
-		<!-- Secondary content: Stuff that goes in the secondary content column (by default, the narrower right column) -->
-		<div id="secondarycontent">
-			<!-- Secondary content area start -->
-			
-			<!-- HINT: Set any div's class to "box" to encapsulate it in (you guessed it) a box -->
+        <!-- Primary content area end -->
+      </div>
+    </div>
 
-<!--
+
+    <!-- Secondary content: Stuff that goes in the secondary content column (by default, the narrower right column) -->
+    <div id="secondarycontent">
+      <!-- Secondary content area start -->
+
+      <!-- HINT: Set any div's class to "box" to encapsulate it in (you guessed it) a box -->
+
+      <!--
 <% for event in @events %>
 			<div class="box">
-				<h4><%=event.name%></h4>
-				<%=event.start_at.strftime('%Y-%m-%d')%>
-				<%=" - #{event.end_at.strftime('%Y-%m-%d')}" if event.end_at%>
-				<%=link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin?%>
+				<h4><%= event.name %></h4>
+				<%= event.start_at.strftime('%Y-%m-%d') %>
+				<%= " - #{event.end_at.strftime('%Y-%m-%d')}" if event.end_at %>
+				<%= link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin? %>
 				<div class="contentarea">
-					<p><%=event.description.html_safe%></p>
+					<p><%= event.description.html_safe %></p>
 				</div>
 			</div>
 <% end %>
 -->
 
-<!--		
-			<div>
-				<h4>Nullam Dolore</h4>
-				<div class="contentarea">
-					<ul class="linklist">
-						<li><a href="#">Volutpat at varius sed</a></li>
-						<li><a href="#">Sollicitudin et arcu</a></li>
-						<li><a href="#">Vivamus viverra nullam</a></li>
-						<li><a href="#">Turpis vestibulum</a></li>
-						<li><a href="#">Sed etiam lorem ipsum</a></li>
-						<li><a href="#">Sit amet dolore nulla</a></li>
-						<li><a href="#">Facilisi sed tortor</a></li>
-						<li><a href="#">Aenean felis quisque</a></li>
-						<li><a href="#">Eros cras lobortis vel</a></li>
-						<li><a href="#">Purus in eget odio sapien</a></li>
-						<li><a href="#">Adipiscing blandit</a></li>
-					</ul>
-				</div>
-			</div>
--->
-			<!-- Secondary content area end -->
-		</div>
+      <!--
+                  <div>
+                      <h4>Nullam Dolore</h4>
+                      <div class="contentarea">
+                          <ul class="linklist">
+                              <li><a href="#">Volutpat at varius sed</a></li>
+                              <li><a href="#">Sollicitudin et arcu</a></li>
+                              <li><a href="#">Vivamus viverra nullam</a></li>
+                              <li><a href="#">Turpis vestibulum</a></li>
+                              <li><a href="#">Sed etiam lorem ipsum</a></li>
+                              <li><a href="#">Sit amet dolore nulla</a></li>
+                              <li><a href="#">Facilisi sed tortor</a></li>
+                              <li><a href="#">Aenean felis quisque</a></li>
+                              <li><a href="#">Eros cras lobortis vel</a></li>
+                              <li><a href="#">Purus in eget odio sapien</a></li>
+                              <li><a href="#">Adipiscing blandit</a></li>
+                          </ul>
+                      </div>
+                  </div>
+      -->
+      <!-- Secondary content area end -->
+    </div>
 <% end %>

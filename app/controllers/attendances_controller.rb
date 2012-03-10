@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class AttendancesController < ApplicationController
   before_filter :admin_required
 

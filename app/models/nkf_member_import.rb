@@ -1,7 +1,9 @@
+# encoding: UTF-8
 require 'net/http'
 require 'uri'
 require 'erb'
 require 'pp'
+require 'iconv'
 
 class NkfMemberImport
   CONCURRENT_REQUESTS = 8

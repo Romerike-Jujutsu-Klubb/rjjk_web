@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class MembersController < ApplicationController
   before_filter :store_location
   before_filter :admin_required
@@ -19,7 +20,7 @@ class MembersController < ApplicationController
     @title = "Søk i medlemsregisteret"
     if params[:q]
       query = params[:q]
-      @members = Member.find_by_contents(query, :limit => :all)
+      @members = Member.find_by_contents(query)
       @members = @members.sort_by { |member| member.last_name }
     end
   end
@@ -314,7 +315,11 @@ class MembersController < ApplicationController
     @member.groups.delete(Group.find(params[:group_id]))
     redirect_to :controller => :nkf_members, :action => :comparison, :id => 0
   end
-  
+
+  def map
+    @json = Member.active(Date.today).to_gmaps4rails
+  end
+
   private
   
   def year_end(offset=0)

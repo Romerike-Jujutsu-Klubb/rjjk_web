@@ -10,9 +10,7 @@
   <%= csrf_meta_tag %>
 
   <link href="<%= url_for(:controller => 'stylesheets', :action => 'dark_ritual', :format => 'css', :id => @content_width) %>" media="screen" rel="stylesheet" type="text/css"/>
-  <%= stylesheet_link_tag 'dark_ritual_adaption', :media => 'screen' %>
-  <%= stylesheet_link_tag 'lightwindow' %>
-  <%= stylesheet_link_tag 'redbox' %>
+  <%= stylesheet_link_tag :application %>
 
   <title>Romerike Jujutsu Klubb</title>
 
@@ -55,7 +53,7 @@
   <div class="main_right">
 
     <div class="padded">
-      <%= image_tag 'rjjk_logo_&_txt_320.png', :style => 'width: 182px; height: 181px; border: 0' %>
+      <%= link_to image_tag('rjjk_logo_&_txt_320.png', :style => 'width: 182px; height: 181px; border: 0'), '/' %>
       <% if admin? %>
           <%= link_to image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :members, :action => :history_graph, :format => :png, :id => 1024 %>
           <%= link_to image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :attendances, :action => :history_graph, :format => :png, :id => 1024 %>
