@@ -7,9 +7,9 @@ class NkfReplication < ActionMailer::Base
     mail to: "uwe@kubosch.no", :subject => "Hentet #{@import.size} endringer fra NKF"
   end
 
-  def synchronize
-    @greeting = "Hi"
+  def update_members(nkf_member_comparison)
+    @comparison = nkf_member_comparison
 
-    mail to: "uwe@kubosch.no"
+    mail to: "uwe@kubosch.no", :subject => "Oppdateringer fra NKF"
   end
 end
