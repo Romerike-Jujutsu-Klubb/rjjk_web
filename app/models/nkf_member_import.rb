@@ -10,6 +10,14 @@ class NkfMemberImport
   include MonitorMixin
   attr_reader :changes, :error_records, :import_rows
 
+  def size
+    changes.try(:size).to_i + error_records.try(:size).to_i
+  end
+
+  def any?
+    size > 0
+  end
+
   def initialize
     super
     @changes       = []

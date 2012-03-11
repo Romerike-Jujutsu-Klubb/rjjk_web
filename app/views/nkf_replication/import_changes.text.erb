@@ -1,0 +1,15 @@
+NKF Import
+
+Importerte endringer fra NKF-portalen.
+
+<%= @import.changes.size %> records importert,
+<%= @import.error_records.size %> feilet,
+<%= @import.import_rows.size - @import.changes.size - @import.error_records.size %> uendret.
+
+<% if @import.error_records.any? %>
+    Feil:
+
+    <% @import.error_records.each do |r| %>
+        <%= r.class %> <%= r.id %> <%= r.errors.full_messages.inspect %>
+    <% end %>
+<% end %>
