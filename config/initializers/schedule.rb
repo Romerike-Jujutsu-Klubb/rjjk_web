@@ -23,5 +23,5 @@ scheduler.every('60m', :first_in => '10s') do
     end
   end
 
-  NkfReplication.update_members(c).deliver
+  NkfReplication.update_members(c).deliver if c.orphan_nkf_members.any? || c.members.any?
 end
