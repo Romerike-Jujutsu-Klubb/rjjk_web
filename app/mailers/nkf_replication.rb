@@ -7,9 +7,15 @@ class NkfReplication < ActionMailer::Base
     mail to: "uwe@kubosch.no", :subject => "Hentet #{@import.size} endringer fra NKF"
   end
 
-  def update_members(nkf_member_comparison)
-    @comparison = nkf_member_comparison
-
-    mail to: "uwe@kubosch.no", :subject => "Oppdateringer fra NKF"
+  def update_members(new_members, member_changes, group_changes)
+    @new_members = new_members
+    @member_changes = member_changes
+    @group_changes = group_changes
+    stats = [
+        @new_members.any? ? "#{@new_members.size} nye" : nil,
+        @member_changes.any? ? "#{@member_changes.size} endrede" : nil,
+        @group_changes.any? ? "#{@group_changes.size} gruppeendringer" : nil
+    ].compact.join(', ')
+    mail to: "uwe@kubosch.no", :subject => "Oppdateringer fra NKF: #{stats}"
   end
 end

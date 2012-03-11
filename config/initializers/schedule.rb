@@ -5,23 +5,35 @@ scheduler.every('60m', :first_in => '10s') do
 
   c = NkfMemberComparison.new
 
-  c.orphan_nkf_members.each do |nkf_member|
+  new_members = c.orphan_nkf_members.map do |nkf_member|
     nkf_member.create_member!
   end
 
-  c.members.each do |m|
+  member_changes = c.members.map do |m|
+    changes = m.changes
     m.save!
-  end
+    [m, changes] unless changes.empty?
+  end.compact
 
+  group_changes = Hash.new{|h, k| h[k] = [[], []]}
   c.members.each do |member|
     nkf_group_names = member.nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /).map { |n| n.split('/')[3] }
     member_groups = member.groups.map { |g| g.name }
     (nkf_group_names - member_groups).each do |gn|
       if group = c.groups.find { |g| g.name == gn }
-        @member.groups << Group.find(group.id)
+        group = Group.find(group.id)
+        member.groups << group
+        group_changes[member][0] << group
+      end
+    end
+    (member_groups - nkf_group_names).each do |gn|
+      if group = c.groups.find { |g| g.name == gn }
+        group = Group.find(group.id)
+        member.groups.delete(group)
+        group_changes[member][1] << group
       end
     end
   end
 
-  NkfReplication.update_members(c).deliver if c.orphan_nkf_members.any? || c.members.any?
+  NkfReplication.update_members(new_members, member_changes, group_changes).deliver if new_members.any? || member_changes.any? || group_changes.any?
 end
