@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/nkf_member_comparison.rb" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/views/nkf_replication/synchronize.text.erb" afterPath="$PROJECT_DIR$/app/views/nkf_replication/update_members.text.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/nkf_members_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/mailers/nkf_replication.rb" afterPath="$PROJECT_DIR$/app/mailers/nkf_replication.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/nkf_member.rb" afterPath="$PROJECT_DIR$/app/models/nkf_member.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/initializers/schedule.rb" afterPath="$PROJECT_DIR$/config/initializers/schedule.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/nkf_replication/import_changes.text.erb" afterPath="$PROJECT_DIR$/app/views/nkf_replication/import_changes.text.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/nkf_replication/update_members.text.erb" afterPath="$PROJECT_DIR$/app/views/nkf_replication/update_members.text.erb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -94,75 +90,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="comparison.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/nkf_members/comparison.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="78" column="0" selection-start="2003" selection-end="2473" vertical-scroll-proportion="-17.642857">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nkf_members_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/nkf_members_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="0" selection-start="1304" selection-end="1304" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#1617#1635#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="members_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/members_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="309" column="0" selection-start="10172" selection-end="10263" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="schedule.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/config/initializers/schedule.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="8" selection-start="714" selection-end="714" vertical-scroll-proportion="0.6766382">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nkf_member_comparison.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/nkf_member_comparison.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="0" selection-start="487" selection-end="487" vertical-scroll-proportion="-6.0384617">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nkf_replication.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/mailers/nkf_replication.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="65" selection-start="392" selection-end="392" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="import_changes.text.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/nkf_replication/import_changes.text.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="0" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="update_members.text.erb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="update_members.text.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/nkf_replication/update_members.text.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="33" selection-start="372" selection-end="372" vertical-scroll-proportion="0.0">
+            <state line="15" column="8" selection-start="404" selection-end="404" vertical-scroll-proportion="0.39364642">
               <folding />
             </state>
           </provider>
@@ -212,7 +143,6 @@
         <option value="$PROJECT_DIR$/app/models/graduations_import.rb" />
         <option value="$PROJECT_DIR$/app/models/member_history_graph.rb" />
         <option value="$PROJECT_DIR$/config/environments/development.rb" />
-        <option value="$PROJECT_DIR$/app/views/nkf_replication/import_changes.text.erb" />
         <option value="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
         <option value="$PROJECT_DIR$/app/models/NkfMemberComparison.rb" />
         <option value="$PROJECT_DIR$/app/views/nkf_replication/synchronize.text.erb" />
@@ -221,6 +151,7 @@
         <option value="$PROJECT_DIR$/app/models/nkf_member.rb" />
         <option value="$PROJECT_DIR$/config/initializers/schedule.rb" />
         <option value="$PROJECT_DIR$/app/mailers/nkf_replication.rb" />
+        <option value="$PROJECT_DIR$/app/views/nkf_replication/import_changes.text.erb" />
         <option value="$PROJECT_DIR$/app/views/nkf_replication/update_members.text.erb" />
       </list>
     </option>
@@ -480,6 +411,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="nkf_replication" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nkf_members" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1598,7 +1551,11 @@
       <created>1331459547103</created>
       <updated>1331459547103</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="* Sender e-post ved import av medlemsinfo fra NKF.">
+      <created>1331464400101</created>
+      <updated>1331464400101</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1607,7 +1564,7 @@
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19060774" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32834995" sideWeight="0.7117864" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30847144" sideWeight="0.94745576" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30847144" sideWeight="0.94745576" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32780847" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.2248394" sideWeight="0.29005525" order="3" side_tool="false" content_ui="tabs" />
@@ -1821,53 +1778,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/nkf_members/comparison.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="0" selection-start="2003" selection-end="2473" vertical-scroll-proportion="-17.642857">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/members_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="309" column="0" selection-start="10172" selection-end="10263" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Frameworks/JRuby.framework/Gems/1.9/gems/activesupport-3.2.2/lib/active_support/core_ext/module/synchronization.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="6" selection-start="717" selection-end="717" vertical-scroll-proportion="0.33287293">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/nkf_member_comparison.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="487" selection-end="487" vertical-scroll-proportion="-6.0384617">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/nkf_members_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="0" selection-start="1304" selection-end="1304" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#1617#1635#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/nkf_replication/import_changes.text.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/mailers/nkf_replication.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="65" selection-start="392" selection-end="392" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1879,16 +1792,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/nkf_replication/update_members.text.erb">
+    <entry file="file://$PROJECT_DIR$/config/initializers/schedule.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="33" selection-start="372" selection-end="372" vertical-scroll-proportion="0.0">
+        <state line="8" column="29" selection-start="269" selection-end="269" vertical-scroll-proportion="0.21652421">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/initializers/schedule.rb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/members_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="8" selection-start="714" selection-end="714" vertical-scroll-proportion="0.6766382">
+        <state line="309" column="0" selection-start="10172" selection-end="10263" vertical-scroll-proportion="0.6357039">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/nkf_members_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="0" selection-start="1304" selection-end="1304" vertical-scroll-proportion="0.027576197">
+          <folding>
+            <element signature="e#1617#1635#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/nkf_members/comparison.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="78" column="0" selection-start="2003" selection-end="2473" vertical-scroll-proportion="0.70977014">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/nkf_member_comparison.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="487" selection-end="487" vertical-scroll-proportion="0.2722063">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/mailers/nkf_replication.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="65" selection-start="392" selection-end="392" vertical-scroll-proportion="0.31491712">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/nkf_replication/import_changes.text.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="8" selection-start="424" selection-end="424" vertical-scroll-proportion="0.36740333">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/nkf_replication/update_members.text.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="8" selection-start="404" selection-end="404" vertical-scroll-proportion="0.39364642">
           <folding />
         </state>
       </provider>

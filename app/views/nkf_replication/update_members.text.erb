@@ -1,17 +1,16 @@
 NKF Avstemming
 
-<% if @comparison.orphan_nkf_members.any? %>
+<% if @comparison.orphan_nkf_members.any? -%>
 Opprettet følgende nye medlemmer:
 
-    <% @comparison.orphan_nkf_members.each do |nkfm| %>
+    <% @comparison.orphan_nkf_members.each do |nkfm| -%>
 <%= nkfm.fornavn %> <%= nkfm.etternavn %>
-    <% end %>
-<% end %>
+    <% end -%>
+<% end -%>
 
-
-<% if @comparison.members.any? %>
+<% if @comparison.members.any? -%>
 Oppdaterte følgnde eksisterende medlemmer.
-    <% @comparison.members.each do |m| %>
+    <% @comparison.members.each do |m| -%>
 <%=m.first_name %> <%=m.last_name %>
-    <% end %>
-<% end %>
+    <% end -%>
+<% end -%>
