@@ -1,10 +1,11 @@
 class NkfReplication < ActionMailer::Base
-  default from: "uwe@kubosch.no"
+  default from: 'webmaster@jujutsu.no',
+          to: Rails.env == 'prodution' ? ['medlem@jujutsu.no', 'uwe@kubosch.no'] : 'uwe@kubosch.no'
 
   def import_changes(nkf_member_import)
     @import = nkf_member_import
 
-    mail to: "uwe@kubosch.no", :subject => "Hentet #{@import.size} endringer fra NKF"
+    mail subject: "Hentet #{@import.size} endringer fra NKF"
   end
 
   def update_members(new_members, member_changes, group_changes)
@@ -16,6 +17,6 @@ class NkfReplication < ActionMailer::Base
         @member_changes.any? ? "#{@member_changes.size} endrede" : nil,
         @group_changes.any? ? "#{@group_changes.size} gruppeendringer" : nil
     ].compact.join(', ')
-    mail to: "uwe@kubosch.no", :subject => "Oppdateringer fra NKF: #{stats}"
+    mail subject: "Oppdateringer fra NKF: #{stats}"
   end
 end
