@@ -1,5 +1,3 @@
-NKF Avstemming
-
 <% if @new_members.any? -%>
 Opprettet følgende nye medlemmer:
 
@@ -9,7 +7,8 @@ Opprettet følgende nye medlemmer:
 
 <% end -%>
 <% if @member_changes.any? -%>
-Oppdaterte følgende eksisterende medlemmer.
+Oppdaterte følgende eksisterende medlemmer:
+
     <% @member_changes.each do |m, c| -%>
 <%=m.first_name %> <%=m.last_name %>
         <% c.each do |k, v| -%>
