@@ -9,7 +9,7 @@ Opprettet følgende nye medlemmer:
 
 <% end -%>
 <% if @member_changes.any? -%>
-Oppdaterte følgnde eksisterende medlemmer.
+Oppdaterte følgende eksisterende medlemmer.
     <% @member_changes.each do |m, c| -%>
 <%=m.first_name %> <%=m.last_name %>
         <% c.each do |k, v| -%>
