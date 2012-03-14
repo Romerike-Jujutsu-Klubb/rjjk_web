@@ -12,7 +12,10 @@ class Image < ActiveRecord::Base
 
   def content_data
     data = super
-    return eval("%Q{#{data}}") if data =~ /^\\3(77|30)/
+    if data =~ /^\\3(77|30)/
+      logger.error "Image id=#{id} has invalid data."
+      return eval("%Q{#{data}}")
+    end
     data
   end
 

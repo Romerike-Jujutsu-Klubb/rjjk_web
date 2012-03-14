@@ -13,6 +13,7 @@ one:
   reg_dato: 2010-10-03
   tid: 1
   stilart: Jujutsu
+  medlems_type: Enkeltmedlem
 
 two:
   medlems_type: MyString
@@ -29,3 +30,4 @@ two:
   reg_dato: 2010-10-03
   tid: 2
   stilart: Aikido
+  medlems_type: Enkeltmedlem

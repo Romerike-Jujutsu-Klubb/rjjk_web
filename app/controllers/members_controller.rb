@@ -7,15 +7,6 @@ class MembersController < ApplicationController
   caches_page :image, :image_thumbnail, :history_graph, :grade_history_graph
   cache_sweeper :member_image_sweeper, :only => [:add_group, :create, :update, :destroy]
   
-  #  add_to_sortable_columns('listing', 
-  #    :model => Member, 
-  #    :field => 'first_name', 
-  #    :alias => 'fornavn') 
-  #  add_to_sortable_columns('listing', 
-  #    :model => Member, 
-  #    :field => 'last_name', 
-  #    :alias => 'etternavn') 
-  
   def search
     @title = "Søk i medlemsregisteret"
     if params[:q]
@@ -318,6 +309,10 @@ class MembersController < ApplicationController
 
   def map
     @json = Member.active(Date.today).to_gmaps4rails
+  end
+
+  def my_media
+    @images = Image
   end
 
   private
