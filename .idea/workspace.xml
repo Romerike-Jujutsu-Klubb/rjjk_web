@@ -2,106 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/assets/javascripts/live_tree.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/assets/stylesheets/live_tree.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/assets/stylesheets/live_tree_win_icons.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/assert_cookie/Rakefile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/assert_cookie/init.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/assert_cookie/lib/assert_cookie.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/assert_cookie/meta.yml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/assert_cookie/test/test_assert_cookie.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/assert_cookie/test/test_helper.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/Rakefile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/classes/LiveTree.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/classes/LiveTree.src/M000001.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/classes/LiveTree.src/M000002.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/classes/LiveTree/ClassMethods.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/classes/LiveTree/ClassMethods.src/M000006.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/classes/LiveTree/LiveTreeHelper.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/classes/LiveTree/LiveTreeHelper.src/M000003.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/classes/LiveTree/LiveTreeHelper.src/M000004.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/classes/LiveTree/LiveTreeHelper.src/M000005.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/files/CHANGES.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/files/LICENSE.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/files/LiveTreeClient.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/files/LiveTreeProtocol.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/files/README.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/files/STATUS.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/files/TODO.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/files/live_tree_rb.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/fr_class_index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/fr_file_index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/fr_method_index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/rdoc-style.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/init.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/lib/live_tree.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/lib/tasks/live_tree_tasks.rake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/test/live_tree_test.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db/Rakefile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db/init.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db/install.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db/lib/generators/scaffold_from_db/scaffold_from_db_generator.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db/lib/tasks/scaffold_from_db_tasks.rake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db/test/scaffold_from_db_test.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db/uninstall.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/sortable_column_headers/CHANGELOG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/sortable_column_headers/Rakefile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/sortable_column_headers/init.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/sortable_column_headers/install.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/sortable_column_headers/lib/sortable_column_headers.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/sortable_column_headers/lib/tasks/sortable_column_headers_tasks.rake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/sortable_column_headers/test/sortable_column_headers_test.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/sortable_column_headers/uninstall.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/assert_cookie/MIT-LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/assert_cookie/README" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/assert_cookie/lib" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/assert_cookie/test" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/assert_cookie" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/README" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/classes/LiveTree.src" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/classes/LiveTree/ClassMethods.src" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/classes/LiveTree/LiveTreeHelper.src" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/classes/LiveTree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/classes" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/created.rid" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc/files" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/doc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/lib/CHANGES" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/lib/LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/lib/LiveTreeClient" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/lib/LiveTreeProtocol" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/lib/README" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/lib/STATUS" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/lib/TODO" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/lib/tasks" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/lib" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree/test" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/live_tree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db/MIT-LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db/README" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db/lib/generators/scaffold_from_db/USAGE" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db/lib/generators/scaffold_from_db" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db/lib/generators" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db/lib/tasks" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db/lib" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db/test" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/scaffold_from_db" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/sortable_column_headers/MIT-LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/sortable_column_headers/README" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/sortable_column_headers/lib/tasks" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/sortable_column_headers/lib" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/sortable_column_headers/test" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/plugins/sortable_column_headers" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/member_image.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20120314211058_create_member_images.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/fixtures/member_images.yml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/unit/member_image_test.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/application_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/application_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/members_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/members_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/image.rb" afterPath="$PROJECT_DIR$/app/models/image.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/fixtures/images.yml" afterPath="$PROJECT_DIR$/test/fixtures/images.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/fixtures/members.yml" afterPath="$PROJECT_DIR$/test/fixtures/members.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/fixtures/nkf_member_trials.yml" afterPath="$PROJECT_DIR$/test/fixtures/nkf_member_trials.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/functional/members_controller_test.rb" afterPath="$PROJECT_DIR$/test/functional/members_controller_test.rb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -1412,13 +1317,18 @@
       <created>1331632000102</created>
       <updated>1331632000102</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <task id="LOCAL-00108" summary="* Fjernet gamle plugins&#10;* Startet å lage bilde/film opplasting for medlemmer og deling">
+      <created>1331761977104</created>
+      <updated>1331761977104</updated>
+    </task>
+    <option name="localTasksCounter" value="109" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="66" y="22" width="1534" height="1178" extended-state="0" />
     <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19060774" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32834995" sideWeight="0.7117864" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30847144" sideWeight="0.94745576" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1434,7 +1344,6 @@
       <window_info id="SVN Properties" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32872927" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19060774" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293247" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
@@ -1477,7 +1386,7 @@
     <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
     <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Rettet skrivefeil i e-post." />
+    <option name="LAST_COMMIT_MESSAGE" value="* Fjernet gamle plugins&#10;* Startet å lage bilde/film opplasting for medlemmer og deling" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1490,7 +1399,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="* Oppdaterte kode uten å endre funksjon" />
     <MESSAGE value="* Fjernet støy i epostlisten" />
     <MESSAGE value="* Legg til forfatter ved ny nyhet" />
     <MESSAGE value="* Fikset bildeopplasting" />
@@ -1515,6 +1423,7 @@
     <MESSAGE value="* Ikke komprimer JavaScript..." />
     <MESSAGE value="* Flyttet NKF Avstemming nederst i menyen siden den er automatisk nå" />
     <MESSAGE value="* Rettet skrivefeil i e-post." />
+    <MESSAGE value="* Fjernet gamle plugins&#10;* Startet å lage bilde/film opplasting for medlemmer og deling" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
