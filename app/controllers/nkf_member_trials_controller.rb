@@ -37,21 +37,15 @@ class NkfMemberTrialsController < ApplicationController
     @nkf_member_trial = NkfMemberTrial.find(params[:id])
   end
 
-  # POST /nkf_member_trials
-  # POST /nkf_member_trials.xml
   def create
     @nkf_member_trial = NkfMemberTrial.new(params[:nkf_member_trial])
 
-    respond_to do |format|
       if @nkf_member_trial.save
         flash[:notice] = 'NkfMemberTrial was successfully created.'
-        format.html { redirect_to(@nkf_member_trial) }
-        format.xml  { render :xml => @nkf_member_trial, :status => :created, :location => @nkf_member_trial }
+        redirect_to(@nkf_member_trial)
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @nkf_member_trial.errors, :status => :unprocessable_entity }
+        render :action => "new"
       end
-    end
   end
 
   # PUT /nkf_member_trials/1

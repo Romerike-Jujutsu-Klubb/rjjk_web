@@ -18,7 +18,10 @@ class GroupsControllerTest < ActionController::TestCase
 
   def test_should_create_group
     assert_difference('Group.count') do
-      post :create, :group => { }
+      post :create, :group => {
+          :from_age => 8, :martial_art_id => martial_arts(:keiwaryu).id, :name => 'New group', :to_age => 10
+      }
+      assert_no_errors :group
     end
 
     assert_redirected_to group_path(assigns(:group))
@@ -35,7 +38,7 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   def test_should_update_group
-    put :update, :id => groups(:panda).id, :group => { }
+    put :update, :id => groups(:panda).id, :group => {}
     assert_redirected_to group_path(assigns(:group))
   end
 

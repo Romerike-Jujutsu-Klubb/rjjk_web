@@ -8,6 +8,7 @@ one:
   sted: MyString
   adresse: MyString
   epost: MyString
+  epost_faktura: MyString
   mobil: MyString
   res_sms: false
   reg_dato: 2010-10-03

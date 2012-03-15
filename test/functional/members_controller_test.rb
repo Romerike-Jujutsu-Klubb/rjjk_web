@@ -51,12 +51,14 @@ class MembersControllerTest < ActionController::TestCase
       :postal_code => 1472,
       :payment_problem => false,
       :instructor => false,
-      :nkf_fee => true
+      :nkf_fee => true,
+      :joined_on => '2007-06-21',
+      :birthdate => '1967-06-21',
     }
     
-    assert_equal [], assigns(:member).errors.to_a
+    assert_no_errors :member
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :action => :edit, :id => assigns(:member).id
     
     assert_equal num_members + 1, Member.count
   end
@@ -67,12 +69,12 @@ class MembersControllerTest < ActionController::TestCase
     assert_response :success
     assert_template 'edit'
     
-    assert_not_nil assigns(:member)
-    assert assigns(:member).valid?
+    assert_no_errors :member
   end
   
   def test_update
     post :update, :id => @first_id
+    assert_no_errors :member
     assert_response :redirect
     assert_redirected_to :action => 'edit', :id => @first_id
   end

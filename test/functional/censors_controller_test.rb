@@ -38,7 +38,7 @@ class CensorsControllerTest < ActionController::TestCase
     assert_template 'show'
 
     assert_not_nil assigns(:censor)
-    assert assigns(:censor).valid?, assigns(:censor).errors.full_messages
+    assert assigns(:censor).valid?{assigns(:censor).errors.full_messages}
   end
 
   def test_new
@@ -68,7 +68,7 @@ class CensorsControllerTest < ActionController::TestCase
     assert_template 'edit'
 
     assert_not_nil assigns(:censor)
-    assert assigns(:censor).valid?, assigns(:censor).errors.full_messages
+    assert assigns(:censor).valid?{assigns(:censor).errors.full_messages}
   end
 
   def test_update

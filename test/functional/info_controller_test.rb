@@ -53,6 +53,7 @@ class InfoControllerTest < ActionController::TestCase
 
     login(:admin)
     post :create, :information_page => {:title => 'an article'}
+    assert_no_errors :information_page
 
     assert_response :redirect
     assert_redirected_to :action => :show, :id => InformationPage.find_by_title('an article')
@@ -84,7 +85,7 @@ class InfoControllerTest < ActionController::TestCase
     login(:admin)
     post :destroy, :id => 1
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :controller => :news, :action => :index
 
     assert_raise(ActiveRecord::RecordNotFound) {
       InformationPage.find(1)

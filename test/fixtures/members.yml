@@ -8,6 +8,7 @@ first:
   instructor: false
   nkf_fee: true
   joined_on: 2007-06-21
+  birthdate: 1967-06-21
 
 two:
   male: false
@@ -19,3 +20,5 @@ two:
   instructor: true
   nkf_fee: true
   joined_on: 1987-01-05
+  birthdate: 1970-11-25
+

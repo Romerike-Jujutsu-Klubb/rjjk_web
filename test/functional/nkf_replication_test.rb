@@ -10,7 +10,7 @@ class NkfReplicationTest < ActionMailer::TestCase
   end
 
   test "synchronize" do
-    mail = NkfReplication.synchronize
+    mail = NkfReplication.update_members
     assert_equal "Synchronize", mail.subject
     assert_equal ["to@example.org"], mail.to
     assert_equal ["from@example.com"], mail.from

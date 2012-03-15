@@ -6,7 +6,7 @@ class NewsItem < ActiveRecord::Base
   validates_length_of :title, :maximum => 64
   
   before_validation do |news_item|
-    news_item.created_by ||= current_user.id
+    news_item.created_by ||= current_user.try(:id)
   end
   
 end

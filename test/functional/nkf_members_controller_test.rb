@@ -1,6 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class NkfMembersControllerTest < ActionController::TestCase
+  def setup
+    login(:admin)
+  end
+
   test "should get index" do
     get :index
     assert_response :success
@@ -14,7 +18,8 @@ class NkfMembersControllerTest < ActionController::TestCase
 
   test "should create nkf_member" do
     assert_difference('NkfMember.count') do
-      post :create, :nkf_member => { }
+      post :create, :nkf_member => {:kjonn => 'Mann'}
+      assert_no_errors :nkf_member
     end
 
     assert_redirected_to nkf_member_path(assigns(:nkf_member))
@@ -32,7 +37,7 @@ class NkfMembersControllerTest < ActionController::TestCase
 
   test "should update nkf_member" do
     put :update, :id => nkf_members(:one).to_param, :nkf_member => { }
-    assert_redirected_to nkf_member_path(assigns(:nkf_member))
+    assert_redirected_to :controller => :nkf_members, :action => :comparison, :id => 0
   end
 
   test "should destroy nkf_member" do

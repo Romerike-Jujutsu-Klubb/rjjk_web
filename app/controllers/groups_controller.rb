@@ -15,7 +15,7 @@ class GroupsController < ApplicationController
 
   # GET /groups/yaml
   def yaml
-    @groups = Group.find(:all)
+    @groups = Group.all
     @groups.each{|g| g['members'] = g.members.map{|m| m.id}}
     render :text => @groups.map{|g| g.attributes}.to_yaml, :content_type => 'text/yaml', :layout => false
   end
@@ -31,39 +31,26 @@ class GroupsController < ApplicationController
     end
   end
 
-  # GET /groups/new
-  # GET /groups/new.xml
   def new
-    @group = Group.new
-    @martial_arts = MartialArt.find(:all)
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @group }
-    end
+    @group ||= Group.new
+    @martial_arts ||= MartialArt.all
   end
 
-  # GET /groups/1/edit
   def edit
     @group = Group.find(params[:id])
-    @martial_arts = MartialArt.find(:all)
+    @martial_arts = MartialArt.all
   end
 
-  # POST /groups
-  # POST /groups.xml
   def create
     @group = Group.new(params[:group])
 
-    respond_to do |format|
       if @group.save
         flash[:notice] = 'Group was successfully created.'
-        format.html { redirect_to(@group) }
-        format.xml  { render :xml => @group, :status => :created, :location => @group }
+        redirect_to(@group)
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @group.errors, :status => :unprocessable_entity }
+        new
+        render :action => "new"
       end
-    end
   end
 
   # PUT /groups/1

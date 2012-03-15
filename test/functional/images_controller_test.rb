@@ -54,7 +54,7 @@ class ImagesControllerTest < ActionController::TestCase
     post :create, :image => {:name => 'new file', :content_type => 'image/png', :content_data => 'qwerty'}
 
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :action => :index
 
     assert_equal num_images + 1, Image.count
   end
