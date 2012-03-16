@@ -64,8 +64,8 @@
               <% end %>
               <%= @image.description %>
               <%= link_to 'Godkjenn', {:controller => :images, :action => :update, :id => @image.id, :image => {:approved => true}}, :method => :put if admin? && !@image.approved? %>
-              <%= link_to @image.public? ? 'Offentlig' : 'Privat', {:controller => :images, :action => :update, :id => @image.id, :image => {:public => !@image.public?}}, :method => :put if admin? %>
-              <%= link_to 'Liker', {:controller => :users, :action => :like, :id => @image.id}, :method => :post if user? && !@image.likers.include?(current_user) %>
+              <%= link_to @image.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => @image.id, :image => {:public => !@image.public?}}, :method => :put if admin? %>
+              <%= link_to 'Liker', {:controller => :user, :action => :like, :id => @image.id}, :method => :post if user? && !@image.likers.include?(current_user) %>
           <% end %>
           <br/>
       <% end %>
