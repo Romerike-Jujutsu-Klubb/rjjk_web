@@ -1,6 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class TrialAttendancesControllerTest < ActionController::TestCase
+  fixtures :group_schedules, :nkf_member_trials
+
+  def setup
+    login(:admin)
+  end
+
   test "should get index" do
     get :index
     assert_response :success
@@ -14,7 +20,11 @@ class TrialAttendancesControllerTest < ActionController::TestCase
 
   test "should create trial_attendance" do
     assert_difference('TrialAttendance.count') do
-      post :create, :trial_attendance => { }
+      post :create, :trial_attendance => {
+          :group_schedule_id => group_schedules(:one).id, :nkf_member_trial_id => nkf_member_trials(:one).id,
+          :year => 2012, :week => 10
+      }
+      assert_no_errors :trial_attendance
     end
 
     assert_redirected_to trial_attendance_path(assigns(:trial_attendance))

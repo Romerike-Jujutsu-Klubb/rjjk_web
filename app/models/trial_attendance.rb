@@ -4,6 +4,8 @@ class TrialAttendance < ActiveRecord::Base
   belongs_to :nkf_member_trial
   belongs_to :group_schedule
 
+  validates_presence_of :group_schedule, :nkf_member_trial, :week, :year
+
   def date
     Date.commercial(year, week, group_schedule.weekday)
   end

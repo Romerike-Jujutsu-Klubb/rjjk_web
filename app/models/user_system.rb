@@ -3,16 +3,16 @@ module UserSystem
   
   CONFIG = {
     # Source address for user emails
-    :email_from => 'uwe@kubosch.no',
+    :email_from => 'webmaster@jujutsu.no',
 
     # Destination email for system errors
-    :admin_email => 'uwe@kubosch.no',
+    :admin_email => 'webmaster@jujutsu.no',
 
     # Sent in emails to users
     :app_url => 'http://jujutsu.no/',
 
     # Sent in emails to users
-    :app_name => 'RJJK\'s Nettsted',
+    :app_name => 'RJJK',
 
     # Email charset
     :mail_charset => 'utf-8',

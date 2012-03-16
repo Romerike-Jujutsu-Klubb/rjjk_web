@@ -7,10 +7,10 @@
   <meta name="keywords" content="keywords"/>
   <meta name="author" content="author"/>
   <%= javascript_include_tag :application %>
-  <%= csrf_meta_tag %>
+  <%= csrf_meta_tags %>
 
   <link href="<%= url_for(:controller => 'stylesheets', :action => 'dark_ritual', :format => 'css', :id => @content_width) %>" media="screen" rel="stylesheet" type="text/css"/>
-  <%= stylesheet_link_tag :application %>
+  <%= stylesheet_link_tag :application, :media => :all %>
 
   <title>Romerike Jujutsu Klubb</title>
 

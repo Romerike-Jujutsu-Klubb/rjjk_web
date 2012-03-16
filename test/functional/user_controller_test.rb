@@ -14,8 +14,8 @@ class UserControllerTest < ActionController::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     @request.host = "localhost"
-    ActionMailer::Base.inject_one_error = false
-    ActionMailer::Base.deliveries = []
+    Mail::TestMailer.inject_one_error = false
+    Mail::TestMailer.deliveries = []
   end
   
   def test_login__valid_login__redirects_as_specified
@@ -31,10 +31,10 @@ class UserControllerTest < ActionController::TestCase
     
     assert_logged_in users(:tesla)
     assert_response :redirect
-    assert_equal @controller.url_for(:controller => 'user', :action => :welcome), @response.redirect_url
-    assert_cookie :autologin, :value => '1000001'
-    assert_cookie :token
-    assert_not_equal 'random_token_string', cookies['token'].value
+    assert_equal @controller.url_for(:controller => :welcome, :action => :index, :only_path => false), @response.redirect_url
+    assert_equal cookies[:autologin], '1000001'
+    assert cookies[:token]
+    assert_not_equal 'random_token_string', cookies[:token]
     assert_equal false, User.find(1000001).token_expired?
     assert_not_equal 'random_token_string', User.find(1000001).security_token
   end
@@ -53,7 +53,8 @@ class UserControllerTest < ActionController::TestCase
     post :login, :user => { :login => "tesla", :password => "atest" }
     assert_logged_in users(:tesla)
     assert_response :redirect
-    assert_equal @controller.url_for(:action => 'welcome'), @response.redirect_url
+    assert_equal @controller.url_for(:controller => :welcome, :action => :index, :only_path => false),
+                 @response.redirect_url
   end
 
   def test_login__wrong_password
@@ -83,12 +84,12 @@ class UserControllerTest < ActionController::TestCase
                 :email => "newemail@example.com"
     assert_not_logged_in
     assert_redirected_to_login
-    assert_equal 1, ActionMailer::Base.deliveries.size
+    assert_equal 1, Mail::TestMailer.deliveries.size
 
-    mail = ActionMailer::Base.deliveries[0]
+    mail = Mail::TestMailer.deliveries[0]
     assert_equal "newemail@example.com", mail.to_addrs[0].to_s
-    assert_match /login:\s+\w+\n/, mail.encoded
-    assert_match /password:\s+\w+\n/, mail.encoded
+    assert_match /login:\s+\w+\r\n/, mail.encoded
+    assert_match /password:\s+\w+\r\n/, mail.encoded
     user = User.find_by_email("newemail@example.com")
     assert_match /user\[id\]=#{user.id}/, mail.encoded
     assert_match /key=#{user.security_token}/, mail.encoded
@@ -113,12 +114,12 @@ class UserControllerTest < ActionController::TestCase
   end
 
   def test_signup__raises_delivery_errors
-    ActionMailer::Base.inject_one_error = true
+    Mail::TestMailer.inject_one_error = true
     post_signup :login => "newtesla",
                 :password => "newpassword", :password_confirmation => "newpassword",
                 :email => "newtesla@example.com"
     assert_not_logged_in
-    assert_equal 0, ActionMailer::Base.deliveries.size
+    assert_equal 0, Mail::TestMailer.deliveries.size
     assert_contains "confirmation email not sent", flash['message']
   end
 
@@ -185,11 +186,12 @@ class UserControllerTest < ActionController::TestCase
     user = users(:tesla)
     set_logged_in user
     post :change_password, :user => { :password => "changed_password", :password_onfirmation => "changed_password" }
-    assert_equal 1, ActionMailer::Base.deliveries.size
-    mail = ActionMailer::Base.deliveries[0]
+    assert_no_errors :user
+    assert_equal 1, Mail::TestMailer.deliveries.size
+    mail = Mail::TestMailer.deliveries[0]
     assert_equal "tesla@example.com", mail.to_addrs[0].to_s
-    assert_match /login:\s+\w+\n/, mail.encoded
-    assert_match /password:\s+\w+\n/, mail.encoded
+    assert_match /brukernavn:\s+\w+ eller [a-zA-Z0-9.@]+\r\n/, mail.encoded
+    assert_match /passord\s*:\s+\w+\r\n/, mail.encoded
     assert_equal user, User.authenticate(user.login, 'changed_password')
   end
 
@@ -200,14 +202,14 @@ class UserControllerTest < ActionController::TestCase
     assert_equal 1, user.errors.size
     assert_not_nil user.errors['password']
     assert_response :success
-    assert_equal 0, ActionMailer::Base.deliveries.size
+    assert_equal 0, Mail::TestMailer.deliveries.size
   end
 
   def test_change_password__succeeds_despite_delivery_errors
     set_logged_in users(:tesla)
-    ActionMailer::Base.inject_one_error = true
+    Mail::TestMailer.inject_one_error = true
     post :change_password, :user => { :password => "changed_password", :password_confirmation => "changed_password" }
-    assert_equal 0, ActionMailer::Base.deliveries.size
+    assert_equal 0, Mail::TestMailer.deliveries.size
     assert_equal users(:tesla), User.authenticate(users(:tesla).login, 'changed_password')
   end
 
@@ -215,26 +217,26 @@ class UserControllerTest < ActionController::TestCase
     user = users(:tesla)
     set_logged_in user
     post :forgot_password, :user => { :email => user.email }
-    assert_equal 0, ActionMailer::Base.deliveries.size
+    assert_equal 0, Mail::TestMailer.deliveries.size
     assert_response :redirect
     assert_equal @controller.url_for(:action => "change_password"), @response.redirect_url
   end
 
   def test_forgot_password__requires_valid_email_address
     post :forgot_password, :user => { :email => "" }
-    assert_equal 0, ActionMailer::Base.deliveries.size
+    assert_equal 0, Mail::TestMailer.deliveries.size
     assert_match /Please enter a valid email address./, @response.body
   end
 
   def test_forgot_password__ignores_unknown_email_address
     post :forgot_password, :user => { :email => "unknown_email@example.com" }
-    assert_equal 0, ActionMailer::Base.deliveries.size
+    assert_equal 0, Mail::TestMailer.deliveries.size
   end
 
   def test_forgot_password__reports_delivery_error
-    ActionMailer::Base.inject_one_error = true
+    Mail::TestMailer.inject_one_error = true
     post :forgot_password, :user => { :email => users(:tesla).email }
-    assert_equal 0, ActionMailer::Base.deliveries.size
+    assert_equal 0, Mail::TestMailer.deliveries.size
     assert_match /Your password could not be emailed/, @response.body
   end
 
@@ -280,12 +282,12 @@ class UserControllerTest < ActionController::TestCase
     assert_equal 1, user.errors.size
     assert_not_nil user.errors['password']
     assert_response :success
-    assert_equal 0, ActionMailer::Base.deliveries.size
+    assert_equal 0, Mail::TestMailer.deliveries.size
   end
 
   def assert_contains( target, container )
     assert !container.nil?, %Q( Failed to find "#{target}" in nil String )
-    assert container.include?(target)
+    assert container.include?(target), "#{container.inspect} does not contain #{target.inspect}"
   end
 
 end

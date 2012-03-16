@@ -90,6 +90,7 @@
     <orderEntry type="library" scope="PROVIDED" name="activesupport (v3.2.2, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="acts_as_list (v0.1.5, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="acts_as_tree (v0.1.1, jruby-1.6.7-p357) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="ansi (v1.4.2, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="arel (v3.0.2, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bouncy-castle-java (v1.5.0146.1, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.0.0, jruby-1.6.7-p357) [gem]" level="application" />
@@ -111,7 +112,11 @@
     <orderEntry type="library" scope="PROVIDED" name="jruby-rack (v1.1.4, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="json (v1.6.5, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mail (v2.4.3, jruby-1.6.7-p357) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="metaclass (v0.0.1, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mime-types (v1.17.2, jruby-1.6.7-p357) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="minitest (v2.11.3, jruby-1.6.7-p357) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="minitest-reporters (v0.5.1, jruby-1.6.7-p357) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="mocha (v0.10.5, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multi_json (v1.1.0, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="pdf-reader (v1.0.0, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="polyglot (v0.3.3, jruby-1.6.7-p357) [gem]" level="application" />
@@ -126,6 +131,7 @@
     <orderEntry type="library" scope="PROVIDED" name="rdoc (v3.12, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="redbox (v1.0.4, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rmagick4j (v0.3.7, jruby-1.6.7-p357) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="ruby-progressbar (v0.0.10, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ruby-rc4 (v0.1.5, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rufus-scheduler (v2.0.16, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sass (v3.1.15, jruby-1.6.7-p357) [gem]" level="application" />
@@ -148,6 +154,7 @@
   <component name="RModuleSettingsStorage">
     <LOAD_PATH number="0" />
     <I18N_FOLDERS number="1" string0="$MODULE_DIR$/config/locales" />
+    <OPTIONS NAME="SPORK_SERVER_LAST_USED_TEST_FR_OPTION" VALUE=":test_unit " />
   </component>
 </module>
 

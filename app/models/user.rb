@@ -37,9 +37,9 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(login, pass)
-    u = find( :first, :conditions => ["login = ? AND verified = ? AND deleted = ?", login, true, false])
+    u = find(:first, :conditions => ["(login = ? OR email = ?) AND verified = ? AND deleted = ?", login, login, true, false])
     return nil if u.nil?
-    find( :first, :conditions => ["login = ? AND salted_password = ? AND verified = ?", login, salted_password(u.salt, hashed(pass)), true])
+    find(:first, :conditions => ["(login = ? OR email = ?) AND salted_password = ? AND verified = ?", login, login, salted_password(u.salt, hashed(pass)), true])
   end
 
   def self.authenticate_by_token(id, token)

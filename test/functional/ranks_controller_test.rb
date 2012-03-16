@@ -13,6 +13,7 @@ class RanksControllerTest < ActionController::TestCase
     @response   = ActionController::TestResponse.new
 
     @first_id = ranks(:one).id
+    login(:admin)
   end
 
   def test_index
@@ -52,8 +53,11 @@ class RanksControllerTest < ActionController::TestCase
   def test_create
     num_ranks = Rank.count
 
-    post :create, :rank => {:name => '5.kyu', :colour => 'gult', :position => 1, :martial_art_id => 1}
-
+    post :create, :rank => {
+        :group_id => groups(:panda).id, :martial_art_id => martial_arts(:keiwaryu).id, :name => '5.kyu',
+        :colour => 'gult', :position => 3, :standard_months => 6
+    }
+    assert_no_errors :rank
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
@@ -73,7 +77,7 @@ class RanksControllerTest < ActionController::TestCase
   def test_update
     post :update, :id => @first_id
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => @first_id
+    assert_redirected_to :action => :index
   end
 
   def test_destroy
@@ -83,7 +87,7 @@ class RanksControllerTest < ActionController::TestCase
 
     post :destroy, :id => @first_id
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :action => :list
 
     assert_raise(ActiveRecord::RecordNotFound) {
       Rank.find(@first_id)

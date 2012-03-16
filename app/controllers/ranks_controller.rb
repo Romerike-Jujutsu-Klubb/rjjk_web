@@ -19,9 +19,9 @@ class RanksController < ApplicationController
   end
 
   def new
-    @rank = Rank.new
-    @martial_arts = MartialArt.find(:all, :order => 'name')
-    @groups = Group.find(:all, :order => 'from_age')
+    @rank ||= Rank.new
+    @martial_arts = MartialArt.all(:order => 'name')
+    @groups = Group.all(:order => 'from_age')
   end
 
   def create
@@ -30,15 +30,15 @@ class RanksController < ApplicationController
       flash[:notice] = 'Rank was successfully created.'
       redirect_to :action => 'list'
     else
-      @martial_arts = MartialArt.find(:all, :order => 'name')
+      new
       render :action => 'new'
     end
   end
 
   def edit
     @rank ||= Rank.find(params[:id])
-    @martial_arts = MartialArt.find(:all, :order => 'name')
-    @groups = Group.find(:all, :order => 'from_age')
+    @martial_arts = MartialArt.all(:order => 'name')
+    @groups = Group.all(:order => 'from_age')
     render :action => 'edit'
   end
 

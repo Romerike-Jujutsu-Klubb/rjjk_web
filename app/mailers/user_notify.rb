@@ -1,50 +1,59 @@
 class UserNotify < ActionMailer::Base
+  default from: UserSystem::CONFIG[:email_from].to_s
+
   def signup(user, password, url=nil)
     setup_email(user)
 
-    # Email header info
     @subject += "Welcome to #{UserSystem::CONFIG[:app_name]}!"
 
-    # Email body substitutions
-    @body["name"] = "#{user.first_name} #{user.last_name}"
-    @body["login"] = user.login
-    @body["password"] = password
-    @body["url"] = url || UserSystem::CONFIG[:app_url].to_s
-    @body["app_name"] = UserSystem::CONFIG[:app_name].to_s
+    @name = "#{user.first_name} #{user.last_name}"
+    @login = user.login
+    @password = password
+    @url = url || UserSystem::CONFIG[:app_url].to_s
+    @app_name = UserSystem::CONFIG[:app_name].to_s
+
+    send_email
   end
 
   def forgot_password(user, url=nil)
     setup_email(user)
 
-    # Email header info
     @subject += "Forgotten password notification"
 
-    # Email body substitutions
-    @body["name"] = "#{user.first_name} #{user.last_name}"
-    @body["login"] = user.login
-    @body["url"] = url || UserSystem::CONFIG[:app_url].to_s
-    @body["app_name"] = UserSystem::CONFIG[:app_name].to_s
+    @name = "#{user.first_name} #{user.last_name}"
+    @login = user.login
+    @url = url || UserSystem::CONFIG[:app_url].to_s
+    @app_name = UserSystem::CONFIG[:app_name].to_s
+
+    send_email
   end
 
   def change_password(user, password, url=nil)
     setup_email(user)
 
-    # Email header info
     @subject += "Changed password notification"
 
-    # Email body substitutions
-    @body["name"] = "#{user.first_name} #{user.last_name}"
-    @body["login"] = user.login
-    @body["password"] = password
-    @body["url"] = url || UserSystem::CONFIG[:app_url].to_s
-    @body["app_name"] = UserSystem::CONFIG[:app_name].to_s
+    @name = "#{user.first_name} #{user.last_name}"
+    @login = user.login
+    @password = password
+    @url = url || UserSystem::CONFIG[:app_url].to_s
+    @app_name = UserSystem::CONFIG[:app_name].to_s
+    @email = user.email
+
+    send_email
   end
+
+  private
 
   def setup_email(user)
     @recipients = "#{user.email}"
-    @from       = UserSystem::CONFIG[:email_from].to_s
     @subject    = "[#{UserSystem::CONFIG[:app_name]}] "
     @sent_on    = Time.now
-    @headers['Content-Type'] = "text/plain; charset=#{UserSystem::CONFIG[:mail_charset]}; format=flowed"
+    headers['Content-Type'] = "text/plain; charset=#{UserSystem::CONFIG[:mail_charset]}; format=flowed"
   end
+
+  def send_email
+    mail subject: @subject, to: @recipients
+  end
+
 end

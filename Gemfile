@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'rails', '~>3.2.2'
 
@@ -39,4 +39,9 @@ end
 
 group :development do
   gem 'rdoc'
+end
+
+group :test do
+  gem 'minitest-reporters'
+  gem 'mocha'
 end

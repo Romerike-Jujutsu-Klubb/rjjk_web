@@ -5,7 +5,7 @@ class UserController < ApplicationController
   skip_before_filter :authenticate_user, :only => [ :login, :logout, :signup, :forgot_password ]
   
   def list
-    @users = User.find(:all, :order => 'last_name, first_name')
+    @users = User.all(:order => 'last_name, first_name')
   end
   
   def login
@@ -34,7 +34,7 @@ class UserController < ApplicationController
     key = user.generate_security_token
     url = url_for(:action => 'welcome')
     url += "?user[id]=#{user.id}&key=#{key}"
-    UserNotify.deliver_signup(user, user.password, url)
+    UserNotify.signup(user, user.password, url).deliver
   end
   
   def signup
@@ -54,7 +54,7 @@ class UserController < ApplicationController
           key = @user.generate_security_token
           url = url_for(:action => 'welcome')
           url += "?user[id]=#{@user.id}&key=#{key}"
-          UserNotify.deliver_signup(@user, params['user']['password'], url)
+          UserNotify.signup(@user, params['user']['password'], url).deliver
           flash['notice'] = 'Signup successful! Please check your registered email account to verify your account registration and continue with the login.'
           redirect_to :action => 'login'
         end
@@ -86,7 +86,7 @@ class UserController < ApplicationController
       render and return
     end
     begin
-      UserNotify.deliver_change_password(@user, params['user']['password'])
+      UserNotify.change_password(@user, params['user']['password']).deliver
     rescue Exception => ex
       report_exception ex
     end
@@ -112,7 +112,7 @@ class UserController < ApplicationController
           key = user.generate_security_token
           url = url_for(:action => 'change_password')
           url += "?user[id]=#{user.id}&key=#{key}"
-          UserNotify.deliver_forgot_password(user, url)
+          UserNotify.forgot_password(user, url).deliver
           flash['notice'] = "Instructions on resetting your password have been emailed to #{CGI.escapeHTML(params['user']['email'])}."
           unless authenticated_user?
             redirect_to :action => 'login'
@@ -138,7 +138,7 @@ class UserController < ApplicationController
           if user.admin?
             user_params = unclean_params
           else
-            user_params = unclean_params.delete_if { |k,v| not User::CHANGEABLE_FIELDS.include?(k) }
+            user_params = unclean_params.delete_if { |k,*| not User::CHANGEABLE_FIELDS.include?(k) }
           end
           @user.attributes = user_params
           if @user.save
@@ -164,7 +164,7 @@ class UserController < ApplicationController
       @user.update_attribute( :deleted, true )
       logout
     rescue Exception => ex
-      flash.now['message'] = "Error: #{@ex}."
+      flash.now['message'] = "Error: #{ex}."
       redirect_back_or_default :action => 'welcome'
     end
   end
@@ -175,35 +175,33 @@ class UserController < ApplicationController
   protected
   
   def protect?(action)
-    if ['login', 'signup', 'forgot_password'].include?(action)
-      return false
-    else
-      return true
-    end
+    !%w{login signup forgot_password}.include?(action)
   end
   
   # Generate a template user for certain actions on get
   def generate_blank_form
     case request.method
-      when 'GET'
+    when 'GET'
       @user = User.new
       render
-      return true
+      true
+    else
+      false
     end
-    return false
   end
-  
+
   # Generate a template user for certain actions on get
   def generate_filled_in
     @user = (params[:id] && User.find_by_id(params[:id])) || @current_user || User.find_by_id(session[:user_id])
     case request.method
-      when 'GET'
+    when 'GET'
       render
-      return true
+      true
+    else
+      false
     end
-    return false
   end
-  
+
   def report_exception( ex )
     logger.warn ex
     logger.warn ex.backtrace.join("\n")
