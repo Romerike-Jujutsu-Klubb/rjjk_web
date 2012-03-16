@@ -173,8 +173,8 @@ class UserController < ApplicationController
   end
 
   def like
-    UserImage.where(:user_id => current_user.id, :image_id => params[:id], :type => 'LIKE').first_or_create!
-    redirect_to :controller => :news, :action => index
+    UserImage.where(:user_id => current_user.id, :image_id => params[:id], :rel_type => 'LIKE').first_or_create!
+    redirect_to :controller => :news, :action => :index
   end
 
   protected

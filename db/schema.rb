@@ -278,10 +278,12 @@ ActiveRecord::Schema.define(:version => 20120316165432) do
   create_table "user_images", :force => true do |t|
     t.integer  "user_id",                  :null => false
     t.integer  "image_id",                 :null => false
-    t.string   "type",       :limit => 16, :null => false
+    t.string   "rel_type",   :limit => 16, :null => false
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
   end
+
+  add_index "user_images", ["user_id", "image_id", "rel_type"], :name => "index_user_images_on_user_id_and_image_id_and_rel_type", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "login",           :limit => 80,                    :null => false

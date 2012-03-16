@@ -4,7 +4,7 @@ class Image < ActiveRecord::Base
 
   belongs_to :user
   has_many :user_images
-  has_many :likers, :class_name => 'User', :through => :user_images, :conditions => "user_images.type = 'LIKE'", :source => :image
+  has_many :likers, :class_name => 'User', :through => :user_images, :conditions => "user_images.rel_type = 'LIKE'", :source => :image
 
   before_create do
     self.user ||= current_user
