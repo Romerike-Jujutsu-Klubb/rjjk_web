@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
     if not admin?
       @information_pages = @information_pages.select{|ip| ip.visible?}
     end
+    image_query = Image.select('content_type, description, id, name').where("content_type LIKE 'image/%%' OR content_type LIKE 'video/%%'", true).order('RANDOM()')
+    image_query = image_query.where('public = ? AND approved = ?', true, true) unless admin?
+    @image = image_query.first
+    @new_image = Image.new
     @events = Event.all(:conditions => ['(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)', Date.today, Date.today], :order => 'start_at', :limit => 5)
   end
 

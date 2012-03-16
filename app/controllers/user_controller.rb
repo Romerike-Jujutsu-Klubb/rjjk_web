@@ -1,6 +1,6 @@
 class UserController < ApplicationController
   before_filter :authenticate_user
-  before_filter :admin_required, :except => [:welcome, :login, :logout, :signup, :forgot_password, :change_password]
+  before_filter :admin_required, :except => [:welcome, :like, :login, :logout, :signup, :forgot_password, :change_password]
   
   skip_before_filter :authenticate_user, :only => [ :login, :logout, :signup, :forgot_password ]
   
@@ -19,8 +19,8 @@ class UserController < ApplicationController
       flash['notice'] = 'Login succeeded'
       if remember_me && remember_me == '1'
         user.generate_security_token
-        cookies[:autologin] = {:value => user.id.to_s, :expires =>90.days.from_now}
-        cookies[:token]     = {:value => user.security_token, :expires =>90.days.from_now}
+        cookies[:autologin] = {:value => user.id.to_s, :expires => 90.days.from_now}
+        cookies[:token]     = {:value => user.security_token, :expires => 90.days.from_now}
       end
       redirect_back_or_default '/'
     else
@@ -171,7 +171,12 @@ class UserController < ApplicationController
   
   def welcome
   end
-  
+
+  def like
+    UserImage.where(:user_id => current_user.id, :image_id => params[:id], :type => 'LIKE').first_or_create!
+    redirect_to :controller => :news, :action => index
+  end
+
   protected
   
   def protect?(action)

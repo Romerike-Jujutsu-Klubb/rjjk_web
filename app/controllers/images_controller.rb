@@ -8,7 +8,7 @@ class ImagesController < ApplicationController
   end
 
   def list
-    @images = Image.paginate :page => params[:page], :per_page => 10
+    @images = Image.paginate :page => params[:page], :per_page => 4
   end
 
   def show
@@ -24,11 +24,13 @@ class ImagesController < ApplicationController
     begin
        image = Magick::Image.from_blob(@image.content_data).first
     rescue java.lang.NullPointerException
-      redirect_to '/assets/pdficon_large.png'
+      redirect_to @image.video? ? '/assets/video-icon-tran.png' : '/assets/pdficon_large.png'
       return
     end
-    ratio = 492.0 / image.columns
-    send_data(image.crop_resized!(492, image.rows * ratio).to_blob,
+    width = params[:width].to_i
+    width = 492 if width < 8
+    ratio = width.to_f / image.columns
+    send_data(image.crop_resized!(width, image.rows * ratio).to_blob,
         :disposition => 'inline',
         :type => @image.content_type,
         :filename => @image.name)

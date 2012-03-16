@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120314211058) do
+ActiveRecord::Schema.define(:version => 20120316165432) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -118,9 +118,14 @@ ActiveRecord::Schema.define(:version => 20120314211058) do
   add_index "groups_members", ["group_id", "member_id"], :name => "index_groups_members_on_group_id_and_member_id", :unique => true
 
   create_table "images", :force => true do |t|
-    t.string "name",         :limit => 64, :null => false
-    t.string "content_type",               :null => false
-    t.binary "content_data",               :null => false
+    t.string  "name",         :limit => 64, :null => false
+    t.string  "content_type",               :null => false
+    t.binary  "content_data",               :null => false
+    t.integer "user_id"
+    t.string  "description",  :limit => 16
+    t.text    "story"
+    t.boolean "public"
+    t.boolean "approved"
   end
 
   create_table "information_pages", :force => true do |t|
@@ -136,14 +141,6 @@ ActiveRecord::Schema.define(:version => 20120314211058) do
   create_table "martial_arts", :force => true do |t|
     t.string "name",   :limit => 16, :null => false
     t.string "family", :limit => 16, :null => false
-  end
-
-  create_table "member_images", :force => true do |t|
-    t.integer  "member_id",                :null => false
-    t.integer  "image_id",                 :null => false
-    t.string   "type",       :limit => 16, :null => false
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
   end
 
   create_table "members", :force => true do |t|
@@ -278,6 +275,14 @@ ActiveRecord::Schema.define(:version => 20120314211058) do
     t.datetime "updated_at"
   end
 
+  create_table "user_images", :force => true do |t|
+    t.integer  "user_id",                  :null => false
+    t.integer  "image_id",                 :null => false
+    t.string   "type",       :limit => 16, :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
   create_table "users", :force => true do |t|
     t.string   "login",           :limit => 80,                    :null => false
     t.string   "salted_password", :limit => 40,                    :null => false
@@ -290,6 +295,7 @@ ActiveRecord::Schema.define(:version => 20120314211058) do
     t.datetime "token_expiry"
     t.boolean  "verified",                      :default => false
     t.boolean  "deleted",                       :default => false
+    t.integer  "member_id"
   end
 
 end

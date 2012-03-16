@@ -54,25 +54,34 @@
 
     <div class="padded">
       <%= link_to image_tag('rjjk_logo_&_txt_320.png', :style => 'width: 182px; height: 181px; border: 0'), '/' %>
-      <% if admin? %>
-          <%= link_to image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :members, :action => :history_graph, :format => :png, :id => 1024 %>
-          <%= link_to image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :attendances, :action => :history_graph, :format => :png, :id => 1024 %>
-          <%= link_to image_tag(url_for(:controller => :members, :action => :grade_history_graph, :format => :png, :id => 182), :title => 'Historikk over grader', :style => 'width: 100%; border: 0'), :controller => :members, :action => :grade_history_graph, :format => :png, :id => 1024 %>
-          <br/>
+
+      <% if @image %>
+          <%= link_to :controller => :images, :action => admin? ? :index : :show, :id => @image.id do %>
+              <% if @image.video? %>
+                  <%= video_tag image_url(@image), :title => @image.name || 'Film', :style => 'width: 100%; border: 0', :controls => true, :autobuffer => true %>
+              <% else %>
+                  <%= image_tag url_for(:controller => :images, :action => :inline, :id => @image.id, :width => 182), :title => @image.name || 'Bilde', :style => 'width: 100%; border: 0' %>
+              <% end %>
+              <%= @image.description %>
+              <%= link_to 'Godkjenn', {:controller => :images, :action => :update, :id => @image.id, :image => {:approved => true}}, :method => :put if admin? && !@image.approved? %>
+              <%= link_to @image.public? ? 'Offentlig' : 'Privat', {:controller => :images, :action => :update, :id => @image.id, :image => {:public => !@image.public?}}, :method => :put if admin? %>
+              <%= link_to 'Liker', {:controller => :users, :action => :like, :id => @image.id}, :method => :post if user? && !@image.likers.include?(current_user) %>
+          <% end %>
           <br/>
       <% end %>
 
-      <%= link_to image_tag('http://romerikeaikido.org/Bilder/san_gen-logo-rak.jpg', :style => 'width: 182px; height: 182px; border: 0'), 'http://romerikeaikido.org/', :target => :blank %>
+      <h3>Last opp</h3>
+      <%= form_for @new_image do |f| %>
+          <%= f.file_field :file %>
+          <%= f.submit %>
+      <% end %>
+
+      <h3>Hva skjer?</h3>
 
       <% for event in @events %>
           <% ingress = event.ingress %>
           <% ingress = nil if ingress.blank? %>
-          <h3>
-            <% if ingress %>
-                <%= link_to event.name, :controller => :events, :action => :show, :id => event.id %>
-            <% else %>
-                <%= event.name %>
-            <% end %>
+          <h4><span style="white-space: nowrap">
             <% if event.start_at.min != 0 || event.start_at.hour != 0 %>
                 <%= event.start_at.strftime('%d/%m %H:%M') %>
             <% else %>
@@ -83,7 +92,12 @@
                 <%= event.end_at.strftime('%Y-%m-%d') if event.end_at.to_date != event.start_at.to_date %>
                 <%= event.end_at.strftime('%H:%M') if event.end_at.hour != 0 || event.end_at.min != 0 %>
             <% end %>
-          </h3>
+            <% if ingress %>
+                <%= link_to event.name, :controller => :events, :action => :show, :id => event.id %>
+            <% else %>
+                <%= event.name %>
+            <% end %>
+          </span></h4>
           <%= link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin? %>
 
           <% if ingress %>
@@ -97,19 +111,32 @@
       <% end %>
 
       <% if admin? %>
-				<ul class="controls">
-            		<li><%=link_to 'Ny hendelse', {:controller => 'events', :action => 'new'}, :class => :edit %></li>
-				</ul>
-   			<% end %>
-		</div>
+          <ul class="controls">
+            <li><%= link_to 'Ny hendelse', {:controller => 'events', :action => 'new'}, :class => :edit %></li>
+          </ul>
+      <% end %>
+      <br/>
 
-	</div>
+      <!--<% if admin? %>-->
+          <!--<%= link_to image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :members, :action => :history_graph, :format => :png, :id => 1024 %>-->
+          <!--<%= link_to image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :attendances, :action => :history_graph, :format => :png, :id => 1024 %>-->
+          <!--<%= link_to image_tag(url_for(:controller => :members, :action => :grade_history_graph, :format => :png, :id => 182), :title => 'Historikk over grader', :style => 'width: 100%; border: 0'), :controller => :members, :action => :grade_history_graph, :format => :png, :id => 1024 %>-->
+          <!--<br/>-->
+          <!--<br/>-->
+      <!--<% end %>-->
 
-	<div class="subnav">
+      <br/>
+      <%= link_to image_tag('http://romerikeaikido.org/Bilder/san_gen-logo-rak.jpg', :style => 'width: 182px; height: 182px; border: 0'), 'http://romerikeaikido.org/', :target => :blank %>
 
-		<ul>
-			<li><%=link_to 'Forside', '/' %></li>
-		</ul>
+    </div>
+
+  </div>
+
+  <div class="subnav">
+
+    <ul>
+      <li><%= link_to 'Forside', '/' %></li>
+    </ul>
 
 		<h1>Oversikt</h1>
 		<ul>

@@ -2,7 +2,7 @@
   <%= detour_to 'Legg til bilde', :controller => 'images', :action => 'new' %>
 </div>
 
-<table border="1">
+<table>
   <% for image in @images.sort_by { |i| i.name.upcase } %>
       <tr>
         <td align="center">
@@ -11,7 +11,8 @@
                       {:controller => 'images', :action => 'show', :id => image.id},
                       :title => h(image.name), :author => "RJJK", :caption => h(image.name)
               ) %>
-          <br/>
+        </td>
+        <td>
           <%=image.name %><br/>
           <%=link_to_redbox(
                       'Vis',
