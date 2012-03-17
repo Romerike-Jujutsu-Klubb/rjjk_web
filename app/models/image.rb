@@ -21,14 +21,14 @@ class Image < ActiveRecord::Base
     name.split('.').last
   end
 
-  def content_data
-    data = super
-    if data =~ /^\\3(77|30)/
-      logger.error "Image id=#{id} has invalid data."
-      return eval("%Q{#{data}}")
-    end
-    data
-  end
+  #def content_data
+  #  data = super
+  #  if data =~ /^\\3(77|30)/
+  #    logger.error "Image id=#{id} has invalid data."
+  #    return eval("%Q{#{data}}")
+  #  end
+  #  data
+  #end
 
   def video?
     content_type =~ /^video\//
