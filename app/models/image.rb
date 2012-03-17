@@ -4,7 +4,7 @@ class Image < ActiveRecord::Base
 
   belongs_to :user
   has_many :user_images
-  has_many :likers, :class_name => 'User', :through => :user_images, :conditions => "user_images.rel_type = 'LIKE'", :source => :image
+  has_many :likers, :class_name => 'User', :through => :user_images, :conditions => "user_images.rel_type = 'LIKE'", :source => :user
 
   before_create do
     self.user ||= current_user
@@ -20,15 +20,6 @@ class Image < ActiveRecord::Base
   def format
     name.split('.').last
   end
-
-  #def content_data
-  #  data = super
-  #  if data =~ /^\\3(77|30)/
-  #    logger.error "Image id=#{id} has invalid data."
-  #    return eval("%Q{#{data}}")
-  #  end
-  #  data
-  #end
 
   def video?
     content_type =~ /^video\//
