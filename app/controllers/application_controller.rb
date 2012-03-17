@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     if not admin?
       @information_pages = @information_pages.select{|ip| ip.visible?}
     end
-    image_query = Image.select('content_type, description, id, name').where("content_type LIKE 'image/%%' OR content_type LIKE 'video/%%'", true).order('RANDOM()')
+    image_query = Image.select('approved, content_type, description, id, name, public').where("content_type LIKE 'image/%%' OR content_type LIKE 'video/%%'", true).order('RANDOM()')
     image_query = image_query.where('public = ? AND approved = ?', true, true) unless admin?
     @image = image_query.first
     @new_image = Image.new
