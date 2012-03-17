@@ -85,4 +85,11 @@ class ImagesController < ApplicationController
     render :layout => false
   end
 
+  def gallery
+    fields = 'approved, content_type, description, id, name, public'
+    image_select = Image.select(fields)
+    @image = image_select.where(:id => params[:id]).first || image_select.first || Image.new
+    @images = image_select.all
+  end
+
 end
