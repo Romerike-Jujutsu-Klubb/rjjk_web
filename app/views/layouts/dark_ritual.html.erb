@@ -56,7 +56,7 @@
       <%= link_to image_tag('rjjk_logo_&_txt_320.png', :style => 'width: 182px; height: 181px; border: 0'), '/' %>
 
       <% if @image %>
-          <%= link_to :controller => :images, :action => admin? ? :index : :show, :id => @image.id do %>
+          <%= link_to :controller => :images, :action => admin? ? :index : :show, :id => @image.id, :format => @image.format do %>
               <% if @image.video? %>
                   <%= video_tag image_url(@image), :title => @image.name || 'Film', :style => 'width: 100%; border: 0', :controls => true, :autobuffer => true %>
               <% else %>
