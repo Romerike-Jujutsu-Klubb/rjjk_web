@@ -70,10 +70,12 @@
           <br/>
       <% end %>
 
-      <h3>Last opp</h3>
-      <%= form_for @new_image do |f| %>
-          <%= f.file_field :file %>
-          <%= f.submit %>
+      <% if user? %>
+          <h3>Last opp</h3>
+          <%= form_for @new_image do |f| %>
+              <%= f.file_field :file %>
+              <%= f.submit %>
+          <% end %>
       <% end %>
 
       <h3>Hva skjer?</h3>
