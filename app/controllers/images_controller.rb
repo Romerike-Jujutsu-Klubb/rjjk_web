@@ -21,6 +21,10 @@ class ImagesController < ApplicationController
 
   def inline
     @image = Image.find(params[:id])
+    if params[:format].nil?
+      redirect_to :width => params[:width], :format => @image.format
+      return
+    end
     begin
        image = Magick::Image.from_blob(@image.content_data).first
     rescue java.lang.NullPointerException

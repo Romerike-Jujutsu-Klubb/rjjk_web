@@ -21,6 +21,7 @@ RjjkWeb::Application.routes.draw do
   match 'documents/*path_info', :controller => 'documents', :action => 'webdav'
 
   match ':controller/:action/:id/:width.:format'
+  match ':controller/:action/:id/:width'
   match ':controller/:action/:id.:format'
   match ':controller/:action.:format'
   match ':controller/:action/:id'
