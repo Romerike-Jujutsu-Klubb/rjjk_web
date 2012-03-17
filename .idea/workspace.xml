@@ -4,6 +4,7 @@
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/images/gallery.html.erb" afterPath="$PROJECT_DIR$/app/views/images/gallery.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -107,19 +108,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gallery.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="gallery.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/images/gallery.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="862" selection-end="862" vertical-scroll-proportion="0.25221238">
+            <state line="1" column="66" selection-start="89" selection-end="89" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dark_ritual.html.erb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="dark_ritual.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="0" selection-start="2446" selection-end="3496" vertical-scroll-proportion="-11.535714">
+            <state line="60" column="100" selection-start="2583" selection-end="2583" vertical-scroll-proportion="0.26307693">
               <folding />
             </state>
           </provider>
@@ -167,9 +168,9 @@
         <option value="$PROJECT_DIR$/app/models/image.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/controllers/images_controller.rb" />
-        <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
         <option value="/Rails rjjk_web: development" />
         <option value="$PROJECT_DIR$/app/views/images/gallery.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
       </list>
     </option>
   </component>
@@ -284,6 +285,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layouts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1513,7 +1536,11 @@
       <created>1332014644101</created>
       <updated>1332014644101</updated>
     </task>
-    <option name="localTasksCounter" value="126" />
+    <task id="LOCAL-00126" summary="* Lager galleri">
+      <created>1332015891101</created>
+      <updated>1332015891101</updated>
+    </task>
+    <option name="localTasksCounter" value="127" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1765,13 +1792,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="0" selection-start="2446" selection-end="3496" vertical-scroll-proportion="-11.535714">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="dbDummy://dbElement:/ef5a4d69/efa181d4-2c07-4dd5-b35b-69f9efbf9aee/.public.groups">
       <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
         <state />
@@ -1784,7 +1804,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/images/gallery.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="862" selection-end="862" vertical-scroll-proportion="0.25221238">
+        <state line="1" column="66" selection-start="89" selection-end="89" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="100" selection-start="2583" selection-end="2583" vertical-scroll-proportion="0.26307693">
           <folding />
         </state>
       </provider>
