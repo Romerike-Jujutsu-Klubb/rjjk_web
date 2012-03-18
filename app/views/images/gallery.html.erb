@@ -3,7 +3,29 @@
 <% else %>
     <%= image_tag url_for(:controller => :images, :action => :inline, :id => @image.id, :format => @image.format), :title => @image.name || 'Bilde' %>
 <% end %>
+<br/>
 <%= @image.description %>
+<br/>
 <%= link_to 'Godkjenn', {:controller => :images, :action => :update, :id => @image.id, :image => {:approved => true}}, :method => :put if admin? && !@image.approved? %>
 <%= link_to @image.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => @image.id, :image => {:public => !@image.public?}}, :method => :put if admin? %>
 <%= link_to 'Liker', {:controller => :user, :action => :like, :id => @image.id}, :method => :post if user? && !@image.likers.include?(current_user) %>
+<br/>
+
+<% @images.each_slice(5) do |slice| %>
+    <% slice.each do |i| %>
+        <div style="float: right">
+          <%= link_to :controller => :images, :action => :show, :id => i.id, :format => i.format do %>
+              <% if @image.video? %>
+                  <%= video_tag url_for(:controller => :images, :action => :show, :id => i.id, :format => i.format), :title => i.name || 'Film', :controls => true, :autobuffer => true, :style => 'width: 20%' %>
+              <% else %>
+                  <%= image_tag url_for(:controller => :images, :action => :inline, :id => i.id, :format => i.format, :width => 492 / 5), :title => i.name || 'Bilde' %>
+              <% end %>
+          <% end %>
+          <br/>
+          <%= @image.description %>
+          <%= link_to 'Godkjenn', {:controller => :images, :action => :update, :id => @image.id, :image => {:approved => true}}, :method => :put if admin? && !@image.approved? %>
+          <%= link_to @image.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => @image.id, :image => {:public => !@image.public?}}, :method => :put if admin? %>
+          <%= link_to 'Liker', {:controller => :user, :action => :like, :id => @image.id}, :method => :post if user? && !@image.likers.include?(current_user) %>
+        </div>
+    <% end %>
+<% end %>

@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/test/fixtures/member_images.yml" afterPath="$PROJECT_DIR$/test/fixtures/user_images.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/nkf_member_import.rb" afterPath="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/nkf_member_trial.rb" afterPath="$PROJECT_DIR$/app/models/nkf_member_trial.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/images/gallery.html.erb" afterPath="$PROJECT_DIR$/app/views/images/gallery.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/nkf_replication/import_changes.text.erb" afterPath="$PROJECT_DIR$/app/views/nkf_replication/import_changes.text.erb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -92,7 +89,26 @@
     <favorites_list name="rjjk_web" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="gallery.html.erb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/images/gallery.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="25" selection-start="1049" selection-end="1049" vertical-scroll-proportion="0.42035398">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="images_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/images_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="87" column="6" selection-start="2271" selection-end="2271" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -131,12 +147,12 @@
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/controllers/images_controller.rb" />
         <option value="/Rails rjjk_web: development" />
-        <option value="$PROJECT_DIR$/app/views/images/gallery.html.erb" />
         <option value="$PROJECT_DIR$/app/views/nkf_replication/import_changes.text.erb" />
         <option value="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
         <option value="$PROJECT_DIR$/app/models/nkf_member_trial.rb" />
         <option value="$PROJECT_DIR$/test/fixtures/user_images.yml" />
         <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/images/gallery.html.erb" />
       </list>
     </option>
   </component>
@@ -259,6 +275,78 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1442,7 +1530,11 @@
       <created>1332019982101</created>
       <updated>1332019982102</updated>
     </task>
-    <option name="localTasksCounter" value="128" />
+    <task id="LOCAL-00128" summary="* Lager galleri">
+      <created>1332068595101</created>
+      <updated>1332068595101</updated>
+    </task>
+    <option name="localTasksCounter" value="129" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1642,20 +1734,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/images/gallery.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="17" selection-start="40" selection-end="40" vertical-scroll-proportion="0.029320987">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/images_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="0" selection-start="2265" selection-end="2265" vertical-scroll-proportion="0.67170954">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="85" selection-start="564" selection-end="617" vertical-scroll-proportion="0.55709875">
@@ -1712,13 +1790,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="41" selection-start="2375" selection-end="2375" vertical-scroll-proportion="0.17903225">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/image.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="0" selection-start="503" selection-end="503" vertical-scroll-proportion="0.57488656">
@@ -1736,6 +1807,27 @@
     <entry file="file://$PROJECT_DIR$/test/functional/images_controller_test.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="42" column="0" selection-start="855" selection-end="855" vertical-scroll-proportion="0.33282906">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="76" column="38" selection-start="3813" selection-end="3813" vertical-scroll-proportion="0.33709678">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/images_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="87" column="6" selection-start="2271" selection-end="2271" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/images/gallery.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="25" selection-start="1049" selection-end="1049" vertical-scroll-proportion="0.42035398">
           <folding />
         </state>
       </provider>

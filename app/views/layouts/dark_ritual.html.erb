@@ -59,7 +59,7 @@
           <%= link_to :controller => :images, :action => :gallery, :id => @image.id do %>
               <% if @image.video? %>
                   <%= video_tag url_for(:controller => :images, :action => :show, :id => @image.id, :format => @image.format), :title => @image.name || 'Film', :style => 'width: 100%; border: 0', :controls => true, :autobuffer => true %>
-               <% else %>
+              <% else %>
                   <%= image_tag url_for(:controller => :images, :action => :inline, :id => @image.id, :width => 182, :format => @image.format), :title => @image.name || 'Bilde', :style => 'width: 100%; border: 0' %>
               <% end %>
               <%= @image.description %>
@@ -71,44 +71,46 @@
       <% end %>
 
       <% if user? %>
-          <h3>Last opp</h3>
+          <h3>Last opp media</h3>
           <%= form_for @new_image do |f| %>
               <%= f.file_field :file %>
-              <%= f.submit %>
+              <%= f.submit 'Last opp' %>
           <% end %>
       <% end %>
 
-      <h3>Hva skjer?</h3>
+      <% if @events.any? %>
+          <h3>Hva skjer?</h3>
 
-      <% for event in @events %>
-          <% ingress = event.ingress %>
-          <% ingress = nil if ingress.blank? %>
-          <h4><span style="white-space: nowrap">
+          <% for event in @events %>
+              <% ingress = event.ingress %>
+              <% ingress = nil if ingress.blank? %>
+              <h4><span style="white-space: nowrap">
             <% if event.start_at.min != 0 || event.start_at.hour != 0 %>
                 <%= event.start_at.strftime('%d/%m %H:%M') %>
             <% else %>
                 <%= event.start_at.strftime('%d/%m') %>
             <% end %>
-            <% if event.end_at %>
+                <% if event.end_at %>
                 -
-                <%= event.end_at.strftime('%Y-%m-%d') if event.end_at.to_date != event.start_at.to_date %>
-                <%= event.end_at.strftime('%H:%M') if event.end_at.hour != 0 || event.end_at.min != 0 %>
+                    <%= event.end_at.strftime('%Y-%m-%d') if event.end_at.to_date != event.start_at.to_date %>
+                    <%= event.end_at.strftime('%H:%M') if event.end_at.hour != 0 || event.end_at.min != 0 %>
             <% end %>
-            <% if ingress %>
+                <% if ingress %>
                 <%= link_to event.name, :controller => :events, :action => :show, :id => event.id %>
             <% else %>
                 <%= event.name %>
             <% end %>
           </span></h4>
-          <%= link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin? %>
+              <%= link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin? %>
 
-          <% if ingress %>
-              <%= ingress.html_safe %>
-          <% end %>
-          <% if ingress && event.description.size > ingress.size %>
-              <ul class="controls">
-                <li><%= link_to 'Les mer', {:controller => :events, :action => :show, :id => event.id}, :class => :edit %></li>
-              </ul>
+              <% if ingress %>
+                  <%= ingress.html_safe %>
+              <% end %>
+              <% if ingress && event.description.size > ingress.size %>
+                  <ul class="controls">
+                    <li><%= link_to 'Les mer', {:controller => :events, :action => :show, :id => event.id}, :class => :edit %></li>
+                  </ul>
+              <% end %>
           <% end %>
       <% end %>
 
@@ -140,92 +142,94 @@
       <li><%= link_to 'Forside', '/' %></li>
     </ul>
 
-		<h1>Oversikt</h1>
-		<ul>
-			<% @information_pages.each do |page| %>
-			<li>
-				<%=link_to page.title + (page.visible? ? '' : ' (skjult)'), :controller => :info, :action => :show, :id => page.title%>
-				<%#=link_to 'ned', :controller => :info, :action => :move_down, :id => page.id%>
-			</li>
-			<% end %>
+    <h1>Oversikt</h1>
+    <ul>
+      <% @information_pages.each do |page| %>
+          <li>
+            <%= link_to page.title + (page.visible? ? '' : ' (skjult)'), :controller => :info, :action => :show, :id => page.title %>
+            <%#=link_to 'ned', :controller => :info, :action => :move_down, :id => page.id%>
+          </li>
+      <% end %>
 
-		<% if not user? %>
-   			<li><%=link_to 'Login', :controller => 'user', :action => :login %></li>
-		<% else %>
-   			<li><%=link_to 'Logout', :controller => 'user', :action => :logout %></li>
-		<% end %>
-		</ul>
+      <% if not user? %>
+          <li><%= link_to 'Login', :controller => 'user', :action => :login %></li>
+      <% else %>
+          <li><%= link_to 'Logout', :controller => 'user', :action => :logout %></li>
+      <% end %>
+    </ul>
 
-      <% if admin? %>
-		<h1>Administrasjon</h1>
-          <div id="admin_menu">
-            <ul>
-              <li><%= link_to 'Ny nyhet', :controller => 'news', :action => 'new' %></li>
-              <li><%= link_to 'Ny side', :controller => 'info', :action => 'new' %></li>
-              <li><%= link_to 'Ny hendelse', :controller => 'events', :action => 'new' %></li>
-              <li><%= link_to 'Brukere', :controller => 'user', :action => :list %></li>
-            </ul>
-          </div>
+    <% if admin? %>
+        <h1>Administrasjon</h1>
 
-          <h1>Medlemsreg.</h1>
+        <div id="admin_menu">
+          <ul>
+            <li><%= link_to 'Ny nyhet', :controller => 'news', :action => 'new' %></li>
+            <li><%= link_to 'Ny side', :controller => 'info', :action => 'new' %></li>
+            <li><%= link_to 'Ny hendelse', :controller => 'events', :action => 'new' %></li>
+            <li><%= link_to 'Brukere', :controller => 'user', :action => :list %></li>
+          </ul>
+        </div>
 
-          <div id="members_menu">
-            <ul>
-            <li><%=menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
-			<li><%=menu_item 'Oppmøtelister', :controller => 'members', :action => :attendance_form_index %></li>
-			<li><%=menu_item 'Graderingsoversikt', :controller => 'members', :action => :grading_form_index %></li>
-			<li><%=menu_item 'Telefonliste', :controller => 'members', :action => :telephone_list %></li>
-			<li><%=menu_item 'E-postlister', :controller => 'members', :action => :email_list %></li>
-			<li><%=menu_item 'Gamle medlemmer', :controller => 'members', :action => :list_inactive %></li>
-			<li><%=menu_item 'Graderinger', :controller => 'graduations' %></li>
-			<li><%=menu_item 'Stiler', :controller => 'martial_arts' %></li>
-			<li><%=menu_item 'Grader', :controller => 'ranks' %></li>
-			<li><%=menu_item 'Grupper', :controller => 'groups' %></li>
-			<li><%=menu_item 'Treninger', :controller => 'group_schedules' %></li>
-			<!--
-			<li><%=menu_item 'Inntekt', :controller => 'members', :action => :income %></li>
-			<li><%=menu_item 'NKF Rapport', :controller => 'members', :action => :NKF_report %></li>
-			<li><%=menu_item 'CMS-Kontrakter', :controller => 'cms_members', :action => :active_contracts %></li>
-			<li><%=menu_item 'CMS Avstemming', :controller => 'members', :action => :cms_comparison %></li>
-			<li><%=menu_item 'NKF Medlemsliste', :controller => 'nkf_members', :action => :index %></li>
+        <h1>Medlemsreg.</h1>
+
+        <div id="members_menu">
+          <ul>
+            <li><%= menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
+            <li><%= menu_item 'Oppmøtelister', :controller => 'members', :action => :attendance_form_index %></li>
+            <li><%= menu_item 'Graderingsoversikt', :controller => 'members', :action => :grading_form_index %></li>
+            <li><%= menu_item 'Telefonliste', :controller => 'members', :action => :telephone_list %></li>
+            <li><%= menu_item 'E-postlister', :controller => 'members', :action => :email_list %></li>
+            <li><%= menu_item 'Gamle medlemmer', :controller => 'members', :action => :list_inactive %></li>
+            <li><%= menu_item 'Graderinger', :controller => 'graduations' %></li>
+            <li><%= menu_item 'Stiler', :controller => 'martial_arts' %></li>
+            <li><%= menu_item 'Grader', :controller => 'ranks' %></li>
+            <li><%= menu_item 'Grupper', :controller => 'groups' %></li>
+            <li><%= menu_item 'Treninger', :controller => 'group_schedules' %></li>
+            <!--
+			<li><%= menu_item 'Inntekt', :controller => 'members', :action => :income %></li>
+			<li><%= menu_item 'NKF Rapport', :controller => 'members', :action => :NKF_report %></li>
+			<li><%= menu_item 'CMS-Kontrakter', :controller => 'cms_members', :action => :active_contracts %></li>
+			<li><%= menu_item 'CMS Avstemming', :controller => 'members', :action => :cms_comparison %></li>
+			<li><%= menu_item 'NKF Medlemsliste', :controller => 'nkf_members', :action => :index %></li>
 			-->
-              <li><%=menu_item 'NKF Avstemming', :controller => 'nkf_members', :action => :comparison %></li>
-			<li><%=menu_item 'Versjon', :controller => 'info', :action => :versjon %></li>
-		</ul>
-		</div>
-		<% end %>
+            <li><%= menu_item 'NKF Avstemming', :controller => 'nkf_members', :action => :comparison %></li>
+            <li><%= menu_item 'Versjon', :controller => 'info', :action => :versjon %></li>
+          </ul>
+        </div>
+    <% end %>
 
-<!--
-		<h1>Third and last</h1>
-		<ul>
-			<li><a href="index.html">sociis natoque</a></li>
-			<li><a href="index.html">magna sed purus</a></li>
-			<li><a href="index.html">tincidunt</a></li>
-			<li><a href="index.html">consequat molestie</a></li>
-		</ul>
--->
+    <!--
+            <h1>Third and last</h1>
+            <ul>
+                <li><a href="index.html">sociis natoque</a></li>
+                <li><a href="index.html">magna sed purus</a></li>
+                <li><a href="index.html">tincidunt</a></li>
+                <li><a href="index.html">consequat molestie</a></li>
+            </ul>
+    -->
 
-	</div>
-		
-	<div class="main">
+  </div>
 
-		<div class="padded">
-          <%= yield %>
-		</div>
+  <div class="main">
 
-	</div>
-	
-	<div class="clearer"><span></span></div>
+    <div class="padded">
+      <%= yield %>
+    </div>
 
-	<div class="footer">
-		
-		<span class="left">&copy; 2008 <a href="http://jujutsu.no/">Romerike Jujutsu Klubb</a>. Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> &amp; <a href="http://validator.w3.org/check?uri=referer">XHTML</a></span>
-		
-		<span class="right">Template design by <a href="http://templates.arcsin.se">Arcsin</a></span>
-		
-		<div class="clearer"><span></span></div>
+  </div>
 
-	</div>
+  <div class="clearer"><span></span></div>
+
+  <div class="footer">
+
+    <span class="left">&copy; 2008 <a href="http://jujutsu.no/">Romerike Jujutsu
+      Klubb</a>. Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> &amp; <a href="http://validator.w3.org/check?uri=referer">XHTML</a></span>
+
+    <span class="right">Template design by <a href="http://templates.arcsin.se">Arcsin</a></span>
+
+    <div class="clearer"><span></span></div>
+
+  </div>
 
 </div>
 
