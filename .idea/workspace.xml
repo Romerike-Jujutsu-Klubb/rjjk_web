@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/images_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/images_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/user_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/user_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -98,10 +99,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="images_controller.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="images_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/images_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="92" column="0" selection-start="2601" selection-end="2601" vertical-scroll-proportion="0.74285716">
+            <state line="92" column="0" selection-start="2601" selection-end="2601" vertical-scroll-proportion="-19.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dark_ritual.html.erb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="102" column="14" selection-start="4869" selection-end="4869" vertical-scroll-proportion="0.6446154">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/user_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="24" selection-start="454" selection-end="454" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -146,7 +165,6 @@
         <option value="$PROJECT_DIR$/config/application.rb" />
         <option value="$PROJECT_DIR$/app/views/images/_list.html.erb" />
         <option value="$PROJECT_DIR$/app/views/images/list.html.erb" />
-        <option value="$PROJECT_DIR$/app/controllers/user_controller.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20120316165432_add_properties_to_images.rb" />
         <option value="$PROJECT_DIR$/app/models/user_image.rb" />
         <option value="$PROJECT_DIR$/app/controllers/application_controller.rb" />
@@ -158,9 +176,10 @@
         <option value="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
         <option value="$PROJECT_DIR$/app/models/nkf_member_trial.rb" />
         <option value="$PROJECT_DIR$/test/fixtures/user_images.yml" />
-        <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
         <option value="$PROJECT_DIR$/app/views/images/gallery.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/images_controller.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/user_controller.rb" />
+        <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
       </list>
     </option>
   </component>
@@ -301,6 +320,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layouts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1536,7 +1577,11 @@
       <created>1332082201101</created>
       <updated>1332082201101</updated>
     </task>
-    <option name="localTasksCounter" value="133" />
+    <task id="LOCAL-00133" summary="* Lager galleri">
+      <created>1332097333101</created>
+      <updated>1332097333101</updated>
+    </task>
+    <option name="localTasksCounter" value="134" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1663,11 +1708,6 @@
     <entry file="file://$PROJECT_DIR$/db/migrate/20120314211058_create_member_images.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="0" selection-start="276" selection-end="276" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/user_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="175" column="0" selection-start="5722" selection-end="5722" vertical-scroll-proportion="0.32223904" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/db/migrate/20120316165432_add_properties_to_images.rb">
@@ -1806,13 +1846,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="38" selection-start="3813" selection-end="3813" vertical-scroll-proportion="0.33709678">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/images/gallery.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="31" selection-start="1177" selection-end="1177" vertical-scroll-proportion="0.0">
@@ -1829,7 +1862,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/images_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="0" selection-start="2601" selection-end="2601" vertical-scroll-proportion="0.74285716">
+        <state line="92" column="0" selection-start="2601" selection-end="2601" vertical-scroll-proportion="-19.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/user_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="24" selection-start="454" selection-end="454" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="102" column="14" selection-start="4869" selection-end="4869" vertical-scroll-proportion="0.6446154">
           <folding />
         </state>
       </provider>

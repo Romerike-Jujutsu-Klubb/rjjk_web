@@ -84,23 +84,23 @@
           <% for event in @events %>
               <% ingress = event.ingress %>
               <% ingress = nil if ingress.blank? %>
-              <h4><span style="white-space: nowrap">
-            <% if event.start_at.min != 0 || event.start_at.hour != 0 %>
-                <%= event.start_at.strftime('%d/%m %H:%M') %>
-            <% else %>
-                <%= event.start_at.strftime('%d/%m') %>
-            <% end %>
+              <h4>
+                <% if event.start_at.min != 0 || event.start_at.hour != 0 %>
+                    <%= event.start_at.strftime('%d/%m %H:%M') %>
+                <% else %>
+                    <%= event.start_at.strftime('%d/%m') %>
+                <% end %>
                 <% if event.end_at %>
-                -
+                    -
                     <%= event.end_at.strftime('%Y-%m-%d') if event.end_at.to_date != event.start_at.to_date %>
                     <%= event.end_at.strftime('%H:%M') if event.end_at.hour != 0 || event.end_at.min != 0 %>
-            <% end %>
+                <% end %>
                 <% if ingress %>
-                <%= link_to event.name, :controller => :events, :action => :show, :id => event.id %>
-            <% else %>
-                <%= event.name %>
-            <% end %>
-          </span></h4>
+                    <%= link_to event.name, :controller => :events, :action => :show, :id => event.id %>
+                <% else %>
+                    <%= event.name %>
+                <% end %>
+              </h4>
               <%= link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin? %>
 
               <% if ingress %>
@@ -152,9 +152,9 @@
       <% end %>
 
       <% if not user? %>
-          <li><%= link_to 'Login', :controller => 'user', :action => :login %></li>
+          <li><%= detour_to 'Login', :controller => 'user', :action => :login %></li>
       <% else %>
-          <li><%= link_to 'Logout', :controller => 'user', :action => :logout %></li>
+          <li><%= detour_to 'Logout', :controller => 'user', :action => :logout %></li>
       <% end %>
     </ul>
 

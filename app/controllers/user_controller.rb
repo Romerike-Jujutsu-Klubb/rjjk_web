@@ -22,7 +22,7 @@ class UserController < ApplicationController
         cookies[:autologin] = {:value => user.id.to_s, :expires => 90.days.from_now}
         cookies[:token]     = {:value => user.security_token, :expires => 90.days.from_now}
       end
-      redirect_back_or_default '/'
+      back_or_redirect_to '/'
     else
       @login = params['user']['login']
       flash['message'] = 'Login failed'
@@ -71,7 +71,7 @@ class UserController < ApplicationController
     self.current_user = nil
     cookies[:autologin] = {:value => '', :expires =>0.days.from_now}
     cookies[:token]     = {:value => '', :expires =>0.days.from_now}
-    redirect_to '/'
+    back_or_redirect_to '/'
   end
   
   def change_password
