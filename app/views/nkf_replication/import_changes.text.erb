@@ -10,6 +10,6 @@ Importerte endringer fra NKF-portalen.
     Feil:
 
     <% @import.error_records.each do |r| -%>
-        <%= r.class %> <%= r.id %> <%= r.errors.full_messages.inspect %>
+        <%= r.class %> <%= r.id %> <%= r.errors.full_messages.inspect.html_safe %>
     <% end -%>
 <% end -%>

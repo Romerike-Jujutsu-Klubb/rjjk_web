@@ -55,18 +55,18 @@
     <div class="padded">
       <%= link_to image_tag('rjjk_logo_&_txt_320.png', :style => 'width: 182px; height: 181px; border: 0'), '/' %>
 
-      <% if @image %>
+      <% if @image && !@image.new_record? %>
           <%= link_to :controller => :images, :action => :gallery, :id => @image.id do %>
               <% if @image.video? %>
                   <%= video_tag url_for(:controller => :images, :action => :show, :id => @image.id, :format => @image.format), :title => @image.name || 'Film', :style => 'width: 100%; border: 0', :controls => true, :autobuffer => true %>
-              <% else %>
+               <% else %>
                   <%= image_tag url_for(:controller => :images, :action => :inline, :id => @image.id, :width => 182, :format => @image.format), :title => @image.name || 'Bilde', :style => 'width: 100%; border: 0' %>
               <% end %>
               <%= @image.description %>
-              <%= link_to 'Godkjenn', {:controller => :images, :action => :update, :id => @image.id, :image => {:approved => true}}, :method => :put if admin? && !@image.approved? %>
-              <%= link_to @image.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => @image.id, :image => {:public => !@image.public?}}, :method => :put if admin? %>
-              <%= link_to 'Liker', {:controller => :user, :action => :like, :id => @image.id}, :method => :post if user? && !@image.likers.include?(current_user) %>
           <% end %>
+          <%= link_to 'Godkjenn', {:controller => :images, :action => :update, :id => @image.id, :image => {:approved => true}}, :method => :put if admin? && !@image.approved? %>
+          <%= link_to @image.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => @image.id, :image => {:public => !@image.public?}}, :method => :put if admin? %>
+          <%= link_to 'Liker', {:controller => :user, :action => :like, :id => @image.id}, :method => :post if user? && !@image.likers.include?(current_user) %>
           <br/>
       <% end %>
 

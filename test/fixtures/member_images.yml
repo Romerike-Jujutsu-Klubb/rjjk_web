@@ -1,9 +1,0 @@
-one:
-  member: uwe
-  image: one
-  type: OWNER
-
-two:
-  member: uwe
-  image: one
-  type: LIKE

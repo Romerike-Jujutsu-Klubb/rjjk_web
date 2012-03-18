@@ -280,6 +280,9 @@ class NkfMemberImport
         if record.save
           @changes << record.changes
         else
+          logger.error "ERROR: #{columns}"
+          logger.error "ERROR: #{row}"
+          logger.error "ERROR: #{record.attributes}"
           logger.error "ERROR: #{record.errors.to_a.join(', ')}"
           @error_records << record
         end

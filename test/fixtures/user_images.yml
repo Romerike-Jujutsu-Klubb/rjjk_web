@@ -1,0 +1,10 @@
+one:
+  user: uwe
+  image: one
+  rel_type: OWNER
+
+two:
+  user: uwe
+  image: one
+  rel_type: LIKE
+

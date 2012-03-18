@@ -1,7 +1,7 @@
 class NkfMemberTrial < ActiveRecord::Base
   has_many :trial_attendances
 
-  validates_presence_of :adresse, :alder, :epost, :epost_faktura, :etternavn, :fodtdato,
+  validates_presence_of :adresse, :alder, :epost, :etternavn, :fodtdato,
                         :fornavn, :medlems_type, :mobil, :postnr, :reg_dato, :sted, :stilart, :tid
   validates_inclusion_of :res_sms, :in => [true, false]
 
