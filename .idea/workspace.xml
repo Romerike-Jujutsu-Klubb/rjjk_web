@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/images/gallery.html.erb" afterPath="$PROJECT_DIR$/app/views/images/gallery.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/images_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/images_controller.rb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -89,19 +89,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="gallery.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="gallery.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/images/gallery.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="31" selection-start="1177" selection-end="1177" vertical-scroll-proportion="0.53244835">
+            <state line="19" column="31" selection-start="1177" selection-end="1177" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="images_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="images_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/images_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="0" selection-start="2265" selection-end="2265" vertical-scroll-proportion="-15.346154">
+            <state line="92" column="0" selection-start="2601" selection-end="2601" vertical-scroll-proportion="0.74285716">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="22" column="0" selection-start="714" selection-end="855" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -150,8 +159,8 @@
         <option value="$PROJECT_DIR$/app/models/nkf_member_trial.rb" />
         <option value="$PROJECT_DIR$/test/fixtures/user_images.yml" />
         <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
-        <option value="$PROJECT_DIR$/app/controllers/images_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/images/gallery.html.erb" />
+        <option value="$PROJECT_DIR$/app/controllers/images_controller.rb" />
       </list>
     </option>
   </component>
@@ -1523,7 +1532,11 @@
       <created>1332081749101</created>
       <updated>1332081749101</updated>
     </task>
-    <option name="localTasksCounter" value="132" />
+    <task id="LOCAL-00132" summary="* Lager galleri">
+      <created>1332082201101</created>
+      <updated>1332082201101</updated>
+    </task>
+    <option name="localTasksCounter" value="133" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1533,7 +1546,7 @@
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296501" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19060774" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15545088" sideWeight="0.6703499" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3388582" sideWeight="0.94745576" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3388582" sideWeight="0.94745576" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.2248394" sideWeight="0.29005525" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.218035" sideWeight="0.6611418" order="0" side_tool="false" content_ui="combo" />
@@ -1723,13 +1736,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="85" selection-start="564" selection-end="617" vertical-scroll-proportion="0.55709875">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/schema.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="208" column="23" selection-start="8905" selection-end="8950" vertical-scroll-proportion="0.5462963">
@@ -1807,16 +1813,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/images_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/views/images/gallery.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="0" selection-start="2265" selection-end="2265" vertical-scroll-proportion="-15.346154">
+        <state line="19" column="31" selection-start="1177" selection-end="1177" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/images/gallery.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="31" selection-start="1177" selection-end="1177" vertical-scroll-proportion="0.53244835">
+        <state line="22" column="0" selection-start="714" selection-end="855" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/images_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="92" column="0" selection-start="2601" selection-end="2601" vertical-scroll-proportion="0.74285716">
           <folding />
         </state>
       </provider>
