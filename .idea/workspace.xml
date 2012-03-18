@@ -92,7 +92,7 @@
       <file leaf-file-name="gallery.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/images/gallery.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="12" selection-start="35" selection-end="35" vertical-scroll-proportion="0.028023599">
+            <state line="19" column="31" selection-start="1177" selection-end="1177" vertical-scroll-proportion="0.53244835">
               <folding />
             </state>
           </provider>
@@ -1519,7 +1519,11 @@
       <created>1332081197101</created>
       <updated>1332081197101</updated>
     </task>
-    <option name="localTasksCounter" value="131" />
+    <task id="LOCAL-00131" summary="* Lager galleri">
+      <created>1332081749101</created>
+      <updated>1332081749101</updated>
+    </task>
+    <option name="localTasksCounter" value="132" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1812,7 +1816,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/images/gallery.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="12" selection-start="35" selection-end="35" vertical-scroll-proportion="0.028023599">
+        <state line="19" column="31" selection-start="1177" selection-end="1177" vertical-scroll-proportion="0.53244835">
           <folding />
         </state>
       </provider>
