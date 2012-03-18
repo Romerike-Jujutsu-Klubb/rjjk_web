@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/images_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/images_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/images/gallery.html.erb" afterPath="$PROJECT_DIR$/app/views/images/gallery.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -93,7 +93,7 @@
       <file leaf-file-name="gallery.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/images/gallery.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="25" selection-start="1049" selection-end="1049" vertical-scroll-proportion="0.42035398">
+            <state line="37" column="0" selection-start="2134" selection-end="2134" vertical-scroll-proportion="0.6356932">
               <folding />
             </state>
           </provider>
@@ -102,7 +102,7 @@
       <file leaf-file-name="images_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/images_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="6" selection-start="2271" selection-end="2271" vertical-scroll-proportion="0.0">
+            <state line="87" column="0" selection-start="2265" selection-end="2265" vertical-scroll-proportion="-15.346154">
               <folding />
             </state>
           </provider>
@@ -145,13 +145,13 @@
         <option value="$PROJECT_DIR$/config/environments/production.rb" />
         <option value="$PROJECT_DIR$/app/models/image.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/images_controller.rb" />
         <option value="/Rails rjjk_web: development" />
         <option value="$PROJECT_DIR$/app/views/nkf_replication/import_changes.text.erb" />
         <option value="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
         <option value="$PROJECT_DIR$/app/models/nkf_member_trial.rb" />
         <option value="$PROJECT_DIR$/test/fixtures/user_images.yml" />
         <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
+        <option value="$PROJECT_DIR$/app/controllers/images_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/images/gallery.html.erb" />
       </list>
     </option>
@@ -1534,7 +1534,11 @@
       <created>1332068595101</created>
       <updated>1332068595101</updated>
     </task>
-    <option name="localTasksCounter" value="129" />
+    <task id="LOCAL-00129" summary="* Lager galleri">
+      <created>1332076042101</created>
+      <updated>1332076042101</updated>
+    </task>
+    <option name="localTasksCounter" value="130" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1820,14 +1824,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/images_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="6" selection-start="2271" selection-end="2271" vertical-scroll-proportion="0.0">
+        <state line="87" column="0" selection-start="2265" selection-end="2265" vertical-scroll-proportion="-15.346154">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/images/gallery.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="25" selection-start="1049" selection-end="1049" vertical-scroll-proportion="0.42035398">
+        <state line="37" column="0" selection-start="2134" selection-end="2134" vertical-scroll-proportion="0.6356932">
           <folding />
         </state>
       </provider>

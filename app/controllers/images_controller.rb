@@ -87,7 +87,7 @@ class ImagesController < ApplicationController
 
   def gallery
     fields = 'approved, content_type, description, id, name, public'
-    image_select = Image.select(fields)
+    image_select = Image.select(fields).where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
     @image = image_select.where(:id => params[:id]).first || image_select.first || Image.new
     @images = image_select.all
   end
