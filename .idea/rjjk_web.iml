@@ -111,7 +111,7 @@
     <orderEntry type="library" scope="PROVIDED" name="jruby-openssl (v0.7.6.1, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jruby-rack (v1.1.4, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="json (v1.6.5, jruby-1.6.7-p357) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="mail (v2.4.3, jruby-1.6.7-p357) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="mail (v2.4.4, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="metaclass (v0.0.1, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mime-types (v1.17.2, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="minitest (v2.11.3, jruby-1.6.7-p357) [gem]" level="application" />
@@ -126,6 +126,7 @@
     <orderEntry type="library" scope="PROVIDED" name="rack-ssl (v1.3.2, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack-test (v0.6.1, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rails (v3.2.2, jruby-1.6.7-p357) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rails-i18n (v0.5.1, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="railties (v3.2.2, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rake (v0.9.2.2, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rdoc (v3.12, jruby-1.6.7-p357) [gem]" level="application" />
@@ -136,7 +137,7 @@
     <orderEntry type="library" scope="PROVIDED" name="rufus-scheduler (v2.0.16, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sass (v3.1.15, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sass-rails (v3.2.4, jruby-1.6.7-p357) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="simple_workflow (v0.2.1, jruby-1.6.7-p357) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="simple_workflow (v0.3.0, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sprockets (v2.1.2, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="therubyrhino (v1.73.1, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="thor (v0.14.6, jruby-1.6.7-p357) [gem]" level="application" />

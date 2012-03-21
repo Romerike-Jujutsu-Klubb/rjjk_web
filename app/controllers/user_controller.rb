@@ -16,11 +16,11 @@ class UserController < ApplicationController
     if user
       @current_user = user
       session[:user_id] = user.id
-      flash['notice'] = 'Login succeeded'
+      flash['notice'] = 'Velkommen!'
       if remember_me && remember_me == '1'
         user.generate_security_token
-        cookies[:autologin] = {:value => user.id.to_s, :expires => 90.days.from_now}
-        cookies[:token]     = {:value => user.security_token, :expires => 90.days.from_now}
+        cookies.permanent[:autologin] = user.id.to_s
+        cookies.permanent[:token]     = user.security_token
       end
       back_or_redirect_to '/'
     else

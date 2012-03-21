@@ -7,7 +7,7 @@ unless Rails.env == 'test'
     c = NkfMemberComparison.new
 
     new_members = c.orphan_nkf_members.map do |nkf_member|
-      nkf_member.create_member!
+      nkf_member.create_corresponding_member!
     end
 
     member_changes = c.members.map do |m|

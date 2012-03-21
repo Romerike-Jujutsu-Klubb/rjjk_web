@@ -29,6 +29,7 @@ gem 'jquery-rails'
 gem 'tinymce-rails'
 gem 'simple_workflow'
 gem 'gmaps4rails'
+gem 'rails-i18n'
 
 group :assets do
   gem 'sass-rails'

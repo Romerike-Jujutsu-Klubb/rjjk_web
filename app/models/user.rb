@@ -7,21 +7,21 @@ class User < ActiveRecord::Base
 
   belongs_to :member
 
-  CHANGEABLE_FIELDS = ['first_name', 'last_name', 'email']
+  CHANGEABLE_FIELDS = %w(first_name last_name email)
   attr_accessor :password_needs_confirmation
 
-  after_save '@password_needs_confirmation = false'
+  before_validation{self.login = email if self.login.blank?}
+  after_save{@password_needs_confirmation = false}
   after_validation :crypt_password
 
   validates_presence_of :login, :on => :create
-  validates_length_of :login, :within => 3..40, :on => :create
+  validates_length_of :login, :within => 3..40, :on => :create, :allow_blank => true
   validates_uniqueness_of :login, :on => :create
   validates_uniqueness_of :email, :on => :create
 
   validates_presence_of :password, :if => :validate_password?
   validates_confirmation_of :password, :if => :validate_password?
-  validates_length_of :password, { :minimum => 5, :if => :validate_password? }
-  validates_length_of :password, { :maximum => 40, :if => :validate_password? }
+  validates_length_of :password, :within => 5..40, :if => :validate_password?
 
   def validate
     if role_changed? && (user.nil? || user.role.nil?)
@@ -65,10 +65,9 @@ class User < ActiveRecord::Base
 
   def generate_security_token
     if self.security_token.nil? or self.token_expiry.nil? or (remaining_token_lifetime < (User.token_lifetime / 2))
-      token = new_security_token
-      return token
+      new_security_token
     else
-      return self.security_token
+      self.security_token
     end
   end
 
@@ -118,7 +117,7 @@ class User < ActiveRecord::Base
     write_attribute('security_token', self.class.hashed(self.salted_password + Clock.now.to_i.to_s + rand.to_s))
     write_attribute('token_expiry', expiry)
     update
-    return self.security_token
+    self.security_token
   end
 
   def self.salted_password(salt, hashed_password)

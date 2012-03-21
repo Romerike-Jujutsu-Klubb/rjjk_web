@@ -38,9 +38,10 @@
   <div class="header">
     Romerike Jujutsu Klubb<br/>
 
-    <% if flash[:notice] %>
+    <% if flash[:notice] || flash['notice'] %>
         <div style="width: 45% ; height: 3em ; background: white; margin-left: 1em ; border: 1px solid yellow; font-size: 10pt ; float: left">
           <%= flash[:notice] %>
+          <%= flash['notice'] %>
         </div>
     <% end %>
     <span style="font-size: 10pt; text-align: center">

@@ -83,8 +83,8 @@ class NkfMember < ActiveRecord::Base
     new_attributes
   end
 
-  def create_member!
-    member.create!(converted_attributes)
+  def create_corresponding_member!
+    create_member!(converted_attributes)
   end
 
 end

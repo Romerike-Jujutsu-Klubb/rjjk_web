@@ -19,11 +19,11 @@ class UserControllerTest < ActionController::TestCase
   end
   
   def test_login__valid_login__redirects_as_specified
-    @request.session[:return_to] = "/bogus/location"
+    add_stored_detour :controller => :welcome, :action => :index
     post :login, :user => { :login => "tesla", :password => "atest" }
     assert_logged_in users(:tesla)
     assert_response :redirect
-    assert_equal "http://#{@request.host}/bogus/location", @response.redirect_url
+    assert_redirected_to :controller => :welcome, :action => :index
   end
 
   def test_login_with_remember_me

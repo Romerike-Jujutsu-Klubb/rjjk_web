@@ -11,7 +11,6 @@ module UserHelper
   end
 
   def head_helper(label, options = {})
-    notice = message = error = nil
     opts = DEFAULT_HEAD_OPTIONS.dup
     opts.update(options.symbolize_keys)
     s = "<h3>#{label}</h3>"
@@ -25,12 +24,9 @@ module UserHelper
     end
     if not opts[:error].nil? and opts[:error]
      error = error_messages_for('user')
-     if not error.nil?
-       error = error + "<br/>"
-       s = s + error
-     end
+     s << error if error
    end
-   return s.html_safe
+   s.html_safe
   end
 
 end
