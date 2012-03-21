@@ -96,7 +96,6 @@ class UserControllerTest < ActionController::TestCase
     assert !user.verified
   end
 
-
   def test_signup__cannot_set_arbitrary_attributes
     post_signup :login => "newuser",
                 :password => "password", :password_confirmation => "password",

@@ -96,9 +96,9 @@ class UserTest < ActiveSupport::TestCase
     assert !u.save     
     assert u.errors[:login].any?
 
-    u.login = ""
-    assert !u.save
-    assert u.errors[:login].any?
+    u.login = "" # login is set to email automatically
+    assert u.save
+    assert u.errors[:login].empty?
 
     u.login = "oktesla"
     assert u.save
