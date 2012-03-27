@@ -1,0 +1,31 @@
+<h1>Din Embu</h1>
+
+<% if @embu %>
+    <%= render 'form' %>
+<% end %>
+
+<table>
+  <tr>
+    <th>Rank</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @embus.each do |embu| %>
+      <tr>
+        <td><%= embu.rank.name %></td>
+        <td><%= link_to 'Show', embu %></td>
+        <td><%= link_to 'Edit', edit_embu_path(embu) %></td>
+        <td><%= link_to 'Destroy', embu, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+  <% end %>
+</table>
+
+<br/>
+
+<%= link_to 'New Embu', new_embu_path %>
+
+<% @embu.images.each do |e| %>
+    <img src="<%=url_for(:controller => :images, :action => :inline, :id => e.id) %>"/>
+<% end %>

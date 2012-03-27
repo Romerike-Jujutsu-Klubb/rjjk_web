@@ -141,6 +141,9 @@
 
     <ul>
       <li><%= link_to 'Forside', '/' %></li>
+      <% if user? %>
+      <li><%= link_to 'Min Embu', :controller => :embus, :action => :index %></li>
+          <% end %>
     </ul>
 
     <h1>Oversikt</h1>
