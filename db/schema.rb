@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120327163449) do
+ActiveRecord::Schema.define(:version => 20120328001714) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -198,11 +198,12 @@ ActiveRecord::Schema.define(:version => 20120327163449) do
   end
 
   create_table "news_items", :force => true do |t|
-    t.string   "title",      :limit => 64, :null => false
+    t.string   "title",             :limit => 64, :null => false
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "created_by"
+    t.string   "publication_state",               :null => false
   end
 
   create_table "nkf_member_trials", :force => true do |t|
@@ -213,9 +214,9 @@ ActiveRecord::Schema.define(:version => 20120327163449) do
     t.integer  "alder",                       :null => false
     t.string   "postnr",        :limit => 4,  :null => false
     t.string   "sted",          :limit => 32, :null => false
-    t.string   "adresse",       :limit => 64, :null => false
+    t.string   "adresse",       :limit => 64
     t.string   "epost",         :limit => 64, :null => false
-    t.string   "mobil",         :limit => 16, :null => false
+    t.string   "mobil",         :limit => 16
     t.boolean  "res_sms",                     :null => false
     t.date     "reg_dato",                    :null => false
     t.datetime "created_at"
