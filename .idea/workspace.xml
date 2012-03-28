@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20120327220750_add_publication_state_to_news_items.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20120328001714_make_address_and_mobile_optional_for_nkf_member_trials.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/news_item.rb" afterPath="$PROJECT_DIR$/app/models/news_item.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/nkf_member_trial.rb" afterPath="$PROJECT_DIR$/app/models/nkf_member_trial.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/embus_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/embus_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/user_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/user_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/member.rb" afterPath="$PROJECT_DIR$/app/models/member.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/user_system.rb" afterPath="$PROJECT_DIR$/app/models/user_system.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/embus/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/embus/_form.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/embus/show.html.erb" afterPath="$PROJECT_DIR$/app/views/embus/show.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/locales/nb.yml" afterPath="$PROJECT_DIR$/config/locales/nb.yml" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -93,29 +96,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="embu.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/embu.rb">
+      <file leaf-file-name="embus_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/embus_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="0" selection-start="309" selection-end="309" vertical-scroll-proportion="0.0">
+            <state line="25" column="0" selection-start="486" selection-end="486" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="image.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/image.rb">
+      <file leaf-file-name="new.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/embus/new.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="308" selection-end="490" vertical-scroll-proportion="0.0">
+            <state line="3" column="0" selection-start="19" selection-end="40" vertical-scroll-proportion="-2.0357144">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="embu_image.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/embu_image.rb">
+      <file leaf-file-name="_form.html.erb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/embus/_form.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="14" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="24" column="35" selection-start="702" selection-end="713" vertical-scroll-proportion="0.6877828">
+              <folding>
+                <element signature="e#433#441#0" expanded="true" />
+                <element signature="e#898#907#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -123,61 +129,16 @@
       <file leaf-file-name="show.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/embus/show.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="87" selection-start="632" selection-end="632" vertical-scroll-proportion="0.0">
+            <state line="15" column="0" selection-start="310" selection-end="310" vertical-scroll-proportion="-10.178572">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="schema.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db/schema.rb">
+      <file leaf-file-name="nb.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/locales/nb.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="218" column="19" selection-start="9268" selection-end="9269" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="20120328001714_make_address_and_mobile_optional_for_nkf_member_trials.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/db/migrate/20120328001714_make_address_and_mobile_optional_for_nkf_member_trials.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="53" selection-start="141" selection-end="141" vertical-scroll-proportion="0.05873261">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="20120327220750_add_publication_state_to_news_items.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db/migrate/20120327220750_add_publication_state_to_news_items.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="4" selection-start="191" selection-end="191" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nkf_member_trial.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/nkf_member_trial.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="49" selection-start="185" selection-end="185" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="news_item.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/news_item.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="22" selection-start="357" selection-end="357" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_form.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/embus/_form.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="22" selection-start="755" selection-end="755" vertical-scroll-proportion="0.0">
+            <state line="133" column="26" selection-start="2648" selection-end="2648" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -197,8 +158,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/views/nkf_replication/import_changes.text.erb" />
-        <option value="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
         <option value="$PROJECT_DIR$/test/fixtures/user_images.yml" />
         <option value="$PROJECT_DIR$/app/views/images/gallery.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/images_controller.rb" />
@@ -207,27 +166,29 @@
         <option value="$PROJECT_DIR$/app/views/user/signup.html.erb" />
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/app/models/user.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/user_controller.rb" />
-        <option value="$PROJECT_DIR$/config/locales/nb.yml" />
         <option value="$PROJECT_DIR$/config/initializers/schedule.rb" />
         <option value="$PROJECT_DIR$/app/models/nkf_member.rb" />
         <option value="/Library/Frameworks/JRuby.framework/Gems/1.9/gems/simple_workflow-0.3.0/lib/simple_workflow.rb" />
         <option value="$PROJECT_DIR$/test/functional/user_controller_test.rb" />
         <option value="$PROJECT_DIR$/test/unit/user_test.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20120327161551_create_embus.rb" />
-        <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
         <option value="$PROJECT_DIR$/app/views/embus/index.html.erb" />
-        <option value="$PROJECT_DIR$/app/controllers/embus_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/embus/edit.html.erb" />
         <option value="$PROJECT_DIR$/db/migrate/20120327163449_create_embu_images.rb" />
         <option value="$PROJECT_DIR$/app/models/embu_image.rb" />
-        <option value="$PROJECT_DIR$/app/views/embus/_form.html.erb" />
         <option value="$PROJECT_DIR$/app/models/embu.rb" />
-        <option value="$PROJECT_DIR$/app/views/embus/show.html.erb" />
         <option value="$PROJECT_DIR$/app/models/news_item.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20120327220750_add_publication_state_to_news_items.rb" />
         <option value="$PROJECT_DIR$/app/models/nkf_member_trial.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20120328001714_make_address_and_mobile_optional_for_nkf_member_trials.rb" />
+        <option value="$PROJECT_DIR$/app/models/member.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/embus_controller.rb" />
+        <option value="$PROJECT_DIR$/app/models/user_system.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/user_controller.rb" />
+        <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/embus/show.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/embus/_form.html.erb" />
+        <option value="$PROJECT_DIR$/config/locales/nb.yml" />
       </list>
     </option>
   </component>
@@ -321,6 +282,92 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="locales" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="embus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="RailsProjectView">
@@ -383,7 +430,7 @@
       <recent name="$PROJECT_DIR$/assets/javascripts" />
     </key>
   </component>
-  <component name="RunManager" selected="Rake.db:migrate">
+  <component name="RunManager" selected="Rails.Development: rjjk_web">
     <configuration default="false" name="Default" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console" temporary="true">
       <option name="VM_PARAMETERS" value="" />
       <option name="USER_CFG_CLASS" />
@@ -1551,13 +1598,18 @@
       <created>1332866785105</created>
       <updated>1332866785105</updated>
     </task>
-    <option name="localTasksCounter" value="138" />
+    <task id="LOCAL-00138" summary="* Mindre sjekking på NKFMemberTrials&#10;* La til publiseringsstatus for nyhetsartikler">
+      <created>1332921188103</created>
+      <updated>1332921188103</updated>
+    </task>
+    <option name="localTasksCounter" value="139" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="66" y="22" width="1534" height="1178" extended-state="0" />
     <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19060774" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15545088" sideWeight="0.6703499" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3388582" sideWeight="0.9974227" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1574,7 +1626,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32780847" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19060774" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293247" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
@@ -1617,7 +1668,7 @@
     <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
     <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="* La til embu" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Mindre sjekking på NKFMemberTrials&#10;* La til publiseringsstatus for nyhetsartikler" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1630,7 +1681,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="* Fikset login og medlemssøk" />
     <MESSAGE value="* Fikset NKF import" />
     <MESSAGE value="* La til forhåndsvisning for nyhetsredigering" />
     <MESSAGE value="* Rettet feil i oppmøtelistene" />
@@ -1655,46 +1705,12 @@
     <MESSAGE value="* Lager galleri" />
     <MESSAGE value="* Grønne tester&#10;* Jobber med login&#10;" />
     <MESSAGE value="* La til embu" />
+    <MESSAGE value="* Mindre sjekking på NKFMemberTrials&#10;* La til publiseringsstatus for nyhetsartikler" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test/test_helper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="2" selection-start="954" selection-end="954" vertical-scroll-proportion="0.61000943" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/functional/user_controller_test.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="26" selection-start="545" selection-end="545" vertical-scroll-proportion="0.33333334" />
-      </provider>
-    </entry>
-    <entry file="file:///Library/Frameworks/JRuby.framework/Gems/1.9/gems/simple_workflow-0.3.0/lib/simple_workflow/test_helper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file:///Library/Frameworks/JRuby.framework/Gems/1.9/gems/simple_workflow-0.3.0/lib/simple_workflow.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="0" selection-start="595" selection-end="595" vertical-scroll-proportion="0.6611195" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/mailers/nkf_replication.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="805" selection-end="805" vertical-scroll-proportion="0.6049204" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/mailers/user_notify.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="0" selection-start="1387" selection-end="1455" vertical-scroll-proportion="0.80752534" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/unit/user_test.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="98" column="54" selection-start="3458" selection-end="3458" vertical-scroll-proportion="0.028023599" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Gemfile.lock">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="22" selection-start="208" selection-end="208" vertical-scroll-proportion="0.027496383" />
@@ -1735,16 +1751,6 @@
         <state line="300" column="0" selection-start="12851" selection-end="12851" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="144" column="74" selection-start="7012" selection-end="7012" vertical-scroll-proportion="-10.178572" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/embus/new.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="19" selection-end="40" vertical-scroll-proportion="-2.0357144" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/embus/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="0" selection-start="0" selection-end="632" vertical-scroll-proportion="-10.178572" />
@@ -1753,11 +1759,6 @@
     <entry file="file://$PROJECT_DIR$/app/views/embus/edit.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/embus_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="195" selection-end="195" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/db/migrate/20120327163449_create_embu_images.rb">
@@ -1778,13 +1779,6 @@
     <entry file="file://$PROJECT_DIR$/app/models/embu_image.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="14" selection-start="70" selection-end="70" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/embus/show.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="87" selection-start="632" selection-end="632" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/db/schema.rb">
@@ -1809,17 +1803,95 @@
         <state line="15" column="22" selection-start="357" selection-end="357" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/embus/_form.html.erb">
+    <entry file="file://$PROJECT_DIR$/db/migrate/20120328001714_make_address_and_mobile_optional_for_nkf_member_trials.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="22" selection-start="755" selection-end="755" vertical-scroll-proportion="0.0">
+        <state line="2" column="53" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/migrate/20120328001714_make_address_and_mobile_optional_for_nkf_member_trials.rb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/members_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="53" selection-start="141" selection-end="141" vertical-scroll-proportion="0.05873261">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/martial_art.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/embus_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="0" selection-start="486" selection-end="486" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/member.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="147" column="6" selection-start="4816" selection-end="4816" vertical-scroll-proportion="0.36102235">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/user.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/user_system.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="89" column="6" selection-start="2024" selection-end="2024" vertical-scroll-proportion="-1.6463224">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/user_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="0" selection-start="656" selection-end="656" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="45" selection-start="1617" selection-end="1617" vertical-scroll-proportion="-12.214286">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/embus/new.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="19" selection-end="40" vertical-scroll-proportion="-2.0357144" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/embus/show.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="310" selection-end="310" vertical-scroll-proportion="-10.178572">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/locales/nb.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="133" column="26" selection-start="2648" selection-end="2648" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/embus/_form.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="35" selection-start="702" selection-end="713" vertical-scroll-proportion="0.6877828">
+          <folding>
+            <element signature="e#433#441#0" expanded="true" />
+            <element signature="e#898#907#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -12,21 +12,27 @@
     <% end %>
 
     <div class="field">
-      <%= f.label :rank_id %>
-      <br/>
-      <%= f.select :rank_id, @ranks.map { |r| [r.name, r.id] } %>
+      <%= f.label :rank_id, t(:rank) %>:
+      <% if @embu.new_record? %>
+          <br/>
+          <%= f.select :rank_id, @ranks.map { |r| [r.name, r.id] } %>
+      <% else %>
+          <%= @embu.rank.name %>
+      <% end %>
     </div>
+
     <div class="field">
-      <%= f.label :description %>
+      <%= f.label :description, t(:description) %>
       <br/>
       <%= f.text_area :description, :style => 'width: 100%' %>
     </div>
 
-    <div class="field">
-      <%= f.label :image %>
-      <br/>
-      <%= f.file_field :image %>
-    </div>
+    <% unless @embu.new_record? %>
+        <div class="field">
+          <%= f.label :image, t(:image) %>:
+          <%= f.file_field :image %>
+        </div>
+    <% end %>
 
     <div class="actions">
       <%= f.submit %>

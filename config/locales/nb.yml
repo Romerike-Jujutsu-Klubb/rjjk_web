@@ -131,7 +131,10 @@ nb:
         delimiter: ""
         precision: 4
 
-  # Controller
+  description: Beskrivelse
+  image: Bilde
+  rank: Grad
+  rank_id: Grad
   user_login_succeeded: Login successful
   user_login_failed: Login unsuccessful
   user_signup_succeeded: Signup successful! Please check your registered email account to verify your account registration and continue with the login.

@@ -2,16 +2,18 @@ class EmbusController < ApplicationController
   # GET /embus
   # GET /embus.json
   def index
-    @embu = Embu.last || Embu.new
-    redirect_to @embu
+    if embu = Embu.last
+      redirect_to :action => :edit, :id => embu.id
+    else
+      redirect_to :action => :new
+    end
   end
 
   # GET /embus/1
   # GET /embus/1.json
   def show
     @embu = Embu.find(params[:id])
-    @embus = Embu.where('user_id = ?', current_user.id).all
-    @ranks = Rank.all
+    load_data
 
     respond_to do |format|
       format.html # show.html.erb
@@ -23,7 +25,8 @@ class EmbusController < ApplicationController
   # GET /embus/new.json
   def new
     @embu = Embu.new
-    @embus = Embu.where('user_id = ?', current_user.id).all
+    load_data
+    @rank = current_user.member.next_rank
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,7 +37,7 @@ class EmbusController < ApplicationController
   # GET /embus/1/edit
   def edit
     @embu = Embu.find(params[:id])
-    @embus = Embu.where('user_id = ?', current_user.id).all
+    load_data
   end
 
   # POST /embus
@@ -80,4 +83,12 @@ class EmbusController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def load_data
+    @embus = Embu.where('user_id = ?', current_user.id).all
+    @ranks = Rank.order('position DESC').all
+  end
+
 end

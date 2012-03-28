@@ -77,7 +77,7 @@ class Member < ActiveRecord::Base
     "#{"#{years} år" if years > 0} #{"#{months} mnd" if years == 0 || months > 0}" # TODO: What about leap years etc?
   end
 
-  def next_rank(graduation)
+  def next_rank(graduation = Graduation.new(:held_on => Date.today, :martial_art => MartialArt.find_by_name('Kei Wa Ryu')))
     age = self.age(graduation.held_on)
     ma = graduation.martial_art
     current_rank = current_rank(ma, graduation.held_on)

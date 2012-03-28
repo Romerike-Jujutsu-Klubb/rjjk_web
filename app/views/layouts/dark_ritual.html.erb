@@ -41,7 +41,7 @@
     <% if flash[:notice] || flash['notice'] %>
         <div style="width: 45% ; height: 3em ; background: white; margin-left: 1em ; border: 1px solid yellow; font-size: 10pt ; float: left">
           <%= flash[:notice] %>
-          <%= flash['notice'] %>
+          <%= flash['notice'].try(:html_safe) %>
         </div>
     <% end %>
     <span style="font-size: 10pt; text-align: center">
@@ -141,7 +141,7 @@
 
     <ul>
       <li><%= link_to 'Forside', '/' %></li>
-      <% if user? %>
+      <% if member? %>
       <li><%= link_to 'Min Embu', :controller => :embus, :action => :index %></li>
           <% end %>
     </ul>

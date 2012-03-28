@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class UserController < ApplicationController
   before_filter :authenticate_user
   before_filter :admin_required, :except => [:welcome, :like, :login, :logout, :signup, :forgot_password, :change_password]
@@ -14,13 +15,18 @@ class UserController < ApplicationController
     @user = User.new(params['user'])
     user = User.authenticate(params['user']['login'], params['user']['password'])
     if user
-      @current_user = user
-      session[:user_id] = user.id
+      self.current_user = user
       flash['notice'] = 'Velkommen!'
       if remember_me && remember_me == '1'
         user.generate_security_token
         cookies.permanent[:autologin] = user.id.to_s
         cookies.permanent[:token]     = user.security_token
+      end
+      unless member?
+        if member = Member.find_by_email(user.email)
+          user.update_attributes! :member_id => member.id
+          flash['notice'] << "  Du er nå registrert som medlem #{member.name}."
+        end
       end
       back_or_redirect_to '/'
     else

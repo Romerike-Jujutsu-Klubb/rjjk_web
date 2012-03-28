@@ -87,6 +87,10 @@ module UserSystem
     authenticated_user?
   end
 
+  def member?
+    !!current_user.try(:member)
+  end
+
   def store_current_user_in_thread
     if session[:user_id]
       self.current_user = User.find_by_id(session[:user_id])
