@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class EmbusController < ApplicationController
   # GET /embus
   # GET /embus.json
@@ -12,13 +14,8 @@ class EmbusController < ApplicationController
   # GET /embus/1
   # GET /embus/1.json
   def show
-    @embu = Embu.find(params[:id])
-    load_data
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @embu }
-    end
+    edit
+    render :actipon => :edit
   end
 
   # GET /embus/new
