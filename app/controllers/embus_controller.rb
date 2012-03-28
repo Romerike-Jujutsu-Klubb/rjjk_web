@@ -24,6 +24,10 @@ class EmbusController < ApplicationController
   # GET /embus/new
   # GET /embus/new.json
   def new
+    unless current_user
+      redirect_to :controller => :welcome, :action => :index, :notice => 'Du må være logget på for å redigere din embu.'
+      return
+    end
     @embu = Embu.new
     load_data
     @rank = current_user.member.next_rank

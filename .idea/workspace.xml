@@ -4,13 +4,6 @@
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/embus_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/embus_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/user_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/user_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/member.rb" afterPath="$PROJECT_DIR$/app/models/member.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/user_system.rb" afterPath="$PROJECT_DIR$/app/models/user_system.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/embus/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/embus/_form.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/embus/show.html.erb" afterPath="$PROJECT_DIR$/app/views/embus/show.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/locales/nb.yml" afterPath="$PROJECT_DIR$/config/locales/nb.yml" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -96,10 +89,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="embus_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="embus_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/embus_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="0" selection-start="486" selection-end="486" vertical-scroll-proportion="0.0">
+            <state line="28" column="12" selection-start="653" selection-end="653" vertical-scroll-proportion="0.39528024">
               <folding />
             </state>
           </provider>
@@ -114,10 +107,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_form.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="_form.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/embus/_form.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="35" selection-start="702" selection-end="713" vertical-scroll-proportion="0.6877828">
+            <state line="24" column="35" selection-start="702" selection-end="713" vertical-scroll-proportion="-16.285715">
               <folding>
                 <element signature="e#433#441#0" expanded="true" />
                 <element signature="e#898#907#0" expanded="true" />
@@ -182,13 +175,13 @@
         <option value="$PROJECT_DIR$/app/models/nkf_member_trial.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20120328001714_make_address_and_mobile_optional_for_nkf_member_trials.rb" />
         <option value="$PROJECT_DIR$/app/models/member.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/embus_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/user_system.rb" />
         <option value="$PROJECT_DIR$/app/controllers/user_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
         <option value="$PROJECT_DIR$/app/views/embus/show.html.erb" />
         <option value="$PROJECT_DIR$/app/views/embus/_form.html.erb" />
         <option value="$PROJECT_DIR$/config/locales/nb.yml" />
+        <option value="$PROJECT_DIR$/app/controllers/embus_controller.rb" />
       </list>
     </option>
   </component>
@@ -365,6 +358,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1602,7 +1613,11 @@
       <created>1332921188103</created>
       <updated>1332921188103</updated>
     </task>
-    <option name="localTasksCounter" value="139" />
+    <task id="LOCAL-00139" summary="* Fikset embu redigering">
+      <created>1332924836101</created>
+      <updated>1332924836101</updated>
+    </task>
+    <option name="localTasksCounter" value="140" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1668,7 +1683,7 @@
     <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
     <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Mindre sjekking på NKFMemberTrials&#10;* La til publiseringsstatus for nyhetsartikler" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Fikset embu redigering" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1681,7 +1696,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="* Fikset NKF import" />
     <MESSAGE value="* La til forhåndsvisning for nyhetsredigering" />
     <MESSAGE value="* Rettet feil i oppmøtelistene" />
     <MESSAGE value="* La til visning av antall gratismedlemmer i medlemshistorikken" />
@@ -1706,6 +1720,7 @@
     <MESSAGE value="* Grønne tester&#10;* Jobber med login&#10;" />
     <MESSAGE value="* La til embu" />
     <MESSAGE value="* Mindre sjekking på NKFMemberTrials&#10;* La til publiseringsstatus for nyhetsartikler" />
+    <MESSAGE value="* Fikset embu redigering" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1824,13 +1839,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/embus_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="0" selection-start="486" selection-end="486" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/member.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="147" column="6" selection-start="4816" selection-end="4816" vertical-scroll-proportion="0.36102235">
@@ -1887,11 +1895,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/embus/_form.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="35" selection-start="702" selection-end="713" vertical-scroll-proportion="0.6877828">
+        <state line="24" column="35" selection-start="702" selection-end="713" vertical-scroll-proportion="-16.285715">
           <folding>
             <element signature="e#433#441#0" expanded="true" />
             <element signature="e#898#907#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/embus_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="12" selection-start="653" selection-end="653" vertical-scroll-proportion="0.39528024">
+          <folding />
         </state>
       </provider>
     </entry>
