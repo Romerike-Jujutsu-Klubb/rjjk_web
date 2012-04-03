@@ -75,11 +75,9 @@ class NkfMember < ActiveRecord::Base
         logger.error "Unknown attribute: #{k}"
       end
     end
-    if new_record?
-      new_attributes[:instructor] = false
-      new_attributes[:nkf_fee] = true
-      new_attributes[:payment_problem] = false
-    end
+    new_attributes[:instructor] = false
+    new_attributes[:nkf_fee] = true
+    new_attributes[:payment_problem] = false
     new_attributes
   end
 

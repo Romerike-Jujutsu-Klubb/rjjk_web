@@ -57,19 +57,12 @@ class EmbusController < ApplicationController
     end
   end
 
-  # PUT /embus/1
-  # PUT /embus/1.json
   def update
     @embu = Embu.find(params[:id])
-
-    respond_to do |format|
-      if @embu.update_attributes(params[:embu])
-        format.html { redirect_to @embu, notice: 'Embu was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @embu.errors, status: :unprocessable_entity }
-      end
+    if @embu.update_attributes(params[:embu])
+      redirect_to :action => :edit, :id => @embu.id, notice: 'Embu was successfully updated.'
+    else
+      render action: "edit"
     end
   end
 

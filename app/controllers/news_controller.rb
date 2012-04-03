@@ -19,8 +19,9 @@ class NewsController < ApplicationController
   end
 
   def new
-    @news_item = NewsItem.new
+    @news_item ||= NewsItem.new
     @images = Image.all(:conditions => "name NOT LIKE '%.MP4'", :select => 'id, name')
+    render :action => :new
   end
 
   def create
@@ -29,7 +30,7 @@ class NewsController < ApplicationController
       flash[:notice] = 'NewsItem was successfully created.'
       redirect_to :action => :list
     else
-      render :action => :new
+      new
     end
   end
 

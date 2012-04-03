@@ -3,6 +3,8 @@ nb:
     models:
       user: Bruker
     attributes:
+      news_item:
+        publication_state: Publiseringsstatus
       user:
         email: E-post
         login: Brukernavn
@@ -132,7 +134,10 @@ nb:
         precision: 4
 
   description: Beskrivelse
+  draft: Kladd
+  expired: Utdatert
   image: Bilde
+  published: Publisert
   rank: Grad
   rank_id: Grad
   user_login_succeeded: Login successful

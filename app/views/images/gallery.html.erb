@@ -6,7 +6,8 @@
 <% end %>
 
 <div width="100%" align="center">
-    <%= @image.description || @image.name%>
+  <%= @image.description || @image.name%>
+  av <%= @image.user.name %>
     <br/>
 <%= link_to 'Godkjenn', {:controller => :images, :action => :update, :id => @image.id, :image => {:approved => true}}, :method => :put if admin? && !@image.approved? %>
 <%= link_to @image.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => @image.id, :image => {:public => !@image.public?}}, :method => :put if admin? %>
