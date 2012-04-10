@@ -1,4 +1,3 @@
-# encoding: utf-8
 class Image < ActiveRecord::Base
   include UserSystem
 
@@ -12,10 +11,23 @@ class Image < ActiveRecord::Base
 
   validates_uniqueness_of :content_data, :on => :create
 
+  after_create do |i|
+    next unless @content_file
+    conn = self.class.connection.raw_connection.connection
+    is = java.io.FileInputStream.new(java.io.File.new(@content_file))
+    st = conn.prepareStatement("UPDATE images SET content_data = ? WHERE id = ?")
+    st.java_send(:setBinaryStream, [Java::int  , java.io.InputStream, Java::int], 1, is, is.available)
+    st.setInt(2, id)
+    st.executeUpdate
+    st.close
+    @content_file = nil
+  end
+
   def file=(file)
     return if file == ""
     self.name = file.original_filename if name.blank?
-    self.content_data = file.read.force_encoding("ASCII-8BIT")
+    self.content_data = 'Temporary'
+    @content_file = file.path
     self.content_type = file.content_type
   end
 
