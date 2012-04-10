@@ -30,7 +30,7 @@
               <%= video_tag url_for(:controller => :images, :action => :show, :id => e.id, :format => e.format), :title => e.name || 'Film', :controls => true, :autobuffer => true, :style => "float: right; width: 19%" %>
               </video>
           <% else %>
-              <%= image_tag url_for(:controller => :images, :action => :inline, :id => e.id, :format => e.format, :width => 492 / 5), :title => e.name || 'Bilde', :style=>"float: right; width: 19%" %>
+              <%= image_tag url_for(:controller => :images, :action => :inline, :id => e.id, :format => e.format, :width => 185), :title => e.name || 'Bilde', :style=>"float: right; width: 19%" %>
           <% end %>
           <br clear="right"/>
       <% end %>
