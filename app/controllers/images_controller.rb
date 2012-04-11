@@ -1,7 +1,7 @@
 class ImagesController < ApplicationController
   caches_page :show, :inline
   cache_sweeper :image_sweeper, :only => [:update, :destroy]
-  
+
   def index
     list
     render :action => 'list'
@@ -12,11 +12,21 @@ class ImagesController < ApplicationController
   end
 
   def show
-    @image = Image.find(params[:id])
-    send_data(@image.content_data,
-        :disposition => 'inline',
-        :type => @image.content_type,
-        :filename => @image.name)
+    @image = Image.select('id, content_type, name').find(params[:id])
+    if params[:format].nil?
+      redirect_to :width => params[:width], :format => @image.format
+      return
+    end
+    if @image.video?
+      headers["Content-Type"] = @image.content_type
+      headers["Content-disposition"] = "inline; filename=\"#{@image.name}\""
+      self.response_body = @image.content_data_io
+    else
+      send_data(@image.content_data,
+                :disposition => 'inline',
+                :type => @image.content_type,
+                :filename => @image.name)
+    end
   end
 
   def inline
@@ -26,8 +36,8 @@ class ImagesController < ApplicationController
       return
     end
     begin
-       imgs = Magick::ImageList.new
-       imgs.from_blob @image.content_data
+      imgs = Magick::ImageList.new
+      imgs.from_blob @image.content_data
     rescue java.lang.NullPointerException
       redirect_to @image.video? ? '/assets/video-icon-tran.png' : '/assets/pdficon_large.png'
       return
@@ -35,9 +45,9 @@ class ImagesController < ApplicationController
     logger.info "Image size: #{imgs.size}"
     logger.info "Image cols: #{imgs.first.columns}"
     imgs.each.with_index do |im, idx|
-    logger.info "Image cols #{idx}: #{im.columns}"
+      logger.info "Image cols #{idx}: #{im.columns}"
     end
-    cols = imgs.map{|im| im.columns}
+    cols = imgs.map { |im| im.columns }
     logger.info "Image cols #{cols}"
     width = params[:width].to_i
     width = 492 if width < 8
@@ -81,7 +91,7 @@ class ImagesController < ApplicationController
     Image.find(params[:id]).destroy
     back_or_redirect_to :action => 'list'
   end
-  
+
   def image_list
     @images = Image.all(:conditions => "name NOT LIKE '%.MP4'", :order => 'UPPER(name)')
     render :layout => false
@@ -89,7 +99,7 @@ class ImagesController < ApplicationController
 
   def media_list
     media_extensions = %w{mp4 mov flv}
-    @media = Image.all(:conditions => media_extensions.map{|e|"UPPER(name) LIKE '%.#{e.upcase}'"}.join(' OR '), :order => 'UPPER(name)')
+    @media = Image.all(:conditions => media_extensions.map { |e| "UPPER(name) LIKE '%.#{e.upcase}'" }.join(' OR '), :order => 'UPPER(name)')
     render :layout => false
   end
 
@@ -98,7 +108,7 @@ class ImagesController < ApplicationController
     image_select = Image.select(fields).where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
     image_select = image_select.where('approved = ?', true) unless admin?
     image_select = image_select.where('public = ?', true) unless user?
-    @image = image_select.where(:id => params[:id]).first || image_select.first || Image.new
+    @image = image_select.select(fields).where(:id => params[:id]).first || image_select.first || Image.new
     @images = image_select.all
   end
 
