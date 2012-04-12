@@ -50,7 +50,7 @@ class Image < ActiveRecord::Base
       chunk_size = 10 * 1024 * 1024
       image_length = Image.connection.execute("SELECT LENGTH(content_data) as length FROM images WHERE id = #{@image.id}")[0]['length']
       (1..image_length).step(chunk_size) do |i|
-        data = Image.connection.execute("SELECT SUBSTRING(content_data FROM #{i} FOR #{[image_length - i, chunk_size].min}) as chunk FROM images WHERE id = #{@image.id}")[0]['chunk']
+        data = Image.connection.execute("SELECT SUBSTRING(content_data FROM #{i} FOR #{[image_length - i + 1, chunk_size].min}) as chunk FROM images WHERE id = #{@image.id}")[0]['chunk']
         block.call(data) if data
       end
     end
