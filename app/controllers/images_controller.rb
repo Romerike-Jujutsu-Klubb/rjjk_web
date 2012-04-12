@@ -22,6 +22,7 @@ class ImagesController < ApplicationController
       filename = "#{Rails.root}/public/images/#{@image.id}.#{@image.format}"
       if perform_caching && !File.exists?(filename)
         total_size = 0
+        FileUtils.mkdir_p(File.dirname(filename))
         File.open(filename, 'w') do |f|
           streamer.each{|chunk| f << chunk ; total_size += chunk.size}
         end
