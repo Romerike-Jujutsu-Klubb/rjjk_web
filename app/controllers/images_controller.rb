@@ -20,9 +20,12 @@ class ImagesController < ApplicationController
     if @image.video?
       streamer = @image.content_data_io
       if config.action_controller.perform_caching
-        File.open("#{Rails.root}/public/images/#{@image.id}.#{@image.format}") do |f|
-          streamer.each{|chunk| f << chunk}
+        filename = "#{Rails.root}/public/images/#{@image.id}.#{@image.format}"
+        total_size = 0
+        File.open(filename) do |f|
+          streamer.each{|chunk| f << chunk ; total_size += chunk.size}
         end
+        logger.info "Wrote movie (#{total_size} bytes) to public file: #{filename}"
       end
       headers["Content-Type"] = @image.content_type
       headers["Content-disposition"] = "inline; filename=\"#{@image.name}\""
