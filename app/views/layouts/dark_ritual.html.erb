@@ -142,8 +142,11 @@
     <ul>
       <li><%= link_to 'Forside', '/' %></li>
       <% if member? %>
-      <li><%= link_to 'Min Embu', :controller => :embus, :action => :index %></li>
-          <% end %>
+          <li><%= link_to 'Min Embu', :controller => :embus, :action => :index %></li>
+      <% end %>
+      <% if user? %>
+          <li><%= link_to 'Mine media', :controller => :images, :action => :mine %></li>
+      <% end %>
     </ul>
 
     <h1>Oversikt</h1>

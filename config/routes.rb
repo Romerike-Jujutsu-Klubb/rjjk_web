@@ -7,6 +7,7 @@ RjjkWeb::Application.routes.draw do
   match ':controller/create', :action => 'create'
   match ':controller/excel_export', :action => 'excel_export'
   match ':controller/yaml', :action => 'yaml'
+  match ':controller/mine', :action => 'mine'
 
   resources :attendances
   resources :cms_members

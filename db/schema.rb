@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120328001714) do
+ActiveRecord::Schema.define(:version => 20120412151312) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(:version => 20120328001714) do
     t.string  "name",         :limit => 64, :null => false
     t.string  "content_type",               :null => false
     t.binary  "content_data",               :null => false
-    t.integer "user_id"
+    t.integer "user_id",                    :null => false
     t.string  "description",  :limit => 16
     t.text    "story"
     t.boolean "public"
