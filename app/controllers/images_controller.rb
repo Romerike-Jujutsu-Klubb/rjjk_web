@@ -19,8 +19,8 @@ class ImagesController < ApplicationController
     end
     if @image.video?
       streamer = @image.content_data_io
-      if config.action_controller.perform_caching
-        filename = "#{Rails.root}/public/images/#{@image.id}.#{@image.format}"
+      filename = "#{Rails.root}/public/images/#{@image.id}.#{@image.format}"
+      if perform_caching && !File.exists?(filename)
         total_size = 0
         File.open(filename) do |f|
           streamer.each{|chunk| f << chunk ; total_size += chunk.size}
