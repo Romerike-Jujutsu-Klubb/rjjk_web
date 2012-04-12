@@ -18,9 +18,15 @@ class ImagesController < ApplicationController
       return
     end
     if @image.video?
+      streamer = @image.content_data_io
+      if config.action_controller.perform_caching
+        File.open("#{Rails.root}/public/images/#{@image.id}.#{@image.format}") do |f|
+          streamer.each{|chunk| f << chunk}
+        end
+      end
       headers["Content-Type"] = @image.content_type
       headers["Content-disposition"] = "inline; filename=\"#{@image.name}\""
-      self.response_body = @image.content_data_io
+      self.response_body = streamer
     else
       send_data(@image.content_data,
                 :disposition => 'inline',
