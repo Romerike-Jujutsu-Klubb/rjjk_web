@@ -22,7 +22,7 @@ class ImagesController < ApplicationController
       filename = "#{Rails.root}/public/images/#{@image.id}.#{@image.format}"
       if perform_caching && !File.exists?(filename)
         total_size = 0
-        File.open(filename) do |f|
+        File.open(filename, 'w') do |f|
           streamer.each{|chunk| f << chunk ; total_size += chunk.size}
         end
         logger.info "Wrote movie (#{total_size} bytes) to public file: #{filename}"
