@@ -17,7 +17,9 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
   def login(login)
-    @request.session[:user_id] = users(login).id
+    u = users(login)
+    @request.session[:user_id] = u.id
+    Thread.current[:user] = u
   end
 
   def assert_no_errors(symbol)

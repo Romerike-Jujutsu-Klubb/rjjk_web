@@ -17,6 +17,7 @@ tesla:
   deleted: false
   security_token: random_token_string
   token_expiry: <%=(Clock.now + User.token_lifetime/3).utc.strftime("%Y-%m-%d %H:%M:%S") %>
+  member: first
 
 long_user:
   id: 1000003

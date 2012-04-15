@@ -3,12 +3,13 @@ require 'test_helper'
 class EmbusControllerTest < ActionController::TestCase
   setup do
     @embu = embus(:one)
+    login :tesla
   end
 
   test "should get index" do
     get :index
-    assert_response :success
-    assert_not_nil assigns(:embus)
+    assert_response :redirect
+    assert_redirected_to edit_embu_path(embus(:one))
   end
 
   test "should get new" do
@@ -36,7 +37,7 @@ class EmbusControllerTest < ActionController::TestCase
 
   test "should update embu" do
     put :update, id: @embu, embu: @embu.attributes
-    assert_redirected_to embu_path(assigns(:embu))
+    assert_redirected_to edit_embu_path(assigns(:embu), :notice => 'Embu was successfully updated.')
   end
 
   test "should destroy embu" do

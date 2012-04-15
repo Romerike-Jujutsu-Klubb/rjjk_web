@@ -6,9 +6,10 @@ class Image < ActiveRecord::Base
   has_many :likers, :class_name => 'User', :through => :user_images, :conditions => "user_images.rel_type = 'LIKE'", :source => :user
 
   before_create do
-    self.user ||= current_user
+    self.user_id ||= current_user.try(:id)
   end
 
+  validates_presence_of :name
   validates_uniqueness_of :content_data, :on => :create
 
   after_create do |i|

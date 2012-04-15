@@ -12,30 +12,22 @@ class ImagesController < ApplicationController
   end
 
   def show
-    @image = Image.select('id, content_type, name').find(params[:id])
+    image = Image.select('id, content_type, name').find(params[:id])
     if params[:format].nil?
-      redirect_to :width => params[:width], :format => @image.format
+      redirect_to :width => params[:width], :format => image.format
       return
     end
-    if @image.video?
-      streamer = @image.content_data_io
-      #filename = "#{Rails.root}/public/images/#{@image.id}.#{@image.format}"
-      #if perform_caching && !File.exists?(filename)
-      #  total_size = 0
-      #  FileUtils.mkdir_p(File.dirname(filename))
-      #  File.open(filename, 'w') do |f|
-      #    streamer.each{|chunk| f << chunk ; total_size += chunk.size}
-      #  end
-      #  logger.info "Wrote movie (#{total_size} bytes) to public file: #{filename}"
-      #end
-      headers["Content-Type"] = @image.content_type
-      headers["Content-disposition"] = "inline; filename=\"#{@image.name}\""
+    if image.video?
+      streamer = image.content_data_io
+      headers["Content-Type"] = image.content_type
+      headers["Content-disposition"] = "inline; filename=\"#{image.name}\""
       self.response_body = streamer
     else
-      send_data(@image.content_data,
+      image_content = Image.select('id, content_data').find(params[:id])
+      send_data(image_content.content_data,
                 :disposition => 'inline',
-                :type => @image.content_type,
-                :filename => @image.name)
+                :type => image.content_type,
+                :filename => image.name)
     end
   end
 
@@ -118,7 +110,7 @@ class ImagesController < ApplicationController
     image_select = Image.select(fields).where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
     image_select = image_select.where('approved = ?', true) unless admin?
     image_select = image_select.where('public = ?', true) unless user?
-    @image = image_select.select(fields).where(:id => params[:id]).first || image_select.first || Image.new
+    @image = image_select.select(fields).where(:id => params[:id]).first || image_select.first
     @images = image_select.all
   end
 

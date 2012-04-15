@@ -260,7 +260,6 @@ class UserControllerTest < ActionController::TestCase
 
   def assert_logged_in( user )
     assert_equal user.id, @request.session[:user_id]
-    assert_equal user, assigns(:current_user)
   end
 
   def assert_not_logged_in

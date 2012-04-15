@@ -31,12 +31,8 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, :id => @first_id
-
+    get :show, :id => @first_id, :format => 'png'
     assert_response :success
-
-    assert_not_nil assigns(:image)
-    assert assigns(:image).valid?
   end
 
   def test_new
@@ -49,6 +45,8 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_create
+    login :tesla
+
     num_images = Image.count
 
     post :create, :image => {:name => 'new file', :content_type => 'image/png', :content_data => 'qwerty'}
@@ -88,4 +86,15 @@ class ImagesControllerTest < ActionController::TestCase
       Image.find(@first_id)
     }
   end
+
+  def test_gallery
+    get :gallery, :id => @first_id
+
+    assert_response :success
+    assert_template 'gallery'
+
+    #assert_not_nil assigns(:image)
+    assert_not_nil assigns(:images)
+  end
+
 end
