@@ -81,7 +81,7 @@ class EmbusController < ApplicationController
   private
 
   def load_data
-    @embus = Embu.where('user_id = ?', current_user.id).all
+    @embus = Embu.where('user_id = ?', current_user.id).order('created_at DESC').all
     @ranks = Rank.order('position DESC').all
   end
 

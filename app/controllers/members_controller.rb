@@ -2,8 +2,7 @@
 class MembersController < ApplicationController
   before_filter :store_location
   before_filter :admin_required
-  before_filter :find_incomplete
-  
+
   caches_page :image, :image_thumbnail, :history_graph, :grade_history_graph
   cache_sweeper :member_image_sweeper, :only => [:add_group, :create, :update, :destroy]
   
@@ -172,6 +171,7 @@ class MembersController < ApplicationController
     @female_twenty_twentyfive= member_count(false, 20, 25)
     @male_twentysix_and_over   = member_count(true, 26, 100)
     @female_twentysix_and_over= member_count(false, 26, 100)
+    @incomplete_members = Member.find_active.select {|m| m.birthdate.nil?}
   end
   
   def telephone_list
@@ -327,10 +327,6 @@ class MembersController < ApplicationController
   
   def member_count(male, from_age, to_age)
     Member.count(:conditions => "left_on IS NULL AND male = #{male} AND birthdate <= '#{year_end(from_age)}' AND birthdate >= '#{year_start(to_age)}'")
-  end
-  
-  def find_incomplete
-    @incomplete_members = Member.find_active.select {|m| m.birthdate.nil?}
   end
   
   def update_memberships
