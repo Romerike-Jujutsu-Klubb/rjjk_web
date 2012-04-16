@@ -141,7 +141,7 @@ class UserController < ApplicationController
         case form
           when "edit"
           unclean_params = params['user']
-          if user.admin?
+          if current_user.admin?
             user_params = unclean_params
           else
             user_params = unclean_params.delete_if { |k,*| not User::CHANGEABLE_FIELDS.include?(k) }

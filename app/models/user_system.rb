@@ -38,7 +38,7 @@ module UserSystem
   #
   def admin_required
     return false unless authenticate_user
-    if authenticated_user? && user.role == ADMIN_ROLE
+    if authenticated_user? && current_user.role == ADMIN_ROLE
       return true
     end
     store_location
@@ -150,10 +150,6 @@ module UserSystem
     
     # Everything failed
     false
-  end
-  
-  def user
-    current_user
   end
   
   def admin?

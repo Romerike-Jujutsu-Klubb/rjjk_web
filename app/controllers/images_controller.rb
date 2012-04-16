@@ -106,11 +106,12 @@ class ImagesController < ApplicationController
   end
 
   def gallery
-    fields = 'approved, content_type, description, id, name, public'
+    fields = 'approved, content_type, description, id, name, public, user_id'
     image_select = Image.select(fields).where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
+    image_select = image_select.includes(:user)
     image_select = image_select.where('approved = ?', true) unless admin?
     image_select = image_select.where('public = ?', true) unless user?
-    @image = image_select.select(fields).where(:id => params[:id]).first || image_select.first
+    @image = image_select.where(:id => params[:id]).first || image_select.first
     @images = image_select.all
   end
 
