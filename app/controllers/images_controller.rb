@@ -117,9 +117,10 @@ class ImagesController < ApplicationController
 
   def mine
     raise "Nei!" unless current_user
-    fields = 'approved, content_type, description, id, name, public'
+    fields = 'approved, content_type, description, id, name, public, user_id'
     image_select = Image.select(fields).where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
-    image_select = image_select.select(fields).where('user_id = ?', current_user.id)
+    image_select = image_select.where('user_id = ?', current_user.id)
+    image_select = image_select.includes(:user)
     @images = image_select.all
     render :action => :gallery
   end
