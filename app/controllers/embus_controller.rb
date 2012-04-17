@@ -11,15 +11,15 @@ class EmbusController < ApplicationController
     end
   end
 
-  # GET /embus/1
-  # GET /embus/1.json
   def show
     edit
-    render :actipon => :edit
   end
 
-  # GET /embus/new
-  # GET /embus/new.json
+  def print
+    @embu = Embu.find(params[:id])
+    render :layout => 'print'
+  end
+
   def new
     unless current_user.try(:member)
       redirect_to :controller => :welcome, :action => :index, :notice => 'Du må være logget på og medlem for å redigere din embu.'
@@ -35,14 +35,11 @@ class EmbusController < ApplicationController
     end
   end
 
-  # GET /embus/1/edit
   def edit
     @embu = Embu.find(params[:id])
     load_data
   end
 
-  # POST /embus
-  # POST /embus.json
   def create
     @embu = Embu.new(params[:embu].merge(:user_id => current_user.id))
 

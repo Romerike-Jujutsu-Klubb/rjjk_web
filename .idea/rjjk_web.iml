@@ -89,7 +89,7 @@
     <orderEntry type="library" scope="PROVIDED" name="activeresource (v3.2.3, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activesupport (v3.2.3, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="acts_as_list (v0.1.5, jruby-1.6.7-p357) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="acts_as_tree (v1.0.0, jruby-1.6.7-p357) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="acts_as_tree (v0.1.1, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ansi (v1.4.2, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="arel (v3.0.2, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bouncy-castle-java (v1.5.0146.1, jruby-1.6.7-p357) [gem]" level="application" />
