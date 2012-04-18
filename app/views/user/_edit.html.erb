@@ -19,7 +19,7 @@
       <td class="prompt"><label>E-post:</label></td>
       <td class="value">
         <%= text_field 'user', 'email' %>
-        <%= link_to 'Medlemsinfo', edit_member_path(@user.member) if @user.member %>
+        <%= link_to 'Medlemsinfo', :controller => :members, :action => :edit, :id => @user.member if @user.member %>
       </td>
     </tr>
 <% if admin? %>
