@@ -56,6 +56,13 @@ class Member < ActiveRecord::Base
     "#{self.address}, #{self.postal_code}, Norway"
   end
 
+  def gmaps4rails_infowindow
+    html = ''
+    html << "<img src='/members/image_thumbnail/#{id}.#{image_format}' width='128' style='float: left; margin-right: 1em'>" if image_name
+    html<< name
+    html
+  end
+
   def current_graduate(martial_art, date = Date.today)
     graduates.select { |g| g.graduation.held_on < date && (martial_art.nil? || g.rank.martial_art == martial_art) }.sort_by { |g| g.rank.position }.last
   end
