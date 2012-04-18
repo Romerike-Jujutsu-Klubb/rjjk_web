@@ -17,12 +17,16 @@
     </tr>
     <tr class="two_columns">
       <td class="prompt"><label>E-post:</label></td>
-      <td class="value">
-        <%= text_field 'user', 'email' %>
-        <%= link_to 'Medlemsinfo', :controller => :members, :action => :edit, :id => @user.member if @user.member %>
-      </td>
+      <td class="value"><%= text_field 'user', 'email' %></td>
     </tr>
 <% if admin? %>
+        <tr class="two_columns">
+          <td class="prompt"><label>Medlem:</label></td>
+          <td class="value">
+            <%= select 'user', 'member_id', @members.map{|m| [m.name, m.id]} %>
+            <%= link_to 'Medlemsinfo', :controller => :members, :action => :edit, :id => @user.member if @user.member %>
+          </td>
+        </tr>
     <tr class="two_columns">
       <td class="prompt"><label>Bekreftet:</label></td>
       <td class="value"><%=select 'user', 'verified', [['Nei', false], ['Ja', true]] %> <%=link_to 'Send e-post med login link', {:action => :forgot_password, :user => {:email => @user.email}}, :method => :post %></td>

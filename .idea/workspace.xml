@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/member.rb" afterPath="$PROJECT_DIR$/app/models/member.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/user_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/user_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/user/_edit.html.erb" afterPath="$PROJECT_DIR$/app/views/user/_edit.html.erb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -98,10 +99,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="member.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="member.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/member.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="122" selection-start="2425" selection-end="2425" vertical-scroll-proportion="0.35787922">
+            <state line="60" column="122" selection-start="2425" selection-end="2425" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_edit.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/user/_edit.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="76" selection-start="990" selection-end="990" vertical-scroll-proportion="-16.964285">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user_controller.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/controllers/user_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="206" column="85" selection-start="6597" selection-end="6597" vertical-scroll-proportion="0.41237113">
               <folding />
             </state>
           </provider>
@@ -139,7 +158,6 @@
         <option value="$PROJECT_DIR$/Gemfile.lock" />
         <option value="$PROJECT_DIR$/app/models/image.rb" />
         <option value="$PROJECT_DIR$/app/models/user_system.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/user_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/images_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/application_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/embus/_form.html.erb" />
@@ -150,8 +168,9 @@
         <option value="$PROJECT_DIR$/app/views/embus/new.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/embus_controller.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
-        <option value="$PROJECT_DIR$/app/views/user/_edit.html.erb" />
         <option value="$PROJECT_DIR$/app/models/member.rb" />
+        <option value="$PROJECT_DIR$/app/views/user/_edit.html.erb" />
+        <option value="$PROJECT_DIR$/app/controllers/user_controller.rb" />
       </list>
     </option>
   </component>
@@ -402,6 +421,10 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -417,7 +440,25 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="user" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1763,7 +1804,11 @@
       <created>1334766621101</created>
       <updated>1334766621101</updated>
     </task>
-    <option name="localTasksCounter" value="162" />
+    <task id="LOCAL-00162" summary="* Fikset medlemskart">
+      <created>1334767443101</created>
+      <updated>1334767443101</updated>
+    </task>
+    <option name="localTasksCounter" value="163" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1877,10 +1922,6 @@
           <url>file://$PROJECT_DIR$/test/functional/user_controller_test.rb</url>
           <line>168</line>
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="ruby-line">
-          <url>file://$PROJECT_DIR$/app/controllers/user_controller.rb</url>
-          <line>160</line>
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
@@ -1927,13 +1968,6 @@
     <entry file="file://$PROJECT_DIR$/test/functional/user_controller_test.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="168" column="0" selection-start="6071" selection-end="6071" vertical-scroll-proportion="0.02878788">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/user_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="21" selection-start="4968" selection-end="4968" vertical-scroll-proportion="0.029366305">
           <folding />
         </state>
       </provider>
@@ -2072,13 +2106,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/user/_edit.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="9" selection-start="911" selection-end="911" vertical-scroll-proportion="0.26959246">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/members_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="221" column="21" selection-start="7151" selection-end="7166" vertical-scroll-proportion="0.0">
@@ -2088,7 +2115,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/member.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="122" selection-start="2425" selection-end="2425" vertical-scroll-proportion="0.35787922">
+        <state line="60" column="122" selection-start="2425" selection-end="2425" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/user/_edit.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="76" selection-start="990" selection-end="990" vertical-scroll-proportion="-16.964285">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/user_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="206" column="85" selection-start="6597" selection-end="6597" vertical-scroll-proportion="0.41237113">
           <folding />
         </state>
       </provider>

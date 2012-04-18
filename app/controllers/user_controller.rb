@@ -2,13 +2,13 @@
 class UserController < ApplicationController
   before_filter :authenticate_user
   before_filter :admin_required, :except => [:welcome, :like, :login, :logout, :signup, :forgot_password, :change_password]
-  
-  skip_before_filter :authenticate_user, :only => [ :login, :logout, :signup, :forgot_password ]
-  
+
+  skip_before_filter :authenticate_user, :only => [:login, :logout, :signup, :forgot_password]
+
   def list
     @users = User.all(:order => 'last_name, first_name')
   end
-  
+
   def login
     return if generate_blank_form
     remember_me = params.delete(:remember_me)
@@ -20,7 +20,7 @@ class UserController < ApplicationController
       if remember_me && remember_me == '1'
         user.generate_security_token
         cookies.permanent[:autologin] = user.id.to_s
-        cookies.permanent[:token]     = user.security_token
+        cookies.permanent[:token] = user.security_token
       end
       unless member?
         if member = Member.find_by_email(user.email)
@@ -34,7 +34,7 @@ class UserController < ApplicationController
       flash['message'] = 'Login failed'
     end
   end
-  
+
   def send_login_email
     user = User.find(params[:id])
     key = user.generate_security_token
@@ -42,16 +42,16 @@ class UserController < ApplicationController
     url += "?user[id]=#{user.id}&key=#{key}"
     UserNotify.signup(user, user.password, url).deliver
   end
-  
+
   def signup
     return if generate_blank_form
     @user = User.new(
-                     :login => params['user'][:login],
-    :password => params['user'][:password],
-    :password_confirmation => params['user'][:password_confirmation],
-    :email => params['user'][:email],
-    :first_name => params['user'][:first_name],
-    :last_name => params['user'][:last_name]
+        :login => params['user'][:login],
+        :password => params['user'][:password],
+        :password_confirmation => params['user'][:password_confirmation],
+        :email => params['user'][:email],
+        :first_name => params['user'][:first_name],
+        :last_name => params['user'][:last_name]
     )
     begin
       User.transaction do
@@ -69,17 +69,17 @@ class UserController < ApplicationController
       report_exception ex
       flash['message'] = 'Error creating account: confirmation email not sent'
     end
-  end  
-  
+  end
+
   def logout
     session[:user_id] = nil
     @current_user = nil
     self.current_user = nil
-    cookies[:autologin] = {:value => '', :expires =>0.days.from_now}
-    cookies[:token]     = {:value => '', :expires =>0.days.from_now}
+    cookies[:autologin] = {:value => '', :expires => 0.days.from_now}
+    cookies[:token] = {:value => '', :expires => 0.days.from_now}
     back_or_redirect_to '/'
   end
-  
+
   def change_password
     return if generate_filled_in
     params['user'].delete('form')
@@ -96,18 +96,18 @@ class UserController < ApplicationController
     rescue Exception => ex
       report_exception ex
     end
-    
+
   end
-  
+
   def forgot_password
     if authenticated_user? and not admin?
       flash['message'] = 'You are currently logged in. You may change your password now.'
       redirect_to :action => 'change_password'
       return
     end
-    
+
     return if generate_blank_form
-    
+
     if params['user']['email'].empty?
       flash.now['message'] = 'Please enter a valid email address.'
     elsif (user = User.find_by_email(params['user']['email'])).nil?
@@ -132,27 +132,27 @@ class UserController < ApplicationController
       end
     end
   end
-  
+
   def edit
     return if generate_filled_in
     if params['user']['form']
       form = params['user'].delete('form')
       begin
         case form
-          when "edit"
+        when "edit"
           unclean_params = params['user']
           if current_user.admin?
             user_params = unclean_params
           else
-            user_params = unclean_params.delete_if { |k,*| not User::CHANGEABLE_FIELDS.include?(k) }
+            user_params = unclean_params.delete_if { |k, *| not User::CHANGEABLE_FIELDS.include?(k) }
           end
           @user.attributes = user_params
           if @user.save
             flash.now['notice'] = "User has been updated."
           end
-          when "change_password"
+        when "change_password"
           change_password
-          when "delete"
+        when "delete"
           delete
         else
           raise "unknown edit action"
@@ -163,18 +163,18 @@ class UserController < ApplicationController
       end
     end
   end
-  
+
   def delete
-    @user = @current_user || User.find_by_id( session[:user_id] )
+    @user = @current_user || User.find_by_id(session[:user_id])
     begin
-      @user.update_attribute( :deleted, true )
+      @user.update_attribute(:deleted, true)
       logout
     rescue Exception => ex
       flash.now['message'] = "Error: #{ex}."
       redirect_back_or_default :action => 'welcome'
     end
   end
-  
+
   def welcome
   end
 
@@ -184,11 +184,11 @@ class UserController < ApplicationController
   end
 
   protected
-  
+
   def protect?(action)
     !%w{login signup forgot_password}.include?(action)
   end
-  
+
   # Generate a template user for certain actions on get
   def generate_blank_form
     case request.method
@@ -204,6 +204,7 @@ class UserController < ApplicationController
   # Generate a template user for certain actions on get
   def generate_filled_in
     @user = (params[:id] && User.find_by_id(params[:id])) || @current_user || User.find_by_id(session[:user_id])
+    @members = Member.select('id, first_name, last_name').where(:email => @user.email).all
     case request.method
     when 'GET'
       render
@@ -213,9 +214,9 @@ class UserController < ApplicationController
     end
   end
 
-  def report_exception( ex )
+  def report_exception(ex)
     logger.warn ex
     logger.warn ex.backtrace.join("\n")
   end
-  
+
 end
