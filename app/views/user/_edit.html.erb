@@ -17,7 +17,10 @@
     </tr>
     <tr class="two_columns">
       <td class="prompt"><label>E-post:</label></td>
-      <td class="value"><%= text_field 'user', 'email' %></td>
+      <td class="value">
+        <%= text_field 'user', 'email' %>
+        <%= link_to 'Medlemsinfo', edit_member_path(@user.member) if @user.member %>
+      </td>
     </tr>
 <% if admin? %>
     <tr class="two_columns">

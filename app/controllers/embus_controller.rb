@@ -1,8 +1,6 @@
 # encoding: UTF-8
 
 class EmbusController < ApplicationController
-  # GET /embus
-  # GET /embus.json
   def index
     if embu = Embu.last
       redirect_to :action => :edit, :id => embu.id
@@ -25,9 +23,8 @@ class EmbusController < ApplicationController
       redirect_to :controller => :welcome, :action => :index, :notice => 'Du må være logget på og medlem for å redigere din embu.'
       return
     end
-    @embu = Embu.new
+    @embu = Embu.new :rank => current_user.member.next_rank
     load_data
-    @rank = current_user.member.next_rank
 
     respond_to do |format|
       format.html # new.html.erb

@@ -1,4 +1,8 @@
 class Embu < ActiveRecord::Base
+  extend UserSystem
+
+  default_scope { where(:user_id => current_user) }
+
   belongs_to :user
   belongs_to :rank
   has_many :embu_images

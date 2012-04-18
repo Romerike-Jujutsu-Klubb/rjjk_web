@@ -15,6 +15,7 @@ RjjkWeb::Application.routes.draw do
   resources :group_schedules
   resources :groups
   resources :images
+  resources :members
   resources :nkf_members
   resources :nkf_member_trials
   resources :trial_attendances

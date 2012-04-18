@@ -1,5 +1,13 @@
 <% @content_width = 1024 %>
 
+<style type="text/css">
+    #map {
+      text-align: center;
+      width: 100%;
+      height: 691px;
+    }
+</style>
+
 <%= gmaps4rails(@json) %>
 
 <%= yield :scripts %>
