@@ -4,6 +4,8 @@ unless Rails.env == 'test'
     i = NkfMemberImport.new
     NkfReplication.import_changes(i).deliver if i.any?
 
+    errors = []
+
     c = NkfMemberComparison.new
 
     new_members = c.orphan_nkf_members.map do |nkf_member|
@@ -11,9 +13,17 @@ unless Rails.env == 'test'
     end
 
     member_changes = c.members.map do |m|
-      changes = m.changes
-      m.save!
-      [m, changes] unless changes.empty?
+      begin
+        changes = m.changes
+        m.save!
+        [m, changes] unless changes.empty?
+      rescue
+        Rails.logger.error "Exception saving member changes"
+        Rails.logger.error $!.message
+        Rails.logger.error $!.backtrace.join("\n")
+        errors << ['Changes', m, $!]
+        nil
+      end
     end.compact
 
     group_changes = Hash.new { |h, k| h[k] = [[], []] }
@@ -36,6 +46,12 @@ unless Rails.env == 'test'
       end
     end
 
-    NkfReplication.update_members(new_members, member_changes, group_changes).deliver if new_members.any? || member_changes.any? || group_changes.any?
+    begin
+      NkfReplication.update_members(new_members, member_changes, group_changes, errors).deliver if new_members.any? || member_changes.any? || group_changes.any?
+    rescue
+      Rails.logger.error "Execption sending update_members email"
+      Rails.logger.error $!.message
+      Rails.logger.error $!.backtrace.join("\n")
+    end
   end
 end

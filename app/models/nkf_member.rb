@@ -75,14 +75,11 @@ class NkfMember < ActiveRecord::Base
         logger.error "Unknown attribute: #{k}"
       end
     end
-    new_attributes[:instructor] = false
-    new_attributes[:nkf_fee] = true
-    new_attributes[:payment_problem] = false
     new_attributes
   end
 
   def create_corresponding_member!
-    create_member!(converted_attributes)
+    create_member!(converted_attributes.update :instructor => false, :nkf_fee => true, :payment_problem => false)
   end
 
 end

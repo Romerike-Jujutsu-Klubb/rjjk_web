@@ -6,6 +6,14 @@ Importerte endringer fra NKF-portalen.
 <%= @import.error_records.size %> feilet,
 <%= @import.import_rows.size - @import.changes.size - @import.error_records.size %> uendret.
 
+<% if @import.changes.any? -%>
+    Endringer:
+
+    <% @import.changes.each do |r| -%>
+        r.inspect.html_safe %>
+    <% end -%>
+<% end -%>
+
 <% if @import.error_records.any? -%>
     Feil:
 

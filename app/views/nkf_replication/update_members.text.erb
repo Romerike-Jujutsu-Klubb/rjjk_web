@@ -1,33 +1,44 @@
 <% if @new_members.any? -%>
-Opprettet følgende nye medlemmer:
+    Opprettet følgende nye medlemmer:
 
     <% @new_members.each do |m| -%>
-<%= m.first_name %> <%= m.last_name %>
+        <%= m.first_name %> <%= m.last_name %>
     <% end -%>
 
 <% end -%>
 <% if @member_changes.any? -%>
-Oppdaterte følgende eksisterende medlemmer:
+    Oppdaterte følgende eksisterende medlemmer:
 
     <% @member_changes.each do |m, c| -%>
-<%=m.first_name %> <%=m.last_name %>
+        <%= m.first_name %> <%= m.last_name %>
         <% c.each do |k, v| -%>
-    <%= k %>: <%= v[0] %> => <%= v[1] %>
+            <%= k %>: <%= v[0] %> => <%= v[1] %>
         <% end -%>
     <% end -%>
 
 <% end -%>
+
 <% if @group_changes.any? -%>
-Gruppemedlemskap:
+    Gruppemedlemskap:
 
     <% @group_changes.each do |m, (groups_added, groups_removed)| -%>
-<%= m.first_name %> <%= m.last_name %>
+        <%= m.first_name %> <%= m.last_name %>
         <% if groups_added.any? -%>
-    Lagt til: <%= groups_added.map{|g| g.name}.join(', ')%>
+            Lagt til: <%= groups_added.map { |g| g.name }.join(', ') %>
         <% end -%>
         <% if groups_removed.any? -%>
-    Fjernet : <%= groups_removed.map{|g| g.name}.join(', ')%>
+            Fjernet : <%= groups_removed.map { |g| g.name }.join(', ') %>
         <% end -%>
     <% end -%>
 
+<% end -%>
+
+<% if @errors.any? -%>
+    Feil:
+
+    <% @errors.each do |operation, record, exception| -%>
+        Operation: <%= operation %>
+        Record: <%= record.inspect.html_safe %>
+        Exception : <%= exception %>
+    <% end -%>
 <% end -%>
