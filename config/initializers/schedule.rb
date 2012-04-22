@@ -27,7 +27,7 @@ unless Rails.env == 'test'
     end.compact
 
     group_changes = Hash.new { |h, k| h[k] = [[], []] }
-    c.members.each do |member|
+    (new_members + c.members).each do |member|
       nkf_group_names = member.nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /).map { |n| n.split('/')[3] }
       member_groups = member.groups.map { |g| g.name }
       (nkf_group_names - member_groups).each do |gn|

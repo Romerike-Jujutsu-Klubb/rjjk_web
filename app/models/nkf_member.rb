@@ -79,7 +79,9 @@ class NkfMember < ActiveRecord::Base
   end
 
   def create_corresponding_member!
-    create_member!(converted_attributes.update :instructor => false, :nkf_fee => true, :payment_problem => false)
+    member = create_member!(converted_attributes.update :instructor => false, :nkf_fee => true, :payment_problem => false)
+    member.nkf_member = self
+    member
   end
 
 end

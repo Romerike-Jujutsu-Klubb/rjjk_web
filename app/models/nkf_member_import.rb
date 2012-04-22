@@ -8,7 +8,7 @@ require 'iconv'
 class NkfMemberImport
   CONCURRENT_REQUESTS = 8
   include MonitorMixin
-  attr_reader :changes, :error_records, :import_rows
+  attr_reader :changes, :error_records, :import_rows, :trial_changes
 
   def size
     changes.try(:size).to_i + error_records.try(:size).to_i
@@ -21,6 +21,7 @@ class NkfMemberImport
   def initialize
     super
     @changes       = []
+    @trial_changes = []
     @error_records = []
 
     @iconv = Iconv.new('UTF8', 'ISO-8859-1')
@@ -232,8 +233,9 @@ class NkfMemberImport
         raise
       end
       if record.changed?
+        c = record.changes
         if record.save
-          @changes << record.changes
+          @changes << {:record => record, :changes => c}
         else
           logger.error "ERROR: #{record.errors.to_a.join(', ')}"
           @error_records << record
@@ -256,7 +258,8 @@ class NkfMemberImport
         if m
           attrs = ta.attributes
           attrs.delete_if { |k, v| ['id', 'created_at', 'updated_at'].include? k }
-          attrs['member_id'] = attrs.delete('nkf_member_trial_id')
+          attrs['member_id'] = m.id
+          attrs.delete('nkf_member_trial_id')
           m.attendances << Attendance.new(attrs)
         end
         ta.destroy
@@ -277,8 +280,9 @@ class NkfMemberImport
       record            ||= NkfMemberTrial.new
       record.attributes = attributes
       if record.changed?
+        c = record.changes
         if record.save
-          @changes << record.changes
+          @trial_changes << {:record => record, :changes => c}
         else
           logger.error "ERROR: #{columns}"
           logger.error "ERROR: #{row}"

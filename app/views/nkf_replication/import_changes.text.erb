@@ -6,11 +6,21 @@ Importerte endringer fra NKF-portalen.
 <%= @import.error_records.size %> feilet,
 <%= @import.import_rows.size - @import.changes.size - @import.error_records.size %> uendret.
 
+<% if @import.trial_changes.any? -%>
+    Endringer prøvetid:
+
+    <% @import.trial_changes.each do |r| -%>
+        <%= r[:record].fornavn %> <%= r[:record].etternavn %>
+        <%= r[:changes].inspect.html_safe %>
+    <% end -%>
+<% end -%>
+
 <% if @import.changes.any? -%>
     Endringer:
 
     <% @import.changes.each do |r| -%>
-        r.inspect.html_safe %>
+        <%= r[:record].fornavn %> <%= r[:record].etternavn %>
+        <%= r[:changes].inspect.html_safe %>
     <% end -%>
 <% end -%>
 
