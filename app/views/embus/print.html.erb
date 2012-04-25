@@ -1,5 +1,5 @@
 <h1>Embu <%= @embu.user.name %> <%= @embu.rank.name %></h1>
 
 <div style="font-size: 24pt">
-  <%= textilize(@embu.description).html_safe %>
+  <%= textilize(@embu.description.gsub('æ', '&aelig;').gsub('ø', '&oslash;').gsub('å', 'aa')).html_safe %>
 </div>
