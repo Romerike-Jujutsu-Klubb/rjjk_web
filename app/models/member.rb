@@ -11,6 +11,8 @@ class Member < ActiveRecord::Base
     address.blank? || (!latitude.blank? && !longitude.blank?)
   end
 
+  default_scope :select => (column_names - ['image'])
+  scope :with_image, :select =>	'*'
   scope :active, lambda { |date| {:conditions => ['left_on IS NULL OR left_on > ?', date]} }
 
   has_many :graduates

@@ -16,7 +16,7 @@ input.half {width: 7.5em;}
 </style>
 
 <div style="float: left">
-<% if @member.image %>
+<% if @member.image_content_type %>
 	<%=image_tag url_for(:action => :image_thumbnail, :id => @member.id, :format => @member.image_format), :title => @member.image_name, :style => 'float: left'%>
 <% else %>
 	Last opp bilde: 

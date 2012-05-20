@@ -208,7 +208,7 @@ class MembersController < ApplicationController
   end
   
   def image
-    @member = Member.find(params[:id])
+    @member = Member.with_image.find(params[:id])
     if @member.image
       send_data(@member.image,
                 :disposition => 'inline',
@@ -220,7 +220,7 @@ class MembersController < ApplicationController
   end
   
   def image_thumbnail
-    @member = Member.find(params[:id])
+    @member = Member.with_image.find(params[:id])
     if thumbnail = @member.thumbnail
       send_data(thumbnail,
                 :disposition => 'inline',
