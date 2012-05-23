@@ -1,11 +1,9 @@
 one:
-  id: 1
   name: picture_one.png
   content_type: image/png
   content_data: ABCabc
   user_id: 1000001
 two:
-  id: 2
   name: picture two
   content_type: image/png
   content_data: ÆØÅæøå

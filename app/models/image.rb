@@ -1,6 +1,9 @@
 class Image < ActiveRecord::Base
   include UserSystem
 
+  default_scope :select => (column_names - ['content_data'])
+  scope :with_image, :select =>	'*'
+
   belongs_to :user
   has_many :user_images
   has_many :likers, :class_name => 'User', :through => :user_images, :conditions => "user_images.rel_type = 'LIKE'", :source => :user

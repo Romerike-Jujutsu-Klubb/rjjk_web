@@ -2,8 +2,12 @@ require 'test_helper'
 
 class EmbusControllerTest < ActionController::TestCase
   setup do
-    @embu = embus(:one)
     login :tesla
+    @embu = embus(:one)
+  end
+
+  teardown do
+
   end
 
   test "should get index" do
@@ -20,6 +24,7 @@ class EmbusControllerTest < ActionController::TestCase
   test "should create embu" do
     assert_difference('Embu.count') do
       post :create, embu: @embu.attributes
+      assert_no_errors :embu
     end
 
     assert_redirected_to embu_path(assigns(:embu))

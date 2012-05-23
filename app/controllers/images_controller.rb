@@ -75,7 +75,7 @@ class ImagesController < ApplicationController
   end
 
   def edit
-    @image = Image.find(params[:id])
+    @image = Image.with_image.find(params[:id])
   end
 
   def update
