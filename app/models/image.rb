@@ -1,7 +1,7 @@
 class Image < ActiveRecord::Base
   include UserSystem
 
-  default_scope :select => (column_names - ['content_data'])
+  default_scope :select => (column_names - ['content_data']).map{|c| "images.#{c}"}
   scope :with_image, :select =>	'*'
 
   belongs_to :user

@@ -32,7 +32,7 @@ class ImagesController < ApplicationController
   end
 
   def inline
-    @image = Image.find(params[:id])
+    @image = Image.with_image.find(params[:id])
     if params[:format].nil?
       redirect_to :width => params[:width], :format => @image.format
       return

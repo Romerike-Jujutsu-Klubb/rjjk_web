@@ -2,7 +2,7 @@ one:
   member: first
   graduation: one
   passed: true
-  rank_id: 1
+  rank: one
   paid_graduation: true
   paid_belt: true
 
@@ -10,7 +10,7 @@ two:
   member: two
   graduation: one
   passed: false
-  rank_id: 1
+  rank: one
   paid_graduation: true
   paid_belt: false
   
