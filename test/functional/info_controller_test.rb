@@ -16,7 +16,7 @@ class InfoControllerTest < ActionController::TestCase
   def test_index
     get :index
     assert_response :redirect
-    assert_redirected_to :action => :show, :id => InformationPage.find(1)
+    assert_redirected_to :action => :show, :id => information_pages(:first).id
   end
 
   def test_list
@@ -29,7 +29,7 @@ class InfoControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, :id => 1
+    get :show, :id => information_pages(:first).id
 
     assert_response :success
     assert_template 'show'
@@ -63,7 +63,7 @@ class InfoControllerTest < ActionController::TestCase
 
   def test_edit
     login(:admin)
-    get :rediger, :id => 1
+    get :rediger, :id => information_pages(:first).id
 
     assert_response :success
     assert_template 'rediger'
@@ -74,21 +74,22 @@ class InfoControllerTest < ActionController::TestCase
 
   def test_update
     login(:admin)
-    post :update, :id => 1
+    post :update, :id => information_pages(:first).id
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+    assert_redirected_to :action => 'show', :id => information_pages(:first).id
   end
 
   def test_destroy
-    assert_not_nil InformationPage.find(1)
+    information_page = information_pages(:first)
+    assert_not_nil information_page
 
     login(:admin)
-    post :destroy, :id => 1
+    post :destroy, :id => information_page.id
     assert_response :redirect
     assert_redirected_to :controller => :news, :action => :index
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      InformationPage.find(1)
+      InformationPage.find(information_page.id)
     }
   end
 end

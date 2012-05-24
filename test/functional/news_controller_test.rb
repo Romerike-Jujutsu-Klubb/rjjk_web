@@ -29,7 +29,7 @@ class NewsControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, :id => 1
+    get :show, :id => news_items(:first).id
 
     assert_response :success
     assert_template 'show'
@@ -62,7 +62,7 @@ class NewsControllerTest < ActionController::TestCase
 
   def test_edit
     login(:admin)
-    get :edit, :id => 1
+    get :edit, :id => news_items(:first).id
 
     assert_response :success
     assert_template 'edit'
@@ -73,21 +73,22 @@ class NewsControllerTest < ActionController::TestCase
 
   def test_update
     login(:admin)
-    post :update, :id => 1
+    post :update, :id => news_items(:first).id
     assert_response :redirect
-    assert_redirected_to :action => :list, :id => 1
+    assert_redirected_to :action => :list, :id => news_items(:first).id
   end
 
   def test_destroy
-    assert_not_nil NewsItem.find(1)
+    n = news_items(:first)
+    assert_not_nil n
 
     login(:admin)
-    post :destroy, :id => 1
+    post :destroy, :id => n.id
     assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      NewsItem.find(1)
+      NewsItem.find(n.id)
     }
   end
 end
