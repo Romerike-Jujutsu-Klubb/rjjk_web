@@ -94,7 +94,7 @@ class MembersController < ApplicationController
         @group = Group.find(params[:group_id])
         @instructors = Member.active(@date).find_all_by_instructor(true).select{|m| m.groups.any?{|g| g.martial_art_id == @group.martial_art_id}}
         @instructors = @instructors.sort_by{|m| [m.current_rank(@group.martial_art) ? -m.current_rank(@group.martial_art).position : 99, m.first_name, m.last_name]}
-        @members = @group.members.active(@date).sort_by {|m| [m.current_rank(@group.martial_art) ? -m.current_rank(@group.martial_art).position : 99, m.first_name, m.last_name]}
+        @members = @group.members.active(@date).includes({:graduates => :rank}, {:groups => :group_schedules}, :nkf_member).sort_by {|m| [m.current_rank(@group.martial_art) ? -m.current_rank(@group.martial_art).position : 99, m.first_name, m.last_name]}
         @trials = NkfMemberTrial.all(:conditions => ['alder BETWEEN ? AND ?', @group.from_age, @group.to_age], :order => 'fornavn, etternavn')
       end
     else
