@@ -13,6 +13,10 @@ table {
 
 thead {display: table-header-group;}
 
+tr.even {
+    background: #efefef;
+}
+
 th {
 	background: lightgray;
 	border-width: thin thin thin thin;
