@@ -70,7 +70,6 @@
             <li><%= link_to @image.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => @image.id, :image => {:public => !@image.public?}}, :method => :put if admin? %></li>
             <li><%= link_to 'Liker', {:controller => :user, :action => :like, :id => @image.id}, :method => :post if user? && !@image.likers.include?(current_user) %></li>
           </ul>
-          <br/>
       <% end %>
 
       <% if user? %>

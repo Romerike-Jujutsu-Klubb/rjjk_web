@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/dark_ritual_adaption.css" afterPath="$PROJECT_DIR$/app/assets/stylesheets/dark_ritual_adaption.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/images/gallery.html.erb" afterPath="$PROJECT_DIR$/app/views/images/gallery.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -90,19 +89,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="gallery.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/images/gallery.html.erb">
+      <file leaf-file-name="dark_ritual.html.erb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="0" selection-start="1175" selection-end="1175" vertical-scroll-proportion="-10.857142">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dark_ritual_adaption.css" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/dark_ritual_adaption.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="14" selection-start="830" selection-end="830" vertical-scroll-proportion="0.4118497">
+            <state line="72" column="0" selection-start="3840" selection-end="3840" vertical-scroll-proportion="0.64208907">
               <folding />
             </state>
           </provider>
@@ -150,9 +140,9 @@
         <option value="$PROJECT_DIR$/app/views/news/_form.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/news_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/images/_list.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
         <option value="$PROJECT_DIR$/app/views/images/gallery.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/dark_ritual_adaption.css" />
+        <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
       </list>
     </option>
   </component>
@@ -249,6 +239,46 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layouts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1706,7 +1736,11 @@
       <created>1337951608113</created>
       <updated>1337951608114</updated>
     </task>
-    <option name="localTasksCounter" value="181" />
+    <task id="LOCAL-00181" summary="* Pynter på redigeringslinkene.">
+      <created>1337952070102</created>
+      <updated>1337952070102</updated>
+    </task>
+    <option name="localTasksCounter" value="182" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1775,7 +1809,7 @@
     <option name="CHANGE_DETAILS_ON" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Endret bildeopplasting til å starte automatisk, og litt penere design.&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Pynter på redigeringslinkene." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1788,7 +1822,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="* Endret filopplasting til streaming" />
     <MESSAGE value="* Endret filopplasting til streaming for embu bilder/filmer" />
     <MESSAGE value="* Endret bildevisning til streaming for bilder/filmer" />
     <MESSAGE value="* La til caching av filmer&#10;" />
@@ -1813,6 +1846,7 @@
     <MESSAGE value="* Ikke vis bilde/film i høyre kolonne hvis den vises i galleriet." />
     <MESSAGE value="* La til skjuling av nyheter fra forsiden" />
     <MESSAGE value="* Endret bildeopplasting til å starte automatisk, og litt penere design.&#10;" />
+    <MESSAGE value="* Pynter på redigeringslinkene." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1981,23 +2015,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/dark_ritual_adaption.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="12" selection-start="3237" selection-end="3237" vertical-scroll-proportion="0.49615976">
+        <state line="43" column="14" selection-start="830" selection-end="830" vertical-scroll-proportion="0.4118497">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/images/gallery.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="1175" selection-end="1175" vertical-scroll-proportion="-10.857142">
+        <state line="16" column="0" selection-start="1175" selection-end="1175" vertical-scroll-proportion="0.4669739">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/dark_ritual_adaption.css">
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="14" selection-start="830" selection-end="830" vertical-scroll-proportion="0.4118497">
+        <state line="72" column="0" selection-start="3840" selection-end="3840" vertical-scroll-proportion="0.64208907">
           <folding />
         </state>
       </provider>
