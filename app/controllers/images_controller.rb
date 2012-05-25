@@ -103,18 +103,18 @@ class ImagesController < ApplicationController
 
   def gallery
     fields = 'approved, content_type, description, id, name, public, user_id'
-    image_select = Image.select(fields).where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
+    image_select = Image.select(fields).where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'").order('created_at DESC')
     image_select = image_select.includes(:user)
     image_select = image_select.where('approved = ?', true) unless admin?
     image_select = image_select.where('public = ?', true) unless user?
     @image = image_select.where(:id => params[:id]).first || image_select.first
-    @images = image_select.order('created_at DESC').all
+    @images = image_select.all
   end
 
   def mine
     raise "Nei!" unless current_user
     fields = 'approved, content_type, description, id, name, public, user_id'
-    image_select = Image.select(fields).where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
+    image_select = Image.select(fields).where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'").order('created_at DESC')
     image_select = image_select.where('user_id = ?', current_user.id)
     image_select = image_select.includes(:user)
     @images = image_select.all
