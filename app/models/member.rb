@@ -69,6 +69,12 @@ class Member < ActiveRecord::Base
     graduates.select { |g| g.graduation.held_on < date && (martial_art.nil? || g.rank.martial_art == martial_art) }.sort_by { |g| g.rank.position }.last
   end
 
+  def attendances_since_graduation(group)
+    c = current_graduate(group.martial_art)
+    return [] if c.nil?
+    attendances.select { |a| a.group_schedule.group == group && a.date >= c.graduation.held_on }
+  end
+
   def current_rank(martial_art = nil, date = Date.today)
     current_graduate(martial_art, date).try(:rank)
   end

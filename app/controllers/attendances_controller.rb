@@ -9,7 +9,7 @@ class AttendancesController < ApplicationController
   # GET /attendances
   # GET /attendances.xml
   def index
-    @attendances = Attendance.find(:all)
+    @attendances = Attendance.all
     
     respond_to do |format|
       format.html # index.html.erb
@@ -17,6 +17,12 @@ class AttendancesController < ApplicationController
     end
   end
   
+  def since_graduation
+    @member = Member.find(params[:id])
+    @attendances = Group.all.map{|g| @member.attendances_since_graduation(g)}.flatten.sort_by(&:date)
+    render :action => :index
+  end
+
   # GET /attendances/1
   # GET /attendances/1.xml
   def show
@@ -53,7 +59,7 @@ class AttendancesController < ApplicationController
       if @attendance.save
         flash[:notice] = 'Attendance was successfully created.'
         format.html do 
-          if (request.xhr?)
+          if request.xhr?
             flash.clear
             render :partial => '/members/attendance_delete_link', :locals => {:attendance => @attendance}
           else
@@ -93,7 +99,7 @@ class AttendancesController < ApplicationController
     
     respond_to do |format|
       format.html do 
-        if (request.xhr?)
+        if request.xhr?
           flash.clear
           render :partial => '/members/attendance_create_link', :locals => {:member_id => @attendance.member_id, :group_schedule_id => @attendance.group_schedule_id, :date => @attendance.date}
         else
