@@ -91,7 +91,7 @@
                 <% if event.start_at.min != 0 || event.start_at.hour != 0 %>
                     <%= event.start_at.strftime('%d/%m %H:%M') %>
                 <% else %>
-                    <%= event.start_at.strftime('%d/%m') %>
+                    <%=event.start_at.mday%>/<%=event.start_at.month%>
                 <% end %>
                 <% if event.end_at %>
                     -
