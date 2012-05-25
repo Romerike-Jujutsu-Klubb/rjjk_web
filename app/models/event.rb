@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  default_scope :order => 'start_at DESC'
+  default_scope :order => 'start_at'
 
   validates_presence_of :start_at
 

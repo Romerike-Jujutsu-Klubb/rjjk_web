@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
     image_query = image_query.where('public = ?', true) unless user?
     @image = image_query.first
     @new_image = Image.new
-    @events = Event.all(:conditions => ['(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)', Date.today, Date.today], :order => 'start_at', :limit => 5)
+    @events = Event.all(:conditions => ['(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)', Date.today, Date.today], :limit => 5)
   end
 
 end
