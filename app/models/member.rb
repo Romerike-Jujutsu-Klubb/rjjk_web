@@ -12,7 +12,7 @@ class Member < ActiveRecord::Base
   end
 
   default_scope :select => (column_names - ['image'])
-  scope :with_image, :select =>	'*'
+  scope :with_image, :select => '*'
   scope :active, lambda { |date| {:conditions => ['left_on IS NULL OR left_on > ?', date]} }
 
   has_many :graduates
@@ -71,8 +71,12 @@ class Member < ActiveRecord::Base
 
   def attendances_since_graduation(group)
     c = current_graduate(group.martial_art)
-    return [] if c.nil?
-    attendances.select { |a| a.group_schedule.group == group && a.date >= c.graduation.held_on }
+    if c
+      ats = attendances.select { |a| a.date >= c.graduation.held_on }
+    else
+      ats = attendances.to_a
+    end
+    ats.select { |a| a.group_schedule.group == group }
   end
 
   def current_rank(martial_art = nil, date = Date.today)
