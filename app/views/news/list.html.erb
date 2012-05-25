@@ -14,6 +14,7 @@
         <% if user? %>
             <ul class="controls">
               <li><a href="<%= url_for :action => :edit, :id => @news_item %>" class="edit">Redigèr</a></li>
+              <li><%= link_to 'Utløpt', {:action => :expire, :id => @news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
               <li><%= link_to 'Slett', {:action => :destroy, :id => @news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
             </ul>
         <% end %>
@@ -48,6 +49,7 @@
                 <% if user? %>
                     <ul class="controls">
                       <li><a href="<%= url_for :action => :edit, :id => news_item %>" class="edit">Redigèr</a></li>
+                      <li><%= link_to 'Utløpt', {:action => :expire, :id => news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
                       <li><%= link_to 'Slett', {:action => :destroy, :id => news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
                     </ul>
                 <% end %>

@@ -14,6 +14,8 @@
 <p>
   <label for="news_item_publication_state">Publiseringsstatus</label><br/>
   <%=select :news_item, :publication_state, NewsItem::PublicationState.constants.map{|s| [t(s.downcase), s]} %>
+  Publiser fra <%=text_field :news_item, :publish_at %>
+  til <%=text_field :news_item, :expire_at %>
 </p>
 
 <p>

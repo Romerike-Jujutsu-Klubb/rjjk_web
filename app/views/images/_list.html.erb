@@ -16,11 +16,6 @@
       <tr>
         <td align="center">
           <%=image.name %><br/>
-          <%=link_to_redbox(
-                      'Vis',
-                      {:controller => 'images', :action => 'show', :id => image.id},
-                      :title => h(image.name), :author => "RJJK", :caption => h(image.name)
-              ) %>
           <%= detour_to 'Rediger', :controller => 'images', :action => 'edit', :id => image.id %>
           <%= detour_to 'Slett', {:controller => 'images', :action => 'destroy', :id => image.id}, :confirm => 'Are you sure?', :method => :delete %>
         </td>

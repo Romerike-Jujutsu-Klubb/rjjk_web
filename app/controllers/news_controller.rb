@@ -11,7 +11,7 @@ class NewsController < ApplicationController
   #       :redirect_to => { :action => :list }
 
   def list
-    @news_items = NewsItem.all(:order => 'created_at DESC', :limit => 10)
+    @news_items = NewsItem.current.all(:order => 'created_at DESC', :limit => 10)
   end
 
   def show
@@ -45,12 +45,21 @@ class NewsController < ApplicationController
       flash[:notice] = 'NewsItem was successfully updated.'
       redirect_to :action => :list, :id => @news_item
     else
-      render :action => 'edit'
+      render :action => :edit
     end
+  end
+
+  def expire
+    n = NewsItem.find(params[:id])
+    n.publication_state = NewsItem::PublicationState::EXPIRED
+    n.expire_at ||= Time.now
+    n.save!
+    redirect_to :action => :list
   end
 
   def destroy
     NewsItem.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    redirect_to :action => :list
   end
+
 end
