@@ -39,9 +39,11 @@
       <br clear="all"/>
       <% slice.each do |i| %>
           <div style="float: left; width: 20%; text-align: center">
-            <%= link_to 'Godkjenn', {:controller => :images, :action => :update, :id => i.id, :image => {:approved => true}}, :method => :put if admin? && !i.approved? %>
-            <%= link_to i.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => i.id, :image => {:public => !i.public?}}, :method => :put if admin? %>
-            <%= link_to 'Liker', {:controller => :user, :action => :like, :id => i.id}, :method => :post if user? && !i.likers.include?(current_user) %>
+            <ul class="controls">
+              <li><%= link_to 'Godkjenn', {:controller => :images, :action => :update, :id => i.id, :image => {:approved => true}}, :method => :put if admin? && !i.approved? %></li>
+              <li><%= link_to i.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => i.id, :image => {:public => !i.public?}}, :method => :put if admin? %></li>
+              <li><%= link_to 'Liker', {:controller => :user, :action => :like, :id => i.id}, :method => :post if user? && !i.likers.include?(current_user) %></li>
+            </ul>
           </div>
       <% end %>
     </div>
