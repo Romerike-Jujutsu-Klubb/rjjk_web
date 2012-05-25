@@ -101,7 +101,7 @@
       <file leaf-file-name="images_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/images_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="48" selection-start="1282" selection-end="1282" vertical-scroll-proportion="0.3323741">
+            <state line="41" column="12" selection-start="1218" selection-end="1218" vertical-scroll-proportion="0.3323741">
               <folding />
             </state>
           </provider>
@@ -1740,7 +1740,11 @@
       <created>1337932947101</created>
       <updated>1337932947101</updated>
     </task>
-    <option name="localTasksCounter" value="176" />
+    <task id="LOCAL-00176" summary="* Sorterer bilder i galleriet med nyeste først.">
+      <created>1337933711102</created>
+      <updated>1337933711103</updated>
+    </task>
+    <option name="localTasksCounter" value="177" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2023,7 +2027,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/images_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="48" selection-start="1282" selection-end="1282" vertical-scroll-proportion="0.3323741">
+        <state line="41" column="12" selection-start="1218" selection-end="1218" vertical-scroll-proportion="0.3323741">
           <folding />
         </state>
       </provider>

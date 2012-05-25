@@ -32,14 +32,18 @@ class ImagesController < ApplicationController
   end
 
   def inline
-    @image = Image.with_image.find(params[:id])
+    @image = Image.find(params[:id])
     if params[:format].nil?
       redirect_to :width => params[:width], :format => @image.format
       return
     end
+    if @image.video?
+      redirect_to '/assets/video-icon-tran.png'
+      return
+    end
     begin
       imgs = Magick::ImageList.new
-      imgs.from_blob @image.content_data
+      imgs.from_blob Image.with_image.find(params[:id]).content_data
     rescue java.lang.NullPointerException, java.lang.OutOfMemoryError
       redirect_to @image.video? ? '/assets/video-icon-tran.png' : '/assets/pdficon_large.png'
       return
