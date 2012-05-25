@@ -1,76 +1,76 @@
-#member_search
-{
-position: absolute;
-top: 3.5em;
-right: 2.0em;
-padding-right: 0.0em;
+#member_search {
+    position: absolute;
+    top: 3.5em;
+    right: 2.0em;
+    padding-right: 0.0em;
 }
 
-#member_search input.text
-{
-margin-right: 0.5em;
-vertical-align: middle;
-border-top: solid 1px #000000;
-border-right: 0px;
-border-bottom: solid 1px #777777;
-border-left: 0px;
-padding: 0.15em;
-width: 10.0em;
+#member_search input.text {
+    margin-right: 0.5em;
+    vertical-align: middle;
+    border-top: solid 1px #000000;
+    border-right: 0px;
+    border-bottom: solid 1px #777777;
+    border-left: 0px;
+    padding: 0.15em;
+    width: 10.0em;
 }
 
-#member_search input.submit
-{
-/* background: #939B00 url('/assets/buttonbg.gif') repeat-x; */
-background: #ffb400;
-border: solid 1px #EC9D48;
-font-weight: bold;
-padding: 0.25em;
-font-size: 0.8em;
-color: #00226C;
-vertical-align: middle;
+#member_search input.submit {
+    /* background: #939B00 url('/assets/buttonbg.gif') repeat-x; */
+    background: #ffb400;
+    border: solid 1px #EC9D48;
+    font-weight: bold;
+    padding: 0.25em;
+    font-size: 0.8em;
+    color: #00226C;
+    vertical-align: middle;
 }
 
-.details
-{
-font-size: 0.8em;
-color: #787878;
-margin-bottom: 1em;
+.details {
+    font-size: 0.8em;
+    color: #787878;
+    margin-bottom: 1em;
 }
 
-ul.controls
-{
-clear: both;
+div.main_right ul.controls {
+    margin: 0;
+    width: 100%;
+    text-align: center;
 }
 
-ul.controls li
-{
-display: inline;
-font-size: 0.8em;
+ul.controls {
+    clear: both;
 }
 
-ul.controls li a
-{
-background-repeat: no-repeat;
-background-position: left;
-padding: 0em 1.0em 0em 20px;
+ul.controls li {
+    display: inline;
+    font-size: 0.8em;
 }
 
-ul.controls li a.printerfriendly
-{
-background-image: url('/assets/icon-printerfriendly.gif');
+ul.controls li a {
+    background-repeat: no-repeat;
+    background-position: left;
+    padding: 0em 1.0em 0em 20px;
+    text-decoration: none;
 }
 
-ul.controls li a.comments
-{
-background-image: url('/assets/icon-comments.gif');
+div.main_right ul.controls li a {
+    padding: 0;
 }
 
-ul.controls li a.more
-{
-background-image: url('/assets/icon-more.gif');
+ul.controls li a.printerfriendly {
+    background-image: url('/assets/icon-printerfriendly.gif');
 }
 
-ul.controls li a.edit
-{
-background-image: url('/assets/icon-more.gif');
+ul.controls li a.comments {
+    background-image: url('/assets/icon-comments.gif');
+}
+
+ul.controls li a.more {
+    background-image: url('/assets/icon-more.gif');
+}
+
+ul.controls li a.edit {
+    background-image: url('/assets/icon-more.gif');
 }

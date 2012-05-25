@@ -11,10 +11,7 @@
                       {:controller => 'images', :action => 'show', :id => image.id},
                       :title => h(image.name), :author => "RJJK", :caption => h(image.name)
               ) %>
-        </td>
-      </tr>
-      <tr>
-        <td align="center">
+          <br/>
           <%=image.name %><br/>
           <%= detour_to 'Rediger', :controller => 'images', :action => 'edit', :id => image.id %>
           <%= detour_to 'Slett', {:controller => 'images', :action => 'destroy', :id => image.id}, :confirm => 'Are you sure?', :method => :delete %>
