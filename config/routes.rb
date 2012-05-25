@@ -6,6 +6,7 @@ RjjkWeb::Application.routes.draw do
   match ':controller/active_contracts', :action => 'active_contracts'
   match ':controller/create', :action => 'create'
   match ':controller/excel_export', :action => 'excel_export'
+  match ':controller/gallery/:id', :action => 'gallery'
   match ':controller/gallery', :action => 'gallery'
   match ':controller/mine', :action => 'mine'
   match ':controller/yaml', :action => 'yaml'
