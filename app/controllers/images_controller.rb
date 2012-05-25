@@ -40,21 +40,13 @@ class ImagesController < ApplicationController
     begin
       imgs = Magick::ImageList.new
       imgs.from_blob @image.content_data
-    rescue java.lang.NullPointerException
+    rescue java.lang.NullPointerException, java.lang.OutOfMemoryError
       redirect_to @image.video? ? '/assets/video-icon-tran.png' : '/assets/pdficon_large.png'
       return
     end
-    logger.info "Image size: #{imgs.size}"
-    logger.info "Image cols: #{imgs.first.columns}"
-    imgs.each.with_index do |im, idx|
-      logger.info "Image cols #{idx}: #{im.columns}"
-    end
-    cols = imgs.map { |im| im.columns }
-    logger.info "Image cols #{cols}"
     width = params[:width].to_i
     width = 492 if width < 8
     img_width = imgs.first.columns
-    logger.info "img_width: #{img_width}"
     ratio = width.to_f / img_width
     imgs.each { |img| img.crop_resized!(width, img.rows * ratio) }
     send_data(imgs.to_blob, :disposition => 'inline', :type => @image.content_type, :filename => @image.name)
