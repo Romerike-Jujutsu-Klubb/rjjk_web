@@ -81,6 +81,7 @@
       <% end %>
 
       <% if @events.any? %>
+          <div class="events">
           <h3>Hva skjer?</h3>
 
           <% for event in @events %>
@@ -103,7 +104,6 @@
                     <%= event.name %>
                 <% end %>
               </h4>
-              <%= link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin? %>
 
               <% if ingress %>
                   <%= ingress.html_safe %>
@@ -111,9 +111,11 @@
               <% if ingress && event.description.size > ingress.size %>
                   <ul class="controls">
                     <li><%= link_to 'Les mer', {:controller => :events, :action => :show, :id => event.id}, :class => :edit %></li>
+                    <li><%= link_to 'Redigèr', {:controller => :events, :action => :edit, :id => event.id}, :class => :edit if admin? %></li>
                   </ul>
               <% end %>
           <% end %>
+          </div>
       <% end %>
 
       <% if admin? %>

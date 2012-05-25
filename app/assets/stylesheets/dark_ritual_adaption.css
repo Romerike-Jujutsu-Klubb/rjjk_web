@@ -33,6 +33,10 @@
     margin-bottom: 1em;
 }
 
+div.main_right div.events p {
+    padding: 0;
+}
+
 div.main_right ul.controls {
     margin: 0;
     width: 100%;
