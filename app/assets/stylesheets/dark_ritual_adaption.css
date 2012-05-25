@@ -41,6 +41,7 @@ div.main_right ul.controls {
 
 ul.controls {
     clear: both;
+    margin: 0;
 }
 
 ul.controls li {
@@ -51,26 +52,26 @@ ul.controls li {
 ul.controls li a {
     background-repeat: no-repeat;
     background-position: left;
-    padding: 0em 1.0em 0em 20px;
+    padding: 0;
     text-decoration: none;
 }
 
-div.main_right ul.controls li a {
-    padding: 0;
-}
-
 ul.controls li a.printerfriendly {
+    padding: 0em 1.0em 0em 20px;
     background-image: url('/assets/icon-printerfriendly.gif');
 }
 
 ul.controls li a.comments {
+    padding: 0em 1.0em 0em 20px;
     background-image: url('/assets/icon-comments.gif');
 }
 
 ul.controls li a.more {
+    padding: 0em 1.0em 0em 20px;
     background-image: url('/assets/icon-more.gif');
 }
 
 ul.controls li a.edit {
+    padding: 0em 1.0em 0em 20px;
     background-image: url('/assets/icon-more.gif');
 }
