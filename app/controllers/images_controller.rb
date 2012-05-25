@@ -112,7 +112,7 @@ class ImagesController < ApplicationController
     image_select = image_select.where('approved = ?', true) unless admin?
     image_select = image_select.where('public = ?', true) unless user?
     @image = image_select.where(:id => params[:id]).first || image_select.first
-    @images = image_select.all
+    @images = image_select.order('created_at DESC').all
   end
 
   def mine

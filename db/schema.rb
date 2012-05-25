@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120412151312) do
+ActiveRecord::Schema.define(:version => 20120525073724) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -133,14 +133,16 @@ ActiveRecord::Schema.define(:version => 20120412151312) do
   add_index "groups_members", ["group_id", "member_id"], :name => "index_groups_members_on_group_id_and_member_id", :unique => true
 
   create_table "images", :force => true do |t|
-    t.string  "name",         :limit => 64, :null => false
-    t.string  "content_type",               :null => false
-    t.binary  "content_data",               :null => false
-    t.integer "user_id",                    :null => false
-    t.string  "description",  :limit => 16
-    t.text    "story"
-    t.boolean "public"
-    t.boolean "approved"
+    t.string   "name",         :limit => 64, :null => false
+    t.string   "content_type",               :null => false
+    t.binary   "content_data",               :null => false
+    t.integer  "user_id",                    :null => false
+    t.string   "description",  :limit => 16
+    t.text     "story"
+    t.boolean  "public"
+    t.boolean  "approved"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "information_pages", :force => true do |t|

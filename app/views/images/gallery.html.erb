@@ -23,11 +23,8 @@
       <% slice.each do |i| %>
           <div style="float: left; width: 20%">
             <%= link_to :controller => :images, :action => :gallery, :id => i.id do %>
-                <% if i.video? %>
-                    <%= video_tag url_for(:controller => :images, :action => :show, :id => i.id, :format => i.format), :title => i.name || 'Film', :controls => true, :autobuffer => true, :style => 'width: 100%' %>
-                <% else %>
-                    <%= image_tag url_for(:controller => :images, :action => :inline, :id => i.id, :format => i.format, :width => 492 / 5), :title => i.name || 'Bilde' %>
-                <% end %>
+                <% width = 492 / 5 %>
+                <%= image_tag url_for(:controller => :images, :action => :inline, :id => i.id, :format => i.format, :width => width), :title => i.name || 'Bilde', :width => width %>
             <% end %>
           </div>
       <% end %>
