@@ -1,22 +1,21 @@
-<h1>Listing groups</h1>
+<h1>Grupper</h1>
 
-<table>
+<table width="100%">
   <tr>
-    <th>Martial art</th>
-    <th>Name</th>
-    <th>From age</th>
-    <th>To age</th>
+    <th>Navn</th>
+    <th>Gren</th>
+    <th>Fra alder</th>
+    <th>Til alder</th>
+    <th>Avsluttet</th>
   </tr>
 
 <% for group in @groups %>
   <tr>
-    <td><%=h group.martial_art.name %></td>
-    <td><%=h group.name %></td>
+    <td><%= link_to edit_group_path(group) do %><%=h group.name %><%end%></td>
+    <td><%= link_to edit_martial_art_path(group.martial_art) do %><%=h group.martial_art.name %><%end%></td>
     <td><%=h group.from_age %></td>
     <td><%=h group.to_age %></td>
-    <td><%= link_to 'Show', group %></td>
-    <td><%= link_to 'Edit', edit_group_path(group) %></td>
-    <td><%= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%=h group.closed_on %></td>
   </tr>
 <% end %>
 </table>

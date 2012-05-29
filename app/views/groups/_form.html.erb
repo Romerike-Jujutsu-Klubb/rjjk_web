@@ -1,24 +1,24 @@
-<%=form_for(@group) do |f| %>
-  <%= f.error_messages %>
+<%= form_for(@group) do |f| %>
+    <%= f.error_messages %>
 
-  <p>
-    <%= f.label :martial_art_id %><br />
-    <%= f.select :martial_art_id, @martial_arts.map{|ma| [ma.name, ma.id] } %>
-  </p>
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :from_age %><br />
-    <%= f.text_field :from_age %>
-  </p>
-  <p>
-    <%= f.label :to_age %><br />
-    <%= f.text_field :to_age %>
-  </p>
-  <p>
-    <%= f.submit "Lagre" %>
-	<%= link_to 'Tilbake', groups_path %>
-  </p>
+    <p>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <%= f.label :martial_art_id, 'Gren' %>
+      <%= f.select :martial_art_id, @martial_arts.map { |ma| [ma.name, ma.id] } %>
+    </p>
+    <p>
+      <%= f.label :from_age, 'Fra alder' %>
+      <%= f.text_field :from_age, :size => 8 %>
+      <%= f.label :to_age, 'Til alder' %>
+      <%= f.text_field :to_age, :size => 8 %>
+    </p>
+    <p>
+      <%= f.label :closed_on, 'Avsluttet' %>
+      <%= f.date_select :closed_on, :include_blank => true %>
+    </p>
+    <p>
+      <%= f.submit "Lagre" %>
+      <%= link_to 'Tilbake', groups_path %>
+    </p>
 <% end %>

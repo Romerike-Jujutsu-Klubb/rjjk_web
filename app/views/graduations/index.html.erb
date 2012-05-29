@@ -180,7 +180,9 @@ function add_graduate(c_id){
         add_csrf_header(xmlHttp);
 		xmlHttp.send(pvalues);
 	}
-    document.getElementById('potential_graduate_' + c_id).replace('');
+    alert(c_id);
+    alert(document.getElementById('potential_graduate_' + c_id));
+    $('#potential_graduate_' + c_id).remove();
 }
 
 function changeStyle() {
@@ -231,8 +233,8 @@ function deleteGraduation() {
 
 function removeGraduate(id, name) {
 	if (confirm('Er du sikker på at du vil slette ' + name + ' fra denne graderingen ?')) {
-        document.getElementById('graduate_' + id + '_view').replace('');
-        document.getElementById('graduate_' + id + '_edit').replace('');
+        $('#graduate_' + id + '_view').remove();
+        $('#graduate_' + id + '_edit').remove();
 		callAjaxObject('/graduates/destroy/' + id, null);
 		changeStyle();
 	}

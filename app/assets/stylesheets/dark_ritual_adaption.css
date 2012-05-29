@@ -43,6 +43,18 @@ div.main_right ul.controls {
     text-align: center;
 }
 
+table {
+    border: 1px solid gray;
+}
+
+tr:nth-child(odd) {
+    background: #efefef;
+}
+
+tr:hover{ background-color: #dddddd; }
+
+th{ background-color: #cccccc; }
+
 ul.controls {
     clear: both;
     margin: 0;

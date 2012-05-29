@@ -13,13 +13,6 @@ table {
 
 thead {display: table-header-group;}
 
-tr.even {
-    background: #efefef;
-}
-
-tr.odd:hover{ background-color: #dddddd; }
-tr.even:hover{ background-color: #dddddd; }
-
 th {
 	background: lightgray;
 	border-width: thin thin thin thin;

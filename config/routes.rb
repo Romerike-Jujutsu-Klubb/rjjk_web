@@ -1,6 +1,4 @@
 RjjkWeb::Application.routes.draw do
-  resources :embus
-
   match 'stylesheets/dark_ritual/:width.:format', :controller => 'stylesheets', :action => 'dark_ritual'
   match 'stylesheets/dark_ritual.:format', :controller => 'stylesheets', :action => 'dark_ritual'
   match ':controller/active_contracts', :action => 'active_contracts'
@@ -14,9 +12,12 @@ RjjkWeb::Application.routes.draw do
   resources :attendances
   resources :cms_members
   resources :events
+  resources :embus
   resources :group_schedules
   resources :groups
   resources :images
+  resources :instructions
+  resources :martial_arts
   resources :nkf_members
   resources :nkf_member_trials
   resources :trial_attendances

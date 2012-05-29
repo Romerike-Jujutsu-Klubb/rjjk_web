@@ -76,7 +76,7 @@ EOH
       members = @grads.select{|m| m.groups.include? group}
       next if members.empty?
       rstr << "<tr id='group_#{group.id}'>" <<
-          "<th align=left><a href='#' onClick='#{members.map{|m| "add_graduate(#{m.id});"}}'>" <<
+          "<th align=left><a href='#' onClick='#{members.map{|m| "add_graduate(#{m.id})"}.join(';')}'>" <<
           "#{group.name}</a></th>" <<
           "<th ALIGN='right'>&nbsp;" <<
           "<th>&nbsp;</th></tr>\n"

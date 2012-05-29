@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120525091427) do
+ActiveRecord::Schema.define(:version => 20120529151146) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(:version => 20120525091427) do
     t.integer  "to_age",         :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "closed_on"
   end
 
   create_table "groups_members", :id => false, :force => true do |t|
@@ -153,6 +154,14 @@ ActiveRecord::Schema.define(:version => 20120525091427) do
     t.datetime "updated_at"
     t.integer  "position"
     t.boolean  "hidden"
+  end
+
+  create_table "instructions", :force => true do |t|
+    t.integer  "group_id"
+    t.integer  "member_id"
+    t.date     "from"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "martial_arts", :force => true do |t|
