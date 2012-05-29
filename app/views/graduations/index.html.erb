@@ -180,8 +180,6 @@ function add_graduate(c_id){
         add_csrf_header(xmlHttp);
 		xmlHttp.send(pvalues);
 	}
-    alert(c_id);
-    alert(document.getElementById('potential_graduate_' + c_id));
     $('#potential_graduate_' + c_id).remove();
 }
 
