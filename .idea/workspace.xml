@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/attendances/since_graduation.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/graduations/index.html.erb" afterPath="$PROJECT_DIR$/app/views/graduations/index.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/attendances_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/attendances_controller.rb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -89,10 +90,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html.erb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views/graduations/index.html.erb">
+      <file leaf-file-name="since_graduation.html.erb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/attendances/since_graduation.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="182" column="0" selection-start="5239" selection-end="5239" vertical-scroll-proportion="0.7755102">
+            <state line="0" column="31" selection-start="31" selection-end="31" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="attendances_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/attendances_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="0" selection-start="524" selection-end="524" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -112,7 +122,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/views/news/list.html.erb" />
         <option value="$PROJECT_DIR$/app/models/news_item.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20120525091427_add_expires_at_to_news_items.rb" />
         <option value="$PROJECT_DIR$/app/views/news/_form.html.erb" />
@@ -126,7 +135,6 @@
         <option value="$PROJECT_DIR$/app/controllers/images_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/images/gallery.html.erb" />
         <option value="$PROJECT_DIR$/app/views/members/_form.html.erb" />
-        <option value="$PROJECT_DIR$/app/controllers/attendances_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/member.rb" />
         <option value="$PROJECT_DIR$/app/views/attendances/index.html.erb" />
         <option value="$PROJECT_DIR$/app/models/image.rb" />
@@ -143,6 +151,8 @@
         <option value="$PROJECT_DIR$/app/views/groups/_form.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/graduations/index.html.erb" />
+        <option value="$PROJECT_DIR$/app/controllers/attendances_controller.rb" />
+        <option value="$PROJECT_DIR$/app/views/attendances/since_graduation.html.erb" />
       </list>
     </option>
   </component>
@@ -154,9 +164,9 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="66" />
+    <option name="x" value="64" />
     <option name="y" value="22" />
-    <option name="width" value="1534" />
+    <option name="width" value="1536" />
     <option name="height" value="1178" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -204,16 +214,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="RailsProjectView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="org.jetbrains.plugins.ruby.rails.projectView.v2.nodes.RailsProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -278,7 +278,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="graduations" />
+              <option name="myItemId" value="attendances" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -296,6 +296,34 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="RailsProjectView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="org.jetbrains.plugins.ruby.rails.projectView.v2.nodes.RailsProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Favorites" />
@@ -306,15 +334,15 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="142" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="55" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="155" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
-    <property name="recentsLimit" value="5" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="133" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="131" />
+    <property name="recentsLimit" value="5" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="131" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="129" />
     <property name="RakeTaksPopup.undocumentedIncluded" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="922" />
@@ -331,9 +359,9 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="Ruby.ViewRefParam.DefaultExtension" value="html.erb" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -602,13 +630,6 @@
       <RTEST_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_OPTIONS" VALUE="" />
       <method />
     </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
-      <JSRemoteDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSRemoteDebuggerConfigurationSettings>
-      <method />
-    </configuration>
     <configuration default="true" type="CucumberRunConfigurationType" factoryName="Cucumber">
       <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
       <module name="" />
@@ -640,6 +661,13 @@
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_RUNNER_PATH" VALUE="" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_RUNNER" VALUE="false" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SETTINGS_VERSION" VALUE="2" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
+      <JSRemoteDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSRemoteDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
@@ -777,15 +805,15 @@
       <method />
     </configuration>
     <list size="9">
-      <item index="0" class="java.lang.String" itemvalue="Rails.Production: rjjk_web" />
-      <item index="1" class="java.lang.String" itemvalue="Rails.Development: rjjk_web" />
-      <item index="2" class="java.lang.String" itemvalue="Rake.test" />
-      <item index="3" class="java.lang.String" itemvalue="Rake.spec" />
-      <item index="4" class="java.lang.String" itemvalue="Test::Unit/Shoulda/Minitest.NkfReplicationTest" />
-      <item index="5" class="java.lang.String" itemvalue="Test::Unit/Shoulda/Minitest.EmbusControllerTest" />
-      <item index="6" class="java.lang.String" itemvalue="Rake.db:migrate" />
-      <item index="7" class="java.lang.String" itemvalue="Rake.db:migrate:redo" />
-      <item index="8" class="java.lang.String" itemvalue="Rake.db:migrate:down" />
+      <item index="0" class="java.lang.String" itemvalue="Test::Unit/Shoulda/Minitest.NkfReplicationTest" />
+      <item index="1" class="java.lang.String" itemvalue="Test::Unit/Shoulda/Minitest.EmbusControllerTest" />
+      <item index="2" class="java.lang.String" itemvalue="Rake.db:migrate" />
+      <item index="3" class="java.lang.String" itemvalue="Rake.db:migrate:redo" />
+      <item index="4" class="java.lang.String" itemvalue="Rake.db:migrate:down" />
+      <item index="5" class="java.lang.String" itemvalue="Rails.Production: rjjk_web" />
+      <item index="6" class="java.lang.String" itemvalue="Rails.Development: rjjk_web" />
+      <item index="7" class="java.lang.String" itemvalue="Rake.test" />
+      <item index="8" class="java.lang.String" itemvalue="Rake.spec" />
     </list>
     <recent_temporary>
       <list size="2">
@@ -1763,20 +1791,22 @@
       <created>1338307841114</created>
       <updated>1338307841115</updated>
     </task>
-    <option name="localTasksCounter" value="196" />
+    <task id="LOCAL-00196" summary="* Fikset feil i registrering av gradering&#10;* La til registrering av instruktører.">
+      <created>1338308345102</created>
+      <updated>1338308345103</updated>
+    </task>
+    <option name="localTasksCounter" value="197" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="66" y="22" width="1534" height="1178" extended-state="0" />
+    <frame x="64" y="22" width="1536" height="1178" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19060774" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2614728" sideWeight="0.6500904" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2804428" sideWeight="0.97652084" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2804428" sideWeight="0.99932885" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23154981" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1767473" sideWeight="0.71955717" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17741935" sideWeight="0.71955717" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17651007" sideWeight="0.71955717" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17986578" sideWeight="0.71955717" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45664206" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2744015" sideWeight="0.40174967" order="8" side_tool="true" content_ui="tabs" />
@@ -1787,6 +1817,8 @@
       <window_info id="SVN Properties" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32872927" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23154981" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19060774" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293247" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
@@ -1882,21 +1914,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///Library/Frameworks/JRuby.framework/Gems/1.9/gems/remotipart-1.0.2/vendor/assets/javascripts/jquery.remotipart.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="10" selection-start="163" selection-end="163" vertical-scroll-proportion="0.2835821" />
-      </provider>
-    </entry>
-    <entry file="file:///Library/Frameworks/JRuby.framework/Gems/1.9/gems/remotipart-1.0.2/lib/remotipart/rails/version.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file:///Library/Frameworks/JRuby.framework/Gems/1.9/gems/remotipart-1.0.2/lib/remotipart/rails/engine.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file:///Library/Frameworks/JRuby.framework/Gems/1.9/gems/remotipart-1.0.2/lib/remotipart/rails.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
@@ -1939,51 +1956,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/database.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="252" selection-end="252" vertical-scroll-proportion="0.42159763">
-          <folding />
-        </state>
+        <state line="15" column="0" selection-start="252" selection-end="252" vertical-scroll-proportion="0.42159763" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/db/migrate/20120529151146_create_instructions.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="27" selection-start="236" selection-end="236" vertical-scroll-proportion="0.3091716">
-          <folding />
-        </state>
+        <state line="11" column="27" selection-start="236" selection-end="236" vertical-scroll-proportion="0.3091716" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/helpers/instructions_helper.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/instructions_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/instructions.css.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/instructions.js.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/instruction.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="51" selection-start="90" selection-end="90" vertical-scroll-proportion="0.027220631">
-          <folding />
-        </state>
+        <state line="1" column="51" selection-start="90" selection-end="90" vertical-scroll-proportion="0.027220631" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Gemfile">
@@ -2002,77 +2005,78 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/groups/edit.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="1" selection-start="28" selection-end="28" vertical-scroll-proportion="-1.3571428">
-          <folding />
-        </state>
+        <state line="2" column="1" selection-start="28" selection-end="28" vertical-scroll-proportion="-1.3571428" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/graduations/show.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/groups/_form.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="7" selection-start="592" selection-end="592" vertical-scroll-proportion="1.0972644">
-          <folding />
-        </state>
+        <state line="19" column="7" selection-start="592" selection-end="592" vertical-scroll-proportion="1.0972644" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/print.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="287" selection-end="287" vertical-scroll-proportion="0.7519789">
-          <folding />
-        </state>
+        <state line="15" column="0" selection-start="287" selection-end="287" vertical-scroll-proportion="0.7519789" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/dark_ritual_adaption.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="29" selection-start="990" selection-end="990" vertical-scroll-proportion="1.3403693">
-          <folding />
-        </state>
+        <state line="55" column="29" selection-start="990" selection-end="990" vertical-scroll-proportion="1.3403693" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/groups/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="19" selection-start="179" selection-end="179" vertical-scroll-proportion="0.5954416">
-          <folding />
-        </state>
+        <state line="11" column="19" selection-start="179" selection-end="179" vertical-scroll-proportion="0.5954416" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/graduations/list_graduates.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/graduations/_list_graduates.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/graduations_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="6" selection-start="6" selection-end="6" vertical-scroll-proportion="-0.0718232">
-          <folding />
-        </state>
+        <state line="0" column="6" selection-start="6" selection-end="6" vertical-scroll-proportion="-0.0718232" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="122" column="6" selection-start="4773" selection-end="4773" vertical-scroll-proportion="0.5541237">
-          <folding />
-        </state>
+        <state line="122" column="6" selection-start="4773" selection-end="4773" vertical-scroll-proportion="0.5541237" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/graduations/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="182" column="0" selection-start="5239" selection-end="5239" vertical-scroll-proportion="0.7755102">
+        <state line="182" column="0" selection-start="5239" selection-end="5239" vertical-scroll-proportion="0.026685392">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/attendances/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="631" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/attendances_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="0" selection-start="524" selection-end="524" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/attendances/since_graduation.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="31" selection-start="31" selection-end="31" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
