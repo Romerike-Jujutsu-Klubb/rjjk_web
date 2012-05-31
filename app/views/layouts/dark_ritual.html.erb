@@ -94,9 +94,8 @@
                     <%=event.start_at.mday%>/<%=event.start_at.month%>
                 <% end %>
                 <% if event.end_at %>
-                    -
-                    <%= event.end_at.strftime('%Y-%m-%d') if event.end_at.to_date != event.start_at.to_date %>
-                    <%= event.end_at.strftime('%H:%M') if event.end_at.hour != 0 || event.end_at.min != 0 %>
+                    <%= event.end_at.strftime('- %Y-%m-%d') if event.end_at.to_date != event.start_at.to_date %>
+                    <%= event.end_at.strftime('- %H:%M') if event.end_at.hour != 0 || event.end_at.min != 0 %>
                 <% end %>
                 <% if ingress %>
                     <%= link_to event.name, :controller => :events, :action => :show, :id => event.id %>
