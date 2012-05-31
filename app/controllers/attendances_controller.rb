@@ -19,7 +19,7 @@ class AttendancesController < ApplicationController
   
   def since_graduation
     @member = Member.find(params[:id])
-    @attendances = Group.all.map{|g| @member.attendances_since_graduation(g)}.flatten.sort_by(&:date)
+    @attendances = Group.all.map{|g| @member.attendances_since_graduation(g)}.flatten.sort_by(&:date).reverse
   end
 
   # GET /attendances/1
