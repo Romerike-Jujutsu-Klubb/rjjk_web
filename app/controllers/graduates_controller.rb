@@ -98,7 +98,7 @@ EOH
       @graduate.update_attributes!(:rank_id   => rank_id, :passed => passed)
       render :text => "Endret graderingsinfo for medlem. <!-- #{@graduate.member_id} -->"
     rescue StandardError
-      render :text => "Det oppstod en feil ved endring av medlem #{@graduate.member_id}:<P>" + $! + "</P>"
+      render :text => "Det oppstod en feil ved endring av medlem #{@graduate.member_id}:<P>#$!</P>"
     end
   end
 

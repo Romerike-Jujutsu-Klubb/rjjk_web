@@ -66,6 +66,10 @@
             </td>
             <td STYLE="text-align: left;">
               <%= gr.rank.name %> <%= gr.rank.colour %>
+              <% graduated = gr.member.graduates.find { |gr2| gr2 != gr && gr2.passed && gr2.rank_id == gr.rank_id } %>
+              <% if graduated %>
+                  <br/><span style="color: red">Har allerede bestått denne graden (<%=link_to graduated.graduation.held_on, :id => graduated.graduation_id%>).</span>
+              <% else %>
               <% next_rank = mbr.next_rank(@graduation) %>
               <% current_graduate = mbr.current_graduate(@graduation.martial_art, @graduation.held_on) %>
               <% if next_rank && gr.rank != next_rank %>
@@ -99,6 +103,7 @@
 
               <% if gr.member.left_on && gr.member.left_on < gr.graduation.held_on %>
                   <br/><span style="color: red">Deltakeren er utmeldt.</span>
+              <% end %>
               <% end %>
             </td>
 

@@ -4,7 +4,7 @@ class Graduate < ActiveRecord::Base
   belongs_to :rank
 
   validates_uniqueness_of :member_id, :scope => :graduation_id
-  validates_uniqueness_of :member_id, :scope => :rank_id
+  validates_uniqueness_of :member_id, :scope => [:passed, :rank_id], :if => :passed
 
   def training_start_date
     member.current_graduate(graduation.martial_art, graduation.held_on - 1).try(:graduation).try(:held_on) || member.joined_on

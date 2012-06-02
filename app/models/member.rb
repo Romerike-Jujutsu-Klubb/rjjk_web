@@ -16,6 +16,7 @@ class Member < ActiveRecord::Base
   scope :active, lambda { |date| {:conditions => ['left_on IS NULL OR left_on > ?', date]} }
 
   has_many :graduates
+  has_many :ranks, :through => :graduates, :conditions => ["graduates.passed IS NOT NULL AND graduates.passed = ?", true]
   has_many :attendances
   has_and_belongs_to_many :groups
   has_one :nkf_member
@@ -66,7 +67,7 @@ class Member < ActiveRecord::Base
   end
 
   def current_graduate(martial_art, date = Date.today)
-    graduates.select { |g| g.graduation.held_on < date && (martial_art.nil? || g.rank.martial_art_id == martial_art.id) }.sort_by { |g| g.rank.position }.last
+    graduates.select { |g| g.passed? && g.graduation.held_on < date && (martial_art.nil? || g.rank.martial_art_id == martial_art.id) }.sort_by { |g| g.rank.position }.last
   end
 
   def attendances_since_graduation(group)
