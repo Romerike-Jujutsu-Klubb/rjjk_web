@@ -157,9 +157,9 @@
       <% end %>
 
       <% if not user? %>
-          <li><%= detour_to 'Login', :controller => 'user', :action => :login %></li>
+          <li><%= detour_to 'Logg inn', :controller => 'user', :action => :login %></li>
       <% else %>
-          <li><%= detour_to 'Logout', :controller => 'user', :action => :logout %></li>
+          <li><%= detour_to 'Logg ut', :controller => 'user', :action => :logout %></li>
       <% end %>
     </ul>
 
@@ -181,15 +181,15 @@
           <ul>
             <li><%= menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
             <li><%= menu_item 'Oppmøtelister', :controller => 'members', :action => :attendance_form_index %></li>
+            <li><%= menu_item 'Graderinger', :controller => 'graduations' %></li>
             <li><%= menu_item 'Graderingsoversikt', :controller => 'members', :action => :grading_form_index %></li>
             <li><%= menu_item 'Telefonliste', :controller => 'members', :action => :telephone_list %></li>
             <li><%= menu_item 'E-postlister', :controller => 'members', :action => :email_list %></li>
             <li><%= menu_item 'Gamle medlemmer', :controller => 'members', :action => :list_inactive %></li>
-            <li><%= menu_item 'Graderinger', :controller => 'graduations' %></li>
-            <li><%= menu_item 'Stiler', :controller => 'martial_arts' %></li>
-            <li><%= menu_item 'Grader', :controller => 'ranks' %></li>
-            <li><%= menu_item 'Grupper', :controller => 'groups' %></li>
             <li><%= menu_item 'Treninger', :controller => 'group_schedules' %></li>
+            <li><%= menu_item 'Grupper', :controller => 'groups' %></li>
+            <li><%= menu_item 'Grader', :controller => 'ranks' %></li>
+            <li><%= menu_item 'Stiler', :controller => 'martial_arts' %></li>
             <!--
 			<li><%= menu_item 'Inntekt', :controller => 'members', :action => :income %></li>
 			<li><%= menu_item 'NKF Rapport', :controller => 'members', :action => :NKF_report %></li>

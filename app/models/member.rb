@@ -66,7 +66,7 @@ class Member < ActiveRecord::Base
   end
 
   def current_graduate(martial_art, date = Date.today)
-    graduates.select { |g| g.graduation.held_on < date && (martial_art.nil? || g.rank.martial_art == martial_art) }.sort_by { |g| g.rank.position }.last
+    graduates.select { |g| g.graduation.held_on < date && (martial_art.nil? || g.rank.martial_art_id == martial_art.id) }.sort_by { |g| g.rank.position }.last
   end
 
   def attendances_since_graduation(group)
@@ -111,7 +111,7 @@ class Member < ActiveRecord::Base
   end
 
   def future_graduates(graduation)
-    graduates.select { |g| g.graduation.martial_art == graduation.martial_art && g.graduation.held_on > graduation.held_on }
+    graduates.select { |g| g.graduation.martial_art_id == graduation.martial_art.id && g.graduation.held_on > graduation.held_on }
   end
 
   def future_ranks(graduation)

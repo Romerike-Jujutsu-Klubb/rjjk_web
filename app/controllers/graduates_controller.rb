@@ -14,7 +14,7 @@ class GraduatesController < ApplicationController
   #       :redirect_to => {:action => :list}
 
   def show_last_grade
-    @members      = Member.find(:all)
+    @members      = Member.all
     @all_grades   = @members.map { |m| m.current_grade }
     @grade_counts = {}
     @all_grades.each do |g|
@@ -43,28 +43,18 @@ class GraduatesController < ApplicationController
       @graduate_pages, @graduates = paginate :graduates, :per_page => MEMBERS_PER_PAGE, :conditions => "graduation_id = #{params[:id]}", :order => "rank_id,passed"
     else
       @graduate_pages = paginate :graduates, :conditions => "member_id > 0", :order => "member_id,rank_id,passed"
-      @graduates      = Graduate.find(:all, :conditions => "member_id > 0", :order => "member_id,rank_id,passed")
+      @graduates      = Graduate.all(:conditions => "member_id > 0", :order => "member_id,rank_id,passed")
     end
     render :action => 'list'
   end
 
-  def yes_no_select(cid, sid, graduate_id)
-    rstr = String.new()
-    nsel = !sid ? "SELECTED" : ""
-    ysel = sid ? "SELECTED" : ""
-    rstr << "\n<SELECT NAME='#{cid}_row_#{graduate_id}' STYLE='width: 56px; height: 18px;' ID='#{cid}_row_#{graduate_id}'>\n"
-    rstr << "<OPTION #{nsel} VALUE='0'>Nei</OPTION>\n"
-    rstr << "<OPTION #{ysel} VALUE='1'>Ja</OPTION>\n"
-    rstr << "</SELECT>\n"
-  end
-
   def list_potential_graduates
     graduation = Graduation.find(params[:graduation_id])
-    @grads = Member.find(:all, :conditions => ["joined_on <= ? AND left_on IS NULL OR left_on >= ?", graduation.held_on, graduation.held_on], :order => 'first_name, last_name',
+    @grads = Member.all(:conditions => ["joined_on <= ? AND left_on IS NULL OR left_on >= ?", graduation.held_on, graduation.held_on], :order => 'first_name, last_name',
                          :select => 'first_name, last_name, id')
     @grads.delete_if { |g| graduation.graduates.map(&:member).include? g }
     rstr =<<EOH
-<div style="height:512px; width:256px; overflow:auto; overflow-x:hidden;">
+<div style="height:640px; width:256px; overflow:auto; overflow-x:hidden;">
 	<table WIDTH="256" CELLPADDING="0" CELLSPACING="0">
 	<tr>
 		<td STYLE="background: #e3e3e3;border-top: 1px solid #000000;border-bottom: 1px solid #000000;"<B>Medlemmer</B></td>
@@ -72,7 +62,7 @@ class GraduatesController < ApplicationController
 		<td width=20>&nbsp;</td>
 	</td><tr>
 EOH
-    Group.all(:order => :from_age).each do |group|
+    Group.active(graduation.held_on).all(:order => :from_age).each do |group|
       members = @grads.select{|m| m.groups.include? group}
       next if members.empty?
       rstr << "<tr id='group_#{group.id}'>" <<
@@ -97,7 +87,7 @@ EOH
   def update_graduate
     graduate_id = params[:graduate_id].to_i
     rank_id     = params[:rank_id].to_i
-    #passed      = params[:passed].to_i
+    passed      = params[:passed].to_i
     #paid        = params[:paid].to_i
     #paid_belt   = params[:paid_belt].to_i
 
@@ -105,7 +95,7 @@ EOH
       @graduate = Graduate.find(graduate_id)
       #@graduate.update_attributes!(:rank_id   => rank_id, :passed => passed, :paid_graduation => paid,
       #                             :paid_belt => paid_belt)
-      @graduate.update_attributes!(:rank_id   => rank_id)
+      @graduate.update_attributes!(:rank_id   => rank_id, :passed => passed)
       render :text => "Endret graderingsinfo for medlem. <!-- #{@graduate.member_id} -->"
     rescue StandardError
       render :text => "Det oppstod en feil ved endring av medlem #{@graduate.member_id}:<P>" + $! + "</P>"
@@ -130,7 +120,7 @@ EOH
     next_rank = member.next_rank(graduation)
     raise "Unable to find rank for martial art with id = #{aid}" unless next_rank
 
-    Graduate.create!(:graduation_id => gid, :member_id => mid, :passed => true,
+    Graduate.create!(:graduation_id => gid, :member_id => mid, :passed => false,
                      :rank_id       => next_rank.id, :paid_graduation => true, :paid_belt => true)
     render :text =>" "
   end

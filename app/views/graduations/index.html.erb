@@ -137,6 +137,7 @@ function add_censor(c_id, name){
 						                  "Det oppstod en feil (" + xmlHttp.status + ")</font>";
 					} else {
 						changeGraduationData();
+                        $('#censor_' + c_id).remove();
 						debug.innerHTML = ""; 
 					}
 			}
@@ -171,6 +172,7 @@ function add_graduate(c_id){
 						                  "Det oppstod en feil (" + xmlHttp.status + ")</font>";
 					} else {
 						debug.innerHTML = xmlHttp.responseText + "<br>";
+                        $('#potential_graduate_' + c_id).remove();
 						changeGraduationData();
 					}
 			}
@@ -180,7 +182,6 @@ function add_graduate(c_id){
         add_csrf_header(xmlHttp);
 		xmlHttp.send(pvalues);
 	}
-    $('#potential_graduate_' + c_id).remove();
 }
 
 function changeStyle() {
@@ -231,10 +232,10 @@ function deleteGraduation() {
 
 function removeGraduate(id, name) {
 	if (confirm('Er du sikker på at du vil slette ' + name + ' fra denne graderingen ?')) {
-        $('#graduate_' + id + '_view').remove();
-        $('#graduate_' + id + '_edit').remove();
 		callAjaxObject('/graduates/destroy/' + id, null);
 		changeStyle();
+        $('#graduate_' + id + '_view').remove();
+        $('#graduate_' + id + '_edit').remove();
 	}
 }
 
@@ -258,8 +259,8 @@ function saveGraduateInfo(graduate_id) {
 		showObj.style.display = '';
 		var rrObj = document.getElementById('rank_row_' + graduate_id);
 		var rrVal = rrObj.value;
-//		var prObj = document.getElementById('passed_row_' + graduate_id);
-//		var prVal = prObj.value;
+		var prObj = document.getElementById('passed_row_' + graduate_id);
+		var prVal = prObj.value;
 //		var pgObj = document.getElementById('paid_grad_row_' + graduate_id);
 //		var pgVal = pgObj.value;
 //		var pbObj = document.getElementById('paid_belt_row_' + graduate_id);
@@ -269,7 +270,7 @@ function saveGraduateInfo(graduate_id) {
 //      		          "&passed=" + prVal + "&" + "paid=" + pgVal +
 //      				  "&paid_belt=" + pbVal;
 
-        pvalues = "graduate_id=" + graduate_id + "&rank_id=" + rrVal;
+        pvalues = "graduate_id=" + graduate_id + "&rank_id=" + rrVal + "&passed=" + prVal;
 
 		var xmlHttp = initAjax();
 		var debug = document.getElementById("debug");
@@ -309,8 +310,8 @@ function cancelSaveGraduateInfo(graduate_id) {
 		showObj.style.display = '';
 		var rrObj = document.getElementById('rank_row_' + graduate_id);
 		rrObj.reset;
-//		var prObj = document.getElementById('passed_row_' + graduate_id);
-//		prObj.reset;
+		var prObj = document.getElementById('passed_row_' + graduate_id);
+		prObj.reset;
 //		var pgObj = document.getElementById('paid_grad_row_' + graduate_id);
 //		pgObj.reset;
 //		var pbObj = document.getElementById('paid_belt_row_' + graduate_id);
@@ -373,7 +374,7 @@ function cancelSaveGraduateInfo(graduate_id) {
 		<%= link_to 'Registrer ny gradering', :action => 'new' %>
 	</td>
 	<td align="center">
-		<A HREF="#" onClick="show_glist('/censors/list_instructors');">Legg til sensor</a>
+		<A HREF="#" onClick="show_glist('/censors/list_instructors/<%=@graduation.id%>');">Legg til sensor</a>
 		</td>
 	<td align="center">
 		<A HREF="#" onClick="show_glist('/graduates/list_potential_graduates?graduation_id=' + $('#grader_1')[0].options($('#grader_1')[0].selectedIndex).value);">Legg til medlemmer</a>

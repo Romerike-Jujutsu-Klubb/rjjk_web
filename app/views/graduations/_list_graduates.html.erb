@@ -41,8 +41,8 @@
       <tr STYLE=" background: #e3e3e3;">
         <th STYLE="text-align: left; border-bottom: 1px solid #000000;">Medlem (<%=@graduates.size%>)</th>
         <th STYLE="border-bottom: 1px solid #000000;">Grad</th>
-        <!--
         <th STYLE="border-bottom: 1px solid #000000;">Bestått</th>
+        <!--
         <th STYLE="border-bottom: 1px solid #000000;">Bet.Grad</th>
         <th STYLE="border-bottom: 1px solid #000000;">Bet.Belte</th>
         -->
@@ -86,12 +86,14 @@
                 <br/>(konflikt: <%=link_to %Q{<font color="red">#{fg.rank.name} #{fg.graduation.held_on}</font>}.html_safe, :controller => :graduations, :action => :index, :id => fg.graduation.id %>)
               <% end %>
 
-              <% if gr.training_attendances == 0 %>
+              <% training_attendances = gr.training_attendances
+                 minimum_attendances = gr.minimum_attendances
+                 if training_attendances == 0 %>
                   <br/><span style="color: red">Har ikke vært på trening siden <%=current_graduate ? 'forrige gradering' : 'innmelding'%> (<%=gr.training_start_date%>).</span>
-              <% elsif gr.training_attendances < gr.minimum_attendances %>
-                      <br/>Har bare vært på <span style="color: red"><%=gr.training_attendances %> trening<%='er' if gr.training_attendances > 1 %></span> siden <%=current_graduate ? 'forrige gradering' : 'innmelding'%> (<%=gr.training_start_date%>).
-                      <br/>Minimum er <%=gr.minimum_attendances %>
-                           <% if gr.minimum_attendances <= gr.registered_trainings %>av <%=gr.registered_trainings %><% end %>
+              <% elsif training_attendances < minimum_attendances %>
+                      <br/>Har bare vært på <span style="color: red"><%= training_attendances %> trening<%='er' if training_attendances > 1 %></span> siden <%=current_graduate ? 'forrige gradering' : 'innmelding'%> (<%=gr.training_start_date%>).
+                      <br/>Minimum er <%= minimum_attendances %>
+                           <% if minimum_attendances <= gr.registered_trainings %>av <%=gr.registered_trainings %><% end %>
                            registrerte treninger.
               <% end %>
 
@@ -100,11 +102,13 @@
               <% end %>
             </td>
 
-            <!--  <td STYLE="text-align: center;"><%= gr.passed ? 'Ja' : 'Nei' %></td>
+        <td STYLE="text-align: center;"><%= gr.passed ? 'Ja' : 'Nei' %></td>
+        <!--
         <td STYLE="text-align: center;"><%= gr.paid_graduation ? 'Ja' : 'Nei' %></td>
         <td STYLE="text-align: center;"><%= gr.paid_belt ? 'Ja' : 'Nei' %></td>
         <td STYLE="text-align: center;"><A HREF="/graduates/list/<%= gr.member_id %>">
-      <IMG SRC="<%=asset_path 'button-view-16x16.png'%>" STYLE="border: 0;" title="Oversikt" ALT="Oversikt"></A></td> -->
+      <IMG SRC="<%=asset_path 'button-view-16x16.png'%>" STYLE="border: 0;" title="Oversikt" ALT="Oversikt"></A></td>
+        -->
 
             <td STYLE="text-align: center;"><A HREF='#' onClick='saveGraduateInfo(<%=gr.id%>)'>
               <IMG SRC="<%=asset_path 'button-edit-16x16.png'%>" STYLE="border: 0;" title="Endre" ALT="Endre"></A></td>
@@ -115,7 +119,7 @@
             <td><%= fn %> <%= ln %></td>
             <td style="text-align: center;">
               <% ma_id, member_id, row_id = gr.graduation.martial_art_id, gr.id, gr.rank.id %>
-              <% @mranks = Rank.find(:all, :conditions => "martial_art_id = #{ma_id}", :order => 'position') %>
+              <% @mranks = Rank.all(:conditions => "martial_art_id = #{ma_id}", :order => 'position') %>
               <select style='width: 72px; height: 18px;' name='rank_row_<%= member_id %>' id='rank_row_<%= member_id %>'>
                 <% for rank in @mranks %>
                     <option <%='SELECTED' if row_id == rank.id%> VALUE='<%=rank.id %>' <%='style="font-weight: bold"' if rank == mbr.next_rank(gr.graduation)%> ><%= rank.name %><%='*' if rank == mbr.next_rank(gr.graduation)%></option>
@@ -123,9 +127,11 @@
               </select>
             </td>
 
-            <!--  <td STYLE=\"text-align: center;\">#{yes_no_select('passed', gr.passed, gr.id)}</td>
-       <td STYLE=\"text-align: center;\">#{yes_no_select('paid_grad', gr.paid_graduation, gr.id)}</td>
-       <td STYLE=\"text-align: center;\">#{yes_no_select('paid_belt', gr.paid_belt, gr.id)}</td> -->
+            <td STYLE="text-align: center;"><%= yes_no_select('passed', gr.passed, gr.id) %></td>
+            <!--
+            <td STYLE=\"text-align: center;\">#{yes_no_select('paid_grad', gr.paid_graduation, gr.id)}</td>
+            <td STYLE=\"text-align: center;\">#{yes_no_select('paid_belt', gr.paid_belt, gr.id)}</td>
+            -->
 
             <td STYLE="text-align: center;">&nbsp;</td>
             <td STYLE="text-align: center;"><A HREF='#' onClick='saveGraduateInfo(<%=gr.id%>)'>

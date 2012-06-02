@@ -15,7 +15,9 @@ class CensorsController < ApplicationController
   end
   
   def list_instructors
-    @instructors = Member.find(:all, :conditions => "left_on IS NULL AND instructor = true", :order => 'first_name, last_name')
+    @graduation = Graduation.find(params[:id])
+    @instructors = Member.all(:conditions => "left_on IS NULL AND instructor = true", :order => 'first_name, last_name')
+    @instructors -= @graduation.censors.map(&:member)
     rstr =<<EOH
     <div style="height:512px; width:284px; overflow: auto; overflow-x: hidden;">
     <table STYLE="height: 128px;" CELLPADDING="0" CELLSPACING="0" width="100%">
@@ -29,7 +31,7 @@ EOH
       fn = instr.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
       ln = instr.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') 
       nm = fn << " " << ln
-      rstr = rstr << "<tr>" <<
+      rstr = rstr << "<tr id='censor_#{instr.id}'>" <<
              "<td><a href='#' onClick='add_censor(" + instr.id.to_s + ",\"" + nm + "\");'>" <<
              nm << "</a></td>"
              "</tr>"
@@ -50,7 +52,7 @@ EOH
     gid = params[:graduation_id].to_i
     mid = params[:member_id].to_i
     name = params[:name]
-    if Censor.find(:first, :conditions => "member_id = #{mid} AND graduation_id = #{gid}")
+    if Censor.first(:conditions => "member_id = #{mid} AND graduation_id = #{gid}")
       render :text => "Censor already exists"
     else
       Censor.create!(:graduation_id => gid, :member_id => mid)

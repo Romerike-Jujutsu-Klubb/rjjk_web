@@ -65,7 +65,7 @@ class GraduationsController < ApplicationController
 
   def destroy
     Graduation.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    redirect_to :action => :index, :id => nil
   end
 
   def certificates
@@ -100,11 +100,10 @@ class GraduationsController < ApplicationController
   private
 
   def load_graduates
-    @graduation = Graduation.find(params[:id])
-    @censors   = Censor.all(:conditions => "graduation_id = #{@graduation.id}")
-    @graduates = Graduate.all(:conditions => ["graduation_id = ? AND member_id != 0", params[:id]],
-                               :order            => 'ranks.position DESC, members.first_name, members.last_name',
-                               :include          => [:graduation, :member, :rank])
+    @graduation = Graduation.includes(:martial_art => {:ranks => :group}).find(params[:id])
+    @censors   = Censor.includes(:member).all(:conditions => "graduation_id = #{@graduation.id}")
+    @graduates = Graduate.where("graduates.graduation_id = ? AND graduates.member_id != 0", params[:id]).
+        includes({:graduation => :martial_art}, {:member => [{:attendances => :group_schedule}, {:graduates => [:graduation, :rank]}]}, {:rank => :group}).all(:order => 'ranks.position DESC, members.first_name, members.last_name')
   end
 
 end

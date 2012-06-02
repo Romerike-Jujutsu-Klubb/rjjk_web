@@ -1,4 +1,6 @@
 class Group < ActiveRecord::Base
+  scope :active, -> date {where('closed_on IS NULL OR closed_on >= ?', date)}
+
   belongs_to :martial_art
   has_and_belongs_to_many :members, :conditions => 'left_on IS NULL OR left_on > DATE(CURRENT_TIMESTAMP)'
   has_many :group_schedules
