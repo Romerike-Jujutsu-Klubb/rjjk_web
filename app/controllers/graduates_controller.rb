@@ -66,7 +66,7 @@ EOH
       members = @grads.select{|m| m.groups.include? group}
       next if members.empty?
       rstr << "<tr id='group_#{group.id}'>" <<
-          "<th align=left><a href='#' onClick='#{members.map{|m| "add_graduate(#{m.id})"}.join(';')}'>" <<
+          "<th align=left><a href='#' onClick='#{members.map{|m| "add_graduate(#{m.id})"}.join(';')};changeGraduationData();'>" <<
           "#{group.name}</a></th>" <<
           "<th ALIGN='right'>&nbsp;" <<
           "<th>&nbsp;</th></tr>\n"
@@ -74,7 +74,7 @@ EOH
         ln = grad.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
         fn = grad.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
         rstr << "<tr id='potential_graduate_#{grad.id}'>" <<
-            "<td align=left><a href='#' onClick='add_graduate(#{grad.id});'>" <<
+            "<td align=left><a href='#' onClick='add_graduate(#{grad.id});changeGraduationData();'>" <<
             "#{fn} #{ln}</a></td>" <<
             "<td ALIGN='right'>&nbsp;" <<
             "<td>&nbsp;</td></tr>\n"

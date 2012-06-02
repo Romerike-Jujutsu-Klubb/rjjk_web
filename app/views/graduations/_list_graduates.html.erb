@@ -95,7 +95,7 @@
                  if training_attendances == 0 %>
                   <br/><span style="color: red">Har ikke vært på trening siden <%=current_graduate ? 'forrige gradering' : 'innmelding'%> (<%=gr.training_start_date%>).</span>
               <% elsif training_attendances < minimum_attendances %>
-                      <br/>Har bare vært på <span style="color: red"><%= training_attendances %> trening<%='er' if training_attendances > 1 %></span> siden <%=current_graduate ? 'forrige gradering' : 'innmelding'%> (<%=gr.training_start_date%>).
+                      <br/>Har bare vært på <%=link_to "#{training_attendances} trening#{'er' if training_attendances > 1}", {:controller => :attendances, :action => :since_graduation, :id => mbr.id}, :style => "color: red" %> siden <%=current_graduate ? 'forrige gradering' : 'innmelding'%> (<%=gr.training_start_date%>).
                       <br/>Minimum er <%= minimum_attendances %>
                            <% if minimum_attendances <= gr.registered_trainings %>av <%=gr.registered_trainings %><% end %>
                            registrerte treninger.
