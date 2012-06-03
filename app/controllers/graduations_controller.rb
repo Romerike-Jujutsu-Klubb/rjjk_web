@@ -101,9 +101,10 @@ class GraduationsController < ApplicationController
 
   def load_graduates
     @graduation = Graduation.includes(:martial_art => {:ranks => :group}).find(params[:id])
-    @censors   = Censor.includes(:member).all(:conditions => "graduation_id = #{@graduation.id}")
-    @graduates = Graduate.where("graduates.graduation_id = ? AND graduates.member_id != 0", params[:id]).
-        includes({:graduation => :martial_art}, {:member => [{:attendances => :group_schedule}, {:graduates => [:graduation, :rank]}]}, {:rank => :group}).all(:order => 'ranks.position DESC, members.first_name, members.last_name')
+    @censors    = Censor.includes(:member).all(:conditions => "graduation_id = #{@graduation.id}")
+    @graduates  = Graduate.where("graduates.graduation_id = ? AND graduates.member_id != 0", params[:id]).
+        includes({:graduation => :martial_art}, {:member => [{:attendances => :group_schedule}, {:graduates => [:graduation, :rank]}]}, {:rank => :group}).
+        order('ranks_graduates.position DESC, members.first_name, members.last_name').all
   end
 
 end
