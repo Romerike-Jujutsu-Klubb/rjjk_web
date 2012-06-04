@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/sandal/prawn.git
+  revision: 857f13e919d1bd7120de1ea9ba0429620329865b
+  specs:
+    prawn (1.0.0.rc1)
+      pdf-reader (>= 0.9.0)
+      ttfunk (~> 1.0.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -87,9 +95,6 @@ GEM
       Ascii85 (~> 1.0.0)
       ruby-rc4
     polyglot (0.3.3)
-    prawn (1.0.0.rc1)
-      pdf-reader (>= 0.9.0)
-      ttfunk (~> 1.0.3)
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -171,7 +176,7 @@ DEPENDENCIES
   jruby-openssl
   minitest-reporters
   mocha
-  prawn (~> 1.0.0.rc1)
+  prawn!
   rails (~> 3.2.2)
   rails-i18n
   rdoc
