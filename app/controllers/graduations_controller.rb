@@ -40,7 +40,7 @@ class GraduationsController < ApplicationController
   end
 
   def create
-    @graduation = Graduation.new(params[:graduation_mailer])
+    @graduation = Graduation.new(params[:graduation])
     if @graduation.save
       flash[:notice] = 'Graduation was successfully created.'
       redirect_to :action => :index
@@ -55,7 +55,7 @@ class GraduationsController < ApplicationController
 
   def update
     @graduation = Graduation.find(params[:id])
-    if @graduation.update_attributes(params[:graduation_mailer])
+    if @graduation.update_attributes(params[:graduation])
       flash[:notice] = 'Graduation was successfully updated.'
       redirect_to :action => 'show', :id => @graduation
     else

@@ -34,8 +34,8 @@ class GraduationsControllerTest < ActionController::TestCase
     assert_response :success
     assert_template 'show'
 
-    assert_not_nil assigns(:graduation_mailer)
-    assert assigns(:graduation_mailer).valid?
+    assert_not_nil assigns(:graduation)
+    assert assigns(:graduation).valid?
   end
 
   def test_new
@@ -44,15 +44,15 @@ class GraduationsControllerTest < ActionController::TestCase
     assert_response :success
     assert_template 'new'
 
-    assert_not_nil assigns(:graduation_mailer)
+    assert_not_nil assigns(:graduation)
   end
 
   def test_create
     num_graduations = Graduation.count
 
-    post :create, :graduation_mailer => {:held_on => '2007-10-07', :martial_art_id => martial_arts(:keiwaryu).id}
+    post :create, :graduation => {:held_on => '2007-10-07', :martial_art_id => martial_arts(:keiwaryu).id}
 
-    assert_no_errors :graduation_mailer
+    assert_no_errors :graduation
     assert_response :redirect
     assert_redirected_to :action => :index
 
@@ -65,8 +65,8 @@ class GraduationsControllerTest < ActionController::TestCase
     assert_response :success
     assert_template 'edit'
 
-    assert_not_nil assigns(:graduation_mailer)
-    assert assigns(:graduation_mailer).valid?
+    assert_not_nil assigns(:graduation)
+    assert assigns(:graduation).valid?
   end
 
   def test_update
