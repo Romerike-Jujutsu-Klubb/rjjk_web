@@ -9,7 +9,8 @@ gem 'RedCloth'
 gem 'gruff'
 gem 'trinidad'
 gem 'trinidad_daemon_extension'
-gem 'prawn'
+# FIXME(uwe): Switch to release gem as soon as prawn > 1.0.0.rc1 is out
+gem 'prawn', :git => "https://github.com/sandal/prawn.git"
 gem 'rufus-scheduler'
 gem 'dynamic_form'
 gem 'redbox', '~> 1.0.4'

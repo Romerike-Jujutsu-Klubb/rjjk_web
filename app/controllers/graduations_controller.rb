@@ -70,7 +70,7 @@ class GraduationsController < ApplicationController
 
   def certificates
     graduation = Graduation.find(params[:id])
-    template   = "#{Rails::root.to_s}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.pdf"
+    template   = "#{Rails::root}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.pdf"
     filename   = "Certificates_#{graduation.martial_art.name}_#{graduation.held_on}.pdf"
 
     pdf = Prawn::Document.new :template => template do

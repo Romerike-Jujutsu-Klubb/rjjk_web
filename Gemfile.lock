@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     Ascii85 (1.0.1)
+    RedCloth (4.2.9)
     RedCloth (4.2.9-java)
     actionmailer (3.2.5)
       actionpack (= 3.2.5)
@@ -65,6 +66,7 @@ GEM
     jruby-openssl (0.7.7)
       bouncy-castle-java (>= 1.5.0146.1)
     jruby-rack (1.1.6)
+    json (1.7.3)
     json (1.7.3-java)
     mail (2.4.4)
       i18n (>= 0.4.0)
@@ -85,9 +87,9 @@ GEM
       Ascii85 (~> 1.0.0)
       ruby-rc4
     polyglot (0.3.3)
-    prawn (0.12.0)
+    prawn (1.0.0.rc1)
       pdf-reader (>= 0.9.0)
-      ttfunk (~> 1.0.2)
+      ttfunk (~> 1.0.3)
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -169,7 +171,7 @@ DEPENDENCIES
   jruby-openssl
   minitest-reporters
   mocha
-  prawn
+  prawn (~> 1.0.0.rc1)
   rails (~> 3.2.2)
   rails-i18n
   rdoc
