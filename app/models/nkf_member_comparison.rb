@@ -22,7 +22,7 @@ class NkfMemberComparison
   end
 
   def sync
-    errors = []
+    @errors = []
 
     @new_members = @orphan_nkf_members.map do |nkf_member|
       nkf_member.create_corresponding_member!
@@ -37,7 +37,7 @@ class NkfMemberComparison
         Rails.logger.error "Exception saving member changes"
         Rails.logger.error $!.message
         Rails.logger.error $!.backtrace.join("\n")
-        errors << ['Changes', m, $!]
+        @errors << ['Changes', m, $!]
         nil
       end
     end.compact

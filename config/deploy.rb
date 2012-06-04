@@ -1,4 +1,5 @@
-require "bundler/capistrano"
+# FIXME(uwe): Add back when it works with JRuby in 1.9 mode.
+# require "bundler/capistrano"
 
 set :application, "rjjk_web"
 set :repository, "svn+ssh://capistrano@source.kubosch.no/var/svn/trunk/#{application}"
