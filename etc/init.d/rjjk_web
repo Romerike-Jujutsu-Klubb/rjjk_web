@@ -21,7 +21,7 @@ START_CMD="cd $APP_DIR ;
   export PATH=\$JAVA_HOME/bin:\$JRUBY_HOME/bin:\$PATH ;
   export JRUBY_OPTS='--1.9 -J-Xmx2G --server' ;
   jruby --version ;
-  jruby -S bundle install --deploy --path /u/apps/rjjk_web/shared/bundle --without 'development test' ;
+  jruby -S bundle install --deployment --path /u/apps/rjjk_web/shared/bundle --without 'development test' ;
   jruby -S bundle exec trinidad -p $PORT -e production -t -ldaemon --daemonize $pidfile -d $APP_DIR 1>$LOG_DIR/stdout.log 2>$LOG_DIR/stderr.log
 "
 STOP_CMD="kill `cat $pidfile`"
