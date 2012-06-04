@@ -10,7 +10,7 @@
 	</tr>
 	<% for graduate in @member.graduates.sort_by{|g|g.graduation.held_on} %>
 	<tr>
-		<td><%=graduate.graduation.held_on%></td>
+		<td><%=link_to graduate.graduation.held_on, :controller => :graduations, :action => :index, :id => graduate.graduation_id %></td>
 		<td><%=graduate.rank.martial_art.name%> <%=graduate.rank.name%></td>
 		<td align="center"><%=graduate.training_duration %> (<%=graduate.rank.standard_months %>)  mnd</td>
 		<td align="center"><%=graduate.training_attendances %></td>
