@@ -18,7 +18,7 @@
 <% per_page = 7 %>
 <%@members.each_with_index do |member, i| %>
   <tr <%='style="page-break-before: always"' if i % per_page == (per_page - 1)%> onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';" onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'">
-    <td><%=image_tag(url_for(:action => :image_thumbnail, :id => member.id, :format => member.image_format), :width => '120px') if member.image %></td>
+    <td><%=image_tag(url_for(:action => :image_thumbnail, :id => member.id, :format => member.image_format), :width => '120px') if member.image_content_type %></td>
     <td nowrap="true"><%=h member.first_name %><br/>
 	<%=h member.last_name %><br/>
     <%=member.birthdate && "#{member.age} år" %>&nbsp;<br/>
