@@ -374,7 +374,7 @@ class NkfMemberImport
   end
 
   def logger
-    ActiveRecord::Base.logger
+    Rails.logger
   end
 
 end

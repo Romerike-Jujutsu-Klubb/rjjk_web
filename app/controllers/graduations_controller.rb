@@ -20,7 +20,7 @@ class GraduationsController < ApplicationController
       redirect_to(:id => Graduation.last(:order => :held_on))
       return
     end
-    @graduation = Graduation.find(params[:id])
+    @graduation   = Graduation.find(params[:id])
     @graduations  = Graduation.all(:order => 'held_on DESC', :conditions => ["martial_art_id = 1"])
     @martial_arts = MartialArt.all
 
@@ -40,7 +40,7 @@ class GraduationsController < ApplicationController
   end
 
   def create
-    @graduation = Graduation.new(params[:graduation])
+    @graduation = Graduation.new(params[:graduation_mailer])
     if @graduation.save
       flash[:notice] = 'Graduation was successfully created.'
       redirect_to :action => :index
@@ -55,7 +55,7 @@ class GraduationsController < ApplicationController
 
   def update
     @graduation = Graduation.find(params[:id])
-    if @graduation.update_attributes(params[:graduation])
+    if @graduation.update_attributes(params[:graduation_mailer])
       flash[:notice] = 'Graduation was successfully updated.'
       redirect_to :action => 'show', :id => @graduation
     else
@@ -75,7 +75,7 @@ class GraduationsController < ApplicationController
 
     pdf = Prawn::Document.new :template => template do
       date = graduation.held_on
-      graduation.graduates.sort_by{|g| -g.rank.position}.each do |graduate|
+      graduation.graduates.sort_by { |g| -g.rank.position }.each do |graduate|
         move_down 300
         text graduate.member.name, :size => 18, :align => :center
         move_down 16
@@ -101,10 +101,14 @@ class GraduationsController < ApplicationController
 
   def load_graduates
     @graduation = Graduation.includes(:martial_art => {:ranks => :group}).find(params[:id])
-    @censors    = Censor.includes(:member).all(:conditions => "graduation_id = #{@graduation.id}")
-    @graduates  = Graduate.where("graduates.graduation_id = ? AND graduates.member_id != 0", params[:id]).
-        includes({:graduation => :martial_art}, {:member => [{:attendances => :group_schedule}, {:graduates => [:graduation, :rank]}]}, {:rank => :group}).
-        order('ranks_graduates.position DESC, members.first_name, members.last_name').all
+    @censors    = Censor.includes(:member).where(:graduation_id => @graduation.id).all
+    logger.error "Loading graduates"
+    @graduates = Graduate.where("graduates.graduation_id = ? AND graduates.member_id != 0", params[:id]).
+        #includes({:graduation => :martial_art}, {:member => [{:attendances => :group_schedule}, {:graduates => [:graduation, :rank]}]}, {:rank => :group}).
+        includes({:graduation => :martial_art}, :member, {:rank => :group}).
+        #order('ranks_graduates.position DESC, members.first_name, members.last_name').all
+        order('ranks.position DESC, members.first_name, members.last_name').all
+    logger.error "Loaded  graduates...OK!"
   end
 
 end

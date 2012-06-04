@@ -1,0 +1,29 @@
+<%= form_for(@correspondence) do |f| %>
+  <% if @correspondence.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@correspondence.errors.count, "error") %> prohibited this correspondence from being saved:</h2>
+
+      <ul>
+      <% @correspondence.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :sent_at %><br />
+    <%= f.datetime_select :sent_at %>
+  </div>
+  <div class="field">
+    <%= f.label :member_id %><br />
+    <%= f.number_field :member_id %>
+  </div>
+  <div class="field">
+    <%= f.label :related_id %><br />
+    <%= f.number_field :related_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

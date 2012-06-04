@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  sent_at: 2012-06-04 10:01:30
+  member_id: 1
+  related_id: 1
+
+two:
+  sent_at: 2012-06-04 10:01:30
+  member_id: 1
+  related_id: 1

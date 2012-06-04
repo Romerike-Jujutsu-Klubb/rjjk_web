@@ -55,7 +55,7 @@ class MemberGradeHistoryGraph
       active_members = Member.all(
           :select => (Member.column_names - ['image']).join(','),
         :conditions => eval(ACTIVE_CLAUSE),
-        :include => {:graduates => {:graduation => :martial_art}}
+        :include => {:graduates => {:graduation_mailer => :martial_art}}
       )
       ranks = active_members.select{|m| m.graduates.select{|g| g.graduation.martial_art.name =='Kei Wa Ryu' && g.graduation.held_on <= date}.sort_by{|g| g.graduation.held_on}.last.try(:rank) == rank}.size
       logger.debug "#{prev_date} #{date} #{next_date} Active members: #{active_members.size}, ranks: #{ranks}"

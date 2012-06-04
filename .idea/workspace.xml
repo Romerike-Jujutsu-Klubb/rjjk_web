@@ -2,8 +2,39 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/correspondences" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/graduation_mailer" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/javascripts/correspondences.js.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/stylesheets/correspondences.css.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/correspondences_controller.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/helpers/correspondences_helper.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/mailers/graduation_mailer.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/correspondence.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/correspondences/_form.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/correspondences/edit.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/correspondences/index.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/correspondences/new.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/correspondences/show.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/graduation_mailer/creation_reminder.text.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/graduation_mailer/date_info_reminder.text.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/graduation_mailer/lock_reminder.text.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/graduation_mailer/member_info_reminder.text.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20120604080130_create_correspondences.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/fixtures/correspondences.yml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/functional/correspondences_controller_test.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/unit/correspondence_test.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/unit/helpers/correspondences_helper_test.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/graduations_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/graduations_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/mailers/nkf_replication.rb" afterPath="$PROJECT_DIR$/app/mailers/nkf_replication.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/graduate.rb" afterPath="$PROJECT_DIR$/app/models/graduate.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/member_grade_history_graph.rb" afterPath="$PROJECT_DIR$/app/models/member_grade_history_graph.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/nkf_member_comparison.rb" afterPath="$PROJECT_DIR$/app/models/nkf_member_comparison.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/nkf_member_import.rb" afterPath="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/initializers/fake_explain.rb" afterPath="$PROJECT_DIR$/config/initializers/fake_explain.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/initializers/schedule.rb" afterPath="$PROJECT_DIR$/config/initializers/schedule.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/functional/graduations_controller_test.rb" afterPath="$PROJECT_DIR$/test/functional/graduations_controller_test.rb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -89,46 +120,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="_list_graduates.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/graduations/_list_graduates.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="28.5">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="graduations_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/graduations_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="106" column="30" selection-start="3374" selection-end="3374" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rjjk_web" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/etc/init.d/rjjk_web">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Gemfile.lock" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Gemfile.lock">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="145" column="27" selection-start="3491" selection-end="3491" vertical-scroll-proportion="0.4318182">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="list_graduates.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/graduations/list_graduates.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+            <state line="108" column="0" selection-start="3465" selection-end="3465" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -137,16 +132,7 @@
       <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/graduations/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="203" column="9" selection-start="5772" selection-end="5772" vertical-scroll-proportion="-4.8703704">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="graduates_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="101" selection-start="2877" selection-end="2877" vertical-scroll-proportion="0.0">
+            <state line="320" column="0" selection-start="10048" selection-end="10048" vertical-scroll-proportion="-7.321429">
               <folding />
             </state>
           </provider>
@@ -155,7 +141,70 @@
       <file leaf-file-name="member.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/member.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="114" column="40" selection-start="4651" selection-end="4651" vertical-scroll-proportion="0.0">
+            <state line="13" column="53" selection-start="382" selection-end="408" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="graduation_mailer.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/mailers/graduation_mailer.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="22" selection-start="22" selection-end="22" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="schedule.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/initializers/schedule.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="25" selection-start="506" selection-end="506" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="20120604080130_create_correspondences.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/db/migrate/20120604080130_create_correspondences.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="16" selection-start="177" selection-end="177" vertical-scroll-proportion="0.23869346">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Gemfile.lock" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Gemfile.lock">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="145" column="27" selection-start="3506" selection-end="3506" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Gemfile" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Gemfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="10" selection-start="940" selection-end="940" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="environment.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/environment.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fake_explain.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/initializers/fake_explain.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="0" selection-start="157" selection-end="157" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -175,13 +224,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/controllers/images_controller.rb" />
-        <option value="$PROJECT_DIR$/app/views/images/gallery.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/members/_form.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/attendances/index.html.erb" />
-        <option value="$PROJECT_DIR$/app/models/image.rb" />
-        <option value="$PROJECT_DIR$/Gemfile" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/application.js" />
         <option value="$PROJECT_DIR$/app/models/instruction.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20120529151146_create_instructions.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
@@ -204,8 +246,15 @@
         <option value="$PROJECT_DIR$/app/controllers/graduates_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/graduations/_list_graduates.html.erb" />
         <option value="$PROJECT_DIR$/app/models/member.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/graduations_controller.rb" />
         <option value="$PROJECT_DIR$/Gemfile.lock" />
+        <option value="$PROJECT_DIR$/config/initializers/fake_explain.rb" />
+        <option value="$PROJECT_DIR$/app/models/nkf_member_comparison.rb" />
+        <option value="$PROJECT_DIR$/app/models/nkf_member_import.rb" />
+        <option value="$PROJECT_DIR$/app/mailers/graduation_mailer.rb" />
+        <option value="$PROJECT_DIR$/config/initializers/schedule.rb" />
+        <option value="$PROJECT_DIR$/app/mailers/nkf_replication.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/graduations_controller.rb" />
+        <option value="$PROJECT_DIR$/db/migrate/20120604080130_create_correspondences.rb" />
       </list>
     </option>
   </component>
@@ -305,7 +354,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="etc" />
+              <option name="myItemId" value="db" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -319,11 +368,75 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="etc" />
+              <option name="myItemId" value="db" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="init.d" />
+              <option name="myItemId" value="migrate" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="initializers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rjjk_web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -372,6 +485,7 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
     <property name="Ruby.ViewRefParam.DefaultExtension" value="html.erb" />
@@ -1844,24 +1958,32 @@
       <created>1338685019102</created>
       <updated>1338685019102</updated>
     </task>
-    <option name="localTasksCounter" value="206" />
+    <task id="LOCAL-00206" summary="* Oppdaterte app server for å prøve å fiske minnelekasje">
+      <created>1338705790101</created>
+      <updated>1338705790102</updated>
+    </task>
+    <task id="LOCAL-00207" summary="* Oppdaterte gems for å prøve å fikse minnelekasje">
+      <created>1338706903102</created>
+      <updated>1338706903103</updated>
+    </task>
+    <option name="localTasksCounter" value="208" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="66" y="22" width="1536" height="1178" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19060774" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2614728" sideWeight="0.6500904" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18357934" sideWeight="0.99932885" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5876384" sideWeight="0.99932885" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23154981" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17651007" sideWeight="0.6688192" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18255034" sideWeight="0.8164207" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18255034" sideWeight="0.41236162" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45664206" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2744015" sideWeight="0.40174967" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3311808" sideWeight="0.99896693" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3311808" sideWeight="0.07181208" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3311808" sideWeight="0.9234899" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32933578" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32841328" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1913,7 +2035,7 @@
     <option name="CHANGE_DETAILS_ON" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Rettet på sorteringen i graderingsoversikten" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Fikset litt på graderingsoversikten for å unngå OutOfMemory feil" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1926,9 +2048,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="* Justerte slik at første rad i print-tabell er hvit, og annenhver er grå" />
-    <MESSAGE value="* Prøver å optimere oppmøtelisten litt." />
-    <MESSAGE value="* Sorterer bilder i galleriet med nyeste først." />
     <MESSAGE value="* Ikke vis bilde/film i høyre kolonne hvis den vises i galleriet." />
     <MESSAGE value="* La til skjuling av nyheter fra forsiden" />
     <MESSAGE value="* Endret bildeopplasting til å starte automatisk, og litt penere design.&#10;" />
@@ -1951,6 +2070,9 @@
     <MESSAGE value="* Rettet link til gradering med allerede bestått grad." />
     <MESSAGE value="* Rettet feil i advarsel om neste grad." />
     <MESSAGE value="* Rettet på sorteringen i graderingsoversikten" />
+    <MESSAGE value="* Oppdaterte app server for å prøve å fiske minnelekasje" />
+    <MESSAGE value="* Oppdaterte gems for å prøve å fikse minnelekasje" />
+    <MESSAGE value="* Fikset litt på graderingsoversikten for å unngå OutOfMemory feil" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1963,61 +2085,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/models/instruction.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="51" selection-start="90" selection-end="90" vertical-scroll-proportion="0.027220631" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="286" selection-end="286" vertical-scroll-proportion="0.027220631" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/routes.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="29" selection-start="917" selection-end="917" vertical-scroll-proportion="0.5988539" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/groups/edit.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="1" selection-start="28" selection-end="28" vertical-scroll-proportion="-1.3571428" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/graduations/show.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/groups/_form.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="7" selection-start="592" selection-end="592" vertical-scroll-proportion="1.0972644" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/print.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="287" selection-end="287" vertical-scroll-proportion="0.7519789" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/dark_ritual_adaption.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="29" selection-start="990" selection-end="990" vertical-scroll-proportion="1.3403693" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/groups/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="19" selection-start="179" selection-end="179" vertical-scroll-proportion="0.5954416" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/attendances/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="631" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/attendances_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="109" selection-start="695" selection-end="695" vertical-scroll-proportion="0.3837838" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/attendances/since_graduation.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" />
@@ -2100,20 +2167,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/member.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="114" column="40" selection-start="4651" selection-end="4651" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/graduations/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="203" column="9" selection-start="5772" selection-end="5772" vertical-scroll-proportion="-4.8703704">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/graduates_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="68" column="101" selection-start="2877" selection-end="2877" vertical-scroll-proportion="0.0">
@@ -2133,14 +2186,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/graduations_controller.rb">
+    <entry file="file://$PROJECT_DIR$/etc/init.d/rjjk_web">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="106" column="30" selection-start="3374" selection-end="3374" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/etc/init.d/rjjk_web">
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/application.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="23" selection-start="673" selection-end="684" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/application.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
@@ -2149,7 +2209,91 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Gemfile.lock">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="27" selection-start="3491" selection-end="3491" vertical-scroll-proportion="0.4318182">
+        <state line="145" column="27" selection-start="3506" selection-end="3506" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="10" selection-start="940" selection-end="940" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/environment.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/initializers/fake_explain.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="0" selection-start="157" selection-end="157" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/nkf_member_comparison.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="14" selection-start="1313" selection-end="1313" vertical-scroll-proportion="0.41420117">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/nkf_member_import.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="4" selection-start="1207" selection-end="1207" vertical-scroll-proportion="0.35897437">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/mailers/graduation_mailer.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="22" selection-start="22" selection-end="22" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/mailers/nkf_replication.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="0" selection-start="845" selection-end="845" vertical-scroll-proportion="0.56213015">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/initializers/schedule.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="25" selection-start="506" selection-end="506" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/member.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="53" selection-start="382" selection-end="408" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/graduations_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="108" column="0" selection-start="3465" selection-end="3465" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/graduations/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="320" column="0" selection-start="10048" selection-end="10048" vertical-scroll-proportion="-7.321429">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/migrate/20120604080130_create_correspondences.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="16" selection-start="177" selection-end="177" vertical-scroll-proportion="0.23869346">
           <folding />
         </state>
       </provider>

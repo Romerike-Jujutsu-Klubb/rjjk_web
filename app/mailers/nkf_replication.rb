@@ -7,12 +7,11 @@ class NkfReplication < ActionMailer::Base
     mail subject: "Hentet #{@import.size} endringer fra NKF"
   end
 
-  def update_members(new_members, member_changes, group_changes, errors)
-    Rails.logger.info "Errors: #{errors.inspect}"
-    @new_members = new_members
-    @member_changes = member_changes
-    @group_changes = group_changes
-    @errors = errors
+  def update_members(comparison)
+    @new_members = comparison.new_members
+    @member_changes = comparison.member_changes
+    @group_changes = comparison.group_changes
+    @errors = comparison.errors
     stats = [
         @new_members.any? ? "#{@new_members.size} nye" : nil,
         @member_changes.any? ? "#{@member_changes.size} endrede" : nil,
