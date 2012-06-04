@@ -107,6 +107,7 @@
     <orderEntry type="library" scope="PROVIDED" name="mocha (v0.11.4, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multi_json (v1.3.6, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="polyglot (v0.3.3, jruby-1.6.7-p357) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="prawn (v857f13, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack (v1.4.1, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack-cache (v1.2, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack-ssl (v1.3.2, jruby-1.6.7-p357) [gem]" level="application" />

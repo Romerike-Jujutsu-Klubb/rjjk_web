@@ -259,7 +259,7 @@ class MembersController < ApplicationController
   def grading_form
     if params[:group_id]
       if params[:group_id] == 'others'
-        @members = Member.all(:conditions => 'id NOT in (SELECT DISTINCT member_id FROM groups_members) AND left_on IS NULL')
+        @members = Member.where('id NOT in (SELECT DISTINCT member_id FROM groups_members) AND left_on IS NULL').all
       else
         @group = Group.find(params[:group_id])
         @members = @group.members.active(Date.today)
