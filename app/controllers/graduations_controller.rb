@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class GraduationsController < ApplicationController
   MEMBERS_PER_PAGE = 30
 
@@ -97,12 +98,44 @@ class GraduationsController < ApplicationController
     render :partial => 'list_graduates'
   end
 
+  def censor_form
+    @graduation = Graduation.includes(:graduates => [:member, :rank]).find params[:id]
+    render :layout => 'print'
+  end
+
+  def censor_form_pdf
+    graduation = Graduation.find(params[:id])
+    filename   = "Certificates_#{graduation.martial_art.name}_#{graduation.held_on}.pdf"
+
+    pdf = Prawn::Document.new do
+      date = graduation.held_on
+      text "Gradering #{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}",
+           :size => 18, :align => :center
+      move_down 16
+      data = graduation.graduates.sort_by { |g| -g.rank.position }.map.with_index do |graduate, i|
+        member_current_rank = graduate.member.current_rank(graduate.graduation.martial_art, graduate.graduation.held_on)
+        [
+            "<font size='18'>" + graduate.member.first_name + '</font> ' + graduate.member.last_name + (graduate.member.birthdate && " (#{graduate.member.age} år)" || '') + "\n" +
+                (member_current_rank && member_current_rank.colour || 'Ugradert') + "\n" +
+                "Treninger: #{graduate.member.attendances_since_graduation.count}" + ' i ' + graduate.member.current_rank_age + "\n" +
+                "#{graduate.rank.name} #{graduate.rank.colour}",
+            '' * 32,
+            '' * 32,
+        ]
+      end
+      table([['Utøver', 'Bra', 'Kan bli bedre']] + data, :cell_style => {:inline_format => true, :width => 180, :padding => 8})
+      start_new_page
+    end
+
+    send_data pdf.render, :type => "text/pdf", :filename => filename, :disposition => 'attachment'
+  end
+
   private
 
   def load_graduates
     @graduation = Graduation.includes(:martial_art => {:ranks => :group}).find(params[:id])
     @censors    = Censor.includes(:member).where(:graduation_id => @graduation.id).all
-    @graduates = Graduate.where("graduates.graduation_id = ? AND graduates.member_id != 0", params[:id]).
+    @graduates  = Graduate.where("graduates.graduation_id = ? AND graduates.member_id != 0", params[:id]).
         #includes({:graduation => :martial_art}, {:member => [{:attendances => :group_schedule}, {:graduates => [:graduation, :rank]}]}, {:rank => :group}).
         includes({:graduation => :martial_art}, :member, {:rank => :group}).
         #order('ranks_graduates.position DESC, members.first_name, members.last_name').all

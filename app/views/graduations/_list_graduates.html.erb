@@ -3,7 +3,7 @@
 
     <table width="100%" STYLE="border: 1px solid #000000;" cellspacing="0" cellpadding="0">
       <tr STYLE=" background: #e3e3e3;">
-        <th style="text-align: left; border-bottom: 1px solid #000000;" colspan="<%= cmax*2 %>">Sensor</th>
+        <th style="text-align: left; border-bottom: 1px solid #000000;" colspan="<%= cmax*2 %>">Sensor (<%= link_to 'Skjema', :action => :censor_form, :id => @graduation.id %>, <%= link_to 'PDF', :action => :censor_form_pdf, :id => @graduation.id %>)</th>
       </tr>
 
       <% @censors.each_with_index do |cen, i|

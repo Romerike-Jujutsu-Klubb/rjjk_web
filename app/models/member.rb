@@ -11,8 +11,6 @@ class Member < ActiveRecord::Base
     address.blank? || (!latitude.blank? && !longitude.blank?)
   end
 
-  default_scope :select => (column_names - ['image'])
-  scope :with_image, :select => '*'
   scope :active, lambda { |date| {:conditions => ['left_on IS NULL OR left_on > ?', date]} }
 
   has_many :graduates
@@ -20,6 +18,7 @@ class Member < ActiveRecord::Base
   has_many :attendances
   has_and_belongs_to_many :groups
   has_one :nkf_member
+  has_one :image, :class_name => MemberImage.name, :dependent => :destroy
 
   # validates_presence_of :address, :cms_contract_id
   validates_length_of :billing_postal_code, :is => 4, :if => Proc.new { |m| m.billing_postal_code && !m.billing_postal_code.empty? }
@@ -61,7 +60,7 @@ class Member < ActiveRecord::Base
 
   def gmaps4rails_infowindow
     html = ''
-    html << "<img src='/members/image_thumbnail/#{id}.#{image_format}' width='128' style='float: left; margin-right: 1em'>" if image_name
+    html << "<img src='/members/thumbnail/#{id}.#{image.format}' width='128' style='float: left; margin-right: 1em'>" if image?
     html<< name
     html
   end
@@ -70,14 +69,17 @@ class Member < ActiveRecord::Base
     graduates.select { |g| g.passed? && g.graduation.held_on < date && (martial_art.nil? || g.rank.martial_art_id == martial_art.id) }.sort_by { |g| g.rank.position }.last
   end
 
-  def attendances_since_graduation(group)
-    c = current_graduate(group.martial_art)
-    if c
-      ats = attendances.select { |a| a.date >= c.graduation.held_on }
-    else
-      ats = attendances.to_a
-    end
-    ats.select { |a| a.group_schedule.group == group }
+  def attendances_since_graduation(group = nil)
+    groups = group ? [group] : Group.all
+    groups.map do |g|
+      if c = current_graduate(g.martial_art)
+        ats = attendances.select { |a| a.date >= c.graduation.held_on }
+      else
+        ats = attendances.to_a
+      end
+      ats.select!{ |a| a.group_schedule.group == g }
+      ats
+    end.flatten.sort_by(&:date).reverse
   end
 
   def current_rank(martial_art = nil, date = Date.today)
@@ -171,18 +173,16 @@ class Member < ActiveRecord::Base
 
   def image_file=(file)
     return if file == ""
-    self.image = file.read
-    self.image_name = file.original_filename
-    self.image_content_type = file.content_type
+    self.create_image! :filename => file.original_filename, :content_type => file.content_type, :data => file.read
   end
 
-  def image_format
-    image_name && image_name.split('.').last
+  def image?
+    !!image
   end
 
   def thumbnail(x = 120, y = 160)
-    return unless self.image
-    magick_image = Magick::Image.from_blob(self.image).first
+    return unless self.image?
+    magick_image = Magick::Image.from_blob(self.image.data).first
     return magick_image.crop_resized(x, y).to_blob
   end
 

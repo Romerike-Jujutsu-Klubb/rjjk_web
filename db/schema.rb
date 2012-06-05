@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120529151146) do
+ActiveRecord::Schema.define(:version => 20120604144204) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -61,6 +61,14 @@ ActiveRecord::Schema.define(:version => 20120529151146) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "kid",                  :limit => 64
+  end
+
+  create_table "correspondences", :force => true do |t|
+    t.datetime "sent_at"
+    t.integer  "member_id"
+    t.integer  "related_model_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "documents", :force => true do |t|
@@ -169,6 +177,15 @@ ActiveRecord::Schema.define(:version => 20120529151146) do
     t.string "family", :limit => 16, :null => false
   end
 
+  create_table "member_images", :force => true do |t|
+    t.integer  "member_id"
+    t.string   "filename",     :limit => 64, :null => false
+    t.string   "content_type", :limit => 64, :null => false
+    t.binary   "data",                       :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
   create_table "members", :force => true do |t|
     t.string  "first_name",           :limit => 100, :default => "", :null => false
     t.string  "last_name",            :limit => 100, :default => "", :null => false
@@ -199,9 +216,6 @@ ActiveRecord::Schema.define(:version => 20120529151146) do
     t.string  "billing_phone_home",   :limit => 32
     t.string  "billing_phone_mobile", :limit => 32
     t.string  "rfid",                 :limit => 25
-    t.binary  "image"
-    t.string  "image_name",           :limit => 64
-    t.string  "image_content_type",   :limit => 32
     t.string  "kid",                  :limit => 64
     t.float   "latitude"
     t.float   "longitude"

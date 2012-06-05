@@ -1,25 +1,23 @@
 class MemberImageSweeper < ActionController::Caching::Sweeper
-  observe Member
+  observe MemberImage
   
-  def after_create(member)
-    expire_image(member)
+  def after_create(member_image)
+    expire_image(member_image)
   end
   
-  def after_update(member)
-    expire_image(member)
+  def after_update(member_image)
+    expire_image(member_image)
   end
   
-  def after_destroy(member)
-    expire_image(member)
+  def after_destroy(member_image)
+    expire_image(member_image)
   end
   
   private
   
-  def expire_image(member)
-    expire_page(:controller => 'members', :action => 'image', :id => member.id, :format => member.image_format)
-    expire_page(:controller => 'members', :action => 'image_thumbnail', :id => member.id, :format => member.image_format)
-    expire_page(:controller => 'members', :action => 'history_graph', :format => :png, :id => 182)
-    expire_page(:controller => 'members', :action => 'history_graph', :format => :png, :id => 1024)
+  def expire_image(member_image)
+    expire_page(:controller => 'members', :action => 'image',     :id => member_image.member_id, :format => member_image.format)
+    expire_page(:controller => 'members', :action => 'thumbnail', :id => member_image.member_id, :format => member_image.format)
   end
   
 end

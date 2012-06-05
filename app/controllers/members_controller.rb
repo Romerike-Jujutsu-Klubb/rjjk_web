@@ -3,9 +3,10 @@ class MembersController < ApplicationController
   before_filter :store_location
   before_filter :admin_required
 
-  caches_page :image, :image_thumbnail, :history_graph, :grade_history_graph
-  cache_sweeper :member_image_sweeper, :only => [:add_group, :create, :update, :destroy]
-  
+  caches_page :image, :thumbnail, :history_graph, :grade_history_graph
+  cache_sweeper :member_sweeper, :only => [:add_group, :create, :update, :destroy]
+  cache_sweeper :member_image_sweeper, :only => [:create, :update, :destroy]
+
   def search
     @title = "Søk i medlemsregisteret"
     if params[:q]
@@ -208,24 +209,24 @@ class MembersController < ApplicationController
   end
   
   def image
-    @member = Member.with_image.find(params[:id])
-    if @member.image
-      send_data(@member.image,
+    @member = Member.find(params[:id])
+    if @member.image?
+      send_data(@member.image.data,
                 :disposition => 'inline',
-      :type => @member.image_content_type,
-      :filename => @member.image_name)
+      :type => @member.image.content_type,
+      :filename => @member.image.filename)
     else
       render :text => 'Bilde mangler'
     end
   end
   
-  def image_thumbnail
-    @member = Member.with_image.find(params[:id])
+  def thumbnail
+    @member = Member.find(params[:id])
     if thumbnail = @member.thumbnail
       send_data(thumbnail,
                 :disposition => 'inline',
-      :type => @member.image_content_type,
-      :filename => @member.image_name)
+      :type => @member.image.content_type,
+      :filename => @member.image.filename)
     else
       render :text => 'Bilde mangler'
     end
@@ -239,46 +240,6 @@ class MembersController < ApplicationController
     @new_cms_members = @cms_members.select{|cmsm| @members.find{|m| m.cms_contract_id == cmsm.cms_contract_id}.nil?}
     @new_inactive_members = @members.select{|m| cmsm = @inactive_cms_members.find{|cmsm| cmsm.cms_contract_id == m.cms_contract_id} && m.left_on == cmsm.left_on}
     @members_not_in_cms = @members.select{|m| @cms_members.find{|cmsm| cmsm.cms_contract_id == m.cms_contract_id}.nil?}
-  end
-  
-  def grading_form_index
-    @groups = []
-    @ranks = {}
-    MartialArt.all(:order => :family, :include => :groups).each do |ma|
-      ma.groups.each do |group|
-        @groups << group
-        @ranks[group] = {}
-        group_ranks = group.members.active(Date.today).all(:select => 'id').map{|m| m.current_rank(ma)}.sort_by{|r| r ? r.position : -99}.map{|r| r ? r.id : 'nil'}
-        midle = (group_ranks.size - 1) / 2
-        @ranks[group][:beginners] = group_ranks[0..midle].uniq
-        @ranks[group][:advanced]  = (group_ranks[midle..-1] || []).uniq[1..-1] || []
-      end
-    end
-  end
-  
-  def grading_form
-    if params[:group_id]
-      if params[:group_id] == 'others'
-        @members = Member.where('id NOT in (SELECT DISTINCT member_id FROM groups_members) AND left_on IS NULL').all
-      else
-        @group = Group.find(params[:group_id])
-        @members = @group.members.active(Date.today)
-        if rank_ids = params[:rank_ids]
-          include_unranked = rank_ids.delete('nil')
-          ranks = Rank.find(rank_ids)
-          ranks << nil if include_unranked
-          @members = @members.select {|m| ranks.include? m.current_rank(@group.martial_art)}
-        end
-        @members = @members.sort_by{|m| [m.current_rank(@group.martial_art) ? -m.current_rank(@group.martial_art).position : 99, m.first_name, m.last_name]}
-      end
-    else
-      @members = []
-    end
-    render :layout => 'print'
-  end
-  
-  def grading_form_for_censor
-    grading_form
   end
   
   def missing_contract

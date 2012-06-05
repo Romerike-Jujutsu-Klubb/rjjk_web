@@ -15,7 +15,5 @@ class AddPropertiesToImages < ActiveRecord::Migration
     add_column :images, :approved, :boolean
 
     add_column :users, :member_id, :integer
-
-    drop_table :member_images
   end
 end
