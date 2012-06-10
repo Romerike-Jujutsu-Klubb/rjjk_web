@@ -1,6 +1,6 @@
 Hei <%= @user.first_name %>!
 
-<% if @user.joined_on > 1.month.ago.to_date -%>
+<% if @user.member.joined_on > 1.month.ago.to_date -%>
 Velkommen til Romerike Jujutsu Klubb!
 
 <% end -%>

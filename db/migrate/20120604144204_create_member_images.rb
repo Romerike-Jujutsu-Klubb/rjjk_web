@@ -1,3 +1,8 @@
+require 'user_system'
+require 'user'
+require 'user_notify'
+require 'member'
+
 class CreateMemberImages < ActiveRecord::Migration
   PASSWORD_CHARS = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
 
