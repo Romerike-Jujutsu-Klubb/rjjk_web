@@ -15,6 +15,16 @@ class UserNotify < ActionMailer::Base
     send_email
   end
 
+  def created_from_member(user, password)
+    setup_email(user)
+
+    @subject += "Velkommen til Romerike Jujutsu Klubb!"
+    @user = user
+    @password = password
+
+    send_email
+  end
+
   def forgot_password(user, url=nil)
     setup_email(user)
 
@@ -46,7 +56,7 @@ class UserNotify < ActionMailer::Base
   private
 
   def setup_email(user)
-    @recipients = "#{user.email}"
+    @recipients = Rails.env != 'production' ? 'uwe@kubosch.no' : user.email
     @subject    = "[#{UserSystem::CONFIG[:app_name]}] "
     @sent_on    = Time.now
     headers['Content-Type'] = "text/plain; charset=#{UserSystem::CONFIG[:mail_charset]}; format=flowed"

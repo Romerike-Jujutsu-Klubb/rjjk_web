@@ -5,7 +5,7 @@ require 'clock'
 class User < ActiveRecord::Base
   include UserSystem
 
-  belongs_to :member
+  has_one :member
 
   CHANGEABLE_FIELDS = %w(first_name last_name email)
   attr_accessor :password_needs_confirmation

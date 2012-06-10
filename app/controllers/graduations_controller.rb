@@ -112,15 +112,15 @@ class GraduationsController < ApplicationController
       text "Gradering #{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}",
            :size => 18, :align => :center
       move_down 16
-      data = graduation.graduates.sort_by { |g| -g.rank.position }.map.with_index do |graduate, i|
+      data = graduation.graduates.sort_by { |g| [-g.rank.position, g.member.name] }.map.with_index do |graduate, i|
         member_current_rank = graduate.member.current_rank(graduate.graduation.martial_art, graduate.graduation.held_on)
         [
             "<font size='18'>" + graduate.member.first_name + '</font> ' + graduate.member.last_name + (graduate.member.birthdate && " (#{graduate.member.age} år)" || '') + "\n" +
-                (member_current_rank && member_current_rank.colour || 'Ugradert') + "\n" +
-                "Treninger: #{graduate.member.attendances_since_graduation.count}" + ' i ' + graduate.member.current_rank_age + "\n" +
+                (member_current_rank && "#{member_current_rank.name} #{member_current_rank.colour}" || 'Ugradert') + "\n" +
+                "Treninger: #{graduate.member.attendances_since_graduation(graduation.held_on).count}" + ' (' + graduate.current_rank_age + ")\n" +
                 "#{graduate.rank.name} #{graduate.rank.colour}",
-            '' * 32,
-            '' * 32,
+            '',
+            '',
         ]
       end
       table([['Utøver', 'Bra', 'Kan bli bedre']] + data, :cell_style => {:inline_format => true, :width => 180, :padding => 8})

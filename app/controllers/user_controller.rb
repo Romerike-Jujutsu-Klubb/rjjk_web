@@ -25,7 +25,7 @@ class UserController < ApplicationController
       unless member?
         if member = Member.find_by_email(user.email)
           user.update_attributes! :member_id => member.id
-          flash['notice'] << "  Du er nå registrert som medlem #{member.name}."
+          flash['notice'] << "Du er nå registrert som medlem #{member.name}."
         end
       end
       back_or_redirect_to '/'

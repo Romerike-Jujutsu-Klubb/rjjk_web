@@ -7,9 +7,8 @@
   <tr>
 	<th>Fornavn</th>
     <th>Etternavn</th>
-	<th>Avdeling</th>
-	<th>Parti</th>
-	<th>Instruktør</th>
+	<th>Gruppe</th>
+	<th>Status</th>
 	<th>E-post</th>
 	<th>Mobil</th>
   </tr>
@@ -17,9 +16,8 @@
   	<tr class="<%= cycle('odd', 'even') %>">
     	<td><%=h member.first_name %></td>
     	<td><%=h member.last_name %></td>
-    	<td><%=h member.groups.map{|g|g.martial_art.family}.uniq.sort.join(', ') %></td>
-		<td><%=h member.groups.map{|g|g.name} * ', ' %></td>
-		<td><%=h yes_no(member.instructor) %></td>	
+		<td><%=h member.groups.map{|g|"#{g.name}#{" (#{g.martial_art.family})" if g.martial_art.family != 'Jujutsu'}"} * ', ' %></td>
+		<td><%=member.left_on ? 'Utmeldt' : (member.instructor ? 'Instruktør' : 'Aktiv') %></td>
 		<td><a href="mailto:<%=h member.email%>"><%=h member.email%></a></td>
 		<td><%=h member.phone_mobile %></td>	
     	<td><%= link_to 'Rediger', :action => 'edit', :id => member %></td>

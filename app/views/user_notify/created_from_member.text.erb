@@ -1,0 +1,17 @@
+Hei <%= @user.first_name %>!
+
+<% if @user.joined_on > 1.month.ago.to_date -%>
+Velkommen til Romerike Jujutsu Klubb!
+
+<% end -%>
+Du er nå registrert som bruker på http://jujutsu.no/  Her vil du finne generell informasjon om klubben og
+nyheter om trening, gradering, leire, fester og annet.
+
+Ditt brukernavn og passord er:
+
+  Brukernavn: <%= @user.login %>
+  Passord   : <%= @password.html_safe %>
+
+Vennligst klikk på lenken under for å bekrefte registreringen din:
+
+<%= url_for(:action => 'welcome', :only_path => false) +"?user[id]=#{@user.id}&key=#{@user.security_token}" %>

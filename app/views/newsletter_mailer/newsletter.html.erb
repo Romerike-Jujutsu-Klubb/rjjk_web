@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title><%= @news_item.title %></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <style type="text/css">
+      @media only screen and (max-device-width: 480px) {
+          .table, .cell {
+              width: 300px !important;
+          }
+
+          .logotable {
+              width: 240px !important;
+          }
+
+          img {
+              max-width: 50% !important;
+          }
+      }
+
+          /** Clearfix code below **/
+      .clearfix:after {
+          content: "." !important;
+          display: block !important;
+          clear: both !important;
+          visibility: hidden !important;
+          line-height: 0 !important;
+          height: 0 !important;
+      }
+
+      .clearfix {
+          display: inline-block !important;
+      }
+
+      html[xmlns] .clearfix {
+          display: block !important;
+      }
+
+      * html .clearfix {
+          height: 1% !important;
+      }
+  </style>
+</head>
+<body marginheight="0" marginwidth="0" topmargin="0" leftmargin="0" bgcolor="#f2f2f2" style="-webkit-font-smoothing: antialiased;width:100% !important;background:#f2f2f2;-webkit-text-size-adjust:none;">
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f2f2f2">
+  <tr>
+    <td valign="top" align="center">
+      <table width="551" class="table" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td align="left" style="padding:10px 0 10px 10px; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#888888;text-align: center;">
+            <%= link_to 'Klikk her', {:only_path => false, :controller => :news, :action => :show, :id => @news_item.id, :email => Base64.encode64(@user.email)}, :style => 'color: #454545' %>
+            hvis du har problemer med å lese nyhetsbrevet.
+          </td>
+        </tr>
+        <tr>
+          <td align="left" bgcolor="#ffffff" style="border:1px solid #9c9c9c; padding:5px;">
+            <div style="padding: 0; margin: 0;" class="clearfix">
+              <table width="551" class="table" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td style="padding:25px 20px 20px 20px;border-bottom: medium solid #CBC7BD;">
+                    <table width="485" class="logotable" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td>
+                          <img src="<%= url_for(:only_path => false, :controller => :welcome, :action => :index) + 'images/DatekLogoMini.png' %>" alt="Datek Logo" width="150" height="54" />
+                        </td>
+                        <td align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#acabab;"><%= @news_item.updated_at.strftime "#{t(:date)[:month_names][@news_item.updated_at.month]} %Y" %></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:30px 20px 0px 20px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:16px;">
+                    <% [@news_item].each_with_index do |c, i| %>
+                        <div class="clearfix" style="margin:0 0 10px 0; padding-bottom: 5px;<%='border-bottom: 1px solid #CBC7BD' unless i == 0 %>">
+                          <p style="margin:0 0 10px 0; font-size:18px; color:#CD071E;"><%= c.title %></p>
+                          <% if false && c.image %>
+                              <img src="<%= url_for :only_path => false, :controller => :news_items, :action => :view_image, :id => c.id, :width => c.image_width_max(275), :format => @news_item.format %>" alt="Image" style="margin-left: 5px;" align="right" width="<%=c.image_width_max(275)%>" height="<%=c.image_height_at(275)%>" />
+                          <% end %>
+                          <%# = textilize c.heading unless c.heading.blank? %>
+                          <%= textilize c.body %>
+                          <br clear="all" />
+                        </div>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="border:1px solid #d6d6d6; background-color:#f6f6f6; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#666666; line-height:17px;  padding:15px 0; text-align: center;">
+                    <b>Datek Wireless AS</b><br>
+                    Instituttveien 6, Postboks 46, 2007 Kjeller<br>
+                    <a href="mailto:info@datek.no" style="color:#CD071E;text-decoration: none;font-weight: bold;">info@datek.no</a><br>
+                    <a href="http://www.datek.no" style="color:#CD071E;text-decoration: none;font-weight: bold;">http://www.datek.no</a>
+                  </td>
+                </tr>
+              </table>
+
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td align="left" style="padding:20px 0 10px 10px; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#888888;text-align:center;">
+            For å forsikre om at nyhetsbrevene våre kommer fram, legg
+            <a href="mailto:nyhetsbrev@datek.no" style="color:#545454;text-decoration: none;font-weight: bold;">nyhetsbrev@datek.no</a>
+            i
+            adresseboken din.
+            <br/><%= link_to 'Ikke send', {:only_path => false, :controller => :newsletters, :action => :unsubscribe, :news_item_id => @news_item.id, :email => Base64.encode64(@user.email)}, :style => 'color: #545454;text-decoration: none;font-weight: bold;' %>
+            flere nyhetsbrev til meg
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

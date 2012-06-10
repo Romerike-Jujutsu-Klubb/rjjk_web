@@ -19,7 +19,9 @@ class AttendancesController < ApplicationController
   
   def since_graduation
     @member = Member.find(params[:id])
-    @attendances = @member.attendances_since_graduation
+    @date = params[:date].try(:to_date) || Date.today
+    @graduate = @member.current_graduate(nil, @date)
+    @attendances = @member.attendances_since_graduation(@date)
   end
 
   # GET /attendances/1

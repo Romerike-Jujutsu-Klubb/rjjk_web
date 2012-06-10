@@ -1,0 +1,29 @@
+Har du problemer med <%= textify 'å' %> lese denne e-posten, klikk her:
+<%= url_for :only_path => false, :controller => :articles, :action => :show, :id => @article.id %>
+
+<%= textify @article.title %>
+
+<%= textify @article.heading %>
+
+<%= textify @article.body %>
+
+<% if (@article.embedded_articles.size > 0) %>
+    Innhold:
+    <% @article.embedded_articles.each_with_index do |c, i| %>
+<%= textify c.title %>
+    <% end %>
+
+
+    <% @article.embedded_articles.each_with_index do |c, i| %>
+
+<%= textify c.title %>
+
+<%= textify c.heading %>
+
+<%= textify c.body %>
+
+    <% end %>
+<% end %>
+
+Ønsker du ikke flere nyhetsbrev fra oss, vennligst klikk på denne linken:
+<%= url_for :only_path => false, :controller => :newsletters, :action => :unsubscribe, :email => @email %>

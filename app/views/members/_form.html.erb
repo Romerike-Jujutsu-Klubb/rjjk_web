@@ -108,7 +108,7 @@ input.half {width: 7.5em;}
 <% @groups.each do |g| %>
   <%=check_box_tag "member_group_ids[#{g.id}]", g.id, @member.groups.include?(g) %>
   <label for="member_group_ids_<%=g.id%>" <%='style="font-weight: bold"' if g.contains_age(@member.age)%> >
-    <% attendances_since_graduation = @member.attendances_since_graduation(g).size %>
+    <% attendances_since_graduation = @member.attendances_since_graduation(Date.today, g).size %>
     <%= "#{g.martial_art.name} #{g.name} #{link_to("(#{attendances_since_graduation} treninger)", :controller => :attendances, :action => :since_graduation, :id => @member.id) if attendances_since_graduation > 0}".html_safe %>
   </label><br/>
 <% end %>

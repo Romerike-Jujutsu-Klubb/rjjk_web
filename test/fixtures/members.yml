@@ -1,4 +1,4 @@
-first:
+first:  # rename to tesla
   male: true
   first_name: Lars
   last_name: Bråten
@@ -9,6 +9,7 @@ first:
   nkf_fee: true
   joined_on: 2007-06-21
   birthdate: 1967-06-21
+  user_id: 1000001
 
 two:
   male: false
@@ -21,4 +22,4 @@ two:
   nkf_fee: true
   joined_on: 1987-01-05
   birthdate: 1970-11-25
-
+  user_id: 1000000

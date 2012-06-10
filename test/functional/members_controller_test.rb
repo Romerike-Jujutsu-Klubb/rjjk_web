@@ -54,6 +54,7 @@ class MembersControllerTest < ActionController::TestCase
       :nkf_fee => true,
       :joined_on => '2007-06-21',
       :birthdate => '1967-06-21',
+      :user_id => users(:unverified_user).id,
     }
     
     assert_no_errors :member

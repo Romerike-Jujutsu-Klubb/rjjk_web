@@ -23,25 +23,23 @@ class UserSystemTest < ActionController::IntegrationTest
     assert_equal 1, Mail::TestMailer.deliveries.size
 
     mail = Mail::TestMailer.deliveries[0]
-    assert_equal "newemail@example.com", mail.to_addrs[0].to_s
-    assert_match(/login:\s+\w+\r\n/, mail.encoded)
-    assert_match(/password:\s+\w+\r\n/, mail.encoded)
-    mail.encoded =~ /user\[id\]=(\d+)&amp;key=(.*?)"/
+    assert_equal "uwe@kubosch.no", mail.to_addrs[0].to_s
+    assert_match(/Brukernavn:\s+\w+\r\n/, mail.encoded)
+    assert_match(/Passord\s*:\s+\w+\r\n/, mail.encoded)
+    mail.decoded =~ /user\[id\]=(\d+)&amp;key=(.*?)"/
     id = $1
     key = $2
 
     Clock.advance_by_seconds User.token_lifetime # now past verification deadline
 
-    get url_for(:controller => 'user', :action => 'welcome'),
-        :user => {:id => id}, :key => key
+    get url_for(:controller => 'user', :action => 'welcome'), :user => {:id => id}, :key => key
     assert_redirected_to_login
     user = User.find id
     assert !user.verified
     assert_not_logged_in
 
     Clock.time = Time.now # now before deadline
-    get url_for(:controller => 'user', :action => 'welcome'),
-        :user => {:id => "#{id}"}, :key => "boguskey"
+    get url_for(:controller => 'user', :action => 'welcome'), :user => {:id => "#{id}"}, :key => "boguskey"
     assert_redirected_to_login
     assert_not_logged_in
     user.reload
@@ -60,7 +58,7 @@ class UserSystemTest < ActionController::IntegrationTest
     post url_for(:controller => 'user', :action => 'forgot_password'), :user => {:email => user.email}
     assert_equal 1, Mail::TestMailer.deliveries.size
     mail = Mail::TestMailer.deliveries[0]
-    assert_equal users(:tesla).email, mail.to_addrs[0].to_s
+    assert_equal 'uwe@kubosch.no', mail.to_addrs[0].to_s
     mail.encoded =~ /user\[id\]=(.+?)&amp;key=(.+?)"/
     id = $1
     key = $2

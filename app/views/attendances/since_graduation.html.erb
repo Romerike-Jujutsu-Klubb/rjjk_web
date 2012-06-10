@@ -1,4 +1,8 @@
-<h1>Oppmøte for <%=@member.name%> siden innmelding/gradering</h1>
+<h2>Oppmøte for <%=@member.name%></h2>
+<h3>
+  Fra <%=@graduate ? "gradering (#{@graduate.graduation.held_on})" : "innmelding (#{@member.joined_on})"%>
+  til <%= @date ? @date : 'i dag' %>
+</h3>
 
 <table border="1" width="100%"  >
   <tr>

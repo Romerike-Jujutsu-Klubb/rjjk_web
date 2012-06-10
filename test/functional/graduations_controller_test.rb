@@ -82,7 +82,7 @@ class GraduationsControllerTest < ActionController::TestCase
 
     post :destroy, :id => @first_id
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :action => :index, :id => nil
 
     assert_raise(ActiveRecord::RecordNotFound) {
       Graduation.find(@first_id)

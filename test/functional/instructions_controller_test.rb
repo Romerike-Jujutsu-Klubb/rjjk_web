@@ -18,7 +18,8 @@ class InstructionsControllerTest < ActionController::TestCase
 
   test "should create instruction" do
     assert_difference('Instruction.count') do
-      post :create, instruction: { from: @instruction.from, group_id: @instruction.group_id, member_id: @instruction.member_id, to: @instruction.to }
+      post :create, instruction: { from: @instruction.from, group_id: @instruction.group_id, member_id: @instruction.member_id }
+      assert_no_errors :instruction
     end
 
     assert_redirected_to instruction_path(assigns(:instruction))
@@ -35,7 +36,8 @@ class InstructionsControllerTest < ActionController::TestCase
   end
 
   test "should update instruction" do
-    put :update, id: @instruction, instruction: { from: @instruction.from, group_id: @instruction.group_id, member_id: @instruction.member_id, to: @instruction.to }
+    put :update, id: @instruction, instruction: { from: @instruction.from, group_id: @instruction.group_id, member_id: @instruction.member_id }
+    assert_no_errors :instruction
     assert_redirected_to instruction_path(assigns(:instruction))
   end
 

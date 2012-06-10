@@ -18,11 +18,13 @@ class Member < ActiveRecord::Base
   has_many :attendances
   has_and_belongs_to_many :groups
   has_one :nkf_member
-  has_one :image, :class_name => MemberImage.name, :dependent => :destroy
+  belongs_to :image, :dependent => :destroy
+  belongs_to :user, :dependent => :destroy
 
   # validates_presence_of :address, :cms_contract_id
   validates_length_of :billing_postal_code, :is => 4, :if => Proc.new { |m| m.billing_postal_code && !m.billing_postal_code.empty? }
   validates_presence_of :birthdate, :joined_on
+  validates_presence_of :user, :user_id, :unless => :left_on
   validates_uniqueness_of :cms_contract_id, :if => :cms_contract_id
   validates_presence_of :first_name, :last_name
   validates_inclusion_of :instructor, :in => [true, false]
@@ -69,15 +71,15 @@ class Member < ActiveRecord::Base
     graduates.select { |g| g.passed? && g.graduation.held_on < date && (martial_art.nil? || g.rank.martial_art_id == martial_art.id) }.sort_by { |g| g.rank.position }.last
   end
 
-  def attendances_since_graduation(group = nil)
+  def attendances_since_graduation(before_date = Date.today, group = nil)
     groups = group ? [group] : Group.all
     groups.map do |g|
-      if c = current_graduate(g.martial_art)
+      if c = current_graduate(g.martial_art, before_date)
         ats = attendances.select { |a| a.date >= c.graduation.held_on }
       else
         ats = attendances.to_a
       end
-      ats.select!{ |a| a.group_schedule.group == g }
+      ats.select!{ |a| a.group_schedule.group == g && a.date <= before_date }
       ats
     end.flatten.sort_by(&:date).reverse
   end
@@ -86,17 +88,17 @@ class Member < ActiveRecord::Base
     current_graduate(martial_art, date).try(:rank)
   end
 
-  def current_rank_date(martial_art = nil)
-    graduate = self.current_graduate(martial_art)
+  def current_rank_date(martial_art = nil, date = Date.today)
+    graduate = self.current_graduate(martial_art, date)
     graduate && graduate.graduation.held_on || joined_on
   end
 
-  def current_rank_age(martial_art = nil)
-    date = current_rank_date
-    days = (Date.today - date).to_i
-    years = (Date.today - date).to_i / 365
+  def current_rank_age(martial_art, to_date)
+    date = current_rank_date(martial_art, to_date)
+    days = (to_date - date).to_i
+    years = (to_date - date).to_i / 365
     months = (days - (years * 365)) / 30
-    "#{"#{years} år" if years > 0} #{"#{months} mnd" if years == 0 || months > 0}" # TODO: What about leap years etc?
+    [years > 0 ? "#{years} år" : nil, years == 0 || months > 0 ? "#{months} mnd" : nil].compact.join(' ')
   end
 
   def next_rank(graduation = Graduation.new(:held_on => Date.today, :martial_art => MartialArt.find_by_name('Kei Wa Ryu')))
@@ -177,7 +179,7 @@ class Member < ActiveRecord::Base
   end
 
   def image?
-    !!image
+    !!image_id
   end
 
   def thumbnail(x = 120, y = 160)

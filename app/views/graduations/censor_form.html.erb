@@ -31,9 +31,9 @@
           <% member_current_rank = member.current_rank(@graduation.martial_art, @graduation.held_on) %>
           <%= member_current_rank && member_current_rank.colour || 'Ugradert' %>
           i
-          <%= member.current_rank_age %>
+          <%= member.current_rank_age(@graduation.martial_art, @graduation.held_on) %>
           <br/>
-          Treninger: <%= member.attendances_since_graduation.count %>
+          Treninger: <%= member.attendances_since_graduation(@graduation.held_on).count %>
         </td>
         <td width="45%" style="height: 8em">&nbsp;</td>
         <td width="45%" style="height: 8em">&nbsp;</td>

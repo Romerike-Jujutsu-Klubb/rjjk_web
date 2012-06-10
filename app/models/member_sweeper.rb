@@ -16,6 +16,10 @@ class MemberSweeper < ActionController::Caching::Sweeper
   private
   
   def expire_image(member)
+    if member.image
+      expire_page(:controller => 'members', :action => 'image',     :id => member.id, :format => member.image.format)
+      expire_page(:controller => 'members', :action => 'thumbnail', :id => member.id, :format => member.image.format)
+    end
     expire_page(:controller => 'members', :action => 'history_graph', :format => :png, :id => 182)
     expire_page(:controller => 'members', :action => 'history_graph', :format => :png, :id => 1024)
   end

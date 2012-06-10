@@ -5,7 +5,6 @@ class MembersController < ApplicationController
 
   caches_page :image, :thumbnail, :history_graph, :grade_history_graph
   cache_sweeper :member_sweeper, :only => [:add_group, :create, :update, :destroy]
-  cache_sweeper :member_image_sweeper, :only => [:create, :update, :destroy]
 
   def search
     @title = "Søk i medlemsregisteret"

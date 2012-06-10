@@ -177,15 +177,6 @@ ActiveRecord::Schema.define(:version => 20120604144204) do
     t.string "family", :limit => 16, :null => false
   end
 
-  create_table "member_images", :force => true do |t|
-    t.integer  "member_id"
-    t.string   "filename",     :limit => 64, :null => false
-    t.string   "content_type", :limit => 64, :null => false
-    t.binary   "data",                       :null => false
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-  end
-
   create_table "members", :force => true do |t|
     t.string  "first_name",           :limit => 100, :default => "", :null => false
     t.string  "last_name",            :limit => 100, :default => "", :null => false
@@ -220,7 +211,12 @@ ActiveRecord::Schema.define(:version => 20120604144204) do
     t.float   "latitude"
     t.float   "longitude"
     t.boolean "gmaps"
+    t.integer "image_id"
+    t.integer "user_id"
   end
+
+  add_index "members", ["image_id"], :name => "index_members_on_image_id", :unique => true
+  add_index "members", ["user_id"], :name => "index_members_on_user_id", :unique => true
 
   create_table "news_items", :force => true do |t|
     t.string   "title",             :limit => 64, :null => false
@@ -340,7 +336,6 @@ ActiveRecord::Schema.define(:version => 20120604144204) do
     t.datetime "token_expiry"
     t.boolean  "verified",                      :default => false
     t.boolean  "deleted",                       :default => false
-    t.integer  "member_id"
   end
 
 end

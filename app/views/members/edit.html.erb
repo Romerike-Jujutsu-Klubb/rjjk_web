@@ -13,7 +13,9 @@
 		<td><%=link_to graduate.graduation.held_on, :controller => :graduations, :action => :index, :id => graduate.graduation_id %></td>
 		<td><%=graduate.rank.martial_art.name%> <%=graduate.rank.name%></td>
 		<td align="center"><%=graduate.training_duration %> (<%=graduate.rank.standard_months %>)  mnd</td>
-		<td align="center"><%=graduate.training_attendances %></td>
+		<td align="center"><%=link_to graduate.training_attendances, :controller => :attendances, :action => :since_graduation, :id => graduate.member_id, :date => graduate.graduation.held_on %>
+          <%= graduate.training_period %>
+        </td>
 	</tr>
 	<% end %>
 	<tr>

@@ -1,0 +1,11 @@
+Har du problemer med <%= textify 'å' %> lese denne e-posten, klikk her:
+<%= url_for :only_path => false, :controller => :news, :action => :show, :id => @news_item.id %>
+
+<%= textify @news_item.title %>
+
+<%# = textify @news_item.heading %>
+
+<%= textify @news_item.body %>
+
+Ønsker du ikke flere nyhetsbrev fra oss, vennligst klikk på denne linken:
+<%= url_for :only_path => false, :controller => :news, :action => :unsubscribe, :email => @user.email %>

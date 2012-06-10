@@ -87,12 +87,12 @@ class UserControllerTest < ActionController::TestCase
     assert_equal 1, Mail::TestMailer.deliveries.size
 
     mail = Mail::TestMailer.deliveries[0]
-    assert_equal "newemail@example.com", mail.to_addrs[0].to_s
-    assert_match /login:\s+\w+\r\n/, mail.encoded
-    assert_match /password:\s+\w+\r\n/, mail.encoded
+    assert_equal "uwe@kubosch.no", mail.to_addrs[0].to_s
+    assert_match /Brukernavn:\s+\w+\r\n/, mail.encoded
+    assert_match /Passord\s*:\s+\w+\r\n/, mail.encoded
     user = User.find_by_email("newemail@example.com")
-    assert_match /user\[id\]=#{user.id}/, mail.encoded
-    assert_match /key=#{user.security_token}/, mail.encoded
+    assert_match /user\[id\]=3D#{user.id}/, mail.encoded
+    assert_match /key=#{user.security_token}/, mail.body.decoded
     assert !user.verified
   end
 
@@ -188,7 +188,7 @@ class UserControllerTest < ActionController::TestCase
     assert_no_errors :user
     assert_equal 1, Mail::TestMailer.deliveries.size
     mail = Mail::TestMailer.deliveries[0]
-    assert_equal "tesla@example.com", mail.to_addrs[0].to_s
+    assert_equal "uwe@kubosch.no", mail.to_addrs[0].to_s
     assert_match /brukernavn:\s+\w+ eller [a-zA-Z0-9.@]+\r\n/, mail.encoded
     assert_match /passord\s*:\s+\w+\r\n/, mail.encoded
     assert_equal user, User.authenticate(user.login, 'changed_password')
