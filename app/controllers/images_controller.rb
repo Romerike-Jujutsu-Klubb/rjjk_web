@@ -118,6 +118,7 @@ class ImagesController < ApplicationController
     image_select = image_select.where('user_id = ?', current_user.id)
     image_select = image_select.includes(:user)
     @images = image_select.all
+    @image = @images.first
     render :action => :gallery
   end
 

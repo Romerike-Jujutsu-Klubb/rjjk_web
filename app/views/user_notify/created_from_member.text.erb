@@ -14,4 +14,4 @@ Ditt brukernavn og passord er:
 
 Vennligst klikk på lenken under for å bekrefte registreringen din:
 
-<%= url_for(:controller => :user, :action => :welcome, :only_path => false) +"?user[id]=#{@user.id}&key=#{@user.security_token}" %>
+<%= (url_for(:controller => :user, :action => :welcome, :only_path => false) +"?user[id]=#{@user.id}&key=#{@user.security_token}").html_safe %>
