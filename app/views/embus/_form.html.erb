@@ -22,7 +22,10 @@
     </div>
 
     <div class="field">
-      <%= f.label :description, t(:description) %> (<%=link_to 'Print', :action => :print%>)
+      <%= f.label :description, t(:description) %>
+      <% unless @embu.new_record? %>
+          (<%= link_to 'Print', :action => :print %>)
+      <% end %>
       <br/>
       <%= f.text_area :description, :style => 'width: 80%' %>
       <% @embu.images.select('images.id, content_type, name').each do |e| %>
