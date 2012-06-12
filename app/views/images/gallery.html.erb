@@ -16,6 +16,9 @@
         <li><%= link_to 'Liker', {:controller => :user, :action => :like, :id => @image.id}, :method => :post if user? && !@image.likers.include?(current_user) %></li>
       </ul>
     </div>
+<% elsif @images.empty? %>
+    Du har ikke lastet opp noen mediefiler enda.
+    Du kan laste opp ved å velge fil i høyre kolonne, under "Last opp media".
 <% end %>
 
 <% @images.each_slice(5) do |slice| %>

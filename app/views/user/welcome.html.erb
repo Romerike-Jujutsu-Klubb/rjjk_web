@@ -1,10 +1,13 @@
 <div title="<%= title_helper %>" class="memo">
-  <%= head_helper 'Welcome', :notice => false, :message => false %>
-  <p>You are now logged into the system...</p>
+  <%= head_helper 'Velkommen', :notice => false, :message => false %>
   <p>
-    Since you are here it's safe to assume the application never
-    called store_location, otherwise you would have been redirected
-    somewhere else after a successful login.
+    Du er nå logget på systemet og kan laste opp og se på interne bilder og filmer i
+    "<%=link_to 'Galleriet', :controller => :images, :action => :gallery %>",
+    "<%=link_to 'Mine media', :controller => :images, :action => :mine %>"
+    eller "<%=link_to 'Min Embu', :controller => :embus %>"
+  </p>
+  <p>
+    Hvis du lurer på noe, <%= link_to 'kontakt oss', :controller => :info, :action => :show, :id => :Kontakt %>.
   </p>
   <%= link_to 'logout', :action => 'logout' %>
 </div>
