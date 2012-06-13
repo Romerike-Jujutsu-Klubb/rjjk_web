@@ -7,4 +7,13 @@ class Event < ActiveRecord::Base
     description.try(:slice, /\A.*?<\/p>/)
   end
   
+  def body
+    ingress = self.ingress
+    if ingress && description.size > ingress.size
+      description[ingress.size..-1]
+    else
+      nil
+    end
+  end
+
 end

@@ -10,4 +10,6 @@
  *
  *= require_self
  *= require dark_ritual_adaption
+ *= require jquery-ui-timepicker-addon
+ *= require jquery-ui/ui-lightness
 */
