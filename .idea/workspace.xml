@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/events_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/events_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/newsletter_mailer/event_invitation.html.erb" afterPath="$PROJECT_DIR$/app/views/newsletter_mailer/event_invitation.html.erb" />
     </list>
     <ignored path="rjjk_web.iws" />
@@ -96,7 +95,7 @@
       <file leaf-file-name="event_invitation.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/newsletter_mailer/event_invitation.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="103" column="15" selection-start="5172" selection-end="5172" vertical-scroll-proportion="1.4115226">
+            <state line="86" column="61" selection-start="4151" selection-end="4151" vertical-scroll-proportion="0.74691355">
               <folding />
             </state>
           </provider>
@@ -2160,7 +2159,11 @@
       <created>1339715873102</created>
       <updated>1339715873102</updated>
     </task>
-    <option name="localTasksCounter" value="231" />
+    <task id="LOCAL-00231" summary="* La til utsending av invitasjon til aktivitet.">
+      <created>1339716919102</created>
+      <updated>1339716919102</updated>
+    </task>
+    <option name="localTasksCounter" value="232" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2472,7 +2475,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/newsletter_mailer/event_invitation.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="15" selection-start="5172" selection-end="5172" vertical-scroll-proportion="1.4115226">
+        <state line="86" column="61" selection-start="4151" selection-end="4151" vertical-scroll-proportion="0.74691355">
           <folding />
         </state>
       </provider>
