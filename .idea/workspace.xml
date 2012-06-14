@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/events_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/events_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/newsletter_mailer/event_invitation.html.erb" afterPath="$PROJECT_DIR$/app/views/newsletter_mailer/event_invitation.html.erb" />
     </list>
     <ignored path="rjjk_web.iws" />
@@ -95,16 +96,7 @@
       <file leaf-file-name="event_invitation.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/newsletter_mailer/event_invitation.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="15" selection-start="1925" selection-end="1925" vertical-scroll-proportion="0.45061728">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="email_list.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/members/email_list.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="50" selection-start="60" selection-end="172" vertical-scroll-proportion="-3.392857">
+            <state line="103" column="15" selection-start="5172" selection-end="5172" vertical-scroll-proportion="1.4115226">
               <folding />
             </state>
           </provider>
@@ -122,7 +114,7 @@
       <file leaf-file-name="events_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/events_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="132" selection-start="1150" selection-end="1150" vertical-scroll-proportion="0.0">
+            <state line="55" column="7" selection-start="1247" selection-end="1247" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -131,7 +123,7 @@
       <file leaf-file-name="newsletter_mailer.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/mailers/newsletter_mailer.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="40" selection-start="101" selection-end="101" vertical-scroll-proportion="0.0">
+            <state line="4" column="15" selection-start="138" selection-end="138" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -179,8 +171,8 @@
         <option value="$PROJECT_DIR$/app/views/events/show.html.erb" />
         <option value="$PROJECT_DIR$/config/environments/development.rb" />
         <option value="$PROJECT_DIR$/app/views/events/_form.html.erb" />
-        <option value="$PROJECT_DIR$/app/controllers/events_controller.rb" />
         <option value="$PROJECT_DIR$/app/mailers/newsletter_mailer.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/events_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/newsletter_mailer/event_invitation.html.erb" />
       </list>
     </option>
@@ -2164,7 +2156,11 @@
       <created>1339715579103</created>
       <updated>1339715579104</updated>
     </task>
-    <option name="localTasksCounter" value="230" />
+    <task id="LOCAL-00230" summary="* La til utsending av invitasjon til aktivitet.">
+      <created>1339715873102</created>
+      <updated>1339715873102</updated>
+    </task>
+    <option name="localTasksCounter" value="231" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2439,13 +2435,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/members/email_list.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="50" selection-start="60" selection-end="172" vertical-scroll-proportion="-3.392857">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/members_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="180" column="0" selection-start="6122" selection-end="6122" vertical-scroll-proportion="0.33285093">
@@ -2460,23 +2449,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/events_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/mailers/newsletter_mailer.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="132" selection-start="1150" selection-end="1150" vertical-scroll-proportion="0.0">
+        <state line="4" column="15" selection-start="138" selection-end="138" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/mailers/newsletter_mailer.rb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/events_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="40" selection-start="101" selection-end="101" vertical-scroll-proportion="0.0">
+        <state line="55" column="7" selection-start="1247" selection-end="1247" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/members/email_list.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="28" selection-start="589" selection-end="589" vertical-scroll-proportion="0.3372781">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/newsletter_mailer/event_invitation.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="15" selection-start="1925" selection-end="1925" vertical-scroll-proportion="0.45061728">
+        <state line="103" column="15" selection-start="5172" selection-end="5172" vertical-scroll-proportion="1.4115226">
           <folding />
         </state>
       </provider>
