@@ -43,5 +43,15 @@ class EventsController < ApplicationController
     @event.destroy
     redirect_to(events_url)
   end
-  
+
+  def invite
+    event = Event.find(params[:id])
+    if params[:example]
+      recipient = current_user.email
+    elsif params[:recipients] == 'all'
+      recipient = Group.all.map {|g| g.members.active(event.start_at.to_date).map {|m| m.email }}.flatten.compact.sort.uniq.join(',')
+    end
+    NewsletterMailer.event_invitation(event, recipient).deliver
+    render :text => ''
+  end
 end

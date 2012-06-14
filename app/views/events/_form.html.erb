@@ -10,12 +10,12 @@
   <p style="float: left; margin-right: 1em">
     <%= f.label :start_tidspunkt %><br />
     <%= f.datetime_picker :start_at, :value => @event.start_at && @event.start_at.strftime('%Y-%m-%d %H:%M'),
-                          :dateFormat => "yy-mm-dd", :size => 12 %>
+                          :dateFormat => 'yy-mm-dd', :timeFormat => 'h:m', :firstDay => 1, :size => 18 %>
   </p>
   <p>
     <%= f.label :slutt_tidspunkt %><br />
     <%= f.datetime_picker :end_at, :value => @event.end_at && @event.end_at.strftime('%Y-%m-%d %H:%M'),
-                     :dateFormat => "yy-mm-dd", :size => 12 %>
+                     :dateFormat => 'yy-mm-dd', :timeFormat => 'h:m', :firstDay => 1, :size => 18 %>
   </p>
   <p>
     <%= f.label :beskrivelse %><br />
@@ -23,6 +23,8 @@
   </p>
   <p>
     <%= f.submit "Lagre" %>
+    <%= f.button 'Send meg eksempel på innbydelse', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :example => true)}')" %>
+    <%= f.button 'Send innbydelse til alle aktive medlemmer', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :all)}')" %>
     <%= back_or_link_to 'Back', events_path %>
   </p>
 <% end %>

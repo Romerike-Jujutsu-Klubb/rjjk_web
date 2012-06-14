@@ -63,12 +63,16 @@ class User < ActiveRecord::Base
     self.security_token and self.token_expiry and (Clock.now >= self.token_expiry)
   end
 
-  def generate_security_token
-    if self.security_token.nil? or self.token_expiry.nil? or (remaining_token_lifetime < (User.token_lifetime / 2))
-      new_security_token
+  def generate_security_token(duration = :short)
+    if self.security_token.nil? or self.token_expiry.nil? or token_stale?(duration)
+      new_security_token(duration)
     else
-      self.security_token
+      security_token
     end
+  end
+
+  def token_stale?(duration)
+    remaining_token_lifetime < (User.token_lifetime(duration) / 2)
   end
 
   def change_password(pass, confirm = nil)
@@ -77,8 +81,8 @@ class User < ActiveRecord::Base
     @password_needs_confirmation = true
   end
 
-  def self.token_lifetime
-    UserSystem::CONFIG[:security_token_life_hours].hours
+  def self.token_lifetime(duration = :short)
+    UserSystem::CONFIG[duration == :login ? :autologin_token_life_hours : :security_token_life_hours].hours
   end
 
   def remaining_token_lifetime
@@ -112,10 +116,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  def new_security_token
-    expiry = Time.at(Clock.now.to_i + User.token_lifetime)
+  def new_security_token(duration)
     write_attribute('security_token', self.class.hashed(self.salted_password + Clock.now.to_i.to_s + rand.to_s))
-    write_attribute('token_expiry', expiry)
+    write_attribute('token_expiry', Time.at(Clock.now.to_i + User.token_lifetime(duration)))
     update
     self.security_token
   end

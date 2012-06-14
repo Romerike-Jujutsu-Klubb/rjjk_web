@@ -18,7 +18,7 @@ class UserController < ApplicationController
       self.current_user = user
       flash['notice'] = 'Velkommen!'
       if remember_me && remember_me == '1'
-        user.generate_security_token
+        user.generate_security_token(:login)
         cookies.permanent[:autologin] = user.id.to_s
         cookies.permanent[:token] = user.security_token
       end

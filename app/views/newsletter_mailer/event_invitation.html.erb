@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title><%= @article.title %></title>
+  <title><%= @event.name %></title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <style type="text/css">
       @media only screen and (max-device-width: 480px) {
@@ -48,8 +48,8 @@
       <table width="551" class="table" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td align="left" style="padding:10px 0 10px 10px; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#888888;text-align: center;">
-            <%= link_to 'Klikk her', {:only_path => false, :controller => :articles, :action => :show, :id => @article.id, :newsletter_id => @newsletter.id, :email => Base64.encode64(@email)}, :style => 'color: #454545' %>
-            hvis du har problemer med å lese nyhetsbrevet.
+            <%= link_to 'Klikk her', {:only_path => false, :controller => :events, :action => :show, :id => @event.id, :email => Base64.encode64(@email)}, :style => 'color: #454545' %>
+            hvis du har problemer med å lese invitasjonen.
           </td>
         </tr>
         <tr>
@@ -61,34 +61,31 @@
                     <table width="485" class="logotable" border="0" cellspacing="0" cellpadding="0">
                       <tr>
                         <td>
-                          <img src="<%= url_for(:only_path => false, :controller => :welcome, :action => :index) + 'images/DatekLogoMini.png' %>" alt="Datek Logo" width="150" height="54" />
+                          <img src="<%= url_for(:only_path => false, :controller => :welcome, :action => :index) + 'assets/rjjk_logo_&_txt_320.png' %>" alt="Datek Logo" width="160" height="160" />
                         </td>
-                        <td align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#acabab;"><%= @article.updated_at.strftime "#{t(:date)[:month_names][@article.updated_at.month]} %Y" %></td>
+                        <td align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#acabab;">
+                          <p style="margin:0 0 10px 0; font-size:18px; color:#E20916;"><%= @event.name %></p>
+                          <%= @event.start_at.strftime "%d. #{t(:date)[:month_names][@event.updated_at.month]} %Y" %>
+                          <%= @event.start_at.strftime "kl. %H:%M" if @event.start_at.hour != 0 || @event.start_at.min != 0 %>
+                        </td>
                       </tr>
                     </table>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding:30px 20px 0px 20px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:16px;">
-                    <% [@article, *@article.embedded_articles].each_with_index do |c, i| %>
-                        <div class="clearfix" style="margin:0 0 10px 0; padding-bottom: 5px;<%='border-bottom: 1px solid #CBC7BD' unless i == @article.embedded_articles.size %>">
-                          <p style="margin:0 0 10px 0; font-size:18px; color:#CD071E;"><%= c.title %></p>
-                          <% if c.image %>
-                              <img src="<%= url_for :only_path => false, :controller => :articles, :action => :view_image, :id => c.id, :width => c.image_width_max(275), :format => @article.format %>" alt="Image" style="margin-left: 5px;" align="right" width="<%=c.image_width_max(275)%>" height="<%=c.image_height_at(275)%>" />
-                          <% end %>
-                          <%= textalize c.heading unless c.heading.blank? %>
-                          <%= textalize c.body %>
-                          <br clear="all" />
-                        </div>
-                    <% end %>
+                    <div class="clearfix" style="margin:0 0 10px 0; padding-bottom: 5px">
+                      <%= @event.description.html_safe %>
+                      <br clear="all" />
+                    </div>
                   </td>
                 </tr>
                 <tr>
                   <td style="border:1px solid #d6d6d6; background-color:#f6f6f6; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#666666; line-height:17px;  padding:15px 0; text-align: center;">
-                    <b>Datek Wireless AS</b><br>
-                    Instituttveien 6, Postboks 46, 2007 Kjeller<br>
-                    <a href="mailto:info@datek.no" style="color:#CD071E;text-decoration: none;font-weight: bold;">info@datek.no</a><br>
-                    <a href="http://www.datek.no" style="color:#CD071E;text-decoration: none;font-weight: bold;">http://www.datek.no</a>
+                    <b>Romerike Jujutsu Klubb</b><br>
+                    Stasjonsveien 17, 2010 Strømmen<br>
+                    <a href="mailto:post@jujutsu.no" style="color:#E20916;text-decoration: none;font-weight: bold;">post@jujutsu.no</a><br>
+                    <a href="http://jujutsu.no" style="color:#E20916;text-decoration: none;font-weight: bold;">http://jujutsu.no</a>
                   </td>
                 </tr>
               </table>
@@ -99,10 +96,9 @@
         <tr>
           <td align="left" style="padding:20px 0 10px 10px; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#888888;text-align:center;">
             For å forsikre om at nyhetsbrevene våre kommer fram, legg
-            <a href="mailto:nyhetsbrev@datek.no" style="color:#545454;text-decoration: none;font-weight: bold;">nyhetsbrev@datek.no</a>
-            i
-            adresseboken din.
-            <br/><%= link_to 'Ikke send', {:only_path => false, :controller => :newsletters, :action => :unsubscribe, :newsletter_id => @newsletter.id, :email => Base64.encode64(@email)}, :style => 'color: #545454;text-decoration: none;font-weight: bold;' %>
+            <a href="mailto:post@jujutsu.no" style="color:#545454;text-decoration: none;font-weight: bold;">post@jujutsu.no</a>
+            i adresseboken din.
+            <br/><%= link_to 'Ikke send', {:only_path => false, :controller => :newsletters, :action => :unsubscribe, :email => Base64.encode64(@email)}, :style => 'color: #545454;text-decoration: none;font-weight: bold;' %>
             flere nyhetsbrev til meg
           </td>
         </tr>

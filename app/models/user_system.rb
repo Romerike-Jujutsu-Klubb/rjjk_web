@@ -19,6 +19,7 @@ module UserSystem
 
     # Security token lifetime in hours
     :security_token_life_hours => 24 * 7,
+    :autologin_token_life_hours => 24 * 365,
   }
 
   protected

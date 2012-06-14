@@ -1,12 +1,12 @@
 class NewsletterMailer < ActionMailer::Base
   helper :mailer
-  default from: "post@jujutsu.no"
+  default from: '"Romerike Jujutsu Klubb" <post@jujutsu.no>'
 
-  def event_invitation(event, news_item)
+  def event_invitation(event, email)
     @event = event
-    @news_item = news_item
+    @email = email
 
-    mail to: "uwe@kubosch.no"
+    mail to: Rails.env == 'production' ? @email : 'uwe@kubosch.no', subject: "Invitasjon til #{@event.name}"
   end
 
   def newsletter(news_item, user)
