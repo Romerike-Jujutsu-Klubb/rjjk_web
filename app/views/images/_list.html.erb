@@ -3,7 +3,7 @@
 </div>
 
 <table>
-  <% for image in @images.sort_by { |i| i.name.upcase } %>
+  <% for image in images.sort_by { |i| i.name.upcase } %>
       <tr>
         <td align="center">
           <%=link_to_redbox(

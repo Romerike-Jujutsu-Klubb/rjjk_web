@@ -1,5 +1,17 @@
 <% @content_width = 1024 %>
 
+<div style="float: right; width: 240px; height: 680px; overflow:auto; border: 1px solid black">
+  <% @embu.images.select('images.id, content_type, name').each do |e| %>
+      <% if e.video? %>
+          <%= video_tag url_for(:controller => :images, :action => :show, :id => e.id, :format => e.format), :title => e.name || 'Film', :controls => true, :autobuffer => true, :style => "float: right; width: 240px" %>
+          </video>
+      <% else %>
+          <%= image_tag url_for(:controller => :images, :action => :inline, :id => e.id, :format => e.format, :width => 185), :title => e.name || 'Bilde', :style => "float: right; width: 19%" %>
+      <% end %>
+      <br clear="right"/>
+  <% end %>
+</div>
+
 <h1>Din Embu</h1>
 
 <%= render 'form' %>

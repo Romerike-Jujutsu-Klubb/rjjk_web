@@ -3,7 +3,7 @@
 <%= error_messages_for 'information_page' %>
 
 <div style="float: right; width: 240px; height: 680px; overflow:auto; border: 1px solid black">
-  <%=render :partial => '/images/list' %>
+  <%=render :partial => '/images/list', :locals => {:images => @images} %>
 </div>
 
 <p style="float: left; margin-right: 2em"><label for="information_page_title">Tittel</label><br/>

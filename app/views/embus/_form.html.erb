@@ -1,3 +1,5 @@
+<%=render :partial => '/tiny_mce' %>
+
 <%= form_for(@embu) do |f| %>
     <% if @embu.errors.any? %>
         <div id="error_explanation">
@@ -27,16 +29,7 @@
           (<%= link_to 'Print', :action => :print %>)
       <% end %>
       <br/>
-      <%= f.text_area :description, :style => 'width: 80%' %>
-      <% @embu.images.select('images.id, content_type, name').each do |e| %>
-          <% if e.video? %>
-              <%= video_tag url_for(:controller => :images, :action => :show, :id => e.id, :format => e.format), :title => e.name || 'Film', :controls => true, :autobuffer => true, :style => "float: right; width: 19%" %>
-              </video>
-          <% else %>
-              <%= image_tag url_for(:controller => :images, :action => :inline, :id => e.id, :format => e.format, :width => 185), :title => e.name || 'Bilde', :style=>"float: right; width: 19%" %>
-          <% end %>
-          <br clear="right"/>
-      <% end %>
+      <%= f.text_area :description, :class => :tiny_mce, :cols => 100, :rows => 36 %>
     </div>
 
     <% unless @embu.new_record? %>
