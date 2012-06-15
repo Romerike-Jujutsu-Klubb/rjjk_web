@@ -40,7 +40,7 @@ div.main_right div.events p {
 div.main_right ul.controls {
     margin: 0;
     width: 100%;
-    text-align: center;
+    text-align: left;
 }
 
 table {
