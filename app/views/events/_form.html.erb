@@ -3,23 +3,23 @@
 <%=form_for(@event) do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.label :name %><br />
+    <p style="float: left; margin-right: 1em">
+    <%= f.label :name, 'Navn' %><br />
     <%= f.text_field :name %>
   </p>
   <p style="float: left; margin-right: 1em">
-    <%= f.label :start_tidspunkt %><br />
+    <%= f.label :start_at, 'Fra' %><br />
     <%= f.datetime_picker :start_at, :value => @event.start_at && @event.start_at.strftime('%Y-%m-%d %H:%M'),
                           :dateFormat => 'yy-mm-dd', :timeFormat => 'h:m', :firstDay => 1, :size => 18 %>
   </p>
   <p>
-    <%= f.label :slutt_tidspunkt %><br />
+    <%= f.label :end_at, 'Til (valgfritt)' %><br />
     <%= f.datetime_picker :end_at, :value => @event.end_at && @event.end_at.strftime('%Y-%m-%d %H:%M'),
                      :dateFormat => 'yy-mm-dd', :timeFormat => 'h:m', :firstDay => 1, :size => 18 %>
   </p>
   <p>
     <%= f.label :beskrivelse %><br />
-    <%= f.text_area :description, :class => 'tiny_mce' %>
+    <%= f.text_area :description, :class => 'tiny_mce', :cols => 100, :rows => 36 %>
   </p>
   <p>
     <%= f.submit "Lagre" %>
