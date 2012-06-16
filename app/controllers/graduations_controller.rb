@@ -79,7 +79,8 @@ class GraduationsController < ApplicationController
                               :margin => 0 do
       create_stamp('border') { image img,
                                      :at  => [0, Prawn::Document::PageGeometry::SIZES["A4"][0]],
-                                     :fit => Prawn::Document::PageGeometry::SIZES["A4"].reverse }
+                                     :width => Prawn::Document::PageGeometry::SIZES["A4"][1],
+                                     :height => Prawn::Document::PageGeometry::SIZES["A4"][0] }
       stamp 'border'
       date = graduation.held_on
       graduation.graduates.sort_by { |g| -g.rank.position }.each do |graduate|
