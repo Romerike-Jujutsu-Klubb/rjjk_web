@@ -84,11 +84,11 @@ class GraduationsController < ApplicationController
       stamp 'border'
       date = graduation.held_on
       graduation.graduates.sort_by { |g| -g.rank.position }.each do |graduate|
-        move_down 336
+        move_down 344
         text graduate.member.name, :size => 18, :align => :center
         move_down 16
         text "#{graduate.rank.name} #{graduate.rank.colour}", :size => 18, :align => :center
-        move_down 16
+        move_down 17
         text "#{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}", :size => 18, :align => :center
         unless graduate.rank.group.name == 'Grizzly'
           draw_text graduate.rank.group.name, :at => [120 + 36, 300 + 36], :size => 18
