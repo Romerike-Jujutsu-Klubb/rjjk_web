@@ -72,7 +72,7 @@ class GraduationsController < ApplicationController
   def certificates
     graduation = Graduation.find(params[:id])
     date = graduation.held_on
-    content = graduation.graduates.sort_by { |g| -g.rank.position }.map{|g| {:name => g.member.name, :rank => "#{graduate.rank.name} #{g.rank.colour}", :group => g.rank.group.name}}
+    content = graduation.graduates.sort_by { |g| -g.rank.position }.map{|g| {:name => g.member.name, :rank => "#{g.rank.name} #{g.rank.colour}", :group => g.rank.group.name}}
     filename   = "Certificates_#{graduation.martial_art.name}_#{graduation.held_on}.pdf"
     send_data certificates_pdf(date, content), :type => "text/pdf", :filename => filename, :disposition => 'attachment'
   end
