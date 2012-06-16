@@ -71,34 +71,26 @@ class GraduationsController < ApplicationController
 
   def certificates
     graduation = Graduation.find(params[:id])
-    template   = "#{Rails::root}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.pdf"
+    date = graduation.held_on
+    content = graduation.graduates.sort_by { |g| -g.rank.position }.map{|g| {:name => g.member.name, :rank => "#{graduate.rank.name} #{g.rank.colour}", :group => g.rank.group.name}}
     filename   = "Certificates_#{graduation.martial_art.name}_#{graduation.held_on}.pdf"
-    img = "#{Rails::root}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.jpg"
+    send_data certificates_pdf(date, content), :type => "text/pdf", :filename => filename, :disposition => 'attachment'
+  end
 
-    pdf = Prawn::Document.new :page_size => 'A4', :page_layout => :landscape,
-                              :margin => 0 do
-      create_stamp('border') { image img,
-                                     :at  => [0, Prawn::Document::PageGeometry::SIZES["A4"][0]],
-                                     :width => Prawn::Document::PageGeometry::SIZES["A4"][1],
-                                     :height => Prawn::Document::PageGeometry::SIZES["A4"][0] }
-      stamp 'border'
-      date = graduation.held_on
-      graduation.graduates.sort_by { |g| -g.rank.position }.each do |graduate|
-        move_down 344
-        text graduate.member.name, :size => 18, :align => :center
-        move_down 16
-        text "#{graduate.rank.name} #{graduate.rank.colour}", :size => 18, :align => :center
-        move_down 17
-        text "#{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}", :size => 18, :align => :center
-        unless graduate.rank.group.name == 'Grizzly'
-          draw_text graduate.rank.group.name, :at => [120 + 36, 300 + 36], :size => 18
-        end
-        start_new_page
-        stamp 'border'
-      end
+  def birthday_certificates
+    date     = Date.parse('2012-06-17')
+    content  = ['Oskar Flesland', 'Peter Flesland', 'Jørgen Daland Bjørnsen', 'Ulvar Jensen Fresvig', 'Nicolai Hagen',
+                'Ismael Iturrieta-Ismail', 'Leander Mathisen', 'Jesper Skogly', 'Selmer Solland', 'Oskar Strand',
+                'Benjamin westby', 'Haben'].map do |n|
+      {
+          :name    => n, :rank => "Innføring i Jujutsu", :group => "",
+          :censor1 => {:title => 'Sensei', :name => 'Uwe Kubosch'},
+          :censor2 => {:title => 'Sempai', :name => 'Tuan Le'},
+          :censor3 => {:title => 'Sempai', :name => 'Svein Robert Rolijordet'},
+      }
     end
-
-    send_data pdf.render, :type => "text/pdf", :filename => filename, :disposition => 'attachment'
+    filename = "Certificates_birthday_#{date}.pdf"
+    send_data certificates_pdf(date, content), :type => "text/pdf", :filename => filename, :disposition => 'attachment'
   end
 
   def list_graduates
@@ -148,6 +140,44 @@ class GraduationsController < ApplicationController
         includes({:graduation => :martial_art}, :member, {:rank => :group}).
         #order('ranks_graduates.position DESC, members.first_name, members.last_name').all
         order('ranks.position DESC, members.first_name, members.last_name').all
+  end
+
+  def certificates_pdf(date, content)
+    Prawn::Document.new :page_size => 'A4', :page_layout => :landscape, :margin    => 0 do
+      create_stamp('border') { image "#{Rails::root}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.jpg",
+                                     :at     => [0, Prawn::Document::PageGeometry::SIZES["A4"][0]],
+                                     :width  => Prawn::Document::PageGeometry::SIZES["A4"][1],
+                                     :height => Prawn::Document::PageGeometry::SIZES["A4"][0] }
+      stamp 'border'
+      content.each do |c|
+        move_down 344
+        text c[:name], :size => 18, :align => :center
+        move_down 16
+        text c[:rank], :size => 18, :align => :center
+        move_down 17
+        text "#{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}", :size => 18, :align => :center
+        move_down 17
+        title_x = 275
+        name_x = 350
+        if c[:censor1]
+          text_box c[:censor1][:title], :at => [title_x, cursor], :size => 18, :align => :left
+          text_box c[:censor1][:name],  :at => [name_x, cursor], :size => 18, :align => :left
+        end
+        if c[:censor2]
+          text_box c[:censor2][:title], :at => [title_x, cursor - 35], :size => 18, :align => :left
+          text_box c[:censor2][:name],  :at => [name_x, cursor - 35], :size => 18, :align => :left
+        end
+        if c[:censor3]
+          text_box c[:censor3][:title], :at => [title_x, cursor - 60], :size => 18, :align => :left
+          text_box c[:censor3][:name],  :at => [name_x, cursor - 60], :size => 18, :align => :left
+        end
+        unless c[:group] == 'Grizzly'
+          draw_text c[:group], :at => [120 + 36, 300 + 36], :size => 18
+        end
+        start_new_page
+        stamp 'border'
+      end
+    end.render
   end
 
 end
