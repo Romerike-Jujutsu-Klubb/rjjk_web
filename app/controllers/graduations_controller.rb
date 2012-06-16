@@ -73,20 +73,27 @@ class GraduationsController < ApplicationController
     graduation = Graduation.find(params[:id])
     template   = "#{Rails::root}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.pdf"
     filename   = "Certificates_#{graduation.martial_art.name}_#{graduation.held_on}.pdf"
+    img = "#{Rails::root}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.jpg"
 
-    pdf = Prawn::Document.new :template => template do
+    pdf = Prawn::Document.new :page_size => 'A4', :page_layout => :landscape,
+                              :margin => 0 do
+      create_stamp('border') { image img,
+                                     :at  => [0, Prawn::Document::PageGeometry::SIZES["A4"][0]],
+                                     :fit => Prawn::Document::PageGeometry::SIZES["A4"].reverse }
+      stamp 'border'
       date = graduation.held_on
       graduation.graduates.sort_by { |g| -g.rank.position }.each do |graduate|
-        move_down 300
+        move_down 336
         text graduate.member.name, :size => 18, :align => :center
         move_down 16
         text "#{graduate.rank.name} #{graduate.rank.colour}", :size => 18, :align => :center
         move_down 16
         text "#{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}", :size => 18, :align => :center
         unless graduate.rank.group.name == 'Grizzly'
-          draw_text graduate.rank.group.name, :at => [120, 300], :size => 18
+          draw_text graduate.rank.group.name, :at => [120 + 36, 300 + 36], :size => 18
         end
-        start_new_page :template => template
+        start_new_page
+        stamp 'border'
       end
     end
 
@@ -105,7 +112,7 @@ class GraduationsController < ApplicationController
 
   def censor_form_pdf
     graduation = Graduation.find(params[:id])
-    filename   = "Certificates_#{graduation.martial_art.name}_#{graduation.held_on}.pdf"
+    filename   = "Sensorskjema_#{graduation.held_on}.pdf"
 
     pdf = Prawn::Document.new do
       date = graduation.held_on
@@ -123,7 +130,7 @@ class GraduationsController < ApplicationController
             '',
         ]
       end
-      table([['Utøver', 'Bra', 'Kan bli bedre']] + data, :cell_style => {:inline_format => true, :width => 180, :padding => 8})
+      table([['Utøver', 'Bra', 'Kan bli bedre']] + data, :header => true, :cell_style => {:inline_format => true, :width => 180, :padding => 8})
       start_new_page
     end
 
