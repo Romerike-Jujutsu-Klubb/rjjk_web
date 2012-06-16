@@ -93,26 +93,39 @@
               <% body = event.body %>
                 <% if event.start_at.mon != last_mon %>
                     <% last_mon = event.start_at.mon %>
-                    <h4><%= t Date::MONTHNAMES[last_mon] %></h4>
+                    <h4 style="color: #E20916"><%= t Date::MONTHNAMES[last_mon] %></h4>
                 <% end %>
                 <h4>
-                <% if event.start_at.min != 0 || event.start_at.hour != 0 %>
-                    <%= event.start_at.strftime('%d. %H:%M') %>
-                <% else %>
-                    <%=event.start_at.mday%><%= '.' if event.end_at.nil? || event.end_at.to_date == event.start_at.to_date %>
-                <% end %>
-                <% if event.end_at %>
-                    <%= event.end_at.strftime('- %d') if event.end_at.to_date != event.start_at.to_date %>
-                    <%= event.end_at.strftime('- %H:%M') if event.end_at.hour != 0 || event.end_at.min != 0 %>
-                <% end %>
+                  <% if event.end_at.nil? || event.end_at == event.start_at %>
+                      <% if event.start_at.min != 0 || event.start_at.hour != 0 %>
+                          <%= t(:date)[:day_names][event.start_at.wday]%> <%= event.start_at.strftime('%d. kl. %H:%M') %>
+                      <% else %>
+                          <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>.
+                      <% end %>
+                  <% else %>
+                      <% if event.end_at.to_date == event.start_at.to_date %>
+                          <%= t(:date)[:day_names][event.start_at.wday]%> <%= event.start_at.mday %>.<br/>
+                          kl. <%= event.start_at.strftime('%H:%M') %>-<%= event.end_at.strftime('%H:%M') %>
+                      <% else %>
+                          <% if event.start_at.min == 0 && event.start_at.hour == 0 && event.end_at.hour == 0 && event.end_at.min == 0 %>
+                              <%= event.start_at.mday %>-<%=event.end_at.mday%>.
+                          <% else %>
+                              <%= t(:date)[:day_names][event.start_at.wday] %>
+                          <% end %>
+                      <%= event.end_at.strftime('- %H:%M') if event.end_at.hour != 0 || event.end_at.min != 0 %>
+                      <% end %>
+                  <% end %>
+                </h4>
+
+                <h4>
                 <% if body %>
                     <%= link_to event.name, :controller => :events, :action => :show, :id => event.id %>
                 <% else %>
                     <%= event.name %>
                 <% end %>
-              </h4>
+                </h4>
 
-              <% if ingress %>
+                <% if ingress %>
                   <%= ingress.html_safe %>
               <% end %>
                 <ul class="controls">
