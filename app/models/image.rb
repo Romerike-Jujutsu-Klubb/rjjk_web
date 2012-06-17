@@ -3,6 +3,8 @@ class Image < ActiveRecord::Base
 
   default_scope :select => (column_names - ['content_data']).map{|c| "images.#{c}"}
   scope :with_image, :select =>	'*'
+  scope :public, where(:public => true, :approved => true)
+  scope :images, where("content_type LIKE 'image/%'")
 
   belongs_to :user
   has_many :user_images

@@ -5,7 +5,7 @@ class InfoController < ApplicationController
   
   def index
     unless id = params[:id]
-      id = InformationPage.find(:first, :order => 'id')
+      id = InformationPage.first(:order => 'id')
       unless id
         redirect_to :action => :new
         return
@@ -43,7 +43,7 @@ class InfoController < ApplicationController
   def new
     @information_page = InformationPage.new
     @information_page.parent_id = params[:parent_id]
-    @images = Image.find(:all, :conditions => "name NOT LIKE '%.MP4'", :select => 'id, name')
+    load_images
   end
 
   def create
@@ -58,7 +58,7 @@ class InfoController < ApplicationController
 
   def rediger
     @information_page = InformationPage.find(params[:id])
-    @images = Image.find(:all, :conditions => "name NOT LIKE '%.MP4'", :select => 'id, name')
+    load_images
   end
 
   def update
@@ -75,5 +75,11 @@ class InfoController < ApplicationController
     InformationPage.find(params[:id]).destroy
     redirect_to :controller => :news, :action => :index
   end
-  
+
+  private
+
+  def load_images
+    @images = Image.public.images.select('id, name').all
+  end
+
 end

@@ -1,10 +1,9 @@
 <% @content_width = 1024 %>
 
-<h1>New information_page</h1>
+<h1>Opprette ny informasjonsside</h1>
 
 <%=form_tag :action => 'create' do %>
   <%= render :partial => 'form' %>
-  <%= submit_tag "Create" %>
+  <%= submit_tag 'Lagre' %>
+  <%= back_or_link_to 'Tilbake', :action => 'list' %>
 <% end %>
-
-<%= link_to 'Back', :action => 'list' %>

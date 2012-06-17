@@ -1,16 +1,14 @@
 <% @title = @information_page.title %>
 
-<h1><%=h @information_page.title %></h1>
+<h1><%= h @information_page.title %></h1>
 
 <p>
-	<%=@information_page.body.try(:html_safe)%>
+  <%= @information_page.body.try(:html_safe) %>
 </p>
 
 <% if user? || admin? %>
-<br clear="all"/>
-
-<ul class="controls">
-  <li><%=link_to 'Rediger', {:action => 'rediger', :id => @information_page}, :class => :edit %></li>
-  <li><%=link_to 'Slett', {:action => 'destroy', :id => @information_page}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
-</ul>
+    <ul class="controls">
+      <li><%= link_to 'Rediger', {:action => 'rediger', :id => @information_page}, :class => :edit %></li>
+      <li><%= link_to 'Slett', {:action => 'destroy', :id => @information_page}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
+    </ul>
 <% end %>
