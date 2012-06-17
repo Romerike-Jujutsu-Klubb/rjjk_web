@@ -20,7 +20,7 @@ class NewsController < ApplicationController
 
   def new
     @news_item ||= NewsItem.new
-    @images = Image.all(:conditions => "name NOT LIKE '%.MP4'", :select => 'id, name')
+    load_images
     render :action => :new
   end
 
@@ -36,7 +36,7 @@ class NewsController < ApplicationController
 
   def edit
     @news_item = NewsItem.find(params[:id])
-    @images = Image.all(:conditions => "name NOT LIKE '%.MP4'", :select => 'id, name')
+    load_images
   end
 
   def update
@@ -60,6 +60,12 @@ class NewsController < ApplicationController
   def destroy
     NewsItem.find(params[:id]).destroy
     redirect_to :action => :list
+  end
+
+  private
+
+  def load_images
+    @images = Image.public.images.select('id, name').all
   end
 
 end
