@@ -147,6 +147,12 @@ class GraduationsController < ApplicationController
       page_width = Prawn::Document::PageGeometry::SIZES["A4"][1]
       page_height = Prawn::Document::PageGeometry::SIZES["A4"][0]
       name_width = 440
+      labels_x = 143
+      graduate_name_y = 250
+      rank_y = 213
+      date_y = 176
+      sensor_y = 139
+
       create_stamp('border') do
         rotate 0.5 do
         image "#{Rails::root}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.jpg",
@@ -228,57 +234,49 @@ class GraduationsController < ApplicationController
           text 'Kei Wa Ryu', :align => :center, :size => 36, :mode => :fill_stroke, :character_spacing => 1
         end
 
-      end
-      stamp 'border'
-      content.each do |c|
-        labels_x = 143
-
+        # Mask old labels
         fill_color "ffffff"
         fill_rectangle [95, 255], 55, 140
         fill_color "000000"
 
         font 'Helvetica'
-        name_y = 250
-        bounding_box [labels_x, name_y], :width => 80, :height => 20 do
+        bounding_box [labels_x, graduate_name_y], :width => 80, :height => 20 do
           text 'Navn', :size => 18, :align => :center, :style => :italic
         end
-        bounding_box [(page_width - name_width) / 2, name_y], :width => name_width, :height => 20 do
-          text c[:name], :size => 18, :align => :center, :valign => :bottom
-        end
-        move_down 17
-        rank_y = cursor
         bounding_box [labels_x, rank_y], :width => 80, :height => 20 do
           text 'Grad', :size => 18, :align => :center, :style => :italic
+        end
+        bounding_box [labels_x, date_y], :width => 80, :height => 20 do
+          text 'Dato', :size => 18, :align => :center, :style => :italic
+        end
+        bounding_box [labels_x, sensor_y], :width => 80, :height => 20 do
+          text 'Sensor', :size => 18, :align => :center, :style => :italic
+        end
+      end
+      stamp 'border'
+      content.each do |c|
+        bounding_box [(page_width - name_width) / 2, graduate_name_y], :width => name_width, :height => 20 do
+          text c[:name], :size => 18, :align => :center, :valign => :bottom
         end
         bounding_box [(page_width - name_width) / 2, rank_y], :width => name_width, :height => 20 do
           text c[:rank], :size => 18, :align => :center
         end
-        move_down 17
-        date_y = cursor
-        bounding_box [labels_x, date_y], :width => 80, :height => 20 do
-          text 'Dato', :size => 18, :align => :center, :style => :italic
-        end
         bounding_box [(page_width - name_width) / 2, date_y], :width => name_width, :height => 20 do
           text "#{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}", :size => 18, :align => :center
         end
-        move_down 17
-        sensor_y = cursor
-        bounding_box [labels_x, sensor_y], :width => 80, :height => 20 do
-          text 'Sensor', :size => 18, :align => :center, :style => :italic
-        end
-        title_x = 275
-        name_x = 350
+        censor_title_x = 275
+        censor_name_x = 350
         if c[:censor1]
-          text_box c[:censor1][:title], :at => [title_x, sensor_y], :size => 18, :align => :left
-          text_box c[:censor1][:name],  :at => [name_x, sensor_y], :size => 18, :align => :left
+          text_box c[:censor1][:title], :at => [censor_title_x, sensor_y], :size => 18, :align => :left
+          text_box c[:censor1][:name],  :at => [censor_name_x, sensor_y], :size => 18, :align => :left
         end
         if c[:censor2]
-          text_box c[:censor2][:title], :at => [title_x, sensor_y - 35], :size => 18, :align => :left
-          text_box c[:censor2][:name],  :at => [name_x, sensor_y - 35], :size => 18, :align => :left
+          text_box c[:censor2][:title], :at => [censor_title_x, sensor_y - 35], :size => 18, :align => :left
+          text_box c[:censor2][:name],  :at => [censor_name_x, sensor_y - 35], :size => 18, :align => :left
         end
         if c[:censor3]
-          text_box c[:censor3][:title], :at => [title_x, sensor_y - 60], :size => 18, :align => :left
-          text_box c[:censor3][:name],  :at => [name_x, sensor_y - 60], :size => 18, :align => :left
+          text_box c[:censor3][:title], :at => [censor_title_x, sensor_y - 60], :size => 18, :align => :left
+          text_box c[:censor3][:name],  :at => [censor_name_x, sensor_y - 60], :size => 18, :align => :left
         end
         unless c[:group] == 'Grizzly'
           draw_text c[:group], :at => [120 + 36, 300 + 36], :size => 18
