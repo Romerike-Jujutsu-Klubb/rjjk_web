@@ -155,11 +155,11 @@ class GraduationsController < ApplicationController
 
       create_stamp('border') do
         rotate 0.5 do
-        image "#{Rails::root}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.jpg",
-              :at     => [1, page_height - 4],
-              :width  => page_width,
-              :height => page_height,
-        end
+          image "#{Rails::root}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.jpg",
+                :at     => [1, page_height - 4],
+                :width  => page_width,
+                :height => page_height,
+          end
         logo_width = 120
 
         fill_color "ffffff"
@@ -207,21 +207,9 @@ class GraduationsController < ApplicationController
         fill_color "000000"
 
         bounding_box [(page_width - name_width) / 2, 397], :width => name_width, :height => 60 do
-          # fill_color "E20816"
-          # stroke_color "000000"
           font 'Times-Roman', :style => :italic
           text 'Sertifikat', :align => :center, :size => 54, :mode => :fill_stroke, :character_spacing => 2
         end
-
-        #bounding_box [670, 370], :width => 60, :height => 280 do
-        #  stroke_bounds
-        #  fill_color "000000"
-        #  stroke_color "000000"
-        #  font 'Times-Roman'
-        #  font("#{Rails.root}/app/views/graduations/japanese.ttf") do
-        #    text '啓 和 流 柔 術', :align => :center, :size => 36
-        #  end
-        #end
 
         fill_color "ffffff"
         fill_rectangle [(page_width - name_width) / 2, 327], name_width, 40
