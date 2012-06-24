@@ -83,6 +83,7 @@
       <% end %>
 
       <% if @events.any? %>
+          <% last_year = Date.today.year %>
           <% last_mon = nil %>
           <div class="events">
           <h3>Hva skjer?</h3>
@@ -91,6 +92,10 @@
               <% ingress = event.ingress %>
               <% ingress = nil if ingress.blank? %>
               <% body = event.body %>
+                <% if event.start_at.year != last_year %>
+                    <% last_year = event.start_at.year %>
+                    <h4 style="color: #E20916"><%=last_year %></h4>
+                <% end %>
                 <% if event.start_at.mon != last_mon %>
                     <% last_mon = event.start_at.mon %>
                     <h4 style="color: #E20916"><%= t Date::MONTHNAMES[last_mon] %></h4>
@@ -110,9 +115,10 @@
                           <% if event.start_at.min == 0 && event.start_at.hour == 0 && event.end_at.hour == 0 && event.end_at.min == 0 %>
                               <%= event.start_at.mday %>-<%=event.end_at.mday%>.
                           <% else %>
-                              <%= t(:date)[:day_names][event.start_at.wday] %>
+                              <%= t(:date)[:day_names][event.start_at.wday]%> <%= event.start_at.mday %>. <%= event.start_at.strftime('%H:%M') %>
+                              -
+                              <%= t(:date)[:day_names][event.end_at.wday] %>  <%=event.end_at.mday%>.     <%= event.end_at.strftime('%H:%M') %>
                           <% end %>
-                      <%= event.end_at.strftime('- %H:%M') if event.end_at.hour != 0 || event.end_at.min != 0 %>
                       <% end %>
                   <% end %>
                 </h4>
