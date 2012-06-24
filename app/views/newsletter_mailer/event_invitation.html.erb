@@ -65,8 +65,30 @@
                         </td>
                         <td align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#acabab;">
                           <p style="margin:0 0 10px 0; font-size:18px; color:#E20916;"><%= @event.name %></p>
-                          <%= @event.start_at.strftime "%d. #{t(:date)[:month_names][@event.updated_at.month]} %Y" %>
-                          <%= @event.start_at.strftime "kl. %H:%M" if @event.start_at.hour != 0 || @event.start_at.min != 0 %>
+
+                          <% event = @event %>
+                          <% last_mon = event.start_at.mon %>
+                            <% if event.end_at.nil? || event.end_at == event.start_at %>
+                                <% if event.start_at.min != 0 || event.start_at.hour != 0 %>
+                                    <%= t(:date)[:day_names][event.start_at.wday]%> <%= event.start_at.mday %>. <%= t Date::MONTHNAMES[last_mon] %> <%= event.start_at.strftime('%d. kl. %H:%M') %>
+                                <% else %>
+                                    <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>. <%= t Date::MONTHNAMES[last_mon] %>
+                                <% end %>
+                            <% else %>
+                                <% if event.end_at.to_date == event.start_at.to_date %>
+                                    <%= t(:date)[:day_names][event.start_at.wday]%> <%= event.start_at.mday %>. <%= t Date::MONTHNAMES[last_mon] %><br/>
+                                    kl. <%= event.start_at.strftime('%H:%M') %>-<%= event.end_at.strftime('%H:%M') %>
+                                <% else %>
+                                    <% if event.start_at.min == 0 && event.start_at.hour == 0 && event.end_at.hour == 0 && event.end_at.min == 0 %>
+                                        <%= event.start_at.mday %>-<%=event.end_at.mday%>. <%= t Date::MONTHNAMES[last_mon] %>
+                                    <% else %>
+                                        <%= t(:date)[:day_names][event.start_at.wday] %>
+                                    <% end %>
+                                    <%= event.end_at.strftime('- %H:%M') if event.end_at.hour != 0 || event.end_at.min != 0 %>
+                                <% end %>
+                            <% end %>
+                          <%= @event.start_at.year %>
+
                         </td>
                       </tr>
                     </table>
