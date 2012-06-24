@@ -6,15 +6,15 @@
   <% for image in images.sort_by { |i| i.name.upcase } %>
       <tr>
         <td align="center">
-          <%=link_to_redbox(
-                      image_tag(url_for(:only_path => false, :controller => 'images', :action => :inline, :id => image.id, :format => image.format), :width => 160, :title => h(image.name), :alt => h(image.name)),
+          <%= link_to(image_tag(url_for(:only_path => false, :controller => 'images', :action => :inline, :id => image.id, :format => image.format), :width => 160, :title => h(image.name), :alt => h(image.name)),
                       {:controller => 'images', :action => 'show', :id => image.id},
                       :title => h(image.name), :author => "RJJK", :caption => h(image.name)
               ) %>
           <br/>
-          <%=image.name %><br/>
+          <%= image.name %>
+          <br/>
           <%= detour_to 'Rediger', :controller => 'images', :action => 'edit', :id => image.id %>
-          <%= detour_to 'Slett', {:controller => 'images', :action => 'destroy', :id => image.id}, :confirm => 'Are you sure?', :method => :delete %>
+          <%= detour_to 'Slett', {:controller => 'images', :action => 'destroy', :id => image.id}, :data => {:confirm => 'Are you sure?'}, :method => :delete %>
         </td>
       </tr>
   <% end %>

@@ -96,7 +96,7 @@
     <td><%=h nkf_member.antall_etiketter_1 %></td>
     <td><%= link_to 'Show', nkf_member %></td>
     <td><%= link_to 'Edit', edit_nkf_member_path(nkf_member) %></td>
-    <td><%= link_to 'Destroy', nkf_member, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', nkf_member, data: {:confirm => 'Are you sure?'}, :method => :delete %></td>
   </tr>
 <% end %>
 </table>

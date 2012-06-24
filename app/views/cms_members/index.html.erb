@@ -66,7 +66,7 @@
     <td><%=h cms_member.billing_phone_mobile %></td>
     <td><%= link_to 'Show', cms_member %></td>
     <td><%= link_to 'Edit', edit_cms_member_path(cms_member) %></td>
-    <td><%= link_to 'Destroy', cms_member, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', cms_member, :data => {:confirm => 'Are you sure?'}, :method => :delete %></td>
   </tr>
 <% end %>
 </table>

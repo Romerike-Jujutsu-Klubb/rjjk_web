@@ -17,7 +17,7 @@
     <td><%= correspondence.related_model_id %></td>
     <td><%= link_to 'Show', correspondence %></td>
     <td><%= link_to 'Edit', edit_correspondence_path(correspondence) %></td>
-    <td><%= link_to 'Destroy', correspondence, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Destroy', correspondence, data: {confirm: 'Are you sure?'}, method: :delete %></td>
   </tr>
 <% end %>
 </table>

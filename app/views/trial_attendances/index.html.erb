@@ -8,7 +8,7 @@
   <tr>
     <td><%= link_to 'Show', trial_attendance %></td>
     <td><%= link_to 'Edit', edit_trial_attendance_path(trial_attendance) %></td>
-    <td><%= link_to 'Destroy', trial_attendance, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', trial_attendance, data: {:confirm => 'Are you sure?'}, :method => :delete %></td>
   </tr>
 <% end %>
 </table>

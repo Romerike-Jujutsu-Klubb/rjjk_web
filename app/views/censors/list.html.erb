@@ -14,7 +14,7 @@
   <% end %>
     <td><%= link_to 'Show', :action => 'show', :id => censor %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => censor %></td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => censor }, :confirm => 'Are you sure?', :method => :post %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => censor }, :data => {:confirm => 'Are you sure?'}, :method => :post %></td>
   </tr>
 <% end %>
 </table>

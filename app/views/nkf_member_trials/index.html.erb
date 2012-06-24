@@ -32,7 +32,7 @@
     <td><%=h nkf_member_trial.reg_dato %></td>
     <td><%= link_to 'Show', nkf_member_trial %></td>
     <td><%= link_to 'Edit', edit_nkf_member_trial_path(nkf_member_trial) %></td>
-    <td><%= link_to 'Destroy', nkf_member_trial, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', nkf_member_trial, data: {:confirm => 'Are you sure?'}, :method => :delete %></td>
   </tr>
 <% end %>
 </table>

@@ -21,7 +21,7 @@
         <td><%= embu.description %></td>
         <td><%= link_to 'Show', embu %></td>
         <td><%= link_to 'Edit', edit_embu_path(embu) %></td>
-        <td><%= link_to 'Destroy', embu, confirm: 'Are you sure?', method: :delete %></td>
+        <td><%= link_to 'Destroy', embu, data: {confirm: 'Are you sure?'}, method: :delete %></td>
       </tr>
   <% end %>
 </table>

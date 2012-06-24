@@ -15,7 +15,7 @@
     <td><%=t group_schedule.start_at %></td>
     <td><%=t group_schedule.end_at %></td>
     <td><%= link_to 'Redigèr', edit_group_schedule_path(group_schedule) %></td>
-    <td><%= link_to 'Slett', group_schedule, :confirm => 'Sikker?', :method => :delete %></td>
+    <td><%= link_to 'Slett', group_schedule, :data => {:confirm => 'Sikker?'}, :method => :delete %></td>
   </tr>
 <% end %>
 </table>

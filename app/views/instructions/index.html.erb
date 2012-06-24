@@ -17,7 +17,7 @@
     <td><%= instruction.from %></td>
     <td><%= link_to 'Show', instruction %></td>
     <td><%= link_to 'Edit', edit_instruction_path(instruction) %></td>
-    <td><%= link_to 'Destroy', instruction, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Destroy', instruction, data: {confirm: 'Are you sure?'}, method: :delete %></td>
   </tr>
 <% end %>
 </table>
