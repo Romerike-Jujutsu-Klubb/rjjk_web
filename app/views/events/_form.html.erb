@@ -22,7 +22,7 @@
       <%= f.text_area :description, :class => 'tiny_mce', :cols => 100, :rows => 36 %>
     </p>
     <p>
-      <%= f.label :inviterte %>(<%=@event.invitees.split(/\s*,\s*/).size%>) (Kommaseparert liste:  Navn 1 &lt;e-post1&gt;, e-post2, Navn 3 &lt;e-post3&gt;, etc.)<br/>
+      <%= f.label :inviterte %>(<%=@event && @event.invitees.split(/\s*,\s*/).size%>) (Kommaseparert liste:  Navn 1 &lt;e-post1&gt;, e-post2, Navn 3 &lt;e-post3&gt;, etc.)<br/>
       <%= f.text_area :invitees, :cols => 100, :rows => 30 %>
     </p>
     <p>
