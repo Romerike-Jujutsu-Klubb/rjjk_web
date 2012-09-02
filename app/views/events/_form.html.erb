@@ -1,30 +1,34 @@
-<%=render :partial => '/tiny_mce' %>
+<%= render :partial => '/tiny_mce' %>
 
-<%=form_for(@event) do |f| %>
-  <%= f.error_messages %>
+<%= form_for(@event) do |f| %>
+    <%= f.error_messages %>
 
     <p style="float: left; margin-right: 1em">
-    <%= f.label :name, 'Navn' %><br />
-    <%= f.text_field :name, :size => 52 %>
-  </p>
-  <p style="float: left; margin-right: 1em">
-    <%= f.label :start_at, 'Fra' %><br />
-    <%= f.datetime_picker :start_at, :value => @event.start_at && @event.start_at.strftime('%Y-%m-%d %H:%M'),
-                          :dateFormat => 'yy-mm-dd', :timeFormat => 'hh:mm', :firstDay => 1, :size => 18 %>
-  </p>
-  <p>
-    <%= f.label :end_at, 'Til (valgfritt)' %><br />
-    <%= f.datetime_picker :end_at, :value => @event.end_at && @event.end_at.strftime('%Y-%m-%d %H:%M'),
-                     :dateFormat => 'yy-mm-dd', :timeFormat => 'hh:mm', :firstDay => 1, :size => 18 %>
-  </p>
-  <p>
-    <%= f.label :beskrivelse %><br />
-    <%= f.text_area :description, :class => 'tiny_mce', :cols => 100, :rows => 36 %>
-  </p>
-  <p>
-    <%= f.submit "Lagre" %>
-    <%= f.button 'Send meg eksempel på innbydelse', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :example => true)}')" %>
-    <%= f.button 'Send innbydelse til alle aktive medlemmer', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :all)}')" %>
-    <%= back_or_link_to 'Back', events_path %>
-  </p>
+      <%= f.label :name, 'Navn' %><br/>
+      <%= f.text_field :name, :size => 52 %>
+    </p>
+    <p style="float: left; margin-right: 1em">
+      <%= f.label :start_at, 'Fra' %><br/>
+      <%= f.datetime_picker :start_at, :value => @event.start_at && @event.start_at.strftime('%Y-%m-%d %H:%M'),
+                            :dateFormat => 'yy-mm-dd', :timeFormat => 'hh:mm', :firstDay => 1, :size => 18 %>
+    </p>
+    <p>
+      <%= f.label :end_at, 'Til (valgfritt)' %><br/>
+      <%= f.datetime_picker :end_at, :value => @event.end_at && @event.end_at.strftime('%Y-%m-%d %H:%M'),
+                            :dateFormat => 'yy-mm-dd', :timeFormat => 'hh:mm', :firstDay => 1, :size => 18 %>
+    </p>
+    <p>
+      <%= f.label :beskrivelse %><br/>
+      <%= f.text_area :description, :class => 'tiny_mce', :cols => 100, :rows => 36 %>
+    </p>
+    <p>
+      <%= f.label :inviterte %>(<%=@event.invitees.split(/\s*,\s*/).size%>) (Kommaseparert liste:  Navn 1 &lt;e-post1&gt;, e-post2, Navn 3 &lt;e-post3&gt;, etc.)<br/>
+      <%= f.text_area :invitees, :cols => 100, :rows => 30 %>
+    </p>
+    <p>
+      <%= f.submit "Lagre" %>
+      <%= f.button 'Send meg eksempel på innbydelse', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :example => true)}')" %>
+      <%= f.button 'Send innbydelse til alle aktive medlemmer', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :all)}')" %>
+      <%= back_or_link_to 'Back', events_path %>
+    </p>
 <% end %>

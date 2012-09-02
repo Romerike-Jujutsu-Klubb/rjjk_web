@@ -1,6 +1,17 @@
 class Event < ActiveRecord::Base
   default_scope :order => 'start_at'
 
+  before_validation do |r|
+    if r.invitees.nil? || r.invitees.blank?
+      r.invitees = nil
+    else
+      r.invitees = r.invitees.gsub /^\s+/, ''
+      r.invitees = r.invitees.gsub /\s+$/, ''
+      r.invitees = r.invitees.gsub /\s+/, ' '
+      r.invitees = r.invitees.split(/\s*,\s*/).sort_by(&:upcase).join(",\n") + "\n"
+    end
+  end
+
   validates_presence_of :start_at
 
   def ingress
