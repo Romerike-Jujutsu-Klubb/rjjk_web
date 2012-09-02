@@ -10,12 +10,12 @@
   <p style="float: left; margin-right: 1em">
     <%= f.label :start_at, 'Fra' %><br />
     <%= f.datetime_picker :start_at, :value => @event.start_at && @event.start_at.strftime('%Y-%m-%d %H:%M'),
-                          :dateFormat => 'yy-mm-dd', :timeFormat => 'h:m', :firstDay => 1, :size => 18 %>
+                          :dateFormat => 'yy-mm-dd', :timeFormat => 'hh:mm', :firstDay => 1, :size => 18 %>
   </p>
   <p>
     <%= f.label :end_at, 'Til (valgfritt)' %><br />
     <%= f.datetime_picker :end_at, :value => @event.end_at && @event.end_at.strftime('%Y-%m-%d %H:%M'),
-                     :dateFormat => 'yy-mm-dd', :timeFormat => 'h:m', :firstDay => 1, :size => 18 %>
+                     :dateFormat => 'yy-mm-dd', :timeFormat => 'hh:mm', :firstDay => 1, :size => 18 %>
   </p>
   <p>
     <%= f.label :beskrivelse %><br />
