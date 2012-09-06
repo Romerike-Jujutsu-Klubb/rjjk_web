@@ -13,7 +13,9 @@
     <%= h member.age %>
   </td>
   <td nowrap="true">
-    <% if @group %>
+    <% if member.left_on && member.left_on < (@dates[0] + 2.months) %>
+        Utmeldt fra <%= member.left_on %>
+    <% elsif @group %>
         <%= h member.current_rank(@group.martial_art).try(:colour) %>
     <% else %>
         &nbsp;
