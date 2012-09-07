@@ -56,7 +56,7 @@ class NkfMembersController < ApplicationController
     c = NkfMemberComparison.new
     @orphan_nkf_members = c.orphan_nkf_members
     @orphan_members = c.orphan_members
-    @groups = c.groups
+    @groups = Group.order('from_age DESC, to_age DESC').all
     @members = c.members
   end
   
