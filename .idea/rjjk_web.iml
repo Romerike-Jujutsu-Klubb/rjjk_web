@@ -101,7 +101,7 @@
     <orderEntry type="library" scope="PROVIDED" name="dynamic_form (v1.1.4, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="erubis (v2.7.0, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="execjs (v1.4.0, jruby-1.6.7-p357) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="gmaps4rails (v1.5.2, jruby-1.6.7-p357) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="gmaps4rails (v1.4.8, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="gruff (v0.3.6, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="hike (v1.2.1, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="httparty (v0.8.3, jruby-1.6.7-p357) [gem]" level="application" />
@@ -110,7 +110,7 @@
     <orderEntry type="library" scope="PROVIDED" name="journey (v1.0.4, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jquery-rails (v2.0.2, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jquery-ui-themes (v0.0.6, jruby-1.6.7-p357) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="jquery_datepicker (v0.4@57ff88, jruby-1.6.7-p357) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="jquery_datepicker (v0.4.1@6980f8, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jruby-openssl (v0.7.7, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jruby-rack (v1.1.7, jruby-1.6.7-p357) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="json (v1.7.3, jruby-1.6.7-p357) [gem]" level="application" />

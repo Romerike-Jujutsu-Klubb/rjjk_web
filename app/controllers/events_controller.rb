@@ -19,6 +19,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(params[:event])
+    @event.groups = params[:group][:id].map{|group_id| Group.find(group_id) }
 
     if @event.save
       flash[:notice] = 'Event was successfully created.'
@@ -30,6 +31,7 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
+    @event.groups = params[:group][:id].map{|group_id| Group.find(group_id) }
     if @event.update_attributes(params[:event])
       flash[:notice] = 'Event was successfully updated.'
       redirect_to(@event)
@@ -51,7 +53,9 @@ class EventsController < ApplicationController
     elsif params[:recipients] == 'all'
       recipients = Group.all.map { |g| g.members.active(event.start_at.to_date).map { |m| m.email } }.flatten.compact.sort.uniq
     elsif params[:recipients] == 'invited'
-      recipients = event.invitees.split(/\s*,\s*/)
+      recipients = event.event_invitees.map{|ei| ei.email}
+    elsif params[:recipients] == 'groups'
+      recipients = event.groups.map{|g| g.members.map{|m| m.email}}.flatten
     end
     recipients.each do |recipient|
       NewsletterMailer.event_invitation(event, recipient).deliver

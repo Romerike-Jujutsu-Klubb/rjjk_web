@@ -23,13 +23,48 @@
     </p>
     <p>
       <%= f.label :inviterte %><%="(#{@event.invitees.split(/\s*,\s*/).size})" if @event.invitees%> (Kommaseparert liste:  Navn 1 &lt;e-post1&gt;, e-post2, Navn 3 &lt;e-post3&gt;, etc.)<br/>
-      <%= f.text_area :invitees, :cols => 100, :rows => 30 %>
+      <%= f.text_area :invitees, :cols => 100, :rows => 3 %>
     </p>
+
+    <div style="float: left">
+    <table>
+      <tr>
+        <th>Navn</th>
+        <th>e-post</th>
+      </tr>
+      <% for inv in @event.event_invitees %>
+        <tr>
+          <td><%= inv.email %></td>
+          <td><%= inv.name %></td>
+        </tr>
+      <% end %>
+    </table>
+    <%= f.button 'Send innbydelse til de inviterte', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :invited)}')" %>
+    </div>
+
+    <div style="float: left">
+    <table>
+      <tr>
+        <th>Gruppe</th>
+        <th>Invitert</th>
+      </tr>
+      <% for g in Group.all %>
+        <tr>
+          <td><%= g.name %></td>
+          <td>
+            <%=check_box :group, 'id', {:multiple => true, :checked => @event.groups.include?(g)}, g.id, nil %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <%= f.button 'Send innbydelse til disse gruppene', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :groups)}')" %>
+    </div>
+
+    <br clear="all"/>
+
     <p>
       <%= f.submit "Lagre" %>
       <%= f.button 'Send meg eksempel på innbydelse', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :example => true)}')" %>
-      <%= f.button 'Send innbydelse til alle inviterte', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :invited)}')" %>
-      <%= f.button 'Send innbydelse til alle aktive medlemmer', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :all)}')" %>
       <%= back_or_link_to 'Back', events_path %>
     </p>
 <% end %>
