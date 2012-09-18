@@ -6,7 +6,7 @@ class NewsletterMailer < ActionMailer::Base
     @event = event
     @email = email
 
-    mail to: Rails.env == 'production' ? @email : 'uwe@kubosch.no', subject: "Invitasjon til #{@event.name}"
+    mail to: Rails.env == 'production' ? @email : 'Uwe Kubosch <uwe@kubosch.no>', subject: "Invitasjon til #{@event.name}"
   end
 
   def newsletter(news_item, user)

@@ -28,6 +28,7 @@
     <p>
       <%= f.submit "Lagre" %>
       <%= f.button 'Send meg eksempel på innbydelse', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :example => true)}')" %>
+      <%= f.button 'Send innbydelse til alle inviterte', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :invited)}')" %>
       <%= f.button 'Send innbydelse til alle aktive medlemmer', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :all)}')" %>
       <%= back_or_link_to 'Back', events_path %>
     </p>
