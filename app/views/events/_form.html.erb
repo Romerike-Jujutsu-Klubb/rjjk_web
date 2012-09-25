@@ -31,11 +31,15 @@
       <tr>
         <th>Navn</th>
         <th>e-post</th>
+        <th>Kommer</th>
+        <th>Betalt</th>
       </tr>
       <% for inv in @event.event_invitees %>
         <tr>
-          <td><%= inv.email %></td>
-          <td><%= inv.name %></td>
+          <td><%=detour_to inv.name, edit_event_invitee_path(inv) %></td>
+          <td><%=inv.email %></td>
+          <td><%= inv.will_attend %></td>
+          <td><%= inv.payed %></td>
         </tr>
       <% end %>
     </table>

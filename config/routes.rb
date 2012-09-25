@@ -1,4 +1,6 @@
 RjjkWeb::Application.routes.draw do
+  resources :event_invitees
+
   resources :correspondences
 
   match 'stylesheets/dark_ritual/:width.:format', :controller => 'stylesheets', :action => 'dark_ritual'
