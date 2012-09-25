@@ -24,7 +24,8 @@ class EventInviteesController < ApplicationController
   # GET /event_invitees/new
   # GET /event_invitees/new.json
   def new
-    @event_invitee = EventInvitee.new
+    @event_invitee = EventInvitee.new params[:event_invitee]
+    @users = User.order(:first_name, :last_name).all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,6 +36,7 @@ class EventInviteesController < ApplicationController
   # GET /event_invitees/1/edit
   def edit
     @event_invitee = EventInvitee.find(params[:id])
+    @users = User.order(:first_name, :last_name).all
   end
 
   # POST /event_invitees
@@ -44,9 +46,10 @@ class EventInviteesController < ApplicationController
 
     respond_to do |format|
       if @event_invitee.save
-        format.html { redirect_to @event_invitee, notice: 'Event invitee was successfully created.' }
+        format.html { back_or_redirect_to @event_invitee, notice: 'Event invitee was successfully created.' }
         format.json { render json: @event_invitee, status: :created, location: @event_invitee }
       else
+        @users = User.order(:first_name, :last_name).all
         format.html { render action: "new" }
         format.json { render json: @event_invitee.errors, status: :unprocessable_entity }
       end
@@ -63,6 +66,7 @@ class EventInviteesController < ApplicationController
         format.html { back_or_redirect_to @event_invitee, notice: 'Event invitee was successfully updated.' }
         format.json { head :no_content }
       else
+        @users = User.order(:first_name, :last_name).all
         format.html { render action: "edit" }
         format.json { render json: @event_invitee.errors, status: :unprocessable_entity }
       end

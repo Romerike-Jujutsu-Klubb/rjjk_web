@@ -43,7 +43,8 @@
         </tr>
       <% end %>
     </table>
-    <%= f.button 'Send innbydelse til de inviterte', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :invited)}')" %>
+      <%=detour_to 'Legg til', :controller => :event_invitees, :action => :new, :event_invitee => {:event_id => @event.id} %>
+      <%= f.button 'Send innbydelse til de inviterte', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :invited)}')" %>
     </div>
 
     <div style="float: left">
