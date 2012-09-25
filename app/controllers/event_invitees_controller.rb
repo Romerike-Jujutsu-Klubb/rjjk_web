@@ -25,7 +25,7 @@ class EventInviteesController < ApplicationController
   # GET /event_invitees/new.json
   def new
     @event_invitee = EventInvitee.new params[:event_invitee]
-    @users = User.order(:first_name, :last_name).all
+    load_users
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,20 +36,26 @@ class EventInviteesController < ApplicationController
   # GET /event_invitees/1/edit
   def edit
     @event_invitee = EventInvitee.find(params[:id])
-    @users = User.order(:first_name, :last_name).all
+    load_users
   end
 
   # POST /event_invitees
   # POST /event_invitees.json
   def create
     @event_invitee = EventInvitee.new(params[:event_invitee])
+    if @event_invitee.user
+      @event_invitee.attributes = {
+          :name => @event_invitee.user.name,
+          :email => @event_invitee.user.email,
+      }
+    end
 
     respond_to do |format|
       if @event_invitee.save
         format.html { back_or_redirect_to @event_invitee, notice: 'Event invitee was successfully created.' }
         format.json { render json: @event_invitee, status: :created, location: @event_invitee }
       else
-        @users = User.order(:first_name, :last_name).all
+        load_users
         format.html { render action: "new" }
         format.json { render json: @event_invitee.errors, status: :unprocessable_entity }
       end
@@ -66,7 +72,7 @@ class EventInviteesController < ApplicationController
         format.html { back_or_redirect_to @event_invitee, notice: 'Event invitee was successfully updated.' }
         format.json { head :no_content }
       else
-        @users = User.order(:first_name, :last_name).all
+        load_users
         format.html { render action: "edit" }
         format.json { render json: @event_invitee.errors, status: :unprocessable_entity }
       end
@@ -84,4 +90,11 @@ class EventInviteesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def load_users
+    @users = [@event_invitee.user] + (User.order(:first_name, :last_name).all - @event_invitee.event.users)
+  end
+
 end

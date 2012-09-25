@@ -2,6 +2,7 @@ class Event < ActiveRecord::Base
   default_scope :order => 'start_at'
 
   has_many :event_invitees, :order => :name
+  has_many :users, :through => :event_invitees
   has_and_belongs_to_many :groups
 
   before_validation do |r|

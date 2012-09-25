@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20120925171644_add_will_work_and_comment_to_event_invitees.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/event_invitee.rb" afterPath="$PROJECT_DIR$/app/models/event_invitee.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/event_invitees/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/event_invitees/_form.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/event_invitees_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/event_invitees_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/event.rb" afterPath="$PROJECT_DIR$/app/models/event.rb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -104,19 +102,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="event_invitees_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="event_invitees_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/event_invitees_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="24" selection-start="392" selection-end="392" vertical-scroll-proportion="0.0">
+            <state line="96" column="80" selection-start="2647" selection-end="2647" vertical-scroll-proportion="0.68013465">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="event_invitee.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="event_invitee.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/event_invitee.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="19" selection-start="190" selection-end="190" vertical-scroll-proportion="0.0959596">
+            <state line="3" column="19" selection-start="190" selection-end="190" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -158,16 +156,16 @@
         <option value="$PROJECT_DIR$/db/migrate/20120918170431_create_event_groups.rb" />
         <option value="$PROJECT_DIR$/app/controllers/events_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/event_invitees/index.html.erb" />
-        <option value="$PROJECT_DIR$/app/models/event.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20120925161439_add_phone_to_event_invitee.rb" />
         <option value="$PROJECT_DIR$/app/views/event_invitees/edit.html.erb" />
         <option value="$PROJECT_DIR$/app/views/event_invitees/new.html.erb" />
         <option value="$PROJECT_DIR$/db/migrate/20120925164621_add_user_id_to_event_invitees.rb" />
         <option value="$PROJECT_DIR$/app/views/events/_form.html.erb" />
         <option value="$PROJECT_DIR$/app/views/event_invitees/show.html.erb" />
-        <option value="$PROJECT_DIR$/app/controllers/event_invitees_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/event_invitees/_form.html.erb" />
         <option value="$PROJECT_DIR$/app/models/event_invitee.rb" />
+        <option value="$PROJECT_DIR$/app/models/event.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/event_invitees_controller.rb" />
       </list>
     </option>
   </component>
@@ -2217,7 +2215,11 @@
       <created>1348593173102</created>
       <updated>1348593173103</updated>
     </task>
-    <option name="localTasksCounter" value="267" />
+    <task id="LOCAL-00267" summary="* Registrere medhjelpere og kommentarer for leir">
+      <created>1348593930102</created>
+      <updated>1348593930102</updated>
+    </task>
+    <option name="localTasksCounter" value="268" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2284,7 +2286,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Registrering av medlemmer som deltakere på leir" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Registrere medhjelpere og kommentarer for leir" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -2297,7 +2299,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="* Fikset litt på &quot;Mine bilder&quot; og &quot;galleri&quot;" />
     <MESSAGE value="* La til datovelger for hendelser" />
     <MESSAGE value="* La til utsending av invitasjon til aktivitet." />
     <MESSAGE value="* Rettet på layout for embus" />
@@ -2322,6 +2323,7 @@
     <MESSAGE value="* La til invitasjon av grupper" />
     <MESSAGE value="* La til registrering av hvem som har sagt de kommer og hvem som har betalt." />
     <MESSAGE value="* Registrering av medlemmer som deltakere på leir" />
+    <MESSAGE value="* Registrere medhjelpere og kommentarer for leir" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2433,13 +2435,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/event.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="43" selection-start="114" selection-end="114" vertical-scroll-proportion="0.08225108">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/migrate/20120925161439_add_phone_to_event_invitee.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="33" selection-start="101" selection-end="101" vertical-scroll-proportion="0.053146854">
@@ -2515,16 +2510,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/event_invitees_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/event_invitee.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="24" selection-start="392" selection-end="392" vertical-scroll-proportion="0.0">
+        <state line="3" column="19" selection-start="190" selection-end="190" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/event_invitee.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/event.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="19" selection-start="190" selection-end="190" vertical-scroll-proportion="0.0959596">
+        <state line="4" column="46" selection-start="161" selection-end="161" vertical-scroll-proportion="0.113673806">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/event_invitees_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="96" column="80" selection-start="2647" selection-end="2647" vertical-scroll-proportion="0.68013465">
           <folding />
         </state>
       </provider>
