@@ -1,0 +1,45 @@
+<%= form_for(@event_invitee) do |f| %>
+  <% if @event_invitee.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@event_invitee.errors.count, "error") %> prohibited this event_invitee from being saved:</h2>
+
+      <ul>
+      <% @event_invitee.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :event_id %><br />
+    <%= f.number_field :event_id %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address %>
+  </div>
+  <div class="field">
+    <%= f.label :organization %><br />
+    <%= f.text_field :organization %>
+  </div>
+  <div class="field">
+    <%= f.label :will_attend_boolean %><br />
+    <%= f.check_box :will_attend %>
+  </div>
+  <div class="field">
+    <%= f.label :payed %><br />
+    <%= f.text_field :payed %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

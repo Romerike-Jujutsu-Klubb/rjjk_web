@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  event_id: 1
+  email: MyString
+  name: MyString
+  address: MyString
+  organization: MyString
+  will_attend_boolean: MyString
+  payed: false
+
+two:
+  event_id: 1
+  email: MyString
+  name: MyString
+  address: MyString
+  organization: MyString
+  will_attend_boolean: MyString
+  payed: false

@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Event:</b>
+  <%= @event_invitee.event_id %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @event_invitee.email %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @event_invitee.name %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @event_invitee.address %>
+</p>
+
+<p>
+  <b>Organization:</b>
+  <%= @event_invitee.organization %>
+</p>
+
+<p>
+  <b>Will attend boolean:</b>
+  <%= @event_invitee.will_attend %>
+</p>
+
+<p>
+  <b>Payed:</b>
+  <%= @event_invitee.payed %>
+</p>
+
+
+<%= link_to 'Edit', edit_event_invitee_path(@event_invitee) %> |
+<%= link_to 'Back', event_invitees_path %>

@@ -1,0 +1,35 @@
+<h1>Listing event_invitees</h1>
+
+<table>
+  <tr>
+    <th>Event</th>
+    <th>Email</th>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Organization</th>
+    <th>Will attend boolean</th>
+    <th>Payed</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @event_invitees.each do |event_invitee| %>
+  <tr>
+    <td><%= event_invitee.event_id %></td>
+    <td><%= event_invitee.email %></td>
+    <td><%= event_invitee.name %></td>
+    <td><%= event_invitee.address %></td>
+    <td><%= event_invitee.organization %></td>
+    <td><%= event_invitee.will_attend %></td>
+    <td><%= event_invitee.payed %></td>
+    <td><%= link_to 'Show', event_invitee %></td>
+    <td><%= link_to 'Edit', edit_event_invitee_path(event_invitee) %></td>
+    <td><%= link_to 'Destroy', event_invitee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Event invitee', new_event_invitee_path %>
