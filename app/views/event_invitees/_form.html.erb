@@ -33,7 +33,7 @@
   </div>
   <div class="field">
     <%= f.label :will_attend_boolean %><br />
-    <%= f.check_box :will_attend %>
+    <%= f.select :will_attend, [['', nil], ['Ja', true], 'Nei', false] %>
   </div>
   <div class="field">
     <%= f.label :payed %><br />

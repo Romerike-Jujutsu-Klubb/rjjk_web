@@ -38,8 +38,8 @@
         <tr>
           <td><%=detour_to inv.name, edit_event_invitee_path(inv) %></td>
           <td><%=inv.email %></td>
-          <td><%= inv.will_attend %></td>
-          <td><%= inv.payed %></td>
+          <td align="center"><%= {true => 'Ja', false => 'Nei'}[inv.will_attend] %></td>
+          <td align="right"><%= inv.payed %></td>
         </tr>
       <% end %>
     </table>
