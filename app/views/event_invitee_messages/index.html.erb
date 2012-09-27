@@ -1,0 +1,29 @@
+<h1>Listing signup_confirmations</h1>
+
+<table>
+  <tr>
+    <th>Event invitee</th>
+    <th>Subject</th>
+    <th>Body</th>
+    <th>Sent at</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @signup_confirmations.each do |signup_confirmation| %>
+  <tr>
+    <td><%= signup_confirmation.event_invitee_id %></td>
+    <td><%= signup_confirmation.subject %></td>
+    <td><%= signup_confirmation.body %></td>
+    <td><%= signup_confirmation.sent_at %></td>
+    <td><%= link_to 'Show', signup_confirmation %></td>
+    <td><%= link_to 'Edit', edit_signup_confirmation_path(signup_confirmation) %></td>
+    <td><%= link_to 'Destroy', signup_confirmation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Signup confirmation', new_signup_confirmation_path %>

@@ -1,0 +1,52 @@
+<%= form_for(@event_invitee_message) do |f| %>
+  <% if @event_invitee_message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@event_invitee_message.errors.count, "error") %> prohibited this event_invitee_message from being saved:</h2>
+
+      <ul>
+      <% @event_invitee_message.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <div class="field">
+      <%= f.label :hendelse %>:
+      <%= f.hidden_field :event_invitee_id %>
+      <%= f.hidden_field :message_type %>
+      <%= @event_invitee_message.event_invitee.event.name %>
+    </div>
+    <div class="field">
+      <%= f.label :deltaker %>:
+      <%= f.hidden_field :event_invitee_id %>
+      <%= @event_invitee_message.event_invitee.name %>
+    </div>
+    <div class="field">
+      <%= f.label :meldingstype %>:
+      <%= f.hidden_field :message_type %>
+      <%= @event_invitee_message.message_type %>
+    </div>
+    <div class="field">
+    <%= f.label :emne %><br />
+    <%= f.text_field :subject %>
+  </div>
+    <div class="field">
+      <%= f.label :melding %><br />
+      <%= f.text_area :body, :cols => 64 %>
+    </div>
+    <div class="field">
+      <%= f.label :klar %>:
+      <%= f.check_box :ready_at, {}, Time.now, nil %>
+    </div>
+    <% if @event_invitee_message.sent_at %>
+        <div class="field">
+          <%= f.label :sendt %>:
+          <%= @event_invitee_message.sent_at %>
+        </div>
+    <% end %>
+    <div class="actions">
+    <%= f.submit %>
+    <%=back_or_link_to 'Tilbake', event_invitee_messages_path %>
+  </div>
+<% end %>

@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Event invitee:</b>
+  <%= @event_invitee_message.event_invitee_id %>
+</p>
+
+<p>
+  <b>Subject:</b>
+  <%= @event_invitee_message.subject %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%= @event_invitee_message.body %>
+</p>
+
+<p>
+  <b>Sent at:</b>
+  <%= @event_invitee_message.sent_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_event_invitee_message_path(@event_invitee_message) %> |
+<%= link_to 'Back', event_invitee_messages_path %>

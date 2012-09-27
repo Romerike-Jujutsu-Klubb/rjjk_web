@@ -18,14 +18,15 @@
       <%=f.hidden_field :event_id %>
     </div>
     <div class="field">
-      <%= f.label :navn %>
-      <br/>
-      <%= f.text_field :name %>
-    </div>
-    <div class="field">
       <%= f.label :bruker %>
       <br/>
       <%= f.select :user_id, [['', nil]] + @users.map{|u| [u.name, u.id]} %>
+    </div>
+    <% if @event_invitee.user.nil? %>
+    <div class="field">
+      <%= f.label :navn %>
+      <br/>
+      <%= f.text_field :name %>
     </div>
     <div class="field">
       <%= f.label :organisasjon %>
@@ -47,6 +48,7 @@
       <br/>
       <%= f.text_field :phone %>
     </div>
+        <%end%>
     <div class="field">
       <%= f.label :kommer %>
       <br/>

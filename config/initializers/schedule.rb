@@ -1,7 +1,7 @@
 unless Rails.env == 'test'
   scheduler = Rufus::Scheduler.start_new
 
-  scheduler.every('60m', :first_in => '10s') do
+  scheduler.every('60m', :first_in => '10m') do
     begin
       i = NkfMemberImport.new
       NkfReplication.import_changes(i).deliver if i.any?
@@ -23,8 +23,19 @@ unless Rails.env == 'test'
     end
   end
 
-  scheduler.every('1d', :first_in => '10s') do
-
+  scheduler.every('1m', :first_in => '10s') do
+    now = Time.now
+    EventInviteeMessage.where('ready_at IS NOT NULL AND sent_at IS NULL').all.each do |eim|
+      begin
+      NewsletterMailer.event_invitee_message(
+          eim.event_invitee, eim.event_invitee.user.try(:email) || eim.event_invitee.email, eim.subject, eim.body
+      ).deliver
+      eim.update_attributes! :sent_at => now
+      rescue
+        Rails.logger.error "Exception sending event message: #{$!}"
+        Rails.logger.error $!.backtrace.join("\n")
+      end
+    end
   end
 
 end

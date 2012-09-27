@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def initialize(attributes = nil)
+  def initialize(*args)
     super
     @password_needs_confirmation = false
   end

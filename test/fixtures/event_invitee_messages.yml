@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  event_invitee_id: 1
+  subject: MyString
+  body: MyText
+  sent_at: 2012-09-25 22:31:19
+
+two:
+  event_invitee_id: 1
+  subject: MyString
+  body: MyText
+  sent_at: 2012-09-25 22:31:19

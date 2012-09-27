@@ -1,4 +1,6 @@
 RjjkWeb::Application.routes.draw do
+  resources :event_invitee_messages
+
   resources :event_invitees
 
   resources :correspondences
