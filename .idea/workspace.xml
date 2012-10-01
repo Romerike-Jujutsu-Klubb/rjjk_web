@@ -2,40 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2ff3f9de-a03b-4a63-899a-9c151579e23b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/images/dark_ritual/bgcontainer_800.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/images/dark_ritual/header_800.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/event_messages" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/javascripts/event_messages.js.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/stylesheets/event_messages.css.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/event_messages_controller.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/helpers/event_messages_helper.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/event_message.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/event_messages/_form.html.erb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/event_messages/edit.html.erb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/event_messages/index.html.erb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/event_messages/new.html.erb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/event_messages/show.html.erb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20120927163158_create_event_messages.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/fixtures/event_messages.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/functional/event_messages_controller_test.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/unit/event_message_test.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/unit/helpers/event_messages_helper_test.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/rjjk_web.iml" afterPath="$PROJECT_DIR$/.idea/rjjk_web.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/events_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/events_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/mailers/newsletter_mailer.rb" afterPath="$PROJECT_DIR$/app/mailers/newsletter_mailer.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/event.rb" afterPath="$PROJECT_DIR$/app/models/event.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/event_invitee.rb" afterPath="$PROJECT_DIR$/app/models/event_invitee.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/event_invitee_message.rb" afterPath="$PROJECT_DIR$/app/models/event_invitee_message.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/event_invitee_messages/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/event_invitee_messages/_form.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/event_invitees/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/event_invitees/_form.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/events/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/events/_form.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/newsletter_mailer/event_invitee_message.html.erb" afterPath="$PROJECT_DIR$/app/views/newsletter_mailer/event_invitee_message.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/stylesheets/dark_ritual.css.erb" afterPath="$PROJECT_DIR$/app/views/stylesheets/dark_ritual.css.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/environment.rb" afterPath="$PROJECT_DIR$/config/environment.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/environments/development.rb" afterPath="$PROJECT_DIR$/config/environments/development.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
     </list>
     <ignored path="rjjk_web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -124,17 +98,80 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="_form.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/events/_form.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="72" column="27" selection-start="3257" selection-end="3257" vertical-scroll-proportion="-4.607143">
+              <folding>
+                <marker date="1349100087000" expanded="true" signature="60:5885" placeholder="do ... end" />
+                <marker date="1349100087000" expanded="false" signature="113:143" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="144:238" placeholder="..." />
+                <marker date="1349100087000" expanded="false" signature="254:284" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="285:559" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="567:845" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="853:988" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="998:3058" placeholder="if ... end" />
+                <marker date="1349100087000" expanded="true" signature="1025:3044" placeholder="if ... end" />
+                <marker date="1349100087000" expanded="true" signature="1068:1372" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="1408:2268" placeholder="if ... end" />
+                <marker date="1349100087000" expanded="false" signature="1469:1481" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="1482:2248" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="1508:2039" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="1533:1637" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="1662:2010" placeholder="for ... end" />
+                <marker date="1349100087000" expanded="true" signature="1711:1982" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="1791:1952" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="2286:2606" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="2623:3026" placeholder="if ... end" />
+                <marker date="1349100087000" expanded="true" signature="2674:3006" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="3070:5752" placeholder="if ... end" />
+                <marker date="1349100087000" expanded="false" signature="3123:3134" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="3135:5740" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="3153:5274" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="3170:3343" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="3360:5253" placeholder="for ... end" />
+                <marker date="1349100087000" expanded="true" signature="3415:5233" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="3580:4977" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="3680:4951" placeholder="if ... end" />
+                <marker date="1349100087000" expanded="true" signature="5095:5211" placeholder="..." />
+                <marker date="1349100087000" expanded="true" signature="5786:5877" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="event_invitee_message.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/event_invitee_message.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="73" selection-start="1173" selection-end="1173" vertical-scroll-proportion="0.0">
+            <state line="44" column="0" selection-start="1581" selection-end="1581" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="20120927163158_create_event_messages.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/db/migrate/20120927163158_create_event_messages.rb">
+      <file leaf-file-name="embu.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/embu.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="41" selection-start="299" selection-end="299" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="database.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/database.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1349103867000" expanded="true" signature="85:155" placeholder="test:" />
+                <marker date="1349103867000" expanded="true" signature="156:252" placeholder="production:" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="environment.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/config/environment.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
@@ -145,17 +182,55 @@
       <file leaf-file-name="_form.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/event_invitee_messages/_form.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
-              <folding />
+            <state line="31" column="42" selection-start="1065" selection-end="1065" vertical-scroll-proportion="-12.892858">
+              <folding>
+                <marker date="1349100829000" expanded="true" signature="37:1618" placeholder="do ... end" />
+                <marker date="1349100829000" expanded="true" signature="52:417" placeholder="if ... end" />
+                <marker date="1349100829000" expanded="true" signature="124:407" placeholder="..." />
+                <marker date="1349100829000" expanded="true" signature="270:396" placeholder="..." />
+                <marker date="1349100829000" expanded="true" signature="330:382" placeholder="do ... end" />
+                <marker date="1349100829000" expanded="true" signature="444:636" placeholder="..." />
+                <marker date="1349100829000" expanded="true" signature="660:804" placeholder="..." />
+                <marker date="1349100829000" expanded="true" signature="828:966" placeholder="..." />
+                <marker date="1349100829000" expanded="true" signature="990:1076" placeholder="..." />
+                <marker date="1349100829000" expanded="true" signature="1100:1191" placeholder="..." />
+                <marker date="1349100829000" expanded="true" signature="1215:1308" placeholder="..." />
+                <marker date="1349100829000" expanded="true" signature="1317:1488" placeholder="if ... end" />
+                <marker date="1349100829000" expanded="true" signature="1380:1476" placeholder="..." />
+                <marker date="1349100829000" expanded="true" signature="1516:1610" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="new.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/event_invitee_messages/new.html.erb">
+      <file leaf-file-name="_form.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/event_invitees/_form.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
-              <folding />
+            <state line="59" column="22" selection-start="1725" selection-end="1725" vertical-scroll-proportion="-1.3571428">
+              <folding>
+                <marker date="1349100077000" expanded="true" signature="29:2340" placeholder="do ... end" />
+                <marker date="1349100077000" expanded="true" signature="46:433" placeholder="if ... end" />
+                <marker date="1349100077000" expanded="true" signature="114:421" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="129:248" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="264:406" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="322:388" placeholder="do ... end" />
+                <marker date="1349100077000" expanded="true" signature="460:585" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="628:791" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="682:773" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="738:760" placeholder="{ ... }" />
+                <marker date="1349100077000" expanded="true" signature="810:1675" placeholder="if ... end" />
+                <marker date="1349100077000" expanded="true" signature="885:1663" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="962:1068" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="1098:1220" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="1250:1362" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="1392:1503" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="1533:1643" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="1701:1835" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="1859:1979" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="2003:2088" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="2112:2213" placeholder="..." />
+                <marker date="1349100077000" expanded="true" signature="2239:2332" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -174,8 +249,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/test/unit/event_invitee_message_test.rb" />
-        <option value="$PROJECT_DIR$/app/helpers/event_invitee_messages_helper.rb" />
         <option value="$PROJECT_DIR$/app/views/event_invitee_messages/show.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/event_invitee_messages_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/event_invitee_messages/edit.html.erb" />
@@ -185,8 +258,6 @@
         <option value="$PROJECT_DIR$/db/migrate/20120927152604_link_event_invitees_to_users.rb" />
         <option value="$PROJECT_DIR$/app/models/user.rb" />
         <option value="$PROJECT_DIR$/app/controllers/event_invitees_controller.rb" />
-        <option value="$PROJECT_DIR$/app/views/event_invitee_messages/_form.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/event_invitees/_form.html.erb" />
         <option value="$PROJECT_DIR$/app/models/event.rb" />
         <option value="$PROJECT_DIR$/app/views/stylesheets/dark_ritual.css.erb" />
         <option value="$PROJECT_DIR$/app/models/event_message.rb" />
@@ -195,16 +266,20 @@
         <option value="$PROJECT_DIR$/app/controllers/event_messages_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/event_messages/_form.html.erb" />
         <option value="$PROJECT_DIR$/app/views/event_messages/edit.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/events/_form.html.erb" />
         <option value="$PROJECT_DIR$/app/models/event_invitee.rb" />
         <option value="$PROJECT_DIR$/app/mailers/newsletter_mailer.rb" />
         <option value="$PROJECT_DIR$/config/environments/development.rb" />
         <option value="$PROJECT_DIR$/app/views/newsletter_mailer/event_invitee_message.html.erb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/controllers/events_controller.rb" />
-        <option value="$PROJECT_DIR$/config/environment.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/dark_ritual.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/event_invitees/_form.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/events/_form.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/event_invitee_messages/_form.html.erb" />
+        <option value="$PROJECT_DIR$/config/database.yml" />
+        <option value="$PROJECT_DIR$/config.ru" />
         <option value="$PROJECT_DIR$/app/models/event_invitee_message.rb" />
+        <option value="$PROJECT_DIR$/config/environment.rb" />
       </list>
     </option>
   </component>
@@ -292,15 +367,9 @@
               <option name="myItemId" value="rjjk_web" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -310,28 +379,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="db" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="db" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="migrate" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -346,104 +393,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="environments" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layouts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="event_invitee_messages" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rjjk_web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -480,7 +429,7 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="197" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="196" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
-    <property name="last_opened_file_path" value="$USER_HOME$/.ssh/id_rsa" />
+    <property name="last_opened_file_path" value="/Library/Frameworks/JRuby.framework/Versions/1.7.0.RC1/bin/jruby" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="193" />
     <property name="RakeTaksPopup.undocumentedIncluded" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="986" />
@@ -2233,15 +2182,21 @@
       <created>1348762962119</created>
       <updated>1348762962119</updated>
     </task>
-    <option name="localTasksCounter" value="270" />
+    <task id="LOCAL-00270" summary="* La til mer kommunikasjon mot leirdeltakere">
+      <created>1349099399108</created>
+      <updated>1349099399109</updated>
+    </task>
+    <option name="localTasksCounter" value="271" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1600" height="1178" extended-state="0" />
     <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19003691" sideWeight="0.49496982" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.41512915" sideWeight="0.82541436" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31826568" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30696902" sideWeight="0.6845018" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17651007" sideWeight="0.6688192" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22136422" sideWeight="0.5848709" order="0" side_tool="false" content_ui="combo" />
@@ -2256,8 +2211,6 @@
       <window_info id="SVN Properties" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32872927" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31826568" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19003691" sideWeight="0.49496982" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293247" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -2350,31 +2303,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/db/schema.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="374" column="29" selection-start="14641" selection-end="14641" vertical-scroll-proportion="0.5529412" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/events/edit.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="0" selection-end="28" vertical-scroll-proportion="-0.6785714" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/images/dark_ritual/bgcontainer_1024.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/images/dark_ritual/bgcontainer_540.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/images/dark_ritual/bgcontainer.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/member_sweeper.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="23" column="94" selection-start="758" selection-end="758" vertical-scroll-proportion="0.0" />
@@ -2418,13 +2346,6 @@
     <entry file="file://$PROJECT_DIR$/app/views/event_messages/edit.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="16" selection-start="70" selection-end="70" vertical-scroll-proportion="-2.7142856" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/events/_form.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="0" selection-start="5614" selection-end="5614" vertical-scroll-proportion="0.73239434">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/event_messages_controller.rb">
@@ -2474,23 +2395,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/environment.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="89" selection-end="89" vertical-scroll-proportion="0.08213256">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/event_invitee_messages_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="0" selection-start="696" selection-end="696" vertical-scroll-proportion="0.6634078">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/event_invitee_messages/new.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -2516,21 +2423,151 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/db/migrate/20120927163158_create_event_messages.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="0" selection-start="268" selection-end="268" vertical-scroll-proportion="0.40691927">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/event_invitee_messages/new.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/event_invitees/_form.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="22" selection-start="1725" selection-end="1725" vertical-scroll-proportion="-1.3571428">
+          <folding>
+            <marker date="1349100077000" expanded="true" signature="29:2340" placeholder="do ... end" />
+            <marker date="1349100077000" expanded="true" signature="46:433" placeholder="if ... end" />
+            <marker date="1349100077000" expanded="true" signature="114:421" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="129:248" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="264:406" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="322:388" placeholder="do ... end" />
+            <marker date="1349100077000" expanded="true" signature="460:585" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="628:791" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="682:773" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="738:760" placeholder="{ ... }" />
+            <marker date="1349100077000" expanded="true" signature="810:1675" placeholder="if ... end" />
+            <marker date="1349100077000" expanded="true" signature="885:1663" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="962:1068" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="1098:1220" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="1250:1362" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="1392:1503" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="1533:1643" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="1701:1835" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="1859:1979" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="2003:2088" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="2112:2213" placeholder="..." />
+            <marker date="1349100077000" expanded="true" signature="2239:2332" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/events/_form.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="72" column="27" selection-start="3257" selection-end="3257" vertical-scroll-proportion="-4.607143">
+          <folding>
+            <marker date="1349100087000" expanded="true" signature="60:5885" placeholder="do ... end" />
+            <marker date="1349100087000" expanded="false" signature="113:143" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="144:238" placeholder="..." />
+            <marker date="1349100087000" expanded="false" signature="254:284" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="285:559" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="567:845" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="853:988" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="998:3058" placeholder="if ... end" />
+            <marker date="1349100087000" expanded="true" signature="1025:3044" placeholder="if ... end" />
+            <marker date="1349100087000" expanded="true" signature="1068:1372" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="1408:2268" placeholder="if ... end" />
+            <marker date="1349100087000" expanded="false" signature="1469:1481" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="1482:2248" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="1508:2039" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="1533:1637" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="1662:2010" placeholder="for ... end" />
+            <marker date="1349100087000" expanded="true" signature="1711:1982" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="1791:1952" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="2286:2606" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="2623:3026" placeholder="if ... end" />
+            <marker date="1349100087000" expanded="true" signature="2674:3006" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="3070:5752" placeholder="if ... end" />
+            <marker date="1349100087000" expanded="false" signature="3123:3134" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="3135:5740" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="3153:5274" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="3170:3343" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="3360:5253" placeholder="for ... end" />
+            <marker date="1349100087000" expanded="true" signature="3415:5233" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="3580:4977" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="3680:4951" placeholder="if ... end" />
+            <marker date="1349100087000" expanded="true" signature="5095:5211" placeholder="..." />
+            <marker date="1349100087000" expanded="true" signature="5786:5877" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/event_invitee_messages/_form.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+        <state line="31" column="42" selection-start="1065" selection-end="1065" vertical-scroll-proportion="-12.892858">
+          <folding>
+            <marker date="1349100829000" expanded="true" signature="37:1618" placeholder="do ... end" />
+            <marker date="1349100829000" expanded="true" signature="52:417" placeholder="if ... end" />
+            <marker date="1349100829000" expanded="true" signature="124:407" placeholder="..." />
+            <marker date="1349100829000" expanded="true" signature="270:396" placeholder="..." />
+            <marker date="1349100829000" expanded="true" signature="330:382" placeholder="do ... end" />
+            <marker date="1349100829000" expanded="true" signature="444:636" placeholder="..." />
+            <marker date="1349100829000" expanded="true" signature="660:804" placeholder="..." />
+            <marker date="1349100829000" expanded="true" signature="828:966" placeholder="..." />
+            <marker date="1349100829000" expanded="true" signature="990:1076" placeholder="..." />
+            <marker date="1349100829000" expanded="true" signature="1100:1191" placeholder="..." />
+            <marker date="1349100829000" expanded="true" signature="1215:1308" placeholder="..." />
+            <marker date="1349100829000" expanded="true" signature="1317:1488" placeholder="if ... end" />
+            <marker date="1349100829000" expanded="true" signature="1380:1476" placeholder="..." />
+            <marker date="1349100829000" expanded="true" signature="1516:1610" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/database.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1349103867000" expanded="true" signature="85:155" placeholder="test:" />
+            <marker date="1349103867000" expanded="true" signature="156:252" placeholder="production:" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/embu.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="41" selection-start="299" selection-end="299" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/rubystubs19/encoding.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="842" column="47" selection-start="37216" selection-end="37216" vertical-scroll-proportion="0.45244956">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/event_invitee_message.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="73" selection-start="1173" selection-end="1173" vertical-scroll-proportion="0.0">
+        <state line="44" column="0" selection-start="1581" selection-end="1581" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/migrate/20120927163158_create_event_messages.rb">
+    <entry file="file://$PROJECT_DIR$/config.ru">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="68" selection-end="68" vertical-scroll-proportion="0.032478634">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/environment.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />

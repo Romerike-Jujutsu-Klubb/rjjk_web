@@ -30,19 +30,19 @@ Uwe Kubosch
 Romerike Jujutsu Klubb
 }
       elsif message_type == MessageType::SIGNUP_REJECTION
-        self.subject ||= "Påmelding til " + event_invitee.event.name.to_s
+        self.subject ||= "Påmelding til #{event_invitee.event.name}"
         self.body ||= %Q{Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
-  men må dessverre meddele at du ikke har fått plass pga. plassmangel.
+men må dessverre meddele at du ikke har fått plass pga. plassmangel.
 
-  Vi har din kontaktinfo og vil ta kontakt hvis det skulle bli ledig plass.
+Vi har din kontaktinfo og vil ta kontakt hvis det skulle bli ledig plass.
 
-  Har du noen spørsmål, så ta kontakt med Uwe på uwe@kubosch.no eller på telefon 922 06 046.
+Har du noen spørsmål, så ta kontakt med Uwe på uwe@kubosch.no eller på telefon 922 06 046.
 
-  --
-  Med vennlig hilsen,
-  Uwe Kubosch
-  Romerike Jujutsu Klubb
-  }
+--
+Med vennlig hilsen,
+Uwe Kubosch
+Romerike Jujutsu Klubb
+}
     end
   end
 
