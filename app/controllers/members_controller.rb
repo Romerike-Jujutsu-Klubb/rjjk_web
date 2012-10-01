@@ -225,7 +225,7 @@ class MembersController < ApplicationController
       send_data(thumbnail,
                 :disposition => 'inline',
       :type => @member.image.content_type,
-      :filename => @member.image.filename)
+      :filename => @member.image.name)
     else
       render :text => 'Bilde mangler'
     end

@@ -184,7 +184,7 @@ class Member < ActiveRecord::Base
 
   def thumbnail(x = 120, y = 160)
     return unless self.image?
-    magick_image = Magick::Image.from_blob(self.image.data).first
+    magick_image = Magick::Image.from_blob(Image.with_image.find(self.image_id).content_data).first
     return magick_image.crop_resized(x, y).to_blob
   end
 

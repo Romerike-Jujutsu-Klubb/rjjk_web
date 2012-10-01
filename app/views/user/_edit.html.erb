@@ -5,6 +5,7 @@
       <td class="prompt"><label>Brukernavn:</label></td>
       <td class="value">
         <%= @user.new_record? ? text_field( 'user', 'login' ) : @user.login %>
+        <%=link_to('(medlem)', :controller => :members, :action => :edit, :id => @user.member.id) if @user.member %>
       </td>
     </tr>
     <tr class="two_columns">
