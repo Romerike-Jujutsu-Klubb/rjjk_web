@@ -1,0 +1,31 @@
+<h1>Listing event_messages</h1>
+
+<table>
+  <tr>
+    <th>Event</th>
+    <th>Message type</th>
+    <th>Subject</th>
+    <th>Body</th>
+    <th>Ready at</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @event_messages.each do |event_message| %>
+  <tr>
+    <td><%= event_message.event_id %></td>
+    <td><%= event_message.message_type %></td>
+    <td><%= event_message.subject %></td>
+    <td><%= event_message.body %></td>
+    <td><%= event_message.ready_at %></td>
+    <td><%= link_to 'Show', event_message %></td>
+    <td><%= link_to 'Edit', edit_event_message_path(event_message) %></td>
+    <td><%= link_to 'Destroy', event_message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Event message', new_event_message_path %>

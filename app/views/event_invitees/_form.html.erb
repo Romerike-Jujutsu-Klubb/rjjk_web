@@ -15,40 +15,47 @@
     <div class="field">
       <%= f.label :hendelse %>:
       <%= @event_invitee.event.try :name %>
-      <%=f.hidden_field :event_id %>
+      <%= f.hidden_field :event_id %>
     </div>
+
+    <fieldset title="Kontaktinformasjon">
+      <legend>Bruker</legend>
     <div class="field">
-      <%= f.label :bruker %>
-      <br/>
-      <%= f.select :user_id, [['', nil]] + @users.map{|u| [u.name, u.id]} %>
+      <%= f.select :user_id, [['', nil]] + @users.map { |u| [u.name, u.id] } %>
     </div>
+      </fieldset>
+    eller
     <% if @event_invitee.user.nil? %>
-    <div class="field">
-      <%= f.label :navn %>
-      <br/>
-      <%= f.text_field :name %>
-    </div>
-    <div class="field">
-      <%= f.label :organisasjon %>
-      <br/>
-      <%= f.text_field :organization %>
-    </div>
-    <div class="field">
-      <%= f.label :adresse %>
-      <br/>
-      <%= f.text_field :address %>
-    </div>
-    <div class="field">
-      <%= f.label :"e-post" %>
-      <br/>
-      <%= f.text_field :email %>
-    </div>
-    <div class="field">
-      <%= f.label :telefon %>
-      <br/>
-      <%= f.text_field :phone %>
-    </div>
-        <%end%>
+        <fieldset title="Kontaktinformasjon">
+          <legend>Kontaktinformasjon</legend>
+
+          <div class="field">
+            <%= f.label :navn %>
+            <br/>
+            <%= f.text_field :name %>
+          </div>
+          <div class="field">
+            <%= f.label :organisasjon %>
+            <br/>
+            <%= f.text_field :organization %>
+          </div>
+          <div class="field">
+            <%= f.label :adresse %>
+            <br/>
+            <%= f.text_field :address %>
+          </div>
+          <div class="field">
+            <%= f.label :"e-post" %>
+            <br/>
+            <%= f.text_field :email %>
+          </div>
+          <div class="field">
+            <%= f.label :telefon %>
+            <br/>
+            <%= f.text_field :phone %>
+          </div>
+        </fieldset>
+    <% end %>
     <div class="field">
       <%= f.label :kommer %>
       <br/>

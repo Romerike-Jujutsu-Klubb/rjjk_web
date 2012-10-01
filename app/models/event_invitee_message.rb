@@ -5,7 +5,7 @@ class EventInviteeMessage < ActiveRecord::Base
     SIGNUP_REJECTION = 'SIGNUP_REJECTION'
   end
 
-  attr_accessible :body, :event_invitee_id, :message_type, :ready_at, :sent_at, :subject
+  attr_accessible :body, :event_invitee, :event_invitee_id, :message_type, :ready_at, :sent_at, :subject
 
   belongs_to :event_invitee
 
@@ -16,7 +16,7 @@ class EventInviteeMessage < ActiveRecord::Base
     super
     if message_type == MessageType::SIGNUP_CONFIRMATION
       self.subject ||= "Bekreftelse av påmelding"
-      self.body ||= %Q{Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name}
+      self.body ||= %Q{Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
 og kan bekrefte at du har fått plass.
 
 Deltakeravgiften på kr 700,- kan betales til konto 7035.05.37706.
@@ -29,6 +29,20 @@ Med vennlig hilsen,
 Uwe Kubosch
 Romerike Jujutsu Klubb
 }
+      elsif message_type == MessageType::SIGNUP_REJECTION
+        self.subject ||= "Påmelding til " + event_invitee.event.name.to_s
+        self.body ||= %Q{Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
+  men må dessverre meddele at du ikke har fått plass pga. plassmangel.
+
+  Vi har din kontaktinfo og vil ta kontakt hvis det skulle bli ledig plass.
+
+  Har du noen spørsmål, så ta kontakt med Uwe på uwe@kubosch.no eller på telefon 922 06 046.
+
+  --
+  Med vennlig hilsen,
+  Uwe Kubosch
+  Romerike Jujutsu Klubb
+  }
     end
   end
 

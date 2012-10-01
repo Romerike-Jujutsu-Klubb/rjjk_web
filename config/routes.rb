@@ -1,10 +1,4 @@
 RjjkWeb::Application.routes.draw do
-  resources :event_invitee_messages
-
-  resources :event_invitees
-
-  resources :correspondences
-
   match 'stylesheets/dark_ritual/:width.:format', :controller => 'stylesheets', :action => 'dark_ritual'
   match 'stylesheets/dark_ritual.:format', :controller => 'stylesheets', :action => 'dark_ritual'
   match ':controller/active_contracts', :action => 'active_contracts'
@@ -17,6 +11,9 @@ RjjkWeb::Application.routes.draw do
 
   resources :attendances
   resources :cms_members
+  resources :correspondences
+  resources :event_invitee_messages
+  resources :event_invitees
   resources :events
   resources :embus
   resources :group_schedules
@@ -27,6 +24,7 @@ RjjkWeb::Application.routes.draw do
   resources :nkf_members
   resources :nkf_member_trials
   resources :trial_attendances
+  resources :event_messages
 
   root :to => "welcome#index"
   match ':controller/service.wsdl', :action => 'wsdl'

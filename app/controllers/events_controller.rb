@@ -31,7 +31,7 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
-    @event.groups = params[:group][:id].map{|group_id| Group.find(group_id) }
+    @event.groups = params[:group][:id].map{|group_id| Group.find(group_id) } if params[:group]
     if @event.update_attributes(params[:event])
       flash[:notice] = 'Event was successfully updated.'
       redirect_to(@event)
@@ -49,7 +49,7 @@ class EventsController < ApplicationController
   def invite
     event = Event.find(params[:id])
     if params[:example]
-      recipients = [current_user.email]
+      recipients = [EventInvitee.new(:event => event, :name => current_user.name, :email => current_user.email)]
     elsif params[:recipients] == 'all'
       recipients = Group.all.map { |g| g.members.active(event.start_at.to_date).map { |m| m.email } }.flatten.compact.sort.uniq
     elsif params[:recipients] == 'invited'
@@ -57,8 +57,14 @@ class EventsController < ApplicationController
     elsif params[:recipients] == 'groups'
       recipients = event.groups.map{|g| g.members.map{|m| m.email}}.flatten
     end
+    invitation = EventMessage.find_by_message_type EventMessage::MessageType::INVITATION
     recipients.each do |recipient|
-      NewsletterMailer.event_invitation(event, recipient).deliver
+      event_invitee_message = EventInviteeMessage.new(
+          :event_invitee => recipient, :message_type => EventMessage::MessageType::INVITATION, :body => invitation.body,
+          :subject => invitation.subject
+      )
+      event_invitee_message.id = 0
+      NewsletterMailer.event_invitee_message(event_invitee_message).deliver
     end
     render :text => ''
   end

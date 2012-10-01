@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Event:</b>
+  <%= @event_message.event_id %>
+</p>
+
+<p>
+  <b>Message type:</b>
+  <%= @event_message.message_type %>
+</p>
+
+<p>
+  <b>Subject:</b>
+  <%= @event_message.subject %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%= @event_message.body %>
+</p>
+
+<p>
+  <b>Ready at:</b>
+  <%= @event_message.ready_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_event_message_path(@event_message) %> |
+<%= back_or_link_to 'Tilbake', event_messages_path %>

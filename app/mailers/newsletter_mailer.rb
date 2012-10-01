@@ -17,14 +17,14 @@ class NewsletterMailer < ActionMailer::Base
     mail to: "uwe@kubosch.no"
   end
 
-  def event_invitee_message(event_invitee, email, subject, body)
-    @event_invitee = event_invitee
-    @email = email
-    @subject = subject
-    @body = body
+  def event_invitee_message(event_invitee_message)
+    @event_invitee_message = event_invitee_message
+    @event_invitee = event_invitee_message.event_invitee
+    @email = event_invitee_message.event_invitee.email
+    @subject = event_invitee_message.subject
+    @body = event_invitee_message.body
 
-    mail to: Rails.env == 'production' ? @email : 'Uwe Kubosch <uwe@kubosch.no>',
-         subject: subject
+    mail to: Rails.env == 'production' ? @email : 'Uwe Kubosch <uwe@kubosch.no>', subject: @subject
   end
 
 end
