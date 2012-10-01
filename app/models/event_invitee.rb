@@ -3,6 +3,7 @@ class EventInvitee < ActiveRecord::Base
 
   belongs_to :event
   belongs_to :user
+  has_one :invitation, :class_name => 'EventInviteeMessage', :conditions => "message_type = '#{EventMessage::MessageType::INVITATION}'"
   has_one :signup_confirmation, :class_name => 'EventInviteeMessage', :conditions => "message_type = '#{EventInviteeMessage::MessageType::SIGNUP_CONFIRMATION}'"
   has_one :signup_rejection, :class_name => 'EventInviteeMessage', :conditions => "message_type = '#{EventInviteeMessage::MessageType::SIGNUP_REJECTION}'"
 

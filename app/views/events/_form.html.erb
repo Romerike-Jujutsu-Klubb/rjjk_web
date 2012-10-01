@@ -85,7 +85,7 @@
                                       :action => inv.signup_confirmation ? :edit : :new,
                                       :id => inv.signup_confirmation.try(:id),
                                       :event_invitee_message => {
-                                              :message_type => 'SIGNUP_CONFIRMATION',
+                                              :message_type => EventInviteeMessage::MessageType::SIGNUP_CONFIRMATION,
                                               :event_invitee_id => inv.id,
                                       }) unless inv.signup_confirmation.try(:ready_at)
                         %>
@@ -96,6 +96,15 @@
                                               :message_type => EventInviteeMessage::MessageType::SIGNUP_REJECTION,
                                               :event_invitee_id => inv.id,
                                       }) unless inv.signup_confirmation.try(:ready_at)
+                        %>
+                    <% else %>
+                        <%= detour_to('Send invitasjon', :controller => :event_invitee_messages,
+                                      :action => inv.invitation ? :edit : :new,
+                                      :id => inv.invitation.try(:id),
+                                      :event_invitee_message => {
+                                              :message_type => EventMessage::MessageType::INVITATION,
+                                              :event_invitee_id => inv.id,
+                                      }) unless !inv.will_attend.nil? || inv.invitation.try(:ready_at)
                         %>
                     <% end %>
                   </td>

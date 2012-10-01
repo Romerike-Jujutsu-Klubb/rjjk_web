@@ -40,5 +40,6 @@
   <div class="actions">
     <%= f.submit %>
     <%= back_or_link_to 'Tilbake', event_messages_path %>
+    <%= link_to 'Vis', @event_message if @event_message.id %>
   </div>
 <% end %>
