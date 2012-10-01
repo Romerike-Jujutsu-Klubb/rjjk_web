@@ -35,7 +35,7 @@ module ApplicationHelper
   def textalize(s)
     return '' if s.nil?
     s.gsub! /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i do |m|
-      mail_to m, nil, :encode => :javascript
+      mail_to m, nil # , :encode => :javascript
     end
     html = RedCloth.new(s.strip).to_html
     if @email

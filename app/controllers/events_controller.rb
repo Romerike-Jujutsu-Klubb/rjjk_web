@@ -35,7 +35,7 @@ class EventsController < ApplicationController
     @event.groups = params[:group][:id].map{|group_id| Group.find(group_id) } if params[:group]
     if @event.update_attributes(params[:event])
       flash[:notice] = 'Event was successfully updated.'
-      redirect_to(@event)
+      redirect_to :action => :edit
     else
       render :action => "edit"
     end

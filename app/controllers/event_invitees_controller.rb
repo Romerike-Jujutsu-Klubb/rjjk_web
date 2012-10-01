@@ -56,8 +56,7 @@ class EventInviteesController < ApplicationController
     respond_to do |format|
       if @event_invitee.save
         format.html do
-          redirect_to_signup_confirmation ||
-              back_or_redirect_to(@event_invitee, notice: 'Event invitee was successfully created.')
+          back_or_redirect_to(@event_invitee, notice: 'Event invitee was successfully created.')
         end
         format.json { render json: @event_invitee, status: :created, location: @event_invitee }
       else
@@ -76,8 +75,7 @@ class EventInviteesController < ApplicationController
     respond_to do |format|
       if @event_invitee.update_attributes(params[:event_invitee])
         format.html do
-          redirect_to_signup_confirmation ||
-              back_or_redirect_to(@event_invitee, notice: 'Event invitee was successfully updated.')
+          back_or_redirect_to(@event_invitee, notice: 'Event invitee was successfully updated.')
         end
         format.json { head :no_content }
       else
@@ -104,24 +102,6 @@ class EventInviteesController < ApplicationController
 
   def load_users
     @users = [@event_invitee.user].compact + (User.order(:first_name, :last_name).all - @event_invitee.event.users)
-  end
-
-  def redirect_to_signup_confirmation
-    if @event_invitee.will_attend
-      if @event_invitee.signup_confirmation.nil?
-        redirect_to :controller => :event_invitee_messages, :action => :new,
-                    :event_invitee_message => {
-                        :event_invitee_id => @event_invitee.id,
-                        :message_type => EventInviteeMessage::MessageType::SIGNUP_CONFIRMATION,
-                    }
-        return true
-      elsif @event_invitee.signup_confirmation.ready_at.nil?
-        redirect_to :controller => :event_invitee_messages, :action => :edit,
-                    :id => @event_invitee.signup_confirmation.id
-        return true
-      end
-    end
-    return false
   end
 
 end
