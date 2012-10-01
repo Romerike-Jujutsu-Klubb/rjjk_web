@@ -15,7 +15,7 @@ class EventInviteeMessage < ActiveRecord::Base
   def initialize(*args)
     super
     if message_type == MessageType::SIGNUP_CONFIRMATION
-      self.subject ||= "Bekreftelse av påmelding"
+      self.subject ||= "Bekreftelse av påmelding #{event_invitee.event.name}"
       self.body ||= %Q{Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
 og kan bekrefte at du har fått plass.
 
