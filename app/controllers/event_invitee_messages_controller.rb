@@ -15,7 +15,18 @@ class EventInviteeMessagesController < ApplicationController
   # GET /event_invitee_messages/1
   # GET /event_invitee_messages/1.json
   def show
-    @event_invitee_message = EventInviteeMessage.find(params[:id])
+    item_id = params[:id].to_i
+    if item_id >= 0
+      @event_invitee_message = EventInviteeMessage.find(item_id)
+    else
+      event_message = EventMessage.find(-item_id)
+      event_invitee = nil # event_message.event_invitee
+      @event_invitee_message = EventInviteeMessage.new(:body => event_message.body,
+                                                       :event_invitee => event_invitee,
+                                                       :message_type => event_message.message_type,
+                                                       :subject => event_message.subject)
+      @event_invitee_message.id = 0
+    end
 
     respond_to do |format|
       format.html # show.html.erb

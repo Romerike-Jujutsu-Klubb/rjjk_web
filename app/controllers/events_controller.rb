@@ -57,13 +57,13 @@ class EventsController < ApplicationController
     elsif params[:recipients] == 'groups'
       recipients = event.groups.map{|g| g.members.map{|m| m.email}}.flatten
     end
-    invitation = EventMessage.find_by_message_type EventMessage::MessageType::INVITATION
+    invitation = event.invitation
     recipients.each do |recipient|
       event_invitee_message = EventInviteeMessage.new(
           :event_invitee => recipient, :message_type => EventMessage::MessageType::INVITATION, :body => invitation.body,
           :subject => invitation.subject
       )
-      event_invitee_message.id = 0
+      event_invitee_message.id = -invitation.id
       NewsletterMailer.event_invitee_message(event_invitee_message).deliver
     end
     render :text => ''

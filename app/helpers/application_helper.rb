@@ -32,4 +32,26 @@ module ApplicationHelper
     %w{Søndag Mandag Tirsdag Onsdag Torsdag Fredag Lørdag Søndag}[wday_index]
   end
 
+  def textalize(s)
+    return '' if s.nil?
+    s.gsub! /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i do |m|
+      mail_to m, nil, :encode => :javascript
+    end
+    html = RedCloth.new(s.strip).to_html
+    if @email
+      base = url_for(:controller => :welcome, :action => :index, :only_path => false)
+
+      html.gsub!(/\b(href|src)="(?:#{base}|\/)([^?"]*)(\?[^"]*)?"/i) do |m|
+        %Q{#$1="#{base}#$2#$3#{$3 ? '&' : '?'}email=#{Base64.encode64(@email)}#{"&newsletter_id=#{@newsletter.id}" if @newsletter}"}
+      end
+
+      html.gsub! /(<a href="[^"]*")>/i, %Q{\\1 style="color: #CD071E;text-decoration:none;font-weight:bold;">}
+    end
+    html.html_safe
+  end
+
+  def textify(s)
+    RedCloth.new(s.strip).to_plain
+  end
+
 end
