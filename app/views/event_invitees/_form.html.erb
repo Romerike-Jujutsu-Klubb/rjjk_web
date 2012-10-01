@@ -22,10 +22,12 @@
       <legend>Bruker</legend>
     <div class="field">
       <%= f.select :user_id, [['', nil]] + @users.map { |u| [u.name, u.id] } %>
+      <%=link_to('(bruker)', :controller => :user, :action => :edit, :id => @event_invitee.user_id) if @event_invitee.user_id %>
     </div>
       </fieldset>
-    eller
     <% if @event_invitee.user.nil? %>
+        eller
+
         <fieldset title="Kontaktinformasjon">
           <legend>Kontaktinformasjon</legend>
 

@@ -10,4 +10,13 @@ class EventInvitee < ActiveRecord::Base
   validates_presence_of :event, :event_id, :name, :email
   validates_uniqueness_of :user_id, :scope => :event_id, :allow_nil => true
   validates_inclusion_of :will_work, :in => [nil, false], :if => proc{|r| r.will_attend == false}
+
+  def name
+    user.try(:name) || super
+  end
+
+  def email
+    user.try(:email) || super
+  end
+
 end

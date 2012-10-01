@@ -34,6 +34,14 @@ class User < ActiveRecord::Base
     @password_needs_confirmation = false
   end
 
+  def email
+    member.try(:email) || super
+  end
+
+  def name
+    member.try(:name) || super
+  end
+
   def self.find_administrators
     find(:all, :conditions => ['role = ?', UserSystem::ADMIN_ROLE])
   end
