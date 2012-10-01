@@ -27,9 +27,7 @@ unless Rails.env == 'test'
     now = Time.now
     EventInviteeMessage.where('ready_at IS NOT NULL AND sent_at IS NULL').all.each do |eim|
       begin
-      NewsletterMailer.event_invitee_message(
-          eim.event_invitee, eim.event_invitee.user.try(:email) || eim.event_invitee.email, eim.subject, eim.body
-      ).deliver
+      NewsletterMailer.event_invitee_message(eim).deliver
       eim.update_attributes! :sent_at => now
       rescue
         Rails.logger.error "Exception sending event message: #{$!}"
