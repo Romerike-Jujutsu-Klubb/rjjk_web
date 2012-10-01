@@ -106,7 +106,7 @@
                                               :event_invitee_id => inv.id,
                                       }) unless inv.invitation.try(:ready_at)
                         %>
-                        <%= "Invitert #{inv.invitation.sent_at.to_date}" if inv.invitation %>
+                        <%= "Invitert #{inv.invitation.sent_at.to_date}" if inv.invitation.try(:sent_at) %>
                     <% end %>
                   </td>
                   <td align="center">

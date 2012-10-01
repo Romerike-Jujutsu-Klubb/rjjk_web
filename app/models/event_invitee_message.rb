@@ -16,7 +16,7 @@ class EventInviteeMessage < ActiveRecord::Base
     super
     if message_type == EventMessage::MessageType::INVITATION
       self.subject ||= "Invitasjon til #{event_invitee.event.name}"
-      self.body ||= event_invitee.event.description.gsub(/<p>(.*?)<\/p>/, "\\1\n").gsub(/<a .*?>(.*?)<\/a>/, "\\1").html_safe
+      self.body ||= event_invitee.event.invitation.body.gsub(/<br \/>/, "\n").gsub(/<p>(.*?)<\/p>/m, "\\1\n").gsub(/<a .*?>(.*?)<\/a>/, "\\1").html_safe
     elsif message_type == MessageType::SIGNUP_CONFIRMATION
       self.subject ||= "Bekreftelse av påmelding #{event_invitee.event.name}"
       self.body ||= %Q{Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
