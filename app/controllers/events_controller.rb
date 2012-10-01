@@ -15,6 +15,7 @@ class EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
+    @groups = Group.where('closed_on IS NULL OR closed_on >= ?', @event.start_at.to_date).all
   end
 
   def create

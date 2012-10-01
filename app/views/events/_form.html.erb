@@ -37,7 +37,7 @@
                       <th>Gruppe</th>
                       <th>Invitert</th>
                     </tr>
-                    <% for g in Group.all %>
+                    <% for g in @groups %>
                         <tr>
                           <td><%= g.name %></td>
                           <td>
