@@ -71,8 +71,8 @@
               <th>Navn</th>
               <th>e-post</th>
               <th>Vil delta</th>
-              <th>Betalt</th>
               <th>Medhjelper</th>
+              <th>Betalt</th>
             </tr>
             <% for inv in @event.event_invitees %>
                 <tr>
@@ -97,21 +97,22 @@
                                               :event_invitee_id => inv.id,
                                       }) unless inv.signup_confirmation.try(:ready_at)
                         %>
-                    <% else %>
-                        <%= detour_to('Send invitasjon', :controller => :event_invitee_messages,
+                    <% elsif inv.will_attend.nil? %>
+                        <%=detour_to('Send invitasjon', :controller => :event_invitee_messages,
                                       :action => inv.invitation ? :edit : :new,
                                       :id => inv.invitation.try(:id),
                                       :event_invitee_message => {
                                               :message_type => EventMessage::MessageType::INVITATION,
                                               :event_invitee_id => inv.id,
-                                      }) unless !inv.will_attend.nil? || inv.invitation.try(:ready_at)
+                                      }) unless inv.invitation.try(:ready_at)
                         %>
+                        <%= "Invitert #{inv.invitation.sent_at.to_date}" if inv.invitation %>
                     <% end %>
                   </td>
-                  <td align="right"><%= inv.payed if inv.payed.to_i > 0 %></td>
                   <td align="center">
                     <%= {true => 'Ja', false => 'Nei'}[inv.will_work] if inv.will_attend %>
                   </td>
+                  <td align="right"><%= inv.payed if inv.payed.to_i > 0 %></td>
                 </tr>
             <% end %>
           </table>
