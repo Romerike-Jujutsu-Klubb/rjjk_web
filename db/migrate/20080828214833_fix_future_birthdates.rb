@@ -9,4 +9,6 @@ class FixFutureBirthdates < ActiveRecord::Migration
 
   def self.down
   end
+
+  class Member < ActiveRecord::Base ; end
 end

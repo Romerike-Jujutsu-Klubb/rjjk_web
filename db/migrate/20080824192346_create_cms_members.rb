@@ -42,4 +42,7 @@ class CreateCmsMembers < ActiveRecord::Migration
   def self.down
     drop_table :cms_members
   end
+
+  class CmsMember < ActiveRecord::Base ; end
+  class Member < ActiveRecord::Base ; end
 end

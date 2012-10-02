@@ -8,4 +8,6 @@ class AddStandardTimeToRanks < ActiveRecord::Migration
   def self.down
     remove_column :ranks, :standard_months
   end
+
+  class Rank < ActiveRecord::Base ; end
 end

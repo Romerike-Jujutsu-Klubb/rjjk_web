@@ -49,4 +49,8 @@ class CreateGroups < ActiveRecord::Migration
     drop_table :groups_members
     drop_table :groups
   end
+
+  class Group < ActiveRecord::Base ; end
+  class MartialArt < ActiveRecord::Base ; end
+  class Member < ActiveRecord::Base ; end
 end

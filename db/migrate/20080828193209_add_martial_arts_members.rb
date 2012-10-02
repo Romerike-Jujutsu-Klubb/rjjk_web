@@ -27,4 +27,6 @@ class AddMartialArtsMembers < ActiveRecord::Migration
     end
     drop_table :martial_arts_members
   end
+
+  class Member < ActiveRecord::Base ; end
 end
