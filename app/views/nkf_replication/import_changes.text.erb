@@ -2,32 +2,32 @@ NKF Import
 
 Importerte endringer fra NKF-portalen.
 
-<%= @import.changes.size %> records importert,
-<%= @import.error_records.size %> feilet,
-<%= @import.import_rows.size - @import.changes.size - @import.error_records.size %> uendret.
+<%= @import.changes.size %> records importert
+<%= @import.import_rows.size - @import.changes.size - @import.error_records.size %> uendret
+<%="#{@import.error_records.size} feilet" if @import.error_records.any? %>
 
 <% if @import.trial_changes.any? -%>
-    Endringer prøvetid:
+Endringer prøvetid:
 
     <% @import.trial_changes.each do |r| -%>
-        <%= r[:record].fornavn %> <%= r[:record].etternavn %>
-        <%= r[:changes].inspect.html_safe %>
+    <%= r[:record].fornavn %> <%= r[:record].etternavn %>
+    <%= r[:changes].inspect.html_safe %>
     <% end -%>
 <% end -%>
 
 <% if @import.changes.any? -%>
-    Endringer:
+Endringer:
 
     <% @import.changes.each do |r| -%>
-        <%= r[:record].fornavn %> <%= r[:record].etternavn %>
-        <%= r[:changes].inspect.html_safe %>
+    <%= r[:record].fornavn %> <%= r[:record].etternavn %>
+    <%= r[:changes].inspect.html_safe %>
     <% end -%>
 <% end -%>
 
 <% if @import.error_records.any? -%>
-    Feil:
+Feil:
 
     <% @import.error_records.each do |r| -%>
-        <%= r.class %> <%= r.id %> <%= r.errors.full_messages.inspect.html_safe %>
+    <%= r.class %> <%= r.id %> <%= r.errors.full_messages.inspect.html_safe %>
     <% end -%>
 <% end -%>

@@ -6,7 +6,7 @@ require 'pp'
 require 'iconv'
 
 class NkfMemberImport
-  CONCURRENT_REQUESTS = 8
+  CONCURRENT_REQUESTS = 7
   include MonitorMixin
   attr_reader :changes, :error_records, :import_rows, :trial_changes
 
@@ -234,7 +234,9 @@ class NkfMemberImport
       end
       if record.changed?
         c = record.changes
+        logger.debug "Found changes: #{c.inspect}"
         if record.save
+          logger.debug "Found changes: #{c.inspect}"
           @changes << {:record => record, :changes => c}
         else
           logger.error "ERROR: #{record.errors.to_a.join(', ')}"

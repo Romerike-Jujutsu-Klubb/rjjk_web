@@ -10,7 +10,6 @@ if RUBY_PLATFORM =~ /java/
     class TextileDoc
       def initialize( string, restrictions = [] )
         restrictions.each { |r| method("#{r}=").call( true ) }
-        ActiveRecord::Base.logger.info string.chars.map{|x| x.bytes.to_a.size > 1 ? "&##{x.unpack("U*").join};" : x}.join.inspect
         super(string.chars.map{|x| x.bytes.to_a.size > 1 ? "&##{x.unpack("U*").join};" : x}.join)
       end
     end

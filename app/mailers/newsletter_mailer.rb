@@ -24,7 +24,8 @@ class NewsletterMailer < ActionMailer::Base
     @subject = event_invitee_message.subject
     @body = event_invitee_message.body
 
-    mail to: Rails.env == 'production' ? @email : 'Uwe Kubosch <uwe@kubosch.no>', subject: @subject
+    mail to: Rails.env == 'production' ? @email : 'Uwe Kubosch <uwe@kubosch.no>', subject: @subject,
+         bcc: 'Uwe Kubosch <uwe@kubosch.no>'
   end
 
 end

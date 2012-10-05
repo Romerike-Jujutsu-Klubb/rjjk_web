@@ -8,7 +8,7 @@ echo "SELECT procpid, (SELECT pg_terminate_backend(procpid)) as killed from pg_s
     WHERE datname = '$DB_NAME' AND current_query LIKE '<IDLE>';" | psql -h localhost $DB_NAME
 
 echo "Re-creating database"
-dropdb -h localhost $DB_NAME
+dropdb -h localhost $DB_NAME # --if-exists
 createdb -h localhost $DB_NAME
 
 echo "Transferring database"
