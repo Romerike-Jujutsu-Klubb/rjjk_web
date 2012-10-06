@@ -4,7 +4,7 @@ class UserNotify < ActionMailer::Base
   def signup(user, password, url=nil)
     setup_email(user)
 
-    @subject += "Welcome to #{UserSystem::CONFIG[:app_name]}!"
+    @subject += "Velkommen til #{UserSystem::CONFIG[:app_name]}!"
 
     @name = "#{user.first_name} #{user.last_name}"
     @login = user.login

@@ -1,12 +1,15 @@
-Velkommen til <%= @app_name %>, <%= @name %>.
+<h1>Velkommen til <%= @app_name %>, <%= @name %>!</h1>
 
 Ditt brukernavn og passord er:
-
+<pre>
   Brukernavn: <%= @login %>
   Passord   : <%= @password %>
+</pre>
 
-Vennligst klikk på lenken under for å bekrefte registreringen din:
-
-<a href="<%= @url%>">Klikk meg!</a>
-
-<%= @url %>
+<p>
+  Vennligst klikk på lenken under for å bekrefte registreringen din:<br/>
+  <br/>
+  <a href="<%= @url %>">Klikk meg!</a><br/>
+  <br/>
+  <%= @url %>
+</p>
