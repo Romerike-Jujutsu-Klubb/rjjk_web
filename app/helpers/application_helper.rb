@@ -51,7 +51,8 @@ module ApplicationHelper
   end
 
   def textify(s)
-    RedCloth.new(s.strip).to_plain
+    return '' if s.blank?
+    RedCloth.new(s.strip.force_encoding(Encoding::UTF_8)).to_plain
   end
 
 end

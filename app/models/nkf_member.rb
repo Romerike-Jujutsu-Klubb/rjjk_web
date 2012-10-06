@@ -79,9 +79,32 @@ class NkfMember < ActiveRecord::Base
   end
 
   def create_corresponding_member!
-    member = create_member!(converted_attributes.update :instructor => false, :nkf_fee => true, :payment_problem => false)
-    member.nkf_member = self
-    member
+    p = (0..4).map { [*((0..9).to_a + ('a'..'z').to_a)][rand(36)] }.join
+    transaction do
+      u = User.find_by_email(epost)
+      if u.nil? || Member.exists?(:user_id => u.id)
+        if u
+          email = %Q{#{fornavn} #{etternavn} <#{epost}>}
+          if email.size > 40
+            email = %Q{#{fornavn.split(/\s+/).first} #{etternavn.split(/\s+/).last} <#{epost}>}
+          end
+        else
+          email = epost
+        end
+        u = User.new(
+            :login => email, :first_name => fornavn, :last_name => etternavn,
+            :email => email, :password => p, :password_confirmation => p,
+        )
+        u.password_needs_confirmation = true
+        u.save!
+      end
+      member = create_member!(
+          converted_attributes.update :instructor => false, :nkf_fee => true, :payment_problem => false,
+                                      :user => u,
+      )
+      member.nkf_member = self
+      member
+    end
   end
 
 end

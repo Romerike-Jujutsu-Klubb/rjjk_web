@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'digest/sha1'
 require 'clock'
 
@@ -114,7 +115,7 @@ class User < ActiveRecord::Base
   end
 
   def self.hashed(str)
-    return Digest::SHA1.hexdigest("change-me--#{str}--")[0..39]
+    return Digest::SHA1.hexdigest("Man må like å lide!--#{str}--")[0..39]
   end
 
   def crypt_password

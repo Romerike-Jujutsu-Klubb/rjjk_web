@@ -1,5 +1,5 @@
 class NewsletterMailer < ActionMailer::Base
-  helper :mailer
+  helper :application
   default from: '"Romerike Jujutsu Klubb" <post@jujutsu.no>'
 
   def event_invitation(event, email)

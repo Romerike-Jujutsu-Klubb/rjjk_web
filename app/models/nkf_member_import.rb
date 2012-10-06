@@ -217,7 +217,7 @@ class NkfMemberImport
       attributes = {}
       columns.each_with_index do |column, i|
         next if ['aktivitetsomrade_id', 'aktivitetsomrade_navn', 'alder', 'avtalegiro', 'dan_graderingsserifikat', 'forbundskontingent', 'foresatte'].include? column
-        attributes[column] = row[i]
+        attributes[column] = row[i] && row[i].strip
       end
       record = NkfMember.find_by_medlemsnummer(row[0]) || NkfMember.new
       if record.member_id.nil?

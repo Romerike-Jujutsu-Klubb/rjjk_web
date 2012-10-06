@@ -12,5 +12,5 @@ dropdb -h localhost $DB_NAME # --if-exists
 createdb -h localhost $DB_NAME
 
 echo "Transferring database"
-ssh root@kubosch.no "pg_dump -U capistrano rjjk_production | gzip" |
+time ssh root@kubosch.no "pg_dump -U capistrano rjjk_production | gzip" |
     gunzip | sed -e s/capistrano/uwe/ | psql -h localhost $DB_NAME

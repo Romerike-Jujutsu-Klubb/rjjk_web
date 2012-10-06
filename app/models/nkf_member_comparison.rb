@@ -47,15 +47,13 @@ class NkfMemberComparison
       nkf_group_names = member.nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /).map { |n| n.split('/')[3] }
       member_groups   = member.groups.map { |g| g.name }
       (nkf_group_names - member_groups).each do |gn|
-        if group = @groups.find { |g| g.name == gn }
-          group = Group.find(group.id)
+        if group = Group.find_by_name(gn)
           member.groups << group
           @group_changes[member][0] << group
         end
       end
       (member_groups - nkf_group_names).each do |gn|
-        if group = @groups.find { |g| g.name == gn }
-          group = Group.find(group.id)
+        if group = Group.find_by_name(gn)
           member.groups.delete(group)
           @group_changes[member][1] << group
         end
