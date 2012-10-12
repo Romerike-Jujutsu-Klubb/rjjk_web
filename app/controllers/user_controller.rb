@@ -101,7 +101,7 @@ class UserController < ApplicationController
 
   def forgot_password
     if authenticated_user? and not admin?
-      flash['message'] = 'You are currently logged in. You may change your password now.'
+      flash['message'] = 'Du er nå logget på. Du kan nå endre passordet ditt.'
       redirect_to :action => 'change_password'
       return
     end
@@ -111,7 +111,7 @@ class UserController < ApplicationController
     if params['user']['email'].empty?
       flash.now['message'] = 'Please enter a valid email address.'
     elsif (user = User.find_by_email(params['user']['email'])).nil?
-      flash.now['message'] = "We could not find a user with the email address #{CGI.escapeHTML(params['user']['email'])}"
+      flash.now['message'] = "Vi kunne ikke finne noen bruker med e-postadresse #{CGI.escapeHTML(params['user']['email'])}"
     else
       begin
         User.transaction do
@@ -119,7 +119,7 @@ class UserController < ApplicationController
           url = url_for(:action => 'change_password')
           url += "?user[id]=#{user.id}&key=#{key}"
           UserNotify.forgot_password(user, url).deliver
-          flash['notice'] = "Instructions on resetting your password have been emailed to #{CGI.escapeHTML(params['user']['email'])}."
+          flash['notice'] = "En e-post med veiledning for å sette nytt passord er sendt til #{CGI.escapeHTML(params['user']['email'])}."
           unless authenticated_user?
             redirect_to :action => 'login'
             return

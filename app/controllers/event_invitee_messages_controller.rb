@@ -18,13 +18,11 @@ class EventInviteeMessagesController < ApplicationController
     item_id = params[:id].to_i
     if item_id >= 0
       @event_invitee_message = EventInviteeMessage.find(item_id)
-    else
-      event_message = EventMessage.find(-item_id)
-      event_invitee = nil # event_message.event_invitee
-      @event_invitee_message = EventInviteeMessage.new(:body => event_message.body,
-                                                       :event_invitee => event_invitee,
-                                                       :message_type => event_message.message_type,
-                                                       :subject => event_message.subject)
+    else # Test message
+      event = Event.find(-item_id)
+      event_invitee = EventInvitee.new(:event => event, :name => 'test', :email => 'test@example.com')
+      @event_invitee_message = EventInviteeMessage.new(
+          :event_invitee => event_invitee, :message_type => EventMessage::MessageType::INVITATION)
       @event_invitee_message.id = 0
     end
 
