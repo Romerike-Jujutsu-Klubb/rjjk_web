@@ -46,12 +46,6 @@ class EventInviteesController < ApplicationController
   # POST /event_invitees.json
   def create
     @event_invitee = EventInvitee.new(params[:event_invitee])
-    if @event_invitee.user
-      @event_invitee.attributes = {
-          :name => @event_invitee.user.name,
-          :email => @event_invitee.user.email,
-      }
-    end
 
     respond_to do |format|
       if @event_invitee.save

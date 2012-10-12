@@ -23,14 +23,6 @@
     </p>
 
     <% if @event.id %>
-        <% if @event.invitation.nil? %>
-            <p>
-              <%= detour_to 'Lag invitasjon', :controller => :event_messages, :action => :new, :event_message => {
-                      :message_type => EventMessage::MessageType::INVITATION, :event_id => @event.id,
-                      :subject => "Invitasjon til #{@event.name}"} %>
-            </p>
-        <% else %>
-            <% if @event.invitation.ready_at %>
                 <div style="float: right">
                   <table>
                     <tr>
@@ -46,23 +38,27 @@
                         </tr>
                     <% end %>
                   </table>
-                  <%= f.button 'Send innbydelse til disse gruppene', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :groups)}')" %>
+                  <%#= f.button 'Send innbydelse til disse gruppene', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :groups)}')" %>
                 </div>
-            <% end %>
             <p>
-              <%= detour_to 'Rediger invitasjonen', :controller => :event_messages, :action => :edit, :id => @event.invitation %>
+              <%#= detour_to 'Rediger invitasjonen', :controller => :event_messages, :action => :edit, :id => @event.invitation %>
               <%= f.button 'Send meg eksempel på innbydelse', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :example => true)}')" %>
+              <%= detour_to 'Legg til deltaker', :controller => :event_invitees, :action => :new, :event_invitee => {:event_id => @event.id} %>
+              <%= detour_to 'Lag melding', :controller => :event_messages, :action => :new, :event_message => {:event_id => @event.id} %>
+              <%#= f.button 'Send innbydelse til de inviterte', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :invited)}')" %>
             </p>
-            <% if @event.invitation.ready_at %>
                 <p>
                   <%= f.label :inviter %><%= "(#{@event.invitees.split(/\s*,\s*/).size})" if @event.invitees %>
                   (Kommaseparert
                   liste: Navn 1 &lt;e-post1&gt;, e-post2, Navn 3 &lt;e-post3&gt;, etc.)<br/>
                   <%= f.text_area :invitees, :cols => 100, :rows => 3 %>
                 </p>
-            <% end %>
-        <% end %>
     <% end %>
+
+    <p>
+    <%= f.submit "Lagre" %>
+    <%= back_or_link_to 'Tilbake', events_path %>
+    </p>
 
     <% if @event.event_invitees.any? %>
         <div style="float: left">
@@ -129,16 +125,7 @@
               <td>Ja: <%=@event.event_invitees.select(&:will_attend).size %></td>
             </tr>
           </table>
-          <%= detour_to 'Legg til deltaker', :controller => :event_invitees, :action => :new, :event_invitee => {:event_id => @event.id} %>
-          <%= detour_to 'Lag melding', :controller => :event_messages, :action => :new, :event_message => {:event_id => @event.id} %>
-          <%= f.button 'Send innbydelse til de inviterte', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :invited)}')" %>
         </div>
     <% end %>
 
-    <br clear="all"/>
-
-    <p>
-      <%= f.submit "Lagre" %>
-      <%= back_or_link_to 'Tilbake', events_path %>
-    </p>
 <% end %>

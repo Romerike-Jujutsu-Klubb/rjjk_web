@@ -11,6 +11,14 @@ class EventInvitee < ActiveRecord::Base
   validates_uniqueness_of :user_id, :scope => :event_id, :allow_nil => true
   validates_inclusion_of :will_work, :in => [nil, false], :if => proc{|r| r.will_attend == false}
 
+  before_create do
+    if user
+      self.name = user.name
+      self.email = user.email
+      self.organization = 'Romerike Jujutsu Klubb' if user.member
+    end
+  end
+
   def name
     user.try(:name) || super
   end
