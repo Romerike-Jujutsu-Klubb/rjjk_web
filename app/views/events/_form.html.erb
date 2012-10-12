@@ -77,7 +77,7 @@
                 <tr>
                   <td><%= detour_to inv.name, edit_event_invitee_path(inv) %></td>
                   <td><%= inv.organization %></td>
-                  <td><%= inv.email %></td>
+                  <td><%=link_to inv.email, "mailto:#{inv.email}?subject=#{@event.name}" %></td>
                   <td><%= inv.phone %></td>
                   <td align="center">
                     <%= {true => 'Ja', false => 'Nei'}[inv.will_attend] %>
