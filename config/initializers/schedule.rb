@@ -24,16 +24,44 @@ unless Rails.env == 'test'
   end
 
   scheduler.every('1m', :first_in => '10s') do
-    now = Time.now
+    begin
+      now = Time.now
+
+      # FIXME(uwe): Consider using SQL to optimize the selection.
+      EventMessage.where('message_type <> ? AND ready_at IS NOT NULL', EventMessage::MessageType::INVITATION).
+          order(:ready_at).includes(:event => {:event_invitees => :invitation}).all.each do |em|
+        recipients = em.event.event_invitees
+        recipients = recipients.select { |r| r.will_attend || r.invitation.try(:sent_at) }
+
+        # FIXME(uwe):  Skip sending messages to those not attending?
+
+        already_received = em.event_invitee_messages.map(&:event_invitee)
+        Rails.logger.info "recipients: #{recipients.inspect}"
+        Rails.logger.info "already_received: #{already_received.inspect}"
+        recipients -= already_received
+        Rails.logger.info "recipients: #{recipients.inspect}"
+        recipients.each do |ei|
+          EventInviteeMessage.create! :event_message_id => em.id, :event_invitee_id => ei.id,
+                                      :message_type => em.message_type, :subject => em.subject, :body => em.body,
+                                      :ready_at => now
+        end
+      end
+    rescue
+      Rails.logger.error "Execption sending event messages."
+      Rails.logger.error $!.message
+      Rails.logger.error $!.backtrace.join("\n")
+    end
+
     EventInviteeMessage.where('ready_at IS NOT NULL AND sent_at IS NULL').all.each do |eim|
       begin
-      NewsletterMailer.event_invitee_message(eim).deliver
-      eim.update_attributes! :sent_at => now
+        NewsletterMailer.event_invitee_message(eim).deliver
+        eim.update_attributes! :sent_at => now
       rescue
         Rails.logger.error "Exception sending event message: #{$!}"
         Rails.logger.error $!.backtrace.join("\n")
       end
     end
+
   end
 
 end

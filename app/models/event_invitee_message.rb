@@ -5,12 +5,14 @@ class EventInviteeMessage < ActiveRecord::Base
     SIGNUP_REJECTION = 'SIGNUP_REJECTION'
   end
 
-  attr_accessible :body, :event_invitee, :event_invitee_id, :message_type, :ready_at, :sent_at, :subject
+  attr_accessible :body, :event_invitee, :event_invitee_id, :event_message_id, :message_type, :ready_at, :sent_at, :subject
 
   belongs_to :event_invitee
 
   validates_presence_of :body, :event_invitee, :event_invitee_id, :message_type, :subject
-  validates_uniqueness_of :event_invitee_id, :scope => :message_type
+  validates_uniqueness_of :event_invitee_id,
+                          :if => proc{|eim| eim.message_type == EventMessage::MessageType::INVITATION}
+  validates_uniqueness_of :event_invitee_id, :scope => :event_message_id, :if => :event_message_id
 
   def initialize(*args)
     super

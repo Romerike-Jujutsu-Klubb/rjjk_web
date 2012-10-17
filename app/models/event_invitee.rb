@@ -6,6 +6,7 @@ class EventInvitee < ActiveRecord::Base
   has_one :invitation, :class_name => 'EventInviteeMessage', :conditions => "message_type = '#{EventMessage::MessageType::INVITATION}'"
   has_one :signup_confirmation, :class_name => 'EventInviteeMessage', :conditions => "message_type = '#{EventInviteeMessage::MessageType::SIGNUP_CONFIRMATION}'"
   has_one :signup_rejection, :class_name => 'EventInviteeMessage', :conditions => "message_type = '#{EventInviteeMessage::MessageType::SIGNUP_REJECTION}'"
+  has_many :event_invitee_messages, :conditions => "message_type <> '#{EventMessage::MessageType::INVITATION}'"
 
   validates_presence_of :event, :event_id, :name, :email
   validates_uniqueness_of :user_id, :scope => :event_id, :allow_nil => true
