@@ -20,7 +20,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(params[:event])
-    @event.groups = params[:group][:id].map{|group_id| Group.find(group_id) }
+    @event.groups = params[:group][:id].map{|group_id| Group.find(group_id) } if params[:group]
 
     if @event.save
       flash[:notice] = 'Event was successfully created.'

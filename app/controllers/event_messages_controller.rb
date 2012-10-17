@@ -27,6 +27,7 @@ class EventMessagesController < ApplicationController
   # GET /event_messages/new.json
   def new
     @event_message = EventMessage.new(params[:event_message])
+    @event_message.subject ||= @event_message.event.try(:name)
     @event_message.body ||= @event_message.event.try(:description)
 
     respond_to do |format|

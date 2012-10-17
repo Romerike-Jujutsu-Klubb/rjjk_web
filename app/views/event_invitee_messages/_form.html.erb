@@ -14,7 +14,6 @@
     <div class="field">
       <%= f.label :hendelse %>:
       <%= f.hidden_field :event_invitee_id %>
-      <%= f.hidden_field :message_type %>
       <%= @event_invitee_message.event_invitee.event.name %>
     </div>
     <div class="field">
@@ -24,8 +23,12 @@
     </div>
     <div class="field">
       <%= f.label :meldingstype %>:
-      <%= f.hidden_field :message_type %>
-      <%= @event_invitee_message.message_type %>
+      <% if @event_invitee_message.message_type %>
+          <%= @event_invitee_message.message_type %>
+          <%= f.hidden_field :message_type %>
+      <% else %>
+          <%= f.select :message_type, [nil] + EventMessage::MessageType.constants.sort %>
+      <% end %>
     </div>
     <div class="field">
     <%= f.label :emne %><br />

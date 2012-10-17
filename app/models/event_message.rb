@@ -1,6 +1,8 @@
 class EventMessage < ActiveRecord::Base
   module MessageType
+    INFORMATION = 'INFORMATION'
     INVITATION = 'INVITATION'
+    REMINDER = 'REMINDER'
   end
 
   attr_accessible :body, :event_id, :message_type, :ready_at, :subject

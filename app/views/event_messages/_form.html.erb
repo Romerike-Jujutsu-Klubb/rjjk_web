@@ -22,8 +22,12 @@
     </div>
     <div class="field">
       <%= f.label :meldingstype %>:
-      <%= f.hidden_field :message_type %>
-      <%=@event_message.message_type %>
+      <% if @event_message.message_type %>
+          <%= @event_message.message_type %>
+          <%= f.hidden_field :message_type %>
+      <% else %>
+          <%= f.select :message_type, [nil] + EventMessage::MessageType.constants.sort %>
+      <% end %>
     </div>
   <div class="field">
     <%= f.label :subject %><br />
