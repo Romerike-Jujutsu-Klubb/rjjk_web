@@ -32,14 +32,8 @@ unless Rails.env == 'test'
           order(:ready_at).includes(:event => {:event_invitees => :invitation}).all.each do |em|
         recipients = em.event.event_invitees
         recipients = recipients.select { |r| r.will_attend || r.invitation.try(:sent_at) }
-
-        # FIXME(uwe):  Skip sending messages to those not attending?
-
         already_received = em.event_invitee_messages.map(&:event_invitee)
-        Rails.logger.info "recipients: #{recipients.inspect}"
-        Rails.logger.info "already_received: #{already_received.inspect}"
         recipients -= already_received
-        Rails.logger.info "recipients: #{recipients.inspect}"
         recipients.each do |ei|
           EventInviteeMessage.create! :event_message_id => em.id, :event_invitee_id => ei.id,
                                       :message_type => em.message_type, :subject => em.subject, :body => em.body,
