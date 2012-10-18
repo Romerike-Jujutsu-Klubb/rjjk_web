@@ -51,6 +51,7 @@
 	</span>
   </div>
 
+  <% unless @content_width.to_i >= 1024 -%>
   <div class="main_right">
 
     <div class="padded">
@@ -161,6 +162,7 @@
     </div>
 
   </div>
+  <% end -%>
 
   <div class="subnav">
 
