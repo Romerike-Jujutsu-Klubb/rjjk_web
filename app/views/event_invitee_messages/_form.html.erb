@@ -39,7 +39,7 @@
       <%= f.text_area :body, :cols => 64 %>
     </div>
     <div class="field">
-      <%= f.label :klar %>:
+      <%= f.label :ready_at, :Klar %>:
       <%= f.check_box :ready_at, {}, Time.now, nil %>
     </div>
     <% if @event_invitee_message.sent_at %>

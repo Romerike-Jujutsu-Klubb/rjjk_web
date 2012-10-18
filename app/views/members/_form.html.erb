@@ -68,8 +68,10 @@ input.half {width: 7.5em;}
 <p><label for="member_contract_id">Medlemsnummer</label><br/>
 <%= text_field 'member', 'contract_id', :class => :half %></p>
 
-<p><label for="member_cms_contract_id">CMS Kontraktnummer</label><br/>
-<%= text_field 'member', 'cms_contract_id', :class => :half %></p>
+<p>
+  <label for="member_nkf_member_id">NKF medlemsnummer</label><br/>
+  <span style="background-color: white; border: 1px solid #d3d3d3;"><%=@member.nkf_member.medlemsnummer %></span>
+</p>
 
 <p><label for="member_left_on">Utmeldt dato</label><br/>
 <%=text_field :member, :left_on, :value => @member.left_on && @member.left_on.strftime('%Y-%m-%d'), :size => 10 %>
