@@ -58,6 +58,7 @@
     <p>
     <%= f.submit "Lagre" %>
     <%= back_or_link_to 'Tilbake', events_path %>
+      <%= link_to 'Oppmøteliste', :action => :attendance_form if @event.try(:event_invitees).try(:any?) %>
     </p>
 
     <% if @event.event_invitees.any? %>

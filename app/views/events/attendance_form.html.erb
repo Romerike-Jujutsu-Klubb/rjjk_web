@@ -1,0 +1,44 @@
+<% @content_width = 1024 %>
+
+<h1><%= @event.name%> - Oppmøte</h1>
+
+<p><%= @event.start_at %> - <%= @event.end_at %></p>
+
+          <table>
+            <tr>
+              <th>Navn</th>
+              <th>Organisasjon</th>
+              <th>E-post</th>
+              <th>Telefon</th>
+              <th>Vil delta</th>
+              <th>Medhjelper</th>
+              <th>Betalt</th>
+              <th>Kommentar</th>
+            </tr>
+            <% for inv in @event.event_invitees %>
+                <tr>
+                  <td><%= inv.name %></td>
+                  <td><%= inv.organization %></td>
+                  <td><%= inv.email %></td>
+                  <td><%= inv.phone %></td>
+                  <td align="center">
+                    <%= {true => 'Ja', false => 'Nei'}[inv.will_attend] %>
+                    <% if inv.will_attend.nil? %>
+                        <%= "Invitert #{inv.invitation.sent_at.to_date}" if inv.invitation.try(:sent_at) %>
+                    <% end %>
+                  </td>
+                  <td align="center">
+                    <%= {true => 'Ja', false => 'Nei'}[inv.will_work] if inv.will_attend %>
+                  </td>
+                  <td align="right"><%= inv.payed if inv.payed.to_i > 0 %></td>
+                  <td><%=inv.comment %></td>
+                </tr>
+            <% end %>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>Ja: <%=@event.event_invitees.select(&:will_attend).size %></td>
+            </tr>
+          </table>

@@ -9,6 +9,11 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
   end
 
+  def attendance_form
+    @event = Event.find(params[:id])
+    render :layout => 'print'
+  end
+
   def new
     @event = Event.new
   end
