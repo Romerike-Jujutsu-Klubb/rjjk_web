@@ -87,7 +87,7 @@ class EventInviteesController < ApplicationController
     @event_invitee.destroy
 
     respond_to do |format|
-      format.html { redirect_to event_invitees_url }
+      format.html { back_or_redirect_to event_invitees_url }
       format.json { head :no_content }
     end
   end

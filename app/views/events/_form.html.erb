@@ -116,6 +116,7 @@
                   </td>
                   <td align="right"><%= inv.payed if inv.payed.to_i > 0 %></td>
                   <td><%=inv.comment %></td>
+                  <td><%= detour_to 'Slett', url_for(inv), :data => {:confirm => "Er du sikker?"}, :method => :delete %></td>
                 </tr>
             <% end %>
             <tr>
