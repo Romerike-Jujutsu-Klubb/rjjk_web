@@ -4,8 +4,7 @@ require 'rails/test_help'
 
 if ENV["RM_INFO"] || ENV["TEAMCITY_VERSION"]
   require 'minitest/reporters'
-  MiniTest::Unit.runner = MiniTest::SuiteRunner.new
-  MiniTest::Unit.runner.reporters << MiniTest::Reporters::RubyMineReporter.new
+  MiniTest::Reporters.use!
 end
 
 class ActiveSupport::TestCase

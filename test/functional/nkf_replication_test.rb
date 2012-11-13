@@ -14,7 +14,7 @@ class NkfReplicationTest < ActionMailer::TestCase
     assert_equal "Hentet 1 endringer fra NKF", mail.subject
     assert_equal ["uwe@kubosch.no"], mail.to
     assert_equal ["webmaster@jujutsu.no"], mail.from
-    assert_match /NKF Import\s+Importerte endringer fra NKF-portalen.\s+0 records importert,\s+0 feilet,\s+1 uendret./, mail.body.encoded
+    assert_match /NKF Import\s+Endringer fra NKF-portalen.\s+0 medlemmer oppdatert\s+1 uendret/, mail.body.encoded
   end
 
   test "update_members" do

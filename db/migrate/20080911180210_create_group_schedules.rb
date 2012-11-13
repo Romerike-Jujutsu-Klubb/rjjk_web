@@ -9,13 +9,13 @@ class CreateGroupSchedules < ActiveRecord::Migration
       t.timestamps
     end
     
-    GroupSchedule.create! :group_id => 2, :weekday => 2, :start_at => TimeOfDay.new(17, 45), :end_at => TimeOfDay.new(18, 45)
-    GroupSchedule.create! :group_id => 3, :weekday => 2, :start_at => TimeOfDay.new(19),     :end_at => TimeOfDay.new(20, 30)
-    GroupSchedule.create! :group_id => 4, :weekday => 2, :start_at => TimeOfDay.new(19),     :end_at => TimeOfDay.new(21)
-    GroupSchedule.create! :group_id => 2, :weekday => 4, :start_at => TimeOfDay.new(17, 45), :end_at => TimeOfDay.new(18, 45)
-    GroupSchedule.create! :group_id => 3, :weekday => 4, :start_at => TimeOfDay.new(19),     :end_at => TimeOfDay.new(20, 30)
-    GroupSchedule.create! :group_id => 4, :weekday => 4, :start_at => TimeOfDay.new(19),     :end_at => TimeOfDay.new(21)
-    GroupSchedule.create! :group_id => 1, :weekday => 5, :start_at => TimeOfDay.new(18),     :end_at => TimeOfDay.new(19)
+    GroupSchedule.create! :group_id => 2, :weekday => 2, :start_at => '17:45', :end_at => '18:45'
+    GroupSchedule.create! :group_id => 3, :weekday => 2, :start_at => '19:00', :end_at => '20:30'
+    GroupSchedule.create! :group_id => 4, :weekday => 2, :start_at => '19:00', :end_at => '21:00'
+    GroupSchedule.create! :group_id => 2, :weekday => 4, :start_at => '17:45', :end_at => '18:45'
+    GroupSchedule.create! :group_id => 3, :weekday => 4, :start_at => '19:00', :end_at => '20:30'
+    GroupSchedule.create! :group_id => 4, :weekday => 4, :start_at => '19:00', :end_at => '21:00'
+    GroupSchedule.create! :group_id => 1, :weekday => 5, :start_at => '18:00', :end_at => '19:00'
   end
   
   def self.down

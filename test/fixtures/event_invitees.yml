@@ -6,7 +6,7 @@ one:
   name: MyString
   address: MyString
   organization: MyString
-  will_attend_boolean: MyString
+  will_attend: true
   payed: false
 
 two:
@@ -15,5 +15,5 @@ two:
   name: MyString
   address: MyString
   organization: MyString
-  will_attend_boolean: MyString
+  will_attend: false
   payed: false

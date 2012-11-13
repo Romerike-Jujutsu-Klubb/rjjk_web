@@ -37,7 +37,7 @@ class EventsControllerTest < ActionController::TestCase
 
   def test_should_update_event
     put :update, :id => events(:one).id, :event => { }
-    assert_redirected_to event_path(assigns(:event))
+    assert_redirected_to edit_event_path(assigns(:event))
   end
 
   def test_should_destroy_event
