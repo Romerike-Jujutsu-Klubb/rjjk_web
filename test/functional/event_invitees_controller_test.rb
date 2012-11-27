@@ -2,6 +2,7 @@ require 'test_helper'
 
 class EventInviteesControllerTest < ActionController::TestCase
   setup do
+    login :admin
     @event_invitee = event_invitees(:one)
   end
 
@@ -12,7 +13,7 @@ class EventInviteesControllerTest < ActionController::TestCase
   end
 
   test "should get new" do
-    get :new
+    get :new, event_invitee: {event_id: events(:one).id}
     assert_response :success
   end
 

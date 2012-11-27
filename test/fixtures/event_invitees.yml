@@ -1,7 +1,5 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
 one:
-  event_id: 1
+  event: one
   email: MyString
   name: MyString
   address: MyString
@@ -10,7 +8,7 @@ one:
   payed: false
 
 two:
-  event_id: 1
+  event: one
   email: MyString
   name: MyString
   address: MyString

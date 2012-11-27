@@ -216,7 +216,9 @@ class NkfMemberImport
     import_rows.each do |row|
       attributes = {}
       columns.each_with_index do |column, i|
-        next if ['aktivitetsomrade_id', 'aktivitetsomrade_navn', 'alder', 'avtalegiro', 'dan_graderingsserifikat', 'forbundskontingent', 'foresatte'].include? column
+        next if ['aktivitetsomrade_id', 'aktivitetsomrade_navn', 'alder', 'avtalegiro',
+                 'dan_graderingsserifikat', 'forbundskontingent', 'foresatte', 'foresatte_epost',
+                 'foresatte_mobil', 'foresatte_nr_2', 'foresatte_nr_2_mobil'].include? column
         attributes[column] = row[i] && row[i].strip
       end
       record = NkfMember.find_by_medlemsnummer(row[0]) || NkfMember.new

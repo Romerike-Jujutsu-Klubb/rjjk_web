@@ -34,7 +34,7 @@ class NkfMemberComparison
         m.save!
         [m, changes] unless changes.empty?
       rescue
-        Rails.logger.error "Exception saving member changes"
+        Rails.logger.error "Exception saving member changes for #{m.attributes.inspect}"
         Rails.logger.error $!.message
         Rails.logger.error $!.backtrace.join("\n")
         @errors << ['Changes', m, $!]

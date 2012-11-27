@@ -12,10 +12,11 @@ RjjkWeb::Application.routes.draw do
   resources :attendances
   resources :cms_members
   resources :correspondences
+  resources :embus
   resources :event_invitee_messages
   resources :event_invitees
+  resources :event_messages
   resources :events
-  resources :embus
   resources :group_schedules
   resources :groups
   resources :images
@@ -24,7 +25,6 @@ RjjkWeb::Application.routes.draw do
   resources :nkf_members
   resources :nkf_member_trials
   resources :trial_attendances
-  resources :event_messages
 
   root :to => "welcome#index"
   match ':controller/service.wsdl', :action => 'wsdl'

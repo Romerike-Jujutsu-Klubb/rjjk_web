@@ -5,7 +5,7 @@ class Member < ActiveRecord::Base
   MEMBERS_PER_PAGE = 30
   ACTIVE_CONDITIONS = "left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)"
 
-  acts_as_gmappable :check_process => :prevent_geocoding
+  acts_as_gmappable :check_process => :prevent_geocoding, :validation => false
 
   def prevent_geocoding
     address.blank? || (!latitude.blank? && !longitude.blank?)

@@ -2,6 +2,7 @@ require 'test_helper'
 
 class EventMessagesControllerTest < ActionController::TestCase
   setup do
+    login :admin
     @event_message = event_messages(:one)
   end
 

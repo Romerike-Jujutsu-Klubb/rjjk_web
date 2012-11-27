@@ -13,7 +13,7 @@ class CensorsControllerTest < ActionController::TestCase
     @response   = ActionController::TestResponse.new
 
     @first_id = censors(:one).id
-    login(:admin)
+    login :admin
   end
 
   def test_index

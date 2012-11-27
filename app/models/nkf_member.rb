@@ -86,7 +86,7 @@ class NkfMember < ActiveRecord::Base
         if u
           email = %Q{#{fornavn} #{etternavn} <#{epost}>}
           if email.size > 40
-            email = %Q{#{fornavn.split(/\s+/).first} #{etternavn.split(/\s+/).last} <#{epost}>}
+            email = %Q{#{fornavn.split(/\s+/).first} #{etternavn.split(/\s+/).last} <#{epost}>}[0..39]
           end
         else
           email = epost
