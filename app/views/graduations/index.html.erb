@@ -2,7 +2,6 @@
 
 <h1>Graderingsoversikt</h1>
 <script language="JavaScript1.2">
-<!-- 
 var CONST_AJAX_UNINITIALIZED    = 0;
 var CONST_AJAX_LOADING		    = 1;
 var CONST_AJAX_RH_RECEIVED	    = 2;
@@ -318,7 +317,6 @@ function cancelSaveGraduateInfo(graduate_id) {
 	}
 	//changeGraduationData();
 }
--->
 </script>
 
 <!-- %= button_to 'Importer data fra CSV', :action => 'import'% -->
@@ -347,7 +345,7 @@ function cancelSaveGraduateInfo(graduate_id) {
 	<td ALIGN="center">
   		<% for ma in @martial_arts %>
 			<div id="ma_grad_<%=ma.id%>" STYLE="display: <%=ma.id == 1 ? '' : 'none'%>">
-			<select id="grader_<%=ma.id%>" onChange="window.location = '<%=url_for(:id => '')%>' + options[selectedIndex].value">
+			<select id="grader_<%=ma.id%>" onChange="window.location.href = '<%=url_for(:id => '')%>' + options[selectedIndex].value">
   			<% for grd in ma.graduations.reverse %>
 				<option value='<%=grd.id%>' <%='SELECTED' if grd == @graduation %>><%=grd.held_on%></option>
 			<% end %>
@@ -376,7 +374,7 @@ function cancelSaveGraduateInfo(graduate_id) {
 		<A HREF="#" onClick="show_glist('/censors/list_instructors/<%=@graduation.id%>');">Legg til sensor</a>
 		</td>
 	<td align="center">
-		<A HREF="#" onClick="show_glist('/graduates/list_potential_graduates?graduation_id=' + $('#grader_1')[0].options($('#grader_1')[0].selectedIndex).value);">Legg til medlemmer</a>
+		<A HREF="#" onClick="show_glist('/graduates/list_potential_graduates?graduation_id=' + $('#grader_1')[0].options[$('#grader_1')[0].selectedIndex].value);">Legg til medlemmer</a>
 	</td><td align="right">
 		<A HREF="#" onClick='deleteGraduation();'>Fjern gradering</A></td>
 	</tr>
