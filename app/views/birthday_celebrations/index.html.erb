@@ -1,0 +1,26 @@
+<h1>Listing birthday_celebrations</h1>
+
+<table>
+  <tr>
+    <th>Held on</th>
+    <th>Participants</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @birthday_celebrations.each do |birthday_celebration| %>
+  <tr>
+    <td><%= birthday_celebration.held_on %></td>
+    <td><%= birthday_celebration.participants %></td>
+    <td><%= link_to 'Vis', birthday_celebration %></td>
+    <td><%= link_to 'Rediger', edit_birthday_celebration_path(birthday_celebration) %></td>
+    <td><%= link_to 'Diplomer', :action => :certificates, :id => birthday_celebration.id %></td>
+    <td><%= link_to 'Destroy', birthday_celebration, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Birthday celebration', new_birthday_celebration_path %>

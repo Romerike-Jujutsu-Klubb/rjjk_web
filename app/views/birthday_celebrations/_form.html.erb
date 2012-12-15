@@ -1,0 +1,35 @@
+<%= form_for(@birthday_celebration) do |f| %>
+  <% if @birthday_celebration.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@birthday_celebration.errors.count, "error") %> prohibited this birthday_celebration from being saved:</h2>
+
+      <ul>
+      <% @birthday_celebration.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :held_on %><br />
+    <%= f.date_select :held_on %>
+  </div>
+    <div class="field" style="float: left; width: 45%">
+      <%= f.label :participants %><br />
+      <%= f.text_area :participants, :style => 'width: 100%' %>
+    </div>
+    <div class="field" style="float: left; width: 45%; margin-left: 1em;">
+      <%= f.label :sensor1_id %><br />
+      <%= f.select :sensor1_id, [[]] + @members.map{|m| [m.name, m.id]}, :style => 'width: 100%' %>
+      <%= f.label :sensor2_id %><br />
+      <%= f.select :sensor2_id, [[]] + @members.map{|m| [m.name, m.id]}, :style => 'width: 100%' %>
+      <%= f.label :sensor3_id %><br />
+      <%= f.select :sensor3_id, [[]] + @members.map{|m| [m.name, m.id]}, :style => 'width: 100%' %>
+    </div>
+    <br clear="all"/>
+  <div class="actions">
+    <%= f.submit %>
+    <%= back_or_link_to 'Tilbake', birthday_celebrations_path %>
+  </div>
+<% end %>
