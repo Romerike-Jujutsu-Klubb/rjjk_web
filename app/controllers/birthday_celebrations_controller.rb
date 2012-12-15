@@ -3,7 +3,7 @@ class BirthdayCelebrationsController < ApplicationController
   # GET /birthday_celebrations
   # GET /birthday_celebrations.json
   def index
-    @birthday_celebrations = BirthdayCelebration.all
+    @birthday_celebrations = BirthdayCelebration.order('held_on DESC').all
 
     respond_to do |format|
       format.html # index.html.erb

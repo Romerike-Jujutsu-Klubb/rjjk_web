@@ -1,26 +1,27 @@
-<h1>Listing birthday_celebrations</h1>
+<h1>Bursdagsfeiringer</h1>
 
 <table>
   <tr>
-    <th>Held on</th>
-    <th>Participants</th>
-    <th></th>
-    <th></th>
+    <th>Dato</th>
+    <th>Deltakere</th>
     <th></th>
   </tr>
 
-<% @birthday_celebrations.each do |birthday_celebration| %>
-  <tr>
-    <td><%= birthday_celebration.held_on %></td>
-    <td><%= birthday_celebration.participants %></td>
-    <td><%= link_to 'Vis', birthday_celebration %></td>
-    <td><%= link_to 'Rediger', edit_birthday_celebration_path(birthday_celebration) %></td>
-    <td><%= link_to 'Diplomer', :action => :certificates, :id => birthday_celebration.id %></td>
-    <td><%= link_to 'Destroy', birthday_celebration, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+  <% @birthday_celebrations.each do |birthday_celebration| %>
+      <tr valign="top">
+        <td nowrap="true"><%= birthday_celebration.held_on %></td>
+        <td><%= birthday_celebration.participants.gsub(/\s*\n\s*/, ', ') %></td>
+        <td>
+          <%= link_to 'Vis', birthday_celebration %>
+          <%= link_to 'Rediger', edit_birthday_celebration_path(birthday_celebration) %>
+          <%= link_to 'Diplomer', :action => :certificates, :id => birthday_celebration.id %>
+          <%= link_to 'Slett', birthday_celebration, method: :delete,
+                      data: {confirm: 'Er du sikker på at du vil slette bursdagen?'} %>
+        </td>
+      </tr>
+  <% end %>
 </table>
 
-<br />
+<br/>
 
-<%= link_to 'New Birthday celebration', new_birthday_celebration_path %>
+<%= link_to 'Registrer ny bursdag', new_birthday_celebration_path %>
