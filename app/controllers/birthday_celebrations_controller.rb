@@ -49,7 +49,7 @@ class BirthdayCelebrationsController < ApplicationController
   # GET /birthday_celebrations/new.json
   def new
     @birthday_celebration = BirthdayCelebration.new
-    @members = Member.order(:first_name).all
+    @members = Member.order(:first_name).active(Date.today).all.select{|m| m.age >= 15}
 
     respond_to do |format|
       format.html # new.html.erb
@@ -60,7 +60,7 @@ class BirthdayCelebrationsController < ApplicationController
   # GET /birthday_celebrations/1/edit
   def edit
     @birthday_celebration = BirthdayCelebration.find(params[:id])
-    @members = Member.order(:first_name).all
+    @members = Member.order(:first_name).active(@birthday_celebration.held_on).all.select{|m| m.age >= 15}
   end
 
   # POST /birthday_celebrations
