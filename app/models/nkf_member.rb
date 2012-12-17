@@ -99,8 +99,8 @@ class NkfMember < ActiveRecord::Base
         u.save!
       end
       member = create_member!(
-          converted_attributes.update :instructor => false, :nkf_fee => true, :payment_problem => false,
-                                      :user => u,
+          converted_attributes.update :instructor => false, :nkf_fee => true,
+                                      :payment_problem => false, :user => u,
       )
       member.nkf_member = self
       member

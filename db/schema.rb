@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121017080031) do
+ActiveRecord::Schema.define(:version => 20121215085609) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(:version => 20121017080031) do
   end
 
   add_index "attendances", ["member_id", "group_schedule_id", "year", "week"], :name => "ix_attendances_on_member_id_et_group_schedule_id_et_year_et_wee", :unique => true
+
+  create_table "birthday_celebrations", :force => true do |t|
+    t.date     "held_on",      :null => false
+    t.text     "participants", :null => false
+    t.integer  "sensor1_id"
+    t.integer  "sensor2_id"
+    t.integer  "sensor3_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
 
   create_table "censors", :force => true do |t|
     t.integer "graduation_id", :null => false
@@ -159,6 +169,14 @@ ActiveRecord::Schema.define(:version => 20121017080031) do
     t.integer "martial_art_id", :null => false
   end
 
+  create_table "group_instructors", :force => true do |t|
+    t.integer  "group_id"
+    t.integer  "member_id"
+    t.date     "from"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "group_schedules", :force => true do |t|
     t.integer  "group_id",   :null => false
     t.integer  "weekday",    :null => false
@@ -206,14 +224,6 @@ ActiveRecord::Schema.define(:version => 20121017080031) do
     t.datetime "updated_at"
     t.integer  "position"
     t.boolean  "hidden"
-  end
-
-  create_table "instructions", :force => true do |t|
-    t.integer  "group_id"
-    t.integer  "member_id"
-    t.date     "from"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "martial_arts", :force => true do |t|

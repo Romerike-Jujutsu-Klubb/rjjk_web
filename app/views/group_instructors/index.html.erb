@@ -1,0 +1,27 @@
+<h1>Gruppeinstruktører</h1>
+
+<table>
+  <tr>
+    <th>Gruppe</th>
+    <th>Instruktør</th>
+    <th>Fra</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @group_instructors.each do |instruction| %>
+  <tr>
+    <td><%= instruction.group.name %></td>
+    <td><%= instruction.member.name %></td>
+    <td><%= instruction.from %></td>
+    <td><%= link_to 'Vis', instruction %></td>
+    <td><%= link_to 'Rediger', edit_group_instructor_path(instruction) %></td>
+    <td><%= link_to 'Slett', instruction, data: {confirm: 'Er du sikker?'}, method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Registrer gruppeinstruktør', new_group_instructor_path %>

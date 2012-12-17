@@ -1,0 +1,30 @@
+<%= form_for(@group_instructor) do |f| %>
+  <% if @group_instructor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@group_instructor.errors.count, "error") %> prohibited this instruction from being saved:</h2>
+
+      <ul>
+      <% @group_instructor.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :group_id, 'Gruppe' %><br />
+    <%= f.select :group_id, [[]] + @groups.map{|g| [g.name, g.id]} %>
+  </div>
+  <div class="field">
+    <%= f.label :member_id, 'Instruktør' %><br />
+    <%= f.select :member_id, [[]] + @group_instructors.map{|g| [g.name, g.id]} %>
+  </div>
+  <div class="field">
+    <%= f.label :from, 'Fra' %><br />
+    <%= f.date_select :from %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Lagre' %>
+    <%= back_or_link_to 'Tilbake', group_instructors_path %>
+  </div>
+<% end %>

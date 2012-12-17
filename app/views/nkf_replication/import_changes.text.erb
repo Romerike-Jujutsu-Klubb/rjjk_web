@@ -2,26 +2,38 @@ NKF Import
 
 Endringer fra NKF-portalen.
 
+<% if @import.new_records.any? -%>
+<%=@import.new_records.size %> medlemmer opprettet
+<% end -%>
+<% if @import.changes.any? -%>
 <%=@import.changes.size %> medlemmer oppdatert
-<%=@import.import_rows.size - @import.changes.size - @import.error_records.size %> uendret
+<% end -%>
 <%="#{@import.error_records.size} feilet" if @import.error_records.any? %>
 
 <% if @import.trial_changes.any? -%>
 Endringer prøvetid:
 <% @import.trial_changes.each do |r| -%>
-    <%= r[:record].fornavn %> <%= r[:record].etternavn -%>
+    <%= r[:record].fornavn %> <%= r[:record].etternavn %>:
         <%= r[:changes].inspect.html_safe %>
     <% end -%>
-<% end -%>
 
+<% end -%>
+<% if @import.new_records.any? -%>
+Nye medlemmer:
+    <% @import.new_records.each do |r| -%>
+    <%= r[:record].fornavn %> <%= r[:record].etternavn %>:
+        <%= r[:record].attributes.inspect.html_safe %>
+    <% end -%>
+
+<% end -%>
 <% if @import.changes.any? -%>
 Endringer:
     <% @import.changes.each do |r| -%>
-    <%= r[:record].fornavn %> <%= r[:record].etternavn -%>
+    <%= r[:record].fornavn %> <%= r[:record].etternavn %>:
         <%= r[:changes].inspect.html_safe %>
     <% end -%>
-<% end -%>
 
+<% end -%>
 <% if @import.error_records.any? -%>
 Feil:
     <% @import.error_records.each do |r| -%>

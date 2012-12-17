@@ -55,6 +55,12 @@ class Member < ActiveRecord::Base
         }.update(options))
   end
 
+  def self.instructors(date = Date.today)
+    active(date).
+        where('instructor = true OR id IN (SELECT member_id FROM group_instructors GROUP BY member_id)').
+        order('first_name, last_name').all
+  end
+
   # describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
   def gmaps4rails_address
     "#{self.address}, #{self.postal_code}, Norway"

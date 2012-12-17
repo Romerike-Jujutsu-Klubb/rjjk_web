@@ -1,7 +1,7 @@
 unless Rails.env == 'test'
   scheduler = Rufus::Scheduler.start_new
 
-  scheduler.every('60m', :first_in => '10m') do
+  scheduler.every('60m', :first_in => '20s') do
     begin
       i = NkfMemberImport.new
       NkfReplication.import_changes(i).deliver if i.any?

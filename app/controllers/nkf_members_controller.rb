@@ -1,12 +1,13 @@
+# encoding: utf-8
 class NkfMembersController < ApplicationController
   before_filter :admin_required
-  
+
   cache_sweeper :member_sweeper, :only => [:create_member, :update_member]
 
   def index
     @nkf_members = NkfMember.all :order => 'fornavn, etternavn'
   end
-  
+
   def show
     if params[:id] && respond_to?(params[:id])
       send params[:id]
@@ -15,15 +16,15 @@ class NkfMembersController < ApplicationController
     end
     @nkf_member = NkfMember.find(params[:id])
   end
-  
+
   def new
     @nkf_member = NkfMember.new
   end
-  
+
   def edit
     @nkf_member = NkfMember.find(params[:id])
   end
-  
+
   def create
     @nkf_member = NkfMember.new(params[:nkf_member])
     if @nkf_member.save
@@ -33,7 +34,7 @@ class NkfMembersController < ApplicationController
       render :action => "new"
     end
   end
-  
+
   def update
     @nkf_member = NkfMember.find(params[:id])
     if @nkf_member.update_attributes(params[:nkf_member])
@@ -45,13 +46,13 @@ class NkfMembersController < ApplicationController
       render :action => "edit"
     end
   end
-  
+
   def destroy
     @nkf_member = NkfMember.find(params[:id])
     @nkf_member.destroy
     redirect_to(nkf_members_url)
   end
-  
+
   def comparison
     c = NkfMemberComparison.new
     @orphan_nkf_members = c.orphan_nkf_members
@@ -59,7 +60,7 @@ class NkfMembersController < ApplicationController
     @groups = Group.order('from_age DESC, to_age DESC').all
     @members = c.members
   end
-  
+
   def create_member
     nkf_member = NkfMember.find(params[:id])
     if nkf_member.create_member!
@@ -69,7 +70,7 @@ class NkfMembersController < ApplicationController
     end
     redirect_to :action => :comparison, :id => 0
   end
-  
+
   def update_member
     @member = Member.find(params[:id])
     if @member.update_attributes(params[:member])
@@ -79,13 +80,22 @@ class NkfMembersController < ApplicationController
     end
     redirect_to :action => :comparison, :id => 0
   end
-  
+
   def import
     import = NkfMemberImport.new
     flash[:notice] = "#{import.changes.size} records imported, #{html_escape(import.error_records.size.to_s)} failed, #{import.import_rows.size - import.changes.size - import.error_records.size} skipped" +
-        (import.error_records.any? ? "<br>#{html_escape(import.error_records.map{|r| [r, r.errors.full_messages]}.inspect)}" : '')
+        (import.error_records.any? ? "<br>#{html_escape(import.error_records.map { |r| [r, r.errors.full_messages] }.inspect)}" : '')
 
     redirect_to :action => :comparison
   end
-  
+
+  def age_vs_contract
+    members = NkfMember.where(:medlemsstatus => 'A').all
+    @feil_kontrakt = members.select { |m|
+      (m.member.age < 10 && m.kont_sats !~ /^Barn/) ||
+          (m.member.age >= 10 && m.member.age < 15 && m.kont_sats !~ /^Ungdom/) ||
+          (m.member.age >= 15 && m.kont_sats !~ /^(Voksne|Styre|Trenere|Æresmedlem)/)
+    }
+  end
+
 end

@@ -8,10 +8,10 @@ require 'iconv'
 class NkfMemberImport
   CONCURRENT_REQUESTS = 7
   include MonitorMixin
-  attr_reader :changes, :error_records, :import_rows, :trial_changes
+  attr_reader :changes, :error_records, :import_rows, :new_records, :trial_changes
 
   def size
-    changes.try(:size).to_i + error_records.try(:size).to_i
+    new_records.try(:size).to_i + changes.try(:size).to_i + error_records.try(:size).to_i
   end
 
   def any?
@@ -20,6 +20,7 @@ class NkfMemberImport
 
   def initialize
     super
+    @new_records   = []
     @changes       = []
     @trial_changes = []
     @error_records = []
@@ -234,12 +235,13 @@ class NkfMemberImport
         logger.error attributes.inspect
         raise
       end
+      was_new_record = record.new_record?
       if record.changed?
         c = record.changes
         logger.debug "Found changes: #{c.inspect}"
         if record.save
           logger.debug "Found changes: #{c.inspect}"
-          @changes << {:record => record, :changes => c}
+          (was_new_record ? @new_records : @changes) << {:record => record, :changes => c}
         else
           logger.error "ERROR: #{record.errors.to_a.join(', ')}"
           @error_records << record
