@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 unless Rails.env == 'test'
   scheduler = Rufus::Scheduler.start_new
 
@@ -56,6 +58,21 @@ unless Rails.env == 'test'
       end
     end
 
+  end
+
+  scheduler.every('1d', :first_in => '30s') do
+    begin
+      members = NkfMember.where(:medlemsstatus => 'A').all
+      wrong_contracts = members.select { |m|
+        (m.member.age < 10 && m.kont_sats !~ /^Barn/) ||
+            (m.member.age >= 10 && m.member.age < 15 && m.kont_sats !~ /^Ungdom/) ||
+            (m.member.age >= 15 && m.kont_sats !~ /^(Voksne|Styre|Trenere|Æresmedlem)/)
+      }
+      NkfReplication.wrong_contracts(wrong_contracts).deliver
+    rescue
+      Rails.logger.error "Exception sending contract message: #{$!}"
+      Rails.logger.error $!.backtrace
+    end
   end
 
 end

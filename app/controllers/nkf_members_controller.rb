@@ -91,7 +91,7 @@ class NkfMembersController < ApplicationController
 
   def age_vs_contract
     members = NkfMember.where(:medlemsstatus => 'A').all
-    @feil_kontrakt = members.select { |m|
+    @wrong_contracts = members.select { |m|
       (m.member.age < 10 && m.kont_sats !~ /^Barn/) ||
           (m.member.age >= 10 && m.member.age < 15 && m.kont_sats !~ /^Ungdom/) ||
           (m.member.age >= 15 && m.kont_sats !~ /^(Voksne|Styre|Trenere|Æresmedlem)/)

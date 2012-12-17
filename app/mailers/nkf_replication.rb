@@ -24,4 +24,10 @@ class NkfReplication < ActionMailer::Base
     Rails.logger.error $!.message
     Rails.logger.error $!.backtrace.join("\n")
   end
+
+  def wrong_contracts(wrong_contracts)
+    @wrong_contracts = wrong_contracts
+    mail subject: "Medlemmer med feil kontrakt"
+  end
+
 end
