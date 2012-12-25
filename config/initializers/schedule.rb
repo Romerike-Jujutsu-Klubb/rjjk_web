@@ -68,7 +68,7 @@ unless Rails.env == 'test'
             (m.member.age >= 10 && m.member.age < 15 && m.kont_sats !~ /^Ungdom/) ||
             (m.member.age >= 15 && m.kont_sats !~ /^(Voksne|Styre|Trenere|Æresmedlem)/)
       }
-      NkfReplication.wrong_contracts(wrong_contracts).deliver
+      NkfReplication.wrong_contracts(wrong_contracts).deliver if wrong_contracts.any?
     rescue
       Rails.logger.error "Exception sending contract message: #{$!}"
       Rails.logger.error $!.backtrace
