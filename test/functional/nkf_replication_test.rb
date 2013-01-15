@@ -5,6 +5,7 @@ class NkfReplicationTest < ActionMailer::TestCase
   test "import_changes" do
     import = mock('import')
     import.stubs(:size).returns(1)
+    import.stubs(:new_records).returns([])
     import.stubs(:changes).returns({})
     import.stubs(:trial_changes).returns([])
     import.stubs(:error_records).returns([])
@@ -14,7 +15,7 @@ class NkfReplicationTest < ActionMailer::TestCase
     assert_equal "Hentet 1 endringer fra NKF", mail.subject
     assert_equal ["uwe@kubosch.no"], mail.to
     assert_equal ["webmaster@jujutsu.no"], mail.from
-    assert_match /NKF Import\s+Endringer fra NKF-portalen.\s+0 medlemmer oppdatert\s+1 uendret/, mail.body.encoded
+    assert_match /NKF Import\s+Endringer fra NKF-portalen.\s+/, mail.body.encoded
   end
 
   test "update_members" do

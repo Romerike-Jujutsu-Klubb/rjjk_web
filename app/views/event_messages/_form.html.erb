@@ -18,7 +18,7 @@
       <%= f.label :hendelse %>:
       <%= f.hidden_field :event_id %>
       <%= f.hidden_field :message_type %>
-      <%= @event_message.event.name %>
+      <%= @event_message.event.try(:name) %>
     </div>
     <div class="field">
       <%= f.label :meldingstype %>:

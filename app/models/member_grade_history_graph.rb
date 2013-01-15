@@ -9,7 +9,7 @@ class MemberGradeHistoryGraph
     end
 
     ranks = MartialArt.find_by_name('Kei Wa Ryu').ranks.reverse
-    ranks = ranks.first(8)
+    ranks = ranks.first(9)[1..-1]
 
     g = Gruff::Line.new(size)
     g.theme_37signals
@@ -20,7 +20,7 @@ class MemberGradeHistoryGraph
     
     #first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = 5.years.ago.to_date
-    first_date = Date.civil(2010, 8, 01)
+    first_date = Date.civil(2011, 01, 01)
     dates = []
     Date.today.step(first_date, -14){|date| dates << date}
     dates.reverse!

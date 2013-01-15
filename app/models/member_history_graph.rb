@@ -24,24 +24,24 @@ class MemberHistoryGraph
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     #g.legend_font_size = 14
     g.hide_dots = true
-    g.colors = %w{gray lightgray blue brown orange black red yellow lightblue green}
+    g.colors = %w{gray blue brown orange black red yellow lightblue green}
     
     #first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = 5.years.ago.to_date
-    first_date = Date.civil(2010, 8, 01)
+    first_date = Date.civil(2011, 01, 01)
     dates = []
     Date.today.step(first_date, -14) {|date| dates << date}
     dates.reverse!
     g.data("Totalt", totals(dates))
-    g.data("Totalt m/Aikido", totals_paying(dates))
+    #g.data("Totalt m/Aikido", totals_paying(dates))
     g.data("Totalt betalende", totals_jj(dates))
     g.data("Voksne", seniors_jj(dates))
     g.data("Tiger", juniors_jj(dates))
     g.data("Panda", aspirants(dates))
     g.data("Gratis", gratis(dates))
     g.data("Prøvetid", dates.map{|d| NkfMemberTrial.count(:conditions => ["reg_dato <= ?", d])}.without_consecutive_zeros)
-    g.data("Aikido Seniorer", seniors_ad(dates).without_consecutive_zeros)
-    g.data("Aikido Juniorer", juniors_ad(dates).without_consecutive_zeros)
+    #g.data("Aikido Seniorer", seniors_ad(dates).without_consecutive_zeros)
+    #g.data("Aikido Juniorer", juniors_ad(dates).without_consecutive_zeros)
 
     g.minimum_value = 0
     
