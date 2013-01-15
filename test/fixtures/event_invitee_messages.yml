@@ -1,7 +1,7 @@
 one:
   event_invitee: one
-  subject: MyString
-  body: MyText
+  subject: Så søte bær!
+  body: SÅ SØTE BÆR!
   sent_at: 2012-09-25 22:31:19
 
 two:
