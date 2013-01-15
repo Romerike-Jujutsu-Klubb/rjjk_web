@@ -84,7 +84,7 @@ class GroupInstructorsController < ApplicationController
     @group_instructor.destroy
 
     respond_to do |format|
-      format.html { redirect_to group_instructor_url }
+      format.html { redirect_to group_instructors_url }
       format.json { head :no_content }
     end
   end

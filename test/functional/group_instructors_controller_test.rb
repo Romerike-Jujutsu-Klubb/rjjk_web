@@ -2,7 +2,7 @@ require 'test_helper'
 
 class GroupInstructorsControllerTest < ActionController::TestCase
   setup do
-    @groupinstructor = instructions(:one)
+    @group_instructor = group_instructors(:one)
   end
 
   test "should get index" do
@@ -16,36 +16,36 @@ class GroupInstructorsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create groupinstructor" do
+  test "should create group_instructor" do
     assert_difference('GroupInstructor.count') do
-      post :create, groupinstructor: { from: @groupinstructor.from, group_id: @groupinstructor.group_id, member_id: @groupinstructor.member_id }
-      assert_no_errors :groupinstructor
+      post :create, group_instructor: { from: @group_instructor.from + 1, group_id: @group_instructor.group_id, member_id: @group_instructor.member_id }
+      assert_no_errors :group_instructor
     end
 
-    assert_redirected_to instruction_path(assigns(:groupinstructor))
+    assert_redirected_to group_instructor_path(assigns(:group_instructor))
   end
 
-  test "should show groupinstructor" do
-    get :show, id: @groupinstructor
+  test "should show group_instructor" do
+    get :show, id: @group_instructor
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @groupinstructor
+    get :edit, id: @group_instructor
     assert_response :success
   end
 
-  test "should update groupinstructor" do
-    put :update, id: @groupinstructor, groupinstructor: { from: @groupinstructor.from, group_id: @groupinstructor.group_id, member_id: @groupinstructor.member_id }
-    assert_no_errors :groupinstructor
-    assert_redirected_to instruction_path(assigns(:groupinstructor))
+  test "should update group_instructor" do
+    put :update, id: @group_instructor, group_instructor: { from: @group_instructor.from, group_id: @group_instructor.group_id, member_id: @group_instructor.member_id }
+    assert_no_errors :group_instructor
+    assert_redirected_to group_instructor_path(assigns(:group_instructor))
   end
 
-  test "should destroy groupinstructor" do
+  test "should destroy group_instructor" do
     assert_difference('GroupInstructor.count', -1) do
-      delete :destroy, id: @groupinstructor
+      delete :destroy, id: @group_instructor
     end
 
-    assert_redirected_to instructions_path
+    assert_redirected_to group_instructors_path
   end
 end
