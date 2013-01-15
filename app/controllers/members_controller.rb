@@ -72,12 +72,7 @@ class MembersController < ApplicationController
   end
   
   def attendance_form_index
-    @groups = []
-    MartialArt.all(:order => :family).each do |ma|
-      ma.groups.each do |group|
-        @groups << group
-      end
-    end
+    @groups = Group.active(Date.today).order :from_age
   end
   
   def attendance_form
