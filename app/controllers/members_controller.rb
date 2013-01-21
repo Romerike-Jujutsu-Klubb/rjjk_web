@@ -48,7 +48,9 @@ class MembersController < ApplicationController
 
   def grade_history_graph
     if params[:id] && params[:id].to_i <= 1280
-      g = MemberGradeHistoryGraph.history_graph params[:id].to_i
+      g = MemberGradeHistoryGraph.history_graph :size => params[:id].to_i,
+                                                :interval => params[:interval].try(:to_i).try(:days),
+                                                :step => params[:step].try(:to_i).try(:days)
     else
       g = MemberGradeHistoryGraph.history_graph
     end
