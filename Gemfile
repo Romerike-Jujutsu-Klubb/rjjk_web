@@ -36,6 +36,7 @@ gem 'rails-i18n'
 # gem 'jquery_datepicker', :git => "https://github.com/albertopq/jquery_datepicker.git"
 gem 'jquery_datepicker', :git => "https://github.com/AlexNisnevich/jquery_datepicker.git"
 gem 'jquery-ui-themes'
+gem 'ri_cal'
 
 group :assets do
   gem 'sass-rails'

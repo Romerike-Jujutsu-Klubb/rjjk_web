@@ -1,3 +1,4 @@
+# encoding: utf-8
 class MemberGradeHistoryGraph
   ACTIVE_CLAUSE = '"EXISTS (SELECT 1 FROM attendances WHERE member_id = members.id
 AND (year > #{prev_date.cwyear} OR (year = #{prev_date.cwyear} AND week >= #{prev_date.cweek}))
@@ -10,10 +11,17 @@ AND (year < #{next_date.cwyear} OR (year = #{next_date.cwyear} AND week <= #{nex
 
 AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
 
+  ATTENDANCE_CLAUSE = '"(SELECT COUNT(*) FROM attendances WHERE member_id = members.id
+AND (year > #{prev_date.cwyear} OR (year = #{prev_date.cwyear} AND week >= #{prev_date.cweek}))
+AND (year < #{date.cwyear} OR (year = #{date.cwyear} AND week <= #{date.cweek}))) >= #{(practices * percentage) / 100}
+
+AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
+
   def self.history_graph(options)
     size = options[:size] || 480
     interval = options[:interval] || 8.weeks
     step = options[:step] || 1.weeks
+    percentage = options[:percentage]
     begin
       require 'gruff'
     rescue MissingSourceFile => e
@@ -26,6 +34,10 @@ AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (
     g = Gruff::Line.new(size)
     g.theme_37signals
     g.title = "Fordeling av grader"
+    if percentage
+      g.title_font_size *= 0.95
+      g.title += " med oppmøte over #{percentage}%"
+    end
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     g.hide_dots = true
     g.colors = %w{yellow yellow orange orange green green blue blue yellow yellow orange orange green green blue blue brown yellow orange green blue brown black black black}.last(ranks.size)
@@ -39,7 +51,7 @@ AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (
     dates.reverse!
     sums = nil
     data = ranks.map do |rank|
-      rank_totals = totals(rank, dates, interval)
+      rank_totals = totals(rank, dates, interval, percentage)
       if sums
         sums = sums.zip(rank_totals).map { |s, t| s + t }
       else
@@ -65,13 +77,14 @@ AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (
     g.to_blob
   end
 
-  def self.totals(rank, dates, interval)
+  def self.totals(rank, dates, interval, percentage)
     dates.each.map do |date|
       prev_date = date - interval
       next_date = date + interval
+      practices = Group.find_by_name('Voksne').trainings_in_period(prev_date..date)
       active_members = Member.all(
           :select => (Member.column_names - ['image']).join(','),
-          :conditions => eval(ACTIVE_CLAUSE),
+          :conditions => eval(percentage ? ATTENDANCE_CLAUSE : ACTIVE_CLAUSE),
           :include => {:graduates => {:graduation => :martial_art}}
       )
       ranks = active_members.select { |m| m.graduates.select { |g| g.graduation.martial_art.name =='Kei Wa Ryu' && g.graduation.held_on <= date }.sort_by { |g| g.graduation.held_on }.last.try(:rank) == rank }.size

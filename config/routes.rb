@@ -1,5 +1,4 @@
 RjjkWeb::Application.routes.draw do
-  resources :birthday_celebrations
 
 
   match 'stylesheets/dark_ritual/:width.:format', :controller => 'stylesheets', :action => 'dark_ritual'
@@ -11,8 +10,10 @@ RjjkWeb::Application.routes.draw do
   match ':controller/gallery', :action => 'gallery'
   match ':controller/mine', :action => 'mine'
   match ':controller/yaml', :action => 'yaml'
+  match 'events/calendar', :controller => 'events', :action => 'calendar'
 
   resources :attendances
+  resources :birthday_celebrations
   resources :cms_members
   resources :correspondences
   resources :embus

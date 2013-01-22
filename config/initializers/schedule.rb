@@ -53,7 +53,7 @@ unless Rails.env == 'test'
         NewsletterMailer.event_invitee_message(eim).deliver
         eim.update_attributes! :sent_at => now
       rescue
-        Rails.logger.error "Exception sending event message: #{$!}"
+        Rails.logger.error "Exception sending event message for #{eim}\n#{$!}"
         Rails.logger.error $!.backtrace.join("\n")
       end
     end

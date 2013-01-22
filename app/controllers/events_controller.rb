@@ -1,5 +1,6 @@
+# encoding: utf-8
 class EventsController < ApplicationController
-  before_filter :admin_required, :except => [:index, :show]
+  before_filter :admin_required, :except => [:calendar, :index, :show]
 
   def index
     @events = Event.all
@@ -25,7 +26,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(params[:event])
-    @event.groups = params[:group][:id].map{|group_id| Group.find(group_id) } if params[:group]
+    @event.groups = params[:group][:id].map { |group_id| Group.find(group_id) } if params[:group]
 
     if @event.save
       flash[:notice] = 'Event was successfully created.'
@@ -37,7 +38,7 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
-    @event.groups = params[:group][:id].map{|group_id| Group.find(group_id) } if params[:group]
+    @event.groups = params[:group][:id].map { |group_id| Group.find(group_id) } if params[:group]
     if @event.update_attributes(params[:event])
       selected_members = @event.groups.map(&:members).flatten.uniq
       selected_users = selected_members.map(&:user).compact
@@ -67,7 +68,7 @@ class EventsController < ApplicationController
     elsif params[:recipients] == 'invited'
       recipients = event.event_invitees
     elsif params[:recipients] == 'groups'
-      recipients = event.groups.map{|g| g.members}.flatten
+      recipients = event.groups.map { |g| g.members }.flatten
     end
     recipients.each do |recipient|
       event_invitee = EventInvitee.new(:event => event, :name => recipient.name, :email => recipient.email)
@@ -78,4 +79,27 @@ class EventsController < ApplicationController
     end
     render :text => ''
   end
+
+  def calendar
+    cal = RiCal.Calendar do
+      Event.order(:start_at, :end_at).each do |e|
+        event do
+          uid e.id.to_s
+          summary e.name
+          description e.description
+          dtstart e.start_at
+          dtend e.end_at || e.start_at
+          # location "Datek Wireless AS, Instituttveien, Kjeller"
+          # add_attendee "uwe@kubosch.no"
+          alarm do
+            description e.name
+          end
+        end
+      end
+    end
+    respond_to do |format|
+      format.ics { send_data(cal.export, :filename => "mycal.ics", :disposition => "inline; filename=mycal.ics", :type => "text/calendar") }
+    end
+  end
+
 end

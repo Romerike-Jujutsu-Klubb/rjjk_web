@@ -16,6 +16,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     Ascii85 (1.0.2)
+    RedCloth (4.2.9)
     RedCloth (4.2.9-java)
     actionmailer (3.2.11)
       actionpack (= 3.2.11)
@@ -86,6 +87,7 @@ GEM
     jruby-openssl (0.8.2)
       bouncy-castle-java (>= 1.5.0146.1)
     jruby-rack (1.1.13.1)
+    json (1.7.6)
     json (1.7.6-java)
     mail (2.4.4)
       i18n (>= 0.4.0)
@@ -143,6 +145,7 @@ GEM
     red_cloth_formatters_plain (0.2.0)
       RedCloth (>= 4.2.3)
     redbox (1.0.4)
+    ri_cal (0.8.8)
     rmagick4j (0.3.7)
     ruby-rc4 (0.1.5)
     rufus-scheduler (2.0.17)
@@ -206,6 +209,7 @@ DEPENDENCIES
   rdoc
   red_cloth_formatters_plain
   redbox (~> 1.0.4)
+  ri_cal
   rmagick4j
   rufus-scheduler
   sass-rails
