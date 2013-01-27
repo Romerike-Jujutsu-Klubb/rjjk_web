@@ -21,8 +21,9 @@ namespace :deploy do
   
   desc 'Restart the service'
   task :restart, :roles => :app do
+    send(run_method, "/sbin/service #{application} stop")
     send(run_method, "/u/apps/rjjk_web_beta/current/copy_production_to_beta.sh")
-    send(run_method, "/sbin/service #{application} restart")
+    send(run_method, "/sbin/service #{application} start")
   end
   
 end
