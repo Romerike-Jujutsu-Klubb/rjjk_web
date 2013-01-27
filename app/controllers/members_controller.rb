@@ -3,7 +3,8 @@ class MembersController < ApplicationController
   before_filter :store_location
   before_filter :admin_required
 
-  caches_page :image, :thumbnail, :history_graph, :grade_history_graph
+  caches_page :image, :thumbnail, :history_graph, :grade_history_graph,
+              :grade_history_graph_percentage
   cache_sweeper :member_sweeper, :only => [:add_group, :create, :update, :destroy]
 
   def search
@@ -56,6 +57,10 @@ class MembersController < ApplicationController
       g = MemberGradeHistoryGraph.history_graph
     end
     send_data(g, :disposition => 'inline', :type => 'image/png', :filename => "RJJK_MedlemsGradsHistorikk.png")
+  end
+
+  def grade_history_graph_percentage
+    grade_history_graph
   end
 
   def list_inactive

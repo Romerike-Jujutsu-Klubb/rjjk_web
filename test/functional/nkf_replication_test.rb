@@ -10,6 +10,7 @@ class NkfReplicationTest < ActionMailer::TestCase
     import.stubs(:trial_changes).returns([])
     import.stubs(:error_records).returns([])
     import.stubs(:import_rows).returns([1])
+    import.stubs(:exception).returns(nil)
 
     mail = NkfReplication.import_changes(import)
     assert_equal "Hentet 1 endringer fra NKF", mail.subject

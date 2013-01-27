@@ -40,3 +40,8 @@ Feil:
     <%= r.class %> <%= r.id %> <%= r.errors.full_messages.inspect.html_safe %>
     <% end -%>
 <% end -%>
+<% if @import.exception -%>
+Feil:
+    <%= @import.exception.message %>
+    <%= @import.exception.backtrace %>
+<% end -%>

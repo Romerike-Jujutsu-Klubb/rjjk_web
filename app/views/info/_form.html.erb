@@ -1,28 +1,33 @@
+<div style="float: right; width: 196px; height: 680px; overflow:auto; border: 1px solid black">
+  <%=render :partial => '/images/list', :locals => {:images => @images} %>
+</div>
+
 <%=render :partial => '/tiny_mce' %>
 
 <%= error_messages_for 'information_page' %>
 
-<div style="float: right; width: 240px; height: 680px; overflow:auto; border: 1px solid black">
-  <%=render :partial => '/images/list', :locals => {:images => @images} %>
-</div>
+<div style="float: left; margin-right: 2em"><label for="information_page_title">Tittel</label>
+<%=text_field 'information_page', 'title'  %></div>
 
-<p style="float: left; margin-right: 2em"><label for="information_page_title">Tittel</label><br/>
-<%=text_field 'information_page', 'title'  %></p>
-
-<p style="float: left; margin-right: 2em"><label for="information_page_hidden">Skjul</label><br/>
-<%=check_box 'information_page', 'hidden'  %></p>
+<div style="float: left; margin-right: 2em"><label for="information_page_hidden">Skjul</label>
+<%=check_box 'information_page', 'hidden'  %></div>
 
 <% if @information_page.created_at %>
-<p style="float: left; margin-right: 2em"><label for="information_page_created_at">Opprettet</label><br/>
-<%=h @information_page.created_at.strftime('%Y-%m-%d %H:%M') %></p>
+<div style="float: left; margin-right: 2em"><label for="information_page_created_at">Opprettet</label>
+<%=h @information_page.created_at.strftime('%Y-%m-%d %H:%M') %></div>
 <% end %>
 
 <% if @information_page.updated_at %>
-<p><label for="information_page_updated_at">Oppdatert</label><br/>
-<%=h @information_page.updated_at.strftime('%Y-%m-%d %H:%M') %></p>
+<div><label for="information_page_updated_at">Oppdatert</label>
+<%=h @information_page.updated_at.strftime('%Y-%m-%d %H:%M') %></div>
 <% end %>
 
 <br clear="left"/>
 
-<p><label for="information_page_body">Innhold</label><br/>
-<%=text_area 'information_page', 'body', :cols => 100, :rows => 36, :class => 'tiny_mce' %></p>
+<%=text_area 'information_page', 'body', :cols => 100, :rows => 30, :class => 'tiny_mce' %>
+
+<%= javascript_tag do %>
+    document.getElementById('information_page_title').focus();
+    document.getElementById('information_page_title').select();
+    $('body').scrollTo(".main");
+<% end %>

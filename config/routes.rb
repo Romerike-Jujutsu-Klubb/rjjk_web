@@ -1,6 +1,5 @@
 RjjkWeb::Application.routes.draw do
 
-
   match 'stylesheets/dark_ritual/:width.:format', :controller => 'stylesheets', :action => 'dark_ritual'
   match 'stylesheets/dark_ritual.:format', :controller => 'stylesheets', :action => 'dark_ritual'
   match ':controller/active_contracts', :action => 'active_contracts'
@@ -31,6 +30,7 @@ RjjkWeb::Application.routes.draw do
   resources :trial_attendances
 
   root :to => "welcome#index"
+  match 'info/:id', :controller => :info, :action => :show
   match ':controller/service.wsdl', :action => 'wsdl'
   match 'documents/*path_info', :controller => 'documents', :action => 'webdav'
 

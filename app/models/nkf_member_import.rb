@@ -8,14 +8,14 @@ require 'iconv'
 class NkfMemberImport
   CONCURRENT_REQUESTS = 7
   include MonitorMixin
-  attr_reader :changes, :error_records, :import_rows, :new_records, :trial_changes
+  attr_reader :changes, :error_records, :exception, :import_rows, :new_records, :trial_changes
 
   def size
     new_records.try(:size).to_i + changes.try(:size).to_i + error_records.try(:size).to_i
   end
 
   def any?
-    size > 0
+    @exception || size > 0
   end
 
   def initialize
@@ -75,6 +75,8 @@ class NkfMemberImport
 
     import_member_rows(@import_rows)
     import_member_trials(member_trial_rows)
+  rescue
+    @exception = $!
   end
 
   private

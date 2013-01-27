@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '~>3.2.2'
 
-gem 'jruby-openssl'
 gem 'rmagick4j'
 gem 'activerecord-jdbcpostgresql-adapter'
 gem 'RedCloth'
@@ -47,6 +46,7 @@ end
 
 group :development do
   gem 'rdoc'
+  gem 'capistrano-ext'
 end
 
 group :test do

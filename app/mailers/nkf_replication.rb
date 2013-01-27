@@ -4,7 +4,8 @@ class NkfReplication < ActionMailer::Base
 
   def import_changes(nkf_member_import)
     @import = nkf_member_import
-    mail subject: "Hentet #{@import.size} endringer fra NKF"
+    mail subject: (@import.exception ? 'Det oppsto en feil ved henting av' :
+        "Hentet #{@import.size}") + ' endringer fra NKF'
   end
 
   def update_members(comparison)

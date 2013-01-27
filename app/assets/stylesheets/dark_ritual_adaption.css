@@ -43,6 +43,10 @@ div.main_right ul.controls {
     text-align: left;
 }
 
+h4 {
+    color: #046CB8;
+}
+
 table {
     border: 1px solid gray;
 }
@@ -90,4 +94,31 @@ ul.controls li a.more {
 ul.controls li a.edit {
     padding: 0em 1.0em 0em 20px;
     background-image: url('/assets/icon-more.gif');
+}
+
+.header {
+    background: url(/assets/dark_ritual/header_left.png) left no-repeat,
+                url(/assets/dark_ritual/header_right.png) right no-repeat,
+                url(/assets/dark_ritual/header_lines.png) left repeat;
+    background-color: #F4F4F4;
+}
+
+.container {
+    background: url(/assets/dark_ritual/bgcontainer_left.png) top left repeat-y,
+                url(/assets/dark_ritual/bgcontainer_right.png) top right repeat-y;
+    background-color: #F7F7F7;
+}
+
+.main_right > div.padded {
+    height: 100%;
+    padding-top: 0;
+    background-color: #222222;
+}
+
+#logo_img {
+    margin-bottom: 0.5em;
+}
+
+.nav-tabs li {
+    list-style-image: none;
 }

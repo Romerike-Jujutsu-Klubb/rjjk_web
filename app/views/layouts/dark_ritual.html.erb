@@ -54,7 +54,7 @@
   <div class="main_right">
 
     <div class="padded">
-      <%= link_to image_tag('rjjk_logo_&_txt_320.png', :style => 'width: 182px; height: 181px; border: 0'), '/' %>
+      <%= link_to image_tag('rjjk_logo_&_txt_320.png', :id => :logo_img, :style => 'width: 182px; height: 181px; border: 0'), '/' %>
 
       <% if @image && !@image.new_record? && (controller.class != ImagesController || !%w{gallery mine}.include?(controller.action_name)) %>
           <div align="center">
@@ -77,16 +77,29 @@
       <% if user? %>
           <h3 align="center">Last opp media</h3>
           <%= form_for @new_image do |f| %>
-              <%= f.file_field :file, :onchange => 'form.submit()', :style => 'width: 100%; background: #89866F' %>
+              <%= f.file_field :file, :onchange => 'form.submit()',
+                               'size' => '10', :style => 'width: 100%',
+                               :class => 'hide ie_show' %>
+              <div class="input-append ie_hide">
+                <input id="pretty-input" class="input-small" type="text" onclick="$('input[id=image_file]').click();">
+                <a class="btn" onclick="$('input[id=image_file]').click();">Browse</a>
+              </div>
           <% end %>
-          <br/>
+          <script type="text/javascript">
+              $('input[id=image_file]').change(function () {
+                  $('#pretty-input').val($(this).val().replace("C:\\fakepath\\", ""));
+              });
+          </script>
       <% end %>
 
       <% if @events.any? %>
           <% last_year = Date.today.year %>
           <% last_mon = nil %>
           <div class="events">
-          <h3>Hva skjer? <%=link_to image_tag('ical.png', :height => '24px'), :protocol => :webcal, :controller => :events, :action => :calendar, :format => :ics%></h3>
+          <h3>Hva skjer? <%=link_to image_tag('ical.png', :style => 'height: 24px'),
+                                    {:only_path => false, :protocol => :webcal,
+                                    :controller => :events, :action => :calendar,
+                                    :format => :ics}, :title => 'Abonnér på hendelseskalender!' %></h3>
 
           <% for event in @events %>
               <% ingress = event.ingress %>
@@ -129,10 +142,14 @@
                 <% else %>
                     <%= event.name %>
                 <% end %>
+                  <%= link_to image_tag('ical.png', :style => 'height: 24px'),
+                              {:controller => :events, :action => :calendar,
+                              :id => event.id, :format => :ics},
+                              :title => "Sett '#{event.name}' på din kalender!" %>
                 </h4>
 
                 <% if ingress %>
-                  <%= ingress.html_safe %>
+                  <%= ingress.gsub(/&nbsp;/, ' ').html_safe %>
               <% end %>
                 <ul class="controls">
                   <% if ingress && event.description.size > ingress.size %>
@@ -153,16 +170,20 @@
 
       <% if admin? %>
           <% if Rails.env != 'development' %>
-              <%= link_to image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0'), :controller => :members, :action => :history_graph, :format => :png, :id => 1024 %>
-              <%= link_to image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => 182), :title => 'Oppmøte graf', :style => 'width: 100%; border: 0'), :controller => :attendances, :action => :history_graph, :format => :png, :id => 1024 %>
-              <%= link_to image_tag(url_for(:controller => :members, :action => :grade_history_graph, :format => :png, :id => 182), :title => 'Historikk over grader', :style => 'width: 100%; border: 0'), :controller => :members, :action => :grade_history_graph, :format => :png, :id => 1024 %>
-              <%= link_to image_tag(url_for(:controller => :members, :action => :grade_history_graph, :format => :png, :id => 182, :percentage => 67, :step => 30, :interval => 365), :title => 'Gjevnt oppmøte voksne per grad', :style => 'width: 100%; border: 0'), :controller => :members, :action => :grade_history_graph, :format => :png, :id => 800, :percentage => 67, :step => 61, :interval => 365 %>
+              <% history_chart_link = image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0') %>
+              <% attendance_chart_link = image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => 182), :title => 'Oppmøte graf', :style => 'width: 100%; border: 0') %>
+              <% grades_chart_link = image_tag(url_for(:controller => :members, :action => :grade_history_graph, :format => :png, :id => 182), :title => 'Historikk over grader', :style => 'width: 100%; border: 0') %>
+              <% good_attendance_chart_link = image_tag(url_for(:controller => :members, :action => :grade_history_graph_percentage, :format => :png, :id => 182, :percentage => 67, :step => 30, :interval => 365), :title => 'Gjevnt oppmøte voksne per grad', :style => 'width: 100%; border: 0') %>
           <% else %>
-              <%= link_to 'Historikk graf', :controller => :members, :action => :history_graph, :format => :png, :id => 1024 %>
-              <%= link_to 'Oppmøte graf', :controller => :attendances, :action => :history_graph, :format => :png, :id => 1024 %>
-              <%= link_to 'Historikk over grader', :controller => :members, :action => :grade_history_graph, :format => :png, :id => 1024 %>
-              <%= link_to 'Gjevnt oppmøte voksne', :controller => :members, :action => :grade_history_graph, :format => :png, :id => 800, :percentage => 67, :step => 30, :interval => 365 %>
+              <% history_chart_link = 'Historikk graf' %>
+              <% attendance_chart_link = 'Oppmøte graf' %>
+              <% grades_chart_link = 'Historikk over grader' %>
+              <% good_attendance_chart_link = 'Gjevnt oppmøte voksne' %>
           <% end %>
+          <%= link_to history_chart_link, :controller => :members, :action => :history_graph, :format => :png, :id => 800 %><br/>
+          <%= link_to attendance_chart_link, :controller => :attendances, :action => :history_graph, :format => :png, :id => 800 %><br/>
+          <%= link_to grades_chart_link, :controller => :members, :action => :grade_history_graph, :format => :png, :id => 800 %><br/>
+          <%= link_to good_attendance_chart_link, :controller => :members, :action => :grade_history_graph_percentage, :format => :png, :id => 800, :percentage => 67, :step => 30, :interval => 365 %><br/>
           <br/>
           <br/>
       <% end %>
@@ -174,13 +195,18 @@
 
     <ul>
       <li><%= link_to 'Forside', '/' %></li>
-      <% if member? %>
-          <li><%= link_to 'Min Embu', :controller => :embus, :action => :index %></li>
-      <% end %>
-      <% if user? %>
-          <li><%= link_to 'Mine media', :controller => :images, :action => :mine %></li>
-      <% end %>
+      <li><%= link_to 'Nyheter', :controller => :news %></li>
     </ul>
+
+    <% if user? %>
+        <h1>Mine sider</h1>
+        <% if member? %>
+            <ul>
+              <li><%= link_to 'Min Embu', :controller => :embus, :action => :index %></li>
+        <% end %>
+        <li><%= link_to 'Mine media', :controller => :images, :action => :mine %></li>
+        </ul>
+    <% end %>
 
     <h1>Oversikt</h1>
     <ul>
@@ -263,7 +289,7 @@
 
   <div class="footer">
 
-    <span class="left">&copy; 2008-2012 <a href="http://jujutsu.no/">Romerike Jujutsu
+    <span class="left">&copy; 2008-2013 <a href="http://jujutsu.no/">Romerike Jujutsu
       Klubb</a>. Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> &amp; <a href="http://validator.w3.org/check?uri=referer">XHTML</a></span>
 
     <span class="right">Template design by <a href="http://templates.arcsin.se">Arcsin</a></span>

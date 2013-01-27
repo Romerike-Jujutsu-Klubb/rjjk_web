@@ -7,21 +7,21 @@ unless Rails.env == 'test'
     begin
       i = NkfMemberImport.new
       NkfReplication.import_changes(i).deliver if i.any?
-      Rails.logger.info "Sent NKF member import mail."
+      ActiveRecord::Base.logger.info "Sent NKF member import mail."
     rescue
-      Rails.logger.error "Execption sending NKF import email."
-      Rails.logger.error $!.message
-      Rails.logger.error $!.backtrace.join("\n")
+      ActiveRecord::Base.logger.error "Execption sending NKF import email."
+      ActiveRecord::Base.logger.error $!.message
+      ActiveRecord::Base.logger.error $!.backtrace.join("\n")
     end
 
     begin
       c = NkfMemberComparison.new
       NkfReplication.update_members(c).deliver if c.any?
-      Rails.logger.info "Sent member comparison mail."
+      ActiveRecord::Base.logger.info "Sent member comparison mail."
     rescue
-      Rails.logger.error "Execption sending update_members email."
-      Rails.logger.error $!.message
-      Rails.logger.error $!.backtrace.join("\n")
+      ActiveRecord::Base.logger.error "Execption sending update_members email."
+      ActiveRecord::Base.logger.error $!.message
+      ActiveRecord::Base.logger.error $!.backtrace.join("\n")
     end
   end
 
@@ -43,9 +43,9 @@ unless Rails.env == 'test'
         end
       end
     rescue
-      Rails.logger.error "Execption sending event messages."
-      Rails.logger.error $!.message
-      Rails.logger.error $!.backtrace.join("\n")
+      ActiveRecord::Base.logger.error "Execption sending event messages."
+      ActiveRecord::Base.logger.error $!.message
+      ActiveRecord::Base.logger.error $!.backtrace.join("\n")
     end
 
     EventInviteeMessage.where('ready_at IS NOT NULL AND sent_at IS NULL').all.each do |eim|
@@ -53,8 +53,8 @@ unless Rails.env == 'test'
         NewsletterMailer.event_invitee_message(eim).deliver
         eim.update_attributes! :sent_at => now
       rescue
-        Rails.logger.error "Exception sending event message for #{eim}\n#{$!}"
-        Rails.logger.error $!.backtrace.join("\n")
+        ActiveRecord::Base.logger.error "Exception sending event message for #{eim.inspect}\n#{$!}"
+        ActiveRecord::Base.logger.error $!.backtrace.join("\n")
       end
     end
 
@@ -70,8 +70,8 @@ unless Rails.env == 'test'
       }
       NkfReplication.wrong_contracts(wrong_contracts).deliver if wrong_contracts.any?
     rescue
-      Rails.logger.error "Exception sending contract message: #{$!}"
-      Rails.logger.error $!.backtrace
+      ActiveRecord::Base.logger.error "Exception sending contract message: #{$!}"
+      ActiveRecord::Base.logger.error $!.backtrace
     end
   end
 

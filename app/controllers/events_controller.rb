@@ -81,12 +81,18 @@ class EventsController < ApplicationController
   end
 
   def calendar
+    event_id = params[:id]
     cal = RiCal.Calendar do
-      Event.order(:start_at, :end_at).each do |e|
+      if event_id
+        events = [Event.find(event_id)]
+      else
+        events = Event.order(:start_at, :end_at)
+      end
+      events.each do |e|
         event do
-          uid e.id.to_s
+          uid "event#{e.id}@jujutsu.no"
           summary e.name
-          description e.description
+          description RedCloth.new(e.description.strip).to_plain
           dtstart e.start_at
           dtend e.end_at || e.start_at
           # location "Datek Wireless AS, Instituttveien, Kjeller"
@@ -98,7 +104,7 @@ class EventsController < ApplicationController
       end
     end
     respond_to do |format|
-      format.ics { send_data(cal.export, :filename => "mycal.ics", :disposition => "inline; filename=mycal.ics", :type => "text/calendar") }
+      format.ics { send_data(cal.export, :filename => "RJJK.ics", :disposition => "inline; filename=RJJK.ics", :type => "text/calendar") }
     end
   end
 

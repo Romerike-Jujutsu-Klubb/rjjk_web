@@ -1,8 +1,11 @@
 class WelcomeController < ApplicationController
-  layout false, :action => :original
-  
   def index
-    redirect_to :controller => 'news'
+    if user?
+      redirect_to :controller => :news
+      return
+    end
+    @information_page = InformationPage.find_by_title('Om klubben')
+    render :template => 'info/show'
   end
   
 end
