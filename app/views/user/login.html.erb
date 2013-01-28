@@ -3,19 +3,20 @@
 
   <div class="form-padding">
     <%= form_tag(url_for(:action => "#{controller.action_name}")) do %>
-        <table>
+        <table width="100%">
           <tr class="two_columns">
-            <td class="prompt"><label>Logg inn:</label></td>
-            <td class="value"><%= text_field 'user', 'login', :style => 'width: 14em;' %> (e-post eller NKF medlemsnr)</td>
+            <td class="prompt"><label>Brukernavn</label></td>
+            <td class="value"><%= text_field 'user', 'login', :style => 'width: 14em;' %> <small>e-post eller NKF medlemsnr</small></td>
           </tr>
           <tr class="two_columns">
-            <td class="prompt"><label>Passord:</label></td>
+            <td class="prompt"><label>Passord</label></td>
             <td class="value"><%= password_field 'user', 'password', :style => 'width: 14em;' %></td>
           </tr>
+          <tr class="two_columns">
+            <td><label for="remember_me">Husk meg</label></td>
+            <td><%= check_box_tag 'remember_me' %></td>
+          </tr>
         </table>
-
-        <p><label for="remember_me">Husk meg:</label>
-          <%= check_box_tag 'remember_me' %></p>
 
         <div class="button-bar">
           <%= submit_tag 'Logg inn' %>

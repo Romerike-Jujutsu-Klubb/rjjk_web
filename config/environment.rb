@@ -29,3 +29,17 @@ if RUBY_PLATFORM =~ /java/
 end
 
 ActionView::Base.field_error_proc = Proc.new { |html_tag, instance| "<span class=\"fieldWithErrors\">#{html_tag}</span>".html_safe }
+
+# TODO(uwe): Report this upstream
+class ActiveRecord::ConnectionAdapters::JdbcAdapter
+  def _execute(sql, name = nil)
+    @connection.execute(sql)
+  rescue ActiveRecord::JDBCError => e
+    if e.message == "This connection has been closed."
+      ActiveRecord::Base.logger.info "Reconnecting!"
+      @connection.reconnect!
+      return @connection.execute(sql)
+    end
+    raise
+  end
+end
