@@ -32,7 +32,7 @@
       <div id="primarycontent">
         <!-- Primary content area start -->
 
-        <% @news_items[1..5].each_with_index do |news_item, i| %>
+        <% @news_items[1..-1].each_with_index do |news_item, i| %>
             <% if i > 0 %>
                 <div class="divider2"></div>
             <% end %>

@@ -2,16 +2,11 @@ class NewsController < ApplicationController
   before_filter :admin_required, :except => [ :index, :list, :show ]
 
   def index
-    list
-    render :action => 'list'
+    @news_items = NewsItem.current.order('created_at DESC').limit(10).all
   end
 
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  #verify :method => :post, :only => [ :destroy, :create, :update ],
-  #       :redirect_to => { :action => :list }
-
   def list
-    @news_items = NewsItem.current.all(:order => 'created_at DESC', :limit => 10)
+    @news_items = NewsItem.order('created_at DESC').limit(30).all
   end
 
   def show
