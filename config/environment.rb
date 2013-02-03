@@ -12,18 +12,18 @@ if RUBY_PLATFORM =~ /java/
   require 'redcloth/textile_doc'
   module RedCloth
     class TextileDoc
-      def initialize( string, restrictions = [] )
-        restrictions.each { |r| method("#{r}=").call( true ) }
+      def initialize(string, restrictions = [])
+        restrictions.each { |r| method("#{r}=").call(true) }
         super(string.chars.map { |x| x.bytesize > 1 ? "&##{x.unpack("U*").first};" : x }.join)
       end
-    end
 
-    def to_plain(*rules)
-      apply_rules(rules)
-      output = to(Formatters::Plain)
-      output.force_encoding(Encoding::UTF_8)
-      output = Formatters::Plain::Sanitizer.strip_tags(output)
-      output.gsub("!LINK_OPEN_TAG!", "<").gsub("!LINK_CLOSE_TAG!", ">")
+      def to_plain(*rules)
+        apply_rules(rules)
+        output = to(Formatters::Plain)
+        output.force_encoding(Encoding::UTF_8)
+        output = Formatters::Plain::Sanitizer.strip_tags(output)
+        output.gsub("!LINK_OPEN_TAG!", "<").gsub("!LINK_CLOSE_TAG!", ">")
+      end
     end
   end
 end

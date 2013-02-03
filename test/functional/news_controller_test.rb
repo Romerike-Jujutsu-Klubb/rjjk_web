@@ -16,7 +16,7 @@ class NewsControllerTest < ActionController::TestCase
   def test_index
     get :index
     assert_response :success
-    assert_template 'list'
+    assert_template %w{news/index layouts/dark_ritual}
   end
 
   def test_list

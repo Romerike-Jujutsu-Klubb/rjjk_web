@@ -31,9 +31,7 @@ gem 'tinymce-rails'
 gem 'simple_workflow'
 gem 'gmaps4rails'
 gem 'rails-i18n'
-# FIXME(uwe): Switch to release gem as soon as version > 0.3.4 is out
-# gem 'jquery_datepicker', :git => "https://github.com/albertopq/jquery_datepicker.git"
-gem 'jquery_datepicker', :git => "https://github.com/AlexNisnevich/jquery_datepicker.git"
+gem 'jquery_datepicker'
 gem 'jquery-ui-themes'
 gem 'ri_cal'
 

@@ -43,5 +43,5 @@ Feil:
 <% if @import.exception -%>
 Feil:
     <%= @import.exception.message %>
-    <%= @import.exception.backtrace %>
+    <%= @import.exception.backtrace.join("\n").html_safe %>
 <% end -%>

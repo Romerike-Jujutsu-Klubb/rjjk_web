@@ -1,10 +1,4 @@
 GIT
-  remote: https://github.com/AlexNisnevich/jquery_datepicker.git
-  revision: 6980f8579a927d0cf1ea09869a741066cd9a447e
-  specs:
-    jquery_datepicker (0.4.1)
-
-GIT
   remote: https://github.com/sandal/prawn.git
   revision: 857f13e919d1bd7120de1ea9ba0429620329865b
   specs:
@@ -92,6 +86,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-themes (0.0.8)
       httparty
+    jquery_datepicker (0.4)
     jruby-rack (1.1.13.1)
     json (1.7.6)
     json (1.7.6-java)
@@ -214,7 +209,7 @@ DEPENDENCIES
   gruff
   jquery-rails
   jquery-ui-themes
-  jquery_datepicker!
+  jquery_datepicker
   minitest-reporters
   mocha
   prawn!
