@@ -7,7 +7,7 @@ GIT
       ttfunk (~> 1.0.3)
 
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
     Ascii85 (1.0.2)
     RedCloth (4.2.9)
