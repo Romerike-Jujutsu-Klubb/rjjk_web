@@ -323,7 +323,9 @@ class NkfMemberImport
     rescue EOFError, SystemCallError, Timeout::Error, Errno::ECONNREFUSED
       logger.error $!.message
       if backoff > 10.minutes
-        $!.message = "Backoff limit reached (#{backoff}): #{$!.message}"
+        if $!.respond_to?(:message=)
+          $!.message = "Backoff limit reached (#{backoff}): #{$!.message}"
+        end
         raise
       end
       sleep backoff
