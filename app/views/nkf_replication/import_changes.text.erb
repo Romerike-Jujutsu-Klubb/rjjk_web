@@ -42,6 +42,7 @@ Feil:
 <% end -%>
 <% if @import.exception -%>
 Feil:
-    <%= @import.exception.message %>
+    <%= @import.exception.class %>
+    <%= @import.exception.message.html_safe %>
     <%= @import.exception.backtrace.join("\n").html_safe %>
 <% end -%>
