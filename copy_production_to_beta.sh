@@ -16,4 +16,7 @@ createdb -h localhost $DB_NAME
 echo "Transferring database"
 pg_dump -U capistrano rjjk_production | psql -U capistrano -h localhost $DB_NAME
 
+cd /u/apps/rjjk_beta/current
+rake db:migrate
+
 touch $MARKER_FILE

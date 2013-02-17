@@ -39,6 +39,11 @@
       * html .clearfix {
           height: 1% !important;
       }
+      a {
+          color: #E20916;
+          text-decoration: none;
+          font-weight: bold;
+      }
   </style>
 </head>
 <body marginheight="0" marginwidth="0" topmargin="0" leftmargin="0" bgcolor="#f2f2f2" style="-webkit-font-smoothing: antialiased;width:100% !important;background:#f2f2f2;-webkit-text-size-adjust:none;">
@@ -61,9 +66,12 @@
                     <table width="485" class="logotable" border="0" cellspacing="0" cellpadding="0">
                       <tr>
                         <td>
-                          <img src="<%= url_for(:only_path => false, :controller => :welcome, :action => :index) + 'images/DatekLogoMini.png' %>" alt="Datek Logo" width="150" height="54" />
+                          <img src="<%= url_for(:only_path => false, :controller => :welcome, :action => :index) + 'assets/rjjk_logo_&_txt_320.png' %>" alt="RJJK Logo" width="160" height="160" />
                         </td>
-                        <td align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#acabab;"><%= @news_item.updated_at.strftime "#{t(:date)[:month_names][@news_item.updated_at.month]} %Y" %></td>
+                        <td align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#acabab;">
+                          <p style="margin:0 0 10px 0; font-size:18px; color:#E20916;"><%= @news_item.title %></p>
+                          <%= @news_item.updated_at.strftime "#{@news_item.updated_at.day}. #{t(:date)[:month_names][@news_item.updated_at.month]} %Y" %>
+                        </td>
                       </tr>
                     </table>
                   </td>
@@ -77,7 +85,7 @@
                               <img src="<%= url_for :only_path => false, :controller => :news_items, :action => :view_image, :id => c.id, :width => c.image_width_max(275), :format => @news_item.format %>" alt="Image" style="margin-left: 5px;" align="right" width="<%=c.image_width_max(275)%>" height="<%=c.image_height_at(275)%>" />
                           <% end %>
                           <%# = textilize c.heading unless c.heading.blank? %>
-                          <%= textilize c.body %>
+                          <%= textilize(c.body).html_safe %>
                           <br clear="all" />
                         </div>
                     <% end %>
@@ -85,10 +93,10 @@
                 </tr>
                 <tr>
                   <td style="border:1px solid #d6d6d6; background-color:#f6f6f6; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#666666; line-height:17px;  padding:15px 0; text-align: center;">
-                    <b>Datek Wireless AS</b><br>
-                    Instituttveien 6, Postboks 46, 2007 Kjeller<br>
-                    <a href="mailto:info@datek.no" style="color:#CD071E;text-decoration: none;font-weight: bold;">info@datek.no</a><br>
-                    <a href="http://www.datek.no" style="color:#CD071E;text-decoration: none;font-weight: bold;">http://www.datek.no</a>
+                    <b>Romerike Jujutsu Klubb</b><br>
+                    Stasjonsveien 17, 2010 Strømmen<br>
+                    <a href='mailto:"Romerike Jujutsu Klubb" <post@jujutsu.no>' style="color:#E20916;text-decoration: none;font-weight: bold;">post@jujutsu.no</a><br>
+                    <a href="http://jujutsu.no" style="color:#E20916;text-decoration: none;font-weight: bold;">http://jujutsu.no</a>
                   </td>
                 </tr>
               </table>
@@ -99,11 +107,12 @@
         <tr>
           <td align="left" style="padding:20px 0 10px 10px; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#888888;text-align:center;">
             For å forsikre om at nyhetsbrevene våre kommer fram, legg
-            <a href="mailto:nyhetsbrev@datek.no" style="color:#545454;text-decoration: none;font-weight: bold;">nyhetsbrev@datek.no</a>
-            i
-            adresseboken din.
-            <br/><%= link_to 'Ikke send', {:only_path => false, :controller => :newsletters, :action => :unsubscribe, :news_item_id => @news_item.id, :email => Base64.encode64(@user.email)}, :style => 'color: #545454;text-decoration: none;font-weight: bold;' %>
+            <a href='mailto:"Romerike Jujutsu Klubb" <post@jujutsu.no>' style="color:#545454;text-decoration: none;font-weight: bold;">post@jujutsu.no</a>
+            i adresseboken din.
+            <!--
+            <br/><%= link_to 'Ikke send', {:only_path => false, :controller => :newsletters, :action => :unsubscribe, :email => Base64.encode64(@user.email)}, :style => 'color: #545454;text-decoration: none;font-weight: bold;' %>
             flere nyhetsbrev til meg
+            -->
           </td>
         </tr>
       </table>

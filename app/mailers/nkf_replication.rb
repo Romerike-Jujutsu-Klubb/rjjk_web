@@ -1,6 +1,6 @@
 class NkfReplication < ActionMailer::Base
   default from: Rails.env == 'production' ? 'webmaster@jujutsu.no' : 'beta@jujutsu.no',
-          to: Rails.env == 'production' ? ['medlem@jujutsu.no', 'uwe@kubosch.no'] : 'uwe@kubosch.no'
+          to: Rails.env == 'production' ? %w(medlem@jujutsu.no uwe@kubosch.no) : 'uwe@kubosch.no'
 
   def import_changes(nkf_member_import)
     @import = nkf_member_import
@@ -28,7 +28,7 @@ class NkfReplication < ActionMailer::Base
 
   def wrong_contracts(wrong_contracts)
     @wrong_contracts = wrong_contracts
-    mail subject: "Medlemmer med feil kontrakt"
+    mail subject: 'Medlemmer med feil kontrakt'
   end
 
 end
