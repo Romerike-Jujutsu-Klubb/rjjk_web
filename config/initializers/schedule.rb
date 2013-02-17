@@ -4,7 +4,7 @@ unless Rails.env == 'test'
   scheduler = Rufus::Scheduler.start_new
 
   scheduler.every('1h', :first_in => '10s') { send_news }
-  scheduler.every('1m', :first_in => '10s'){ send_event_messages }
+  scheduler.every('1m', :first_in => '30s'){ send_event_messages }
   scheduler.cron('0 * * * *') { import_nkf_changes }
   scheduler.cron('0 0 * * *') { notify_wrong_contracts }
 end
