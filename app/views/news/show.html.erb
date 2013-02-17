@@ -1,8 +1,7 @@
-<% for column in NewsItem.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> <%=h @news_item.send(column.name) %>
-</p>
-<% end %>
+<%= render :partial => 'item' %>
 
-<%= link_to 'Edit', :action => 'edit', :id => @news_item %> |
-<%= link_to 'Back', :action => 'list' %>
+<% if admin? %>
+    <ul class="controls">
+      <li><%= back_or_link_to 'Tilbake', nil, :class=>:edit %></li>
+    </ul>
+<% end %>

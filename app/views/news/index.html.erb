@@ -1,26 +1,6 @@
 <% if not @news_items.empty? %>
     <% @news_item = @news_items[0] %>
-    <div id="normalcontent" class="post">
-      <h3><%= h @news_item.title %></h3>
-
-      <div class="contentarea">
-        <div class="details">
-          <%= "Skrevet av #{@news_item.creator.name}" if @news_item.creator %>
-          <%= @news_item.created_at.strftime '%Y-%m-%d' %>
-        </div>
-        <%= textilize(@news_item.body.to_s.strip).html_safe %>
-
-        <% if user? %>
-            <ul class="controls">
-              <li>
-                <a href="<%= url_for :action => :edit, :id => @news_item %>" class="edit">Redigèr</a>
-              </li>
-              <li><%= link_to 'Utløpt', {:action => :expire, :id => @news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
-              <li><%= link_to 'Slett', {:action => :destroy, :id => @news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
-            </ul>
-        <% end %>
-      </div>
-    </div>
+    <%= render :partial => 'item' %>
 
     <div class="divider1"></div>
 
