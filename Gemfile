@@ -44,7 +44,7 @@ end
 
 group :development do
   gem 'rdoc'
-  gem 'capistrano-ext'
+  gem 'capistrano'
 end
 
 group :test do
