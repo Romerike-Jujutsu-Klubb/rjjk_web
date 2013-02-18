@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
   end
 
   def name
-    member.try(:name) || super
+    member.try(:name) || "#{first_name} #{last_name}"
   end
 
   def self.find_administrators
@@ -100,10 +100,6 @@ class User < ActiveRecord::Base
 
   def admin?
     role == UserSystem::ADMIN_ROLE
-  end
-
-  def name
-    "#{first_name} #{last_name}"
   end
 
   protected
