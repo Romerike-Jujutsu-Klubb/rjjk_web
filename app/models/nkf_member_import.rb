@@ -26,10 +26,11 @@ class NkfMemberImport
     @error_records = []
 
     @iconv = Iconv.new('UTF8', 'ISO-8859-1')
+    @cookies = []
 
-    front_page_url = login
-    url = URI.parse(front_page_url)
-    search_url = 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_reg_medladm?f_informasjon=skjul&f_utvalg=vis&frm_27_v04=40001062&frm_27_v05=1&frm_27_v06=1&frm_27_v07=1034&frm_27_v10=162&frm_27_v12=O&frm_27_v15=Romerike%20Jujutsu%20Klubb&frm_27_v16=Stasjonsvn.%2017&frm_27_v17=P.b.%20157&frm_27_v18=2011&frm_27_v20=47326154&frm_27_v22=post%40jujutsu.no&frm_27_v23=70350537706&frm_27_v25=http%3A%2F%2Fjujutsu.no%2F&frm_27_v27=N&frm_27_v29=0&frm_27_v34=%3D&frm_27_v37=-1&frm_27_v44=%3D&frm_27_v45=%3D&frm_27_v46=11&frm_27_v47=11&frm_27_v49=N&frm_27_v50=134002.PNG&frm_27_v53=-1&p_ks_reg_medladm_action=SEARCH&p_page_search='
+    login
+
+    search_url = 'page/portal/ks_utv/ks_reg_medladm?f_informasjon=skjul&f_utvalg=vis&frm_27_v04=40001062&frm_27_v05=1&frm_27_v06=1&frm_27_v07=1034&frm_27_v10=162&frm_27_v12=O&frm_27_v15=Romerike%20Jujutsu%20Klubb&frm_27_v16=Stasjonsvn.%2017&frm_27_v17=P.b.%20157&frm_27_v18=2011&frm_27_v20=47326154&frm_27_v22=post%40jujutsu.no&frm_27_v23=70350537706&frm_27_v25=http%3A%2F%2Fjujutsu.no%2F&frm_27_v27=N&frm_27_v29=0&frm_27_v34=%3D&frm_27_v37=-1&frm_27_v44=%3D&frm_27_v45=%3D&frm_27_v46=11&frm_27_v47=11&frm_27_v49=N&frm_27_v50=134002.PNG&frm_27_v53=-1&p_ks_reg_medladm_action=SEARCH&p_page_search='
     html_search_body = http_get(search_url, true).body
     extra_function_codes = html_search_body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
     raise html_search_body if extra_function_codes.empty?
@@ -57,7 +58,7 @@ class NkfMemberImport
     raise 'Could not find session id' unless session_id
 
     @import_rows = get_member_rows(session_id, detail_codes)
-    member_trial_rows = get_member_trial_rows(url, session_id, extra_function_code)
+    member_trial_rows = get_member_trial_rows(session_id, extra_function_code)
 
     import_member_rows(@import_rows)
     import_member_trials(member_trial_rows)
@@ -68,7 +69,7 @@ class NkfMemberImport
   private
 
   def get_member_rows(session_id, detail_codes)
-    members_body = http_get("http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{session_id}").body
+    members_body = http_get("pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{session_id}").body
     import_rows = members_body.split("\n").map { |line| @iconv.iconv(line.chomp).split(';', -1)[0..-2] }
     #import_rows = members_body.split("\n").map { |line| line.chomp.split(';', -1)[0..-2] }
     import_rows[0] << 'ventekid'
@@ -76,7 +77,7 @@ class NkfMemberImport
       threads = detail_code_slice.map do |dc|
         Thread.start do
           begin
-            details_body = http_get("http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}").body
+            details_body = http_get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}").body
             if details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
               member_id = $1
               if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
@@ -105,13 +106,13 @@ class NkfMemberImport
     import_rows
   end
 
-  def get_member_trial_rows(url, session_id, extra_function_code)
-    trial_csv_url = 'http://nkfwww.kampsport.no/portal/pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + session_id
+  def get_member_trial_rows(session_id, extra_function_code)
+    trial_csv_url = 'pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + session_id
     member_trials_csv_body = http_get(trial_csv_url).body
     member_trial_rows = member_trials_csv_body.split("\n").map { |line| @iconv.iconv(line.chomp).split(';') }
     # member_trial_rows = member_trials_csv_body.split("\n").map { |line| line.chomp.split(';') }
 
-    trial_url = 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_cr_par=' + extra_function_code
+    trial_url = 'page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_cr_par=' + extra_function_code
     member_trials_body = http_get(trial_url).body
     trial_ids = member_trials_body.scan(/edit_click28\('(.*?)'\)/).map { |tid| tid[0] }
 
@@ -123,7 +124,7 @@ class NkfMemberImport
       threads = trial_ids_slice.each.map do |tid|
         Thread.start do
           begin
-            trial_details_url = "http://nkfwww.kampsport.no/portal/page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=" + extra_function_code
+            trial_details_url = "page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=" + extra_function_code
             trial_details_body = http_get(trial_details_url).body
             if trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
               first_name = $1
@@ -214,7 +215,7 @@ class NkfMemberImport
       t.trial_attendances.each do |ta|
         if m
           attrs = ta.attributes
-          attrs.delete_if { |k, _| ['id', 'created_at', 'updated_at'].include? k }
+          attrs.delete_if { |k, _| %w(id created_at updated_at).include? k }
           attrs['member_id'] = m.id
           attrs.delete('nkf_member_trial_id')
           m.attendances << Attendance.new(attrs)
@@ -256,16 +257,14 @@ class NkfMemberImport
   end
 
   def login
-    @cookies = []
-    url = URI.parse('http://nkfwww.kampsport.no/')
-    login_content = http_get('http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login').body
+    login_content = http_get('page/portal/ks_utv/st_login').body
 
-    token_body = http_get('http://nkfwww.kampsport.no/portal/pls/portal/portal.wwptl_login.show_site2pstoretoken?p_url=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpls%2Fportal%2Fmyports.st_login_proc.set_language%3Fref_path%3D7513_ST_LOGIN_463458038&p_cancel=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpage%2Fportal%2Fks_utv%2Fst_login').body
+    token_body = http_get('pls/portal/portal.wwptl_login.show_site2pstoretoken?p_url=http%3A%2F%2Fwww.kampsport.no%2Fportal%2Fpls%2Fportal%2Fmyports.st_login_proc.set_language%3Fref_path%3D7513_ST_LOGIN_463458038&p_cancel=http%3A%2F%2Fwww.kampsport.no%2Fportal%2Fpage%2Fportal%2Fks_utv%2Fst_login').body
     token_fields = token_body.scan /<input .*?name="(.*?)".*?value ?="(.*?)".*?>/i
     token = token_fields.find { |t| t[0] == 'site2pstoretoken' }[1]
-    http_get('http://nkfwww.kampsport.no/portal/pls/portal/myports.st_login_proc.create_user?CreUser=40001062').body
+    http_get('pls/portal/myports.st_login_proc.create_user?CreUser=40001062')
 
-    url = URI.parse('http://nkflogin.kampsport.no/')
+    url = URI.parse('http://login.kampsport.no/')
     login_form_fields = login_content.scan /<input .*?name="(.*?)".*?value ?="(.*?)".*?>/
     login_form_fields.delete_if { |f| %w{site2pstoretoken ssousername password}.include? f[0] }
     login_form_fields += [['site2pstoretoken', token], %w{ssousername 40001062}, %w{password CokaBrus42}]
@@ -304,25 +303,22 @@ class NkfMemberImport
 
   def http_get(url_string, binary = false)
     logger.debug "Getting #{url_string}"
-    url = URI.parse(url_string)
+    url = URI.parse(url_string =~ %r{^http://} ? url_string : "http://www.kampsport.no/portal/#{url_string}")
     backoff = 1
     begin
       Net::HTTP.start(url.host, url.port) do |http|
-        response = http.get(url_string, cookie_header.update(binary ? {'Content-Type' => 'application/octet-stream'} : {}))
+        response = http.get(url_string =~ %r{^http://} ? url_string.gsub(%r{^http://[^/]+}, '') : "/portal/#{url_string}", cookie_header.update(binary ? {'Content-Type' => 'application/octet-stream'} : {}))
         body = response.body
         raise Timeout::Error if body =~ /ks_medlprofil timed out|Siden er utl.pt/
         raise EOFError.new('Internal error') if body =~ /The server encountered an internal error or/
         raise EOFError.new('Try refreshing') if body =~ /An error occurred while processing the request. Try refreshing your browser. If the problem persists contact the site administrator/
         raise EOFError.new('Lytter returnerte feil') if body =~ /Feil: Lytteren returnerte den f.lgende meldingen: 503 Service Unavailable/
         raise EOFError.new('Servlet Error') if body =~ /<TITLE>Servlet Error<\/TITLE>/i
-        process_response(response)
-        body = response.body
-        # body = @iconv.iconv(body)
-        return response
+        return process_response(response)
       end
     rescue EOFError, SystemCallError, Timeout::Error, Errno::ECONNREFUSED
       logger.error $!.message
-      if backoff > 10.minutes
+      if backoff > 15.minutes
         if $!.respond_to?(:message=)
           $!.message = "Backoff limit reached (#{backoff}): #{$!.message}"
         end
@@ -341,6 +337,8 @@ class NkfMemberImport
       redirect_url = response['location']
       logger.debug "Following redirect to #{redirect_url}"
       return http_get redirect_url
+    elsif response.code != '200'
+      raise "Got response code #{response.code}"
     end
     response
   end

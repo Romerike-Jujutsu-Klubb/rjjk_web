@@ -5,7 +5,7 @@ unless Rails.env == 'test'
 
   scheduler.every('1h', :first_in => '10s') { send_news }
   scheduler.every('1m', :first_in => '30s'){ send_event_messages }
-  scheduler.cron('0 * * * *') { import_nkf_changes }
+  scheduler.cron('0 7-23 * * *') { import_nkf_changes }
   scheduler.cron('0 0 * * *') { notify_wrong_contracts }
 end
 
@@ -40,8 +40,10 @@ end
 def import_nkf_changes
   begin
     i = NkfMemberImport.new
-    NkfReplication.import_changes(i).deliver if i.any?
-    logger.info 'Sent NKF member import mail.'
+    if i.any?
+      NkfReplication.import_changes(i).deliver
+      logger.info 'Sent NKF member import mail.'
+    end
   rescue
     logger.error 'Execption sending NKF import email.'
     logger.error $!.message
@@ -50,8 +52,10 @@ def import_nkf_changes
 
   begin
     c = NkfMemberComparison.new
-    NkfReplication.update_members(c).deliver if c.any?
-    logger.info 'Sent member comparison mail.'
+    if c.any?
+      NkfReplication.update_members(c).deliver
+      logger.info 'Sent member comparison mail.'
+    end
   rescue
     logger.error 'Execption sending update_members email.'
     logger.error $!.message
