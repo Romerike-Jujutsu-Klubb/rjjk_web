@@ -2,17 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
+  <title>Romerike Jujutsu Klubb</title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
   <meta name="description" content="description"/>
   <meta name="keywords" content="keywords"/>
   <meta name="author" content="author"/>
   <%= javascript_include_tag :application %>
-  <%= csrf_meta_tags %>
-
-  <link href="<%= url_for(:controller => 'stylesheets', :action => 'dark_ritual', :format => 'css', :id => @content_width) %>" media="screen" rel="stylesheet" type="text/css"/>
+  <% @content_width ||= 540 %>
+  <style type="text/css">
+      .container{width: <%=@content_width + 360%>px !important}
+      .header {width: <%=@content_width + 160%>px !important}
+      .top {width: <%=@content_width + 159%>px !important}
+      .main {width: <%=@content_width%>px !important}
+  </style>
   <%= stylesheet_link_tag :application, :media => :all %>
-
-  <title>Romerike Jujutsu Klubb</title>
+  <%= csrf_meta_tags %>
 
   <script type="text/javascript">
       var _gaq = _gaq || [];

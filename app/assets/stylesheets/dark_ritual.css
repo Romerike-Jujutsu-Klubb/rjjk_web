@@ -19,7 +19,7 @@ a {color: #682;}
 a:hover {color: #9A6;}
 
 body {
-	background: #333 url(<%= asset_path 'dark_ritual/bg.gif' %>);
+	background: #333 url(/assets/dark_ritual/bg.gif);
 	color: #333;
 	font: normal 82.5% "Lucida Sans Unicode",sans-serif;
 	margin: 3% 0;
@@ -61,18 +61,18 @@ h1,h2,h3 {color: #994;}
 /* structure */
 .container {
 	font-size: 1.2em;
-	background: url(<%= asset_path "dark_ritual/bgcontainer_#{@content_width}.png" %>) repeat-y;
+	background: url(/assets/dark_ritual/bgcontainer.png) repeat-y;
 	margin: 0 auto;
-	width: <%=@content_width + 360%>px !important;
+	width: 900px;
 	border: 12px solid #222;
 }
 
 /* header */
 .header {
 	float: left;
-	width: <%=@content_width + 160%>px;
+	width: 700px;
 	height: 100px;
-	background: url(<%= asset_path "dark_ritual/header_#{@content_width}.png" %>) no-repeat;
+	background: url(/assets/dark_ritual/header.png) no-repeat;
 	font: normal 2.4em Verdana,sans-serif;
 	text-align: center;	
 	padding-top: 50px;
@@ -97,7 +97,7 @@ h1,h2,h3 {color: #994;}
 	font: normal 1.4em Verdana;
 	height: 50px;
 	text-align: center;
-	width: <%=@content_width + 159%>px;
+	width: 699px;
 }
 .subnav {
 	float: left;
@@ -105,7 +105,7 @@ h1,h2,h3 {color: #994;}
 }
 .main {
 	float: left;
-	width: <%=@content_width%>px;
+	width: 540px;
 	height: 100%;
 }
 .main_right {
@@ -144,7 +144,7 @@ h1,h2,h3 {color: #994;}
 
 /* footer */
 .footer {
-	background: url(<%= asset_path 'dark_ritual/bgfooter.gif' %>) repeat-x;
+	background: url(/assets/dark_ritual/bgfooter.gif) repeat-x;
 	color: #CCC;
 	font-size: 0.9em;
 	line-height: 39px;
