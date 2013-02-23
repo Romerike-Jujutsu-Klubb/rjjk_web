@@ -1,4 +1,5 @@
 load 'deploy'
+load 'deploy/assets'
 
 set :stages, %w(beta production)
 set :default_stage, 'beta'

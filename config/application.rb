@@ -17,5 +17,6 @@ module RjjkWeb
     config.filter_parameters += [:file, :image, :password]
     config.assets.enabled = true
     config.assets.version = '1.0'
+    config.assets.initialize_on_precompile = false
   end
 end
