@@ -14,32 +14,45 @@
     <% end %>
 
     <div class="field">
-      <%= f.label :rank_id, t(:rank) %>:
       <% if @embu.new_record? %>
+          <%= f.label :rank_id, t(:rank) %>:
           <br/>
           <%= f.select :rank_id, @ranks.map { |r| [r.name, r.id] } %>
       <% else %>
+          <%= t(:rank) %>:
           <%= @embu.rank.name %>
+          (<%= link_to 'Print', :action => :print %>)
       <% end %>
     </div>
 
-    <div class="field">
-      <%= f.label :description, t(:description) %>
-      <% unless @embu.new_record? %>
-          (<%= link_to 'Print', :action => :print %>)
+    <div style="float: right; width: 240px; height: 731px; overflow:auto;
+            border: 1px solid black; text-align: center">
+      <% @embu.embu_images.order('created_at DESC').each do |e| %>
+          <% i = e.image %>
+          <% if i.video? %>
+              <%= video_tag url_for(:controller => :images, :action => :show, :id => i.id, :format => i.format), :title => i.name || 'Film', :controls => true, :autobuffer => true, :style => 'float: right; width: 240px' %>
+              </video>
+          <% else %>
+              <%= image_tag url_for(:controller => :images, :action => :inline, :id => i.id, :format => i.format, :width => 185), :title => i.name || 'Bilde', :style => 'float: right; width: 19%' %>
+          <% end %>
+          <ul class="controls">
+            <li><%= detour_to 'Fjern', embu_image_path(e), :class => :delete, :method => :delete, :confirm => "Er du sikker på at du vil fjerne #{i.video? ? 'denne videoen' : 'dette bildet'} fra din embu?" %></li>
+          </ul>
+          <br clear="right"/>
       <% end %>
-      <br/>
-      <%= f.text_area :description, :class => :tiny_mce, :cols => 100, :rows => 36 %>
     </div>
+
+    <%= f.text_area :description, :class => :tiny_mce, :cols => 100, :rows => 32 %>
 
     <% unless @embu.new_record? %>
         <div class="field">
-          <%= f.label :image, t(:image) %>:
+          <%= f.label :image, t(:image) %>
           <%= f.file_field :image %>
         </div>
     <% end %>
 
     <div class="actions">
       <%= f.submit %>
+      <%= link_to 'Ny Embu', new_embu_path %>
     </div>
 <% end %>

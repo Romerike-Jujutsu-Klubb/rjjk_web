@@ -16,6 +16,7 @@ RjjkWeb::Application.routes.draw do
   resources :cms_members
   resources :correspondences
   resources :embus
+  resources :embu_images
   resources :event_invitee_messages
   resources :event_invitees
   resources :event_messages

@@ -9,7 +9,7 @@ class Embu < ActiveRecord::Base
   has_many :images, :through => :embu_images
 
   def image=(file)
-    return if file == ""
+    return if file == ''
     #content = file.read.force_encoding("ASCII-8BIT")
     #if existing_image = Image.find_by_content_data(content)
     #  if existing_embu_image = EmbuImage.find_by_embu_id_and_image_id(id, existing_image.id)

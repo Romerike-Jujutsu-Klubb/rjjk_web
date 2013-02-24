@@ -1,0 +1,21 @@
+<h1>Listing embu_images</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @embu_images.each do |embu_image| %>
+  <tr>
+    <td><%= link_to 'Show', embu_image %></td>
+    <td><%= link_to 'Edit', edit_embu_image_path(embu_image) %></td>
+    <td><%= link_to 'Destroy', embu_image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Embu image', new_embu_image_path %>

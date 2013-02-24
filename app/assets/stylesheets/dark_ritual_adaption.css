@@ -96,6 +96,11 @@ ul.controls li a.edit {
     background-image: url('/assets/icon-more.gif');
 }
 
+ul.controls li a.delete {
+    padding: 0em 1.0em 0em 20px;
+    background-image: url('/assets/button-delete-16x16.png');
+}
+
 .header {
     background: url(/assets/dark_ritual/header_left.png) left no-repeat,
                 url(/assets/dark_ritual/header_right.png) right no-repeat,

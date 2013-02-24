@@ -1,7 +1,7 @@
 class Image < ActiveRecord::Base
   include UserSystem
 
-  default_scope :select => (column_names - ['content_data']).map{|c| "images.#{c}"}
+  default_scope :select => (column_names - %w(content_data)).map{|c| "images.#{c}"}
   scope :with_image, :select =>	'*'
   scope :public, where(:public => true, :approved => true)
   scope :images, where("content_type LIKE 'image/%'")
@@ -17,11 +17,11 @@ class Image < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :content_data, :on => :create
 
-  after_create do |i|
+  after_create do |_|
     next unless @content_file
     conn = self.class.connection.raw_connection.connection
     is = java.io.FileInputStream.new(java.io.File.new(@content_file))
-    st = conn.prepareStatement("UPDATE images SET content_data = ? WHERE id = ?")
+    st = conn.prepareStatement('UPDATE images SET content_data = ? WHERE id = ?')
     st.java_send(:setBinaryStream, [Java::int, java.io.InputStream, Java::int], 1, is, is.available)
     st.setInt(2, id)
     st.executeUpdate
@@ -30,7 +30,7 @@ class Image < ActiveRecord::Base
   end
 
   def file=(file)
-    return if file == ""
+    return if file == ''
     self.name = file.original_filename if name.blank?
     self.content_data = 'Temporary'
     @content_file = file.path
