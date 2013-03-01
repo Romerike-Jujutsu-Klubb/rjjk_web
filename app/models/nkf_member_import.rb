@@ -135,9 +135,21 @@ class NkfMemberImport
                   if trial_details_body =~ /<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren\/stilart -<\/option>.*?<option selected value="\d+">([^<]*)<\/option>.*<\/select>/
                     martial_art = $1
                     trial_row = member_trial_rows.find { |ir| ir.size < member_trial_rows[0].size && ir[1] == last_name && ir[2] == first_name }
-                    trial_row << tid
-                    trial_row << (invoice_email.blank? ? nil : invoice_email)
-                    trial_row << martial_art
+                    if trial_row
+                      trial_row << tid
+                      trial_row << (invoice_email.blank? ? nil : invoice_email)
+                      trial_row << martial_art
+                    else
+                      logger.error '*' * 80
+                      logger.error "Fant ikke prøvetidsmedlem:  #{tid.inspect}"
+                      logger.error "First name: #{first_name.inspect}"
+                      logger.error "Last name: #{last_name.inspect}"
+                      logger.error "invoice_email: #{invoice_email.inspect}"
+                      logger.error "martial_art: #{martial_art.inspect}"
+                      logger.error trial_details_body
+                      logger.error member_trial_rows
+                      logger.error '=' * 80
+                    end
                   else
                     raise 'Could not find martial art'
                   end
