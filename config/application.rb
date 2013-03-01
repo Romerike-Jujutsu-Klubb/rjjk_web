@@ -14,7 +14,7 @@ module RjjkWeb
     config.time_zone = 'UTC'
     config.i18n.default_locale = :nb
     config.encoding = Encoding::UTF_8
-    config.filter_parameters += [:file, :image, :password]
+    config.filter_parameters += [:content_data, :file, :image, :password]
     config.assets.enabled = true
     config.assets.version = '1.0'
     config.assets.initialize_on_precompile = false

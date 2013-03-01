@@ -74,4 +74,28 @@ class Image < ActiveRecord::Base
     content_type =~ /^video\//
   end
 
+  def width_max(max_width)
+    update_dimensions!
+    [width, max_width].min.to_i
+  end
+
+  def height_at(max_width)
+    update_dimensions!
+    ratio = max_width.to_f / width
+    max_height = height * ratio
+    [height, max_height].min.to_i
+  end
+
+  def update_dimensions!
+    if width.nil? || height.nil?
+      if attributes[:content_data].nil?
+        self.content_data = self.class.select(:content_data).find(id).content_data
+      end
+      magick_image = Magick::Image.from_blob(content_data).first
+      self.width = magick_image.columns
+      self.height = magick_image.rows
+      save!
+    end
+  end
+
 end
