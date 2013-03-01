@@ -69,8 +69,8 @@ class NkfMemberImport
   private
 
   def get_member_rows(session_id, detail_codes)
-    members_body = http_get("pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{session_id}").body
-    import_rows = members_body.split("\n").map { |line| @iconv.iconv(line.chomp).split(';', -1)[0..-2] }
+    members_body = @iconv.iconv http_get("pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{session_id}").body
+    import_rows = members_body.split("\n").map { |line| line.chomp.split(';', -1)[0..-2] }
     #import_rows = members_body.split("\n").map { |line| line.chomp.split(';', -1)[0..-2] }
     import_rows[0] << 'ventekid'
     detail_codes.each_slice(CONCURRENT_REQUESTS) do |detail_code_slice|
@@ -125,7 +125,7 @@ class NkfMemberImport
         Thread.start do
           begin
             trial_details_url = "page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=" + extra_function_code
-            trial_details_body = http_get(trial_details_url).body
+            trial_details_body = @iconv.iconv http_get(trial_details_url).body
             if trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
               first_name = $1
               if trial_details_body =~ /name="frm_28_v09" value="(.*?)"/
