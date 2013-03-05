@@ -63,7 +63,7 @@ class EmbuImagesController < ApplicationController
         format.html { redirect_to @embu_image, notice: 'Embu image was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @embu_image.errors, status: :unprocessable_entity }
       end
     end
