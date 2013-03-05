@@ -12,6 +12,7 @@ role :db,  'kubosch.no', :primary => true
 
 set :user, 'capistrano'
 set :use_sudo, false
+set(:rails_env) { fetch(:stage) }
 
 namespace :deploy do
   desc 'The spinner task is used by :cold_deploy to start the application up'
