@@ -1,10 +1,15 @@
 one:
   name: picture_one.png
   content_type: image/png
-  content_data: ABCabc
+  content_data: !binary |
+    iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==
   user_id: 1000001
 two:
   name: picture two
-  content_type: image/png
-  content_data: ÆØÅæøå
+  content_type: image/gif
+  content_data: !binary |
+                 R0lGODlhDAAMAIQAAP//9/X17unp5WZmZgAAAOfn515eXvPz7Y6OjuDg4J+fn5
+                 OTk6enp56enmlpaWNjY6Ojo4SEhP/++f/++f/++f/++f/++f/++f/++f/++f/+
+                 +f/++f/++f/++f/++f/++SH+Dk1hZGUgd2l0aCBHSU1QACwAAAAADAAMAAAFLC
+                 AgjoEwnuNAFOhpEMTRiggcz4BNJHrv/zCFcLiwMWYNG84BwwEeECcgggoBADs=
   user_id: 1000001
