@@ -1,4 +1,5 @@
 # encoding: utf-8
+require 'gruff'
 class MemberGradeHistoryGraph
   ACTIVE_CLAUSE = '"EXISTS (SELECT 1 FROM attendances WHERE member_id = members.id
 AND (year > #{prev_date.cwyear} OR (year = #{prev_date.cwyear} AND week >= #{prev_date.cweek}))
@@ -22,18 +23,13 @@ AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (
     interval = options[:interval] || 8.weeks
     step = options[:step] || 1.weeks
     percentage = options[:percentage]
-    begin
-      require 'gruff'
-    rescue MissingSourceFile => e
-      return File.read("public/images/rails.png")
-    end
 
     ranks = MartialArt.find_by_name('Kei Wa Ryu').ranks.reverse
     ranks = ranks.first(9)[1..-1]
 
     g = Gruff::Line.new(size)
     g.theme_37signals
-    g.title = "Fordeling av grader"
+    g.title = 'Fordeling av grader'
     if percentage
       g.title_font_size *= 0.95
       g.title += " med oppmøte over #{percentage}%"
@@ -67,8 +63,8 @@ AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (
     current_year = nil
     current_month = nil
     dates.each_with_index { |date, i|
-      if date.month != current_month && [1, 8].include?(date.month) then
-        labels[i] = (date.year != current_year ? "#{date.strftime("%m")}\n    #{date.strftime("%Y")}" : "#{date.strftime("%m")}"); current_year = date.year; current_month = date.month
+      if date.month != current_month && [1, 8].include?(date.month)
+        labels[i] = (date.year != current_year ? "#{date.strftime('%m')}\n    #{date.strftime('%Y')}" : "#{date.strftime('%m')}"); current_year = date.year; current_month = date.month
       end }
     g.labels = labels
 
@@ -83,7 +79,7 @@ AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (
       next_date = date + interval
       practices = Group.find_by_name('Voksne').trainings_in_period(prev_date..date)
       active_members = Member.all(
-          :select => (Member.column_names - ['image']).join(','),
+          :select => (Member.column_names - %w(image)).join(','),
           :conditions => eval(percentage ? ATTENDANCE_CLAUSE : ACTIVE_CLAUSE),
           :include => {:graduates => {:graduation => :martial_art}}
       )

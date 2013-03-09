@@ -4,7 +4,7 @@ unless Rails.env == 'test'
   scheduler = Rufus::Scheduler.start_new
 
   scheduler.every('1h', :first_in => '10s') { send_news }
-  scheduler.every('1m', :first_in => '30s'){ send_event_messages }
+  scheduler.every('1h', :first_in => '30s') { send_event_messages }
   scheduler.cron('0 7-23 * * *') { import_nkf_changes }
   scheduler.cron('0 0 * * *') { notify_wrong_contracts }
 end
@@ -69,7 +69,8 @@ def send_event_messages
 
     # FIXME(uwe): Consider using SQL to optimize the selection.
     EventMessage.where('message_type <> ? AND ready_at IS NOT NULL', EventMessage::MessageType::INVITATION).
-        order(:ready_at).includes(:event => {:event_invitees => :invitation}).all.each do |em|
+        order(:ready_at).includes(:event => {:event_invitees => :invitation},
+                                  :event_invitee_messages => :event_invitee).all.each do |em|
       recipients = em.event.event_invitees
       recipients = recipients.select { |r| r.will_attend || r.invitation.try(:sent_at) }
       already_received = em.event_invitee_messages.map(&:event_invitee)
@@ -81,7 +82,7 @@ def send_event_messages
       end
     end
   rescue
-    logger.error "Execption sending event messages."
+    logger.error 'Execption sending event messages.'
     logger.error $!.message
     logger.error $!.backtrace.join("\n")
   end

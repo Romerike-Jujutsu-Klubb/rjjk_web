@@ -22,6 +22,10 @@ class MemberSweeper < ActionController::Caching::Sweeper
     end
     expire_page(:controller => 'members', :action => 'history_graph', :format => :png, :id => 182)
     expire_page(:controller => 'members', :action => 'history_graph', :format => :png, :id => 1024)
+
+    expire_page(:controller => 'members', :action => 'age_chart', :format => :png, :id => 182)
+    expire_page(:controller => 'members', :action => 'age_chart', :format => :png, :id => 800)
+    expire_page(:controller => 'members', :action => 'age_chart', :format => :png, :id => 1024)
   end
   
 end
