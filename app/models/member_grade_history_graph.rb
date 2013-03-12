@@ -1,22 +1,22 @@
 # encoding: utf-8
 require 'gruff'
 class MemberGradeHistoryGraph
-  ACTIVE_CLAUSE = '"EXISTS (SELECT 1 FROM attendances WHERE member_id = members.id
-AND (year > #{prev_date.cwyear} OR (year = #{prev_date.cwyear} AND week >= #{prev_date.cweek}))
-AND (year < #{date.cwyear} OR (year = #{date.cwyear} AND week <= #{date.cweek})))
+  ACTIVE_CLAUSE = 'EXISTS (SELECT 1 FROM attendances WHERE member_id = members.id
+AND (year > ? OR (year = ? AND week >= ?))
+AND (year < ? OR (year = ? AND week <= ?)))
 
-AND (\'#{next_date}\' > CURRENT_DATE OR
+AND (? > CURRENT_DATE OR
 EXISTS (SELECT 1 FROM attendances WHERE member_id = members.id
-AND (year > #{date.cwyear} OR (year = #{date.cwyear} AND week >= #{date.cweek}))
-AND (year < #{next_date.cwyear} OR (year = #{next_date.cwyear} AND week <= #{next_date.cweek}))))
+AND (year > ? OR (year = ? AND week >= ?))
+AND (year < ? OR (year = ? AND week <= ?))))
 
-AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
+AND (joined_on IS NULL OR joined_on <= ?) AND (left_on IS NULL OR left_on > ?)'
 
-  ATTENDANCE_CLAUSE = '"(SELECT COUNT(*) FROM attendances WHERE member_id = members.id
-AND (year > #{prev_date.cwyear} OR (year = #{prev_date.cwyear} AND week >= #{prev_date.cweek}))
-AND (year < #{date.cwyear} OR (year = #{date.cwyear} AND week <= #{date.cweek}))) >= #{(practices * percentage) / 100}
+  ATTENDANCE_CLAUSE = '(SELECT COUNT(*) FROM attendances WHERE member_id = members.id
+AND (year > ? OR (year = ? AND week >= ?))
+AND (year < ? OR (year = ? AND week <= ?))) >= ?
 
-AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (left_on IS NULL OR left_on > \'#{date.strftime(\'%Y-%m-%d\')}\')"'
+AND (joined_on IS NULL OR joined_on <= ?) AND (left_on IS NULL OR left_on > ?)'
 
   def self.history_graph(options)
     size = options[:size] || 480
@@ -80,8 +80,14 @@ AND (joined_on IS NULL OR joined_on <= \'#{date.strftime(\'%Y-%m-%d\')}\') AND (
       practices = Group.find_by_name('Voksne').trainings_in_period(prev_date..date)
       active_members = Member.all(
           :select => (Member.column_names - %w(image)).join(','),
-          :conditions => eval(percentage ? ATTENDANCE_CLAUSE : ACTIVE_CLAUSE),
-          :include => {:graduates => {:graduation => :martial_art}}
+          :conditions => percentage ?
+              [ATTENDANCE_CLAUSE, prev_date.cwyear, prev_date.cwyear, prev_date.cweek,
+               date.cwyear, date.cwyear, date.cweek, (practices * percentage) / 100,
+               date, date] :
+              [ACTIVE_CLAUSE, prev_date.cwyear, prev_date.cwyear, prev_date.cweek, date.cwyear, date.cwyear, date.cweek,
+               next_date, date.cwyear, date.cwyear, date.cweek, next_date.cwyear, next_date.cwyear, next_date.cweek,
+               date, date],
+          :include => {:graduates => [{:graduation => :martial_art}, :rank]}
       )
       ranks = active_members.select { |m| m.graduates.select { |g| g.graduation.martial_art.name =='Kei Wa Ryu' && g.graduation.held_on <= date }.sort_by { |g| g.graduation.held_on }.last.try(:rank) == rank }.size
       logger.debug "#{prev_date} #{date} #{next_date} Active members: #{active_members.size}, ranks: #{ranks}"

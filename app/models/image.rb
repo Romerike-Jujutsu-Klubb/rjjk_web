@@ -37,17 +37,6 @@ class Image < ActiveRecord::Base
     self.content_type = file.content_type
   end
 
-  if Rails.env == 'development'
-    def content_data
-      data = super
-      if data =~ /^\\3(77|30)/
-        logger.error "Image id=#{id} has invalid data."
-        return eval("%Q{#{data}}")
-      end
-      data
-    end
-  end
-
   class Streamer
     def initialize(image)
       @image = image

@@ -2,7 +2,7 @@ class Clock
   @@time = Time.now
 
   def self.at(*params)
-    eval("Time.at #{params.join(',')}")
+    Time.at *params
   end
 
   def self.now
@@ -10,7 +10,7 @@ class Clock
   end
 
   def self.time=(new_time)
-    raise "Cannot set real Clock class" unless Rails.env =='test'
+    raise 'Cannot set real Clock class' unless Rails.env =='test'
     @@time = new_time
   end
 
