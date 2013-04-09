@@ -71,7 +71,8 @@ module UserSystem
   end
   
   def login_from_cookie
-    if token = cookies[:auth_token]
+    if token = cookies[:token]
+      logger.info "Found login cookie: #{token}"
       user_by_token = User.find_by_security_token(token)
       if user_by_token
         self.current_user = User.authenticate_by_token(user_by_token.id, token)

@@ -48,20 +48,20 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(login, pass)
-    u = find(:first, :conditions => ["(login = ? OR email = ?) AND verified = ? AND deleted = ?", login, login, true, false])
+    u = find(:first, :conditions => ['(login = ? OR email = ?) AND verified = ? AND deleted = ?', login, login, true, false])
     return nil if u.nil?
-    find(:first, :conditions => ["(login = ? OR email = ?) AND salted_password = ? AND verified = ?", login, login, salted_password(u.salt, hashed(pass)), true])
+    find(:first, :conditions => ['(login = ? OR email = ?) AND salted_password = ? AND verified = ?', login, login, salted_password(u.salt, hashed(pass)), true])
   end
 
   def self.authenticate_by_token(id, token)
     # Allow logins for deleted accounts, but only via this method (and
     # not the regular authenticate call)
     logger.info "Attempting authorization of #{id} with #{token}"
-    u = find( :first, :conditions => ["id = ? AND security_token = ?", id, token])
+    u = find( :first, :conditions => ['id = ? AND security_token = ?', id, token])
     if u
       logger.info "Authenticated by token: #{u.inspect}"
     else
-      logger.info "Not authenticated" if u.nil?
+      logger.info 'Not authenticated' if u.nil?
     end
     return nil if (u.nil? or u.token_expired?)
     u.update_attributes :verified => true, :token_expiry => Clock.now
@@ -116,8 +116,8 @@ class User < ActiveRecord::Base
 
   def crypt_password
     if @password_needs_confirmation
-      write_attribute("salt", self.class.hashed("salt-#{Clock.now}"))
-      write_attribute("salted_password", self.class.salted_password(salt, self.class.hashed(@password)))
+      write_attribute('salt', self.class.hashed("salt-#{Clock.now}"))
+      write_attribute('salted_password', self.class.salted_password(salt, self.class.hashed(@password)))
     end
   end
 

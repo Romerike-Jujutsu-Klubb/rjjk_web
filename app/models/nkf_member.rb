@@ -10,6 +10,11 @@ class NkfMember < ActiveRecord::Base
       :epost_faktura => nil,
       :etternavn => :last_name,
       :fodselsdato => :birthdate,
+      :foresatte => :parent_name,
+      :foresatte_epost => :parent_email,
+      :foresatte_mobil => :billing_phone_mobile,
+      :foresatte_nr_2 => :parent_2_name,
+      :foresatte_nr_2_mobil => :parent_2_mobile,
       :fornavn => :first_name,
       :gren_stilart_avd_parti___gren_stilart_avd_parti => nil,
       :hovedmedlem_id => nil,
@@ -66,6 +71,8 @@ class NkfMember < ActiveRecord::Base
             v = "#$3-#$2-#$1"
           elsif v =~ /Mann|Kvinne/
             v = v == 'Mann'
+          elsif v.blank? && k =~ /email|mobile|phone/
+            v = nil
           end
           new_attributes[FIELD_MAP[k.to_sym]] = v
         else

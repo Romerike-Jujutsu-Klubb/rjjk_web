@@ -12,7 +12,7 @@ require 'config/environment'
 require 'yaml'
 
 def dump(model_plural)
-  model_class = eval model_plural.to_s.singularize.camelize
+  model_class = model_plural.to_s.singularize.camelize.constantize
   models = model_class.find(:all)
   puts "Found #{models.size} #{model_plural}"
   models.each{|m| m.image = m.thumbnail} if model_class == Member

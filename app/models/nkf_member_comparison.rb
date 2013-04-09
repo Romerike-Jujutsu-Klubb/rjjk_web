@@ -1,5 +1,6 @@
 class NkfMemberComparison
-  attr_reader :errors, :group_changes, :members, :member_changes, :new_members, :orphan_members, :orphan_nkf_members
+  attr_reader :errors, :group_changes, :members, :member_changes, :new_members,
+              :orphan_members, :orphan_nkf_members
 
   def initialize
     fetch

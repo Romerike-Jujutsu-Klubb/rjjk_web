@@ -12,7 +12,7 @@ require 'member'
 
 def load(model_plural)
   puts "Loading #{model_plural}"
-  eval model_plural.to_s.singularize.camelize
+  model_plural.to_s.singularize.camelize.constantize
   records = YAML.load_file("#{EXPORT_DIR}/#{model_plural}.yml")
   records.each do |r|
     attendance = Attendance.find_by_member_id_and_year_and_week_and_group_schedule_id(r.member_id, r.year, r.week, r.group_schedule_id)

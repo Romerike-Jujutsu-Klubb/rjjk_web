@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130301132111) do
+ActiveRecord::Schema.define(:version => 20130312173015) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -269,6 +269,9 @@ ActiveRecord::Schema.define(:version => 20130301132111) do
     t.boolean "gmaps"
     t.integer "image_id"
     t.integer "user_id"
+    t.string  "parent_email",         :limit => 32
+    t.string  "parent_2_name",        :limit => 64
+    t.string  "parent_2_mobile",      :limit => 16
   end
 
   add_index "members", ["image_id"], :name => "index_members_on_image_id", :unique => true
@@ -351,6 +354,11 @@ ActiveRecord::Schema.define(:version => 20130301132111) do
     t.datetime "updated_at"
     t.string   "ventekid",                                        :limit => 20
     t.string   "kjonn",                                           :limit => 6,  :null => false
+    t.string   "foresatte",                                       :limit => 64
+    t.string   "foresatte_epost",                                 :limit => 32
+    t.string   "foresatte_mobil",                                 :limit => 16
+    t.string   "foresatte_nr_2",                                  :limit => 64
+    t.string   "foresatte_nr_2_mobil",                            :limit => 16
   end
 
   create_table "ranks", :force => true do |t|

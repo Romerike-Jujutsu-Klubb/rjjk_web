@@ -71,7 +71,6 @@ class NkfMemberImport
   def get_member_rows(session_id, detail_codes)
     members_body = @iconv.iconv http_get("pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{session_id}").body
     import_rows = members_body.split("\n").map { |line| line.chomp.split(';', -1)[0..-2] }
-    #import_rows = members_body.split("\n").map { |line| line.chomp.split(';', -1)[0..-2] }
     import_rows[0] << 'ventekid'
     detail_codes.each_slice(CONCURRENT_REQUESTS) do |detail_code_slice|
       threads = detail_code_slice.map do |dc|
@@ -182,8 +181,7 @@ class NkfMemberImport
       attributes = {}
       columns.each_with_index do |column, i|
         next if %w{aktivitetsomrade_id aktivitetsomrade_navn alder avtalegiro
-                 dan_graderingsserifikat forbundskontingent foresatte foresatte_epost
-                 foresatte_mobil foresatte_nr_2 foresatte_nr_2_mobil}.include? column
+                 dan_graderingsserifikat forbundskontingent}.include? column
         attributes[column] = row[i] && row[i].strip
       end
       record = NkfMember.find_by_medlemsnummer(row[0]) || NkfMember.new
