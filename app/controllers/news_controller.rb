@@ -2,11 +2,11 @@ class NewsController < ApplicationController
   before_filter :admin_required, :except => [ :index, :list, :show ]
 
   def index
-    @news_items = NewsItem.current.order('created_at DESC').limit(10).all
+    @news_items = NewsItem.current.order('created_at DESC').limit(10).includes(:creator => :member).all
   end
 
   def list
-    @news_items = NewsItem.order('created_at DESC').limit(30).all
+    @news_items = NewsItem.order('created_at DESC').limit(30).includes(:creator => :member).all
   end
 
   def show
