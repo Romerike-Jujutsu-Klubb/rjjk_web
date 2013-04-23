@@ -47,18 +47,6 @@ h4 {
     color: #046CB8;
 }
 
-table {
-    border: 1px solid gray;
-}
-
-tr:nth-child(odd) {
-    background: #efefef;
-}
-
-tr:hover{ background-color: #dddddd; }
-
-th{ background-color: #cccccc; }
-
 ul.controls {
     clear: both;
     margin: 0;

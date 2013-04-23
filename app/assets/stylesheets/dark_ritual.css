@@ -8,12 +8,6 @@ URL: http://templates.arcsin.se
 Feel free to use and modify but please provide credits.
 #############################################################*/
 
-/* standard elements */
-* {
-	margin: 0;
-	padding: 0;
-}
-
 a {color: #682;}
 
 a:hover {color: #9A6;}
