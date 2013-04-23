@@ -1,3 +1,25 @@
+.notice {
+    position: relative;
+    width: 30%;
+    height: 3em;
+    background: white;
+    margin-left: 1em;
+    border: 1px solid yellow;
+    font-size: 10pt;
+    float: left;
+}
+.notice .inner {
+    position: absolute;
+    width: 100%;
+    height: 4em;
+    display: table;
+}
+.notice .inner p {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
 #member_search {
     position: absolute;
     top: 3.5em;
