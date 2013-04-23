@@ -52,7 +52,7 @@ module UserSystem
   # example use :
   # a popup window might just close itself for instance
   def access_denied
-    redirect_to :controller => "/user", :action => "login"
+    redirect_to :controller => '/user', :action => 'login'
   end  
   
   # store current uri in  the session.
@@ -162,7 +162,7 @@ module UserSystem
     Thread.current[:user]
   end
   
-  def current_user= user
+  def current_user=(user)
     session[:user_id] = (user && user.id) if defined?(session)
     Thread.current[:user] = user
   end

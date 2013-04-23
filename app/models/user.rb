@@ -62,9 +62,13 @@ class User < ActiveRecord::Base
       logger.info "Authenticated by token: #{u.inspect}"
     else
       logger.info 'Not authenticated' if u.nil?
+      return nil
     end
-    return nil if (u.nil? or u.token_expired?)
-    u.update_attributes :verified => true, :token_expiry => Clock.now
+    if u.token_expired?
+      logger.info 'Token expired.'
+      return nil
+    end
+    u.update_attributes :verified => true, :token_expiry => Clock.now + token_lifetime
     return u
   end
 

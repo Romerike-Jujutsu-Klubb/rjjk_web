@@ -66,15 +66,16 @@ class NkfMember < ActiveRecord::Base
     new_attributes = {}
     attributes.each do |k, v|
       if FIELD_MAP.keys.include?(k.to_sym)
-        if FIELD_MAP[k.to_sym]
+        mapped_attribute = FIELD_MAP[k.to_sym]
+        if mapped_attribute
           if v =~ /^\s*(\d{2}).(\d{2}).(\d{4})\s*$/
             v = "#$3-#$2-#$1"
           elsif v =~ /Mann|Kvinne/
             v = v == 'Mann'
-          elsif v.blank? && k =~ /foresatte|email|mobile|phone/
+          elsif v.blank? && mapped_attribute =~ /parent|email|mobile|phone/
             v = nil
           end
-          new_attributes[FIELD_MAP[k.to_sym]] = v
+          new_attributes[mapped_attribute] = v
         else
           # Ignoring attribute
         end

@@ -12,7 +12,7 @@ Oppdaterte følgende eksisterende medlemmer:
 <% @member_changes.each do |m, c| -%>
     <%= m.first_name %> <%= m.last_name %>
     <% c.each do |k, v| -%>
-        <%= k %>: <%= v[0] %> => <%= v[1] %>
+        <%= k %>: <%= v[0].inspect %> => <%= v[1].inspect %>
     <% end -%>
 <% end -%>
 <% end -%>
