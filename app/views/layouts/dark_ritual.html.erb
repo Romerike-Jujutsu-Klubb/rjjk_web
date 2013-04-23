@@ -50,7 +50,11 @@
     <% end %>
     <span style="font-size: 10pt; text-align: center">
       <%= link_to 'Logg på NKF', 'http://www.kampsport.no/portal/page/portal/ks_utv/st_login', :onclick => 'return !window.open(this.href)', :style => 'margin-right: 50px' %>
-      <%= link_to 'FaceBook', 'http://www.facebook.com/home.php#!/pages/Romerike-Jujutsu-Klubb/260684570923?ref=ts', :onclick => 'return !window.open(this.href)' %>
+      <% if user? %>
+      <%= link_to 'Gruppe', 'https://www.facebook.com/groups/romerikejjk', :onclick => 'return !window.open(this.href)',
+                  :style => 'padding-left:2.7em;background-image: url(/assets/fb.png); background-repeat:no-repeat;background-origin:padding-box;background-position: 0.5em;' %>
+      <% end %>
+      <%= link_to 'Facebook', 'http://www.facebook.com/home.php#!/pages/Romerike-Jujutsu-Klubb/260684570923?ref=ts', :onclick => 'return !window.open(this.href)' %>
       <%= link_to 'Bli medlem!', 'http://www.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)' %>
 	</span>
   </div>

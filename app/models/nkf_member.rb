@@ -71,7 +71,7 @@ class NkfMember < ActiveRecord::Base
             v = "#$3-#$2-#$1"
           elsif v =~ /Mann|Kvinne/
             v = v == 'Mann'
-          elsif v.blank? && k =~ /email|mobile|phone/
+          elsif v.blank? && k =~ /foresatte|email|mobile|phone/
             v = nil
           end
           new_attributes[FIELD_MAP[k.to_sym]] = v
