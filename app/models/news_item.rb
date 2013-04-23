@@ -13,6 +13,9 @@ class NewsItem < ActiveRecord::Base
   
   before_validation do |news_item|
     news_item.created_by ||= current_user.try(:id)
+    if news_item.body
+      news_item.body.gsub! /(<td[^>]*>\s*)<p>((?!<\/td>).)*<\/p>(\s*<\/td>)/, '\1\2\3'
+    end
   end
 
   validates_presence_of :publication_state
