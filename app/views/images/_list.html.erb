@@ -3,7 +3,7 @@
 </div>
 
 <table>
-  <% for image in images.sort_by { |i| i.name.upcase } %>
+  <% for image in images.sort_by { |i| UnicodeUtils.upcase(i.name) } %>
       <tr>
         <td align="center">
           <%= link_to(image_tag(url_for(:only_path => false, :controller => 'images', :action => :inline, :id => image.id, :format => image.format), :width => 160, :title => h(image.name), :alt => h(image.name)),

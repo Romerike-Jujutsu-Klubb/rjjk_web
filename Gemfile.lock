@@ -187,6 +187,7 @@ GEM
     uglifier (2.0.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    unicode_utils (1.4.0)
     will_paginate (3.0.4)
 
 PLATFORMS
@@ -224,4 +225,5 @@ DEPENDENCIES
   trinidad
   trinidad_daemon_extension
   uglifier
+  unicode_utils
   will_paginate

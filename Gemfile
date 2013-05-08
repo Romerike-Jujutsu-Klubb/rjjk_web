@@ -33,6 +33,7 @@ gem 'rails-i18n'
 gem 'jquery_datepicker'
 gem 'jquery-ui-themes'
 gem 'ri_cal'
+gem 'unicode_utils'
 
 group :assets do
   gem 'sass-rails'
