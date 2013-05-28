@@ -12,8 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :group_id, 'Gruppe' %><br />
-    <%= f.select :group_id, [[]] + @groups.map{|g| [g.name, g.id]} %>
+    <%= f.label :group_schedule_id, 'Gruppe' %><br />
+    <%= f.select :group_schedule_id, [[]] + @group_schedules.map{|gs| ["#{gs.group.name} #{gs.weekday_name}", gs.id]} %>
   </div>
   <div class="field">
     <%= f.label :member_id, 'Instruktør' %><br />

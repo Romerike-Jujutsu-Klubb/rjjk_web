@@ -204,6 +204,21 @@
           <br/>
           <br/>
       <% end %>
+
+      <h3>Instruktører</h3>
+
+      <ul>
+        <% @groups.each do |g| %>
+            <li><%= g.name %>
+              <% g.group_schedules.map(&:group_instructors).flatten.each do |i| %>
+                  <ul>
+                    <li><%= i.member.name %> (<%= i.group_schedule.weekday_name %>)</li>
+                  </ul>
+              <% end %>
+            </li>
+        <% end %>
+      </ul>
+
     </div>
 
   </div>

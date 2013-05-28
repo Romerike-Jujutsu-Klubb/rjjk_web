@@ -26,6 +26,7 @@ class ApplicationController < ActionController::Base
     @image = image_query.first
     @new_image = Image.new
     @events = Event.all(:conditions => ['(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)', Date.today, Date.today], :limit => 5)
+    @groups = Group.active(Date.today).order(:name).includes(:group_schedules).all
   end
 
 end

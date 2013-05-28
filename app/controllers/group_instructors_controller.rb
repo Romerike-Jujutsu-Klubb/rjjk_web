@@ -3,6 +3,7 @@ class GroupInstructorsController < ApplicationController
   # GET /group_instructors.json
   def index
     @group_instructors = GroupInstructor.all
+    @group_schedules = GroupSchedule.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -26,6 +27,7 @@ class GroupInstructorsController < ApplicationController
   def new
     @group_instructor = GroupInstructor.new
     @groups = Group.all
+    @group_schedules = GroupSchedule.all
     @group_instructors = Member.instructors
 
     respond_to do |format|
