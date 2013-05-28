@@ -142,7 +142,6 @@ class UserControllerTest < ActionController::TestCase
     user.reload
     assert user.verified
     assert_logged_in( user )
-    assert user.token_expired?
   end
 
   def test_welcome__fails_if_expired_token

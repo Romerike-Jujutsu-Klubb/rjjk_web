@@ -134,7 +134,6 @@ module UserSystem
       
       cookie_user ||= User.authenticate(cookie_value, '')
       if cookie_user
-        @current_user = cookie_user
         self.current_user = cookie_user
         return cookie_user
       end
@@ -145,9 +144,8 @@ module UserSystem
     id = params['user']['id']
     key = params['key']
     if id and key
-      @current_user = User.authenticate_by_token(id, key)
-      self.current_user = @current_user
-      return true if not @current_user.nil?
+      self.current_user = User.authenticate_by_token(id, key)
+      return true if not current_user.nil?
     end
     
     # Everything failed

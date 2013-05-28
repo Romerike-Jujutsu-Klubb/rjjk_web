@@ -73,7 +73,6 @@ class UserController < ApplicationController
 
   def logout
     session[:user_id] = nil
-    @current_user = nil
     self.current_user = nil
     cookies[:autologin] = {:value => '', :expires => 0.days.from_now}
     cookies[:token] = {:value => '', :expires => 0.days.from_now}
@@ -166,7 +165,7 @@ class UserController < ApplicationController
   end
 
   def delete
-    @user = @current_user || User.find_by_id(session[:user_id])
+    @user = current_user || User.find_by_id(session[:user_id])
     begin
       @user.update_attribute(:deleted, true)
       logout
@@ -204,7 +203,7 @@ class UserController < ApplicationController
 
   # Generate a template user for certain actions on get
   def generate_filled_in
-    @user = (params[:id] && User.find_by_id(params[:id])) || @current_user || User.find_by_id(session[:user_id])
+    @user = (params[:id] && User.find_by_id(params[:id])) || current_user || User.find_by_id(session[:user_id])
     @members = Member.select('id, first_name, last_name').where(:email => @user.email).all
     case request.method
     when 'GET'

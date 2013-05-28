@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title>Romerike Jujutsu Klubb</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <meta name="description" content="description"/>
+  <meta name="keywords" content="keywords"/>
+  <meta name="author" content="author"/>
+  <%= javascript_include_tag :application %>
+  <% @content_width ||= 640 %>
+  <%= stylesheet_link_tag :application, :media => :all %>
+  <%= csrf_meta_tags %>
+
+  <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-20693372-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function () {
+          var ga = document.createElement('script');
+          ga.type = 'text/javascript';
+          ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(ga, s);
+      })();
+  </script>
+
+</head>
+
+<body>
+
+<div class="container-fluent">
+  <div class="row-fluent">
+    <div class="span9" id="left_column">
+      <div class="row-fluent">
+        <div class="header span9">
+          Romerike Jujutsu Klubb<br/>
+        </div>
+      </div>
+      <div class="row-fluent">
+        <div class="subnav span2">
+          <ul>
+            <li><%= link_to 'Forside', '/' %></li>
+            <li><%= link_to 'Nyheter', :controller => :news %></li>
+          </ul>
+        </div>
+        <div class="span7">
+          Content
+        </div>
+      </div>
+    </div>
+    <div class="span3">
+      <div class="padded" style="background: white">
+        Right column
+      </div>
+    </div>
+  </div>
+  <div class="row-fluent">
+    <div class="footer span12">
+    <span class="left">&copy; 2008-2013 <a href="http://jujutsu.no/">Romerike
+      Jujutsu
+      Klubb</a>. Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> &amp; <a href="http://validator.w3.org/check?uri=referer">XHTML</a></span>
+      <span class="right">Template design by <a href="http://templates.arcsin.se">Arcsin</a></span>
+
+      <div class="clearer"><span></span></div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>
