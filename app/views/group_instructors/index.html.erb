@@ -3,6 +3,7 @@
 <table>
   <tr>
     <th>Gruppe</th>
+    <th>Dag</th>
     <th>Instruktør</th>
     <th>Fra</th>
     <th></th>
@@ -12,7 +13,8 @@
 
 <% @group_instructors.each do |instruction| %>
   <tr>
-    <td><%= instruction.group.name %></td>
+    <td><%= instruction.group_schedule.group.name %></td>
+    <td><%= instruction.group_schedule.weekday_name %></td>
     <td><%= instruction.member.name %></td>
     <td><%= instruction.from %></td>
     <td><%= link_to 'Vis', instruction %></td>

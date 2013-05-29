@@ -210,11 +210,23 @@
       <ul>
         <% @groups.each do |g| %>
             <li><%= g.name %>
-              <% g.group_schedules.map(&:group_instructors).flatten.each do |i| %>
-                  <ul>
-                    <li><%= i.member.name %> (<%= i.group_schedule.weekday_name %>)</li>
-                  </ul>
-              <% end %>
+              <ul>
+                <% g.group_schedules.map{|gs| gs.group_instructors.map(&:member)}.flatten.uniq.each do |m| %>
+                    <li><%= m.name %>
+                        <% unless g.group_schedules.all? { |gs2| gs2.group_instructors.map(&:member).include?(m) } %>
+                          <% g.group_schedules.each do |gs| %>
+                              <% if gs.group_instructors.map(&:member).include?(m) %>
+                              (<%= gs.weekday_name %>)
+                              <% end %>
+                          <% end %>
+                        <% end %>
+                    </li>
+                    <% g.group_schedules.each do |gs| %>
+                        <%= link_to "#{gs.weekday_name} mangler!", :controller => :group_instructors, :action => :new,
+                                    :group_instructor => {:group_schedule_id => gs.id} if gs.group_instructors.empty? %>
+                    <% end %>
+                <% end %>
+              </ul>
             </li>
         <% end %>
       </ul>

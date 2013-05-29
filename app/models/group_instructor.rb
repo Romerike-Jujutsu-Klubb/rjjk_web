@@ -7,4 +7,9 @@ class GroupInstructor < ActiveRecord::Base
   validates_presence_of :from, :group_schedule, :group_schedule_id, :member, :member_id
 
   validates_uniqueness_of :from, :scope => :group_schedule_id
+
+  def active?(date = Date.today)
+    from <= date && (to.nil? || to >= date)
+  end
+
 end

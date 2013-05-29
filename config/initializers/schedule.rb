@@ -7,6 +7,7 @@ unless Rails.env == 'test'
   scheduler.every('1h', :first_in => '30s') { send_event_messages }
   scheduler.cron('0 7-23 * * *') { import_nkf_changes }
   scheduler.cron('0 0 * * *') { notify_wrong_contracts }
+  scheduler.cron('*/2 * * * *') { notify_missing_instructors }
 end
 
 private
@@ -109,6 +110,18 @@ def notify_wrong_contracts
     NkfReplication.wrong_contracts(wrong_contracts).deliver if wrong_contracts.any?
   rescue
     logger.error "Exception sending contract message: #{$!}"
+    logger.error $!.backtrace
+  end
+end
+
+def notify_missing_instructors
+  begin
+    groups = Group.active(Date.today).all
+    group_schedules = groups.map(&:group_schedules).flatten
+    missing_schedules = group_schedules.select{|gs| gs.group_instructors.select(&:active?).empty?}
+    InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
+  rescue
+    logger.error "Exception sending instruction message: #{$!}"
     logger.error $!.backtrace
   end
 end

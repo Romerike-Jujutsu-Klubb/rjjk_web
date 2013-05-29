@@ -22,16 +22,13 @@ class GroupInstructorsController < ApplicationController
     end
   end
 
-  # GET /group_instructors/new
-  # GET /group_instructors/new.json
   def new
-    @group_instructor = GroupInstructor.new
-    @groups = Group.all
-    @group_schedules = GroupSchedule.all
-    @group_instructors = Member.instructors
+    @group_instructor ||= GroupInstructor.new params[:group_instructor]
+    @group_schedules ||= GroupSchedule.all.select{|gs| gs.group.active?}
+    @group_instructors ||= Member.instructors
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render action: 'new' }
       format.json { render json: @group_instructor }
     end
   end
@@ -39,7 +36,7 @@ class GroupInstructorsController < ApplicationController
   # GET /group_instructors/1/edit
   def edit
     @group_instructor = GroupInstructor.find(params[:id])
-    @groups = Group.all
+    @group_schedules = GroupSchedule.all.select{|gs| gs.group.active?}
     @group_instructors = Member.instructors
   end
 
@@ -53,9 +50,7 @@ class GroupInstructorsController < ApplicationController
         format.html { redirect_to @group_instructor, notice: 'GroupInstructor was successfully created.' }
         format.json { render json: @group_instructor, status: :created, location: @group_instructor }
       else
-        @groups = Group.all
-        @group_instructors = Member.instructors
-        format.html { render action: "new" }
+        new
         format.json { render json: @group_instructor.errors, status: :unprocessable_entity }
       end
     end

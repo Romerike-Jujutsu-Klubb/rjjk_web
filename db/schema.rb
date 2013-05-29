@@ -175,6 +175,7 @@ ActiveRecord::Schema.define(:version => 20130528161719) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.integer  "group_schedule_id", :null => false
+    t.date     "to"
   end
 
   create_table "group_schedules", :force => true do |t|

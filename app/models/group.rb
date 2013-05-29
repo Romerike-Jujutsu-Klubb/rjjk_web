@@ -31,4 +31,8 @@ class Group < ActiveRecord::Base
         all.size
   end
 
+  def active?(date = Date.today)
+    closed_on.nil? || closed_on >= date
+  end
+
 end
