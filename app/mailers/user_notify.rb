@@ -18,7 +18,7 @@ class UserNotify < ActionMailer::Base
   def created_from_member(user, password)
     setup_email(user)
 
-    @subject += "Velkommen til Romerike Jujutsu Klubb!"
+    @subject += 'Velkommen til Romerike Jujutsu Klubb!'
     @user = user
     @password = password
 
@@ -28,7 +28,7 @@ class UserNotify < ActionMailer::Base
   def forgot_password(user, url=nil)
     setup_email(user)
 
-    @subject += "Forgotten password notification"
+    @subject += 'Forgotten password notification'
 
     @name = "#{user.first_name} #{user.last_name}"
     @login = user.login
@@ -41,7 +41,7 @@ class UserNotify < ActionMailer::Base
   def change_password(user, password, url=nil)
     setup_email(user)
 
-    @subject += "Changed password notification"
+    @subject += 'Changed password notification'
 
     @name = "#{user.first_name} #{user.last_name}"
     @login = user.login

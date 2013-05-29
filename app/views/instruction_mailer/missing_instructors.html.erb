@@ -6,7 +6,7 @@
   </tr>
   <% @missing_schedules.each do |gs| %>
       <tr>
-        <td><%=link_to gs.group.name, :controller => :group_instructors, :action => :new,
+        <td><%=link_to gs.group.name, :only_path => false, :controller => :group_instructors, :action => :new,
                        :group_instructor => {:group_schedule_id => gs.id} %></td>
         <td><%= gs.weekday_name %></td>
       </tr>
