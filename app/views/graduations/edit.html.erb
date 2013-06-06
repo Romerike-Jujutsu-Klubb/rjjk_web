@@ -1,9 +1,3 @@
 <h1>Editing graduation</h1>
 
-<%=form_tag :action => 'update', :id => @graduation do %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag 'Edit' %>
-<% end %>
-
-<%= link_to 'Show', :action => 'show', :id => @graduation %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= render :partial => 'form' %>

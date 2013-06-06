@@ -12,10 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui
+//= require jquery.ui.datepicker
+//= require jquery.ui.slider
 //= require jquery-ui-timepicker-addon.js
 //= require_tree .
-//= require tinymce
+//= require tinymce/tiny_mce
 //= require gmaps4rails/gmaps4rails.base.js
 //= require gmaps4rails/gmaps4rails.googlemaps.js
 //= require bootstrap.js

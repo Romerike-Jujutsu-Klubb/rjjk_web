@@ -22,13 +22,10 @@ class GraduationsController < ApplicationController
       return
     end
     @graduation   = Graduation.find(params[:id])
-    @graduations  = Graduation.all(:order => 'held_on DESC', :conditions => ["martial_art_id = 1"])
+    @graduations  = Graduation.includes(:group).all(:order => 'held_on DESC', :conditions => ["groups.martial_art_id = 1"])
     @martial_arts = MartialArt.all
 
     @grad_pages, @grad = Hash.new()
-    @martial_arts.collect { |c|
-      tmp = Graduation.all(:order => 'held_on DESC', :conditions => ["martial_art_id = #{c.id}"])
-    }
     load_graduates
   end
 
@@ -37,7 +34,8 @@ class GraduationsController < ApplicationController
   end
 
   def new
-    @graduation = Graduation.new
+    @graduation ||= Graduation.new
+    @groups = Group.all
   end
 
   def create
@@ -46,12 +44,14 @@ class GraduationsController < ApplicationController
       flash[:notice] = 'Graduation was successfully created.'
       redirect_to :action => :index
     else
+      new
       render :action => 'new'
     end
   end
 
   def edit
     @graduation = Graduation.find(params[:id])
+    @groups = Group.all
   end
 
   def update
@@ -73,8 +73,8 @@ class GraduationsController < ApplicationController
     graduation = Graduation.find(params[:id])
     date = graduation.held_on
     content = graduation.graduates.sort_by { |g| -g.rank.position }.map{|g| {:name => g.member.name, :rank => "#{g.rank.name} #{g.rank.colour}", :group => g.rank.group.name}}
-    filename   = "Certificates_#{graduation.martial_art.name}_#{graduation.held_on}.pdf"
-    send_data Certificates.pdf(date, content), :type => "text/pdf",
+    filename   = "Certificates_#{graduation.group.martial_art.name}_#{graduation.held_on}.pdf"
+    send_data Certificates.pdf(date, content), :type => 'text/pdf',
               :filename => filename, :disposition => 'attachment'
   end
 
@@ -118,11 +118,14 @@ class GraduationsController < ApplicationController
   private
 
   def load_graduates
-    @graduation = Graduation.includes(:martial_art => {:ranks => :group}).find(params[:id])
+
+    @graduation = Graduation.includes(:group => {:martial_art => {:ranks => :group}}).find(params[:id])
+
     @censors    = Censor.includes(:member).where(:graduation_id => @graduation.id).all
+
     @graduates  = Graduate.where("graduates.graduation_id = ? AND graduates.member_id != 0", params[:id]).
         #includes({:graduation => :martial_art}, {:member => [{:attendances => :group_schedule}, {:graduates => [:graduation, :rank]}]}, {:rank => :group}).
-        includes({:graduation => :martial_art}, :member, {:rank => :group}).
+        includes({:graduation => {:group => :martial_art}}, :member, {:rank => :group}).
         #order('ranks_graduates.position DESC, members.first_name, members.last_name').all
         order('ranks.position DESC, members.first_name, members.last_name').all
   end

@@ -26,6 +26,7 @@ gem 'acts_as_list'
 gem 'acts_as_tree'
 gem 'will_paginate'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'tinymce-rails'
 gem 'simple_workflow'
 gem 'gmaps4rails'
@@ -33,6 +34,7 @@ gem 'rails-i18n'
 gem 'jquery_datepicker'
 gem 'jquery-ui-themes'
 gem 'ri_cal'
+gem 'activerecord-time'
 gem 'unicode_utils'
 
 group :assets do
@@ -49,5 +51,5 @@ end
 
 group :test do
   gem 'minitest-reporters'
-  gem 'mocha'
+  gem 'mocha', :require => 'mocha/setup'
 end

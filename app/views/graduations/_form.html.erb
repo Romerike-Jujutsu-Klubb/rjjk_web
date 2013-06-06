@@ -1,9 +1,21 @@
-<%= error_messages_for 'graduation' %>
+<%= form_for @graduation do |f| %>
+    <%= f.error_messages %>
 
-<!--[form:graduation]-->
-<p>
-<label for="graduation_held_on">Dato for gradering</label><br/>
-<%= select("graduation", "martial_art_id", MartialArt.find(:all).collect { |c| [c.name, c.id] }) %>
-<%= date_select 'graduation', 'held_on' %></p>
-<!--[eoform:graduation]-->
+    <div class="field">
+      <%= f.label :held_on, 'Dato for gradering' %>
+      <%= f.datepicker :held_on, :dateFormat => 'yy-mm-dd', :firstDay => 1,
+                       :size => 18 %>
+    </div>
 
+    <div class="field">
+      <%= f.label :group_id, 'Gruppe' %>
+      <%= f.select :group_id, @groups.map { |c| [c.name, c.id] } %>
+    </div>
+
+    <%= f.submit 'Lagre' %>
+
+    <% unless @graduation.new_record? %>
+        <%= link_to 'Vis', :action => 'show', :id => @graduation %>
+    <% end %>
+    | <%= back_or_link_to 'Back', :action => :index %>
+<% end %>

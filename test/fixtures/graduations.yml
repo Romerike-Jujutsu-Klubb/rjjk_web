@@ -1,7 +1,6 @@
 one:
   held_on: '2007-10-08'
-  martial_art: keiwaryu
+  group: panda
 two:
   held_on: '2007-10-09'
-  martial_art: keiwaryu
-  
+  group: tiger

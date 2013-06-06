@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Start on:</b>
+  <%= @semester.start_on %>
+</p>
+
+<p>
+  <b>End on:</b>
+  <%= @semester.end_on %>
+</p>
+
+
+<%= link_to 'Edit', edit_semester_path(@semester) %> |
+<%= link_to 'Back', semesters_path %>

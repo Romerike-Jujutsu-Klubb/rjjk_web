@@ -4,15 +4,33 @@
 
 <%= render :partial => '/tiny_mce' %>
 
-<%= error_messages_for 'news_item' %>
+<%= form_for(@news_item) do |f| %>
+    <%= f.error_messages %>
 
-<label for="news_item_title">Tittel</label>
-<%= text_field 'news_item', 'title' %>
+    <%= f.label :title, 'Tittel' %>
+    <%= f.text_field :title %>
 
-<label for="news_item_publication_state">Publiseringsstatus</label>
-<%= select :news_item, :publication_state, NewsItem::PublicationState.constants.map { |s| [t(s.downcase), s] } %>
-Publiser fra <%= text_field :news_item, :publish_at, :class => 'input-small' %>
-til <%= text_field :news_item, :expire_at, :class => 'input-small' %>
+    <%= f.label :publication_state, 'Publiseringsstatus' %>
+    <%= f.select :publication_state, NewsItem::PublicationState.constants.map { |s| [t(s.downcase), s] } %>
 
-<%= text_area 'news_item', 'body', :cols => 100, :rows => 24, :class => 'tiny_mce' %>
+    Publiser fra
+    <%= f.datetime_picker :publish_at, :dateFormat => 'yy-mm-dd',
+                          :timeFormat => 'hh:mm', :class => 'input-medium',
+                          :firstDay => 1 %>
+
+    til <%= f.datetime_picker :expire_at, :class => 'input-medium' %>
+
+    <%= f.text_area :body, :cols => 100, :rows => 24, :class => 'tiny_mce' %>
+
+    <%= f.submit 'Lagre', :id => :save %>
+    <%= link_to 'Avbryt', :action => 'list' %>
+
+<% end %>
+
+<script type="text/JavaScript">
+    //<!--
+    document.getElementById('news_item_title').focus();
+    document.getElementById('news_item_title').select();
+    //-->
+</script>
 

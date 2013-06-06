@@ -43,3 +43,22 @@ class ActiveRecord::ConnectionAdapters::JdbcAdapter
     raise
   end
 end
+
+class TimeOfDay
+  def min
+    minute
+  end
+
+  def day
+    nil
+  end
+
+  def month
+    nil
+  end
+
+  def year
+    nil
+  end
+
+end

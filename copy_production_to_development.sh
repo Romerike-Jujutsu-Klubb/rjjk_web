@@ -13,3 +13,6 @@ createdb -h localhost $DB_NAME
 echo "Transferring database"
 time ssh root@kubosch.no "pg_dump -U capistrano rjjk_production | gzip" |
     gunzip | sed -e s/capistrano/uwe/ | psql -h localhost $DB_NAME
+
+rvm use jruby
+RAILS_ENV=development jruby -S bundle exec rake db:migrate

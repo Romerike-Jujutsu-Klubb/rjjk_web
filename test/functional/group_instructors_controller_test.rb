@@ -5,43 +5,43 @@ class GroupInstructorsControllerTest < ActionController::TestCase
     @group_instructor = group_instructors(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:group_instructors)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create group_instructor" do
+  test 'should create group_instructor' do
     assert_difference('GroupInstructor.count') do
-      post :create, group_instructor: { from: @group_instructor.from + 1, group_id: @group_instructor.group_id, member_id: @group_instructor.member_id }
+      post :create, group_instructor: { from: @group_instructor.from + 1, group_schedule_id: @group_instructor.group_schedule_id, member_id: @group_instructor.member_id }
       assert_no_errors :group_instructor
     end
 
     assert_redirected_to group_instructor_path(assigns(:group_instructor))
   end
 
-  test "should show group_instructor" do
+  test 'should show group_instructor' do
     get :show, id: @group_instructor
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @group_instructor
     assert_response :success
   end
 
-  test "should update group_instructor" do
-    put :update, id: @group_instructor, group_instructor: { from: @group_instructor.from, group_id: @group_instructor.group_id, member_id: @group_instructor.member_id }
+  test 'should update group_instructor' do
+    put :update, id: @group_instructor, group_instructor: { from: @group_instructor.from, group_schedule_id: @group_instructor.group_schedule_id, member_id: @group_instructor.member_id }
     assert_no_errors :group_instructor
     assert_redirected_to group_instructor_path(assigns(:group_instructor))
   end
 
-  test "should destroy group_instructor" do
+  test 'should destroy group_instructor' do
     assert_difference('GroupInstructor.count', -1) do
       delete :destroy, id: @group_instructor
     end

@@ -169,7 +169,7 @@
                   <% if ingress && event.description.size > ingress.size %>
                       <li><%= link_to 'Les mer', {:controller => :events, :action => :show, :id => event.id}, :class => :edit %></li>
                   <% end %>
-                  <li><%= link_to 'Redigèr', {:controller => :events, :action => :edit, :id => event.id}, :class => :edit if admin? %></li>
+                  <li><%= link_to 'Redigèr', edit_polymorphic_path(event), :class => :edit if admin? %></li>
                 </ul>
           <% end %>
           </div>

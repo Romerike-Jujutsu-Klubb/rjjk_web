@@ -40,7 +40,7 @@ class Event < ActiveRecord::Base
   end
 
   def ingress
-    description.try(:slice, /\A.*?<\/p>/)
+    description.try(:slice, %r{\A.*?(?:<br /><br />|</p>|\Z)}m)
   end
   
   def body

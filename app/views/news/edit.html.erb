@@ -2,15 +2,4 @@
 
 <h1>Redigèr nyhet</h1>
 
-<%=form_tag :action => 'update', :id => @news_item do %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag 'Lagre', :id => :save %>
-  <%=link_to 'Avbryt', :action => 'list' %>
-<% end %>
-
-<script type="text/JavaScript">
-//<!--
-document.getElementById('news_item_title').focus();
-document.getElementById('news_item_title').select();
-//-->
-</script>
+<%= render :partial => 'form' %>

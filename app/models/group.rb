@@ -5,6 +5,7 @@ class Group < ActiveRecord::Base
   has_and_belongs_to_many :members, :conditions => 'left_on IS NULL OR left_on > DATE(CURRENT_TIMESTAMP)'
   has_many :group_schedules
   has_many :ranks, :order => :position
+  has_many :graduations, :order => :held_on
 
   validates_presence_of :from_age, :martial_art, :name, :to_age
 

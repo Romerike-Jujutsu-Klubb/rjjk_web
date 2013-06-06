@@ -107,12 +107,12 @@ class Member < ActiveRecord::Base
     [years > 0 ? "#{years} år" : nil, years == 0 || months > 0 ? "#{months} mnd" : nil].compact.join(' ')
   end
 
-  def next_rank(graduation = Graduation.new(:held_on => Date.today, :martial_art => MartialArt.find_by_name('Kei Wa Ryu')))
+  def next_rank(graduation = Graduation.new(:held_on => Date.today))
     age = self.age(graduation.held_on)
-    ma = graduation.martial_art
+    ma = graduation.group.try(:martial_art) || MartialArt.find_by_name('Kei Wa Ryu')
     current_rank = current_rank(ma, graduation.held_on)
     if current_rank
-      next_rank = ma.ranks.select { |r| !future_ranks(graduation).include?(r) && r.position > current_rank.position &&
+      next_rank = ma.ranks.select { |r| !future_ranks(graduation.held_on, ma).include?(r) && r.position > current_rank.position &&
           age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age) }.first
       next_rank ||= Rank.first(:conditions => ['martial_art_id = ? AND position = ?', ma, current_rank.position + 1])
     end
@@ -121,12 +121,12 @@ class Member < ActiveRecord::Base
     next_rank
   end
 
-  def future_graduates(graduation)
-    graduates.select { |g| g.passed? && g.graduation.martial_art_id == graduation.martial_art.id && g.graduation.held_on > graduation.held_on }
+  def future_graduates(after, martial_art_id)
+    graduates.select { |g| g.passed? && g.graduation.group.martial_art_id == martial_art_id && g.graduation.held_on > after }
   end
 
-  def future_ranks(graduation)
-    future_graduates(graduation).map(&:rank)
+  def future_ranks(after, martial_art_id)
+    future_graduates(after, martial_art_id).map(&:rank)
   end
 
   def fee

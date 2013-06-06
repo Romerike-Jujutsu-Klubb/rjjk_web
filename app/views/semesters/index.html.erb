@@ -1,0 +1,60 @@
+<h1>Semesteret</h1>
+
+<% if @semester %>
+    <div class="field" style="float: left; margin-right: 1em">
+      <%= label :start_on, 'Fra' %>
+      <%= @semester.start_on %>
+    </div>
+
+    <div class="field">
+      <%= label :end_on, 'Til' %>
+      <%= @semester.end_on %>
+    </div>
+
+    <h2>Graderinger</h2>
+
+    <% if @semester.graduations.any? %>
+        <table>
+          <% @semester.graduations.each do |g| %>
+              <tr>
+                <td><%= link_to g.held_on, edit_graduation_path(g) %></td>
+                <td><%= g.group.name %></td>
+              </tr>
+          <% end %>
+        </table>
+    <% else %>
+        Det er ikke satt opp noen graderinger for dette semesteret.
+    <% end %>
+<% else %>
+    Det er ikke registrert noe semester!
+<% end %>
+
+<% if admin? %>
+
+    <h2>Alle semestre</h2>
+
+    <table>
+      <tr>
+        <th align="left">Fra</th>
+        <th align="left">Til</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+
+      <% @semesters.each do |semester| %>
+          <tr>
+            <td><%= semester.start_on %></td>
+            <td><%= semester.end_on %></td>
+            <td><%= link_to 'Show', semester %></td>
+            <td><%= link_to 'Edit', edit_semester_path(semester) %></td>
+            <td><%= link_to 'Destroy', semester, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+          </tr>
+      <% end %>
+    </table>
+
+    <br/>
+
+    <%= link_to 'Nytt semester', new_semester_path %>
+    | <%= link_to 'Rediger', edit_semester_path(@semester) if @semester %>
+<% end %>

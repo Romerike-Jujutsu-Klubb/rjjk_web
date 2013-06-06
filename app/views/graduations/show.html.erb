@@ -1,8 +1,8 @@
 <% for column in Graduation.content_columns %>
 <p>
-  <b><%= column.human_name %>:</b> <%=h @graduation.send(column.name) %>
+  <strong><%= column.human_name %>:</strong> <%=h @graduation.send(column.name) %>
 </p>
 <% end %>
 
-<%= link_to 'Edit', :action => 'edit', :id => @graduation %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= link_to 'Edit', :action => :edit, :id => @graduation %> |
+<%= link_to 'Back', :action => :index %>

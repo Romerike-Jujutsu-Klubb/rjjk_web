@@ -50,7 +50,7 @@ class GraduationsControllerTest < ActionController::TestCase
   def test_create
     num_graduations = Graduation.count
 
-    post :create, :graduation => {:held_on => '2007-10-07', :martial_art_id => martial_arts(:keiwaryu).id}
+    post :create, :graduation => {:held_on => '2007-10-07', :group_id => groups(:panda).id}
 
     assert_no_errors :graduation
     assert_response :redirect

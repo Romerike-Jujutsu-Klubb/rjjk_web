@@ -7,7 +7,10 @@ unless Rails.env == 'test'
   scheduler.every('1h', :first_in => '30s') { send_event_messages }
   scheduler.cron('0 7-23 * * *') { import_nkf_changes }
   scheduler.cron('0 0 * * *') { notify_wrong_contracts }
-  scheduler.cron('0 8 1 * *') { notify_missing_instructors }
+  scheduler.cron('0 4 * * *') { notify_missing_semesters }
+  scheduler.cron('0 5 1 * *') { notify_missing_instructors }
+  scheduler.cron('0 6 * * *') { notify_missing_graduations }
+  scheduler.cron('0 7 1 * *') { notify_overdue_graduates }
 end
 
 private
@@ -118,6 +121,46 @@ def notify_missing_instructors
   begin
     groups = Group.active(Date.today).all
     group_schedules = groups.map(&:group_schedules).flatten
+    missing_schedules = group_schedules.select{|gs| gs.group_instructors.select(&:active?).empty?}
+    InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
+  rescue
+    logger.error "Exception sending instruction message: #{$!}"
+    logger.error $!.backtrace
+  end
+end
+
+def notify_missing_semesters
+  begin
+    unless Semester.where('CURRENT_DATE BETWEEN start_on AND end_on').exists?
+      SemesterMailer.missing_current_semester.deliver
+      return
+    end
+    unless Semester.where('? BETWEEN start_on AND end_on', Date.today + 6.months).exists?
+      SemesterMailer.missing_next_semester.deliver
+    end
+  rescue
+    logger.error "Exception sending semester message: #{$!}"
+    logger.error $!.backtrace
+  end
+end
+
+def notify_missing_graduations
+  begin
+    today = Date.today
+    groups = Group.active(today).all
+    #planned_graduations = Graduation.where('held_on >= ?').all.map(&:)
+    missing_schedules = group_schedules.select{|gs| gs.group_instructors.select(&:active?).empty?}
+    InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
+  rescue
+    logger.error "Exception sending instruction message: #{$!}"
+    logger.error $!.backtrace
+  end
+end
+
+def notify_overdue_graduates
+  begin
+    overdue_graduates = Member.active(today).all
+    #planned_graduations = Graduation.where('held_on >= ?').all.map(&:)
     missing_schedules = group_schedules.select{|gs| gs.group_instructors.select(&:active?).empty?}
     InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
   rescue

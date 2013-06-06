@@ -14,23 +14,19 @@
 
     <div class="field" style="float: left; margin-right: 1em">
       <%= f.label :group_schedule_id, 'Gruppe' %>
-      <br/>
       <%= f.select :group_schedule_id, [[]] + @group_schedules.map { |gs| ["#{gs.group.name} #{gs.weekday_name}", gs.id] } %>
     </div>
     <div class="field">
       <%= f.label :member_id, 'Instruktør' %>
-      <br/>
       <%= f.select :member_id, [[]] + @group_instructors.map { |g| [g.name, g.id] } %>
     </div>
     <div class="field" style="float: left; margin-right: 1em">
       <%= f.label :from, 'Fra' %>
-      <br/>
       <%= f.datepicker :from, :value => @group_instructor.from && @group_instructor.from.strftime('%Y-%m-%d'),
                             :dateFormat => 'yy-mm-dd', :firstDay => 1, :size => 18 %>
     </div>
     <div class="field">
       <%= f.label :from, 'Til (valgfri)' %>
-      <br/>
       <%= f.datepicker :to, :value => @group_instructor.to && @group_instructor.to.strftime('%Y-%m-%d'),
                             :dateFormat => 'yy-mm-dd', :firstDay => 1, :size => 18 %>
     </div>

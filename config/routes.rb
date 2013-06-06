@@ -21,16 +21,19 @@ RjjkWeb::Application.routes.draw do
   resources :event_invitees
   resources :event_messages
   resources :events
+  resources :graduations
   resources :group_instructors
   resources :group_schedules
   resources :groups
   resources :images
   resources :martial_arts
+  resources :news_items, :controller => 'news'
   resources :nkf_members
   resources :nkf_member_trials
+  resources :semesters
   resources :trial_attendances
 
-  root :to => "welcome#index"
+  root :to => 'welcome#index'
   match 'info/:id', :controller => :info, :action => :show
   match ':controller/service.wsdl', :action => 'wsdl'
   match 'documents/*path_info', :controller => 'documents', :action => 'webdav'
