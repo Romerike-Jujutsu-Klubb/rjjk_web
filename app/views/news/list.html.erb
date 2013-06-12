@@ -77,7 +77,7 @@
 				<%= " - #{event.end_at.strftime('%Y-%m-%d')}" if event.end_at %>
 				<%= link_to 'Redigèr', :controller => :events, :action => :edit, :id => event.id if admin? %>
 				<div class="contentarea">
-					<p><%= event.description.html_safe %></p>
+					<p><%= event.description.try(:html_safe) %></p>
 				</div>
 			</div>
 <% end %>

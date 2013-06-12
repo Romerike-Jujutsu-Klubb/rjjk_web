@@ -5,6 +5,7 @@ class Event < ActiveRecord::Base
   has_many :users, :through => :event_invitees
   has_and_belongs_to_many :groups
   has_one :invitation, :class_name => 'EventMessage'
+  has_one :graduation # optional
 
   before_validation do |r|
     if r.invitees.nil? || r.invitees.blank?

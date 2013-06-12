@@ -1,6 +1,8 @@
 one:
   held_on: '2007-10-08'
   group: panda
+  event: graduation_one
 two:
   held_on: '2007-10-09'
   group: tiger
+  event: graduation_two

@@ -1,3 +1,12 @@
 one:
   name: THE EVENT
-  start_at: 2012-02-18
+  start_at: 2012-02-18 13:37
+
+graduation_one:
+  name: Graduation Panda
+  start_at: 2007-10-08 17:45
+
+graduation_two:
+  name: Graduation Tiger
+  start_at: 2007-10-09 17:45
+

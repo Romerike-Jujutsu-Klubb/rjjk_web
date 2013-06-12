@@ -33,6 +33,7 @@ class EventsControllerTest < ActionController::TestCase
   def test_should_get_edit
     get :edit, :id => events(:one).id
     assert_response :success
+    assert_select '#event_start_at[value=?]', '2012-02-18 13:37'
   end
 
   def test_should_update_event
@@ -44,7 +45,6 @@ class EventsControllerTest < ActionController::TestCase
     assert_difference('Event.count', -1) do
       delete :destroy, :id => events(:one).id
     end
-
     assert_redirected_to events_path
   end
 end

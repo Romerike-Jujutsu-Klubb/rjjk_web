@@ -25,9 +25,9 @@ class ApplicationController < ActionController::Base
     image_query = image_query.where('public = ?', true) unless user?
     @image = image_query.first
     @new_image = Image.new
-    @events = Event.all(:conditions => ['(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)', Date.today, Date.today], :limit => 5)
-    @events += Graduation.where('held_on >= CURRENT_DATE')
-    @events.sort_by!{|e| [e.start_at, e.end_at]}
+    @events = Event.
+        where('(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)', Date.today, Date.today).
+        order('start_at, end_at').limit(5).all
     @groups = Group.active(Date.today).order(:name).includes(:group_schedules).all
   end
 

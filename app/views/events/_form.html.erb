@@ -13,20 +13,20 @@
   <div class="tab-pane active" id="description">
 
         <p style="float: left; margin-right: 1em; padding-bottom: 0">
-          <%= f.label :name, 'Navn' %>
+          <%= f.label :name, 'Hendelse' %>
           <%= f.text_field :name, :size => 52 %>
         </p>
 
         <p style="float: left; margin-right: 1em; padding-bottom: 0">
           <%= f.label :start_at, 'Fra' %>
-          <%= f.datetime_picker :start_at, :value => @event.start_at && @event.start_at.strftime('%Y-%m-%d %H:%M'),
-                                :dateFormat => 'yy-mm-dd', :timeFormat => 'hh:mm', :firstDay => 1, :size => 18 %>
+          <%= f.datetime_picker :start_at, :value => @event.start_at.try(:strftime, '%Y-%m-%d %H:%M'),
+                                :dateFormat => 'yy-mm-dd', :timeFormat => 'hh:mm', :firstDay => 1 %>
         </p>
 
         <p style="float: left; margin-right: 1em; padding-bottom: 0">
           <%= f.label :end_at, 'Til (valgfritt)' %>
-          <%= f.datetime_picker :end_at, :value => @event.end_at && @event.end_at.strftime('%Y-%m-%d %H:%M'),
-                                :dateFormat => 'yy-mm-dd', :timeFormat => 'hh:mm', :firstDay => 1, :size => 18 %>
+          <%= f.datetime_picker :end_at, :value => @event.end_at.try(:strftime, '%Y-%m-%d %H:%M'),
+                                :dateFormat => 'yy-mm-dd', :timeFormat => 'hh:mm', :firstDay => 1 %>
         </p>
 
         <p>

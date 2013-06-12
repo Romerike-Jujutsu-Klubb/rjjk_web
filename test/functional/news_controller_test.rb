@@ -69,6 +69,9 @@ class NewsControllerTest < ActionController::TestCase
 
     assert_not_nil assigns(:news_item)
     assert assigns(:news_item).valid?
+
+    assert_select '#news_item_publish_at[value=?]', '2007-07-12 13:37'
+    assert_select '#news_item_expire_at[value=?]', '9999-12-31 23:59'
   end
 
   def test_update

@@ -10,7 +10,7 @@ class GraduationsController < ApplicationController
     lines = String.new()
     @imported.each { |k, v|
       v.each { |x, y|
-        lines << k.to_s << " " << x << " " << y << "<br>"
+        lines << k.to_s << ' ' << x << ' ' << y << '<br>'
       }
     }
     render :text => lines
@@ -22,7 +22,7 @@ class GraduationsController < ApplicationController
       return
     end
     @graduation   = Graduation.find(params[:id])
-    @graduations  = Graduation.includes(:group).all(:order => 'held_on DESC', :conditions => ["groups.martial_art_id = 1"])
+    @graduations  = Graduation.includes(:group).all(:order => 'held_on DESC', :conditions => ['groups.martial_art_id = 1'])
     @martial_arts = MartialArt.all
 
     @grad_pages, @grad = Hash.new()
@@ -40,6 +40,10 @@ class GraduationsController < ApplicationController
 
   def create
     @graduation = Graduation.new(params[:graduation])
+    @graduation.build_event(
+        :name => @graduation.default_name,
+        :start_at => @graduation.default_start_at,
+        :end_at => @graduation.default_end_at) unless @graduation.event
     if @graduation.save
       flash[:notice] = 'Graduation was successfully created.'
       redirect_to :action => :index
@@ -97,7 +101,7 @@ class GraduationsController < ApplicationController
       text "Gradering #{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}",
            :size => 18, :align => :center
       move_down 16
-      data = graduation.graduates.sort_by { |g| [-g.rank.position, g.member.name] }.map.with_index do |graduate, i|
+      data = graduation.graduates.sort_by { |g| [-g.rank.position, g.member.name] }.map do |graduate|
         member_current_rank = graduate.member.current_rank(graduate.graduation.martial_art, graduate.graduation.held_on)
         [
             "<font size='18'>" + graduate.member.first_name + '</font> ' + graduate.member.last_name + (graduate.member.birthdate && " (#{graduate.member.age} år)" || '') + "\n" +
@@ -112,7 +116,7 @@ class GraduationsController < ApplicationController
       start_new_page
     end
 
-    send_data pdf.render, :type => "text/pdf", :filename => filename, :disposition => 'attachment'
+    send_data pdf.render, :type => 'text/pdf', :filename => filename, :disposition => 'attachment'
   end
 
   private
@@ -123,7 +127,7 @@ class GraduationsController < ApplicationController
 
     @censors    = Censor.includes(:member).where(:graduation_id => @graduation.id).all
 
-    @graduates  = Graduate.where("graduates.graduation_id = ? AND graduates.member_id != 0", params[:id]).
+    @graduates  = Graduate.where('graduates.graduation_id = ? AND graduates.member_id != 0', params[:id]).
         #includes({:graduation => :martial_art}, {:member => [{:attendances => :group_schedule}, {:graduates => [:graduation, :rank]}]}, {:rank => :group}).
         includes({:graduation => {:group => :martial_art}}, :member, {:rank => :group}).
         #order('ranks_graduates.position DESC, members.first_name, members.last_name').all
