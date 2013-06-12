@@ -22,13 +22,11 @@
     </div>
     <div class="field" style="float: left; margin-right: 1em">
       <%= f.label :from, 'Fra' %>
-      <%= f.datepicker :from, :value => @group_instructor.from && @group_instructor.from.strftime('%Y-%m-%d'),
-                            :dateFormat => 'yy-mm-dd', :firstDay => 1, :size => 18 %>
+      <%= f.datepicker :from, :dateFormat => 'yy-mm-dd', :firstDay => 1 %>
     </div>
     <div class="field">
       <%= f.label :from, 'Til (valgfri)' %>
-      <%= f.datepicker :to, :value => @group_instructor.to && @group_instructor.to.strftime('%Y-%m-%d'),
-                            :dateFormat => 'yy-mm-dd', :firstDay => 1, :size => 18 %>
+      <%= f.datepicker :to, :dateFormat => 'yy-mm-dd', :firstDay => 1 %>
     </div>
     <div class="actions">
       <%= f.submit 'Lagre' %>

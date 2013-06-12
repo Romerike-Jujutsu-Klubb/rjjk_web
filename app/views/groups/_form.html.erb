@@ -4,19 +4,20 @@
     <p>
       <%= f.label :name %>
       <%= f.text_field :name %>
+
       <%= f.label :martial_art_id, 'Gren' %>
       <%= f.select :martial_art_id, @martial_arts.map { |ma| [ma.name, ma.id] } %>
-    </p>
-    <p>
+
       <%= f.label :from_age, 'Fra alder' %>
       <%= f.text_field :from_age, :size => 8 %>
+
       <%= f.label :to_age, 'Til alder' %>
       <%= f.text_field :to_age, :size => 8 %>
-    </p>
-    <p>
+
       <%= f.label :closed_on, 'Avsluttet' %>
-      <%= f.date_select :closed_on, :include_blank => true %>
+      <%= f.datepicker :closed_on, :dateFormat => 'yy-mm-dd', :firstDay => 1 %>
     </p>
+
     <p>
       <%= f.submit "Lagre" %>
       <%= link_to 'Tilbake', groups_path %>
