@@ -1,8 +1,5 @@
 # encoding: UTF-8
 class AttendanceHistoryGraph
-  def initialize()
-  end
-
   def logger
     Rails.logger
   end
@@ -10,17 +7,17 @@ class AttendanceHistoryGraph
   def history_graph(size = 480)
     begin
       require 'gruff'
-    rescue MissingSourceFile => e
-      return File.read("public/images/rails.png")
+    rescue MissingSourceFile
+      return File.read('public/images/rails.png')
     end
     
     g = Gruff::Line.new(size)
     g.theme_37signals
-    g.title = "Oppmøte"
+    g.title = 'Oppmøte'
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     #g.legend_font_size = 14
     g.hide_dots = true
-    g.colors = %w{blue orange black}
+    g.colors = %w{blue orange black green}
     
     #first_date = find(:first, :order => 'joined_on').joined_on
     #first_date = 5.years.ago.to_date
@@ -30,7 +27,7 @@ class AttendanceHistoryGraph
     weeks.reverse!
     totals = Array.new(weeks.size - 1, nil)
     totals_sessions = Array.new(weeks.size - 1, 0)
-    Group.all(:order => 'martial_art_id, from_age DESC').each do |group|
+    Group.all(:order => 'martial_art_id, from_age DESC, to_age').each do |group|
       attendances = weeks.each_cons(2).map do |w1, w2|
         Attendance.by_group_id(group.id).all(:conditions => ['(year > ? OR (year = ? AND week > ?)) AND (year < ? OR (year = ? AND week <= ?))', w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]]) +
         TrialAttendance.by_group_id(group.id).all(:conditions => ['(year > ? OR (year = ? AND week > ?)) AND (year < ? OR (year = ? AND week <= ?))', w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]])
