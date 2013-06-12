@@ -18,7 +18,7 @@ AND (year < ? OR (year = ? AND week <= ?))) >= ?
 
 AND (joined_on IS NULL OR joined_on <= ?) AND (left_on IS NULL OR left_on > ?)'
 
-  def self.history_graph(options)
+  def self.history_graph(options = {})
     size = options[:size] || 480
     interval = options[:interval] || 8.weeks
     step = options[:step] || 1.weeks
@@ -87,7 +87,7 @@ AND (joined_on IS NULL OR joined_on <= ?) AND (left_on IS NULL OR left_on > ?)'
               [ACTIVE_CLAUSE, prev_date.cwyear, prev_date.cwyear, prev_date.cweek, date.cwyear, date.cwyear, date.cweek,
                next_date, date.cwyear, date.cwyear, date.cweek, next_date.cwyear, next_date.cwyear, next_date.cweek,
                date, date],
-          :include => {:graduates => [{:graduation => :martial_art}, :rank]}
+          :include => {:graduates => [{:graduation => {:group => :martial_art}}, :rank]}
       )
       ranks = active_members.select { |m| m.graduates.select { |g| g.graduation.martial_art.name =='Kei Wa Ryu' && g.graduation.held_on <= date }.sort_by { |g| g.graduation.held_on }.last.try(:rank) == rank }.size
       logger.debug "#{prev_date} #{date} #{next_date} Active members: #{active_members.size}, ranks: #{ranks}"

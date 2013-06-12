@@ -9,3 +9,9 @@ tiger:
   martial_art: keiwaryu
   from_age: 10
   to_age: 14
+
+voksne:
+  name: Voksne
+  martial_art: keiwaryu
+  from_age: 14
+  to_age: 99
