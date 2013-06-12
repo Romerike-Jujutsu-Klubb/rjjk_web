@@ -24,7 +24,7 @@ class InfoController < ApplicationController
   def show
     @information_page ||= InformationPage.find_by_title(params[:id])
     @information_page ||= InformationPage.find_by_id(params[:id].to_i)
-    raise "Unknown page" unless @information_page
+    raise ActiveRecord::RecordNotFound unless @information_page
   end
 
   def move_down
