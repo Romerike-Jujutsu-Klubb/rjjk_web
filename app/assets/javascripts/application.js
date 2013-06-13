@@ -15,8 +15,7 @@
 //= require jquery.ui.datepicker
 //= require jquery.ui.slider
 //= require jquery-ui-timepicker-addon
-//= require_tree .
-//= require tinymce/tiny_mce
+//= require tinymce-jquery
 //= require gmaps4rails/gmaps4rails.base
 //= require gmaps4rails/gmaps4rails.googlemaps
 //= require bootstrap

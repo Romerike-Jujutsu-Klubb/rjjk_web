@@ -184,7 +184,7 @@ GEM
       trinidad_jars (>= 1.1.0)
     trinidad_daemon_extension (0.4.0)
       trinidad (>= 1.3.5)
-    trinidad_jars (1.2.3)
+    trinidad_jars (1.2.4)
     ttfunk (1.0.3)
     tzinfo (0.3.37)
     uglifier (2.1.1)
