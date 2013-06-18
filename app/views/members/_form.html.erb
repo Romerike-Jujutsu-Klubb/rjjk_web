@@ -60,18 +60,20 @@ input.half {width: 7.5em;}
 
 		</td>
 		<td valign="top">
-<label for="member_joined_on">Innmeldingsdato</label>
-<%= date_select 'member', 'joined_on', :start_year=>1982 %>
+            <%= label :member, :joined_on, 'Innmeldingsdato' %>
+            <%= datepicker :member, :joined_on, :dateFormat => 'yy-mm-dd', :firstDay => 1 %>
 
 <label for="member_contract_id">Medlemsnummer</label>
 <%= text_field 'member', 'contract_id', :class => :half %>
 
+          <p>
   <label for="member_nkf_member_id">NKF medlemsnummer</label>
   <span style="background-color: white; border: 1px solid #d3d3d3;"><%=@member.nkf_member.try(:medlemsnummer) %></span>
+          </p>
 
-<label for="member_left_on">Utmeldt dato</label>
-<%=text_field :member, :left_on, :value => @member.left_on && @member.left_on.strftime('%Y-%m-%d'), :size => 10 %>
-<a href="#" onclick="cal.select(document.forms[0].member_left_on,'anchor1','yyyy-MM-dd'); return false;" name="anchor1" id="anchor1">Velg</a>
+          <%= label :member, :left_on, 'Utmeldingsdato' %>
+          <%= datepicker :member, :left_on, :dateFormat => 'yy-mm-dd', :firstDay => 1 %>
+
 
 <label for="member_parent_name">Foresattes navn</label>
 <%= text_field 'member', 'parent_name', :class => :full %>
@@ -101,6 +103,7 @@ input.half {width: 7.5em;}
 		<td valign="top">
 <p>
 <% @groups.each do |g| %>
+  <% next unless g.active? || @member.groups.include?(g) %>
   <% attendances_since_graduation = @member.attendances_since_graduation(Date.today, g).size -%>
   <label for="member_group_ids_<%=g.id%>" <%='style="font-weight: bold"' if g.contains_age(@member.age)%> >
     <%=check_box_tag "member_group_ids[#{g.id}]", g.id, @member.groups.include?(g) %>
