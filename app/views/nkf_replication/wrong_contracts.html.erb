@@ -7,7 +7,7 @@
   </tr>
   <% @wrong_contracts.each do |nkfm| %>
       <tr>
-        <td><%=link_to nkfm.member.name, :controller => :members, :action => :edit, :id => nkfm.member_id %></td>
+        <td><%=link_to nkfm.member.name, :only_path => false, :controller => :members, :action => :edit, :id => nkfm.member_id %></td>
         <td><%= nkfm.member.age %></td>
         <td><%= nkfm.kont_sats %></td>
       </tr>
