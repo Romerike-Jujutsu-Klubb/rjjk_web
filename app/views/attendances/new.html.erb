@@ -3,7 +3,17 @@
 <%= form_for(@attendance) do |f| %>
     <%= f.error_messages %>
 
+    <p style="float: left; margin-right: 2em">
+      <%= f.label :member_id, 'Medlem' %>
+      <%= f.select :member_id, [nil] + @members.map(&:name) %>
+    </p>
+
     <p>
+      <%= f.label :group_schedule_id, 'Trening' %>
+      <%= f.select :group_schedule_id, [nil] + @group_schedules.map{|gs| ["#{gs.group.name} #{gs.weekday_name}", gs.id]} %>
+    </p>
+
+    <p style="float: left; margin-right: 2em">
       <%= f.label :year, 'År' %>
       <%= f.text_field :year %>
     </p>
@@ -11,11 +21,6 @@
     <p>
       <%= f.label :week, 'Uke' %>
       <%= f.select :week, (1..52) %>
-    </p>
-
-    <p>
-      <%= f.label :group_schedule_id, 'Trening' %>
-      <%= f.select :group_schedule_id, @group_schedules.map{|gs| ["#{gs.group.name} #{gs.weekday_name}", gs.id]} %>
     </p>
 
     <p>

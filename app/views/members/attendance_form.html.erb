@@ -16,12 +16,14 @@
     <% end %>
 
     <tr class="<%= cycle('odd', 'even') %>">
-      <td colspan="3"><%=link_to ('&nbsp;' * 20).html_safe, {:controller => :attendances, :action => :new, :attendance => {:year => @dates.first.cwyear, :week => @dates.first.cweek}}, :style => 'text-decoration: none'%></td>
+      <td colspan="3">&nbsp;</td>
       <% if @birthdate_missing %>
           <td>&nbsp;</td>
       <% end %>
       <% @dates.each do |d| %>
-          <td>&nbsp;</td>
+          <td onclick="window.location = '<%=url_for :controller => :attendances, :action => :new,
+                  :attendance => {:group_schedule_id => @group.group_schedules.find{|gs| gs.weekday == d.cwday}.id, :year => d.cwyear, :week => d.cweek}
+          %>';return false">&nbsp;</td>
       <% end %>
       <td>&nbsp;</td>
     </tr>

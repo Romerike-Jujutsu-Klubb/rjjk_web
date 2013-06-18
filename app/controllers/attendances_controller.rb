@@ -6,8 +6,6 @@ class AttendancesController < ApplicationController
   cache_sweeper :attendance_image_sweeper, :only => [:create, :update, :destroy]
   cache_sweeper :grade_history_image_sweeper, :only => [:create, :update, :destroy]
 
-  # GET /attendances
-  # GET /attendances.xml
   def index
     @attendances = Attendance.all
     
@@ -24,8 +22,6 @@ class AttendancesController < ApplicationController
     @attendances = @member.attendances_since_graduation(@date)
   end
 
-  # GET /attendances/1
-  # GET /attendances/1.xml
   def show
     @attendance = Attendance.find(params[:id])
     
@@ -35,25 +31,22 @@ class AttendancesController < ApplicationController
     end
   end
   
-  # GET /attendances/new
-  # GET /attendances/new.xml
   def new
     @attendance ||= Attendance.new params[:attendance]
-    @group_schedules = GroupSchedule.all
+    group_id = params[:group]
+    @members = Member.order(:first_name, :last_name).all
+    @group_schedules = GroupSchedule.where(group_id ? {:group_id => group_id} : {}).all
     
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render :action => 'new' }
       format.xml  { render :xml => @attendance }
     end
   end
   
-  # GET /attendances/1/edit
   def edit
     @attendance = Attendance.find(params[:id])
   end
   
-  # POST /attendances
-  # POST /attendances.xml
   def create
     @attendance = Attendance.new(params[:attendance])
     
@@ -70,14 +63,12 @@ class AttendancesController < ApplicationController
           format.xml  { render :xml => @attendance, :status => :created, :location => @attendance }
         end
       else
-        format.html { render :action => "new" }
+        format.html { new }
         format.xml  { render :xml => @attendance.errors, :status => :unprocessable_entity }
       end
     end
   end
   
-  # PUT /attendances/1
-  # PUT /attendances/1.xml
   def update
     @attendance = Attendance.find(params[:id])
     
@@ -87,14 +78,12 @@ class AttendancesController < ApplicationController
         format.html { redirect_to(@attendance) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => 'edit' }
         format.xml  { render :xml => @attendance.errors, :status => :unprocessable_entity }
       end
     end
   end
   
-  # DELETE /attendances/1
-  # DELETE /attendances/1.xml
   def destroy
     @attendance = Attendance.find(params[:id])
     @attendance.destroy
@@ -118,7 +107,7 @@ class AttendancesController < ApplicationController
     else
       g = AttendanceHistoryGraph.new.history_graph
     end
-    send_data(g, :disposition => 'inline', :type => 'image/png', :filename => "RJJK_Oppmøtehistorikk.png")
+    send_data(g, :disposition => 'inline', :type => 'image/png', :filename => 'RJJK_Oppmøtehistorikk.png')
   end
   
 end
