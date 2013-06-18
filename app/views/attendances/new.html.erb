@@ -29,3 +29,7 @@
 <% end %>
 
 <%= link_to 'Back', attendances_path %>
+
+<%=javascript_tag do %>
+    $('#attendance_member_id').focus();
+<% end %>
