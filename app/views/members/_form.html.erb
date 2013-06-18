@@ -52,7 +52,7 @@ input.half {width: 7.5em;}
 <%= text_field 'member', 'phone_work', :class => :half %>
 
 <label for="member_birthdate">Fødselsdato (format yyyy-mm-dd)</label>
-<%=text_field 'member', 'birthdate', :class => :half %>
+          <%= datepicker :member, :birthdate, :dateFormat => 'yy-mm-dd', :firstDay => 1, :class => :half %>
 <%="#{((Date.today - @member.birthdate.to_date) / 365).to_i} år" if @member.birthdate %>
 
 <label for="member_male">Kjønn</label>
