@@ -16,7 +16,7 @@
     <% if member.left_on && member.left_on < (@dates[0] + 2.months) %>
         Utmeldt fra <%= member.left_on %>
     <% elsif @group %>
-        <%= h member.current_rank(@group.martial_art, @dates.last).try(:colour) %>
+        <%= h member.current_rank(@group.martial_art, @dates.first).try(:colour) %>
     <% else %>
         &nbsp;
     <% end %>

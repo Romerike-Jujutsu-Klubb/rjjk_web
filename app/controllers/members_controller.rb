@@ -120,7 +120,7 @@ class MembersController < ApplicationController
         @trials = NkfMemberTrial.all(:conditions => ['alder BETWEEN ? AND ?', @group.from_age, @group.to_age], :order => 'fornavn, etternavn')
 
         @instructors.sort_by! { |m| [m.current_rank(@group.martial_art, last_date) ? -m.current_rank(@group.martial_art, last_date).position : 99, m.first_name, m.last_name] }
-        @members.sort_by! { |m| [m.current_rank(@group.martial_art, last_date) ? -m.current_rank(@group.martial_art, last_date).position : 99, m.first_name, m.last_name] }
+        @members.sort_by! { |m| [m.current_rank(@group.martial_art, first_date) ? -m.current_rank(@group.martial_art, first_date).position : 99, m.first_name, m.last_name] }
       end
     else
       @instructors = []
