@@ -96,11 +96,11 @@ class MembersController < ApplicationController
     if params[:date]
       @date = Date.parse(params[:date])
     end
+    @date ||= Date.today
 
     first_date = Date.new(@date.year, @date.month, 1)
     last_date = Date.new(@date.year, @date.month, -1)
 
-    @date ||= Date.today
     if params[:group_id]
       if params[:group_id] == 'others'
         @instructors = []
@@ -108,6 +108,7 @@ class MembersController < ApplicationController
         @trials = []
         weekdays = [2, 4]
         @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
+        current_members = []
       else
         @group = Group.find(params[:group_id])
         weekdays = @group.group_schedules.map { |gs| gs.weekday }
@@ -132,6 +133,9 @@ class MembersController < ApplicationController
       @instructors = []
       @members = []
       @trials = []
+      current_members = []
+      weekdays = [2, 4]
+      @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
     end
 
     @instructors -= current_members

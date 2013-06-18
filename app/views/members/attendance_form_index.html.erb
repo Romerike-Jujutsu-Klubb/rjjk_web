@@ -1,25 +1,15 @@
 <h1>Oppmøtelister</h1>
 
-<table>
+<% start_date = Date.parse('2009-08-01')
+   months = (Date.today.year - start_date.year) * 12 + Date.today.mon - start_date.mon + 1
+%>
+
 <% for group in @groups %>
-    <tr>
-    	<td>
-    	<%="#{h group.martial_art.name} #{h group.name}"%>
-		</td>
-		<td>
-			<form method="GET">
-				<% start_date = Date.parse('2009-08-01')
-				   months = (Date.today.year - start_date.year) * 12 + Date.today.mon - start_date.mon + 1
-				%>
-				<% options = (0..months).map{|i| ["#{t Date::MONTHNAMES[1 + (7 + i) % 12]} #{2009 + (8 + i) / 12}", url_for(:action => :attendance_form, :group_id => group.id, :date => (start_date + i.months).strftime('%Y-%m-01'))]}.reverse %>
-    			<%=select :group_name, :month, [[nil, nil]] + options, {}, :onchange => "document.location = options[selectedIndex].value" %>
-			</form>
-		</td>
-    </tr>
+    <form>
+      <label><%=group.name%></label>
+      <% options = (0..months).map { |i| ["#{t Date::MONTHNAMES[1 + (7 + i) % 12]} #{2009 + (8 + i) / 12}", url_for(:action => :attendance_form, :group_id => group.id, :date => (start_date + i.months).strftime('%Y-%m-01'))] }.reverse %>
+      <%= select :group_name, :month, [[nil, nil]] + options, {}, :onchange => 'document.location = options[selectedIndex].value' %>
+    </form>
 <% end %>
-    <tr>
-    	<td colspan="2">
-    	<%=link_to "Andre", :action => :attendance_form, :group_id => 'others' %>
-		</td>
-	</tr>
-</table>
+
+<%= link_to 'Andre', :action => :attendance_form, :group_id => 'others' %>
