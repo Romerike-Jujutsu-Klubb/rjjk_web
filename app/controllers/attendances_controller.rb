@@ -38,7 +38,8 @@ class AttendancesController < ApplicationController
   # GET /attendances/new
   # GET /attendances/new.xml
   def new
-    @attendance = Attendance.new
+    @attendance ||= Attendance.new params[:attendance]
+    @group_schedules = GroupSchedule.all
     
     respond_to do |format|
       format.html # new.html.erb

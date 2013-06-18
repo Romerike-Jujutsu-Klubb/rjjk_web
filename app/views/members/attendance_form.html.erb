@@ -11,9 +11,24 @@
 
 <% unless @instructors.empty? %>
     <% for member in @instructors %>
+        <% next if @group && member.attendances.select{|a| ((@dates.first - 92.days)..@dates.last).include?(a.date) && a.group_schedule.group_id == @group.id }.empty? %>
         <%= render :partial => 'attendance_row', :locals => {:member => member} %>
     <% end %>
+
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td colspan="3"><%=link_to ('&nbsp;' * 20).html_safe, {:controller => :attendances, :action => :new, :attendance => {:year => @dates.first.cwyear, :week => @dates.first.cweek}}, :style => 'text-decoration: none'%></td>
+      <% if @birthdate_missing %>
+          <td>&nbsp;</td>
+      <% end %>
+      <% @dates.each do |d| %>
+          <td>&nbsp;</td>
+      <% end %>
+      <td>&nbsp;</td>
+    </tr>
+    <% @blank_lines -= 2 %>
+
     <%= render :partial => 'attendance_form_footer' %>
+
     <tr style="border-left: hidden ; border-right: hidden">
       <td colspan="<%= 4 + @dates.size + (@birthdate_missing ? 1 : 0) %>">&nbsp;</td>
     </tr>
