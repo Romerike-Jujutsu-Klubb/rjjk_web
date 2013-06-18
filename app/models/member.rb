@@ -85,7 +85,7 @@ class Member < ActiveRecord::Base
       else
         ats = attendances.to_a
       end
-      ats.select!{ |a| a.group_schedule.group == g && a.date <= before_date }
+      ats.select! { |a| a.group_schedule.group == g && a.date <= before_date }
       ats
     end.flatten.sort_by(&:date).reverse
   end
@@ -112,11 +112,34 @@ class Member < ActiveRecord::Base
     ma = graduation.group.try(:martial_art) || MartialArt.find_by_name('Kei Wa Ryu')
     current_rank = current_rank(ma, graduation.held_on)
     if current_rank
-      next_rank = ma.ranks.select { |r| !future_ranks(graduation.held_on, ma).include?(r) && r.position > current_rank.position &&
-          age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age) }.first
+      next_rank = ma.ranks.find { |r|
+        !future_ranks(graduation.held_on, ma).include?(r) &&
+            r.position > current_rank.position &&
+            age >= r.minimum_age &&
+            (r.group.from_age..r.group.to_age).include?(age) &&
+            attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
+      }
+      next_rank ||= ma.ranks.find { |r|
+        !future_ranks(graduation.held_on, ma).include?(r) &&
+            r.position > current_rank.position &&
+            age >= r.minimum_age &&
+            age >= r.group.from_age &&
+            attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
+      }
       next_rank ||= Rank.first(:conditions => ['martial_art_id = ? AND position = ?', ma, current_rank.position + 1])
     end
-    next_rank ||= ma.ranks.select { |r| age.nil? || (age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age)) }.first
+    next_rank ||= ma.ranks.find { |r|
+      !future_ranks(graduation.held_on, ma).include?(r) &&
+          age >= r.minimum_age &&
+          (r.group.from_age..r.group.to_age).include?(age) &&
+          attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
+    }
+    next_rank ||= ma.ranks.find { |r|
+      !future_ranks(graduation.held_on, ma).include?(r) &&
+          age >= r.minimum_age &&
+          attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
+    }
+    next_rank ||= ma.ranks.find { |r| age.nil? || (age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age)) }
     next_rank ||= ma.ranks.first
     next_rank
   end

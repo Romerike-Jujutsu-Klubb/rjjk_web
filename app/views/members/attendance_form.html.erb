@@ -17,7 +17,6 @@
 
 <% unless @instructors.empty? %>
     <% for member in @instructors %>
-        <% next if @group && member.attendances.select{|a| ((@dates.first - 92.days)..@dates.last).include?(a.date) && a.group_schedule.group_id == @group.id }.empty? %>
         <%= render :partial => 'attendance_row', :locals => {:member => member} %>
     <% end %>
 

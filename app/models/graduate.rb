@@ -7,7 +7,8 @@ class Graduate < ActiveRecord::Base
   validates_uniqueness_of :member_id, :scope => [:passed, :rank_id], :if => :passed
 
   def training_start_date
-    member.current_graduate(graduation.group.martial_art, graduation.held_on - 1).try(:graduation).try(:held_on) || member.joined_on
+    member.current_graduate(graduation.group.martial_art, graduation.held_on - 1).try(:graduation).try(:held_on).try(:+, 1) ||
+        [member.joined_on, member.attendances.map(&:date).sort.first].compact.min
   end
 
   def training_duration

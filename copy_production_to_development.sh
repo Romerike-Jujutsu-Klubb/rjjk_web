@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -el
 
 DB_NAME=rjjk_web_development
 

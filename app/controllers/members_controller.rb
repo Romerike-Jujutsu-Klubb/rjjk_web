@@ -106,9 +106,15 @@ class MembersController < ApplicationController
         @instructors = []
         @members = Member.all(:conditions => ['id NOT in (SELECT DISTINCT member_id FROM groups_members) AND (left_on IS NULL OR left_on > ?)', @date])
         @trials = []
+        weekdays = [2, 4]
+        @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
       else
         @group = Group.find(params[:group_id])
+        weekdays = @group.group_schedules.map { |gs| gs.weekday }
+        @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
+
         @instructors = Member.active(@date).find_all_by_instructor(true).select { |m| m.groups.any? { |g| g.martial_art_id == @group.martial_art_id } }
+        @instructors.delete_if{|m| m.attendances.select{|a| ((@dates.first - 92.days)..@dates.last).include?(a.date) && a.group_schedule.group_id == @group.id }.empty?}
 
         current_members = @group.members.active(@date).includes({:graduates => :rank}, {:groups => :group_schedules}, :nkf_member)
         attended_members = Attendance.
@@ -127,9 +133,6 @@ class MembersController < ApplicationController
       @members = []
       @trials = []
     end
-
-    weekdays = @group && @group.group_schedules.map { |gs| gs.weekday } || [2, 4]
-    @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
 
     @instructors -= current_members
     @passive_members = @members.select { |m| m.nkf_member.medlemsstatus == 'P' || m.attendances.select { |a| (@group.nil? || a.group_schedule.group_id == @group.id) && a.date <= (@date + 31) && a.date > (@date - 92) }.empty? }
