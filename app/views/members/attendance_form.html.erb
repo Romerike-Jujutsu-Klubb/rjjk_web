@@ -113,7 +113,7 @@ Gradering er ..." %>
               <td>&nbsp;</td>
           <% end %>
       <% end %>
-      <td align="center"><%= member_trial_total if member_trial_total > 0 %></td>
+      <td align="center"><%=trial.trial_attendances.size if trial.trial_attendances.size > 0 %></td>
     </tr>
 <% end %>
 
