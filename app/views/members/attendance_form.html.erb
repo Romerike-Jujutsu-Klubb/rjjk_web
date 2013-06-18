@@ -1,3 +1,9 @@
+<style type="text/css">
+    tr:hover {
+        background-color: lightyellow;
+    }
+</style>
+
 <h1 style="font-family:Arial, Helvetica, sans-serif">
   Oppmøteliste <%= @group.try(:name) %>
   <%= l Date::MONTHNAMES[@date.mon] %> <%= @date.year %>
@@ -47,7 +53,7 @@
     <% @member_count += 1 %>
     <% missing_contract = (trial.reg_dato + 14) < Date.today %>
     <% @blank_lines -= missing_contract ? 3 : 2 %>
-    <tr class="<%= cycle('odd', 'even') %>" onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';">
+    <tr class="<%= cycle('odd', 'even') %>">
       <td>
         <%= "#{trial.fornavn} #{trial.etternavn}" %>
         <br/>
