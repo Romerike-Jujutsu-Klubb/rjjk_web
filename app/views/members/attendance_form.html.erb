@@ -27,8 +27,8 @@
           <td>&nbsp;</td>
       <% end %>
       <% @dates.each do |d| %>
-          <td onclick="window.location = '<%=url_for :controller => :attendances, :action => :new,
-                  :attendance => {:group_schedule_id => @group.group_schedules.find{|gs| gs.weekday == d.cwday}.id, :year => d.cwyear, :week => d.cweek}
+          <td onclick="window.location = '<%=url_for with_detour(:controller => :attendances, :action => :new,
+                  :attendance => {:group_schedule_id => @group.group_schedules.find{|gs| gs.weekday == d.cwday}.id, :year => d.cwyear, :week => d.cweek})
           %>';return false">&nbsp;</td>
       <% end %>
       <td>&nbsp;</td>

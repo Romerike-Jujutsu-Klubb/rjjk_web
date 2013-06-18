@@ -58,7 +58,7 @@ class AttendancesController < ApplicationController
             flash.clear
             render :partial => '/members/attendance_delete_link', :locals => {:attendance => @attendance}
           else
-            redirect_to(@attendance) 
+            back_or_redirect_to(@attendance)
           end
           format.xml  { render :xml => @attendance, :status => :created, :location => @attendance }
         end

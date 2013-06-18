@@ -5,7 +5,7 @@
 
     <p style="float: left; margin-right: 2em">
       <%= f.label :member_id, 'Medlem' %>
-      <%= f.select :member_id, [nil] + @members.map(&:name) %>
+      <%= f.select :member_id, [nil] + @members.map{|m| [m.name, m.id]} %>
     </p>
 
     <p>
