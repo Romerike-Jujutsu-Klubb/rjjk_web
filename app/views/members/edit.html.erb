@@ -11,7 +11,11 @@
 	<% for graduate in @member.graduates.sort_by{|g|g.graduation.held_on}.reverse %>
 	<tr>
 		<td><%=link_to graduate.graduation.held_on, :controller => :graduations, :action => :index, :id => graduate.graduation_id %></td>
-		<td><%=graduate.rank.martial_art.name%> <%=graduate.rank.name%></td>
+		<td>
+          <%=graduate.rank.martial_art.name unless graduate.rank.martial_art.name == 'Kei Wa Ryu'%>
+          <%=graduate.rank.name%>
+          <%=graduate.rank.colour%>
+        </td>
 		<td align="center"><%=graduate.training_duration %> (<%=graduate.rank.standard_months %>)  mnd</td>
 		<td align="center"><%=link_to graduate.training_attendances, :controller => :attendances, :action => :since_graduation, :id => graduate.member_id, :date => graduate.graduation.held_on %>
           <%= graduate.training_period %>
