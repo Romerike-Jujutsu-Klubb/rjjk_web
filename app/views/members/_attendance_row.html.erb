@@ -16,7 +16,7 @@
     <% if member.left_on && member.left_on < (@dates[0] + 2.months) %>
         Utmeldt fra <%= member.left_on %>
     <% elsif @group %>
-        <%= h member.current_rank(@group.martial_art).try(:colour) %>
+        <%= h member.current_rank(@group.martial_art, @dates.last).try(:colour) %>
     <% else %>
         &nbsp;
     <% end %>
@@ -54,5 +54,9 @@
       <% end %>
   <% end %>
   <% half_year_total = member.attendances.select { |a| a.date >= (@dates.last - (6 * 30)) }.size %>
-  <td align="center"><%= "#{member_total}/#{half_year_total}" if half_year_total > 0 %></td>
+  <td align="center">
+    <%= half_year_total %>
+    /
+    <%=member.attendances_since_graduation(@dates.last).size%>
+  </td>
 </tr>

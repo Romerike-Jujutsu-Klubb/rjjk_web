@@ -81,7 +81,7 @@ class Member < ActiveRecord::Base
     groups = group ? [group] : Group.all
     groups.map do |g|
       if c = current_graduate(g.martial_art, before_date)
-        ats = attendances.select { |a| a.date >= c.graduation.held_on }
+        ats = attendances.select { |a| a.date > c.graduation.held_on }
       else
         ats = attendances.to_a
       end

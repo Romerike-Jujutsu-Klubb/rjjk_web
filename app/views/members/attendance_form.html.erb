@@ -1,10 +1,8 @@
-<h1 style="font-family:Arial, Helvetica, sans-serif">Oppmøteliste <%= @group.try(:name) %> <%= l Date::MONTHNAMES[@date.mon] %> <%= @date.year %></h1>
+<h1 style="font-family:Arial, Helvetica, sans-serif">
+  Oppmøteliste <%= @group.try(:name) %>
+  <%= l Date::MONTHNAMES[@date.mon] %> <%= @date.year %>
+</h1>
 
-<% weekdays = @group && @group.group_schedules.map { |gs| gs.weekday } || [2, 4] %>
-<% first_date = Date.new(@date.year, @date.month, 1) %>
-<% last_date = Date.new(@date.year, @date.month, -1) %>
-<% @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday } %>
-<% @birthdate_missing = @members.empty? || @members.find { |m| m.birthdate.nil? } %>
 <% @member_count = 0 %>
 <% @date_totals = {} %>
 <% @blank_lines = 42 %>

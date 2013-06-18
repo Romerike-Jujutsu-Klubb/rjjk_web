@@ -96,6 +96,10 @@ class MembersController < ApplicationController
     if params[:date]
       @date = Date.parse(params[:date])
     end
+
+    first_date = Date.new(@date.year, @date.month, 1)
+    last_date = Date.new(@date.year, @date.month, -1)
+
     @date ||= Date.today
     if params[:group_id]
       if params[:group_id] == 'others'
@@ -105,18 +109,35 @@ class MembersController < ApplicationController
       else
         @group = Group.find(params[:group_id])
         @instructors = Member.active(@date).find_all_by_instructor(true).select { |m| m.groups.any? { |g| g.martial_art_id == @group.martial_art_id } }
-        @instructors = @instructors.sort_by { |m| [m.current_rank(@group.martial_art) ? -m.current_rank(@group.martial_art).position : 99, m.first_name, m.last_name] }
-        @members = @group.members.active(@date).includes({:graduates => :rank}, {:groups => :group_schedules}, :nkf_member).sort_by { |m| [m.current_rank(@group.martial_art) ? -m.current_rank(@group.martial_art).position : 99, m.first_name, m.last_name] }
+
+        current_members = @group.members.active(@date).includes({:graduates => :rank}, {:groups => :group_schedules}, :nkf_member)
+        attended_members = Attendance.
+            where('group_schedule_id IN (?) AND (year > ? OR ( year = ? AND week >= ?)) AND (year < ? OR ( year = ? AND week <= ?))',
+                  @group.group_schedules.map(&:id), first_date.cwyear, first_date.cwyear, first_date.cweek, last_date.cwyear, last_date.cwyear, last_date.cweek).
+            all.map(&:member).uniq
+        attended_members -= @instructors
+        @members = current_members + (attended_members - current_members)
         @trials = NkfMemberTrial.all(:conditions => ['alder BETWEEN ? AND ?', @group.from_age, @group.to_age], :order => 'fornavn, etternavn')
+
+        @instructors.sort_by! { |m| [m.current_rank(@group.martial_art, last_date) ? -m.current_rank(@group.martial_art, last_date).position : 99, m.first_name, m.last_name] }
+        @members.sort_by! { |m| [m.current_rank(@group.martial_art, last_date) ? -m.current_rank(@group.martial_art, last_date).position : 99, m.first_name, m.last_name] }
       end
     else
       @instructors = []
       @members = []
       @trials = []
     end
-    @instructors -= @members
+
+    weekdays = @group && @group.group_schedules.map { |gs| gs.weekday } || [2, 4]
+    @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
+
+    @instructors -= current_members
     @passive_members = @members.select { |m| m.nkf_member.medlemsstatus == 'P' || m.attendances.select { |a| (@group.nil? || a.group_schedule.group_id == @group.id) && a.date <= (@date + 31) && a.date > (@date - 92) }.empty? }
     @members -= @passive_members
+    @instructors -= @passive_members
+
+    @birthdate_missing = @members.empty? || @members.find { |m| m.birthdate.nil? }
+
     render :layout => 'print'
   end
 
