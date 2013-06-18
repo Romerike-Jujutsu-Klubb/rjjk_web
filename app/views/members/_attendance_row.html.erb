@@ -57,6 +57,6 @@
   <td align="center">
     <%= half_year_total %>
     /
-    <%=member.attendances_since_graduation(@dates.last).size%>
+    <%=@dates.map{|d| member.attendances_since_graduation(d).size}.max%>
   </td>
 </tr>
