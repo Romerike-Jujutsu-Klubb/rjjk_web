@@ -189,13 +189,16 @@ ActiveRecord::Schema.define(:version => 20130619090259) do
   end
 
   create_table "groups", :force => true do |t|
-    t.integer  "martial_art_id", :null => false
-    t.string   "name",           :null => false
-    t.integer  "from_age",       :null => false
-    t.integer  "to_age",         :null => false
+    t.integer  "martial_art_id",               :null => false
+    t.string   "name",                         :null => false
+    t.integer  "from_age",                     :null => false
+    t.integer  "to_age",                       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "closed_on"
+    t.integer  "monthly_price"
+    t.integer  "yearly_price"
+    t.string   "contract",       :limit => 16
     t.string   "summary"
     t.text     "description"
   end

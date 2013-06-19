@@ -1,11 +1,8 @@
 class GroupsController < ApplicationController
   before_filter :admin_required, :except => :show
 
-  # GET /groups
-  # GET /groups.xml
   def index
-    @groups = Group.find(:all)
-
+    @groups = Group.all
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @groups }
@@ -13,15 +10,12 @@ class GroupsController < ApplicationController
     end
   end
 
-  # GET /groups/yaml
   def yaml
     @groups = Group.all
     @groups.each{|g| g['members'] = g.members.map{|m| m.id}}
     render :text => @groups.map{|g| g.attributes}.to_yaml, :content_type => 'text/yaml', :layout => false
   end
   
-  # GET /groups/1
-  # GET /groups/1.xml
   def show
     @group = Group.find(params[:id])
 
@@ -39,6 +33,7 @@ class GroupsController < ApplicationController
   def edit
     @group = Group.find(params[:id])
     @martial_arts = MartialArt.all
+    @contracts = NkfMember.all.group_by(&:kontraktstype).keys.sort
   end
 
   def create

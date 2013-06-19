@@ -1,35 +1,64 @@
-<%= form_for(@group) do |f| %>
+<%= form_for @group do |f| %>
     <%= f.error_messages %>
 
-    <div style="float: right ; width: 50%">
-      <%= f.label :summary, :Sammendrag %>
-      <%= f.text_area :summary, :style => 'width: 100%', :rows => 5 %>
+    <table width="100%">
+      <tr>
+        <td valign="top">
+          <div>
+            <%= f.label :name %>
+            <%= f.text_field :name %>
 
-      <%= f.label :description, :Beskrivelse %>
-      <%= f.text_area :description, :style => 'width: 100%', :rows => 5 %>
+            <% if @group.martial_art && @group.martial_art.name != 'Kei Wa Ryu' %>
+                <%= f.label :martial_art_id, 'Gren' %>
+                <%= f.select :martial_art_id, @martial_arts.map { |ma| [ma.name, ma.id] } %>
+            <% end %>
+          </div>
+
+          <div style="float: left ; margin-right: 1em">
+            <%= f.label :from_age, 'Fra alder' %>
+            <%= f.text_field :from_age, :class => 'input-small' %>
+          </div>
+
+          <div>
+            <%= f.label :to_age, 'Til alder' %>
+            <%= f.text_field :to_age, :class => 'input-small' %>
+          </div>
+
+          <div style="float: left ; margin-right: 1em">
+            <%= f.label :monthly_price, 'Månedspris' %>
+            <%= f.text_field :monthly_price, :class => 'input-small' %>
+          </div>
+
+          <div>
+            <%= f.label :yearly_price, 'Årskontingent' %>
+            <%= f.text_field :yearly_price, :class => 'input-small' %>
+          </div>
+
+          <div>
+            <%= f.label :contract_type, 'Kontraktstype' %>
+            <%= f.select :contract, [nil] + @contracts %>
+          </div>
+
+          <div style="float: left ; margin-right: 1em">
+            <%= f.label :closed_on, 'Avsluttet' %>
+            <%= f.datepicker :closed_on, :dateFormat => 'yy-mm-dd', :firstDay => 1, :class => 'input-small' %>
+          </div>
+
+        </td>
+
+        <td>
+          <%= f.label :summary, :Sammendrag %>
+          <%= f.text_area :summary, :rows => 5 %>
+
+          <%= f.label :description, :Beskrivelse %>
+          <%= f.text_area :description, :rows => 5 %>
+        </td>
+      </tr>
+    </table>
+
+    <div>
+      <%= f.submit 'Lagre' %>
+      <%= link_to 'Tilbake', groups_path %>
     </div>
 
-    <p>
-      <%= f.label :name %>
-      <%= f.text_field :name %>
-
-      <% if @group.martial_art && @group.martial_art.name != 'Kei Wa Ryu' %>
-          <%= f.label :martial_art_id, 'Gren' %>
-          <%= f.select :martial_art_id, @martial_arts.map { |ma| [ma.name, ma.id] } %>
-      <% end %>
-
-      <%= f.label :from_age, 'Fra alder' %>
-      <%= f.text_field :from_age %>
-
-      <%= f.label :to_age, 'Til alder' %>
-      <%= f.text_field :to_age %>
-
-      <%= f.label :closed_on, 'Avsluttet' %>
-      <%= f.datepicker :closed_on, :dateFormat => 'yy-mm-dd', :firstDay => 1 %>
-    </p>
-
-    <p>
-      <%= f.submit "Lagre" %>
-      <%= link_to 'Tilbake', groups_path %>
-    </p>
 <% end %>

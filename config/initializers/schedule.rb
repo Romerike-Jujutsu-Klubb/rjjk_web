@@ -47,6 +47,16 @@ def import_nkf_changes
     if i.any?
       NkfReplication.import_changes(i).deliver
       logger.info 'Sent NKF member import mail.'
+      logger.info 'Oppdaterer kontrakter'
+      contract_types = NkfMember.all.group_by(&:kontraktstype)
+      contract_types.each do |contract_name, members_with_contracts|
+        monthly_price = members_with_contracts.map(&:kontraktsbelop).group_by { |x| x }.group_by { |k, v| v.size }.sort.last.last.map(&:first).first
+        yearly_price = members_with_contracts.map(&:kont_belop).group_by { |x| x }.group_by { |k, v| v.size }.sort.last.last.map(&:first).first
+        Group.where(:contract => contract_name).all.each do |group|
+          logger.info "Update contract #{group} #{contract_name} #{monthly_price} #{yearly_price}"
+          group.update_attributes! :monthly_price => monthly_price, :yearly_price => yearly_price
+        end
+      end
     end
   rescue
     logger.error 'Execption sending NKF import email.'
@@ -121,7 +131,7 @@ def notify_missing_instructors
   begin
     groups = Group.active(Date.today).all
     group_schedules = groups.map(&:group_schedules).flatten
-    missing_schedules = group_schedules.select{|gs| gs.group_instructors.select(&:active?).empty?}
+    missing_schedules = group_schedules.select { |gs| gs.group_instructors.select(&:active?).empty? }
     InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
   rescue
     logger.error "Exception sending instruction message: #{$!}"
@@ -149,7 +159,7 @@ def notify_missing_graduations
     today = Date.today
     groups = Group.active(today).all
     #planned_graduations = Graduation.where('held_on >= ?').all.map(&:)
-    missing_schedules = group_schedules.select{|gs| gs.group_instructors.select(&:active?).empty?}
+    missing_schedules = group_schedules.select { |gs| gs.group_instructors.select(&:active?).empty? }
     InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
   rescue
     logger.error "Exception sending instruction message: #{$!}"
@@ -161,7 +171,7 @@ def notify_overdue_graduates
   begin
     overdue_graduates = Member.active(today).all
     #planned_graduations = Graduation.where('held_on >= ?').all.map(&:)
-    missing_schedules = group_schedules.select{|gs| gs.group_instructors.select(&:active?).empty?}
+    missing_schedules = group_schedules.select { |gs| gs.group_instructors.select(&:active?).empty? }
     InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
   rescue
     logger.error "Exception sending instruction message: #{$!}"

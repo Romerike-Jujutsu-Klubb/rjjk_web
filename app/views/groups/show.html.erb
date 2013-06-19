@@ -10,13 +10,25 @@ Fra <%= @group.from_age %> til <%= @group.to_age %> år.
     <%= gs.weekday_name %> <%= gs.start_at.strftime '%H:%M' %> - <%= gs.end_at.strftime '%H:%M' %><br/>
 <% end %>
 
-<p>
-  <%= textalize @group.summary %>
-</p>
+<% unless @group.monthly_price.blank? %>
+    <h4>Pris</h4>
 
-<p>
-  <%= textalize @group.description %>
-</p>
+    <p style="line-height: 1.5">
+      <% unless @group.yearly_price.blank? %>
+          Årskontingent kr <%= @group.yearly_price %>,-<br/>
+      <% end %>
+
+      Treningsavgift kr <%= @group.monthly_price %>,- /måned
+    </p>
+<% end %>
+
+<% unless @group.summary.blank? %>
+    <%= textalize @group.summary.strip %>
+<% end %>
+
+<% unless @group.description.blank? %>
+    <%= textalize @group.description %>
+<% end %>
 
 <% if admin? %>
     <ul class="controls">
