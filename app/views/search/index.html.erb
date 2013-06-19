@@ -1,10 +1,38 @@
 <h1>Søkeresultat</h1>
 
-<% if @members %>
-    <h3>Medlemmer</h3>
-    <ul>
-    <% @members.each do |m| %>
-        <li><%=link_to m.name, m%></li>
+
+<% if @query %>
+    <% if (@members + @pages).any? %>
+
+        <% if @members.any? %>
+            <h3>Medlemmer</h3>
+            <ul>
+              <% @members.each do |m| %>
+                  <li><%= link_to m.name, m %></li>
+              <% end %>
+            </ul>
+
+        <% end %>
+
+        <% if @pages.any? %>
+            <h3>Infromasjonssider</h3>
+            <ul>
+              <% @pages.each do |p| %>
+                  <li><%= link_to p.title, p %></li>
+              <% end %>
+            </ul>
+
+        <% end %>
+
+        <h2>Savner du noe?</h2>
+        <p>
+          Dette er første utkast til søkefunksjonen. Hvis du vil ha mer, si
+          ifra til <%=link_to 'nettansvarlig', 'mailto:web@jujutsu.no?subject=[RJJK] Bedre søk på web'%>.
+        </p>
+
+    <% else %>
+        Fant ingenting om "<%= @query %>".
     <% end %>
-    </ul>
+<% else %>
+    Fyll inn søkeboksen oppe til høyre for å søke.
 <% end %>

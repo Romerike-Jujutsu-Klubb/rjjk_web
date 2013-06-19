@@ -15,7 +15,7 @@ Fra <%= @group.from_age %> til <%= @group.to_age %> år.
 </p>
 
 <p>
-  <%= @group.description %>
+  <%= textalize @group.description %>
 </p>
 
 <% if admin? %>

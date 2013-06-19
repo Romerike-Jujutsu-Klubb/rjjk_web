@@ -70,7 +70,7 @@
 
       <% if admin? %>
           <form action="/search">
-            <%=text_field nil, :q, :placeholder => 'Søk', :style => 'width: 168px'%>
+            <%=text_field nil, nil, :name => :q, :placeholder => 'Søk', :style => 'width: 168px'%>
           </form>
       <% end %>
 

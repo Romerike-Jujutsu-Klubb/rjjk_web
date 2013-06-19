@@ -28,6 +28,7 @@ RjjkWeb::Application.routes.draw do
   resources :group_schedules
   resources :groups
   resources :images
+  resources :information_pages, :controller => :info, :path => :info
   resources :martial_arts
   resources :members
   resources :news_items, :controller => 'news'
