@@ -1,5 +1,7 @@
 RjjkWeb::Application.routes.draw do
 
+  get "search/index"
+
   match 'stylesheets/dark_ritual/:width.:format', :controller => 'stylesheets', :action => 'dark_ritual'
   match 'stylesheets/dark_ritual.:format', :controller => 'stylesheets', :action => 'dark_ritual'
   match ':controller/active_contracts', :action => 'active_contracts'
@@ -27,6 +29,7 @@ RjjkWeb::Application.routes.draw do
   resources :groups
   resources :images
   resources :martial_arts
+  resources :members
   resources :news_items, :controller => 'news'
   resources :nkf_members
   resources :nkf_member_trials

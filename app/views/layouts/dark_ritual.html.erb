@@ -68,6 +68,12 @@
     <div class="padded">
       <%= link_to image_tag('rjjk_logo_&_txt_320.png', :id => :logo_img, :style => 'width: 182px; height: 181px; border: 0'), '/' %>
 
+      <% if admin? %>
+          <form action="/search">
+            <%=text_field nil, :q, :placeholder => 'Søk', :style => 'width: 168px'%>
+          </form>
+      <% end %>
+
       <% if @image && !@image.new_record? && (controller.class != ImagesController || !%w{gallery mine}.include?(controller.action_name)) %>
           <div align="center">
             <%= link_to :controller => :images, :action => :gallery, :id => @image.id do %>
@@ -205,11 +211,10 @@
           <br/>
       <% end %>
 
-      <h3>Instruktører</h3>
-
+      <h3>Grupper</h3>
       <ul>
         <% @groups.each do |g| %>
-            <li><%= g.name %>
+            <li><%=link_to g.name, g %> (<%= g.from_age %>-<%= g.to_age%> år)
               <ul>
                 <% g.group_schedules.map{|gs| gs.group_instructors.map(&:member)}.flatten.uniq.each do |m| %>
                     <li><%= m.name %>

@@ -180,9 +180,15 @@ class MembersController < ApplicationController
     end
   end
 
+  def show
+    edit
+    render :action => :edit
+  end
+
   def edit
     @member = Member.find(params[:id])
-    @groups = Group.all(:include => :martial_art, :order => 'martial_arts.name, groups.name')
+    @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').where(:closed_on => nil).all
+    @groups |= @member.groups
   end
 
   def update

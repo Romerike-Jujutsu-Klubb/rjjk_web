@@ -17,7 +17,7 @@
 
           <td style='padding-left: 1em' width=25% nowrap='true'>
             <%= name %>
-            <a href="#" onClick='removeCensor(<%=cen.id%>, "<%=name%>");'>
+            <a href="#" onClick='removeCensor(<%=cen.id%>, "<%=name%>") ; return false'>
               <img src="<%=asset_path 'button-delete-16x16.png'%>" style="border: 0;" title="Slett sensor <%= name %>" ALT="Slett sensor <%= name %>"></a>
           </td>
 
@@ -78,7 +78,7 @@
                   <% else %>
                       <br/>Har ingen grad fra før.
                   <% end %>
-                  <br/><font color="red">Anbefalt neste grad er <%= next_rank.name %>.</font>
+                  <br/><span style="color: red; ">Anbefalt neste grad er <%= next_rank.name %>.</span>
               <% end %>
               <% if below_minimum_age %>
                   <br/><span style="color: red">Aldersgrense for <%=gr.rank.name%> er <%=gr.rank.minimum_age%> år.</span>
@@ -115,9 +115,9 @@
       <IMG SRC="<%=asset_path 'button-view-16x16.png'%>" STYLE="border: 0;" title="Oversikt" ALT="Oversikt"></A></td>
         -->
 
-            <td STYLE="text-align: center;"><A HREF='#' onClick='saveGraduateInfo(<%=gr.id%>)'>
+            <td STYLE="text-align: center;"><A HREF='#' onClick='saveGraduateInfo(<%=gr.id%>) ; return false'>
               <IMG SRC="<%=asset_path 'button-edit-16x16.png'%>" STYLE="border: 0;" title="Endre" ALT="Endre"></A></td>
-            <td STYLE="text-align: center;"><A HREF='#' onClick='removeGraduate(<%=gr.id%>,"<%=fn%> <%=ln%>")'>
+            <td STYLE="text-align: center;"><A HREF='#' onClick='removeGraduate(<%=gr.id%>,"<%=fn%> <%=ln%>") ; return false'>
               <IMG SRC="<%=asset_path 'button-delete-16x16.png'%>" STYLE="border: 0;" title="Slett" ALT="Slett"></A></td>
           </tr>
           <tr id='graduate_<%= gr.id %>_edit' STYLE='display: none;'>
@@ -139,9 +139,9 @@
             -->
 
             <td STYLE="text-align: center;">&nbsp;</td>
-            <td STYLE="text-align: center;"><A HREF='#' onClick='saveGraduateInfo(<%=gr.id%>)'>
+            <td STYLE="text-align: center;"><A HREF='#' onClick='saveGraduateInfo(<%=gr.id%>) ; return false'>
               <IMG SRC="<%=asset_path 'button-ok-16x16.png'%>" STYLE="border: 0;" title="Lagre" ALT="Lagre"></A></td>
-            <td STYLE="text-align: center;"><A HREF='#' onClick='cancelSaveGraduateInfo(<%=gr.id%>)'>
+            <td STYLE="text-align: center;"><A HREF='#' onClick='cancelSaveGraduateInfo(<%=gr.id%>) ; return false'>
               <IMG SRC="<%=asset_path 'button-cancel-16x16.png'%>" STYLE="border: 0;" title="Avbryt" ALT="Avbryt"></A></td>
           </tr>
 

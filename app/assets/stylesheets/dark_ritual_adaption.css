@@ -106,6 +106,11 @@ ul.controls li a.edit {
     background-image: url('/assets/icon-more.gif');
 }
 
+ul.controls li a.back {
+    padding: 0em 1.0em 0em 20px;
+    background-image: url('/assets/icon-back.png');
+}
+
 ul.controls li a.delete {
     padding: 0em 1.0em 0em 20px;
     background-image: url('/assets/button-delete-16x16.png');

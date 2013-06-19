@@ -1,23 +1,26 @@
+<h3><%= @group.name %></h3>
+
+<h4>Alder</h4>
+
+Fra <%= @group.from_age %> til <%= @group.to_age %> år.
+
+<h4>Treningstider</h4>
+
+<% @group.group_schedules.each do |gs| %>
+    <%= gs.weekday_name %> <%= gs.start_at.strftime '%H:%M' %> - <%= gs.end_at.strftime '%H:%M' %><br/>
+<% end %>
+
 <p>
-  <b>Martial art:</b>
-  <%=h @group.martial_art_id %>
+  <%= textalize @group.summary %>
 </p>
 
 <p>
-  <b>Name:</b>
-  <%=h @group.name %>
+  <%= @group.description %>
 </p>
 
-<p>
-  <b>From age:</b>
-  <%=h @group.from_age %>
-</p>
-
-<p>
-  <b>To age:</b>
-  <%=h @group.to_age %>
-</p>
-
-
-<%= link_to 'Edit', edit_group_path(@group) %> |
-<%= link_to 'Back', groups_path %>
+<% if admin? %>
+    <ul class="controls">
+      <li><%= link_to 'Rediger', edit_group_path(@group), :class => :edit %></li>
+      <li><%= back_or_link_to 'Tilbake', groups_path, :class => :back %></li>
+    </ul>
+<% end %>

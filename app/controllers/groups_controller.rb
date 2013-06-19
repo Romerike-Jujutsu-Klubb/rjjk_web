@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_filter :admin_required
+  before_filter :admin_required, :except => :show
 
   # GET /groups
   # GET /groups.xml

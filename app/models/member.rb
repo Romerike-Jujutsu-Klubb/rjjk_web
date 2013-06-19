@@ -20,6 +20,7 @@ class Member < ActiveRecord::Base
   has_one :nkf_member
   belongs_to :image, :dependent => :destroy
   belongs_to :user, :dependent => :destroy
+  has_and_belongs_to_many :groups
 
   # validates_presence_of :address, :cms_contract_id
   validates_length_of :billing_postal_code, :is => 4, :if => Proc.new { |m| m.billing_postal_code && !m.billing_postal_code.empty? }

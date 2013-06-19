@@ -1,0 +1,10 @@
+<h1>Søkeresultat</h1>
+
+<% if @members %>
+    <h3>Medlemmer</h3>
+    <ul>
+    <% @members.each do |m| %>
+        <li><%=link_to m.name, m%></li>
+    <% end %>
+    </ul>
+<% end %>
