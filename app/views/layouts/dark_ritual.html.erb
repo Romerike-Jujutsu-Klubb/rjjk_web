@@ -68,11 +68,9 @@
     <div class="padded">
       <%= link_to image_tag('rjjk_logo_&_txt_320.png', :id => :logo_img, :style => 'width: 182px; height: 181px; border: 0'), '/' %>
 
-      <% if admin? %>
-          <form action="/search" class="form-search">
-            <%=text_field nil, nil, :name => :q, :placeholder => 'Søk', :style => 'width: 152px', :class => 'search-query'%>
-          </form>
-      <% end %>
+      <form action="/search" class="form-search">
+        <%= text_field nil, nil, :name => :q, :placeholder => 'Søk', :style => 'width: 152px', :class => 'search-query' %>
+      </form>
 
       <% if @image && !@image.new_record? && (controller.class != ImagesController || !%w{gallery mine}.include?(controller.action_name)) %>
           <div align="center">

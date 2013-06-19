@@ -2,9 +2,9 @@
 
 
 <% if @query %>
-    <% if (@members + @pages).any? %>
+    <% if !@members.blank? || !@trials.blank? || @pages.any? %>
 
-        <% if @members.any? %>
+        <% unless @members.blank? %>
             <h3>Medlemmer</h3>
             <ul>
               <% @members.each do |m| %>
@@ -14,8 +14,18 @@
 
         <% end %>
 
+        <% unless @trials.blank? %>
+            <h3>Søkere i prøvetid</h3>
+            <ul>
+              <% @trials.each do |tr| %>
+                  <li><%= link_to tr.name, tr %></li>
+              <% end %>
+            </ul>
+
+        <% end %>
+
         <% if @pages.any? %>
-            <h3>Infromasjonssider</h3>
+            <h3>Informasjonssider</h3>
             <ul>
               <% @pages.each do |p| %>
                   <li><%= link_to p.title, p %></li>

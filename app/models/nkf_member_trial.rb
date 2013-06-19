@@ -11,4 +11,7 @@ class NkfMemberTrial < ActiveRecord::Base
     age
   end
 
+  def name
+    "#{fornavn} #{etternavn}"
+  end
 end

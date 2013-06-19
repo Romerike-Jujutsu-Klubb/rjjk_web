@@ -1,6 +1,6 @@
 class NkfMemberTrialsController < ApplicationController
-  # GET /nkf_member_trials
-  # GET /nkf_member_trials.xml
+  before_filter :admin_required
+
   def index
     @nkf_member_trials = NkfMemberTrial.all
 
@@ -10,8 +10,6 @@ class NkfMemberTrialsController < ApplicationController
     end
   end
 
-  # GET /nkf_member_trials/1
-  # GET /nkf_member_trials/1.xml
   def show
     @nkf_member_trial = NkfMemberTrial.find(params[:id])
 
@@ -21,8 +19,6 @@ class NkfMemberTrialsController < ApplicationController
     end
   end
 
-  # GET /nkf_member_trials/new
-  # GET /nkf_member_trials/new.xml
   def new
     @nkf_member_trial = NkfMemberTrial.new
 
@@ -32,7 +28,6 @@ class NkfMemberTrialsController < ApplicationController
     end
   end
 
-  # GET /nkf_member_trials/1/edit
   def edit
     @nkf_member_trial = NkfMemberTrial.find(params[:id])
   end
@@ -48,8 +43,6 @@ class NkfMemberTrialsController < ApplicationController
       end
   end
 
-  # PUT /nkf_member_trials/1
-  # PUT /nkf_member_trials/1.xml
   def update
     @nkf_member_trial = NkfMemberTrial.find(params[:id])
 
@@ -65,8 +58,6 @@ class NkfMemberTrialsController < ApplicationController
     end
   end
 
-  # DELETE /nkf_member_trials/1
-  # DELETE /nkf_member_trials/1.xml
   def destroy
     @nkf_member_trial = NkfMemberTrial.find(params[:id])
     @nkf_member_trial.destroy
