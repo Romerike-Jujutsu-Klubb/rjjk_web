@@ -48,15 +48,7 @@ def import_nkf_changes
       NkfReplication.import_changes(i).deliver
       logger.info 'Sent NKF member import mail.'
       logger.info 'Oppdaterer kontrakter'
-      contract_types = NkfMember.all.group_by(&:kontraktstype)
-      contract_types.each do |contract_name, members_with_contracts|
-        monthly_price = members_with_contracts.map(&:kontraktsbelop).group_by { |x| x }.group_by { |k, v| v.size }.sort.last.last.map(&:first).first
-        yearly_price = members_with_contracts.map(&:kont_belop).group_by { |x| x }.group_by { |k, v| v.size }.sort.last.last.map(&:first).first
-        Group.where(:contract => contract_name).all.each do |group|
-          logger.info "Update contract #{group} #{contract_name} #{monthly_price} #{yearly_price}"
-          group.update_attributes! :monthly_price => monthly_price, :yearly_price => yearly_price
-        end
-      end
+      NkfMember.update_group_prices
     end
   rescue
     logger.error 'Execption sending NKF import email.'

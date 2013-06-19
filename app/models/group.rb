@@ -1,5 +1,5 @@
 class Group < ActiveRecord::Base
-  scope :active, -> date {where('closed_on IS NULL OR closed_on >= ?', date)}
+  scope :active, -> date { where('closed_on IS NULL OR closed_on >= ?', date) }
 
   belongs_to :martial_art
   has_and_belongs_to_many :members, :conditions => 'left_on IS NULL OR left_on > DATE(CURRENT_TIMESTAMP)'
@@ -34,6 +34,12 @@ class Group < ActiveRecord::Base
 
   def active?(date = Date.today)
     closed_on.nil? || closed_on >= date
+  end
+
+  def update_prices
+    contracts = NkfMember.where(:kontraktstype => contract).all
+    self.monthly_price = contracts.map(&:kontraktsbelop).group_by { |x| x }.group_by { |k, v| v.size }.sort.last.last.map(&:first).first
+    self.yearly_price = contracts.map(&:kont_belop).group_by { |x| x }.group_by { |k, v| v.size }.sort.last.last.map(&:first).first
   end
 
 end
