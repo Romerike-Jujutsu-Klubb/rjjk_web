@@ -54,6 +54,13 @@ class MembersControllerTest < ActionController::TestCase
     assert_template 'email_list'
   end
 
+  def test_telephone_list
+    get :telephone_list
+    assert_response :success
+    assert_template 'list'
+    assert_not_nil assigns(:members)
+  end
+
   def test_new
     get :new
 

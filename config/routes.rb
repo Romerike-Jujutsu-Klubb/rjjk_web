@@ -12,6 +12,7 @@ RjjkWeb::Application.routes.draw do
   match ':controller/gallery', action: :gallery
   match ':controller/list_active', action: :list_active
   match ':controller/list_inactive', action: :list_active
+  match ':controller/telephone_list', action: :telephone_list
   match ':controller/mine', action: :mine
   match ':controller/yaml', action: :yaml
 

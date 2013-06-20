@@ -4,11 +4,11 @@
 <h2>Aktive <%=group.name%></h2>
 <table>
   <tr>
-	<th><%= link_to 'Etternavn', sort_param('listing', :alias => 'etternavn') %></th>
-    <th><%= link_to 'Fornavn', sort_param('listing', :alias => 'fornavn') %></th>	
-    <th><%= link_to 'Mobil', sort_param('listing', :alias => 'phone_mobile') %></th>
-    <th><%= link_to 'Hjemme', sort_param('listing', :alias => 'phone_home') %></th>
-    <th><%= link_to 'Jobb', sort_param('listing', :alias => 'phone_work') %></th>
+	<th><%= link_to 'Etternavn' %></th>
+    <th><%= link_to 'Fornavn' %></th>
+    <th><%= link_to 'Mobil' %></th>
+    <th><%= link_to 'Hjemme' %></th>
+    <th><%= link_to 'Jobb' %></th>
   </tr>
   
 <% for member in group.members.active(Date.today) %>
