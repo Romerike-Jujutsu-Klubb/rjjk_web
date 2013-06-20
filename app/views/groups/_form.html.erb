@@ -40,6 +40,11 @@
           </div>
 
           <div style="float: left ; margin-right: 1em">
+            <%= f.label :school_breaks, 'Følger skoleåret' %>
+            <%= f.check_box :school_breaks, :class => 'input-small' %>
+          </div>
+
+          <div style="float: left ; margin-right: 1em">
             <%= f.label :closed_on, 'Avsluttet' %>
             <%= f.datepicker :closed_on, :dateFormat => 'yy-mm-dd', :firstDay => 1, :class => 'input-small' %>
           </div>

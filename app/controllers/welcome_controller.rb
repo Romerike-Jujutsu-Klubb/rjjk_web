@@ -1,7 +1,8 @@
 class WelcomeController < ApplicationController
   def index
     if user?
-      redirect_to :controller => :news
+      @news_items = NewsItem.front_page_items
+      render :controller => :news, :action => :index
       return
     end
     @information_page = InformationPage.find_by_title('Velkommen')

@@ -1,7 +1,7 @@
 <% @content_width = 1024 %>
 
 <div id="graduations" style="float: right">
-<table border="1">
+<table class="table table-bordered table-condensed">
 	<tr>
 		<th>Dato</th>
 		<th>Grad</th>
@@ -16,17 +16,26 @@
           <%=graduate.rank.name%>
           <%=graduate.rank.colour%>
         </td>
-		<td align="center"><%=graduate.training_duration %> (<%=graduate.rank.standard_months %>)  mnd</td>
-		<td align="center"><%=link_to graduate.training_attendances, :controller => :attendances, :action => :since_graduation, :id => graduate.member_id, :date => graduate.graduation.held_on %>
-          <%= graduate.training_period %>
+		<td align="center">
+          <%= graduate.training_duration %>
+          <% if graduate.training_duration != graduate.rank.standard_months %>
+              (<span title="Normert tid i måneder"><%= graduate.rank.standard_months %></span>)
+          <% end %>
+          mnd
+          (<%= graduate.training_period.to_s.gsub('..', ' - ') %>)
+        </td>
+		<td style="text-align: center">
+          <%=link_to graduate.training_attendances, :controller => :attendances, :action => :since_graduation, :id => graduate.member_id, :date => graduate.graduation.held_on %>
         </td>
 	</tr>
 	<% end %>
+  <% if @member.graduates.empty? %>
 	<tr>
 		<td colspan="4" align="center">
 			<%=link_to 'Graderinger', :controller => 'graduations'%>
 		</td>
 	</tr>
+      <% end %>
 </table>
 </div>
 

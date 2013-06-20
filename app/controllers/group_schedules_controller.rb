@@ -1,7 +1,6 @@
 class GroupSchedulesController < ApplicationController
   before_filter :admin_required
-  # GET /group_schedules
-  # GET /group_schedules.xml
+
   def index
     @group_schedules = GroupSchedule.all.sort_by{|gs| [gs.weekday == 0 ? 7 : gs.weekday, gs.start_at, gs.end_at]}
 
@@ -11,14 +10,11 @@ class GroupSchedulesController < ApplicationController
     end
   end
 
-  # GET /group_schedules/yaml
   def yaml
     @group_schedules = GroupSchedule.all
     render :text => @group_schedules.map{|gs| gs.attributes}.to_yaml, :content_type => 'text/yaml', :layout => false
   end
 
-  # GET /group_schedules/1
-  # GET /group_schedules/1.xml
   def show
     @group_schedule = GroupSchedule.find(params[:id])
 
@@ -28,8 +24,6 @@ class GroupSchedulesController < ApplicationController
     end
   end
 
-  # GET /group_schedules/new
-  # GET /group_schedules/new.xml
   def new
     @group_schedule ||= GroupSchedule.new
     @groups = Group.all
@@ -40,14 +34,11 @@ class GroupSchedulesController < ApplicationController
     end
   end
 
-  # GET /group_schedules/1/edit
   def edit
     @group_schedule = GroupSchedule.find(params[:id])
     @groups = Group.all
   end
 
-  # POST /group_schedules
-  # POST /group_schedules.xml
   def create
     @group_schedule = GroupSchedule.new(params[:group_schedule])
 
@@ -63,8 +54,6 @@ class GroupSchedulesController < ApplicationController
     end
   end
 
-  # PUT /group_schedules/1
-  # PUT /group_schedules/1.xml
   def update
     @group_schedule = GroupSchedule.find(params[:id])
 
@@ -80,8 +69,6 @@ class GroupSchedulesController < ApplicationController
     end
   end
 
-  # DELETE /group_schedules/1
-  # DELETE /group_schedules/1.xml
   def destroy
     @group_schedule = GroupSchedule.find(params[:id])
     @group_schedule.destroy

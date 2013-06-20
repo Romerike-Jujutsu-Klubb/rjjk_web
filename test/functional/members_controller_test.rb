@@ -27,13 +27,31 @@ class MembersControllerTest < ActionController::TestCase
     assert_template 'list'
   end
 
-  def test_list
-    get :list
-
+  def test_list_active
+    get :list_active
     assert_response :success
     assert_template 'list'
-
     assert_not_nil assigns(:members)
+  end
+
+  def test_list_inactive
+    get :list_inactive
+    assert_response :success
+    assert_template 'list'
+    assert_not_nil assigns(:members)
+  end
+
+  def test_list
+    get :list
+    assert_response :success
+    assert_template 'list'
+    assert_not_nil assigns(:members)
+  end
+
+  def test_email_list
+    get :email_list
+    assert_response :success
+    assert_template 'email_list'
   end
 
   def test_new

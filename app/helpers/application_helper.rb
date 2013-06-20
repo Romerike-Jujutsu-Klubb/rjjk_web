@@ -12,9 +12,9 @@ module ApplicationHelper
 
   def yes_no(bool)
     if bool == true
-      "Ja"
+      'Ja'
     else
-      "Nei"
+      'Nei'
     end
   end
 

@@ -2,13 +2,26 @@
 
 <h4>Alder</h4>
 
+<p>
 Fra <%= @group.from_age %> til <%= @group.to_age %> år.
+</p>
 
 <h4>Treningstider</h4>
 
-<% @group.group_schedules.each do |gs| %>
-    <%= gs.weekday_name %> <%= gs.start_at.strftime '%H:%M' %> - <%= gs.end_at.strftime '%H:%M' %><br/>
-<% end %>
+<p>
+  <% @group.group_schedules.each do |gs| %>
+      <%= gs.weekday_name %> <%= gs.start_at.strftime '%H:%M' %>
+      - <%= gs.end_at.strftime '%H:%M' %><br/>
+  <% end %>
+
+<div>
+  <% if @group.school_breaks? %>
+      Gruppen følger skoleåret og har ikke trening i skoleferiene.
+  <% else %>
+      Gruppen har trening hele året dersom annet ikke er annonsert.
+  <% end %>
+</div>
+</p>
 
 <% unless @group.monthly_price.blank? %>
     <h4>Pris</h4>

@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Group:</b>
+  <%= @group_semester.group_id %>
+</p>
+
+<p>
+  <b>Semester:</b>
+  <%= @group_semester.semester_id %>
+</p>
+
+<p>
+  <b>First session:</b>
+  <%= @group_semester.first_session %>
+</p>
+
+<p>
+  <b>Last session:</b>
+  <%= @group_semester.last_session %>
+</p>
+
+
+<%= link_to 'Edit', edit_group_semester_path(@group_semester) %> |
+<%= link_to 'Back', group_semesters_path %>

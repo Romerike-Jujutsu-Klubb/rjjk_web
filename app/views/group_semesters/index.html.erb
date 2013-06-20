@@ -1,0 +1,29 @@
+<h1>Listing group_semesters</h1>
+
+<table>
+  <tr>
+    <th>Group</th>
+    <th>Semester</th>
+    <th>First session</th>
+    <th>Last session</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @group_semesters.each do |group_semester| %>
+  <tr>
+    <td><%= group_semester.group_id %></td>
+    <td><%= group_semester.semester_id %></td>
+    <td><%= group_semester.first_session %></td>
+    <td><%= group_semester.last_session %></td>
+    <td><%= link_to 'Show', group_semester %></td>
+    <td><%= link_to 'Edit', edit_group_semester_path(group_semester) %></td>
+    <td><%= link_to 'Destroy', group_semester, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Group semester', new_group_semester_path %>

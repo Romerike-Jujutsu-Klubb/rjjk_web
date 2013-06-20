@@ -1,0 +1,11 @@
+one:
+  group_id: 1
+  semester_id: 1
+  first_session: 2013-06-20
+  last_session: 2013-06-20
+
+two:
+  group_id: 1
+  semester_id: 1
+  first_session: 2013-06-20
+  last_session: 2013-06-20

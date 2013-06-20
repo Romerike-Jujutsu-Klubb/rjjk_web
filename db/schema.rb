@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130619090259) do
+ActiveRecord::Schema.define(:version => 20130619223851) do
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -188,6 +188,15 @@ ActiveRecord::Schema.define(:version => 20130619090259) do
     t.datetime "updated_at"
   end
 
+  create_table "group_semesters", :force => true do |t|
+    t.integer  "group_id",      :null => false
+    t.integer  "semester_id",   :null => false
+    t.date     "first_session"
+    t.date     "last_session"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
   create_table "groups", :force => true do |t|
     t.integer  "martial_art_id",               :null => false
     t.string   "name",                         :null => false
@@ -201,6 +210,7 @@ ActiveRecord::Schema.define(:version => 20130619090259) do
     t.string   "contract",       :limit => 16
     t.string   "summary"
     t.text     "description"
+    t.boolean  "school_breaks"
   end
 
   create_table "groups_members", :id => false, :force => true do |t|

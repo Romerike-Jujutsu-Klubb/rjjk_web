@@ -23,6 +23,10 @@ class NewsItem < ActiveRecord::Base
   validates_length_of :title, :maximum => 64
   validates_inclusion_of :publication_state, :in => PublicationState.constants.map(&:to_s)
 
+  def self.front_page_items
+    current.order('created_at DESC').limit(10).includes(:creator => :member).all
+  end
+
   def initialize(*args)
     super
     self.publication_state ||= PublicationState::PUBLISHED
