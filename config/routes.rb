@@ -38,7 +38,7 @@ RjjkWeb::Application.routes.draw do
   resources :information_pages, controller: :info, path: :info
   resources :martial_arts
   resources :members
-  resources :news_items, controller: :news
+  resources :news_items, controller: :news, path: :news
   resources :nkf_members
   resources :nkf_member_trials
   resources :semesters

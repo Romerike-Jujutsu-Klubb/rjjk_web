@@ -14,8 +14,8 @@ class ApplicationController < ActionController::Base
 
   def load_layout_model
     @information_pages = InformationPage.roots
-    if not admin?
-      @information_pages = @information_pages.select{|ip| ip.visible?}
+    unless admin?
+      @information_pages = @information_pages.select { |ip| ip.visible? }
     end
     image_query = Image.
         select('approved, content_type, description, height, id, name, public, user_id, width').
