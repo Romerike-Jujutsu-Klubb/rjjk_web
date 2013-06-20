@@ -58,7 +58,6 @@ class MembersControllerTest < ActionController::TestCase
     get :telephone_list
     assert_response :success
     assert_template 'list'
-    assert_not_nil assigns(:members)
   end
 
   def test_new

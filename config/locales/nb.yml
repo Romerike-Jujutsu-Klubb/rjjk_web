@@ -198,5 +198,6 @@ nb:
   user_delete_account_button: Delete account
   will_paginate:
       next_label: Neste
+      page_gap: ..
       previous_label: Forrige
 

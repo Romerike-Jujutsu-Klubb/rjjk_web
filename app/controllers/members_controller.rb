@@ -221,11 +221,11 @@ class MembersController < ApplicationController
   end
 
   def telephone_list
-    @groups = Group.all(:include => :members)
+    @groups = Group.active(Date.today).includes(:members).all
   end
 
   def email_list
-    @groups = Group.all(:include => :members)
+    @groups = Group.active(Date.today).includes(:members).all
     @former_members = Member.all(:conditions => 'left_on IS NOT NULL')
     @administrators = User.find_administrators
     @administrator_emails = @administrators.map { |m| m.email }.compact.uniq

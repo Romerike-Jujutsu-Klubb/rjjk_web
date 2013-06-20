@@ -1,12 +1,15 @@
 RjjkWeb::Application.routes.draw do
-
+  get 'info/versjon'
   get 'search/index'
 
   match 'stylesheets/dark_ritual/:width.:format', controller: :stylesheets, action: :dark_ritual
   match 'stylesheets/dark_ritual.:format', controller: :stylesheets, action: :dark_ritual
   match ':controller/active_contracts', action: :active_contracts
+  match ':controller/attendance_form', action: :attendance_form
+  match ':controller/attendance_form_index', action: :attendance_form_index
   match ':controller/calendar', action: :calendar
   match ':controller/create', action: :create
+  match ':controller/email_list', action: :email_list
   match ':controller/excel_export', action: :excel_export
   match ':controller/gallery/:id', action: :gallery
   match ':controller/gallery', action: :gallery
