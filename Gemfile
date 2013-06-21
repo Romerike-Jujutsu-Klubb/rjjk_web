@@ -2,7 +2,9 @@ source 'https://rubygems.org/'
 
 gem 'rails', '~>3.2.2'
 
+gem 'rake', '~>10.0.4'
 gem 'rmagick4j'
+gem 'activerecord-jdbc-adapter', '~>1.3.0.beta2'
 gem 'activerecord-jdbcpostgresql-adapter', '~>1.3.0.beta2'
 gem 'RedCloth'
 gem 'red_cloth_formatters_plain'
@@ -13,7 +15,7 @@ gem 'prawn', '~> 1.0.0.rc2'
 gem 'rufus-scheduler'
 gem 'dynamic_form'
 gem 'redbox', '~> 1.0.4'
-# gem 'schema_plus' # has trouble with ARJDBC 2012-02-18
+gem 'schema_plus'
 gem 'acts_as_list'
 gem 'acts_as_tree'
 gem 'will_paginate'
