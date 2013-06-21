@@ -22,11 +22,9 @@
 
                 <% if user? %>
                     <ul class="controls">
-                      <li>
-                        <a href="<%= url_for :action => :edit, :id => news_item %>" class="edit">Redigèr</a>
-                      </li>
-                      <li><%= link_to 'Utløpt', {:action => :expire, :id => news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
-                      <li><%= link_to 'Slett', {:action => :destroy, :id => news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
+                      <li><%= detour_to 'Endre', edit_news_item_path(news_item), :class => :edit %></li>
+                      <li><%= detour_to 'Utløpt', {:controller => :news, :action => :expire, :id => news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
+                      <li><%= detour_to 'Slett', {:controller => :news, :action => :destroy, :id => news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :delete %></li>
                     </ul>
                 <% end %>
               </div>
@@ -38,6 +36,6 @@
 
 <ul class="controls">
   <li>
-    <%= link_to 'Eldre nyheter', {:action => :list, :id => nil}, :class => :edit %>
+    <%= link_to 'Eldre nyheter', {:controller => :news, :action => :list, :id => nil}, :class => :edit %>
   </li>
 </ul>

@@ -38,7 +38,7 @@ class NewsController < ApplicationController
     @news_item = NewsItem.find(params[:id])
     if @news_item.update_attributes(params[:news_item])
       flash[:notice] = 'NewsItem was successfully updated.'
-      redirect_to :action => :list, :id => @news_item
+      back_or_redirect_to :action => :list, :id => @news_item
     else
       render :action => :edit
     end
@@ -49,12 +49,12 @@ class NewsController < ApplicationController
     n.publication_state = NewsItem::PublicationState::EXPIRED
     n.expire_at ||= Time.now
     n.save!
-    redirect_to :action => :list
+    back_or_redirect_to :action => :list
   end
 
   def destroy
     NewsItem.find(params[:id]).destroy
-    redirect_to :action => :list
+    back_or_redirect_to :action => :list
   end
 
   private

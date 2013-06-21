@@ -25,7 +25,7 @@
     <%= f.text_area :body, :cols => 100, :rows => 24, :class => 'tiny_mce' %>
 
     <%= f.submit 'Lagre', :id => :save %>
-    <%= link_to 'Avbryt', :action => 'list' %>
+    <%= back_or_link_to 'Avbryt', :action => 'list' %>
 
 <% end %>
 

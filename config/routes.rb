@@ -1,5 +1,6 @@
 RjjkWeb::Application.routes.draw do
   get 'info/versjon'
+  get 'news/list'
   get 'search/index'
 
   match 'stylesheets/dark_ritual/:width.:format', controller: :stylesheets, action: :dark_ritual
