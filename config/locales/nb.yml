@@ -1,8 +1,13 @@
 nb:
   activerecord:
     models:
+      group: Gruppe
       user: Bruker
     attributes:
+      group_semester:
+        group_id: Gruppe
+        first_session: Første trening
+        last_session: Siste trening
       news_item:
         publication_state: Publiseringsstatus
       user:

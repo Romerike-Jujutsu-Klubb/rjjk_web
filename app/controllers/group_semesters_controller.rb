@@ -2,7 +2,7 @@ class GroupSemestersController < ApplicationController
   before_filter :admin_required
 
   def index
-    @group_semesters = GroupSemester.all
+    @group_semesters = GroupSemester.includes(:semester).order('semesters.start_on DESC').all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -20,7 +20,8 @@ class GroupSemestersController < ApplicationController
   end
 
   def new
-    @group_semester = GroupSemester.new
+    @group_semester ||= GroupSemester.new params[:group_semester]
+    load_form_data
 
     respond_to do |format|
       format.html # new.html.erb
@@ -29,7 +30,8 @@ class GroupSemestersController < ApplicationController
   end
 
   def edit
-    @group_semester = GroupSemester.find(params[:id])
+    @group_semester ||= GroupSemester.find(params[:id])
+    load_form_data
   end
 
   def create
@@ -54,7 +56,7 @@ class GroupSemestersController < ApplicationController
         format.html { redirect_to @group_semester, notice: 'Group semester was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        format.html { edit ; render action: 'edit' }
         format.json { render json: @group_semester.errors, status: :unprocessable_entity }
       end
     end
@@ -69,4 +71,12 @@ class GroupSemestersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def load_form_data
+    @groups = Group.active(@group_semester.semester.try(:start_on) || Date.today).order(:from_age).all
+    @semesters = Semester.order('start_on DESC').all
+  end
+
 end

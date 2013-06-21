@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Group:</b>
+  <b>Gruppe:</b>
   <%= @group_semester.group_id %>
 </p>
 
@@ -11,15 +11,15 @@
 </p>
 
 <p>
-  <b>First session:</b>
+  <b>Første trening:</b>
   <%= @group_semester.first_session %>
 </p>
 
 <p>
-  <b>Last session:</b>
+  <b>Siste trening:</b>
   <%= @group_semester.last_session %>
 </p>
 
 
-<%= link_to 'Edit', edit_group_semester_path(@group_semester) %> |
-<%= link_to 'Back', group_semesters_path %>
+<%= link_to 'Rediger', edit_group_semester_path(@group_semester) %> |
+<%= back_or_link_to 'Tilbake', group_semesters_path %>

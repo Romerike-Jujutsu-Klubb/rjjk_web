@@ -53,16 +53,18 @@
 
         <td valign="top">
           <%= f.label :summary, :Sammendrag %>
-          <%= f.text_area :summary, :rows => 5 %>
+          <%= f.text_area :summary, :rows => 5, :class => 'input-xlarge' %>
 
           <%= f.label :description, :Beskrivelse %>
-          <%= f.text_area :description, :rows => 5 %>
+          <%= f.text_area :description, :rows => 7, :class => 'input-xlarge' %>
         </td>
       </tr>
     </table>
 
     <div>
       <%= f.submit 'Lagre' %>
+      <%= link_to 'Semester', edit_group_semester_path(@group.current_semester) %>
+      <%= link_to 'Neste semester', edit_group_semester_path(@group.next_semester) %>
       <%= link_to 'Tilbake', groups_path %>
     </div>
 

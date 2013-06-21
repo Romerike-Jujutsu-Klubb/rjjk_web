@@ -46,9 +46,9 @@
           <tr>
             <td><%= semester.start_on %></td>
             <td><%= semester.end_on %></td>
-            <td><%= link_to 'Show', semester %></td>
-            <td><%= link_to 'Edit', edit_semester_path(semester) %></td>
-            <td><%= link_to 'Destroy', semester, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+            <td><%= link_to 'Vis', semester %></td>
+            <td><%= link_to 'Endre', edit_semester_path(semester) %></td>
+            <td><%= link_to 'Slett', semester, method: :delete, data: {confirm: 'Er du sikker?'} %></td>
           </tr>
       <% end %>
     </table>

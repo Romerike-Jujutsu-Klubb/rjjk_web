@@ -6,23 +6,6 @@
 Fra <%= @group.from_age %> til <%= @group.to_age %> år.
 </p>
 
-<h4>Treningstider</h4>
-
-<p>
-  <% @group.group_schedules.each do |gs| %>
-      <%= gs.weekday_name %> <%= gs.start_at.strftime '%H:%M' %>
-      - <%= gs.end_at.strftime '%H:%M' %><br/>
-  <% end %>
-
-<div>
-  <% if @group.school_breaks? %>
-      Gruppen følger skoleåret og har ikke trening i skoleferiene.
-  <% else %>
-      Gruppen har trening hele året dersom annet ikke er annonsert.
-  <% end %>
-</div>
-</p>
-
 <% unless @group.monthly_price.blank? %>
     <h4>Pris</h4>
 
@@ -34,6 +17,35 @@ Fra <%= @group.from_age %> til <%= @group.to_age %> år.
       Treningsavgift kr <%= @group.monthly_price %>,- (månedlig)
     </p>
 <% end %>
+
+<h4>Treningstider</h4>
+
+<p>
+  <% @group.group_schedules.each do |gs| %>
+      <%= gs.weekday_name %> <%= gs.start_at.strftime '%H:%M' %>
+      - <%= gs.end_at.strftime '%H:%M' %><br/>
+  <% end %>
+
+<div>
+  <% if @group.school_breaks? %>
+      <p>
+      Gruppen følger skoleåret og har ikke trening i skoleferiene.
+      </p>
+
+      <% if @group.current_semester %>
+          <p>
+            Siste trening dette semesteret: <%= @group.current_semester.last_session %>
+          </p>
+          <p>
+            Første trening neste semester : <%= @group.next_semester.first_session %>
+          </p>
+      <% end %>
+
+  <% else %>
+      Gruppen har trening hele året dersom annet ikke er annonsert.
+  <% end %>
+</div>
+</p>
 
 <% unless @group.summary.blank? %>
     <%= textalize @group.summary.strip %>

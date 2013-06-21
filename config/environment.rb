@@ -4,6 +4,8 @@ Encoding.default_internal = Encoding::UTF_8
 # Load the rails application
 require File.expand_path('../application', __FILE__)
 
+require 'schema_plus_fix'
+
 # Initialize the rails application
 RjjkWeb::Application.initialize!
 

@@ -6,6 +6,13 @@ class Group < ActiveRecord::Base
   has_many :group_schedules
   has_many :ranks, :order => :position
   has_many :graduations, :order => :held_on
+  has_one :current_semester, :class_name => :GroupSemester,
+          :include => :semester,
+          :conditions => 'CURRENT_DATE BETWEEN semesters.start_on AND semesters.end_on'
+  has_one :next_semester, :class_name => :GroupSemester,
+          :include => :semester,
+          :conditions => 'semesters.start_on > CURRENT_DATE',
+          :order => 'semesters.start_on'
 
   validates_presence_of :from_age, :martial_art, :name, :to_age
 

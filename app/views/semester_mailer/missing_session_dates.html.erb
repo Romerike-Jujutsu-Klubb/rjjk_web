@@ -1,0 +1,24 @@
+<h1>Hei Curt!</h1>
+
+<p>
+Du trenger å planlegge treningsstart og -stop for neste semester!
+</p>
+
+<p>
+Gå til denne linken for å skrive inn datoene:
+</p>
+
+<p>
+<%=link_to 'Fyll in datoer', :only_path => false, :controller => :group_semesters,
+           :action => :edit, :id => @group_semester.id,
+           :group_semester => {
+                   :group_id => @group_semester.group_id, :semester_id => @group_semester.semester_id
+           } %>
+</p>
+
+<p>
+Dette blir bra!
+</p>
+
+<hr/>
+Romerike Jujutsu Klubb

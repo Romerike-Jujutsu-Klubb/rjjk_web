@@ -1,10 +1,10 @@
 class NewsletterMailer < ActionMailer::Base
   helper :application
   default from: {
-        'production' => '"Romerike Jujutsu Klubb" <post@jujutsu.no>',
-        'beta' => 'beta@jujutsu.no',
-        'test' => 'test@jujutsu.no',
-        'development' => 'development@jujutsu.no',
+      'production' => '"Romerike Jujutsu Klubb" <post@jujutsu.no>',
+      'beta' => 'beta@jujutsu.no',
+      'test' => 'test@jujutsu.no',
+      'development' => 'development@jujutsu.no',
   }[Rails.env]
 
   def event_invitation(event, email)
@@ -15,13 +15,11 @@ class NewsletterMailer < ActionMailer::Base
          subject: "Invitasjon til #{@event.name}"
   end
 
-  def newsletter(news_item, user)
+  def newsletter(news_item, member)
     @news_item = news_item
-    @user = user
-    mail to: Rails.env == 'production' ?
-        %Q{"#{@user.name}" <#{@user.email}>} :
-        %Q{"#{@user.name}" <uwe@kubosch.no>},
-         subject: "[RJJK] #{@news_item.title}"
+    @user = member
+    recipients = Rails.env == 'production' ? @user.emails : %Q{"#{@user.name}" <uwe@kubosch.no>}
+    mail to: recipients, subject: "[RJJK] #{@news_item.title}"
   end
 
   def event_invitee_message(event_invitee_message)

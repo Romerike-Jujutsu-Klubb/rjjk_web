@@ -12,22 +12,22 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :group_id %><br />
-    <%= f.number_field :group_id %>
+    <%= f.label :group_id %>
+    <%= f.select :group_id, [nil] + @groups.map{|g| [g.name, g.id]}, {}, :disabled => !!@group_semester.group_id %>
   </div>
   <div class="field">
-    <%= f.label :semester_id %><br />
-    <%= f.number_field :semester_id %>
+    <%= f.label :semester_id %>
+    <%= f.select :semester_id, [nil] + @semesters.map{|s| ["#{s.start_on} - #{s.end_on}", s.id]}, {}, :disabled => !!@group_semester.semester_id %>
   </div>
   <div class="field">
-    <%= f.label :first_session %><br />
-    <%= f.date_select :first_session %>
+    <%= f.label :first_session %>
+    <%= f.datepicker :first_session, :dateFormat => 'yy-mm-dd', :firstDay => 1 %>
   </div>
   <div class="field">
-    <%= f.label :last_session %><br />
-    <%= f.date_select :last_session %>
+    <%= f.label :last_session %>
+    <%= f.datepicker :last_session, :dateFormat => 'yy-mm-dd', :firstDay => 1 %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Lagre' %>
   </div>
 <% end %>

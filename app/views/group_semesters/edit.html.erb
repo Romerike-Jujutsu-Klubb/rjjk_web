@@ -1,6 +1,6 @@
-<h1>Editing group_semester</h1>
+<h1>Semester for <%=@group_semester.group.name%></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @group_semester %> |
-<%= link_to 'Back', group_semesters_path %>
+<%= link_to 'Vis', @group_semester %> |
+<%= back_or_link_to 'Tilbake', group_semesters_path %>

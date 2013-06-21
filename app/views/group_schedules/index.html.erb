@@ -1,6 +1,6 @@
-<h1>Listing group_schedules</h1>
+<h1>Treningstider</h1>
 
-<table>
+<table class="table">
   <tr>
     <th align="left">Gruppe</th>
     <th>Ukedag</th>
@@ -14,7 +14,7 @@
     <td align="center"><%=wday group_schedule.weekday %></td>
     <td><%=t group_schedule.start_at %></td>
     <td><%=t group_schedule.end_at %></td>
-    <td><%= link_to 'Redigèr', edit_group_schedule_path(group_schedule) %></td>
+    <td><%= link_to 'Endre', edit_group_schedule_path(group_schedule) %></td>
     <td><%= link_to 'Slett', group_schedule, :data => {:confirm => 'Sikker?'}, :method => :delete %></td>
   </tr>
 <% end %>
@@ -22,4 +22,4 @@
 
 <br />
 
-<%= link_to 'New group_schedule', new_group_schedule_path %>
+<%= link_to 'Ny treningstid', new_group_schedule_path %>

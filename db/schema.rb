@@ -11,7 +11,83 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130619223851) do
+ActiveRecord::Schema.define(:version => 20130621060851) do
+
+  create_table "martial_arts", :force => true do |t|
+    t.string "name",   :limit => 16, :null => false
+    t.string "family", :limit => 16, :null => false
+  end
+
+  create_table "groups", :force => true do |t|
+    t.integer  "martial_art_id",               :null => false
+    t.string   "name",                         :null => false
+    t.integer  "from_age",                     :null => false
+    t.integer  "to_age",                       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.date     "closed_on"
+    t.integer  "monthly_price"
+    t.integer  "yearly_price"
+    t.string   "contract",       :limit => 16
+    t.string   "summary"
+    t.text     "description"
+    t.boolean  "school_breaks"
+    t.foreign_key ["martial_art_id"], "martial_arts", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "groups_martial_art_id_fkey"
+  end
+
+  create_table "group_schedules", :force => true do |t|
+    t.integer  "group_id",   :null => false
+    t.integer  "weekday",    :null => false
+    t.time     "start_at",   :null => false
+    t.time     "end_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.foreign_key ["group_id"], "groups", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "group_schedules_group_id_fkey"
+  end
+
+  create_table "members", :force => true do |t|
+    t.string  "first_name",           :limit => 100, :default => "", :null => false
+    t.string  "last_name",            :limit => 100, :default => "", :null => false
+    t.string  "email",                :limit => 128
+    t.string  "phone_mobile",         :limit => 32
+    t.string  "phone_home",           :limit => 32
+    t.string  "phone_work",           :limit => 32
+    t.string  "phone_parent",         :limit => 32
+    t.date    "birthdate"
+    t.boolean "male",                                                :null => false
+    t.date    "joined_on",                                           :null => false
+    t.integer "contract_id"
+    t.integer "cms_contract_id"
+    t.date    "left_on"
+    t.string  "parent_name",          :limit => 100
+    t.string  "address",              :limit => 100, :default => "", :null => false
+    t.string  "postal_code",          :limit => 4,                   :null => false
+    t.string  "billing_type",         :limit => 100
+    t.string  "billing_name",         :limit => 100
+    t.string  "billing_address",      :limit => 100
+    t.string  "billing_postal_code",  :limit => 4
+    t.boolean "payment_problem",                                     :null => false
+    t.string  "comment"
+    t.boolean "instructor",                                          :null => false
+    t.boolean "nkf_fee",                                             :null => false
+    t.string  "social_sec_no",        :limit => 11
+    t.string  "account_no",           :limit => 16
+    t.string  "billing_phone_home",   :limit => 32
+    t.string  "billing_phone_mobile", :limit => 32
+    t.string  "rfid",                 :limit => 25
+    t.string  "kid",                  :limit => 64
+    t.float   "latitude"
+    t.float   "longitude"
+    t.boolean "gmaps"
+    t.integer "image_id"
+    t.integer "user_id"
+    t.string  "parent_email",         :limit => 32
+    t.string  "parent_2_name",        :limit => 64
+    t.string  "parent_2_mobile",      :limit => 16
+    t.string  "billing_email",        :limit => 32
+    t.index ["image_id"], :name => "index_members_on_image_id", :unique => true
+    t.index ["user_id"], :name => "index_members_on_user_id", :unique => true
+  end
 
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",         :null => false
@@ -20,9 +96,10 @@ ActiveRecord::Schema.define(:version => 20130619223851) do
     t.integer  "week",              :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["member_id", "group_schedule_id", "year", "week"], :name => "index_attendances_on_member_id_and_group_schedule_id_and_year_a", :unique => true
+    t.foreign_key ["group_schedule_id"], "group_schedules", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "attendances_group_schedule_id_fkey"
+    t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "attendances_member_id_fkey"
   end
-
-  add_index "attendances", ["member_id", "group_schedule_id", "year", "week"], :name => "index_attendances_on_member_id_and_group_schedule_id_and_year_a", :unique => true
 
   create_table "birthday_celebrations", :force => true do |t|
     t.date     "held_on",      :null => false
@@ -34,9 +111,29 @@ ActiveRecord::Schema.define(:version => 20130619223851) do
     t.datetime "updated_at",   :null => false
   end
 
+  create_table "events", :force => true do |t|
+    t.string   "name",        :limit => 64, :null => false
+    t.datetime "start_at",                  :null => false
+    t.datetime "end_at"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "invitees"
+  end
+
+  create_table "graduations", :force => true do |t|
+    t.date    "held_on",  :null => false
+    t.integer "group_id", :null => false
+    t.integer "event_id", :null => false
+    t.index ["event_id"], :name => "fk__graduations_event_id"
+    t.foreign_key ["event_id"], "events", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_graduations_event_id"
+  end
+
   create_table "censors", :force => true do |t|
     t.integer "graduation_id", :null => false
     t.integer "member_id",     :null => false
+    t.foreign_key ["graduation_id"], "graduations", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "censors_graduation_id_fkey"
+    t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "censors_member_id_fkey"
   end
 
   create_table "cms_members", :force => true do |t|
@@ -140,19 +237,20 @@ ActiveRecord::Schema.define(:version => 20130619223851) do
     t.datetime "updated_at",   :null => false
   end
 
-  create_table "events", :force => true do |t|
-    t.string   "name",        :limit => 64, :null => false
-    t.datetime "start_at",                  :null => false
-    t.datetime "end_at"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "invitees"
-  end
-
   create_table "events_groups", :force => true do |t|
     t.integer "event_id"
     t.integer "group_id"
+  end
+
+  create_table "ranks", :force => true do |t|
+    t.string  "name",            :limit => 16, :null => false
+    t.string  "colour",          :limit => 48, :null => false
+    t.integer "position",                      :null => false
+    t.integer "martial_art_id",                :null => false
+    t.integer "standard_months",               :null => false
+    t.integer "group_id"
+    t.foreign_key ["group_id"], "groups", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "ranks_group_id_fkey"
+    t.foreign_key ["martial_art_id"], "martial_arts", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "ranks_martial_art_id_fkey"
   end
 
   create_table "graduates", :force => true do |t|
@@ -162,12 +260,9 @@ ActiveRecord::Schema.define(:version => 20130619223851) do
     t.integer "rank_id",         :null => false
     t.boolean "paid_graduation", :null => false
     t.boolean "paid_belt",       :null => false
-  end
-
-  create_table "graduations", :force => true do |t|
-    t.date    "held_on",  :null => false
-    t.integer "group_id", :null => false
-    t.integer "event_id", :null => false
+    t.foreign_key ["graduation_id"], "graduations", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "graduates_graduation_id_fkey"
+    t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "graduates_member_id_fkey"
+    t.foreign_key ["rank_id"], "ranks", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "graduates_rank_id_fkey"
   end
 
   create_table "group_instructors", :force => true do |t|
@@ -179,13 +274,11 @@ ActiveRecord::Schema.define(:version => 20130619223851) do
     t.date     "to"
   end
 
-  create_table "group_schedules", :force => true do |t|
-    t.integer  "group_id",   :null => false
-    t.integer  "weekday",    :null => false
-    t.time     "start_at",   :null => false
-    t.time     "end_at",     :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "semesters", :force => true do |t|
+    t.date     "start_on",   :null => false
+    t.date     "end_on",     :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "group_semesters", :force => true do |t|
@@ -195,30 +288,19 @@ ActiveRecord::Schema.define(:version => 20130619223851) do
     t.date     "last_session"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-  end
-
-  create_table "groups", :force => true do |t|
-    t.integer  "martial_art_id",               :null => false
-    t.string   "name",                         :null => false
-    t.integer  "from_age",                     :null => false
-    t.integer  "to_age",                       :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.date     "closed_on"
-    t.integer  "monthly_price"
-    t.integer  "yearly_price"
-    t.string   "contract",       :limit => 16
-    t.string   "summary"
-    t.text     "description"
-    t.boolean  "school_breaks"
+    t.index ["group_id"], :name => "fk__group_semesters_group_id"
+    t.index ["semester_id"], :name => "fk__group_semesters_semester_id"
+    t.foreign_key ["group_id"], "groups", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_semesters_group_id"
+    t.foreign_key ["semester_id"], "semesters", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_semesters_semester_id"
   end
 
   create_table "groups_members", :id => false, :force => true do |t|
     t.integer "group_id",  :null => false
     t.integer "member_id", :null => false
+    t.index ["group_id", "member_id"], :name => "index_groups_members_on_group_id_and_member_id", :unique => true
+    t.foreign_key ["group_id"], "groups", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "groups_members_group_id_fkey"
+    t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "groups_members_member_id_fkey"
   end
-
-  add_index "groups_members", ["group_id", "member_id"], :name => "index_groups_members_on_group_id_and_member_id", :unique => true
 
   create_table "images", :force => true do |t|
     t.string   "name",         :limit => 64, :null => false
@@ -243,56 +325,22 @@ ActiveRecord::Schema.define(:version => 20130619223851) do
     t.datetime "updated_at"
     t.integer  "position"
     t.boolean  "hidden"
+    t.foreign_key ["parent_id"], "information_pages", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "information_pages_parent_id_fkey"
   end
 
-  create_table "martial_arts", :force => true do |t|
-    t.string "name",   :limit => 16, :null => false
-    t.string "family", :limit => 16, :null => false
+  create_table "users", :force => true do |t|
+    t.string   "login",           :limit => 80,                    :null => false
+    t.string   "salted_password", :limit => 40,                    :null => false
+    t.string   "email",           :limit => 60,                    :null => false
+    t.string   "first_name",      :limit => 40
+    t.string   "last_name",       :limit => 40
+    t.string   "salt",            :limit => 40,                    :null => false
+    t.string   "role",            :limit => 40
+    t.string   "security_token",  :limit => 40
+    t.datetime "token_expiry"
+    t.boolean  "verified",                      :default => false
+    t.boolean  "deleted",                       :default => false
   end
-
-  create_table "members", :force => true do |t|
-    t.string  "first_name",           :limit => 100, :default => "", :null => false
-    t.string  "last_name",            :limit => 100, :default => "", :null => false
-    t.string  "email",                :limit => 128
-    t.string  "phone_mobile",         :limit => 32
-    t.string  "phone_home",           :limit => 32
-    t.string  "phone_work",           :limit => 32
-    t.string  "phone_parent",         :limit => 32
-    t.date    "birthdate"
-    t.boolean "male",                                                :null => false
-    t.date    "joined_on",                                           :null => false
-    t.integer "contract_id"
-    t.integer "cms_contract_id"
-    t.date    "left_on"
-    t.string  "parent_name",          :limit => 100
-    t.string  "address",              :limit => 100, :default => "", :null => false
-    t.string  "postal_code",          :limit => 4,                   :null => false
-    t.string  "billing_type",         :limit => 100
-    t.string  "billing_name",         :limit => 100
-    t.string  "billing_address",      :limit => 100
-    t.string  "billing_postal_code",  :limit => 4
-    t.boolean "payment_problem",                                     :null => false
-    t.string  "comment"
-    t.boolean "instructor",                                          :null => false
-    t.boolean "nkf_fee",                                             :null => false
-    t.string  "social_sec_no",        :limit => 11
-    t.string  "account_no",           :limit => 16
-    t.string  "billing_phone_home",   :limit => 32
-    t.string  "billing_phone_mobile", :limit => 32
-    t.string  "rfid",                 :limit => 25
-    t.string  "kid",                  :limit => 64
-    t.float   "latitude"
-    t.float   "longitude"
-    t.boolean "gmaps"
-    t.integer "image_id"
-    t.integer "user_id"
-    t.string  "parent_email",         :limit => 32
-    t.string  "parent_2_name",        :limit => 64
-    t.string  "parent_2_mobile",      :limit => 16
-  end
-
-  add_index "members", ["image_id"], :name => "index_members_on_image_id", :unique => true
-  add_index "members", ["user_id"], :name => "index_members_on_user_id", :unique => true
 
   create_table "news_items", :force => true do |t|
     t.string   "title",             :limit => 64, :null => false
@@ -304,6 +352,7 @@ ActiveRecord::Schema.define(:version => 20130619223851) do
     t.datetime "publish_at"
     t.datetime "expire_at"
     t.datetime "mailed_at"
+    t.foreign_key ["created_by"], "users", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "news_items_created_by_fkey"
   end
 
   create_table "nkf_member_trials", :force => true do |t|
@@ -324,9 +373,8 @@ ActiveRecord::Schema.define(:version => 20130619223851) do
     t.integer  "tid",                         :null => false
     t.string   "epost_faktura", :limit => 64
     t.string   "stilart",       :limit => 64, :null => false
+    t.index ["tid"], :name => "index_nkf_member_trials_on_tid", :unique => true
   end
-
-  add_index "nkf_member_trials", ["tid"], :name => "index_nkf_member_trials_on_tid", :unique => true
 
   create_table "nkf_members", :force => true do |t|
     t.integer  "member_id"
@@ -376,22 +424,7 @@ ActiveRecord::Schema.define(:version => 20130619223851) do
     t.string   "foresatte_mobil",                                 :limit => 16
     t.string   "foresatte_nr_2",                                  :limit => 64
     t.string   "foresatte_nr_2_mobil",                            :limit => 16
-  end
-
-  create_table "ranks", :force => true do |t|
-    t.string  "name",            :limit => 16, :null => false
-    t.string  "colour",          :limit => 48, :null => false
-    t.integer "position",                      :null => false
-    t.integer "martial_art_id",                :null => false
-    t.integer "standard_months",               :null => false
-    t.integer "group_id"
-  end
-
-  create_table "semesters", :force => true do |t|
-    t.date     "start_on",   :null => false
-    t.date     "end_on",     :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "nkf_members_member_id_fkey"
   end
 
   create_table "trial_attendances", :force => true do |t|
@@ -401,6 +434,8 @@ ActiveRecord::Schema.define(:version => 20130619223851) do
     t.integer  "week",                :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.foreign_key ["group_schedule_id"], "group_schedules", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "trial_attendances_group_schedule_id_fkey"
+    t.foreign_key ["nkf_member_trial_id"], "nkf_member_trials", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "trial_attendances_nkf_member_trial_id_fkey"
   end
 
   create_table "user_images", :force => true do |t|
@@ -409,22 +444,7 @@ ActiveRecord::Schema.define(:version => 20130619223851) do
     t.string   "rel_type",   :limit => 16, :null => false
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
-  end
-
-  add_index "user_images", ["user_id", "image_id", "rel_type"], :name => "index_user_images_on_user_id_and_image_id_and_rel_type", :unique => true
-
-  create_table "users", :force => true do |t|
-    t.string   "login",           :limit => 80,                    :null => false
-    t.string   "salted_password", :limit => 40,                    :null => false
-    t.string   "email",           :limit => 60,                    :null => false
-    t.string   "first_name",      :limit => 40
-    t.string   "last_name",       :limit => 40
-    t.string   "salt",            :limit => 40,                    :null => false
-    t.string   "role",            :limit => 40
-    t.string   "security_token",  :limit => 40
-    t.datetime "token_expiry"
-    t.boolean  "verified",                      :default => false
-    t.boolean  "deleted",                       :default => false
+    t.index ["user_id", "image_id", "rel_type"], :name => "index_user_images_on_user_id_and_image_id_and_rel_type", :unique => true
   end
 
 end

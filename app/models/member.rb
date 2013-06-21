@@ -223,7 +223,17 @@ class Member < ActiveRecord::Base
   end
 
   def invoice_email
-    nkf_member.epost_faktura.blank? ? email : nkf_member.epost_faktura
+    billing_email || email
   end
 
+  def emails
+    emails = [%Q{"#{@user.name}" <#{@user.email}>}]
+    if billing_email
+      emails << parent_name ? %Q{"#{parent_name}" <#{billing_email}>} : billing_email
+    end
+    if parent_email
+      emails << parent2_name ? %Q{"#{parent2_name}" <#{parent_email}>} : parent_email
+    end
+    emails.uniq
+  end
 end

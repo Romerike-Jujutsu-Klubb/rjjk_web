@@ -7,7 +7,7 @@ class NkfMember < ActiveRecord::Base
       :betalt_t_o_m__dato => nil,
       :created_at => nil,
       :epost => :email,
-      :epost_faktura => nil,
+      :epost_faktura => :billing_email,
       :etternavn => :last_name,
       :fodselsdato => :birthdate,
       :foresatte => :parent_name,
