@@ -18,12 +18,20 @@ class ActiveRecord::ConnectionAdapters::PostgreSQLColumn
   end
 end
 
-class ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
-  def indexes(*args)
-    super(*args) # Will be removed by the schema_plus gem
-  end
-  def exec_cache(*args) # Will be aliased by schema_plus
-    super
+module SchemaPlus
+  module ActiveRecord
+    module ConnectionAdapters
+      module PostgresqlAdapter
+        def self.included(base) #:nodoc:
+          base.class_eval do
+            remove_method :indexes if methods.include?(:indexes)
+            alias_method_chain :rename_table, :schema_plus
+            alias_method_chain :exec_cache, :schema_plus if methods.include?(:exec_cache)
+          end
+          ::ActiveRecord::ConnectionAdapters::PostgreSQLColumn.send(:include, PostgreSQLColumn) unless ::ActiveRecord::ConnectionAdapters::PostgreSQLColumn.include?(PostgreSQLColumn)
+        end
+      end
+    end
   end
 end
 

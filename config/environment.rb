@@ -32,35 +32,17 @@ end
 
 ActionView::Base.field_error_proc = Proc.new { |html_tag, _| "<span class=\"fieldWithErrors\">#{html_tag}</span>".html_safe }
 
-# TODO(uwe): Report this upstream
-class ActiveRecord::ConnectionAdapters::JdbcAdapter
-  def _execute(sql, name = nil)
-    @connection.execute(sql)
-  rescue ActiveRecord::JDBCError => e
-    if e.message == 'This connection has been closed.'
-      ActiveRecord::Base.logger.info 'Reconnecting!'
-      @connection.reconnect!
-      return @connection.execute(sql)
-    end
-    raise
-  end
-end
-
 class TimeOfDay
   def min
     minute
   end
-
   def day
     nil
   end
-
   def month
     nil
   end
-
   def year
     nil
   end
-
 end
