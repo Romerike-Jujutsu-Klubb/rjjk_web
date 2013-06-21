@@ -2,6 +2,8 @@
 class Semester < ActiveRecord::Base
   attr_accessible :end_on, :start_on
 
+  has_many :group_semesters
+
   validates_presence_of :end_on, :start_on
 
   validate do
@@ -17,6 +19,14 @@ class Semester < ActiveRecord::Base
     if Semester.where('id <> ? AND start_on <= ? AND end_on >= ?', id, end_on, end_on).exists?
       errors.add(:end_on, 'Du kan ikke avslutte et semester inni et annet semester.')
     end
+  end
+
+  def self.current
+    where('CURRENT_DATE BETWEEN start_on AND end_on').first
+  end
+
+  def self.next
+    where('start_on > CURRENT_DATE').order(:start_on).first
   end
 
   def graduations

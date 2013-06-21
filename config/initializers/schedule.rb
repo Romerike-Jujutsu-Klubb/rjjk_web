@@ -8,7 +8,8 @@ unless Rails.env == 'test'
   scheduler.cron('0 7-23 * * *') { import_nkf_changes }
   scheduler.cron('0 0 * * *') { notify_wrong_contracts }
   scheduler.cron('0 3 * * *') { notify_missing_semesters }
-  scheduler.cron('0 4 * * *') { notify_missing_group_semesters }
+  scheduler.cron('0 4 * * *') { create_missing_group_semesters }
+  scheduler.cron('0 4 1 * *') { notify_missing_group_semesters }
   scheduler.cron('0 5 1 * *') { notify_missing_instructors }
   scheduler.cron('0 6 * * *') { notify_missing_graduations }
   scheduler.cron('0 7 1 * *') { notify_overdue_graduates }
@@ -147,7 +148,7 @@ def notify_missing_semesters
   end
 end
 
-def notify_missing_group_semesters
+def create_missing_group_semesters
   begin
     # Create missing GroupSemesters
     groups = Group.where('school_breaks = ?', true).all
@@ -157,7 +158,14 @@ def notify_missing_group_semesters
         GroupSemester.create! cond unless GroupSemester.exists? cond
       end
     end
+  rescue
+    logger.error "Exception sending semester message: #{$!}"
+    logger.error $!.backtrace
+  end
+end
 
+def notify_missing_group_semesters
+  begin
     # Ensure first and last sessions are set
     GroupSemester.includes(:group).
         where('groups.school_breaks = ? AND (first_session IS NULL OR last_session IS NULL)', true).each do |gs|

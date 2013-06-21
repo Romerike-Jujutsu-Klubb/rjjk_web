@@ -57,6 +57,17 @@ class GroupsController < ApplicationController
     respond_to do |format|
       if @group.save
         flash[:notice] = 'Group was successfully updated.'
+
+        if @group.school_breaks
+          if (current_semester = Semester.current) && !@group.current_semester
+            @group.create_current_semester(:semester_id => current_semester.id)
+          end
+
+          if (next_semester = Semester.next) && !@group.next_semester
+            @group.create_next_semester(:semester_id => next_semester.id)
+          end
+        end
+
         format.html { redirect_to(@group) }
         format.xml { head :ok }
       else

@@ -3,7 +3,7 @@
 <h4>Alder</h4>
 
 <p>
-Fra <%= @group.from_age %> til <%= @group.to_age %> år.
+  Fra <%= @group.from_age %> til <%= @group.to_age %> år.
 </p>
 
 <% unless @group.monthly_price.blank? %>
@@ -26,38 +26,42 @@ Fra <%= @group.from_age %> til <%= @group.to_age %> år.
       - <%= gs.end_at.strftime '%H:%M' %><br/>
   <% end %>
 
-<div>
-  <% if @group.school_breaks? %>
-      <p>
-      Gruppen følger skoleåret og har ikke trening i skoleferiene.
-      </p>
+  <div>
+    <% if @group.school_breaks? %>
+        <p>
+          Gruppen følger skoleåret og har ikke trening i skoleferiene.
+        </p>
+        <% if @group.current_semester %>
+            <% if @group.current_semester.last_session %>
+                <p>
+                  Siste trening dette
+                  semesteret : <%= @group.current_semester.last_session %>
+                </p>
+            <% end %>
+            <% if @group.next_semester.try(:first_session) %>
+                <p>
+                  Første trening neste
+                  semester : <%= @group.next_semester.first_session %>
+                </p>
+            <% end %>
+        <% end %>
+    <% else %>
+        Gruppen har trening hele året dersom annet ikke er annonsert.
+    <% end %>
+  </div>
+  </p>
 
-      <% if @group.current_semester %>
-          <p>
-            Siste trening dette semesteret: <%= @group.current_semester.last_session %>
-          </p>
-          <p>
-            Første trening neste semester : <%= @group.next_semester.first_session %>
-          </p>
-      <% end %>
-
-  <% else %>
-      Gruppen har trening hele året dersom annet ikke er annonsert.
+  <% unless @group.summary.blank? %>
+      <%= textalize @group.summary.strip %>
   <% end %>
-</div>
-</p>
 
-<% unless @group.summary.blank? %>
-    <%= textalize @group.summary.strip %>
-<% end %>
+  <% unless @group.description.blank? %>
+      <%= textalize @group.description %>
+  <% end %>
 
-<% unless @group.description.blank? %>
-    <%= textalize @group.description %>
-<% end %>
-
-<% if admin? %>
-    <ul class="controls">
-      <li><%= link_to 'Rediger', edit_group_path(@group), :class => :edit %></li>
-      <li><%= back_or_link_to 'Tilbake', groups_path, :class => :back %></li>
-    </ul>
-<% end %>
+  <% if admin? %>
+      <ul class="controls">
+        <li><%= link_to 'Rediger', edit_group_path(@group), :class => :edit %></li>
+        <li><%= back_or_link_to 'Tilbake', groups_path, :class => :back %></li>
+      </ul>
+  <% end %>
