@@ -2,7 +2,8 @@ class GroupsController < ApplicationController
   before_filter :admin_required, :except => :show
 
   def index
-    @groups = Group.all
+    @groups = Group.active(Date.today).all
+    @closed_groups = Group.inactive(Date.today).all
     respond_to do |format|
       format.html # index.html.erb
       format.xml { render :xml => @groups }
@@ -32,7 +33,7 @@ class GroupsController < ApplicationController
   end
 
   def edit
-    @group = Group.find(params[:id])
+    @group ||= Group.find(params[:id])
     @martial_arts = MartialArt.all
     @contracts = NkfMember.all.group_by(&:kontraktstype).keys.sort
   end
@@ -45,7 +46,7 @@ class GroupsController < ApplicationController
       redirect_to(@group)
     else
       new
-      render :action => "new"
+      render :action => :new
     end
   end
 
@@ -71,7 +72,7 @@ class GroupsController < ApplicationController
         format.html { redirect_to(@group) }
         format.xml { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { edit ; render :action => :edit }
         format.xml { render :xml => @group.errors, :status => :unprocessable_entity }
       end
     end
