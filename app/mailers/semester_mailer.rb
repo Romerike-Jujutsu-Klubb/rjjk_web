@@ -10,8 +10,8 @@ class SemesterMailer < ActionMailer::Base
     mail subject: '[RJJK] Planlegge neste semester'
   end
 
-  def missing_session_dates(group_semester)
-    @group_semester = group_semester
+  def missing_session_dates(group)
+    @group = group
     mail subject: '[RJJK] Planlegge neste semester'
   end
 end

@@ -117,7 +117,7 @@ def notify_wrong_contracts
     NkfReplication.wrong_contracts(wrong_contracts).deliver if wrong_contracts.any?
   rescue
     logger.error "Exception sending contract message: #{$!}"
-    logger.error $!.backtrace
+    logger.error $!.backtrace.join("\n")
   end
 end
 
@@ -129,7 +129,7 @@ def notify_missing_instructors
     InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
   rescue
     logger.error "Exception sending instruction message: #{$!}"
-    logger.error $!.backtrace
+    logger.error $!.backtrace.join("\n")
   end
 end
 
@@ -144,7 +144,7 @@ def notify_missing_semesters
     end
   rescue
     logger.error "Exception sending semester message: #{$!}"
-    logger.error $!.backtrace
+    logger.error $!.backtrace.join("\n")
   end
 end
 
@@ -160,20 +160,23 @@ def create_missing_group_semesters
     end
   rescue
     logger.error "Exception sending semester message: #{$!}"
-    logger.error $!.backtrace
+    logger.error $!.backtrace.join("\n")
   end
 end
 
 def notify_missing_group_semesters
   begin
     # Ensure first and last sessions are set
-    GroupSemester.includes(:group).
-        where('groups.school_breaks = ? AND (first_session IS NULL OR last_session IS NULL)', true).each do |gs|
-      SemesterMailer.missing_session_dates(gs).deliver
+    Group.active(Date.today).includes(:current_semester, :next_semester).
+        where('groups.school_breaks = ?', true).all.
+        select { |g| g.current_semester.last_session.nil? }.
+        select { |g| g.next_semester.first_session.nil? }.
+        each do |g|
+      SemesterMailer.missing_session_dates(g).deliver
     end
   rescue
-    logger.error "Exception sending semester message: #{$!}"
-    logger.error $!.backtrace
+    logger.error "Exception sending session dates message: #{$!}"
+    logger.error $!.backtrace.join("\n")
   end
 end
 
@@ -186,7 +189,7 @@ def notify_missing_graduations
     InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
   rescue
     logger.error "Exception sending instruction message: #{$!}"
-    logger.error $!.backtrace
+    logger.error $!.backtrace.join("\n")
   end
 end
 
@@ -198,6 +201,6 @@ def notify_overdue_graduates
     InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
   rescue
     logger.error "Exception sending instruction message: #{$!}"
-    logger.error $!.backtrace
+    logger.error $!.backtrace.join("\n")
   end
 end
