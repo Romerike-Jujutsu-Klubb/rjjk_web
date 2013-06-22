@@ -13,6 +13,8 @@ class Group < ActiveRecord::Base
           :include => :semester,
           :conditions => 'semesters.start_on > CURRENT_DATE',
           :order => 'semesters.start_on'
+  accepts_nested_attributes_for :current_semester
+  accepts_nested_attributes_for :next_semester
 
   validates_presence_of :from_age, :martial_art, :name, :to_age
 

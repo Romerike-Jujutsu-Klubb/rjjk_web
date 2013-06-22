@@ -44,9 +44,23 @@
             <%= f.check_box :school_breaks, :class => 'input-small' %>
           </div>
 
-          <div style="float: left ; margin-right: 1em">
+          <div>
             <%= f.label :closed_on, 'Avsluttet' %>
             <%= f.datepicker :closed_on, :dateFormat => 'yy-mm-dd', :firstDay => 1, :class => 'input-small' %>
+          </div>
+
+          <div style="float: left ; margin-right: 1em">
+            <%= f.fields_for :current_semester, @group.current_semester do |csf| %>
+                <%= csf.label :last_session, 'Siste trening' %>
+                <%= csf.datepicker :last_session, :dateFormat => 'yy-mm-dd', :firstDay => 1, :class => 'input-small' %>
+            <% end %>
+          </div>
+
+          <div>
+            <%= f.fields_for :next_semester, @group.next_semester do |csf| %>
+                <%= csf.label :first_session, 'Første trening' %>
+                <%= csf.datepicker :first_session, :dateFormat => 'yy-mm-dd', :firstDay => 1, :class => 'input-small' %>
+            <% end %>
           </div>
 
         </td>
@@ -63,8 +77,6 @@
 
     <div>
       <%= f.submit 'Lagre' %>
-      <%= link_to 'Semester', edit_group_semester_path(@group.current_semester) if @group.current_semester %>
-      <%= link_to 'Neste semester', edit_group_semester_path(@group.next_semester) if @group.next_semester %>
       <%= link_to 'Tilbake', groups_path %>
     </div>
 
