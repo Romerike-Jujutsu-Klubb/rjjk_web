@@ -69,7 +69,7 @@ class GroupsController < ApplicationController
           end
         end
 
-        format.html { redirect_to(@group) }
+        format.html { back_or_redirect_to(@group) }
         format.xml { head :ok }
       else
         format.html { edit ; render :action => :edit }
