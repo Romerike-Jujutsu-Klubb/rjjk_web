@@ -52,14 +52,18 @@
           <div style="float: left ; margin-right: 1em">
             <%= f.fields_for :current_semester, @group.current_semester do |csf| %>
                 <%= csf.label :last_session, 'Siste trening' %>
-                <%= csf.datepicker :last_session, :dateFormat => 'yy-mm-dd', :firstDay => 1, :class => 'input-small' %>
+                <%= csf.datepicker :last_session, :dateFormat => 'yy-mm-dd',
+                                   :firstDay => 1, :class => 'input-small',
+                 :placeholder => 'før ferien' %>
             <% end %>
           </div>
 
           <div>
             <%= f.fields_for :next_semester, @group.next_semester do |csf| %>
                 <%= csf.label :first_session, 'Første trening' %>
-                <%= csf.datepicker :first_session, :dateFormat => 'yy-mm-dd', :firstDay => 1, :class => 'input-small' %>
+                <%= csf.datepicker :first_session, :dateFormat => 'yy-mm-dd',
+                                   :firstDay => 1, :class => 'input-small',
+                                   :placeholder => 'etter ferien'%>
             <% end %>
           </div>
 
@@ -70,7 +74,7 @@
           <%= f.text_area :summary, :rows => 5, :class => 'input-xlarge' %>
 
           <%= f.label :description, :Beskrivelse %>
-          <%= f.text_area :description, :rows => 7, :class => 'input-xlarge' %>
+          <%= f.text_area :description, :rows => 10, :class => 'input-xlarge' %>
         </td>
       </tr>
     </table>
