@@ -4,6 +4,9 @@ nb:
       group: Gruppe
       user: Bruker
     attributes:
+      group:
+        from_age: Nedre aldersgrense
+        to_age: Øvre aldersgrense
       group_semester:
         group_id: Gruppe
         first_session: Første trening

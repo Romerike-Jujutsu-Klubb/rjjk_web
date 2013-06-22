@@ -25,47 +25,49 @@
       <%= gs.weekday_name %> <%= gs.start_at.strftime '%H:%M' %>
       - <%= gs.end_at.strftime '%H:%M' %><br/>
   <% end %>
-  </p>
+</p>
 
-  <div>
-    <% if @group.school_breaks? %>
-        <p>
-          Gruppen følger skoleåret og har ikke trening i skoleferiene.
-        </p>
-        <% if @group.current_semester %>
-            <% if @group.current_semester.last_session %>
-                <p>
-                  Siste trening dette
-                  semesteret : <%= @group.current_semester.last_session %>
-                </p>
-            <% end %>
-            <% if @group.next_semester.try(:first_session) %>
-                <p>
-                  Første trening neste
-                  semester : <%= @group.next_semester.first_session %>
-                </p>
-            <% end %>
-        <% end %>
-    <% else %>
+<div>
+  <% if @group.school_breaks? %>
+      <p>
+        Gruppen følger skoleåret og har ikke trening i skoleferiene.
+      </p>
+      <% if @group.current_semester %>
+          <% if @group.current_semester.last_session %>
+              <p>
+                Siste trening dette
+                semesteret : <%= @group.current_semester.last_session %>
+              </p>
+          <% end %>
+          <% if @group.next_semester.try(:first_session) %>
+              <p>
+                Første trening neste
+                semester : <%= @group.next_semester.first_session %>
+              </p>
+          <% end %>
+      <% end %>
+  <% else %>
+      <p>
         Gruppen har trening hele året dersom annet ikke er annonsert.
+      </p>
+  <% end %>
+</div>
+
+<% unless @group.summary.blank? && @group.description.blank? %>
+    <h4>Innhold</h4>
+
+    <% unless @group.summary.blank? %>
+        <%= textalize @group.summary.strip %>
     <% end %>
-  </div>
 
-  <% unless @group.summary.blank? && @group.description.blank? %>
-      <h4>Innhold</h4>
+    <% unless @group.description.blank? %>
+        <%= textalize @group.description %>
+    <% end %>
+<% end %>
 
-      <% unless @group.summary.blank? %>
-          <%= textalize @group.summary.strip %>
-      <% end %>
-
-      <% unless @group.description.blank? %>
-          <%= textalize @group.description %>
-      <% end %>
-  <% end %>
-
-  <% if admin? %>
-      <ul class="controls">
-        <li><%= detour_to 'Rediger', edit_group_path(@group), :class => :edit %></li>
-        <li><%= back_or_link_to 'Tilbake', groups_path, :class => :back %></li>
-      </ul>
-  <% end %>
+<% if admin? %>
+    <ul class="controls">
+      <li><%= detour_to 'Rediger', edit_group_path(@group), :class => :edit %></li>
+      <li><%= back_or_link_to 'Tilbake', groups_path, :class => :back %></li>
+    </ul>
+<% end %>
