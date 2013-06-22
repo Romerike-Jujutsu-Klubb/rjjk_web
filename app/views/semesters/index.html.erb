@@ -14,7 +14,7 @@
     <h2>Graderinger</h2>
 
     <% if @semester.graduations.any? %>
-        <table>
+        <table class="table">
           <% @semester.graduations.each do |g| %>
               <tr>
                 <td><%= link_to g.held_on, edit_graduation_path(g) %></td>
@@ -33,7 +33,7 @@
 
     <h2>Alle semestre</h2>
 
-    <table>
+    <table class="table">
       <tr>
         <th align="left">Fra</th>
         <th align="left">Til</th>
