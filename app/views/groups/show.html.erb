@@ -65,7 +65,7 @@
 
   <% if admin? %>
       <ul class="controls">
-        <li><%= link_to 'Rediger', edit_group_path(@group), :class => :edit %></li>
+        <li><%= detour_to 'Rediger', edit_group_path(@group), :class => :edit %></li>
         <li><%= back_or_link_to 'Tilbake', groups_path, :class => :back %></li>
       </ul>
   <% end %>
