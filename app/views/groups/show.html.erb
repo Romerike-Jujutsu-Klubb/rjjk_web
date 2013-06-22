@@ -25,6 +25,7 @@
       <%= gs.weekday_name %> <%= gs.start_at.strftime '%H:%M' %>
       - <%= gs.end_at.strftime '%H:%M' %><br/>
   <% end %>
+  </p>
 
   <div>
     <% if @group.school_breaks? %>
@@ -49,14 +50,17 @@
         Gruppen har trening hele året dersom annet ikke er annonsert.
     <% end %>
   </div>
-  </p>
 
-  <% unless @group.summary.blank? %>
-      <%= textalize @group.summary.strip %>
-  <% end %>
+  <% unless @group.summary.blank? && @group.description.blank? %>
+      <h4>Innhold</h4>
 
-  <% unless @group.description.blank? %>
-      <%= textalize @group.description %>
+      <% unless @group.summary.blank? %>
+          <%= textalize @group.summary.strip %>
+      <% end %>
+
+      <% unless @group.description.blank? %>
+          <%= textalize @group.description %>
+      <% end %>
   <% end %>
 
   <% if admin? %>
