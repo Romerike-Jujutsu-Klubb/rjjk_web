@@ -3,7 +3,7 @@
 <h4>Alder</h4>
 
 <p>
-  Fra <%= @group.from_age %> til <%= @group.to_age %> år.
+  <strong>Fra <%= @group.from_age %> til <%= @group.to_age %> år</strong>.
 </p>
 
 <% unless @group.monthly_price.blank? %>
@@ -11,46 +11,45 @@
 
     <p style="line-height: 1.5">
       <% unless @group.yearly_price.blank? %>
-          Årskontingent kr <%= @group.yearly_price %>,-<br/>
+          Årskontingent <strong>kr <%= @group.yearly_price %>,-</strong><br/>
       <% end %>
 
-      Treningsavgift kr <%= @group.monthly_price %>,- (månedlig)
+      Treningsavgift <strong>kr <%= @group.monthly_price %>,-</strong> (månedlig)
     </p>
 <% end %>
 
 <h4>Treningstider</h4>
 
-<p>
+<p><strong>
   <% @group.group_schedules.each do |gs| %>
       <%= gs.weekday_name %> <%= gs.start_at.strftime '%H:%M' %>
       - <%= gs.end_at.strftime '%H:%M' %><br/>
   <% end %>
-</p>
+</strong></p>
 
 <div>
-  <% if @group.school_breaks? %>
-      <p>
+  <p>
+    <% if @group.school_breaks? %>
         Gruppen følger skoleåret og har ikke trening i skoleferiene.
-      </p>
-      <% if @group.current_semester %>
-          <% if @group.current_semester.last_session %>
-              <p>
-                Siste trening dette
-                semesteret : <%= @group.current_semester.last_session %>
-              </p>
-          <% end %>
-          <% if @group.next_semester.try(:first_session) %>
-              <p>
-                Første trening neste
-                semester : <%= @group.next_semester.first_session %>
-              </p>
-          <% end %>
-      <% end %>
-  <% else %>
-      <p>
+        <br/>
+        <% if @group.current_semester %>
+            <% if @group.current_semester.last_session %>
+                Siste trening før ferien er
+                <strong><%= @group.current_semester.last_session.day %>.
+                  <%= t(:date)[:month_names][@group.current_semester.last_session.month].downcase %></strong>.
+                <br/>
+            <% end %>
+            <% if @group.next_semester.try(:first_session) %>
+                Første trening etter ferien er
+                <strong><%= @group.next_semester.first_session.day %>.
+                  <%= t(:date)[:month_names][@group.next_semester.first_session.month].downcase %></strong>.
+                <br/>
+            <% end %>
+        <% end %>
+    <% else %>
         Gruppen har trening hele året dersom annet ikke er annonsert.
-      </p>
-  <% end %>
+    <% end %>
+  </p>
 </div>
 
 <% unless @group.summary.blank? && @group.description.blank? %>
