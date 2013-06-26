@@ -19,18 +19,15 @@
   <%= csrf_meta_tags %>
 
   <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-20693372-1']);
-      _gaq.push(['_trackPageview']);
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-20693372-1']);
+    _gaq.push(['_trackPageview']);
 
-      (function () {
-          var ga = document.createElement('script');
-          ga.type = 'text/javascript';
-          ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0];
-          s.parentNode.insertBefore(ga, s);
-      })();
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
   </script>
 
 </head>
@@ -38,315 +35,21 @@
 <body>
 
 <div class="container">
-
-  <div class="header">
-    Romerike Jujutsu Klubb<br/>
-
-    <% if flash[:notice] || flash['notice'] %>
-        <div class="notice">
-          <div class="inner">
-            <p>
-              <%= flash[:notice] %>
-              <%= flash['notice'].try(:html_safe) %>
-            </p>
-          </div>
-        </div>
-    <% end %>
-    <span style="font-size: 10pt; text-align: center">
-      <%= link_to 'Logg på NKF', 'http://www.kampsport.no/portal/page/portal/ks_utv/st_login', :onclick => 'return !window.open(this.href)', :style => 'margin-right: 50px' %>
-      <% if user? %>
-      <%= link_to 'Gruppe', 'https://www.facebook.com/groups/romerikejjk', :onclick => 'return !window.open(this.href)',
-                  :style => 'padding-left:2.7em;background-image: url(/assets/facebook.png); background-repeat:no-repeat;background-origin:padding-box;background-position: 0.5em;background-size: 24px 24px' %>
-      <% end %>
-      <%= link_to 'Facebook', 'http://www.facebook.com/home.php#!/pages/Romerike-Jujutsu-Klubb/260684570923?ref=ts', :onclick => 'return !window.open(this.href)' %>
-      <%= link_to 'Bli medlem!', 'http://www.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)' %>
-	</span>
-  </div>
-
-  <div class="main_right">
-
-    <div class="padded">
-      <%= link_to image_tag('rjjk_logo_&_txt_320.png', :id => :logo_img, :style => 'width: 182px; height: 181px; border: 0'), '/' %>
-
-      <form action="/search" class="form-search">
-        <%= text_field nil, nil, :name => :q, :value => @query, :placeholder => 'Søk', :style => 'width: 152px', :class => 'search-query' %>
-      </form>
-
-      <% if @image && !@image.new_record? && (controller.class != ImagesController || !%w{gallery mine}.include?(controller.action_name)) %>
-          <div align="center">
-            <%= link_to :controller => :images, :action => :gallery, :id => @image.id do %>
-                <% if @image.video? %>
-                    <%= video_tag url_for(:controller => :images, :action => :show, :id => @image.id, :format => @image.format), :title => @image.name || 'Film', :style => 'width: 100%; border: 0', :controls => true, :autobuffer => true %>
-                <% else %>
-                    <% image_width = @image.width_max(182) %>
-                    <% image_height = @image.height_at(image_width) %>
-                    <%= image_tag url_for(:controller => :images, :action => :inline, :id => @image.id, :width => image_width, :format => @image.format), :title => @image.name || 'Bilde', :style => "width: #{image_width}px; height: #{image_height}px; border: 0" %>
-                <% end %>
-                <%= @image.description %>
-            <% end %>
-            <ul class="controls" style="text-align: center">
-              <li><%= link_to 'Godkjenn', {:controller => :images, :action => :update, :id => @image.id, :image => {:approved => true}}, :method => :put if admin? && !@image.approved? %></li>
-              <li><%= link_to @image.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => @image.id, :image => {:public => !@image.public?}}, :method => :put if admin? %></li>
-              <li><%= link_to 'Liker', {:controller => :user, :action => :like, :id => @image.id}, :method => :post if user? && !@image.likers.include?(current_user) %></li>
-            </ul>
-          </div>
-      <% end %>
-
-      <% if user? %>
-          <h3 align="center">Last opp media</h3>
-          <%= form_for @new_image do |f| %>
-              <%= f.file_field :file, :onchange => 'form.submit()',
-                               'size' => '10', :style => 'width: 100%',
-                               :class => 'hide ie_show' %>
-              <div class="input-append ie_hide">
-                <input id="pretty-input" class="input-small" type="text" onclick="$('input[id=image_file]').click();">
-                <a class="btn" onclick="$('input[id=image_file]').click();">Browse</a>
-              </div>
-          <% end %>
-          <script type="text/javascript">
-              $('input[id=image_file]').change(function () {
-                  $('#pretty-input').val($(this).val().replace("C:\\fakepath\\", ""));
-              });
-          </script>
-      <% end %>
-
-      <% if @events.any? %>
-          <% last_year = Date.today.year %>
-          <% last_mon = nil %>
-          <div class="events">
-          <h3>Hva skjer? <%=link_to image_tag('ical.png', :style => 'height: 24px'),
-                                    {:only_path => false, :protocol => :webcal,
-                                    :controller => :events, :action => :calendar,
-                                    :format => :ics}, :title => 'Abonnér på hendelseskalender!' %></h3>
-
-          <% for event in @events %>
-              <% ingress = event.ingress %>
-              <% ingress = nil if ingress.blank? %>
-              <% body = event.body %>
-                <% if event.start_at.year != last_year %>
-                    <% last_year = event.start_at.year %>
-                    <h4 style="color: #E20916"><%=last_year %></h4>
-                <% end %>
-                <% if event.start_at.mon != last_mon %>
-                    <% last_mon = event.start_at.mon %>
-                    <h4 style="color: #E20916"><%= t Date::MONTHNAMES[last_mon] %></h4>
-                <% end %>
-                <h4 style="color: #FFB400">
-                  <% if event.end_at.nil? || event.end_at == event.start_at %>
-                      <% if event.start_at.min != 0 || event.start_at.hour != 0 %>
-                          <%= t(:date)[:day_names][event.start_at.wday]%> <%= event.start_at.strftime('%d. kl. %H:%M') %>
-                      <% else %>
-                          <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>.
-                      <% end %>
-                  <% else %>
-                      <% if event.end_at.to_date == event.start_at.to_date %>
-                          <%= t(:date)[:day_names][event.start_at.wday]%> <%= event.start_at.mday %>.<br/>
-                          kl. <%= event.start_at.strftime('%H:%M') %>-<%= event.end_at.strftime('%H:%M') %>
-                      <% else %>
-                          <% if event.start_at.min == 0 && event.start_at.hour == 0 && event.end_at.hour == 0 && event.end_at.min == 0 %>
-                              <%= event.start_at.mday %>-<%=event.end_at.mday%>.
-                          <% else %>
-                              <%= t(:date)[:day_names][event.start_at.wday]%> <%= event.start_at.mday %>. <%= event.start_at.strftime('%H:%M') %>
-                              -
-                              <%= t(:date)[:day_names][event.end_at.wday] %>  <%=event.end_at.mday%>.     <%= event.end_at.strftime('%H:%M') %>
-                          <% end %>
-                      <% end %>
-                  <% end %>
-                </h4>
-
-                <h4>
-                <% if body %>
-                    <%= link_to event.name, :controller => :events, :action => :show, :id => event.id %>
-                <% else %>
-                    <%= event.name %>
-                <% end %>
-                  <%= link_to image_tag('ical.png', :style => 'height: 24px'),
-                              {:controller => :events, :action => :calendar,
-                              :id => event.id, :format => :ics},
-                              :title => "Sett '#{event.name}' på din kalender!" %>
-                </h4>
-
-                <% if ingress %>
-                  <%= ingress.gsub(/&nbsp;/, ' ').html_safe %>
-              <% end %>
-                <ul class="controls">
-                  <% if ingress && event.description.size > ingress.size %>
-                      <li><%= link_to 'Les mer', {:controller => :events, :action => :show, :id => event.id}, :class => :edit %></li>
-                  <% end %>
-                  <li><%= link_to 'Redigèr', edit_polymorphic_path(event), :class => :edit if admin? %></li>
-                </ul>
-          <% end %>
-          </div>
-      <% end %>
-
-      <% if admin? %>
-          <ul class="controls">
-            <li><%= link_to 'Ny hendelse', {:controller => 'events', :action => 'new'}, :class => :edit %></li>
-          </ul>
-      <% end %>
-      <br/>
-
-      <% if admin? %>
-          <% if Rails.env != 'development' %>
-              <% history_chart_link = image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0') %>
-              <% attendance_chart_link = image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => 182), :title => 'Oppmøte graf', :style => 'width: 100%; border: 0') %>
-              <% grades_chart_link = image_tag(url_for(:controller => :members, :action => :grade_history_graph, :format => :png, :id => 182), :title => 'Historikk over grader', :style => 'width: 100%; border: 0') %>
-              <% age_chart_link = image_tag(url_for(:controller => :members, :action => :age_chart, :format => :png, :id => 182), :title => 'Aldersfordeling', :style => 'width: 100%; border: 0') %>
-              <% good_attendance_chart_link = image_tag(url_for(:controller => :members, :action => :grade_history_graph_percentage, :format => :png, :id => 182, :percentage => 50, :step => 30, :interval => 92), :title => 'Jevnt oppmøte voksne per grad', :style => 'width: 100%; border: 0') %>
-          <% else %>
-              <% history_chart_link = 'Historikk graf' %>
-              <% attendance_chart_link = 'Oppmøte graf' %>
-              <% grades_chart_link = 'Historikk over grader' %>
-              <% age_chart_link = 'Aldersfordeling' %>
-              <% good_attendance_chart_link = 'Jevnt oppmøte voksne' %>
-          <% end %>
-          <%= link_to history_chart_link, :controller => :members, :action => :history_graph, :format => :png, :id => 800 %><br/>
-          <%= link_to attendance_chart_link, :controller => :attendances, :action => :history_graph, :format => :png, :id => 800 %><br/>
-          <%= link_to grades_chart_link, :controller => :members, :action => :grade_history_graph, :format => :png, :id => 800 %><br/>
-          <%= link_to age_chart_link, :controller => :members, :action => :age_chart, :format => :png, :id => 800 %><br/>
-          <%= link_to good_attendance_chart_link, :controller => :members, :action => :grade_history_graph_percentage, :format => :png, :id => 800, :percentage => 50, :step => 30, :interval => 92 %><br/>
-          <br/>
-          <br/>
-      <% end %>
-
-      <h3>Grupper</h3>
-      <ul>
-        <% @groups.each do |g| %>
-            <li><%=link_to g.name, g %> (<%= g.from_age %>-<%= g.to_age%> år)
-              <ul>
-                <% g.group_schedules.map{|gs| gs.group_instructors.map(&:member)}.flatten.uniq.each do |m| %>
-                    <li><%= m.name %>
-                        <% unless g.group_schedules.all? { |gs2| gs2.group_instructors.map(&:member).include?(m) } %>
-                          <% g.group_schedules.each do |gs| %>
-                              <% if gs.group_instructors.map(&:member).include?(m) %>
-                              (<%= gs.weekday_name %>)
-                              <% end %>
-                          <% end %>
-                        <% end %>
-                    </li>
-                    <% g.group_schedules.each do |gs| %>
-                        <%= link_to "#{gs.weekday_name} mangler!", :controller => :group_instructors, :action => :new,
-                                    :group_instructor => {:group_schedule_id => gs.id} if gs.group_instructors.empty? %>
-                    <% end %>
-                <% end %>
-              </ul>
-            </li>
-        <% end %>
-      </ul>
-
-    </div>
-
-  </div>
-
-  <div class="subnav">
-
-    <ul>
-      <li><%= link_to 'Forside', '/' %></li>
-      <li><%= link_to 'Nyheter', :controller => :news %></li>
-    </ul>
-
-    <% if user? %>
-        <h1>Mine sider</h1>
-        <% if member? %>
-            <ul>
-              <li><%= link_to 'Min Embu', :controller => :embus, :action => :index %></li>
-        <% end %>
-        <li><%= link_to 'Mine media', :controller => :images, :action => :mine %></li>
-        </ul>
-    <% end %>
-
-    <h1>Oversikt</h1>
-    <ul>
-      <% @information_pages.each do |page| %>
-          <li>
-            <%= link_to page.title + (page.visible? ? '' : ' (skjult)'), :controller => :info, :action => :show, :id => page.title %>
-            <%#=link_to 'ned', :controller => :info, :action => :move_down, :id => page.id%>
-          </li>
-      <% end %>
-
-      <% if not user? %>
-          <li><%= detour_to 'Logg inn', :controller => 'user', :action => :login %></li>
-      <% else %>
-          <li><%= detour_to 'Logg ut', :controller => 'user', :action => :logout %></li>
-      <% end %>
-    </ul>
-
-    <% if admin? %>
-        <h1>Administrasjon</h1>
-
-        <div id="admin_menu">
-          <ul>
-            <li><%= link_to 'Ny nyhet', :controller => 'news', :action => 'new' %></li>
-            <li><%= link_to 'Ny side', :controller => 'info', :action => 'new' %></li>
-            <li><%= link_to 'Ny hendelse', :controller => 'events', :action => 'new' %></li>
-            <li><%= link_to 'Brukere', :controller => 'user', :action => :list %></li>
-          </ul>
-        </div>
-
-        <h1>Medlemsreg.</h1>
-
-        <div id="members_menu">
-          <ul>
-            <li><%= menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
-            <li><%= menu_item 'Oppmøtelister', :controller => 'members', :action => :attendance_form_index %></li>
-            <li><%= menu_item 'Graderinger', :controller => 'graduations' %></li>
-            <li><%= menu_item 'Telefonliste', :controller => 'members', :action => :telephone_list %></li>
-            <li><%= menu_item 'E-postlister', :controller => 'members', :action => :email_list %></li>
-            <li><%= menu_item 'Gamle medlemmer', :controller => 'members', :action => :list_inactive %></li>
-            <li><%= menu_item 'Instruksjon', :controller => 'group_instructors' %></li>
-            <li><%= menu_item 'Bursdager', :controller => 'birthday_celebrations' %></li>
-            <li><%= menu_item 'Treninger', :controller => 'group_schedules' %></li>
-            <li><%= menu_item 'Grupper', :controller => 'groups' %></li>
-            <li><%= menu_item 'Grader', :controller => 'ranks' %></li>
-            <li><%= menu_item 'Stiler', :controller => 'martial_arts' %></li>
-            <!--
-			<li><%= menu_item 'Inntekt', :controller => 'members', :action => :income %></li>
-			<li><%= menu_item 'NKF Rapport', :controller => 'members', :action => :NKF_report %></li>
-			<li><%= menu_item 'CMS-Kontrakter', :controller => 'cms_members', :action => :active_contracts %></li>
-			<li><%= menu_item 'CMS Avstemming', :controller => 'members', :action => :cms_comparison %></li>
-			<li><%= menu_item 'NKF Medlemsliste', :controller => 'nkf_members', :action => :index %></li>
-			-->
-            <li><%= menu_item 'NKF Avstemming', :controller => 'nkf_members', :action => :comparison %></li>
-            <li><%= menu_item 'Versjon', :controller => 'info', :action => :versjon %></li>
-          </ul>
-        </div>
-    <% end %>
-
-    <!--
-            <h1>Third and last</h1>
-            <ul>
-                <li><a href="index.html">sociis natoque</a></li>
-                <li><a href="index.html">magna sed purus</a></li>
-                <li><a href="index.html">tincidunt</a></li>
-                <li><a href="index.html">consequat molestie</a></li>
-            </ul>
-    -->
-
-  </div>
-
+  <%= render :partial => 'layouts/header' %>
+  <%= render :partial => 'layouts/right_column' %>
+  <%= render :partial => 'layouts/navigation' %>
   <div class="main">
-
     <div class="padded">
       <%= yield %>
     </div>
-
   </div>
-
   <div class="clearer"><span></span></div>
-
   <div class="footer">
-
     <span class="left">&copy; 2008-2013 <a href="http://jujutsu.no/">Romerike Jujutsu
       Klubb</a>. Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> &amp; <a href="http://validator.w3.org/check?uri=referer">XHTML</a></span>
-
     <span class="right">Template design by <a href="http://templates.arcsin.se">Arcsin</a></span>
-
     <div class="clearer"><span></span></div>
-
   </div>
-
 </div>
-
 </body>
-
 </html>

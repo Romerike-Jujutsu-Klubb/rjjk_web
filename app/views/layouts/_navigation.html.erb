@@ -1,0 +1,73 @@
+<div class="subnav">
+  <ul>
+    <li><%= link_to 'Forside', '/' %></li>
+    <li><%= link_to 'Nyheter', :controller => :news %></li>
+  </ul>
+
+  <% if user? %>
+      <h1>Mine sider</h1>
+      <% if member? %>
+          <ul>
+            <li><%= link_to 'Min Embu', :controller => :embus, :action => :index %></li>
+      <% end %>
+      <li><%= link_to 'Mine media', :controller => :images, :action => :mine %></li>
+      </ul>
+  <% end %>
+
+  <h1>Oversikt</h1>
+  <ul>
+    <% @information_pages.each do |page| %>
+        <li>
+          <%= link_to page.title + (page.visible? ? '' : ' (skjult)'), :controller => :info, :action => :show, :id => page.title %>
+          <%#=link_to 'ned', :controller => :info, :action => :move_down, :id => page.id%>
+        </li>
+    <% end %>
+
+    <% if not user? %>
+        <li><%= detour_to 'Logg inn', :controller => 'user', :action => :login %></li>
+    <% else %>
+        <li><%= detour_to 'Logg ut', :controller => 'user', :action => :logout %></li>
+    <% end %>
+  </ul>
+
+  <% if admin? %>
+      <h1>Administrasjon</h1>
+
+      <div id="admin_menu">
+        <ul>
+          <li><%= link_to 'Ny nyhet', :controller => 'news', :action => 'new' %></li>
+          <li><%= link_to 'Ny side', :controller => 'info', :action => 'new' %></li>
+          <li><%= link_to 'Ny hendelse', :controller => 'events', :action => 'new' %></li>
+          <li><%= link_to 'Brukere', :controller => 'user', :action => :list %></li>
+        </ul>
+      </div>
+
+      <h1>Medlemsreg.</h1>
+
+      <div id="members_menu">
+        <ul>
+          <li><%= menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
+          <li><%= menu_item 'Oppmøtelister', :controller => 'members', :action => :attendance_form_index %></li>
+          <li><%= menu_item 'Graderinger', :controller => 'graduations' %></li>
+          <li><%= menu_item 'Telefonliste', :controller => 'members', :action => :telephone_list %></li>
+          <li><%= menu_item 'E-postlister', :controller => 'members', :action => :email_list %></li>
+          <li><%= menu_item 'Gamle medlemmer', :controller => 'members', :action => :list_inactive %></li>
+          <li><%= menu_item 'Instruksjon', :controller => 'group_instructors' %></li>
+          <li><%= menu_item 'Bursdager', :controller => 'birthday_celebrations' %></li>
+          <li><%= menu_item 'Treninger', :controller => 'group_schedules' %></li>
+          <li><%= menu_item 'Grupper', :controller => 'groups' %></li>
+          <li><%= menu_item 'Grader', :controller => 'ranks' %></li>
+          <li><%= menu_item 'Stiler', :controller => 'martial_arts' %></li>
+          <!--
+			<li><%= menu_item 'Inntekt', :controller => 'members', :action => :income %></li>
+			<li><%= menu_item 'NKF Rapport', :controller => 'members', :action => :NKF_report %></li>
+			<li><%= menu_item 'CMS-Kontrakter', :controller => 'cms_members', :action => :active_contracts %></li>
+			<li><%= menu_item 'CMS Avstemming', :controller => 'members', :action => :cms_comparison %></li>
+			<li><%= menu_item 'NKF Medlemsliste', :controller => 'nkf_members', :action => :index %></li>
+			-->
+          <li><%= menu_item 'NKF Avstemming', :controller => 'nkf_members', :action => :comparison %></li>
+          <li><%= menu_item 'Versjon', :controller => 'info', :action => :versjon %></li>
+        </ul>
+      </div>
+  <% end %>
+</div>

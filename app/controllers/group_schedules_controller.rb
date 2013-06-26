@@ -29,7 +29,7 @@ class GroupSchedulesController < ApplicationController
     @groups = Group.all
 
     respond_to do |format|
-      format.html {render :action => "new"}
+      format.html { render :action => :new }
       format.xml  { render :xml => @group_schedule }
     end
   end

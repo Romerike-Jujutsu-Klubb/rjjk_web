@@ -1,7 +1,9 @@
 # encoding: utf-8
 class GroupSchedule < ActiveRecord::Base
   belongs_to :group
+  has_many :attendances, :dependent => :destroy
   has_many :group_instructors
+  has_many :trial_attendances, :dependent => :destroy
 
   validates_presence_of :end_at, :group, :start_at, :weekday
 

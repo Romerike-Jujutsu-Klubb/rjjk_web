@@ -33,12 +33,9 @@ class CensorsControllerTest < ActionController::TestCase
 
   def test_show
     get :show, :id => @first_id
-
+    assert_no_errors :censor
     assert_response :success
     assert_template 'show'
-
-    assert_not_nil assigns(:censor)
-    assert assigns(:censor).valid?{assigns(:censor).errors.full_messages}
   end
 
   def test_new
@@ -53,7 +50,7 @@ class CensorsControllerTest < ActionController::TestCase
   def test_create
     num_censors = Censor.count
 
-    post :create, :censor => {:graduation_id => 1, :member_id => members(:first).id}
+    post :create, :censor => {:graduation_id => graduations(:one).id, :member_id => members(:first).id}
     assert_no_errors :censor
     assert_response :redirect
     assert_redirected_to :action => 'list'
@@ -63,12 +60,9 @@ class CensorsControllerTest < ActionController::TestCase
 
   def test_edit
     get :edit, :id => @first_id
-
+    assert_no_errors :censor
     assert_response :success
     assert_template 'edit'
-
-    assert_not_nil assigns(:censor)
-    assert assigns(:censor).valid?{assigns(:censor).errors.full_messages}
   end
 
   def test_update

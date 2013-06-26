@@ -4,9 +4,10 @@ class Group < ActiveRecord::Base
 
   belongs_to :martial_art
   has_and_belongs_to_many :members, :conditions => 'left_on IS NULL OR left_on > DATE(CURRENT_TIMESTAMP)'
-  has_many :group_schedules
-  has_many :ranks, :order => :position
+  has_many :group_schedules, :dependent => :destroy
+  has_many :ranks, :order => :position, :dependent => :destroy
   has_many :graduations, :order => :held_on
+  has_many :group_semesters, :dependent => :destroy
   has_one :current_semester, :class_name => :GroupSemester,
           :include => :semester,
           :conditions => 'CURRENT_DATE BETWEEN semesters.start_on AND semesters.end_on'

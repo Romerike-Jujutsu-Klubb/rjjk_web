@@ -19,7 +19,11 @@ class GroupSemestersControllerTest < ActionController::TestCase
 
   test 'should create group_semester' do
     assert_difference('GroupSemester.count') do
-      post :create, group_semester: { first_session: @group_semester.first_session, group_id: @group_semester.group_id, last_session: @group_semester.last_session, semester_id: @group_semester.semester_id }
+      post :create, group_semester: {
+          first_session: '2013-06-05', group_id: @group_semester.group_id,
+          last_session: '2013-06-05', semester_id: semesters(:two).id
+      }
+      assert_no_errors :group_semester
     end
 
     assert_redirected_to group_semester_path(assigns(:group_semester))
@@ -36,7 +40,13 @@ class GroupSemestersControllerTest < ActionController::TestCase
   end
 
   test 'should update group_semester' do
-    put :update, id: @group_semester, group_semester: { first_session: @group_semester.first_session, group_id: @group_semester.group_id, last_session: @group_semester.last_session, semester_id: @group_semester.semester_id }
+    put :update, id: @group_semester, group_semester: {
+        first_session: @group_semester.first_session,
+        group_id: @group_semester.group_id,
+        last_session: @group_semester.last_session,
+        semester_id: @group_semester.semester_id
+    }
+    assert_no_errors :group_semester
     assert_redirected_to group_semester_path(assigns(:group_semester))
   end
 

@@ -24,7 +24,7 @@ class GroupSemestersController < ApplicationController
     load_form_data
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render action: :new }
       format.json { render json: @group_semester }
     end
   end
@@ -42,7 +42,7 @@ class GroupSemestersController < ApplicationController
         format.html { redirect_to @group_semester, notice: 'Group semester was successfully created.' }
         format.json { render json: @group_semester, status: :created, location: @group_semester }
       else
-        format.html { render action: 'new' }
+        format.html { new }
         format.json { render json: @group_semester.errors, status: :unprocessable_entity }
       end
     end

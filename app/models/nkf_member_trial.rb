@@ -1,5 +1,5 @@
 class NkfMemberTrial < ActiveRecord::Base
-  has_many :trial_attendances
+  has_many :trial_attendances, :dependent => :destroy
 
   validates_presence_of :alder, :epost, :etternavn, :fodtdato,
                         :fornavn, :medlems_type, :postnr, :reg_dato, :sted, :stilart, :tid

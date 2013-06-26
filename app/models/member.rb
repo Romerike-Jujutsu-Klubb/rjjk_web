@@ -13,14 +13,15 @@ class Member < ActiveRecord::Base
 
   scope :active, lambda { |date| {:conditions => ['left_on IS NULL OR left_on > ?', date]} }
 
-  has_many :graduates
+  has_many :graduates, :dependent => :destroy
   has_many :ranks, :through => :graduates, :conditions => ["graduates.passed IS NOT NULL AND graduates.passed = ?", true]
-  has_many :attendances
+  has_many :attendances, :dependent => :destroy
   has_and_belongs_to_many :groups
   has_one :nkf_member
   belongs_to :image, :dependent => :destroy
   belongs_to :user, :dependent => :destroy
   has_and_belongs_to_many :groups
+  has_many :censors, :dependent => :destroy
 
   # validates_presence_of :address, :cms_contract_id
   validates_length_of :billing_postal_code, :is => 4, :if => Proc.new { |m| m.billing_postal_code && !m.billing_postal_code.empty? }

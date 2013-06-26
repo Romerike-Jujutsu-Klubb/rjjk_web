@@ -1,11 +1,11 @@
 one:
-  group_id: 1
-  semester_id: 1
-  first_session: 2013-06-20
-  last_session: 2013-06-20
+  group: panda
+  semester: one
+  first_session: 2013-06-04
+  last_session: 2013-06-04
 
 two:
-  group_id: 1
-  semester_id: 1
-  first_session: 2013-06-20
-  last_session: 2013-06-20
+  group: tiger
+  semester: one
+  first_session: 2013-06-04
+  last_session: 2013-06-04

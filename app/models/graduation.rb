@@ -1,7 +1,7 @@
 class Graduation < ActiveRecord::Base
   belongs_to :group
-  has_many :censors
-  has_many :graduates
+  has_many :censors, :dependent => :destroy
+  has_many :graduates, :dependent => :destroy
   belongs_to :event
 
   validates_presence_of :event, :group, :held_on

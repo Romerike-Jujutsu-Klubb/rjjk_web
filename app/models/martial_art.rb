@@ -1,5 +1,5 @@
 class MartialArt < ActiveRecord::Base
-  has_many :groups
+  has_many :groups, :dependent => :destroy
   has_many :ranks, :order => :position
   has_many :graduations, :order => :held_on, :through => :groups
   

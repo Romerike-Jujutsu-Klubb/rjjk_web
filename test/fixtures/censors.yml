@@ -1,7 +1,6 @@
 one:
-  graduation_id: 1
+  graduation: one
   member: first
 two:
-  graduation_id: 2
+  graduation: two
   member: first
-  
