@@ -25,6 +25,19 @@ class ApplicationController < ActionController::Base
     image_query = image_query.where('public = ?', true) unless user?
     @image = image_query.first
     @new_image = Image.new
+
+    if (m = current_user.try(:member)) && (group = m.groups.find{|g| g.name == 'Voksne'})
+      @next_practice = group.next_practice
+      @next_schedule = group.next_schedule
+      @attendances_next_practice = Attendance.
+          where('group_schedule_id = ? AND year = ? AND week = ?',
+                @next_schedule.id, @next_practice.cwyear, @next_practice.cweek).
+          all
+      @your_attendance_next_practice = @attendances_next_practice.find{|a| a.member_id == m.id}
+      @attendances_next_practice.delete @your_attendance_next_practice
+      @attendances_next_practice = @attendances_next_practice.group_by(&:status)
+    end
+
     @events = Event.
         where('(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)', Date.today, Date.today).
         order('start_at, end_at').limit(5).all

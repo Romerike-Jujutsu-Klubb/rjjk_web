@@ -45,6 +45,76 @@
         </script>
     <% end %>
 
+    <% if @next_practice %>
+
+      <h3>Neste trening</h3>
+
+      <%= t(:date)[:day_names][@next_practice.cwday] %> <%= @next_practice.day %>.
+      <%= t(:date)[:month_names][@next_practice.month].downcase %>
+      <br/>
+      <% if @your_attendance_next_practice &&
+              [Attendance::ATTENDED, Attendance::WILL_ATTEND].include?(@your_attendance_next_practice.status) %>
+          Du
+          <% unless @attendances_next_practice['W'].blank? && @attendances_next_practice[Attendance::ATTENDED].blank? %>
+              og <%= @attendances_next_practice['W'].try(:size).to_i + @attendances_next_practice[Attendance::ATTENDED].try(:size).to_i %>
+              andre
+          <% end %>
+          kommer.
+          <% unless @attendances_next_practice['F'].blank? %>
+              <%= @attendances_next_practice['F'].size %> har meldt fravær.
+          <% end %>
+          <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::ABSENT),
+                      :class => 'btn btn-mini', :title => 'Kan ikke allikevel...') do %>
+              <i class="icon-thumbs-down"></i>
+          <% end %>
+      <% elsif @your_attendance_next_practice && @your_attendance_next_practice.status == Attendance::ABSENT %>
+          Du kommer ikke.
+          <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::WILL_ATTEND),
+                      :class => 'btn btn-mini', :title => 'Kommer allikevel!') do %>
+              <i class="icon-thumbs-up"></i>
+          <% end %>
+          <br/>
+          <% unless @attendances_next_practice['W'].blank? && @attendances_next_practice[Attendance::ATTENDED].blank? %>
+              <%= @attendances_next_practice['W'].try(:size).to_i + @attendances_next_practice[Attendance::ATTENDED].try(:size).to_i %>
+              andre
+          <% end %>
+          kommer.
+          <% unless @attendances_next_practice['F'].blank? %>
+              <%= @attendances_next_practice['F'].size %> har meldt fravær.
+          <% end %>
+      <% else %>
+          <% if @attendances_next_practice.any? %>
+              <%= @attendances_next_practice.size %> andre kommer.
+          <% end %>
+
+          Kommer du?
+          <div class="btn-group">
+            <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::WILL_ATTEND), :class => 'btn btn-mini', :title => 'kommer!') do %>
+                <i class="icon-thumbs-up"></i>
+            <% end %>
+            <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::ABSENT),
+                        :class => 'btn btn-mini', :title => 'kan ikke...') do %>
+                <i class="icon-thumbs-down"></i>
+            <% end %>
+          </div>
+      <% end %>
+      <br/>
+      <!--
+        <div class="btn-group">
+          <a class="btn btn-mini btn-primary" href="#"><i class="icon-user icon-white"></i> User</a>
+          <a class="btn btn-mini btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
+            <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
+            <li><a href="#"><i class="icon-ban-circle"></i> Ban</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="i"></i> Make admin</a></li>
+          </ul>
+        </div>
+        -->
+      <br/>
+    <% end %>
+
     <% if @events.any? %>
         <% last_year = Date.today.year %>
         <% last_mon = nil %>
@@ -112,14 +182,15 @@
               </ul>
           <% end %>
         </div>
-    <% end %>
 
     <% if admin? %>
         <ul class="controls">
           <li><%= link_to 'Ny hendelse', {:controller => 'events', :action => 'new'}, :class => :edit %></li>
         </ul>
+        <br/>
     <% end %>
-    <br/>
+
+    <% end %>
 
     <% if admin? %>
         <% if Rails.env != 'development' %>

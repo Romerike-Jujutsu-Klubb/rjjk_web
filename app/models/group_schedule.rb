@@ -14,4 +14,8 @@ class GroupSchedule < ActiveRecord::Base
     }[weekday]
   end
 
+  def next_practice
+    today = Date.today
+    Date.commercial today.cwyear, weekday >= today.cwday ? today.cweek : today.cweek + 1, weekday
+  end
 end

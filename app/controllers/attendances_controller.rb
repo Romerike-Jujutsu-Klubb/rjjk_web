@@ -109,5 +109,16 @@ class AttendancesController < ApplicationController
     end
     send_data(g, :disposition => 'inline', :type => 'image/png', :filename => 'RJJK_Oppmøtehistorikk.png')
   end
-  
+
+  def announce
+    u = current_user.member
+    criteria = {:member_id => u.id,
+            :group_schedule_id => u.groups[0].next_schedule.id,
+            :year => Date.today.cwyear,
+            :week => Date.today.cweek}
+    @attendance = Attendance.where(criteria).first || Attendance.new(criteria)
+    @attendance.status = params[:id]
+    @attendance.save!
+    back_or_redirect_to(@attendance)
+  end
 end

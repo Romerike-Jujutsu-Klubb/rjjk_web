@@ -54,4 +54,11 @@ class Group < ActiveRecord::Base
     self.yearly_price = contracts.map(&:kont_belop).group_by { |x| x }.group_by { |k, v| v.size }.sort.last.last.map(&:first).first
   end
 
+  def next_schedule
+    group_schedules.sort_by(&:next_practice).first
+  end
+
+  def next_practice
+    next_schedule.next_practice
+  end
 end

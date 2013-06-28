@@ -1,1 +1,1 @@
-<%=link_to (params[:x] ? 'X' : image_tag('accept.png')), {:controller => :attendances, :action => :destroy, :id => attendance.id}, :method => :delete, :remote => true %>
+<%=link_to attendance.status, {:controller => :attendances, :action => :destroy, :id => attendance.id}, :style => 'text-decoration: none', :method => :delete, :remote => true %>
