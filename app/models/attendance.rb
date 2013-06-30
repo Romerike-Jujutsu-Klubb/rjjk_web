@@ -1,6 +1,6 @@
 class Attendance < ActiveRecord::Base
   ATTENDED = 'X'
-  WILL_ATTEND = 'W'
+  WILL_ATTEND = 'P'
   SICK = 'S'
   HOLIDAY = 'B'
   ABSENT = 'F'
