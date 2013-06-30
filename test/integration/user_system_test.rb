@@ -14,16 +14,16 @@ class UserSystemTest < ActionController::IntegrationTest
   def test_signup_and_verify
     Clock.time = Time.now
     post url_for(:controller => 'user', :action => 'signup'),
-         :user => {:login => "newuser",
-                   :password => "password", :password_confirmation => "password",
-                   :email => "newemail@example.com"}
+         :user => {:login => 'newuser',
+                   :password => 'password', :password_confirmation => 'password',
+                   :email => 'newemail@example.com'}
 
     assert_not_logged_in
     assert_redirected_to_login
     assert_equal 1, Mail::TestMailer.deliveries.size
 
     mail = Mail::TestMailer.deliveries[0]
-    assert_equal "uwe@kubosch.no", mail.to_addrs[0].to_s
+    assert_equal 'uwe@kubosch.no', mail.to_addrs[0].to_s
     assert_match(/Brukernavn:\s+\w+\r\n/, mail.encoded)
     assert_match(/Passord\s*:\s+\w+\r\n/, mail.encoded)
     mail.decoded =~ /user\[id\]=(\d+)&amp;key=(.*?)"/
@@ -39,7 +39,7 @@ class UserSystemTest < ActionController::IntegrationTest
     assert_not_logged_in
 
     Clock.time = Time.now # now before deadline
-    get url_for(:controller => 'user', :action => 'welcome'), :user => {:id => "#{id}"}, :key => "boguskey"
+    get url_for(:controller => 'user', :action => 'welcome'), :user => {:id => "#{id}"}, :key => 'boguskey'
     assert_redirected_to_login
     assert_not_logged_in
     user.reload
@@ -53,7 +53,7 @@ class UserSystemTest < ActionController::IntegrationTest
     assert_logged_in(user)
   end
 
-  def test_forgot_password__allows_change_password_after_mailing_key
+  def test_forgot_password_allows_change_password_after_mailing_key
     user = users(:tesla)
     post url_for(:controller => 'user', :action => 'forgot_password'), :user => {:email => user.email}
     assert_equal 1, Mail::TestMailer.deliveries.size
@@ -63,8 +63,8 @@ class UserSystemTest < ActionController::IntegrationTest
     id = $1
     key = $2
     post url_for(:controller => 'user', :action => 'change_password'),
-         :user => {:password => "newpassword",
-                   :password_confirmation => "newpassword",
+         :user => {:password => 'newpassword',
+                   :password_confirmation => 'newpassword',
                    :id => id},
          :key => key
     user.reload
@@ -86,7 +86,7 @@ class UserSystemTest < ActionController::IntegrationTest
 
   def assert_redirected_to_login
     assert_response :redirect
-    assert_equal controller.url_for(:action => "login"), response.redirect_url
+    assert_equal controller.url_for(:action => 'login'), response.redirect_url
   end
 
 end
