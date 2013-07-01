@@ -37,7 +37,7 @@ class GroupSchedulesControllerTest < ActionController::TestCase
 
   def test_should_update_group_schedule
     put :update, :id => group_schedules(:panda).id, :group_schedule => { }
-    assert_redirected_to group_schedule_path(assigns(:group_schedule))
+    assert_redirected_to group_schedules_path
   end
 
   def test_should_destroy_group_schedule
