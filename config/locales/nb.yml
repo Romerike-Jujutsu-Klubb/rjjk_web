@@ -11,6 +11,11 @@ nb:
       group:
         from_age: Nedre aldersgrense
         to_age: Øvre aldersgrense
+      group_schedule:
+        end_at: Slutt
+        group_id: Gruppe
+        start_at: Start
+        weekday: Ukedag
       group_semester:
         group_id: Gruppe
         first_session: Første trening
