@@ -5,6 +5,9 @@ nb:
       group_instructor: Gruppeinstruktør
       user: Bruker
     attributes:
+      current_semester:
+        first_session: Første trening
+        last_session: Siste trening
       group:
         from_age: Nedre aldersgrense
         to_age: Øvre aldersgrense
@@ -14,6 +17,8 @@ nb:
         last_session: Siste trening
       news_item:
         publication_state: Publiseringsstatus
+      next_semester:
+        first_session: Første trening neste semester
       user:
         email: E-post
         login: Brukernavn

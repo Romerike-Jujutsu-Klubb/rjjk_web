@@ -49,6 +49,12 @@
         Gruppen følger skoleåret og har ikke trening i skoleferiene.
         <br/>
         <% if @group.current_semester %>
+            <% if @group.current_semester.try(:first_session).try(:>, Date.today) %>
+                Første trening etter ferien er
+                <strong><%= @group.current_semester.first_session.day %>.
+                  <%= t(:date)[:month_names][@group.current_semester.first_session.month].downcase %></strong>.
+                <br/>
+            <% end %>
             <% if @group.current_semester.last_session %>
                 Siste trening før ferien er
                 <strong><%= @group.current_semester.last_session.day %>.

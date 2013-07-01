@@ -10,10 +10,10 @@ class GroupSemester < ActiveRecord::Base
   validate do
     if semester
       if first_session && !(semester.start_on..semester.end_on).include?(first_session)
-        errors.add :first_session, 'må være innenfor dette semesteret.'
+        errors.add :first_session, 'må være innenfor det tilhørende semesteret.'
       end
       if last_session && !(semester.start_on..semester.end_on).include?(last_session)
-        errors.add :last_session, 'må være innenfor dette semesteret.'
+        errors.add :last_session, 'må være innenfor det tilhørende semesteret.'
       end
     end
   end

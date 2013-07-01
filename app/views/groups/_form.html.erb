@@ -49,21 +49,33 @@
             <%= f.datepicker :closed_on, :dateFormat => 'yy-mm-dd', :firstDay => 1, :class => 'input-small' %>
           </div>
 
+          <% semester_started = @group.current_semester.try(:first_session).try(:<, Date.today) %>
+          <% unless semester_started %>
+              <div style="float: left ; margin-right: 1em">
+                <%= f.fields_for :current_semester, @group.current_semester do |csf| %>
+                    <%= csf.label :first_session, 'Første trening' %>
+                    <%= csf.datepicker :first_session, :dateFormat => 'yy-mm-dd',
+                                       :firstDay => 1, :class => 'input-small',
+                                       :placeholder => 'etter ferien' %>
+                <% end %>
+              </div>
+          <% end %>
+
           <div style="float: left ; margin-right: 1em">
             <%= f.fields_for :current_semester, @group.current_semester do |csf| %>
                 <%= csf.label :last_session, 'Siste trening' %>
                 <%= csf.datepicker :last_session, :dateFormat => 'yy-mm-dd',
                                    :firstDay => 1, :class => 'input-small',
-                 :placeholder => 'før ferien' %>
+                                   :placeholder => 'før ferien' %>
             <% end %>
           </div>
 
           <div>
             <%= f.fields_for :next_semester, @group.next_semester do |csf| %>
-                <%= csf.label :first_session, 'Første trening' %>
+                <%= csf.label :first_session, "Første trening#{' neste semester' unless semester_started}" %>
                 <%= csf.datepicker :first_session, :dateFormat => 'yy-mm-dd',
                                    :firstDay => 1, :class => 'input-small',
-                                   :placeholder => 'etter ferien'%>
+                                   :placeholder => 'etter ferien' %>
             <% end %>
           </div>
 
