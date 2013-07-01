@@ -62,10 +62,10 @@ class GroupSchedulesController < ApplicationController
     respond_to do |format|
       if @group_schedule.update_attributes(params[:group_schedule])
         flash[:notice] = 'GroupSchedule was successfully updated.'
-        format.html { redirect_to(@group_schedule) }
+        format.html { redirect_to group_schedules_path }
         format.xml { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => :edit }
         format.xml { render :xml => @group_schedule.errors, :status => :unprocessable_entity }
       end
     end
