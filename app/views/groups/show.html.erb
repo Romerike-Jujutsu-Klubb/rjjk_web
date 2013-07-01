@@ -1,31 +1,47 @@
 <h3><%= @group.name %></h3>
 
-<h4>Alder</h4>
+<div style="float:left; width: 50%">
+  <h4>Alder</h4>
 
-<p>
-  <strong>Fra <%= @group.from_age %> til <%= @group.to_age %> år</strong>.
-</p>
+  <p>
+    <strong>Fra <%= @group.from_age %> til <%= @group.to_age %> år</strong>.
+  </p>
+</div>
 
-<% unless @group.monthly_price.blank? %>
-    <h4>Pris</h4>
+<div style="float:left; width: 50%">
+  <% unless @group.monthly_price.blank? %>
+      <h4>Pris</h4>
 
-    <p style="line-height: 1.5">
-      <% unless @group.yearly_price.blank? %>
-          Årskontingent <strong>kr <%= @group.yearly_price %>,-</strong><br/>
-      <% end %>
+      <p style="line-height: 1.5">
+        <% unless @group.yearly_price.blank? %>
+            Årskontingent <strong>kr <%= @group.yearly_price %>,-</strong><br/>
+        <% end %>
 
-      Treningsavgift <strong>kr <%= @group.monthly_price %>,-</strong> (månedlig)
-    </p>
-<% end %>
-
-<h4>Treningstider</h4>
-
-<p><strong>
-  <% @group.group_schedules.each do |gs| %>
-      <%= gs.weekday_name %> <%= gs.start_at.strftime '%H:%M' %>
-      - <%= gs.end_at.strftime '%H:%M' %><br/>
+        Treningsavgift <strong>kr <%= @group.monthly_price %>,-</strong> (månedlig)
+      </p>
   <% end %>
-</strong></p>
+</div>
+
+
+<div style="float:left; width: 50%">
+  <h4>Treningstider</h4>
+
+  <p><strong>
+    <% @group.group_schedules.each do |gs| %>
+        <%= gs.weekday_name %> <%= gs.start_at.strftime '%H:%M' %>
+        - <%= gs.end_at.strftime '%H:%M' %><br/>
+    <% end %>
+  </strong></p>
+</div>
+
+<div style="float:left; width: 50%">
+  <h4>Instruktører</h4>
+  <% @group.group_schedules.map(&:group_instructors).flatten.select(&:active?).map(&:member).uniq.each do |m| %>
+      <%= m.name %>
+  <% end %>
+</div>
+
+<br clear="all"/>
 
 <div>
   <p>
