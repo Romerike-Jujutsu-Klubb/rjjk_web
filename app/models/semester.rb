@@ -37,4 +37,16 @@ class Semester < ActiveRecord::Base
   def name
     "#{start_on} - #{end_on}"
   end
+
+  def current?
+    (start_on..end_on).include? Date.today
+  end
+
+  def future?
+    start_on > Date.today
+  end
+
+  def past?
+    end_on < Date.today
+  end
 end

@@ -1,27 +1,39 @@
 <h1>Gruppeinstruktører</h1>
 
-<table class="table">
-  <tr>
-    <th>Gruppe</th>
-    <th>Dag</th>
-    <th>Instruktør</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<% @semesters.each do |s, instructions| %>
+    <% if s.future? %>
+        <h3>Neste semester (<%= s.name %>)</h3>
+    <% elsif s.past? %>
+        <h3>Tidligere semester (<%= s.name %>)</h3>
+    <% end %>
 
-<% @group_instructors.each do |instruction| %>
-  <tr>
-    <td><%= instruction.group_schedule.group.name %></td>
-    <td><%= instruction.group_schedule.weekday_name %></td>
-    <td><%= instruction.member.name %></td>
-    <td><%= link_to 'Vis', instruction %></td>
-    <td><%= link_to 'Rediger', edit_group_instructor_path(instruction) %></td>
-    <td><%= link_to 'Slett', instruction, data: {confirm: 'Er du sikker?'}, method: :delete %></td>
-  </tr>
+    <table class="table">
+      <tr>
+        <th>Gruppe</th>
+        <th>Dag</th>
+        <th>Instruktør</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+
+      <% instructions.each do |instruction| %>
+          <tr>
+            <td><%= instruction.group_schedule.group.name %></td>
+            <td><%= instruction.group_schedule.weekday_name %></td>
+            <td><%= instruction.member.name %></td>
+            <td><%= link_to 'Vis', instruction %></td>
+            <td><%= link_to 'Rediger', edit_group_instructor_path(instruction) %></td>
+            <td><%= link_to 'Slett', instruction, data: {confirm: 'Er du sikker?'}, method: :delete %></td>
+          </tr>
+      <% end %>
+    </table>
+
+    <% if s.current? %>
+        <%= link_to 'Registrer gruppeinstruktør', new_group_instructor_path %>
+    <% end %>
+
+    <br/>
+    <br/>
+
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'Registrer gruppeinstruktør', new_group_instructor_path %>

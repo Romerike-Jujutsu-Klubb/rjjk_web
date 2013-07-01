@@ -2,8 +2,10 @@ class GroupInstructorsController < ApplicationController
   # GET /group_instructors
   # GET /group_instructors.json
   def index
-    @group_instructors = GroupInstructor.all
-    @group_schedules = GroupSchedule.all
+    group_instructors = GroupInstructor.includes(:semester, :group_schedule => :group).
+        order('group_schedules.weekday, group_schedules.start_at, groups.from_age').all
+    group_instructors.sort_by!{|gi| [gi.semester.current? ? 0 : 1, gi.semester.future? ? 0 : 1, gi.semester.future? ? gi.semester.start_on : Date.today - gi.semester.end_on]}
+    @semesters = group_instructors.group_by(&:semester)
 
     respond_to do |format|
       format.html # index.html.erb
