@@ -62,4 +62,8 @@ class Group < ActiveRecord::Base
   def next_practice
     next_schedule.next_practice
   end
+
+  def instructors
+    group_schedules.map(&:group_instructors).flatten.compact.select(&:active?).map(&:member).uniq
+  end
 end

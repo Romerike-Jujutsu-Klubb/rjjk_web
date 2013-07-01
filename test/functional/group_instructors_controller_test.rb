@@ -8,7 +8,7 @@ class GroupInstructorsControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:group_instructors)
+    assert_not_nil assigns(:semesters)
   end
 
   test 'should get new' do

@@ -19,6 +19,7 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
+    @instructors = @group.instructors
 
     respond_to do |format|
       format.html # show.html.erb

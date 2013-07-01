@@ -34,12 +34,14 @@
   </strong></p>
 </div>
 
-<div style="float:left; width: 50%">
-  <h4>Instruktører</h4>
-  <% @group.group_schedules.map(&:group_instructors).flatten.select(&:active?).map(&:member).uniq.each do |m| %>
-      <%= m.name %>
-  <% end %>
-</div>
+<% if @instructors.any? %>
+    <div style="float:left; width: 50%">
+      <h4>Instruktører</h4>
+      <% @instructors.each do |m| %>
+          <%= m.name %>
+      <% end %>
+    </div>
+<% end %>
 
 <br clear="all"/>
 
