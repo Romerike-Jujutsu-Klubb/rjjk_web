@@ -203,7 +203,8 @@
     <h3>Grupper</h3>
     <ul>
       <% @groups.each do |g| %>
-          <li><%=link_to g.name, g %> (<%= g.from_age %>-<%= g.to_age%> år)
+          <li><%=link_to g.name, g %> <span style="white-space:nowrap">(<%= g.from_age %>-<%= g.to_age%> år)</span>
+            <!--
             <ul>
               <% g.group_schedules.map{|gs| gs.group_instructors.map(&:member)}.flatten.uniq.each do |m| %>
                   <li><%= m.name %>
@@ -221,6 +222,7 @@
                   <% end %>
               <% end %>
             </ul>
+            -->
           </li>
       <% end %>
     </ul>
