@@ -8,6 +8,7 @@
       <h1>Mine sider</h1>
       <% if member? %>
           <ul>
+            <li><%= detour_to 'Mitt oppmøte', :controller => :attendances, :action => :plan %></li>
             <li><%= link_to 'Min Embu', :controller => :embus, :action => :index %></li>
       <% end %>
       <li><%= link_to 'Mine media', :controller => :images, :action => :mine %></li>

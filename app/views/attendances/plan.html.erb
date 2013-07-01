@@ -64,12 +64,19 @@
                   <% end %>
                 </ul>
               </div>
+              <br/>
+              <% others = gs.attendances.select { |a| a.year == year && a.week == week && a.member_id != current_user.member.id } %>
+              <% if others.any? %>
+                  <%= others.size %> andre kommer
+              <% end %>
             </td>
         <% end %>
       </tr>
     </table>
 
 <% end %>
+
+<br/>
 
 <!--
 <h4>Melding til instruktør</h4>
