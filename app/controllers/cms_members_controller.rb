@@ -1,10 +1,8 @@
 class CmsMembersController < ApplicationController
   before_filter :admin_required
 
-  # GET /cms_members
-  # GET /cms_members.xml
   def index
-    @cms_members = CmsMember.find(:all)
+    @cms_members = CmsMember.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -12,8 +10,6 @@ class CmsMembersController < ApplicationController
     end
   end
 
-  # GET /cms_members/1
-  # GET /cms_members/1.xml
   def show
     @cms_member = CmsMember.find(params[:id])
 
@@ -23,8 +19,6 @@ class CmsMembersController < ApplicationController
     end
   end
 
-  # GET /cms_members/new
-  # GET /cms_members/new.xml
   def new
     @cms_member = CmsMember.new
 
@@ -34,13 +28,10 @@ class CmsMembersController < ApplicationController
     end
   end
 
-  # GET /cms_members/1/edit
   def edit
     @cms_member = CmsMember.find(params[:id])
   end
 
-  # POST /cms_members
-  # POST /cms_members.xml
   def create
     @cms_member = CmsMember.new(params[:cms_member])
 
@@ -56,8 +47,6 @@ class CmsMembersController < ApplicationController
     end
   end
 
-  # PUT /cms_members/1
-  # PUT /cms_members/1.xml
   def update
     @cms_member = CmsMember.find(params[:id])
 
@@ -73,8 +62,6 @@ class CmsMembersController < ApplicationController
     end
   end
 
-  # DELETE /cms_members/1
-  # DELETE /cms_members/1.xml
   def destroy
     @cms_member = CmsMember.find(params[:id])
     @cms_member.destroy

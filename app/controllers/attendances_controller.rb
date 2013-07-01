@@ -1,6 +1,8 @@
 # encoding: UTF-8
 class AttendancesController < ApplicationController
-  before_filter :admin_required, :except => [:announce, :plan]
+  user_actions = [:announce, :plan]
+  before_filter :admin_required, :except => user_actions
+  before_filter :authenticate_user, :only => user_actions
 
   caches_page :history_graph
   cache_sweeper :attendance_image_sweeper, :only => [:create, :update, :destroy]

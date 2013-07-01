@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(:version => 20130701065100) do
     t.string  "parent_email",         :limit => 32
     t.string  "parent_2_name",        :limit => 64
     t.string  "parent_2_mobile",      :limit => 16
-    t.string  "billing_email",        :limit => 32
+    t.string  "billing_email",        :limit => 64
     t.index ["image_id"], :name => "index_members_on_image_id"
     t.index ["user_id"], :name => "index_members_on_user_id"
   end
@@ -277,9 +277,7 @@ ActiveRecord::Schema.define(:version => 20130701065100) do
     t.datetime "updated_at",        :null => false
     t.integer  "group_schedule_id", :null => false
     t.integer  "semester_id",       :null => false
-    t.index ["group_schedule_id"], :name => "fk__group_instructors_group_schedule_id"
     t.index ["semester_id"], :name => "fk__group_instructors_semester_id"
-    t.foreign_key ["group_schedule_id"], "group_schedules", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_instructors_group_schedule_id"
     t.foreign_key ["semester_id"], "semesters", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_instructors_semester_id"
   end
 

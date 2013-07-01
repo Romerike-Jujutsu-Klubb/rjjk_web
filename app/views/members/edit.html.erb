@@ -39,9 +39,6 @@
 </table>
 </div>
 
-
-<h1>Redigèr Medlem</h1>
-
 <%=form_tag({:action => 'update', :id => @member}, {:multipart => true, :method => :put}) do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Lagre', :id => 'save', :class => 'btn' %>
