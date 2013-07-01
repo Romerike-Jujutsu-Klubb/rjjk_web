@@ -71,7 +71,7 @@ class GroupInstructorsController < ApplicationController
       else
         @groups = Group.all
         @group_instructors = Member.instructors
-        format.html { render action: "edit" }
+        format.html { render action: :edit }
         format.json { render json: @group_instructor.errors, status: :unprocessable_entity }
       end
     end
