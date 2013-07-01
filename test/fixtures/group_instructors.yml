@@ -1,9 +1,9 @@
 one:
-  group_schedule: one
-  member: first
-  from: 2012-05-29
+  group_schedule: panda
+  member: lars
+  semester: previous
 
 two:
-  group_schedule: two
+  group_schedule: tiger_tuesday
   member: two
-  from: 2012-08-29
+  semester: previous

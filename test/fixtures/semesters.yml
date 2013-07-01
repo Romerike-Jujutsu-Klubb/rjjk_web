@@ -1,7 +1,11 @@
-one:
-  start_on: 2013-06-04
-  end_on: 2013-06-04
+previous:
+  start_on: 2013-01-01
+  end_on: 2013-06-30
 
-two:
-  start_on: 2013-06-05
-  end_on: 2013-06-05
+current:
+  start_on: 2013-07-01
+  end_on: 2099-12-31
+
+next:
+  start_on: 2100-01-01
+  end_on: 2199-12-31

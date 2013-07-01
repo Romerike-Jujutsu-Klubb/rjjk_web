@@ -17,7 +17,7 @@ class MembersControllerTest < ActionController::TestCase
     @request = ActionController::TestRequest.new
     @response = ActionController::TestResponse.new
 
-    @first_id = members(:first).id
+    @first_id = members(:lars).id
     login(:admin)
   end
 

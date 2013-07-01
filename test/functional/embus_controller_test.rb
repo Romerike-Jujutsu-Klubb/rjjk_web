@@ -2,7 +2,7 @@ require 'test_helper'
 
 class EmbusControllerTest < ActionController::TestCase
   setup do
-    login :tesla
+    login :lars
     @embu = embus(:one)
   end
 
@@ -25,7 +25,7 @@ class EmbusControllerTest < ActionController::TestCase
     assert_difference('Embu.count') do
       post :create, embu: @embu.attributes
       assert_no_errors :embu
-      login :tesla
+      login :lars
     end
 
     assert_redirected_to embu_path(assigns(:embu))
@@ -49,7 +49,7 @@ class EmbusControllerTest < ActionController::TestCase
   test "should destroy embu" do
     assert_difference('Embu.count', -1) do
       delete :destroy, id: @embu
-      login :tesla
+      login :lars
     end
 
     assert_redirected_to embus_path

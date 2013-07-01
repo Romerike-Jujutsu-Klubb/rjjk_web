@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   include UserSystem
 
   has_one :member
+  has_many :embus, :dependent => :destroy
+  has_many :images, :dependent => :destroy
 
   CHANGEABLE_FIELDS = %w(first_name last_name email)
   attr_accessor :password_needs_confirmation

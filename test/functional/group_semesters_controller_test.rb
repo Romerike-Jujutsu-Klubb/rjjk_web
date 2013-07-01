@@ -20,8 +20,8 @@ class GroupSemestersControllerTest < ActionController::TestCase
   test 'should create group_semester' do
     assert_difference('GroupSemester.count') do
       post :create, group_semester: {
-          first_session: '2013-06-05', group_id: @group_semester.group_id,
-          last_session: '2013-06-05', semester_id: semesters(:two).id
+          first_session: '2013-01-03', group_id: @group_semester.group_id,
+          last_session: '2013-06-20', semester_id: semesters(:previous).id
       }
       assert_no_errors :group_semester
     end

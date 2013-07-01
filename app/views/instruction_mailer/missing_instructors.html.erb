@@ -1,14 +1,27 @@
 <h1>Grupper som mangler instruktør</h1>
-<table>
-  <tr>
-    <th>Navn</th>
-    <th>Dag</th>
-  </tr>
-  <% @missing_schedules.each do |gs| %>
+
+<% @semesters.each do |s, instructions| %>
+    <h3>
+      <% if s.start_on <= Date.today %>
+          Dette semesteret
+      <% else %>
+          Neste semester
+      <% end %>
+      (<%= s.name %>)
+    </h3>
+
+    <table>
       <tr>
-        <td><%=link_to gs.group.name, :only_path => false, :controller => :group_instructors, :action => :new,
-                       :group_instructor => {:group_schedule_id => gs.id} %></td>
-        <td><%= gs.weekday_name %></td>
+        <th>Gruppe</th>
+        <th>Dag</th>
       </tr>
-  <% end %>
-</table>
+      <% instructions.each do |gi| %>
+          <tr>
+            <td><%= link_to gi.group_schedule.group.name, :only_path => false, :controller => :group_instructors,
+                            :action => :new, :group_instructor => {
+                            :group_schedule_id => gi.group_schedule_id, :semester_id => gi.semester_id} %></td>
+            <td><%= gi.group_schedule.weekday_name %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>

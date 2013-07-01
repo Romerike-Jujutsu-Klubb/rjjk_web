@@ -111,14 +111,27 @@ class AttendancesController < ApplicationController
   end
 
   def announce
-    u = current_user.member
-    criteria = {:member_id => u.id,
-            :group_schedule_id => u.groups[0].next_schedule.id,
-            :year => Date.today.cwyear,
-            :week => Date.today.cweek}
+    m = current_user.member
+    year = (params[:year] || Date.today.cwyear).to_i
+    week = (params[:week] || Date.today.cweek).to_i
+    gs_id = params[:gs_id] || m.groups[0].next_schedule.id
+    criteria = {:member_id => m.id,
+            :group_schedule_id => gs_id,
+            :year => year,
+            :week => week}
     @attendance = Attendance.where(criteria).first || Attendance.new(criteria)
     @attendance.status = params[:id]
     @attendance.save!
     back_or_redirect_to(@attendance)
   end
+
+  def plan
+    today = Date.today
+    @weeks = [[today.year, today.cweek], [(today + 7).year, (today + 7).cweek]]
+    @group_schedules = current_user.member.groups.map(&:group_schedules).flatten
+    @attendances = Attendance.where('member_id = ? AND ((year = ? AND week = ?) OR (year = ? AND week = ?))',
+                                     current_user.member, today.year, today.cweek, (today + 7).year, (today + 7).cweek).
+        all
+  end
+
 end

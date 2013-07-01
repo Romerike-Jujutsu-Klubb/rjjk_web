@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
     @events = Event.
         where('(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)', Date.today, Date.today).
         order('start_at, end_at').limit(5).all
-    @groups = Group.active(Date.today).order('to_age, from_age DESC').includes(:group_schedules).all
+    @groups = Group.active(Date.today).order('to_age, from_age DESC').includes(:current_semester).all
   end
 
 end

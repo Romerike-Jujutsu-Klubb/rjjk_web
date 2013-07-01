@@ -1,11 +1,11 @@
 one:
   group: panda
-  semester: one
+  semester: previous
   first_session: 2013-06-04
   last_session: 2013-06-04
 
 two:
   group: tiger
-  semester: one
+  semester: previous
   first_session: 2013-06-04
   last_session: 2013-06-04

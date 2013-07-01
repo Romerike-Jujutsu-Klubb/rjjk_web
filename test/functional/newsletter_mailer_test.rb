@@ -4,7 +4,7 @@ require 'test_helper'
 
 class NewsletterMailerTest < ActionMailer::TestCase
   def test_newsletter
-    mail = NewsletterMailer.newsletter(news_items(:first), users(:tesla))
+    mail = NewsletterMailer.newsletter(news_items(:first), users(:lars))
     assert_equal '[RJJK] My first news item', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from

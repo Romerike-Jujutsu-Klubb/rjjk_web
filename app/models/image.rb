@@ -7,7 +7,7 @@ class Image < ActiveRecord::Base
   scope :images, where("content_type LIKE 'image/%'")
 
   belongs_to :user
-  has_many :user_images
+  has_many :user_images, :dependent => :destroy
   has_many :likers, :class_name => 'User', :through => :user_images, :conditions => "user_images.rel_type = 'LIKE'", :source => :user
 
   before_create do

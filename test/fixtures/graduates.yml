@@ -1,5 +1,5 @@
 one:
-  member: first
+  member: lars
   graduation: one
   passed: true
   rank: one
@@ -13,4 +13,3 @@ two:
   rank: one
   paid_graduation: true
   paid_belt: false
-  

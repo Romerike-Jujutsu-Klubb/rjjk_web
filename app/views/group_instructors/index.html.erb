@@ -1,11 +1,10 @@
 <h1>Gruppeinstruktører</h1>
 
-<table>
+<table class="table">
   <tr>
     <th>Gruppe</th>
     <th>Dag</th>
     <th>Instruktør</th>
-    <th>Fra</th>
     <th></th>
     <th></th>
     <th></th>
@@ -16,7 +15,6 @@
     <td><%= instruction.group_schedule.group.name %></td>
     <td><%= instruction.group_schedule.weekday_name %></td>
     <td><%= instruction.member.name %></td>
-    <td><%= instruction.from %></td>
     <td><%= link_to 'Vis', instruction %></td>
     <td><%= link_to 'Rediger', edit_group_instructor_path(instruction) %></td>
     <td><%= link_to 'Slett', instruction, data: {confirm: 'Er du sikker?'}, method: :delete %></td>

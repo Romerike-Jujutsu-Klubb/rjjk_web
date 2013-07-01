@@ -3,16 +3,17 @@
 unless Rails.env == 'test'
   scheduler = Rufus::Scheduler.start_new
 
-  scheduler.every('1h', :first_in => '10s') { send_news }
-  scheduler.every('1h', :first_in => '30s') { send_event_messages }
-  scheduler.cron('0 7-23 * * *') { import_nkf_changes }
+  scheduler.cron('0 * * * *') { send_news }
+  scheduler.cron('5 * * * *') { send_event_messages }
+  scheduler.cron('10 7-23 * * *') { import_nkf_changes }
   scheduler.cron('0 0 * * *') { notify_wrong_contracts }
   scheduler.cron('0 3 * * *') { notify_missing_semesters }
   scheduler.cron('0 4 * * *') { create_missing_group_semesters }
   scheduler.cron('0 4 1 * *') { notify_missing_group_semesters }
-  scheduler.cron('0 5 1 * *') { notify_missing_instructors }
+  scheduler.cron('0 5 1 * *') { InstructionReminder.notify_missing_instructors }
   scheduler.cron('0 6 * * *') { notify_missing_graduations }
   scheduler.cron('0 7 1 * *') { notify_overdue_graduates }
+  scheduler.cron('0 8 1 * *') { send_attendance_plan }
 end
 
 private
@@ -121,18 +122,6 @@ def notify_wrong_contracts
   end
 end
 
-def notify_missing_instructors
-  begin
-    groups = Group.active(Date.today).all
-    group_schedules = groups.map(&:group_schedules).flatten
-    missing_schedules = group_schedules.select { |gs| gs.group_instructors.select(&:active?).empty? }
-    InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
-  rescue
-    logger.error "Exception sending instruction message: #{$!}"
-    logger.error $!.backtrace.join("\n")
-  end
-end
-
 def notify_missing_semesters
   begin
     unless Semester.where('CURRENT_DATE BETWEEN start_on AND end_on').exists?
@@ -203,4 +192,11 @@ def notify_overdue_graduates
     logger.error "Exception sending instruction message: #{$!}"
     logger.error $!.backtrace.join("\n")
   end
+end
+
+def send_attendance_plan
+  member = Member.find(81)
+  AttendanceMailer.plan(member).deliver
+  member = Member.find(279)
+  AttendanceMailer.plan(member).deliver
 end

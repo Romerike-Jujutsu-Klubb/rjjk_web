@@ -24,11 +24,10 @@ class GroupInstructorsController < ApplicationController
 
   def new
     @group_instructor ||= GroupInstructor.new params[:group_instructor]
-    @group_schedules ||= GroupSchedule.all.select{|gs| gs.group.active?}
-    @group_instructors ||= Member.instructors
+    load_form_data
 
     respond_to do |format|
-      format.html { render action: 'new' }
+      format.html { render action: :new }
       format.json { render json: @group_instructor }
     end
   end
@@ -36,8 +35,7 @@ class GroupInstructorsController < ApplicationController
   # GET /group_instructors/1/edit
   def edit
     @group_instructor = GroupInstructor.find(params[:id])
-    @group_schedules = GroupSchedule.all.select{|gs| gs.group.active?}
-    @group_instructors = Member.instructors
+    load_form_data
   end
 
   # POST /group_instructors
@@ -50,7 +48,7 @@ class GroupInstructorsController < ApplicationController
         format.html { redirect_to @group_instructor, notice: 'GroupInstructor was successfully created.' }
         format.json { render json: @group_instructor, status: :created, location: @group_instructor }
       else
-        new
+        format.html { new }
         format.json { render json: @group_instructor.errors, status: :unprocessable_entity }
       end
     end
@@ -85,4 +83,13 @@ class GroupInstructorsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def load_form_data
+    @group_schedules ||= GroupSchedule.all.select { |gs| gs.group.active? }
+    @group_instructors ||= Member.instructors
+    @semesters ||= Semester.order('start_on DESC').all
+  end
+
 end

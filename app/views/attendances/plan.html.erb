@@ -1,0 +1,59 @@
+<p>For å kunne organisere treningene fremover ønsker vi at alle merker av når de planlegger å komme
+  og når de ikke kan komme.</p>
+
+<p>Trykk på "<strong>Kommer!</strong>"-knappen slik at den blir
+  <span style="color: #5BB75B">grønn</span> på de treningene du planlegger å komme på, eller velg
+  årsak
+  fra listen på de treningene du ikke kan delta på.</p>
+
+<% @weeks.each.with_index do |(year, week), i| %>
+
+    <h4><%=i == 0 ? 'Denne uken' : 'Neste uke'%></h4>
+
+    <table>
+      <tr>
+        <% @group_schedules.each do |gs| %>
+            <% date = Date.commercial(year, week, gs.weekday) %>
+            <th>
+              <%=t(:date)[:day_names][gs.weekday] %>
+              <%=date.day%>.
+              <%=t(:date)[:month_names][date.mon]%>
+            </th>
+        <% end %>
+      </tr>
+      <tr>
+        <% @group_schedules.each do |gs| %>
+            <td>
+              <div class="btn-group">
+                <%=link_to({:controller => :attendances, :action => :create, :attendance => {:member_id => current_user.member.id, :group_schedule_id => gs.id, :year => year, :week => week, :status => Attendance::WILL_ATTEND}}, :method => :post, :remote => true, :id => "btn_#{year}_#{week}_#{gs.id}",
+                   :class => "btn #{'btn-success ' if @attendances.any?{|a|[Attendance::ATTENDED, Attendance::WILL_ATTEND].include?(a.status) && a.group_schedule == gs && a.year == year && a.week == week}}input-small",
+                   :onclick => "$(this).toggleClass('btn-success').removeClass('btn-info btn-warning btn-danger'); $(this).html('<i class=&quot;icon-thumbs-up icon-white&quot;></i> Kommer!') ; return false") do %>
+                  <i class="icon-thumbs-up"></i>
+                  Kommer!
+                  <% end %>
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#" onclick="$('#btn_<%=year%>_<%=week%>_<%=gs.id%>').removeClass('btn-info btn-success btn-danger').addClass('btn-warning').html($(this).html()); return false"><i class="icon-hand-right"></i>
+                      Bortreist</a></li>
+                  <li>
+                    <a href="#" onclick="$('#btn_<%=year%>_<%=week%>_<%=gs.id%>').removeClass('btn-info btn-warning btn-success').addClass('btn-danger').html($(this).html()); return false"><i class="icon-plus"></i>
+                      Syk</a></li>
+                  <li>
+                    <a href="#" onclick="$('#btn_<%=year%>_<%=week%>_<%=gs.id%>').removeClass('btn-success btn-warning btn-danger').addClass('btn-info').html($(this).html()); return false"><i class="icon-thumbs-down"></i>
+                      Annet</a></li>
+                </ul>
+              </div>
+            </td>
+        <% end %>
+      </tr>
+    </table>
+
+<% end %>
+
+<h4>Melding til instruktør</h4>
+
+<%= text_area :attendance, :message, :class => 'input-xxlarge', :rows => 6 %>
+
+<%= submit_tag 'Lagre', :class => 'btn' %>
+<%= back_or_link_to 'Tilbake', nil %>

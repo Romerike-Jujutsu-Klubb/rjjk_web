@@ -1,4 +1,4 @@
-first:  # rename to tesla
+lars:
   male: true
   first_name: Lars
   last_name: Bråten
@@ -10,6 +10,7 @@ first:  # rename to tesla
   joined_on: 2007-06-21
   birthdate: 1967-06-21
   user_id: 1000001
+  email: lars@example.com
 
 two:
   male: false

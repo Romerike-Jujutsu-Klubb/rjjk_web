@@ -2,6 +2,7 @@
 class Semester < ActiveRecord::Base
   attr_accessible :end_on, :start_on
 
+  has_many :group_instructors, :dependent => :destroy
   has_many :group_semesters, :dependent => :destroy
 
   validates_presence_of :end_on, :start_on
@@ -33,4 +34,7 @@ class Semester < ActiveRecord::Base
     Graduation.where('held_on BETWEEN ? and ?', start_on, end_on)
   end
 
+  def name
+    "#{start_on} - #{end_on}"
+  end
 end

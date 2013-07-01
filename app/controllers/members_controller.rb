@@ -1,6 +1,5 @@
 # encoding: UTF-8
 class MembersController < ApplicationController
-  before_filter :store_location
   before_filter :admin_required
 
   caches_page :age_chart, :image, :thumbnail, :history_graph, :grade_history_graph,

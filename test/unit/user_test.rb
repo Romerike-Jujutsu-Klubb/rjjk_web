@@ -5,9 +5,9 @@ class UserTest < ActiveSupport::TestCase
   self.use_transactional_fixtures = false
 
   def test_authenticate
-    assert_equal users(:tesla), User.authenticate(users(:tesla).login, 'atest')
+    assert_equal users(:lars), User.authenticate(users(:lars).login, 'atest')
     assert_nil User.authenticate('nontesla', 'atest')
-    assert_nil User.authenticate(users(:tesla).login, 'wrong password')
+    assert_nil User.authenticate(users(:lars).login, 'wrong password')
   end
 
   def test_authenticate_by_token
@@ -115,7 +115,7 @@ class UserTest < ActiveSupport::TestCase
 
   def test_create__validates_unique_login
     u = User.new
-    u.login = users(:tesla).login
+    u.login = users(:lars).login
     u.email = 'new@example.com'
     u.change_password('password')
     assert !u.save
@@ -124,7 +124,7 @@ class UserTest < ActiveSupport::TestCase
   def test_create__validates_unique_email
     u = User.new
     u.login = 'new_user'
-    u.email= users(:tesla).email
+    u.email= users(:lars).email
     u.change_password('password')
     assert !u.save
   end

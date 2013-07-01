@@ -3,7 +3,7 @@ class Member < ActiveRecord::Base
   JUNIOR_AGE_LIMIT = 15
   ASPIRANT_AGE_LIMIT = 10
   MEMBERS_PER_PAGE = 30
-  ACTIVE_CONDITIONS = "left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)"
+  ACTIVE_CONDITIONS = 'left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)'
 
   acts_as_gmappable :check_process => :prevent_geocoding, :validation => false
 
@@ -13,15 +13,16 @@ class Member < ActiveRecord::Base
 
   scope :active, lambda { |date| {:conditions => ['left_on IS NULL OR left_on > ?', date]} }
 
-  has_many :graduates, :dependent => :destroy
-  has_many :ranks, :through => :graduates, :conditions => ["graduates.passed IS NOT NULL AND graduates.passed = ?", true]
-  has_many :attendances, :dependent => :destroy
-  has_and_belongs_to_many :groups
-  has_one :nkf_member
   belongs_to :image, :dependent => :destroy
   belongs_to :user, :dependent => :destroy
-  has_and_belongs_to_many :groups
+  has_one :nkf_member
+  has_many :attendances, :dependent => :destroy
   has_many :censors, :dependent => :destroy
+  has_many :correspondences, :dependent => :destroy
+  has_many :graduates, :dependent => :destroy
+  has_many :group_instructors, :dependent => :destroy
+  has_many :ranks, :through => :graduates, :conditions => ['graduates.passed IS NOT NULL AND graduates.passed = ?', true]
+  has_and_belongs_to_many :groups
 
   # validates_presence_of :address, :cms_contract_id
   validates_length_of :billing_postal_code, :is => 4, :if => Proc.new { |m| m.billing_postal_code && !m.billing_postal_code.empty? }
@@ -82,7 +83,7 @@ class Member < ActiveRecord::Base
   def attendances_since_graduation(before_date = Date.today, group = nil)
     groups = group ? [group] : Group.all
     groups.map do |g|
-      if c = current_graduate(g.martial_art, before_date)
+      if (c = current_graduate(g.martial_art, before_date))
         ats = attendances.select { |a| a.date > c.graduation.held_on }
       else
         ats = attendances.to_a
@@ -186,17 +187,17 @@ class Member < ActiveRecord::Base
   def age_group
     return nil unless age
     if age >= JUNIOR_AGE_LIMIT
-      "Senior"
+      'Senior'
     else
-      "Junior"
+      'Junior'
     end
   end
 
   def gender
     if male
-      "Mann"
+      'Mann'
     else
-      "Kvinne"
+      'Kvinne'
     end
   end
 
@@ -205,7 +206,7 @@ class Member < ActiveRecord::Base
   end
 
   def image_file=(file)
-    return if file == ""
+    return if file == ''
     self.create_image! :filename => file.original_filename, :content_type => file.content_type, :data => file.read
   end
 

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SemestersControllerTest < ActionController::TestCase
   setup do
-    @semester = semesters(:one)
+    @semester = semesters(:previous)
     login(:admin)
   end
 

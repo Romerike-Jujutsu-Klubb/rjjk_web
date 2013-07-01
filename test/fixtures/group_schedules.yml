@@ -1,11 +1,29 @@
-one:
+panda:
   group: panda
-  weekday: 1
-  start_at: 2008-09-11 20:22:41
-  end_at: 2008-09-11 20:22:41
+  weekday: 4
+  start_at: !!time '17:45:00'
+  end_at: !!time '18:45:00'
 
-two:
-  group: panda
-  weekday: 1
-  start_at: 2008-09-11 20:22:41
-  end_at: 2008-09-11 20:22:41
+tiger_tuesday:
+  group: tiger
+  weekday: 2
+  start_at: !!time '17:45:00'
+  end_at: !!time '18:45:00'
+
+tiger_thursday:
+  group: tiger
+  weekday: 4
+  start_at: !!time '17:45:00'
+  end_at: !!time '18:45:00'
+
+voksne_tuesday:
+  group: voksne
+  weekday: 2
+  start_at: !!time '19:00:00'
+  end_at: !!time '20:30:00'
+
+voksne_thursday:
+  group: voksne
+  weekday: 4
+  start_at: !!time '19:00:00'
+  end_at: !!time '19:00:00'

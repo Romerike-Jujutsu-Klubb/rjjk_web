@@ -1,6 +1,7 @@
 class Rank < ActiveRecord::Base
   belongs_to :martial_art
   belongs_to :group
+  has_many :embus, :dependent => :destroy
   has_many :graduates, :dependent => :destroy
 
   validates_presence_of :position, :standard_months, :group, :group_id, :martial_art, :martial_art_id

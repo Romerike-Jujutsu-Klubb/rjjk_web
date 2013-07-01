@@ -1,16 +1,5 @@
 <%= form_for(@group_instructor) do |f| %>
-    <% if @group_instructor.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@group_instructor.errors.count, "error") %> prohibited this instruction
-            from being saved:</h2>
-
-          <ul>
-            <% @group_instructor.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
+    <%=f.error_messages%>
 
     <div class="field" style="float: left; margin-right: 1em">
       <%= f.label :group_schedule_id, 'Gruppe' %>
@@ -20,13 +9,9 @@
       <%= f.label :member_id, 'Instruktør' %>
       <%= f.select :member_id, [[]] + @group_instructors.map { |g| [g.name, g.id] } %>
     </div>
-    <div class="field" style="float: left; margin-right: 1em">
-      <%= f.label :from, 'Fra' %>
-      <%= f.datepicker :from, :dateFormat => 'yy-mm-dd', :firstDay => 1 %>
-    </div>
     <div class="field">
-      <%= f.label :from, 'Til (valgfri)' %>
-      <%= f.datepicker :to, :dateFormat => 'yy-mm-dd', :firstDay => 1 %>
+      <%= f.label :semester_id %>
+      <%= f.select :semester_id, [[]] + @semesters.map { |g| [g.name, g.id] } %>
     </div>
     <div class="actions">
       <%= f.submit 'Lagre' %>

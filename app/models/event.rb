@@ -1,7 +1,8 @@
 class Event < ActiveRecord::Base
   default_scope :order => 'start_at'
 
-  has_many :event_invitees, :order => :name
+  has_many :event_invitees, :order => :name, :dependent => :destroy
+  has_many :event_messages, :dependent => :destroy
   has_many :users, :through => :event_invitees
   has_and_belongs_to_many :groups
   has_one :invitation, :class_name => 'EventMessage'

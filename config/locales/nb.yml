@@ -2,6 +2,7 @@ nb:
   activerecord:
     models:
       group: Gruppe
+      group_instructor: Gruppeinstruktør
       user: Bruker
     attributes:
       group:

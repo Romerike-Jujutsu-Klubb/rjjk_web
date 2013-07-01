@@ -50,7 +50,7 @@ class CensorsControllerTest < ActionController::TestCase
   def test_create
     num_censors = Censor.count
 
-    post :create, :censor => {:graduation_id => graduations(:one).id, :member_id => members(:first).id}
+    post :create, :censor => {:graduation_id => graduations(:one).id, :member_id => members(:lars).id}
     assert_no_errors :censor
     assert_response :redirect
     assert_redirected_to :action => 'list'

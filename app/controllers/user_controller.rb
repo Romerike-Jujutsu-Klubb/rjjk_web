@@ -124,7 +124,7 @@ class UserController < ApplicationController
             redirect_to :action => 'login'
             return
           end
-          redirect_back_or_default :action => 'welcome'
+          back_or_redirect_to '/'
         end
       rescue Exception => ex
         report_exception ex
@@ -171,7 +171,7 @@ class UserController < ApplicationController
       logout
     rescue Exception => ex
       flash.now['message'] = "Error: #{ex}."
-      redirect_back_or_default :action => 'welcome'
+      back_or_redirect_to '/'
     end
   end
 

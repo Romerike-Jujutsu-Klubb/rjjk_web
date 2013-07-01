@@ -55,7 +55,7 @@ class GraduatesControllerTest < ActionController::TestCase
   def test_create
     num_graduates = Graduate.count
 
-    post :create, :graduate => {:member_id => members(:first).id,
+    post :create, :graduate => {:member_id => members(:lars).id,
                                 :graduation_id => graduations(:two).id,
                                 :passed => true, :rank_id => ranks(:two).id,
                                 :paid_graduation => true, :paid_belt => true}

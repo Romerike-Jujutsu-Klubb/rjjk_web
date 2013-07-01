@@ -21,7 +21,7 @@ class TrialAttendancesControllerTest < ActionController::TestCase
   test "should create trial_attendance" do
     assert_difference('TrialAttendance.count') do
       post :create, :trial_attendance => {
-          :group_schedule_id => group_schedules(:one).id, :nkf_member_trial_id => nkf_member_trials(:one).id,
+          :group_schedule_id => group_schedules(:panda).id, :nkf_member_trial_id => nkf_member_trials(:one).id,
           :year => 2012, :week => 10
       }
       assert_no_errors :trial_attendance

@@ -20,16 +20,16 @@ class UserControllerTest < ActionController::TestCase
   
   def test_login__valid_login__redirects_as_specified
     add_stored_detour :controller => :welcome, :action => :index
-    post :login, :user => { :login => 'tesla', :password => 'atest'}
-    assert_logged_in users(:tesla)
+    post :login, :user => { :login => 'lars', :password => 'atest'}
+    assert_logged_in users(:lars)
     assert_response :redirect
     assert_redirected_to :controller => :welcome, :action => :index
   end
 
   def test_login_with_remember_me
-    post :login, :user => { :login => 'tesla', :password => 'atest'}, :remember_me => '1'
+    post :login, :user => { :login => 'lars', :password => 'atest'}, :remember_me => '1'
     
-    assert_logged_in users(:tesla)
+    assert_logged_in users(:lars)
     assert_response :redirect
     assert_equal @controller.url_for(:controller => :welcome, :action => :index, :only_path => false), @response.redirect_url
     assert_equal cookies[:autologin], '1000001'
@@ -46,19 +46,19 @@ class UserControllerTest < ActionController::TestCase
 #    @request.cookies['token'] = 'random_token_string'
     get :welcome
     assert_response :ok
-    assert_logged_in users(:tesla)
+    assert_logged_in users(:lars)
   end
   
   def test_login__valid_login__shows_welcome_as_default
-    post :login, :user => { :login => 'tesla', :password => 'atest'}
-    assert_logged_in users(:tesla)
+    post :login, :user => { :login => 'lars', :password => 'atest'}
+    assert_logged_in users(:lars)
     assert_response :redirect
     assert_equal @controller.url_for(:controller => :welcome, :action => :index, :only_path => false),
                  @response.redirect_url
   end
 
   def test_login__wrong_password
-    post :login, :user => { :login => 'tesla', :password => 'wrong password'}
+    post :login, :user => { :login => 'lars', :password => 'wrong password'}
     assert_not_logged_in
     assert_template 'login'
     assert_contains 'Login failed', flash['message']
@@ -180,7 +180,7 @@ class UserControllerTest < ActionController::TestCase
   end
 
   def test_change_password
-    user = users(:tesla)
+    user = users(:lars)
     set_logged_in user
     post :change_password, :user => { :password => 'changed_password', :password_onfirmation => 'changed_password'}
     assert_no_errors :user
@@ -193,7 +193,7 @@ class UserControllerTest < ActionController::TestCase
   end
 
   def test_change_password__confirms_password
-    set_logged_in users(:tesla)
+    set_logged_in users(:lars)
     post :change_password, :user => { :password => 'bad', :password_confirmation => 'bad'}
     user = assigns(:user)
     assert_equal 1, user.errors.size
@@ -203,15 +203,15 @@ class UserControllerTest < ActionController::TestCase
   end
 
   def test_change_password__succeeds_despite_delivery_errors
-    set_logged_in users(:tesla)
+    set_logged_in users(:lars)
     Mail::TestMailer.inject_one_error = true
     post :change_password, :user => { :password => 'changed_password', :password_confirmation => 'changed_password'}
     assert_equal 0, Mail::TestMailer.deliveries.size
-    assert_equal users(:tesla), User.authenticate(users(:tesla).login, 'changed_password')
+    assert_equal users(:lars), User.authenticate(users(:lars).login, 'changed_password')
   end
 
   def test_forgot_password__when_logged_in_redirects_to_change_password
-    user = users(:tesla)
+    user = users(:lars)
     set_logged_in user
     post :forgot_password, :user => { :email => user.email }
     assert_equal 0, Mail::TestMailer.deliveries.size
@@ -232,20 +232,20 @@ class UserControllerTest < ActionController::TestCase
 
   def test_forgot_password__reports_delivery_error
     Mail::TestMailer.inject_one_error = true
-    post :forgot_password, :user => { :email => users(:tesla).email }
+    post :forgot_password, :user => { :email => users(:lars).email }
     assert_equal 0, Mail::TestMailer.deliveries.size
     assert_match /Your password could not be emailed/, @response.body
   end
 
   def test_invalid_login
-    post :login, :user => { :login => 'tesla', :password => 'not_correct'}
+    post :login, :user => { :login => 'lars', :password => 'not_correct'}
     assert_not_logged_in
     assert_response :success
     assert_template 'login'
   end
   
   def test_logout
-    set_logged_in users(:tesla)
+    set_logged_in users(:lars)
     get :logout
     assert_not_logged_in
   end

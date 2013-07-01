@@ -2,7 +2,7 @@
 
 class EmbusController < ApplicationController
   def index
-    if embu = Embu.last
+    if embu = Embu.mine.last
       redirect_to :action => :edit, :id => embu.id
     else
       redirect_to :action => :new
@@ -14,7 +14,7 @@ class EmbusController < ApplicationController
   end
 
   def print
-    @embu = Embu.find(params[:id])
+    @embu = Embu.mine.find(params[:id])
     render :layout => 'print'
   end
 
@@ -33,7 +33,7 @@ class EmbusController < ApplicationController
   end
 
   def edit
-    @embu = Embu.find(params[:id])
+    @embu = Embu.mine.find(params[:id])
     load_data
   end
 
@@ -52,7 +52,7 @@ class EmbusController < ApplicationController
   end
 
   def update
-    @embu = Embu.find(params[:id])
+    @embu = Embu.mine.find(params[:id])
     if @embu.update_attributes(params[:embu])
       redirect_to :action => :edit, :id => @embu.id, notice: 'Embu was successfully updated.'
     else
@@ -63,7 +63,7 @@ class EmbusController < ApplicationController
   # DELETE /embus/1
   # DELETE /embus/1.json
   def destroy
-    @embu = Embu.find(params[:id])
+    @embu = Embu.mine.find(params[:id])
     @embu.destroy
 
     respond_to do |format|
@@ -75,7 +75,7 @@ class EmbusController < ApplicationController
   private
 
   def load_data
-    @embus = Embu.where('user_id = ?', current_user.id).order('created_at DESC').all
+    @embus = Embu.mine.where('user_id = ?', current_user.id).order('created_at DESC').all
     @ranks = Rank.order('position DESC').all
   end
 

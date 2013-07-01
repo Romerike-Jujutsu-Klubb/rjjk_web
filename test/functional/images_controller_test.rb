@@ -45,7 +45,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_create
-    login :tesla
+    login :lars
 
     num_images = Image.count
 

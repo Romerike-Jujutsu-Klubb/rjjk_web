@@ -1,8 +1,3 @@
-<%=javascript_include_tag 'CalendarPopup' %>
-<script language="JavaScript">
-var cal = new CalendarPopup();
-</script>
-
 <%= error_messages_for 'member' %>
 
 <!--[form:member]-->
@@ -16,12 +11,13 @@ input.half {width: 7.5em;}
 </style>
 
 <div style="float: left">
-<% if @member.image? %>
-	<%=image_tag url_for(:action => :thumbnail, :id => @member.id, :format => @member.image.format), :title => @member.image.name, :style => 'float: left'%>
-<% else %>
-	Last opp bilde: 
-<% end %>
-<%=file_field :member, :image_file, :size => 8 %>
+  <% if @member.image? %>
+      <%= image_tag url_for(:action => :thumbnail, :id => @member.id, :format => @member.image.format), :title => @member.image.name, :style => 'float: left' %>
+  <% else %>
+      Last opp bilde:
+  <% end %>
+  <br/>
+  <%= file_field :member, :image_file, :size => 8 %>
 </div>
 
 <table id="spaced" style="float: left" cellpadding="20px">

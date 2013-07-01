@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130626163840) do
+ActiveRecord::Schema.define(:version => 20130701065100) do
 
   create_table "martial_arts", :force => true do |t|
     t.string "name",   :limit => 16, :null => false
@@ -264,20 +264,23 @@ ActiveRecord::Schema.define(:version => 20130626163840) do
     t.foreign_key ["rank_id"], "ranks", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "graduates_rank_id_fkey"
   end
 
-  create_table "group_instructors", :force => true do |t|
-    t.integer  "member_id"
-    t.date     "from"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-    t.integer  "group_schedule_id", :null => false
-    t.date     "to"
-  end
-
   create_table "semesters", :force => true do |t|
     t.date     "start_on",   :null => false
     t.date     "end_on",     :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "group_instructors", :force => true do |t|
+    t.integer  "member_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "group_schedule_id", :null => false
+    t.integer  "semester_id",       :null => false
+    t.index ["group_schedule_id"], :name => "fk__group_instructors_group_schedule_id"
+    t.index ["semester_id"], :name => "fk__group_instructors_semester_id"
+    t.foreign_key ["group_schedule_id"], "group_schedules", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_instructors_group_schedule_id"
+    t.foreign_key ["semester_id"], "semesters", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_instructors_semester_id"
   end
 
   create_table "group_semesters", :force => true do |t|

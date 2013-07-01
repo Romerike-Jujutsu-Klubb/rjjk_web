@@ -1,6 +1,6 @@
 one:
-  member: first
-  group_schedule: one
+  member: lars
+  group_schedule: panda
   year: 2010
   week: 42
   status: X

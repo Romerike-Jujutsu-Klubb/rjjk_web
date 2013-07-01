@@ -2,7 +2,7 @@ require 'test_helper'
 
 class EmbuImagesControllerTest < ActionController::TestCase
   setup do
-    login :tesla
+    login :lars
     @embu_image = embu_images(:one)
   end
 

@@ -54,7 +54,7 @@ class UserSystemTest < ActionController::IntegrationTest
   end
 
   def test_forgot_password_allows_change_password_after_mailing_key
-    user = users(:tesla)
+    user = users(:lars)
     post url_for(:controller => 'user', :action => 'forgot_password'), :user => {:email => user.email}
     assert_equal 1, Mail::TestMailer.deliveries.size
     mail = Mail::TestMailer.deliveries[0]

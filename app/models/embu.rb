@@ -1,7 +1,7 @@
 class Embu < ActiveRecord::Base
   extend UserSystem
 
-  default_scope { where(:user_id => current_user) }
+  scope :mine, proc{ where(:user_id => current_user) }
 
   belongs_to :user
   belongs_to :rank

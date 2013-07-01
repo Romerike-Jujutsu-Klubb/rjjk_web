@@ -73,13 +73,13 @@
                       :class => 'btn btn-mini', :title => 'Kommer allikevel!') do %>
               <i class="icon-thumbs-up"></i>
           <% end %>
-          <br/>
           <% unless @attendances_next_practice['W'].blank? && @attendances_next_practice[Attendance::ATTENDED].blank? %>
+              <br/>
               <%= @attendances_next_practice['W'].try(:size).to_i + @attendances_next_practice[Attendance::ATTENDED].try(:size).to_i %>
-              andre
+              andre kommer.
           <% end %>
-          kommer.
           <% unless @attendances_next_practice['F'].blank? %>
+              <br/>
               <%= @attendances_next_practice['F'].size %> har meldt fravær.
           <% end %>
       <% else %>
@@ -99,19 +99,6 @@
           </div>
       <% end %>
       <br/>
-      <!--
-        <div class="btn-group">
-          <a class="btn btn-mini btn-primary" href="#"><i class="icon-user icon-white"></i> User</a>
-          <a class="btn btn-mini btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
-            <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
-            <li><a href="#"><i class="icon-ban-circle"></i> Ban</a></li>
-            <li class="divider"></li>
-            <li><a href="#"><i class="i"></i> Make admin</a></li>
-          </ul>
-        </div>
-        -->
       <br/>
     <% end %>
 
@@ -211,8 +198,6 @@
         <%= link_to grades_chart_link, :controller => :members, :action => :grade_history_graph, :format => :png, :id => 800 %><br/>
         <%= link_to age_chart_link, :controller => :members, :action => :age_chart, :format => :png, :id => 800 %><br/>
         <%= link_to good_attendance_chart_link, :controller => :members, :action => :grade_history_graph_percentage, :format => :png, :id => 800, :percentage => 50, :step => 30, :interval => 92 %><br/>
-        <br/>
-        <br/>
     <% end %>
 
     <h3>Grupper</h3>
