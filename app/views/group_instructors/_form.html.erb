@@ -14,7 +14,7 @@
       <%= f.select :semester_id, [[]] + @semesters.map { |g| [g.name, g.id] } %>
     </div>
     <div class="actions">
-      <%= f.submit 'Lagre' %>
+      <%= f.submit 'Lagre', :class => :btn %>
       <%= back_or_link_to 'Tilbake', group_instructors_path %>
     </div>
 <% end %>

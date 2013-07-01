@@ -6,6 +6,9 @@ class GroupInstructorsController < ApplicationController
         order('group_schedules.weekday, group_schedules.start_at, groups.from_age').all
     group_instructors.sort_by!{|gi| [gi.semester.current? ? 0 : 1, gi.semester.future? ? 0 : 1, gi.semester.future? ? gi.semester.start_on : Date.today - gi.semester.end_on]}
     @semesters = group_instructors.group_by(&:semester)
+    if @semesters.empty? && Semester.current
+      @semesters = {Semester.current => []}
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -63,7 +66,7 @@ class GroupInstructorsController < ApplicationController
 
     respond_to do |format|
       if @group_instructor.update_attributes(params[:group_instructor])
-        format.html { redirect_to @group_instructor, notice: 'GroupInstructor was successfully updated.' }
+        format.html { redirect_to group_instructors_path, notice: 'GroupInstructor was successfully updated.' }
         format.json { head :no_content }
       else
         @groups = Group.all

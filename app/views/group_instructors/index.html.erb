@@ -14,7 +14,6 @@
         <th>Instruktør</th>
         <th></th>
         <th></th>
-        <th></th>
       </tr>
 
       <% instructions.each do |instruction| %>
@@ -22,8 +21,7 @@
             <td><%= instruction.group_schedule.group.name %></td>
             <td><%= instruction.group_schedule.weekday_name %></td>
             <td><%= instruction.member.name %></td>
-            <td><%= link_to 'Vis', instruction %></td>
-            <td><%= link_to 'Rediger', edit_group_instructor_path(instruction) %></td>
+            <td><%= link_to 'Endre', edit_group_instructor_path(instruction) %></td>
             <td><%= link_to 'Slett', instruction, data: {confirm: 'Er du sikker?'}, method: :delete %></td>
           </tr>
       <% end %>
