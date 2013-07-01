@@ -2,17 +2,19 @@ class GroupSchedulesController < ApplicationController
   before_filter :admin_required
 
   def index
-    @group_schedules = GroupSchedule.all.sort_by{|gs| [gs.weekday == 0 ? 7 : gs.weekday, gs.start_at, gs.end_at]}
+    @group_schedules = GroupSchedule.all.
+        select {|gs| gs.group.active?}.
+        sort_by { |gs| [gs.weekday == 0 ? 7 : gs.weekday, gs.start_at, gs.end_at, gs.group.from_age] }
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @group_schedules }
+      format.xml { render :xml => @group_schedules }
     end
   end
 
   def yaml
     @group_schedules = GroupSchedule.all
-    render :text => @group_schedules.map{|gs| gs.attributes}.to_yaml, :content_type => 'text/yaml', :layout => false
+    render :text => @group_schedules.map { |gs| gs.attributes }.to_yaml, :content_type => 'text/yaml', :layout => false
   end
 
   def show
@@ -20,7 +22,7 @@ class GroupSchedulesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @group_schedule }
+      format.xml { render :xml => @group_schedule }
     end
   end
 
@@ -30,7 +32,7 @@ class GroupSchedulesController < ApplicationController
 
     respond_to do |format|
       format.html { render :action => :new }
-      format.xml  { render :xml => @group_schedule }
+      format.xml { render :xml => @group_schedule }
     end
   end
 
@@ -46,10 +48,10 @@ class GroupSchedulesController < ApplicationController
       if @group_schedule.save
         flash[:notice] = 'GroupSchedule was successfully created.'
         format.html { redirect_to(@group_schedule) }
-        format.xml  { render :xml => @group_schedule, :status => :created, :location => @group_schedule }
+        format.xml { render :xml => @group_schedule, :status => :created, :location => @group_schedule }
       else
         format.html { new }
-        format.xml  { render :xml => @group_schedule.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @group_schedule.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -61,10 +63,10 @@ class GroupSchedulesController < ApplicationController
       if @group_schedule.update_attributes(params[:group_schedule])
         flash[:notice] = 'GroupSchedule was successfully updated.'
         format.html { redirect_to(@group_schedule) }
-        format.xml  { head :ok }
+        format.xml { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @group_schedule.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @group_schedule.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -75,7 +77,7 @@ class GroupSchedulesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(group_schedules_url) }
-      format.xml  { head :ok }
+      format.xml { head :ok }
     end
   end
 end

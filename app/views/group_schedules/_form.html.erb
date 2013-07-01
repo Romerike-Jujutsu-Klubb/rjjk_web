@@ -1,24 +1,24 @@
 <%=form_for(@group_schedule) do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.label :group_id %><br />
+  <div>
+    <%= f.label :group_id %>
     <%= f.select :group_id, @groups.map{|g| ["#{g.martial_art.name} #{g.name}", g.id]}.sort %>
-  </p>
-  <p>
-    <%= f.label :weekday %><br />
+  </div>
+  <div>
+    <%= f.label :weekday %>
     <%= f.select :weekday, [['Mandag', 1], ['Tirsdag', 2], ['Onsdag', 3], ['Torsdag', 4], ['Fredag', 5], ['Lørdag', 6], ['Søndag', 7]] %>
-  </p>
+  </div>
+  <div>
+    <%= f.label :start_at %>
+    <%= f.text_field :start_at %>
+  </div>
+  <div>
+    <%= f.label :end_at %>
+    <%= f.text_field :end_at %>
+  </div>
   <p>
-    <%= f.label :start_at %><br />
-    <%= f.time_select :start_at %>
-  </p>
-  <p>
-    <%= f.label :end_at %><br />
-    <%= f.time_select :end_at %>
-  </p>
-  <p>
-    <%= f.submit "Lagre" %>
+    <%= f.submit 'Lagre', :class => :btn %>
 	<%= link_to 'Tilbake', group_schedules_path %>
   </p>
 <% end %>

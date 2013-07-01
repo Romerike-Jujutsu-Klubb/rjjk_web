@@ -22,7 +22,7 @@ class Group < ActiveRecord::Base
   validates_presence_of :from_age, :martial_art, :name, :to_age
 
   def full_name
-    "#{martial_art.name} #{name}"
+    "#{"#{martial_art.name} " if martial_art.name != 'Kei Wa Ryu'}#{name}"
   end
 
   def contains_age(age)
