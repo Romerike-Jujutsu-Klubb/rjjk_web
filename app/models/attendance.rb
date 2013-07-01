@@ -6,6 +6,12 @@ class Attendance < ActiveRecord::Base
   ABSENT = 'F'
   PRESENT = 'T'
 
+  STATES = [
+      [Attendance::HOLIDAY, 'Bortreist', 'icon-hand-right', 'btn-warning'],
+      [Attendance::SICK, 'Syk', 'icon-plus', 'btn-danger'],
+      [Attendance::ABSENT, 'Annet', 'icon-thumbs-down', 'btn-info'],
+  ]
+
   scope :by_group_id, lambda { |group_id| { :conditions => ['group_schedules.group_id = ?', group_id], :include => :group_schedule }}
   scope :last_months, lambda { |count| limit = count.months.ago ; { :conditions => ['(year = ? AND week >= ?) OR year > ?', limit.year, limit.to_date.cweek, limit.year]}}
   scope :on_date, lambda { |date| { :conditions => ['year = ? AND week = ?', date.year, date.cweek]}}
