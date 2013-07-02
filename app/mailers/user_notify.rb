@@ -28,7 +28,7 @@ class UserNotify < ActionMailer::Base
   def forgot_password(user, url=nil)
     setup_email(user)
 
-    @subject += 'Forgotten password notification'
+    @subject += 'Glemt passord'
 
     @name = "#{user.first_name} #{user.last_name}"
     @login = user.login
@@ -59,7 +59,6 @@ class UserNotify < ActionMailer::Base
     @recipients = Rails.env != 'production' ? 'uwe@kubosch.no' : user.email
     @subject    = "[#{UserSystem::CONFIG[:app_name]}] "
     @sent_on    = Time.now
-    headers['Content-Type'] = "text/plain; charset=#{UserSystem::CONFIG[:mail_charset]}; format=flowed"
   end
 
   def send_email

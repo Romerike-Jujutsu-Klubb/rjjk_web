@@ -96,7 +96,7 @@ class UserController < ApplicationController
     rescue Exception => ex
       report_exception ex
     end
-
+    redirect_to :controller => :user, :action => :welcome
   end
 
   def forgot_password
