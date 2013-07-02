@@ -24,11 +24,8 @@ class Member < ActiveRecord::Base
   has_many :ranks, :through => :graduates, :conditions => ['graduates.passed IS NOT NULL AND graduates.passed = ?', true]
   has_and_belongs_to_many :groups
 
-  before_validation do
-    self.parent_name = nil if parent_name.blank?
-    self.phone_home = nil if phone_home.blank?
-    self.phone_work = nil if phone_work.blank?
-  end
+  NILLABLE_FIELDS = [:parent_name, :phone_home, :phone_work]
+  before_validation { NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? } }
 
   # validates_presence_of :address, :cms_contract_id
   validates_length_of :billing_postal_code, :is => 4, :if => Proc.new { |m| m.billing_postal_code && !m.billing_postal_code.empty? }

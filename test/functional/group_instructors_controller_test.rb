@@ -23,8 +23,7 @@ class GroupInstructorsControllerTest < ActionController::TestCase
           :semester_id => semesters(:current).id}
       assert_no_errors :group_instructor
     end
-
-    assert_redirected_to group_instructor_path(assigns(:group_instructor))
+    assert_redirected_to group_instructors_path
   end
 
   test 'should show group_instructor' do
