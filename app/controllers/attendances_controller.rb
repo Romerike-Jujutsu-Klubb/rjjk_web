@@ -142,9 +142,16 @@ class AttendancesController < ApplicationController
     today = Date.today
     @weeks = [[today.year, today.cweek], [(today + 7).year, (today + 7).cweek]]
     @group_schedules = current_user.member.groups.map(&:group_schedules).flatten
-    @attendances = Attendance.where('member_id = ? AND ((year = ? AND week = ?) OR (year = ? AND week = ?))',
-                                    current_user.member, today.year, today.cweek, (today + 7).year, (today + 7).cweek).
+    @planned_attendances = Attendance.where('member_id = ? AND ((year = ? AND week = ?) OR (year = ? AND week = ?))',
+                                            current_user.member, today.year, today.cweek, (today + 7).year, (today + 7).cweek).
         all
+    start_date = 6.months.ago.to_date.beginning_of_month
+    attendances = Attendance.where('member_id = ? AND status = ? AND ((year = ? AND week >= ?) OR (year = ?))',
+                                   current_user.member, Attendance::ATTENDED, start_date.year, start_date.cweek, today.year).
+        all
+    @attended_groups = attendances.map{|a| a.group_schedule.group}.uniq.sort_by{|g| -g.from_age}
+    per_month = attendances.group_by{|a| d = Date.commercial(a.year, a.week, a.group_schedule.weekday) ; [d.year, d.mon]}
+    @months = per_month.keys.sort.map{|ym| [t(:date)[:month_names][ym[1]], *per_month[ym].group_by{|a| a.group_schedule.group}.map(&:size)]}
   end
 
 end

@@ -1,10 +1,18 @@
-<p>For å kunne organisere treningene fremover ønsker vi at alle merker av når de planlegger å komme
-  og når de ikke kan komme.</p>
-
-<p>Trykk på "<strong>Kommer!</strong>"-knappen slik at den blir
-  <span style="color: #5BB75B">grønn</span> på de treningene du planlegger å komme på, eller velg
-  årsak
-  fra listen på de treningene du ikke kan delta på.</p>
+<table class="table">
+  <tr>
+    <th>Måned<%= '/Gruppe' if @groups.size > 1 %></th>
+    <% @attended_groups.each do |g| %>
+        <th><%= g.name if @groups.size > 1 %></th>
+    <% end %>
+  </tr>
+  <% @months.each do |fields| %>
+      <tr>
+        <% fields.each do |f| %>
+            <td><%= f %></td>
+        <% end %>
+      </tr>
+  <% end %>
+</table>
 
 <% @weeks.each.with_index do |(year, week), i| %>
 
@@ -24,7 +32,7 @@
       <tr>
         <% @group_schedules.each do |gs| %>
             <%
-               ats = @attendances.select { |a| a.group_schedule == gs && a.year == year && a.week == week }
+               ats = @planned_attendances.select { |a| a.group_schedule == gs && a.year == year && a.week == week }
                initial_text = 'Kommer!'
                initial_icon = 'icon-thumbs-up'
                initial_class = nil
@@ -67,7 +75,7 @@
               <br/>
               <% others = gs.attendances.select { |a| a.year == year && a.week == week && a.member_id != current_user.member.id } %>
               <% if others.any? %>
-                  <%= others.size %> andre kommer
+                  <%= others.size == 1 ? others[0].member.first_name : others.size %> andre kommer
               <% end %>
             </td>
         <% end %>
@@ -77,6 +85,14 @@
 <% end %>
 
 <br/>
+
+<p>For å kunne organisere treningene fremover ønsker vi at alle merker av når de planlegger å komme
+  og når de ikke kan komme.</p>
+
+<p>Trykk på "<strong>Kommer!</strong>"-knappene slik at de blir
+  <span style="color: #5BB75B">grønne</span> på de treningene du planlegger å komme på, eller velg
+  årsak fra listen på de treningene du ikke kan delta på.</p>
+
 
 <!--
 <h4>Melding til instruktør</h4>

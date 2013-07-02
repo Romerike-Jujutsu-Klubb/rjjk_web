@@ -1,10 +1,12 @@
 class Attendance < ActiveRecord::Base
-  ATTENDED = 'X'
-  WILL_ATTEND = 'P'
-  SICK = 'S'
-  HOLIDAY = 'B'
   ABSENT = 'F'
+  ASSISTANT = 'H'
+  ATTENDED = 'X'
+  HOLIDAY = 'B'
+  INSTRUCTOR = 'I'
   PRESENT = 'T'
+  SICK = 'S'
+  WILL_ATTEND = 'P'
 
   STATES = [
       [Attendance::HOLIDAY, 'Bortreist', 'icon-hand-right', 'btn-warning'],

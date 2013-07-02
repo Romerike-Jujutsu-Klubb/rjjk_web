@@ -36,7 +36,7 @@ class Mail::TestMailer
   def deliver_with_error!(mail)
     if inject_one_error
       self.class.inject_one_error = false
-      raise "Failed to send email" if ActionMailer::Base.raise_delivery_errors
+      raise 'Failed to send email' if ActionMailer::Base.raise_delivery_errors
     end
     deliver_without_error! mail
   end
