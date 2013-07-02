@@ -1,174 +1,182 @@
 <div class="main_right">
 
-  <div class="padded">
-    <%= link_to image_tag('rjjk_logo_&_txt_320.png', :id => :logo_img, :style => 'width: 182px; height: 181px; border: 0'), '/' %>
+<div class="padded">
+<%= link_to image_tag('rjjk_logo_&_txt_320.png', :id => :logo_img, :style => 'width: 182px; height: 181px; border: 0'), '/' %>
 
-    <form action="/search" class="form-search">
-      <%= text_field nil, nil, :name => :q, :value => @query, :placeholder => 'Søk', :style => 'width: 152px', :class => 'search-query' %>
-    </form>
+<form action="/search" class="form-search">
+  <%= text_field nil, nil, :name => :q, :value => @query, :placeholder => 'Søk', :style => 'width: 152px', :class => 'search-query' %>
+</form>
 
-    <% if @image && !@image.new_record? && (controller.class != ImagesController || !%w{gallery mine}.include?(controller.action_name)) %>
-        <div align="center">
-          <%= link_to :controller => :images, :action => :gallery, :id => @image.id do %>
-              <% if @image.video? %>
-                  <%= video_tag url_for(:controller => :images, :action => :show, :id => @image.id, :format => @image.format), :title => @image.name || 'Film', :style => 'width: 100%; border: 0', :controls => true, :autobuffer => true %>
-              <% else %>
-                  <% image_width = @image.width_max(182) %>
-                  <% image_height = @image.height_at(image_width) %>
-                  <%= image_tag url_for(:controller => :images, :action => :inline, :id => @image.id, :width => image_width, :format => @image.format), :title => @image.name || 'Bilde', :style => "width: #{image_width}px; height: #{image_height}px; border: 0" %>
-              <% end %>
-              <%= @image.description %>
+<% if @image && !@image.new_record? && (controller.class != ImagesController || !%w{gallery mine}.include?(controller.action_name)) %>
+    <div align="center">
+      <%= link_to :controller => :images, :action => :gallery, :id => @image.id do %>
+          <% if @image.video? %>
+              <%= video_tag url_for(:controller => :images, :action => :show, :id => @image.id, :format => @image.format), :title => @image.name || 'Film', :style => 'width: 100%; border: 0', :controls => true, :autobuffer => true %>
+          <% else %>
+              <% image_width = @image.width_max(182) %>
+              <% image_height = @image.height_at(image_width) %>
+              <%= image_tag url_for(:controller => :images, :action => :inline, :id => @image.id, :width => image_width, :format => @image.format), :title => @image.name || 'Bilde', :style => "width: #{image_width}px; height: #{image_height}px; border: 0" %>
           <% end %>
-          <ul class="controls" style="text-align: center">
-            <li><%= link_to 'Godkjenn', {:controller => :images, :action => :update, :id => @image.id, :image => {:approved => true}}, :method => :put if admin? && !@image.approved? %></li>
-            <li><%= link_to @image.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => @image.id, :image => {:public => !@image.public?}}, :method => :put if admin? %></li>
-            <li><%= link_to 'Liker', {:controller => :user, :action => :like, :id => @image.id}, :method => :post if user? && !@image.likers.include?(current_user) %></li>
-          </ul>
+          <%= @image.description %>
+      <% end %>
+      <ul class="controls" style="text-align: center">
+        <li><%= link_to 'Godkjenn', {:controller => :images, :action => :update, :id => @image.id, :image => {:approved => true}}, :method => :put if admin? && !@image.approved? %></li>
+        <li><%= link_to @image.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => @image.id, :image => {:public => !@image.public?}}, :method => :put if admin? %></li>
+        <li><%= link_to 'Liker', {:controller => :user, :action => :like, :id => @image.id}, :method => :post if user? && !@image.likers.include?(current_user) %></li>
+      </ul>
+    </div>
+<% end %>
+
+<% if user? %>
+    <h3 align="center">Last opp media</h3>
+    <%= form_for @new_image do |f| %>
+        <%= f.file_field :file, :onchange => 'form.submit()',
+                         'size' => '10', :style => 'width: 100%',
+                         :class => 'hide ie_show' %>
+        <div class="input-append ie_hide">
+          <input id="pretty-input" class="input-small" type="text" onclick="$('input[id=image_file]').click();">
+          <a class="btn" onclick="$('input[id=image_file]').click();">Browse</a>
         </div>
     <% end %>
+    <script type="text/javascript">
+        $('input[id=image_file]').change(function () {
+            $('#pretty-input').val($(this).val().replace("C:\\fakepath\\", ""));
+        });
+    </script>
+<% end %>
 
-    <% if user? %>
-        <h3 align="center">Last opp media</h3>
-        <%= form_for @new_image do |f| %>
-            <%= f.file_field :file, :onchange => 'form.submit()',
-                             'size' => '10', :style => 'width: 100%',
-                             :class => 'hide ie_show' %>
-            <div class="input-append ie_hide">
-              <input id="pretty-input" class="input-small" type="text" onclick="$('input[id=image_file]').click();">
-              <a class="btn" onclick="$('input[id=image_file]').click();">Browse</a>
-            </div>
+<% if @next_practice %>
+
+    <h3>Neste trening</h3>
+
+    <%= t(:date)[:day_names][@next_practice.cwday] %> <%= @next_practice.day %>.
+    <%= t(:date)[:month_names][@next_practice.month].downcase %>
+    <br/>
+    <% if @your_attendance_next_practice &&
+            [Attendance::ATTENDED, Attendance::WILL_ATTEND].include?(@your_attendance_next_practice.status) %>
+        Du
+        <% unless @other_attendees.empty? %>
+            og
+            <% if @other_attendees.size == 1 %>
+                <%= @other_attendees[0].member.first_name %>
+            <% else %>
+                <%= @other_attendees.size %>
+                andre
+            <% end %>
         <% end %>
-        <script type="text/javascript">
-            $('input[id=image_file]').change(function () {
-                $('#pretty-input').val($(this).val().replace("C:\\fakepath\\", ""));
-            });
-        </script>
-    <% end %>
+        kommer.
+        <% unless @other_absentees.empty? %>
+            <%= @other_absentees.size %> har meldt fravær.
+        <% end %>
+        <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::ABSENT),
+                    :class => 'btn btn-mini', :title => 'Kan ikke allikevel...') do %>
+            <i class="icon-thumbs-down"> Angre</i>
+        <% end %>
+    <% elsif @your_attendance_next_practice %>
+        Du kommer ikke.
+        <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::WILL_ATTEND),
+                    :class => 'btn btn-mini', :title => 'Kommer allikevel!') do %>
+            <i class="icon-thumbs-up"></i>
+        <% end %>
+        <% unless @other_attendees.empty? %>
+            <br/>
+            <%= @other_attendees.size %> andre kommer.
+        <% end %>
+        <% unless @other_absentees.empty? %>
+            <br/>
+            <%= @other_absentees.size %> har meldt fravær.
+        <% end %>
+    <% else %>
+        <% if @other_attendees.any? %>
+            <%= @other_attendees.size %> andre kommer.
+        <% end %>
 
-    <% if @next_practice %>
-
-      <h3>Neste trening</h3>
-
-      <%= t(:date)[:day_names][@next_practice.cwday] %> <%= @next_practice.day %>.
-      <%= t(:date)[:month_names][@next_practice.month].downcase %>
-      <br/>
-      <% if @your_attendance_next_practice &&
-              [Attendance::ATTENDED, Attendance::WILL_ATTEND].include?(@your_attendance_next_practice.status) %>
-          Du
-          <% unless @attendances_next_practice['W'].blank? && @attendances_next_practice[Attendance::ATTENDED].blank? %>
-              og <%= @attendances_next_practice['W'].try(:size).to_i + @attendances_next_practice[Attendance::ATTENDED].try(:size).to_i %>
-              andre
-          <% end %>
-          kommer.
-          <% unless @attendances_next_practice['F'].blank? %>
-              <%= @attendances_next_practice['F'].size %> har meldt fravær.
-          <% end %>
-          <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::ABSENT),
-                      :class => 'btn btn-mini', :title => 'Kan ikke allikevel...') do %>
-              <i class="icon-thumbs-down"> Angre</i>
-          <% end %>
-      <% elsif @your_attendance_next_practice && @your_attendance_next_practice.status == Attendance::ABSENT %>
-          Du kommer ikke.
-          <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::WILL_ATTEND),
-                      :class => 'btn btn-mini', :title => 'Kommer allikevel!') do %>
+        Kommer du?
+        <div class="btn-group">
+          <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::WILL_ATTEND), :class => 'btn btn-mini', :title => 'kommer!') do %>
               <i class="icon-thumbs-up"></i>
           <% end %>
-          <% unless @attendances_next_practice['W'].blank? && @attendances_next_practice[Attendance::ATTENDED].blank? %>
-              <br/>
-              <%= @attendances_next_practice['W'].try(:size).to_i + @attendances_next_practice[Attendance::ATTENDED].try(:size).to_i %>
-              andre kommer.
-          <% end %>
-          <% unless @attendances_next_practice['F'].blank? %>
-              <br/>
-              <%= @attendances_next_practice['F'].size %> har meldt fravær.
-          <% end %>
-      <% else %>
-          <% if @attendances_next_practice.any? %>
-              <%= @attendances_next_practice.size %> andre kommer.
-          <% end %>
-
-          Kommer du?
-          <div class="btn-group">
-            <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::WILL_ATTEND), :class => 'btn btn-mini', :title => 'kommer!') do %>
-                <i class="icon-thumbs-up"></i>
-            <% end %>
-            <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::ABSENT),
-                        :class => 'btn btn-mini', :title => 'kan ikke...') do %>
-                <i class="icon-thumbs-down"></i>
-            <% end %>
-          </div>
-      <% end %>
-      <br/>
-      <br/>
-    <% end %>
-
-    <% if @events.any? %>
-        <% last_year = Date.today.year %>
-        <% last_mon = nil %>
-        <div class="events">
-          <h3>Hva skjer? <%=link_to image_tag('ical.png', :style => 'height: 24px'),
-                                    {:only_path => false, :protocol => :webcal,
-                                     :controller => :events, :action => :calendar,
-                                     :format => :ics}, :title => 'Abonnér på hendelseskalender!' %></h3>
-
-          <% for event in @events %>
-              <% ingress = event.ingress %>
-              <% ingress = nil if ingress.blank? %>
-              <% body = event.body %>
-              <% if event.start_at.year != last_year %>
-                  <% last_year = event.start_at.year %>
-                  <h4 style="color: #E20916"><%=last_year %></h4>
-              <% end %>
-              <% if event.start_at.mon != last_mon %>
-                  <% last_mon = event.start_at.mon %>
-                  <h4 style="color: #E20916"><%= t Date::MONTHNAMES[last_mon] %></h4>
-              <% end %>
-              <h4 style="color: #FFB400">
-                <% if event.end_at.nil? || event.end_at == event.start_at %>
-                    <% if event.start_at.min != 0 || event.start_at.hour != 0 %>
-                        <%= t(:date)[:day_names][event.start_at.wday]%> <%= event.start_at.strftime('%d. kl. %H:%M') %>
-                    <% else %>
-                        <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>.
-                    <% end %>
-                <% else %>
-                    <% if event.end_at.to_date == event.start_at.to_date %>
-                        <%= t(:date)[:day_names][event.start_at.wday]%> <%= event.start_at.mday %>.<br/>
-                        kl. <%= event.start_at.strftime('%H:%M') %>-<%= event.end_at.strftime('%H:%M') %>
-                    <% else %>
-                        <% if event.start_at.min == 0 && event.start_at.hour == 0 && event.end_at.hour == 0 && event.end_at.min == 0 %>
-                            <%= event.start_at.mday %>-<%=event.end_at.mday%>.
-                        <% else %>
-                            <%= t(:date)[:day_names][event.start_at.wday]%> <%= event.start_at.mday %>. <%= event.start_at.strftime('%H:%M') %>
-                            -
-                            <%= t(:date)[:day_names][event.end_at.wday] %>  <%=event.end_at.mday%>.     <%= event.end_at.strftime('%H:%M') %>
-                        <% end %>
-                    <% end %>
-                <% end %>
-              </h4>
-
-              <h4>
-                <% if body %>
-                    <%= link_to event.name, :controller => :events, :action => :show, :id => event.id %>
-                <% else %>
-                    <%= event.name %>
-                <% end %>
-                <%= link_to image_tag('ical.png', :style => 'height: 24px'),
-                            {:controller => :events, :action => :calendar,
-                             :id => event.id, :format => :ics},
-                            :title => "Sett '#{event.name}' på din kalender!" %>
-              </h4>
-
-              <% if ingress %>
-                  <%= ingress.gsub(/&nbsp;/, ' ').html_safe %>
-              <% end %>
-              <ul class="controls">
-                <% if ingress && event.description.size > ingress.size %>
-                    <li><%= link_to 'Les mer', {:controller => :events, :action => :show, :id => event.id}, :class => :edit %></li>
-                <% end %>
-                <li><%= link_to 'Redigèr', edit_polymorphic_path(event), :class => :edit if admin? %></li>
-              </ul>
+          <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::ABSENT),
+                      :class => 'btn btn-mini', :title => 'kan ikke...') do %>
+              <i class="icon-thumbs-down"></i>
           <% end %>
         </div>
+    <% end %>
+    <br/>
+    <br/>
+<% end %>
+
+<% if @events.any? %>
+    <% last_year = Date.today.year %>
+    <% last_mon = nil %>
+    <div class="events">
+      <h3>Hva skjer? <%= link_to image_tag('ical.png', :style => 'height: 24px'),
+                                 {:only_path => false, :protocol => :webcal,
+                                  :controller => :events, :action => :calendar,
+                                  :format => :ics}, :title => 'Abonnér på hendelseskalender!' %></h3>
+
+      <% for event in @events %>
+          <% ingress = event.ingress %>
+          <% ingress = nil if ingress.blank? %>
+          <% body = event.body %>
+          <% if event.start_at.year != last_year %>
+              <% last_year = event.start_at.year %>
+              <h4 style="color: #E20916"><%= last_year %></h4>
+          <% end %>
+          <% if event.start_at.mon != last_mon %>
+              <% last_mon = event.start_at.mon %>
+              <h4 style="color: #E20916"><%= t Date::MONTHNAMES[last_mon] %></h4>
+          <% end %>
+          <h4 style="color: #FFB400">
+            <% if event.end_at.nil? || event.end_at == event.start_at %>
+                <% if event.start_at.min != 0 || event.start_at.hour != 0 %>
+                    <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.strftime('%d. kl. %H:%M') %>
+                <% else %>
+                    <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>.
+                <% end %>
+            <% else %>
+                <% if event.end_at.to_date == event.start_at.to_date %>
+                    <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>
+                    .<br/>
+                    kl. <%= event.start_at.strftime('%H:%M') %>
+                    -<%= event.end_at.strftime('%H:%M') %>
+                <% else %>
+                    <% if event.start_at.min == 0 && event.start_at.hour == 0 && event.end_at.hour == 0 && event.end_at.min == 0 %>
+                        <%= event.start_at.mday %>-<%= event.end_at.mday %>.
+                    <% else %>
+                        <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>
+                        . <%= event.start_at.strftime('%H:%M') %>
+                        -
+                        <%= t(:date)[:day_names][event.end_at.wday] %>  <%= event.end_at.mday %>
+                        .     <%= event.end_at.strftime('%H:%M') %>
+                    <% end %>
+                <% end %>
+            <% end %>
+          </h4>
+
+          <h4>
+            <% if body %>
+                <%= link_to event.name, :controller => :events, :action => :show, :id => event.id %>
+            <% else %>
+                <%= event.name %>
+            <% end %>
+            <%= link_to image_tag('ical.png', :style => 'height: 24px'),
+                        {:controller => :events, :action => :calendar,
+                         :id => event.id, :format => :ics},
+                        :title => "Sett '#{event.name}' på din kalender!" %>
+          </h4>
+
+          <% if ingress %>
+              <%= ingress.gsub(/&nbsp;/, ' ').html_safe %>
+          <% end %>
+          <ul class="controls">
+            <% if ingress && event.description.size > ingress.size %>
+                <li><%= link_to 'Les mer', {:controller => :events, :action => :show, :id => event.id}, :class => :edit %></li>
+            <% end %>
+            <li><%= link_to 'Redigèr', edit_polymorphic_path(event), :class => :edit if admin? %></li>
+          </ul>
+      <% end %>
+    </div>
 
     <% if admin? %>
         <ul class="controls">
@@ -177,36 +185,42 @@
         <br/>
     <% end %>
 
-    <% end %>
+<% end %>
 
-    <% if admin? %>
-        <% if Rails.env != 'development' %>
-            <% history_chart_link = image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0') %>
-            <% attendance_chart_link = image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => 182), :title => 'Oppmøte graf', :style => 'width: 100%; border: 0') %>
-            <% grades_chart_link = image_tag(url_for(:controller => :members, :action => :grade_history_graph, :format => :png, :id => 182), :title => 'Historikk over grader', :style => 'width: 100%; border: 0') %>
-            <% age_chart_link = image_tag(url_for(:controller => :members, :action => :age_chart, :format => :png, :id => 182), :title => 'Aldersfordeling', :style => 'width: 100%; border: 0') %>
-            <% good_attendance_chart_link = image_tag(url_for(:controller => :members, :action => :grade_history_graph_percentage, :format => :png, :id => 182, :percentage => 50, :step => 30, :interval => 92), :title => 'Jevnt oppmøte voksne per grad', :style => 'width: 100%; border: 0') %>
-        <% else %>
-            <% history_chart_link = 'Historikk graf' %>
-            <% attendance_chart_link = 'Oppmøte graf' %>
-            <% grades_chart_link = 'Historikk over grader' %>
-            <% age_chart_link = 'Aldersfordeling' %>
-            <% good_attendance_chart_link = 'Jevnt oppmøte voksne' %>
-        <% end %>
-        <%= link_to history_chart_link, :controller => :members, :action => :history_graph, :format => :png, :id => 800 %><br/>
-        <%= link_to attendance_chart_link, :controller => :attendances, :action => :history_graph, :format => :png, :id => 800 %><br/>
-        <%= link_to grades_chart_link, :controller => :members, :action => :grade_history_graph, :format => :png, :id => 800 %><br/>
-        <%= link_to age_chart_link, :controller => :members, :action => :age_chart, :format => :png, :id => 800 %><br/>
-        <%= link_to good_attendance_chart_link, :controller => :members, :action => :grade_history_graph_percentage, :format => :png, :id => 800, :percentage => 50, :step => 30, :interval => 92 %><br/>
+<% if admin? %>
+    <% if Rails.env != 'development' %>
+        <% history_chart_link = image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0') %>
+        <% attendance_chart_link = image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => 182), :title => 'Oppmøte graf', :style => 'width: 100%; border: 0') %>
+        <% grades_chart_link = image_tag(url_for(:controller => :members, :action => :grade_history_graph, :format => :png, :id => 182), :title => 'Historikk over grader', :style => 'width: 100%; border: 0') %>
+        <% age_chart_link = image_tag(url_for(:controller => :members, :action => :age_chart, :format => :png, :id => 182), :title => 'Aldersfordeling', :style => 'width: 100%; border: 0') %>
+        <% good_attendance_chart_link = image_tag(url_for(:controller => :members, :action => :grade_history_graph_percentage, :format => :png, :id => 182, :percentage => 50, :step => 30, :interval => 92), :title => 'Jevnt oppmøte voksne per grad', :style => 'width: 100%; border: 0') %>
+    <% else %>
+        <% history_chart_link = 'Historikk graf' %>
+        <% attendance_chart_link = 'Oppmøte graf' %>
+        <% grades_chart_link = 'Historikk over grader' %>
+        <% age_chart_link = 'Aldersfordeling' %>
+        <% good_attendance_chart_link = 'Jevnt oppmøte voksne' %>
     <% end %>
+    <%= link_to history_chart_link, :controller => :members, :action => :history_graph, :format => :png, :id => 800 %>
+    <br/>
+    <%= link_to attendance_chart_link, :controller => :attendances, :action => :history_graph, :format => :png, :id => 800 %>
+    <br/>
+    <%= link_to grades_chart_link, :controller => :members, :action => :grade_history_graph, :format => :png, :id => 800 %>
+    <br/>
+    <%= link_to age_chart_link, :controller => :members, :action => :age_chart, :format => :png, :id => 800 %>
+    <br/>
+    <%= link_to good_attendance_chart_link, :controller => :members, :action => :grade_history_graph_percentage, :format => :png, :id => 800, :percentage => 50, :step => 30, :interval => 92 %>
+    <br/>
+<% end %>
 
-    <h3>Grupper</h3>
-    <ul>
-      <% @groups.each do |g| %>
-          <li><%=link_to g.name, g %> <span style="white-space:nowrap">(<%= g.from_age %>-<%= g.to_age%> år)</span>
-            <!--
+<h3>Grupper</h3>
+<ul>
+  <% @groups.each do |g| %>
+      <li><%= link_to g.name, g %>
+        <span style="white-space:nowrap">(<%= g.from_age %>-<%= g.to_age %> år)</span>
+        <!--
             <ul>
-              <% g.group_schedules.map{|gs| gs.group_instructors.map(&:member)}.flatten.uniq.each do |m| %>
+              <% g.group_schedules.map { |gs| gs.group_instructors.map(&:member) }.flatten.uniq.each do |m| %>
                   <li><%= m.name %>
                     <% unless g.group_schedules.all? { |gs2| gs2.group_instructors.map(&:member).include?(m) } %>
                         <% g.group_schedules.each do |gs| %>
@@ -223,10 +237,10 @@
               <% end %>
             </ul>
             -->
-          </li>
-      <% end %>
-    </ul>
+      </li>
+  <% end %>
+</ul>
 
-  </div>
+</div>
 
 </div>

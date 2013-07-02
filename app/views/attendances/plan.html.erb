@@ -80,7 +80,7 @@
                 </ul>
               </div>
               <br/>
-              <% others = gs.attendances.select { |a| a.year == year && a.week == week && a.member_id != current_user.member.id } %>
+              <% others = gs.attendances.select { |a| [Attendance::ATTENDED, Attendance::WILL_ATTEND].include?(a.status) && a.year == year && a.week == week && a.member_id != current_user.member.id } %>
               <% if others.any? %>
                   <small>
                     <%= others[rand others.size].member.first_name %>

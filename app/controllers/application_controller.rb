@@ -26,16 +26,17 @@ class ApplicationController < ActionController::Base
     @image = image_query.first
     @new_image = Image.new
 
-    if (m = current_user.try(:member)) && (group = m.groups.find{|g| g.name == 'Voksne'})
+    if (m = current_user.try(:member)) && (group = m.groups.find { |g| g.name == 'Voksne' })
       @next_practice = group.next_practice
       @next_schedule = group.next_schedule
-      @attendances_next_practice = Attendance.
+      attendances_next_practice = Attendance.
           where('group_schedule_id = ? AND year = ? AND week = ?',
                 @next_schedule.id, @next_practice.cwyear, @next_practice.cweek).
           all
-      @your_attendance_next_practice = @attendances_next_practice.find{|a| a.member_id == m.id}
-      @attendances_next_practice.delete @your_attendance_next_practice
-      @attendances_next_practice = @attendances_next_practice.group_by(&:status)
+      @your_attendance_next_practice = attendances_next_practice.find { |a| a.member_id == m.id }
+      attendances_next_practice.delete @your_attendance_next_practice
+      @other_attendees = attendances_next_practice.select{|a| [Attendance::WILL_ATTEND, Attendance::ATTENDED].include? a.status}
+      @other_absentees = attendances_next_practice - @other_attendees
     end
 
     @events = Event.
