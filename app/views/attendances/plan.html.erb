@@ -20,7 +20,7 @@
 
     <h4><%= i == 0 ? 'Denne uken' : 'Neste uke' %></h4>
 
-    <table>
+    <table width="1" cellpadding="4">
       <tr>
         <% @group_schedules.each do |gs| %>
             <% date = Date.commercial(year, week, gs.weekday) %>
@@ -56,7 +56,7 @@
                  end
                end
             %>
-            <td>
+            <td valign="top" align="center">
               <div class="btn-group">
                 <%= link_to(initial_disabled ? '#' : {:controller => :attendances, :action => :announce, :id => Attendance::WILL_ATTEND, :gs_id => gs.id, :year => year, :week => week},
                             :method => initial_disabled ? nil : :post, :remote => !initial_disabled, :id => "btn_#{year}_#{week}_#{gs.id}",
@@ -82,7 +82,15 @@
               <br/>
               <% others = gs.attendances.select { |a| a.year == year && a.week == week && a.member_id != current_user.member.id } %>
               <% if others.any? %>
-                  <%= others.size == 1 ? others[0].member.first_name : others.size %> andre kommer
+                  <small>
+                    <%= others[rand others.size].member.first_name %>
+                    <% if others.size > 1 %>
+                        og
+                        <%= others.size - 1 %>
+                        <%= others.size == 2 ? 'annen' : 'andre' %>
+                    <% end %>
+                    kommer.
+                  </small>
               <% end %>
             </td>
         <% end %>
