@@ -53,19 +53,19 @@
         <br/>
         <% if @group.current_semester %>
             <% if @group.current_semester.try(:first_session).try(:>, Date.today) %>
-                Første trening etter ferien er
+                Første trening etter <%=@group.current_semester.first_session.month > 6 ? 'sommer' : 'jule'%>ferien er
                 <strong><%= @group.current_semester.first_session.day %>.
                   <%= t(:date)[:month_names][@group.current_semester.first_session.month].downcase %></strong>.
                 <br/>
             <% end %>
             <% if @group.current_semester.last_session %>
-                Siste trening før ferien er
+                Siste trening før <%=@group.current_semester.last_session.month < 8 ? 'sommer' : 'jule'%>ferien er
                 <strong><%= @group.current_semester.last_session.day %>.
                   <%= t(:date)[:month_names][@group.current_semester.last_session.month].downcase %></strong>.
                 <br/>
             <% end %>
             <% if @group.next_semester.try(:first_session) %>
-                Første trening etter ferien er
+                Første trening etter <%=@group.next_semester.first_session.month > 6 ? 'sommer' : 'jule'%>ferien er
                 <strong><%= @group.next_semester.first_session.day %>.
                   <%= t(:date)[:month_names][@group.next_semester.first_session.month].downcase %></strong>.
                 <br/>
