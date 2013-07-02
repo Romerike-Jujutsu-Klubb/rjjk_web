@@ -10,7 +10,7 @@
   <% @months.each do |fields| %>
       <tr>
         <% fields.each do |f| %>
-            <td><%= f %></td>
+            <td><%= f unless f == 0 %></td>
         <% end %>
       </tr>
   <% end %>
