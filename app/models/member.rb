@@ -25,6 +25,8 @@ class Member < ActiveRecord::Base
   has_and_belongs_to_many :groups
 
   before_validation do
+    self.parent_name = nil if parent_name.blank?
+    self.phone_home = nil if phone_home.blank?
     self.phone_work = nil if phone_work.blank?
   end
 
