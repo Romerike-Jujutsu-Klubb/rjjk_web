@@ -66,7 +66,7 @@
                     <%= initial_text %>
                 <% end %>
                 <a class="<%= 'disabled ' if initial_disabled %>btn dropdown-toggle" <%= (initial_disabled ? 'onclick="return false"' : 'data-toggle="dropdown"').html_safe %> href="#"><span class="caret"></span></a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" align="left">
                   <% Attendance::STATES.each do |state, link_text, link_icon, link_class| %>
                       <li>
                         <%= link_to({:controller => :attendances, :action => :announce, :id => state, :gs_id => gs.id, :year => year, :week => week},
