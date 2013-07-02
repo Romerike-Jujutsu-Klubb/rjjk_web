@@ -50,7 +50,7 @@ class GroupInstructorsController < ApplicationController
 
     respond_to do |format|
       if @group_instructor.save
-        format.html { redirect_to @group_instructor, notice: 'GroupInstructor was successfully created.' }
+        format.html { redirect_to group_instructors_path, notice: 'GroupInstructor was successfully created.' }
         format.json { render json: @group_instructor, status: :created, location: @group_instructor }
       else
         format.html { new }
@@ -92,7 +92,7 @@ class GroupInstructorsController < ApplicationController
   private
 
   def load_form_data
-    @group_schedules ||= GroupSchedule.all.select { |gs| gs.group.active? }
+    @group_schedules ||= GroupSchedule.includes(:group).order('weekday, groups.from_age').all.select { |gs| gs.group.active? }
     @group_instructors ||= Member.instructors
     @semesters ||= Semester.order('start_on DESC').all
   end

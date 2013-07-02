@@ -64,6 +64,6 @@ class Group < ActiveRecord::Base
   end
 
   def instructors
-    group_schedules.map(&:group_instructors).flatten.compact.select(&:active?).map(&:member).uniq
+    group_schedules.map(&:group_instructors).flatten.select(&:active?).map(&:member).uniq.sort_by{|m| -m.current_rank.position}
   end
 end
