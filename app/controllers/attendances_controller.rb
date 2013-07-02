@@ -141,19 +141,25 @@ class AttendancesController < ApplicationController
   def plan
     today = Date.today
     @weeks = [[today.year, today.cweek], [(today + 7).year, (today + 7).cweek]]
-    @group_schedules = current_user.member.groups.map(&:group_schedules).flatten
+    member = current_user.member
+    @group_schedules = member.groups.map(&:group_schedules).flatten
     @planned_attendances = Attendance.where('member_id = ? AND ((year = ? AND week = ?) OR (year = ? AND week = ?))',
-                                            current_user.member, today.year, today.cweek, (today + 7).year, (today + 7).cweek).
+                                            member, today.year, today.cweek, (today + 7).year, (today + 7).cweek).
         all
     start_date = 6.months.ago.to_date.beginning_of_month
     attendances = Attendance.where('member_id = ? AND status = ? AND ((year = ? AND week >= ?) OR (year = ?))',
-                                   current_user.member, Attendance::ATTENDED, start_date.year, start_date.cweek, today.year).
+                                   member, Attendance::ATTENDED, start_date.year, start_date.cweek, today.year).
         all
     @attended_groups = attendances.map{|a| a.group_schedule.group}.uniq.sort_by{|g| -g.from_age}
     per_month = attendances.group_by{|a| d = Date.commercial(a.year, a.week, a.group_schedule.weekday) ; [d.year, d.mon]}
     @months = per_month.keys.sort.map do |ym|
       per_group = per_month[ym].group_by { |a| a.group_schedule.group }
       [t(:date)[:month_names][ym[1]], *@attended_groups.map{|g| (per_group[g] || []).size}]
+    end
+    if member.current_rank
+      attendances_since_graduation = member.attendances_since_graduation
+      by_group = attendances_since_graduation.group_by{|a| a.group_schedule.group}
+      @months << ['Siden gradering', *@attended_groups.map{|g| (by_group[g] || []).size}]
     end
   end
 

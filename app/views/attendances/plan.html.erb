@@ -1,10 +1,12 @@
 <table class="table">
-  <tr>
-    <th>Måned<%= '/Gruppe' if @groups.size > 1 %></th>
-    <% @attended_groups.each do |g| %>
-        <th><%= g.name if @groups.size > 1 %></th>
-    <% end %>
-  </tr>
+  <% if @groups.size > 1 %>
+      <tr>
+        <th>Måned/Gruppe</th>
+        <% @attended_groups.each do |g| %>
+            <th><%= g.name %></th>
+        <% end %>
+      </tr>
+  <% end %>
   <% @months.each do |fields| %>
       <tr>
         <% fields.each do |f| %>
@@ -63,7 +65,7 @@
                     <i class="<%= initial_icon %>"></i>
                     <%= initial_text %>
                 <% end %>
-                <a class="<%='disabled ' if initial_disabled%>btn dropdown-toggle" <%=(initial_disabled ? 'onclick="return false"' : 'data-toggle="dropdown"').html_safe%> href="#"><span class="caret"></span></a>
+                <a class="<%= 'disabled ' if initial_disabled %>btn dropdown-toggle" <%= (initial_disabled ? 'onclick="return false"' : 'data-toggle="dropdown"').html_safe %> href="#"><span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <% Attendance::STATES.each do |state, link_text, link_icon, link_class| %>
                       <li>
