@@ -196,8 +196,9 @@ end
 
 def send_attendance_plan
   today = Date.today
-  Member.where('NOT EXISTS (SELECT id FROM attendances WHERE member_id = members.id AND year = ? AND week = ?)',
-               today.cwyear, today.cweek).all.each do |member|
+  Member.active(today).where('NOT EXISTS (SELECT id FROM attendances WHERE member_id = members.id AND year = ? AND week = ?)',
+                             today.cwyear, today.cweek).
+      select{|m| m.age >= 14}.all.each do |member|
     AttendanceMailer.plan(member).deliver
   end
 end
