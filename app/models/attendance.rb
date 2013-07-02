@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Attendance < ActiveRecord::Base
   ABSENT = 'F'
   ASSISTANT = 'H'
@@ -23,7 +24,11 @@ class Attendance < ActiveRecord::Base
 
   validates_presence_of :member_id, :status
   validates_uniqueness_of :member_id, :scope => [:group_schedule_id, :year, :week]
-  
+
+  validate :on => :update do
+    errors.add(:status, 'kan ikke endres for treningen du var på.') if status_was == ATTENDED && status == WILL_ATTEND
+  end
+
   def date
     Date.commercial(year, week, group_schedule.weekday)
   end
