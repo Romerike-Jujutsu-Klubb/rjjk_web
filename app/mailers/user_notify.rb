@@ -41,7 +41,7 @@ class UserNotify < ActionMailer::Base
   def change_password(user, password, url=nil)
     setup_email(user)
 
-    @subject += 'Changed password notification'
+    @subject += 'Passordbytte'
 
     @name = "#{user.first_name} #{user.last_name}"
     @login = user.login
