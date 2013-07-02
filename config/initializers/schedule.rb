@@ -195,8 +195,9 @@ def notify_overdue_graduates
 end
 
 def send_attendance_plan
-  member = Member.find(81)
-  AttendanceMailer.plan(member).deliver
-  member = Member.find(279)
-  AttendanceMailer.plan(member).deliver
+  today = Date.today
+  Member.where('NOT EXISTS (SELECT id FROM attendances WHERE member_id = members.id AND year = ? AND week = ?)',
+               today.cwyear, today.cweek).all.each do |member|
+    AttendanceMailer.plan(member).deliver
+  end
 end

@@ -65,7 +65,7 @@
           <% end %>
           <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::ABSENT),
                       :class => 'btn btn-mini', :title => 'Kan ikke allikevel...') do %>
-              <i class="icon-thumbs-down"></i>
+              <i class="icon-thumbs-down"> Angre</i>
           <% end %>
       <% elsif @your_attendance_next_practice && @your_attendance_next_practice.status == Attendance::ABSENT %>
           Du kommer ikke.

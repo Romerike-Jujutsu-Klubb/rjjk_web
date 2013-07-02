@@ -9,6 +9,7 @@ class AttendanceMailer < ActionMailer::Base
     @timestamp = Time.now
     key = member.user.generate_security_token
     @email_url = {:controller => :attendances, :action => :plan, :id => member.user.id, :key => key}
-    mail to: member.email, subject: '[RJJK] Kommer du?'
+    mail to: Rails.env == 'production' ? member.email : %Q{"#{member.name}" <uwe@kubosch.no>},
+         subject: '[RJJK] Kommer du?'
   end
 end
