@@ -1,13 +1,14 @@
 <h3>Versjon</h3>
 
 <p>
-<% if File.exists? 'REVISION' %>
-  <%=File.readlines 'REVISION' %>
-<% else %>
-  Utvikling
-<% end %>
+  <% if File.exists? 'REVISION' %>
+      Revision: <%= File.read('REVISION') %>
+      Timestamp: <%= File.mtime('REVISION') %>
+  <% else %>
+      Utvikling
+  <% end %>
 </p>
 
 <h3>Ruby</h3>
 
-<%=RUBY_DESCRIPTION%>
+<%= RUBY_DESCRIPTION %>
