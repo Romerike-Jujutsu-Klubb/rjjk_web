@@ -13,8 +13,8 @@ class User < ActiveRecord::Base
   CHANGEABLE_FIELDS = %w(first_name last_name email)
   attr_accessor :password_needs_confirmation
 
-  before_validation{self.login = email if self.login.blank?}
-  after_save{@password_needs_confirmation = false}
+  before_validation { self.login = email if self.login.blank? }
+  after_save { @password_needs_confirmation = false }
   after_validation :crypt_password
 
   validates_presence_of :login, :on => :create
@@ -32,6 +32,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.find_by_contents(query)
+    users = find_all_by_email(query)
+    users.append *Member.find_by_contents(query).map(&:user)
+    users.uniq
+  end
+
   def initialize(*args)
     super
     @password_needs_confirmation = false
@@ -39,6 +45,12 @@ class User < ActiveRecord::Base
 
   def email
     member.try(:email) || super
+  end
+
+  def emails
+    result = [email]
+    result += member.emails if member
+    result.uniq
   end
 
   def name
@@ -59,7 +71,7 @@ class User < ActiveRecord::Base
     # Allow logins for deleted accounts, but only via this method (and
     # not the regular authenticate call)
     logger.info "Attempting authorization of #{id} with #{token}"
-    u = find( :first, :conditions => ['id = ? AND security_token = ?', id, token])
+    u = find(:first, :conditions => ['id = ? AND security_token = ?', id, token])
     if u
       logger.info "Authenticated by token: #{u.inspect}"
     else

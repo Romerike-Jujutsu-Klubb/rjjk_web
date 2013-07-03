@@ -110,16 +110,18 @@ class UserController < ApplicationController
 
     email = params['user']['email']
     if email.empty?
-      flash.now['message'] = 'Please enter a valid email address.'
-    elsif (user = User.find_by_email(email)).nil?
-      flash.now['message'] = "Vi kunne ikke finne noen bruker med e-postadresse #{CGI.escapeHTML(email)}"
+      flash.now['message'] = 'Skriv inn en gyldig e-postadresse.'
+    elsif (users = User.find_by_contents(email)).empty?
+      flash.now['message'] = "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{CGI.escapeHTML(email)}"
     else
       begin
         User.transaction do
-          key = user.generate_security_token
-          url = url_for(:action => 'change_password')
-          url += "?user[id]=#{user.id}&key=#{key}"
-          UserNotify.forgot_password(user, url).deliver
+          users.each do |user|
+            key = user.generate_security_token
+            url = url_for(:action => 'change_password')
+            url += "?user[id]=#{user.id}&key=#{key}"
+            UserNotify.forgot_password(user, url).deliver
+          end
           flash['notice'] = "En e-post med veiledning for å sette nytt passord er sendt til #{CGI.escapeHTML(email)}."
           unless authenticated_user?
             redirect_to :action => 'login'

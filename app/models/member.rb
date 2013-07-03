@@ -54,7 +54,7 @@ class Member < ActiveRecord::Base
   end
 
   def self.find_by_contents(query, options = {})
-    search_fields = [:first_name, :last_name, :email, :phone_mobile, :phone_home, :phone_parent, :phone_work]
+    search_fields = [:billing_email, :first_name, :last_name, :email, :parent_email, :phone_mobile, :phone_home, :phone_parent, :phone_work]
     all({
             :conditions => [search_fields.map { |c| "UPPER(#{c}) LIKE ?" }.join(' OR '), *(["%#{UnicodeUtils.upcase(query)}%"] * search_fields.size)],
             :order => 'first_name, last_name',

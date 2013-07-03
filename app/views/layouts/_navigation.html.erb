@@ -12,6 +12,7 @@
             <li><%= link_to 'Min Embu', :controller => :embus, :action => :index %></li>
       <% end %>
       <li><%= link_to 'Mine media', :controller => :images, :action => :mine %></li>
+      <li><%= detour_to 'Logg ut', :controller => 'user', :action => :logout %></li>
       </ul>
   <% end %>
 
@@ -64,11 +65,8 @@
           <%#=link_to 'ned', :controller => :info, :action => :move_down, :id => page.id%>
         </li>
     <% end %>
-
-    <% if not user? %>
+    <% unless user? %>
         <li><%= detour_to 'Logg inn', :controller => 'user', :action => :login %></li>
-    <% else %>
-        <li><%= detour_to 'Logg ut', :controller => 'user', :action => :logout %></li>
     <% end %>
   </ul>
 

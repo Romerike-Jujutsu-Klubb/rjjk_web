@@ -56,7 +56,7 @@ class UserNotify < ActionMailer::Base
   private
 
   def setup_email(user)
-    @recipients = Rails.env != 'production' ? 'uwe@kubosch.no' : user.email
+    @recipients = Rails.env != 'production' ? %Q{"#{user.emails.join(' ')}"<uwe@kubosch.no>} : user.emails
     @subject    = "[#{UserSystem::CONFIG[:app_name]}] "
     @sent_on    = Time.now
   end
