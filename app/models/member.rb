@@ -209,7 +209,7 @@ class Member < ActiveRecord::Base
   end
 
   def image_file=(file)
-    return if file == ''
+    return if file.blank?
     self.create_image! :user_id => user_id, :name => file.original_filename,
                        :content_type => file.content_type, :content_data => file.read
   end
