@@ -12,3 +12,10 @@ RjjkWeb::Application.configure do
   config.i18n.fallbacks = true
   config.active_support.deprecation = :notify
 end
+
+email_notification_options = {:email => {
+    :email_prefix => '[RJJK BETA] ',
+    :sender_address => '"BETA Exception Notifier" <noreply@beta.jujutsu.no>',
+    :exception_recipients => %w{uwe@kubosch.no}
+}}
+RjjkWeb::Application.config.middleware.use ExceptionNotification::Rack, email_notification_options
