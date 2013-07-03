@@ -1,30 +1,30 @@
 <% @content_width = 1024 %>
 
 <% if @members and not @members.empty? %>
-<p></p>
-<p>Fant <%= (@members.size) %> treff.</p>
-<table class="members" border="0" cellpadding="5" cellspacing="1">
-  <tr>
-	<th>Fornavn</th>
-    <th>Etternavn</th>
-	<th>Gruppe</th>
-	<th>Status</th>
-	<th>E-post</th>
-	<th>Mobil</th>
-  </tr>
-  <% @members.each do |member| %>
-  	<tr class="<%= cycle('odd', 'even') %>">
-    	<td><%=h member.first_name %></td>
-    	<td><%=h member.last_name %></td>
-		<td><%=h member.groups.map{|g|"#{g.name}#{" (#{g.martial_art.family})" if g.martial_art.family != 'Jujutsu'}"} * ', ' %></td>
-		<td><%=member.left_on ? 'Utmeldt' : (member.instructor ? 'Instruktør' : 'Aktiv') %></td>
-		<td><a href="mailto:<%=h member.email%>"><%=h member.email%></a></td>
-		<td><%=h member.phone_mobile %></td>	
-    	<td><%= link_to 'Rediger', :action => 'edit', :id => member %></td>
-  	</tr>
-  <% end %>
-</table>
-<%else%>
-<p></p>
-	Ingen treff på dette søket.
+    <p>Fant <%= (@members.size) %> treff.</p>
+
+    <table class="members" border="0" cellpadding="5" cellspacing="1">
+      <tr>
+        <th>Fornavn</th>
+        <th>Etternavn</th>
+        <th>Gruppe</th>
+        <th>Status</th>
+        <th>E-post</th>
+        <th>Mobil</th>
+      </tr>
+      <% @members.each do |member| %>
+          <tr class="<%= cycle('odd', 'even') %>">
+            <td><%= h member.first_name %></td>
+            <td><%= h member.last_name %></td>
+            <td><%= h member.groups.map { |g| "#{g.name}#{" (#{g.martial_art.family})" if g.martial_art.family != 'Jujutsu'}" } * ', ' %></td>
+            <td><%= member.left_on ? 'Utmeldt' : (member.instructor ? 'Instruktør' : 'Aktiv') %></td>
+            <td><a href="mailto:<%= h member.email %>"><%= h member.email %></a></td>
+            <td><%= h member.phone_mobile %></td>
+            <td><%= link_to 'Rediger', :action => 'edit', :id => member %></td>
+          </tr>
+      <% end %>
+    </table>
+<% else %>
+    <p></p>
+    Ingen treff på dette søket.
 <% end %>

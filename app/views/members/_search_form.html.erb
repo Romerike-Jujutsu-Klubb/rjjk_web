@@ -1,14 +1,14 @@
-<%= form_tag({:controller => :members, :action => "search"}, :method => "get") do %>
-    <div class="form_row">
-      <label for="q">Søk etter:</label>
-      <%= text_field_tag "q", params[:q] || 'Medlem', :class => :text %>
-      <input type="submit" value="Søk" class="submit"/>
-    </div>
+<%= form_tag({:controller => :members, :action => :search}, :method => :get) do %>
+    <label for="q">Søk etter:</label>
+    <%= text_field_tag :q, params[:q], :class => 'input-medium search-query', :placeholder => :Medlem %>
+    <input type="submit" value="Søk" class="btn"/>
 <% end %>
+
 <%= javascript_tag do %>
     $('#q').select();
     $('#q').focus();
 <% end %>
+
 <% if @invalid %>
     <p>Ugyldige tegn i søk.</p>
 <% end %>
