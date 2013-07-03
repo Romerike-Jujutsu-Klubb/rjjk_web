@@ -66,21 +66,21 @@ class UserControllerTest < ActionController::TestCase
     post :login, :user => {:login => 'lars', :password => 'wrong password'}
     assert_not_logged_in
     assert_template 'login'
-    assert_contains 'Login failed', flash['message']
+    assert_contains 'Innlogging feilet.', flash['message']
   end
 
   def test_login__wrong_login
     post :login, :user => {:login => 'wrong login', :password => 'atest'}
     assert_not_logged_in
     assert_template 'login'
-    assert_contains 'Login failed', flash['message']
+    assert_contains 'Innlogging feilet.', flash['message']
   end
 
   def test_login__deleted_user_cant_login
     post :login, :user => {:login => 'deleted_tesla', :password => 'atest'}
     assert_not_logged_in
     assert_template 'login'
-    assert_contains 'Login failed', flash['message']
+    assert_contains 'Innlogging feilet.', flash['message']
   end
 
   def test_signup
