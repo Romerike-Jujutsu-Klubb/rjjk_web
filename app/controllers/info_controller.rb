@@ -65,7 +65,7 @@ class InfoController < ApplicationController
       flash[:notice] = 'InformationPage was successfully updated.'
       redirect_to :action => 'show', :id => @information_page
     else
-      render :action => 'rediger'
+      render :action => :rediger
     end
   end
 

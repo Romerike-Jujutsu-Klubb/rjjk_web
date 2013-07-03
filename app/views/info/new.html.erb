@@ -2,8 +2,4 @@
 
 <h1>Opprette ny informasjonsside</h1>
 
-<%=form_tag :action => 'create' do %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag 'Lagre' %>
-  <%= back_or_link_to 'Tilbake', :action => 'list' %>
-<% end %>
+<%= render :partial => 'form' %>

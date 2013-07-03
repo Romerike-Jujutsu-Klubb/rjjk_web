@@ -2,8 +2,4 @@
 
 <% @title = 'Rediger Informasjonsside' %>
 
-<%=form_tag :action => 'update', :id => @information_page do %>
-  <%=render :partial => 'form' %>
-  <%=submit_tag 'Lagre', :id => :save %>
-  <%=link_to 'Vis', :action => 'show', :id => @information_page %>
-<% end %>
+<%= render :partial => 'form' %>
