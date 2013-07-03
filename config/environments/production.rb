@@ -1,14 +1,23 @@
 RjjkWeb::Application.configure do
-  config.cache_classes = true
-  config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
-  config.serve_static_assets = false
+  config.action_mailer.default_url_options = {host: 'jujutsu.no'}
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.active_support.deprecation = :notify
   config.assets.compress = true
   config.assets.compile = false
   config.assets.digest = true
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = {host: 'jujutsu.no'}
-  config.threadsafe!
+  config.cache_classes = true
+  config.consider_all_requests_local = false
   config.i18n.fallbacks = true
-  config.active_support.deprecation = :notify
+  config.serve_static_assets = false
+  config.threadsafe!
 end
+
+email_notification_options = {:email => {
+    :email_prefix => '[RJJK] ',
+    :sender_address => '"Exception Notifier" <noreply@jujutsu.no>',
+    :exception_recipients => %w{uwe@kubosch.no}
+}}
+RjjkWeb::Application.config.middleware.use ExceptionNotification::Rack, email_notification_options

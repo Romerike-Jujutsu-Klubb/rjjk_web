@@ -9,6 +9,7 @@ class Event < ActiveRecord::Base
   has_one :graduation # optional
 
   before_validation do |r|
+    r.description = nil if r.description.blank?
     if r.invitees.nil? || r.invitees.blank?
       r.invitees = nil
     else

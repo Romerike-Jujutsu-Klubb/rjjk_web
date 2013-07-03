@@ -47,4 +47,8 @@ class EventsControllerTest < ActionController::TestCase
     end
     assert_redirected_to events_path
   end
+
+  def test_calendar
+    get :calendar
+  end
 end

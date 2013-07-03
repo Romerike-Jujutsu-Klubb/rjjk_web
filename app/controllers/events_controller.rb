@@ -92,7 +92,7 @@ class EventsController < ApplicationController
         event do
           uid "event#{e.id}@jujutsu.no"
           summary e.name
-          description RedCloth.new(e.description.strip).to_plain
+          description RedCloth.new(e.description.strip).to_plain if e.description
           dtstart e.start_at
           dtend e.end_at || e.start_at
           # location "Datek Wireless AS, Instituttveien, Kjeller"

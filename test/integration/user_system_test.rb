@@ -58,8 +58,11 @@ class UserSystemTest < ActionController::IntegrationTest
     post url_for(:controller => 'user', :action => 'forgot_password'), :user => {:email => user.email}
     assert_equal 1, Mail::TestMailer.deliveries.size
     mail = Mail::TestMailer.deliveries[0]
-    assert_equal 'uwe@kubosch.no', mail.to_addrs[0].to_s
-    mail.encoded =~ /user\[id\]=(.+?)&amp;key=(.+?)"/
+    assert_equal %w(uwe@kubosch.no), mail.to
+    assert_equal 2, mail.body.parts.size
+    body = mail.html_part.body.decoded
+    assert body =~ /user\[id\]=(.+?)&amp;key=(.+?)"/,
+           "Unable to find user id and key in the message: #{body.inspect}"
     id = $1
     key = $2
     post url_for(:controller => 'user', :action => 'change_password'),

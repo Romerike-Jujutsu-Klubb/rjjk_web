@@ -187,8 +187,6 @@ class UserControllerTest < ActionController::TestCase
     assert_equal 1, Mail::TestMailer.deliveries.size
     mail = Mail::TestMailer.deliveries[0]
     assert_equal 'uwe@kubosch.no', mail.to_addrs[0].to_s
-    assert_match /brukernavn:\s+\w+ eller [a-zA-Z0-9.@]+\r\n/, mail.encoded
-    assert_match /passord\s*:\s+\w+\r\n/, mail.encoded
     assert_equal user, User.authenticate(user.login, 'changed_password')
   end
 

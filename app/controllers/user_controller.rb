@@ -108,10 +108,11 @@ class UserController < ApplicationController
 
     return if generate_blank_form
 
-    if params['user']['email'].empty?
+    email = params['user']['email']
+    if email.empty?
       flash.now['message'] = 'Please enter a valid email address.'
-    elsif (user = User.find_by_email(params['user']['email'])).nil?
-      flash.now['message'] = "Vi kunne ikke finne noen bruker med e-postadresse #{CGI.escapeHTML(params['user']['email'])}"
+    elsif (user = User.find_by_email(email)).nil?
+      flash.now['message'] = "Vi kunne ikke finne noen bruker med e-postadresse #{CGI.escapeHTML(email)}"
     else
       begin
         User.transaction do
@@ -119,7 +120,7 @@ class UserController < ApplicationController
           url = url_for(:action => 'change_password')
           url += "?user[id]=#{user.id}&key=#{key}"
           UserNotify.forgot_password(user, url).deliver
-          flash['notice'] = "En e-post med veiledning for å sette nytt passord er sendt til #{CGI.escapeHTML(params['user']['email'])}."
+          flash['notice'] = "En e-post med veiledning for å sette nytt passord er sendt til #{CGI.escapeHTML(email)}."
           unless authenticated_user?
             redirect_to :action => 'login'
             return
@@ -128,7 +129,7 @@ class UserController < ApplicationController
         end
       rescue Exception => ex
         report_exception ex
-        flash.now['message'] = "Your password could not be emailed to #{CGI.escapeHTML(params['user']['email'])}"
+        flash.now['message'] = "Your password could not be emailed to #{CGI.escapeHTML(email)}"
       end
     end
   end
