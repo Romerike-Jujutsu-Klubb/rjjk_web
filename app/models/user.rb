@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
 
   def self.find_by_contents(query)
     users = find_all_by_email(query)
-    users.append *Member.find_by_contents(query).map(&:user)
+    users += Member.find_by_contents(query).map(&:user)
     users.uniq
   end
 
@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
   end
 
   def emails
-    result = [email]
+    result = [attributes[:email]]
     result += member.emails if member
     result.uniq
   end
