@@ -210,7 +210,8 @@ class Member < ActiveRecord::Base
 
   def image_file=(file)
     return if file == ''
-    self.create_image! :filename => file.original_filename, :content_type => file.content_type, :data => file.read
+    self.create_image! :user_id => user_id, :name => file.original_filename,
+                       :content_type => file.content_type, :content_data => file.read
   end
 
   def image?

@@ -16,10 +16,3 @@ RjjkWeb::Application.configure do
   config.serve_static_assets = true
   config.whiny_nils = true
 end
-
-email_notification_options = {:email => {
-    :email_prefix => '[RJJK] ',
-    :sender_address => '"Exception Notifier" <noreply@jujutsu.no>',
-    :exception_recipients => %w{uwe@kubosch.no}
-}}
-RjjkWeb::Application.config.middleware.use ExceptionNotification::Rack, email_notification_options
