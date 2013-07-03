@@ -31,7 +31,7 @@ class UserController < ApplicationController
       back_or_redirect_to '/'
     else
       @login = params['user']['login']
-      flash['message'] = 'Login failed'
+      flash['message'] = 'Innlogging feilet.'
     end
   end
 
@@ -106,6 +106,7 @@ class UserController < ApplicationController
       return
     end
 
+    params[:user][:email] ||= params[:user][:login] if params[:user]
     return if generate_blank_form
 
     email = params['user']['email']
@@ -122,7 +123,7 @@ class UserController < ApplicationController
             url += "?user[id]=#{user.id}&key=#{key}"
             UserNotify.forgot_password(user, url).deliver
           end
-          flash['notice'] = "En e-post med veiledning for å sette nytt passord er sendt til #{CGI.escapeHTML(email)}."
+          flash['message'] = "En e-post med veiledning for å sette nytt passord er sendt til #{CGI.escapeHTML(email)}."
           unless authenticated_user?
             redirect_to :action => 'login'
             return
@@ -196,7 +197,7 @@ class UserController < ApplicationController
   def generate_blank_form
     case request.method
     when 'GET'
-      @user = User.new
+      @user = User.new params[:user]
       render
       true
     else

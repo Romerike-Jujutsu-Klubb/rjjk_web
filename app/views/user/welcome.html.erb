@@ -1,7 +1,9 @@
 <div title="<%= title_helper %>" class="memo">
   <%= head_helper 'Velkommen', :notice => false, :message => false %>
   <p>
-    Du er nå logget på systemet og kan laste opp og se på interne bilder og filmer i
+    Du er nå logget på systemet og kan se på
+    "<%=link_to 'Mitt oppmøte', :controller => :attendances, :action => :plan %>"
+    og laste opp og se på interne bilder og filmer i
     "<%=link_to 'Galleriet', :controller => :images, :action => :gallery %>",
     "<%=link_to 'Mine media', :controller => :images, :action => :mine %>"
     eller "<%=link_to 'Min Embu', :controller => :embus %>"

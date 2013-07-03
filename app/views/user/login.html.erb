@@ -2,15 +2,17 @@
   <%= head_helper 'Venligst logg inn' %>
 
   <div class="form-padding">
-    <%= form_tag(url_for(:action => "#{controller.action_name}")) do %>
-        <table width="100%">
+    <%= form_tag(url_for(:action => "#{controller.action_name}"), :class => 'form-inline') do %>
+        <table class="table">
           <tr>
             <td><label>Brukernavn</label></td>
-            <td><%= text_field 'user', 'login', :style => 'width: 14em;', :placeholder => 'e-post' %></td>
+            <td><%= text_field 'user', 'login', :class => 'input-large', :placeholder => 'e-post' %></td>
           </tr>
           <tr>
             <td><label>Passord</label></td>
-            <td><%= password_field 'user', 'password', :style => 'width: 14em;' %></td>
+            <td valign="top">
+              <%= password_field 'user', 'password', :class => 'input-large' %>
+            </td>
           </tr>
           <tr>
             <td/>
@@ -20,12 +22,16 @@
               </label>
             </td>
           </tr>
+          <tr>
+            <td>
+            </td>
+            <td>
+              <%= submit_tag 'Logg inn', :class => :btn %>
+              <%= submit_tag 'Glemt passord?', :class => :btn, :onclick => "form.action = '#{url_for(:action => :forgot_password)}'" %>
+              <%= button_tag 'Registrer deg', :class => :btn, :onclick => "form.action = '#{url_for(:action => :signup)}'" %>
+            </td>
+          </tr>
         </table>
-
-        <div class="button-bar">
-          <%= submit_tag 'Logg inn', :class => :btn %>
-          <%= link_to 'Registrer deg', :action => 'signup' %> |
-          <%= link_to 'Glemt passord', :action => 'forgot_password' %>      </div>
     <% end %>
   </div>
 </div>

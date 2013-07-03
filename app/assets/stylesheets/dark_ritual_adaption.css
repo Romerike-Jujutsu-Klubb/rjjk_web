@@ -142,11 +142,3 @@ ul.controls li a.delete {
 .nav-tabs li {
     list-style-image: none;
 }
-
-.errorExplanation h2 {
-    font-size: 14pt;
-}
-
-.errorExplanation p {
-    padding-bottom: 0;
-}

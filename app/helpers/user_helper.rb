@@ -15,11 +15,11 @@ module UserHelper
     opts.update(options.symbolize_keys)
     s = "<h3>#{label}</h3>"
     if flash['notice'] and not opts[:notice].nil? and opts[:notice]
-      notice = "<div><p>#{flash['notice']}</p></div>"
+      notice = "<div><p style=\"padding-left: 0.5em;padding-bottom: 0.5em;color: #08C\">#{flash['notice']}</p></div>"
       s = s + notice
     end
     if flash['message'] and not opts[:message].nil? and opts[:message]
-      message = "<div id=\"ErrorExplanation\"><p>#{flash['message']}</p></div>"
+      message = "<div><p style=\"padding-left: 0.5em;padding-bottom: 0.5em;color: #08C\">#{flash['message']}</p></div>"
       s = s + message
     end
     if not opts[:error].nil? and opts[:error]
