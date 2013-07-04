@@ -60,7 +60,7 @@ class NewsController < ApplicationController
   private
 
   def load_images
-    @images = Image.public.images.select('id, name').all
+    @images = Image.published.images.select('id, name').all
   end
 
 end
