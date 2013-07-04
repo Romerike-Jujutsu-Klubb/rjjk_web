@@ -3,7 +3,7 @@
 <% @blank_lines -= (missing_contract ? 3 : 1) %>
 <tr class="<%= cycle('odd', 'even') %>">
   <td nowrap="true" onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'">
-    <%= h member.first_name %> <%= h member.last_name %> <%='(Permisjon)' if member.nkf_member.medlemsstatus == 'P'-%>
+    <%= h member.first_name %> <%= h member.last_name %> <%= '(Permisjon)' if member.nkf_member.medlemsstatus == 'P' -%>
     <% if missing_contract %>
         <br/><%= member.invoice_email %>
         <br/><%= member.nkf_member.ventekid %>
@@ -53,10 +53,10 @@
           <td>&nbsp;</td>
       <% end %>
   <% end %>
-  <% half_year_total = member.attendances.select { |a| a.date >= (@dates.last - (6 * 30)) }.size %>
+  <% half_year_total = member.attendances.select { |a| a.group_schedule.group_id == @group.id && a.date >= (@dates.last - 6.months) }.size %>
   <td align="center">
     <%= half_year_total %>
     /
-    <%=@dates.map{|d| member.attendances_since_graduation(d, @group).size}.max%>
+    <%= @dates.map { |d| member.attendances_since_graduation(d, @group).size }.max %>
   </td>
 </tr>
