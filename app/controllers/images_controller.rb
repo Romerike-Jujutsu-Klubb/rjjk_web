@@ -1,4 +1,6 @@
 class ImagesController < ApplicationController
+  before_filter :authenticate_user, :only => :mine
+
   caches_page :show, :inline
   cache_sweeper :image_sweeper, :only => [:update, :destroy]
 
@@ -112,7 +114,6 @@ class ImagesController < ApplicationController
   end
 
   def mine
-    raise 'Nei!' unless current_user
     fields = 'approved, content_type, description, id, name, public, user_id'
     image_select = Image.select(fields).where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'").order('created_at DESC')
     image_select = image_select.where('user_id = ?', current_user.id)

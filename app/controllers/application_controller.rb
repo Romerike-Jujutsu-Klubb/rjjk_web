@@ -14,9 +14,8 @@ class ApplicationController < ActionController::Base
 
   def load_layout_model
     @information_pages = InformationPage.roots
-    unless admin?
-      @information_pages = @information_pages.select { |ip| ip.visible? }
-    end
+    @information_pages = @information_pages.where('hidden IS NULL OR hidden = ?', false) unless admin?
+    @information_pages = @information_pages.where('title <> ?', 'Velkommen') unless user?
     image_query = Image.
         select('approved, content_type, description, height, id, name, public, user_id, width').
         where("content_type LIKE 'image/%%' OR content_type LIKE 'video/%%'", true).

@@ -1,8 +1,10 @@
 # encoding: UTF-8
 
 class EmbusController < ApplicationController
+  before_filter :authenticate_user
+
   def index
-    if embu = Embu.mine.last
+    if (embu = Embu.mine.last)
       redirect_to :action => :edit, :id => embu.id
     else
       redirect_to :action => :new
@@ -45,7 +47,7 @@ class EmbusController < ApplicationController
         format.html { redirect_to @embu, notice: 'Embu was successfully created.' }
         format.json { render json: @embu, status: :created, location: @embu }
       else
-        format.html { render action: "new" }
+        format.html { render action: :new }
         format.json { render json: @embu.errors, status: :unprocessable_entity }
       end
     end
@@ -56,7 +58,7 @@ class EmbusController < ApplicationController
     if @embu.update_attributes(params[:embu])
       redirect_to :action => :edit, :id => @embu.id, notice: 'Embu was successfully updated.'
     else
-      render action: "edit"
+      render action: :edit
     end
   end
 
