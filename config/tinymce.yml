@@ -19,4 +19,21 @@ plugins:
   - image
   - table
   - fullscreen
+# table_styles: "Standard=table;Kompakt=table table-condensed;Pysjamas=table table-striped;Linjert=table table-bordered"
+style_formats:
+#  - title: 'Bold text'
+#    inline : 'b'
+#            {title : 'Red text', inline : 'span', styles : {color : '#ff0000'}},
+#            {title : 'Red header', block : 'h1', styles : {color : '#ff0000'}},
+#            {title : 'Example 1', inline : 'span', classes : 'example1'},
+#            {title : 'Example 2', inline : 'span', classes : 'example2'},
+#            {title : 'Table styles'},
+  - title: 'Table Standard'
+    selector: 'table'
+    classes: 'table'
+  - title: 'Table Bordered'
+    selector: 'table'
+    classes: 'table table-bordered'
+#            {title : 'Table row 1', selector : 'tr', classes : 'tablerow1'}
+#    ]
 width: 768px

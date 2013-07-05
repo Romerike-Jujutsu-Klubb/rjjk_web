@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   layout DEFAULT_LAYOUT
   helper :user
 
-  before_filter :login_from_cookie
   before_filter :store_current_user_in_thread
   before_filter :load_layout_model
   after_filter :clear_user

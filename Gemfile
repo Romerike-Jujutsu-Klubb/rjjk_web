@@ -37,6 +37,7 @@ group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
   gem 'therubyrhino'
+  gem 'turbo-sprockets-rails3'
   gem 'uglifier'
 end
 

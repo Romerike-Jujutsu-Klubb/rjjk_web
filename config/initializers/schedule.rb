@@ -170,35 +170,38 @@ def notify_missing_group_semesters
 end
 
 def notify_missing_graduations
-  begin
-    today = Date.today
-    groups = Group.active(today).all
-    #planned_graduations = Graduation.where('held_on >= ?').all.map(&:)
-    missing_schedules = group_schedules.select { |gs| gs.group_instructors.select(&:active?).empty? }
-    InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
-  rescue
-    logger.error "Exception sending instruction message: #{$!}"
-    logger.error $!.backtrace.join("\n")
-  end
+  today = Date.today
+  groups = Group.active(today).all
+  #planned_graduations = Graduation.where('held_on >= ?').all.map(&:)
+  missing_schedules = group_schedules.select { |gs| gs.group_instructors.select(&:active?).empty? }
+  InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
+rescue
+  logger.error "Exception sending instruction message: #{$!}"
+  logger.error $!.backtrace.join("\n")
 end
 
 def notify_overdue_graduates
-  begin
-    overdue_graduates = Member.active(today).all
-    #planned_graduations = Graduation.where('held_on >= ?').all.map(&:)
-    missing_schedules = group_schedules.select { |gs| gs.group_instructors.select(&:active?).empty? }
-    InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
-  rescue
-    logger.error "Exception sending instruction message: #{$!}"
-    logger.error $!.backtrace.join("\n")
-  end
+  overdue_graduates = Member.active(today).all
+  #planned_graduations = Graduation.where('held_on >= ?').all.map(&:)
+  missing_schedules = group_schedules.select { |gs| gs.group_instructors.select(&:active?).empty? }
+  InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
+rescue
+  logger.error "Exception sending instruction message: #{$!}"
+  logger.error $!.backtrace.join("\n")
 end
 
 def send_attendance_plan
   today = Date.today
   Member.active(today).where('NOT EXISTS (SELECT id FROM attendances WHERE member_id = members.id AND year = ? AND week = ?)',
                              today.cwyear, today.cweek).
-      select{|m| m.age >= 14}.all.each do |member|
+      select { |m| m.age >= 14 }.
+      select { |m| m.groups.find { |g| g.name == 'Voksne' } }.
+      select { |m| !m.passive? }.
+      each do |member|
+    if member.user.nil?
+      logger.error "USER IS MISSING!!!!! #{member}"
+      next
+    end
     AttendanceMailer.plan(member).deliver
   end
 end

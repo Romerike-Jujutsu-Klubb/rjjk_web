@@ -12,23 +12,17 @@ class UserTest < ActiveSupport::TestCase
 
   def test_authenticate_by_token
     user = users(:unverified_user)
-    assert_equal user, User.authenticate_by_token(user.id, user.security_token)
+    assert_equal user, User.authenticate_by_token(user.security_token)
   end
 
   def test_authenticate_by_token__fails_if_expired
     user = users(:unverified_user)
     Clock.time = Clock.now + User.token_lifetime
-    assert_nil User.authenticate_by_token(user.id, user.security_token)
+    assert_nil User.authenticate_by_token(user.security_token)
   end
 
   def test_authenticate_by_token__fails_if_bad_token
-    user = users(:unverified_user)
-    assert_nil User.authenticate_by_token(user.id, 'bad_token')
-  end
-
-  def test_authenticate_by_token__fails_if_bad_id
-    user = users(:unverified_user)
-    assert_nil User.authenticate_by_token(-1, user.security_token)
+    assert_nil User.authenticate_by_token('bad_token')
   end
 
   def test_change_password

@@ -141,6 +141,9 @@ class AttendancesController < ApplicationController
   def plan
     today = Date.today
     @weeks = [[today.year, today.cweek], [(today + 7).year, (today + 7).cweek]]
+    if today.month >= 6 && today.month <= 7
+      @weeks += [[(today + 14).year, (today + 14).cweek], [(today + 21).year, (today + 21).cweek]]
+    end
     member = current_user.member
     @group_schedules = member.groups.map(&:group_schedules).flatten
     @planned_attendances = Attendance.where('member_id = ? AND ((year = ? AND week = ?) OR (year = ? AND week = ?))',

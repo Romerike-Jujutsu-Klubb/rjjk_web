@@ -24,7 +24,7 @@ namespace :deploy do
   task :restart, :roles => :app do
     send(run_method, "/sbin/service #{application} stop")
     sleep 5
-    send(run_method, "/u/apps/rjjk_web_beta/current/copy_production_to_beta.sh")
+    send(run_method, "/u/apps/#{application}/current/copy_production_to_beta.sh")
     send(run_method, "/sbin/service #{application} start")
   end
 end

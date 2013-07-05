@@ -37,7 +37,6 @@ class UserControllerTest < ActionController::TestCase
     assert_logged_in users(:lars)
     assert_response :redirect
     assert_equal @controller.url_for(:controller => :welcome, :action => :index, :only_path => false), @response.redirect_url
-    assert_equal cookies[:autologin], '1000001'
     assert cookies[:token]
     assert_not_equal 'random_token_string', cookies[:token]
     assert_equal false, User.find(1000001).token_expired?
@@ -45,10 +44,7 @@ class UserControllerTest < ActionController::TestCase
   end
 
   def test_autologin_with_token
-    @request.cookies['autologin'] = CGI::Cookie.new('autologin', '1000001')
-    @request.cookies['token'] = CGI::Cookie.new('token', 'random_token_string')
-#    @request.cookies['autologin'] = '1000001'
-#    @request.cookies['token'] = 'random_token_string'
+    @request.cookies['token'] = 'random_token_string'
     get :welcome
     assert_response :ok
     assert_logged_in users(:lars)
@@ -96,7 +92,6 @@ class UserControllerTest < ActionController::TestCase
     assert_match /Brukernavn:\s+\w+\r\n/, mail.encoded
     assert_match /Passord\s*:\s+\w+\r\n/, mail.encoded
     user = User.find_by_email('newemail@example.com')
-    assert_match /user\[id\]=3D#{user.id}/, mail.encoded
     assert_match /key=#{user.security_token}/, mail.body.decoded
     assert !user.verified
   end

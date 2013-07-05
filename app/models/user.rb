@@ -67,21 +67,21 @@ class User < ActiveRecord::Base
     find(:first, :conditions => ['(login = ? OR email = ?) AND salted_password = ? AND verified = ?', login, login, salted_password(u.salt, hashed(pass)), true])
   end
 
-  def self.authenticate_by_token(id, token)
-    # Allow logins for deleted accounts, but only via this method (and
-    # not the regular authenticate call)
-    logger.info "Attempting authorization of #{id} with #{token}"
-    u = find(:first, :conditions => ['id = ? AND security_token = ?', id, token])
-    if u
-      logger.info "Authenticated by token: #{u.inspect}"
+  # Allow logins for deleted accounts, but only via this method
+  # (and not the regular authenticate call)
+  def self.authenticate_by_token(token)
+    logger.info "Attempting authentication with token: #{token.inspect}"
+    if (u = where('security_token = ?', token).first)
+      logger.info "Identified by token: #{u.inspect}"
     else
-      logger.info 'Not authenticated' if u.nil?
+      logger.info 'Not authenticated'
       return nil
     end
     if u.token_expired?
       logger.info 'Token expired.'
       return nil
     end
+    logger.info "Authenticated by token: #{u.inspect}.  Extending token lifetime."
     u.update_attributes :verified => true, :token_expiry => Clock.now + token_lifetime
     return u
   end

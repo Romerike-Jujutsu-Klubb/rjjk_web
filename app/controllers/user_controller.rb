@@ -13,17 +13,14 @@ class UserController < ApplicationController
     return if generate_blank_form
     remember_me = params.delete(:remember_me)
     @user = User.new(params['user'])
-    user = User.authenticate(params['user']['login'], params['user']['password'])
-    if user
+    if (user = User.authenticate(params['user']['login'], params['user']['password']))
       self.current_user = user
       flash['notice'] = 'Velkommen!'
       if remember_me && remember_me == '1'
-        user.generate_security_token(:login)
-        cookies.permanent[:autologin] = user.id.to_s
-        cookies.permanent[:token] = user.security_token
+        cookies.permanent[:token] = user.generate_security_token(:login)
       end
       unless member?
-        if member = Member.find_by_email(user.email)
+        if (member = Member.find_by_email(user.email))
           user.update_attributes! :member_id => member.id
           flash['notice'] << "Du er nå registrert som medlem #{member.name}."
         end
@@ -57,9 +54,7 @@ class UserController < ApplicationController
       User.transaction do
         @user.password_needs_confirmation = true
         if @user.save
-          key = @user.generate_security_token
-          url = url_for(:action => 'welcome')
-          url += "?user[id]=#{@user.id}&key=#{key}"
+          url = url_for(with_login(@user, :action => :welcome))
           UserNotify.signup(@user, params['user']['password'], url).deliver
           flash['notice'] = 'Signup successful! Please check your registered email account to verify your account registration and continue with the login.'
           redirect_to :action => 'login'
@@ -72,9 +67,7 @@ class UserController < ApplicationController
   end
 
   def logout
-    session[:user_id] = nil
     self.current_user = nil
-    cookies[:autologin] = {:value => '', :expires => 0.days.from_now}
     cookies[:token] = {:value => '', :expires => 0.days.from_now}
     flash['notice'] = 'Velkommen tilbake!'
     back_or_redirect_to '/'

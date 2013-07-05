@@ -168,6 +168,11 @@ class Member < ActiveRecord::Base
     end
   end
 
+  def passive?(date = Date.today, group = nil)
+  nkf_member.medlemsstatus == 'P' ||
+      attendances.select { |a| (group.nil? || a.group_schedule.group_id == group.id) && a.date <= (date + 31) && a.date > (date - 92) }.empty?
+  end
+
   def senior?
     birthdate && (age >= JUNIOR_AGE_LIMIT)
   end

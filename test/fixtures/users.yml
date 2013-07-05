@@ -52,6 +52,6 @@ unverified_user:
   salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
   email: unverified_user@example.com
   verified: false
-  security_token: random_token_string
+  security_token: another_random_token_string
   token_expiry: <%=(Clock.now + User.token_lifetime).utc.strftime("%Y-%m-%d %H:%M:%S") %>
   deleted: false

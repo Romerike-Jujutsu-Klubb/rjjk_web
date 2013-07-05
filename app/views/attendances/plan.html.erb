@@ -18,7 +18,7 @@
 
 <% @weeks.each.with_index do |(year, week), i| %>
 
-    <h4><%= i == 0 ? 'Denne uken' : 'Neste uke' %></h4>
+    <h4><%= i == 0 ? 'Denne uken' : i == 1 ? 'Neste uke' : "Uke #{week}" %></h4>
 
     <table width="1" cellpadding="4">
       <tr>

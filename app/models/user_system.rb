@@ -55,14 +55,22 @@ module UserSystem
   end
 
   def login_from_cookie
-    if token = cookies[:token]
+    if (token = cookies[:token])
       logger.info "Found login cookie: #{token}"
-      user_by_token = User.find_by_security_token(token)
-      if user_by_token
-        self.current_user = User.authenticate_by_token(user_by_token.id, token)
-      end
+      self.current_user = User.authenticate_by_token(token)
     end
-    true
+    current_user
+  end
+
+  def login_from_params
+    if (token = params[:key]) && (self.current_user = User.authenticate_by_token(token))
+      params.delete 'key'
+    end
+    current_user
+  end
+
+  def with_login(user = current_user, options)
+    options.merge :key => user.generate_security_token, :only_path => false
   end
 
   def clear_user
@@ -78,67 +86,16 @@ module UserSystem
   end
 
   def store_current_user_in_thread
+    return true if login_from_params
     if session[:user_id]
       self.current_user = User.find_by_id(session[:user_id])
     end
+    login_from_cookie unless current_user
     true
   end
 
   def authenticated_user?
-    return true if current_user
-
-    if cookie = cookies[:autologin]
-      cookie_value = case cookie
-                     when String # Development
-                       cookies[:autologin]
-                     when Hash # Production
-                       cookies[:autologin][:value].first
-                     when Array # Not sure why this happens in development...
-                       cookies[:autologin].first
-                     else
-                       raise "Unknown cookie class: #{cookie.class}\n#{cookie.inspect}"
-                     end
-
-      token = cookies[:token] && case cookies[:token]
-                                 when String # Development
-                                   cookies[:token]
-                                 when Hash # Production
-                                   cookies[:token][:value].first
-                                 when Array # Not sure why this happens in development...
-                                   cookies[:token].first
-                                 else
-                                   raise "Unknown cookie class: #{cookie.class}"
-                                 end
-
-      begin
-        cookie_user = User.authenticate_by_token(Integer(cookie_value), token)
-      rescue ArgumentError => e
-        logger.warn e
-      end
-
-      cookie_user ||= User.authenticate(cookie_value, '')
-      if cookie_user
-        self.current_user = cookie_user
-        return cookie_user
-      end
-    end
-
-    # If not, is the user being authenticated by a token (created by signup/forgot password actions)?
-    if (key = params['key'])
-      if (id = params['user'].try(:[], 'id'))
-        self.current_user = User.authenticate_by_token(id, key)
-      end
-      if current_user.nil? && (id = params['id'])
-        self.current_user = User.authenticate_by_token(id, key)
-      end
-      if current_user
-        params.delete 'key'
-        return true
-      end
-    end
-
-    # Everything failed
-    false
+    !!current_user
   end
 
   def admin?
