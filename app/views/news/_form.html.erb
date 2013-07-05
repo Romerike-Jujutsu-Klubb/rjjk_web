@@ -1,3 +1,5 @@
+<% @content_width = 1024 %>
+
 <div style="float: right; width: 196px; height: 680px; overflow:auto; border: 1px solid black">
   <%= render :partial => '/images/list', :locals => {:images => @images} %>
 </div>
@@ -7,11 +9,13 @@
 <%= form_for(@news_item) do |f| %>
     <%= f.error_messages %>
 
+    <div style="float: left;margin-right: 0.5em">
     <%= f.label :title, 'Tittel' %>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, :class => 'input-medium' %>
+    </div>
 
     <%= f.label :publication_state, 'Publiseringsstatus' %>
-    <%= f.select :publication_state, NewsItem::PublicationState.constants.map { |s| [t(s.downcase), s] } %>
+    <%= f.select :publication_state, NewsItem::PublicationState.constants.map { |s| [t(s.downcase), s] }, {},:class => 'input-medium' %>
 
     Publiser fra
     <%= f.datetime_picker :publish_at, :value => @news_item.publish_at.try(:strftime, '%Y-%m-%d %H:%M'),
