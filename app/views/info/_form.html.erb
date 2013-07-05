@@ -2,7 +2,7 @@
   <%= render :partial => '/images/list', :locals => {:images => @images} %>
 </div>
 
-<%= render :partial => '/tiny_mce' %>
+<%= tinymce %>
 
 <%= form_for @information_page do |f| %>
     <%= f.error_messages %>
@@ -27,7 +27,7 @@
     <br clear="left"/>
 
     <p>
-      <%= f.text_area :body, :cols => 100, :rows => 30, :class => 'tiny_mce' %>
+      <%= f.text_area :body, :class => :tinymce %>
     </p>
 
     <%= f.submit 'Lagre', :id => :save, :class => :btn %>

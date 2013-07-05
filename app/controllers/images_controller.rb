@@ -10,7 +10,7 @@ class ImagesController < ApplicationController
   end
 
   def list
-    @images = Image.paginate :page => params[:page].to_i, :per_page => 4
+    @images = Image.paginate :page => params[:page] || 1, :per_page => 4
   end
 
   def show

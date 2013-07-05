@@ -2,7 +2,7 @@
   <%= render :partial => '/images/list', :locals => {:images => @images} %>
 </div>
 
-<%= render :partial => '/tiny_mce' %>
+<%= tinymce %>
 
 <%= form_for(@news_item) do |f| %>
     <%= f.error_messages %>
@@ -22,7 +22,7 @@
                               :dateFormat => 'yy-mm-dd', :timeFormat => 'hh:mm',
                               :class => 'input-medium', :firstDay => 1 %>
 
-    <%= f.text_area :body, :cols => 100, :rows => 24, :class => 'tiny_mce' %>
+    <%= f.text_area :body, :class => :tinymce %>
 
     <%= f.submit 'Lagre', :id => :save, :class => :btn %>
     <%= back_or_link_to 'Avbryt', :action => 'list' %>

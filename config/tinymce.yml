@@ -1,0 +1,22 @@
+formats:
+  avrundet:
+    selector: img
+    classes : img-rounded
+  forecolor:
+    selector: p,span
+    classes: forecolor
+    styles:
+      color: 'red'
+height: 400px
+#image_advtab: true
+image_list:
+  - title: 'Dog'
+    value: 'mydog.jpg'
+  - title: 'Cat'
+    value: 'mycat.gif'
+language: nb_NO
+plugins:
+  - image
+  - table
+  - fullscreen
+width: 768px

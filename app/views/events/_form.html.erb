@@ -1,4 +1,4 @@
-<%= render :partial => '/tiny_mce' %>
+<%= tinymce %>
 
 <ul class="nav nav-tabs">
   <li class="active"><a href="#description" data-toggle="tab">Beskrivelse</a></li>
@@ -35,7 +35,7 @@
 
         <p>
           <%= f.label :beskrivelse %>
-          <%= f.text_area :description, :class => 'tiny_mce', :cols => 100, :rows => 24 %>
+          <%= f.text_area :description, :class => :tinymce %>
         </p>
       </div>
 

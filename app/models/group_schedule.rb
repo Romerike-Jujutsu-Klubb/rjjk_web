@@ -15,7 +15,13 @@ class GroupSchedule < ActiveRecord::Base
   end
 
   def next_practice
-    today = Date.today
-    Date.commercial today.cwyear, weekday >= today.cwday ? today.cweek : today.cweek + 1, weekday
+    now = Time.now
+    today = now.to_date
+    Date.commercial today.cwyear, (
+    if weekday > today.cwday || (weekday == today.cwday && start_at > now.time_of_day) then
+      today.cweek
+    else
+      today.cweek + 1
+    end), weekday
   end
 end

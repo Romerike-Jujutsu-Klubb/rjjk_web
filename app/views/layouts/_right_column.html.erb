@@ -15,7 +15,10 @@
           <% else %>
               <% image_width = @image.width_max(182) %>
               <% image_height = @image.height_at(image_width) %>
-              <%= image_tag url_for(:controller => :images, :action => :inline, :id => @image.id, :width => image_width, :format => @image.format), :title => @image.name || 'Bilde', :style => "width: #{image_width}px; height: #{image_height}px; border: 0" %>
+              <%= image_tag url_for(:controller => :images, :action => :inline, :id => @image.id,
+                                    :width => image_width, :format => @image.format),
+                            :title => @image.name || 'Bilde', :class => 'img-rounded',
+                            :style => "width: #{image_width}px; height: #{image_height}px; border: 0" %>
           <% end %>
           <%= @image.description %>
       <% end %>
