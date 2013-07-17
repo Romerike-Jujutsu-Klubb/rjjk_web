@@ -12,7 +12,7 @@ lars:
   user_id: 1000001
   email: lars@example.com
 
-two:
+uwe:
   male: false
   first_name: Uwe
   last_name: Kubosch

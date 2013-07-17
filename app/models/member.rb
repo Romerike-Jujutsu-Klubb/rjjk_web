@@ -22,6 +22,7 @@ class Member < ActiveRecord::Base
   has_many :graduates, :dependent => :destroy
   has_many :group_instructors, :dependent => :destroy
   has_many :ranks, :through => :graduates, :conditions => ['graduates.passed IS NOT NULL AND graduates.passed = ?', true]
+  has_many :signatures, :dependent => :destroy
   has_and_belongs_to_many :groups
 
   NILLABLE_FIELDS = [:parent_name, :phone_home, :phone_work]
@@ -246,5 +247,9 @@ class Member < ActiveRecord::Base
       emails << (parent_2_name ? %Q{"#{parent_2_name}" <#{parent_email}>} : parent_email)
     end
     emails.uniq
+  end
+
+  def title(date = Date.today)
+    current_rank(MartialArt.find_by_name('Kei Wa Ryu'), date).name =~ /dan/ ? 'Sensei' : 'Sempai'
   end
 end

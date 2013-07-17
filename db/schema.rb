@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130701065100) do
+ActiveRecord::Schema.define(:version => 20130716052906) do
 
   create_table "martial_arts", :force => true do |t|
     t.string "name",   :limit => 16, :null => false
@@ -425,6 +425,17 @@ ActiveRecord::Schema.define(:version => 20130701065100) do
     t.string   "foresatte_nr_2",                                  :limit => 64
     t.string   "foresatte_nr_2_mobil",                            :limit => 16
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "nkf_members_member_id_fkey"
+  end
+
+  create_table "signatures", :force => true do |t|
+    t.integer  "member_id",    :null => false
+    t.string   "name",         :null => false
+    t.string   "content_type", :null => false
+    t.binary   "image",        :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.index ["member_id"], :name => "fk__signatures_member_id"
+    t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_signatures_member_id"
   end
 
   create_table "trial_attendances", :force => true do |t|

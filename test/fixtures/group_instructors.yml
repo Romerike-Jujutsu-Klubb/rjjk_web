@@ -5,5 +5,5 @@ one:
 
 two:
   group_schedule: tiger_tuesday
-  member: two
+  member: uwe
   semester: previous

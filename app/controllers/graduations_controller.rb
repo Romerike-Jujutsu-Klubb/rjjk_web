@@ -21,8 +21,8 @@ class GraduationsController < ApplicationController
       redirect_to(:id => Graduation.last(:order => :held_on))
       return
     end
-    @graduation   = Graduation.find(params[:id])
-    @graduations  = Graduation.includes(:group).all(:order => 'held_on DESC', :conditions => ['groups.martial_art_id = 1'])
+    @graduation = Graduation.find(params[:id])
+    @graduations = Graduation.includes(:group).all(:order => 'held_on DESC', :conditions => ['groups.martial_art_id = 1'])
     @martial_arts = MartialArt.all
 
     @grad_pages, @grad = Hash.new()
@@ -76,8 +76,15 @@ class GraduationsController < ApplicationController
   def certificates
     graduation = Graduation.find(params[:id])
     date = graduation.held_on
-    content = graduation.graduates.sort_by { |g| -g.rank.position }.map{|g| {:name => g.member.name, :rank => "#{g.rank.name} #{g.rank.colour}", :group => g.rank.group.name}}
-    filename   = "Certificates_#{graduation.group.martial_art.name}_#{graduation.held_on}.pdf"
+
+    content = graduation.graduates.sort_by { |g| -g.rank.position }.map do |g|
+      {:name => g.member.name, :rank => "#{g.rank.name} #{g.rank.colour}", :group => g.rank.group.name,
+       :censor1 => graduation.censors[0] ? {:title => (graduation.censors[0].member.title), :name => graduation.censors[0].member.name, :signature => graduation.censors[0].member.signatures.sample.try(:image)} : nil,
+       :censor2 => graduation.censors[1] ? {:title => (graduation.censors[1].member.title), :name => graduation.censors[1].member.name, :signature => graduation.censors[1].member.signatures.sample.try(:image)} : nil,
+       :censor3 => graduation.censors[2] ? {:title => (graduation.censors[2].member.title), :name => graduation.censors[2].member.name, :signature => graduation.censors[2].member.signatures.sample.try(:image)} : nil,
+      }
+    end
+    filename = "Certificates_#{graduation.group.martial_art.name}_#{graduation.held_on}.pdf"
     send_data Certificates.pdf(date, content), :type => 'text/pdf',
               :filename => filename, :disposition => 'attachment'
   end
@@ -94,7 +101,7 @@ class GraduationsController < ApplicationController
 
   def censor_form_pdf
     graduation = Graduation.find(params[:id])
-    filename   = "Sensorskjema_#{graduation.held_on}.pdf"
+    filename = "Sensorskjema_#{graduation.held_on}.pdf"
 
     pdf = Prawn::Document.new do
       date = graduation.held_on
@@ -122,12 +129,9 @@ class GraduationsController < ApplicationController
   private
 
   def load_graduates
-
     @graduation = Graduation.includes(:group => {:martial_art => {:ranks => :group}}).find(params[:id])
-
-    @censors    = Censor.includes(:member).where(:graduation_id => @graduation.id).all
-
-    @graduates  = Graduate.where('graduates.graduation_id = ? AND graduates.member_id != 0', params[:id]).
+    @censors = Censor.includes(:member).where(:graduation_id => @graduation.id).all
+    @graduates = Graduate.where('graduates.graduation_id = ? AND graduates.member_id != 0', params[:id]).
         #includes({:graduation => :martial_art}, {:member => [{:attendances => :group_schedule}, {:graduates => [:graduation, :rank]}]}, {:rank => :group}).
         includes({:graduation => {:group => :martial_art}}, :member, {:rank => :group}).
         #order('ranks_graduates.position DESC, members.first_name, members.last_name').all

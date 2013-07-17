@@ -1,8 +1,7 @@
 RjjkWeb::Application.configure do
   config.action_controller.perform_caching = false
   config.action_dispatch.best_standards_support = :builtin
-  config.action_mailer.delivery_method = :sendmail
-  config.action_mailer.default_url_options = {:host => 'localhost', :port => 3000}
+  config.action_mailer.default_url_options = {host: 'localhost', port: 3000}
   config.action_mailer.delivery_method = :sendmail
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
@@ -16,3 +15,13 @@ RjjkWeb::Application.configure do
   config.serve_static_assets = true
   config.whiny_nils = true
 end
+
+email_notification_options = {
+    :ignore_exceptions => [],
+    :email => {
+        :email_prefix => '[RJJK][Development] ',
+        :sender_address => '"Exception Notifier" <noreply@jujutsu.no>',
+        :exception_recipients => %w{uwe@kubosch.no}
+    }
+}
+RjjkWeb::Application.config.middleware.use ExceptionNotification::Rack, email_notification_options

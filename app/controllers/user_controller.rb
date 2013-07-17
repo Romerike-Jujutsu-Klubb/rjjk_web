@@ -125,7 +125,7 @@ class UserController < ApplicationController
         end
       rescue Exception => ex
         report_exception ex
-        flash.now['message'] = "Your password could not be emailed to #{CGI.escapeHTML(email)}"
+        flash.now['message'] = "Beklager!  Link for innlogging kunne ikke sendes til #{CGI.escapeHTML(email)}"
       end
     end
   end

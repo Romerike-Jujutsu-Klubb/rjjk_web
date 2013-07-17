@@ -1,0 +1,11 @@
+lars:
+  member: lars
+  name: MyString
+  content_type: MyString
+  image: SignatureImage
+
+uwe:
+  member: uwe
+  name: MyString
+  content_type: MyString
+  image: SignatureImage

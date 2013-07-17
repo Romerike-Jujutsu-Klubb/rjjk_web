@@ -46,6 +46,7 @@ RjjkWeb::Application.routes.draw do
   resources :nkf_members
   resources :nkf_member_trials
   resources :semesters
+  resources :signatures
   resources :trial_attendances
 
   root to: 'welcome#index'

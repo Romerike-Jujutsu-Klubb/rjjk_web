@@ -195,13 +195,18 @@ def send_attendance_plan
   Member.active(today).where('NOT EXISTS (SELECT id FROM attendances WHERE member_id = members.id AND year = ? AND week = ?)',
                              today.cwyear, today.cweek).
       select { |m| m.age >= 14 }.
-      select { |m| m.groups.find { |g| g.name == 'Voksne' } }.
+      select { |m| m.groups.any? { |g| g.name == 'Voksne' } }.
       select { |m| !m.passive? }.
       each do |member|
     if member.user.nil?
-      logger.error "USER IS MISSING!!!!! #{member}"
+      msg = "USER IS MISSING!  #{member.inspect}"
+      logger.error msg
+      ExceptionNotifier.notify_exception(ActiveRecord::RecordNotFound.new(msg))
       next
     end
     AttendanceMailer.plan(member).deliver
   end
+rescue Exception
+  logger.error $!
+  ExceptionNotifier.background_exception_notification($!)
 end

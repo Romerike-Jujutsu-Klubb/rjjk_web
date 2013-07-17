@@ -7,7 +7,7 @@ one:
   paid_belt: true
 
 two:
-  member: two
+  member: uwe
   graduation: one
   passed: false
   rank: one

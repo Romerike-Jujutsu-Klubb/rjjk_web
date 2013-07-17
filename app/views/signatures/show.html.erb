@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Member:</b>
+  <%= @signature.member_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @signature.name %>
+</p>
+
+<p>
+  <b>Content type:</b>
+  <%= @signature.content_type %>
+</p>
+
+<p>
+  <b>Image:</b>
+  <image src="<%=url_for(:action => :image)%>"/>
+</p>
+
+
+<%= link_to 'Endre', edit_signature_path(@signature) %> |
+<%= back_or_link_to 'Tilbake', signatures_path %>

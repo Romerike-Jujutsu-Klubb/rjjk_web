@@ -232,7 +232,7 @@ class UserControllerTest < ActionController::TestCase
     Mail::TestMailer.inject_one_error = true
     post :forgot_password, :user => {:email => users(:lars).email}
     assert_equal 0, Mail::TestMailer.deliveries.size
-    assert_match /Your password could not be emailed/, @response.body
+    assert_match /Beklager!  Link for innlogging kunne ikke sendes til lars@example.com/, @response.body
   end
 
   def test_invalid_login

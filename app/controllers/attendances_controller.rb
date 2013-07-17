@@ -146,8 +146,9 @@ class AttendancesController < ApplicationController
     end
     member = current_user.member
     @group_schedules = member.groups.map(&:group_schedules).flatten
-    @planned_attendances = Attendance.where('member_id = ? AND ((year = ? AND week = ?) OR (year = ? AND week = ?))',
-                                            member, today.year, today.cweek, (today + 7).year, (today + 7).cweek).
+    @planned_attendances = Attendance.where('member_id = ? AND (year > ? OR (year = ? AND week >= ?)) AND (year < ? OR (year = ? AND week <= ?))',
+                                            member, today.year, today.year, today.cweek,
+                                            @weeks.last[0], @weeks.last[0], @weeks.last[1]).
         all
     start_date = 6.months.ago.to_date.beginning_of_month
     attendances = Attendance.where('member_id = ? AND status = ? AND ((year = ? AND week >= ?) OR (year = ?))',

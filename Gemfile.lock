@@ -219,7 +219,7 @@ DEPENDENCIES
   capistrano
   coffee-rails
   dynamic_form
-  exception_notification (~> 4.0.0.rc1)
+  exception_notification
   gmaps4rails
   gruff
   jquery-rails

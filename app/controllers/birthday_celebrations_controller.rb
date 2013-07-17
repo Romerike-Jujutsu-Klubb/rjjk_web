@@ -30,18 +30,15 @@ class BirthdayCelebrationsController < ApplicationController
     # 'Ismael Iturrieta-Ismail', 'Leander Mathisen', 'Jesper Skogly', 'Selmer Solland', 'Oskar Strand',
     # 'Benjamin westby', 'Haben']
     general = {
-        :rank => "Innføring i Jujutsu", :group => "",
-        :censor1 => bc.sensor1 ? {:title => (bc.sensor1.current_rank(MartialArt.find_by_name('Kei Wa Ryu'), bc.held_on).name =~ /dan/ ? 'Sensei' : 'Sempai'),
-                                  :name => bc.sensor1.name} : nil,
-        :censor2 => bc.sensor1 ? {:title => (bc.sensor2.current_rank(MartialArt.find_by_name('Kei Wa Ryu'), bc.held_on).name =~ /dan/ ? 'Sensei' : 'Sempai'),
-                                          :name => bc.sensor2.name} : nil,
-        :censor3 => bc.sensor1 ? {:title => (bc.sensor3.current_rank(MartialArt.find_by_name('Kei Wa Ryu'), bc.held_on).name =~ /dan/ ? 'Sensei' : 'Sempai'),
-                                          :name => bc.sensor3.name} : nil,
+        :rank => 'Innføring i Jujutsu', :group => '',
+        :censor1 => bc.sensor1 ? {:title => (bc.sensor1.title), :name => bc.sensor1.name} : nil,
+        :censor2 => bc.sensor1 ? {:title => (bc.sensor2.title), :name => bc.sensor2.name} : nil,
+        :censor3 => bc.sensor1 ? {:title => (bc.sensor3.title), :name => bc.sensor3.name} : nil,
     }
 
     content = participants.map{|n| general.dup.update({:name => n})}
     filename = "Certificates_birthday_#{date}.pdf"
-    send_data Certificates.pdf(date, content), :type => "text/pdf",
+    send_data Certificates.pdf(date, content), :type => 'text/pdf',
               :filename => filename, :disposition => 'attachment'
   end
 
@@ -73,7 +70,7 @@ class BirthdayCelebrationsController < ApplicationController
         format.html { redirect_to @birthday_celebration, notice: 'Birthday celebration was successfully created.' }
         format.json { render json: @birthday_celebration, status: :created, location: @birthday_celebration }
       else
-        format.html { render action: "new" }
+        format.html { render action: :new }
         format.json { render json: @birthday_celebration.errors, status: :unprocessable_entity }
       end
     end
@@ -89,7 +86,7 @@ class BirthdayCelebrationsController < ApplicationController
         format.html { redirect_to @birthday_celebration, notice: 'Birthday celebration was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: :edit }
         format.json { render json: @birthday_celebration.errors, status: :unprocessable_entity }
       end
     end
