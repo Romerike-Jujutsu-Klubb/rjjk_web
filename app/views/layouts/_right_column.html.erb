@@ -194,11 +194,11 @@
 
 <% if admin? %>
     <% if Rails.env != 'development' %>
-        <% history_chart_link = image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :style => 'width: 100%; border: 0') %>
-        <% attendance_chart_link = image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => 182), :title => 'Oppmøte graf', :style => 'width: 100%; border: 0') %>
-        <% grades_chart_link = image_tag(url_for(:controller => :members, :action => :grade_history_graph, :format => :png, :id => 182), :title => 'Historikk over grader', :style => 'width: 100%; border: 0') %>
-        <% age_chart_link = image_tag(url_for(:controller => :members, :action => :age_chart, :format => :png, :id => 182), :title => 'Aldersfordeling', :style => 'width: 100%; border: 0') %>
-        <% good_attendance_chart_link = image_tag(url_for(:controller => :members, :action => :grade_history_graph_percentage, :format => :png, :id => 182, :percentage => 50, :step => 30, :interval => 92), :title => 'Jevnt oppmøte voksne per grad', :style => 'width: 100%; border: 0') %>
+        <% history_chart_link = image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 182), :title => 'Historikk graf', :class => 'img-rounded', :style => 'width: 100%; border: 0') %>
+        <% attendance_chart_link = image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => 182), :title => 'Oppmøte graf', :class => 'img-rounded', :style => 'width: 100%; border: 0') %>
+        <% grades_chart_link = image_tag(url_for(:controller => :members, :action => :grade_history_graph, :format => :png, :id => 182), :title => 'Historikk over grader', :class => 'img-rounded', :style => 'width: 100%; border: 0') %>
+        <% age_chart_link = image_tag(url_for(:controller => :members, :action => :age_chart, :format => :png, :id => 182), :title => 'Aldersfordeling', :class => 'img-rounded', :style => 'width: 100%; border: 0') %>
+        <% good_attendance_chart_link = image_tag(url_for(:controller => :members, :action => :grade_history_graph_percentage, :format => :png, :id => 182, :percentage => 50, :step => 30, :interval => 92), :title => 'Jevnt oppmøte voksne per grad', :class => 'img-rounded', :style => 'width: 100%; border: 0') %>
     <% else %>
         <% history_chart_link = 'Historikk graf' %>
         <% attendance_chart_link = 'Oppmøte graf' %>
@@ -223,7 +223,7 @@
   <% @groups.each do |g| %>
       <li><%= link_to g.name, g %>
         <span style="white-space:nowrap">(<%= g.from_age %>-<%= g.to_age %> år)</span>
-        <!--
+        <% if admin? %>
             <ul>
               <% g.group_schedules.map { |gs| gs.group_instructors.map(&:member) }.flatten.uniq.each do |m| %>
                   <li><%= m.name %>
@@ -241,7 +241,7 @@
                   <% end %>
               <% end %>
             </ul>
-            -->
+        <% end %>
       </li>
   <% end %>
 </ul>
