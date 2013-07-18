@@ -3,12 +3,16 @@ class Certificates
     Prawn::Document.new :page_size => 'A4', :page_layout => :landscape, :margin => 0 do
       page_width = Prawn::Document::PageGeometry::SIZES['A4'][1]
       page_height = Prawn::Document::PageGeometry::SIZES['A4'][0]
-      name_width = 440
+      org_name_width = 100
+      name_width = 430
+      org_right_center = page_width - 140
       labels_x = 143
       graduate_name_y = 250
       rank_y = 213
       date_y = 176
       sensor_y = 139
+      censor_title_x = 275
+      censor_name_x = 350
 
       create_stamp('border') do
         case 3
@@ -28,6 +32,11 @@ class Certificates
           image "#{Rails::root}/app/views/graduations/logo_RJJK_notext.jpg",
                 :at => [(page_width - logo_width) / 2, page_height - 5],
                 :width => logo_width
+          # Mask old labels
+          fill_color 'ffffff'
+          fill_rectangle [95, 255], 55, 140
+          fill_rectangle [censor_title_x - 10, graduate_name_y], page_width - censor_title_x*2 + 25, graduate_name_y - sensor_y + 60
+          fill_color '000000'
         when 2
           scale = -0.05
           image "#{Rails::root}/app/views/graduations/Style_of_Phoenix_border_A4_Landscape.jpg",
@@ -43,26 +52,31 @@ class Certificates
           scale = -0.025
           logo_width = 120
           image "#{Rails::root}/app/views/graduations/logo_RJJK_notext.jpg",
-                :at => [(page_width - logo_width) / 2 - 2, page_height],
+                :at => [(page_width - logo_width) / 2 - 2, page_height - 2],
                 :width => logo_width
           image "#{Rails::root}/app/views/graduations/custome_rank_certificate.png",
                 :at => [0, page_height * (1 + scale)],
                 :width => page_width,
                 :height => page_height * (1 + scale)
+          kanji_scale = 2.5
+          kanji_width = 126 / kanji_scale
+          kanji_height = 674 / kanji_scale
+          image "#{Rails::root}/app/views/graduations/KeiWaRyuKanji.png",
+                :at => [org_right_center - kanji_width / 2, (page_height * 0.4 ) + kanji_height / 2],
+                :width => kanji_width, :height => kanji_height
         end
         name_y = 455
 
         fill_color 'ffffff'
-        fill_rectangle [90, name_y], 100, 40
+        fill_rectangle [90, name_y], org_name_width, 40
         fill_color '000000'
 
-        bounding_box [90, name_y - 4.5], :width => 100, :height => 40 do
+        bounding_box [90, name_y - 4.5], :width => org_name_width, :height => 40 do
           font 'Helvetica'
           text 'Norges Kampsportforbund', :align => :center
         end
 
         fill_color 'ffffff'
-        name_width = 440
         fill_rectangle [(page_width - name_width) / 2, name_y], name_width, 40
         fill_color '000000'
 
@@ -74,10 +88,10 @@ class Certificates
         end
 
         fill_color 'ffffff'
-        fill_rectangle [page_width - 90 - 100, name_y], 100, 40
+        fill_rectangle [org_right_center - org_name_width / 2, name_y], org_name_width, 40
         fill_color '000000'
 
-        bounding_box [page_width - 90 - 100, name_y - 4.5], :width => 100, :height => 40 do
+        bounding_box [org_right_center - org_name_width / 2, name_y - 4.5], :width => org_name_width, :height => 40 do
           font 'Helvetica'
           text 'Scandinavian Budo Association', :align => :center
         end
@@ -102,24 +116,28 @@ class Certificates
           text 'Kei Wa Ryu', :align => :center, :size => 36, :mode => :fill_stroke, :character_spacing => 1
         end
 
-        # Mask old labels
-        fill_color 'ffffff'
-        fill_rectangle [95, 255], 55, 140
-        fill_color '000000'
-
         font 'Helvetica'
+        fill_color '000000'
         bounding_box [labels_x, graduate_name_y], :width => 80, :height => 20 do
           text 'Navn', :size => 18, :align => :center, :style => :italic
         end
+        stroke { line [censor_title_x, graduate_name_y - 18], [page_width - censor_title_x, graduate_name_y - 18] }
+
         bounding_box [labels_x, rank_y], :width => 80, :height => 20 do
           text 'Grad', :size => 18, :align => :center, :style => :italic
         end
+        stroke { line [censor_title_x, rank_y - 18], [page_width - censor_title_x, rank_y - 18] }
+
         bounding_box [labels_x, date_y], :width => 80, :height => 20 do
           text 'Dato', :size => 18, :align => :center, :style => :italic
         end
+        stroke { line [censor_title_x, date_y - 18], [page_width - censor_title_x, date_y - 18] }
+
         bounding_box [labels_x, sensor_y], :width => 80, :height => 20 do
           text 'Sensor', :size => 18, :align => :center, :style => :italic
         end
+        stroke { line [censor_title_x, sensor_y - 18], [page_width - censor_title_x, sensor_y - 18] }
+        stroke { line [censor_title_x, sensor_y - 53], [page_width - censor_title_x, sensor_y - 53] }
       end
       stamp 'border'
       content.each do |c|
@@ -132,8 +150,6 @@ class Certificates
         bounding_box [(page_width - name_width) / 2, date_y], :width => name_width, :height => 20 do
           text "#{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}", :size => 18, :align => :center
         end
-        censor_title_x = 275
-        censor_name_x = 350
         if c[:censor1]
           text_box c[:censor1][:title], :at => [censor_title_x, sensor_y], :size => 18, :align => :left
           if c[:censor1][:signature]
