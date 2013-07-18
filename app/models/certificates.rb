@@ -11,7 +11,8 @@ class Certificates
       sensor_y = 139
 
       create_stamp('border') do
-        if false # old design
+        case 3
+        when 1
           rotate 0.5 do
             image "#{Rails::root}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.jpg",
                   :at => [1, page_height - 4],
@@ -27,7 +28,7 @@ class Certificates
           image "#{Rails::root}/app/views/graduations/logo_RJJK_notext.jpg",
                 :at => [(page_width - logo_width) / 2, page_height - 5],
                 :width => logo_width
-        else
+        when 2
           scale = -0.05
           image "#{Rails::root}/app/views/graduations/Style_of_Phoenix_border_A4_Landscape.jpg",
                 :at => [page_height * (0 - scale / 1.44), page_height * (1 + scale / 2)],
@@ -38,6 +39,16 @@ class Certificates
           image "#{Rails::root}/app/views/graduations/logo_RJJK_notext.jpg",
                 :at => [(page_width - logo_width) / 2, page_height - 5],
                 :width => logo_width
+        when 3
+          scale = -0.025
+          logo_width = 120
+          image "#{Rails::root}/app/views/graduations/logo_RJJK_notext.jpg",
+                :at => [(page_width - logo_width) / 2 - 2, page_height],
+                :width => logo_width
+          image "#{Rails::root}/app/views/graduations/custome_rank_certificate.png",
+                :at => [0, page_height * (1 + scale)],
+                :width => page_width,
+                :height => page_height * (1 + scale)
         end
         name_y = 455
 
