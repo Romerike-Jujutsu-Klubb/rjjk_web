@@ -26,7 +26,7 @@ class Certificates
           logo_width = 120
 
           fill_color 'ffffff'
-          fill_rectangle [(page_width - logo_width) / 2 - 5, page_height], logo_width + 5, logo_width
+          fill_rectangle [(page_width - logo_width) / 2 - 5, page_height - 1], logo_width + 5, logo_width
           fill_color '000000'
 
           image "#{Rails::root}/app/views/graduations/logo_RJJK_notext.jpg",
@@ -40,7 +40,7 @@ class Certificates
         when 2
           scale = -0.05
           image "#{Rails::root}/app/views/graduations/Style_of_Phoenix_border_A4_Landscape.jpg",
-                :at => [page_height * (0 - scale / 1.44), page_height * (1 + scale / 2)],
+                :at => [page_width * (0 - scale) - 1, page_height * (1 + scale / 2) - 1],
                 :width => page_width * (1 + scale),
                 :height => page_height * (1 + scale)
           logo_width = 85 * (1 + scale)
@@ -52,10 +52,10 @@ class Certificates
           scale = -0.025
           logo_width = 120
           image "#{Rails::root}/app/views/graduations/logo_RJJK_notext.jpg",
-                :at => [(page_width - logo_width) / 2 - 2, page_height - 2],
+                :at => [(page_width - logo_width) / 2 - 2, page_height - 1],
                 :width => logo_width
           image "#{Rails::root}/app/views/graduations/custome_rank_certificate.png",
-                :at => [0, page_height * (1 + scale)],
+                :at => [0, page_height * (1 + scale) - 1],
                 :width => page_width,
                 :height => page_height * (1 + scale)
           kanji_scale = 2.5
