@@ -4,10 +4,8 @@ class SearchController < ApplicationController
       @query = params[:q]
 
       if admin?
-        @members = Member.find_by_contents(@query).sort_by(&:name)
-        @trials = NkfMemberTrial.
-            where('UPPER(fornavn) LIKE ? OR UPPER(etternavn) LIKE ?',
-                  *(["%#{UnicodeUtils.upcase(@query)}%"] * 2)).all
+        @members = Member.find_by_contents(@query)
+        @trials = NkfMemberTrial.find_by_contents(@query)
       end
 
       @pages = InformationPage.

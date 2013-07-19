@@ -14,4 +14,13 @@ class NkfMemberTrial < ActiveRecord::Base
   def name
     "#{fornavn} #{etternavn}"
   end
+
+  def self.find_by_contents(query, options = {})
+    search_fields = [:fornavn, :etternavn, :epost]
+    all({
+            :conditions => [search_fields.map { |c| "UPPER(#{c}) LIKE ?" }.join(' OR '), *(["%#{UnicodeUtils.upcase(query)}%"] * search_fields.size)],
+            :order => 'fornavn, etternavn',
+        }.update(options))
+  end
+
 end
