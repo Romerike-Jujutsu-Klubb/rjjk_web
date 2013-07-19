@@ -29,17 +29,16 @@ class ApplicationController < ActionController::Base
           Image.uncached do
             image_query = Image.
                 select('approved, content_type, description, height, id, name, public, user_id, width').
-                where("content_type LIKE 'image/%%' OR content_type LIKE 'video/%%'", true).
+                where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'").
                 order('RANDOM()')
             image_query = image_query.where('approved = ?', true) unless admin?
             image_query = image_query.where('public = ?', true) unless user?
             @image = image_query.first
           end
-          @image.update_dimensions!
+          @image.update_dimensions! unless @image.video?
           break
         rescue Exception
-          logger.error "Unable to find dimensions of image with id #{@image.try(:id)}"
-          logger.error $!
+          ExceptionNotifier.notify_exception($!)
           retry
         end
       end

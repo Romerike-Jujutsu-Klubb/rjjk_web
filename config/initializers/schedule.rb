@@ -208,5 +208,5 @@ def send_attendance_plan
   end
 rescue Exception
   logger.error $!
-  ExceptionNotifier.background_exception_notification($!)
+  ExceptionNotifier.notify_exception($!)
 end

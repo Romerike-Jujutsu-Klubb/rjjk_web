@@ -74,6 +74,12 @@ class ImagesController < ApplicationController
 
   def edit
     @image = Image.with_image.find(params[:id])
+    begin
+      @image.update_dimensions! unless @image.video?
+    rescue Exception
+      @image.width = 320
+      @image.height = 240
+    end
   end
 
   def update
