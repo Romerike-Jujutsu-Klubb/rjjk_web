@@ -7,8 +7,12 @@ class ApplicationController < ActionController::Base
   helper :user
 
   before_filter :store_current_user_in_thread
-  before_filter :load_layout_model
   after_filter :clear_user
+
+  def render(*args)
+    load_layout_model unless args[0][:text] && !args[0][:layout]
+    super
+  end
 
   private
 
@@ -20,15 +24,27 @@ class ApplicationController < ActionController::Base
       @information_pages = @information_pages.where('title <> ?', 'Velkommen') unless user?
     end
     unless @image
-      image_query = Image.
-          select('approved, content_type, description, height, id, name, public, user_id, width').
-          where("content_type LIKE 'image/%%' OR content_type LIKE 'video/%%'", true).
-          order('RANDOM()')
-      image_query = image_query.where('approved = ?', true) unless admin?
-      image_query = image_query.where('public = ?', true) unless user?
-      @image = image_query.first
+      loop do
+        begin
+          Image.uncached do
+            image_query = Image.
+                select('approved, content_type, description, height, id, name, public, user_id, width').
+                where("content_type LIKE 'image/%%' OR content_type LIKE 'video/%%'", true).
+                order('RANDOM()')
+            image_query = image_query.where('approved = ?', true) unless admin?
+            image_query = image_query.where('public = ?', true) unless user?
+            @image = image_query.first
+          end
+          @image.update_dimensions!
+          break
+        rescue Exception
+          logger.error "Unable to find dimensions of image with id #{@image.try(:id)}"
+          logger.error $!
+          retry
+        end
+      end
     end
-    @new_image = Image.new if user?
+    @new_image = Image.new if user? # For uploading a new image.
 
     if (m = current_user.try(:member)) && (group = m.groups.find { |g| g.name == 'Voksne' })
       @next_practice = group.next_practice
