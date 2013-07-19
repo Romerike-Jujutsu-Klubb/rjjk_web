@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   after_filter :clear_user
 
   def render(*args)
-    load_layout_model unless args[0][:text] && !args[0][:layout]
+    load_layout_model unless args[0].is_a?(Hash) && args[0][:text] && !args[0][:layout]
     super
   end
 
