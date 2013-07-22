@@ -53,8 +53,10 @@
       <table width="551" class="table" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td align="left" style="padding:10px 0 10px 10px; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#888888;text-align: center;">
-            <%= link_to 'Klikk her', {:only_path => false, :email => Base64.encode64(@user_email || '')}.merge(@email_url), :style => 'color: #454545' %>
-            hvis du har problemer med å lese e-posten.
+            <% if @email_url %>
+                <%= link_to 'Klikk her', {:only_path => false, :email => Base64.encode64(@user_email || '')}.merge(@email_url), :style => 'color: #454545' %>
+                hvis du har problemer med å lese e-posten.
+            <% end %>
           </td>
         </tr>
         <tr>

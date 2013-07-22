@@ -1,0 +1,19 @@
+<% if @attendees.any? %>
+    Disse kommer også:
+
+    <ul>
+      <% @attendees.each do |m| %>
+          <li><%= m.name %></li>
+      <% end %>
+    </ul>
+<% end %>
+
+<% if @absentees.any? %>
+    Avbud:
+
+    <ul>
+      <% @absentees.each do |m| %>
+          <li><%= m.name %></li>
+      <% end %>
+    </ul>
+<% end %>

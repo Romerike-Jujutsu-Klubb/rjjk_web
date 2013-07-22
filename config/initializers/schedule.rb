@@ -4,12 +4,14 @@ unless Rails.env == 'test'
   scheduler = Rufus::Scheduler.start_new
 
   # Users
-  scheduler.cron('0 8    1 * *') { send_attendance_plan }
-  scheduler.cron('0 9-23 * * *') { send_news }
-  scheduler.cron('5 9-23 * * *') { send_event_messages }
+  scheduler.cron('0 7    1 * *') { send_attendance_plan }
+  scheduler.cron('0 8-23 * * *') { send_news }
+  scheduler.cron('5 8    * * *') { send_attendance_summary }
+  scheduler.cron('5 9-23 * * *') { send_attendance_changes }
+  scheduler.cron('10 9-23 * * *') { send_event_messages }
 
   # Admin Hourly
-  scheduler.cron('10 9-23 * * *') { import_nkf_changes }
+  scheduler.cron('15 9-23 * * *') { import_nkf_changes }
 
   # Admin Daily
   scheduler.cron('0 0 * * *') { notify_wrong_contracts }
@@ -215,6 +217,50 @@ def send_attendance_plan
       next
     end
     AttendanceMailer.plan(member).deliver
+  end
+rescue Exception
+  logger.error $!
+  ExceptionNotifier.notify_exception($!)
+end
+
+def send_attendance_summary
+  now = Time.now
+  group_schedules = GroupSchedule.includes(:group).
+      where('weekday = ? AND start_at >= ? AND (groups.school_breaks IS NULL OR groups.school_breaks = ?)',
+            now.to_date.cwday, now.time_of_day, false)
+  group_schedules.each do |gs|
+    attendees = Attendance.
+        where(:group_schedule_id => gs.id, :year => now.year, :week => now.to_date.cweek).all.map(&:member)
+    non_attendees = Attendance.
+        where('group_schedule_id = ? AND year = ? AND week = ? AND status IN (?)',
+              gs.id, now.year, now.to_date.cweek, Attendance::STATES.map { |s| s[0] }).
+        all.map(&:member)
+    recipients = gs.group.members.select { |m| !m.passive? } - non_attendees
+    AttendanceMailer.summary(recipients, attendees).deliver unless attendees.empty?
+  end
+rescue Exception
+  logger.error $!
+  ExceptionNotifier.notify_exception($!)
+end
+
+def send_attendance_changes
+  now = Time.now
+  group_schedules = GroupSchedule.includes(:group).
+      where('weekday = ? AND end_at >= ? AND groups.closed_on IS NULL AND (groups.school_breaks IS NULL OR groups.school_breaks = ?)',
+            now.to_date.cwday, now.time_of_day, false).all
+  group_schedules.each do |gs|
+    new_attendances = Attendance.where('group_schedule_id = ? AND year = ? AND week = ? AND updated_at >= ?',
+                                       gs.id, now.year, now.to_date.cweek, 1.hour.ago).all.map(&:member)
+    if new_attendances.any?
+      absentees = Attendance.
+          where('group_schedule_id = ? AND year = ? AND week = ? AND status IN (?)',
+                gs.id, now.year, now.to_date.cweek, Attendance::STATES.map { |s| s[0] }).
+          all.map(&:member)
+      new_attendees = new_attendances - absentees
+      new_absentees = new_attendances & absentees
+      recipients = gs.group.members.select { |m| !m.passive? } - absentees
+      AttendanceMailer.changes(recipients, new_attendees, new_absentees).deliver unless new_attendees.empty? && new_absentees.empty?
+    end
   end
 rescue Exception
   logger.error $!
