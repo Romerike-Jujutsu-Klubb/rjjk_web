@@ -35,6 +35,7 @@ class ApplicationController < ActionController::Base
             image_query = image_query.where('public = ?', true) unless user?
             @image = image_query.first
           end
+          break unless @image
           @image.update_dimensions! unless @image.video?
           break
         rescue Exception

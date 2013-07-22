@@ -48,6 +48,7 @@ RjjkWeb::Application.routes.draw do
   resources :semesters
   resources :signatures
   resources :trial_attendances
+  resources :users, controller: :user, path: :user
 
   root to: 'welcome#index'
   match ':controller/service.wsdl', action: :wsdl

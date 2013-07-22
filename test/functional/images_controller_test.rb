@@ -11,8 +11,8 @@ class ImagesControllerTest < ActionController::TestCase
     @controller = ImagesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-
     @first_id = images(:one).id
+    login(:admin)
   end
 
   def test_index

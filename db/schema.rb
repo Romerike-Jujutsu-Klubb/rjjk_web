@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(:version => 20130716052906) do
     t.boolean "gmaps"
     t.integer "image_id"
     t.integer "user_id"
-    t.string  "parent_email",         :limit => 32
+    t.string  "parent_email",         :limit => 64
     t.string  "parent_2_name",        :limit => 64
     t.string  "parent_2_mobile",      :limit => 16
     t.string  "billing_email",        :limit => 64
@@ -331,7 +331,7 @@ ActiveRecord::Schema.define(:version => 20130716052906) do
   create_table "users", :force => true do |t|
     t.string   "login",           :limit => 80,                    :null => false
     t.string   "salted_password", :limit => 40,                    :null => false
-    t.string   "email",           :limit => 60,                    :null => false
+    t.string   "email",           :limit => 64,                    :null => false
     t.string   "first_name",      :limit => 40
     t.string   "last_name",       :limit => 40
     t.string   "salt",            :limit => 40,                    :null => false

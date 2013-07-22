@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   after_validation :crypt_password
 
   validates_presence_of :login, :on => :create
-  validates_length_of :login, :within => 3..40, :on => :create, :allow_blank => true
+  validates_length_of :login, :within => 3..64, :on => :create, :allow_blank => true
   validates_uniqueness_of :login, :on => :create
   validates_uniqueness_of :email, :on => :create
 

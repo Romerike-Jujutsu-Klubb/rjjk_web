@@ -1,15 +1,5 @@
 <%= error_messages_for 'member' %>
 
-<!--[form:member]-->
-<style type="text/css">
-table#spaced td {
-  padding: 0.5em;
-}
-input.full {width: 16em;}
-input.postal_code {width: 3em;}
-input.half {width: 7.5em;}
-</style>
-
 <div style="float: left">
   <% if @member.image? %>
       <%= image_tag url_for(:action => :thumbnail, :id => @member.id, :format => @member.image.format), :title => @member.image.name, :style => 'float: left' %>
@@ -39,10 +29,10 @@ input.half {width: 7.5em;}
 <%= text_field 'member', 'email', :class => :full %>
 
 <div style="float: left; margin-right: 1em"><label for="member_phone_mobile">Telefon mobil</label>
-<%= text_field 'member', 'phone_mobile', :class => :half %></div>
+<%= text_field 'member', 'phone_mobile', :class => 'input-small' %></div>
 
 <div><label for="member_phone_home">Telefon hjem</label>
-<%= text_field 'member', 'phone_home', :class => :half %></div>
+<%= text_field 'member', 'phone_home', :class => 'input-small' %></div>
 
 <label for="member_phone_work">Telefon arbeid</label>
 <%= text_field 'member', 'phone_work', :class => :half %>
@@ -129,4 +119,3 @@ input.half {width: 7.5em;}
 </table>
 
 <br clear="all"/>
-<!--[eoform:member]-->

@@ -1,55 +1,44 @@
 <% @content_width = 1024 %>
 
-<div id="graduations" style="float: right">
-<table class="table table-bordered table-condensed">
-	<tr>
-		<th>Dato</th>
-		<th>Grad</th>
-		<th>Tid før grad</th>
-		<th>Treninger</th>
-	</tr>
-	<% for graduate in @member.graduates.sort_by{|g|g.graduation.held_on}.reverse %>
-	<tr>
-		<td><%=link_to graduate.graduation.held_on, :controller => :graduations, :action => :index, :id => graduate.graduation_id %></td>
-		<td>
-          <%=graduate.rank.martial_art.name unless graduate.rank.martial_art.name == 'Kei Wa Ryu'%>
-          <%=graduate.rank.name%>
-          <%=graduate.rank.colour%>
-        </td>
-		<td align="center">
-          <%= graduate.training_duration %>
-          <% if graduate.training_duration != graduate.rank.standard_months %>
-              (<span title="Normert tid i måneder"><%= graduate.rank.standard_months %></span>)
-          <% end %>
-          mnd
-          (<%= graduate.training_period.to_s.gsub('..', ' - ') %>)
-        </td>
-		<td style="text-align: center">
-          <%=link_to graduate.training_attendances, :controller => :attendances, :action => :since_graduation, :id => graduate.member_id, :date => graduate.graduation.held_on %>
-        </td>
-	</tr>
-	<% end %>
-  <% if @member.graduates.empty? %>
-	<tr>
-		<td colspan="4" align="center">
-			<%=link_to 'Graderinger', :controller => 'graduations'%>
-		</td>
-	</tr>
-      <% end %>
-</table>
-</div>
+<%= form_tag({:action => 'update', :id => @member}, {:multipart => true, :method => :put}) do %>
 
-<%=form_tag({:action => 'update', :id => @member}, {:multipart => true, :method => :put}) do %>
-  <%= render :partial => 'form' %>
-  <%= submit_tag 'Lagre', :id => 'save', :class => 'btn' %>
-  <%= back_or_link_to 'Tilbake', :action => :list %>
-  <%= link_to 'Til NKF avstemming', :controller => :nkf_members, :action => :comparison, :id => 0 %>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab_details" data-toggle="tab">Detaljer</a></li>
+      <li><a href="#tab_graduations" data-toggle="tab">Graderinger</a></li>
+      <li><a href="#tab_user" data-toggle="tab">Web-bruker</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab_details">
+        <%= render :partial => 'form' %>
+      </div>
+      <div class="tab-pane" id="tab_graduations">
+        <%= render :partial => 'graduations' %>
+      </div>
+      <div class="tab-pane" id="tab_user">
+        <% if @member.user %>
+            <%= link_to 'Bruker', edit_user_path(@member.user) %>
+        <% else %>
+            Ingen bruker!
+        <% end %>
+      </div>
+    </div>
+
+    <%= submit_tag 'Lagre', :id => 'save', :class => 'btn' %>
+    <%= back_or_link_to 'Tilbake', :action => :list %>
+    <%= link_to 'Til NKF avstemming', :controller => :nkf_members, :action => :comparison, :id => 0 %>
 <% end %>
 
 <script type="text/JavaScript">
-//<!--
-document.getElementById('member_first_name').focus();
-document.getElementById('member_first_name').select();
-new Effect.ScrollTo("graduations")
-//-->
+    //<!--
+    $('#tab_details a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+    $('#tab_graduations a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+    document.getElementById('member_first_name').focus();
+    document.getElementById('member_first_name').select();
+    //-->
 </script>

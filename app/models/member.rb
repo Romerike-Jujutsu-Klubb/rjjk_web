@@ -68,6 +68,50 @@ class Member < ActiveRecord::Base
         order('first_name, last_name').all
   end
 
+  def self.create_corresponding_user!(attrs)
+    email, first_name, last_name = attrs['email'], attrs['first_name'], attrs['last_name']
+    p = (0..4).map { [*((0..9).to_a + ('a'..'z').to_a)][rand(36)] }.join
+
+    # Full name and email
+    full_email = %Q{"#{first_name} #{last_name}" <#{email}>}
+    max_length = 64
+
+    # First and last names only
+    if full_email.size > max_length
+      full_email = %Q{"#{first_name.split(/\s+/).first} #{last_name.split(/\s+/).last}" <#{email}>}
+    end
+
+    # Squeezed name and full email
+    if full_email.size > max_length
+      max_name_size = max_length - email.size - 5
+      (cut_name = "#{first_name} #{last_name}")[(max_name_size / 2) - 2 .. (-max_name_size / 2)]
+      full_email = %Q{"#{cut_name}" <#{email}>}
+    end
+
+    # Fallback to non-valid email...
+    if full_email.size > max_length
+      (full_email = %Q{#{first_name} #{last_name} <#{email}>})[(max_length / 2) - 2 .. (-max_length / 2)]
+    end
+
+    [email, full_email].each do |potential_email|
+      existing_user = User.where('(login = ? OR email = ?) AND NOT EXISTS (SELECT id FROM members WHERE user_id = users.id)',
+                                 potential_email, potential_email).first
+      return existing_user if existing_user
+
+      next if User.where('login = ? OR email = ?', *([potential_email] * 2)).exists?
+
+      new_user = User.new(
+          :login => potential_email, :first_name => first_name, :last_name => last_name,
+          :email => potential_email, :password => p, :password_confirmation => p,
+      )
+      new_user.password_needs_confirmation = true
+      new_user.save!
+
+      return new_user
+    end
+    raise "Unable to create user for member: #{attrs}"
+  end
+
   # describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
   def gmaps4rails_address
     "#{self.address}, #{self.postal_code}, Norway"
@@ -170,8 +214,8 @@ class Member < ActiveRecord::Base
   end
 
   def passive?(date = Date.today, group = nil)
-  nkf_member.medlemsstatus == 'P' ||
-      attendances.select { |a| (group.nil? || a.group_schedule.group_id == group.id) && a.date <= (date + 31) && a.date > (date - 92) }.empty?
+    nkf_member.medlemsstatus == 'P' ||
+        attendances.select { |a| (group.nil? || a.group_schedule.group_id == group.id) && a.date <= (date + 31) && a.date > (date - 92) }.empty?
   end
 
   def senior?

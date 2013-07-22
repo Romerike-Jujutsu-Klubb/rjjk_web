@@ -3,19 +3,21 @@ class NkfMemberComparison
               :orphan_members, :orphan_nkf_members
 
   def initialize
-    fetch
-    sync
+    ActiveRecord::Base.transaction do
+      fetch
+      sync
+    end
   end
 
   def fetch
     @orphan_nkf_members = NkfMember.all(:conditions => 'member_id IS NULL', :order => 'fornavn, etternavn')
-    @orphan_members     = NkfMember.find_free_members
-    @members            = []
-    nkf_members         = NkfMember.all :conditions => 'member_id IS NOT NULL', :order => 'fornavn, etternavn'
+    @orphan_members = NkfMember.find_free_members
+    @members = []
+    nkf_members = NkfMember.all :conditions => 'member_id IS NOT NULL', :order => 'fornavn, etternavn'
     nkf_members.each do |nkfm|
-      member            = nkfm.member
+      member = nkfm.member
       member.attributes = nkfm.converted_attributes
-      nkf_group_names   = member.nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /).map { |n| n.split('/')[3] }
+      nkf_group_names = member.nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /).map { |n| n.split('/')[3] }
       if member.changed? || (nkf_group_names.sort != member.groups.map { |g| g.name }.sort)
         @members << nkfm.member
       end
@@ -31,6 +33,10 @@ class NkfMemberComparison
 
     @member_changes = @members.map do |m|
       begin
+        # FIXME(uwe):  Temporary until August 2013
+        m.user = Member.create_corresponding_user!(m.attributes) if m.user.nil?
+        # EMXIF
+
         changes = m.changes
         m.save!
         [m, changes] unless changes.empty?
@@ -46,15 +52,15 @@ class NkfMemberComparison
     @group_changes = Hash.new { |h, k| h[k] = [[], []] }
     (@new_members + @members).each do |member|
       nkf_group_names = member.nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /).map { |n| n.split('/')[3] }
-      member_groups   = member.groups.map { |g| g.name }
+      member_groups = member.groups.map { |g| g.name }
       (nkf_group_names - member_groups).each do |gn|
-        if group = Group.find_by_name(gn)
+        if (group = Group.find_by_name(gn))
           member.groups << group
           @group_changes[member][0] << group
         end
       end
       (member_groups - nkf_group_names).each do |gn|
-        if group = Group.find_by_name(gn)
+        if (group = Group.find_by_name(gn))
           member.groups.delete(group)
           @group_changes[member][1] << group
         end

@@ -53,10 +53,11 @@ def import_nkf_changes
       logger.info 'Oppdaterer kontrakter'
       NkfMember.update_group_prices
     end
-  rescue
+  rescue Exception
     logger.error 'Execption sending NKF import email.'
     logger.error $!.message
     logger.error $!.backtrace.join("\n")
+    ExceptionNotifier.notify_exception($!)
   end
 
   begin
@@ -65,10 +66,11 @@ def import_nkf_changes
       NkfReplication.update_members(c).deliver
       logger.info 'Sent member comparison mail.'
     end
-  rescue
+  rescue Exception
     logger.error 'Execption sending update_members email.'
     logger.error $!.message
     logger.error $!.backtrace.join("\n")
+    ExceptionNotifier.notify_exception($!)
   end
 end
 

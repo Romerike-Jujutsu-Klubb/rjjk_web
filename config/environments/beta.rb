@@ -17,7 +17,7 @@ email_notification_options = {
     :ignore_exceptions => [],
     :email => {
         :email_prefix => '[RJJK BETA] ',
-        :sender_address => '"BETA Exception Notifier" <noreply@beta.jujutsu.no>',
+        :sender_address => '"RJJK BETA Exception Notifier" <noreply@beta.jujutsu.no>',
         :exception_recipients => %w{uwe@kubosch.no}
     }
 }

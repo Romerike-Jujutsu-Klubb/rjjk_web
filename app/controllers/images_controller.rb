@@ -1,4 +1,5 @@
 class ImagesController < ApplicationController
+  before_filter :admin_required, :except => [:create, :new, :show]
   before_filter :authenticate_user, :only => :mine
 
   caches_page :show, :inline

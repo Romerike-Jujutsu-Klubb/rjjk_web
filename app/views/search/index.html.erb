@@ -1,8 +1,7 @@
 <h1>Søkeresultat</h1>
 
-
 <% if @query %>
-    <% if !@members.blank? || !@trials.blank? || @pages.any? %>
+    <% if !@members.blank? || !@trials.blank? || @users || @pages.any? %>
 
         <% unless @members.blank? %>
             <h3>Medlemmer</h3>
@@ -11,7 +10,6 @@
                   <li><%= link_to m.name, m %></li>
               <% end %>
             </ul>
-
         <% end %>
 
         <% unless @trials.blank? %>
@@ -21,7 +19,15 @@
                   <li><%= link_to tr.name, tr %></li>
               <% end %>
             </ul>
+        <% end %>
 
+        <% unless @users.blank? %>
+            <h3>Brukere</h3>
+            <ul>
+              <% @users.each do |u| %>
+                  <li><%= link_to u.name, u %></li>
+              <% end %>
+            </ul>
         <% end %>
 
         <% if @pages.any? %>
@@ -31,7 +37,6 @@
                   <li><%= link_to p.title, p %></li>
               <% end %>
             </ul>
-
         <% end %>
 
         <h2>Savner du noe?</h2>
