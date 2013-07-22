@@ -2,7 +2,7 @@ class NkfMemberTrialsController < ApplicationController
   before_filter :admin_required
 
   def index
-    @nkf_member_trials = NkfMemberTrial.all
+    @nkf_member_trials = NkfMemberTrial.order(:fornavn, :etternavn).all
 
     respond_to do |format|
       format.html # index.html.erb
