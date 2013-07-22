@@ -14,6 +14,7 @@ unless Rails.env == 'test'
   scheduler.cron('0 6 * * *') { notify_missing_graduations }
   scheduler.cron('0 7 1 * *') { notify_overdue_graduates }
   scheduler.cron('0 8 1 * *') { send_attendance_plan }
+  scheduler.cron('* * * * *') { notify_overdue_trials }
 end
 
 private
@@ -208,6 +209,14 @@ def send_attendance_plan
     end
     AttendanceMailer.plan(member).deliver
   end
+rescue Exception
+  logger.error $!
+  ExceptionNotifier.notify_exception($!)
+end
+
+def notify_overdue_trials
+  trials = NkfMemberTrial.where('reg_dato < ?', 2.months.ago).all
+  NkfMemberTrialMailer.notify_overdue_trials(trials).deliver
 rescue Exception
   logger.error $!
   ExceptionNotifier.notify_exception($!)
