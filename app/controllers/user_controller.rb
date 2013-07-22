@@ -9,6 +9,9 @@ class UserController < ApplicationController
     @users = User.all(:order => 'last_name, first_name')
   end
 
+  def show
+  end
+
   def login
     return if generate_blank_form
     remember_me = params.delete(:remember_me)

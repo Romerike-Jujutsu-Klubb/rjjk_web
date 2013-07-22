@@ -87,7 +87,7 @@ class UserSystemTest < ActionController::IntegrationTest
 
   def assert_redirected_to_login
     assert_response :redirect
-    assert_equal controller.url_for(:action => 'login'), response.redirect_url
+    assert_equal controller.url_for(:action => 'login', :id => nil), response.redirect_url
   end
 
 end
