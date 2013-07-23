@@ -5,7 +5,7 @@ unless Rails.env == 'test'
 
   # Users
   scheduler.cron('0 7    1 * *') { send_attendance_plan }
-  scheduler.cron('0 8    1 * *') { send_info }
+  scheduler.cron('0 8    4 * *') { send_weekly_info_page }
   scheduler.cron('0 8-23 * * *') { send_news }
   scheduler.cron('5 8    * * *') { send_attendance_summary }
   scheduler.cron('5 9-23 * * *') { send_attendance_changes }
@@ -58,22 +58,20 @@ end
 #   New pages should be sent to all active members
 #   Newly revised pages should be sent to all members unless they got it within the last 6 months,
 #     or the change is significat (or should that be in a news item?)
-def send_info
-  logger.debug 'Sending information pages'
-  news_item = InformationPage.where("
-mailed_at IS NULL AND
-(publication_state IS NULL OR publication_state = 'PUBLISHED') AND
-(publish_at IS NULL OR publish_at < CURRENT_TIMESTAMP) AND
-(expire_at IS NULL OR expire_at > CURRENT_TIMESTAMP) AND
-(updated_at IS NULL OR updated_at < CURRENT_TIMESTAMP - interval '10' minute)").first
-  if news_item
-    recipients = Rails.env == 'production' ? Member.active(Date.today) : Member.where(:first_name => 'Uwe').all
-    recipients.each do |m|
-      NewsletterMailer.newsletter(news_item, m).deliver
+def send_weekly_info_page
+  logger.debug 'Sending weekly info page'
+  page = InformationPage.where("
+(hidden IS NULL OR hidden = ?) AND
+(revised_at > CURRENT_TIMESTAMP - interval '6' month) AND
+(mailed_at IS NULL OR mailed_at < CURRENT_TIMESTAMP - interval '6' month)", false).
+      order(:mailed_at).first
+  if page
+    Member.active(Date.today).order(:first_name, :last_name).all.each do |m|
+      InformationPageMailer.send_weekly_page(m, page).deliver
     end
-    news_item.update_attributes! :mailed_at => Time.now
+    page.update_attributes! :mailed_at => Time.now
   end
-  logger.debug 'Sending news...OK'
+  logger.debug 'Sending weekly info page...OK'
 rescue
   logger.error 'Execption sending news'
   logger.error $!.message
