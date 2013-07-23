@@ -11,11 +11,12 @@ class InformationPageMailerTest < ActionMailer::TestCase
   end
 
   test 'send_weekly_page' do
-    mail = InformationPageMailer.send_weekly_page
-    assert_equal 'Send weekly page', mail.subject
-    assert_equal %w(to@example.org), mail.to
+    mail = InformationPageMailer.send_weekly_page members(:lars), information_pages(:first)
+    assert_equal '[RJJK] My first article', mail.subject
+    assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_match 'Hi', mail.body.encoded
+    assert_match 'My first article', mail.body.encoded
+    assert_match 'A very interresting topic!', mail.body.encoded
   end
 
 end

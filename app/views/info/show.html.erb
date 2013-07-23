@@ -4,7 +4,7 @@
 
 <%= @information_page.body.try(:html_safe) %>
 
-<% if user? || admin? %>
+<% if admin? %>
     <ul class="controls">
       <li><%= link_to 'Rediger', {:controller => :info, :action => :edit, :id => @information_page}, :class => :edit %></li>
       <li><%= link_to 'Slett', {:controller => :info, :action => :destroy, :id => @information_page}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>

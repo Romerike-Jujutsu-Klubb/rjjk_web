@@ -1,4 +1,6 @@
 first:
+  revised_at: 2013-07-23 13:37
   title: 'My first article'
+  body: 'A very interresting topic!'
 another:
   title: 'My second article'

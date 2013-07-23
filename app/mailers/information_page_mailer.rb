@@ -6,6 +6,7 @@ class InformationPageMailer < ActionMailer::Base
   def notify_outdated_pages(recipients, pages)
     @recipients = recipients
     @pages = pages
+    @timestamp = Time.now
     mail to: Rails.env == 'production' ?
         recipients.map(&:email) : %Q{"#{recipients.map(&:first_name).join(' ')}" <uwe@kubosch.no>},
          subject: '[RJJK] Oppdatering av informasjonssider'
