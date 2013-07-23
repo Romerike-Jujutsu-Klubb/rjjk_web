@@ -1,0 +1,11 @@
+Føgende sider trengs å sees over:
+
+<ul>
+  <% @pages.each do |page| %>
+      <li><%= link_to page.title, edit_information_page_url(page) %></li>
+  <% end %>
+</ul>
+
+Se over at innholdet er OK, og huk av på "Revidert" før du lagrer.
+Hvis siden ikke er relevant lenger, huk av på "Skjul".
+Du vil få ny påmindelse om 6 måneder.

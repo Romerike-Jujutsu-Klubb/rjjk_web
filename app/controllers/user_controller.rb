@@ -5,7 +5,7 @@ class UserController < ApplicationController
 
   skip_before_filter :authenticate_user, :only => [:login, :logout, :signup, :forgot_password]
 
-  def list
+  def index
     @users = User.all(:order => 'last_name, first_name')
   end
 
@@ -134,12 +134,16 @@ class UserController < ApplicationController
   end
 
   def edit
-    return if generate_filled_in
+    generate_filled_in
+  end
+
+  def update
+    @user = User.find_by_id(params[:id]) || current_user
     if params['user']['form']
       form = params['user'].delete('form')
       begin
         case form
-        when "edit"
+        when 'edit'
           unclean_params = params['user']
           if current_user.admin?
             user_params = unclean_params
@@ -148,20 +152,22 @@ class UserController < ApplicationController
           end
           @user.attributes = user_params
           if @user.save
-            flash.now['notice'] = "User has been updated."
+            flash.now['notice'] = 'User has been updated.'
           end
-        when "change_password"
+        when 'change_password'
           change_password
-        when "delete"
+        when 'delete'
           delete
+          return
         else
-          raise "unknown edit action"
+          raise 'unknown edit action'
         end
       rescue Exception => ex
         logger.warn ex
         logger.warn ex.backtrace
       end
     end
+    redirect_to :action => :edit
   end
 
   def delete

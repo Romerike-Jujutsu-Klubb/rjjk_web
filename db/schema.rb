@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130722104156) do
+ActiveRecord::Schema.define(:version => 20130723051944) do
 
   create_table "martial_arts", :force => true do |t|
     t.string "name",   :limit => 16, :null => false
@@ -325,6 +325,8 @@ ActiveRecord::Schema.define(:version => 20130722104156) do
     t.datetime "updated_at"
     t.integer  "position"
     t.boolean  "hidden"
+    t.datetime "revised_at"
+    t.datetime "mailed_at"
     t.foreign_key ["parent_id"], "information_pages", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "information_pages_parent_id_fkey"
   end
 

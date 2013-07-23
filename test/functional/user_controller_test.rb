@@ -165,7 +165,7 @@ class UserControllerTest < ActionController::TestCase
   def test_edit
     tesla = users(:admin)
     set_logged_in tesla
-    post :edit, :user => {:first_name => 'Bob', :form => 'edit'}
+    post :update, :user => {:first_name => 'Bob', :form => 'edit'}
     tesla.reload
     assert_equal 'Bob', tesla.first_name
   end
@@ -173,7 +173,7 @@ class UserControllerTest < ActionController::TestCase
   def test_delete
     user = users(:admin)
     set_logged_in user
-    post :edit, 'user' => {'form' => 'delete'}
+    post :update, 'user' => {'form' => 'delete'}
     user.reload
     assert user.deleted
     assert_not_logged_in

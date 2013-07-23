@@ -11,13 +11,13 @@ end
 
 module RjjkWeb
   class Application < Rails::Application
-    config.time_zone = 'UTC'
-    config.i18n.default_locale = :nb
+    config.assets.enabled = true
+    config.assets.initialize_on_precompile = false
+    config.assets.precompile += %w(print.css)
+    config.assets.version = '1.0'
     config.encoding = Encoding::UTF_8
     config.filter_parameters += [:content_data, :file, :image, :password]
-    config.assets.precompile += %w(print.css)
-    config.assets.enabled = true
-    config.assets.version = '1.0'
-    config.assets.initialize_on_precompile = false
+    config.i18n.default_locale = :nb
+    config.time_zone = 'Copenhagen'
   end
 end

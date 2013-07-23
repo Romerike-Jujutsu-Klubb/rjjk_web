@@ -46,6 +46,7 @@ class InfoController < ApplicationController
 
   def create
     @information_page = InformationPage.new(params[:information_page])
+    set_revised_at_param
     if @information_page.save
       flash[:notice] = 'InformationPage was successfully created.'
       redirect_to :action => 'show', :id => @information_page
@@ -54,18 +55,19 @@ class InfoController < ApplicationController
     end
   end
 
-  def rediger
+  def edit
     @information_page = InformationPage.find(params[:id])
     load_images
   end
 
   def update
     @information_page = InformationPage.find(params[:id])
+    set_revised_at_param
     if @information_page.update_attributes(params[:information_page])
       flash[:notice] = 'InformationPage was successfully updated.'
       redirect_to :action => 'show', :id => @information_page
     else
-      render :action => :rediger
+      render :action => :edit
     end
   end
 
@@ -78,6 +80,12 @@ class InfoController < ApplicationController
 
   def load_images
     @images = Image.published.images.select('id, name').all
+  end
+
+  def set_revised_at_param
+    unless params[:information_page].nil? || params[:information_page][:revised_at].blank?
+      params[:information_page][:revised_at] = Time.now
+    end
   end
 
 end

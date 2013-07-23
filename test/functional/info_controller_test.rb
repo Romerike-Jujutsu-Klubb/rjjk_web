@@ -63,10 +63,10 @@ class InfoControllerTest < ActionController::TestCase
 
   def test_edit
     login(:admin)
-    get :rediger, :id => information_pages(:first).id
+    get :edit, :id => information_pages(:first).id
 
     assert_response :success
-    assert_template 'rediger'
+    assert_template 'edit'
 
     assert_not_nil assigns(:information_page)
     assert assigns(:information_page).valid?

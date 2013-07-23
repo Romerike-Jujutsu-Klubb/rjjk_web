@@ -15,8 +15,8 @@
     <td><%=h information_page.send(column.name).to_s.html_safe %></td>
   <% end %>
     <td><%= link_to 'Vis', :action => 'show', :id => information_page %></td>
-    <td><%= link_to 'Rediger', :action => 'rediger', :id => information_page %></td>
-    <td><%= link_to 'Slett', { :action => 'destroy', :id => information_page }, :data => {:confirm => 'Er du sikker?'}, :method => :post %></td>
+    <td><%= link_to 'Rediger', :action => :edit, :id => information_page %></td>
+    <td><%= link_to 'Slett', { :action => :destroy, :id => information_page }, :data => {:confirm => 'Er du sikker?'}, :method => :post %></td>
   </tr>
 <% end %>
 </table>

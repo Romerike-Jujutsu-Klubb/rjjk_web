@@ -5,6 +5,7 @@ unless Rails.env == 'test'
 
   # Users
   scheduler.cron('0 7    1 * *') { send_attendance_plan }
+  scheduler.cron('0 8    1 * *') { send_info }
   scheduler.cron('0 8-23 * * *') { send_news }
   scheduler.cron('5 8    * * *') { send_attendance_summary }
   scheduler.cron('5 9-23 * * *') { send_attendance_changes }
@@ -20,6 +21,7 @@ unless Rails.env == 'test'
   scheduler.cron('0 6 * * *') { notify_missing_graduations }
 
   # Admin Weekly
+  scheduler.cron('0 8 1 * *') { notify_outdated_pages }
   scheduler.cron('0 2 1 * *') { notify_overdue_trials }
   scheduler.cron('0 4 1 * *') { notify_missing_group_semesters }
   scheduler.cron('0 5 1 * *') { InstructionReminder.notify_missing_instructors }
@@ -30,6 +32,53 @@ private
 
 def logger
   ActiveRecord::Base.logger
+end
+
+# Flow:
+#   Pages should be reviewed at least every 6 months.
+#   Old reviewed pages should be sent to new members
+#   New pages should be sent to all active members
+#   Newly revised pages should be sent to all members unless they got it within the last 6 months,
+#     or the change is significat (or should that be in a news item?)
+def notify_outdated_pages
+  recipients = Member.active(Date.today).includes(:user).where('users.role = ?', 'ADMIN').all
+  pages = InformationPage.where('(hidden IS NULL OR hidden = ?) AND revised_at IS NULL OR revised_at < ?', false, 6.months.ago).
+      order(:revised_at).limit(3).all
+  InformationPageMailer.notify_outdated_pages(recipients, pages).deliver
+rescue
+  logger.error 'Execption sending information page notification'
+  logger.error $!.message
+  logger.error $!.backtrace.join("\n")
+  ExceptionNotifier.notify_exception($!)
+end
+
+# Flow:
+#   Pages should be reviewed at least every 6 months.
+#   Old reviewed pages should be sent to new members
+#   New pages should be sent to all active members
+#   Newly revised pages should be sent to all members unless they got it within the last 6 months,
+#     or the change is significat (or should that be in a news item?)
+def send_info
+  logger.debug 'Sending information pages'
+  news_item = InformationPage.where("
+mailed_at IS NULL AND
+(publication_state IS NULL OR publication_state = 'PUBLISHED') AND
+(publish_at IS NULL OR publish_at < CURRENT_TIMESTAMP) AND
+(expire_at IS NULL OR expire_at > CURRENT_TIMESTAMP) AND
+(updated_at IS NULL OR updated_at < CURRENT_TIMESTAMP - interval '10' minute)").first
+  if news_item
+    recipients = Rails.env == 'production' ? Member.active(Date.today) : Member.where(:first_name => 'Uwe').all
+    recipients.each do |m|
+      NewsletterMailer.newsletter(news_item, m).deliver
+    end
+    news_item.update_attributes! :mailed_at => Time.now
+  end
+  logger.debug 'Sending news...OK'
+rescue
+  logger.error 'Execption sending news'
+  logger.error $!.message
+  logger.error $!.backtrace.join("\n")
+  ExceptionNotifier.notify_exception($!)
 end
 
 def send_news
@@ -52,6 +101,7 @@ rescue
   logger.error 'Execption sending news'
   logger.error $!.message
   logger.error $!.backtrace.join("\n")
+  ExceptionNotifier.notify_exception($!)
 end
 
 def import_nkf_changes

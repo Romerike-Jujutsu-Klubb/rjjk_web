@@ -13,18 +13,19 @@
       <%= f.text_field :title %></div>
 
     <div style="float: left; margin-right: 2em"><label for="information_page_hidden">Skjul</label>
-      <%= f.check_box :hidden %></div>
+      <%= f.check_box :hidden %>
+    </div>
 
-    <% if @information_page.created_at %>
-        <div style="float: left; margin-right: 2em">
-          <label for="information_page_created_at">Opprettet</label>
-          <%= h @information_page.created_at.strftime('%Y-%m-%d %H:%M') %></div>
-    <% end %>
+    <div class="control-group" style="float: left; margin-right: 2em ; <%= 'color: red' if @information_page.revised_at.nil? || @information_page.revised_at < 6.months.ago %>">
+      <label for="information_page_revised_at" style="padding-left: 0">Revidert</label>
 
-    <% if @information_page.updated_at %>
-        <div><label for="information_page_updated_at">Oppdatert</label>
-          <%= h @information_page.updated_at.strftime('%Y-%m-%d %H:%M') %></div>
-    <% end %>
+      <div class="controls">
+        <label for="information_page_revised_at" class="checkbox">
+          <%= f.check_box :revised_at, {:checked => false}, 1, nil %>
+          <%= @information_page.revised_at.strftime('%Y-%m-%d %H:%M') if @information_page.revised_at %>
+        </label>
+      </div>
+    </div>
 
     <br clear="left"/>
 

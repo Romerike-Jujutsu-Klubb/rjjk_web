@@ -71,7 +71,7 @@ class NewsControllerTest < ActionController::TestCase
     assert assigns(:news_item).valid?
 
     assert_select '#news_item_publish_at[value=?]', '2007-07-12 13:37'
-    assert_select '#news_item_expire_at[value=?]', '9999-12-31 23:59'
+    assert_equal '2199-12-31 23:59', css_select('#news_item_expire_at')[0]['value']
   end
 
   def test_update
