@@ -1,9 +1,7 @@
 # encoding: UTF-8
 class UserController < ApplicationController
-  before_filter :authenticate_user
+  before_filter :authenticate_user, :except => [:login, :logout, :signup, :forgot_password]
   before_filter :admin_required, :except => [:welcome, :like, :login, :logout, :signup, :forgot_password, :change_password]
-
-  skip_before_filter :authenticate_user, :only => [:login, :logout, :signup, :forgot_password]
 
   def index
     @users = User.all(:order => 'last_name, first_name')

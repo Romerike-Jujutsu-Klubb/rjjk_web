@@ -44,7 +44,6 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-    @new_image = Image.new if user? # For uploading a new image.
 
     if (m = current_user.try(:member)) && (group = m.groups.find { |g| g.name == 'Voksne' })
       @next_practice = group.next_practice

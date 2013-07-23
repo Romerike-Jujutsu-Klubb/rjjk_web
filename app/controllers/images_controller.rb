@@ -1,6 +1,6 @@
 class ImagesController < ApplicationController
   PUBLIC_ACTIONS = [:gallery, :inline, :show]
-  PERSONAL_ACTIONS = [:create, :new]
+  PERSONAL_ACTIONS = [:create, :mine, :new, :upload]
   before_filter :admin_required, :except => PUBLIC_ACTIONS + PERSONAL_ACTIONS
   before_filter :authenticate_user, :only => PERSONAL_ACTIONS
 
@@ -75,6 +75,12 @@ class ImagesController < ApplicationController
     end
   end
 
+  def upload
+    image_params = params[:image]
+    image_params.delete(:file).each { |file| @image = Image.create! image_params.merge :file => file }
+    back_or_redirect_to :action => :gallery, :id => @image.id
+  end
+
   def edit
     @image = Image.with_image.find(params[:id])
     begin
@@ -128,7 +134,7 @@ class ImagesController < ApplicationController
     image_select = image_select.where('user_id = ?', current_user.id)
     image_select = image_select.includes(:user)
     @images = image_select.all
-    @image = @images.first
+    @image = Image.find_by_id(params[:id]) || @images.first
     render :action => :gallery
   end
 

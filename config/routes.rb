@@ -5,9 +5,10 @@ RjjkWeb::Application.routes.draw do
   get 'attendances/plan' # må være etter mitt/oppmote
   get 'news/list'
   get 'search/index'
+  get 'user/change_password'
+  get 'user/forgot_password'
+  get 'user/login'
 
-  match 'stylesheets/dark_ritual/:width.:format', controller: :stylesheets, action: :dark_ritual
-  match 'stylesheets/dark_ritual.:format', controller: :stylesheets, action: :dark_ritual
   match ':controller/active_contracts', action: :active_contracts
   match ':controller/attendance_form', action: :attendance_form
   match ':controller/attendance_form_index', action: :attendance_form_index
@@ -15,12 +16,11 @@ RjjkWeb::Application.routes.draw do
   match ':controller/create', action: :create
   match ':controller/email_list', action: :email_list
   match ':controller/excel_export', action: :excel_export
-  match ':controller/gallery/:id', action: :gallery
-  match ':controller/gallery', action: :gallery
+  match ':controller/gallery(/:id)', action: :gallery
   match ':controller/list_active', action: :list_active
   match ':controller/list_inactive', action: :list_active
+  match ':controller/mine(/:id)', action: :mine
   match ':controller/telephone_list', action: :telephone_list
-  match ':controller/mine', action: :mine
   match ':controller/yaml', action: :yaml
 
   resources :attendances

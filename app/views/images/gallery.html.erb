@@ -28,7 +28,7 @@
     <div align="center">
       <% slice.each do |i| %>
           <div style="float: left; width: 20%">
-            <%= link_to :controller => :images, :action => :gallery, :id => i.id do %>
+            <%= link_to :id => i.id do %>
                 <% width = 492 / 5 %>
                 <%= image_tag url_for(:controller => :images, :action => :inline, :id => i.id, :format => i.format, :width => width), :title => i.name || 'Bilde', :width => width %>
             <% end %>

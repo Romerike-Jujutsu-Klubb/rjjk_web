@@ -32,10 +32,10 @@
 
 <% if user? %>
     <h3 align="center">Last opp media</h3>
-    <%= form_for @new_image do |f| %>
+    <%= form_for :image, :url => {:controller => :images, :action => :upload} do |f| %>
         <%= f.file_field :file, :onchange => 'form.submit()',
                          'size' => '10', :style => 'width: 100%',
-                         :class => 'hide ie_show' %>
+                         :class => 'hide ie_show', :multiple => true %>
         <div class="input-append ie_hide">
           <input id="pretty-input" class="input-small" type="text" onclick="$('input[id=image_file]').click();">
           <a class="btn" onclick="$('input[id=image_file]').click();">Velg fil</a>
