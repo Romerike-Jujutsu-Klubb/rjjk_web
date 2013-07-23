@@ -1,6 +1,8 @@
 class ImagesController < ApplicationController
-  before_filter :admin_required, :except => [:create, :new, :show]
-  before_filter :authenticate_user, :only => :mine
+  PUBLIC_ACTIONS = [:gallery, :inline, :show]
+  PERSONAL_ACTIONS = [:create, :new]
+  before_filter :admin_required, :except => PUBLIC_ACTIONS + PERSONAL_ACTIONS
+  before_filter :authenticate_user, :only => PERSONAL_ACTIONS
 
   caches_page :show, :inline
   cache_sweeper :image_sweeper, :only => [:update, :destroy]
