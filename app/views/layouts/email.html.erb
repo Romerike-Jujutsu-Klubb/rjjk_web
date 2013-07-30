@@ -68,7 +68,7 @@
                     <table width="485" class="logotable" border="0" cellspacing="0" cellpadding="0">
                       <tr>
                         <td>
-                          <img src="<%= url_for(:only_path => false, :controller => :welcome, :action => :index) + 'assets/rjjk_logo_&_txt_320.png' %>" alt="RJJK Logo" width="160" height="160" />
+                          <img src="<%= url_for(:only_path => false, :controller => :welcome, :action => :index) + 'assets/rjjk_logo_&_txt_320.png' %>" alt="RJJK Logo" width="160" height="160"/>
                         </td>
                         <td align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#acabab;">
                           <p style="margin:0 0 10px 0; font-size:18px; color:#E20916;"><%= @title %></p>
@@ -80,7 +80,10 @@
                 </tr>
                 <tr>
                   <td style="padding:10px 20px 0 20px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:16px;">
-                    <%=yield%>
+                    <div class="clearfix" style="margin:0 0 10px 0; padding-bottom: 5px">
+                      <%= yield %>
+                      <br clear="all"/>
+                    </div>
                   </td>
                 </tr>
                 <tr>

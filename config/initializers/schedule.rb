@@ -4,11 +4,11 @@ unless Rails.env == 'test'
   scheduler = Rufus::Scheduler.start_new
 
   # Users
-  scheduler.cron('0 7    1 * *') { send_attendance_plan }
+  scheduler.cron('0 7    1 * *') { AttendanceNagger.send_attendance_plan }
   scheduler.cron('0 8    4 * *') { send_weekly_info_page }
   scheduler.cron('0 8-23 * * *') { send_news }
-  scheduler.cron('5 8    * * *') { send_attendance_summary }
-  scheduler.cron('5 9-23 * * *') { send_attendance_changes }
+  scheduler.cron('5 8    * * *') { AttendanceNagger.send_attendance_summary }
+  scheduler.cron('5 9-23 * * *') { AttendanceNagger.send_attendance_changes }
   scheduler.cron('10 9-23 * * *') { send_event_messages }
 
   # Admin Hourly
@@ -248,71 +248,6 @@ def notify_overdue_graduates
 rescue
   logger.error "Exception sending instruction message: #{$!}"
   logger.error $!.backtrace.join("\n")
-end
-
-def send_attendance_plan
-  today = Date.today
-  Member.active(today).where('NOT EXISTS (SELECT id FROM attendances WHERE member_id = members.id AND year = ? AND week = ?)',
-                             today.cwyear, today.cweek).
-      select { |m| m.age >= 14 }.
-      select { |m| m.groups.any? { |g| g.name == 'Voksne' } }.
-      select { |m| !m.passive? }.
-      each do |member|
-    if member.user.nil?
-      msg = "USER IS MISSING!  #{member.inspect}"
-      logger.error msg
-      ExceptionNotifier.notify_exception(ActiveRecord::RecordNotFound.new(msg))
-      next
-    end
-    AttendanceMailer.plan(member).deliver
-  end
-rescue Exception
-  logger.error $!
-  ExceptionNotifier.notify_exception($!)
-end
-
-def send_attendance_summary
-  now = Time.now
-  group_schedules = GroupSchedule.includes(:group).
-      where('weekday = ? AND start_at >= ? AND (groups.school_breaks IS NULL OR groups.school_breaks = ?)',
-            now.to_date.cwday, now.time_of_day, false)
-  group_schedules.each do |gs|
-    attendees = Attendance.
-        where(:group_schedule_id => gs.id, :year => now.year, :week => now.to_date.cweek).all.map(&:member)
-    non_attendees = Attendance.
-        where('group_schedule_id = ? AND year = ? AND week = ? AND status IN (?)',
-              gs.id, now.year, now.to_date.cweek, Attendance::STATES.map { |s| s[0] }).
-        all.map(&:member)
-    recipients = gs.group.members.select { |m| !m.passive? } - non_attendees
-    AttendanceMailer.summary(recipients, attendees).deliver unless attendees.empty?
-  end
-rescue Exception
-  logger.error $!
-  ExceptionNotifier.notify_exception($!)
-end
-
-def send_attendance_changes
-  now = Time.now
-  group_schedules = GroupSchedule.includes(:group).
-      where('weekday = ? AND end_at >= ? AND groups.closed_on IS NULL AND (groups.school_breaks IS NULL OR groups.school_breaks = ?)',
-            now.to_date.cwday, now.time_of_day, false).all
-  group_schedules.each do |gs|
-    new_attendances = Attendance.where('group_schedule_id = ? AND year = ? AND week = ? AND updated_at >= ?',
-                                       gs.id, now.year, now.to_date.cweek, 1.hour.ago).all.map(&:member)
-    if new_attendances.any?
-      absentees = Attendance.
-          where('group_schedule_id = ? AND year = ? AND week = ? AND status IN (?)',
-                gs.id, now.year, now.to_date.cweek, Attendance::STATES.map { |s| s[0] }).
-          all.map(&:member)
-      new_attendees = new_attendances - absentees
-      new_absentees = new_attendances & absentees
-      recipients = gs.group.members.select { |m| !m.passive? } - absentees
-      AttendanceMailer.changes(recipients, new_attendees, new_absentees).deliver unless new_attendees.empty? && new_absentees.empty?
-    end
-  end
-rescue Exception
-  logger.error $!
-  ExceptionNotifier.notify_exception($!)
 end
 
 def notify_overdue_trials

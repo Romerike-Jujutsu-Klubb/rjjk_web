@@ -14,25 +14,24 @@ class AttendanceMailer < ActionMailer::Base
          subject: '[RJJK] Kommer du?'
   end
 
-  def summary(recipients, members)
-    @members = members
+  def summary(recipient, attendees, absentees)
+    @members = attendees
     @title = 'Trening i kveld'
     @timestamp = Time.now
-    @email_url = nil
-    mail to: Rails.env == 'production' ?
-        recipients.map(&:email) : %Q{"#{recipients.map(&:first_name).join(' ')}" <uwe@kubosch.no>},
-         subject: "[RJJK] Trening i kveld: #{members.size} deltaker#{'e' if members.size > 1} påmeldt"
+    @email_url = with_login(recipient.user, :controller => :attendances, :action => :plan)
+    mail to: Rails.env == 'production' ? recipient.email : %Q{"#{recipient.name}" <uwe@kubosch.no>},
+         subject: "[RJJK] Trening i kveld: #{attendees.size == 0 ? 'Ingen' : attendees.size} deltaker#{'e' if attendees.size > 1} påmeldt"
   end
 
-  def changes(recipients, attendees, absentees)
+  def changes(recipient, new_attendees, new_absentees, attendees)
+    @new_attendees = new_attendees
+    @new_absentees = new_absentees
     @attendees = attendees
-    @absentees = absentees
     @title = 'Trening i kveld'
     @timestamp = Time.now
-    @email_url = nil
-    mail to: Rails.env == 'production' ?
-        recipients.map(&:email) : %Q{"#{recipients.map(&:first_name).join(' ')}" <uwe@kubosch.no>},
-         subject: "[RJJK] Trening i kveld: #{attendees.size == 0 ? 'Ingen' : attendees.size} deltaker#{'e' if attendees.size != 1} påmeldt"
+    @email_url = with_login(recipient.user, :controller => :attendances, :action => :plan)
+    mail to: Rails.env == 'production' ? recipient.email : %Q{"#{recipient.name}" <uwe@kubosch.no>},
+         subject: "[RJJK] Trening i kveld: #{"#{new_attendees.size} ny#{'e' if new_attendees.size > 1} deltaker#{'e' if new_attendees.size > 1} påmeldt" if new_attendees.size > 0} #{"#{new_absentees.size} avbud" if new_absentees.any?}"
   end
 
 end

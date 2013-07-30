@@ -39,7 +39,7 @@
 
                 <% if user? %>
                     <ul class="controls">
-                      <li><%= detour_to 'Endre', edit_news_item_path(news_item), :class=>:edit%></li>
+                      <li><%= detour_to 'Endre', edit_news_item_path(news_item), :class => :edit %></li>
                       <li><%= detour_to 'Utløpt', {:controller => :news, :action => :expire, :id => news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
                       <li><%= detour_to 'Slett', {:controller => :news, :action => :destroy, :id => news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :delete %></li>
                     </ul>
@@ -49,4 +49,8 @@
         <% end %>
       </div>
     </div>
+<% end %>
+
+<%= javascript_tag do %>
+    $('.post img').addClass('img-polaroid')
 <% end %>

@@ -15,11 +15,13 @@
         <%= render :partial => 'graduations' %>
       </div>
       <div class="tab-pane" id="tab_user">
-        <% if @member.user %>
-            <%= link_to 'Bruker', edit_user_path(@member.user) %>
-        <% else %>
-            Ingen bruker!
-        <% end %>
+        <p>
+          <% if @member.user %>
+              <%= link_to 'Bruker', edit_user_path(@member.user) %>
+          <% else %>
+              Ingen bruker!
+          <% end %>
+        </p>
       </div>
     </div>
 
@@ -28,17 +30,7 @@
     <%= link_to 'Til NKF avstemming', :controller => :nkf_members, :action => :comparison, :id => 0 %>
 <% end %>
 
-<script type="text/JavaScript">
-    //<!--
-    $('#tab_details a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    })
-    $('#tab_graduations a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    })
+<%= javascript_tag do %>
     document.getElementById('member_first_name').focus();
     document.getElementById('member_first_name').select();
-    //-->
-</script>
+<% end %>
