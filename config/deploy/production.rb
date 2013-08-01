@@ -5,8 +5,6 @@ role :web, 'kubosch.no'
 role :app, 'kubosch.no'
 role :db,  'kubosch.no', :primary => true
 
-# {:except=>{:no_release=>true}, :roles=>[:web]}
-
 set :user, 'capistrano'
 set :use_sudo, false
 

@@ -4,7 +4,7 @@
 #
 # chkconfig: 345 88 12
 # description: RJJK web application
-# pidfile: /u/apps/$APP/shared/log/mongrel.pid
+# pidfile: /u/apps/$APP/shared/log/server.pid
 
 . /etc/rc.d/init.d/functions
 
@@ -47,17 +47,13 @@ case "$1" in
 	then
 	    rm -f $pidfile
 	fi
-#    run "$START_FERRET_CMD"
     run "$START_CMD"
         ;;
   stop)
-#    run "$STOP_FERRET_CMD"
     run "$STOP_CMD"
     rm -f ${pidfile}
         ;;
   restart)
-#    run "$STOP_FERRET_CMD"
-#    run "$START_FERRET_CMD"
     run "$STOP_CMD"
     rm -f ${pidfile}
     run "$START_CMD"
