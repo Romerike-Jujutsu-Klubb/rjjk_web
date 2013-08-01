@@ -3,12 +3,11 @@ class InformationPageMailer < ActionMailer::Base
   default from: Rails.env == 'production' ? 'webmaster@jujutsu.no' : "#{Rails.env}@jujutsu.no"
   layout 'email'
 
-  def notify_outdated_pages(recipients, pages)
-    @recipients = recipients
+  def notify_outdated_pages(member, pages)
+    @member = member
     @pages = pages
     @timestamp = Time.now
-    mail to: Rails.env == 'production' ?
-        recipients.map(&:email) : %Q{"#{recipients.map(&:first_name).join(' ')}" <uwe@kubosch.no>},
+    mail to: Rails.env == 'production' ? member.email : %Q{"#{member.name}" <uwe@kubosch.no>},
          subject: '[RJJK] Oppdatering av informasjonssider'
   end
 

@@ -44,7 +44,9 @@ def notify_outdated_pages
   recipients = Member.active(Date.today).includes(:user).where('users.role = ?', 'ADMIN').all
   pages = InformationPage.where('(hidden IS NULL OR hidden = ?) AND revised_at IS NULL OR revised_at < ?', false, 6.months.ago).
       order(:revised_at).limit(3).all
-  InformationPageMailer.notify_outdated_pages(recipients, pages).deliver
+  recipients.each do |recipient|
+    InformationPageMailer.notify_outdated_pages(recipient, pages).deliver
+  end
 rescue
   logger.error 'Execption sending information page notification'
   logger.error $!.message
