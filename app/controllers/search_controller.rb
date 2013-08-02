@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
   def index
     if params[:q]
-      @query = params[:q]
+      @query = params[:q].strip
 
       if admin?
         @members = Member.find_by_contents(@query)
