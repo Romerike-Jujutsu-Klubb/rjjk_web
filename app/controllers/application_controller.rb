@@ -58,8 +58,8 @@ class ApplicationController < ActionController::Base
       @other_absentees = attendances_next_practice - @other_attendees
     end
 
-    unless @events
-      @events = Event.
+    unless @layout_events
+      @layout_events = Event.
           where('(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)', Date.today, Date.today).
           order('start_at, end_at').limit(5).all
     end

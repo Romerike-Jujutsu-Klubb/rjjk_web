@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_filter :admin_required, :except => [:calendar, :index, :show]
 
   def index
-    @events = Event.all
+    @events = Event.order('start_at DESC').all
   end
 
   def show

@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  default_scope :order => 'start_at'
+  scope :chronological, :order => 'start_at'
 
   has_many :event_invitees, :order => :name, :dependent => :destroy
   has_many :event_messages, :dependent => :destroy
@@ -43,7 +43,7 @@ class Event < ActiveRecord::Base
   end
 
   def ingress
-    description.try(:slice, %r{\A.*?(?:<br /><br />|</p>|\Z)}m)
+    description.try(:slice, %r{\A.*?(?:<br ?/><br ?/>|</p>|\Z)}im)
   end
   
   def body

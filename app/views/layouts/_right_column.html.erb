@@ -111,7 +111,7 @@
     <br/>
 <% end %>
 
-<% if @events.any? %>
+<% if @layout_events.any? %>
     <% last_year = Date.today.year %>
     <% last_mon = nil %>
     <div class="events">
@@ -120,8 +120,8 @@
                                   :controller => :events, :action => :calendar,
                                   :format => :ics}, :title => 'Abonnér på hendelseskalender!' %></h3>
 
-      <% for event in @events %>
-          <% ingress = event.ingress %>
+      <% @layout_events.each do |event| %>
+          <% ingress = nil # event.ingress %>
           <% ingress = nil if ingress.blank? %>
           <% body = event.body %>
           <% if event.start_at.year != last_year %>
@@ -185,7 +185,8 @@
 
     <% if admin? %>
         <ul class="controls">
-          <li><%= link_to 'Ny hendelse', {:controller => 'events', :action => 'new'}, :class => :edit %></li>
+          <li><%= link_to 'Ny hendelse', {:controller => :events, :action => :new}, :class => :edit %></li>
+          <li><%= link_to 'Arkiv', {:controller => :events, :action => :index}, :class => :edit %></li>
         </ul>
         <br/>
     <% end %>
