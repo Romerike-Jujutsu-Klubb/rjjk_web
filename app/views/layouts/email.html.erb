@@ -39,6 +39,7 @@
       * html .clearfix {
           height: 1% !important;
       }
+
       a {
           color: #E20916;
           text-decoration: none;
@@ -72,7 +73,7 @@
                         </td>
                         <td align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#acabab;">
                           <p style="margin:0 0 10px 0; font-size:18px; color:#E20916;"><%= @title %></p>
-                          <%= @timestamp.strftime "#{@timestamp.day}. #{t(:date)[:month_names][@timestamp.month]} %Y" %>
+                          <%= @timestamp.strftime "#{@timestamp.day}. #{t(:date)[:month_names][@timestamp.month]} %Y" if @timestamp %>
                         </td>
                       </tr>
                     </table>

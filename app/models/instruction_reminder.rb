@@ -9,7 +9,6 @@ class InstructionReminder
       end
     end.flatten
     InstructionMailer.missing_instructors(missing_instructions).deliver if missing_instructions.any?
-
   rescue
     logger.error "Exception sending instruction message: #{$!}"
     logger.error $!.backtrace.join("\n")
