@@ -8,7 +8,7 @@ class AttendanceHistoryGraph
   def history_graph(size = 480)
     g = Gruff::Line.new(size)
     g.theme_37signals
-    g.title = "Oppmøte #{I18n.t(:date)[:month_names][Date.today.mon]}"
+    g.title = 'Oppmøte'
     g.title_font_size = 18
     g.legend_font_size = 14
     #g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
