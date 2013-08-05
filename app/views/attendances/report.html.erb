@@ -1,40 +1,36 @@
 <% @content_width =880 %>
 
-<% attendance_chart_link = image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => '800x300'),
+<% attendance_chart_link = image_tag(url_for(:controller => :attendances, :action => :month_chart, :year => @year, :month => @month, :size => '800x300', :format => :png),
                                      :title => 'Oppmøte graf', :class => 'img-rounded', :style => 'width: 800px; height: 300px') %>
-<%= link_to attendance_chart_link, :controller => :attendances, :action => :history_graph, :format => :png, :id => 800 %>
+<%= link_to attendance_chart_link, :controller => :attendances, :action => :month_chart, :year => @year, :month => @month, :size => 800, :format => :png %>
 
 <table class="table">
-  <tr>
-    <th>Panda</th>
-    <td>80</td>
-    <td>Gjennomsnitlig 20 deltakere på 4 treninger</td>
-  </tr>
-  <tr>
-    <th>Tiger</th>
-    <td>90</td>
-    <td>Gjennomsnitlig 10 deltakere på 9 treninger</td>
-  </tr>
-  <tr>
-    <th>Voksne</th>
-    <td>36</td>
-    <td>Gjennomsnitlig 6 deltakere på 12 treninger</td>
-  </tr>
+  <% @monthly_summary_per_group.each do |g, stats| %>
+      <tr>
+        <th><%= g.name %></th>
+        <td><%= stats[:present].size %></td>
+        <td>Gjennomsnittlig <%= (stats[:present].size.to_f / stats[:practices]).round %>
+          deltakere på <%= stats[:practices] %> treninger
+        </td>
+      </tr>
+  <% end %>
 </table>
 
-<h3>Antall deltakere som var på 50% eller fler av treningene</h3>
+<h3>Antall deltakere</h3>
 
 <table class="table">
   <tr>
-    <th>Panda</th>
-    <td>20</td>
+    <th></th>
+    <th>Totalt</th>
+    <th>50%+</th>
+    <th>67%+</th>
   </tr>
-  <tr>
-    <th>Tiger</th>
-    <td>10</td>
-  </tr>
-  <tr>
-    <th>Voksne</th>
-    <td>2</td>
-  </tr>
+  <% @by_group_and_member.each do |group, members| %>
+      <tr>
+        <th><%= group.name %></th>
+        <td><%= members.select { |m, ats| true }.size %></td>
+        <td><%= members.select { |m, ats| ats.size >= @monthly_summary_per_group[group][:practices] * 0.5 }.size %></td>
+        <td><%= members.select { |m, ats| ats.size >= @monthly_summary_per_group[group][:practices] * 0.67 }.size %></td>
+      </tr>
+  <% end %>
 </table>

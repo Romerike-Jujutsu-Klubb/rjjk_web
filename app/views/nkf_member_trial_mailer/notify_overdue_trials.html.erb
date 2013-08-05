@@ -1,5 +1,7 @@
 Følgende prøvemedlemmer har utløpt prøvetid:
 
+<ul>
 <% @trials.each do |trial| %>
-    <%= trial.name %>
+    <li><%= trial.name %></li>
 <% end %>
+</ul>

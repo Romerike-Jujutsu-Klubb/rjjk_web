@@ -104,7 +104,24 @@ class AttendancesController < ApplicationController
   end
 
   def report
-
+    @date = (params[:id] && Date.parse(params[:id])) || Date.today
+    @year = @date.year
+    @month = @date.month
+    first_date = @date.beginning_of_month
+    last_date = @date.end_of_month
+    @attendances = Attendance.includes(:group_schedule).
+        where('year = ? AND week >= ? AND week <= ? AND status NOT IN (?)', @year, first_date.cweek, last_date.cweek, Attendance::ABSENT_STATES).
+        all.select{|a| (first_date..last_date).include? a.date}
+    monthly_per_group = @attendances.group_by{|a| a.group_schedule.group}
+    @monthly_summary_per_group = {}
+    monthly_per_group.each do |g, attendances|
+      @monthly_summary_per_group[g] = {}
+      @monthly_summary_per_group[g][:attendances] = attendances
+      @monthly_summary_per_group[g][:present] = attendances.select{|a| !Attendance::STATES.include? a.status}
+      @monthly_summary_per_group[g][:absent] = attendances.select{|a| Attendance::STATES.include? a.status}
+      @monthly_summary_per_group[g][:practices] = attendances.map{|a| [a.year, a.week, a.group_schedule_id]}.uniq.size
+    end
+    @by_group_and_member = Hash[monthly_per_group.map{|g,ats| [g, ats.group_by(&:member)]}]
   end
 
   def history_graph
@@ -116,6 +133,19 @@ class AttendancesController < ApplicationController
       end
     else
       g = AttendanceHistoryGraph.new.history_graph
+    end
+    send_data(g, :disposition => 'inline', :type => 'image/png', :filename => 'RJJK_Oppmøtehistorikk.png')
+  end
+
+  def month_chart
+    if params[:size] && params[:size].to_i <= 1280
+      if params[:size] =~ /^\d+x\d+$/
+        g = AttendanceHistoryGraph.new.month_chart params[:year].to_i, params[:month].to_i, params[:size]
+      else
+        g = AttendanceHistoryGraph.new.month_chart params[:year].to_i, params[:month].to_i, params[:size].to_i
+      end
+    else
+      g = AttendanceHistoryGraph.new.month_chart
     end
     send_data(g, :disposition => 'inline', :type => 'image/png', :filename => 'RJJK_Oppmøtehistorikk.png')
   end

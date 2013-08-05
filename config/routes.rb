@@ -56,6 +56,7 @@ RjjkWeb::Application.routes.draw do
   match ':controller/service.wsdl', action: :wsdl
   match 'documents/*path_info', controller: :documents, action: :webdav
 
+  match ':controller/:action/:year/:month/:size.:format'
   match ':controller/:action/:id/:width.:format'
   match ':controller/:action/:id/:width'
   match ':controller/:action/:id.:format'
