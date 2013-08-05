@@ -34,6 +34,7 @@
     </div>
 <% end %>
 
+<% if @link_to_news_archive %>
 <p>
 <ul class="controls">
   <li>
@@ -41,7 +42,14 @@
   </li>
 </ul>
 </p>
+<% end %>
 
 <%=javascript_tag do %>
-$('.post img').addClass('img-polaroid')
+$('.post img').addClass('img-polaroid');
+    $('.post img').colorbox({
+      title: function() { return $(this).attr('title') },
+      href: function() { return $(this).attr('src').replace("inline", "show") },
+      maxWidth: '100%',
+      maxHeight: '100%',
+    });
 <% end %>

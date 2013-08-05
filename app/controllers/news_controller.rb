@@ -3,10 +3,12 @@ class NewsController < ApplicationController
 
   def index
     @news_items = NewsItem.front_page_items
+    @link_to_news_archive = true
   end
 
   def list
     @news_items = NewsItem.order('created_at DESC').limit(30).includes(:creator => :member).all
+    render :action => :index
   end
 
   def show

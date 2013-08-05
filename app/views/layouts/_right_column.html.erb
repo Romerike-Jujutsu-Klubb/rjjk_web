@@ -72,9 +72,9 @@
                 </a>
                 <div style="display:none">
                   <div id="layout_attendance_details">
-                    <img style="float: left; width: 100px; height: 100px"
-                         src="http://localhost:3000/assets/rjjk_logo_&_txt_320.png"/>
-                    <h3>Påmeldt til neste trening:</h3>
+                    <img style="float: left; width: 100px; height: 100px; margin-right: 1em; margin-left: 0.5em"
+                         src="/assets/rjjk_logo_&_txt_320.png"/>
+                    <h3>Påmeldt til neste trening</h3>
                     <br clear="all"/>
                     <ul>
                       <% @other_attendees.each do |a| %>
@@ -83,8 +83,12 @@
                     </ul>
                   </div>
                   <%= javascript_tag do %>
-                      $("#layout_attendance_details_link").colorbox({inline:true,
-                      href:"#layout_attendance_details"});
+                      $("#layout_attendance_details_link").colorbox({
+                        inline:true,
+                        title: 'Påmeldt til neste trening',
+                        href: "#layout_attendance_details",
+                        returnFocus: false,
+                      });
                   <% end %>
                 </div>
             <% end %>
