@@ -2,6 +2,7 @@ set :application, 'rjjk_web_beta'
 set :scm, :none
 set :repository, '.'
 set :deploy_via, :copy
+set :copy_via, :scp
 set :copy_local_tar, '/usr/bin/gnutar' if `uname` =~ /Darwin/
 set :keep_releases, 1
 after 'deploy:update', 'deploy:cleanup'
