@@ -156,6 +156,7 @@ def send_event_messages
     logger.error 'Execption sending event messages.'
     logger.error $!.message
     logger.error $!.backtrace.join("\n")
+    ExceptionNotifier.notify_exception($!)
   end
 
   EventInviteeMessage.where('ready_at IS NOT NULL AND sent_at IS NULL').all.each do |eim|
@@ -165,70 +166,67 @@ def send_event_messages
     rescue
       logger.error "Exception sending event message for #{eim.inspect}\n#{$!}"
       logger.error $!.backtrace.join("\n")
+      ExceptionNotifier.notify_exception($!)
     end
   end
 end
 
 def notify_wrong_contracts
-  begin
-    members = NkfMember.where(:medlemsstatus => 'A').all
-    wrong_contracts = members.select { |m|
-      (m.member.age < 10 && m.kont_sats !~ /^Barn/) ||
-          (m.member.age >= 10 && m.member.age < 15 && m.kont_sats !~ /^Ungdom/) ||
-          (m.member.age >= 15 && m.kont_sats !~ /^(Voksne|Styre|Trenere|Æresmedlem)/)
-    }
-    NkfReplication.wrong_contracts(wrong_contracts).deliver if wrong_contracts.any?
-  rescue
-    logger.error "Exception sending contract message: #{$!}"
-    logger.error $!.backtrace.join("\n")
-  end
+  members = NkfMember.where(:medlemsstatus => 'A').all
+  wrong_contracts = members.select { |m|
+    (m.member.age < 10 && m.kont_sats !~ /^Barn/) ||
+        (m.member.age >= 10 && m.member.age < 15 && m.kont_sats !~ /^Ungdom/) ||
+        (m.member.age >= 15 && m.kont_sats !~ /^(Voksne|Styre|Trenere|Æresmedlem)/)
+  }
+  NkfReplication.wrong_contracts(wrong_contracts).deliver if wrong_contracts.any?
+rescue
+  logger.error "Exception sending contract message: #{$!}"
+  logger.error $!.backtrace.join("\n")
+  ExceptionNotifier.notify_exception($!)
 end
 
 def notify_missing_semesters
-  begin
-    unless Semester.where('CURRENT_DATE BETWEEN start_on AND end_on').exists?
-      SemesterMailer.missing_current_semester.deliver
-      return
-    end
-    unless Semester.where('? BETWEEN start_on AND end_on', Date.today + 6.months).exists?
-      SemesterMailer.missing_next_semester.deliver
-    end
-  rescue
-    logger.error "Exception sending semester message: #{$!}"
-    logger.error $!.backtrace.join("\n")
+  unless Semester.where('CURRENT_DATE BETWEEN start_on AND end_on').exists?
+    SemesterMailer.missing_current_semester.deliver
+    return
   end
+  unless Semester.where('? BETWEEN start_on AND end_on', Date.today + 6.months).exists?
+    SemesterMailer.missing_next_semester.deliver
+  end
+rescue
+  logger.error "Exception sending semester message: #{$!}"
+  logger.error $!.backtrace.join("\n")
+  ExceptionNotifier.notify_exception($!)
 end
 
 def create_missing_group_semesters
-  begin
-    # Create missing GroupSemesters
-    groups = Group.where('school_breaks = ?', true).all
-    Semester.all.each do |s|
-      groups.each do |g|
-        cond = {:group_id => g.id, :semester_id => s.id}
-        GroupSemester.create! cond unless GroupSemester.exists? cond
-      end
+  # Create missing GroupSemesters
+  groups = Group.where('school_breaks = ?', true).all
+  Semester.all.each do |s|
+    groups.each do |g|
+      cond = {:group_id => g.id, :semester_id => s.id}
+      GroupSemester.create! cond unless GroupSemester.exists? cond
     end
-  rescue
-    logger.error "Exception sending semester message: #{$!}"
-    logger.error $!.backtrace.join("\n")
   end
+rescue
+  logger.error "Exception sending semester message: #{$!}"
+  logger.error $!.backtrace.join("\n")
+  ExceptionNotifier.notify_exception($!)
 end
 
 def notify_missing_group_semesters
-  begin
-    # Ensure first and last sessions are set
-    Group.active(Date.today).includes(:current_semester, :next_semester).
-        where('groups.school_breaks = ?', true).all.
-        select { |g| g.current_semester.last_session.nil? }.
-        select { |g| g.next_semester.first_session.nil? }.
-        each do |g|
-      SemesterMailer.missing_session_dates(g).deliver
-    end
-  rescue
-    logger.error "Exception sending session dates message: #{$!}"
-    logger.error $!.backtrace.join("\n")
+  # Ensure first and last sessions are set
+  Group.active(Date.today).includes(:current_semester, :next_semester).
+      where('groups.school_breaks = ?', true).all.
+      select { |g| g.current_semester.last_session.nil? }.
+      select { |g| g.next_semester.first_session.nil? }.
+      each do |g|
+    SemesterMailer.missing_session_dates(g).deliver
   end
+rescue
+  logger.error "Exception sending session dates message: #{$!}"
+  logger.error $!.backtrace.join("\n")
+  ExceptionNotifier.notify_exception($!)
 end
 
 def notify_missing_graduations
@@ -240,6 +238,7 @@ def notify_missing_graduations
 rescue
   logger.error "Exception sending instruction message: #{$!}"
   logger.error $!.backtrace.join("\n")
+  ExceptionNotifier.notify_exception($!)
 end
 
 def notify_overdue_graduates
@@ -250,6 +249,7 @@ def notify_overdue_graduates
 rescue
   logger.error "Exception sending instruction message: #{$!}"
   logger.error $!.backtrace.join("\n")
+  ExceptionNotifier.notify_exception($!)
 end
 
 def notify_overdue_trials
