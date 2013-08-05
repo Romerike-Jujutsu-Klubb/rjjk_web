@@ -16,4 +16,9 @@
  *= require bootstrap-responsive
  *= require dark_ritual_adaption
  *= require font-awesome
+ *= require colorbox-rails
 */
+#cboxPrevious,
+#cboxNext,
+#cboxSlideshow,
+#cboxClose {border:0;}

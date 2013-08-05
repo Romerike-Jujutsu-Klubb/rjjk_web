@@ -7,6 +7,7 @@ gem 'activerecord-jdbcpostgresql-adapter', '~>1.3.0.beta2'
 gem 'activerecord-time'
 gem 'acts_as_list'
 gem 'acts_as_tree'
+gem "colorbox-rails"
 gem 'dynamic_form'
 gem 'exception_notification'
 gem 'fb_graph'
