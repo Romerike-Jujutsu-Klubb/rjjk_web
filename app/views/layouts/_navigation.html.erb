@@ -32,7 +32,9 @@
 
       <div id="members_menu">
         <ul>
+          <!--
           <li><%= menu_item 'Medlemsliste NY!', :controller => 'members_drilldown', :action => :index %></li>
+          -->
           <li><%= menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
           <li><%= menu_item 'Oppmøtelister', :controller => 'members', :action => :attendance_form_index %></li>
           <li><%= menu_item 'Graderinger', :controller => 'graduations' %></li>
