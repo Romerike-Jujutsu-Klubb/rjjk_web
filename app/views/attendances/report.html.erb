@@ -1,0 +1,40 @@
+<% @content_width =880 %>
+
+<% attendance_chart_link = image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => '800x300'),
+                                     :title => 'Oppmøte graf', :class => 'img-rounded', :style => 'width: 800px; height: 300px') %>
+<%= link_to attendance_chart_link, :controller => :attendances, :action => :history_graph, :format => :png, :id => 800 %>
+
+<table class="table">
+  <tr>
+    <th>Panda</th>
+    <td>80</td>
+    <td>Gjennomsnitlig 20 deltakere på 4 treninger</td>
+  </tr>
+  <tr>
+    <th>Tiger</th>
+    <td>90</td>
+    <td>Gjennomsnitlig 10 deltakere på 9 treninger</td>
+  </tr>
+  <tr>
+    <th>Voksne</th>
+    <td>36</td>
+    <td>Gjennomsnitlig 6 deltakere på 12 treninger</td>
+  </tr>
+</table>
+
+<h3>Antall deltakere som var på 50% eller fler av treningene</h3>
+
+<table class="table">
+  <tr>
+    <th>Panda</th>
+    <td>20</td>
+  </tr>
+  <tr>
+    <th>Tiger</th>
+    <td>10</td>
+  </tr>
+  <tr>
+    <th>Voksne</th>
+    <td>2</td>
+  </tr>
+</table>

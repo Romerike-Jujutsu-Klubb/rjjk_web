@@ -1,4 +1,5 @@
 RjjkWeb::Application.routes.draw do
+  get 'attendances/report'
   get 'info/versjon'
   get 'members/search'
   get 'mitt/oppmote' => 'attendances#plan'

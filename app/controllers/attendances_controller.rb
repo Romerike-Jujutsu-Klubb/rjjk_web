@@ -103,9 +103,17 @@ class AttendancesController < ApplicationController
     end
   end
 
+  def report
+
+  end
+
   def history_graph
     if params[:id] && params[:id].to_i <= 1280
-      g = AttendanceHistoryGraph.new.history_graph params[:id].to_i
+      if params[:id] =~ /^\d+x\d+$/
+        g = AttendanceHistoryGraph.new.history_graph params[:id]
+      else
+        g = AttendanceHistoryGraph.new.history_graph params[:id].to_i
+      end
     else
       g = AttendanceHistoryGraph.new.history_graph
     end
@@ -154,16 +162,16 @@ class AttendancesController < ApplicationController
     attendances = Attendance.where('member_id = ? AND status = ? AND ((year = ? AND week >= ?) OR (year = ?))',
                                    member, Attendance::ATTENDED, start_date.year, start_date.cweek, today.year).
         all
-    @attended_groups = attendances.map{|a| a.group_schedule.group}.uniq.sort_by{|g| -g.from_age}
-    per_month = attendances.group_by{|a| d = Date.commercial(a.year, a.week, a.group_schedule.weekday) ; [d.year, d.mon]}
+    @attended_groups = attendances.map { |a| a.group_schedule.group }.uniq.sort_by { |g| -g.from_age }
+    per_month = attendances.group_by { |a| d = Date.commercial(a.year, a.week, a.group_schedule.weekday); [d.year, d.mon] }
     @months = per_month.keys.sort.map do |ym|
       per_group = per_month[ym].group_by { |a| a.group_schedule.group }
-      [t(:date)[:month_names][ym[1]], *@attended_groups.map{|g| (per_group[g] || []).size}]
+      [t(:date)[:month_names][ym[1]], *@attended_groups.map { |g| (per_group[g] || []).size }]
     end
     if member.current_rank
       attendances_since_graduation = member.attendances_since_graduation
-      by_group = attendances_since_graduation.group_by{|a| a.group_schedule.group}
-      @months << ['Siden gradering', *@attended_groups.map{|g| (by_group[g] || []).size}]
+      by_group = attendances_since_graduation.group_by { |a| a.group_schedule.group }
+      @months << ['Siden gradering', *@attended_groups.map { |g| (by_group[g] || []).size }]
     end
   end
 
