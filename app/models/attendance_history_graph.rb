@@ -98,7 +98,7 @@ class AttendanceHistoryGraph
         g.dataxy(group.name, values, nil, group.color)
       end
     end
-    g.maximum_value = (g.maximum_value.to_f / 5).round * 5
+    g.y_axis_increment = 5 if g.maximum_value >= 10
     g.minimum_value = 0
     g.to_blob
   end
