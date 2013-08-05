@@ -3,7 +3,7 @@ require 'test_helper'
 
 class InformationPageMailerTest < ActionMailer::TestCase
   test 'notify_outdated_pages' do
-    mail = InformationPageMailer.notify_outdated_pages [], []
+    mail = InformationPageMailer.notify_outdated_pages members(:lars), []
     assert_equal '[RJJK] Oppdatering av informasjonssider', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from

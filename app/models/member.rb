@@ -95,7 +95,7 @@ class Member < ActiveRecord::Base
       (full_email = %Q{#{first_name} #{last_name} <#{email}>})[(max_length / 2) - 2 .. (-max_length / 2)]
     end
 
-    [email, full_email].each do |potential_email|
+    [email, full_email].compact.each do |potential_email|
       existing_user = User.where('(login = ? OR email = ?) AND NOT EXISTS (SELECT id FROM members WHERE user_id = users.id)',
                                  potential_email, potential_email).first
       return existing_user if existing_user

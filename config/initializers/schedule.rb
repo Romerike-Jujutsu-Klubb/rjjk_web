@@ -4,8 +4,8 @@ unless Rails.env == 'test'
   scheduler = Rufus::Scheduler.start_new
 
   # Users
-  scheduler.cron('0 7    * * 1') { AttendanceNagger.send_attendance_plan }
-  scheduler.cron('0 8    * * 4') { send_weekly_info_page }
+  scheduler.cron('0 7    * * mon') { AttendanceNagger.send_attendance_plan }
+  scheduler.cron('0 8    * * thu') { send_weekly_info_page }
   scheduler.cron('0 8-23 * * *') { send_news }
   scheduler.cron('5 8    * * *') { AttendanceNagger.send_attendance_summary }
   scheduler.cron('5 9-23 * * *') { AttendanceNagger.send_attendance_changes }
@@ -21,11 +21,11 @@ unless Rails.env == 'test'
   scheduler.cron('0 6 * * *') { notify_missing_graduations }
 
   # Admin Weekly
-  scheduler.cron('0 8 * * 1') { notify_outdated_pages }
-  scheduler.cron('0 2 * * 1') { notify_overdue_trials }
-  scheduler.cron('0 4 * * 1') { notify_missing_group_semesters }
-  scheduler.cron('0 5 * * 1') { InstructionReminder.notify_missing_instructors }
-  scheduler.cron('0 7 * * 1') { notify_overdue_graduates }
+  scheduler.cron('0 8 * * mon') { notify_outdated_pages }
+  scheduler.cron('0 2 * * mon') { notify_overdue_trials }
+  scheduler.cron('0 4 * * mon') { notify_missing_group_semesters }
+  scheduler.cron('0 5 * * mon') { InstructionReminder.notify_missing_instructors }
+  scheduler.cron('0 7 * * mon') { notify_overdue_graduates }
 end
 
 private

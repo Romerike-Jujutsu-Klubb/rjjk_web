@@ -1,4 +1,5 @@
 class NkfReplication < ActionMailer::Base
+  layout 'email'
   default from: Rails.env == 'production' ? 'webmaster@jujutsu.no' : "#{Rails.env}@jujutsu.no",
           to: Rails.env == 'production' ? %w(medlem@jujutsu.no uwe@kubosch.no) : 'uwe@kubosch.no'
 
@@ -20,10 +21,6 @@ class NkfReplication < ActionMailer::Base
     ].compact.join(', ')
     Rails.logger.info "mail subject: Oppdateringer fra NKF: #{stats}"
     mail subject: "Oppdateringer fra NKF: #{stats}"
-  rescue Exception
-    Rails.logger.error "Exception sending update_members mail"
-    Rails.logger.error $!.message
-    Rails.logger.error $!.backtrace.join("\n")
   end
 
   def wrong_contracts(wrong_contracts)
