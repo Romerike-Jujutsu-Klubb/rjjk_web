@@ -87,7 +87,7 @@ class AttendanceHistoryGraph
         where('year = ? AND week >= ? AND week <= ?', year, first_date.cweek, last_date.cweek).
         all.select { |a| a.date >= first_date && a.date <= last_date }
     group_schedules = attendances.map(&:group_schedule).uniq
-    groups = group_schedules.map(&:group).uniq
+    groups = group_schedules.map(&:group).uniq.sort_by(&:from_age)
     dates = (first_date..last_date).select { |d| group_schedules.any? { |gs| gs.weekday == d.cwday } }
     g.labels = Hash[*dates.map { |d| [d.day, d.day.to_s] }.flatten]
     groups.each do |group|
@@ -95,9 +95,10 @@ class AttendanceHistoryGraph
           map { |d| [d.day, attendances.select { |a| a.group_schedule.group == group && a.date == d }.size] }
       values.map! { |k, v| [k, v > 0 ? v : nil] }
       if values.any? { |v| v }
-        g.dataxy(group.name, values)
+        g.dataxy(group.name, values, nil, group.color)
       end
     end
+    g.maximum_value = (g.maximum_value.to_f / 5).round * 5
     g.minimum_value = 0
     g.to_blob
   end

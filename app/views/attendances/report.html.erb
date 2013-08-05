@@ -21,16 +21,16 @@
 <table class="table">
   <tr>
     <th></th>
-    <th>Totalt</th>
-    <th>50%+</th>
-    <th>67%+</th>
+    <th style="text-align:center">Totalt</th>
+    <th style="text-align:center">Tilstede 50%+</th>
+    <th style="text-align:center">Tilstede 67%+</th>
   </tr>
   <% @by_group_and_member.each do |group, members| %>
       <tr>
         <th><%= group.name %></th>
-        <td><%= members.select { |m, ats| true }.size %></td>
-        <td><%= members.select { |m, ats| ats.size >= @monthly_summary_per_group[group][:practices] * 0.5 }.size %></td>
-        <td><%= members.select { |m, ats| ats.size >= @monthly_summary_per_group[group][:practices] * 0.67 }.size %></td>
+        <td style="text-align:center"><%= members.select { |m, ats| true }.size %></td>
+        <td style="text-align:center"><%= members.select { |m, ats| ats.size >= @monthly_summary_per_group[group][:practices] * 0.5 }.size %></td>
+        <td style="text-align:center"><%= members.select { |m, ats| ats.size >= @monthly_summary_per_group[group][:practices] * 0.67 }.size %></td>
       </tr>
   <% end %>
 </table>
