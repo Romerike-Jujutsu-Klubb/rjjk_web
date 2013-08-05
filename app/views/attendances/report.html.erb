@@ -1,8 +1,15 @@
 <% @content_width =880 %>
 
-<% attendance_chart_link = image_tag(url_for(:controller => :attendances, :action => :month_chart, :year => @year, :month => @month, :size => '800x300', :format => :png),
-                                     :title => 'Oppmøte graf', :class => 'img-rounded', :style => 'width: 800px; height: 300px') %>
-<%= link_to attendance_chart_link, :controller => :attendances, :action => :month_chart, :year => @year, :month => @month, :size => 800, :format => :png %>
+<%= image_tag url_for(:controller => :attendances, :action => :month_chart, :year => @year, :month => @month, :size => '800x300', :format => :png),
+              :title => 'Oppmøte graf', :class => 'img-rounded', :style => 'width: 800px; height: 300px',
+              :usemap => '#monthmap' %>
+
+<map name="monthmap">
+  <!--
+  <area shape="circle" coords="90,58,3" href="mercur.htm" alt="Mercury">
+  <area shape="circle" coords="124,58,8" href="venus.htm" alt="Venus">
+  -->
+</map>
 
 <table class="table">
   <% @monthly_summary_per_group.each do |g, stats| %>

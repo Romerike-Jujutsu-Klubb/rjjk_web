@@ -23,7 +23,7 @@ class NewsControllerTest < ActionController::TestCase
     get :list
 
     assert_response :success
-    assert_template 'list'
+    assert_template 'index'
 
     assert_not_nil assigns(:news_items)
   end
