@@ -162,9 +162,15 @@ class AttendancesController < ApplicationController
     @attendance = Attendance.where(criteria).first || Attendance.new(criteria)
 
     new_status = params[:id]
-    if new_status == Attendance::WILL_ATTEND && @attendance.status == new_status
-      new_status = 'NONE'
-      @attendance.destroy
+    if new_status == 'toggle'
+      if @attendance.status == Attendance::WILL_ATTEND
+        new_status = 'NONE'
+        @attendance.destroy
+      else
+        new_status = Attendance::WILL_ATTEND
+        @attendance.status = Attendance::WILL_ATTEND
+        @attendance.save!
+      end
     else
       @attendance.status = new_status
       @attendance.save!
