@@ -10,6 +10,7 @@ class Attendance < ActiveRecord::Base
   WILL_ATTEND = 'P'
 
   STATES = [
+      [Attendance::WILL_ATTEND, 'Kommer!', 'icon-thumbs-up', 'btn-success'],
       [Attendance::HOLIDAY, 'Bortreist', 'icon-hand-right', 'btn-warning'],
       [Attendance::SICK, 'Syk', 'icon-plus', 'btn-danger'],
       [Attendance::ABSENT, 'Annet', 'icon-thumbs-down', 'btn-info'],
