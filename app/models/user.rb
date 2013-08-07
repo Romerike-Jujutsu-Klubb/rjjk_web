@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
   end
 
   def emails
-    result = [attributes[:email]]
+    result = [attributes['email']]
     result += member.emails if member
     result.uniq
   end
