@@ -19,7 +19,7 @@ email_notification_options = {
     :ignore_exceptions => [],
     :email => {
         :email_prefix => '[RJJK] ',
-        :sender_address => '"RJJK Development Exception Notifier" <noreply@jujutsu.no>',
+        :sender_address => '"RJJK Exception Notifier" <noreply@jujutsu.no>',
         :exception_recipients => %w{uwe@kubosch.no}
     }
 }
