@@ -63,7 +63,7 @@
                 <%= link_to(initial_disabled ? '#' : {:controller => :attendances, :action => :announce, :id => Attendance::WILL_ATTEND, :gs_id => gs.id, :year => year, :week => week},
                             :method => initial_disabled ? nil : :post, :remote => !initial_disabled, :id => "btn_#{year}_#{week}_#{gs.id}",
                             :class => "btn #{initial_class} input-small",
-                            :onclick => initial_disabled ? 'return false' : "$(this).toggleClass('btn-success').removeClass('btn-info btn-warning btn-danger') ; $(this).find('i').toggleClass('icon-thumbs-up') ; $(this).find('span').text(($(this).find('span').text() == 'Kommer du?') ? 'Kommer!' : 'Kommer du?') ; return false") do %>
+                            :onclick => initial_disabled ? 'return false' : "$(this).toggleClass('btn-success').removeClass('btn-info btn-warning btn-danger') ; $(this).find('i').toggleClass('icon-thumbs-up').removeClass('icon-thumbs-down icon-plus icon-hand-right') ; $(this).find('span').text($(this).hasClass('btn-success') ? 'Kommer!' : 'Kommer du?') ; return false") do %>
                     <i class="<%= initial_icon %>"></i>
                     <span><%= initial_text %></span>
                 <% end %>
@@ -75,7 +75,7 @@
                                     :mmethod => :post, :remote => true, :id => "btn_#{year}_#{week}_#{gs.id}",
                                     :onclick => "$('#btn_#{year}_#{week}_#{gs.id}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('#{link_class}').html($(this).html()); $('[data-toggle=dropdown]').parent().removeClass('open'); return true") do %>
                             <i class="<%= link_icon %>"></i>
-                            <%= link_text %>
+                            <span><%= link_text %></span>
                         <% end %>
                       </li>
                   <% end %>
