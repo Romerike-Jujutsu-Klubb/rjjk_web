@@ -62,9 +62,12 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(login, pass)
-    u = find(:first, :conditions => ['(login = ? OR email = ?) AND verified = ? AND deleted = ?', login, login, true, false])
-    return nil if u.nil?
-    find(:first, :conditions => ['(login = ? OR email = ?) AND salted_password = ? AND verified = ?', login, login, salted_password(u.salt, hashed(pass)), true])
+    users = includes(:member).
+        where('(login = ? OR users.email = ? OR (members.email IS NOT NULL AND members.email = ?)) AND verified = ? AND deleted = ?',
+              login, login, login, true, false).all
+    users.
+        select { |u| u.salted_password == salted_password(u.salt, hashed(pass)) }.
+        first
   end
 
   # Allow logins for deleted accounts, but only via this method

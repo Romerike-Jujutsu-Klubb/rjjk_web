@@ -18,14 +18,14 @@ unless Rails.env == 'test'
   scheduler.cron('0 0 * * *') { notify_wrong_contracts }
   scheduler.cron('0 3 * * *') { notify_missing_semesters }
   scheduler.cron('0 4 * * *') { create_missing_group_semesters }
-  scheduler.cron('0 6 * * *') { notify_missing_graduations }
+  scheduler.cron('0 6 * * *') { GraduationReminder.notify_missing_graduations }
 
   # Admin Weekly
   scheduler.cron('0 8 * * mon') { notify_outdated_pages }
   scheduler.cron('0 2 * * mon') { notify_overdue_trials }
   scheduler.cron('0 4 * * mon') { notify_missing_group_semesters }
   scheduler.cron('0 5 * * mon') { InstructionReminder.notify_missing_instructors }
-  scheduler.cron('0 7 * * mon') { notify_overdue_graduates }
+  scheduler.cron('0 7 * * mon') { GraduationReminder.notify_overdue_graduates }
 end
 
 private
@@ -225,29 +225,6 @@ def notify_missing_group_semesters
   end
 rescue
   logger.error "Exception sending session dates message: #{$!}"
-  logger.error $!.backtrace.join("\n")
-  ExceptionNotifier.notify_exception($!)
-end
-
-def notify_missing_graduations
-  today = Date.today
-  groups = Group.active(today).all
-  #planned_graduations = Graduation.where('held_on >= ?').all.map(&:)
-  missing_schedules = group_schedules.select { |gs| gs.group_instructors.select(&:active?).empty? }
-  InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
-rescue
-  logger.error "Exception sending instruction message: #{$!}"
-  logger.error $!.backtrace.join("\n")
-  ExceptionNotifier.notify_exception($!)
-end
-
-def notify_overdue_graduates
-  overdue_graduates = Member.active(today).all
-  #planned_graduations = Graduation.where('held_on >= ?').all.map(&:)
-  missing_schedules = group_schedules.select { |gs| gs.group_instructors.select(&:active?).empty? }
-  InstructionMailer.missing_instructors(missing_schedules).deliver if missing_schedules.any?
-rescue
-  logger.error "Exception sending instruction message: #{$!}"
   logger.error $!.backtrace.join("\n")
   ExceptionNotifier.notify_exception($!)
 end

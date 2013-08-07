@@ -5,7 +5,7 @@
   </ul>
 
   <% if user? %>
-      <h1>Mine sider</h1>
+      <h1><%=current_user.name%></h1>
       <% if member? %>
           <ul>
             <li><%= detour_to 'Mitt oppmøte', :controller => :attendances, :action => :plan %></li>
@@ -17,7 +17,7 @@
   <% end %>
 
   <% if admin? %>
-      <h1>Administrasjon</h1>
+      <h1>Web</h1>
 
       <div id="admin_menu">
         <ul>

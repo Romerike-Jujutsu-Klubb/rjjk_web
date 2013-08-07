@@ -28,7 +28,7 @@ class UserTest < ActiveSupport::TestCase
   def test_change_password
     user = users(:long_user)
     user.change_password('a new password')
-    user.save
+    user.save!
     assert_equal user, User.authenticate(user.login, 'a new password')
     assert_nil User.authenticate(user.login, 'alongtest')
   end
