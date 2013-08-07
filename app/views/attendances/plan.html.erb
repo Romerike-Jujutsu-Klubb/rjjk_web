@@ -74,7 +74,6 @@
                         <%= link_to({:controller => :attendances, :action => :announce, :id => state, :gs_id => gs.id, :year => year, :week => week},
                                     :method => :post, :remote => true, :id => "btn_#{year}_#{week}_#{gs.id}",
                                     :onclick => "$('#btn_#{year}_#{week}_#{gs.id}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('#{link_class}').html($(this).html()); $('[data-toggle=dropdown]').parent().removeClass('open'); return true",
-                                    :class => link_class, :style => 'color: white',
                             ) do %>
                             <i class="<%= link_icon %>"></i>
                             <span><%= link_text %></span>
