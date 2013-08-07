@@ -111,17 +111,17 @@ class AttendancesController < ApplicationController
     last_date = @date.end_of_month
     @attendances = Attendance.includes(:group_schedule).
         where('year = ? AND week >= ? AND week <= ? AND status NOT IN (?)', @year, first_date.cweek, last_date.cweek, Attendance::ABSENT_STATES).
-        all.select{|a| (first_date..last_date).include? a.date}
-    monthly_per_group = @attendances.group_by{|a| a.group_schedule.group}.sort_by{|g, ats| g.from_age}
+        all.select { |a| (first_date..last_date).include? a.date }
+    monthly_per_group = @attendances.group_by { |a| a.group_schedule.group }.sort_by { |g, ats| g.from_age }
     @monthly_summary_per_group = {}
     monthly_per_group.each do |g, attendances|
       @monthly_summary_per_group[g] = {}
       @monthly_summary_per_group[g][:attendances] = attendances
-      @monthly_summary_per_group[g][:present] = attendances.select{|a| !Attendance::STATES.include? a.status}
-      @monthly_summary_per_group[g][:absent] = attendances.select{|a| Attendance::STATES.include? a.status}
-      @monthly_summary_per_group[g][:practices] = attendances.map{|a| [a.year, a.week, a.group_schedule_id]}.uniq.size
+      @monthly_summary_per_group[g][:present] = attendances.select { |a| !Attendance::STATES.include? a.status }
+      @monthly_summary_per_group[g][:absent] = attendances.select { |a| Attendance::STATES.include? a.status }
+      @monthly_summary_per_group[g][:practices] = attendances.map { |a| [a.year, a.week, a.group_schedule_id] }.uniq.size
     end
-    @by_group_and_member = Hash[monthly_per_group.map{|g,ats| [g, ats.group_by(&:member)]}]
+    @by_group_and_member = Hash[monthly_per_group.map { |g, ats| [g, ats.group_by(&:member)] }]
   end
 
   def history_graph
@@ -200,8 +200,10 @@ class AttendancesController < ApplicationController
     end
     if member.current_rank
       attendances_since_graduation = member.attendances_since_graduation
-      by_group = attendances_since_graduation.group_by { |a| a.group_schedule.group }
-      @months << ['Siden gradering', *@attended_groups.map { |g| (by_group[g] || []).size }]
+      if attendances_since_graduation.size > 0
+        by_group = attendances_since_graduation.group_by { |a| a.group_schedule.group }
+        @months << ['Siden gradering', *@attended_groups.map { |g| (by_group[g] || []).size }]
+      end
     end
   end
 
