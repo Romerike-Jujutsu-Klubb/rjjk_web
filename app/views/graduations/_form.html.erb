@@ -12,10 +12,10 @@
       <%= f.select :group_id, @groups.map { |c| [c.name, c.id] } %>
     </div>
 
-    <%= f.submit 'Lagre' %>
+    <%= f.submit 'Lagre', :class => :btn %>
 
     <% unless @graduation.new_record? %>
         <%= link_to 'Vis', :action => 'show', :id => @graduation %>
     <% end %>
-    | <%= back_or_link_to 'Back', :action => :index %>
+    | <%= back_or_link_to 'Tilbake', :action => :index %>
 <% end %>

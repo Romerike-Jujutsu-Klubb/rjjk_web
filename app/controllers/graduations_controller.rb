@@ -78,10 +78,11 @@ class GraduationsController < ApplicationController
     date = graduation.held_on
 
     content = graduation.graduates.sort_by { |g| -g.rank.position }.map do |g|
+      censors = graduation.censors.all.sort_by{|c| -c.member.current_rank.position}
       {:name => g.member.name, :rank => "#{g.rank.name} #{g.rank.colour}", :group => g.rank.group.name,
-       :censor1 => graduation.censors[0] ? {:title => (graduation.censors[0].member.title), :name => graduation.censors[0].member.name, :signature => graduation.censors[0].member.signatures.sample.try(:image)} : nil,
-       :censor2 => graduation.censors[1] ? {:title => (graduation.censors[1].member.title), :name => graduation.censors[1].member.name, :signature => graduation.censors[1].member.signatures.sample.try(:image)} : nil,
-       :censor3 => graduation.censors[2] ? {:title => (graduation.censors[2].member.title), :name => graduation.censors[2].member.name, :signature => graduation.censors[2].member.signatures.sample.try(:image)} : nil,
+       :censor1 => censors[0] ? {:title => (censors[0].member.title), :name => censors[0].member.name, :signature => censors[0].member.signatures.sample.try(:image)} : nil,
+       :censor2 => censors[1] ? {:title => (censors[1].member.title), :name => censors[1].member.name, :signature => censors[1].member.signatures.sample.try(:image)} : nil,
+       :censor3 => censors[2] ? {:title => (censors[2].member.title), :name => censors[2].member.name, :signature => censors[2].member.signatures.sample.try(:image)} : nil,
       }
     end
     filename = "Certificates_#{graduation.group.martial_art.name}_#{graduation.held_on}.pdf"
