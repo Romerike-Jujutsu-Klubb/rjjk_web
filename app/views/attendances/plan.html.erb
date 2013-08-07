@@ -72,8 +72,10 @@
                   <% Attendance::STATES.each do |state, link_text, link_icon, link_class| %>
                       <li>
                         <%= link_to({:controller => :attendances, :action => :announce, :id => state, :gs_id => gs.id, :year => year, :week => week},
-                                    :mmethod => :post, :remote => true, :id => "btn_#{year}_#{week}_#{gs.id}",
-                                    :onclick => "$('#btn_#{year}_#{week}_#{gs.id}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('#{link_class}').html($(this).html()); $('[data-toggle=dropdown]').parent().removeClass('open'); return true") do %>
+                                    :method => :post, :remote => true, :id => "btn_#{year}_#{week}_#{gs.id}",
+                                    :onclick => "$('#btn_#{year}_#{week}_#{gs.id}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('#{link_class}').html($(this).html()); $('[data-toggle=dropdown]').parent().removeClass('open'); return true",
+                                    :class => link_class, :style => 'color: white',
+                            ) do %>
                             <i class="<%= link_icon %>"></i>
                             <span><%= link_text %></span>
                         <% end %>
@@ -103,11 +105,13 @@
 
 <br/>
 
-<p>For å kunne organisere treningene fremover ønsker vi at alle på voksengruppen merker av når de
+<p>For å kunne organisere treningene fremover ønsker vi at alle på voksengruppen
+  merker av når de
   planlegger å komme og når de ikke kan komme.</p>
 
 <p>Trykk på "<strong>Kommer du?</strong>"-knappene slik at de blir
-  <span style="color: #5BB75B">grønne</span> på de treningene du planlegger å komme på, eller velg
+  <span style="color: #5BB75B">grønne</span> på de treningene du planlegger å
+  komme på, eller velg
   årsak fra listen på de treningene du ikke kan delta på.</p>
 
 
