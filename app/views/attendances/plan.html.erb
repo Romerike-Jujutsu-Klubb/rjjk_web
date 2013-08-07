@@ -39,11 +39,7 @@
                initial_icon = nil
                initial_class = nil
                initial_disabled = nil
-               if ats.any? { |a| [Attendance::WILL_ATTEND].include?(a.status) }
-                 initial_text = 'Kommer!'
-                 initial_icon = 'icon-thumbs-up'
-                 initial_class = 'btn-success '
-               elsif ats.any? { |a| [Attendance::ATTENDED].include?(a.status) }
+               if ats.any? { |a| [Attendance::ATTENDED].include?(a.status) }
                  initial_class = 'btn-success '
                  initial_text = 'Var der!'
                  initial_disabled = true

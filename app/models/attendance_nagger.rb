@@ -29,7 +29,7 @@ class AttendanceNagger
       attendances = Attendance.includes(:group_schedule, :member).
           where(:group_schedule_id => gs.id, :year => now.year, :week => now.to_date.cweek).all
       next if attendances.empty?
-      non_attendees = attendances.select { |a| Attendance::STATES.map { |s| s[0] }.include? a.status }.map(&:member)
+      non_attendees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:member)
       attendees = attendances.map(&:member) - non_attendees
       recipients = gs.group.members.select { |m| !m.passive? } - non_attendees
       recipients.each do |recipient|
@@ -52,7 +52,7 @@ class AttendanceNagger
                 gs.id, now.year, now.to_date.cweek).all
       new_attendances = attendances.select{|a| a.updated_at >= 1.hour.ago}.map(&:member)
       next if new_attendances.empty?
-      absentees = attendances.select { |a| Attendance::STATES.map { |s| s[0] }.include? a.status }.map(&:member)
+      absentees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:member)
       attendees = attendances.map(&:member) - absentees
       new_attendees = new_attendances & attendees
       new_absentees = new_attendances & absentees

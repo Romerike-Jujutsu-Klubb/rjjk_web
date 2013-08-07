@@ -10,13 +10,13 @@ class Attendance < ActiveRecord::Base
   WILL_ATTEND = 'P'
 
   STATES = [
-      [Attendance::WILL_ATTEND, 'Kommer!', 'icon-thumbs-up', 'btn-success'],
-      [Attendance::HOLIDAY, 'Bortreist', 'icon-hand-right', 'btn-warning'],
-      [Attendance::SICK, 'Syk', 'icon-plus', 'btn-danger'],
-      [Attendance::ABSENT, 'Annet', 'icon-thumbs-down', 'btn-info'],
+      [WILL_ATTEND, 'Kommer!', 'icon-thumbs-up', 'btn-success'],
+      [HOLIDAY, 'Bortreist', 'icon-hand-right', 'btn-warning'],
+      [SICK, 'Syk', 'icon-plus', 'btn-danger'],
+      [ABSENT, 'Annet', 'icon-thumbs-down', 'btn-info'],
   ]
 
-  ABSENT_STATES = STATES.map{|s| s[0]}
+  ABSENT_STATES = [HOLIDAY, SICK, ABSENT]
 
   scope :by_group_id, lambda { |group_id| { :conditions => ['group_schedules.group_id = ?', group_id], :include => :group_schedule }}
   scope :last_months, lambda { |count| limit = count.months.ago ; { :conditions => ['(year = ? AND week >= ?) OR year > ?', limit.year, limit.to_date.cweek, limit.year]}}

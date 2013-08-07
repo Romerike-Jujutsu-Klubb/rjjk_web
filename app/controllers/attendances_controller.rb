@@ -117,8 +117,8 @@ class AttendancesController < ApplicationController
     monthly_per_group.each do |g, attendances|
       @monthly_summary_per_group[g] = {}
       @monthly_summary_per_group[g][:attendances] = attendances
-      @monthly_summary_per_group[g][:present] = attendances.select { |a| !Attendance::STATES.include? a.status }
-      @monthly_summary_per_group[g][:absent] = attendances.select { |a| Attendance::STATES.include? a.status }
+      @monthly_summary_per_group[g][:present] = attendances.select { |a| !Attendance::ABSENT_STATES.include? a.status }
+      @monthly_summary_per_group[g][:absent] = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }
       @monthly_summary_per_group[g][:practices] = attendances.map { |a| [a.year, a.week, a.group_schedule_id] }.uniq.size
     end
     @by_group_and_member = Hash[monthly_per_group.map { |g, ats| [g, ats.group_by(&:member)] }]
