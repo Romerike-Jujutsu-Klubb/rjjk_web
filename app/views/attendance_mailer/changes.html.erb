@@ -1,5 +1,7 @@
+<h1>Hei <%= @recipient.first_name %>!</h1>
+
 <% if @new_attendees.any? %>
-    Nylig påmeldt:
+    <h3>Nylig påmeldt</h3>
 
     <ul>
       <% @new_attendees.each do |m| %>
@@ -9,7 +11,7 @@
 <% end %>
 
 <% if @new_absentees.any? %>
-    Avmelding:
+    <h3>Avmelding</h3>
     <ul>
       <% @new_absentees.each do |m| %>
           <li><%= m.name %></li>
@@ -17,10 +19,12 @@
     </ul>
 <% end %>
 
+<p>
 Du kan se på og endre din påmelding på <%= link_to 'Mitt oppmøte', @email_url %>.
+</p>
 
 <% if @attendees.any? && @attendees != @new_attendees %>
-    <%= @attendees.size %> deltakere påmeldt:
+    <h3><%= @attendees.size %> deltakere påmeldt</h3>
     <ul>
       <% @attendees.each do |m| %>
           <li><%= m.name %></li>

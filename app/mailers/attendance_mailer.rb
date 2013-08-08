@@ -15,6 +15,7 @@ class AttendanceMailer < ActionMailer::Base
   end
 
   def summary(recipient, attendees, absentees)
+    @recipient = recipient
     @members = attendees
     @title = 'Trening i kveld'
     @timestamp = Time.now
@@ -24,6 +25,7 @@ class AttendanceMailer < ActionMailer::Base
   end
 
   def changes(recipient, new_attendees, new_absentees, attendees)
+    @recipient = recipient
     @new_attendees = new_attendees
     @new_absentees = new_absentees
     @attendees = attendees
