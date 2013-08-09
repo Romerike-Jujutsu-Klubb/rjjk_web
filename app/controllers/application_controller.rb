@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   layout DEFAULT_LAYOUT
   helper :user
 
+  before_filter :reject_baidu_bot
   before_filter :store_current_user_in_thread
   after_filter :clear_user
 
@@ -65,6 +66,16 @@ class ApplicationController < ActionController::Base
     end
     unless @groups
       @groups = Group.active(Date.today).order('to_age, from_age DESC').includes(:current_semester).all
+    end
+  end
+
+  def reject_baidu_bot
+    if request.headers['HTTP_REFERER'] =~ /baidu/i
+      BaiduMailer.reject(request.headers['HTTP_REFERER']).deliver
+      redirect_to request.headers['HTTP_REFERER']
+      false
+    else
+      true
     end
   end
 
