@@ -14,22 +14,24 @@ class AttendanceMailer < ActionMailer::Base
          subject: '[RJJK] Kommer du?'
   end
 
-  def summary(recipient, attendees, absentees)
+  def summary(group_schedule, recipient, attendees, absentees)
+    @group_schedule = group_schedule
     @recipient = recipient
     @members = attendees
-    @title = 'Trening i kveld'
+    @title = "Trening i #{group_schedule.start_at.day_phase}"
     @timestamp = Time.now
     @email_url = with_login(recipient.user, :controller => :attendances, :action => :plan)
     mail to: Rails.env == 'production' ? recipient.email : %Q{"#{recipient.name}" <uwe@kubosch.no>},
          subject: "[RJJK] Trening i kveld: #{attendees.size == 0 ? 'Ingen' : attendees.size} deltaker#{'e' if attendees.size > 1} påmeldt"
   end
 
-  def changes(recipient, new_attendees, new_absentees, attendees)
+  def changes(group_schedule, recipient, new_attendees, new_absentees, attendees)
+    @group_schedule = group_schedule
     @recipient = recipient
     @new_attendees = new_attendees
     @new_absentees = new_absentees
     @attendees = attendees
-    @title = 'Trening i kveld'
+    @title = "Trening i #{group_schedule.start_at.day_phase}"
     @timestamp = Time.now
     @email_url = with_login(recipient.user, :controller => :attendances, :action => :plan)
     mail to: Rails.env == 'production' ? recipient.email : %Q{"#{recipient.name}" <uwe@kubosch.no>},

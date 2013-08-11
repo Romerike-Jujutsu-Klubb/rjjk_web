@@ -1,6 +1,8 @@
-<%=render :partial => '/tiny_mce' %>
+<% @content_width = 1024 %>
 
-<%= form_for(@embu) do |f| %>
+<%= tinymce %>
+
+<%= form_for @embu do |f| %>
     <% if @embu.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@embu.errors.count, "error") %> prohibited this embu from being saved:</h2>
@@ -24,9 +26,7 @@
           (<%= link_to 'Print', :action => :print %>)
       <% end %>
     </div>
-
-    <div style="float: right; width: 240px; height: 731px; overflow:auto;
-            border: 1px solid black; text-align: center">
+    <div style="float: right; width: 196px; height: 680px; overflow:auto; border: 1px solid black">
       <% @embu.embu_images.order('created_at DESC').each do |e| %>
           <% i = e.image %>
           <% if i.video? %>
@@ -42,7 +42,7 @@
       <% end %>
     </div>
 
-    <%= f.text_area :description, :class => :tiny_mce, :cols => 100, :rows => 32 %>
+    <%= f.text_area :description, :class => :tinymce %>
 
     <% unless @embu.new_record? %>
         <div class="field">

@@ -33,7 +33,7 @@ class AttendanceNagger
       attendees = attendances.map(&:member) - non_attendees
       recipients = gs.group.members.select { |m| !m.passive? } - non_attendees
       recipients.each do |recipient|
-        AttendanceMailer.summary(recipient, attendees, non_attendees).deliver
+        AttendanceMailer.summary(gs, recipient, attendees, non_attendees).deliver
       end
     end
   rescue Exception
@@ -58,7 +58,7 @@ class AttendanceNagger
       new_absentees = new_attendances & absentees
       recipients = gs.group.members.select { |m| !m.passive? } - absentees
       recipients.each do |recipient|
-        AttendanceMailer.changes(recipient, new_attendees, new_absentees, attendees).deliver
+        AttendanceMailer.changes(gs, recipient, new_attendees, new_absentees, attendees).deliver
       end
     end
   rescue Exception

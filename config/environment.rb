@@ -45,4 +45,7 @@ class TimeOfDay
   def year
     nil
   end
+  def day_phase
+    self < self.class.new(17) ? 'dag' : 'kveld'
+  end
 end

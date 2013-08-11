@@ -1,6 +1,6 @@
 <h1>Hei <%= @recipient.first_name %>!</h1>
 
-Følgende er påmeldt til trening i kveld:
+Følgende er påmeldt til trening i <%=@group_schedule.start_at.day_phase%>:
 
 <ul>
   <% @members.each do |m| %>
