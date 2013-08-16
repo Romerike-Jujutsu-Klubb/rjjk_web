@@ -6,8 +6,10 @@ class InformationPage < ActiveRecord::Base
     body.try(:strip!)
   end
 
+  validates_uniqueness_of :title, :scope => :parent_id, :case_sensitive => false
+
   def visible?
     !hidden
   end
-  
+
 end

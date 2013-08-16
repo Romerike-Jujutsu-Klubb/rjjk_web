@@ -21,7 +21,7 @@ class InfoController < ApplicationController
   end
 
   def show
-    @information_page ||= InformationPage.find_by_title(params[:id])
+    @information_page ||= InformationPage.where('UPPER(title) = ?', params[:id].upcase).first
     @information_page ||= InformationPage.find_by_id(params[:id].to_i)
     if (page_alias = PageAlias.where(old_path: request.path).first)
       redirect_to page_alias.new_path, :status => :moved_permanently
