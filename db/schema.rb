@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130805110011) do
+ActiveRecord::Schema.define(:version => 20130816175727) do
 
   create_table "martial_arts", :force => true do |t|
     t.string "name",   :limit => 16, :null => false
@@ -318,6 +318,13 @@ ActiveRecord::Schema.define(:version => 20130805110011) do
     t.integer  "height"
   end
 
+  create_table "information_page_aliases", :force => true do |t|
+    t.string   "old_path"
+    t.string   "new_path"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "information_pages", :force => true do |t|
     t.integer  "parent_id"
     t.string   "title",      :limit => 32, :null => false
@@ -428,6 +435,13 @@ ActiveRecord::Schema.define(:version => 20130805110011) do
     t.string   "foresatte_nr_2",                                  :limit => 64
     t.string   "foresatte_nr_2_mobil",                            :limit => 16
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "nkf_members_member_id_fkey"
+  end
+
+  create_table "page_aliases", :force => true do |t|
+    t.string   "old_path"
+    t.string   "new_path"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "signatures", :force => true do |t|

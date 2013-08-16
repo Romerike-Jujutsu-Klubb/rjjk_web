@@ -1,6 +1,6 @@
 class InfoController < ApplicationController
   before_filter :admin_required, :except => [:index, :list, :show, :show_content]
-  
+
   def index
     unless id = params[:id]
       id = InformationPage.first(:order => 'id')
@@ -23,6 +23,10 @@ class InfoController < ApplicationController
   def show
     @information_page ||= InformationPage.find_by_title(params[:id])
     @information_page ||= InformationPage.find_by_id(params[:id].to_i)
+    if (page_alias = PageAlias.where(old_path: request.path).first)
+      redirect_to page_alias.new_path, :status => :moved_permanently
+      return
+    end
     raise ActiveRecord::RecordNotFound unless @information_page
   end
 

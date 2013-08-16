@@ -47,6 +47,7 @@ RjjkWeb::Application.routes.draw do
   resources :news_items, controller: :news, path: :news
   resources :nkf_members
   resources :nkf_member_trials
+  resources :page_aliases
   resources :semesters
   resources :signatures
   resources :trial_attendances
