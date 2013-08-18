@@ -318,13 +318,6 @@ ActiveRecord::Schema.define(:version => 20130816175727) do
     t.integer  "height"
   end
 
-  create_table "information_page_aliases", :force => true do |t|
-    t.string   "old_path"
-    t.string   "new_path"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "information_pages", :force => true do |t|
     t.integer  "parent_id"
     t.string   "title",      :limit => 32, :null => false
