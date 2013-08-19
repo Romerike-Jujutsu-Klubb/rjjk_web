@@ -5,7 +5,7 @@ unless Rails.env == 'test'
 
   # Users
   scheduler.cron('0 7    * * mon') { AttendanceNagger.send_attendance_plan }
-  scheduler.cron('0 8    * * thu') { send_weekly_info_page }
+  scheduler.cron('0 8    * * thu') { InformationPageNotifier.send_weekly_info_page }
   scheduler.cron('0 8-23 * * *') { send_news }
   scheduler.cron('5 8    * * *') { AttendanceNagger.send_attendance_summary }
   scheduler.cron('5 9-23 * * *') { AttendanceNagger.send_attendance_changes }
@@ -21,7 +21,7 @@ unless Rails.env == 'test'
   scheduler.cron('0 6 * * *') { GraduationReminder.notify_missing_graduations }
 
   # Admin Weekly
-  scheduler.cron('0 8 * * mon') { notify_outdated_pages }
+  scheduler.cron('0 8 * * mon') { InformationPageNotifier.notify_outdated_pages }
   scheduler.cron('0 2 * * mon') { notify_overdue_trials }
   scheduler.cron('0 4 * * mon') { notify_missing_group_semesters }
   scheduler.cron('0 5 * * mon') { InstructionReminder.notify_missing_instructors }
@@ -32,53 +32,6 @@ private
 
 def logger
   ActiveRecord::Base.logger
-end
-
-# Flow:
-#   Pages should be reviewed at least every 6 months.
-#   Old reviewed pages should be sent to new members
-#   New pages should be sent to all active members
-#   Newly revised pages should be sent to all members unless they got it within the last 6 months,
-#     or the change is significat (or should that be in a news item?)
-def notify_outdated_pages
-  recipients = Member.active(Date.today).includes(:user).where('users.role = ?', 'ADMIN').all
-  pages = InformationPage.where('(hidden IS NULL OR hidden = ?) AND revised_at IS NULL OR revised_at < ?', false, 6.months.ago).
-      order(:revised_at).limit(3).all
-  recipients.each do |recipient|
-    InformationPageMailer.notify_outdated_pages(recipient, pages).deliver
-  end
-rescue
-  logger.error 'Execption sending information page notification'
-  logger.error $!.message
-  logger.error $!.backtrace.join("\n")
-  ExceptionNotifier.notify_exception($!)
-end
-
-# Flow:
-#   Pages should be reviewed at least every 6 months.
-#   Old reviewed pages should be sent to new members
-#   New pages should be sent to all active members
-#   Newly revised pages should be sent to all members unless they got it within the last 6 months,
-#     or the change is significat (or should that be in a news item?)
-def send_weekly_info_page
-  logger.debug 'Sending weekly info page'
-  page = InformationPage.where("
-(hidden IS NULL OR hidden = ?) AND
-(revised_at > CURRENT_TIMESTAMP - interval '6' month) AND
-(mailed_at IS NULL OR mailed_at < CURRENT_TIMESTAMP - interval '6' month)", false).
-      order(:mailed_at).first
-  if page
-    Member.active(Date.today).order(:first_name, :last_name).all.each do |m|
-      InformationPageMailer.send_weekly_page(m, page).deliver
-    end
-    page.update_attributes! :mailed_at => Time.now
-  end
-  logger.debug 'Sending weekly info page...OK'
-rescue
-  logger.error 'Execption sending news'
-  logger.error $!.message
-  logger.error $!.backtrace.join("\n")
-  ExceptionNotifier.notify_exception($!)
 end
 
 def send_news
