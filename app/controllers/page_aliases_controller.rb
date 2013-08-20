@@ -4,7 +4,7 @@ class PageAliasesController < ApplicationController
   # GET /page_aliases
   # GET /page_aliases.json
   def index
-    @page_aliases = PageAlias.all
+    @page_aliases = PageAlias.order(:old_path, :new_path).all
 
     respond_to do |format|
       format.html # index.html.erb

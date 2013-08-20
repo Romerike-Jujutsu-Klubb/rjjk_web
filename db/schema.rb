@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130816175727) do
+ActiveRecord::Schema.define(:version => 20130820101449) do
 
   create_table "martial_arts", :force => true do |t|
     t.string "name",   :limit => 16, :null => false
@@ -435,6 +435,7 @@ ActiveRecord::Schema.define(:version => 20130816175727) do
     t.string   "new_path"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.index ["old_path"], :name => "index_page_aliases_on_old_path"
   end
 
   create_table "signatures", :force => true do |t|
