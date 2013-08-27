@@ -22,7 +22,7 @@ class AttendanceMailer < ActionMailer::Base
     @timestamp = Time.now
     @email_url = with_login(recipient.user, :controller => :attendances, :action => :plan)
     mail to: Rails.env == 'production' ? recipient.email : %Q{"#{recipient.name}" <uwe@kubosch.no>},
-         subject: "[RJJK] Trening i kveld: #{attendees.size == 0 ? 'Ingen' : attendees.size} deltaker#{'e' if attendees.size > 1} påmeldt"
+         subject: "[RJJK] Trening i <%=@group_schedule.start_at.day_phase%>: #{attendees.size == 0 ? 'Ingen' : attendees.size} deltaker#{'e' if attendees.size > 1} påmeldt"
   end
 
   def changes(group_schedule, recipient, new_attendees, new_absentees, attendees)
@@ -35,7 +35,7 @@ class AttendanceMailer < ActionMailer::Base
     @timestamp = Time.now
     @email_url = with_login(recipient.user, :controller => :attendances, :action => :plan)
     mail to: Rails.env == 'production' ? recipient.email : %Q{"#{recipient.name}" <uwe@kubosch.no>},
-         subject: "[RJJK] Trening i kveld: #{"#{new_attendees.size} ny#{'e' if new_attendees.size > 1} deltaker#{'e' if new_attendees.size > 1} påmeldt" if new_attendees.size > 0} #{"#{new_absentees.size} avbud" if new_absentees.any?}"
+         subject: "[RJJK] Trening i <%=@group_schedule.start_at.day_phase%>: #{"#{new_attendees.size} ny#{'e' if new_attendees.size > 1} deltaker#{'e' if new_attendees.size > 1} påmeldt" if new_attendees.size > 0} #{"#{new_absentees.size} avbud" if new_absentees.any?}"
   end
 
 end

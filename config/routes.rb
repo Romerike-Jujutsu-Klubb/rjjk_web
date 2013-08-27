@@ -13,6 +13,7 @@ RjjkWeb::Application.routes.draw do
 
   match ':controller/active_contracts', action: :active_contracts
   match ':controller/attendance_form', action: :attendance_form
+  match ':controller/attendance_form/:id', action: :attendance_form
   match ':controller/attendance_form_index', action: :attendance_form_index
   match ':controller/calendar', action: :calendar
   match ':controller/create', action: :create

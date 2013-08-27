@@ -154,7 +154,7 @@
     <p>
       <%= f.submit 'Lagre', :class => :btn %>
       <%= back_or_link_to 'Tilbake', events_path %>
-      <%= link_to 'Oppmøteliste', :action => :attendance_form if @event.try(:event_invitees).try(:any?) %>
+      <%= link_to 'Oppmøteliste', :action => :attendance_form, :id => @event.id if @event.try(:event_invitees).try(:any?) %>
     </p>
 
 <% end %>
