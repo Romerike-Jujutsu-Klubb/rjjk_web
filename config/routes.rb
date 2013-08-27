@@ -10,6 +10,7 @@ RjjkWeb::Application.routes.draw do
   get 'user/forgot_password'
   get 'user/login'
   get 'user/logout'
+  get 'user/welcome'
 
   match ':controller/active_contracts', action: :active_contracts
   match ':controller/attendance_form', action: :attendance_form
