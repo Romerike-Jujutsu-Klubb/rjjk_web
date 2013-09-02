@@ -1,4 +1,4 @@
-<h1>New attendance</h1>
+<h1>Registrer oppmøte</h1>
 
 <%= form_for(@attendance) do |f| %>
     <%= f.error_messages %>
@@ -24,7 +24,12 @@
     </p>
 
     <p>
-      <%= f.submit "Create" %>
+      <%= f.label :status, 'Status' %>
+      <%= f.select :status, Attendance::Status.constants.sort.map{|s| [t(s.to_s.downcase), Attendance::Status.const_get(s)]} %>
+    </p>
+
+    <p>
+      <%= f.submit 'Create', :class => :btn %>
     </p>
 <% end %>
 

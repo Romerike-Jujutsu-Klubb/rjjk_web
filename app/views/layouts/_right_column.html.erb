@@ -59,7 +59,7 @@
     </h4>
 
     <% if @your_attendance_next_practice &&
-            [Attendance::ATTENDED, Attendance::WILL_ATTEND].include?(@your_attendance_next_practice.status) %>
+            [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(@your_attendance_next_practice.status) %>
         Du
         <% unless @other_attendees.empty? %>
             og
@@ -98,13 +98,13 @@
         <% unless @other_absentees.empty? %>
             <%= @other_absentees.size %> har meldt fravær.
         <% end %>
-        <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::ABSENT),
+        <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::Status::ABSENT),
                     :class => 'btn btn-mini', :title => 'Kan ikke allikevel...') do %>
             <i class="icon-thumbs-down"> Angre</i>
         <% end %>
     <% elsif @your_attendance_next_practice %>
         Du kommer ikke.
-        <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::WILL_ATTEND),
+        <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::Status::WILL_ATTEND),
                     :class => 'btn btn-mini', :title => 'Kommer allikevel!') do %>
             <i class="icon-thumbs-up"></i>
         <% end %>
@@ -123,10 +123,10 @@
 
         Kommer du?
         <div class="btn-group">
-          <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::WILL_ATTEND), :class => 'btn btn-mini', :title => 'kommer!') do %>
+          <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::Status::WILL_ATTEND), :class => 'btn btn-mini', :title => 'kommer!') do %>
               <i class="icon-thumbs-up"></i>
           <% end %>
-          <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::ABSENT),
+          <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::Status::ABSENT),
                       :class => 'btn btn-mini', :title => 'kan ikke...') do %>
               <i class="icon-thumbs-down"></i>
           <% end %>

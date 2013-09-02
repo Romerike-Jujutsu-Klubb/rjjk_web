@@ -152,6 +152,7 @@ nb:
         delimiter: ""
         precision: 4
 
+  attended: Deltok
   description: Beskrivelse
   draft: Kladd
   expired: Utdatert

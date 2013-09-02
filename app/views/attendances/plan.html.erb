@@ -39,7 +39,7 @@
                initial_icon = nil
                initial_class = nil
                initial_disabled = nil
-               if ats.any? { |a| [Attendance::ATTENDED].include?(a.status) }
+               if ats.any? { |a| [Attendance::Status::ATTENDED].include?(a.status) }
                  initial_class = 'btn-success '
                  initial_text = 'Var der!'
                  initial_disabled = true
@@ -79,7 +79,7 @@
                 </ul>
               </div>
               <br/>
-              <% others = gs.attendances.select { |a| [Attendance::ATTENDED, Attendance::WILL_ATTEND].include?(a.status) && a.year == year && a.week == week && a.member_id != current_user.member.id } %>
+              <% others = gs.attendances.select { |a| [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(a.status) && a.year == year && a.week == week && a.member_id != current_user.member.id } %>
               <% if others.any? %>
                   <small>
                     <%= others[rand others.size].member.first_name %>

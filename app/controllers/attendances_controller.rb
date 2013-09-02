@@ -35,6 +35,7 @@ class AttendancesController < ApplicationController
 
   def new
     @attendance ||= Attendance.new params[:attendance]
+    @attendance.status ||= Attendance::Status::ATTENDED
     group_id = params[:group]
     @members = Member.order(:first_name, :last_name).all
     @group_schedules = GroupSchedule.where(group_id ? {:group_id => group_id} : {}).all
@@ -163,12 +164,12 @@ class AttendancesController < ApplicationController
 
     new_status = params[:id]
     if new_status == 'toggle'
-      if @attendance.status == Attendance::WILL_ATTEND
+      if @attendance.status == Attendance::Status::WILL_ATTEND
         new_status = 'NONE'
         @attendance.destroy
       else
-        new_status = Attendance::WILL_ATTEND
-        @attendance.status = Attendance::WILL_ATTEND
+        new_status = Attendance::Status::WILL_ATTEND
+        @attendance.status = Attendance::Status::WILL_ATTEND
         @attendance.save!
       end
     else
@@ -196,7 +197,7 @@ class AttendancesController < ApplicationController
         all
     start_date = 6.months.ago.to_date.beginning_of_month
     attendances = Attendance.where('member_id = ? AND status = ? AND ((year = ? AND week >= ?) OR (year = ?))',
-                                   member, Attendance::ATTENDED, start_date.year, start_date.cweek, today.year).
+                                   member, Attendance::Status::ATTENDED, start_date.year, start_date.cweek, today.year).
         all
     @attended_groups = attendances.map { |a| a.group_schedule.group }.uniq.sort_by { |g| -g.from_age }
     per_month = attendances.group_by { |a| d = Date.commercial(a.year, a.week, a.group_schedule.weekday); [d.year, d.mon] }

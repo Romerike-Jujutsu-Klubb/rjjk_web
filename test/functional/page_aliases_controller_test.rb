@@ -19,7 +19,8 @@ class PageAliasesControllerTest < ActionController::TestCase
 
   test 'should create page_alias' do
     assert_difference('PageAlias.count') do
-      post :create, page_alias: { new_path: @page_alias.new_path, old_path: @page_alias.old_path }
+      post :create, page_alias: { new_path: @page_alias.new_path, old_path: '/someother_path' }
+      assert_no_errors :page_alias
     end
 
     assert_redirected_to page_alias_path(assigns(:page_alias))
