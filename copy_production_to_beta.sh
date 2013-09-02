@@ -17,6 +17,6 @@ echo "Transferring database"
 pg_dump -U capistrano rjjk_production | psql -U capistrano -h localhost $DB_NAME
 
 cd /u/apps/rjjk_web_beta/current
-RAILS_ENV=beta jruby -S bundle exec rake db:migrate
+JRUBY_OPTS=--2.0 RAILS_ENV=beta jruby -S bundle exec rake db:migrate
 
 touch $MARKER_FILE

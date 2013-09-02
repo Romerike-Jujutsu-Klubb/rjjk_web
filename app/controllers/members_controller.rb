@@ -122,7 +122,7 @@ class MembersController < ApplicationController
         @instructors += GroupInstructor.includes(:group_schedule).
             where('member_id NOT IN (?)', @instructors.map(&:id)).
             where(:group_schedules => {:group_id => @group.id}).all.
-            select{|gi| @dates.any?{|d|gi.active?(d)}}.map(&:member)
+            select{|gi| @dates.any?{|d|gi.active?(d)}}.map(&:member).uniq
 
         current_members = @group.members.active(@date).
             includes({:attendances => :group_schedule, :graduates => [:graduation, :rank], :groups => :group_schedules}, :nkf_member)
