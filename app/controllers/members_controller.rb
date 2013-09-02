@@ -119,6 +119,10 @@ class MembersController < ApplicationController
             includes({:attendances => :group_schedule, :graduates => [:graduation, :rank]}, :groups).find_all_by_instructor(true).
             select { |m| m.groups.any? { |g| g.martial_art_id == @group.martial_art_id } }
         @instructors.delete_if { |m| m.attendances.select { |a| ((@dates.first - 92.days)..@dates.last).include?(a.date) && a.group_schedule.group_id == @group.id }.empty? }
+        @instructors += GroupInstructor.includes(:group_schedule).
+            where('member_id NOT IN (?)', @instructors.map(&:id)).
+            where(:group_schedules => {:group_id => @group.id}).all.
+            select{|gi| @dates.any?{gi.active?(d)}}.map(&:member)
 
         current_members = @group.members.active(@date).
             includes({:attendances => :group_schedule, :graduates => [:graduation, :rank], :groups => :group_schedules}, :nkf_member)
