@@ -3,7 +3,7 @@
 Følgende er påmeldt til trening i <%=@group_schedule.start_at.day_phase%>:
 
 <ul>
-  <% @members.each do |m| %>
+  <% @members.sort_by(&:name).each do |m| %>
       <li><%= m.name %></li>
   <% end %>
 </ul>
