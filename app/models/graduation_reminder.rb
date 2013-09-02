@@ -7,9 +7,11 @@ class GraduationReminder
     planned_groups = Graduation.where('held_on >= ?', today).all.map(&:group)
     missing_groups = groups - planned_groups
     missing_groups.each do |g|
-      instructor = g.current_semester.try(:group_instructor).try(:member)
-      next unless instructor
-      GraduationMailer.missing_graduation(instructor, g).deliver
+      instructors = GroupInstructor.includes(:group_schedule => :group).where('group_id = ?', g.id).all.select(&:acive?).map(&:member)
+      next if instructors.empty?
+      instructors.each do |i|
+        GraduationMailer.missing_graduation(instructor, g).deliver
+      end
     end
   rescue
     logger.error "Exception sending missing graduations message: #{$!}"
