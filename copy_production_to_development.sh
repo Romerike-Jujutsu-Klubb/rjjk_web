@@ -17,4 +17,5 @@ time ssh root@kubosch.no "pg_dump -U capistrano rjjk_production | gzip" |
     gunzip | sed -e s/capistrano/uwe/ | psql -h localhost $DB_NAME
 
 rvm use jruby
+export JRUBY_OPTS=--2.0
 RAILS_ENV=development jruby -S bundle exec rake db:migrate

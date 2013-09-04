@@ -1,4 +1,3 @@
-# encoding: UTF-8
 require 'redbox_helper'
 
 module ApplicationHelper
@@ -38,6 +37,7 @@ module ApplicationHelper
       mail_to m, nil # , :encode => :javascript
     end
     html = RedCloth.new(s.strip).to_html
+    html.force_encoding(Encoding::UTF_8)
     if @email
       base = url_for(:controller => :welcome, :action => :index, :only_path => false)
 
