@@ -4,7 +4,7 @@
 #
 # chkconfig: 345 88 12
 # description: RJJK web beta application
-# pidfile: /u/apps/$APP/shared/log/mongrel.pid
+# pidfile: /u/apps/$APP/shared/log/server.pid
 
 . /etc/rc.d/init.d/functions
 
@@ -20,7 +20,7 @@ START_CMD="cd $APP_DIR ;
   export JAVA_HOME=/usr/java/default ;
   export JRUBY_HOME=/usr/local/jruby ;
   export PATH=\$JAVA_HOME/bin:\$JRUBY_HOME/bin:\$PATH ;
-  export JRUBY_OPTS='-J-Xmx2G --server -J-Djava.awt.headless=true -J-Dawt.toolkit=sun.awt.HToolkit' ;
+  export JRUBY_OPTS='--2.0 -J-Xmx2G --server -J-Djava.awt.headless=true -J-Dawt.toolkit=sun.awt.HToolkit' ;
   jruby --version ;
   jruby -S bundle exec trinidad -p $PORT -e $RAILS_ENV -t -ldaemon --daemonize $pidfile -d $APP_DIR 1>$LOG_DIR/stdout.log 2>$LOG_DIR/stderr.log
 "
@@ -47,17 +47,13 @@ case "$1" in
 	then
 	    rm -f $pidfile
 	fi
-#    run "$START_FERRET_CMD"
     run "$START_CMD"
         ;;
   stop)
-#    run "$STOP_FERRET_CMD"
     run "$STOP_CMD"
     rm -f ${pidfile}
         ;;
   restart)
-#    run "$STOP_FERRET_CMD"
-#    run "$START_FERRET_CMD"
     run "$STOP_CMD"
     rm -f ${pidfile}
     run "$START_CMD"
