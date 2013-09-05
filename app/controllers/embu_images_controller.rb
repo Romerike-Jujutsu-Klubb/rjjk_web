@@ -1,4 +1,6 @@
 class EmbuImagesController < ApplicationController
+  before_filter :admin_required
+
   # GET /embu_images
   # GET /embu_images.json
   def index
@@ -24,10 +26,12 @@ class EmbuImagesController < ApplicationController
   # GET /embu_images/new
   # GET /embu_images/new.json
   def new
-    @embu_image = EmbuImage.new
+    @embu_image ||= EmbuImage.new
+    @embus = Embu.all
+    @images = Image.order(:name).all
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render action: 'new' }
       format.json { render json: @embu_image }
     end
   end
@@ -47,7 +51,7 @@ class EmbuImagesController < ApplicationController
         format.html { redirect_to @embu_image, notice: 'Embu image was successfully created.' }
         format.json { render json: @embu_image, status: :created, location: @embu_image }
       else
-        format.html { render action: "new" }
+        format.html { new }
         format.json { render json: @embu_image.errors, status: :unprocessable_entity }
       end
     end

@@ -1,17 +1,21 @@
 <%= form_for(@embu_image) do |f| %>
-  <% if @embu_image.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@embu_image.errors.count, "error") %> prohibited this embu_image from being saved:</h2>
+    <% if @embu_image.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@embu_image.errors.count, "error") %> prohibited
+            this embu_image from being saved:</h2>
 
-      <ul>
-      <% @embu_image.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @embu_image.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <%=f.select :embu_id, @embus.map{|e| [e.rank.name, e.id]}%>
+    <%=f.select :image_id, @images.map{|i| [i.name, i.id]}%>
+
+    <div class="actions">
+      <%= f.submit :class => :btn %>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
