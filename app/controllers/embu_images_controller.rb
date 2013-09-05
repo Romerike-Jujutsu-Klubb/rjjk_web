@@ -1,5 +1,5 @@
 class EmbuImagesController < ApplicationController
-  before_filter :admin_required
+  before_filter :authenticate_user
 
   # GET /embu_images
   # GET /embu_images.json
@@ -39,6 +39,8 @@ class EmbuImagesController < ApplicationController
   # GET /embu_images/1/edit
   def edit
     @embu_image = EmbuImage.find(params[:id])
+    @embus = Embu.all
+    @images = Image.order(:name).all
   end
 
   # POST /embu_images

@@ -26,11 +26,11 @@
           (<%= link_to 'Print', :action => :print %>)
       <% end %>
     </div>
-    <div style="float: right; width: 196px; height: 680px; overflow:auto; border: 1px solid black">
+    <div style="float: right; width: 196px; height: 100%; overflow:auto; border: 1px solid black; padding-top: 0.5em; text-align: center">
       <% @embu.embu_images.order('created_at DESC').each do |e| %>
           <% i = e.image %>
           <% if i.video? %>
-              <%= video_tag url_for(:controller => :images, :action => :show, :id => i.id, :format => i.format), :title => i.name || 'Film', :controls => true, :autobuffer => true, :style => 'float: right; width: 240px' %>
+              <%= video_tag url_for(:controller => :images, :action => :show, :id => i.id, :format => i.format), :title => i.name || 'Film', :controls => true, :autobuffer => true, :style => 'width: 185px' %>
               </video>
           <% else %>
               <%= image_tag url_for(:controller => :images, :action => :inline, :id => i.id, :format => i.format, :width => 185), :title => i.name || 'Bilde', :style => 'float: right; width: 19%' %>

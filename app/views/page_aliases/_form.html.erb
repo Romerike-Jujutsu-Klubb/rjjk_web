@@ -1,25 +1,26 @@
 <%= form_for(@page_alias) do |f| %>
-  <% if @page_alias.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@page_alias.errors.count, "error") %> prohibited this page_alias from being saved:</h2>
+    <% if @page_alias.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@page_alias.errors.count, "error") %> prohibited
+            this page_alias from being saved:</h2>
 
-      <ul>
-      <% @page_alias.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @page_alias.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :old_path, 'Gammel sti' %>
+      <%= f.text_field :old_path %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :old_path %><br />
-    <%= f.text_field :old_path %>
-  </div>
-  <div class="field">
-    <%= f.label :new_path %><br />
-    <%= f.text_field :new_path %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="field">
+      <%= f.label :new_path, 'Ny sti' %>
+      <%= f.text_field :new_path %>
+    </div>
+    <div class="actions">
+      <%= f.submit :value => 'Lagre', :class => :btn %>
+    </div>
 <% end %>
