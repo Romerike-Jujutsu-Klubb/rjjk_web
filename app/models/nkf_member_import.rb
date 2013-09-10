@@ -109,11 +109,13 @@ class NkfMemberImport
     trial_csv_url = 'pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + session_id
     member_trials_csv_body = http_get(trial_csv_url).body
     member_trial_rows = member_trials_csv_body.split("\n").map { |line| @iconv.iconv(line.chomp).split(';') }
-    # member_trial_rows = member_trials_csv_body.split("\n").map { |line| line.chomp.split(';') }
 
-    trial_url = 'page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_cr_par=' + extra_function_code
-    member_trials_body = http_get(trial_url).body
-    trial_ids = member_trials_body.scan(/edit_click28\('(.*?)'\)/).map { |tid| tid[0] }
+    trial_ids = []
+    (member_trial_rows.size.to_f / 20).ceil.times do |page|
+      trial_url = "page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_page_search=#{page + 1}&p_cr_par=#{extra_function_code}"
+      member_trials_body = http_get(trial_url).body
+      trial_ids += member_trials_body.scan(/edit_click28\('(.*?)'\)/).map { |tid| tid[0] }
+    end
 
     member_trial_rows[0] << 'tid'
     member_trial_rows[0] << 'epost_faktura'
