@@ -71,8 +71,9 @@ class Member < ActiveRecord::Base
   end
 
   def self.create_corresponding_user!(attrs)
-    email, first_name, last_name = attrs['email'], attrs['first_name'], attrs['last_name']
-    p = (0..4).map { [*((0..9).to_a + ('a'..'z').to_a)][rand(36)] }.join
+    attrs.symbolize_keys!
+    email, first_name, last_name = attrs[:email], attrs[:first_name], attrs[:last_name]
+    passwd = (0..4).map { [*((0..9).to_a + ('a'..'z').to_a)][rand(36)] }.join
 
     # Full name and email
     full_email = %Q{"#{first_name} #{last_name}" <#{email}>}
@@ -80,11 +81,13 @@ class Member < ActiveRecord::Base
 
     # First and last names only
     if full_email.size > max_length
+      logger.debug "Full email too long: #{full_email}"
       full_email = %Q{"#{first_name.split(/\s+/).first} #{last_name.split(/\s+/).last}" <#{email}>}
     end
 
     # Squeezed name and full email
     if full_email.size > max_length
+      logger.debug "Full email too long: #{full_email}"
       max_name_size = max_length - email.size - 5
       (cut_name = "#{first_name} #{last_name}")[(max_name_size / 2) - 2 .. (-max_name_size / 2)]
       full_email = %Q{"#{cut_name}" <#{email}>}
@@ -92,10 +95,12 @@ class Member < ActiveRecord::Base
 
     # Fallback to non-valid email...
     if full_email.size > max_length
+      logger.debug "Full email too long: #{full_email}"
       (full_email = %Q{#{first_name} #{last_name} <#{email}>})[(max_length / 2) - 2 .. (-max_length / 2)]
     end
 
-    [email, full_email].compact.each do |potential_email|
+    potential_emails = [email, full_email]
+    potential_emails.compact.each do |potential_email|
       existing_user = User.where('(login = ? OR email = ?) AND NOT EXISTS (SELECT id FROM members WHERE user_id = users.id)',
                                  potential_email, potential_email).first
       return existing_user if existing_user
@@ -104,14 +109,14 @@ class Member < ActiveRecord::Base
 
       new_user = User.new(
           :login => potential_email, :first_name => first_name, :last_name => last_name,
-          :email => potential_email, :password => p, :password_confirmation => p,
+          :email => potential_email, :password => passwd, :password_confirmation => passwd,
       )
       new_user.password_needs_confirmation = true
       new_user.save!
 
       return new_user
     end
-    raise "Unable to create user for member: #{attrs}"
+    raise "Unable to create user for member (#{potential_emails}): #{attrs}"
   end
 
   # describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki

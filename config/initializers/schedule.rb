@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 unless Rails.env == 'test'
   scheduler = Rufus::Scheduler.start_new
 
@@ -127,6 +125,7 @@ end
 def notify_wrong_contracts
   members = NkfMember.where(:medlemsstatus => 'A').all
   wrong_contracts = members.select { |m|
+    m.member &&
     (m.member.age < 10 && m.kont_sats !~ /^Barn/) ||
         (m.member.age >= 10 && m.member.age < 15 && m.kont_sats !~ /^Ungdom/) ||
         (m.member.age >= 15 && m.kont_sats !~ /^(Voksne|Styre|Trenere|Æresmedlem)/)

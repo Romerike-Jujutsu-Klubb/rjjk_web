@@ -2,12 +2,12 @@ source 'https://rubygems.org/'
 
 gem 'rails', '~>3.2.2'
 
-gem 'activerecord-jdbc-adapter', '~>1.3.0.beta2'
-gem 'activerecord-jdbcpostgresql-adapter', '~>1.3.0.beta2'
+gem 'activerecord-jdbc-adapter'
+gem 'activerecord-jdbcpostgresql-adapter'
 gem 'activerecord-time'
 gem 'acts_as_list'
 gem 'acts_as_tree'
-gem "colorbox-rails"
+gem 'colorbox-rails'
 gem 'dynamic_form'
 gem 'exception_notification'
 gem 'fb_graph'

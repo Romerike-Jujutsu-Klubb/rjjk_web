@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130821182406) do
+ActiveRecord::Schema.define(:version => 20130910172841) do
 
   create_table "martial_arts", :force => true do |t|
     t.string "name",   :limit => 16, :null => false
@@ -86,8 +86,8 @@ ActiveRecord::Schema.define(:version => 20130821182406) do
     t.string  "parent_2_name",        :limit => 64
     t.string  "parent_2_mobile",      :limit => 16
     t.string  "billing_email",        :limit => 64
-    t.index ["image_id"], :name => "index_members_on_image_id"
-    t.index ["user_id"], :name => "index_members_on_user_id"
+    t.index ["image_id"], :name => "index_members_on_image_id", :unique => true
+    t.index ["user_id"], :name => "index_members_on_user_id", :unique => true
   end
 
   create_table "attendances", :force => true do |t|
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(:version => 20130821182406) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status",            :limit => 1, :null => false
-    t.index ["member_id", "group_schedule_id", "year", "week"], :name => "index_attendances_on_member_id_and_group_schedule_id_and_year_a"
+    t.index ["member_id", "group_schedule_id", "year", "week"], :name => "index_attendances_on_member_id_and_group_schedule_id_and_year_a", :unique => true
     t.foreign_key ["group_schedule_id"], "group_schedules", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "attendances_group_schedule_id_fkey"
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "attendances_member_id_fkey"
   end
@@ -298,7 +298,7 @@ ActiveRecord::Schema.define(:version => 20130821182406) do
   create_table "groups_members", :id => false, :force => true do |t|
     t.integer "group_id",  :null => false
     t.integer "member_id", :null => false
-    t.index ["group_id", "member_id"], :name => "index_groups_members_on_group_id_and_member_id"
+    t.index ["group_id", "member_id"], :name => "index_groups_members_on_group_id_and_member_id", :unique => true
     t.foreign_key ["group_id"], "groups", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "groups_members_group_id_fkey"
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "groups_members_member_id_fkey"
   end
@@ -355,6 +355,7 @@ ActiveRecord::Schema.define(:version => 20130821182406) do
     t.datetime "publish_at"
     t.datetime "expire_at"
     t.datetime "mailed_at"
+    t.text     "summary"
     t.foreign_key ["created_by"], "users", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "news_items_created_by_fkey"
   end
 
@@ -376,7 +377,7 @@ ActiveRecord::Schema.define(:version => 20130821182406) do
     t.integer  "tid",                         :null => false
     t.string   "epost_faktura", :limit => 64
     t.string   "stilart",       :limit => 64, :null => false
-    t.index ["tid"], :name => "index_nkf_member_trials_on_tid"
+    t.index ["tid"], :name => "index_nkf_member_trials_on_tid", :unique => true
   end
 
   create_table "nkf_members", :force => true do |t|
@@ -435,7 +436,7 @@ ActiveRecord::Schema.define(:version => 20130821182406) do
     t.string   "new_path"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.index ["old_path"], :name => "index_page_aliases_on_old_path"
+    t.index ["old_path"], :name => "index_page_aliases_on_old_path", :unique => true
   end
 
   create_table "signatures", :force => true do |t|
@@ -466,7 +467,7 @@ ActiveRecord::Schema.define(:version => 20130821182406) do
     t.string   "rel_type",   :limit => 16, :null => false
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
-    t.index ["user_id", "image_id", "rel_type"], :name => "index_user_images_on_user_id_and_image_id_and_rel_type"
+    t.index ["user_id", "image_id", "rel_type"], :name => "index_user_images_on_user_id_and_image_id_and_rel_type", :unique => true
   end
 
 end

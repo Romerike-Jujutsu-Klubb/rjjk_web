@@ -10,12 +10,12 @@
     <%= f.error_messages %>
 
     <div style="float: left;margin-right: 0.5em">
-    <%= f.label :title, 'Tittel' %>
-    <%= f.text_field :title, :class => 'input-medium' %>
+      <%= f.label :title, 'Tittel' %>
+      <%= f.text_field :title, :class => 'input-medium' %>
     </div>
 
     <%= f.label :publication_state, 'Publiseringsstatus' %>
-    <%= f.select :publication_state, NewsItem::PublicationState.constants.map { |s| [t(s.downcase), s] }, {},:class => 'input-medium' %>
+    <%= f.select :publication_state, NewsItem::PublicationState.constants.map { |s| [t(s.downcase), s] }, {}, :class => 'input-medium' %>
 
     Publiser fra
     <%= f.datetime_picker :publish_at, :value => @news_item.publish_at.try(:strftime, '%Y-%m-%d %H:%M'),
@@ -27,6 +27,17 @@
                               :class => 'input-medium', :firstDay => 1 %>
 
     <p>
+      Sammendrag
+      <%= f.text_area :summary, :class => :tinymce, :style => 'height: 200px' %>
+    </p>
+    <%= javascript_tag do %>
+        $(window).load(function () {
+        tinyMCE.DOM.setStyle(tinyMCE.DOM.get('news_item_summary_ifr'), 'height', '200px');
+        })
+    <% end %>
+
+    <p>
+      Mer informasjon (valgfri)
       <%= f.text_area :body, :class => :tinymce %>
     </p>
 
@@ -41,4 +52,3 @@
     document.getElementById('news_item_title').select();
     //-->
 </script>
-

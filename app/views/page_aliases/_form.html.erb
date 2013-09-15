@@ -24,3 +24,7 @@
       <%= f.submit :value => 'Lagre', :class => :btn %>
     </div>
 <% end %>
+
+<%= javascript_tag do %>
+  $('#page_alias_old_path').focus().select();
+<% end %>

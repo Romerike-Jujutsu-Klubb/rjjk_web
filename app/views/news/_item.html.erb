@@ -6,7 +6,15 @@
       <%= "Skrevet av #{@news_item.creator.name}" if @news_item.creator %>
       <%= @news_item.created_at.strftime '%Y-%m-%d' %>
     </div>
-    <%= textilize(@news_item.body.to_s.strip).html_safe %>
+    <% texts = [@news_item.summary, @news_item.body].select { |text| !text.blank? } %>
+    <%= textilize(texts[0].strip).html_safe if texts[0] %>
+    <% if texts[1] %>
+        <% if full %>
+            <%= textilize(texts[1].strip).html_safe %>
+        <% else %>
+            <p><%= detour_to('Les mer...', @news_item) %></p>
+        <% end %>
+    <% end %>
 
     <% if user? %>
         <ul class="controls">
