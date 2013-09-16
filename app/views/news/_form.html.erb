@@ -28,11 +28,11 @@
 
     <p>
       Sammendrag
-      <%= f.text_area :summary, :class => :tinymce, :style => 'height: 200px' %>
+      <%= f.text_area :summary, :class => :tinymce, :style => 'height: 120px' %>
     </p>
     <%= javascript_tag do %>
         $(window).load(function () {
-        tinyMCE.DOM.setStyle(tinyMCE.DOM.get('news_item_summary_ifr'), 'height', '200px');
+        tinyMCE.DOM.setStyle(tinyMCE.DOM.get('news_item_summary_ifr'), 'height', '120px');
         })
     <% end %>
 
