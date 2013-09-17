@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/albertopq/jquery_datepicker.git
+  revision: 667c0720eb37f2b2096b65dd5afc5b74740cd756
+  specs:
+    jquery_datepicker (0.4)
+
+GIT
   remote: git://github.com/lomba/schema_plus.git
   revision: ba5b64ceb33d58314959b0371ac6e5ac3dfa41fc
   branch: jruby
@@ -105,7 +111,6 @@ GEM
       railties (>= 3.1.0)
     jquery-ui-themes (0.0.11)
       httparty
-    jquery_datepicker (0.4)
     jruby-rack (1.1.13.2)
     json (1.8.0-java)
     mail (2.5.4)
@@ -252,7 +257,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   jquery-ui-themes
-  jquery_datepicker
+  jquery_datepicker!
   minitest-reporters
   mocha
   prawn (~> 1.0.0.rc2)
