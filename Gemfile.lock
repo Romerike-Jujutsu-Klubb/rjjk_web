@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/lomba/schema_plus.git
-  revision: ba5b64ceb33d58314959b0371ac6e5ac3dfa41fc
+  revision: c16a094b96896a2c15712845ab58a036eb78d838
   branch: jruby
   specs:
     schema_plus (1.2.0)
@@ -233,7 +233,7 @@ GEM
       multi_json (~> 1.0, >= 1.0.2)
     unicode_utils (1.4.0)
     valuable (0.9.8)
-    will_paginate (3.0.4)
+    will_paginate (3.0.5)
 
 PLATFORMS
   java
