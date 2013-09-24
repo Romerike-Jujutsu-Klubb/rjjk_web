@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/lomba/schema_plus.git
-  revision: c16a094b96896a2c15712845ab58a036eb78d838
+  revision: 3f912157d11e27b3cf2ce277e91d4e22ca54fe92
   branch: jruby
   specs:
     schema_plus (1.2.0)
@@ -106,8 +106,7 @@ GEM
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    jquery-ui-rails (4.0.4)
-      jquery-rails
+    jquery-ui-rails (4.0.5)
       railties (>= 3.1.0)
     jquery-ui-themes (0.0.11)
       httparty
@@ -119,7 +118,7 @@ GEM
     metaclass (0.0.1)
     mime-types (1.25)
     minitest (4.7.5)
-    minitest-reporters (0.14.21)
+    minitest-reporters (0.14.22)
       ansi
       builder
       minitest (>= 2.12, < 5.0)
