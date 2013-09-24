@@ -50,15 +50,20 @@ class AttendanceNagger
       attendances = Attendance.includes(:group_schedule, :member).
           where('group_schedule_id = ? AND year = ? AND week = ?',
                 gs.id, now.year, now.to_date.cweek).all
-      new_attendances = attendances.select{|a| a.updated_at >= 1.hour.ago}.map(&:member)
+      new_attendances = attendances.select { |a| a.updated_at >= 1.hour.ago }.map(&:member)
       next if new_attendances.empty?
       absentees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:member)
       attendees = attendances.map(&:member) - absentees
       new_attendees = new_attendances & attendees
       new_absentees = new_attendances & absentees
+      uwe = Member.find_by_first_name_and_last_name('Uwe', 'Kubosch')
       recipients = gs.group.members.select { |m| !m.passive? } - absentees
       recipients.each do |recipient|
-        AttendanceMailer.changes(gs, recipient, new_attendees, new_absentees, attendees).deliver
+        if recipient != uwe
+          next if new_attendances.empty?
+          displayed_absentees = [] if new_absentees.size > new_attendances.size
+        end
+        AttendanceMailer.changes(gs, recipient, new_attendees, displayed_absentees, attendees).deliver
       end
     end
   rescue Exception
