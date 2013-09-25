@@ -18,13 +18,11 @@
     <%= f.select :publication_state, NewsItem::PublicationState.constants.map { |s| [t(s.downcase), s] }, {}, :class => 'input-medium' %>
 
     Publiser fra
-    <%= f.datetime_picker :publish_at, :value => @news_item.publish_at.try(:strftime, '%Y-%m-%d %H:%M'),
-                          :dateFormat => 'yy-mm-dd', :timeFormat => 'hh:mm',
-                          :class => 'input-medium', :firstDay => 1 %>
+    <%= f.datetime_picker :publish_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
+                          :class => 'input-medium' %>
 
-    til <%= f.datetime_picker :expire_at, :value => @news_item.expire_at.try(:strftime, '%Y-%m-%d %H:%M'),
-                              :dateFormat => 'yy-mm-dd', :timeFormat => 'hh:mm',
-                              :class => 'input-medium', :firstDay => 1 %>
+    til <%= f.datetime_picker :expire_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
+                              :class => 'input-medium' %>
 
     <p>
       Sammendrag

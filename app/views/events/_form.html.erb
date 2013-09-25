@@ -21,15 +21,13 @@
 
         <p style="float: left; margin-right: 1em; padding-bottom: 0">
           <%= f.label :start_at, 'Fra' %>
-          <%= f.datetime_picker :start_at, :value => @event.start_at.try(:strftime, '%Y-%m-%d %H:%M'),
-                                :dateFormat => 'yy-mm-dd', :timeFormat => 'hh:mm', :firstDay => 1,
+          <%= f.datetime_picker :start_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
                                 :class => 'input-medium' %>
         </p>
 
         <p style="float: left; margin-right: 1em; padding-bottom: 0">
           <%= f.label :end_at, 'Til (valgfritt)' %>
-          <%= f.datetime_picker :end_at, :value => @event.end_at.try(:strftime, '%Y-%m-%d %H:%M'),
-                                :dateFormat => 'yy-mm-dd', :timeFormat => 'hh:mm', :firstDay => 1,
+          <%= f.datetime_picker :end_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
                                 :class => 'input-medium' %>
         </p>
 

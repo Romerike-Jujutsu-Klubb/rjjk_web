@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/albertopq/jquery_datepicker.git
-  revision: 667c0720eb37f2b2096b65dd5afc5b74740cd756
+  remote: git://github.com/donv/jquery_datepicker.git
+  revision: 1ae3609ca6e592d994dbd24bb8b457225e4a9103
   specs:
     jquery_datepicker (0.4)
 
