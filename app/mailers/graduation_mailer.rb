@@ -1,4 +1,5 @@
 class GraduationMailer < ActionMailer::Base
+  include UserSystem
   layout 'email'
   default from: Rails.env == 'production' ? 'webmaster@jujutsu.no' : "#{Rails.env}@jujutsu.no"
 

@@ -1,5 +1,5 @@
 class GroupInstructor < ActiveRecord::Base
-  attr_accessible :group_schedule, :group_schedule_id, :member_id, :semester_id
+  attr_accessible :group_schedule, :group_schedule_id, :member_id, :role, :semester_id
 
   belongs_to :group_schedule
   belongs_to :member

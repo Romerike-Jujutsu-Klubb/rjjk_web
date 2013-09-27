@@ -1,9 +1,17 @@
 one:
+  semester: previous
   group_schedule: panda
   member: lars
-  semester: previous
+  role: Instruktør
 
 two:
+  semester: previous
   group_schedule: tiger_tuesday
   member: uwe
-  semester: previous
+  role: Instruktør
+
+uwe_current_panda:
+  semester: current
+  group_schedule: panda
+  member: uwe
+  role: Instruktør

@@ -18,12 +18,12 @@ gem install capistrano
 
 Add a reference to your private key in config/deploy.rb
 
-Design Insgtruksjon:
+Design Instruksjon:
 
         GroupSemester         =>     Semester
-    /                  ^
-   V                     \
-Group <= GroupSchedule <* Instruction => Member
+    /                                  ^
+   V                                  /
+Group <= GroupSchedule <= GroupInstructor => Member
                                 |
                                 V
                               Role(Main/Instructor/Helper)

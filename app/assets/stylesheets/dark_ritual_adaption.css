@@ -65,6 +65,11 @@ div.main_right ul.controls {
     text-align: left;
 }
 
+.post h3 {
+    margin-bottom: 0;
+    color: #046CB8;
+}
+
 h4 {
     color: #046CB8;
 }

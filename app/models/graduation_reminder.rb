@@ -7,10 +7,11 @@ class GraduationReminder
     planned_groups = Graduation.where('held_on >= ?', today).all.map(&:group)
     missing_groups = groups - planned_groups
     missing_groups.each do |g|
-      instructors = GroupInstructor.includes(:group_schedule => :group).where('group_id = ?', g.id).all.select(&:acive?).map(&:member)
+      instructors = GroupInstructor.includes(:group_schedule => :group).
+          where('groups.id = ?', g.id).all.select(&:active?).map(&:member).uniq
       next if instructors.empty?
       instructors.each do |i|
-        GraduationMailer.missing_graduation(instructor, g).deliver
+        GraduationMailer.missing_graduation(i, g).deliver
       end
     end
   rescue

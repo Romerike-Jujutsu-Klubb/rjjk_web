@@ -86,8 +86,8 @@ ActiveRecord::Schema.define(:version => 20130910172841) do
     t.string  "parent_2_name",        :limit => 64
     t.string  "parent_2_mobile",      :limit => 16
     t.string  "billing_email",        :limit => 64
-    t.index ["image_id"], :name => "index_members_on_image_id", :unique => true
-    t.index ["user_id"], :name => "index_members_on_user_id", :unique => true
+    t.index ["image_id"], :name => "index_members_on_image_id", :unique => true, :order => {"image_id" => :asc}
+    t.index ["user_id"], :name => "index_members_on_user_id", :unique => true, :order => {"user_id" => :asc}
   end
 
   create_table "attendances", :force => true do |t|
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(:version => 20130910172841) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status",            :limit => 1, :null => false
-    t.index ["member_id", "group_schedule_id", "year", "week"], :name => "index_attendances_on_member_id_and_group_schedule_id_and_year_a", :unique => true
+    t.index ["member_id", "group_schedule_id", "year", "week"], :name => "index_attendances_on_member_id_and_group_schedule_id_and_year_a", :unique => true, :order => {"member_id" => :asc, "group_schedule_id" => :asc, "year" => :asc, "week" => :asc}
     t.foreign_key ["group_schedule_id"], "group_schedules", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "attendances_group_schedule_id_fkey"
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "attendances_member_id_fkey"
   end
@@ -278,7 +278,7 @@ ActiveRecord::Schema.define(:version => 20130910172841) do
     t.datetime "updated_at",        :null => false
     t.integer  "group_schedule_id", :null => false
     t.integer  "semester_id",       :null => false
-    t.index ["semester_id"], :name => "fk__group_instructors_semester_id"
+    t.index ["semester_id"], :name => "fk__group_instructors_semester_id", :order => {"semester_id" => :asc}
     t.foreign_key ["semester_id"], "semesters", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_instructors_semester_id"
   end
 
@@ -289,8 +289,8 @@ ActiveRecord::Schema.define(:version => 20130910172841) do
     t.date     "last_session"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.index ["group_id"], :name => "fk__group_semesters_group_id"
-    t.index ["semester_id"], :name => "fk__group_semesters_semester_id"
+    t.index ["group_id"], :name => "fk__group_semesters_group_id", :order => {"group_id" => :asc}
+    t.index ["semester_id"], :name => "fk__group_semesters_semester_id", :order => {"semester_id" => :asc}
     t.foreign_key ["group_id"], "groups", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_semesters_group_id"
     t.foreign_key ["semester_id"], "semesters", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_semesters_semester_id"
   end
@@ -298,7 +298,7 @@ ActiveRecord::Schema.define(:version => 20130910172841) do
   create_table "groups_members", :id => false, :force => true do |t|
     t.integer "group_id",  :null => false
     t.integer "member_id", :null => false
-    t.index ["group_id", "member_id"], :name => "index_groups_members_on_group_id_and_member_id", :unique => true
+    t.index ["group_id", "member_id"], :name => "index_groups_members_on_group_id_and_member_id", :unique => true, :order => {"group_id" => :asc, "member_id" => :asc}
     t.foreign_key ["group_id"], "groups", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "groups_members_group_id_fkey"
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "groups_members_member_id_fkey"
   end
@@ -377,7 +377,7 @@ ActiveRecord::Schema.define(:version => 20130910172841) do
     t.integer  "tid",                         :null => false
     t.string   "epost_faktura", :limit => 64
     t.string   "stilart",       :limit => 64, :null => false
-    t.index ["tid"], :name => "index_nkf_member_trials_on_tid", :unique => true
+    t.index ["tid"], :name => "index_nkf_member_trials_on_tid", :unique => true, :order => {"tid" => :asc}
   end
 
   create_table "nkf_members", :force => true do |t|
@@ -436,7 +436,7 @@ ActiveRecord::Schema.define(:version => 20130910172841) do
     t.string   "new_path"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.index ["old_path"], :name => "index_page_aliases_on_old_path", :unique => true
+    t.index ["old_path"], :name => "index_page_aliases_on_old_path", :unique => true, :order => {"old_path" => :asc}
   end
 
   create_table "signatures", :force => true do |t|
@@ -446,7 +446,7 @@ ActiveRecord::Schema.define(:version => 20130910172841) do
     t.binary   "image",        :null => false
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
-    t.index ["member_id"], :name => "fk__signatures_member_id"
+    t.index ["member_id"], :name => "fk__signatures_member_id", :order => {"member_id" => :asc}
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_signatures_member_id"
   end
 
@@ -467,7 +467,7 @@ ActiveRecord::Schema.define(:version => 20130910172841) do
     t.string   "rel_type",   :limit => 16, :null => false
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
-    t.index ["user_id", "image_id", "rel_type"], :name => "index_user_images_on_user_id_and_image_id_and_rel_type", :unique => true
+    t.index ["user_id", "image_id", "rel_type"], :name => "index_user_images_on_user_id_and_image_id_and_rel_type", :unique => true, :order => {"user_id" => :asc, "image_id" => :asc, "rel_type" => :asc}
   end
 
 end

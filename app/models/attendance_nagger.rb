@@ -61,7 +61,11 @@ class AttendanceNagger
       recipients.each do |recipient|
         if recipient != uwe
           next if new_attendances.empty?
-          displayed_absentees = [] if new_absentees.size > new_attendances.size
+          if new_absentees.size > new_attendances.size
+            displayed_absentees = []
+          else
+            displayed_absentees = new_absentees
+          end
         end
         AttendanceMailer.changes(gs, recipient, new_attendees, displayed_absentees, attendees).deliver
       end
