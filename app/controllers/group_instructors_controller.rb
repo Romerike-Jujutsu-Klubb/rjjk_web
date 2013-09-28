@@ -39,7 +39,7 @@ class GroupInstructorsController < ApplicationController
 
   # GET /group_instructors/1/edit
   def edit
-    @group_instructor = GroupInstructor.find(params[:id])
+    @group_instructor ||= GroupInstructor.find(params[:id])
     load_form_data
   end
 

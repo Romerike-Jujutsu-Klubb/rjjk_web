@@ -8,7 +8,8 @@ class GraduationReminder
     missing_groups = groups - planned_groups
     missing_groups.each do |g|
       instructors = GroupInstructor.includes(:group_schedule => :group).
-          where('groups.id = ?', g.id).all.select(&:active?).map(&:member).uniq
+          where('role = ? AND groups.id = ?', GroupInstructor::Role::CHIEF, g.id).
+          all.select(&:active?).map(&:member).uniq
       next if instructors.empty?
       instructors.each do |i|
         GraduationMailer.missing_graduation(i, g).deliver

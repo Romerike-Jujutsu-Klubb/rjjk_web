@@ -9,9 +9,13 @@
       <%= f.label :member_id, 'Instruktør' %>
       <%= f.select :member_id, [[]] + @group_instructors.map { |g| [g.name, g.id] } %>
     </div>
-    <div class="field">
+    <div class="field" style="float: left; margin-right: 1em">
       <%= f.label :semester_id %>
       <%= f.select :semester_id, [[]] + @semesters.map { |g| [g.name, g.id] } %>
+    </div>
+    <div class="field">
+      <%= f.label :role, 'Rolle' %>
+      <%= f.select :role, GroupInstructor::Role.constants.map{|r| GroupInstructor::Role.const_get(r)} %>
     </div>
     <div class="actions">
       <%= f.submit 'Lagre', :class => :btn %>

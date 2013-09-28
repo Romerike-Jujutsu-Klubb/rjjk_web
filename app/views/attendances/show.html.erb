@@ -1,3 +1,15 @@
+<h1>Registrert oppmøte</h1>
+
+<ul>
+  <li>
+    <%= @attendance.date %>
+    <%= t(:date)[:day_names][@attendance.date.cwday] %>
+    <%= @attendance.group_schedule.start_at.strftime('%H:%M') %>-
+    <%= @attendance.group_schedule.end_at.strftime('%H:%M') %>
+    <%= @attendance.group_schedule.group.name %>
+    <%= @attendance.status %>
+  </li>
+</ul>
 
 <%= link_to 'Edit', edit_attendance_path(@attendance) %> |
 <%= link_to 'Back', attendances_path %>

@@ -34,7 +34,7 @@ class GraduationsController < ApplicationController
   end
 
   def new
-    @graduation ||= Graduation.new
+    @graduation ||= Graduation.new(params[:graduation])
     @groups = Group.all
   end
 

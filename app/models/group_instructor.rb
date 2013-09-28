@@ -1,6 +1,12 @@
 class GroupInstructor < ActiveRecord::Base
   attr_accessible :group_schedule, :group_schedule_id, :member_id, :role, :semester_id
 
+  module Role
+    CHIEF = 'Hovedinstruktør'
+    INSTRUCTOR = 'Instruktør'
+    ASSISTANT = 'Hjelpeinstruktør'
+  end
+
   belongs_to :group_schedule
   belongs_to :member
   belongs_to :semester

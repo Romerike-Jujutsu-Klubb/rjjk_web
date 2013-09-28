@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130910172841) do
+ActiveRecord::Schema.define(:version => 20130927201629) do
 
   create_table "martial_arts", :force => true do |t|
     t.string "name",   :limit => 16, :null => false
@@ -91,13 +91,16 @@ ActiveRecord::Schema.define(:version => 20130910172841) do
   end
 
   create_table "attendances", :force => true do |t|
-    t.integer  "member_id",                      :null => false
-    t.integer  "group_schedule_id",              :null => false
-    t.integer  "year",                           :null => false
-    t.integer  "week",                           :null => false
+    t.integer  "member_id",                           :null => false
+    t.integer  "group_schedule_id",                   :null => false
+    t.integer  "year",                                :null => false
+    t.integer  "week",                                :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "status",            :limit => 1, :null => false
+    t.string   "status",               :limit => 1,   :null => false
+    t.datetime "sent_review_email_at"
+    t.integer  "rating"
+    t.string   "comment",              :limit => 250
     t.index ["member_id", "group_schedule_id", "year", "week"], :name => "index_attendances_on_member_id_and_group_schedule_id_and_year_a", :unique => true, :order => {"member_id" => :asc, "group_schedule_id" => :asc, "year" => :asc, "week" => :asc}
     t.foreign_key ["group_schedule_id"], "group_schedules", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "attendances_group_schedule_id_fkey"
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "attendances_member_id_fkey"
@@ -274,10 +277,11 @@ ActiveRecord::Schema.define(:version => 20130910172841) do
 
   create_table "group_instructors", :force => true do |t|
     t.integer  "member_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-    t.integer  "group_schedule_id", :null => false
-    t.integer  "semester_id",       :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.integer  "group_schedule_id",               :null => false
+    t.integer  "semester_id",                     :null => false
+    t.string   "role",              :limit => 16, :null => false
     t.index ["semester_id"], :name => "fk__group_instructors_semester_id", :order => {"semester_id" => :asc}
     t.foreign_key ["semester_id"], "semesters", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_instructors_semester_id"
   end

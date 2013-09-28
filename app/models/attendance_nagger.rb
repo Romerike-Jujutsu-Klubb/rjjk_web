@@ -43,10 +43,10 @@ class AttendanceNagger
 
   def self.send_attendance_changes
     now = Time.now
-    group_schedules = GroupSchedule.includes(:group).
+    upcoming_group_schedules = GroupSchedule.includes(:group).
         where('weekday = ? AND end_at >= ? AND groups.closed_on IS NULL AND (groups.school_breaks IS NULL OR groups.school_breaks = ?)',
               now.to_date.cwday, now.time_of_day, false).all
-    group_schedules.each do |gs|
+    upcoming_group_schedules.each do |gs|
       attendances = Attendance.includes(:group_schedule, :member).
           where('group_schedule_id = ? AND year = ? AND week = ?',
                 gs.id, now.year, now.to_date.cweek).all
@@ -69,6 +69,38 @@ class AttendanceNagger
         end
         AttendanceMailer.changes(gs, recipient, new_attendees, displayed_absentees, attendees).deliver
       end
+    end
+  rescue Exception
+    logger.error $!
+    ExceptionNotifier.notify_exception($!)
+  end
+
+  def self.send_attendance_review
+    now = Time.now
+    completed_group_schedules = GroupSchedule.includes(:group).
+        where('weekday = ? AND end_at between ? AND? AND groups.closed_on IS NULL AND (groups.school_breaks IS NULL OR groups.school_breaks = ?)',
+              now.to_date.cwday, now.time_of_day, (now - 1.hour).time_of_day, false).all
+
+    puts "completed_group_schedules: #{completed_group_schedules}"
+
+    planned_attendances = Attendance.includes(:group_schedule, :member).
+        where('group_schedule_id IN (?) AND year = ? AND week = ? AND status = ? AND sent_review_email_at IS NULL',
+              completed_group_schedules.map(&:id), now.year, now.to_date.cweek, Attendance::Status::WILL_ATTEND).all
+
+    puts "planned_attendances: #{planned_attendances}"
+
+    planned_attendances.group_by(&:member).each do |member, completed_attendances|
+      puts "completed_attendances: #{completed_attendances}"
+
+      older_attendances =
+          Attendance.where('member_id = ? AND attendances.id NOT IN (?) AND status = ?',
+                           member.id, completed_attendances.map(&:id), Attendance::Status::WILL_ATTEND).
+              includes(:group_schedule).order(:year, :week, 'group_schedules.weekday').all
+
+      puts "older_attendances: #{older_attendances}"
+
+      AttendanceMailer.review(member, completed_attendances, older_attendances).deliver
+      completed_attendances.each { |a| a.update_attributes :sent_review_email_at => now }
     end
   rescue Exception
     logger.error $!

@@ -1,4 +1,3 @@
-# encoding: utf-8
 class AttendanceMailer < ActionMailer::Base
   include UserSystem
 
@@ -43,6 +42,15 @@ class AttendanceMailer < ActionMailer::Base
     end
     mail to: Rails.env == 'production' ? recipient.email : %Q{"#{recipient.name}" <uwe@kubosch.no>},
          subject: "[RJJK] Trening i #{@group_schedule.start_at.day_phase}: #{change_msg.join(', ')}"
+  end
+
+  def review(member, completed_attendances, older_attendances)
+    @member = member
+    @completed_attendances = completed_attendances
+    @older_attendances = older_attendances
+    @title = 'Hvordan var treningen?'
+    mail to: Rails.env == 'production' ? recipient.email : %Q{"#{member.name}" <uwe@kubosch.no>},
+         subject: "[RJJK] #{@title}"
   end
 
 end
