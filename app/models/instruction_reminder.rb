@@ -1,3 +1,4 @@
+#FIXME(uwe): Notify if CHIEF Instructor is missing.
 class InstructionReminder
   def self.notify_missing_instructors
     semesters = Semester.where("start_on < (CURRENT_DATE + interval '3 months') AND end_on > CURRENT_DATE").order(:end_on).all
