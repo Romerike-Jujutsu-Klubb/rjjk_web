@@ -7,7 +7,7 @@ unless Rails.env == 'test'
   scheduler.cron('0 8-23 * * *') { send_news }
   scheduler.cron('5 8    * * *') { AttendanceNagger.send_attendance_summary }
   scheduler.cron('5 9-23 * * *') { AttendanceNagger.send_attendance_changes }
-  scheduler.cron('8/30 * * * *') { AttendanceNagger.send_attendance_review }
+  scheduler.cron('*/30+8 * * * *') { AttendanceNagger.send_attendance_review }
   scheduler.cron('9 9-23 * * *') { send_event_messages }
 
   # Admin Hourly
@@ -127,7 +127,7 @@ def notify_wrong_contracts
   members = NkfMember.where(:medlemsstatus => 'A').all
   wrong_contracts = members.select { |m|
     m.member &&
-    (m.member.age < 10 && m.kont_sats !~ /^Barn/) ||
+        (m.member.age < 10 && m.kont_sats !~ /^Barn/) ||
         (m.member.age >= 10 && m.member.age < 15 && m.kont_sats !~ /^Ungdom/) ||
         (m.member.age >= 15 && m.kont_sats !~ /^(Voksne|Styre|Trenere|Æresmedlem)/)
   }

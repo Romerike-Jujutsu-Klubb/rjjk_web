@@ -77,10 +77,9 @@ class AttendanceNagger
 
   def self.send_attendance_review
     now = Time.now
-    return if now.time_of_day < TimeOfDay.new(2,0)
     completed_group_schedules = GroupSchedule.includes(:group).
-        where('weekday = ? AND end_at between ? AND? AND groups.closed_on IS NULL AND (groups.school_breaks IS NULL OR groups.school_breaks = ?)',
-              now.to_date.cwday, now.time_of_day, (now - 1.hour).time_of_day, false).all
+        where('weekday = ? AND end_at BETWEEN ? AND ? AND groups.closed_on IS NULL AND (groups.school_breaks IS NULL OR groups.school_breaks = ?)',
+              now.to_date.cwday, (now - 1.hour).time_of_day, now.time_of_day, false).all
 
     puts "completed_group_schedules: #{completed_group_schedules}"
 
