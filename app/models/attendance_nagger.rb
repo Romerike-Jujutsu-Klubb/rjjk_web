@@ -80,25 +80,15 @@ class AttendanceNagger
     completed_group_schedules = GroupSchedule.includes(:group).
         where('weekday = ? AND end_at BETWEEN ? AND ? AND groups.closed_on IS NULL AND (groups.school_breaks IS NULL OR groups.school_breaks = ?)',
               now.to_date.cwday, (now - 1.hour).time_of_day, now.time_of_day, false).all
-
-    puts "completed_group_schedules: #{completed_group_schedules}"
-
     planned_attendances = Attendance.includes(:group_schedule, :member).
         where('group_schedule_id IN (?) AND year = ? AND week = ? AND status = ? AND sent_review_email_at IS NULL',
               completed_group_schedules.map(&:id), now.year, now.to_date.cweek, Attendance::Status::WILL_ATTEND).all
-
-    puts "planned_attendances: #{planned_attendances}"
-
     planned_attendances.group_by(&:member).each do |member, completed_attendances|
-      puts "completed_attendances: #{completed_attendances}"
-
       older_attendances =
           Attendance.where('member_id = ? AND attendances.id NOT IN (?) AND status = ?',
                            member.id, completed_attendances.map(&:id), Attendance::Status::WILL_ATTEND).
-              includes(:group_schedule).order(:year, :week, 'group_schedules.weekday').all
-
-      puts "older_attendances: #{older_attendances}"
-
+              includes(:group_schedule).
+              order(:year, :week, 'group_schedules.weekday').all.reverse
       AttendanceMailer.review(member, completed_attendances, older_attendances).deliver
       completed_attendances.each { |a| a.update_attributes :sent_review_email_at => now }
     end

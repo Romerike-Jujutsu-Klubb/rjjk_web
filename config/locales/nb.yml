@@ -152,6 +152,8 @@ nb:
         delimiter: ""
         precision: 4
 
+  attendances:
+    X: Deltok
   attended: Deltok
   description: Beskrivelse
   draft: Kladd

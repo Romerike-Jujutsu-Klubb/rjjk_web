@@ -4,8 +4,7 @@
   <li>
     <%= @attendance.date %>
     <%= t(:date)[:day_names][@attendance.date.cwday] %>
-    <%= @attendance.group_schedule.start_at.strftime('%H:%M') %>-
-    <%= @attendance.group_schedule.end_at.strftime('%H:%M') %>
+    <%= @attendance.group_schedule.start_at.strftime('%H:%M') %>-<%= @attendance.group_schedule.end_at.strftime('%H:%M') %>
     <%= @attendance.group_schedule.group.name %>
     <%= @attendance.status %>
   </li>

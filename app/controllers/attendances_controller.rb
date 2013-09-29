@@ -214,4 +214,17 @@ class AttendancesController < ApplicationController
     end
   end
 
+  def review
+    @attendance = Attendance.find(params[:id])
+    raise "Wrong user" unless @attendance.member == current_user.member
+    @attendance.update_attributes params[:attendance]
+
+    if (request.xhr?)
+      render :text => "Stored: #{@attendance.status}"
+    else
+      flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  #{t(:attendances)[@attendance.status.to_sym]}"
+      back_or_redirect_to(:action => :plan)
+    end
+  end
+
 end
