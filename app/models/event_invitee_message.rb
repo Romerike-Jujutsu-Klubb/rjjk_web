@@ -24,10 +24,10 @@ class EventInviteeMessage < ActiveRecord::Base
       self.body ||= %Q{Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
 og kan bekrefte at du har fått plass.
 
-Deltakeravgiften på kr 700,- kan betales til konto 7035.05.37706.
+Deltakeravgiften på kr 800,- kan betales til konto 7035.05.37706.
 Merk betalingen med "#{event_invitee.event.name}".
 
-Har du noen spørsmål, så ta kontakt med Uwe på uwe@kubosch.no eller på telefon 922 06 046.
+Har du noen spørsmål, så ta kontakt med Svein Robert på medlem@jujutsu.no eller på telefon 975 34 766.
 
 --
 Med vennlig hilsen,
