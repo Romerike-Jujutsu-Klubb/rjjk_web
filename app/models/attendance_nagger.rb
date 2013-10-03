@@ -66,6 +66,8 @@ class AttendanceNagger
           else
             displayed_absentees = new_absentees
           end
+        else
+          displayed_absentees = new_absentees
         end
         AttendanceMailer.changes(gs, recipient, new_attendees, displayed_absentees, attendees).deliver
       end
