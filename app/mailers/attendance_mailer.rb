@@ -49,7 +49,7 @@ class AttendanceMailer < ActionMailer::Base
     @completed_attendances = completed_attendances
     @older_attendances = older_attendances
     @title = 'Hvordan var treningen?'
-    mail to: Rails.env == 'production' ? recipient.email : %Q{"#{member.name}" <uwe@kubosch.no>},
+    mail to: Rails.env == 'production' ? member.email : %Q{"#{member.name}" <uwe@kubosch.no>},
          subject: "[RJJK] #{@title}"
   end
 
