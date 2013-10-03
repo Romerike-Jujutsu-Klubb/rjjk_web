@@ -78,10 +78,22 @@
                     <h3>Påmeldt til neste trening</h3>
                     <br clear="all"/>
                     <ul>
+                      <% if [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED].include? @your_attendance_next_practice.status %>
+                      <li><%= @your_attendance_next_practice.member.name %></li>
+                      <% end %>
                       <% @other_attendees.each do |a| %>
                           <li><%= a.member.name %></li>
                       <% end %>
                     </ul>
+                    <% if @other_absentees.any? %>
+                    <h3>Disse kommer ikke</h3>
+                    <br clear="all"/>
+                    <ul>
+                      <% @other_absentees.each do |a| %>
+                          <li><%= a.member.name %></li>
+                      <% end %>
+                    </ul>
+                    <% end %>
                   </div>
                   <%= javascript_tag do %>
                       $(".colorbox").colorbox({
