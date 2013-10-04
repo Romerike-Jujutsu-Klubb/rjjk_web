@@ -117,7 +117,7 @@ GEM
     metaclass (0.0.1)
     mime-types (1.25)
     minitest (4.7.5)
-    minitest-reporters (0.14.22)
+    minitest-reporters (0.14.23)
       ansi
       builder
       minitest (>= 2.12, < 5.0)
@@ -187,8 +187,8 @@ GEM
     ri_cal (0.8.8)
     rmagick4j (0.3.7)
     ruby-rc4 (0.1.5)
-    rufus-scheduler (2.0.24)
-      tzinfo (>= 0.3.22)
+    rufus-scheduler (3.0.0)
+      tzinfo
     sass (3.2.11)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -208,7 +208,7 @@ GEM
     therubyrhino_jar (1.7.4)
     thor (0.18.1)
     tilt (1.4.1)
-    tinymce-rails (4.0.6)
+    tinymce-rails (4.0.7)
       railties (>= 3.1.1)
     tinymce-rails-langs (4.20130625)
       tinymce-rails (~> 4.0)

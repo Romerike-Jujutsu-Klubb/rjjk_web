@@ -79,17 +79,44 @@
                 </ul>
               </div>
               <br/>
-              <% others = gs.attendances.select { |a| [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(a.status) && a.year == year && a.week == week && a.member_id != current_user.member.id } %>
+              <% attendances = gs.attendances.select { |a| [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(a.status) && a.year == year && a.week == week } %>
+              <% absences = gs.attendances.select { |a| Attendance::ABSENT_STATES.include?(a.status) && a.year == year && a.week == week } %>
+              <% others = attendances.select { |a| a.member_id != current_user.member.id } %>
               <% if others.any? %>
                   <small>
-                    <%= others[rand others.size].member.first_name %>
-                    <% if others.size > 1 %>
-                        og
-                        <%= others.size - 1 %>
-                        <%= others.size == 2 ? 'annen' : 'andre' %>
-                    <% end %>
+                    <a class="colorbox" href="#layout_attendance_details_<%= gs.id %>"
+                       title="Påmeldt til neste trening">
+                      <%= others[rand others.size].member.first_name %>
+                      <% if others.size > 1 %>
+                          og
+                          <%= others.size - 1 %>
+                          <%= others.size == 2 ? 'annen' : 'andre' %>
+                      <% end %>
+                    </a>
                     kommer.
                   </small>
+                  <div style="display:none">
+                    <div id="layout_attendance_details_<%= gs.id %>">
+                      <img style="float: left; width: 100px; height: 100px; margin-right: 1em; margin-left: 0.5em"
+                           src="/assets/rjjk_logo_&_txt_320.png"/>
+
+                      <h3>Påmeldt til neste trening</h3>
+                      <br clear="all"/>
+                      <ul>
+                        <% attendances.each do |a| %>
+                            <li><%= a.member.name %></li>
+                        <% end %>
+                      </ul>
+                      <% if absences.any? %>
+                          <h4>Disse kommer ikke</h4>
+                          <ul>
+                            <% absences.each do |a| %>
+                                <li><%= a.member.name %></li>
+                            <% end %>
+                          </ul>
+                      <% end %>
+                    </div>
+                  </div>
               <% end %>
             </td>
         <% end %>

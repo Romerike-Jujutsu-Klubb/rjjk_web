@@ -20,3 +20,15 @@
 //= require gmaps4rails/gmaps4rails.googlemaps
 //= require bootstrap
 //= require colorbox-rails.js
+$(function () {
+    $(".colorbox").colorbox({
+        inline: true,
+        title: function () {
+            return $(this).attr("title")
+        },
+        href: function () {
+            return $(this).attr("href")
+        },
+        returnFocus: false,
+    });
+});

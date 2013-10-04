@@ -1,5 +1,5 @@
 unless Rails.env == 'test'
-  scheduler = Rufus::Scheduler.start_new
+  scheduler = Rufus::Scheduler.new
 
   # Users
   scheduler.cron('0 7    * * mon') { AttendanceNagger.send_attendance_plan }
