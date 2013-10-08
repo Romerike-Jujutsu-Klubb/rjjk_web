@@ -2,7 +2,7 @@ require 'test_helper'
 
 class GroupSemestersControllerTest < ActionController::TestCase
   setup do
-    @group_semester = group_semesters(:one)
+    @group_semester = group_semesters(:previous_panda)
     login(:admin)
   end
 

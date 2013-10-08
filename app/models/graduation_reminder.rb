@@ -15,10 +15,10 @@ class GraduationReminder
         GraduationMailer.missing_graduation(i, g).deliver
       end
     end
-  rescue
-    logger.error "Exception sending missing graduations message: #{$!}"
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
+  #rescue
+  #  logger.error "Exception sending missing graduations message: #{$!}"
+  #  logger.error $!.backtrace.join("\n")
+  #  ExceptionNotifier.notify_exception($!)
   end
 
   def self.notify_overdue_graduates
