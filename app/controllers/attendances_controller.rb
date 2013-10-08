@@ -1,6 +1,6 @@
 # encoding: UTF-8
 class AttendancesController < ApplicationController
-  user_actions = [:announce, :plan]
+  user_actions = [:announce, :plan, :review]
   before_filter :admin_required, :except => user_actions
   before_filter :authenticate_user, :only => user_actions
 
