@@ -222,7 +222,8 @@ class Member < ActiveRecord::Base
 
   def passive?(date = Date.today, group = nil)
     nkf_member.medlemsstatus == 'P' ||
-        attendances.select { |a| (group.nil? || a.group_schedule.group_id == group.id) && a.date <= (date + 31) && a.date > (date - 92) }.empty?
+        (joined_on < 2.months.ago.to_date &&
+            attendances.select { |a| (group.nil? || a.group_schedule.group_id == group.id) && a.date <= (date + 31) && a.date > (date - 92) }.empty?)
   end
 
   def senior?
