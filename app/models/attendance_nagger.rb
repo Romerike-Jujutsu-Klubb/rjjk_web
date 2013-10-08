@@ -90,7 +90,8 @@ class AttendanceNagger
           Attendance.where('member_id = ? AND attendances.id NOT IN (?) AND status = ?',
                            member.id, completed_attendances.map(&:id), Attendance::Status::WILL_ATTEND).
               includes(:group_schedule).
-              order(:year, :week, 'group_schedules.weekday').all.reverse
+              order(:year, :week, 'group_schedules.weekday').all.
+              select { |a| a.date <= Date.today }.reverse
       AttendanceMailer.review(member, completed_attendances, older_attendances).deliver
       completed_attendances.each { |a| a.update_attributes :sent_review_email_at => now }
     end
