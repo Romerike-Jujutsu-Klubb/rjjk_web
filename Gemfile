@@ -47,7 +47,7 @@ end
 
 group :development do
   gem 'rdoc'
-  gem 'capistrano'
+  gem 'capistrano', '<3.0.0'
 end
 
 group :test do
