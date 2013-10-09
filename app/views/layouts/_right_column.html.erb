@@ -87,7 +87,6 @@
                     </ul>
                     <% if @other_absentees.any? %>
                     <h3>Disse kommer ikke</h3>
-                    <br clear="all"/>
                     <ul>
                       <% @other_absentees.each do |a| %>
                           <li><%= a.member.name %></li>

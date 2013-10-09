@@ -14,9 +14,9 @@ RjjkWeb::Application.routes.draw do
   get 'user/welcome'
 
   match ':controller/active_contracts', action: :active_contracts
-  match ':controller/attendance_form', action: :attendance_form
-  match ':controller/attendance_form/:id', action: :attendance_form
-  match ':controller/attendance_form_index', action: :attendance_form_index
+  match ':controller/form', action: :form
+  match ':controller/form/:id', action: :form
+  match ':controller/form_index', action: :form_index
   match ':controller/calendar', action: :calendar
   match ':controller/create', action: :create
   match ':controller/email_list', action: :email_list

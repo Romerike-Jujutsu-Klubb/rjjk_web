@@ -96,7 +96,7 @@
 				<li><%=menu_item 'Grader', :controller => 'ranks' %></li>
 				<li><%=menu_item 'Grupper', :controller => 'groups' %></li>
 				<li><%=menu_item 'Treninger', :controller => 'group_schedules' %></li>
-				<li><%=menu_item 'Oppmøtelister', :controller => 'members', :action => :attendance_form_index %></li>
+				<li><%=menu_item 'Oppmøtelister', :controller => :attendances, :action => :form_index %></li>
 			</ul>
 		</div>
 		<% end %>

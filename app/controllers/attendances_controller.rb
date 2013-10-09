@@ -227,11 +227,11 @@ class AttendancesController < ApplicationController
     end
   end
 
-  def attendance_form_index
+  def form_index
     @groups = Group.active(Date.today).order :from_age
   end
 
-  def attendance_form
+  def form
     if params[:date]
       @date = Date.parse(params[:date])
     end
