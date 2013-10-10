@@ -64,6 +64,23 @@ class Group < ActiveRecord::Base
   end
 
   def instructors
-    group_schedules.map(&:group_instructors).flatten.select(&:active?).map(&:member).uniq.sort_by{|m| -(m.current_rank.try(:position) || -99)}
+    group_schedules.map(&:group_instructors).flatten.select(&:active?).map(&:member).uniq.sort_by { |m| -(m.current_rank.try(:position) || -99) }
   end
+
+  def trials
+    NkfMemberTrial.
+        includes(:trial_attendances => :group_schedule).
+        where('alder BETWEEN ? AND ?', from_age, to_age).
+        order('fornavn, etternavn').
+        all
+  end
+
+  def waiting_list
+    return [] unless target_size
+    trial_list = trials.sort_by{|t| [-t.trial_attendances.size, t.reg_dato]}
+    active_size = members.select(&:active?).size
+    active_trial_count = (target_size - active_size)
+    trial_list[active_trial_count..-1]
+  end
+
 end

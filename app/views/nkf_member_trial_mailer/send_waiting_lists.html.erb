@@ -1,0 +1,14 @@
+Følgende grupper har folk på venteliste:
+
+<ul>
+  <% @lists.each do |list| %>
+      <li>
+        <%= list[0].group.name %>
+        <ul>
+          <% list.each do |trial| %>
+          <li><%=trial.name%></li>
+          <% end %>
+        </ul>
+      </li>
+  <% end %>
+</ul>

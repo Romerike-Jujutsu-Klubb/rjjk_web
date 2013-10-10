@@ -59,7 +59,7 @@ class AttendancesController < ApplicationController
         format.html do
           if request.xhr?
             flash.clear
-            render :partial => '/members/attendance_delete_link', :locals => {:attendance => @attendance}
+            render :partial => '/attendances/attendance_delete_link', :locals => {:attendance => @attendance}
           else
             back_or_redirect_to(@attendance)
           end
@@ -95,7 +95,7 @@ class AttendancesController < ApplicationController
       format.html do
         if request.xhr?
           flash.clear
-          render :partial => '/members/attendance_create_link', :locals => {:member_id => @attendance.member_id, :group_schedule_id => @attendance.group_schedule_id, :date => @attendance.date}
+          render :partial => '/attendances/attendance_create_link', :locals => {:member_id => @attendance.member_id, :group_schedule_id => @attendance.group_schedule_id, :date => @attendance.date}
         else
           redirect_to(attendances_url)
         end
@@ -216,7 +216,7 @@ class AttendancesController < ApplicationController
 
   def review
     @attendance = Attendance.find(params[:id])
-    raise "Wrong user" unless @attendance.member == current_user.member
+    raise 'Wrong user' unless @attendance.member == current_user.member
     @attendance.update_attributes params[:attendance]
 
     if (request.xhr?)
@@ -273,11 +273,7 @@ class AttendancesController < ApplicationController
             all.map(&:member).uniq
         attended_members -= @instructors
         @members = current_members + (attended_members - current_members)
-        @trials = NkfMemberTrial.
-            includes(:trial_attendances => :group_schedule).
-            where('alder BETWEEN ? AND ?', @group.from_age, @group.to_age).
-            order('fornavn, etternavn').
-            all
+        @trials = @group.trials
 
         @instructors.sort_by! do |m|
           r = m.current_rank(@group.martial_art, last_date)

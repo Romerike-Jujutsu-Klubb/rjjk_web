@@ -18,7 +18,7 @@ class InformationPageMailer < ActionMailer::Base
     @title = page.title
     @timestamp = @page.revised_at
     mail from: Rails.env == 'production' ? 'post@jujutsu.no' : "#{Rails.env}@jujutsu.no",
-         to: Rails.env == 'production' ? member.email : %Q{"#{member.name}" <uwe@kubosch.no>},
+         to: Rails.env == 'production' ? member.emails : %Q{"#{member.name}" <uwe@kubosch.no>},
          subject: "[RJJK] #{@page.title}"
   end
 end

@@ -21,7 +21,8 @@ unless Rails.env == 'test'
 
   # Admin Weekly
   scheduler.cron('0 8 * * mon') { InformationPageNotifier.notify_outdated_pages }
-  scheduler.cron('0 2 * * mon') { notify_overdue_trials }
+  scheduler.cron('0 2 * * mon') { NkfMemberTrialReminder.notify_overdue_trials }
+  scheduler.cron('0 3 * * mon') { NkfMemberTrialReminder.send_waiting_lists }
   scheduler.cron('0 4 * * mon') { notify_missing_group_semesters }
   scheduler.cron('0 5 * * mon') { InstructionReminder.notify_missing_instructors }
   scheduler.cron('0 7 * * mon') { GraduationReminder.notify_overdue_graduates }
@@ -179,13 +180,5 @@ def notify_missing_group_semesters
 rescue
   logger.error "Exception sending session dates message: #{$!}"
   logger.error $!.backtrace.join("\n")
-  ExceptionNotifier.notify_exception($!)
-end
-
-def notify_overdue_trials
-  trials = NkfMemberTrial.where('reg_dato < ?', 2.months.ago).all
-  NkfMemberTrialMailer.notify_overdue_trials(trials).deliver
-rescue Exception
-  logger.error $!
   ExceptionNotifier.notify_exception($!)
 end

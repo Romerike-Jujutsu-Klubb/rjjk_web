@@ -23,4 +23,7 @@ class NkfMemberTrial < ActiveRecord::Base
         }.update(options))
   end
 
+  def group
+    Group.active(Date.today).all.find{|g|g.contains_age age}
+  end
 end

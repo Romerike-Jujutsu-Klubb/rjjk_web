@@ -13,4 +13,9 @@ class NkfMemberTrialMailer < ActionMailer::Base
     @trials = trials
     mail subject: 'Utløpt prøvetid'
   end
+
+  def send_waiting_lists(lists)
+    @lists = lists
+    mail subject: 'Ventelister'
+  end
 end
