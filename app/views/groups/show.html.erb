@@ -6,6 +6,22 @@
   <p>
     <strong>Fra <%= @group.from_age %> til <%= @group.to_age %> år</strong>.
   </p>
+
+  <p>
+    <% current_size = @group.members.select(&:active?).size %>
+    <% if @group.target_size %>
+        <% free_spots = @group.target_size - current_size %>
+        <% if free_spots > 0 %>
+            <%= free_spots %> ledige plasser.<br/>
+            <%= link_to 'Meld deg på!', 'http://www.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)' %>
+        <% else %>
+            Gruppen er full.  Sett deg på<br/>
+            <%= link_to 'venteliste', 'http://www.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)' %>.
+        <% end %>
+    <% else %>
+        <%= current_size %> aktive.
+    <% end %>
+  </p>
 </div>
 
 <div style="float:left; width: 50%">
@@ -17,7 +33,8 @@
             Årskontingent <strong>kr <%= @group.yearly_price %>,-</strong><br/>
         <% end %>
 
-        Treningsavgift <strong>kr <%= @group.monthly_price %>,-</strong> (månedlig)
+        Treningsavgift <strong>kr <%= @group.monthly_price %>,-</strong>
+        (månedlig)
         Treningsavgiften inkluderer gradering og belte og betales hele året.
       </p>
   <% end %>
@@ -39,7 +56,8 @@
     <div style="float:left; width: 50%">
       <h4>Instruktører</h4>
       <% @instructors.each do |m| %>
-          <%= m.name %><br/>
+          <%= m.name %>
+          <br/>
       <% end %>
       <br/>
     </div>
@@ -54,22 +72,28 @@
         <br/>
         <% if @group.current_semester %>
             <% if @group.current_semester.try(:first_session).try(:>, Date.today) %>
-                Første trening etter <%=@group.current_semester.first_session.month > 6 ? 'sommer' : 'jule'%>ferien er
-                <strong><%=t(:date)[:day_names][@group.current_semester.first_session.cwday].downcase %>
+                Første trening
+                etter <%= @group.current_semester.first_session.month > 6 ? 'sommer' : 'jule' %>
+                ferien er
+                <strong><%= t(:date)[:day_names][@group.current_semester.first_session.cwday].downcase %>
                   <%= @group.current_semester.first_session.day %>.
                   <%= t(:date)[:month_names][@group.current_semester.first_session.month].downcase %></strong>.
                 <br/>
             <% end %>
             <% if @group.current_semester.last_session %>
-                Siste trening før <%=@group.current_semester.last_session.month < 8 ? 'sommer' : 'jule'%>ferien er
-                <strong><%=t(:date)[:day_names][@group.current_semester.last_session.cwday].downcase %>
+                Siste trening
+                før <%= @group.current_semester.last_session.month < 8 ? 'sommer' : 'jule' %>
+                ferien er
+                <strong><%= t(:date)[:day_names][@group.current_semester.last_session.cwday].downcase %>
                   <%= @group.current_semester.last_session.day %>.
                   <%= t(:date)[:month_names][@group.current_semester.last_session.month].downcase %></strong>.
                 <br/>
             <% end %>
             <% if @group.next_semester.try(:first_session) %>
-                Første trening etter <%=@group.next_semester.first_session.month > 6 ? 'sommer' : 'jule'%>ferien er
-                <strong><%=t(:date)[:day_names][@group.next_semester.first_session.cwday].downcase %>
+                Første trening
+                etter <%= @group.next_semester.first_session.month > 6 ? 'sommer' : 'jule' %>
+                ferien er
+                <strong><%= t(:date)[:day_names][@group.next_semester.first_session.cwday].downcase %>
                   <%= @group.next_semester.first_session.day %>.
                   <%= t(:date)[:month_names][@group.next_semester.first_session.month].downcase %></strong>.
                 <br/>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130927201629) do
+ActiveRecord::Schema.define(:version => 20131010142058) do
 
   create_table "martial_arts", :force => true do |t|
     t.string "name",   :limit => 16, :null => false
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20130927201629) do
     t.text     "description"
     t.boolean  "school_breaks"
     t.string   "color",          :limit => 16
+    t.integer  "target_size"
     t.foreign_key ["martial_art_id"], "martial_arts", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "groups_martial_art_id_fkey"
   end
 

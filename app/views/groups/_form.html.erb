@@ -89,7 +89,14 @@
 
           <%= f.label :description, :Beskrivelse %>
           <%= f.text_area :description, :rows => 10, :class => 'input-xlarge' %>
+
+          <div>
+            <%= f.label :target_size, 'Ønsket størrelse' %>
+            <%= f.text_field :target_size, :class => 'input-small' %>
+          </div>
+
         </td>
+
       </tr>
     </table>
 

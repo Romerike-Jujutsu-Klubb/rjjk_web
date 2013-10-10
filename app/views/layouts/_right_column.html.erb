@@ -205,11 +205,12 @@
                         :title => "Sett '#{event.name}' på din kalender!" %>
           </h4>
 
-          <% if user? %>
-              <div class="details">
-                <%= event.event_invitees.select { |ei| ei.will_attend }.size %>
-                påmeldte.
-              </div>
+          <% if user? -%>
+              <% if (crowd_size = event.event_invitees.select { |ei| ei.will_attend }.size) > 0 -%>
+                  <div class="details">
+                    <%= crowd_size %> påmeldte.
+                  </div>
+              <% end %>
           <% end %>
 
           <% if ingress %>

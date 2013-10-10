@@ -220,6 +220,10 @@ class Member < ActiveRecord::Base
     end
   end
 
+  def active?
+    !passive?
+  end
+
   def passive?(date = Date.today, group = nil)
     nkf_member.medlemsstatus == 'P' ||
         (joined_on < 2.months.ago.to_date &&
