@@ -18,7 +18,7 @@ class GroupSchedule < ActiveRecord::Base
     now = Time.now
     today = now.to_date
     Date.commercial today.cwyear, (
-    if weekday > today.cwday || (weekday == today.cwday && start_at > now.time_of_day) then
+    if weekday > today.cwday || (weekday == today.cwday && end_at > now.time_of_day) then
       today.cweek
     else
       today.cweek + 1
