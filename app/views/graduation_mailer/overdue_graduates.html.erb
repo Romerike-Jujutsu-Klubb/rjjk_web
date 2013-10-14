@@ -1,5 +1,20 @@
-<ul>
-  <% @members.each do |m| %>
-      <li><%= m.name %></li>
-  <% end %>
-</ul>
+<% @members.group_by { |m| m.next_rank.group }.each do |group, members| %>
+    <h3><%= group.name %></h3>
+
+    <table>
+      <tr>
+        <th align="left">Navn</th>
+        <th>Grad</th>
+        <th>Minimum</th>
+        <th>Treninger</th>
+      </tr>
+      <% members.each do |m| %>
+          <tr>
+            <td><%= m.name %></td>
+            <td align="center"><%= m.next_rank.name %></td>
+            <td align="center"><%= m.next_rank.minimum_attendances %></td>
+            <td align="center"><%= m.attendances_since_graduation.size %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>

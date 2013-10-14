@@ -20,8 +20,10 @@ class Member < ActiveRecord::Base
   has_many :censors, :dependent => :destroy
   has_many :correspondences, :dependent => :destroy
   has_many :graduates, :dependent => :destroy
+  has_many :passed_graduates, :class_name => 'Graduate',
+           :conditions => {:graduates => {:passed => true}}
   has_many :group_instructors, :dependent => :destroy
-  has_many :ranks, :through => :graduates, :conditions => ['graduates.passed IS NOT NULL AND graduates.passed = ?', true]
+  has_many :ranks, :through => :passed_graduates
   has_many :signatures, :dependent => :destroy
   has_and_belongs_to_many :groups
 

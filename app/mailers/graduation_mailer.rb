@@ -20,7 +20,9 @@ class GraduationMailer < ActionMailer::Base
 
   def overdue_graduates(members)
     @members = members
-    mail subject: 'Disse medlemmene mangler gradering'
+    @title = 'Medlemmer klare for gradering'
+    @timestamp = Time.now
+    mail to: 'uwe@kubosch.no', subject: 'Disse medlemmene mangler gradering'
   end
 
   def date_info_reminder
