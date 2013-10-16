@@ -188,8 +188,8 @@ GEM
     ri_cal (0.8.8)
     rmagick4j (0.3.7)
     ruby-rc4 (0.1.5)
-    rufus-scheduler (3.0.0)
-      tzinfo
+    rufus-scheduler (2.0.24)
+      tzinfo (>= 0.3.22)
     sass (3.2.12)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -268,7 +268,7 @@ DEPENDENCIES
   redbox (~> 1.0.4)
   ri_cal
   rmagick4j
-  rufus-scheduler
+  rufus-scheduler (< 3.0.0)
   sass-rails
   schema_plus!
   simple_drilldown

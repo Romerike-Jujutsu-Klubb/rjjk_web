@@ -5,8 +5,9 @@ class AttendancesController < ApplicationController
   before_filter :authenticate_user, :only => user_actions
 
   caches_page :history_graph, :month_chart
-  cache_sweeper :attendance_image_sweeper, :only => [:create, :update, :destroy]
-  cache_sweeper :grade_history_image_sweeper, :only => [:create, :update, :destroy]
+  update_actions = [:announce, :create, :destroy, :review, :update]
+  cache_sweeper :attendance_image_sweeper, :only => update_actions
+  cache_sweeper :grade_history_image_sweeper, :only => update_actions
 
   def index
     @attendances = Attendance.all

@@ -8,7 +8,7 @@
         <th>Minimum</th>
         <th>Treninger</th>
       </tr>
-      <% members.each do |m| %>
+      <% members.sort_by{|m| [-m.next_rank.position, -m.attendances_since_graduation.size]}.each do |m| %>
           <tr>
             <td><%= m.name %></td>
             <td align="center"><%= m.next_rank.name %></td>
