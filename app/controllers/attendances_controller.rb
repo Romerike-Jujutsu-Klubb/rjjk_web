@@ -158,11 +158,11 @@ class AttendancesController < ApplicationController
     year = (params[:year] || Date.today.cwyear).to_i
     week = (params[:week] || Date.today.cweek).to_i
     gs_id = params[:gs_id] || m.groups[0].next_schedule.id
-    criteria = {:member_id => m.id,
-                :group_schedule_id => gs_id,
-                :year => year,
-                :week => week}
-    @attendance = Attendance.where(criteria).first || Attendance.new(criteria)
+    practice = Practice.where(:group_schedule_id => gs_id,
+                              :year => year,
+                              :week => week).first_or_create!
+    criteria = {:member_id => m.id, :practice_id => practice.id}
+    @attendance = Attendance.includes(:practice).where(criteria).first_or_initialize
 
     new_status = params[:id]
     if new_status == 'toggle'
@@ -178,7 +178,7 @@ class AttendancesController < ApplicationController
       @attendance.status = new_status
       @attendance.save!
     end
-    if (request.xhr?)
+    if request.xhr?
       render :text => "Stored: #{new_status}"
     else
       back_or_redirect_to(@attendance)
@@ -194,8 +194,8 @@ class AttendancesController < ApplicationController
     member = current_user.member
     @group_schedules = member.groups.map(&:group_schedules).flatten
     @weeks.each do |w|
-      @group_schedules.each{|gs| gs.practices.where(:year => today.year, :week => today.cweek).first_or_create!}
-      @group_schedules.each{|gs| gs.practices.where(:year => (today + 7).year, :week => (today + 7).cweek).first_or_create!}
+      @group_schedules.each { |gs| gs.practices.where(:year => today.year, :week => today.cweek).first_or_create! }
+      @group_schedules.each { |gs| gs.practices.where(:year => (today + 7).year, :week => (today + 7).cweek).first_or_create! }
     end
     @planned_attendances = Attendance.includes(:practice).
         where('member_id = ? AND (practices.year > ? OR (practices.year = ? AND practices.week >= ?)) AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
@@ -227,7 +227,7 @@ class AttendancesController < ApplicationController
     raise 'Wrong user' unless @attendance.member == current_user.member
     @attendance.update_attributes params[:attendance]
 
-    if (request.xhr?)
+    if request.xhr?
       render :text => "Stored: #{@attendance.status}"
     else
       flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  #{t(:attendances)[@attendance.status.to_sym]}"

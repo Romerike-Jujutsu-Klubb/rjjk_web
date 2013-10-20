@@ -58,6 +58,25 @@ class AttendancesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_should_announce_toggle_off
+    practice = practices(:voksne_2013_42_thursday)
+    assert_equal 1, practice.attendances.count
+    xhr :post, :announce, :gs_id => practice.group_schedule_id,
+         :week => practice.week, :year => practice.year, :id => 'toggle'
+    assert_response :success
+    assert_equal 0, practice.attendances.count
+  end
+
+  def test_should_announce_toggle_on
+    login(:lars)
+    practice = practices(:voksne_2013_42_thursday)
+    assert_equal 1, practice.attendances.count
+    xhr :post, :announce, :gs_id => practice.group_schedule_id,
+         :week => practice.week, :year => practice.year, :id => 'toggle'
+    assert_response :success
+    assert_equal 2, practice.attendances.count
+  end
+
   def test_should_get_report
     get :report
     assert_response :success
