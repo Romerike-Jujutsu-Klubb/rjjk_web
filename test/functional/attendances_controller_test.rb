@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class AttendancesControllerTest < ActionController::TestCase
   fixtures :attendances
-  
+
   def setup
     super
     login(:admin)
@@ -41,7 +41,7 @@ class AttendancesControllerTest < ActionController::TestCase
   end
 
   def test_should_update_attendance
-    put :update, :id => attendances(:lars_panda_2010_42).id, :attendance => { }
+    put :update, :id => attendances(:lars_panda_2010_42).id, :attendance => {}
     assert_redirected_to attendance_path(assigns(:attendance))
   end
 
@@ -55,6 +55,16 @@ class AttendancesControllerTest < ActionController::TestCase
 
   def test_should_get_plan
     get :plan
+    assert_response :success
+  end
+
+  def test_should_get_report
+    get :report
+    assert_response :success
+  end
+
+  def test_should_get_month_chart
+    get :month_chart, :year => 2013, :month => 10, :size => '800x300', :format => 'png'
     assert_response :success
   end
 

@@ -111,8 +111,9 @@ class AttendancesController < ApplicationController
     @month = @date.month
     first_date = @date.beginning_of_month
     last_date = @date.end_of_month
-    @attendances = Attendance.includes(:group_schedule).
-        where('year = ? AND week >= ? AND week <= ? AND status NOT IN (?)', @year, first_date.cweek, last_date.cweek, Attendance::ABSENT_STATES).
+    @attendances = Attendance.includes(:practice => :group_schedule).
+        where('practices.year = ? AND practices.week >= ? AND practices.week <= ? AND attendances.status NOT IN (?)',
+              @year, first_date.cweek, last_date.cweek, Attendance::ABSENT_STATES).
         all.select { |a| (first_date..last_date).include? a.date }
     monthly_per_group = @attendances.group_by { |a| a.group_schedule.group }.sort_by { |g, ats| g.from_age }
     @monthly_summary_per_group = {}
@@ -121,7 +122,7 @@ class AttendancesController < ApplicationController
       @monthly_summary_per_group[g][:attendances] = attendances
       @monthly_summary_per_group[g][:present] = attendances.select { |a| !Attendance::ABSENT_STATES.include? a.status }
       @monthly_summary_per_group[g][:absent] = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }
-      @monthly_summary_per_group[g][:practices] = attendances.map { |a| [a.year, a.week, a.group_schedule_id] }.uniq.size
+      @monthly_summary_per_group[g][:practices] = attendances.map(&:practice_id).uniq.size
     end
     @by_group_and_member = Hash[monthly_per_group.map { |g, ats| [g, ats.group_by(&:member)] }]
   end

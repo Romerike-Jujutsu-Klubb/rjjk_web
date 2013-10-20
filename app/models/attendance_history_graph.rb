@@ -83,8 +83,9 @@ class AttendanceHistoryGraph
     g.x_axis_label='Dag'
     first_date = Date.civil(year, month, 1)
     last_date = Date.civil(year, month, -1)
-    attendances = Attendance.
-        where('year = ? AND week >= ? AND week <= ? AND status NOT IN (?)', year, first_date.cweek, last_date.cweek, Attendance::ABSENT_STATES).
+    attendances = Attendance.includes(:practice).
+        where('practices.year = ? AND practices.week >= ? AND practices.week <= ? AND attendances.status NOT IN (?)',
+              year, first_date.cweek, last_date.cweek, Attendance::ABSENT_STATES + [Attendance::Status::WILL_ATTEND]).
         all.select { |a| a.date >= first_date && a.date <= last_date }
     group_schedules = attendances.map(&:group_schedule).uniq
     groups = group_schedules.map(&:group).uniq.sort_by(&:from_age)
