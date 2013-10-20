@@ -55,7 +55,7 @@ class Group < ActiveRecord::Base
   end
 
   def next_schedule
-    group_schedules.sort_by(&:next_practice).first
+    group_schedules.sort_by{|gs| gs.next_practice.date}.first
   end
 
   def next_practice
