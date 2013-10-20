@@ -1,3 +1,11 @@
-one:
+erik:
   fornavn: Erik
   kjonn: Mann
+uwe:
+  fornavn: Uwe
+  kjonn: Mann
+  member: uwe
+lars:
+  fornavn: Lars
+  kjonn: Mann
+  member: lars

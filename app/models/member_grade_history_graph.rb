@@ -1,22 +1,37 @@
 # encoding: utf-8
 require 'gruff'
 class MemberGradeHistoryGraph
-  ACTIVE_CLAUSE = 'EXISTS (SELECT 1 FROM attendances WHERE member_id = members.id
-AND (year > ? OR (year = ? AND week >= ?))
-AND (year < ? OR (year = ? AND week <= ?)))
+  ACTIVE_CLAUSE = <<EOF
+EXISTS (
+  SELECT 1
+  FROM attendances a
+    INNER JOIN practices p ON p.id = a.practice_id
+  WHERE member_id = members.id
+    AND (p.year > ? OR (p.year = ? AND p.week >= ?))
+    AND (p.year < ? OR (p.year = ? AND p.week <= ?))
+)
+AND (
+  ? > CURRENT_DATE
+  OR EXISTS (
+    SELECT 1
+    FROM attendances a
+      INNER JOIN practices p ON p.id = a.practice_id
+    WHERE member_id = members.id
+      AND (p.year > ? OR (p.year = ? AND p.week >= ?))
+      AND (p.year < ? OR (p.year = ? AND p.week <= ?))))
+AND (joined_on IS NULL OR joined_on <= ?)
+AND (left_on IS NULL OR left_on > ?)
+EOF
 
-AND (? > CURRENT_DATE OR
-EXISTS (SELECT 1 FROM attendances WHERE member_id = members.id
-AND (year > ? OR (year = ? AND week >= ?))
-AND (year < ? OR (year = ? AND week <= ?))))
-
-AND (joined_on IS NULL OR joined_on <= ?) AND (left_on IS NULL OR left_on > ?)'
-
-  ATTENDANCE_CLAUSE = '(SELECT COUNT(*) FROM attendances WHERE member_id = members.id
-AND (year > ? OR (year = ? AND week >= ?))
-AND (year < ? OR (year = ? AND week <= ?))) >= ?
-
-AND (joined_on IS NULL OR joined_on <= ?) AND (left_on IS NULL OR left_on > ?)'
+  ATTENDANCE_CLAUSE = '(SELECT COUNT(*)
+                        FROM attendances a
+                          INNER JOIN practices p ON p.id = a.practice_id
+                        WHERE member_id = members.id
+                          AND (p.year > ? OR (p.year = ? AND p.week >= ?))
+                          AND (p.year < ? OR (p.year = ? AND p.week <= ?))
+                        ) >= ?
+                        AND (joined_on IS NULL OR joined_on <= ?)
+                        AND (left_on IS NULL OR left_on > ?)'
 
   def self.history_graph(options = {})
     size = options[:size] || 480
@@ -78,17 +93,16 @@ AND (joined_on IS NULL OR joined_on <= ?) AND (left_on IS NULL OR left_on > ?)'
       prev_date = date - interval
       next_date = date + interval
       practices = Group.find_by_name('Voksne').trainings_in_period(prev_date..date)
-      active_members = Member.all(
-          :select => (Member.column_names - %w(image)).join(','),
-          :conditions => percentage ?
+      active_members = Member.
+          select((Member.column_names - %w(image)).join(',')).
+          where(percentage ?
               [ATTENDANCE_CLAUSE, prev_date.cwyear, prev_date.cwyear, prev_date.cweek,
                date.cwyear, date.cwyear, date.cweek, (practices * percentage) / 100,
                date, date] :
               [ACTIVE_CLAUSE, prev_date.cwyear, prev_date.cwyear, prev_date.cweek, date.cwyear, date.cwyear, date.cweek,
                next_date, date.cwyear, date.cwyear, date.cweek, next_date.cwyear, next_date.cwyear, next_date.cweek,
-               date, date],
-          :include => {:graduates => [{:graduation => {:group => :martial_art}}, :rank]}
-      )
+               date, date]).
+          includes(:graduates => [{:graduation => {:group => :martial_art}}, :rank]).all
       ranks = active_members.select { |m| m.graduates.select { |g| g.graduation.martial_art.name =='Kei Wa Ryu' && g.graduation.held_on <= date }.sort_by { |g| g.graduation.held_on }.last.try(:rank) == rank }.size
       logger.debug "#{prev_date} #{date} #{next_date} Active members: #{active_members.size}, ranks: #{ranks}"
       ranks

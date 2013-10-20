@@ -55,9 +55,9 @@
     <h3>Neste trening</h3>
 
     <h4 style="color: #FFB400">
-      <%= t(:date)[:day_names][@next_practice.cwday] %> <%= @next_practice.day %>
+      <%= t(:date)[:day_names][@next_practice.group_schedule.weekday] %> <%= @next_practice.date.day %>
       .
-      <%= t(:date)[:month_names][@next_practice.month].downcase %>
+      <%= t(:date)[:month_names][@next_practice.date.month].downcase %>
     </h4>
 
     <% if @your_attendance_next_practice &&

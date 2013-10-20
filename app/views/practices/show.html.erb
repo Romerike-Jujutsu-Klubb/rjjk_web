@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Group schedule:</b>
+  <%= @practice.group_schedule_id %>
+</p>
+
+<p>
+  <b>Year:</b>
+  <%= @practice.year %>
+</p>
+
+<p>
+  <b>Week:</b>
+  <%= @practice.week %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @practice.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_practice_path(@practice) %> |
+<%= link_to 'Back', practices_path %>

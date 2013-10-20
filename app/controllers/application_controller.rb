@@ -48,11 +48,8 @@ class ApplicationController < ActionController::Base
 
     if (m = current_user.try(:member)) && (group = m.groups.find { |g| g.name == 'Voksne' })
       @next_practice = group.next_practice
-      @next_schedule = group.next_schedule
-      attendances_next_practice = Attendance.
-          where('group_schedule_id = ? AND year = ? AND week = ?',
-                @next_schedule.id, @next_practice.cwyear, @next_practice.cweek).
-          all
+      @next_schedule = @next_practice.group_schedule
+      attendances_next_practice = @next_practice.attendances.all
       @your_attendance_next_practice = attendances_next_practice.find { |a| a.member_id == m.id }
       attendances_next_practice.delete @your_attendance_next_practice
       @other_attendees = attendances_next_practice.select { |a| [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED].include? a.status }

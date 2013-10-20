@@ -3,8 +3,11 @@ nb:
     models:
       group: Gruppe
       group_instructor: Gruppeinstruktør
+      member: medlem
       user: Bruker
     attributes:
+      attendance:
+        member_id: Medlem
       current_semester:
         first_session: Første trening
         last_session: Siste trening

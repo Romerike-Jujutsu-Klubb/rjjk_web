@@ -14,14 +14,13 @@ RjjkWeb::Application.configure do
   config.consider_all_requests_local = true
   config.serve_static_assets = true
   config.whiny_nils = true
+  config.middleware.use ExceptionNotification::Rack, {
+      :ignore_exceptions => [],
+      :email => {
+          :email_prefix => '[RJJK][Development] ',
+          :sender_address => '"RJJK Development Exception Notifier" <noreply@jujutsu.no>',
+          :exception_recipients => %w{uwe@kubosch.no}
+      }
+  }
 end
 
-email_notification_options = {
-    :ignore_exceptions => [],
-    :email => {
-        :email_prefix => '[RJJK][Development] ',
-        :sender_address => '"RJJK Development Exception Notifier" <noreply@jujutsu.no>',
-        :exception_recipients => %w{uwe@kubosch.no}
-    }
-}
-RjjkWeb::Application.config.middleware.use ExceptionNotification::Rack, email_notification_options

@@ -34,7 +34,7 @@
       <tr>
         <% @group_schedules.each do |gs| %>
             <%
-               ats = @planned_attendances.select { |a| a.group_schedule == gs && a.year == year && a.week == week }
+               ats = @planned_attendances.select { |a| a.group_schedule == gs && a.practice.year == year && a.practice.week == week }
                initial_text = 'Kommer du?'
                initial_icon = nil
                initial_class = nil
@@ -79,8 +79,13 @@
                 </ul>
               </div>
               <br/>
-              <% attendances = gs.attendances.select { |a| [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(a.status) && a.year == year && a.week == week } %>
-              <% absences = gs.attendances.select { |a| Attendance::ABSENT_STATES.include?(a.status) && a.year == year && a.week == week } %>
+              <% puts "year: #{year}" %>
+              <% puts "week: #{week}" %>
+              <% puts "gs.practices: #{gs.practices}" %>
+              <% attendances = gs.practices.find { |p| p.year == year && p.week == week }.
+                      attendances.select { |a| [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(a.status) } %>
+              <% absences = gs.practices.find { |p| p.year == year && p.week == week }.
+                      attendances.select { |a| Attendance::ABSENT_STATES.include?(a.status) } %>
               <% others = attendances.select { |a| a.member_id != current_user.member.id } %>
               <% if others.any? %>
                   <small>

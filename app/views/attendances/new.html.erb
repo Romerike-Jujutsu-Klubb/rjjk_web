@@ -9,24 +9,27 @@
     </p>
 
     <p>
-      <%= f.label :group_schedule_id, 'Trening' %>
-      <%= f.select :group_schedule_id, [nil] + @group_schedules.map{|gs| ["#{gs.group.name} #{gs.weekday_name}", gs.id]} %>
-    </p>
-
-    <p style="float: left; margin-right: 2em">
-      <%= f.label :year, 'År' %>
-      <%= f.text_field :year %>
-    </p>
-
-    <p>
-      <%= f.label :week, 'Uke' %>
-      <%= f.select :week, (1..52) %>
-    </p>
-
-    <p>
       <%= f.label :status, 'Status' %>
       <%= f.select :status, Attendance::Status.constants.sort.map{|s| [t(s.to_s.downcase), Attendance::Status.const_get(s)]} %>
     </p>
+
+    <%=f.fields_for :practice do |pf| %>
+    <p>
+      <%= pf.label :group_schedule_id, 'Trening' %>
+      <%= pf.select :group_schedule_id, ['', ''] + @group_schedules.map{|gs| ["#{gs.group.name} #{gs.weekday_name}", gs.id]},
+                   :value => '', :selected => '' %>
+    </p>
+
+    <p style="float: left; margin-right: 2em">
+      <%= pf.label :year, 'År' %>
+      <%= pf.text_field :year %>
+    </p>
+
+    <p>
+      <%= pf.label :week, 'Uke' %>
+      <%= pf.select :week, (1..52) %>
+    </p>
+        <% end %>
 
     <p>
       <%= f.submit 'Create', :class => :btn %>

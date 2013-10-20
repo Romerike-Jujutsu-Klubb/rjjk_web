@@ -11,41 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131010142058) do
-
-  create_table "martial_arts", :force => true do |t|
-    t.string "name",   :limit => 16, :null => false
-    t.string "family", :limit => 16, :null => false
-  end
-
-  create_table "groups", :force => true do |t|
-    t.integer  "martial_art_id",               :null => false
-    t.string   "name",                         :null => false
-    t.integer  "from_age",                     :null => false
-    t.integer  "to_age",                       :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.date     "closed_on"
-    t.integer  "monthly_price"
-    t.integer  "yearly_price"
-    t.string   "contract",       :limit => 16
-    t.string   "summary"
-    t.text     "description"
-    t.boolean  "school_breaks"
-    t.string   "color",          :limit => 16
-    t.integer  "target_size"
-    t.foreign_key ["martial_art_id"], "martial_arts", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "groups_martial_art_id_fkey"
-  end
-
-  create_table "group_schedules", :force => true do |t|
-    t.integer  "group_id",   :null => false
-    t.integer  "weekday",    :null => false
-    t.time     "start_at",   :null => false
-    t.time     "end_at",     :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.foreign_key ["group_id"], "groups", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "group_schedules_group_id_fkey"
-  end
+ActiveRecord::Schema.define(:version => 20131016074943) do
 
   create_table "members", :force => true do |t|
     t.string  "first_name",           :limit => 100, :default => "", :null => false
@@ -91,20 +57,64 @@ ActiveRecord::Schema.define(:version => 20131010142058) do
     t.index ["user_id"], :name => "index_members_on_user_id", :unique => true, :order => {"user_id" => :asc}
   end
 
+  create_table "martial_arts", :force => true do |t|
+    t.string "name",   :limit => 16, :null => false
+    t.string "family", :limit => 16, :null => false
+  end
+
+  create_table "groups", :force => true do |t|
+    t.integer  "martial_art_id",               :null => false
+    t.string   "name",                         :null => false
+    t.integer  "from_age",                     :null => false
+    t.integer  "to_age",                       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.date     "closed_on"
+    t.integer  "monthly_price"
+    t.integer  "yearly_price"
+    t.string   "contract",       :limit => 16
+    t.string   "summary"
+    t.text     "description"
+    t.boolean  "school_breaks"
+    t.string   "color",          :limit => 16
+    t.integer  "target_size"
+    t.foreign_key ["martial_art_id"], "martial_arts", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "groups_martial_art_id_fkey"
+  end
+
+  create_table "group_schedules", :force => true do |t|
+    t.integer  "group_id",   :null => false
+    t.integer  "weekday",    :null => false
+    t.time     "start_at",   :null => false
+    t.time     "end_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.foreign_key ["group_id"], "groups", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "group_schedules_group_id_fkey"
+  end
+
+  create_table "practices", :force => true do |t|
+    t.integer  "group_schedule_id",                  :null => false
+    t.integer  "year",                               :null => false
+    t.integer  "week",                               :null => false
+    t.string   "status",            :default => "X", :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.index ["group_schedule_id"], :name => "fk__practices_group_schedule_id", :order => {"group_schedule_id" => :asc}
+    t.index ["group_schedule_id", "year", "week"], :name => "index_practices_on_group_schedule_id_and_year_and_week", :unique => true, :order => {"group_schedule_id" => :asc, "year" => :asc, "week" => :asc}
+    t.foreign_key ["group_schedule_id"], "group_schedules", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_practices_group_schedule_id"
+  end
+
   create_table "attendances", :force => true do |t|
     t.integer  "member_id",                           :null => false
-    t.integer  "group_schedule_id",                   :null => false
-    t.integer  "year",                                :null => false
-    t.integer  "week",                                :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status",               :limit => 1,   :null => false
     t.datetime "sent_review_email_at"
     t.integer  "rating"
     t.string   "comment",              :limit => 250
-    t.index ["member_id", "group_schedule_id", "year", "week"], :name => "index_attendances_on_member_id_and_group_schedule_id_and_year_a", :unique => true, :order => {"member_id" => :asc, "group_schedule_id" => :asc, "year" => :asc, "week" => :asc}
-    t.foreign_key ["group_schedule_id"], "group_schedules", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "attendances_group_schedule_id_fkey"
+    t.integer  "practice_id",                         :null => false
+    t.index ["practice_id"], :name => "fk__attendances_practice_id", :order => {"practice_id" => :asc}
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "attendances_member_id_fkey"
+    t.foreign_key ["practice_id"], "practices", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_attendances_practice_id"
   end
 
   create_table "birthday_celebrations", :force => true do |t|

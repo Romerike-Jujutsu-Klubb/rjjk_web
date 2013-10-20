@@ -20,7 +20,7 @@ class AttendanceImageSweeper < ActionController::Caching::Sweeper
       expire_page(:controller => 'attendances', :action => 'history_graph',
                   :format => :png, :id => size)
       expire_page(:controller => 'attendances', :action => 'month_chart',
-                  :year => attendance.year, :month => attendance.date.month,
+                  :year => attendance.date.year, :month => attendance.date.month,
                   :size => size, :format => :png)
     end
   end

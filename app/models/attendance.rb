@@ -25,17 +25,21 @@ class Attendance < ActiveRecord::Base
   scope :on_date, lambda { |date| {:conditions => ['year = ? AND week = ?', date.year, date.cweek]} }
 
   belongs_to :member
-  belongs_to :group_schedule
+  belongs_to :practice
 
   validates_presence_of :member_id, :status
-  validates_uniqueness_of :member_id, :scope => [:group_schedule_id, :year, :week]
+  validates_uniqueness_of :member_id, :scope => :practice_id
 
   validate :on => :update do
     errors.add(:status, 'kan ikke endres for treningen du var på.') if status_was == Status::ATTENDED && status == Status::WILL_ATTEND
   end
 
+  def group_schedule
+    practice.group_schedule
+  end
+
   def date
-    Date.commercial(year, week, group_schedule.weekday)
+    practice.date
   end
 
   #def self.find_member_count_for_month(group, year, month)

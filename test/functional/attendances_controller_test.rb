@@ -21,9 +21,9 @@ class AttendancesControllerTest < ActionController::TestCase
 
   def test_should_create_attendance
     assert_difference('Attendance.count') do
-      post :create, :attendance => {:member_id => members(:lars).id,
-                                    :group_schedule_id => group_schedules(:panda).id, :year => 2011,
-                                    :week => 42, :status => 'X'}
+      post :create, :attendance => {:member_id => members(:uwe).id,
+                                    :practice_id => practices(:panda_2010_42).id,
+                                    :status => 'X'}
       assert_no_errors(:attendance)
     end
 
@@ -31,25 +31,31 @@ class AttendancesControllerTest < ActionController::TestCase
   end
 
   def test_should_show_attendance
-    get :show, :id => attendances(:one).id
+    get :show, :id => attendances(:lars_panda_2010_42).id
     assert_response :success
   end
 
   def test_should_get_edit
-    get :edit, :id => attendances(:one).id
+    get :edit, :id => attendances(:lars_panda_2010_42).id
     assert_response :success
   end
 
   def test_should_update_attendance
-    put :update, :id => attendances(:one).id, :attendance => { }
+    put :update, :id => attendances(:lars_panda_2010_42).id, :attendance => { }
     assert_redirected_to attendance_path(assigns(:attendance))
   end
 
   def test_should_destroy_attendance
     assert_difference('Attendance.count', -1) do
-      delete :destroy, :id => attendances(:one).id
+      delete :destroy, :id => attendances(:lars_panda_2010_42).id
     end
 
     assert_redirected_to attendances_path
   end
+
+  def test_should_get_plan
+    get :plan
+    assert_response :success
+  end
+
 end

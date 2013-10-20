@@ -1,0 +1,27 @@
+<h1>Treninger</h1>
+
+<table class="table">
+  <tr>
+    <th>Gruppe</th>
+    <th>Dato</th>
+    <th>Status</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @practices.each do |practice| %>
+  <tr>
+    <td><%= practice.group_schedule.group.name %></td>
+    <td><%= practice.date %></td>
+    <td><%= practice.status %></td>
+    <td><%= link_to 'Show', practice %></td>
+    <td><%= link_to 'Edit', edit_practice_path(practice) %></td>
+    <td><%= link_to 'Destroy', practice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New practice', new_practice_path %>

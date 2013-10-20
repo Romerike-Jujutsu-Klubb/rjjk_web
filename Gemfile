@@ -25,7 +25,7 @@ gem 'red_cloth_formatters_plain'
 gem 'redbox', '~> 1.0.4'
 gem 'ri_cal'
 gem 'rmagick4j'
-gem 'rufus-scheduler', '<3.0.0'
+gem 'rufus-scheduler'
 gem 'schema_plus', :git => 'git://github.com/lomba/schema_plus.git'
 gem 'simple_drilldown'
 gem 'simple_workflow'
@@ -53,4 +53,5 @@ end
 group :test do
   gem 'minitest-reporters'
   gem 'mocha', :require => 'mocha/setup'
+  gem 'timecop'
 end

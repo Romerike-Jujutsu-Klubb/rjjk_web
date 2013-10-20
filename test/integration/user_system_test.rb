@@ -12,7 +12,6 @@ class UserSystemTest < ActionController::IntegrationTest
   end
 
   def test_signup_and_verify
-    Clock.time = Time.now
     post url_for(:controller => 'user', :action => 'signup'),
          :user => {:login => 'newuser',
                    :password => 'password', :password_confirmation => 'password',
@@ -29,22 +28,22 @@ class UserSystemTest < ActionController::IntegrationTest
     assert (mail.decoded =~ /key=(.*?)"/)
     key = $1
 
-    Clock.advance_by_seconds User.token_lifetime # now past verification deadline
-
-    get url_for(:controller => 'user', :action => 'welcome'), :key => key
-    assert_redirected_to_login
     assert user = User.find_by_login('newuser')
-    assert !user.verified
-    assert_not_logged_in
+    Timecop.freeze(Time.now + User.token_lifetime + 1) do
+      get url_for(:controller => 'user', :action => 'welcome'), :key => key
+      assert_redirected_to_login
+      user.reload
+      assert !user.verified
+      assert_not_logged_in
+    end
 
-    Clock.time = Time.now # now before deadline
     get url_for(:controller => 'user', :action => 'welcome'), :key => 'boguskey'
     assert_redirected_to_login
     assert_not_logged_in
     user.reload
     assert !user.verified
 
-    get url_for(:controller => 'user', :action => 'welcome'), :key => "#{key}"
+    get url_for(:controller => 'user', :action => 'welcome'), :key => key
     assert_response :success
     user.reload
     assert user.verified

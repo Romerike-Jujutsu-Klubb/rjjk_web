@@ -1,6 +1,5 @@
 # encoding: utf-8
 require 'digest/sha1'
-require 'clock'
 
 # this model expects a certain database layout and its based on the name/login pattern. 
 class User < ActiveRecord::Base
@@ -85,12 +84,12 @@ class User < ActiveRecord::Base
       return nil
     end
     logger.info "Authenticated by token: #{u.inspect}.  Extending token lifetime."
-    u.update_attributes :verified => true, :token_expiry => Clock.now + token_lifetime
+    u.update_attributes :verified => true, :token_expiry => Time.now + token_lifetime
     return u
   end
 
   def token_expired?
-    self.security_token and self.token_expiry and (Clock.now >= self.token_expiry)
+    self.security_token and self.token_expiry and (Time.now >= self.token_expiry)
   end
 
   def generate_security_token(duration = :short)
@@ -116,7 +115,7 @@ class User < ActiveRecord::Base
   end
 
   def remaining_token_lifetime
-    self.token_expiry.to_i - Clock.now.to_i
+    self.token_expiry.to_i - Time.now.to_i
   end
 
   def admin?
@@ -137,14 +136,14 @@ class User < ActiveRecord::Base
 
   def crypt_password
     if @password_needs_confirmation
-      write_attribute('salt', self.class.hashed("salt-#{Clock.now}"))
+      write_attribute('salt', self.class.hashed("salt-#{Time.now}"))
       write_attribute('salted_password', self.class.salted_password(salt, self.class.hashed(@password)))
     end
   end
 
   def new_security_token(duration)
-    write_attribute('security_token', self.class.hashed(self.salted_password + Clock.now.to_i.to_s + rand.to_s))
-    write_attribute('token_expiry', Time.at(Clock.now.to_i + User.token_lifetime(duration)))
+    write_attribute('security_token', self.class.hashed(self.salted_password + Time.now.to_i.to_s + rand.to_s))
+    write_attribute('token_expiry', Time.at(Time.now.to_i + User.token_lifetime(duration)))
     update
     self.security_token
   end

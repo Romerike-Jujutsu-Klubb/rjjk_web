@@ -1,0 +1,29 @@
+panda_2010_42:
+  group_schedule: panda
+  year: 2010
+  week: 42
+  status: X
+
+panda_2013_42:
+  group_schedule: panda
+  year: 2013
+  week: 42
+  status: X
+
+voksne_2013_41_tuesday:
+  group_schedule: voksne_tuesday
+  year: 2013
+  week: 41
+  status: X
+
+voksne_2013_42_tuesday:
+  group_schedule: voksne_tuesday
+  year: 2013
+  week: 42
+  status: X
+
+voksne_2013_42_thursday:
+  group_schedule: voksne_thursday
+  year: 2013
+  week: 42
+  status: X

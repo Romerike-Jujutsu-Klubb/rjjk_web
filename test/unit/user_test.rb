@@ -17,8 +17,9 @@ class UserTest < ActiveSupport::TestCase
 
   def test_authenticate_by_token__fails_if_expired
     user = users(:unverified_user)
-    Clock.time = Clock.now + User.token_lifetime
-    assert_nil User.authenticate_by_token(user.security_token)
+    Timecop.freeze(Time.now + User.token_lifetime) do
+      assert_nil User.authenticate_by_token(user.security_token)
+    end
   end
 
   def test_authenticate_by_token__fails_if_bad_token
@@ -40,19 +41,21 @@ class UserTest < ActiveSupport::TestCase
     assert_not_nil token
     user.reload
     assert_equal token, user.security_token
-    assert_equal((Clock.now + User.token_lifetime).to_i, user.token_expiry.to_i)
+    assert_equal((Time.now + User.token_lifetime).to_i, user.token_expiry.to_i)
   end
 
   def test_generate_security_token__reuses_token_when_not_stale
     user = users(:unverified_user)
-    Clock.advance_by_seconds((User.token_lifetime/2))
-    assert_equal user.security_token, user.generate_security_token 
+    Timecop.freeze(Time.now + User.token_lifetime / 2) do
+      assert_equal user.security_token, user.generate_security_token
+    end
   end
 
   def test_generate_security_token_generates_new_token_when_getting_stale
     user = users(:unverified_user)
-    Clock.advance_by_seconds(1.second + User.token_lifetime/2)
-    assert_not_equal user.security_token, user.generate_security_token
+    Timecop.freeze(Time.now + User.token_lifetime / 2 + 1) do
+      assert_not_equal user.security_token, user.generate_security_token
+    end
   end
 
   def test_change_password__disallowed_passwords
@@ -61,33 +64,33 @@ class UserTest < ActiveSupport::TestCase
     u.email = 'disallowed_password@example.com'
 
     u.change_password('tiny')
-    assert !u.save     
+    assert !u.save
     assert u.errors['password'].any?
 
     u.change_password('hugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehuge')
-    assert !u.save     
+    assert !u.save
     assert u.errors['password'].any?
-        
+
     u.change_password('')
-    assert !u.save    
+    assert !u.save
     assert u.errors['password'].any?
-        
+
     u.change_password('a_s3cure_p4ssword')
-    assert u.save     
+    assert u.save
     assert u.errors.empty?
   end
-  
+
   def test_validates_login
     u = User.new
     u.change_password('teslas_secure_password')
     u.email = 'bad_login_tesla@example.com'
 
     u.login = 'x'
-    assert !u.save     
+    assert !u.save
     assert u.errors[:login].any?
 
     u.login = 'hugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahug'
-    assert !u.save     
+    assert !u.save
     assert u.errors[:login].any?
 
     u.login = '' # login is set to email automatically

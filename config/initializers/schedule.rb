@@ -1,5 +1,5 @@
 unless Rails.env == 'test'
-  scheduler = Rufus::Scheduler.new
+  scheduler = Rufus::Scheduler.new :max_work_threads => 3
 
   # Users
   scheduler.cron('0 7    * * mon') { AttendanceNagger.send_attendance_plan }

@@ -1,6 +1,24 @@
-one:
+lars_panda_2010_42:
   member: lars
-  group_schedule: panda
-  year: 2010
-  week: 42
+  practice: panda_2010_42
   status: X
+
+lars_voksne_2013_41_attended:
+  member: lars
+  practice: voksne_2013_41_tuesday
+  status: X
+
+uwe_panda_2013_42_planned:
+  member: uwe
+  practice: panda_2013_42
+  status: P
+
+uwe_voksne_2013_42_tuesday_attended:
+  member: uwe
+  practice: voksne_2013_42_tuesday
+  status: X
+
+uwe_voksne_2013_42_thursday_planned:
+  member: uwe
+  practice: voksne_2013_42_thursday
+  status: P

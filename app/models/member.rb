@@ -15,7 +15,7 @@ class Member < ActiveRecord::Base
 
   belongs_to :image, :dependent => :destroy
   belongs_to :user, :dependent => :destroy
-  has_one :nkf_member
+  has_one :nkf_member, :dependent => :nullify
   has_many :attendances, :dependent => :destroy
   has_many :censors, :dependent => :destroy
   has_many :correspondences, :dependent => :destroy
