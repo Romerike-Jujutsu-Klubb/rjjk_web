@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131016074943) do
+ActiveRecord::Schema.define(:version => 20131020213008) do
 
   create_table "members", :force => true do |t|
     t.string  "first_name",           :limit => 100, :default => "", :null => false
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20131016074943) do
     t.string   "comment",              :limit => 250
     t.integer  "practice_id",                         :null => false
     t.index ["practice_id"], :name => "fk__attendances_practice_id", :order => {"practice_id" => :asc}
+    t.index ["member_id", "practice_id"], :name => "index_attendances_on_member_id_and_practice_id", :unique => true, :order => {"member_id" => :asc, "practice_id" => :asc}
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "attendances_member_id_fkey"
     t.foreign_key ["practice_id"], "practices", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_attendances_practice_id"
   end
@@ -467,13 +468,13 @@ ActiveRecord::Schema.define(:version => 20131016074943) do
 
   create_table "trial_attendances", :force => true do |t|
     t.integer  "nkf_member_trial_id", :null => false
-    t.integer  "group_schedule_id",   :null => false
-    t.integer  "year",                :null => false
-    t.integer  "week",                :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.foreign_key ["group_schedule_id"], "group_schedules", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "trial_attendances_group_schedule_id_fkey"
+    t.integer  "practice_id",         :null => false
+    t.index ["practice_id"], :name => "fk__trial_attendances_practice_id", :order => {"practice_id" => :asc}
+    t.index ["nkf_member_trial_id", "practice_id"], :name => "index_trial_attendances_on_nkf_member_trial_id_and_practice_id", :unique => true, :order => {"nkf_member_trial_id" => :asc, "practice_id" => :asc}
     t.foreign_key ["nkf_member_trial_id"], "nkf_member_trials", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "trial_attendances_nkf_member_trial_id_fkey"
+    t.foreign_key ["practice_id"], "practices", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_trial_attendances_practice_id"
   end
 
   create_table "user_images", :force => true do |t|

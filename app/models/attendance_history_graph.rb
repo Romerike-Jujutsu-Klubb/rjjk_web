@@ -29,10 +29,11 @@ class AttendanceHistoryGraph
     totals_sessions = Array.new(weeks.size - 1, 0)
     Group.all(:order => 'martial_art_id, from_age DESC, to_age').each do |group|
       attendances = weeks.each_cons(2).map do |w1, w2|
-        Attendance.by_group_id(group.id).all(:conditions => ['(year > ? OR (year = ? AND week > ?)) AND (year < ? OR (year = ? AND week <= ?))', w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]]) +
-            TrialAttendance.by_group_id(group.id).all(:conditions => ['(year > ? OR (year = ? AND week > ?)) AND (year < ? OR (year = ? AND week <= ?))', w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]])
+        Attendance.by_group_id(group.id).includes(:practice).
+            where('(practices.year > ? OR (practices.year = ? AND practices.week > ?)) AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))', w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).all +
+            TrialAttendance.by_group_id(group.id).where('(year > ? OR (year = ? AND week > ?)) AND (year < ? OR (year = ? AND week <= ?))', w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).all
       end
-      sessions = attendances.map { |ats| ats.map { |a| [a.group_schedule_id, a.year, a.week] }.uniq.size }
+      sessions = attendances.map { |ats| ats.map(&:practice_id).uniq.size }
       values = attendances.each_with_index.map { |a, i| sessions[i] > 0 ? a.size / sessions[i] : nil }
       if values.any? { |v| v }
         g.data(group.name, values)
