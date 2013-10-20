@@ -1,11 +1,7 @@
 one:
   nkf_member_trial: one
-  group_schedule: panda
-  year: 2012
-  week: 1
+  practice: panda_2010_42
 
 two:
   nkf_member_trial: one
-  group_schedule: panda
-  year: 2012
-  week: 2
+  practice: panda_2013_42

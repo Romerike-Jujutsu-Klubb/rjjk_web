@@ -21,8 +21,7 @@ class TrialAttendancesControllerTest < ActionController::TestCase
   test "should create trial_attendance" do
     assert_difference('TrialAttendance.count') do
       post :create, :trial_attendance => {
-          :group_schedule_id => group_schedules(:panda).id, :nkf_member_trial_id => nkf_member_trials(:one).id,
-          :year => 2012, :week => 10
+          :practice_id => practices(:panda_2013_42).id, :nkf_member_trial_id => nkf_member_trials(:two).id
       }
       assert_no_errors :trial_attendance
     end
@@ -41,7 +40,7 @@ class TrialAttendancesControllerTest < ActionController::TestCase
   end
 
   test "should update trial_attendance" do
-    put :update, :id => trial_attendances(:one).to_param, :trial_attendance => { }
+    put :update, :id => trial_attendances(:one).to_param, :trial_attendance => {}
     assert_redirected_to trial_attendance_path(assigns(:trial_attendance))
   end
 

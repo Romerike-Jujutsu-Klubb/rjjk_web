@@ -88,7 +88,7 @@ class AttendancesControllerTest < ActionController::TestCase
   end
 
   def test_should_get_history_chart
-    get :history_graph, :size => '182', :format => 'png'
+    get :history_graph, :id => '182', :format => 'png'
     assert_response :success
   end
 
