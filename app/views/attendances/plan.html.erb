@@ -1,21 +1,3 @@
-<table class="table">
-  <% if @attended_groups.size > 1 %>
-      <tr>
-        <th>Måned/Gruppe</th>
-        <% @attended_groups.each do |g| %>
-            <th><%= g.name %></th>
-        <% end %>
-      </tr>
-  <% end %>
-  <% @months.each do |fields| %>
-      <tr>
-        <% fields.each do |f| %>
-            <td><%= f unless f == 0 %></td>
-        <% end %>
-      </tr>
-  <% end %>
-</table>
-
 <% @weeks.each.with_index do |(year, week), i| %>
 
     <h4><%= i == 0 ? 'Denne uken' : i == 1 ? 'Neste uke' : "Uke #{week}" %></h4>
@@ -149,3 +131,21 @@
 -->
 
 <%= back_or_link_to 'Tilbake' %>
+
+<table class="table">
+  <% if @attended_groups.size > 1 %>
+      <tr>
+        <th>Måned/Gruppe</th>
+        <% @attended_groups.each do |g| %>
+            <th><%= g.name %></th>
+        <% end %>
+      </tr>
+  <% end %>
+  <% @months.each do |fields| %>
+      <tr>
+        <% fields.each do |f| %>
+            <td><%= f unless f == 0 %></td>
+        <% end %>
+      </tr>
+  <% end %>
+</table>
