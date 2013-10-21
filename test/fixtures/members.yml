@@ -14,15 +14,15 @@ lars:
   user_id: 1000001
 
 uwe:
-  male: false
-  first_name: Uwe
-  last_name: Kubosch
   address: Møllesvingen 5
-  postal_code: 2006
-  payment_problem: false
-  instructor: true
-  nkf_fee: true
-  joined_on: 1987-01-05
   birthdate: 1970-11-25
-  user_id: 1000000
+  first_name: Uwe
   groups: voksne
+  instructor: true
+  joined_on: 1987-01-05
+  last_name: Kubosch
+  male: false
+  nkf_fee: true
+  payment_problem: false
+  postal_code: 2006
+  user_id: 1000000

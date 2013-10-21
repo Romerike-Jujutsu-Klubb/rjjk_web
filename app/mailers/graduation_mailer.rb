@@ -1,5 +1,6 @@
 class GraduationMailer < ActionMailer::Base
   include UserSystem
+  include MailerHelper
   layout 'email'
   default from: Rails.env == 'production' ? 'webmaster@jujutsu.no' : "#{Rails.env}@jujutsu.no"
 
@@ -14,7 +15,7 @@ class GraduationMailer < ActionMailer::Base
     @email_url = with_login(@instructor.user,
                             :controller => :graduations, :action => :new,
                             :graduation => {:group_id => @group.id, :held_on => suggested_date})
-    mail subject: @title,
+    mail subject: rjjk_prefix(@title),
          to: Rails.env == 'production' ? @instructor.email : "\"#{@instructor.name}\" <uwe@kubosch.no>"
   end
 
@@ -22,7 +23,7 @@ class GraduationMailer < ActionMailer::Base
     @members = members
     @title = 'Medlemmer klare for gradering'
     @timestamp = Time.now
-    mail to: 'uwe@kubosch.no', subject: 'Disse medlemmene mangler gradering'
+    mail to: 'uwe@kubosch.no', subject: rjjk_prefix('Disse medlemmene mangler gradering')
   end
 
   def date_info_reminder

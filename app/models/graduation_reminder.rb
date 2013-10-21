@@ -24,7 +24,8 @@ class GraduationReminder
   def self.notify_overdue_graduates
     today = Date.today
     members = Member.active(today).
-        includes(:ranks, :attendances => {:group_schedule => :group}).all
+        includes(:ranks, :attendances => {:practice => {:group_schedule => :group}}).
+        all
     overdue_graduates = members.select do |m|
       next_rank = m.next_rank
       attendances = m.attendances_since_graduation

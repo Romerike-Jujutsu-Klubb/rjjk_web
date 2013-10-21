@@ -1,7 +1,7 @@
 one:
   medlems_type: MyString
-  etternavn: MyString
-  fornavn: MyString
+  etternavn: Eriksen
+  fornavn: Hans
   fodtdato: 2010-10-03
   alder: 1
   postnr: 1234
@@ -18,8 +18,8 @@ one:
 
 two:
   medlems_type: MyString
-  etternavn: MyString
-  fornavn: MyString
+  etternavn: Hansen
+  fornavn: Erik
   fodtdato: 2010-10-03
   alder: 1
   postnr: 4321

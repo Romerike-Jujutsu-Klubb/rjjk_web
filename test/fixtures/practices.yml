@@ -4,10 +4,10 @@ panda_2010_42:
   week: 42
   status: X
 
-panda_2013_42:
+panda_2013_41:
   group_schedule: panda
   year: 2013
-  week: 42
+  week: 41
   status: X
 
 voksne_2013_41_tuesday:
@@ -16,8 +16,20 @@ voksne_2013_41_tuesday:
   week: 41
   status: X
 
+voksne_2013_41_thursday:
+  group_schedule: voksne_thursday
+  year: 2013
+  week: 41
+  status: X
+
 voksne_2013_42_tuesday:
   group_schedule: voksne_tuesday
+  year: 2013
+  week: 42
+  status: X
+
+panda_2013_42:
+  group_schedule: panda
   year: 2013
   week: 42
   status: X

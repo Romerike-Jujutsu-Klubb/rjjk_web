@@ -3,9 +3,19 @@ lars_panda_2010_42:
   practice: panda_2010_42
   status: X
 
+lars_panda_2013_41:
+  member: lars
+  practice: panda_2013_41
+  status: X
+
 lars_voksne_2013_41_attended:
   member: lars
   practice: voksne_2013_41_tuesday
+  status: X
+
+lars_voksne_2013_41_thursday_attended:
+  member: lars
+  practice: voksne_2013_41_thursday
   status: X
 
 uwe_panda_2013_42_planned:
