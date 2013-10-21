@@ -1,4 +1,3 @@
-#FIXME(uwe): Notify if CHIEF Instructor is missing.
 class InstructionReminder
   def self.notify_missing_instructors
     semesters = Semester.where("start_on < (CURRENT_DATE + interval '3 months') AND end_on > CURRENT_DATE").order(:end_on).all
@@ -6,7 +5,7 @@ class InstructionReminder
       groups = Group.active(s.start_on).all
       group_schedules = groups.map(&:group_schedules).flatten.sort_by(&:weekday)
       group_schedules.select { |gs| gs.group_instructors.select do |gi|
-        gi.active?(s.start_on) && gi.role = GroupInstructor::Role::CHIEF
+        gi.active?(s.start_on) && gi.role == GroupInstructor::Role::CHIEF
       end.empty? }.map do |gs|
         GroupInstructor.new(:semester_id => s.id, :group_schedule => gs, :role => GroupInstructor::Role::CHIEF)
       end
@@ -24,5 +23,6 @@ class InstructionReminder
   rescue
     logger.error "Exception sending instruction message: #{$!}"
     logger.error $!.backtrace.join("\n")
+    ExceptionNotifier.notify_exception($!)
   end
 end

@@ -16,12 +16,20 @@
             <th>Gruppe</th>
             <th>Dag</th>
           </tr>
-          <% instructions.each do |gi| %>
+          <% instructions.group_by(&:group_schedule).each do |gs, gis| %>
               <tr>
-                <td><%= link_to gi.group_schedule.group.name, :only_path => false, :controller => :group_instructors,
-                                :action => :new, :group_instructor => {
-                                :group_schedule_id => gi.group_schedule_id, :semester_id => gi.semester_id} %></td>
-                <td><%= gi.group_schedule.weekday_name %></td>
+                <td><%= gs.group.name %></td>
+                <td>
+                  <% gis.each do |gi| %>
+                      <%= link_to gi.group_schedule.weekday_name, :only_path => false,
+                                  :controller => :group_instructors,
+                                  :action => :new, :group_instructor => {
+                                      :group_schedule_id => gi.group_schedule_id,
+                                      :semester_id => gi.semester_id,
+                                      :role => GroupInstructor::Role::CHIEF,
+                              } %>
+                  <% end %>
+                </td>
               </tr>
           <% end %>
         </table>
