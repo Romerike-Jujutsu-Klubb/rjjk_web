@@ -8,8 +8,14 @@
                     :title => 'Oppmøte graf', :class => 'img-rounded', :style => 'width: 832px; height: 300px',
                     :usemap => '#monthmap' %>
     </div>
+    <div class="item">
+      <%= image_tag url_for(:controller => :attendances, :action => :history_graph, :id => '832x300', :format => :png),
+                    :title => 'Oppmøte graf', :class => 'img-rounded', :style => 'width: 832px; height: 300px',
+                    :usemap => '#monthmap' %>
+    </div>
   </div>
   <!-- Carousel nav -->
+  <a class="carousel-control" style="top: 10%" href="#myCarousel" data-slide="next">&lsaquo;</a>
   <a class="carousel-control left" href="<%= url_for :id => (@date.beginning_of_month - 1).beginning_of_month %>">&lsaquo;</a>
   <a class="carousel-control right" href="<%=url_for :id => (@date.end_of_month + 1)%>">&rsaquo;</a>
 </div>
