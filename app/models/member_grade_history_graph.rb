@@ -85,9 +85,7 @@ EOF
         labels[i] = (date.year != current_year ? "#{date.strftime('%m')}\n    #{date.strftime('%Y')}" : "#{date.strftime('%m')}"); current_year = date.year; current_month = date.month
       end }
     g.labels = labels
-
-    g.maximum_value = 12
-    g.marker_count = 6
+    g.y_axis_increment = 5
     g.to_blob
   end
 
