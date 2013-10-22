@@ -186,7 +186,7 @@ GEM
       RedCloth (>= 4.2.3)
     redbox (1.0.4)
     ri_cal (0.8.8)
-    rmagick4j (0.3.7)
+    rmagick4j (0.3.8)
     ruby-rc4 (0.1.5)
     rufus-scheduler (3.0.2)
       tzinfo
