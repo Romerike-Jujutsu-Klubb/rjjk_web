@@ -11,6 +11,7 @@ class AttendanceHistoryGraph
     g.title = 'Oppmøte'
     g.title_font_size = 18
     g.legend_font_size = 14
+    g.marker_font_size = 14
     #g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     #g.legend_font_size = 14
     g.hide_dots = true
@@ -30,13 +31,15 @@ class AttendanceHistoryGraph
     Group.all(:order => 'martial_art_id, from_age DESC, to_age').each do |group|
       attendances = weeks.each_cons(2).map do |w1, w2|
         Attendance.by_group_id(group.id).includes(:practice).
-            where('(practices.year > ? OR (practices.year = ? AND practices.week > ?)) AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))', w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).all +
-            TrialAttendance.by_group_id(group.id).where('(year > ? OR (year = ? AND week > ?)) AND (year < ? OR (year = ? AND week <= ?))', w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).all
+            where('(practices.year > ? OR (practices.year = ? AND practices.week > ?)) AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
+                  w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).all +
+            TrialAttendance.by_group_id(group.id).where('(year > ? OR (year = ? AND week > ?)) AND (year < ? OR (year = ? AND week <= ?))',
+                                                        w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).all
       end
       sessions = attendances.map { |ats| ats.map(&:practice_id).uniq.size }
       values = attendances.each_with_index.map { |a, i| sessions[i] > 0 ? a.size / sessions[i] : nil }
       if values.any? { |v| v }
-        g.data(group.name, values)
+        g.data(group.name, values, group.color)
         sessions.each_with_index do |session, i|
           totals[i] = totals[i].to_i + values[i] if values[i]
           totals_sessions[i] += session
@@ -79,6 +82,7 @@ class AttendanceHistoryGraph
     g.title = "Oppmøte #{I18n.t(:date)[:month_names][month]} #{year}"
     g.title_font_size = 18
     g.legend_font_size = 14
+    g.marker_font_size = 14
     g.colors = %w{blue orange black green}
     #g.y_axis_label = 'Oppmøte'
     g.x_axis_label='Dag'
@@ -86,8 +90,8 @@ class AttendanceHistoryGraph
     last_date = Date.civil(year, month, -1)
     attendances = Attendance.includes(:practice).
         where('practices.year = ? AND practices.week >= ? AND practices.week <= ? AND attendances.status NOT IN (?)',
-              year, first_date.cweek, last_date.cweek, Attendance::ABSENT_STATES + [Attendance::Status::WILL_ATTEND]).
-        all.select { |a| a.date >= first_date && a.date <= last_date }
+              year, first_date.cweek, last_date.cweek, Attendance::ABSENT_STATES).
+        all.select { |a| a.date >= first_date && a.date <= last_date && a.date <= Date.today }
     group_schedules = attendances.map(&:group_schedule).uniq
     groups = group_schedules.map(&:group).uniq.sort_by(&:from_age)
     dates = (first_date..last_date).select { |d| group_schedules.any? { |gs| gs.weekday == d.cwday } }

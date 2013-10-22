@@ -92,4 +92,9 @@ class AttendancesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_should_get_form
+    get :form, :group_id => groups(:panda).id
+    assert_response :success
+  end
+
 end

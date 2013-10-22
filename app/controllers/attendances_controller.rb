@@ -120,9 +120,9 @@ class AttendancesController < ApplicationController
     monthly_per_group.each do |g, attendances|
       @monthly_summary_per_group[g] = {}
       @monthly_summary_per_group[g][:attendances] = attendances
-      @monthly_summary_per_group[g][:present] = attendances.select { |a| !Attendance::ABSENT_STATES.include? a.status }
+      @monthly_summary_per_group[g][:present] = attendances.select { |a| !Attendance::ABSENT_STATES.include?(a.status) && a.date <= Date.today }
       @monthly_summary_per_group[g][:absent] = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }
-      @monthly_summary_per_group[g][:practices] = attendances.map(&:practice_id).uniq.size
+      @monthly_summary_per_group[g][:practices] = @monthly_summary_per_group[g][:present].map(&:practice_id).uniq.size
     end
     @by_group_and_member = Hash[monthly_per_group.map { |g, ats| [g, ats.group_by(&:member)] }]
   end
@@ -268,7 +268,7 @@ class AttendancesController < ApplicationController
           @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
 
           @instructors = Member.active(@date).
-              includes({:attendances => :group_schedule, :graduates => [:graduation, :rank]}, :groups).find_all_by_instructor(true).
+              includes({:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank]}, :groups).find_all_by_instructor(true).
               select { |m| m.groups.any? { |g| g.martial_art_id == @group.martial_art_id } }
           @instructors.delete_if { |m| m.attendances.select { |a| ((@dates.first - 92.days)..@dates.last).include?(a.date) && a.group_schedule.group_id == @group.id }.empty? }
           @instructors += GroupInstructor.includes(:group_schedule).
@@ -277,13 +277,12 @@ class AttendancesController < ApplicationController
               select { |gi| @dates.any? { |d| gi.active?(d) } }.map(&:member).uniq
 
           current_members = @group.members.active(@date).
-              includes({:attendances => :group_schedule, :graduates => [:graduation, :rank], :groups => :group_schedules}, :nkf_member)
-          attended_members = Attendance.
-              includes(:member => {:attendances => :group_schedule, :graduates => [:graduation, :rank]}).
-              where('group_schedule_id IN (?) AND (year > ? OR ( year = ? AND week >= ?)) AND (year < ? OR ( year = ? AND week <= ?))',
-                    @group.group_schedules.map(&:id), first_date.cwyear, first_date.cwyear, first_date.cweek, last_date.cwyear, last_date.cwyear, last_date.cweek).
-              all.map(&:member).uniq
-          attended_members -= @instructors
+              includes({:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank], :groups => :group_schedules}, :nkf_member)
+          attended_members = Member.
+              includes(:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank]).
+              where('members.id NOT IN (?) AND practices.group_schedule_id IN (?) AND (year > ? OR ( year = ? AND week >= ?)) AND (year < ? OR ( year = ? AND week <= ?))',
+                    @instructors.map(&:id), @group.group_schedules.map(&:id), first_date.cwyear, first_date.cwyear, first_date.cweek, last_date.cwyear, last_date.cwyear, last_date.cweek).
+              all
           @members = current_members + (attended_members - current_members)
           @trials = @group.trials
 
