@@ -53,6 +53,5 @@ end
 group :test do
   gem 'minitest-reporters'
   gem 'mocha', :require => 'mocha/setup'
-  gem 'rcov'
   gem 'timecop'
 end

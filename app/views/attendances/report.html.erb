@@ -1,8 +1,28 @@
-<% @content_width =880 %>
+<% @content_width = 880 %>
 
-<%= image_tag url_for(:controller => :attendances, :action => :month_chart, :year => @year, :month => @month, :size => '800x300', :format => :png),
-              :title => 'Oppmøte graf', :class => 'img-rounded', :style => 'width: 800px; height: 300px',
-              :usemap => '#monthmap' %>
+<div id="myCarousel" class="carousel slide">
+  <!-- Carousel items -->
+  <div class="carousel-inner">
+    <div class="active item">
+      <%= image_tag url_for(:controller => :attendances, :action => :month_chart, :year => @year, :month => @month, :size => '832x300', :format => :png),
+                    :title => 'Oppmøte graf', :class => 'img-rounded', :style => 'width: 832px; height: 300px',
+                    :usemap => '#monthmap' %>
+    </div>
+  </div>
+  <!-- Carousel nav -->
+  <a class="carousel-control left" href="<%= url_for :id => (@date.beginning_of_month - 1).beginning_of_month %>">&lsaquo;</a>
+  <a class="carousel-control right" href="<%=url_for :id => (@date.end_of_month + 1)%>">&rsaquo;</a>
+</div>
+
+<style>
+    .carousel .carousel-control {
+        visibility: hidden;
+    }
+
+    .carousel:hover .carousel-control {
+        visibility: visible;
+    }
+</style>
 
 <map name="monthmap">
   <!--

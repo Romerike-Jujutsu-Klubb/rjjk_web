@@ -61,9 +61,6 @@
                 </ul>
               </div>
               <br/>
-              <% puts "year: #{year}" %>
-              <% puts "week: #{week}" %>
-              <% puts "gs.practices: #{gs.practices}" %>
               <% attendances = gs.practices.find { |p| p.year == year && p.week == week }.
                       attendances.select { |a| [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(a.status) } %>
               <% absences = gs.practices.find { |p| p.year == year && p.week == week }.
