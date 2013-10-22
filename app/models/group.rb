@@ -19,6 +19,8 @@ class Group < ActiveRecord::Base
   accepts_nested_attributes_for :current_semester
   accepts_nested_attributes_for :next_semester
 
+  before_validation { |r| r.color = nil if r.color.blank? }
+
   validates_presence_of :from_age, :martial_art, :name, :to_age
 
   def full_name
@@ -55,7 +57,7 @@ class Group < ActiveRecord::Base
   end
 
   def next_schedule
-    group_schedules.sort_by{|gs| gs.next_practice.date}.first
+    group_schedules.sort_by { |gs| gs.next_practice.date }.first
   end
 
   def next_practice
@@ -76,7 +78,7 @@ class Group < ActiveRecord::Base
 
   def waiting_list
     return [] unless target_size
-    trial_list = trials.sort_by{|t| [-t.trial_attendances.size, t.reg_dato]}
+    trial_list = trials.sort_by { |t| [-t.trial_attendances.size, t.reg_dato] }
     active_size = members.select(&:active?).size
     active_trial_count = (target_size - active_size)
     trial_list[active_trial_count..-1]
