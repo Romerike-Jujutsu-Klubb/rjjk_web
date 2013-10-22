@@ -9,15 +9,21 @@
                     :usemap => '#monthmap' %>
     </div>
     <div class="item">
+      <%= image_tag url_for(:controller => :attendances, :action => :month_per_year_chart, :month => @month, :size => '832x300', :format => :png),
+                    :title => 'Oppmøte graf', :class => 'img-rounded', :style => 'width: 832px; height: 300px',
+                    :usemap => '#monthmap' %>
+    </div>
+    <div class="item">
       <%= image_tag url_for(:controller => :attendances, :action => :history_graph, :id => '832x300', :format => :png),
                     :title => 'Oppmøte graf', :class => 'img-rounded', :style => 'width: 832px; height: 300px',
                     :usemap => '#monthmap' %>
     </div>
   </div>
   <!-- Carousel nav -->
-  <a class="carousel-control" style="top: 10%" href="#myCarousel" data-slide="next">&lsaquo;</a>
-  <a class="carousel-control left" href="<%= url_for :id => (@date.beginning_of_month - 1).beginning_of_month %>">&lsaquo;</a>
-  <a class="carousel-control right" href="<%=url_for :id => (@date.end_of_month + 1)%>">&rsaquo;</a>
+  <a class="carousel-control" style="top: 10%" href="<%= url_for :id => (@date.beginning_of_month - 1).beginning_of_month %>">&lsaquo;</a>
+  <a class="carousel-control right" style="top: 10%" href="<%=url_for :id => (@date.end_of_month + 1)%>">&rsaquo;</a>
+  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 </div>
 
 <style>
@@ -42,7 +48,7 @@
       <tr>
         <th><%= g.name %></th>
         <td><%= stats[:present].size %></td>
-        <td>Gjennomsnittlig <%= (stats[:present].size.to_f / stats[:practices]).round %>
+        <td>Gjennomsnittlig <%= stats[:present].empty? ? 0 : (stats[:present].size.to_f / stats[:practices]).round %>
           deltakere på <%= stats[:practices] %> treninger
         </td>
       </tr>

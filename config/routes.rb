@@ -13,6 +13,7 @@ RjjkWeb::Application.routes.draw do
   get 'user/logout'
   get 'user/welcome'
 
+  match ':controller/month_per_year_chart/:month/:size.:format', action: :month_per_year_chart
   match ':controller/active_contracts', action: :active_contracts
   match ':controller/form', action: :form
   match ':controller/form/:id', action: :form

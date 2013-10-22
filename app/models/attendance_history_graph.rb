@@ -104,7 +104,37 @@ class AttendanceHistoryGraph
         g.dataxy(group.name, values, nil, group.color)
       end
     end
-    g.y_axis_increment = 5 if g.maximum_value >= 10
+    g.y_axis_increment = 5 if g.maximum_value && g.maximum_value >= 10
+    g.minimum_value = 0
+    g.to_blob
+  end
+
+  def month_per_year_chart(month, size)
+    g = Gruff::Line.new(size)
+    g.theme_37signals
+    g.title_font_size = 18
+    g.legend_font_size = 14
+    g.marker_font_size = 14
+    g.colors = %w{blue orange black green}
+    g.y_axis_label = 'Oppmøte'
+    g.x_axis_label='År'
+    result = Attendance.connection.execute <<EOF
+SELECT g.name, p.year as year, count(*) as count
+FROM attendances a
+  LEFT JOIN practices p ON p.id = a.practice_id
+  LEFT JOIN group_schedules gs ON gs.id = p.group_schedule_id
+  LEFT JOIN groups g ON g.id = gs.group_id
+WHERE a.status NOT IN (#{Attendance::ABSENT_STATES.map{|s| "'#{s}'"}.join(',')})
+  AND DATE_PART('month', date_trunc('week', (p.year || '-1-4')::date)::date + 7 * (p.week - 1) + gs.weekday) = #{month}
+GROUP BY g.name, p.year
+ORDER BY g.name, p.year
+EOF
+    years = result.map{|r| r['year']}.sort.uniq
+    g.title = "Oppmøte #{I18n.t(:date)[:month_names][month]} #{years[0]}-#{years[-1]}"
+    result.group_by{|r| r['name']}.each do |group, values|
+      g.dataxy(group, values.map{|v| [v['year'], v['count']]}, nil, Group.find_by_name(group).color)
+    end
+    g.labels = Hash[*years.map{|y| [y, y.to_s]}.flatten]
     g.minimum_value = 0
     g.to_blob
   end

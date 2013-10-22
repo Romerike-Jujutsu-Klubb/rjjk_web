@@ -187,131 +187,145 @@ class AttendancesController < ApplicationController
     else
       back_or_redirect_to(@attendance)
     end
+  end
+
+  def plan
+    today = Date.today
+    @weeks = [[today.year, today.cweek], [(today + 7).year, (today + 7).cweek]]
+    if today.month >= 6 && today.month <= 7
+      @weeks += [[(today + 14).year, (today + 14).cweek], [(today + 21).year, (today + 21).cweek]]
     end
-
-    def plan
-      today = Date.today
-      @weeks = [[today.year, today.cweek], [(today + 7).year, (today + 7).cweek]]
-      if today.month >= 6 && today.month <= 7
-        @weeks += [[(today + 14).year, (today + 14).cweek], [(today + 21).year, (today + 21).cweek]]
-      end
-      member = current_user.member
-      @group_schedules = member.groups.map(&:group_schedules).flatten
-      @weeks.each do |w|
-        @group_schedules.each { |gs| gs.practices.where(:year => today.year, :week => today.cweek).first_or_create! }
-        @group_schedules.each { |gs| gs.practices.where(:year => (today + 7).year, :week => (today + 7).cweek).first_or_create! }
-      end
-      @planned_attendances = Attendance.includes(:practice).
-          where('member_id = ? AND (practices.year > ? OR (practices.year = ? AND practices.week >= ?)) AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
-                member, today.year, today.year, today.cweek,
-                @weeks.last[0], @weeks.last[0], @weeks.last[1]).
-          all
-      start_date = 6.months.ago.to_date.beginning_of_month
-      attendances = Attendance.includes(:practice).
-          where('member_id = ? AND attendances.status = ? AND ((practices.year = ? AND practices.week >= ?) OR (practices.year = ?))',
-                member, Attendance::Status::ATTENDED, start_date.year, start_date.cweek, today.year).
-          all
-      @attended_groups = attendances.map { |a| a.group_schedule.group }.uniq.sort_by { |g| -g.from_age }
-      per_month = attendances.group_by { |a| d = a.date; [d.year, d.mon] }
-      @months = per_month.keys.sort.map do |ym|
-        per_group = per_month[ym].group_by { |a| a.group_schedule.group }
-        [t(:date)[:month_names][ym[1]], *@attended_groups.map { |g| (per_group[g] || []).size }]
-      end
-      if member.current_rank
-        attendances_since_graduation = member.attendances_since_graduation
-        if attendances_since_graduation.size > 0
-          by_group = attendances_since_graduation.group_by { |a| a.group_schedule.group }
-          @months << ['Siden gradering', *@attended_groups.map { |g| (by_group[g] || []).size }]
-        end
-      end
+    member = current_user.member
+    @group_schedules = member.groups.map(&:group_schedules).flatten
+    @weeks.each do |w|
+      @group_schedules.each { |gs| gs.practices.where(:year => today.year, :week => today.cweek).first_or_create! }
+      @group_schedules.each { |gs| gs.practices.where(:year => (today + 7).year, :week => (today + 7).cweek).first_or_create! }
     end
-
-    def review
-      @attendance = Attendance.find(params[:id])
-      raise 'Wrong user' unless @attendance.member == current_user.member
-      @attendance.update_attributes params[:attendance]
-
-      if request.xhr?
-        render :text => "Stored: #{@attendance.status}"
-      else
-        flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  #{t(:attendances)[@attendance.status.to_sym]}"
-        back_or_redirect_to(:action => :plan)
+    @planned_attendances = Attendance.includes(:practice).
+        where('member_id = ? AND (practices.year > ? OR (practices.year = ? AND practices.week >= ?)) AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
+              member, today.year, today.year, today.cweek,
+              @weeks.last[0], @weeks.last[0], @weeks.last[1]).
+        all
+    start_date = 6.months.ago.to_date.beginning_of_month
+    attendances = Attendance.includes(:practice).
+        where('member_id = ? AND attendances.status = ? AND ((practices.year = ? AND practices.week >= ?) OR (practices.year = ?))',
+              member, Attendance::Status::ATTENDED, start_date.year, start_date.cweek, today.year).
+        all
+    @attended_groups = attendances.map { |a| a.group_schedule.group }.uniq.sort_by { |g| -g.from_age }
+    per_month = attendances.group_by { |a| d = a.date; [d.year, d.mon] }
+    @months = per_month.keys.sort.map do |ym|
+      per_group = per_month[ym].group_by { |a| a.group_schedule.group }
+      [t(:date)[:month_names][ym[1]], *@attended_groups.map { |g| (per_group[g] || []).size }]
+    end
+    if member.current_rank
+      attendances_since_graduation = member.attendances_since_graduation
+      if attendances_since_graduation.size > 0
+        by_group = attendances_since_graduation.group_by { |a| a.group_schedule.group }
+        @months << ['Siden gradering', *@attended_groups.map { |g| (by_group[g] || []).size }]
       end
     end
+  end
 
-    def form_index
-      @groups = Group.active(Date.today).order :from_age
+  def review
+    @attendance = Attendance.find(params[:id])
+    raise 'Wrong user' unless @attendance.member == current_user.member
+    @attendance.update_attributes params[:attendance]
+
+    if request.xhr?
+      render :text => "Stored: #{@attendance.status}"
+    else
+      flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  #{t(:attendances)[@attendance.status.to_sym]}"
+      back_or_redirect_to(:action => :plan)
     end
+  end
 
-    def form
-      if params[:date]
-        @date = Date.parse(params[:date])
-      end
-      @date ||= Date.today
+  def form_index
+    @groups = Group.active(Date.today).order :from_age
+  end
 
-      first_date = Date.new(@date.year, @date.month, 1)
-      last_date = Date.new(@date.year, @date.month, -1)
+  def form
+    if params[:date]
+      @date = Date.parse(params[:date])
+    end
+    @date ||= Date.today
 
-      if params[:group_id]
-        if params[:group_id] == 'others'
-          @instructors = []
-          @members = Member.includes(:attendances => {:group_schedule => :group}).
-              where('id NOT in (SELECT DISTINCT member_id FROM groups_members) AND (left_on IS NULL OR left_on > ?)', @date).
-              all
-          @trials = []
-          weekdays = [2, 4]
-          @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
-          current_members = []
-        else
-          @group = Group.includes(:martial_art).find(params[:group_id])
-          weekdays = @group.group_schedules.map { |gs| gs.weekday }
-          @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
+    first_date = Date.new(@date.year, @date.month, 1)
+    last_date = Date.new(@date.year, @date.month, -1)
 
-          @instructors = Member.active(@date).
-              includes({:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank]}, :groups).find_all_by_instructor(true).
-              select { |m| m.groups.any? { |g| g.martial_art_id == @group.martial_art_id } }
-          @instructors.delete_if { |m| m.attendances.select { |a| ((@dates.first - 92.days)..@dates.last).include?(a.date) && a.group_schedule.group_id == @group.id }.empty? }
-          @instructors += GroupInstructor.includes(:group_schedule).
-              where('member_id NOT IN (?)', @instructors.map(&:id)).
-              where(:group_schedules => {:group_id => @group.id}).all.
-              select { |gi| @dates.any? { |d| gi.active?(d) } }.map(&:member).uniq
-
-          current_members = @group.members.active(@date).
-              includes({:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank], :groups => :group_schedules}, :nkf_member)
-          attended_members = Member.
-              includes(:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank]).
-              where('members.id NOT IN (?) AND practices.group_schedule_id IN (?) AND (year > ? OR ( year = ? AND week >= ?)) AND (year < ? OR ( year = ? AND week <= ?))',
-                    @instructors.map(&:id), @group.group_schedules.map(&:id), first_date.cwyear, first_date.cwyear, first_date.cweek, last_date.cwyear, last_date.cwyear, last_date.cweek).
-              all
-          @members = current_members + (attended_members - current_members)
-          @trials = @group.trials
-
-          @instructors.sort_by! do |m|
-            r = m.current_rank(@group.martial_art, last_date)
-            [r ? -r.position : 99, m.first_name, m.last_name]
-          end
-          @members.sort_by! do |m|
-            r = m.current_rank(@group.martial_art, first_date)
-            [r ? -r.position : 99, m.first_name, m.last_name]
-          end
-        end
-      else
+    if params[:group_id]
+      if params[:group_id] == 'others'
         @instructors = []
-        @members = []
+        @members = Member.includes(:attendances => {:group_schedule => :group}).
+            where('id NOT in (SELECT DISTINCT member_id FROM groups_members) AND (left_on IS NULL OR left_on > ?)', @date).
+            all
         @trials = []
-        current_members = []
         weekdays = [2, 4]
         @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
+        current_members = []
+      else
+        @group = Group.includes(:martial_art).find(params[:group_id])
+        weekdays = @group.group_schedules.map { |gs| gs.weekday }
+        @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
+
+        @instructors = Member.active(@date).
+            includes({:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank]}, :groups).find_all_by_instructor(true).
+            select { |m| m.groups.any? { |g| g.martial_art_id == @group.martial_art_id } }
+        @instructors.delete_if { |m| m.attendances.select { |a| ((@dates.first - 92.days)..@dates.last).include?(a.date) && a.group_schedule.group_id == @group.id }.empty? }
+        @instructors += GroupInstructor.includes(:group_schedule).
+            where('member_id NOT IN (?)', @instructors.map(&:id)).
+            where(:group_schedules => {:group_id => @group.id}).all.
+            select { |gi| @dates.any? { |d| gi.active?(d) } }.map(&:member).uniq
+
+        current_members = @group.members.active(@date).
+            includes({:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank], :groups => :group_schedules}, :nkf_member)
+        attended_members = Member.
+            includes(:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank]).
+            where('members.id NOT IN (?) AND practices.group_schedule_id IN (?) AND (year > ? OR ( year = ? AND week >= ?)) AND (year < ? OR ( year = ? AND week <= ?))',
+                  @instructors.map(&:id), @group.group_schedules.map(&:id), first_date.cwyear, first_date.cwyear, first_date.cweek, last_date.cwyear, last_date.cwyear, last_date.cweek).
+            all
+        @members = current_members + (attended_members - current_members)
+        @trials = @group.trials
+
+        @instructors.sort_by! do |m|
+          r = m.current_rank(@group.martial_art, last_date)
+          [r ? -r.position : 99, m.first_name, m.last_name]
+        end
+        @members.sort_by! do |m|
+          r = m.current_rank(@group.martial_art, first_date)
+          [r ? -r.position : 99, m.first_name, m.last_name]
+        end
       end
-
-      @instructors -= current_members
-      @passive_members = @members.select { |m| m.passive?(@date, @group) }
-      @members -= @passive_members
-      @instructors -= @passive_members
-
-      @birthdate_missing = @members.empty? || @members.find { |m| m.birthdate.nil? }
-
-      render :layout => 'print'
+    else
+      @instructors = []
+      @members = []
+      @trials = []
+      current_members = []
+      weekdays = [2, 4]
+      @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
     end
 
+    @instructors -= current_members
+    @passive_members = @members.select { |m| m.passive?(@date, @group) }
+    @members -= @passive_members
+    @instructors -= @passive_members
+
+    @birthdate_missing = @members.empty? || @members.find { |m| m.birthdate.nil? }
+
+    render :layout => 'print'
+  end
+
+  def month_per_year_chart
+    if params[:size] && params[:size].to_i <= 1600
+      if params[:size] =~ /^\d+x\d+$/
+        size = params[:size]
+      else
+        size = params[:size].to_i
+      end
+    else
+      size = '800x600'
     end
+    g = AttendanceHistoryGraph.new.month_per_year_chart params[:month].to_i, size
+    send_data(g, :disposition => 'inline', :type => 'image/png', :filename => 'RJJK_Oppmøtehistorikk.png')
+  end
+
+end
