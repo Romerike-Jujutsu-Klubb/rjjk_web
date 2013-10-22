@@ -89,7 +89,7 @@ GEM
       rack-oauth2 (>= 0.14.4)
       tzinfo
     gmaps4rails (1.5.6)
-    gruff (0.4.0-java)
+    gruff (0.5.1-java)
       rmagick4j
     hashery (2.1.1)
     hashie (2.0.5)
@@ -252,7 +252,7 @@ DEPENDENCIES
   dynamic_form
   exception_notification
   fb_graph
-  gmaps4rails
+  gmaps4rails (< 2.0.0)
   gruff
   jquery-rails
   jquery-ui-rails
