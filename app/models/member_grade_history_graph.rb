@@ -45,9 +45,12 @@ EOF
     g = Gruff::Line.new(size)
     g.theme_37signals
     g.title = 'Fordeling av grader'
+    g.legend_font_size = 15
+    g.legend_box_size = 15
+    g.marker_font_size = 14
     if percentage
       g.title_font_size *= 0.95
-      g.title += " med oppmøte over #{percentage}%"
+      g.title += "\nmed oppmøte over #{percentage}%"
     end
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     g.hide_dots = true
@@ -83,8 +86,8 @@ EOF
       end }
     g.labels = labels
 
-    g.maximum_value = 25
-    g.marker_count = 5
+    g.maximum_value = 12
+    g.marker_count = 6
     g.to_blob
   end
 
