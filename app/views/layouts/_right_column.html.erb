@@ -249,7 +249,7 @@
         <% age_chart_link = 'Aldersfordeling' %>
         <% good_attendance_chart_link = 'Jevnt oppmøte voksne' %>
     <% end %>
-    <%= link_to history_chart_link, :controller => :members, :action => :history_graph, :format => :png, :id => 800 %>
+    <%= link_to history_chart_link, :controller => :members, :action => :report %>
     <br/>
     <%= link_to attendance_chart_link, :controller => :attendances, :action => :report %>
     <br/>

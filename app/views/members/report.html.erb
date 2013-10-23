@@ -1,0 +1,68 @@
+<% @content_width = 880 %>
+
+<div id="myCarousel" class="carousel slide" data-interval="false">
+  <!-- Carousel items -->
+  <div class="carousel-inner">
+    <div class="active item">
+      <%= image_tag url_for(:action => :history_graph, :id => '832x600', :format => :png),
+                    :title => 'Medlemmer graf', :class => 'img-rounded', :style => 'width: 832px; height: 600px' %>
+    </div>
+  </div>
+  <!-- Carousel nav -->
+  <a class="carousel-control" style="top: 10%" href="<%= url_for :id => (@date.beginning_of_month - 1).beginning_of_month %>">&lsaquo;</a>
+  <a class="carousel-control right" style="top: 10%" href="<%= url_for :id => (@date.end_of_month + 1) %>">&rsaquo;</a>
+  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div>
+
+<style>
+    .carousel .carousel-control {
+        visibility: hidden;
+    }
+
+    .carousel:hover .carousel-control {
+        visibility: visible;
+    }
+</style>
+
+<table class="table">
+  <tr>
+    <th width="70%">Nye medlemmer</th>
+    <td><%= @members_in.size %></td>
+  </tr>
+  <tr>
+    <th>Utmeldinger</th>
+    <td><%= @members_out.size %></td>
+  </tr>
+</table>
+
+<% if @members_in.any? %>
+    <table class="table">
+      <tr>
+        <th width="70%">Nye medlemmer</th>
+        <th>Innmelding</th>
+      </tr>
+      <% @members_in.each do |m| %>
+          <tr>
+            <td><%= m.name %></td>
+            <td><%= m.joined_on %></td>
+            <td><%= m.left_on %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>
+
+<% if @members_out.any? %>
+    <table class="table">
+      <tr>
+        <th width="70%">Utmeldinger</th>
+        <th>Utmelding</th>
+      </tr>
+      <% @members_out.each do |m| %>
+          <tr>
+            <td><%= m.name %></td>
+            <td><%= m.left_on %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>

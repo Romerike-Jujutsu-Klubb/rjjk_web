@@ -39,7 +39,11 @@ class MembersController < ApplicationController
 
   def history_graph
     if params[:id] && params[:id].to_i <= 1280
-      g = MemberHistoryGraph.history_graph params[:id].to_i
+      if params[:id] =~ /^\d+x\d+$/
+        g = MemberHistoryGraph.history_graph params[:id]
+      else
+        g = MemberHistoryGraph.history_graph params[:id].to_i
+      end
     else
       g = MemberHistoryGraph.history_graph
     end
@@ -258,6 +262,18 @@ class MembersController < ApplicationController
 
   def my_media
     @images = Image
+  end
+
+  def report
+    @date = (params[:id] && Date.parse(params[:id])) || Date.today
+    @year = @date.year
+    @month = @date.month
+    @first_date = @date.beginning_of_month - 1
+    @last_date = @date.end_of_month
+    @members_before = Member.active(@first_date).all
+    @members_after = Member.active(@last_date).all
+    @members_in = @members_after - @members_before
+    @members_out = @members_before - @members_after
   end
 
   private

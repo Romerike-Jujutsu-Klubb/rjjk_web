@@ -15,40 +15,36 @@ class MemberHistoryGraph
     begin
       require 'gruff'
     rescue MissingSourceFile => e
-      return File.read("public/images/rails.png")
+      return File.read('public/images/rails.png')
     end
     
     g = Gruff::Line.new(size)
     g.theme_37signals
-    g.title = "Antall aktive medlemmer"
+    g.title = 'Antall aktive medlemmer'
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
-    #g.legend_font_size = 14
+    g.legend_font_size = 14
+    g.marker_font_size = 14
     g.hide_dots = true
     g.colors = %w{gray blue brown orange black red yellow lightblue green}
     
-    #first_date = find(:first, :order => 'joined_on').joined_on
-    #first_date = 5.years.ago.to_date
     first_date = Date.civil(2011, 01, 01)
     dates = []
     Date.today.step(first_date, -14) {|date| dates << date}
     dates.reverse!
-    g.data("Totalt", totals(dates))
-    #g.data("Totalt m/Aikido", totals_paying(dates))
-    g.data("Totalt betalende", totals_jj(dates))
-    g.data("Voksne", seniors_jj(dates))
-    g.data("Tiger", juniors_jj(dates))
-    g.data("Panda", aspirants(dates))
-    g.data("Gratis", gratis(dates))
-    g.data("Prøvetid", dates.map{|d| NkfMemberTrial.count(:conditions => ["reg_dato <= ?", d])}.without_consecutive_zeros)
-    #g.data("Aikido Seniorer", seniors_ad(dates).without_consecutive_zeros)
-    #g.data("Aikido Juniorer", juniors_ad(dates).without_consecutive_zeros)
+    g.data('Totalt', totals(dates))
+    g.data('Totalt betalende', totals_jj(dates))
+    g.data('Voksne', seniors_jj(dates))
+    g.data('Tiger', juniors_jj(dates))
+    g.data('Panda', aspirants(dates))
+    g.data('Gratis', gratis(dates))
+    g.data('Prøvetid', dates.map{|d| NkfMemberTrial.count(:conditions => ['reg_dato <= ?', d])}.without_consecutive_zeros)
 
     g.minimum_value = 0
     
     labels = {}
     current_year = nil
     current_month = nil
-    dates.each_with_index {|date, i| if date.month != current_month && [1,8].include?(date.month) then labels[i] = (date.year != current_year ? "#{date.strftime("%m")}\n    #{date.strftime("%Y")}" : "#{date.strftime("%m")}") ; current_year = date.year ; current_month = date.month end}
+    dates.each_with_index {|date, i| if date.month != current_month && [1,8].include?(date.month) then labels[i] = (date.year != current_year ? "#{date.strftime('%m')}\n    #{date.strftime('%Y')}" : "#{date.strftime('%m')}") ; current_year = date.year ; current_month = date.month end}
     g.labels = labels
       
     # g.draw_vertical_legend

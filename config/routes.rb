@@ -2,6 +2,7 @@ RjjkWeb::Application.routes.draw do
   get 'attendances/report'
   get 'attendances/review'
   get 'info/versjon'
+  get 'members/report'
   get 'members/search'
   get 'mitt/oppmote' => 'attendances#plan'
   get 'attendances/plan' # må være etter mitt/oppmote

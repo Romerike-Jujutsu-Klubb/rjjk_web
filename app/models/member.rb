@@ -11,7 +11,7 @@ class Member < ActiveRecord::Base
     address.blank? || (!latitude.blank? && !longitude.blank?)
   end
 
-  scope :active, lambda { |date| {:conditions => ['left_on IS NULL OR left_on > ?', date]} }
+  scope :active, lambda { |date| {:conditions => ['joined_on <= ? AND left_on IS NULL OR left_on > ?', date, date]} }
 
   belongs_to :image, :dependent => :destroy
   belongs_to :user, :dependent => :destroy
