@@ -2,8 +2,8 @@ one:
   medlems_type: MyString
   etternavn: Eriksen
   fornavn: Hans
-  fodtdato: 2010-10-03
-  alder: 1
+  fodtdato: 2007-10-03
+  alder: 6
   postnr: 1234
   sted: MyString
   adresse: MyString

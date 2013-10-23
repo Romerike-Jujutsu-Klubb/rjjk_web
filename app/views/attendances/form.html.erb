@@ -91,7 +91,7 @@ Gradering er ..." %>
       <% @dates.each do |d| %>
           <% if @group %>
               <% group_schedule = @group.group_schedules.to_a.find { |gs| gs.weekday == d.cwday } %>
-              <% trial_attendance = trial.trial_attendances.select { |a| a.group_schedule == group_schedule && a.date == d }.first %>
+              <% trial_attendance = trial.trial_attendances.select { |a| a.practice.group_schedule == group_schedule && a.date == d }.first %>
               <td id="trial_attendance_<%= trial.id %>_<%= d.day %>" align="center">
               <% if trial_attendance %>
                   <% member_trial_total += 1 -%>
@@ -132,7 +132,7 @@ Gradering er ..." %>
 
 <%= render :partial => 'attendance_form_footer' %>
 
-<tbody>
+</tbody>
 </table>
 
 
@@ -157,6 +157,6 @@ Gradering er ..." %>
       <td align="center"></td>
     </tr>
 
-    <tbody>
+    </tbody>
     </table>
 <% end %>

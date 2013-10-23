@@ -62,7 +62,7 @@ class AttendancesControllerTest < ActionController::TestCase
     practice = practices(:voksne_2013_42_thursday)
     assert_equal 1, practice.attendances.count
     xhr :post, :announce, :gs_id => practice.group_schedule_id,
-         :week => practice.week, :year => practice.year, :id => 'toggle'
+        :week => practice.week, :year => practice.year, :id => 'toggle'
     assert_response :success
     assert_equal 0, practice.attendances.count
   end
@@ -72,7 +72,7 @@ class AttendancesControllerTest < ActionController::TestCase
     practice = practices(:voksne_2013_42_thursday)
     assert_equal 1, practice.attendances.count
     xhr :post, :announce, :gs_id => practice.group_schedule_id,
-         :week => practice.week, :year => practice.year, :id => 'toggle'
+        :week => practice.week, :year => practice.year, :id => 'toggle'
     assert_response :success
     assert_equal 2, practice.attendances.count
   end
@@ -93,7 +93,7 @@ class AttendancesControllerTest < ActionController::TestCase
   end
 
   def test_should_get_form
-    get :form, :group_id => groups(:panda).id
+    get :form, :date => '2013-10-01', :group_id => groups(:panda).id
     assert_response :success
   end
 

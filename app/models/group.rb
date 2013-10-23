@@ -70,7 +70,7 @@ class Group < ActiveRecord::Base
 
   def trials
     NkfMemberTrial.
-        includes(:trial_attendances => :group_schedule).
+        includes(:trial_attendances => {:practice => :group_schedule}).
         where('alder BETWEEN ? AND ?', from_age, to_age).
         order('fornavn, etternavn').
         all
