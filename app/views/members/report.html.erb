@@ -1,30 +1,10 @@
 <% @content_width = 880 %>
 
-<div id="myCarousel" class="carousel slide" data-interval="false">
-  <!-- Carousel items -->
-  <div class="carousel-inner">
-    <div class="active item">
-      <%= image_tag url_for(:action => :history_graph, :id => '832x600', :format => :png),
-                    :title => 'Medlemmer graf', :class => 'img-rounded', :style => 'width: 832px; height: 600px' %>
-    </div>
-  </div>
-  <!-- Carousel nav -->
-  <a class="carousel-control" style="top: 10%" href="<%= url_for :id => (@date.beginning_of_month - 1).beginning_of_month %>">&lsaquo;</a>
-  <a class="carousel-control right" style="top: 10%" href="<%= url_for :id => (@date.end_of_month + 1) %>">&rsaquo;</a>
-  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
-</div>
+<div>
+<a class="carousel-control left" style="position: inherit; margin-top: -0.05em" href="<%= url_for :id => (@date.beginning_of_month - 1).beginning_of_month %>">&lsaquo;</a>
+<a class="carousel-control right" style="position: inherit; margin-top: -0.05em" href="<%= url_for :id => (@date.end_of_month + 1) %>">&rsaquo;</a>
 
-<style>
-    .carousel .carousel-control {
-        visibility: hidden;
-    }
-
-    .carousel:hover .carousel-control {
-        visibility: visible;
-    }
-</style>
-
+<h2>Medlemsrapport <%= t(:date)[:month_names][@month] %> <%= @year %></h2>
 <table class="table">
   <tr>
     <th width="70%">Nye medlemmer</th>
@@ -35,6 +15,10 @@
     <td><%= @members_out.size %></td>
   </tr>
 </table>
+</div>
+
+<%= image_tag url_for(:action => :history_graph, :id => '832x600', :format => :png),
+              :title => 'Medlemmer graf', :class => 'img-rounded', :style => 'width: 832px; height: 600px' %>
 
 <% if @members_in.any? %>
     <table class="table">
