@@ -16,12 +16,10 @@ class GradeHistoryImageSweeper < ActionController::Caching::Sweeper
   private
   
   def expire_image(attendance)
-    expire_page(:controller => 'members', :action => 'grade_history_graph', :format => :png, :id => 182)
-    expire_page(:controller => 'members', :action => 'grade_history_graph', :format => :png, :id => 800)
-    expire_page(:controller => 'members', :action => 'grade_history_graph', :format => :png, :id => 1024)
-    expire_page(:controller => 'members', :action => 'grade_history_graph_percentage', :format => :png, :id => 182)
-    expire_page(:controller => 'members', :action => 'grade_history_graph_percentage', :format => :png, :id => 800)
-    expire_page(:controller => 'members', :action => 'grade_history_graph_percentage', :format => :png, :id => 1024)
+    cache_dir = ActionController::Base.page_cache_directory
+    cached_files = Dir.glob(cache_dir + '/members/grade_history_graph*/**/*')
+    Rails.logger.info("Expire cached files: #{cached_files}")
+    FileUtils.rm_f(cached_files) rescue Errno::ENOENT
   end
   
 end

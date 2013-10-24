@@ -16,13 +16,10 @@ class AttendanceImageSweeper < ActionController::Caching::Sweeper
   private
 
   def expire_image(attendance)
-    [182, 800, 1024].each do |size|
-      expire_page(:controller => 'attendances', :action => 'history_graph',
-                  :format => :png, :id => size)
-      expire_page(:controller => 'attendances', :action => 'month_chart',
-                  :year => attendance.date.year, :month => attendance.date.month,
-                  :size => size, :format => :png)
-    end
+    cache_dir = ActionController::Base.page_cache_directory
+    cached_files = Dir.glob(cache_dir + '/attendances/**/*')
+    Rails.logger.info("Expire cached files: #{cached_files}")
+    FileUtils.rm_f(cached_files) rescue Errno::ENOENT
   end
 
 end

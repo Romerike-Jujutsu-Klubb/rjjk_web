@@ -4,7 +4,7 @@ class AttendancesController < ApplicationController
   before_filter :admin_required, :except => user_actions
   before_filter :authenticate_user, :only => user_actions
 
-  caches_page :history_graph, :month_chart
+  caches_page :history_graph, :month_chart, :month_per_year_chart
   update_actions = [:announce, :create, :destroy, :review, :update]
   cache_sweeper :attendance_image_sweeper, :only => update_actions
   cache_sweeper :grade_history_image_sweeper, :only => update_actions

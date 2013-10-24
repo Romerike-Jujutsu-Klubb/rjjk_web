@@ -20,12 +20,10 @@ class MemberSweeper < ActionController::Caching::Sweeper
       expire_page(:controller => 'members', :action => 'image',     :id => member.id, :format => member.image.format)
       expire_page(:controller => 'members', :action => 'thumbnail', :id => member.id, :format => member.image.format)
     end
-    expire_page(:controller => 'members', :action => 'history_graph', :format => :png, :id => 182)
-    expire_page(:controller => 'members', :action => 'history_graph', :format => :png, :id => 1024)
-
-    expire_page(:controller => 'members', :action => 'age_chart', :format => :png, :id => 182)
-    expire_page(:controller => 'members', :action => 'age_chart', :format => :png, :id => 800)
-    expire_page(:controller => 'members', :action => 'age_chart', :format => :png, :id => 1024)
+    cache_dir = ActionController::Base.page_cache_directory
+    cached_files = Dir.glob(cache_dir + '/members/{age_chart,history_graph}/**/*')
+    Rails.logger.info("Expire cached files: #{cached_files}")
+    FileUtils.rm_f(cached_files) rescue Errno::ENOENT
   end
   
 end
