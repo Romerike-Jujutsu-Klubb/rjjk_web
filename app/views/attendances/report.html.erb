@@ -20,8 +20,8 @@
     </div>
   </div>
   <!-- Carousel nav -->
-  <a class="carousel-control" style="top: 10%" href="<%= url_for :id => (@date.beginning_of_month - 1).beginning_of_month %>">&lsaquo;</a>
-  <a class="carousel-control right" style="top: 10%" href="<%=url_for :id => (@date.end_of_month + 1)%>">&rsaquo;</a>
+  <a class="carousel-control" style="top: 10%" href="<%= url_for :year => (@first_date - 1).year, :month => (@first_date - 1).month %>">&lsaquo;</a>
+  <a class="carousel-control right" style="top: 10%" href="<%=url_for :year => (@last_date + 1).year, :month => (@last_date + 1).month%>">&rsaquo;</a>
   <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
   <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 </div>

@@ -265,7 +265,7 @@ class MembersController < ApplicationController
   end
 
   def report
-    @date = (params[:id] && Date.parse(params[:id])) || Date.today
+    @date = (params[:year] && params[:month] && Date.new(params[:year].to_i, params[:month].to_i, 1)) || Date.today.beginning_of_month
     @year = @date.year
     @month = @date.month
     @first_date = @date.beginning_of_month - 1

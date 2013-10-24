@@ -106,15 +106,15 @@ class AttendancesController < ApplicationController
   end
 
   def report
-    @date = (params[:id] && Date.parse(params[:id])) || Date.today
+    @date = (params[:year] && params[:month] && Date.new(params[:year].to_i, params[:month].to_i, 1)) || Date.today.beginning_of_month
     @year = @date.year
     @month = @date.month
-    first_date = @date.beginning_of_month
-    last_date = @date.end_of_month
+    @first_date = @date
+    @last_date = @date.end_of_month
     @attendances = Attendance.includes(:practice => :group_schedule).
         where('practices.year = ? AND practices.week >= ? AND practices.week <= ? AND attendances.status NOT IN (?)',
-              @year, first_date.cweek, last_date.cweek, Attendance::ABSENT_STATES).
-        all.select { |a| (first_date..last_date).include? a.date }
+              @year, @first_date.cweek, @last_date.cweek, Attendance::ABSENT_STATES).
+        all.select { |a| (@first_date..@last_date).include? a.date }
     monthly_per_group = @attendances.group_by { |a| a.group_schedule.group }.sort_by { |g, ats| g.from_age }
     @monthly_summary_per_group = {}
     monthly_per_group.each do |g, attendances|
