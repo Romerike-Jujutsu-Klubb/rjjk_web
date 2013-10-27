@@ -94,7 +94,7 @@ class AttendanceHistoryGraph
         all.select { |a| a.date >= first_date && a.date <= last_date && a.date <= Date.today }
     group_schedules = attendances.map(&:group_schedule).uniq
     groups = group_schedules.map(&:group).uniq.sort_by(&:from_age)
-    dates = (first_date..last_date).select { |d| group_schedules.any? { |gs| gs.weekday == d.cwday } }
+    dates = attendances.map(&:date).sort.uniq
     g.labels = Hash[*dates.map { |d| [d.day, d.day.to_s] }.flatten]
     groups.each do |group|
       values = dates.select { |d| group.group_schedules.map(&:weekday).include? d.cwday }.
