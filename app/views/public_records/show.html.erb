@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Registered on:</b>
+  <%= @public_record.registered_on %>
+</p>
+
+<p>
+  <b>Contact:</b>
+  <%= @public_record.contact %>
+</p>
+
+<p>
+  <b>Chairman:</b>
+  <%= @public_record.chairman %>
+</p>
+
+<p>
+  <b>Board members:</b>
+  <%= @public_record.board_members %>
+</p>
+
+<p>
+  <b>Deputies:</b>
+  <%= @public_record.deputies %>
+</p>
+
+
+<%= link_to 'Edit', edit_public_record_path(@public_record) %> |
+<%= link_to 'Back', public_records_path %>

@@ -1,0 +1,22 @@
+<h1>Hei <%= @chairman.first_name %>!</h1>
+
+Her er oppdatert informasjon fra Brønnøysundregisteret:
+
+<table class="table">
+  <tr>
+    <th align="right">Kontaktperson:</th>
+    <td><ul><li><%=@record.contact%></li></ul></td>
+  </tr>
+  <tr>
+    <th align="right">Styreleder:</th>
+    <td><ul><li><%=@record.chairman%></li></ul></td>
+  </tr>
+  <tr>
+    <th align="right" valign="top">Styremedlemmer:</th>
+    <td><ul><%=@record.board_members.split("\n").map{|m| "<li>#{m}</li>"}.join.html_safe%></ul></td>
+  </tr>
+  <tr>
+    <th align="right" valign="top">Varamedlemmer:</th>
+    <td><ul><%=@record.deputies.split("\n").map{|m| "<li>#{m}</li>"}.join.html_safe%></ul></td>
+  </tr>
+</table>

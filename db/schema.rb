@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131020213008) do
+ActiveRecord::Schema.define(:version => 20131028162849) do
 
   create_table "members", :force => true do |t|
     t.string  "first_name",           :limit => 100, :default => "", :null => false
@@ -453,6 +453,15 @@ ActiveRecord::Schema.define(:version => 20131020213008) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.index ["old_path"], :name => "index_page_aliases_on_old_path", :unique => true, :order => {"old_path" => :asc}
+  end
+
+  create_table "public_records", :force => true do |t|
+    t.string   "contact",       :null => false
+    t.string   "chairman",      :null => false
+    t.string   "board_members", :null => false
+    t.string   "deputies",      :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "signatures", :force => true do |t|

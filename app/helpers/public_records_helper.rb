@@ -1,0 +1,2 @@
+module PublicRecordsHelper
+end

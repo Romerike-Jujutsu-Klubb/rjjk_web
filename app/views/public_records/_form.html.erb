@@ -1,0 +1,33 @@
+<%= form_for(@public_record) do |f| %>
+  <% if @public_record.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@public_record.errors.count, "error") %> prohibited this public_record from being saved:</h2>
+
+      <ul>
+      <% @public_record.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :contact %><br />
+    <%= f.text_field :contact %>
+  </div>
+  <div class="field">
+    <%= f.label :chairman %><br />
+    <%= f.text_field :chairman %>
+  </div>
+  <div class="field">
+    <%= f.label :board_members %><br />
+    <%= f.text_field :board_members %>
+  </div>
+  <div class="field">
+    <%= f.label :deputies %><br />
+    <%= f.text_field :deputies %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

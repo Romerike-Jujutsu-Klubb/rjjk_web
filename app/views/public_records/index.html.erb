@@ -1,0 +1,33 @@
+<% @content_width = 880%>
+
+<h1>Oppføringer i Brønnøysundregisteret</h1>
+
+<table class="table">
+  <tr>
+    <th>Dato</th>
+    <th>Kontakt</th>
+    <th>Styreleder</th>
+    <th>Styremedlemmer</th>
+    <th>Varamedlemmer</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @public_records.each do |public_record| %>
+  <tr>
+    <td><%= public_record.created_at.to_date %></td>
+    <td><%= public_record.contact %></td>
+    <td><%= public_record.chairman %></td>
+    <td><%= public_record.board_members %></td>
+    <td><%= public_record.deputies %></td>
+    <td><%= link_to 'Show', public_record %></td>
+    <td><%= link_to 'Edit', edit_public_record_path(public_record) %></td>
+    <td><%= link_to 'Destroy', public_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Ny registrering', new_public_record_path %>

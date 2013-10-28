@@ -1,0 +1,11 @@
+one:
+  contact: MyString
+  chairman: MyString
+  board_members: MyString
+  deputies: MyString
+
+two:
+  contact: MyString
+  chairman: MyString
+  board_members: MyString
+  deputies: MyString

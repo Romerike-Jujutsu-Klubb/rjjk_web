@@ -75,12 +75,37 @@
                 </a>
 
                 <div style="display:none">
-                  <div id="layout_attendance_details">
+                  <div id="layout_attendance_details" style="padding: 1em">
                     <img style="float: left; width: 100px; height: 100px; margin-right: 1em; margin-left: 0.5em"
                          src="/assets/rjjk_logo_&_txt_320.png"/>
 
                     <h3>Påmeldt til neste trening</h3>
                     <br clear="all"/>
+                    <span class="pull-right" style="font-size: 30pt;background-attachment: scroll;
+                    background-clip: border-box;
+                    background-color: rgb(0, 0, 255);
+                    background-image: none;
+                    background-origin: padding-box;
+                    background-size: auto;
+                    border-bottom-color: rgb(255, 255, 255);
+                    border-bottom-left-radius: 23px;
+                    border-bottom-right-radius: 23px;
+                    border-bottom-style: solid;
+                    border-bottom-width: 3px;
+                    border-left-color: rgb(255, 255, 255);
+                    border-left-style: solid;
+                    border-left-width: 3px;
+                    border-right-color: rgb(255, 255, 255);
+                    border-right-style: solid;
+                    border-right-width: 3px;
+                    border-top-color: rgb(255, 255, 255);
+                    border-top-left-radius: 23px;
+                    border-top-right-radius: 23px;
+                    border-top-style: solid;
+                    border-top-width: 3px;
+                    color: rgb(255, 255, 255);
+                            padding: 0.25em;
+                    "><%=@other_attendees.size + ([Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED].include?(@your_attendance_next_practice.status) ? 1 : 0)%></span>
                     <ul>
                       <% if [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED].include? @your_attendance_next_practice.status %>
                           <li><%= @your_attendance_next_practice.member.name %></li>

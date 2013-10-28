@@ -64,7 +64,8 @@ class AttendancesControllerTest < ActionController::TestCase
     xhr :post, :announce, :gs_id => practice.group_schedule_id,
         :week => practice.week, :year => practice.year, :id => 'toggle'
     assert_response :success
-    assert_equal 0, practice.attendances.count
+    assert_equal 1, practice.attendances.count
+    assert_equal Attendance::Status::ABSENT, practice.attendances[0].status
   end
 
   def test_should_announce_toggle_on

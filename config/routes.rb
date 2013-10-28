@@ -53,6 +53,7 @@ RjjkWeb::Application.routes.draw do
   resources :nkf_member_trials
   resources :page_aliases
   resources :practices
+  resources :public_records
   resources :semesters
   resources :signatures
   resources :trial_attendances

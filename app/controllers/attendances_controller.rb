@@ -96,7 +96,11 @@ class AttendancesController < ApplicationController
       format.html do
         if request.xhr?
           flash.clear
-          render :partial => '/attendances/attendance_create_link', :locals => {:member_id => @attendance.member_id, :group_schedule_id => @attendance.group_schedule_id, :date => @attendance.date}
+          render :partial => '/attendances/attendance_create_link', :locals => {
+              :member_id => @attendance.member_id,
+              :group_schedule_id => @attendance.practice.group_schedule_id,
+              :date => @attendance.date, :status => Attendance::Status::ATTENDED
+          }
         else
           redirect_to(attendances_url)
         end
@@ -154,7 +158,7 @@ class AttendancesController < ApplicationController
   end
 
   def announce
-    m = current_user.member
+    m = (params[:member_id] && Member.find(params[:member_id])) || current_user.member
     year = params[:year]
     week = params[:week]
     gs_id = params[:gs_id]
@@ -171,19 +175,15 @@ class AttendancesController < ApplicationController
     new_status = params[:id]
     if new_status == 'toggle'
       if @attendance.status == Attendance::Status::WILL_ATTEND
-        new_status = 'NONE'
-        @attendance.destroy
+        new_status = Attendance::Status::ABSENT
       else
         new_status = Attendance::Status::WILL_ATTEND
-        @attendance.status = Attendance::Status::WILL_ATTEND
-        @attendance.save!
       end
-    else
-      @attendance.status = new_status
-      @attendance.save!
     end
+    @attendance.status = new_status
+    @attendance.save!
     if request.xhr?
-      render :text => "Stored: #{new_status}"
+      render :partial => 'attendance_delete_link', :locals => {:attendance => @attendance}
     else
       back_or_redirect_to(@attendance)
     end
@@ -232,7 +232,7 @@ class AttendancesController < ApplicationController
     @attendance.update_attributes params[:attendance]
 
     if request.xhr?
-      render :text => "Stored: #{@attendance.status}"
+      render :text => @attendance.status
     else
       flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  #{t(:attendances)[@attendance.status.to_sym]}"
       back_or_redirect_to(:action => :plan)
