@@ -18,7 +18,11 @@ class PublicRecordsControllerTest < ActionController::TestCase
 
   test "should create public_record" do
     assert_difference('PublicRecord.count') do
-      post :create, public_record: { board_members: @public_record.board_members, chairman: @public_record.chairman, contact: @public_record.contact, deputies: @public_record.deputies, registered_on: @public_record.registered_on }
+      post :create, public_record: {
+          board_members: @public_record.board_members,
+          chairman: @public_record.chairman, contact: @public_record.contact,
+          deputies: @public_record.deputies,
+      }
     end
 
     assert_redirected_to public_record_path(assigns(:public_record))
@@ -35,7 +39,11 @@ class PublicRecordsControllerTest < ActionController::TestCase
   end
 
   test "should update public_record" do
-    put :update, id: @public_record, public_record: { board_members: @public_record.board_members, chairman: @public_record.chairman, contact: @public_record.contact, deputies: @public_record.deputies, registered_on: @public_record.registered_on }
+    put :update, id: @public_record, public_record: {
+        board_members: @public_record.board_members,
+        chairman: @public_record.chairman, contact: @public_record.contact,
+        deputies: @public_record.deputies,
+    }
     assert_redirected_to public_record_path(assigns(:public_record))
   end
 
