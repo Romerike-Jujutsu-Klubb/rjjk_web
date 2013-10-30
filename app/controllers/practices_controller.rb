@@ -25,6 +25,7 @@ class PracticesController < ApplicationController
   # GET /practices/new.json
   def new
     @practice = Practice.new
+    load_form_data
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,7 +36,7 @@ class PracticesController < ApplicationController
   # GET /practices/1/edit
   def edit
     @practice = Practice.find(params[:id])
-    @group_schedules = GroupSchedule.all
+    load_form_data
   end
 
   # POST /practices
@@ -81,4 +82,11 @@ class PracticesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def load_form_data
+    @group_schedules = GroupSchedule.all
+  end
+
 end

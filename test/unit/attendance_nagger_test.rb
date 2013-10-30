@@ -11,6 +11,11 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_match "Følg linken til\r\n    <a href=\"http://example.com/mitt/oppmote?key=random_token_string+++++++++++++++++++++\">Mitt oppmøte</a>", mail.body.encoded
   end
 
+  def test_send_message_reminder
+    AttendanceNagger.send_message_reminder
+    assert_equal 0, Mail::TestMailer.deliveries.size
+  end
+
   def test_send_attendance_summary
     AttendanceNagger.send_attendance_summary
     assert_equal 2, Mail::TestMailer.deliveries.size
