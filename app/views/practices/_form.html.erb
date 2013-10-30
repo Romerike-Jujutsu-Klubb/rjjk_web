@@ -11,23 +11,27 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :group_schedule_id %><br />
-    <%= f.number_field :group_schedule_id %>
+  <div class="field left">
+    <%= f.label :group_schedule_id %>
+    <%= f.select :group_schedule_id, @group_schedules.map{|gs| [gs.to_s, gs.id]} %>
   </div>
   <div class="field">
-    <%= f.label :year %><br />
+    <%= f.label :year %>
     <%= f.number_field :year %>
   </div>
-  <div class="field">
-    <%= f.label :week %><br />
+  <div class="field left">
+    <%= f.label :week %>
     <%= f.number_field :week %>
   </div>
-  <div class="field">
-    <%= f.label :status %><br />
-    <%= f.select :status, [nil, 'X'] %>
-  </div>
+    <div class="field">
+      <%= f.label :status %>
+      <%= f.select :status, ['X'] %>
+    </div>
+    <div class="field">
+      <%= f.label :message %>
+      <%= f.text_area :message %>
+    </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => :btn %>
   </div>
 <% end %>

@@ -1,6 +1,6 @@
 class AttendanceMailer < ActionMailer::Base
   include UserSystem
-
+  include MailerHelper
   default from: Rails.env == 'production' ? 'webmaster@jujutsu.no' : "#{Rails.env}@jujutsu.no"
   layout 'email'
 
@@ -11,6 +11,16 @@ class AttendanceMailer < ActionMailer::Base
     @email_url = with_login(member.user, :controller => :attendances, :action => :plan)
     mail to: Rails.env == 'production' ? member.email : %Q{"#{member.name}" <uwe@kubosch.no>},
          subject: '[RJJK] Kommer du?'
+  end
+
+  def message_reminder(practice, instructor)
+    @practice = practice
+    @instructor = instructor
+    @title = "Tema for morgendagens trening for #{practice.group_schedule.group.name}"
+    @timestamp = @practice.date
+    @email_url = with_login(instructor.user, :controller => :practices, :action => :edit, :id => practice.id)
+    mail to: Rails.env == 'production' ? @instructor.email : %Q{"#{@instructor.name}" <uwe@kubosch.no>},
+         subject: rjjk_prefix(@title)
   end
 
   def summary(group_schedule, recipient, attendees, absentees)

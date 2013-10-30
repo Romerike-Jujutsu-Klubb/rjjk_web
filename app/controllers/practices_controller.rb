@@ -35,6 +35,7 @@ class PracticesController < ApplicationController
   # GET /practices/1/edit
   def edit
     @practice = Practice.find(params[:id])
+    @group_schedules = GroupSchedule.all
   end
 
   # POST /practices

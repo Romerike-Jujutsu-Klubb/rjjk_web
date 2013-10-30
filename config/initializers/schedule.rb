@@ -12,6 +12,7 @@ unless Rails.env == 'test'
 
   # Admin Hourly
   scheduler.cron('15 9-23 * * *') { import_nkf_changes }
+  scheduler.cron('10 * * * *') { AttendanceNagger.send_message_reminder }
 
   # Admin Daily
   scheduler.cron('0 0 * * *') { notify_wrong_contracts }

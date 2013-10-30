@@ -19,5 +19,8 @@ class GroupSchedule < ActiveRecord::Base
                    :week => week).first_or_create!
   end
 
+  def to_s
+    "#{group.name} #{weekday_name}"
+  end
 
 end
