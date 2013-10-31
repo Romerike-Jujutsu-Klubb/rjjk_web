@@ -2,8 +2,10 @@ nb:
   activerecord:
     models:
       group: Gruppe
+      group_schedule: Trening
       group_instructor: Gruppeinstruktør
       member: medlem
+      practice: Trening
       user: Bruker
     attributes:
       attendance:
@@ -27,6 +29,10 @@ nb:
         publication_state: Publiseringsstatus
       next_semester:
         first_session: Første trening neste semester
+      practice:
+        group_schedule_id: Treningstid
+        week: Uke
+        year: År
       user:
         email: E-post
         login: Brukernavn

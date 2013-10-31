@@ -20,6 +20,11 @@
   <%= @practice.status %>
 </p>
 
+<p>
+  <b>Melding:</b>
+  <%= @practice.message %>
+</p>
 
-<%= link_to 'Edit', edit_practice_path(@practice) %> |
-<%= link_to 'Back', practices_path %>
+
+<%= link_to 'Endre', edit_practice_path(@practice) %> |
+<%= back_or_link_to 'Tilbake', practices_path %>

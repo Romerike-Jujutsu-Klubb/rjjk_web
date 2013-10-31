@@ -1,3 +1,6 @@
+<style>
+  div.left {margin-right: 0.5em}
+</style>
 <%= form_for(@practice) do |f| %>
   <% if @practice.errors.any? %>
     <div id="error_explanation">
@@ -13,23 +16,24 @@
 
   <div class="field left">
     <%= f.label :group_schedule_id %>
-    <%= f.select :group_schedule_id, @group_schedules.map{|gs| [gs.to_s, gs.id]} %>
+    <%= f.select :group_schedule_id, @group_schedules.map{|gs| [gs.to_s, gs.id]}, {}, :class => 'input-medium' %>
   </div>
-  <div class="field">
+  <div class="field left">
     <%= f.label :year %>
-    <%= f.number_field :year %>
+    <%= f.number_field :year, :class => 'input-small' %>
   </div>
   <div class="field left">
     <%= f.label :week %>
-    <%= f.number_field :week %>
+    <%= f.number_field :week, :class => 'input-small' %>
   </div>
     <div class="field">
       <%= f.label :status %>
-      <%= f.select :status, ['X'] %>
+      <%= f.select :status, ['X'], {}, :class => 'input-small' %>
     </div>
     <div class="field">
       <%= f.label :message %>
-      <%= f.text_area :message %>
+      <%= f.text_area :message, :class => 'input-xxlarge', :rows => 5,
+      :placeholder => 'Skriv en liten melding til utøverne om denne treningen.'%>
     </div>
   <div class="actions">
     <%= f.submit :class => :btn %>
