@@ -196,7 +196,7 @@ class AttendancesController < ApplicationController
       @weeks += [[(today + 14).year, (today + 14).cweek], [(today + 21).year, (today + 21).cweek]]
     end
     member = current_user.member
-    @group_schedules = member.groups.map(&:group_schedules).flatten
+    @group_schedules = member.groups.reject(&:school_breaks).map(&:group_schedules).flatten
     @weeks.each do |w|
       @group_schedules.each { |gs| gs.practices.where(:year => today.year, :week => today.cweek).first_or_create! }
       @group_schedules.each { |gs| gs.practices.where(:year => (today + 7).year, :week => (today + 7).cweek).first_or_create! }

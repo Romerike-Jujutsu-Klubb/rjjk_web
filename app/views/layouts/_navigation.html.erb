@@ -8,7 +8,9 @@
       <h1><%=current_user.name%></h1>
       <% if member? %>
           <ul>
-            <li><%= detour_to 'Mitt oppmøte', :controller => :attendances, :action => :plan %></li>
+            <% if current_user.member.groups.reject(&:school_breaks).any? %>
+                <li><%= detour_to 'Mitt oppmøte', :controller => :attendances, :action => :plan %></li>
+            <% end %>
             <li><%= link_to 'Min Embu', :controller => :embus, :action => :index %></li>
       <% end %>
       <li><%= link_to 'Mine media', :controller => :images, :action => :mine %></li>
