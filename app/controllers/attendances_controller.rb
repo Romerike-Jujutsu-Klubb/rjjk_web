@@ -224,17 +224,19 @@ class AttendancesController < ApplicationController
         @months << ['Siden gradering', *@attended_groups.map { |g| (by_group[g] || []).size }]
       end
     end
+    @reviewed_attendance = Attendance.find(flash[:attendance_id]) if flash[:attendance_id]
   end
 
   def review
     @attendance = Attendance.find(params[:id])
     raise 'Wrong user' unless @attendance.member == current_user.member
-    @attendance.update_attributes params[:attendance]
+    @attendance.update_attributes! params[:attendance]
 
     if request.xhr?
       render :text => @attendance.status
     else
       flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  #{t(:attendances)[@attendance.status.to_sym]}"
+      flash[:atendance_id] = @attendance.id
       back_or_redirect_to(:action => :plan)
     end
   end
@@ -283,7 +285,7 @@ class AttendancesController < ApplicationController
             where('members.id NOT IN (?) AND practices.group_schedule_id IN (?) AND (year > ? OR ( year = ? AND week >= ?)) AND (year < ? OR ( year = ? AND week <= ?))',
                   @instructors.map(&:id), @group.group_schedules.map(&:id), first_date.cwyear, first_date.cwyear, first_date.cweek, last_date.cwyear, last_date.cwyear, last_date.cweek).
             all
-        @members = current_members + (attended_members - current_members)
+        @members = current_members | attended_members
         @trials = @group.trials
 
         @instructors.sort_by! do |m|
@@ -305,7 +307,7 @@ class AttendancesController < ApplicationController
     end
 
     @instructors -= current_members
-    @passive_members = @members.select { |m| m.passive?(@date, @group) }
+    @passive_members = (@members - attended_members).select { |m| m.passive?(last_date, @group) }
     @members -= @passive_members
     @instructors -= @passive_members
 
