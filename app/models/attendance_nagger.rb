@@ -29,11 +29,12 @@ class AttendanceNagger
       attendances = Attendance.includes(:member, :practice => :group_schedule).
           where(:practices => {:group_schedule_id => gs.id, :year => now.year, :week => now.to_date.cweek}).all
       next if attendances.empty?
+      practice = attendances[0].practice
       non_attendees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:member)
       attendees = attendances.map(&:member) - non_attendees
       recipients = gs.group.members.select { |m| !m.passive? } - non_attendees
       recipients.each do |recipient|
-        AttendanceMailer.summary(gs, recipient, attendees, non_attendees).deliver
+        AttendanceMailer.summary(practice, gs, recipient, attendees, non_attendees).deliver
       end
     end
   rescue Exception
@@ -70,6 +71,7 @@ class AttendanceNagger
                 gs.id, now.year, now.to_date.cweek).all
       new_attendances = attendances.select { |a| a.updated_at >= 1.hour.ago }.map(&:member)
       next if new_attendances.empty?
+      practice = attendances[0].practice
       absentees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:member)
       attendees = attendances.map(&:member) - absentees
       new_attendees = new_attendances & attendees
@@ -87,7 +89,7 @@ class AttendanceNagger
         else
           displayed_absentees = new_absentees
         end
-        AttendanceMailer.changes(gs, recipient, new_attendees, displayed_absentees, attendees).deliver
+        AttendanceMailer.changes(practice, gs, recipient, new_attendees, displayed_absentees, attendees).deliver
       end
     end
   rescue Exception

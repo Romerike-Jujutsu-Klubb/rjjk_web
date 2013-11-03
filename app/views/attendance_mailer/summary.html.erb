@@ -1,6 +1,10 @@
 <h1>Hei <%= @recipient.first_name %>!</h1>
 
-Følgende er påmeldt til trening i <%=@group_schedule.start_at.day_phase%>:
+<% unless @practice.message.blank? %>
+    <p><%= @practice.message %></p>
+<% end %>
+
+Følgende er påmeldt til trening i <%= @group_schedule.start_at.day_phase %>:
 
 <ul>
   <% @members.sort_by(&:name).each do |m| %>

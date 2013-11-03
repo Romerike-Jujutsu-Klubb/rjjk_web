@@ -1,5 +1,8 @@
-<h1>Hei <%=@instructor.first_name%>!</h1>
+<h1>Hei <%= @instructor.first_name %>!</h1>
 
-Har du en melding til de som skal trene i morgen?
-
-Skriv inn meldingen din <%=link_to 'her', @email_url%>.
+<p>
+  Har du en melding til de som skal trene i morgen?
+</p>
+<p>
+  Skriv inn meldingen din <%= link_to 'her', @email_url %>.
+</p>

@@ -23,7 +23,8 @@ class AttendanceMailer < ActionMailer::Base
          subject: rjjk_prefix(@title)
   end
 
-  def summary(group_schedule, recipient, attendees, absentees)
+  def summary(practice, group_schedule, recipient, attendees, absentees)
+    @practice = practice
     @group_schedule = group_schedule
     @recipient = recipient
     @members = attendees
@@ -34,7 +35,8 @@ class AttendanceMailer < ActionMailer::Base
          subject: "[RJJK] Trening i #{@group_schedule.start_at.day_phase}: #{attendees.size == 0 ? 'Ingen' : attendees.size} deltaker#{'e' if attendees.size > 1} påmeldt"
   end
 
-  def changes(group_schedule, recipient, new_attendees, new_absentees, attendees)
+  def changes(practice, group_schedule, recipient, new_attendees, new_absentees, attendees)
+    @practice = practice
     @group_schedule = group_schedule
     @recipient = recipient
     @new_attendees = new_attendees
