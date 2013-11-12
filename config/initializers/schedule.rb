@@ -5,8 +5,8 @@ unless Rails.env == 'test'
   scheduler.cron('0 7    * * mon') { AttendanceNagger.send_attendance_plan }
   scheduler.cron('0 8    * * thu') { InformationPageNotifier.send_weekly_info_page }
   scheduler.cron('0 8-23 * * *') { NewsPublisher.send_news }
-  scheduler.cron('5 8    * * *') { AttendanceNagger.send_attendance_summary }
-  scheduler.cron('5 9-23 * * *') { AttendanceNagger.send_attendance_changes }
+  scheduler.cron('5 7    * * *') { AttendanceNagger.send_attendance_summary }
+  scheduler.cron('5 8-23 * * *') { AttendanceNagger.send_attendance_changes }
   scheduler.cron('8/15 * * * *') { AttendanceNagger.send_attendance_review }
   scheduler.cron('9 9-23 * * *') { EventNotifier.send_event_messages }
 

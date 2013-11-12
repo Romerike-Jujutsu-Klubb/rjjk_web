@@ -61,6 +61,7 @@ class AttendanceMailer < ActionMailer::Base
     @completed_attendances = completed_attendances
     @older_attendances = older_attendances
     @title = 'Hvordan var treningen?'
+    @timestamp = completed_attendances[0].date
     mail to: Rails.env == 'production' ? member.email : %Q{"#{member.name}" <uwe@kubosch.no>},
          subject: "[RJJK] #{@title}"
   end
