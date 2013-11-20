@@ -33,7 +33,7 @@
       <%= f.text_area :body, :class => :tinymce %>
     </p>
 
-    <%= f.submit 'Lagre', :id => :save, :class => :btn %>
+    <%= f.submit 'Lagre', :id => :save, :class => 'btn btn-default' %>
     <%= link_to 'Vis', :action => 'show', :id => @information_page unless @information_page.new_record? %>
     <%= back_or_link_to 'Tilbake', :action => 'list' %>
 <% end %>

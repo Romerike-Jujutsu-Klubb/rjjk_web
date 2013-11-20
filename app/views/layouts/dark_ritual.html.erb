@@ -2,55 +2,66 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-  <title><%="#{Rails.env.upcase} " unless Rails.env.production? %>Romerike Jujutsu Klubb</title>
+  <title><%= "#{Rails.env.upcase} " unless Rails.env.production? %>Romerike
+    Jujutsu Klubb</title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
   <meta name="description" content="description"/>
   <meta name="keywords" content="jujutsu aikijutsu jiu jitsu strømmen lørenskog skedsmo lillestrøm romerike kampsport kampkunst selvforsvar trygghet trening trim"/>
   <meta name="author" content="author"/>
   <%= javascript_include_tag :application %>
-  <% @content_width ||= 640 %>
-  <style type="text/css">
-      .container{width: <%=@content_width + 360%>px !important}
-      .header {width: <%=@content_width + 160%>px !important}
-      .top {width: <%=@content_width + 159%>px !important}
-      .main {width: <%=@content_width%>px !important}
-  </style>
+  <!--<% if @content_width %>-->
+      <!--<style type="text/css">-->
+              /*.container {*/
+                  /*width: <%=@content_width + 24%>px !important;*/
+                  /*max-width: <%=@content_width + 24%>px !important;*/
+              /*}*/
+      <!--</style>-->
+  <!--<% end %>-->
   <%= stylesheet_link_tag :application, :media => :all %>
   <%= csrf_meta_tags %>
 
   <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-20693372-1']);
-    _gaq.push(['_setDomainName', 'jujutsu.no']);
-    _gaq.push(['_trackPageview']);
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-20693372-1']);
+      _gaq.push(['_setDomainName', 'jujutsu.no']);
+      _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
+      (function () {
+          var ga = document.createElement('script');
+          ga.type = 'text/javascript';
+          ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(ga, s);
+      })();
   </script>
-
 </head>
 
 <body>
 
 <div class="container">
-  <%= render :partial => 'layouts/header' %>
-  <%= render :partial => 'layouts/right_column' %>
-  <%= render :partial => 'layouts/navigation' %>
-  <div class="main">
-    <div class="padded">
-      <%= yield %>
+  <div class="row">
+    <div class="col-md-9 col-xs-12">
+      <div class="row">
+        <div class="header col-md-12 col-xs-12"><%= render :partial => 'layouts/header' %></div>
+      </div>
+      <div class="row">
+        <div class="main col-md-9 col-xs-12 col-md-push-3 stretch">
+          <div class="padded"><%= yield %></div>
+        </div>
+        <div class="subnav col-md-3 col-xs-12 col-md-pull-9 stretch"><%= render :partial => 'layouts/navigation' %></div>
+      </div>
     </div>
+
+    <div class="main_right col-md-3 col-xs-12"><%= render :partial => 'layouts/right_column' %></div>
   </div>
-  <div class="clearer"><span></span></div>
-  <div class="footer">
-    <span class="left">&copy; 2008-2013 <a href="http://jujutsu.no/">Romerike Jujutsu
-      Klubb</a>. Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> &amp; <a href="http://validator.w3.org/check?uri=referer">XHTML</a></span>
-    <span class="right">Template design by <a href="http://templates.arcsin.se">Arcsin</a></span>
-    <div class="clearer"><span></span></div>
+
+  <div class="footer row">
+    <div class="col-md-4 col-xs-12 left">&copy; 2008-2013 <a href="http://jujutsu.no/">Romerike Jujutsu Klubb</a>.</div>
+    <div class="col-md-4 col-xs-12 center">Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> &amp; <a href="http://validator.w3.org/check?uri=referer">XHTML</a></div>
+    <div class="col-md-4 col-xs-12 right">Template design by <a href="http://templates.arcsin.se">Arcsin</a></div>
   </div>
 </div>
+
 </body>
 </html>

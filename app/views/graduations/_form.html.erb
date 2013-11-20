@@ -12,7 +12,7 @@
       <%= f.select :group_id, @groups.map { |c| [c.name, c.id] } %>
     </div>
 
-    <%= f.submit 'Lagre', :class => :btn %>
+    <%= f.submit 'Lagre', :class => 'btn btn-default' %>
 
     <% unless @graduation.new_record? %>
         <%= link_to 'Vis', :action => 'show', :id => @graduation %>

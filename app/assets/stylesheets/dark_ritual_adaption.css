@@ -60,10 +60,17 @@ div.main_right div.events p {
 }
 
 div.main_right ul.controls {
-    margin: 0;
+    padding-bottom: 0;
+    padding-left: 0;
     width: 100%;
-    text-align: left;
 }
+
+div.main_right ul {
+    margin: 0;
+    padding-left: 26px;
+}
+
+.main_right form[role=search] {margin-bottom: 10px}
 
 .post h3 {
     margin-bottom: 0;
@@ -77,6 +84,7 @@ h4 {
 ul.controls {
     clear: both;
     margin: 0;
+    padding-left: 0;
 }
 
 ul.controls li {
@@ -126,12 +134,16 @@ ul.controls li a.delete {
                 url(/assets/dark_ritual/header_right.png) right no-repeat,
                 url(/assets/dark_ritual/header_lines.png) left repeat;
     background-color: #F4F4F4;
+    height: 150px;
 }
 
 .container {
-    background: url(/assets/dark_ritual/bgcontainer_left.png) top left repeat-y,
-                url(/assets/dark_ritual/bgcontainer_right.png) top right repeat-y;
-    background-color: #F7F7F7;
+    background: #222222;
+}
+
+.main_right {
+    padding: 0;
+    background-color: #000000;
 }
 
 .main_right > div.padded {
@@ -141,9 +153,32 @@ ul.controls li a.delete {
 }
 
 #logo_img {
+    border: 0;
     margin-bottom: 0.5em;
 }
 
 .nav-tabs li {
     list-style-image: none;
 }
+
+.subnav {padding: 0; padding-right: 1px; margin: 0; border: 0 ; height: 100%; background-color: #222222}
+.subnav h1 {margin-top: 10px}
+.subnav a {line-height: 1.2}
+.subnav li a {width: inherit}
+
+.main {
+    background: url(/assets/dark_ritual/bg_shadow_left.png) top left repeat-y,
+                url(/assets/dark_ritual/bg_shadow_right.png) top right repeat-y;
+    background-color: #F7F7F7;
+    padding: 0;
+}
+
+/* Allow equal hight columns */
+.stretch{
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+.row {
+    overflow: hidden;
+}
+/* */

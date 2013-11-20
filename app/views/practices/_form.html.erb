@@ -1,41 +1,49 @@
 <style>
-  div.left {margin-right: 0.5em}
+    div.left {
+        margin-right: 0.5em
+    }
 </style>
 <%= form_for(@practice) do |f| %>
-  <% if @practice.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@practice.errors.count, "error") %> prohibited this scheduled_practice from being saved:</h2>
+    <% if @practice.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@practice.errors.count, "error") %> prohibited this
+            scheduled_practice from being saved:</h2>
 
-      <ul>
-      <% @practice.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @practice.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <p>
+    <div class="left">
+      <%= f.label :group_schedule_id %>
+      <%= f.select :group_schedule_id, @group_schedules.map { |gs| [gs.to_s, gs.id] }, {}, :class => 'input-md' %>
     </div>
-  <% end %>
-
-  <div class="field left">
-    <%= f.label :group_schedule_id %>
-    <%= f.select :group_schedule_id, @group_schedules.map{|gs| [gs.to_s, gs.id]}, {}, :class => 'input-medium' %>
-  </div>
-  <div class="field left">
-    <%= f.label :year %>
-    <%= f.number_field :year, :class => 'input-small' %>
-  </div>
-  <div class="field left">
-    <%= f.label :week %>
-    <%= f.number_field :week, :class => 'input-small' %>
-  </div>
-    <div class="field">
+    <div class="left">
+      <%= f.label :year %>
+      <%= f.number_field :year, :class => 'input-sm', :style => 'width: 6em' %>
+    </div>
+    <div class="left">
+      <%= f.label :week %>
+      <%= f.number_field :week, :class => 'input-sm', :style => 'width: 5em' %>
+    </div>
+    <div>
       <%= f.label :status %>
-      <%= f.select :status, ['X'], {}, :class => 'input-small' %>
+      <%= f.select :status, ['X'], {}, :class => 'input-sm' %>
     </div>
-    <div class="field">
-      <%= f.label :message %>
+    </p>
+    <p>
+      <%= f.label :message %><br/>
       <%= f.text_area :message, :class => 'input-xxlarge', :rows => 5,
-      :placeholder => 'Skriv en liten melding til utøverne om denne treningen.'%>
+                      :placeholder => 'Skriv en liten melding til utøverne om denne treningen.' %>
+    </p>
+
+    <div class="actions">
+      <%= f.submit :class => 'btn btn-default' %>
+      <%= link_to('Vis', @practice) unless @practice.new_record? %> |
+      <%= back_or_link_to 'Tilbake', practices_path %>
     </div>
-  <div class="actions">
-    <%= f.submit :class => :btn %>
-  </div>
 <% end %>

@@ -57,7 +57,6 @@ h1,h2,h3 {color: #994;}
 	font-size: 1.2em;
 	background: url(/assets/dark_ritual/bgcontainer.png) repeat-y;
 	margin: 0 auto;
-	width: 900px;
 	border: 12px solid #222;
 }
 
@@ -142,7 +141,7 @@ h1,h2,h3 {color: #994;}
 	color: #CCC;
 	font-size: 0.9em;
 	line-height: 39px;
-	width: 100%;
+    background-color: #61614E;
 	text-align: center;
 }
 .footer .left,.footer .right {padding: 0 16px;}

@@ -6,12 +6,12 @@
         <table class="table">
           <tr>
             <td><label>Brukernavn</label></td>
-            <td><%= text_field 'user', 'login', :class => 'input-large', :placeholder => 'e-post' %></td>
+            <td><%= text_field 'user', 'login', :class => 'input-lg', :placeholder => 'e-post' %></td>
           </tr>
           <tr>
             <td><label>Passord</label></td>
             <td valign="top">
-              <%= password_field 'user', 'password', :class => 'input-large' %>
+              <%= password_field 'user', 'password', :class => 'input-lg' %>
             </td>
           </tr>
           <tr>
@@ -26,9 +26,9 @@
             <td>
             </td>
             <td>
-              <%= submit_tag 'Logg inn', :class => :btn %>
-              <%= submit_tag 'Glemt passord?', :class => :btn, :onclick => "form.action = '#{url_for(:action => :forgot_password)}'" %>
-              <%= button_tag 'Registrer deg', :class => :btn, :onclick => "form.action = '#{url_for(:action => :signup)}'" %>
+              <%= submit_tag 'Logg inn', :class => 'btn btn-default' %>
+              <%= submit_tag 'Glemt passord?', :class => 'btn btn-default', :onclick => "form.action = '#{url_for(:action => :forgot_password)}'" %>
+              <%= button_tag 'Registrer deg', :class => 'btn btn-default', :onclick => "form.action = '#{url_for(:action => :signup)}'" %>
             </td>
           </tr>
         </table>

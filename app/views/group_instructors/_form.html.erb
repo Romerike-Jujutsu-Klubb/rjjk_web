@@ -18,7 +18,7 @@
       <%= f.select :role, GroupInstructor::Role.constants.map{|r| GroupInstructor::Role.const_get(r)} %>
     </div>
     <div class="actions">
-      <%= f.submit 'Lagre', :class => :btn %>
+      <%= f.submit 'Lagre', :class => 'btn btn-default' %>
       <%= back_or_link_to 'Tilbake', group_instructors_path %>
     </div>
 <% end %>
