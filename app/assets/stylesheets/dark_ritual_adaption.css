@@ -141,6 +141,11 @@ ul.controls li a.delete {
     background: #222222;
 }
 
+.main_left {
+    background: #F7F7F7 url(/assets/dark_ritual/bg_shadow_left.png) 25% 0% repeat-y,
+                url(/assets/dark_ritual/bg_shadow_right.png) 100% 0% repeat-y;
+}
+
 .main_right {
     padding: 0;
     background-color: #000000;

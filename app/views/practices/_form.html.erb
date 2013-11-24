@@ -1,5 +1,5 @@
 <style>
-    div.left {
+    form div.left {
         margin-right: 0.5em
     }
 </style>
@@ -19,17 +19,27 @@
 
     <p>
     <div class="left">
-      <%= f.label :group_schedule_id %>
-      <%= f.select :group_schedule_id, @group_schedules.map { |gs| [gs.to_s, gs.id] }, {}, :class => 'input-md' %>
+      <% if @practice.new_record? %>
+          <%= f.label :group_schedule_id %>
+          <%= f.select :group_schedule_id, @group_schedules.map { |gs| [gs.to_s, gs.id] }, {}, :class => 'input-md' %>
+      <% else %>
+          <%= @practice.group_schedule %>
+      <% end %>
     </div>
-    <div class="left">
-      <%= f.label :year %>
-      <%= f.number_field :year, :class => 'input-sm', :style => 'width: 6em' %>
-    </div>
-    <div class="left">
-      <%= f.label :week %>
-      <%= f.number_field :week, :class => 'input-sm', :style => 'width: 5em' %>
-    </div>
+    <% if @practice.new_record? %>
+        <div class="left">
+          <%= f.label :year %>
+          <%= f.number_field :year, :class => 'input-sm', :style => 'width: 6em' %>
+        </div>
+        <div class="left">
+          <%= f.label :week %>
+          <%= f.number_field :week, :class => 'input-sm', :style => 'width: 5em' %>
+        </div>
+    <% else %>
+        <div class="left">
+          <%= @practice.date %> <%= @practice.group_schedule.start_at.strftime('%H:%M') %>
+        </div>
+    <% end %>
     <div>
       <%= f.label :status %>
       <%= f.select :status, ['X'], {}, :class => 'input-sm' %>
@@ -37,8 +47,8 @@
     </p>
     <p>
       <%= f.label :message %><br/>
-      <%= f.text_area :message, :class => 'input-xxlarge', :rows => 5,
-                      :placeholder => 'Skriv en liten melding til utøverne om denne treningen.' %>
+      <%= f.text_area :message, :class => 'input-lg', :rows => 5, :style => 'width: 100%',
+              :placeholder => 'Skriv en liten melding til utøverne om denne treningen.' %>
     </p>
 
     <div class="actions">

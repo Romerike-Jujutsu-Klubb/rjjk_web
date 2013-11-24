@@ -31,6 +31,7 @@ nb:
         first_session: Første trening neste semester
       practice:
         group_schedule_id: Treningstid
+        message: Melding
         week: Uke
         year: År
       user:
