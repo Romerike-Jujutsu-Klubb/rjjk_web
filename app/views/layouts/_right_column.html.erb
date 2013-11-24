@@ -1,8 +1,9 @@
-<% column_width = 218 %>
-<div class="padded">
+<% column_width_1200 = 268 %>
+<% column_width_992 = 218 %>
+<div class="padded" class="stretch">
 
 <div align="center">
-<%= link_to image_tag('rjjk_logo_&_txt_320.png', :id => :logo_img, :style => "width: #{column_width}px; height: #{column_width}px; border: 0"), '/' %>
+<%= link_to image_tag('rjjk_logo_&_txt_320.png', :id => :logo_img), '/' %>
 </div>
 
 <form action="/search" role="search">
@@ -23,12 +24,27 @@
           <% if @image.video? %>
               <%= video_tag url_for(:controller => :images, :action => :show, :id => @image.id, :format => @image.format), :title => @image.name || 'Film', :style => 'width: 100%; border: 0', :controls => true, :autobuffer => true %>
           <% else %>
-              <% image_width = @image.width_max(column_width) %>
-              <% image_height = @image.height_at(image_width) %>
+              <% image_width_1200 = @image.width_max(column_width_1200) %>
+              <% image_width_992 = @image.width_max(column_width_992) %>
+              <% image_height_1200 = @image.height_at(image_width_1200) %>
+              <% image_height_992 = @image.height_at(image_width_992) %>
+              <style type="text/css">
+                  @media (min-width: 992px) {
+                      #gallery_img {
+                          height: <%=image_height_992%>px;
+                      }
+                  }
+
+                  @media (min-width: 1200px) {
+                      #gallery_img {
+                          height: <%=image_height_1200%>px;
+                      }
+                  }
+              </style>
               <%= image_tag url_for(:controller => :images, :action => :inline, :id => @image.id,
-                                    :width => image_width, :format => @image.format),
-                            :title => @image.name || 'Bilde', :class => 'img-rounded',
-                            :style => "width: #{image_width}px; height: #{image_height}px; border: 0" %>
+                      :width => image_width_1200, :format => @image.format),
+                      :id => :gallery_img,
+                      :title => @image.name || 'Bilde', :class => 'img-rounded' %>
           <% end %>
           <br clear="all"/>
           <%= @image.description %>
@@ -186,7 +202,7 @@
     <% last_mon = nil %>
     <div class="events">
       <h3>Hva
-        skjer? <%= link_to image_tag('ical.png', :style => 'height: 24px'),
+        skjer? <%= link_to image_tag('ical.png', :style => 'width: 24px;height: 24px'),
                            {:only_path => false, :protocol => :webcal,
                             :controller => :events, :action => :calendar,
                             :format => :ics}, :title => 'Abonnér på hendelseskalender!' %></h3>
@@ -237,7 +253,7 @@
             <% else %>
                 <%= event.name %>
             <% end %>
-            <%= link_to image_tag('ical.png', :style => 'height: 24px'),
+            <%= link_to image_tag('ical.png', :style => 'width: 24px;height: 24px'),
                         {:controller => :events, :action => :calendar,
                          :id => event.id, :format => :ics},
                         :title => "Sett '#{event.name}' på din kalender!" %>
