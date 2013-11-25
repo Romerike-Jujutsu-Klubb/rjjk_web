@@ -27,6 +27,8 @@ class Attendance < ActiveRecord::Base
   belongs_to :member
   belongs_to :practice
 
+  accepts_nested_attributes_for :practice
+
   validates_presence_of :member_id, :status
   validates_uniqueness_of :member_id, :scope => :practice_id
 

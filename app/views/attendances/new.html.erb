@@ -1,36 +1,37 @@
 <h1>Registrer oppmøte</h1>
 
-<%= form_for(@attendance) do |f| %>
+<%= form_for(@attendance, :html => {:class => 'form-inline'}) do |f| %>
     <%= f.error_messages %>
 
+    <%= f.fields_for :practice do |pf| %>
+        <p style="float: left; margin-right: 2em">
+          <%= pf.label :group_schedule_id, 'Trening' %><br/>
+          <%= pf.select :group_schedule_id, ['', ''] + @group_schedules.map { |gs| ["#{gs.group.name} #{gs.weekday_name}", gs.id] } %>
+        </p>
+
+        <p style="float: left; margin-right: 2em">
+          <%= pf.label :year, 'År' %><br/>
+          <%= pf.text_field :year, :size => 4 %>
+        </p>
+
+        <p>
+          <%= pf.label :week, 'Uke' %><br/>
+          <%= pf.select :week, (1..52) %>
+        </p>
+    <% end %>
+
+    <br clear="all"/>
     <p style="float: left; margin-right: 2em">
-      <%= f.label :member_id, 'Medlem' %>
-      <%= f.select :member_id, [nil] + @members.map{|m| [m.name, m.id]} %>
+      <%= f.label :member_id, 'Medlem' %><br/>
+      <%= f.select :member_id, [nil] + @members.map { |m| [m.name, m.id] } %>
     </p>
 
     <p>
-      <%= f.label :status, 'Status' %>
-      <%= f.select :status, Attendance::Status.constants.sort.map{|s| [t(s.to_s.downcase), Attendance::Status.const_get(s)]} %>
+      <%= f.label :status, 'Status' %><br/>
+      <%= f.select :status, Attendance::Status.constants.sort.map { |s| [t(s.to_s.downcase), Attendance::Status.const_get(s)] } %>
     </p>
 
-    <%=f.fields_for :practice do |pf| %>
-    <p>
-      <%= pf.label :group_schedule_id, 'Trening' %>
-      <%= pf.select :group_schedule_id, ['', ''] + @group_schedules.map{|gs| ["#{gs.group.name} #{gs.weekday_name}", gs.id]},
-                   :value => '', :selected => '' %>
-    </p>
-
-    <p style="float: left; margin-right: 2em">
-      <%= pf.label :year, 'År' %>
-      <%= pf.text_field :year %>
-    </p>
-
-    <p>
-      <%= pf.label :week, 'Uke' %>
-      <%= pf.select :week, (1..52) %>
-    </p>
-        <% end %>
-
+    <br clear="all"/>
     <p>
       <%= f.submit 'Create', :class => 'btn btn-default' %>
     </p>
@@ -38,6 +39,6 @@
 
 <%= link_to 'Back', attendances_path %>
 
-<%=javascript_tag do %>
+<%= javascript_tag do %>
     $('#attendance_member_id').focus();
 <% end %>

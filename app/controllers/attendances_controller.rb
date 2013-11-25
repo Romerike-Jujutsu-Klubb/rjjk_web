@@ -164,8 +164,8 @@ class AttendancesController < ApplicationController
     gs_id = params[:gs_id]
     if year && week && gs_id
       practice = Practice.where(:group_schedule_id => gs_id,
-                                :year => year,
-                                :week => week).first_or_create!
+          :year => year,
+          :week => week).first_or_create!
     else
       practice = m.groups.where(:name => 'Voksne').first.next_practice
     end
@@ -203,13 +203,13 @@ class AttendancesController < ApplicationController
     end
     @planned_attendances = Attendance.includes(:practice).
         where('member_id = ? AND (practices.year > ? OR (practices.year = ? AND practices.week >= ?)) AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
-              member, today.year, today.year, today.cweek,
-              @weeks.last[0], @weeks.last[0], @weeks.last[1]).
+        member, today.year, today.year, today.cweek,
+        @weeks.last[0], @weeks.last[0], @weeks.last[1]).
         all
     start_date = 6.months.ago.to_date.beginning_of_month
     attendances = Attendance.includes(:practice).
         where('member_id = ? AND attendances.status = ? AND ((practices.year = ? AND practices.week >= ?) OR (practices.year = ?))',
-              member, Attendance::Status::ATTENDED, start_date.year, start_date.cweek, today.year).
+        member, Attendance::Status::ATTENDED, start_date.year, start_date.cweek, today.year).
         all
     @attended_groups = attendances.map { |a| a.group_schedule.group }.uniq.sort_by { |g| -g.from_age }
     per_month = attendances.group_by { |a| d = a.date; [d.year, d.mon] }
@@ -283,7 +283,7 @@ class AttendancesController < ApplicationController
         attended_members = Member.
             includes(:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank]).
             where('members.id NOT IN (?) AND practices.group_schedule_id IN (?) AND (year > ? OR ( year = ? AND week >= ?)) AND (year < ? OR ( year = ? AND week <= ?))',
-                  @instructors.map(&:id), @group.group_schedules.map(&:id), first_date.cwyear, first_date.cwyear, first_date.cweek, last_date.cwyear, last_date.cwyear, last_date.cweek).
+            @instructors.map(&:id), @group.group_schedules.map(&:id), first_date.cwyear, first_date.cwyear, first_date.cweek, last_date.cwyear, last_date.cwyear, last_date.cweek).
             all
         @members = current_members | attended_members
         @trials = @group.trials

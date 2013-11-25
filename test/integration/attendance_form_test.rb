@@ -34,6 +34,20 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
       uwe_row.find('td:nth-of-type(4)').find('a', :text => 'X')
     end
 
+    new_instructor_row = find('table:first-of-type tbody tr:nth-of-type(2)')
+    assert new_instructor_row
+    assert_equal ['', '', '', '', '', '', ''],
+        new_instructor_row.all('td').map(&:text)
+    assert_difference 'Attendance.count' do
+      new_instructor_row.find('td:nth-of-type(2)').click
+      assert_equal '/attendances/new', current_path
+      select('Lars Bråten', :from => 'attendance_member_id')
+      click_button('Create')
+      assert_equal "/attendances/form/2013/10/#{groups(:panda).id}", current_path
+      new_instructor_row = find('table:first-of-type tbody tr:nth-of-type(2)')
+      new_instructor_row.find('td:nth-of-type(2)').find('a', :text => 'X')
+    end
+
     hans_row = find('table:first-of-type tbody tr:nth-of-type(6)')
     assert hans_row
     assert_equal ['Hans Eriksen faktura@eriksen.org', '6',
