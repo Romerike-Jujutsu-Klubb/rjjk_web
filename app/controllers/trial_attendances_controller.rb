@@ -8,7 +8,7 @@ class TrialAttendancesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @trial_attendances }
+      format.xml { render :xml => @trial_attendances }
     end
   end
 
@@ -19,7 +19,7 @@ class TrialAttendancesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @trial_attendance }
+      format.xml { render :xml => @trial_attendance }
     end
   end
 
@@ -30,7 +30,7 @@ class TrialAttendancesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @trial_attendance }
+      format.xml { render :xml => @trial_attendance }
     end
   end
 
@@ -42,21 +42,29 @@ class TrialAttendancesController < ApplicationController
   # POST /trial_attendances
   # POST /trial_attendances.xml
   def create
-    @trial_attendance = TrialAttendance.new(params[:trial_attendance])
+    if params[:trial_attendance] && params[:trial_attendance][:practice_id]
+      practice_id = params[:trial_attendance][:practice_id]
+    else
+    practice_id = Practice.
+        where(:group_schedule_id => params[:group_schedule_id], :year => params[:year], :week => params[:week]).
+        first_or_create!.id
+    end
+    @trial_attendance = TrialAttendance.new(:practice_id => practice_id, :nkf_member_trial_id => params[:nkf_member_trial_id])
 
     respond_to do |format|
       if @trial_attendance.save
         format.html {
-          if (request.xhr?)
-            render :partial => '/members/trial_attendance_delete_link', :locals => {:trial_attendance => @trial_attendance}
+          if request.xhr?
+            render :partial => 'attendances/trial_attendance_delete_link',
+                :locals => {:trial_attendance => @trial_attendance}
           else
             redirect_to(@trial_attendance, :notice => 'TrialAttendance was successfully created.')
           end
         }
-        format.xml  { render :xml => @trial_attendance, :status => :created, :location => @trial_attendance }
+        format.xml { render :xml => @trial_attendance, :status => :created, :location => @trial_attendance }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @trial_attendance.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @trial_attendance.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -69,10 +77,10 @@ class TrialAttendancesController < ApplicationController
     respond_to do |format|
       if @trial_attendance.update_attributes(params[:trial_attendance])
         format.html { redirect_to(@trial_attendance, :notice => 'TrialAttendance was successfully updated.') }
-        format.xml  { head :ok }
+        format.xml { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @trial_attendance.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @trial_attendance.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -91,7 +99,7 @@ class TrialAttendancesController < ApplicationController
           redirect_to(trial_attendances_url)
         end
       end
-      format.xml  { head :ok }
+      format.xml { head :ok }
     end
   end
 end

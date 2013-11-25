@@ -52,7 +52,10 @@ group :development do
 end
 
 group :test do
+  gem 'capybara'
+  gem 'database_cleaner'
   gem 'minitest-reporters'
   gem 'mocha', :require => 'mocha/setup'
+  gem 'selenium-webdriver'
   gem 'timecop'
 end

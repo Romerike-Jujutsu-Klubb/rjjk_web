@@ -109,9 +109,8 @@ Gradering er ..." %>
               </td>
 
               <%= javascript_tag do %>
-                  $("#trial_attendance_<%= trial.id %>_<%= d.day %>
-                  ").bind("ajax:complete", function(et, e){
-                  $(this).html(e.responseText);
+                  $("#trial_attendance_<%= trial.id %>_<%= d.day %>").bind("ajax:complete", function(et, e){
+                    $(this).html(e.responseText);
                   });
               <% end %>
 

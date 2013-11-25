@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
 
   def self.authenticate(login, pass)
     users = includes(:member).
-        where('(login = ? OR users.email = ? OR (members.email IS NOT NULL AND members.email = ?)) AND verified = ? AND deleted = ?',
+        where('(login = ? OR users.email = ? OR (members.email IS NOT NULL AND members.email = ?)) AND verified = ? AND (deleted IS NULL OR deleted = ?)',
               login, login, login, true, false).all
     users.
         select { |u| u.salted_password == salted_password(u.salt, hashed(pass)) }.

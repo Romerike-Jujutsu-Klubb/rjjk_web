@@ -246,8 +246,8 @@ class AttendancesController < ApplicationController
   end
 
   def form
-    if params[:date]
-      @date = Date.parse(params[:date])
+    if params[:year] && params[:month]
+      @date = Date.parse("#{params[:year]}-#{params[:month]}-01")
     end
     @date ||= Date.today
 

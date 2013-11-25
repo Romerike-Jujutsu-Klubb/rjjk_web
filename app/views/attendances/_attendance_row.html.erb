@@ -44,13 +44,12 @@
             <% else %>
                 <%= render :partial => 'attendance_create_link', :locals => {:member_id => member.id, :group_schedule_id => group_schedule.id, :date => d} %>
             <% end %>
+            <%= javascript_tag do %>
+                $("#attendance_<%= member.id %>_<%= d.day %>").bind("ajax:complete", function(et, e){
+                  $(this).html(e.responseText);
+                });
+            <% end %>
           </td>
-
-          <%= javascript_tag do %>
-              $("#attendance_<%= member.id %>_<%= d.day %>").bind("ajax:complete", function(et, e){
-              $(this).html(e.responseText);
-              });
-          <% end %>
       <% else %>
           <td>&nbsp;</td>
       <% end %>

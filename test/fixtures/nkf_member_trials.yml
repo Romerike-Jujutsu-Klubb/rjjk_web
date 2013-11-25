@@ -7,8 +7,8 @@ one:
   postnr: 1234
   sted: MyString
   adresse: MyString
-  epost: MyString
-  epost_faktura: MyString
+  epost: hans@eriksen.org
+  epost_faktura: faktura@eriksen.org
   mobil: MyString
   res_sms: false
   reg_dato: 2010-10-03
