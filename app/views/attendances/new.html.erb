@@ -3,7 +3,7 @@
 <%= form_for(@attendance, :html => {:class => 'form-inline'}) do |f| %>
     <%= f.error_messages %>
 
-    <% if @attendance.practice.new_record? %>
+    <% if @attendance.practice.nil? || @attendance.practice.new_record? %>
         <%= f.fields_for :practice do |pf| %>
             <p style="float: left; margin-right: 2em">
               <%= pf.label :group_schedule_id, 'Trening' %><br/>
