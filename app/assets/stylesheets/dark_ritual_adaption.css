@@ -145,6 +145,7 @@ ul.controls li a.delete {
 
 .main_left {
     /* http://css-tricks.com/examples/CSS3Gradient/ */
+    /* http://stackoverflow.com/questions/2504071/is-it-possible-to-combine-a-background-image-and-css3-gradients */
     /* Safari 5.1+, Chrome 10+ */
     background: url(/assets/dark_ritual/bg_shadow_left.png) 27% 0% repeat-y,
         url(/assets/dark_ritual/bg_shadow_right.png) top right repeat-y,
