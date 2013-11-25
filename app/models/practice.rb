@@ -12,4 +12,7 @@ class Practice < ActiveRecord::Base
     Date.commercial(year, week, group_schedule.weekday)
   end
 
+  def to_s
+    "#{group_schedule.group.name} #{date} #{group_schedule.start_at}"
+  end
 end

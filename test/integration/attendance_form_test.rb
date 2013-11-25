@@ -34,6 +34,13 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
       uwe_row.find('td:nth-of-type(4)').find('a', :text => 'X')
     end
 
+    # Attendance 'X' NOT present
+    lars_row = find('table:first-of-type tbody tr:nth-of-type(5)')
+    assert lars_row
+    assert_equal ['Lars Bråten', '46', 'gult', '', 'X', '', '', '', '1 / 1'],
+        lars_row.all('td').map(&:text)
+
+    # Mark Lars as present
     new_instructor_row = find('table:first-of-type tbody tr:nth-of-type(2)')
     assert new_instructor_row
     assert_equal ['', '', '', '', '', '', ''],
@@ -44,18 +51,25 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
       select('Lars Bråten', :from => 'attendance_member_id')
       click_button('Create')
       assert_equal "/attendances/form/2013/10/#{groups(:panda).id}", current_path
-      new_instructor_row = find('table:first-of-type tbody tr:nth-of-type(2)')
-      new_instructor_row.find('td:nth-of-type(2)').find('a', :text => 'X')
+
+      # Attendance 'X' present
+      lars_row = find('table:first-of-type tbody tr:nth-of-type(5)')
+      assert lars_row
+      assert_equal ['Lars Bråten', '46', 'gult', 'X', 'X', '', '', '', '2 / 2'],
+          lars_row.all('td').map(&:text)
+      lars_row.find('td:nth-of-type(4)').find('a', :text => 'X')
     end
 
-    hans_row = find('table:first-of-type tbody tr:nth-of-type(6)')
-    assert hans_row
-    assert_equal ['Hans Eriksen faktura@eriksen.org', '6',
-        'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', 'X', '', '', '2'],
-        hans_row.all('td').map(&:text)
     assert_difference 'TrialAttendance.count' do
-      hans_row.find('td:nth-of-type(4)').find('a').click
-      hans_row.find('td:nth-of-type(4)').find('a', :text => 'X')
+      hans_row = find('table:first-of-type tbody tr:nth-of-type(6)')
+      assert hans_row
+      assert_equal ['Hans Eriksen faktura@eriksen.org', '6',
+          'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', 'X', '', '', '2'],
+          hans_row.all('td').map(&:text)
+      assert_difference 'TrialAttendance.count' do
+        hans_row.find('td:nth-of-type(4)').find('a').click
+        hans_row.find('td:nth-of-type(4)').find('a', :text => 'X')
+      end
     end
   end
 

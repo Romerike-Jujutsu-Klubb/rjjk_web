@@ -36,6 +36,10 @@ class AttendancesController < ApplicationController
 
   def new
     @attendance ||= Attendance.new params[:attendance]
+    if @attendance.practice.new_record?
+      practice = Practice.where(:group_schedule_id => @attendance.practice.group_schedule_id, :year => @attendance.practice.year, :week => @attendance.practice.week).first
+      @attendance.practice = practice if practice
+    end
     @attendance.status ||= Attendance::Status::ATTENDED
     group_id = params[:group]
     @members = Member.order(:first_name, :last_name).all
@@ -52,8 +56,8 @@ class AttendancesController < ApplicationController
   end
 
   def create
-    @attendance = Attendance.new(params[:attendance])
-
+    @attendance = Attendance.new(params[:attendance], :without_protection => true)
+    @attendance.practice = Practice.find(@attendance.practice_id) if @attendance.practice_id
     respond_to do |format|
       if @attendance.save
         flash[:notice] = 'Attendance was successfully created.'

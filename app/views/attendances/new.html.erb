@@ -3,24 +3,30 @@
 <%= form_for(@attendance, :html => {:class => 'form-inline'}) do |f| %>
     <%= f.error_messages %>
 
-    <%= f.fields_for :practice do |pf| %>
-        <p style="float: left; margin-right: 2em">
-          <%= pf.label :group_schedule_id, 'Trening' %><br/>
-          <%= pf.select :group_schedule_id, ['', ''] + @group_schedules.map { |gs| ["#{gs.group.name} #{gs.weekday_name}", gs.id] } %>
-        </p>
+    <% if @attendance.practice.new_record? %>
+        <%= f.fields_for :practice do |pf| %>
+            <p style="float: left; margin-right: 2em">
+              <%= pf.label :group_schedule_id, 'Trening' %><br/>
+              <%= pf.select :group_schedule_id, ['', ''] + @group_schedules.map { |gs| ["#{gs.group.name} #{gs.weekday_name}", gs.id] } %>
+            </p>
 
-        <p style="float: left; margin-right: 2em">
-          <%= pf.label :year, 'År' %><br/>
-          <%= pf.text_field :year, :size => 4 %>
-        </p>
+            <p style="float: left; margin-right: 2em">
+              <%= pf.label :year, 'År' %><br/>
+              <%= pf.text_field :year, :size => 4 %>
+            </p>
 
+            <p>
+              <%= pf.label :week, 'Uke' %><br/>
+              <%= pf.select :week, (1..52) %>
+            </p>
+        <% end %>
+    <% else %>
         <p>
-          <%= pf.label :week, 'Uke' %><br/>
-          <%= pf.select :week, (1..52) %>
+          <%= f.hidden_field :practice_id %>
+          <%= @attendance.practice %>
         </p>
     <% end %>
 
-    <br clear="all"/>
     <p style="float: left; margin-right: 2em">
       <%= f.label :member_id, 'Medlem' %><br/>
       <%= f.select :member_id, [nil] + @members.map { |m| [m.name, m.id] } %>
@@ -31,7 +37,6 @@
       <%= f.select :status, Attendance::Status.constants.sort.map { |s| [t(s.to_s.downcase), Attendance::Status.const_get(s)] } %>
     </p>
 
-    <br clear="all"/>
     <p>
       <%= f.submit 'Create', :class => 'btn btn-default' %>
     </p>
