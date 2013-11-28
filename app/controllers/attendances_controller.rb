@@ -282,7 +282,7 @@ class AttendancesController < ApplicationController
             where(:group_schedules => {:group_id => @group.id}).all.
             select { |gi| @dates.any? { |d| gi.active?(d) } }.map(&:member).uniq
 
-        current_members = @group.members.active(@date).
+        current_members = @group.members.active(first_date, last_date).
             includes({:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank], :groups => :group_schedules}, :nkf_member)
         attended_members = Member.
             includes(:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank]).

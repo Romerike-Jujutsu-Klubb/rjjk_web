@@ -7,14 +7,15 @@
       <li><a href="#tab_graduations" data-toggle="tab">Graderinger</a></li>
       <li><a href="#tab_user" data-toggle="tab">Web-bruker</a></li>
     </ul>
+
     <div class="tab-content">
-      <div class="tab-pane active" id="tab_details">
+      <div class="tab-pane fade in active" id="tab_details">
         <%= render :partial => 'form' %>
       </div>
-      <div class="tab-pane" id="tab_graduations">
+      <div class="tab-pane fade " id="tab_graduations">
         <%= render :partial => 'graduations' %>
       </div>
-      <div class="tab-pane" id="tab_user">
+      <div class="tab-pane fade" id="tab_user">
         <p>
           <% if @member.user %>
               <%= link_to 'Bruker', edit_user_path(@member.user) %>
@@ -25,9 +26,9 @@
       </div>
     </div>
 
-    <%= submit_tag 'Lagre', :id => 'save', :class => 'btn' %>
-    <%= back_or_link_to 'Tilbake', :action => :list %>
-    <%= link_to 'Til NKF avstemming', :controller => :nkf_members, :action => :comparison, :id => 0 %>
+    <%= submit_tag 'Lagre', :id => 'save', :class => 'btn btn-default' %>
+    <%= back_or_link_to 'Tilbake', {:action => :list}, :class => 'btn btn-default' %>
+    <%= link_to 'Til NKF avstemming', {:controller => :nkf_members, :action => :comparison, :id => 0}, :class => 'btn btn-default' %>
 <% end %>
 
 <%= javascript_tag do %>

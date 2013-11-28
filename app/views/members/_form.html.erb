@@ -10,7 +10,7 @@
   <%= file_field :member, :image_file, :style => 'width: 206px' %>
 </div>
 
-<table id="spaced" style="float: left" cellpadding="20px">
+<table id="spaced" style="float: left" cellpadding="8px">
 	<tr>
 		<td valign="top">
 <label for="member_first_name">Fornavn</label>
@@ -70,7 +70,8 @@
 <%= text_field 'member', 'phone_parent', :class => :half %>
 
 <label for="member_billing_type">Faktureringsmåte</label>
-  <%=select 'member', 'billing_type', [['AutoGiro', 'AUTOGIRO'], ['Manuell Giro', 'MANUELL GIRO'], ['AvtaleGiro', 'AvtaleGiro'], @member.billing_type && [@member.billing_type, @member.billing_type]].compact.uniq.sort %>
+<%=select 'member', 'billing_type', [['AutoGiro', 'AUTOGIRO'], ['Manuell Giro', 'MANUELL GIRO'], ['AvtaleGiro', 'AvtaleGiro'], @member.billing_type && [@member.billing_type, @member.billing_type]].compact.uniq.sort %>
+<br/>
 
 <label for="member_account_no">Kontonummer</label>
   <%=text_field 'member', 'account_no', :class => :half %>
@@ -96,24 +97,26 @@
   <label for="member_group_ids_<%=g.id%>" <%='style="font-weight: bold"'.html_safe if g.contains_age(@member.age)%> >
     <%=check_box_tag "member_group_ids[#{g.id}]", g.id, @member.groups.include?(g) %>
     <%= "#{g.martial_art.name} #{g.name} #{link_to("(#{attendances_since_graduation} treninger)", :controller => :attendances, :action => :since_graduation, :id => @member.id) if attendances_since_graduation > 0}".html_safe %>
-  </label>
+  </label><br/>
 <% end %>
 </p>
 
 <label for="member_instructor">Instruktør</label>
 <%=select :member, :instructor, [['Nei', false], ['Ja', true]] %>
+<br/>
 
 <label for="member_nkf_fee">NKF Hovedklubb</label>
 <%=select :member, :nkf_fee, [['Ja', true], ['Nei', false]] %>
 
 <label for="member_payment_problem">Betalingsproblem</label>
 <%=select :member, :payment_problem, [['Nei', false], ['Ja', true]] %>
+<br/>
 
 <label for="member_rfid">RFID</label>
-<%=text_field 'member', 'rfid', :class => :full %>
+<%=text_field 'member', 'rfid' %>
 
 <label for="member_Kommentar">Kommentar</label>
-<%=text_area 'member', 'comment', :cols => 47, :rows => 12 %>
+<%=text_area 'member', 'comment', :class => 'form-control', :cols => 47, :rows => 12 %>
 
 		</td>
 

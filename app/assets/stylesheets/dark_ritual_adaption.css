@@ -147,18 +147,12 @@ ul.controls li a.delete {
     /* http://css-tricks.com/examples/CSS3Gradient/ */
     /* http://stackoverflow.com/questions/2504071/is-it-possible-to-combine-a-background-image-and-css3-gradients */
     /* Safari 5.1+, Chrome 10+ */
-    background: url(/assets/dark_ritual/bg_shadow_left.png) 27% 0% repeat-y,
-        url(/assets/dark_ritual/bg_shadow_right.png) top right repeat-y,
-    -webkit-linear-gradient(left, #222222, #222222 25%, #F7F7F7, #F7F7F7 25%, #F7F7F7);
-     /* Safari 4-5, Chrome 1-9 */
-    background: url(/assets/dark_ritual/bg_shadow_left.png) 27% 0% repeat-y,
-        url(/assets/dark_ritual/bg_shadow_right.png) top right repeat-y,
-        -webkit-gradient(linear, left top, right top, color-stop(0%,#222222), color-stop(25%,#222222), color-stop(25%,#F7F7F7));
-     /* Firefox 3.6+ */
-    background: url(/assets/dark_ritual/bg_shadow_left.png) 27% 0% repeat-y,
-        url(/assets/dark_ritual/bg_shadow_right.png) top right repeat-y,
-        -moz-linear-gradient(left, #222222, #222222 25%, #F7F7F7, #F7F7F7 25%, #F7F7F7);
-    background-origin: padding-box,padding-box;
+    background: url(/assets/dark_ritual/bg_shadow_left.png) 27% 0% repeat-y, url(/assets/dark_ritual/bg_shadow_right.png) top right repeat-y, -webkit-linear-gradient(left, #222222, #222222 25%, #F7F7F7, #F7F7F7 25%, #F7F7F7);
+    /* Safari 4-5, Chrome 1-9 */
+    background: url(/assets/dark_ritual/bg_shadow_left.png) 27% 0% repeat-y, url(/assets/dark_ritual/bg_shadow_right.png) top right repeat-y, -webkit-gradient(linear, left top, right top, color-stop(0%, #222222), color-stop(25%, #222222), color-stop(25%, #F7F7F7));
+    /* Firefox 3.6+ */
+    background: url(/assets/dark_ritual/bg_shadow_left.png) 27% 0% repeat-y, url(/assets/dark_ritual/bg_shadow_right.png) top right repeat-y, -moz-linear-gradient(left, #222222, #222222 25%, #F7F7F7, #F7F7F7 25%, #F7F7F7);
+    background-origin: padding-box, padding-box;
     background-color: #F7F7F7;
 }
 
@@ -198,7 +192,7 @@ ul.controls li a.delete {
 @media (min-width: 992px) {
     .main_right img {
         width: 218px;
-        height:164px;
+        height: 164px;
     }
 }
 
@@ -249,5 +243,3 @@ ul.controls li a.delete {
 .row {
     overflow: hidden;
 }
-
-/* */
