@@ -32,7 +32,6 @@ class PublicRecordImporter
       found = true
       cells[1].content.strip
     end.compact.join("\n")
-    puts "#{name}: #{chairman.inspect}"
     chairman
   end
 end

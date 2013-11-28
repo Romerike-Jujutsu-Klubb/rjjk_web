@@ -36,4 +36,4 @@ style_formats:
     classes: 'table table-bordered'
 #            {title : 'Table row 1', selector : 'tr', classes : 'tablerow1'}
 #    ]
-width: 768px
+# width: 768px

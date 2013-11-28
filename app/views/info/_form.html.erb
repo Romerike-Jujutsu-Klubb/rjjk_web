@@ -1,45 +1,49 @@
 <% @content_width = 1024 %>
 
-<div style="float: right; width: 196px; height: 680px; overflow:auto; border: 1px solid black">
-  <%= render :partial => '/images/list', :locals => {:images => @images} %>
+<div class="row">
+
+  <div class="col-md-9">
+    <%= tinymce %>
+    <%= form_for @information_page, :html => {:role => 'form'} do |f| %>
+        <%= f.error_messages %>
+
+        <div style="float: left; margin-right: 2em">
+          <label for="information_page_title">Tittel</label><br/>
+          <%= f.text_field :title %></div>
+
+        <div style="float: left; margin-right: 2em">
+          <label for="information_page_hidden">Skjul</label><br/>
+          <%= f.check_box :hidden %>
+        </div>
+
+        <div class="control-group" style="float: left; margin-right: 2em ; <%= 'color: red' if @information_page.revised_at.nil? || @information_page.revised_at < 6.months.ago %>">
+          <label for="information_page_revised_at" style="padding-left: 0">Revidert</label><br/>
+
+          <label for="information_page_revised_at">
+            <%= f.check_box :revised_at, {:checked => false}, 1, nil %>
+            <%= @information_page.revised_at.strftime('%Y-%m-%d %H:%M') if @information_page.revised_at %>
+          </label>
+        </div>
+
+        <br clear="left"/>
+
+        <p>
+          <%= f.text_area :body, :class => :tinymce %>
+        </p>
+
+        <%= f.submit 'Lagre', :id => :save, :class => 'btn btn-default' %>
+        <%= link_to 'Vis', :action => 'show', :id => @information_page unless @information_page.new_record? %>
+        <%= back_or_link_to 'Tilbake', :action => 'list' %>
+    <% end %>
+
+    <%= javascript_tag do %>
+        document.getElementById('information_page_title').focus();
+        document.getElementById('information_page_title').select();
+        $('body').scrollTo(".main");
+    <% end %>
+  </div>
+
+  <div class="col-md-3" style="height: 680px; overflow:auto; border: 1px solid black">
+    <%= render :partial => '/images/list', :locals => {:images => @images} %>
+  </div>
 </div>
-
-<%= tinymce %>
-
-<%= form_for @information_page do |f| %>
-    <%= f.error_messages %>
-
-    <div style="float: left; margin-right: 2em"><label for="information_page_title">Tittel</label>
-      <%= f.text_field :title %></div>
-
-    <div style="float: left; margin-right: 2em"><label for="information_page_hidden">Skjul</label>
-      <%= f.check_box :hidden %>
-    </div>
-
-    <div class="control-group" style="float: left; margin-right: 2em ; <%= 'color: red' if @information_page.revised_at.nil? || @information_page.revised_at < 6.months.ago %>">
-      <label for="information_page_revised_at" style="padding-left: 0">Revidert</label>
-
-      <div class="controls">
-        <label for="information_page_revised_at" class="checkbox">
-          <%= f.check_box :revised_at, {:checked => false}, 1, nil %>
-          <%= @information_page.revised_at.strftime('%Y-%m-%d %H:%M') if @information_page.revised_at %>
-        </label>
-      </div>
-    </div>
-
-    <br clear="left"/>
-
-    <p>
-      <%= f.text_area :body, :class => :tinymce %>
-    </p>
-
-    <%= f.submit 'Lagre', :id => :save, :class => 'btn btn-default' %>
-    <%= link_to 'Vis', :action => 'show', :id => @information_page unless @information_page.new_record? %>
-    <%= back_or_link_to 'Tilbake', :action => 'list' %>
-<% end %>
-
-<%= javascript_tag do %>
-    document.getElementById('information_page_title').focus();
-    document.getElementById('information_page_title').select();
-    $('body').scrollTo(".main");
-<% end %>
