@@ -1,104 +1,118 @@
+<% @content_width = 880 %>
+
 <%= form_for @group do |f| %>
     <%= f.error_messages %>
 
-    <table width="100%">
-      <tr>
-        <td valign="top">
+    <div class="row">
+        <div class="col-md-6">
           <div>
-            <%= f.label :name %>
-            <%= f.text_field :name %>
+            <div class="form-group">
+              <%= f.label :name %>
+              <%= f.text_field :name, :class => 'form-control' %>
+            </div>
 
             <% if @group.martial_art && @group.martial_art.name != 'Kei Wa Ryu' %>
-                <%= f.label :martial_art_id, 'Gren' %>
-                <%= f.select :martial_art_id, @martial_arts.map { |ma| [ma.name, ma.id] } %>
+                <div class="form-group">
+                  <%= f.label :martial_art_id, 'Gren' %>
+                  <%= f.select :martial_art_id, @martial_arts.map { |ma| [ma.name, ma.id] }, :class => 'form-control' %>
+                </div>
             <% end %>
           </div>
 
-          <div style="float: left ; margin-right: 1em">
+          <div class="form-group" style="float: left ; margin-right: 1em">
             <%= f.label :from_age, 'Fra alder' %>
-            <%= f.text_field :from_age, :class => 'input-mini' %>
+            <%= f.text_field :from_age, :class => 'form-control input-sm' %>
           </div>
 
-          <div style="float: left ; margin-right: 1em">
+          <div class="form-group" style="float: left ; margin-right: 1em">
             <%= f.label :to_age, 'Til alder' %>
-            <%= f.text_field :to_age, :class => 'input-mini' %>
+            <%= f.text_field :to_age, :class => 'form-control input-sm' %>
           </div>
 
-          <div>
+          <br clear="all"/>
+
+          <div class="form-group">
             <%= f.label :color, 'Farge' %>
-            <%= f.text_field :color, :class => 'input-mini' %>
+            <%= f.text_field :color, :class => 'form-control input-sm' %>
           </div>
 
-          <div style="float: left ; margin-right: 1em">
+          <div class="form-group" style="float: left ; margin-right: 1em">
             <%= f.label :monthly_price, 'Månedspris' %>
-            <%= f.text_field :monthly_price, :class => 'input-small' %>
+            <%= f.text_field :monthly_price, :class => 'form-control input-sm' %>
           </div>
 
-          <div>
+          <div class="form-group pull-left">
             <%= f.label :yearly_price, 'Årskontingent' %>
-            <%= f.text_field :yearly_price, :class => 'input-small' %>
+            <%= f.text_field :yearly_price, :class => 'form-control input-sm' %>
           </div>
 
-          <div>
+          <br clear="all"/>
+
+          <div class="form-group">
             <%= f.label :contract_type, 'Kontraktstype' %>
-            <%= f.select :contract, [nil] + @contracts %>
+            <%= f.select :contract, [nil] + @contracts, :class => 'form-control' %>
           </div>
 
-          <div style="float: left ; margin-right: 1em">
+          <div class="form-group" style="float: left ; margin-right: 1em">
             <%= f.label :school_breaks, 'Følger skoleåret' %>
-            <%= f.check_box :school_breaks, :class => 'input-small' %>
+            <%= f.check_box :school_breaks, :class => 'form-control input-sm' %>
           </div>
 
-          <div>
+          <div class="form-group pull-left">
             <%= f.label :closed_on, 'Avsluttet' %>
-            <%= f.datepicker :closed_on, :dateFormat => 'yy-mm-dd', :firstDay => 1, :class => 'input-small' %>
+            <%= f.datepicker :closed_on, :dateFormat => 'yy-mm-dd', :firstDay => 1, :class => 'form-control input-sm' %>
           </div>
 
-          <div style="float: left ; margin-right: 1em">
+          <br clear="all"/>
+
+          <div class="form-group" style="float: left ; margin-right: 1em">
             <%= f.fields_for :current_semester, @group.current_semester do |csf| %>
                 <%= csf.label :first_session, 'Første trening' %>
                 <%= csf.datepicker :first_session, :dateFormat => 'yy-mm-dd',
-                                   :firstDay => 1, :class => 'input-small',
-                                   :placeholder => 'etter ferien' %>
+                        :firstDay => 1, :class => 'form-control input-sm',
+                        :placeholder => 'etter ferien' %>
             <% end %>
           </div>
 
-          <div style="float: left ; margin-right: 1em">
+          <div class="form-group" style="float: left ; margin-right: 1em">
             <%= f.fields_for :current_semester, @group.current_semester do |csf| %>
                 <%= csf.label :last_session, 'Siste trening' %>
                 <%= csf.datepicker :last_session, :dateFormat => 'yy-mm-dd',
-                                   :firstDay => 1, :class => 'input-small',
-                                   :placeholder => 'før ferien' %>
+                        :firstDay => 1, :class => 'form-control input-sm',
+                        :placeholder => 'før ferien' %>
             <% end %>
           </div>
 
-          <div>
+          <div class="form-group pull-left">
             <%= f.fields_for :next_semester, @group.next_semester do |csf| %>
                 <%= csf.label :first_session, 'Første trening neste semester' %>
                 <%= csf.datepicker :first_session, :dateFormat => 'yy-mm-dd',
-                                   :firstDay => 1, :class => 'input-small',
-                                   :placeholder => 'etter ferien' %>
+                        :firstDay => 1, :class => 'form-control input-sm',
+                        :placeholder => 'etter ferien' %>
             <% end %>
           </div>
 
-        </td>
+        </div>
 
-        <td valign="top">
-          <%= f.label :summary, :Sammendrag %>
-          <%= f.text_area :summary, :rows => 5, :class => 'input-xlarge' %>
-
-          <%= f.label :description, :Beskrivelse %>
-          <%= f.text_area :description, :rows => 10, :class => 'input-xlarge' %>
-
-          <div>
-            <%= f.label :target_size, 'Ønsket størrelse' %>
-            <%= f.text_field :target_size, :class => 'input-small' %>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :summary, :Sammendrag %>
+            <%= f.text_area :summary, :rows => 5, :class => 'form-control input-lg' %>
           </div>
 
-        </td>
+          <div class="form-group">
+          <%= f.label :description, :Beskrivelse %>
+          <%= f.text_area :description, :rows => 10, :class => 'form-control input-lg' %>
+          </div>
 
-      </tr>
-    </table>
+          <div class="form-group">
+            <%= f.label :target_size, 'Ønsket størrelse' %>
+            <%= f.text_field :target_size, :class => 'form-control' %>
+          </div>
+
+        </div>
+
+    </div>
 
     <div>
       <%= f.submit 'Lagre', :class => 'btn btn-default' %>
