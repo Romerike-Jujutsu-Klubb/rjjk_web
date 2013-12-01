@@ -217,7 +217,7 @@ class AttendancesController < ApplicationController
         all
     @attended_groups = attendances.map { |a| a.group_schedule.group }.uniq.sort_by { |g| -g.from_age }
     per_month = attendances.group_by { |a| d = a.date; [d.year, d.mon] }
-    @months = per_month.keys.sort.map do |ym|
+    @months = per_month.keys.sort.reverse.map do |ym|
       per_group = per_month[ym].group_by { |a| a.group_schedule.group }
       [t(:date)[:month_names][ym[1]], *@attended_groups.map { |g| (per_group[g] || []).size }]
     end

@@ -144,14 +144,15 @@
       <tr>
         <th>Måned/Gruppe</th>
         <% @attended_groups.each do |g| %>
-            <th><%= g.name %></th>
+            <th style="text-align: center"><%= g.name %></th>
         <% end %>
       </tr>
   <% end %>
   <% @months.each do |fields| %>
       <tr>
-        <% fields.each do |f| %>
-            <td><%= f unless f == 0 %></td>
+          <td><%= fields[0] %></td>
+        <% fields[1..-1].each do |f| %>
+            <td align="center"><%= f unless f == 0 %></td>
         <% end %>
       </tr>
   <% end %>
