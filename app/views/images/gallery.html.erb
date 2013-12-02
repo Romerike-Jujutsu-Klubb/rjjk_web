@@ -4,7 +4,7 @@
         </video>
     <% else %>
         <%= image_tag url_for(:controller => :images, :action => :inline, :id => @image.id, :format => @image.format, :width => 592),
-                      :title => @image.name || 'Bilde', :class => 'img-polaroid' %>
+                      :title => @image.name || 'Bilde', :class => 'img-thumbnail' %>
     <% end %>
 
     <div width="100%" align="center">
@@ -31,7 +31,7 @@
           <div style="float: left; width: 20%">
             <%= link_to :id => i.id do %>
                 <%= image_tag url_for(:controller => :images, :action => :inline, :id => i.id, :format => i.format, :width => width),
-                              :title => i.name || 'Bilde', :width => width, :class => 'img-polaroid' %>
+                              :title => i.name || 'Bilde', :width => width, :class => 'img-thumbnail' %>
             <% end %>
           </div>
       <% end %>

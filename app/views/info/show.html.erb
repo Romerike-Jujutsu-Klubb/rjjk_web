@@ -10,3 +10,13 @@
       <li><%= link_to 'Slett', {:controller => :info, :action => :destroy, :id => @information_page}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
     </ul>
 <% end %>
+
+<%= javascript_tag do %>
+    $('.main img').addClass('img-thumbnail');
+    $('.main img').colorbox({
+      title: function() { return $(this).attr('title') },
+      href: function() { return $(this).attr('src').replace("inline", "show") },
+      maxWidth: '100%',
+      maxHeight: '100%',
+    });
+<% end %>
