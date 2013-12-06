@@ -60,6 +60,8 @@ class ApplicationController < ActionController::Base
       @layout_events = Event.
           where('(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)', Date.today, Date.today).
           order('start_at, end_at').limit(5).all
+      @layout_events += Graduation.where('held_on >= CURRENT_DATE').all
+      @layout_events.sort_by!(&:start_at)
     end
     unless @groups
       @groups = Group.active(Date.today).order('to_age, from_age DESC').includes(:current_semester).all

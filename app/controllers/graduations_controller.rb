@@ -40,10 +40,6 @@ class GraduationsController < ApplicationController
 
   def create
     @graduation = Graduation.new(params[:graduation])
-    @graduation.build_event(
-        :name => @graduation.default_name,
-        :start_at => @graduation.default_start_at,
-        :end_at => @graduation.default_end_at) unless @graduation.event
     if @graduation.save
       flash[:notice] = 'Graduation was successfully created.'
       redirect_to :action => :index

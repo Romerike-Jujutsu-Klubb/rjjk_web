@@ -260,7 +260,7 @@
           </h4>
 
           <% if user? -%>
-              <% if (crowd_size = event.event_invitees.select { |ei| ei.will_attend }.size) > 0 -%>
+              <% if (crowd_size = event.size) > 0 -%>
                   <div class="details">
                     <%= crowd_size %> påmeldte.
                   </div>

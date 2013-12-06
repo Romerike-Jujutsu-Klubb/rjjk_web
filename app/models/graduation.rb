@@ -2,20 +2,27 @@ class Graduation < ActiveRecord::Base
   belongs_to :group
   has_many :censors, :dependent => :destroy
   has_many :graduates, :dependent => :destroy
-  belongs_to :event
 
-  validates_presence_of :event, :group, :held_on
+  validates_presence_of :group, :held_on
 
-  def default_start_at
+  def start_at
     held_on.try(:at, group_schedule.try(:start_at) || TimeOfDay.new(17, 45))
   end
 
-  def default_end_at
+  def end_at
     held_on.try(:at, group_schedule.try(:end_at) || TimeOfDay.new(20, 30))
   end
 
-  def default_name
+  def name
     "Gradering #{group.name}"
+  end
+
+  def body
+    nil
+  end
+
+  def size
+    graduates.size
   end
 
   def group_schedule

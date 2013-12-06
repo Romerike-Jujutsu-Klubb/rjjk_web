@@ -342,11 +342,10 @@ function cancelSaveGraduateInfo(graduate_id) {
       <% ma = @martial_arts.find{|mar| mar.name == 'Kei Wa Ryu'} %>
       <select id="grader_<%= ma.id %>" onChange="window.location.href = '<%=url_for(:id => '')%>' + options[selectedIndex].value">
         <% for grd in ma.graduations.reverse %>
-            <option value='<%= grd.id %>' <%= 'SELECTED' if grd == @graduation %>><%= grd.held_on %></option>
+            <option value='<%= grd.id %>' <%= 'SELECTED' if grd == @graduation %>><%= grd.held_on %> <%= grd.group.name %></option>
         <% end %>
       </select>
       <%= link_to 'Diplomer', {:action => :certificates, :id => @graduation.id}, :id => :certificates_link %>
-      <%= link_to 'Detaljer', edit_event_path(@graduation.event) if @graduation.event %>
     </td>
 	</form>
 </tr>
