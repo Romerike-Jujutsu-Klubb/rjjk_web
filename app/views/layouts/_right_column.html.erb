@@ -224,24 +224,22 @@
                 <% if event.start_at.min != 0 || event.start_at.hour != 0 %>
                     <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.strftime('%d. kl. %H:%M') %>
                 <% else %>
-                    <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>
-                    .
+                    <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>.
                 <% end %>
             <% else %>
                 <% if event.end_at.to_date == event.start_at.to_date %>
-                    <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>
-                    .<br/>
+                    <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>.<br/>
                     kl. <%= event.start_at.strftime('%H:%M') %>
                     -<%= event.end_at.strftime('%H:%M') %>
                 <% else %>
                     <% if event.start_at.min == 0 && event.start_at.hour == 0 && event.end_at.hour == 0 && event.end_at.min == 0 %>
                         <%= event.start_at.mday %>-<%= event.end_at.mday %>.
                     <% else %>
-                        <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>
-                        . <%= event.start_at.strftime('%H:%M') %>
+                        <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>.
+                        <%= event.start_at.strftime('%H:%M') %>
                         -
-                        <%= t(:date)[:day_names][event.end_at.wday] %>  <%= event.end_at.mday %>
-                        .     <%= event.end_at.strftime('%H:%M') %>
+                        <%= t(:date)[:day_names][event.end_at.wday] %>  <%= event.end_at.mday %>.
+                        <%= event.end_at.strftime('%H:%M') %>
                     <% end %>
                 <% end %>
             <% end %>
