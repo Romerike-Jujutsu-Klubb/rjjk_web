@@ -10,13 +10,12 @@ class GroupSchedule < ActiveRecord::Base
     I18n.t(:date)[:day_names][weekday]
   end
 
-  def next_practice
-    now = Time.now
-    today = now.to_date
-    week = weekday > today.cwday || (weekday == today.cwday && end_at > now.time_of_day) ?
-        today.cweek : today.cweek + 1
-    Practice.where(:group_schedule_id => id, :year => today.cwyear,
-                   :week => week).first_or_create!
+  def next_practice(now = Time.now)
+    date = now.to_date
+    date += 1.week if weekday < date.cwday ||
+        (weekday == date.cwday && end_at <= now.time_of_day)
+    Practice.where(:group_schedule_id => id, :year => date.cwyear,
+        :week => date.cweek).first_or_create!
   end
 
   def to_s
