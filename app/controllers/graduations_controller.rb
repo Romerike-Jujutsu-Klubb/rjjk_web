@@ -30,7 +30,7 @@ class GraduationsController < ApplicationController
   end
 
   def show
-    @graduation = Graduation.find(params[:id])
+    @graduation = Graduation.includes(:censors, :graduates).find(params[:id])
   end
 
   def new
@@ -52,6 +52,7 @@ class GraduationsController < ApplicationController
   def edit
     @graduation = Graduation.find(params[:id])
     @groups = Group.all
+    @censor = Censor.new :graduation_id => @graduation.id
   end
 
   def update

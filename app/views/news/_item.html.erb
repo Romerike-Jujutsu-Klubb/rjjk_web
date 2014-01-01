@@ -1,5 +1,10 @@
 <div id="normalcontent" class="post">
-  <h3><%= h @news_item.title %></h3>
+  <h3>
+    <%= @news_item.title %>
+    <% if @news_item.publication_state != NewsItem::PublicationState::PUBLISHED %>
+    (<%= @news_item.publication_state %>)
+    <% end %>
+  </h3>
 
   <div class="contentarea">
     <div class="details">

@@ -8,17 +8,23 @@ formats:
     styles:
       color: 'red'
 height: 400px
-#image_advtab: true
-image_list:
-  - title: 'Dog'
-    value: 'mydog.jpg'
-  - title: 'Cat'
-    value: 'mycat.gif'
+#image_list:
+#  - title: 'Dog'
+#    value: 'mydog.jpg'
+#  - title: 'Cat'
+#    value: 'mycat.gif'
 language: nb_NO
 plugins:
-  - image
-  - table
+  - anchor
+  - charmap
+  - code
+  - emoticons
   - fullscreen
+  - hr
+  - image
+  - link
+  - table
+  - textcolor
 # table_styles: "Standard=table;Kompakt=table table-condensed;Pysjamas=table table-striped;Linjert=table table-bordered"
 style_formats:
 #  - title: 'Bold text'

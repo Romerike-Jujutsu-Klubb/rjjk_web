@@ -5,6 +5,7 @@ class NewsItem < ActiveRecord::Base
     EXPIRED = 'EXPIRED'
   end
 
+  extend UserSystem
   include UserSystem
 
   scope :current, where("(publication_state IS NULL OR publication_state = '#{PublicationState::PUBLISHED}') AND (publish_at IS NULL OR publish_at <= CURRENT_TIMESTAMP) AND (expire_at IS NULL OR expire_at >= CURRENT_TIMESTAMP)")
@@ -24,7 +25,7 @@ class NewsItem < ActiveRecord::Base
   validates_inclusion_of :publication_state, :in => PublicationState.constants.map(&:to_s)
 
   def self.front_page_items
-    current.order('created_at DESC').limit(10).includes(:creator => :member).all
+    (admin? ? self : current).order('created_at DESC').limit(10).includes(:creator => :member).all
   end
 
   def initialize(*args)

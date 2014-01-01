@@ -1,52 +1,69 @@
 <% @content_width = 1024 %>
 
-<div style="float: right; width: 196px; height: 680px; overflow:auto; border: 1px solid black">
-  <%= render :partial => '/images/list', :locals => {:images => @images} %>
+<div class="row">
+
+  <div class="col-md-9">
+    <%= tinymce %>
+
+    <%= form_for @news_item, :html => {:role => 'form'} do |f| %>
+        <%= f.error_messages %>
+
+        <div class="row">
+          <div class="form-group col-md-12">
+            <%= f.label :title, 'Tittel' %>
+            <%= f.text_field :title, :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-3">
+            <%= f.label :publication_state, 'Publiseringsstatus' %>
+            <%= f.select :publication_state, NewsItem::PublicationState.constants.map { |s| [t(s.downcase), s] },
+                    {}, :class => 'form-control' %>
+          </div>
+
+          <div class="form-group col-md-3">
+            <%= f.label :publish_at, 'Publiser fra' %>
+            <%= f.datetime_picker :publish_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
+                    :class => 'form-control' %>
+          </div>
+
+          <div class="form-group col-md-3">
+            <%= f.label :expire_at, 'til' %>
+            <%= f.datetime_picker :expire_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
+                    :class => 'form-control' %>
+          </div>
+        </div>
+
+        <p>
+          Sammendrag
+          <%= f.text_area :summary, :class => :tinymce, :style => 'height: 120px' %>
+          <%= javascript_tag do %>
+              $(window).load(function () {
+              tinyMCE.DOM.setStyle(tinyMCE.DOM.get('news_item_summary_ifr'), 'height', '120px');
+              })
+          <% end %>
+        </p>
+
+        <p>
+          Mer informasjon (valgfritt)
+          <%= f.text_area :body, :class => :tinymce %>
+        </p>
+
+        <%= f.submit 'Lagre', :id => :save, :class => 'btn btn-default' %>
+        <%= back_or_link_to 'Avbryt', :action => 'list' %>
+
+    <% end %>
+  </div>
+  <div class="col-md-3">
+    <div style="float: right; width: 196px; height: 680px; overflow:auto; border: 1px solid black">
+      <%= render :partial => '/images/list', :locals => {:images => @images} %>
+    </div>
+  </div>
+
 </div>
 
-<%= tinymce %>
-
-<%= form_for(@news_item) do |f| %>
-    <%= f.error_messages %>
-
-    <div style="float: left;margin-right: 0.5em">
-      <%= f.label :title, 'Tittel' %>
-      <%= f.text_field :title, :class => 'input-medium' %>
-    </div>
-
-    <%= f.label :publication_state, 'Publiseringsstatus' %>
-    <%= f.select :publication_state, NewsItem::PublicationState.constants.map { |s| [t(s.downcase), s] }, {}, :class => 'input-medium' %>
-
-    Publiser fra
-    <%= f.datetime_picker :publish_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
-                          :class => 'input-medium' %>
-
-    til <%= f.datetime_picker :expire_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
-                              :class => 'input-medium' %>
-
-    <p>
-      Sammendrag
-      <%= f.text_area :summary, :class => :tinymce, :style => 'height: 120px' %>
-    </p>
-    <%= javascript_tag do %>
-        $(window).load(function () {
-        tinyMCE.DOM.setStyle(tinyMCE.DOM.get('news_item_summary_ifr'), 'height', '120px');
-        })
-    <% end %>
-
-    <p>
-      Mer informasjon (valgfri)
-      <%= f.text_area :body, :class => :tinymce %>
-    </p>
-
-    <%= f.submit 'Lagre', :id => :save, :class => 'btn btn-default' %>
-    <%= back_or_link_to 'Avbryt', :action => 'list' %>
-
+<%= javascript_tag do %>
+    $('#news_item_title').focus();
+    $('#news_item_title').select();
 <% end %>
-
-<script type="text/JavaScript">
-    //<!--
-    document.getElementById('news_item_title').focus();
-    document.getElementById('news_item_title').select();
-    //-->
-</script>

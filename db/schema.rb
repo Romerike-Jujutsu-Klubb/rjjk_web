@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131205152857) do
+ActiveRecord::Schema.define(:version => 20131212160054) do
 
   create_table "members", :force => true do |t|
     t.string  "first_name",           :limit => 100, :default => "", :null => false
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(:version => 20131205152857) do
   create_table "censors", :force => true do |t|
     t.integer "graduation_id", :null => false
     t.integer "member_id",     :null => false
+    t.index ["graduation_id", "member_id"], :name => "index_censors_on_graduation_id_and_member_id", :unique => true
     t.foreign_key ["graduation_id"], "graduations", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "censors_graduation_id_fkey"
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "censors_member_id_fkey"
   end
@@ -272,7 +273,7 @@ ActiveRecord::Schema.define(:version => 20131205152857) do
   create_table "graduates", :force => true do |t|
     t.integer "member_id",       :null => false
     t.integer "graduation_id",   :null => false
-    t.boolean "passed",          :null => false
+    t.boolean "passed"
     t.integer "rank_id",         :null => false
     t.boolean "paid_graduation", :null => false
     t.boolean "paid_belt",       :null => false

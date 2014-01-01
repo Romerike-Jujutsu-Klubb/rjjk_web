@@ -345,6 +345,7 @@ function cancelSaveGraduateInfo(graduate_id) {
             <option value='<%= grd.id %>' <%= 'SELECTED' if grd == @graduation %>><%= grd.held_on %> <%= grd.group.name %></option>
         <% end %>
       </select>
+      <%= link_to 'Endre', :action => :edit, :id => @graduation.id %>
       <%= link_to 'Diplomer', {:action => :certificates, :id => @graduation.id}, :id => :certificates_link %>
     </td>
 	</form>

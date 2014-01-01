@@ -11,7 +11,12 @@
                 <div class="divider2"></div>
             <% end %>
             <div class="post">
-              <h4><%= h news_item.title %></h4>
+              <h4>
+                <%= news_item.title %>
+                <% if news_item.publication_state != NewsItem::PublicationState::PUBLISHED %>
+                (<%= news_item.publication_state %>)
+                <% end %>
+              </h4>
 
               <div class="contentarea">
                 <div class="details">

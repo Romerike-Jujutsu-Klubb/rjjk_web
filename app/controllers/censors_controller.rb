@@ -6,14 +6,10 @@ class CensorsController < ApplicationController
     render :action => 'list'
   end
 
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  #verify :method => :post, :only => [ :destroy, :create, :update ],
-  #       :redirect_to => { :action => :list }
-
   def list
     @censors = Censor.paginate :page => params[:page], :per_page => 10
   end
-  
+
   def list_instructors
     @graduation = Graduation.find(params[:id])
     @instructors = Member.all(:conditions => "left_on IS NULL AND instructor = true", :order => 'first_name, last_name')
@@ -28,13 +24,13 @@ class CensorsController < ApplicationController
       </tr>
 EOH
     for instr in @instructors
-      fn = instr.first_name.split(/\s+/).each { |x| x.capitalize!}.join(' ')
-      ln = instr.last_name.split(/\s+/).each { |x| x.capitalize!}.join(' ') 
+      fn = instr.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
+      ln = instr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
       nm = fn << " " << ln
       rstr = rstr << "<tr id='censor_#{instr.id}'>" <<
-             "<td><a href='#' onClick='add_censor(" + instr.id.to_s + ",\"" + nm + "\");'>" <<
-             nm << "</a></td>"
-             "</tr>"
+          "<td><a href='#' onClick='add_censor(" + instr.id.to_s + ",\"" + nm + "\");'>" <<
+          nm << "</a></td>"
+      "</tr>"
     end
     rstr << "</table>\n</div>\n"
     render :text => rstr
@@ -64,7 +60,7 @@ EOH
     @censor = Censor.new(params[:censor])
     if @censor.save
       flash[:notice] = 'Censor was successfully created.'
-      redirect_to :action => 'list'
+      back_or_redirect_to :action => :index
     else
       render :action => 'new'
     end

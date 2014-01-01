@@ -32,6 +32,7 @@ RjjkWeb::Application.routes.draw do
 
   resources :attendances
   resources :birthday_celebrations
+  resources :censors
   resources :cms_members
   resources :correspondences
   resources :embus
@@ -40,6 +41,12 @@ RjjkWeb::Application.routes.draw do
   resources :event_invitees
   resources :event_messages
   resources :events
+  #resources :events do
+  #  get :calendar, :on => :collection
+  #end
+  resources :graduates do
+    get :list_potential_graduates, :on => :collection
+  end
   resources :graduations
   resources :group_instructors
   resources :group_schedules

@@ -203,7 +203,7 @@
     <div class="events">
       <h3>Hva
         skjer? <%= link_to image_tag('ical.png', :style => 'width: 24px;height: 24px'),
-                           {:only_path => false, :protocol => :webcal,
+                           {:only_path => false, :protocol => 'webcal',
                             :controller => :events, :action => :calendar,
                             :format => :ics}, :title => 'Abonnér på hendelseskalender!' %></h3>
 

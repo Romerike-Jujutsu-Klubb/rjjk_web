@@ -9,13 +9,9 @@ class GraduatesController < ApplicationController
     render :action => 'list'
   end
 
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  #verify :method      => :post, :only => [:destroy, :create, :update],
-  #       :redirect_to => {:action => :list}
-
   def show_last_grade
-    @members      = Member.all
-    @all_grades   = @members.map { |m| m.current_grade }
+    @members = Member.all
+    @all_grades = @members.map { |m| m.current_grade }
     @grade_counts = {}
     @all_grades.each do |g|
       @grade_counts[g] ||= 0
@@ -34,8 +30,8 @@ class GraduatesController < ApplicationController
   def annual_summary
     @year = params[:id]
     @graduates = Graduate.includes(:graduation).where("DATE_PART('YEAR', graduations.held_on) = ?", @year).order('rank_id').all
-    @by_group = @graduates.group_by{|gr| gr.rank.group}
-    @by_rank = @graduates.group_by{|gr| gr.rank}
+    @by_group = @graduates.group_by { |gr| gr.rank.group }
+    @by_rank = @graduates.group_by { |gr| gr.rank }
   end
 
   def list_graduates
@@ -43,7 +39,7 @@ class GraduatesController < ApplicationController
       @graduate_pages, @graduates = paginate :graduates, :per_page => MEMBERS_PER_PAGE, :conditions => "graduation_id = #{params[:id]}", :order => "rank_id,passed"
     else
       @graduate_pages = paginate :graduates, :conditions => "member_id > 0", :order => "member_id,rank_id,passed"
-      @graduates      = Graduate.all(:conditions => "member_id > 0", :order => "member_id,rank_id,passed")
+      @graduates = Graduate.all(:conditions => "member_id > 0", :order => "member_id,rank_id,passed")
     end
     render :action => 'list'
   end
@@ -51,7 +47,7 @@ class GraduatesController < ApplicationController
   def list_potential_graduates
     graduation = Graduation.find(params[:graduation_id])
     @grads = Member.all(:conditions => ["joined_on <= ? AND left_on IS NULL OR left_on >= ?", graduation.held_on, graduation.held_on], :order => 'first_name, last_name',
-                         :select => 'first_name, last_name, id')
+        :select => 'first_name, last_name, id')
     @grads.delete_if { |g| graduation.graduates.map(&:member).include? g }
     rstr =<<EOH
 <div style="height:640px; width:256px; overflow:auto; overflow-x:hidden;">
@@ -63,10 +59,10 @@ class GraduatesController < ApplicationController
 	</td><tr>
 EOH
     Group.active(graduation.held_on).all(:order => :from_age).each do |group|
-      members = @grads.select{|m| m.groups.include? group}
+      members = @grads.select { |m| m.groups.include? group }
       next if members.empty?
       rstr << "<tr id='group_#{group.id}'>" <<
-          "<th align=left><a href='#' onClick='#{members.map{|m| "add_graduate(#{m.id})"}.join(';')};changeGraduationData();'>" <<
+          "<th align=left><a href='#' onClick='#{members.map { |m| "add_graduate(#{m.id})" }.join(';')};changeGraduationData();'>" <<
           "#{group.name}</a></th>" <<
           "<th ALIGN='right'>&nbsp;" <<
           "<th>&nbsp;</th></tr>\n"
@@ -86,8 +82,8 @@ EOH
 
   def update_graduate
     graduate_id = params[:graduate_id].to_i
-    rank_id     = params[:rank_id].to_i
-    passed      = params[:passed].to_i
+    rank_id = params[:rank_id].to_i
+    passed = params[:passed].to_i
     #paid        = params[:paid].to_i
     #paid_belt   = params[:paid_belt].to_i
 
@@ -95,7 +91,7 @@ EOH
       @graduate = Graduate.find(graduate_id)
       #@graduate.update_attributes!(:rank_id   => rank_id, :passed => passed, :paid_graduation => paid,
       #                             :paid_belt => paid_belt)
-      @graduate.update_attributes!(:rank_id   => rank_id, :passed => passed)
+      @graduate.update_attributes!(:rank_id => rank_id, :passed => passed)
       render :text => "Endret graderingsinfo for medlem. <!-- #{@graduate.member_id} -->"
     rescue StandardError
       render :text => "Det oppstod en feil ved endring av medlem #{@graduate.member_id}:<P>#$!</P>"
@@ -111,18 +107,19 @@ EOH
   end
 
   def add_new_graduate
-    gid    = params[:graduation_id]
-    mid    = params[:member_id]
-    aid    = params[:martial_arts_id]
+    gid = params[:graduation_id]
+    mid = params[:member_id]
+    aid = params[:martial_arts_id]
 
     graduation = Graduation.find(gid)
     member = Member.find(mid)
     next_rank = member.next_rank(graduation)
     raise "Unable to find rank for martial art with id = #{aid}" unless next_rank
 
-    Graduate.create!(:graduation_id => gid, :member_id => mid, :passed => false,
-                     :rank_id       => next_rank.id, :paid_graduation => true, :paid_belt => true)
-    render :text =>" "
+    Graduate.create!(:graduation_id => gid, :member_id => mid,
+        :passed => graduation.group.school_breaks ? true : nil,
+        :rank_id => next_rank.id, :paid_graduation => true, :paid_belt => true)
+    render :text => " "
   end
 
 
