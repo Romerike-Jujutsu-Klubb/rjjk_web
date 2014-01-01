@@ -2,7 +2,7 @@
   <h3>
     <%= @news_item.title %>
     <% if @news_item.publication_state != NewsItem::PublicationState::PUBLISHED %>
-    (<%= @news_item.publication_state %>)
+    (<%= t @news_item.publication_state.downcase %>)
     <% end %>
   </h3>
 

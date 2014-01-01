@@ -1,4 +1,5 @@
 class UserNotify < ActionMailer::Base
+  layout 'email'
   default from: UserSystem::CONFIG[:email_from].to_s
 
   def signup(user, password, url=nil)

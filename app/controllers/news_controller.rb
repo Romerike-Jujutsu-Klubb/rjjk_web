@@ -62,7 +62,7 @@ class NewsController < ApplicationController
   private
 
   def load_images
-    @images = Image.published.images.select('id, name').all
+    @images = Image.published.images.select('id, name').order('created_at DESC').all
   end
 
 end

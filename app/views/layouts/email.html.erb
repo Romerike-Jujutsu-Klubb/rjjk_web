@@ -80,10 +80,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <td style="padding:10px 20px 0 20px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:16px;">
+                  <td style="padding:10px 20px 0 20px; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#333333; line-height:16px;">
                     <div class="clearfix" style="margin:0 0 10px 0; padding-bottom: 5px">
                       <%= yield %>
-                      <br clear="all"/>
                     </div>
                   </td>
                 </tr>
@@ -103,7 +102,7 @@
         <tr>
           <td align="left" style="padding:20px 0 10px 10px; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#888888;text-align:center;">
             For å forsikre om at nyhetsbrevene våre kommer fram, legg
-            <a href='mailto:"Romerike Jujutsu Klubb" <post@jujutsu.no>' style="color:#545454;text-decoration: none;font-weight: bold;">post@jujutsu.no</a>
+            <a href='mailto:"Romerike Jujutsu Klubb" <<%=mailer.message.from%>>' style="color:#545454;text-decoration: none;font-weight: bold;">post@jujutsu.no</a>
             i adresseboken din.
             <!--
             <br/><%= link_to 'Ikke send', {:only_path => false, :controller => :newsletters, :action => :unsubscribe, :email => Base64.encode64(@user_email || '')}, :style => 'color: #545454;text-decoration: none;font-weight: bold;' %>
