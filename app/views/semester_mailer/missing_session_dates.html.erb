@@ -1,21 +1,12 @@
 <h1>Hei Curt!</h1>
 
-<p>
-  Du trenger å planlegge treningsstart og -stop for neste semester!
-</p>
+<p>Du trenger å planlegge treningsstart og -stop for neste semester!</p>
+
+<p>Gå til denne linken for å skrive inn datoene:</p>
 
 <p>
-  Gå til denne linken for å skrive inn datoene:
+  <%= link_to 'Fyll in datoer', :only_path => false, :controller => :groups,
+          :action => :edit, :id => @group.id %>
 </p>
 
-<p>
-  <%= link_to 'Fyll in datoer', :only_path => false, :controller => :group,
-              :action => :edit, :id => @group.id %>
-</p>
-
-<p>
-  Dette blir bra!
-</p>
-
-<hr/>
-Romerike Jujutsu Klubb
+<p>Dette blir bra!</p>

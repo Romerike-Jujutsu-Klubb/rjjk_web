@@ -1,5 +1,5 @@
 <% @content_width = 800 %>
-<%= render :partial => '/tiny_mce' %>
+<%= tinymce %>
 
 <%= form_for(@event_message) do |f| %>
   <% if @event_message.errors.any? %>
@@ -35,7 +35,7 @@
   </div>
   <div class="field">
     <%= f.label :body %><br />
-    <%= f.text_area :body, :class => 'tiny_mce', :rows => 36 %>
+    <%= f.text_area :body, :class => :tinymce, :rows => 36 %>
   </div>
     <div class="field">
       <%= f.label :klar %>:

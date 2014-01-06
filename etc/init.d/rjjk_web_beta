@@ -15,14 +15,18 @@ RUN_AS_USER=capistrano
 pidfile=${PIDFILE-/u/apps/$APP/shared/log/server.pid}
 APP_DIR="/u/apps/$APP/current"
 LOG_DIR="/u/apps/$APP/shared/log"
+BUNDLE_DIR="/u/apps/$APP/shared/bundle/jruby/1.9"
 
 START_CMD="cd $APP_DIR ;
   export JAVA_HOME=/usr/java/default ;
   export JRUBY_HOME=/usr/local/jruby ;
-  export PATH=\$JAVA_HOME/bin:\$JRUBY_HOME/bin:\$PATH ;
+  export PATH=\$JRUBY_HOME/bin:\$JAVA_HOME/bin:\$PATH ;
   export JRUBY_OPTS='--2.0 -J-Xmx2G --server -J-Djava.awt.headless=true -J-Dawt.toolkit=sun.awt.HToolkit' ;
   jruby --version ;
-  jruby -S bundle exec trinidad -p $PORT -e $RAILS_ENV -t -ldaemon --daemonize $pidfile -d $APP_DIR 1>$LOG_DIR/stdout.log 2>$LOG_DIR/stderr.log
+  (jruby -S bundle exec torqbox -p $PORT -E $RAILS_ENV 1>$LOG_DIR/stdout.log 2>$LOG_DIR/stderr.log &) ;
+  PID=$$ ;
+  echo $PID > $pidfile ;
+  echo PID: $PID
 "
 STOP_CMD="kill `cat $pidfile`"
 
@@ -43,8 +47,7 @@ run() {
 # See how we were called.
 case "$1" in
   start)
-	if [ -f $pidfile ] && ! ps h `cat $pidfile` > /dev/null
-	then
+	if [ -f $pidfile ] && [ ! ps h `cat $pidfile` > /dev/null ] ; then
 	    rm -f $pidfile
 	fi
     run "$START_CMD"
@@ -59,7 +62,7 @@ case "$1" in
     run "$START_CMD"
         ;;
   status)
-        ps -ef | grep $APP
+        ps -ef | grep $APP | grep -v grep | grep -v etc/init.d
         ;;
   *)
         echo "Usage: $prog {start|stop|restart|status}"
