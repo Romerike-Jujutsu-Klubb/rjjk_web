@@ -1,6 +1,6 @@
 one:
   member: lars
-  graduation: one
+  graduation: panda
   passed: true
   rank: one
   paid_graduation: true
@@ -8,7 +8,7 @@ one:
 
 two:
   member: uwe
-  graduation: one
+  graduation: panda
   passed: false
   rank: one
   paid_graduation: true

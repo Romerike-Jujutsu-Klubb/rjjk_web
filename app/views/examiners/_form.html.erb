@@ -1,0 +1,33 @@
+<%= form_for(@examiner) do |f| %>
+  <% if @examiner.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@examiner.errors.count, "error") %> prohibited this examiner from being saved:</h2>
+
+      <ul>
+      <% @examiner.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :graduation_id %><br />
+    <%= f.number_field :graduation_id %>
+  </div>
+  <div class="field">
+    <%= f.label :member_id %><br />
+    <%= f.number_field :member_id %>
+  </div>
+  <div class="field">
+    <%= f.label :confirmed_at %><br />
+    <%= f.datetime_select :confirmed_at %>
+  </div>
+  <div class="field">
+    <%= f.label :approved_grades_at %><br />
+    <%= f.datetime_select :approved_grades_at %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

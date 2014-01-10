@@ -12,18 +12,18 @@ class GraduationsControllerTest < ActionController::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
 
-    @first_id = graduations(:one).id
+    @first_id = graduations(:panda).id
     login(:admin)
   end
 
   def test_index
     get :index
     assert_response :redirect
-    assert_redirected_to :id => graduations(:two)
+    assert_redirected_to :id => graduations(:tiger)
   end
 
   def test_index_with_id
-    get :index, :id => graduations(:one)
+    get :index, :id => graduations(:panda)
     assert_response :success
     assert_template 'index'
   end

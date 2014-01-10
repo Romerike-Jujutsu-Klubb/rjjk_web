@@ -44,6 +44,7 @@ RjjkWeb::Application.routes.draw do
   #resources :events do
   #  get :calendar, :on => :collection
   #end
+  resources :examiners
   resources :graduates do
     get :list_potential_graduates, :on => :collection
   end

@@ -1,0 +1,29 @@
+<h1>Listing examiners</h1>
+
+<table>
+  <tr>
+    <th>Graduation</th>
+    <th>Member</th>
+    <th>Confirmed at</th>
+    <th>Approved grades at</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @examiners.each do |examiner| %>
+  <tr>
+    <td><%= examiner.graduation_id %></td>
+    <td><%= examiner.member_id %></td>
+    <td><%= examiner.confirmed_at %></td>
+    <td><%= examiner.approved_grades_at %></td>
+    <td><%= link_to 'Show', examiner %></td>
+    <td><%= link_to 'Edit', edit_examiner_path(examiner) %></td>
+    <td><%= link_to 'Destroy', examiner, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Examiner', new_examiner_path %>

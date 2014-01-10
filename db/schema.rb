@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131212160054) do
+ActiveRecord::Schema.define(:version => 20140109155148) do
 
   create_table "members", :force => true do |t|
     t.string  "first_name",           :limit => 100, :default => "", :null => false
@@ -100,8 +100,8 @@ ActiveRecord::Schema.define(:version => 20131212160054) do
     t.datetime "updated_at",                         :null => false
     t.string   "message"
     t.datetime "message_nagged_at"
-    t.index ["group_schedule_id"], :name => "fk__practices_group_schedule_id"
     t.index ["group_schedule_id", "year", "week"], :name => "index_practices_on_group_schedule_id_and_year_and_week", :unique => true
+    t.index ["group_schedule_id"], :name => "fk__practices_group_schedule_id"
     t.foreign_key ["group_schedule_id"], "group_schedules", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_practices_group_schedule_id"
   end
 
@@ -114,8 +114,8 @@ ActiveRecord::Schema.define(:version => 20131212160054) do
     t.integer  "rating"
     t.string   "comment",              :limit => 250
     t.integer  "practice_id",                         :null => false
-    t.index ["practice_id"], :name => "fk__attendances_practice_id"
     t.index ["member_id", "practice_id"], :name => "index_attendances_on_member_id_and_practice_id", :unique => true
+    t.index ["practice_id"], :name => "fk__attendances_practice_id"
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "attendances_member_id_fkey"
     t.foreign_key ["practice_id"], "practices", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_attendances_practice_id"
   end
@@ -136,8 +136,11 @@ ActiveRecord::Schema.define(:version => 20131212160054) do
   end
 
   create_table "censors", :force => true do |t|
-    t.integer "graduation_id", :null => false
-    t.integer "member_id",     :null => false
+    t.integer  "graduation_id",      :null => false
+    t.integer  "member_id",          :null => false
+    t.datetime "requested_at"
+    t.datetime "confirmed_at"
+    t.datetime "approved_grades_at"
     t.index ["graduation_id", "member_id"], :name => "index_censors_on_graduation_id_and_member_id", :unique => true
     t.foreign_key ["graduation_id"], "graduations", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "censors_graduation_id_fkey"
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "censors_member_id_fkey"
@@ -257,6 +260,20 @@ ActiveRecord::Schema.define(:version => 20131212160054) do
   create_table "events_groups", :force => true do |t|
     t.integer "event_id"
     t.integer "group_id"
+  end
+
+  create_table "examiners", :force => true do |t|
+    t.integer  "graduation_id"
+    t.integer  "member_id"
+    t.datetime "requested_at"
+    t.datetime "confirmed_at"
+    t.datetime "approved_grades_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.index ["graduation_id"], :name => "fk__examiners_graduation_id"
+    t.index ["member_id"], :name => "fk__examiners_member_id"
+    t.foreign_key ["graduation_id"], "graduations", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_examiners_graduation_id"
+    t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_examiners_member_id"
   end
 
   create_table "ranks", :force => true do |t|
@@ -482,8 +499,8 @@ ActiveRecord::Schema.define(:version => 20131212160054) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "practice_id",         :null => false
-    t.index ["practice_id"], :name => "fk__trial_attendances_practice_id"
     t.index ["nkf_member_trial_id", "practice_id"], :name => "index_trial_attendances_on_nkf_member_trial_id_and_practice_id", :unique => true
+    t.index ["practice_id"], :name => "fk__trial_attendances_practice_id"
     t.foreign_key ["nkf_member_trial_id"], "nkf_member_trials", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "trial_attendances_nkf_member_trial_id_fkey"
     t.foreign_key ["practice_id"], "practices", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_trial_attendances_practice_id"
   end

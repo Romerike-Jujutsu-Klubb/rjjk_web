@@ -33,7 +33,7 @@ class GraduationReminder
       attendances.size >= minimum_attendances
     end
     GraduationMailer.overdue_graduates(overdue_graduates).deliver if overdue_graduates.any?
-  rescue
+  rescue Exception
     logger.error "Exception sending overdue graduates message: #{$!}"
     logger.error $!.backtrace.join("\n")
     ExceptionNotifier.notify_exception($!)

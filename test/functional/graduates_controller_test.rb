@@ -56,7 +56,7 @@ class GraduatesControllerTest < ActionController::TestCase
     num_graduates = Graduate.count
 
     post :create, :graduate => {:member_id => members(:lars).id,
-                                :graduation_id => graduations(:two).id,
+                                :graduation_id => graduations(:tiger).id,
                                 :passed => true, :rank_id => ranks(:two).id,
                                 :paid_graduation => true, :paid_belt => true}
     assert_no_errors :graduate

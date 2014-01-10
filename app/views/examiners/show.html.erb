@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Graduation:</b>
+  <%= @examiner.graduation_id %>
+</p>
+
+<p>
+  <b>Member:</b>
+  <%= @examiner.member_id %>
+</p>
+
+<p>
+  <b>Confirmed at:</b>
+  <%= @examiner.confirmed_at %>
+</p>
+
+<p>
+  <b>Approved grades at:</b>
+  <%= @examiner.approved_grades_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_examiner_path(@examiner) %> |
+<%= link_to 'Back', examiners_path %>

@@ -1,10 +1,9 @@
-# encoding: utf-8
 require 'test_helper'
 
 class NkfMemberTrialMailerTest < ActionMailer::TestCase
   test 'notify_trial_end' do
     mail = NkfMemberTrialMailer.notify_trial_end
-    assert_equal 'Notify trial end', mail.subject
+    assert_equal '[RJJK][test] Utløpt prøvetid', mail.subject
     assert_equal %w(to@example.org), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
     assert_match 'Hi', mail.body.encoded
