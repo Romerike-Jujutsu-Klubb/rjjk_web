@@ -52,6 +52,9 @@ class GraduationsController < ApplicationController
   def edit
     @graduation = Graduation.find(params[:id])
     @groups = Group.all
+    @approval = (@graduation.examiners + @graduation.censors).
+        find{|a| a.member == current_user.member}
+    @examiner = Examiner.new :graduation_id => @graduation.id
     @censor = Censor.new :graduation_id => @graduation.id
   end
 
@@ -122,6 +125,14 @@ class GraduationsController < ApplicationController
     end
 
     send_data pdf.render, :type => 'text/pdf', :filename => filename, :disposition => 'attachment'
+  end
+
+  def approve
+    @graduation = Graduation.find(params[:id])
+    @graduation.examiners.where(:member_id => current_user.member.id).update_all(:approved_grades_at => Time.now)
+    @graduation.censors.where(:member_id => current_user.member.id).update_all(:approved_grades_at => Time.now)
+    flash.notice = 'Gradering godkjent!'
+    redirect_to :action => :edit, :id => @graduation.id
   end
 
   private

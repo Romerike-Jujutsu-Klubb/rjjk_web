@@ -263,8 +263,8 @@ ActiveRecord::Schema.define(:version => 20140109155148) do
   end
 
   create_table "examiners", :force => true do |t|
-    t.integer  "graduation_id"
-    t.integer  "member_id"
+    t.integer  "graduation_id",      :null => false
+    t.integer  "member_id",          :null => false
     t.datetime "requested_at"
     t.datetime "confirmed_at"
     t.datetime "approved_grades_at"

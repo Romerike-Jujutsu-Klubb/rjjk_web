@@ -1,8 +1,8 @@
 class CreateExaminers < ActiveRecord::Migration
   def change
     create_table :examiners do |t|
-      t.integer :graduation_id
-      t.integer :member_id
+      t.integer :graduation_id, :null => false
+      t.integer :member_id, :null => false
       t.datetime :requested_at
       t.datetime :confirmed_at
       t.datetime :approved_grades_at
@@ -13,5 +13,13 @@ class CreateExaminers < ActiveRecord::Migration
     add_column :censors, :requested_at, :datetime
     add_column :censors, :confirmed_at, :datetime
     add_column :censors, :approved_grades_at, :datetime
+
+    Censor.includes(:graduation).each do |c|
+      c.update_attributes! :approved_grades_at => c.graduation.held_on
+    end
+  end
+
+  class Censor < ActiveRecord::Base
+    belongs_to :graduation
   end
 end

@@ -3,4 +3,8 @@ class Examiner < ActiveRecord::Base
 
   belongs_to :graduation
   belongs_to :member
+
+  validates_presence_of :graduation_id
+  validates_presence_of :member_id
+  validates_presence_of :member, :if => :member_id
 end

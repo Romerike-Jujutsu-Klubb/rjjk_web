@@ -1,24 +1,23 @@
 <%= form_for @graduation, :html => {:class => 'form-inline'} do |f| %>
     <%= f.error_messages %>
 
-    <div class="form-group col-md-3">
-      <%= f.label :held_on, 'Dato for gradering' %>
+    <div class="form-group">
+      <%= f.label :held_on, 'Dato' %>
       <%= f.datepicker :held_on, :dateFormat => 'yy-mm-dd', :firstDay => 1,
-              :size => 18, :class => 'form-control' %>
+              :size => 18, :class => 'form-control', :style => 'width: 7.5em' %>
     </div>
 
-    <div class="form-group col-md-2">
+    <div class="form-group">
       <%= f.label :group_id, 'Gruppe' %>
       <%= f.select :group_id, @groups.map { |c| [c.name, c.id] }, {}, :class => 'form-control' %>
     </div>
 
-    <div class="form-group col-md-4">
-      <br/>
-      <%= f.submit 'Lagre', :class => 'btn btn-default' %>
+    <div class="form-group">
+      <%= f.submit 'Lagre', :class => 'btn btn-primary' %>
 
       <% unless @graduation.new_record? %>
-          <%= link_to 'Vis', :action => 'show', :id => @graduation %>
+          <%= link_to 'Vis', {:action => 'show', :id => @graduation}, :class => 'btn btn-default' %>
       <% end %>
-      | <%= back_or_link_to 'Tilbake', :action => :index %>
+      <%= back_or_link_to 'Tilbake', {:action => :index}, :class => 'btn btn-default' %>
     </div>
 <% end %>

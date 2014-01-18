@@ -39,4 +39,18 @@ class GraduationReminder
     ExceptionNotifier.notify_exception($!)
   end
 
+  def self.notify_missing_aprovals
+    [Examiner, Censor].each do |clazz|
+      clazz.includes(:graduation, :member).
+          where('approved_grades_at IS NULL AND graduations.held_on < CURRENT_DATE').
+          each do |e|
+        GraduationMailer.missing_approval(e).deliver
+      end
+    end
+  rescue
+    logger.error "Exception sending missing approvals message: #{$!}"
+    logger.error $!.backtrace.join("\n")
+    ExceptionNotifier.notify_exception($!)
+  end
+
 end

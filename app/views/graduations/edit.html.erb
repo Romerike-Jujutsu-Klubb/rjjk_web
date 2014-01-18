@@ -1,15 +1,21 @@
 <% @content_width = 1024 %>
 
-<div class="row">
-  <div class="col-md-12">
-    <%= render :partial => 'form' %>
-  </div>
-</div>
-<br/>
+<% if @graduation.held_on < Date.today && @approval %>
+    <% if @approval.approved_grades_at.nil? %>
+        <%= link_to 'Godkjenn', {:action => :approve, :id => @graduation.id},
+                :class => 'btn btn-primary pull-right', :method => :post %>
+    <% else %>
+        <div class="btn btn-success pull-right">Godkjent</div>
+    <% end %>
+<% end %>
+
+<h2>Gradering <%= @graduation.group.name %> <%= @graduation.held_on %></h2>
 
 <ul class="nav nav-tabs">
   <li class="active"><a href="#graduates" data-toggle="tab">Deltakere</a></li>
-  <li><a href="#censors" data-toggle="tab">Sensorer</a></li>
+  <li><a href="#examiners_and_censors" data-toggle="tab">
+    Eksaminatorer / Sensorer</a>
+  <li><a href="#forms" data-toggle="tab">Skjema</a></li>
 </ul>
 
 <div class="tab-content">
@@ -124,39 +130,77 @@
   </div>
 
 
-  <div class="tab-pane" id="censors">
-    <h4>Sensorer
-      (<%= link_to 'Skjema', :action => :censor_form, :id => @graduation.id %>,
-      <%= link_to 'PDF', :action => :censor_form_pdf, :id => @graduation.id %>)
-    </h4>
+  <div class="tab-pane" id="examiners_and_censors">
+    <div class="row">
+      <div class="col-md-3">
+        <h4>Eksaminatorer</h4>
 
-    <% if @graduation.censors.any? %>
-        <div id="censors_row" class="row">
-          <% @graduation.censors.each_with_index do |cen, i|
-            fn = cen.member && cen.member.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
-            ln = cen.member && cen.member.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
-            name = "#{fn} #{ln}"
-          %>
-              <div class="col-md-3">
-                <%= name %>
-                <%= cen.member.name %>
-                <%= link_to({:controller => :censors, :action => :destroy, :id => cen.id},
+        <div id="examiners_row" class="row">
+          <% @graduation.examiners.each do |cen| %>
+              <div class="col-md-12">
+                <%= link_to({:controller => :examiners, :action => :destroy, :id => cen.id},
                         :data => {:remote => true, :method => :delete}) do %>
-                    <img src="<%= asset_path 'button-delete-16x16.png' %>" style="border: 0;" title="Slett sensor <%= name %>" ALT="Slett sensor <%= name %>"/>
+                    <img src="<%= asset_path 'button-delete-16x16.png' %>" style="border: 0;" title="Slett eksaminator <%= cen.member.name %>" ALT="Slett eksaminator <%= cen.member.name %>"/>
                 <% end %>
+                <%= cen.member.name %>
               </div>
           <% end %>
         </div>
         <br/>
-    <% end %>
 
-    <%= form_for @censor, :url => with_detour(new_censor_path) do |f| %>
-        <%= f.hidden_field :graduation_id %>
-        <!-- FIXME(uwe):  Legg på en linje sammen -->
-        <%= f.select :member_id, Member.instructors.map { |m| [m.name, m.id] }.sort, {}, :class => 'form-control' %>
-        <%= f.submit 'Legg til sensor', :class => 'btn btn-default' %>
-    <% end %>
+        <%= form_for @examiner, :url => with_detour(examiners_path), :html => {:method => :post} do |f| %>
+            <%= f.hidden_field :graduation_id %>
 
+            <div class="input-group">
+              <%= f.select :member_id, ['Velg instruktør'] + Member.instructors.map { |m| [m.name, m.id] }.sort,
+                      {}, :class => 'form-control', :onchange => 'form.submit()' %>
+              <span class="input-group-btn">
+              <%= f.submit 'Legg til', :class => 'btn btn-default' %>
+            </span>
+            </div>
+        <% end %>
+      </div>
+
+      <div class="col-md-9">
+        <h4>Sensorer</h4>
+
+        <div id="censors_row" class="row">
+          <% @graduation.censors.each do |cen| %>
+              <div class="col-md-4">
+                <%= link_to({:controller => :censors, :action => :destroy, :id => cen.id},
+                        :data => {:remote => true, :method => :delete}) do %>
+                    <img src="<%= asset_path 'button-delete-16x16.png' %>" style="border: 0;" title="Slett sensor <%= cen.member.name %>" ALT="Slett sensor <%= cen.member.name %>"/>
+                <% end %>
+                <%= cen.member.name %>
+              </div>
+          <% end %>
+        </div>
+        <br/>
+        <%= form_for @censor, :url => with_detour(censors_path), :html => {:method => :post} do |f| %>
+            <%= f.hidden_field :graduation_id %>
+
+            <div class="input-group">
+              <%= f.select :member_id, ['Velg sensor'] + Member.instructors.map { |m| [m.name, m.id] }.sort,
+                      {}, :class => 'form-control', :onchange => 'form.submit()' %>
+              <span class="input-group-btn">
+              <%= f.submit 'Legg til', :class => 'btn btn-default' %>
+            </span>
+            </div>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tab-pane" id="forms">
+    <ul>
+      <li>Sensor:
+        <%= link_to 'PDF', :action => :censor_form_pdf, :id => @graduation.id %>
+        /
+        <%= link_to 'HTML', :action => :censor_form, :id => @graduation.id %>
+      </li>
+      <li><%= link_to 'Diplomer', {:action => :certificates, :id => @graduation.id} %></li>
+    </ul>
   </div>
 
 </div>
@@ -164,10 +208,6 @@
 <%= javascript_tag do %>
     $('a[data-method=delete]').bind('ajax:success', function(event, data, status, xhr) {
     $(event.target).closest('tr').remove();
-    });
-<% end %>
-<%= javascript_tag do %>
-    $('a[data-method=delete]').bind('ajax:success', function(event, data, status, xhr) {
     $(event.target).closest('.row').remove();
     });
 <% end %>

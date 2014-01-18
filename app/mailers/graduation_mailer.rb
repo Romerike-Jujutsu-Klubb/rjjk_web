@@ -13,10 +13,9 @@ class GraduationMailer < ActionMailer::Base
     suggested_date = month_start + (7 - month_start.wday) + @group.group_schedules.first.weekday
 
     @email_url = with_login(@instructor.user,
-                            :controller => :graduations, :action => :new,
-                            :graduation => {:group_id => @group.id, :held_on => suggested_date})
-    mail subject: rjjk_prefix(@title),
-         to: Rails.env == 'production' ? @instructor.email : "\"#{@instructor.name}\" <uwe@kubosch.no>"
+        :controller => :graduations, :action => :new,
+        :graduation => {:group_id => @group.id, :held_on => suggested_date})
+    mail subject: rjjk_prefix(@title), to: safe_email(@instructor)
   end
 
   def overdue_graduates(members)
@@ -30,8 +29,14 @@ class GraduationMailer < ActionMailer::Base
     mail to: 'to@example.org'
   end
 
-  def lock_reminder
-    mail to: 'to@example.org'
+  def missing_approval(examiner)
+    @examiner = examiner
+    @title = 'Bekrefte gradering'
+    @timestamp = Time.now
+    @email_url = with_login(@examiner.member.user,
+        :controller => :graduations, :action => :edit,
+        :id => @examiner.graduation_id)
+    mail to: safe_email(examiner.member), subject: rjjk_prefix(@title)
   end
 
   def member_info_reminder

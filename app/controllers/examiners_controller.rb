@@ -46,7 +46,7 @@ class ExaminersController < ApplicationController
 
     respond_to do |format|
       if @examiner.save
-        format.html { redirect_to @examiner, notice: 'Examiner was successfully created.' }
+        format.html { back_or_redirect_to @examiner, notice: 'Examiner was successfully created.' }
         format.json { render json: @examiner, status: :created, location: @examiner }
       else
         format.html { render action: "new" }
