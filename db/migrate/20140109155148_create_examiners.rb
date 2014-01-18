@@ -14,11 +14,12 @@ class CreateExaminers < ActiveRecord::Migration
     add_column :censors, :confirmed_at, :datetime
     add_column :censors, :approved_grades_at, :datetime
 
-    Censor.includes(:graduation).each do |c|
+    Censor.includes(:graduation).where("graduations.held_on < '2013-12-01'").each do |c|
       c.update_attributes! :approved_grades_at => c.graduation.held_on
     end
   end
 
+  class Graduation < ActiveRecord::Base ; end
   class Censor < ActiveRecord::Base
     belongs_to :graduation
   end
