@@ -261,7 +261,7 @@ DEPENDENCIES
   minitest-reporters (< 1.0.0)
   mocha
   nokogiri
-  prawn (~> 1.0.0.rc2)
+  prawn
   rails (~> 3.2.2)
   rails-i18n
   rake

@@ -1,15 +1,3 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
-// listed below.
-//
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
-// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
-//
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// the compiled file.
-//
-// WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
-// GO AFTER THE REQUIRES BELOW.
-//
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.datepicker
@@ -29,6 +17,26 @@ $(function () {
         href: function () {
             return $(this).attr("href")
         },
-        returnFocus: false,
+        returnFocus: false
     });
 });
+
+$().ready(function () {
+    $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+        tab = $('#' + $(e.target).attr('href').substr(1));
+        window.location.hash = $(e.target).attr("href").substr(1);
+
+        if (!tab.html()) {
+            tab.html('<div class="text-center" style="padding: 3em">Loading...</div>');
+            tab.load(tab.attr('data-target'));
+        }
+        return true;
+    });
+
+    $('a[href="' + window.location.hash + '"]').tab('show');
+    $('.stretch').parent('.row').addClass("row-stretch");
+})
+$(window).load(function () {
+    $('.stretch').parent('.row').scrollTop(0);
+    setTimeout(function(){$('.stretch').parent('.row').scrollTop(0)}, 50)
+})

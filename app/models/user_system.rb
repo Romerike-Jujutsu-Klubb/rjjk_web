@@ -24,10 +24,7 @@ module UserSystem
 
   protected
 
-  # authenticate_user filter. add
-  #
   #   before_filter :authenticate_user
-  #
   def authenticate_user
     return true if authenticated_user?
     access_denied
@@ -35,21 +32,19 @@ module UserSystem
   end
 
   #   before_filter :admin_required
-  #
   def admin_required
     return false unless authenticate_user
-    if authenticated_user? && current_user.role == ADMIN_ROLE
-      return true
-    end
-    access_denied
+    return true if current_user.role == ADMIN_ROLE
+    access_denied('Du må være administrator for å se denne siden.')
   end
 
   # overwrite if you want to have special behavior in case the user is not authorized
   # to access the current operation. 
-  # the default action is to redirect to the login screen
-  # example use :
+  # The default action is to redirect to the login screen.
+  # Example use :
   # a popup window might just close itself for instance
-  def access_denied
+  def access_denied(message = 'Access denied!')
+    flash.alert = message
     store_detour(params)
     redirect_to :controller => :user, :action => :login, :id => nil
   end

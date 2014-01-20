@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(:version => 20140109155148) do
   create_table "censors", :force => true do |t|
     t.integer  "graduation_id",      :null => false
     t.integer  "member_id",          :null => false
+    t.boolean  "examiner"
     t.datetime "requested_at"
     t.datetime "confirmed_at"
     t.datetime "approved_grades_at"
@@ -260,20 +261,6 @@ ActiveRecord::Schema.define(:version => 20140109155148) do
   create_table "events_groups", :force => true do |t|
     t.integer "event_id"
     t.integer "group_id"
-  end
-
-  create_table "examiners", :force => true do |t|
-    t.integer  "graduation_id",      :null => false
-    t.integer  "member_id",          :null => false
-    t.datetime "requested_at"
-    t.datetime "confirmed_at"
-    t.datetime "approved_grades_at"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-    t.index ["graduation_id"], :name => "fk__examiners_graduation_id"
-    t.index ["member_id"], :name => "fk__examiners_member_id"
-    t.foreign_key ["graduation_id"], "graduations", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_examiners_graduation_id"
-    t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_examiners_member_id"
   end
 
   create_table "ranks", :force => true do |t|

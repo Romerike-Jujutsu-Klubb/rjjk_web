@@ -29,14 +29,14 @@ class GraduationMailer < ActionMailer::Base
     mail to: 'to@example.org'
   end
 
-  def missing_approval(examiner)
-    @examiner = examiner
+  def missing_approval(censor)
+    @censor = censor
     @title = 'Bekrefte gradering'
     @timestamp = Time.now
-    @email_url = with_login(@examiner.member.user,
+    @email_url = with_login(@censor.member.user,
         :controller => :graduations, :action => :edit,
-        :id => @examiner.graduation_id)
-    mail to: safe_email(examiner.member), subject: rjjk_prefix(@title)
+        :id => @censor.graduation_id)
+    mail to: safe_email(censor.member), subject: rjjk_prefix(@title)
   end
 
   def member_info_reminder

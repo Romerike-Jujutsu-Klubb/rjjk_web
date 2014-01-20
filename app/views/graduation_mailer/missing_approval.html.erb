@@ -1,10 +1,10 @@
-<h1>Hei <%= @examiner.member.first_name %> !</h1>
+<h1>Hei <%= @censor.member.first_name %> !</h1>
 
 <p>
   Kan du gå inn på RJJK webben og bekrefte graderingen for
 </p>
 <p>
-  <%= link_to "#{@examiner.graduation.group.name} den #{@examiner.graduation.held_on}", @email_url %>
+  <%= link_to "#{@censor.graduation.group.name} den #{@censor.graduation.held_on}", @email_url %>
   ?
 </p>
 <p>

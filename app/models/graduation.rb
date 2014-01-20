@@ -1,7 +1,6 @@
 class Graduation < ActiveRecord::Base
   belongs_to :group
   has_many :censors, :dependent => :destroy
-  has_many :examiners, :dependent => :destroy
   has_many :graduates, :dependent => :destroy
 
   validates_presence_of :group, :held_on

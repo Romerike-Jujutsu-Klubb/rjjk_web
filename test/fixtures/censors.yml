@@ -1,6 +1,11 @@
 one:
   graduation: panda
   member: lars
+uwe_panda:
+  graduation: panda
+  member: uwe
+  examiner: true
 two:
   graduation: tiger
   member: lars
+  examiner: true

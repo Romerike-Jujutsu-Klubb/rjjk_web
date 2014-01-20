@@ -13,7 +13,7 @@
 
 <ul class="nav nav-tabs">
   <li class="active"><a href="#graduates" data-toggle="tab">Deltakere</a></li>
-  <li><a href="#examiners_and_censors" data-toggle="tab">
+  <li><a href="#censors" data-toggle="tab">
     Eksaminatorer / Sensorer</a>
   <li><a href="#forms" data-toggle="tab">Skjema</a></li>
 </ul>
@@ -130,15 +130,15 @@
   </div>
 
 
-  <div class="tab-pane" id="examiners_and_censors">
+  <div class="tab-pane" id="censors">
     <div class="row">
       <div class="col-md-3">
         <h4>Eksaminatorer</h4>
 
         <div id="examiners_row" class="row">
-          <% @graduation.examiners.each do |cen| %>
+          <% @graduation.censors.select{|c| c.examiner}.each do |cen| %>
               <div class="col-md-12">
-                <%= link_to({:controller => :examiners, :action => :destroy, :id => cen.id},
+                <%= link_to({:controller => :censors, :action => :destroy, :id => cen.id},
                         :data => {:remote => true, :method => :delete}) do %>
                     <img src="<%= asset_path 'button-delete-16x16.png' %>" style="border: 0;" title="Slett eksaminator <%= cen.member.name %>" ALT="Slett eksaminator <%= cen.member.name %>"/>
                 <% end %>
@@ -148,8 +148,9 @@
         </div>
         <br/>
 
-        <%= form_for @examiner, :url => with_detour(examiners_path), :html => {:method => :post} do |f| %>
+        <%= form_for @censor, :url => with_detour(censors_path), :html => {:method => :post} do |f| %>
             <%= f.hidden_field :graduation_id %>
+            <%= f.hidden_field :examiner, :value => 1 %>
 
             <div class="input-group">
               <%= f.select :member_id, ['Velg instruktør'] + Member.instructors.map { |m| [m.name, m.id] }.sort,

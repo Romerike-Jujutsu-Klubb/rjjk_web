@@ -1,20 +1,7 @@
-# encoding: UTF-8
 class GraduationsController < ApplicationController
-  MEMBERS_PER_PAGE = 30
-
-  before_filter :admin_required
-
-  def import
-    @imported, @unknown = GraduationsImport.import
-    STDERR.puts @imported.size
-    lines = String.new()
-    @imported.each { |k, v|
-      v.each { |x, y|
-        lines << k.to_s << ' ' << x << ' ' << y << '<br>'
-      }
-    }
-    render :text => lines
-  end
+  CENSOR_ACTIONS = [:edit, :update]
+  before_filter :admin_required, :except => CENSOR_ACTIONS
+  before_filter :authenticate_user, :only => CENSOR_ACTIONS
 
   def index
     if params[:id].blank?
@@ -51,10 +38,11 @@ class GraduationsController < ApplicationController
 
   def edit
     @graduation = Graduation.find(params[:id])
+    @approval = @graduation.censors.
+        select { |c| c.member == current_user.member }.
+        sort_by { |c| c.approved_grades_at ? 0 : 1 }.last
+    return unless admin_or_censor_required
     @groups = Group.all
-    @approval = (@graduation.examiners + @graduation.censors).
-        find{|a| a.member == current_user.member}
-    @examiner = Examiner.new :graduation_id => @graduation.id
     @censor = Censor.new :graduation_id => @graduation.id
   end
 
@@ -78,16 +66,16 @@ class GraduationsController < ApplicationController
     date = graduation.held_on
 
     content = graduation.graduates.sort_by { |g| -g.rank.position }.map do |g|
-      censors = graduation.censors.all.sort_by{|c| -c.member.current_rank.position}
+      censors = graduation.censors.all.sort_by { |c| -c.member.current_rank.position }
       {:name => g.member.name, :rank => "#{g.rank.name} #{g.rank.colour}", :group => g.rank.group.name,
-       :censor1 => censors[0] ? {:title => (censors[0].member.title), :name => censors[0].member.name, :signature => censors[0].member.signatures.sample.try(:image)} : nil,
-       :censor2 => censors[1] ? {:title => (censors[1].member.title), :name => censors[1].member.name, :signature => censors[1].member.signatures.sample.try(:image)} : nil,
-       :censor3 => censors[2] ? {:title => (censors[2].member.title), :name => censors[2].member.name, :signature => censors[2].member.signatures.sample.try(:image)} : nil,
+          :censor1 => censors[0] ? {:title => (censors[0].member.title), :name => censors[0].member.name, :signature => censors[0].member.signatures.sample.try(:image)} : nil,
+          :censor2 => censors[1] ? {:title => (censors[1].member.title), :name => censors[1].member.name, :signature => censors[1].member.signatures.sample.try(:image)} : nil,
+          :censor3 => censors[2] ? {:title => (censors[2].member.title), :name => censors[2].member.name, :signature => censors[2].member.signatures.sample.try(:image)} : nil,
       }
     end
     filename = "Certificates_#{graduation.group.martial_art.name}_#{graduation.held_on}.pdf"
     send_data Certificates.pdf(date, content), :type => 'text/pdf',
-              :filename => filename, :disposition => 'attachment'
+        :filename => filename, :disposition => 'attachment'
   end
 
   def list_graduates
@@ -107,7 +95,7 @@ class GraduationsController < ApplicationController
     pdf = Prawn::Document.new do
       date = graduation.held_on
       text "Gradering #{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}",
-           :size => 18, :align => :center
+          :size => 18, :align => :center
       move_down 16
       data = graduation.graduates.sort_by { |g| [-g.rank.position, g.member.name] }.map do |graduate|
         member_current_rank = graduate.member.current_rank(graduate.graduation.martial_art, graduate.graduation.held_on)
@@ -129,7 +117,6 @@ class GraduationsController < ApplicationController
 
   def approve
     @graduation = Graduation.find(params[:id])
-    @graduation.examiners.where(:member_id => current_user.member.id).update_all(:approved_grades_at => Time.now)
     @graduation.censors.where(:member_id => current_user.member.id).update_all(:approved_grades_at => Time.now)
     flash.notice = 'Gradering godkjent!'
     redirect_to :action => :edit, :id => @graduation.id
@@ -145,6 +132,12 @@ class GraduationsController < ApplicationController
         includes({:graduation => {:group => :martial_art}}, :member, {:rank => :group}).
         #order('ranks_graduates.position DESC, members.first_name, members.last_name').all
         order('ranks.position DESC, members.first_name, members.last_name').all
+  end
+
+  def admin_or_censor_required
+    return false unless authenticate_user
+    return true if @approval || current_user.role == ADMIN_ROLE
+    access_denied('Du må være administrator eller sensor for å redigere graderinger.')
   end
 
 end

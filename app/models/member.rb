@@ -19,7 +19,6 @@ class Member < ActiveRecord::Base
   has_many :attendances, :dependent => :destroy
   has_many :censors, :dependent => :destroy
   has_many :correspondences, :dependent => :destroy
-  has_many :examiners, :dependent => :destroy
   has_many :graduates, :dependent => :destroy
   has_many :group_instructors, :dependent => :destroy
   has_many :passed_graduates, :class_name => 'Graduate',

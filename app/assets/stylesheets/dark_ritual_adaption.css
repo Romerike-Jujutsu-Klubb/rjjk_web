@@ -240,6 +240,6 @@ ul.controls li a.delete {
     padding-bottom: 99999px;
 }
 
-.row {
-    overflow: hidden;
+.row-stretch {
+    overflow-y: hidden;
 }
