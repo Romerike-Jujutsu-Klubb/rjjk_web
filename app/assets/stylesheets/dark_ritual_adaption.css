@@ -134,7 +134,9 @@ ul.controls li a.delete {
 }
 
 .header {
-    background: url(/assets/dark_ritual/header_left.png) left no-repeat, url(/assets/dark_ritual/header_right.png) right no-repeat, url(/assets/dark_ritual/header_lines.png) left repeat;
+    background: url(/assets/dark_ritual/header_left.png) left no-repeat,
+                url(/assets/dark_ritual/header_right.png) right no-repeat,
+                url(/assets/dark_ritual/header_lines.png) left repeat;
     background-color: #F4F4F4;
     height: 150px;
 }
