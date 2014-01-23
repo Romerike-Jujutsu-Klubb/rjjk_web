@@ -5,16 +5,9 @@ class CreateExaminers < ActiveRecord::Migration
     add_column :censors, :confirmed_at, :datetime
     add_column :censors, :approved_grades_at, :datetime
 
-    Censor.select('*').includes(:graduation).
-        where("graduations.held_on < '2013-12-01'").each do |c|
-      c.update_attributes! :requested_at => c.graduation.held_on,
-          :confirmed_at => c.graduation.held_on,
-          :approved_grades_at => c.graduation.held_on
-    end
-  end
-
-  class Graduation < ActiveRecord::Base;end
-  class Censor < ActiveRecord::Base
-    belongs_to :graduation
+    execute "UPDATE censors AS c
+    SET requested_at = g.held_on, confirmed_at = g.held_on, approved_grades_at = g.held_on
+    FROM graduations AS g
+    WHERE c.graduation_id = g.id AND g.held_on < '2013-12-01'"
   end
 end
