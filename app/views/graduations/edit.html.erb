@@ -16,6 +16,7 @@
   <li><a href="#censors" data-toggle="tab">
     Eksaminatorer / Sensorer</a>
   <li><a href="#forms" data-toggle="tab">Skjema</a></li>
+  <li><a href="#form" data-toggle="tab">Dato / Gruppe</a></li>
 </ul>
 
 <div class="tab-content">
@@ -34,32 +35,38 @@
           </thead>
           <tbody>
           <%
-             for gr in @graduation.graduates
+             for gr in @graduation.graduates.sort_by { |gr| -gr.rank.position }
                mbr = gr.member
                fn = mbr.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
                ln = mbr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
           %>
-              <% below_minimum_age = mbr.age && mbr.age < gr.rank.minimum_age %>
-              <% not_in_age_group = !(gr.rank.group.from_age..gr.rank.group.to_age).include?(mbr.age) %>
+              <% below_minimum_age = mbr.age(@graduation.held_on) && mbr.age(@graduation.held_on) < gr.rank.minimum_age %>
+              <% not_in_age_group = !(gr.rank.group.from_age..gr.rank.group.to_age).include?(mbr.age(@graduation.held_on)) %>
               <tr id="graduate_#{gr.id}">
                 <td>
                   <%= link_to "#{fn} #{ln}", :controller => :members, :action => :edit, :id => mbr.id %>
                   <% if below_minimum_age || not_in_age_group %>
-                      (<span style="color: red; white-space: nowrap"><%= mbr.age %>
+                      (<span style="color: red; white-space: nowrap"><%= mbr.age(@graduation.held_on) %>
                   år</span>)
                   <% end %>
                 </td>
-                <% unless @graduation.group.school_breaks? %>
+                <% unless gr.passed? && @graduation.group.school_breaks? %>
                     <td>
-                      <%= form_for gr do |f| %>
-                          <%= f.radio_button :passed, true %>Ja<br/>
-                          <%= f.radio_button :passed, false %>Nei
+                      <%= form_for gr, :html => {:remote => true} do |f| %>
+                          <%= f.radio_button :passed, true, :onchange => "$('#passed_btn_#{gr.id}').click()" %>
+                          Ja<br/>
+                          <%= f.radio_button :passed, false, :onchange => "$('#passed_btn_#{gr.id}').click()" %>
+                          Nei
+                          <%= f.submit :id => "passed_btn_#{gr.id}", :class => 'hidden' %>
                       <% end %>
                     </td>
                 <% end %>
                 <td>
-                  <%= form_for gr, :html => {:class => 'form-inline', :style => 'display: inline'} do |f| %>
-                      <%= f.select :rank_id, Rank.all(:conditions => "martial_art_id = #{@graduation.group.martial_art_id}", :order => 'position').map { |r| ["#{r.name} #{r.colour}", r.id] } %>
+                  <%= form_for gr, :html => {:remote => true, :style => 'display: inline'} do |f| %>
+                      <%= f.select :rank_id, Rank.all(:conditions => "martial_art_id = #{@graduation.group.martial_art_id}",
+                              :order => 'position').map { |r| ["#{r.name} #{r.colour}", r.id] },
+                              {}, :onchange => "$('#rank_btn_#{gr.id}').click()" %>
+                      <%= f.submit :id => "rank_btn_#{gr.id}", :class => 'hidden' %>
                   <% end %>
 
                   <% graduated = gr.member.graduates.find { |gr2| gr2 != gr && gr2.passed && gr2.rank_id == gr.rank_id } %>
@@ -136,7 +143,7 @@
         <h4>Eksaminatorer</h4>
 
         <div id="examiners_row" class="row">
-          <% @graduation.censors.select{|c| c.examiner}.each do |cen| %>
+          <% @graduation.censors.select { |c| c.examiner }.each do |cen| %>
               <div class="col-md-12">
                 <%= link_to({:controller => :censors, :action => :destroy, :id => cen.id},
                         :data => {:remote => true, :method => :delete}) do %>
@@ -202,6 +209,14 @@
       </li>
       <li><%= link_to 'Diplomer', {:action => :certificates, :id => @graduation.id} %></li>
     </ul>
+  </div>
+
+  <div class="tab-pane" id="form">
+    <div class="row">
+      <div class="col-md-6">
+        <%= render 'form' %>
+      </div>
+    </div>
   </div>
 
 </div>

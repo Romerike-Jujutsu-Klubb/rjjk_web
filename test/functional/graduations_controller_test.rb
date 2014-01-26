@@ -18,13 +18,8 @@ class GraduationsControllerTest < ActionController::TestCase
 
   def test_index
     get :index
-    assert_response :redirect
-    assert_redirected_to :id => graduations(:tiger)
-  end
-
-  def test_index_with_id
-    get :index, :id => graduations(:panda)
     assert_response :success
+    assert assigns :graduations
     assert_template 'index'
   end
 

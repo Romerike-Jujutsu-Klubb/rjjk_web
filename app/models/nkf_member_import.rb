@@ -4,6 +4,8 @@ require 'erb'
 require 'pp'
 require 'iconv'
 
+# http://www.reinteractive.net/posts/145-making-crawling-and-scraping-websites-slightly-less-painful-with-anemone?utm_source=rubyweekly&utm_medium=email
+
 class NkfMemberImport
   CONCURRENT_REQUESTS = 7
   include MonitorMixin

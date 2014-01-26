@@ -40,6 +40,8 @@ end
 
 require 'capybara/rails'
 
+# http://blog.jambura.com/2013/03/27/test-your-websites-features-in-firefox-safari-and-chrome-using-rspec-and-capybara-with-selenium/
+
 # Transactional fixtures do not work with Selenium tests, because Capybara
 # uses a separate server thread, which the transactions would be hidden
 # from. We hence use DatabaseCleaner to truncate our test database.

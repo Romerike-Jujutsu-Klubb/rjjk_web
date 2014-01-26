@@ -29,8 +29,8 @@ class InformationPageNotifier
     logger.debug 'Sending weekly info page'
     page = InformationPage.where("
 (hidden IS NULL OR hidden = ?) AND
-(revised_at > CURRENT_TIMESTAMP - interval '6' month) AND
-(mailed_at IS NULL OR mailed_at < CURRENT_TIMESTAMP - interval '6' month)", false).
+(revised_at > ?) AND
+(mailed_at IS NULL OR mailed_at < ?)", false, 6.months.ago, 6.months.ago).
         order(:mailed_at).first
     if page
       Member.active(Date.today).order(:first_name, :last_name).all.each do |m|

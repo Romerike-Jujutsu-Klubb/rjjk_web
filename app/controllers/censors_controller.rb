@@ -57,7 +57,10 @@ EOH
   end
 
   def create
-    @censor = Censor.new(params[:censor])
+    @censor = Censor.where('graduation_id = ? AND member_id = ?',
+        params[:censor][:graduation_id], params[:censor][:member_id]).first ||
+        Censor.new
+    @censor.attributes = params[:censor]
     if @censor.save
       flash[:notice] = 'Censor was successfully created.'
       back_or_redirect_to :action => :index

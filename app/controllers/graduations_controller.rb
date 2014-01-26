@@ -4,16 +4,7 @@ class GraduationsController < ApplicationController
   before_filter :authenticate_user, :only => CENSOR_ACTIONS
 
   def index
-    if params[:id].blank?
-      redirect_to(:id => Graduation.last(:order => :held_on))
-      return
-    end
-    @graduation = Graduation.find(params[:id])
     @graduations = Graduation.includes(:group).all(:order => 'held_on DESC', :conditions => ['groups.martial_art_id = 1'])
-    @martial_arts = MartialArt.all
-
-    @grad_pages, @grad = Hash.new()
-    load_graduates
   end
 
   def show

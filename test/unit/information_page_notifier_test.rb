@@ -27,7 +27,7 @@ class InformationPageNotifierTest < ActionMailer::TestCase
     assert_match 'My first article', mail.body.encoded
     assert_match 'A very interresting topic!', mail.body.encoded
 
-    email = ActionMailer::Base.deliveries[0]
+    email = ActionMailer::Base.deliveries[1]
     assert_equal '[RJJK] My first article', email.subject
     assert_equal %w(uwe@kubosch.no), email.to
     assert_equal %w(test@jujutsu.no), email.from
