@@ -139,11 +139,18 @@ EOH
 
   def update
     @graduate = Graduate.find(params[:id])
-    if @graduate.update_attributes(params[:graduate])
-      flash[:notice] = 'Graduate was successfully updated.'
-      redirect_to :action => 'show', :id => @graduate
-    else
-      render :action => 'edit'
+    respond_to do |format|
+      if @graduate.update_attributes(params[:graduate])
+        format.html do
+          flash[:notice] = 'Graduate was successfully updated.'
+          redirect_to :action => 'show', :id => @graduate
+        end
+        format.json { head :no_content }
+        format.js
+      else
+        format.html { render action: :edit }
+        format.json { render json: @graduate.errors, status: :unprocessable_entity }
+      end
     end
   end
 
