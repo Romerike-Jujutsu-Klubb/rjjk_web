@@ -12,10 +12,9 @@ APP=rjjk_web_beta
 RAILS_ENV=beta
 PORT=3010
 RUN_AS_USER=capistrano
-pidfile=${PIDFILE-/u/apps/$APP/shared/log/server.pid}
+pidfile=${PIDFILE-/u/apps/$APP/shared/pids/server.pid}
 APP_DIR="/u/apps/$APP/current"
 LOG_DIR="/u/apps/$APP/shared/log"
-BUNDLE_DIR="/u/apps/$APP/shared/bundle/jruby/1.9"
 
 START_CMD="cd $APP_DIR ;
   export JAVA_HOME=/usr/java/default ;
@@ -23,12 +22,11 @@ START_CMD="cd $APP_DIR ;
   export PATH=\$JRUBY_HOME/bin:\$JAVA_HOME/bin:\$PATH ;
   export JRUBY_OPTS='--2.0 -J-Xmx2G --server -J-Djava.awt.headless=true -J-Dawt.toolkit=sun.awt.HToolkit' ;
   jruby --version ;
-  (jruby -S bundle exec torqbox -p $PORT -E $RAILS_ENV 1>$LOG_DIR/stdout.log 2>$LOG_DIR/stderr.log &) ;
-  PID=$$ ;
-  echo $PID > $pidfile ;
-  echo PID: $PID
+  (jruby -S bundle exec torqbox -p $PORT -E $RAILS_ENV 1>$LOG_DIR/stdout.log 2>$LOG_DIR/stderr.log) &
+  PID=\$! ;
+  echo \$PID > $pidfile ;
+  echo PID: \$PID
 "
-STOP_CMD="kill `cat $pidfile`"
 
 USER=`whoami`
 
@@ -44,25 +42,53 @@ run() {
     fi
 }
 
+start() {
+  if [ -f $pidfile ] ; then
+    PID=`cat $pidfile`
+    if [ `ps h $PID > /dev/null` ] ; then
+      echo $APP is already running.
+      exit 1
+    fi
+  fi
+  run "$START_CMD"
+}
+
+stop() {
+  if [ -f $pidfile ] ; then
+    PID=`cat $pidfile`
+    if ps h $PID > /dev/null` ; then
+      run "kill `cat $pidfile`"
+    else
+      echo deleting stale PID file `cat $pidfile`
+    fi
+    rm -f ${pidfile}
+  else
+    echo $APP is not running.
+  fi
+}
 # See how we were called.
 case "$1" in
   start)
-	if [ -f $pidfile ] && [ ! ps h `cat $pidfile` > /dev/null ] ; then
-	    rm -f $pidfile
-	fi
-    run "$START_CMD"
+    start
         ;;
   stop)
-    run "$STOP_CMD"
-    rm -f ${pidfile}
+    stop
         ;;
   restart)
-    run "$STOP_CMD"
-    rm -f ${pidfile}
-    run "$START_CMD"
+    stop
+    start
         ;;
   status)
-        ps -ef | grep $APP | grep -v grep | grep -v etc/init.d
+    if [ -f $pidfile ] ; then
+      PID=`cat $pidfile`
+      if kill -0 $PID ; then
+        echo $APP is running as $PID
+      else
+        echo $APP pid $PID is dead!
+      fi
+    else
+      echo $APP is not running.
+    fi
         ;;
   *)
         echo "Usage: $prog {start|stop|restart|status}"
