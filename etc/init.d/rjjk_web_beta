@@ -56,10 +56,10 @@ start() {
 stop() {
   if [ -f $pidfile ] ; then
     PID=`cat $pidfile`
-    if ps h $PID > /dev/null` ; then
-      run "kill `cat $pidfile`"
+    if ps h $PID > /dev/null ; then
+      run "kill $PID"
     else
-      echo deleting stale PID file `cat $pidfile`
+      echo deleting stale PID file $PID
     fi
     rm -f ${pidfile}
   else
