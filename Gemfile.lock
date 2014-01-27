@@ -143,9 +143,8 @@ GEM
     powerbar (1.0.11)
       ansi (~> 1.4.0)
       hashie (>= 1.1.0)
-    prawn (1.0.0.rc2)
-      afm
-      pdf-reader (>= 0.9.0, < 2.0)
+    prawn (0.14.0)
+      pdf-reader (~> 1.2)
       ruby-rc4
       ttfunk (~> 1.0.3)
     rack (1.4.5)
@@ -185,7 +184,7 @@ GEM
     rubyzip (1.1.0)
     rufus-scheduler (3.0.4)
       tzinfo
-    sass (3.2.13)
+    sass (3.2.14)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
