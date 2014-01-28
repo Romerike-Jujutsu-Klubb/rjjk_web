@@ -26,7 +26,7 @@ end
 
 desc 'End maintenance'
 task :end_maintenance, :roles => [:app] do
-  sleep 30
+  sleep 60
   run "#{try_sudo} cd #{current_path}/public ; cp 503_down.html 503.html"
 end
 
