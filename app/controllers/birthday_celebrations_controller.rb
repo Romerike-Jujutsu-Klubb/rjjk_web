@@ -1,5 +1,7 @@
 # encoding: UTF-8
 class BirthdayCelebrationsController < ApplicationController
+  before_filter :admin_required
+
   # GET /birthday_celebrations
   # GET /birthday_celebrations.json
   def index

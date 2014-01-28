@@ -138,7 +138,7 @@ EOH
   end
 
   def update
-    @graduate = Graduate.find(params[:id])
+    @graduate = Graduate.includes(:graduation, :member, :rank).find(params[:id])
     respond_to do |format|
       if @graduate.update_attributes(params[:graduate])
         format.html do
