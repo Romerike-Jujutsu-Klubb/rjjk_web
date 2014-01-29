@@ -91,3 +91,9 @@
     <% end %>
   </td>
 </tr>
+
+<%= javascript_tag do %>
+    $('#graduate_<%= graduate.id %>').find("form").on('ajax:beforeSend', function(event, xhr, settings) {
+        $('#graduate_<%= graduate.id %>').replaceWith('<tr id="graduate_<%= graduate.id %>"><td><%=graduate.member.name%></td><td></td><td>Oppdaterer...</td><td></td></tr>')
+    });
+<% end %>

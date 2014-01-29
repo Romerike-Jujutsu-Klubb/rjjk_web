@@ -34,7 +34,10 @@ class GraduationsController < ApplicationController
         sort_by { |c| c.approved_grades_at ? 0 : 1 }.last
     return unless admin_or_censor_required
     @groups = Group.all
+    @graduate = Graduate.new(:graduation_id => @graduation.id)
     @censor = Censor.new :graduation_id => @graduation.id
+    @members = Member.active(@graduation.held_on).all
+    @instructors = Member.instructors
   end
 
   def update

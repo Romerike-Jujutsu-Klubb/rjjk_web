@@ -35,15 +35,28 @@
           </thead>
           <tbody>
           <% @graduation.graduates.sort_by { |gr| -gr.rank.position }.each do |gr| %>
-               <%=render 'graduates/row', :graduate => gr%>
+              <%= render 'graduates/row', :graduate => gr %>
           <% end %>
           </tbody>
         </table>
     <% else %>
         <p>Det er ikke lagt til noen deltakere på denne graderingen enda.</p>
     <% end %>
-  </div>
 
+    <%= form_for @graduate, :url => with_detour(graduates_path),
+            :html => {:method => :post} do |f| %>
+        <%= f.hidden_field :graduation_id %>
+
+        <div class="input-group">
+          <%= f.select :member_id, ['Velg medlem'] + @members.map { |m| [m.name, m.id] }.sort,
+                  {}, :class => 'form-control', :onchange => 'form.submit()' %>
+          <span class="input-group-btn">
+          <%= f.submit 'Legg til', :class => 'btn btn-default' %>
+        </span>
+        </div>
+    <% end %>
+
+  </div>
 
   <div class="tab-pane" id="censors">
     <div class="row">
@@ -68,7 +81,7 @@
             <%= f.hidden_field :examiner, :value => 1 %>
 
             <div class="input-group">
-              <%= f.select :member_id, ['Velg instruktør'] + Member.instructors.map { |m| [m.name, m.id] }.sort,
+              <%= f.select :member_id, ['Velg instruktør'] + @instructors.map { |m| [m.name, m.id] }.sort,
                       {}, :class => 'form-control', :onchange => 'form.submit()' %>
               <span class="input-group-btn">
               <%= f.submit 'Legg til', :class => 'btn btn-default' %>
@@ -96,7 +109,7 @@
             <%= f.hidden_field :graduation_id %>
 
             <div class="input-group">
-              <%= f.select :member_id, ['Velg sensor'] + Member.instructors.map { |m| [m.name, m.id] }.sort,
+              <%= f.select :member_id, ['Velg sensor'] + @instructors.map { |m| [m.name, m.id] }.sort,
                       {}, :class => 'form-control', :onchange => 'form.submit()' %>
               <span class="input-group-btn">
               <%= f.submit 'Legg til', :class => 'btn btn-default' %>

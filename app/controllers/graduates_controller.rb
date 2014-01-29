@@ -125,9 +125,12 @@ EOH
 
   def create
     @graduate = Graduate.new(params[:graduate])
+    @graduate.rank_id ||= @graduate.member.next_rank(@graduate.graduation).id
+    @graduate.paid_graduation ||= true
+    @graduate.paid_belt ||= true
     if @graduate.save
       flash[:notice] = 'Graduate was successfully created.'
-      redirect_to :action => 'list'
+      back_or_redirect_to :action => :index
     else
       render :action => 'new'
     end
