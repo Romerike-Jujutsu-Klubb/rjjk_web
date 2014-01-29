@@ -28,7 +28,7 @@ class GraduationsController < ApplicationController
   end
 
   def edit
-    @graduation = Graduation.find(params[:id])
+    @graduation = Graduation.includes(:group => :members).find(params[:id])
     @approval = @graduation.censors.
         select { |c| c.member == current_user.member }.
         sort_by { |c| c.approved_grades_at ? 0 : 1 }.last
@@ -36,7 +36,9 @@ class GraduationsController < ApplicationController
     @groups = Group.all
     @graduate = Graduate.new(:graduation_id => @graduation.id)
     @censor = Censor.new :graduation_id => @graduation.id
-    @members = Member.active(@graduation.held_on).all
+    @members = Member.active(@graduation.held_on).all.
+        sort_by { |m| [@graduation.group.members.include?(m) ? 0 : 1, m.name] } -
+        @graduation.graduates.map(&:member)
     @instructors = Member.instructors
   end
 

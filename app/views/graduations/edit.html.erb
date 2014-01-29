@@ -48,7 +48,7 @@
         <%= f.hidden_field :graduation_id %>
 
         <div class="input-group">
-          <%= f.select :member_id, ['Velg medlem'] + @members.map { |m| [m.name, m.id] }.sort,
+          <%= f.select :member_id, ['Velg deltaker'] + @members.map { |m| [m.name, m.id] },
                   {}, :class => 'form-control', :onchange => 'form.submit()' %>
           <span class="input-group-btn">
           <%= f.submit 'Legg til', :class => 'btn btn-default' %>

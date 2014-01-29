@@ -61,7 +61,7 @@ class GraduatesControllerTest < ActionController::TestCase
                                 :paid_graduation => true, :paid_belt => true}
     assert_no_errors :graduate
     assert_response :redirect
-    assert_redirected_to :action => :list
+    assert_redirected_to :action => :index
 
     assert_equal num_graduates + 1, Graduate.count
   end
