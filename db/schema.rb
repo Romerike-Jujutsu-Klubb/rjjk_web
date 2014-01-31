@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140109155148) do
+ActiveRecord::Schema.define(:version => 20140130154914) do
+
+  create_table "annual_meetings", :force => true do |t|
+    t.datetime "start_at"
+    t.text     "invitation"
+    t.datetime "invitation_sent_at"
+    t.datetime "public_record_updated_at"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
 
   create_table "members", :force => true do |t|
     t.string  "first_name",           :limit => 100, :default => "", :null => false

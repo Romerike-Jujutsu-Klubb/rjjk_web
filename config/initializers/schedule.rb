@@ -20,6 +20,7 @@ unless Rails.env == 'test'
   scheduler.cron('0 4 * * *') { create_missing_group_semesters }
   scheduler.cron('0 6 * * *') { GraduationReminder.notify_missing_graduations }
   scheduler.cron('0 10 * * *') { GraduationReminder.notify_missing_aprovals }
+  scheduler.cron('0 11 * * *') { AnnualMeetingReminder.notify_missing_date }
 
   # Admin Weekly
   scheduler.cron('0 1 * * mon') { GraduationReminder.notify_overdue_graduates }

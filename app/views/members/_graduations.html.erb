@@ -7,7 +7,7 @@
   </tr>
   <% for graduate in @member.graduates.sort_by { |g| g.graduation.held_on }.reverse %>
       <tr>
-        <td><%= link_to graduate.graduation.held_on, :controller => :graduations, :action => :index, :id => graduate.graduation_id %></td>
+        <td><%= link_to graduate.graduation.held_on, :controller => :graduations, :action => :edit, :id => graduate.graduation_id %></td>
         <td>
           <%= graduate.rank.martial_art.name unless graduate.rank.martial_art.name == 'Kei Wa Ryu' %>
           <%= graduate.rank.name %>

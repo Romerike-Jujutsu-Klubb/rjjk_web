@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Start at:</b>
+  <%= @annual_meeting.start_at %>
+</p>
+
+<p>
+  <b>Invitation sent at:</b>
+  <%= @annual_meeting.invitation_sent_at %>
+</p>
+
+<p>
+  <b>Public record updated at:</b>
+  <%= @annual_meeting.public_record_updated_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_annual_meeting_path(@annual_meeting) %> |
+<%= link_to 'Back', annual_meetings_path %>

@@ -1,0 +1,13 @@
+<h1>Hei <%= @instructor.first_name %></h1>
+
+<p><%= @group.name %> mangler gradering for dette semesteret.</p>
+
+<p>
+  Du kan opprette gradering ved å følge denne linken:
+  <%= link_to "Opprett gradering for #{@group.name}", @email_url %>
+</p>
+
+<p>
+  Gradering er vanligvis andre uken i
+  <%= Date.today.mon >= 7 ? 'desember' : 'juni' %>.
+</p>

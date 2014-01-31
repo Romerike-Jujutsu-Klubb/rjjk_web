@@ -74,11 +74,6 @@ class GraduationsController < ApplicationController
         :filename => filename, :disposition => 'attachment'
   end
 
-  def list_graduates
-    load_graduates
-    render :partial => 'list_graduates'
-  end
-
   def censor_form
     @graduation = Graduation.includes(:graduates => [:member, :rank]).find params[:id]
     render :layout => 'print'

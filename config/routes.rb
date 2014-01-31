@@ -30,6 +30,7 @@ RjjkWeb::Application.routes.draw do
   match ':controller/telephone_list', action: :telephone_list
   match ':controller/yaml', action: :yaml
 
+  resources :annual_meetings
   resources :attendances
   resources :birthday_celebrations
   resources :censors
