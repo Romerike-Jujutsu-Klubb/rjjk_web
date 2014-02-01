@@ -71,7 +71,11 @@ class GraduatesController < ApplicationController
   end
 
   def destroy
-    Graduate.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    @graduate = Graduate.find(params[:id])
+    @graduate.destroy
+    respond_to do |format|
+      format.html { redirect_to :action => :index }
+      format.js { render :js => %Q{$("#graduate_#{@graduate.id}").remove()} }
+    end
   end
 end
