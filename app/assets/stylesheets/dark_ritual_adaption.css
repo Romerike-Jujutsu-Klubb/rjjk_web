@@ -81,6 +81,14 @@ div.main_right ul {
     color: #046CB8;
 }
 
+.post p.read_more {
+    margin-top: -16px;
+}
+
+.post ul.controls {
+    margin-top: -16px;
+}
+
 h4 {
     color: #046CB8;
 }
@@ -134,9 +142,7 @@ ul.controls li a.delete {
 }
 
 .header {
-    background: url(/assets/dark_ritual/header_left.png) left no-repeat,
-                url(/assets/dark_ritual/header_right.png) right no-repeat,
-                url(/assets/dark_ritual/header_lines.png) left repeat;
+    background: url(/assets/dark_ritual/header_left.png) left no-repeat, url(/assets/dark_ritual/header_right.png) right no-repeat, url(/assets/dark_ritual/header_lines.png) left repeat;
     background-color: #F4F4F4;
     height: 150px;
 }

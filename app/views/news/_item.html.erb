@@ -17,7 +17,9 @@
         <% if full %>
             <%= textilize(texts[1].strip).html_safe %>
         <% else %>
-            <p><%= detour_to('Les mer...', @news_item) %></p>
+            <p class="read_more">
+              <%= detour_to('Les mer...', @news_item) %>
+            </p>
         <% end %>
     <% end %>
 

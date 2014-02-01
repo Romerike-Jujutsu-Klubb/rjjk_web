@@ -24,11 +24,13 @@
     <table class="table">
       <tr>
         <th width="70%">Nye medlemmer</th>
+        <th>Alder</th>
         <th>Innmelding</th>
       </tr>
       <% @members_in.each do |m| %>
           <tr>
             <td><%= m.name %></td>
+            <td><%= m.age(m.joined_on) %></td>
             <td><%= m.joined_on %></td>
             <td><%= m.left_on %></td>
           </tr>
@@ -40,11 +42,13 @@
     <table class="table">
       <tr>
         <th width="70%">Utmeldinger</th>
+        <th>Alder</th>
         <th>Utmelding</th>
       </tr>
       <% @members_out.each do |m| %>
           <tr>
             <td><%= m.name %></td>
+            <td><%= m.age(m.left_on) %></td>
             <td><%= m.left_on %></td>
           </tr>
       <% end %>

@@ -11,13 +11,11 @@ class NewsItem < ActiveRecord::Base
   scope :current, where("(publication_state IS NULL OR publication_state = '#{PublicationState::PUBLISHED}') AND (publish_at IS NULL OR publish_at <= CURRENT_TIMESTAMP) AND (expire_at IS NULL OR expire_at >= CURRENT_TIMESTAMP)")
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :created_by
-  
+
   before_validation do |news_item|
     news_item.created_by ||= current_user.try(:id)
-    if news_item.body
-      news_item.body.gsub! /(<td[^>]*>\s*)<p>((?:(?!<\/td>).)*)<\/p>(\s*<\/td>)/, '\1\2\3'
-      news_item.body.gsub! /<table>/, '<table class="table">'
-    end
+    news_item.summary = cleanup_html(news_item.summary)
+    news_item.body = cleanup_html(news_item.body)
   end
 
   validates_presence_of :publication_state
@@ -33,4 +31,12 @@ class NewsItem < ActiveRecord::Base
     self.publication_state ||= PublicationState::PUBLISHED
   end
 
+  private
+
+  def cleanup_html(field)
+    return unless field
+    field.gsub(/(<td[^>]*>\s*)<p>((?:(?!<\/td>).)*)<\/p>(\s*<\/td>)/, '\1\2\3').
+        gsub(/<table>/, '<table class="table">').
+        gsub(/\s*<p>(\s*|&nbsp;)*<\/p>\s*/, '')
+  end
 end

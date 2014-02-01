@@ -1,20 +1,13 @@
 class AnnualMeetingReminder
   def self.notify_missing_date
-    today = Date.today
-    groups = Group.active(today).all
-    planned_groups = Graduation.where('held_on >= ?', today).all.map(&:group)
-    missing_groups = groups - planned_groups
-    missing_groups.each do |g|
-      instructors = GroupInstructor.includes(:group_schedule => :group).
-          where('role = ? AND groups.id = ?', GroupInstructor::Role::CHIEF, g.id).
-          all.select(&:active?).map(&:member).uniq
-      next if instructors.empty?
-      instructors.each do |i|
-        AnnualMeetingMailer.missing_date(i, g).deliver
-      end
+    return if AnnualMeeting.where('start_at >= ?', Date.today.beginning_of_year).
+        exists?
+    # FIXME(uwe): Send to the board
+    Member.where('email = ?', 'uwe@kubosch.no').each do |m|
+      AnnualMeetingMailer.missing_date(m).deliver
     end
   rescue
-    logger.error "Exception sending missing graduations message: #{$!}"
+    logger.error "Exception sending missing annual meeting date reminder: #{$!}"
     logger.error $!.backtrace.join("\n")
     ExceptionNotifier.notify_exception($!)
   end

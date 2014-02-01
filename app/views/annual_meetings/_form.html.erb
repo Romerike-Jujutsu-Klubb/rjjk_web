@@ -11,19 +11,13 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :start_at %><br />
-    <%= f.datetime_select :start_at %>
+  <div class="form-group">
+    <%= f.label :start_at, 'Dato og tid' %>
+    <%= f.datetime_picker :start_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
+                          :class => 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :invitation_sent_at %><br />
-    <%= f.datetime_select :invitation_sent_at %>
-  </div>
-  <div class="field">
-    <%= f.label :public_record_updated_at %><br />
-    <%= f.datetime_select :public_record_updated_at %>
-  </div>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => 'btn btn-default' %>
   </div>
 <% end %>

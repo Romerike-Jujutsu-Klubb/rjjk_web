@@ -1,16 +1,12 @@
-<h1>Hei <%= @censor.member.first_name %> !</h1>
+<h1>Hei <%= @member.first_name %> !</h1>
 
 <p>
-  Kan du gå inn på RJJK webben og bekrefte graderingen for
+  Det er på tide å sette opp dato for årsmøtet <%=Date.today.year%>. For å registrere datoen
+  kan du gå inn på linken under.
 </p>
 <p>
-  <%= link_to "#{@censor.graduation.group.name} den #{@censor.graduation.held_on}", @email_url %>
-  ?
+  <%= link_to "Årsmøte #{Date.today.year}", @email_url %>
 </p>
 <p>
-  Se over at alle står oppført med riktig grad og endre hvis noe er galt eller
-  mangler.
-</p>
-<p>
-  Når alt er klart, trykk på "Godkjenn" knappen.
+  Årsmøtet skal holdes i februar.
 </p>
