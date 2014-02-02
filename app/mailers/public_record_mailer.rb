@@ -2,7 +2,7 @@ class PublicRecordMailer < ActionMailer::Base
   include UserSystem
   include MailerHelper
   layout 'email'
-  default from: Rails.env == 'production' ? 'webmaster@jujutsu.no' : "#{Rails.env}@jujutsu.no"
+  default from: Rails.env == 'production' ? 'noreply@jujutsu.no' : "#{Rails.env}@jujutsu.no"
 
   def new_record(record)
     @record = record

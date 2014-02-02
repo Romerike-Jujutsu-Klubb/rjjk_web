@@ -1,6 +1,6 @@
 class NkfReplication < ActionMailer::Base
   layout 'email'
-  default from: Rails.env == 'production' ? 'webmaster@jujutsu.no' : "#{Rails.env}@jujutsu.no",
+  default from: Rails.env == 'production' ? 'noreply@jujutsu.no' : "#{Rails.env}@jujutsu.no",
           to: Rails.env == 'production' ? %w(medlem@jujutsu.no uwe@kubosch.no) : 'uwe@kubosch.no'
 
   def import_changes(nkf_member_import)
