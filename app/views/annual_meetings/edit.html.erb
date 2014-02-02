@@ -1,6 +1,3 @@
-<h1>Editing annual_meeting</h1>
+<h1>Årsmøte <%=@annual_meeting.start_at.year%></h1>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @annual_meeting %> |
-<%= link_to 'Back', annual_meetings_path %>

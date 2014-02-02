@@ -1,6 +1,7 @@
 nb:
   activerecord:
     models:
+      annual_meeting: Årsmøte
       group: Gruppe
       group_schedule: Trening
       group_instructor: Gruppeinstruktør
