@@ -6,9 +6,9 @@ class InformationPageMailer < ActionMailer::Base
   def notify_outdated_pages(member, pages)
     @member = member
     @pages = pages
+    @title = 'Oppdatering av informasjonssider'
     @timestamp = Time.now
-    mail to: Rails.env == 'production' ? member.email : %Q{"#{member.name}" <uwe@kubosch.no>},
-         subject: '[RJJK] Oppdatering av informasjonssider'
+    mail to: safe_email(member), subject: rjjk_prefix(@title)
   end
 
   def send_weekly_page(member, page)
@@ -18,7 +18,6 @@ class InformationPageMailer < ActionMailer::Base
     @title = page.title
     @timestamp = @page.revised_at
     mail from: Rails.env == 'production' ? 'post@jujutsu.no' : "#{Rails.env}@jujutsu.no",
-         to: Rails.env == 'production' ? member.emails : %Q{"#{member.name}" <uwe@kubosch.no>},
-         subject: "[RJJK] #{@page.title}"
+        to: safe_email(member), subject: rjjk_prefix(@title)
   end
 end
