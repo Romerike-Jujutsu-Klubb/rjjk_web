@@ -2,11 +2,6 @@ class CensorsController < ApplicationController
   before_filter :admin_required
 
   def index
-    list
-    render :action => 'list'
-  end
-
-  def list
     @censors = Censor.paginate :page => params[:page], :per_page => 10
   end
 
@@ -85,6 +80,6 @@ EOH
 
   def destroy
     Censor.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    redirect_to :action => 'index'
   end
 end

@@ -1,0 +1,35 @@
+<% @content_width =1024 %>
+
+<h1>Listing censors</h1>
+
+<table>
+  <tr>
+    <th>Navn</th>
+    <th>Gradering</th>
+    <th>Eksaminator</th>
+    <th>Forespurt</th>
+    <th>Bekreftet</th>
+    <th>Godkjent</th>
+  </tr>
+
+  <% for censor in @censors %>
+      <tr>
+        <td><%= censor.member.name %></td>
+        <td nowrap="nowrap"><%= censor.graduation.group.name %>
+          <%= censor.graduation.held_on %></td>
+        <td><%= h censor.examiner %></td>
+        <td><%= h censor.requested_at %></td>
+        <td><%= h censor.confirmed_at %></td>
+        <td><%= h censor.approved_grades_at %></td>
+        <td><%= link_to 'Show', :action => 'show', :id => censor %></td>
+        <td><%= link_to 'Edit', :action => 'edit', :id => censor %></td>
+        <td><%= link_to 'Destroy', {:action => 'destroy', :id => censor}, :data => {:confirm => 'Are you sure?'}, :method => :post %></td>
+      </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @censors %>
+
+<br/>
+
+<%= link_to 'New censor', :action => 'new' %>

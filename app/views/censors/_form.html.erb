@@ -1,4 +1,15 @@
-<%= error_messages_for 'censor' %>
+<%= form_for @censor do |f| %>
+    <%= f.error_messages %>
 
-<input type="hidden" id="censor_graduation_id" name="censor[graduation_id]" value="<%= params[:graduation_id] %>">
+    <%= f.hidden_field :graduation_id %>
 
+    <div class="form-group">
+      <%= f.label :approved_grades_at %>
+      <%= f.datetime_picker :approved_grades_at, :dateFormat => 'yy-mm-dd',
+              :firstDay => 1, :class => 'form-control' %>
+    </div>
+
+    <%= submit_tag 'Lagre', :class => 'btn btn-primary' %>
+    <%= link_to('Vis', @censor, :class => 'btn btn-default') unless @censor.new_record? %>
+    <%= back_or_link_to 'Tilbake', {:action => :index}, :class => 'btn btn-default' %>
+<% end %>
