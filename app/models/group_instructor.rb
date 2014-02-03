@@ -11,6 +11,11 @@ class GroupInstructor < ActiveRecord::Base
   belongs_to :member
   belongs_to :semester
 
+  scope :active,
+      ->(date = Date.today) { includes(:semester).
+          where('semesters.start_on <= :date AND semesters.end_on >= :date',
+          :date => date) }
+
   validates_presence_of :group_schedule, :group_schedule_id, :member, :member_id, :semester, :semester_id
 
   validates_uniqueness_of :member_id, :scope => [:group_schedule_id, :semester_id]

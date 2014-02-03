@@ -316,24 +316,32 @@
 <h3>Grupper</h3>
 <ul>
   <% @groups.each do |g| %>
-      <li><%= link_to g.name, g %>
-        <span style="white-space:nowrap">(<%= g.from_age %>-<%= g.to_age %>
-          år)</span>
+      <li>
+        <%= link_to g.name, g %>
+        <span style="white-space:nowrap">(<%= g.from_age %>-<%= g.to_age %> år)</span>
         <% if admin? %>
             <ul>
               <% g.instructors.each do |m| %>
                   <li><%= m.name %>
-                    <% unless g.group_schedules.all? { |gs2| gs2.group_instructors.select(&:active?).map(&:member).include?(m) } %>
+                    <% unless g.group_schedules.all? { |gs2| gs2.group_instructors.active.map(&:member).include?(m) } %>
                         <% g.group_schedules.each do |gs| %>
-                            <% if gs.group_instructors.map(&:member).include?(m) %>
+                            <% if gs.group_instructors.active.map(&:member).include?(m) %>
                                 (<%= gs.weekday_name %>)
                             <% end %>
                         <% end %>
                     <% end %>
                   </li>
-                  <% g.group_schedules.each do |gs| %>
-                      <%= link_to "#{gs.weekday_name} mangler!", :controller => :group_instructors, :action => :new,
-                                  :group_instructor => {:group_schedule_id => gs.id} if gs.group_instructors.empty? %>
+              <% end %>
+              <% g.group_schedules.each do |gs| %>
+                  <% if gs.group_instructors.active.empty? %>
+                      <li>
+                        <%= link_to "#{gs.weekday_name} mangler!",
+                                :controller => :group_instructors, :action => :new,
+                                :group_instructor => {
+                                        :group_schedule_id => gs.id,
+                                        :semester_id => Semester.current.id,
+                                } %>
+                      </li>
                   <% end %>
               <% end %>
             </ul>
