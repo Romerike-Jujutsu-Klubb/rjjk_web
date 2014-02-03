@@ -9,6 +9,7 @@ class InformationPageNotifier
     recipients = Member.active(Date.today).includes(:user).where('users.role = ?', 'ADMIN').all
     pages = InformationPage.where('(hidden IS NULL OR hidden = ?) AND (revised_at IS NULL OR revised_at < ?)', false, 6.months.ago).
         order(:revised_at).limit(3).all
+    return if pages.empty?
     recipients.each do |recipient|
       InformationPageMailer.notify_outdated_pages(recipient, pages).deliver
     end

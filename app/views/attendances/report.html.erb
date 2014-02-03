@@ -1,5 +1,9 @@
 <% @content_width = 880 %>
 
+<a class="carousel-control left" style="position: inherit; margin-top: -0.05em" href="<%= url_for :year => (@first_date - 1).year, :month => (@first_date - 1).month %>">&lsaquo;</a>
+<a class="carousel-control right" style="position: inherit; margin-top: -0.05em" href="<%=url_for :year => (@last_date + 1).year, :month => (@last_date + 1).month%>">&rsaquo;</a>
+<h2>Oppmøterapport <%= t(:date)[:month_names][@first_date.month] %> <%= @first_date.year %></h2>
+
 <div id="myCarousel" class="carousel slide" data-interval="false">
   <!-- Carousel items -->
   <div class="carousel-inner">
@@ -20,8 +24,6 @@
     </div>
   </div>
   <!-- Carousel nav -->
-  <a class="carousel-control" style="top: 10%" href="<%= url_for :year => (@first_date - 1).year, :month => (@first_date - 1).month %>">&lsaquo;</a>
-  <a class="carousel-control right" style="top: 10%" href="<%=url_for :year => (@last_date + 1).year, :month => (@last_date + 1).month%>">&rsaquo;</a>
   <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
   <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 </div>
