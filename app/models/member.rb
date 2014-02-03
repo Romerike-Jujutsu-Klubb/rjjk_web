@@ -27,7 +27,7 @@ class Member < ActiveRecord::Base
   has_many :signatures, :dependent => :destroy
   has_and_belongs_to_many :groups
 
-  NILLABLE_FIELDS = [:parent_name, :phone_home, :phone_work]
+  NILLABLE_FIELDS = [:parent_name, :phone_home, :phone_mobile, :phone_work]
   before_validation { NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? } }
 
   # validates_presence_of :address, :cms_contract_id
