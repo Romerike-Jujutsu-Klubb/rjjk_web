@@ -323,6 +323,10 @@
             <ul>
               <% g.instructors.each do |m| %>
                   <li><%= m.name %>
+                    <% roles = g.group_schedules.map{|gs| gs.group_instructors.active.select{|gi| gi.member_id == m.id}.map(&:role)}.flatten.uniq %>
+                    <% if roles != [GroupInstructor::Role::INSTRUCTOR] %>
+                        (<%= roles.join(', ') %>)
+                    <% end %>
                     <% unless g.group_schedules.all? { |gs2| gs2.group_instructors.active.map(&:member).include?(m) } %>
                         <% g.group_schedules.each do |gs| %>
                             <% if gs.group_instructors.active.map(&:member).include?(m) %>
