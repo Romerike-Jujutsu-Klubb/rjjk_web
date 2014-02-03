@@ -28,13 +28,13 @@ class InformationPageNotifier
 #     or the change is significat (or should that be in a news item?)
   def self.send_weekly_info_page
     logger.debug 'Sending weekly info page'
-    page = InformationPage.where("
+    page = InformationPage.where('
 (hidden IS NULL OR hidden = ?) AND
 (revised_at > ?) AND
-(mailed_at IS NULL OR mailed_at < ?)", false, 6.months.ago, 6.months.ago).
+(mailed_at IS NULL OR mailed_at < ?)', false, 6.months.ago, 6.months.ago).
         order(:mailed_at).first
     if page
-      Member.active(Date.today).order(:first_name, :last_name).all.each do |m|
+      Member.active(Date.today).order(:first_name, :last_name).each do |m|
         InformationPageMailer.send_weekly_page(m, page).deliver
       end
       page.update_attributes! :mailed_at => Time.now

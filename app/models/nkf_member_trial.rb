@@ -1,6 +1,8 @@
 class NkfMemberTrial < ActiveRecord::Base
   has_many :trial_attendances, :dependent => :destroy
 
+  scope :for_group, ->(group){where('alder BETWEEN ? AND ?', group.from_age, group.to_age)}
+
   validates_presence_of :alder, :epost, :etternavn, :fodtdato,
                         :fornavn, :medlems_type, :postnr, :reg_dato, :sted, :stilart, :tid
   validates_inclusion_of :res_sms, :in => [true, false]

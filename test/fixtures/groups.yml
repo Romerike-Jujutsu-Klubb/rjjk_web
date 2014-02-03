@@ -3,15 +3,18 @@ panda:
   martial_art: keiwaryu
   from_age: 6
   to_age: 9
+  target_size: 1
 
 tiger:
   name: Tiger
   martial_art: keiwaryu
   from_age: 10
   to_age: 14
+  target_size: 30
 
 voksne:
   name: Voksne
   martial_art: keiwaryu
   from_age: 14
   to_age: 99
+  target_size: 30

@@ -4,12 +4,12 @@ class Group < ActiveRecord::Base
 
   belongs_to :martial_art
   has_one :current_semester, :class_name => :GroupSemester,
-          :include => :semester,
-          :conditions => 'CURRENT_DATE BETWEEN semesters.start_on AND semesters.end_on'
+      :include => :semester,
+      :conditions => 'CURRENT_DATE BETWEEN semesters.start_on AND semesters.end_on'
   has_one :next_semester, :class_name => :GroupSemester,
-          :include => :semester,
-          :conditions => 'semesters.start_on > CURRENT_DATE',
-          :order => 'semesters.start_on'
+      :include => :semester,
+      :conditions => 'semesters.start_on > CURRENT_DATE',
+      :order => 'semesters.start_on'
   has_many :graduations, :order => :held_on, :dependent => :destroy
   has_many :group_schedules, :dependent => :destroy
   has_many :group_semesters, :dependent => :destroy
@@ -41,7 +41,7 @@ class Group < ActiveRecord::Base
     return 0 if group_schedules.empty?
     Practice.
         where(*["status = 'X' AND group_schedule_id IN (?) AND (year > ? OR (year = ? AND week >= ?)) AND (year < ? OR (year = ? AND week <= ?))",
-                group_schedules.map(&:id), *([[period.first.year]*2, period.first.cweek, [period.last.year]*2, period.last.cweek]).flatten]).
+        group_schedules.map(&:id), *([[period.first.year]*2, period.first.cweek, [period.last.year]*2, period.last.cweek]).flatten]).
         all.size
   end
 
@@ -65,13 +65,14 @@ class Group < ActiveRecord::Base
   end
 
   def instructors
-    group_schedules.map(&:group_instructors).flatten.select(&:active?).map(&:member).uniq.sort_by { |m| -(m.current_rank.try(:position) || -99) }
+    group_schedules.map(&:group_instructors).flatten.select(&:active?).
+        map(&:member).uniq.
+        sort_by { |m| -(m.current_rank.try(:position) || -99) }
   end
 
   def trials
-    NkfMemberTrial.
+    NkfMemberTrial.for_group(self).
         includes(:trial_attendances => {:practice => :group_schedule}).
-        where('alder BETWEEN ? AND ?', from_age, to_age).
         order('fornavn, etternavn').
         all
   end

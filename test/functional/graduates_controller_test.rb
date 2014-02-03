@@ -23,15 +23,7 @@ class GraduatesControllerTest < ActionController::TestCase
   def test_index
     get :index
     assert_response :success
-    assert_template 'list'
-  end
-
-  def test_list
-    get :list
-
-    assert_response :success
-    assert_template 'list'
-
+    assert_template 'index'
     assert_not_nil assigns(:graduates)
   end
 
@@ -88,7 +80,7 @@ class GraduatesControllerTest < ActionController::TestCase
 
     post :destroy, :id => @first_id
     assert_response :redirect
-    assert_redirected_to :action => :list
+    assert_redirected_to :action => :index
 
     assert_raise(ActiveRecord::RecordNotFound) {
       Graduate.find(@first_id)

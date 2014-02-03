@@ -20,8 +20,8 @@ two:
   medlems_type: MyString
   etternavn: Hansen
   fornavn: Erik
-  fodtdato: 2010-10-03
-  alder: 1
+  fodtdato: 2006-10-03
+  alder: 7
   postnr: 4321
   sted: MyString
   adresse: MyString
@@ -30,5 +30,5 @@ two:
   res_sms: false
   reg_dato: 2010-10-03
   tid: 2
-  stilart: Aikido
+  stilart: Jujutsu
   medlems_type: Enkeltmedlem

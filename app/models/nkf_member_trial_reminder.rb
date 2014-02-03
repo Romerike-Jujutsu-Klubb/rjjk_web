@@ -8,7 +8,8 @@ class NkfMemberTrialReminder
   end
 
   def self.send_waiting_lists
-    lists = Group.all.map(&:waiting_list).select(&:any?)
+    lists = Group.includes(:members).map(&:waiting_list).select(&:any?)
+    return if lists.empty?
     NkfMemberTrialMailer.send_waiting_lists(lists).deliver
   rescue Exception
     logger.error $!

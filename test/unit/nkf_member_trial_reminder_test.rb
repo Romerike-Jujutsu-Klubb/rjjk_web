@@ -8,7 +8,7 @@ class NkfMemberTrialReminderTest < ActionMailer::TestCase
     assert_equal '[RJJK][test] Utløpt prøvetid', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_match %r{Følgende prøvemedlemmer har utløpt prøvetid:\s*<ul>\s*<li>\s*Hans Eriksen \(6 år\)\s*<ul>\s*<li>Registrert: 2010-10-03</li>\s*<li>1\s+treninger siste 2 måneder\s*</li>\s*<li>2 treninger totalt</li>\s*</ul>\s*</li>\s*<li>\s*Erik Hansen \(1 år\)\s*<ul>\s*<li>Registrert: 2010-10-03</li>\s*<li>0\s+treninger siste 2 måneder\s*</li>\s*<li>0 treninger totalt</li>\s*</ul>\s*</li>\s*</ul>}, mail.body.decoded
+    assert_match %r{Følgende prøvemedlemmer har utløpt prøvetid:\s*<ul>\s*<li>\s*Hans Eriksen \(6 år\)\s*<ul>\s*<li>Registrert: 2010-10-03</li>\s*<li>1\s+treninger siste 2 måneder\s*</li>\s*<li>2 treninger totalt</li>\s*</ul>\s*</li>\s*<li>\s*Erik Hansen \(7 år\)\s*<ul>\s*<li>Registrert: 2010-10-03</li>\s*<li>0\s+treninger siste 2 måneder\s*</li>\s*<li>0 treninger totalt</li>\s*</ul>\s*</li>\s*</ul>}, mail.body.decoded
   end
 
   def test_send_waiting_lists
@@ -18,7 +18,7 @@ class NkfMemberTrialReminderTest < ActionMailer::TestCase
     assert_equal '[RJJK][test] Ventelister', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_match "Følgende grupper har folk på venteliste:\r\n\r\n<ul>\r\n</ul>", mail.body.encoded
+    assert_match "Følgende grupper har folk på venteliste:\r\n\r\n<ul>\r\n      <li>\r\n        Panda\r\n        <ul>\r\n          <li>Erik Hansen</li>\r\n        </ul>", mail.body.encoded
   end
 
 end

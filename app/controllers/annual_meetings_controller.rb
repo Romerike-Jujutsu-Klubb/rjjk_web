@@ -1,4 +1,6 @@
 class AnnualMeetingsController < ApplicationController
+  before_filter :admin_required
+
   # GET /annual_meetings
   # GET /annual_meetings.json
   def index

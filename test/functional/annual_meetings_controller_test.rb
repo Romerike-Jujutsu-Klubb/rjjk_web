@@ -3,6 +3,7 @@ require 'test_helper'
 class AnnualMeetingsControllerTest < ActionController::TestCase
   setup do
     @annual_meeting = annual_meetings(:one)
+    login(:admin)
   end
 
   test 'should get index' do
@@ -18,7 +19,7 @@ class AnnualMeetingsControllerTest < ActionController::TestCase
 
   test 'should create annual_meeting' do
     assert_difference('AnnualMeeting.count') do
-      post :create, annual_meeting: { invitation_sent_at: @annual_meeting.invitation_sent_at, public_record_updated_at: @annual_meeting.public_record_updated_at, start_at: @annual_meeting.start_at }
+      post :create, annual_meeting: {invitation_sent_at: @annual_meeting.invitation_sent_at, public_record_updated_at: @annual_meeting.public_record_updated_at, start_at: @annual_meeting.start_at}
     end
 
     assert_redirected_to annual_meeting_path(assigns(:annual_meeting))
@@ -35,7 +36,12 @@ class AnnualMeetingsControllerTest < ActionController::TestCase
   end
 
   test 'should update annual_meeting' do
-    put :update, id: @annual_meeting, annual_meeting: { invitation_sent_at: @annual_meeting.invitation_sent_at, public_record_updated_at: @annual_meeting.public_record_updated_at, start_at: @annual_meeting.start_at }
+    put :update, id: @annual_meeting, annual_meeting: {
+        invitation_sent_at: @annual_meeting.invitation_sent_at,
+        public_record_updated_at: @annual_meeting.public_record_updated_at,
+        start_at: @annual_meeting.start_at
+    }
+    assert_no_errors :annual_meeting
     assert_redirected_to annual_meeting_path(assigns(:annual_meeting))
   end
 

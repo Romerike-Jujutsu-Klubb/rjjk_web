@@ -321,9 +321,9 @@
           år)</span>
         <% if admin? %>
             <ul>
-              <% g.group_schedules.map { |gs| gs.group_instructors.map(&:member) }.flatten.uniq.each do |m| %>
+              <% g.instructors.each do |m| %>
                   <li><%= m.name %>
-                    <% unless g.group_schedules.all? { |gs2| gs2.group_instructors.map(&:member).include?(m) } %>
+                    <% unless g.group_schedules.all? { |gs2| gs2.group_instructors.select(&:active?).map(&:member).include?(m) } %>
                         <% g.group_schedules.each do |gs| %>
                             <% if gs.group_instructors.map(&:member).include?(m) %>
                                 (<%= gs.weekday_name %>)
