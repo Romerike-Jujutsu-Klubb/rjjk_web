@@ -1,4 +1,3 @@
-# encoding: UTF-8
 class AttendancesController < ApplicationController
   user_actions = [:announce, :plan, :review]
   before_filter :admin_required, :except => user_actions

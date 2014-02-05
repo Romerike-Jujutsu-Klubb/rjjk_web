@@ -4,8 +4,8 @@ class SearchController < ApplicationController
       @query = params[:q].strip
 
       if admin?
-        @members = Member.find_by_contents(@query)
-        @users = User.find_by_contents(@query) - @members.map(&:user)
+        @members = Member.search(@query).all
+        @users = User.search(@query) - @members.map(&:user)
         @trials = NkfMemberTrial.find_by_contents(@query)
       end
 

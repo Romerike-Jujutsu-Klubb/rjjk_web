@@ -9,6 +9,14 @@ class User < ActiveRecord::Base
   has_many :embus, :dependent => :destroy
   has_many :images, :dependent => :destroy
 
+  # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
+  SEARCH_FIELDS = [:email, :first_name, :last_name, :login]
+  scope :search, ->(query) {
+    where(SEARCH_FIELDS.map { |c| "to_tsvector(UPPER(#{c})) @@ to_tsquery(?)" }.
+        join(' OR '), *(["#{UnicodeUtils.upcase(query).split(/\s+/).join(' | ')}"] * SEARCH_FIELDS.size)).
+        order(:first_name, :last_name)
+  }
+
   CHANGEABLE_FIELDS = %w(first_name last_name email)
   attr_accessor :password_needs_confirmation
 
@@ -29,12 +37,6 @@ class User < ActiveRecord::Base
     if role_changed? && (user.nil? || user.role.nil?)
       errors.add(:role, 'Bare administratorer kan gi administratorrettigheter.')
     end
-  end
-
-  def self.find_by_contents(query)
-    users = find_all_by_email(query)
-    users += Member.find_by_contents(query).map(&:user).compact
-    users.uniq
   end
 
   def initialize(*args)

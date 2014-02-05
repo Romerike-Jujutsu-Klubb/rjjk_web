@@ -1,18 +1,18 @@
 <% @content_width = 1024 %>
 <p>
-<table>
+<table class="table">
 <tr>
-  <td><%=l :user_last_name_form%></td>
-  <td><%=l :user_first_name_form%></td>
-  <td>Admin</td>
-  <td>Bekreftet</td>
+  <th><%=l :user_last_name_form%></th>
+  <th><%=l :user_first_name_form%></th>
+  <th align="center">Admin</th>
+  <th align="center">Bekreftet</th>
 </tr>
 <% for @user in @users %>
 <tr>
   <td><%=h @user.last_name%></td>
   <td><%=h @user.first_name%></td>
-  <td><%='*' if @user.admin?%></td>
-  <td><%='*' if @user.verified?%></td>
+  <td align="center"><%='*' if @user.admin?%></td>
+  <td align="center"><%='*' if @user.verified?%></td>
   <td><%=link_to l(:user_edit_head), :action => :edit, :id => @user%></td>
 </tr>
 <% end %>

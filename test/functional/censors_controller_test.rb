@@ -19,15 +19,7 @@ class CensorsControllerTest < ActionController::TestCase
   def test_index
     get :index
     assert_response :success
-    assert_template 'list'
-  end
-
-  def test_list
-    get :list
-
-    assert_response :success
-    assert_template 'list'
-
+    assert_template 'index'
     assert_not_nil assigns(:censors)
   end
 
@@ -79,7 +71,7 @@ class CensorsControllerTest < ActionController::TestCase
 
     post :destroy, :id => @first_id
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :action => 'index'
 
     assert_raise(ActiveRecord::RecordNotFound) {
       Censor.find(@first_id)

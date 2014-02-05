@@ -1,5 +1,7 @@
 <% @content_width = 1024 %>
 
+<%=link_to 'Ny gradering', new_graduation_path, :class => 'btn btn-primary pull-right'%>
+
 <h1>Graderinger</h1>
 
 <% year = month = nil %>
@@ -19,7 +21,12 @@
           </tr>
       <% end %>
       <tr>
-        <td><%=link_to "#{g.group.name} #{g.held_on}", edit_graduation_path(g) %></td>
+        <td>
+          <%= link_to "#{g.group.name} #{g.held_on}", edit_graduation_path(g) %>
+        <% if g.graduates.empty? %>
+            (<%= link_to 'Slett', graduation_path(g), :method => :delete %>)
+        <% end %>
+        </td>
       </tr>
   <% end %>
 </table>

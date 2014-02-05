@@ -106,7 +106,7 @@ class UserController < ApplicationController
     email = params['user']['email']
     if email.blank? || email !~ /.+@.+\..+/
       flash.now['message'] = 'Skriv inn en gyldig e-postadresse.'
-    elsif (users = User.find_by_contents(email)).empty?
+    elsif (users = User.search(email)).empty?
       flash.now['message'] = "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{CGI.escapeHTML(email)}"
     else
       begin

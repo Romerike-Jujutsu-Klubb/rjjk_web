@@ -11,8 +11,6 @@ class Member < ActiveRecord::Base
     address.blank? || (!latitude.blank? && !longitude.blank?)
   end
 
-  scope :active, lambda { |from_date, to_date = from_date| {:conditions => ['joined_on <= ? AND left_on IS NULL OR left_on > ?', to_date, from_date]} }
-
   belongs_to :image, :dependent => :destroy
   belongs_to :user, :dependent => :destroy
   has_one :nkf_member, :dependent => :nullify
@@ -22,10 +20,20 @@ class Member < ActiveRecord::Base
   has_many :graduates, :dependent => :destroy
   has_many :group_instructors, :dependent => :destroy
   has_many :passed_graduates, :class_name => 'Graduate',
-           :conditions => {:graduates => {:passed => true}}
+      :conditions => {:graduates => {:passed => true}}
   has_many :ranks, :through => :passed_graduates
   has_many :signatures, :dependent => :destroy
   has_and_belongs_to_many :groups
+
+  scope :active, lambda { |from_date, to_date = from_date| {:conditions => ['joined_on <= ? AND left_on IS NULL OR left_on > ?', to_date, from_date]} }
+  SEARCH_FIELDS = [
+      :billing_email, :email, :first_name, :last_name, :parent_email,
+      :parent_name, :phone_home, :phone_mobile, :phone_parent, :phone_work]
+  scope :search, ->(query) {
+    where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ ?" }.
+        join(' OR '), *(["#{UnicodeUtils.upcase(query).split(/\s+/).join('|')}"] * SEARCH_FIELDS.size)).
+        order(:first_name, :last_name)
+  }
 
   NILLABLE_FIELDS = [:parent_name, :phone_home, :phone_mobile, :phone_work]
   before_validation { NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? } }
@@ -54,16 +62,6 @@ class Member < ActiveRecord::Base
 
   def self.count_active
     count :conditions => ACTIVE_CONDITIONS
-  end
-
-  def self.find_by_contents(query, options = {})
-    search_fields = [
-        :billing_email, :email, :first_name, :last_name, :parent_email,
-        :parent_name, :phone_home, :phone_mobile, :phone_parent, :phone_work]
-    all({
-            :conditions => [search_fields.map { |c| "UPPER(#{c}) LIKE ?" }.join(' OR '), *(["%#{UnicodeUtils.upcase(query)}%"] * search_fields.size)],
-            :order => 'first_name, last_name',
-        }.update(options))
   end
 
   def self.instructors(date = Date.today)
@@ -104,7 +102,7 @@ class Member < ActiveRecord::Base
     potential_emails = [email, full_email]
     potential_emails.compact.each do |potential_email|
       existing_user = User.where('(login = ? OR email = ?) AND NOT EXISTS (SELECT id FROM members WHERE user_id = users.id)',
-                                 potential_email, potential_email).first
+          potential_email, potential_email).first
       return existing_user if existing_user
 
       next if User.where('login = ? OR email = ?', *([potential_email] * 2)).exists?
@@ -275,7 +273,7 @@ class Member < ActiveRecord::Base
   def image_file=(file)
     return if file.blank?
     self.create_image! :user_id => user_id, :name => file.original_filename,
-                       :content_type => file.content_type, :content_data => file.read
+        :content_type => file.content_type, :content_data => file.read
   end
 
   def image?
