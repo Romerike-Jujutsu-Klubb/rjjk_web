@@ -86,7 +86,7 @@ Gradering er ..." %>
         <%= (trial.reg_dato + 14).strftime('%Y-%m-%d') %>
         <% if missing_contract %>
             <br/>
-            <%= link_to 'Mangler kontrakt', :action => :trial_missing_contract, :id => trial.id %>
+            <%= link_to 'Mangler kontrakt', :controller => :members, :action => :trial_missing_contract, :id => trial.id %>
         <% end %>
       </td>
       <% if @birthdate_missing %>
