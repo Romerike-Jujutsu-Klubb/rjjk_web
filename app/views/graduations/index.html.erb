@@ -1,32 +1,42 @@
 <% @content_width = 1024 %>
 
-<%=link_to 'Ny gradering', new_graduation_path, :class => 'btn btn-primary pull-right'%>
+<%= link_to 'Ny gradering', new_graduation_path, :class => 'btn btn-primary pull-right' %>
 
 <h1>Graderinger</h1>
 
-<% year = month = nil %>
+<% year = month = date = nil %>
 
 <table class="table">
-  <% @graduations.each do |g| %>
-      <% if g.held_on.cwyear != year %>
-          <% year = g.held_on.cwyear %>
-          <tr>
-            <th><%= g.held_on.cwyear %></th>
-          </tr>
-      <% end %>
-      <% if g.held_on.month != month %>
-          <% month = g.held_on.month %>
-          <tr>
-            <th><%= t(Date::MONTHNAMES[g.held_on.month]) %></th>
-          </tr>
-      <% end %>
+  <% @graduations.each do |held_on, graduations| %>
       <tr>
-        <td>
-          <%= link_to "#{g.group.name} #{g.held_on}", edit_graduation_path(g) %>
-        <% if g.graduates.empty? %>
-            (<%= link_to 'Slett', graduation_path(g), :method => :delete %>)
+        <th>
+          <% if held_on.cwyear != year %>
+              <% year = held_on.cwyear %>
+              <%= held_on.cwyear %>
+          <% end %>
+        <th>
+          <% if held_on.month != month %>
+              <% month = held_on.month %>
+              <%= t(Date::MONTHNAMES[held_on.month]) %>
+          <% end %>
+        <th>
+          <% if held_on != date %>
+              <% date = held_on %>
+              <%= held_on %>
+          <% end %>
+        </th>
+        </th>
+        <% @groups.each do |group| %>
+            <td>
+              <% if g = graduations.find { |gr| gr.group_id == group.id } %>
+                  <%= link_to g.group.name, edit_graduation_path(g) %>
+                  <% if g.graduates.empty? %>
+                      (<%= link_to 'Slett', graduation_path(g), :method => :delete %>
+                      )
+                  <% end %>
+              <% end %>
+            </td>
         <% end %>
-        </td>
       </tr>
   <% end %>
 </table>

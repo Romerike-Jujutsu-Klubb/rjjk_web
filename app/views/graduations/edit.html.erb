@@ -1,5 +1,6 @@
 <% @content_width = 1024 %>
 
+<%= link_to 'Til listen', {:action => :index}, :class => 'btn btn-default pull-right' %>
 <% if @graduation.held_on < Date.today && @approval %>
     <% if @approval.approved_grades_at.nil? %>
         <%= link_to 'Godkjenn', {:action => :approve, :id => @graduation.id},

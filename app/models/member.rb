@@ -188,13 +188,13 @@ class Member < ActiveRecord::Base
     end
     next_rank ||= ma.ranks.find { |r|
       !future_ranks(graduation.held_on, ma).include?(r) &&
-          age >= r.minimum_age &&
+          (age.nil? || age >= r.minimum_age) &&
           (r.group.from_age..r.group.to_age).include?(age) &&
           attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
     }
     next_rank ||= ma.ranks.find { |r|
       !future_ranks(graduation.held_on, ma).include?(r) &&
-          age >= r.minimum_age &&
+          (age.nil? || age >= r.minimum_age) &&
           attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
     }
     next_rank ||= ma.ranks.find { |r| age.nil? || (age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age)) }

@@ -4,7 +4,9 @@ class GraduationsController < ApplicationController
   before_filter :authenticate_user, :only => CENSOR_ACTIONS
 
   def index
-    @graduations = Graduation.includes(:group).all(:order => 'held_on DESC', :conditions => ['groups.martial_art_id = 1'])
+    @graduations = Graduation.includes(:group).order('held_on DESC, group_id DESC').
+        where('groups.martial_art_id = 1').all.group_by{|g| g.held_on}
+    @groups = Group.order('from_age DESC').all
   end
 
   def show
