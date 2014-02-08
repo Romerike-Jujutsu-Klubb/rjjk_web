@@ -215,6 +215,11 @@ ul.controls li a.delete {
     list-style-image: none;
 }
 
+ul.nav.nav-tabs {
+    padding-bottom: 0;
+    margin-left: 0;
+}
+
 .subnav {
     padding: 0;
     padding-right: 1px;

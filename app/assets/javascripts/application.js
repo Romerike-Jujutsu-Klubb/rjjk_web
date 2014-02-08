@@ -32,11 +32,12 @@ $().ready(function () {
         }
         return true;
     });
-
-    $('a[href="' + window.location.hash + '"]').tab('show');
+    $(window).on('popstate', function () {
+        $('a[href="' + window.location.hash + '"]').tab('show');
+        $('.stretch').parent('.row').scrollTop(0);
+        setTimeout(function () {
+            $('.stretch').parent('.row').scrollTop(0)
+        }, 50)
+    });
     $('.stretch').parent('.row').addClass("row-stretch");
-})
-$(window).load(function () {
-    $('.stretch').parent('.row').scrollTop(0);
-    setTimeout(function(){$('.stretch').parent('.row').scrollTop(0)}, 50)
 })

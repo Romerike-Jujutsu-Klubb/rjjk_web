@@ -42,19 +42,33 @@
     <% else %>
         <p>Det er ikke lagt til noen deltakere på denne graderingen enda.</p>
     <% end %>
-
-    <%= form_for @graduate, :url => with_detour(graduates_path),
-            :html => {:method => :post} do |f| %>
-        <%= f.hidden_field :graduation_id %>
-
-        <div class="input-group">
-          <%= f.select :member_id, ['Velg deltaker'] + @members.map { |m| [m.name, m.id] },
-                  {}, :class => 'form-control', :onchange => 'form.submit()' %>
-          <span class="input-group-btn">
+    <div class="row">
+      <div class="col-md-6">
+        <%= form_for @graduation,
+                :url => with_detour(:controller => :graduations, :action => :add_group, :id => @graduation.id) do |f| %>
+            <div class="input-group">
+              <%= select_tag :group_id, options_for_select([['Velg gruppe', nil]] + @groups.map { |g| [g.name, g.id] }, @graduation.group_id),
+                      :class => 'form-control' %>
+              <span class="input-group-btn">
+              <%= f.submit 'Legg til alle', :class => 'btn btn-default' %>
+          </span>
+            </div>
+        <% end %>
+      </div>
+      <div class="col-md-6">
+        <%= form_for @graduate, :url => with_detour(graduates_path),
+                :html => {:method => :post} do |f| %>
+            <%= f.hidden_field :graduation_id %>
+            <div class="input-group">
+              <%= f.select :member_id, [['Velg deltaker', nil]] + @members.map { |m| [m.name, m.id] },
+                      {}, :class => 'form-control', :onchange => 'form.submit()' %>
+              <span class="input-group-btn">
           <%= f.submit 'Legg til', :class => 'btn btn-default' %>
         </span>
-        </div>
-    <% end %>
+            </div>
+        <% end %>
+      </div>
+    </div>
 
   </div>
 
@@ -101,7 +115,7 @@
                     <img src="<%= asset_path 'button-delete-16x16.png' %>" style="border: 0;" title="Slett sensor <%= cen.member.name %>" ALT="Slett sensor <%= cen.member.name %>"/>
                 <% end %>
                 <%= cen.member.name %>
-                <%='(Godkjent)' if cen.approved_grades_at %>
+                <%= '(Godkjent)' if cen.approved_grades_at %>
               </div>
           <% end %>
         </div>

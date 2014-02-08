@@ -113,6 +113,22 @@ class GraduationsController < ApplicationController
     redirect_to :action => :edit, :id => @graduation.id
   end
 
+  def add_group
+    Graduation.transaction do
+      graduation = Graduation.includes(:graduates).find(params[:id])
+      group = Group.includes(:members).find(params[:group_id])
+      members = group.members.active(graduation.held_on) - graduation.graduates.map(&:member)
+      graduation.graduates << members.map do |member|
+        Graduate.new :member_id => member.id,
+            :rank_id => member.next_rank(graduation).id,
+            :passed => graduation.group.school_breaks?,
+            :paid_graduation => true, :paid_belt => true
+      end
+      flash[:notice] = "Group #{group.name} was added to the graduation."
+    end
+    back_or_redirect_to :action => :edit
+  end
+
   private
 
   def load_graduates

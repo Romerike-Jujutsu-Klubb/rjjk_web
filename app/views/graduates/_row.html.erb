@@ -81,7 +81,7 @@
         <% end %>
 
         <% if graduate.member.left_on && graduate.member.left_on < graduate.graduation.held_on %>
-            <br/><span style="color: red">Deltakeren er utmeldt.</span>
+            <br/><span style="color: red">Deltakeren er utmeldt siden <%=graduate.member.left_on%>.</span>
         <% end %>
     <% end %>
   </td>
