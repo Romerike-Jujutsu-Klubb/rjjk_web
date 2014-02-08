@@ -14,6 +14,8 @@ nb:
       current_semester:
         first_session: Første trening
         last_session: Siste trening
+      graduation:
+        held_on: Dato
       group:
         from_age: Nedre aldersgrense
         to_age: Øvre aldersgrense
