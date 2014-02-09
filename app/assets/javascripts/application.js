@@ -33,7 +33,14 @@ $().ready(function () {
         return true;
     });
     $(window).on('popstate', function () {
-        $('a[href="' + window.location.hash + '"]').tab('show');
+        if (window.location.hash) {
+            $('a[href="' + window.location.hash + '"]').tab('show');
+        } else {
+            default_tab = $('li.active > a[data-toggle="tab"]');
+            if (default_tab[0]) {
+                window.location.hash = default_tab.attr("href").substr(1);
+            }
+        }
         $('.stretch').parent('.row').scrollTop(0);
         setTimeout(function () {
             $('.stretch').parent('.row').scrollTop(0)
