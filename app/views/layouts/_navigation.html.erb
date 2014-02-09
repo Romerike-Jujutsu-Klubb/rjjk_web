@@ -1,53 +1,53 @@
-  <ul>
-    <li><%= link_to 'Forsiden', '/' %></li>
-    <li><%= link_to 'Nyheter', :controller => :news %></li>
-  </ul>
+<ul>
+  <li><%= link_to 'Forsiden', '/' %></li>
+  <li><%= link_to 'Nyheter', :controller => :news %></li>
+</ul>
 
-  <% if user? %>
-      <h1><%=current_user.name%></h1>
+<% if user? %>
+    <h1><%= current_user.name %></h1>
+    <ul>
       <% if member? %>
-          <ul>
-            <% if current_user.member.groups.reject(&:school_breaks).any? %>
-                <li><%= detour_to 'Mitt oppmøte', :controller => :attendances, :action => :plan %></li>
-            <% end %>
-            <li><%= link_to 'Min Embu', :controller => :embus, :action => :index %></li>
+          <% if current_user.member.groups.reject(&:school_breaks).any? %>
+              <li><%= detour_to 'Mitt oppmøte', :controller => :attendances, :action => :plan %></li>
+          <% end %>
+          <li><%= link_to 'Min Embu', :controller => :embus, :action => :index %></li>
       <% end %>
       <li><%= link_to 'Mine media', :controller => :images, :action => :mine %></li>
       <li><%= detour_to 'Logg ut', :controller => 'user', :action => :logout %></li>
+    </ul>
+<% end %>
+
+<% if admin? %>
+    <h1>Web</h1>
+
+    <div id="admin_menu">
+      <ul>
+        <li><%= link_to 'Ny nyhet', :controller => 'news', :action => 'new' %></li>
+        <li><%= link_to 'Ny side', :controller => 'info', :action => 'new' %></li>
+        <li><%= link_to 'Ny hendelse', :controller => 'events', :action => 'new' %></li>
+        <li><%= link_to 'Brukere', :controller => 'user', :action => :index %></li>
       </ul>
-  <% end %>
+    </div>
 
-  <% if admin? %>
-      <h1>Web</h1>
+    <h1>Medlemsreg.</h1>
 
-      <div id="admin_menu">
-        <ul>
-          <li><%= link_to 'Ny nyhet', :controller => 'news', :action => 'new' %></li>
-          <li><%= link_to 'Ny side', :controller => 'info', :action => 'new' %></li>
-          <li><%= link_to 'Ny hendelse', :controller => 'events', :action => 'new' %></li>
-          <li><%= link_to 'Brukere', :controller => 'user', :action => :index %></li>
-        </ul>
-      </div>
-
-      <h1>Medlemsreg.</h1>
-
-      <div id="members_menu">
-        <ul>
-          <!--
+    <div id="members_menu">
+      <ul>
+        <!--
           <li><%= menu_item 'Medlemsliste NY!', :controller => 'members_drilldown', :action => :index %></li>
           -->
-          <li><%= menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
-          <li><%= menu_item 'Oppmøtelister', :controller => 'attendances', :action => :form_index %></li>
-          <li><%= menu_item 'Graderinger', :controller => 'graduations' %></li>
-          <li><%= menu_item 'Telefonliste', :controller => 'members', :action => :telephone_list %></li>
-          <li><%= menu_item 'E-postlister', :controller => 'members', :action => :email_list %></li>
-          <li><%= menu_item 'Gamle medlemmer', :controller => 'members', :action => :list_inactive %></li>
-          <li><%= menu_item 'Instruksjon', :controller => 'group_instructors' %></li>
-          <li><%= menu_item 'Bursdager', :controller => 'birthday_celebrations' %></li>
-          <li><%= menu_item 'Treningstider', :controller => 'group_schedules' %></li>
-          <li><%= menu_item 'Grupper', :controller => 'groups' %></li>
-          <li><%= menu_item 'Grader', :controller => 'ranks' %></li>
-          <!--
+        <li><%= menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
+        <li><%= menu_item 'Oppmøtelister', :controller => 'attendances', :action => :form_index %></li>
+        <li><%= menu_item 'Graderinger', :controller => 'graduations' %></li>
+        <li><%= menu_item 'Telefonliste', :controller => 'members', :action => :telephone_list %></li>
+        <li><%= menu_item 'E-postlister', :controller => 'members', :action => :email_list %></li>
+        <li><%= menu_item 'Gamle medlemmer', :controller => 'members', :action => :list_inactive %></li>
+        <li><%= menu_item 'Instruksjon', :controller => 'group_instructors' %></li>
+        <li><%= menu_item 'Bursdager', :controller => 'birthday_celebrations' %></li>
+        <li><%= menu_item 'Treningstider', :controller => 'group_schedules' %></li>
+        <li><%= menu_item 'Grupper', :controller => 'groups' %></li>
+        <li><%= menu_item 'Grader', :controller => 'ranks' %></li>
+        <!--
           <li><%= menu_item 'Stiler', :controller => 'martial_arts' %></li>
           <li><%= menu_item 'Inntekt', :controller => 'members', :action => :income %></li>
           <li><%= menu_item 'NKF Rapport', :controller => 'members', :action => :NKF_report %></li>
@@ -56,20 +56,20 @@
           <li><%= menu_item 'NKF Medlemsliste', :controller => 'nkf_members', :action => :index %></li>
           <li><%= menu_item 'NKF Avstemming', :controller => 'nkf_members', :action => :comparison %></li>
           -->
-          <li><%= menu_item 'Versjon', :controller => 'info', :action => :versjon %></li>
-        </ul>
-      </div>
-  <% end %>
+        <li><%= menu_item 'Versjon', :controller => 'info', :action => :versjon %></li>
+      </ul>
+    </div>
+<% end %>
 
-  <h1>Oversikt</h1>
-  <ul>
-    <% @information_pages.each do |page| %>
-        <li>
-          <%= link_to page.title + (page.visible? ? '' : ' (skjult)'), :controller => :info, :action => :show, :id => page.title %>
-          <%#=link_to 'ned', :controller => :info, :action => :move_down, :id => page.id%>
-        </li>
-    <% end %>
-    <% unless user? %>
-        <li><%= detour_to 'Logg inn', :controller => 'user', :action => :login %></li>
-    <% end %>
-  </ul>
+<h1>Oversikt</h1>
+<ul>
+  <% @information_pages.each do |page| %>
+      <li>
+        <%= link_to page.title + (page.visible? ? '' : ' (skjult)'), :controller => :info, :action => :show, :id => page.title %>
+        <%#=link_to 'ned', :controller => :info, :action => :move_down, :id => page.id%>
+      </li>
+  <% end %>
+  <% unless user? %>
+      <li><%= detour_to 'Logg inn', :controller => 'user', :action => :login %></li>
+  <% end %>
+</ul>
