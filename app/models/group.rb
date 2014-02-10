@@ -9,6 +9,9 @@ class Group < ActiveRecord::Base
   has_many :graduations, :order => :held_on, :dependent => :destroy
   has_many :group_schedules, :dependent => :destroy
   has_many :group_semesters, :dependent => :destroy
+  has_one :next_graduation, :class_name => :Graduation,
+      :conditions => ->(r){['graduations.held_on >= ?', Date.today]},
+      :order => 'graduations.held_on'
   has_one :next_semester, :class_name => :GroupSemester,
       :include => :semester,
       :conditions => 'semesters.start_on > CURRENT_DATE',

@@ -1,4 +1,3 @@
-# encoding: utf-8
 class InstructionMailer < ActionMailer::Base
   layout 'email'
   default from: Rails.env == 'production' ? 'noreply@jujutsu.no' : "#{Rails.env}@jujutsu.no",
@@ -8,7 +7,8 @@ class InstructionMailer < ActionMailer::Base
     @missing_chief_instructions = missing_chief_instructions
     @semesters = missing_instructions.group_by(&:semester)
     @chief_semesters = missing_chief_instructions.group_by(&:semester)
-    mail subject: 'Treningsgrupper som mangler instruktør'
+    @title = 'Treningsgrupper som mangler instruktør'
+    mail subject: rjjk_prefix(@title)
   end
 
 end

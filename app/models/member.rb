@@ -13,6 +13,9 @@ class Member < ActiveRecord::Base
 
   belongs_to :image, :dependent => :destroy
   belongs_to :user, :dependent => :destroy
+  has_one :next_graduate, :class_name => :Graduate, :include => :graduation,
+      :conditions => ->(r) { ['graduations.held_on >= ?', Date.today] },
+      :order => 'graduations.held_on'
   has_one :nkf_member, :dependent => :nullify
   has_many :attendances, :dependent => :destroy
   has_many :censors, :dependent => :destroy
@@ -220,8 +223,8 @@ class Member < ActiveRecord::Base
     end
   end
 
-  def active?
-    !passive?
+  def active?(date = Date.today)
+    !passive?(date)
   end
 
   def passive?(date = Date.today, group = nil)

@@ -30,7 +30,13 @@ class GraduationReminder
       next_rank = m.next_rank
       attendances = m.attendances_since_graduation
       minimum_attendances = next_rank.minimum_attendances
-      attendances.size >= minimum_attendances
+      next unless attendances.size >= minimum_attendances
+      group = m.next_rank.group
+      next if group.school_breaks? &&
+          (group.next_graduation.nil? ||
+              !m.active?(group.next_graduation.held_on))
+      next if m.next_graduate
+      true
     end
     GraduationMailer.overdue_graduates(overdue_graduates).deliver if overdue_graduates.any?
   rescue Exception
