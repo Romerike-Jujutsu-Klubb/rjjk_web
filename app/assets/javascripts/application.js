@@ -38,7 +38,7 @@ $().ready(function () {
         } else {
             default_tab = $('li.active > a[data-toggle="tab"]');
             if (default_tab[0]) {
-                window.location.hash = default_tab.attr("href").substr(1);
+                window.history.replaceState({}, window.title, window.location + default_tab.attr("href"));
             }
         }
         $('.stretch').parent('.row').scrollTop(0);
