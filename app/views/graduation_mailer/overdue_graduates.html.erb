@@ -14,7 +14,7 @@
             <td align="center"><%= m.next_rank.name %></td>
             <td align="center"><%= m.next_rank.minimum_attendances %></td>
             <td align="center"><%= link_to m.attendances_since_graduation.size, :controller => :attendances, :action => :since_graduation, :id => m.id, :only_path => false %></td>
-            <td><%= link_to m.next_rank.group.next_graduation.held_on, edit_graduation_path(m.next_rank.group.next_graduation, :only_path => false) %></td>
+            <td><%= link_to(m.next_rank.group.next_graduation.held_on, edit_graduation_path(m.next_rank.group.next_graduation, :only_path => false)) if m.next_rank.group.next_graduation %></td>
           </tr>
       <% end %>
     </table>

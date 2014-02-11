@@ -1,4 +1,5 @@
 class InstructionMailer < ActionMailer::Base
+  include MailerHelper
   layout 'email'
   default from: Rails.env == 'production' ? 'noreply@jujutsu.no' : "#{Rails.env}@jujutsu.no",
           to: Rails.env == 'production' ? %w(uwe@kubosch.no) : 'uwe@kubosch.no'
