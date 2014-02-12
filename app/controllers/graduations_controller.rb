@@ -15,7 +15,7 @@ class GraduationsController < ApplicationController
 
   def new
     @graduation ||= Graduation.new(params[:graduation])
-    @groups = Group.all
+    @groups = Group.active(nil).order(:from_age).all
   end
 
   def create

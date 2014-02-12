@@ -27,7 +27,6 @@ class InformationPageNotifier
 #   Newly revised pages should be sent to all members unless they got it within the last 6 months,
 #     or the change is significat (or should that be in a news item?)
   def self.send_weekly_info_page
-    logger.debug 'Sending weekly info page'
     page = InformationPage.where('
 (hidden IS NULL OR hidden = ?) AND
 (revised_at > ?) AND
@@ -35,11 +34,14 @@ class InformationPageNotifier
         order(:mailed_at).first
     if page
       Member.active(Date.today).order(:first_name, :last_name).each do |m|
-        InformationPageMailer.send_weekly_page(m, page).deliver
+        if m.user
+          InformationPageMailer.send_weekly_page(m, page).deliver
+        else
+          logger.error "Member without user: #{m.inspect}"
+        end
       end
       page.update_attributes! :mailed_at => Time.now
     end
-    logger.debug 'Sending weekly info page...OK'
   rescue
     logger.error 'Execption sending news'
     logger.error $!.message

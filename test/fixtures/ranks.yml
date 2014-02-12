@@ -1,3 +1,27 @@
+mon_12:
+  name: '12.mon'
+  colour: 'blå stripe'
+  position: -3
+  martial_art: keiwaryu
+  standard_months: 6
+  group: panda
+
+mon_11:
+  name: '11.mon'
+  colour: 'blå stripe m/svart bånd'
+  position: -2
+  martial_art: keiwaryu
+  standard_months: 6
+  group: panda
+
+mon_10:
+  name: '10.mon'
+  colour: '2 gule striper'
+  position: -1
+  martial_art: keiwaryu
+  standard_months: 6
+  group: tiger
+
 one:
   name: '5.kyu'
   colour: 'gult'

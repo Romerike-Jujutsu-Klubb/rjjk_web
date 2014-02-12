@@ -187,6 +187,12 @@ class Member < ActiveRecord::Base
             (age.nil? || age >= r.group.from_age) &&
             attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
       }
+      next_rank ||= ma.ranks.find { |r|
+        !future_ranks(graduation.held_on, ma).include?(r) &&
+            r.position > current_rank.position &&
+            (age.nil? || age >= r.minimum_age) &&
+            (r.group.from_age..r.group.to_age).include?(age)
+      }
       next_rank ||= Rank.first(:conditions => ['martial_art_id = ? AND position = ?', ma, current_rank.position + 1])
     end
     next_rank ||= ma.ranks.find { |r|

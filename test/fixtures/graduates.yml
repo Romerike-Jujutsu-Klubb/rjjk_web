@@ -13,3 +13,11 @@ two:
   rank: one
   paid_graduation: true
   paid_belt: false
+
+sebastian_12_mon:
+  member: sebastian
+  graduation: panda
+  passed: true
+  rank: mon_12
+  paid_graduation: true
+  paid_belt: false

@@ -21,8 +21,21 @@ uwe:
   instructor: true
   joined_on: 1987-01-05
   last_name: Kubosch
-  male: false
+  male: true
   nkf_fee: true
   payment_problem: false
-  postal_code: 2006
+  postal_code: 1479
   user_id: 1000000
+
+sebastian:
+  address: Møllesvingen 5
+  birthdate: 2004-06-03
+  first_name: Sebastian
+  groups: panda tiger
+  instructor: false
+  joined_on: 2010-08-25
+  last_name: Kubosch
+  male: true
+  nkf_fee: true
+  payment_problem: false
+  postal_code: 1479
