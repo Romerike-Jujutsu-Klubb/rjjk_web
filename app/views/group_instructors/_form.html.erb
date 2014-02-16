@@ -14,8 +14,8 @@
       <%= f.select :group_semester_id, [[]] + @group_semesters.map { |g| [g.semester.name, g.id] } %>
     </div>
     <div class="field">
-      <%= f.label :role, 'Rolle' %>
-      <%= f.select :role, GroupInstructor::Role.constants.map{|r| GroupInstructor::Role.const_get(r)} %>
+      <%= f.label :assistant, 'Hjelpeinstruktør' %>
+      <%= f.check_box :assistant %>
     </div>
     <div class="actions">
       <%= f.submit 'Lagre', :class => 'btn btn-default' %>

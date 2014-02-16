@@ -297,11 +297,11 @@ ActiveRecord::Schema.define(:version => 20140215142706) do
 
   create_table "group_instructors", :force => true do |t|
     t.integer  "member_id"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-    t.integer  "group_schedule_id",               :null => false
-    t.string   "role",              :limit => 16, :null => false
-    t.integer  "group_semester_id",               :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.integer  "group_schedule_id",                    :null => false
+    t.integer  "group_semester_id",                    :null => false
+    t.boolean  "assistant",         :default => false, :null => false
     t.index ["group_semester_id"], :name => "fk__group_instructors_group_semester_id"
   end
 

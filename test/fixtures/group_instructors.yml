@@ -2,16 +2,16 @@ one:
   group_semester: previous_panda
   group_schedule: panda
   member: lars
-  role: Instruktør
+  assistant: false
 
 two:
   group_semester: previous_tiger
   group_schedule: tiger_tuesday
   member: uwe
-  role: Instruktør
+  assistant: false
 
 uwe_current_panda:
   group_semester: current_panda
   group_schedule: panda
   member: uwe
-  role: Hovedinstruktør
+  assistant: false

@@ -1,8 +1,8 @@
-# encoding: utf-8
 class GroupSemester < ActiveRecord::Base
   attr_accessible :first_session, :group_id, :last_session, :semester_id
 
   belongs_to :group
+  belongs_to :group_instructor
   belongs_to :semester
   has_many :group_instructors, :dependent => :destroy
 

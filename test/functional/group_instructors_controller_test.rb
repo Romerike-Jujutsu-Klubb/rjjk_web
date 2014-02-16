@@ -8,7 +8,7 @@ class GroupInstructorsControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:group_semesters)
+    assert_not_nil assigns(:semesters)
   end
 
   test 'should get new' do
@@ -22,7 +22,7 @@ class GroupInstructorsControllerTest < ActionController::TestCase
           group_schedule_id: @group_instructor.group_schedule_id,
           member_id: @group_instructor.member_id,
           group_semester_id: group_semesters(:current_panda).id,
-          role: 'Instruktør',
+          assistant: false,
       }
       assert_no_errors :group_instructor
     end

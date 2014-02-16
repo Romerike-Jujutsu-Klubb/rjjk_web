@@ -44,5 +44,9 @@ class MakeChiefInstructorUniquePerGroupSemester < ActiveRecord::Migration
                 AND gs.group_id = gsc.group_id)'
     change_column :group_instructors, :group_semester_id, :integer, :null => false
     remove_column :group_instructors, :semester_id
+
+    add_column :group_instructors, :assistant, :boolean, :null => false, :default => false
+    execute "UPDATE group_instructors SET assistant = 't' WHERE role = 'Hjelpeinstruktør'"
+    remove_column :group_instructors, :role
   end
 end

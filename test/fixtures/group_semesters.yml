@@ -15,6 +15,7 @@ current_panda:
   semester: current
   first_session: 2013-08-23
   last_session: 2099-12-14
+  group_instructor: uwe_current_panda
 
 current_tiger:
   group: tiger
