@@ -10,8 +10,8 @@
       <%= f.select :member_id, [[]] + @group_instructors.map { |g| [g.name, g.id] } %>
     </div>
     <div class="field" style="float: left; margin-right: 1em">
-      <%= f.label :semester_id %>
-      <%= f.select :semester_id, [[]] + @semesters.map { |g| [g.name, g.id] } %>
+      <%= f.label :group_semester_id %>
+      <%= f.select :group_semester_id, [[]] + @group_semesters.map { |g| [g.semester.name, g.id] } %>
     </div>
     <div class="field">
       <%= f.label :role, 'Rolle' %>

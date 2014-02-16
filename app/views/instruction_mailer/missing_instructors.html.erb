@@ -1,37 +1,28 @@
 <% if @chief_semesters.any? %>
     <h1>Grupper som mangler hovedinstruktør</h1>
 
-    <% @chief_semesters.each do |s, instructions| %>
+    <% @chief_semesters.each do |gs| %>
         <h3>
-          <% if s.start_on <= Date.today %>
+          <% if gs.semester.start_on <= Date.today %>
               Dette semesteret
           <% else %>
               Neste semester
           <% end %>
-          (<%= s.name %>)
+          (<%= gs.semester.name %>)
         </h3>
 
         <table>
           <tr>
             <th>Gruppe</th>
-            <th>Dag</th>
           </tr>
-          <% instructions.group_by(&:group_schedule).each do |gs, gis| %>
-              <tr>
-                <td><%= gs.group.name %></td>
-                <td>
-                  <% gis.each do |gi| %>
-                      <%= link_to gi.group_schedule.weekday_name, :only_path => false,
-                                  :controller => :group_instructors,
-                                  :action => :new, :group_instructor => {
-                                      :group_schedule_id => gi.group_schedule_id,
-                                      :semester_id => gi.semester_id,
-                                      :role => GroupInstructor::Role::CHIEF,
-                              } %>
-                  <% end %>
-                </td>
-              </tr>
-          <% end %>
+          <tr>
+            <td>
+              <%= gs.group.name %>
+              <%= link_to gs.group.name, :only_path => false,
+                      :controller => :group_semesters,
+                      :action => :edit, :id => gs.id %>
+            </td>
+          </tr>
         </table>
     <% end %>
 <% end %>
@@ -39,14 +30,14 @@
 <% if @semesters.any? %>
     <h1>Grupper som mangler instruktør</h1>
 
-    <% @semesters.each do |s, instructions| %>
+    <% @semesters.each do |gs, instructions| %>
         <h3>
-          <% if s.start_on <= Date.today %>
+          <% if gs.semester.start_on <= Date.today %>
               Dette semesteret
           <% else %>
               Neste semester
           <% end %>
-          (<%= s.name %>)
+          (<%= gs.semester.name %>)
         </h3>
 
         <table>
@@ -57,8 +48,7 @@
           <% instructions.each do |gi| %>
               <tr>
                 <td><%= link_to gi.group_schedule.group.name, :only_path => false, :controller => :group_instructors,
-                                :action => :new, :group_instructor => {
-                                :group_schedule_id => gi.group_schedule_id, :semester_id => gi.semester_id} %></td>
+                        :action => :new, :group_instructor => gi.attributes.select{|k,v| v} %></td>
                 <td><%= gi.group_schedule.weekday_name %></td>
               </tr>
           <% end %>

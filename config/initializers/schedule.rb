@@ -98,8 +98,7 @@ rescue
 end
 
 def create_missing_group_semesters
-  # Create missing GroupSemesters
-  groups = Group.where('school_breaks = ?', true).all
+  groups = Group.active.all
   Semester.all.each do |s|
     groups.each do |g|
       cond = {:group_id => g.id, :semester_id => s.id}

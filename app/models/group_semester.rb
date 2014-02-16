@@ -4,6 +4,7 @@ class GroupSemester < ActiveRecord::Base
 
   belongs_to :group
   belongs_to :semester
+  has_many :group_instructors, :dependent => :destroy
 
   validates_presence_of :group, :group_id, :semester, :semester_id
 

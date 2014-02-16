@@ -31,3 +31,10 @@ Group <= GroupSchedule <= GroupInstructor => Member
 
 * Only one responsible per group per semester.
 * One or several GroupSchedules
+
+## TODO
+
+* Review link to practice + member instead of attendance
+* Role => boolean ASSISTANT
+* Add coverage
+* Link GroupInstructor to GroupSemesterSchedule

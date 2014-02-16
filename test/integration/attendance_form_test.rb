@@ -3,12 +3,9 @@ require File.expand_path('../test_helper', File.dirname(__FILE__))
 class AttendanceFormTest < ActionDispatch::IntegrationTest
   fixtures :all
 
-  def setup
-    Capybara.current_session.driver.browser.manage.window.resize_to(1024, 768)
-  end
-
   def test_select_panda_october
     visit_with_login '/attendances/form_index'
+    screenshot('attendance_form_index')
     select('Oktober 2013', :from => 'group_name_Panda')
     assert_equal ['Uwe Kubosch',
         'Totalt 1',

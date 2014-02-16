@@ -1,8 +1,6 @@
-# encoding: utf-8
 class Semester < ActiveRecord::Base
   attr_accessible :end_on, :start_on
 
-  has_many :group_instructors, :dependent => :destroy
   has_many :group_semesters, :dependent => :destroy
 
   validates_presence_of :end_on, :start_on

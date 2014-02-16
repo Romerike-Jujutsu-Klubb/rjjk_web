@@ -16,6 +16,7 @@ class GraduationReminder
       end
     end
   rescue
+    raise if Rails.env.test?
     logger.error "Exception sending missing graduations message: #{$!}"
     logger.error $!.backtrace.join("\n")
     ExceptionNotifier.notify_exception($!)

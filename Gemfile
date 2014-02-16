@@ -53,6 +53,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'chunky_png'
   gem 'database_cleaner'
   gem 'minitest-reporters', '<1.0.0'
   gem 'mocha', :require => 'mocha/setup'

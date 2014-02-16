@@ -15,10 +15,16 @@
       <li>
         <%= a.group_schedule.start_at.strftime('%H:%M') %>-<%= a.group_schedule.end_at.strftime('%H:%M') %>
         <%= a.group_schedule.group.name %>
-        [<%= link_to 'Var der!', UserSystem.with_login(@member.user, :controller => :attendances, :action => :review, :id => a.id, :attendance => {:status => Attendance::Status::ATTENDED}) %>]
-        &nbsp;&nbsp;[<%= link_to 'Var syk!', UserSystem.with_login(@member.user, :controller => :attendances, :action => :review, :id => a.id, :attendance => {:status => Attendance::Status::SICK}) %>]
-        &nbsp;&nbsp;[<%= link_to 'Bortreist!', UserSystem.with_login(@member.user, :controller => :attendances, :action => :review, :id => a.id, :attendance => {:status => Attendance::Status::HOLIDAY}) %>]
-        &nbsp;&nbsp;[<%= link_to 'Forhindret!', UserSystem.with_login(@member.user, :controller => :attendances, :action => :review, :id => a.id, :attendance => {:status => Attendance::Status::ABSENT}) %>]
+        <%= [
+                    ['Var der!', Attendance::Status::ATTENDED],
+                    ['Instruerte', Attendance::Status::INSTRUCTOR],
+                    ['Var syk', Attendance::Status::SICK],
+                    ['Bortreist', Attendance::Status::HOLIDAY],
+                    ['Forhindret', Attendance::Status::ABSENT],
+            ].map do |text, status| %>
+            [<%= link_to text, UserSystem.with_login(@member.user, :controller => :attendances, :action => :review, :id => a.id, :attendance => {:status => status}) %>
+            ]
+        <% end.join('&nbsp;'*2) %>
       </li>
   <% end %>
 </ul>
@@ -31,10 +37,16 @@
             <%= a.date %>
             <%= t(:date)[:day_names][a.date.cwday] %>
             <%= a.group_schedule.group.name %>
-            [<%= link_to 'Var der!', UserSystem.with_login(@member.user, :controller => :attendances, :action => :review, :id => a.id, :attendance => {:status => Attendance::Status::ATTENDED}) %>]
-            &nbsp;&nbsp;[<%= link_to 'Var syk!', UserSystem.with_login(@member.user, :controller => :attendances, :action => :review, :id => a.id, :attendance => {:status => Attendance::Status::SICK}) %>]
-            &nbsp;&nbsp;[<%= link_to 'Bortreist!', UserSystem.with_login(@member.user, :controller => :attendances, :action => :review, :id => a.id, :attendance => {:status => Attendance::Status::HOLIDAY}) %>]
-            &nbsp;&nbsp;[<%= link_to 'Forhindret!', UserSystem.with_login(@member.user, :controller => :attendances, :action => :review, :id => a.id, :attendance => {:status => Attendance::Status::ABSENT}) %>]
+            <%= [
+                        ['Var der!', Attendance::Status::ATTENDED],
+                        ['Instruerte', Attendance::Status::INSTRUCTOR],
+                        ['Var syk', Attendance::Status::SICK],
+                        ['Bortreist', Attendance::Status::HOLIDAY],
+                        ['Forhindret', Attendance::Status::ABSENT],
+                ].map do |text, status| %>
+                [<%= link_to text, UserSystem.with_login(@member.user, :controller => :attendances, :action => :review, :id => a.id, :attendance => {:status => status}) %>
+                ]
+            <% end.join('&nbsp;'*2) %>
           </li>
       <% end %>
 <% end %>
