@@ -21,7 +21,7 @@
         &nbsp;
     <% end %>
     <% if missing_contract %>
-        <br/><%= link_to 'Mangler kontrakt', :action => :missing_contract, :id => member.id %>
+        <br/><%= link_to 'Mangler kontrakt', :controller => :members, :action => :missing_contract, :id => member.id %>
         <br/>Innmeldt: <%= member.joined_on.strftime('%Y-%m-%d') %>
     <% end %>
   </td>
