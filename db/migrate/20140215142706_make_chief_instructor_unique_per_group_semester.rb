@@ -1,7 +1,5 @@
 class MakeChiefInstructorUniquePerGroupSemester < ActiveRecord::Migration
   def up
-    add_column :group_semesters, :group_instructor_id, :integer
-
     groups = execute 'SELECT id FROM groups ORDER BY id'
     semesters = execute 'SELECT id FROM semesters ORDER BY id'
     groups.each do |g|
@@ -12,28 +10,34 @@ class MakeChiefInstructorUniquePerGroupSemester < ActiveRecord::Migration
       end
     end
 
-    execute "UPDATE group_semesters gs SET group_instructor_id =
-        (SELECT gi.id FROM group_instructors gi
+    add_column :group_semesters, :chief_instructor_id, :integer,
+        :references => :members
+
+    execute "UPDATE group_semesters gs SET chief_instructor_id =
+        (SELECT m.id FROM group_instructors gi
             INNER JOIN group_schedules gsc ON gsc.id = gi.group_schedule_id
+            INNER JOIN members m ON m.id = gi.member_id
             WHERE gi.semester_id = gs.semester_id
                 AND gsc.group_id = gs.group_id
                 AND role = 'Hovedinstruktør' LIMIT 1)
-        WHERE group_instructor_id IS NULL"
+        WHERE chief_instructor_id IS NULL"
 
-    execute "UPDATE group_semesters gs SET group_instructor_id =
-        (SELECT gi.id FROM group_instructors gi
+    execute "UPDATE group_semesters gs SET chief_instructor_id =
+        (SELECT m.id FROM group_instructors gi
             INNER JOIN group_schedules gsc ON gsc.id = gi.group_schedule_id
+            INNER JOIN members m ON m.id = gi.member_id
             WHERE gi.semester_id = gs.semester_id
                 AND gsc.group_id = gs.group_id
                 AND role = 'Instruktør' LIMIT 1)
-        WHERE group_instructor_id IS NULL"
+        WHERE chief_instructor_id IS NULL"
 
-    execute 'UPDATE group_semesters gs SET group_instructor_id =
-        (SELECT gi.id FROM group_instructors gi
+    execute 'UPDATE group_semesters gs SET chief_instructor_id =
+        (SELECT m.id FROM group_instructors gi
             INNER JOIN group_schedules gsc ON gsc.id = gi.group_schedule_id
+            INNER JOIN members m ON m.id = gi.member_id
             WHERE gi.semester_id = gs.semester_id
                 AND gsc.group_id = gs.group_id LIMIT 1)
-        WHERE group_instructor_id IS NULL'
+        WHERE chief_instructor_id IS NULL'
 
     add_column :group_instructors, :group_semester_id, :integer
     execute 'UPDATE group_instructors gi

@@ -2,7 +2,7 @@ class InstructionReminder
   def self.notify_missing_instructors
     semesters = Semester.where("start_on < (CURRENT_DATE + interval '3 months') AND end_on > CURRENT_DATE").order(:end_on).all
     missing_chief_instructions =
-        semesters.map(&:group_semesters).flatten.reject(&:group_instructor_id)
+        semesters.map(&:group_semesters).flatten.reject(&:chief_instructor_id)
     missing_instructions = semesters.map(&:group_semesters).flatten.map do |gs|
       group_schedules = gs.group.group_schedules.sort_by(&:weekday)
       group_schedules.select { |gsc| gsc.group_instructors.select { |gi| gi.active?(gs.semester.start_on) }.empty? }.map do |gsc|

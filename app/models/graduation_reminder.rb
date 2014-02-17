@@ -8,7 +8,7 @@ class GraduationReminder
     missing_groups = groups - planned_groups
     missing_groups.each do |g|
       instructor = Semester.current.group_semesters.
-          find { |gs| gs.group_id == g.id }.try(:group_instructor).try(:member)
+          find { |gs| gs.group_id == g.id }.try(:chief_instructor)
       next unless instructor
       GraduationMailer.missing_graduation(instructor, g).deliver
     end

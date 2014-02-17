@@ -295,16 +295,6 @@ ActiveRecord::Schema.define(:version => 20140215142706) do
     t.foreign_key ["rank_id"], "ranks", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "graduates_rank_id_fkey"
   end
 
-  create_table "group_instructors", :force => true do |t|
-    t.integer  "member_id"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
-    t.integer  "group_schedule_id",                    :null => false
-    t.integer  "group_semester_id",                    :null => false
-    t.boolean  "assistant",         :default => false, :null => false
-    t.index ["group_semester_id"], :name => "fk__group_instructors_group_semester_id"
-  end
-
   create_table "semesters", :force => true do |t|
     t.date     "start_on",   :null => false
     t.date     "end_on",     :null => false
@@ -319,16 +309,25 @@ ActiveRecord::Schema.define(:version => 20140215142706) do
     t.date     "last_session"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
-    t.integer  "group_instructor_id"
+    t.integer  "chief_instructor_id"
+    t.index ["chief_instructor_id"], :name => "fk__group_semesters_chief_instructor_id"
     t.index ["group_id"], :name => "fk__group_semesters_group_id"
-    t.index ["group_instructor_id"], :name => "fk__group_semesters_group_instructor_id"
     t.index ["semester_id"], :name => "fk__group_semesters_semester_id"
+    t.foreign_key ["chief_instructor_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_semesters_chief_instructor_id"
     t.foreign_key ["group_id"], "groups", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_semesters_group_id"
-    t.foreign_key ["group_instructor_id"], "group_instructors", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_semesters_group_instructor_id"
     t.foreign_key ["semester_id"], "semesters", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_semesters_semester_id"
   end
 
-  add_foreign_key "group_instructors", ["group_semester_id"], "group_semesters", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_instructors_group_semester_id"
+  create_table "group_instructors", :force => true do |t|
+    t.integer  "member_id"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.integer  "group_schedule_id",                    :null => false
+    t.integer  "group_semester_id",                    :null => false
+    t.boolean  "assistant",         :default => false, :null => false
+    t.index ["group_semester_id"], :name => "fk__group_instructors_group_semester_id"
+    t.foreign_key ["group_semester_id"], "group_semesters", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_group_instructors_group_semester_id"
+  end
 
   create_table "groups_members", :id => false, :force => true do |t|
     t.integer "group_id",  :null => false

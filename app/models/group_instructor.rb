@@ -10,8 +10,6 @@ class GroupInstructor < ActiveRecord::Base
   belongs_to :group_schedule
   belongs_to :group_semester
   belongs_to :member
-  has_one :responsible_group_semester, :class_name => :GroupSemester,
-      :dependent => :nullify
 
   scope :active,
       ->(date = Date.today) { includes(:group_semester => :semester).
@@ -27,7 +25,7 @@ class GroupInstructor < ActiveRecord::Base
   end
 
   def role
-    if group_semester.group_instructor_id == id
+    if group_semester.chief_instructor_id == member_id
       Role::CHIEF
     elsif assistant?
       Role::ASSISTANT
