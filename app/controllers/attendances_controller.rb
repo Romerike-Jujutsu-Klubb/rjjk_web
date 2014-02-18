@@ -120,7 +120,7 @@ class AttendancesController < ApplicationController
     @last_date = @date.end_of_month
     @attendances = Attendance.includes(:practice => :group_schedule).
         where('practices.year = ? AND practices.week >= ? AND practices.week <= ? AND attendances.status NOT IN (?)',
-              @year, @first_date.cweek, @last_date.cweek, Attendance::ABSENT_STATES).
+        @year, @first_date.cweek, @last_date.cweek, Attendance::ABSENT_STATES).
         all.select { |a| (@first_date..@last_date).include? a.date }
     monthly_per_group = @attendances.group_by { |a| a.group_schedule.group }.sort_by { |g, ats| g.from_age }
     @monthly_summary_per_group = {}
@@ -231,8 +231,10 @@ class AttendancesController < ApplicationController
   end
 
   def review
-    @attendance = Attendance.find(params[:id])
-    raise 'Wrong user' unless @attendance.member == current_user.member
+    practice_id = params[:id]
+    @attendance = Attendance.
+        where(:member_id => current_user.member_id, :practice_id => practice_id).
+        first_or_create
     @attendance.update_attributes! params[:attendance]
 
     if request.xhr?

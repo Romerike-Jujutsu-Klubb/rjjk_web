@@ -1,12 +1,10 @@
 development:
   adapter: postgresql
   database: rjjk_web_development
-  username: uwe
 
 test:
   adapter: postgresql
   database: rjjk_web_test
-  username: uwe
 
 beta:
   adapter: postgresql

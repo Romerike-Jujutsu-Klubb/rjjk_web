@@ -1,6 +1,6 @@
 class MakeChiefInstructorUniquePerGroupSemester < ActiveRecord::Migration
   def up
-    groups = execute 'SELECT id FROM groups ORDER BY id'
+    groups = execute 'SELECT id FROM groups WHERE closed_on IS NULL ORDER BY id'
     semesters = execute 'SELECT id FROM semesters ORDER BY id'
     groups.each do |g|
       semesters.each do |s|
