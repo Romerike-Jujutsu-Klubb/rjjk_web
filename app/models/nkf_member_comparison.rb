@@ -33,10 +33,6 @@ class NkfMemberComparison
 
     @member_changes = @members.map do |m|
       begin
-        # FIXME(uwe):  Temporary until August 2013
-        m.user = Member.create_corresponding_user!(m.attributes) if m.user.nil?
-        # EMXIF
-
         changes = m.changes
         m.save!
         [m, changes] unless changes.empty?

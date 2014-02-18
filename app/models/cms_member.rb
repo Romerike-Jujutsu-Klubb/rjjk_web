@@ -30,7 +30,7 @@ class CmsMember < ActiveRecord::Base
   end
   
   def age
-    birthdate && ((Date.today - birthdate).to_i / 365) # TODO: What about leap years?
+    birthdate && ((Date.today - birthdate).to_i / 365)
   end
   
   def gender    
