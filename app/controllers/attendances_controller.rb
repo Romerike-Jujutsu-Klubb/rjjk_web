@@ -231,7 +231,7 @@ class AttendancesController < ApplicationController
   end
 
   def review
-    practice_id = params[:id]
+    practice_id = params[:practice_id]
     @attendance = Attendance.
         where(:member_id => current_user.member_id, :practice_id => practice_id).
         first_or_create

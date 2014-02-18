@@ -58,5 +58,6 @@ group :test do
   gem 'minitest-reporters', '<1.0.0'
   gem 'mocha', :require => 'mocha/setup'
   gem 'selenium-webdriver'
+  gem 'simplecov'
   gem 'timecop'
 end

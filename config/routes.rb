@@ -1,5 +1,5 @@
 RjjkWeb::Application.routes.draw do
-  get 'attendances/review'
+  get 'attendances/review/:practice_id' => 'attendances#review'
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
   get ':controller/report(/:year/:month)' => '#report'
   get 'info/versjon'
