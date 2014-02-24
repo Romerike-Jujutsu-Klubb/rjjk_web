@@ -315,6 +315,7 @@ class Member < ActiveRecord::Base
   end
 
   def title(date = Date.today)
-    current_rank(MartialArt.find_by_name('Kei Wa Ryu'), date).name =~ /dan/ ? 'Sensei' : 'Sempai'
+    current_rank = current_rank(MartialArt.find_by_name('Kei Wa Ryu'), date)
+    current_rank && current_rank.name =~ /dan/ ? 'Sensei' : 'Sempai'
   end
 end

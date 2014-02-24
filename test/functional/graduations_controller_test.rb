@@ -83,4 +83,10 @@ class GraduationsControllerTest < ActionController::TestCase
       Graduation.find(@first_id)
     }
   end
+
+  def test_certificates
+    get :certificates, :id => @first_id
+    assert_response :success
+  end
+
 end

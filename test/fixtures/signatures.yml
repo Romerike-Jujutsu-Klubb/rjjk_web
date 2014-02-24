@@ -2,10 +2,12 @@ lars:
   member: lars
   name: MyString
   content_type: MyString
-  image: SignatureImage
+  image: !binary |
+      iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==
 
 uwe:
   member: uwe
   name: MyString
   content_type: MyString
-  image: SignatureImage
+  image: !binary |
+      iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==
