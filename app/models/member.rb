@@ -1,4 +1,3 @@
-# encoding: UTF-8
 class Member < ActiveRecord::Base
   JUNIOR_AGE_LIMIT = 15
   ASPIRANT_AGE_LIMIT = 10

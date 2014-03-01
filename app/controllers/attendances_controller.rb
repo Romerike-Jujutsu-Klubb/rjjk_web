@@ -231,9 +231,12 @@ class AttendancesController < ApplicationController
   end
 
   def review
-    practice_id = params[:practice_id]
+    group_schedule_id = params[:group_schedule_id]
+    date = Date.parse(params[:date])
+    practice = Practice.where(:group_schedule_id => group_schedule_id,
+        :year => date.year, :week => date.cweek).first_or_create!
     @attendance = Attendance.
-        where(:member_id => current_user.member_id, :practice_id => practice_id).
+        where(:member_id => current_user.member.id, :practice_id => practice.id).
         first_or_create
     @attendance.update_attributes! params[:attendance]
 

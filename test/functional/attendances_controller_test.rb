@@ -22,8 +22,8 @@ class AttendancesControllerTest < ActionController::TestCase
   def test_should_create_attendance
     assert_difference('Attendance.count') do
       post :create, :attendance => {:member_id => members(:uwe).id,
-                                    :practice_id => practices(:panda_2010_42).id,
-                                    :status => 'X'}
+          :practice_id => practices(:panda_2010_42).id,
+          :status => 'X'}
       assert_no_errors(:attendance)
     end
 
@@ -56,6 +56,16 @@ class AttendancesControllerTest < ActionController::TestCase
   def test_should_get_plan
     get :plan
     assert_response :success
+  end
+
+  def test_should_get_review
+    practice = practices(:voksne_2013_42_thursday)
+    get :review,
+        group_schedule_id: practice.group_schedule_id,
+        date: practice.date,
+        attendance: {status: :X}
+    assert_response :redirect
+    assert_redirected_to :controller => :attendances, :action => :plan
   end
 
   def test_should_announce_toggle_off

@@ -21,7 +21,11 @@
                 ['Bortreist', Attendance::Status::HOLIDAY],
                 ['Forhindret', Attendance::Status::ABSENT],
            ].each do |text, status| %>
-            [<%= link_to text, UserSystem.with_login(@member.user, :controller => :attendances, :action => :review, :practice_id => a.practice_id, :attendance => {:status => status}) %>]&nbsp;&nbsp;
+            [<%= link_to text, UserSystem.with_login(@member.user,
+              :controller => :attendances, :action => :review,
+              :group_schedule_id => a.practice.group_schedule_id,
+              :date => a.practice.date,
+              :attendance => {:status => status}) %>]&nbsp;&nbsp;
         <% end %>
       </li>
   <% end %>
