@@ -1,10 +1,4 @@
-# encoding: UTF-8
-
 class AttendanceHistoryGraph
-  def logger
-    Rails.logger
-  end
-
   def history_graph(size = 480)
     g = Gruff::Line.new(size)
     g.theme_37signals

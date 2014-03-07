@@ -1,0 +1,11 @@
+uwe_first:
+  member: uwe
+  role: chief_instructor
+  from: 2013-02-12
+  to: 2014-02-25
+
+uwe_second:
+  member: uwe
+  role: chief_instructor
+  from: 2014-02-25
+  to: 2016-02-12

@@ -1,7 +1,6 @@
 #!ruby
 
 require 'chunky_png'
-require 'image_compare'
 
 class ImageCompare
   include ChunkyPNG::Color

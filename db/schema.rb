@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140215142706) do
+ActiveRecord::Schema.define(:version => 20140302211743) do
 
   create_table "annual_meetings", :force => true do |t|
     t.datetime "start_at"
@@ -64,6 +64,26 @@ ActiveRecord::Schema.define(:version => 20140215142706) do
     t.string  "billing_email",        :limit => 64
     t.index ["image_id"], :name => "index_members_on_image_id", :unique => true
     t.index ["user_id"], :name => "index_members_on_user_id", :unique => true
+  end
+
+  create_table "roles", :force => true do |t|
+    t.string   "name",               :limit => 32, :null => false
+    t.integer  "years_on_the_board"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+  end
+
+  create_table "appointments", :force => true do |t|
+    t.integer  "member_id",  :null => false
+    t.integer  "role_id",    :null => false
+    t.date     "from",       :null => false
+    t.date     "to"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.index ["member_id"], :name => "fk__appointments_member_id"
+    t.index ["role_id"], :name => "fk__appointments_role_id"
+    t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_appointments_member_id"
+    t.foreign_key ["role_id"], "roles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_appointments_role_id"
   end
 
   create_table "martial_arts", :force => true do |t|
@@ -202,6 +222,22 @@ ActiveRecord::Schema.define(:version => 20140215142706) do
     t.binary   "content",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "elections", :force => true do |t|
+    t.integer  "annual_meeting_id", :null => false
+    t.integer  "member_id",         :null => false
+    t.integer  "role_id",           :null => false
+    t.integer  "years",             :null => false
+    t.date     "resigned_on"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.index ["annual_meeting_id"], :name => "fk__elections_annual_meeting_id"
+    t.index ["member_id"], :name => "fk__elections_member_id"
+    t.index ["role_id"], :name => "fk__elections_role_id"
+    t.foreign_key ["annual_meeting_id"], "annual_meetings", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_elections_annual_meeting_id"
+    t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_elections_member_id"
+    t.foreign_key ["role_id"], "roles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_elections_role_id"
   end
 
   create_table "embu_images", :force => true do |t|

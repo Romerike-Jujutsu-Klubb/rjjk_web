@@ -11,7 +11,7 @@ unless Rails.env == 'test'
   scheduler.cron('9 9-23 * * *') { EventNotifier.send_event_messages }
 
   # Admin Hourly
-  scheduler.cron('15 9-23 * * *') { import_nkf_changes }
+  scheduler.cron('15 9-23 * * *') { NkfMemberImport.import_nkf_changes }
   scheduler.cron('10 * * * *') { AttendanceNagger.send_message_reminder }
 
   # Admin Daily
@@ -33,40 +33,6 @@ unless Rails.env == 'test'
 end
 
 private
-
-def logger
-  ActiveRecord::Base.logger
-end
-
-def import_nkf_changes
-  begin
-    i = NkfMemberImport.new
-    if i.any?
-      NkfReplication.import_changes(i).deliver
-      logger.info 'Sent NKF member import mail.'
-      logger.info 'Oppdaterer kontrakter'
-      NkfMember.update_group_prices
-    end
-  rescue Exception
-    logger.error 'Execption sending NKF import email.'
-    logger.error $!.message
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
-  end
-
-  begin
-    c = NkfMemberComparison.new
-    if c.any?
-      NkfReplication.update_members(c).deliver
-      logger.info 'Sent member comparison mail.'
-    end
-  rescue Exception
-    logger.error 'Execption sending update_members email.'
-    logger.error $!.message
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
-  end
-end
 
 def notify_wrong_contracts
   members = NkfMember.where(:medlemsstatus => 'A').all

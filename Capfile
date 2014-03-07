@@ -3,9 +3,7 @@ load 'deploy/assets'
 
 set :stages, %w(beta production)
 set :default_stage, 'beta'
-set :default_environment, {
-    'JRUBY_OPTS' => '--2.0 --server',
-}
+set :default_environment, {'JRUBY_OPTS' => '--2.0 --server'}
 
 require 'rubygems'
 require 'bundler/capistrano'
@@ -17,7 +15,6 @@ task :fix_permissions, :roles => [:app, :db, :web] do
 end
 
 after 'deploy:create_symlink', :fix_permissions
-
 
 desc 'Announce maintenance'
 task :announce_maintenance, :roles => [:app] do

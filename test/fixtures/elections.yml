@@ -1,0 +1,11 @@
+uwe_chairman:
+  annual_meeting: one
+  role: chairman
+  member: uwe
+  years: 2
+
+lars:
+  annual_meeting: two
+  role: chairman
+  member: lars
+  years: 2

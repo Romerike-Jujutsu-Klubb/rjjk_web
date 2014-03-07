@@ -13,6 +13,11 @@ class PublicRecordImporter
       record.save!
       PublicRecordMailer.new_record(record).deliver
     end
+  rescue Exception
+    logger.error 'Execption importing public record.'
+    logger.error $!.message
+    logger.error $!.backtrace.join("\n")
+    ExceptionNotifier.notify_exception($!)
   end
 
   private

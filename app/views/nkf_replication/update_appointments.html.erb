@@ -1,0 +1,27 @@
+<h3>Verv registrert i NKF registeret</h3>
+
+<table>
+  <tr>
+    <th align="left">Verv</th>
+    <th>Navn</th>
+    <th>Fra</th>
+    <th>Til</th>
+  </tr>
+  <% @appointments.each do |a| %>
+      <tr>
+        <% if a.is_a? Appointment %>
+            <td><%= a.member.name %></td>
+            <td><%= a.role.name %></td>
+            <td><%= a.from %></td>
+            <td><%= a.to %></td>
+        <% elsif a.is_a? Election %>
+            <td><%= a.member.name %></td>
+            <td><%= a.role.name %> (<%= a.role.years_on_the_board %> år)</td>
+            <td><%= a.annual_meeting.start_at.to_date %></td>
+            <td><%= a.annual_meeting.next.try(:start_at).try(:to_date) %></td>
+        <% else %>
+            <td colspan="4"><%= a %></td>
+        <% end %>
+      </tr>
+  <% end %>
+</table>

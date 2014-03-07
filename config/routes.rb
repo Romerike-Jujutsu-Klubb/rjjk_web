@@ -1,4 +1,13 @@
 RjjkWeb::Application.routes.draw do
+  resources :elections
+
+
+  resources :roles
+
+
+  resources :appointments
+
+
   get 'attendances/review/:practice_id' => 'attendances#review'
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
   get ':controller/report(/:year/:month)' => '#report'

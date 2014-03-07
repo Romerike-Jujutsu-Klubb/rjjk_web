@@ -25,3 +25,7 @@ class Formatter
 end
 
 Rails.logger.formatter = Formatter.new
+
+def logger
+  Rails.logger
+end

@@ -17,6 +17,7 @@ gem 'jquery_datepicker', :git => 'git://github.com/donv/jquery_datepicker.git'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-ui-themes'
+gem 'mechanize'
 gem 'nokogiri'
 gem 'paper_trail' # http://railscasts.com/episodes/255-undo-with-paper-trail?view=similar
 gem 'prawn'

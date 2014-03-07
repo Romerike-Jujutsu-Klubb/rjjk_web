@@ -98,7 +98,9 @@ module UserSystem
   end
 
   def admin?
-    current_user && current_user.role == ADMIN_ROLE
+    current_user && current_user.member &&
+        (current_user.member.elections.current.any? ||
+            current_user.member.appointments.current.any?)
   end
 
   def current_user

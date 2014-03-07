@@ -5,6 +5,7 @@ set :deploy_via, :copy
 set :copy_via, :scp
 set :copy_local_tar, '/usr/bin/tar' if `uname` =~ /Darwin/
 set :keep_releases, 1
+before('deploy') { `rake tmp:clear` ; FileUtils.rm_rf 'coverage'  ; FileUtils.rm_rf Dir['log/*'] }
 after 'deploy:update', 'deploy:cleanup'
 
 role :web, 'kubosch.no'

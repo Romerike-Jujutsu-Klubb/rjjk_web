@@ -12,13 +12,15 @@ class Member < ActiveRecord::Base
 
   belongs_to :image, :dependent => :destroy
   belongs_to :user, :dependent => :destroy
-  has_one :next_graduate, :class_name => :Graduate, :include => :graduation,
-      :conditions => ->(r) { ['graduations.held_on >= ?', Date.today] },
-      :order => 'graduations.held_on'
+  has_one :next_graduate, class_name: :Graduate, include: :graduation,
+      conditions: ->(r) { ['graduations.held_on >= ?', Date.today] },
+      order: 'graduations.held_on'
   has_one :nkf_member, :dependent => :nullify
+  has_many :appointments, :dependent => :destroy
   has_many :attendances, :dependent => :destroy
   has_many :censors, :dependent => :destroy
   has_many :correspondences, :dependent => :destroy
+  has_many :elections, :dependent => :destroy
   has_many :graduates, :dependent => :destroy
   has_many :group_instructors, :dependent => :destroy
   has_many :passed_graduates, :class_name => 'Graduate',

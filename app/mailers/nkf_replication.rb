@@ -19,8 +19,12 @@ class NkfReplication < ActionMailer::Base
         @member_changes.any? ? "#{@member_changes.size} endrede" : nil,
         @group_changes.any? ? "#{@group_changes.size} gruppeendringer" : nil
     ].compact.join(', ')
-    Rails.logger.info "mail subject: Oppdateringer fra NKF: #{stats}"
     mail subject: "Oppdateringer fra NKF: #{stats}"
+  end
+
+  def update_appointments(appointments)
+    @appointments = appointments
+    mail subject: "Verv fra NKF: #{appointments.size}"
   end
 
   def wrong_contracts(wrong_contracts)

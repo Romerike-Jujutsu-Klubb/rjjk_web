@@ -1,0 +1,35 @@
+<%= form_for(@election) do |f| %>
+  <% if @election.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@election.errors.count, "error") %> prohibited this election from being saved:</h2>
+
+      <ul>
+      <% @election.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :annual_meeting_id %><br />
+    <%= f.select :annual_meeting_id, options_from_collection_for_select(@annual_meetings, :id, :date) %>
+  </div>
+  <div class="field">
+    <%= f.label :role_id %><br />
+    <%= f.select :role_id, options_from_collection_for_select(@roles, :id, :name) %>
+  </div>
+  <div class="field">
+    <%= f.label :member_id %><br />
+    <%= f.select :member_id, options_from_collection_for_select(@members, :id, :name) %>
+  </div>
+  <div class="field">
+    <%= f.label :resigned_on %><br />
+    <%= f.date_select :resigned_on %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+    <%= link_to 'Show', @election %> |
+    <%= link_to 'Back', elections_path %>
+  </div>
+<% end %>

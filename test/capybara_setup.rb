@@ -12,7 +12,7 @@ class ActionDispatch::IntegrationTest
 
   include Capybara::DSL
 
-  Capybara.default_driver = :selenium
+   Capybara.default_driver = :selenium
 
   self.use_transactional_fixtures = false
 

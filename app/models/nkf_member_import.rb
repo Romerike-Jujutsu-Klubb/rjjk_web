@@ -2,7 +2,6 @@ require 'net/http'
 require 'uri'
 require 'erb'
 require 'pp'
-require 'iconv'
 
 # http://www.reinteractive.net/posts/145-making-crawling-and-scraping-websites-slightly-less-painful-with-anemone?utm_source=rubyweekly&utm_medium=email
 
@@ -10,6 +9,46 @@ class NkfMemberImport
   CONCURRENT_REQUESTS = 7
   include MonitorMixin
   attr_reader :changes, :error_records, :exception, :import_rows, :new_records, :trial_changes
+
+  def self.import_nkf_changes
+    begin
+      i = NkfMemberImport.new
+      if i.any?
+        NkfReplication.import_changes(i).deliver
+        logger.info 'Sent NKF member import mail.'
+        logger.info 'Oppdaterer kontrakter'
+        NkfMember.update_group_prices
+      end
+    rescue Exception
+      logger.error 'Execption sending NKF import email.'
+      logger.error $!.message
+      logger.error $!.backtrace.join("\n")
+      ExceptionNotifier.notify_exception($!)
+    end
+
+    begin
+      a = NkfMemberComparison.new
+      if a.any?
+        NkfReplication.update_members(a).deliver
+        logger.info 'Sent member comparison mail.'
+      end
+    rescue Exception
+      logger.error 'Execption sending update_members email.'
+      logger.error $!.message
+      logger.error $!.backtrace.join("\n")
+      ExceptionNotifier.notify_exception($!)
+    end
+
+    begin
+      a = NkfAppointmentsScraper.import_appointments
+      NkfReplication.update_appointments(a).deliver if a.any?
+    rescue Exception
+      logger.error 'Execption sending update_members email.'
+      logger.error $!.message
+      logger.error $!.backtrace.join("\n")
+      ExceptionNotifier.notify_exception($!)
+    end
+  end
 
   def size
     new_records.try(:size).to_i + changes.try(:size).to_i + error_records.try(:size).to_i
@@ -25,8 +64,6 @@ class NkfMemberImport
     @changes = []
     @trial_changes = []
     @error_records = []
-
-    @iconv = Iconv.new('UTF8', 'ISO-8859-1')
     @cookies = []
 
     login
@@ -70,7 +107,7 @@ class NkfMemberImport
   private
 
   def get_member_rows(session_id, detail_codes)
-    members_body = @iconv.iconv http_get("pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{session_id}").body
+    members_body = http_get("pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{session_id}").body.force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
     import_rows = members_body.split("\n").map { |line| line.chomp.split(';', -1)[0..-2] }
     import_rows[0] << 'ventekid'
     detail_codes.each_slice(CONCURRENT_REQUESTS) do |detail_code_slice|
@@ -108,8 +145,8 @@ class NkfMemberImport
 
   def get_member_trial_rows(session_id, extra_function_code)
     trial_csv_url = 'pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + session_id
-    member_trials_csv_body = http_get(trial_csv_url).body
-    member_trial_rows = member_trials_csv_body.split("\n").map { |line| @iconv.iconv(line.chomp).split(';') }
+    member_trials_csv_body = http_get(trial_csv_url).body.force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
+    member_trial_rows = member_trials_csv_body.split("\n").map { |line| line.chomp.split(';') }
 
     trial_ids = []
     (member_trial_rows.size.to_f / 20).ceil.times do |page|
@@ -127,7 +164,7 @@ class NkfMemberImport
         Thread.start do
           begin
             trial_details_url = "page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=" + extra_function_code
-            trial_details_body = @iconv.iconv http_get(trial_details_url).body
+            trial_details_body = http_get(trial_details_url).body.force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
             if trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
               first_name = $1
               if trial_details_body =~ /name="frm_28_v09" value="(.*?)"/
@@ -355,9 +392,4 @@ class NkfMemberImport
     end
     response
   end
-
-  def logger
-    Rails.logger
-  end
-
 end
