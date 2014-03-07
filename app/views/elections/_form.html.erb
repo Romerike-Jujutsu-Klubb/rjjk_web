@@ -11,25 +11,26 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :annual_meeting_id %><br />
-    <%= f.select :annual_meeting_id, options_from_collection_for_select(@annual_meetings, :id, :date) %>
+  <div class="form-group">
+    <%= f.label :annual_meeting_id, 'Årsmøte' %><br />
+    <%= f.select :annual_meeting_id, options_from_collection_for_select(@annual_meetings, :id, :date, @election.annual_meeting_id), {}, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :role_id %><br />
-    <%= f.select :role_id, options_from_collection_for_select(@roles, :id, :name) %>
+  <div class="form-group">
+    <%= f.label :role_id, 'Stilling' %><br />
+    <%= f.select :role_id, options_from_collection_for_select(@roles, :id, :name, @election.role_id), {}, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :member_id %><br />
-    <%= f.select :member_id, options_from_collection_for_select(@members, :id, :name) %>
+  <div class="form-group">
+    <%= f.label :member_id, 'Medlem' %><br />
+    <%= f.select :member_id, options_from_collection_for_select(@members, :id, :name, @election.member_id), {}, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :resigned_on %><br />
-    <%= f.date_select :resigned_on %>
+  <div class="form-group">
+    <%= f.label :resigned_on, 'Trukket seg' %>
+    <%= f.datetime_picker :resigned_on, class: 'form-control' %>
   </div>
+
   <div class="actions">
-    <%= f.submit %>
-    <%= link_to 'Show', @election %> |
-    <%= link_to 'Back', elections_path %>
+    <%= f.submit 'Lagre', class: 'btn btn-primary' %>
+    <%= link_to 'Vis', @election %> |
+    <%= link_to 'Tilbake', elections_path %>
   </div>
 <% end %>

@@ -31,7 +31,8 @@ class ElectionsController < ApplicationController
     @roles = Role.
         where('years_on_the_board IS NOT NULL OR id = ?', @election.role_id).
         order(:name).all
-    @members = Member.active(@election.annual_meeting.date).order(:first_name, :last_name).all
+    @members = ([@election.member] + Member.active(@election.annual_meeting.date).
+        order(:first_name, :last_name).all).uniq
   end
 
   # POST /elections
