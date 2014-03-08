@@ -1,0 +1,10 @@
+one:
+  annual_meeting: two
+  start_at: 2014-03-08 12:49:11
+  minutes_filename: MyString
+  minutes_content_type: MyString
+  minutes_content_data:
+
+two:
+  annual_meeting: two
+  start_at: 2014-04-08 13:37

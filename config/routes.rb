@@ -1,13 +1,4 @@
 RjjkWeb::Application.routes.draw do
-  resources :elections
-
-
-  resources :roles
-
-
-  resources :appointments
-
-
   get 'attendances/review/:practice_id' => 'attendances#review'
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
   get ':controller/report(/:year/:month)' => '#report'
@@ -39,12 +30,15 @@ RjjkWeb::Application.routes.draw do
   match ':controller/telephone_list', action: :telephone_list
   match ':controller/yaml', action: :yaml
 
+  resources :appointments
   resources :annual_meetings
   resources :attendances
   resources :birthday_celebrations
+  resources :board_meetings
   resources :censors
   resources :cms_members
   resources :correspondences
+  resources :elections
   resources :embus
   resources :embu_images
   resources :event_invitee_messages
@@ -70,6 +64,7 @@ RjjkWeb::Application.routes.draw do
   resources :page_aliases
   resources :practices
   resources :public_records
+  resources :roles
   resources :semesters
   resources :signatures
   resources :trial_attendances

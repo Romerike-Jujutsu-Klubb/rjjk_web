@@ -1,0 +1,16 @@
+<h1>Referat fra styremøte <%= @board_meeting.start_at.to_date %></h1>
+
+<br/>
+
+<% if @board_meeting.minutes_content_type == 'text/plain' %>
+    <pre>
+      <%= @board_meeting.minutes_content_data %>
+    </pre>
+<% else %>
+    <p>
+      <%= @board_meeting.minutes_content_data %>
+    </p>
+<% end %>
+
+<%= link_to 'Rediger', edit_board_meeting_path(@board_meeting) %> |
+<%= link_to 'Tilbake', board_meetings_path %>

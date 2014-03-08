@@ -27,7 +27,7 @@
     </div>
 
     <%= submit_tag 'Lagre', :id => 'save', :class => 'btn btn-default' %>
-    <%= back_or_link_to 'Tilbake', {:action => :list}, :class => 'btn btn-default' %>
+    <%= back_or_link_to 'Tilbake', {:action => :index}, :class => 'btn btn-default' %>
     <%= link_to 'Til NKF avstemming', {:controller => :nkf_members, :action => :comparison, :id => 0}, :class => 'btn btn-default' %>
 <% end %>
 

@@ -56,3 +56,9 @@ module ApplicationHelper
   end
 
 end
+
+class Array
+  def to_options(method = :name)
+    map { |r| [r.respond_to?(:method) ? r.send(method) : r.to_s, r.id] }
+  end
+end

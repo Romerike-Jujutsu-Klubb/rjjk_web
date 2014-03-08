@@ -1,5 +1,16 @@
-<%= render :partial => 'search_form' %>
 <% if @invalid %>
-	<p>Invalid character in search.</p>
+    <p>Det var ugyldige tegn i søket.</p>
 <% end %>
+
+<div class="pull-left">
+  <%= render :partial => 'search_form' %>
+</div>
+
+<% if @members and not @members.empty? %>
+    <div class="pull-left" style="margin-left: 1em">Fant <%= (@members.size) %> treff.</div>
+<% end %>
+
+<br clear="all">
+<br/>
+
 <%= render :partial => 'user_table' %>

@@ -1,19 +1,6 @@
-# encoding: utf-8
-require File.dirname(__FILE__) + '/../test_helper'
-require 'user_controller'
-require 'user_notify'
-
-# Raise errors beyond the default web-based presentation
-class UserController;
-  def rescue_action(e)
-    raise e
-  end
-end
+require 'test_helper'
 
 class UserControllerTest < ActionController::TestCase
-  self.use_transactional_fixtures = false
-  fixtures :users
-
   def setup
     @controller = UserController.new
     @request = ActionController::TestRequest.new

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140302211743) do
+ActiveRecord::Schema.define(:version => 20140308114911) do
 
   create_table "annual_meetings", :force => true do |t|
     t.datetime "start_at"
@@ -157,6 +157,18 @@ ActiveRecord::Schema.define(:version => 20140302211743) do
     t.integer  "sensor3_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+  end
+
+  create_table "board_meetings", :force => true do |t|
+    t.integer  "annual_meeting_id",                  :null => false
+    t.datetime "start_at",                           :null => false
+    t.string   "minutes_filename",     :limit => 64
+    t.string   "minutes_content_type", :limit => 32
+    t.binary   "minutes_content_data"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.index ["annual_meeting_id"], :name => "fk__board_meetings_annual_meeting_id"
+    t.foreign_key ["annual_meeting_id"], "annual_meetings", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_board_meetings_annual_meeting_id"
   end
 
   create_table "graduations", :force => true do |t|

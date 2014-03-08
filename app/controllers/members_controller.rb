@@ -1,4 +1,3 @@
-# encoding: UTF-8
 class MembersController < ApplicationController
   before_filter :admin_required
 
@@ -10,14 +9,14 @@ class MembersController < ApplicationController
     @title = 'Søk i medlemsregisteret'
     if params[:q]
       query = params[:q]
-      @members = Member.find_by_contents(query)
+      @members = Member.search(query)
       @members = @members.sort_by { |member| member.last_name }
     end
   end
 
   def index
-    list
-    render :action => 'list'
+    @members = Member.paginate :page => params[:page], :per_page => Member::MEMBERS_PER_PAGE, :order => 'first_name, last_name'
+    @member_count = Member.count
   end
 
   # GET /members/yaml
@@ -27,14 +26,10 @@ class MembersController < ApplicationController
     render :text => @members.map { |m| m.attributes }.to_yaml, :content_type => 'text/yaml', :layout => false
   end
 
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  #verify :method => :post, :only => [ :destroy, :create, :update ],
-  #:redirect_to => { :action => :list }
-
   def list_active
     @members = Member.paginate_active(params[:page])
     @member_count = Member.count_active
-    render :action => :list
+    render :index
   end
 
   def history_graph
@@ -78,12 +73,7 @@ class MembersController < ApplicationController
   def list_inactive
     @members = Member.paginate :page => params[:page], :per_page => Member::MEMBERS_PER_PAGE, :conditions => 'left_on IS NOT NULL', :order => 'last_name'
     @member_count = Member.count(:conditions => 'left_on IS NOT NULL')
-    render :action => :list
-  end
-
-  def list
-    @members = Member.paginate :page => params[:page], :per_page => Member::MEMBERS_PER_PAGE, :order => 'first_name, last_name'
-    @member_count = Member.count
+    render :action => :index
   end
 
   def excel_export
@@ -148,7 +138,7 @@ class MembersController < ApplicationController
 
   def destroy
     Member.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    redirect_to :action => 'index'
   end
 
   def NKF_report

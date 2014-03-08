@@ -1,17 +1,6 @@
-# encoding: UTF-8
-require File.dirname(__FILE__) + '/../test_helper'
-require 'members_controller'
-
-# Re-raise errors caught by the controller.
-class MembersController
-  def rescue_action(e)
-    raise e
-  end
-end
+require 'test_helper'
 
 class MembersControllerTest < ActionController::TestCase
-  fixtures :members, :users
-
   def setup
     @controller = MembersController.new
     @request = ActionController::TestRequest.new
@@ -24,27 +13,27 @@ class MembersControllerTest < ActionController::TestCase
   def test_index
     get :index
     assert_response :success
-    assert_template 'list'
+    assert_template :index
   end
 
   def test_list_active
     get :list_active
     assert_response :success
-    assert_template 'list'
+    assert_template :index
     assert_not_nil assigns(:members)
   end
 
   def test_list_inactive
     get :list_inactive
     assert_response :success
-    assert_template 'list'
+    assert_template :index
     assert_not_nil assigns(:members)
   end
 
   def test_list
-    get :list
+    get :index
     assert_response :success
-    assert_template 'list'
+    assert_template :index
     assert_not_nil assigns(:members)
   end
 
@@ -115,7 +104,7 @@ class MembersControllerTest < ActionController::TestCase
 
     post :destroy, :id => @first_id
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to action: :index
 
     assert_raise(ActiveRecord::RecordNotFound) {
       Member.find(@first_id)

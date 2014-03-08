@@ -39,10 +39,8 @@
         <li><%= menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
         <li><%= menu_item 'Oppmøtelister', :controller => 'attendances', :action => :form_index %></li>
         <li><%= menu_item 'Graderinger', :controller => 'graduations' %></li>
-        <li><%= menu_item 'Telefonliste', :controller => 'members', :action => :telephone_list %></li>
-        <li><%= menu_item 'E-postlister', :controller => 'members', :action => :email_list %></li>
-        <li><%= menu_item 'Gamle medlemmer', :controller => 'members', :action => :list_inactive %></li>
         <li><%= menu_item 'Instruksjon', :controller => 'group_instructors' %></li>
+        <li><%= menu_item 'Styremøter', controller: :board_meetings %></li>
         <li><%= menu_item 'Bursdager', :controller => 'birthday_celebrations' %></li>
         <li><%= menu_item 'Treningstider', :controller => 'group_schedules' %></li>
         <li><%= menu_item 'Grupper', :controller => 'groups' %></li>

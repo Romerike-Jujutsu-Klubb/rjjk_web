@@ -5,7 +5,7 @@
 <%=form_tag({:action => 'create'}, {:id => :form, :multipart => true}) do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Lagre', :id => 'save' %>
-  <%= link_to 'Tilbake', :action => 'list' %>
+  <%= link_to 'Tilbake', :action => 'index' %>
 <% end %>
 
 <script type="text/JavaScript">

@@ -1,0 +1,27 @@
+<%= link_to 'Sett opp nytt styremøte', new_board_meeting_path, class: 'btn btn-primary pull-right' %>
+
+<h1>Styremøter</h1>
+
+<% if @board_meetings.any? %>
+    <table class="table">
+      <tr>
+        <th>Dato</th>
+        <th>Tid</th>
+        <th>Referat</th>
+        <th></th>
+      </tr>
+
+      <% @board_meetings.each do |board_meeting| %>
+          <tr>
+            <td><%= link_to board_meeting.start_at.to_date, edit_board_meeting_path(board_meeting) %></td>
+            <td><%= link_to board_meeting.start_at.strftime('%R'), edit_board_meeting_path(board_meeting) %></td>
+            <td><%= link_to(board_meeting.minutes_filename, action: :minutes, id: board_meeting.id) if board_meeting.minutes_filename %></td>
+            <td><%= link_to '', board_meeting, method: :delete,
+                    class: 'glyphicon glyphicon-trash',
+                    data: {confirm: 'Are you sure?'} %></td>
+          </tr>
+      <% end %>
+    </table>
+<% else %>
+    <p>Det er ikke satt noen styremøter enda.</p>
+<% end %>
