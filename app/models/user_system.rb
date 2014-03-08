@@ -34,7 +34,7 @@ module UserSystem
   #   before_filter :admin_required
   def admin_required
     return false unless authenticate_user
-    return true if current_user.role == ADMIN_ROLE
+    return true if current_user.admin?
     access_denied('Du må være administrator for å se denne siden.')
   end
 
@@ -98,9 +98,7 @@ module UserSystem
   end
 
   def admin?
-    current_user && current_user.member &&
-        (current_user.member.elections.current.any? ||
-            current_user.member.appointments.current.any?)
+    current_user.try(:admin?)
   end
 
   def current_user

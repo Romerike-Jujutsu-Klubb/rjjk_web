@@ -30,7 +30,7 @@ class Member < ActiveRecord::Base
   has_and_belongs_to_many :groups
 
   scope :active, ->(from_date = nil, to_date = nil) do
-    from_date ||= Date.today ; to_date ||= from_date
+    from_date ||= Date.today; to_date ||= from_date
     {conditions: ['joined_on <= ? AND left_on IS NULL OR left_on > ?',
         to_date, from_date]}
   end
@@ -322,5 +322,9 @@ class Member < ActiveRecord::Base
   def title(date = Date.today)
     current_rank = current_rank(MartialArt.find_by_name('Kei Wa Ryu'), date)
     current_rank && current_rank.name =~ /dan/ ? 'Sensei' : 'Sempai'
+  end
+
+  def admin?
+    elections.current.any? || appointments.current.any?
   end
 end
