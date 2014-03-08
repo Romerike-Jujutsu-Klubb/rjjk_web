@@ -12,12 +12,7 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :annual_meeting_id %><br />
-    <%= f.select :annual_meeting_id, @annual_meetings.to_options(:date), {},
-            class: 'form-control' %>
-  </div>
-  <div class="form-group">
-    <%= f.label :start_at %><br />
+    <%= f.label :start_at, 'Tidspunkt' %><br />
     <%= f.datetime_picker :start_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
                           :class => 'form-control' %>
   </div>
