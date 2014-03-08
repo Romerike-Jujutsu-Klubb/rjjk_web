@@ -37,7 +37,7 @@ class BoardMeetingsControllerTest < ActionController::TestCase
 
   test 'should update board_meeting' do
     put :update, id: @board_meeting, board_meeting: { start_at: @board_meeting.start_at }
-    assert_redirected_to board_meeting_path(assigns(:board_meeting))
+    assert_redirected_to board_meetings_path
   end
 
   test 'should destroy board_meeting' do
