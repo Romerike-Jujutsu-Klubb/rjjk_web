@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
             image_query = Image.
                 select('approved, content_type, description, height, id, name, public, user_id, width').
                 where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'").
-                order('RANDOM()')
+                order(Rails.env.test? ? :id : 'RANDOM()')
             image_query = image_query.where('approved = ?', true) unless admin?
             image_query = image_query.where('public = ?', true) unless user?
             @image = image_query.first

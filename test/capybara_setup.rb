@@ -7,28 +7,31 @@ require 'image_compare'
 DatabaseCleaner.strategy = :truncation
 
 class ActionDispatch::IntegrationTest
+  WINDOW_SIZE = [1024, 768]
   SCREENSHOT_DIR = 'doc/screenshots'
   SCREENSHOT_DIR_ABS = "#{Rails.root}/#{SCREENSHOT_DIR}"
 
   include Capybara::DSL
 
-   Capybara.default_driver = :selenium
+  Capybara.default_driver = :selenium
 
   self.use_transactional_fixtures = false
+  TEST_START = Time.now.change(sec: 0)
 
   setup do
-    Capybara.current_session.driver.browser.manage.window.resize_to(1024, 768)
-    Timecop.travel
+    Capybara.current_session.driver.browser.manage.window.resize_to(*WINDOW_SIZE)
+    Timecop.travel TEST_START
   end
 
   teardown do
     DatabaseCleaner.clean       # Truncate the database
     Capybara.reset_sessions!    # Forget the (simulated) browser state
     Capybara.use_default_driver # Revert Capybara.current_driver to Capybara.default_driver
+    fail(@test_screenshot_errors.join("\n")) if @test_screenshot_errors
   end
 
   def screenshot(name)
-    return unless Capybara.current_session.driver.browser.manage.window.size == Selenium::WebDriver::Dimension.new(1024, 768)
+    return unless Capybara.current_session.driver.browser.manage.window.size == Selenium::WebDriver::Dimension.new(*WINDOW_SIZE)
     file_name = "#{SCREENSHOT_DIR_ABS}/#{name}.png"
     svn_file_name = "#{SCREENSHOT_DIR_ABS}/.svn/text-base/#{name}.png.svn-base"
     org_name = "#{SCREENSHOT_DIR_ABS}/#{name}_0.png~"
@@ -55,7 +58,19 @@ class ActionDispatch::IntegrationTest
       sleep 0.5
     end
     if ImageCompare.compare(file_name, svn_file_name)
-      # fail("Screenshot does not match for #{name.inspect}\n#{file_name}\n#{org_name}\n#{new_name}")
+      (@test_screenshot_errors ||= []) <<
+          "Screenshot does not match for #{name.inspect}\n#{file_name}\n#{org_name}\n#{new_name}\n#{caller[0]}"
+    end
+  end
+end
+
+module Capybara
+  self.default_wait_time = 15
+  module Node
+    class Element
+      def hover
+        @session.driver.browser.action.move_to(self.native).perform
+      end
     end
   end
 end

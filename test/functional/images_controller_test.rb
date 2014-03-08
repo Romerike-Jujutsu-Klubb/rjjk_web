@@ -1,8 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'images_controller'
-
-# Re-raise errors caught by the controller.
-class ImagesController; def rescue_action(e) raise e end; end
+require 'test_helper'
 
 class ImagesControllerTest < ActionController::TestCase
   fixtures :images

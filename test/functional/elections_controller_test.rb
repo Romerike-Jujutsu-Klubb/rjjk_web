@@ -3,6 +3,7 @@ require 'test_helper'
 class ElectionsControllerTest < ActionController::TestCase
   setup do
     @election = elections(:uwe_chairman)
+    login(:admin)
   end
 
   test 'should get index' do

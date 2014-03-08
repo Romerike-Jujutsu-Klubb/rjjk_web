@@ -3,6 +3,7 @@ require 'test_helper'
 class AppointmentsControllerTest < ActionController::TestCase
   setup do
     @appointment = appointments(:uwe_first)
+    login(:admin)
   end
 
   test 'should get index' do

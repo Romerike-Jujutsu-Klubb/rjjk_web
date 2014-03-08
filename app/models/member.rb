@@ -29,7 +29,11 @@ class Member < ActiveRecord::Base
   has_many :signatures, :dependent => :destroy
   has_and_belongs_to_many :groups
 
-  scope :active, ->(from_date, to_date = from_date) { {conditions: ['joined_on <= ? AND left_on IS NULL OR left_on > ?', to_date, from_date]} }
+  scope :active, ->(from_date = nil, to_date = nil) do
+    from_date ||= Date.today ; to_date ||= from_date
+    {conditions: ['joined_on <= ? AND left_on IS NULL OR left_on > ?',
+        to_date, from_date]}
+  end
   SEARCH_FIELDS = [
       :billing_email, :email, :first_name, :last_name, :parent_email,
       :parent_name, :phone_home, :phone_mobile, :phone_parent, :phone_work]

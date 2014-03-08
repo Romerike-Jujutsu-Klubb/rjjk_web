@@ -19,6 +19,7 @@ class ElectionsController < ApplicationController
 
   def new
     @election = Election.new
+    load_form_data
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @election }
@@ -27,19 +28,11 @@ class ElectionsController < ApplicationController
 
   def edit
     @election = Election.find(params[:id])
-    @annual_meetings = AnnualMeeting.all
-    @roles = Role.
-        where('years_on_the_board IS NOT NULL OR id = ?', @election.role_id).
-        order(:name).all
-    @members = ([@election.member] + Member.active(@election.annual_meeting.date).
-        order(:first_name, :last_name).all).uniq
+    load_form_data
   end
 
-  # POST /elections
-  # POST /elections.json
   def create
     @election = Election.new(params[:election])
-
     respond_to do |format|
       if @election.save
         format.html { redirect_to @election, notice: 'Board appointment was successfully created.' }
@@ -51,11 +44,8 @@ class ElectionsController < ApplicationController
     end
   end
 
-  # PUT /elections/1
-  # PUT /elections/1.json
   def update
     @election = Election.find(params[:id])
-
     respond_to do |format|
       if @election.update_attributes(params[:election])
         format.html { redirect_to @election, notice: 'Board appointment was successfully updated.' }
@@ -67,15 +57,24 @@ class ElectionsController < ApplicationController
     end
   end
 
-  # DELETE /elections/1
-  # DELETE /elections/1.json
   def destroy
     @election = Election.find(params[:id])
     @election.destroy
-
     respond_to do |format|
       format.html { redirect_to elections_url }
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def load_form_data
+    @annual_meetings = AnnualMeeting.all
+    @roles = Role.
+        where('years_on_the_board IS NOT NULL OR id = ?', @election.role_id).
+        order(:name).all
+    @members = ([@election.member].compact + Member.active(@election.annual_meeting.try(:date)).
+        order(:first_name, :last_name).all).uniq
+  end
+
 end
