@@ -3,6 +3,7 @@ class BoardMeetingsController < ApplicationController
 
   def index
     @board_meetings = BoardMeeting.all
+    load_form_data
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @board_meetings }
@@ -18,7 +19,6 @@ class BoardMeetingsController < ApplicationController
   end
 
   def new
-    @board_meeting = BoardMeeting.new params[:board_meeting]
     load_form_data
     respond_to do |format|
       format.html # new.html.erb
@@ -48,7 +48,7 @@ class BoardMeetingsController < ApplicationController
     @board_meeting = BoardMeeting.find(params[:id])
     respond_to do |format|
       if @board_meeting.update_attributes(params[:board_meeting])
-        format.html { redirect_to @board_meeting, notice: 'Board meeting was successfully updated.' }
+        format.html { redirect_to board_meetings_path, notice: 'Board meeting was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render :edit }
@@ -75,6 +75,7 @@ class BoardMeetingsController < ApplicationController
   private
 
   def load_form_data
+    @board_meeting ||= BoardMeeting.new params[:board_meeting]
     @annual_meetings = AnnualMeeting.order('start_at DESC').all
   end
 

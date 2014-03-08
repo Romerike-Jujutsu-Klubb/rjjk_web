@@ -1,5 +1,3 @@
-# encoding: utf-8
-require 'gruff'
 class MemberGradeHistoryGraph
   ACTIVE_CLAUSE = <<EOF
 EXISTS (
@@ -109,9 +107,4 @@ EOF
       ranks
     end
   end
-
-  def self.logger
-    Rails.logger
-  end
-
 end

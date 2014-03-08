@@ -19,11 +19,10 @@ class BoardMeetingsControllerTest < ActionController::TestCase
 
   test 'should create board_meeting' do
     assert_difference('BoardMeeting.count') do
-      post :create, board_meeting: { annual_meeting_id: @board_meeting.annual_meeting_id, start_at: @board_meeting.start_at }
+      post :create, board_meeting: { start_at: @board_meeting.start_at }
       assert_no_errors :board_meeting
     end
-
-    assert_redirected_to board_meeting_path(assigns(:board_meeting))
+    assert_redirected_to board_meetings_path
   end
 
   test 'should show board_meeting' do
@@ -37,7 +36,7 @@ class BoardMeetingsControllerTest < ActionController::TestCase
   end
 
   test 'should update board_meeting' do
-    put :update, id: @board_meeting, board_meeting: { annual_meeting_id: @board_meeting.annual_meeting_id, start_at: @board_meeting.start_at }
+    put :update, id: @board_meeting, board_meeting: { start_at: @board_meeting.start_at }
     assert_redirected_to board_meeting_path(assigns(:board_meeting))
   end
 

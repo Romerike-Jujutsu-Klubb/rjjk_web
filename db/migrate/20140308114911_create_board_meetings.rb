@@ -1,7 +1,6 @@
 class CreateBoardMeetings < ActiveRecord::Migration
   def change
     create_table :board_meetings do |t|
-      t.integer :annual_meeting_id, null: false
       t.datetime :start_at, null: false
       t.string :minutes_filename, limit: 64
       t.string :minutes_content_type, limit: 32

@@ -1,7 +1,5 @@
 class BoardMeeting < ActiveRecord::Base
-  attr_accessible :annual_meeting_id, :minutes, :start_at
-
-  belongs_to :annual_meeting
+  attr_accessible :minutes, :start_at
 
   def minutes=(file)
     return if file == ''

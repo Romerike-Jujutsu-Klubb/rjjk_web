@@ -1,4 +1,13 @@
-<%= link_to 'Sett opp nytt styremøte', new_board_meeting_path, class: 'btn btn-primary pull-right' %>
+<%= form_for(@board_meeting, html: {class: 'form-inline col-xs-7 pull-right',
+        style: 'margin-top: 4px', role: :form}) do |f| %>
+    <div class="input-group">
+      <%= f.datetime_picker :start_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
+              :class => 'form-control', placeholder: 'Tidspunkt' %>
+      <span class="input-group-btn">
+        <%= f.submit 'Sett opp nytt styremøte', class: 'btn btn-primary' %>
+      </span>
+    </div>
+<% end %>
 
 <h1>Styremøter</h1>
 
@@ -13,12 +22,42 @@
 
       <% @board_meetings.each do |board_meeting| %>
           <tr>
-            <td><%= link_to board_meeting.start_at.to_date, edit_board_meeting_path(board_meeting) %></td>
+            <td nowrap="nowrap"><%= link_to board_meeting.start_at.to_date, edit_board_meeting_path(board_meeting) %></td>
             <td><%= link_to board_meeting.start_at.strftime('%R'), edit_board_meeting_path(board_meeting) %></td>
-            <td><%= link_to(board_meeting.minutes_filename, action: :minutes, id: board_meeting.id) if board_meeting.minutes_filename %></td>
+            <td>
+              <% if board_meeting.minutes_filename %>
+                  <%= link_to(board_meeting.minutes_filename, action: :minutes, id: board_meeting.id) if board_meeting.minutes_filename %>
+              <% else %>
+                  <%= form_for(board_meeting, html: {class: 'form-inline', role: :form}) do |f| %>
+                      <div class="input-group">
+                        <%= f.file_field :minutes, class: 'form-control' %>
+                        <span class="input-group-btn">
+                          <%= f.submit 'Last opp referat', class: 'btn btn-primary' %>
+                        </span>
+                      </div>
+                  <% end %>
+              <% end %>
+            </td>
             <td><%= link_to '', board_meeting, method: :delete,
                     class: 'glyphicon glyphicon-trash',
                     data: {confirm: 'Are you sure?'} %></td>
+          </tr>
+      <% end %>
+      <% if @board_meeting.errors.any? %>
+          <tr>
+            <td colspan="3">
+              <div id="error_explanation">
+                <h2><%= pluralize(@board_meeting.errors.count, 'error') %>
+                  prohibited this
+                  board_meeting from being saved:</h2>
+
+                <ul>
+                  <% @board_meeting.errors.full_messages.each do |msg| %>
+                      <li><%= msg %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </td>
           </tr>
       <% end %>
     </table>
