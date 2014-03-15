@@ -1,9 +1,9 @@
 one:
   user_id: 1000001
-  rank: one
+  rank: kyu_5
   description: First
 
 two:
   user_id: 1000001
-  rank: two
+  rank: kyu_4
   description: Second

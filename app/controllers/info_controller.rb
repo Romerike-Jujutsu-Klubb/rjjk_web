@@ -1,22 +1,7 @@
 class InfoController < ApplicationController
-  before_filter :admin_required, :except => [:index, :list, :show, :show_content]
+  before_filter :admin_required, :except => [:index, :show, :show_content]
 
   def index
-    unless id = params[:id]
-      id = InformationPage.first(:order => 'id')
-      unless id
-        redirect_to :action => :new
-        return
-      end
-    end
-    redirect_to :action => :show, :id => id
-  end
-
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  #verify :method => :post, :only => [ :destroy, :create, :update ],
-  #       :redirect_to => { :action => :list }
-
-  def list
     @information_pages = InformationPage.paginate :page => params[:page], :per_page => 10
   end
 

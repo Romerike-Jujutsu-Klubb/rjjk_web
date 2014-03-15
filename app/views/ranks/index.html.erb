@@ -1,0 +1,49 @@
+<% @content_width = 1024 %>
+
+<h1>Grader</h1>
+
+<ul class="nav nav-tabs">
+  <% @martial_arts.each.with_index do |(ma, ranks), i| %>
+  <li <%='class="active"'.html_safe if i == 0%>><a href="#<%=ma.name%>" data-toggle="tab"><%=ma.name%></a></li>
+  <% end %>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+<% @martial_arts.each.with_index do |(ma, ranks), i| %>
+  <div class="tab-pane <%='active' if i == 0%>" id="<%=ma.name%>">
+    <table class="table table-condensed">
+      <tr>
+        <th>Stilart</th>
+        <th>Posisjon</th>
+        <th align="right">Navn</th>
+        <th align="left">Beltebeskrivelse</th>
+        <th align="left">Gruppe</th>
+        <th align="left">Minste alder</th>
+        <th>Måneder</th>
+        <th/>
+      </tr>
+
+      <% for rank in ranks %>
+          <tr>
+            <td><%= h rank.martial_art.name %></td>
+            <td align="center"><%= h rank.position %></td>
+            <td align="right"><%= link_to rank.name, rank %></td>
+            <td><%= link_to rank.colour, rank %></td>
+            <td><%= h rank.group.name %></td>
+            <td><%= h rank.minimum_age %></td>
+            <td align="center"><%= h rank.standard_months %></td>
+            <td><%= link_to 'Rediger', :action => 'edit', :id => rank %></td>
+            <!--
+    <td><%= link_to 'Slett', {:action => 'destroy', :id => rank}, data: {:confirm => 'Are you sure?'}, :method => :post %></td>
+-->
+          </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>
+</div>
+
+<br/>
+
+<%= link_to 'Legg til grad', :action => 'new' %>

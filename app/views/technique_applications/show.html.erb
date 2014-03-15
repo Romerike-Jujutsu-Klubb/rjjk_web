@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @technique_application.name %>
+</p>
+
+<p>
+  <b>Rank:</b>
+  <%= @technique_application.rank_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_technique_application_path(@technique_application) %> |
+<%= link_to 'Back', technique_applications_path %>

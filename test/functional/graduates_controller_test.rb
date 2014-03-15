@@ -49,7 +49,7 @@ class GraduatesControllerTest < ActionController::TestCase
 
     post :create, :graduate => {:member_id => members(:lars).id,
                                 :graduation_id => graduations(:tiger).id,
-                                :passed => true, :rank_id => ranks(:two).id,
+                                :passed => true, :rank_id => ranks(:kyu_4).id,
                                 :paid_graduation => true, :paid_belt => true}
     assert_no_errors :graduate
     assert_response :redirect

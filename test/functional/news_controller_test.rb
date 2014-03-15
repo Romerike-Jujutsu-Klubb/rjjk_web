@@ -20,7 +20,7 @@ class NewsControllerTest < ActionController::TestCase
   end
 
   def test_list
-    get :list
+    get :index
 
     assert_response :success
     assert_template 'index'
@@ -78,7 +78,7 @@ class NewsControllerTest < ActionController::TestCase
     login(:admin)
     post :update, :id => news_items(:first).id
     assert_response :redirect
-    assert_redirected_to :action => :list, :id => news_items(:first).id
+    assert_redirected_to :action => :show, :id => news_items(:first).id
   end
 
   def test_destroy
@@ -88,7 +88,7 @@ class NewsControllerTest < ActionController::TestCase
     login(:admin)
     post :destroy, :id => n.id
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :action => :index
 
     assert_raise(ActiveRecord::RecordNotFound) {
       NewsItem.find(n.id)

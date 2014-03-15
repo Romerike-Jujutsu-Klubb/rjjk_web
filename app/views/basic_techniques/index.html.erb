@@ -1,0 +1,33 @@
+<% @content_width = 1024 %>
+
+<h1>Grunnteknikker</h1>
+
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Translation</th>
+    <th>Waza</th>
+    <th>Description</th>
+    <th>Rank</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @basic_techniques.each do |basic_technique| %>
+  <tr>
+    <td><%= basic_technique.name %></td>
+    <td><%= basic_technique.translation %></td>
+    <td><%= basic_technique.waza.try(:name) %></td>
+    <td><%= basic_technique.description %></td>
+    <td><%= link_to basic_technique.rank.try(:name), basic_technique.rank %></td>
+    <td><%= link_to 'Show', basic_technique %></td>
+    <td><%= link_to 'Edit', edit_basic_technique_path(basic_technique) %></td>
+    <td><%= link_to 'Destroy', basic_technique, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Basic technique', new_basic_technique_path %>

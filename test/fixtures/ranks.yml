@@ -22,7 +22,7 @@ mon_10:
   standard_months: 6
   group: tiger
 
-one:
+kyu_5:
   name: '5.kyu'
   colour: 'gult'
   position: 1
@@ -30,7 +30,7 @@ one:
   standard_months: 6
   group: panda
 
-two:
+kyu_4:
   name: '4.kyu'
   colour: 'oransje'
   position: 2

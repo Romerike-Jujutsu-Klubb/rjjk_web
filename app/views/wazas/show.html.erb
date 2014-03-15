@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @waza.name %>
+</p>
+
+<p>
+  <b>Translation:</b>
+  <%= @waza.translation %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @waza.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_waza_path(@waza) %> |
+<%= link_to 'Back', wazas_path %>

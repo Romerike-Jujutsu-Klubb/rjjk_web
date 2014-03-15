@@ -1,8 +1,27 @@
-<% for column in Rank.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> <%=h @rank.send(column.name) %>
-</p>
-<% end %>
+<h3><%=@rank.name%> <%=@rank.colour%></h3>
+
+Normert tid: <%=@rank.standard_months%> måneder
 
 <%= link_to 'Edit', :action => 'edit', :id => @rank %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= link_to 'Back', :action => 'index' %>
+
+<h3>Grunnteknikker</h3>
+
+<table class="table">
+  <% @rank.basic_techniques.group_by(&:waza).each do |waza, bts| %>
+      <tr>
+        <td><%= waza.name %></td>
+        <td><%=bts.map{|bt| link_to bt.name, bt}.join(', ').html_safe%></td>
+      </tr>
+  <% end %>
+</table>
+
+<h3>Applikasjoner</h3>
+
+<table class="table">
+  <% @rank.technique_applications.each do |app| %>
+      <tr>
+        <td><%= link_to app.name, app %></td>
+      </tr>
+  <% end %>
+</table>

@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Application:</b>
+  <%= @application_step.technique_application_id %>
+</p>
+
+<p>
+  <b>Position:</b>
+  <%= @application_step.position %>
+</p>
+
+<p>
+  <b>Decription:</b>
+  <%= @application_step.decription %>
+</p>
+
+<p>
+  <b>Image filename:</b>
+  <%= @application_step.image_filename %>
+</p>
+
+<p>
+  <b>Image content type:</b>
+  <%= @application_step.image_content_type %>
+</p>
+
+<p>
+  <b>Image content data:</b>
+  <%= @application_step.image_content_data %>
+</p>
+
+
+<%= link_to 'Edit', edit_application_step_path(@application_step) %> |
+<%= link_to 'Back', application_steps_path %>

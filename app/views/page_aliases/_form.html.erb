@@ -12,16 +12,16 @@
         </div>
     <% end %>
 
-    <div class="field">
+    <div class="form-group">
       <%= f.label :old_path, 'Gammel sti' %>
-      <%= f.text_field :old_path %>
+      <%= f.text_field :old_path, class: 'form-control' %>
     </div>
-    <div class="field">
+    <div class="form-group">
       <%= f.label :new_path, 'Ny sti' %>
-      <%= f.text_field :new_path %>
+      <%= f.text_field :new_path, class: 'form-control' %>
     </div>
     <div class="actions">
-      <%= f.submit :value => 'Lagre', :class => 'btn btn-default' %>
+      <%= f.submit :value => 'Lagre', class: 'btn btn-default' %>
     </div>
 <% end %>
 

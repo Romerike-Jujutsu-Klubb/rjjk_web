@@ -1,0 +1,25 @@
+<%= form_for(@technique_application) do |f| %>
+  <% if @technique_application.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@technique_application.errors.count, "error") %> prohibited this application from being saved:</h2>
+
+      <ul>
+      <% @technique_application.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :rank_id %><br />
+    <%= f.select :rank_id, @ranks.to_options, prompt:'Velg grad' %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

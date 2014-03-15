@@ -2,16 +2,8 @@ class RanksController < ApplicationController
   before_filter :admin_required
 
   def index
-    list
-    render :action => 'list'
-  end
-
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  #verify :method => :post, :only => [ :destroy, :create, :update ],
-  #       :redirect_to => { :action => :list }
-
-  def list
-    @ranks = Rank.paginate :page => params[:page], :per_page => 42, :order => 'martial_art_id, position'
+    @ranks = Rank.order(:martial_art_id, :position).all
+    @martial_arts = @ranks.group_by(&:martial_art)
   end
 
   def show
@@ -28,7 +20,7 @@ class RanksController < ApplicationController
     @rank = Rank.new(params[:rank])
     if @rank.save
       flash[:notice] = 'Rank was successfully created.'
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     else
       new
       render :action => 'new'
@@ -54,6 +46,6 @@ class RanksController < ApplicationController
 
   def destroy
     Rank.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    redirect_to :action => 'index'
   end
 end

@@ -1,0 +1,9 @@
+tsuki:
+  name: Tsuki
+  translation: Slag
+  description: Slagteknikker
+
+nage:
+  name: Nage
+  translation: Kast
+  description: Kasteteknikker

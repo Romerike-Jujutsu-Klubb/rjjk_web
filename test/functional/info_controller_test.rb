@@ -1,9 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'info_controller'
 
-# Re-raise errors caught by the controller.
-class InfoController; def rescue_action(e) raise e end; end
-
 class InfoControllerTest < ActionController::TestCase
   fixtures :users, :information_pages
 
@@ -15,15 +12,15 @@ class InfoControllerTest < ActionController::TestCase
 
   def test_index
     get :index
-    assert_response :redirect
-    assert_redirected_to :action => :show, :id => information_pages(:first).id
+    assert_response :success
+    assert_template :index
   end
 
   def test_list
-    get :list
+    get :index
 
     assert_response :success
-    assert_template 'list'
+    assert_template :index
 
     assert_not_nil assigns(:information_pages)
   end

@@ -38,6 +38,7 @@ class GraduationReminder
     end
     GraduationMailer.overdue_graduates(overdue_graduates).deliver if overdue_graduates.any?
   rescue Exception
+    raise if Rails.env.test?
     logger.error "Exception sending overdue graduates message: #{$!}"
     logger.error $!.backtrace.join("\n")
     ExceptionNotifier.notify_exception($!)

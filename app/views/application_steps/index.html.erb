@@ -1,0 +1,33 @@
+<h1>Listing application_steps</h1>
+
+<table>
+  <tr>
+    <th>Application</th>
+    <th>Position</th>
+    <th>Decription</th>
+    <th>Image filename</th>
+    <th>Image content type</th>
+    <th>Image content data</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @application_steps.each do |application_step| %>
+  <tr>
+    <td><%= application_step.technique_application_id %></td>
+    <td><%= application_step.position %></td>
+    <td><%= application_step.decription %></td>
+    <td><%= application_step.image_filename %></td>
+    <td><%= application_step.image_content_type %></td>
+    <td><%= application_step.image_content_data %></td>
+    <td><%= link_to 'Show', application_step %></td>
+    <td><%= link_to 'Edit', edit_application_step_path(application_step) %></td>
+    <td><%= link_to 'Destroy', application_step, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Application step', new_application_step_path %>

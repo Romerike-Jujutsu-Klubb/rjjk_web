@@ -12,21 +12,21 @@ class RanksControllerTest < ActionController::TestCase
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
 
-    @first_id = ranks(:one).id
+    @first_id = ranks(:kyu_5).id
     login(:admin)
   end
 
   def test_index
     get :index
     assert_response :success
-    assert_template 'list'
+    assert_template :index
   end
 
   def test_list
-    get :list
+    get :index
 
     assert_response :success
-    assert_template 'list'
+    assert_template :index
 
     assert_not_nil assigns(:ranks)
   end
@@ -59,7 +59,7 @@ class RanksControllerTest < ActionController::TestCase
     }
     assert_no_errors :rank
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to :action => :index
 
     assert_equal num_ranks + 1, Rank.count
   end
@@ -87,7 +87,7 @@ class RanksControllerTest < ActionController::TestCase
 
     post :destroy, :id => @first_id
     assert_response :redirect
-    assert_redirected_to :action => :list
+    assert_redirected_to :action => :index
 
     assert_raise(ActiveRecord::RecordNotFound) {
       Rank.find(@first_id)

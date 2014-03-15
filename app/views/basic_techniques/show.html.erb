@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @basic_technique.name %>
+</p>
+
+<p>
+  <b>Translation:</b>
+  <%= @basic_technique.translation %>
+</p>
+
+<p>
+  <b>Waza:</b>
+  <%= @basic_technique.waza_id %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @basic_technique.description %>
+</p>
+
+<p>
+  <b>Rank:</b>
+  <%= @basic_technique.rank_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_basic_technique_path(@basic_technique) %> |
+<%= link_to 'Back', basic_techniques_path %>

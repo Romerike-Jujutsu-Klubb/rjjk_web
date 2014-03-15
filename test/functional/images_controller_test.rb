@@ -18,7 +18,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_list
-    get :list
+    get :index
 
     assert_response :success
     assert_template 'list'

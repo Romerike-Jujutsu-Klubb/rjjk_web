@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140308114911) do
+ActiveRecord::Schema.define(:version => 20140310000520) do
 
   create_table "annual_meetings", :force => true do |t|
     t.datetime "start_at"
@@ -20,6 +20,65 @@ ActiveRecord::Schema.define(:version => 20140308114911) do
     t.datetime "public_record_updated_at"
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
+  end
+
+  create_table "martial_arts", :force => true do |t|
+    t.string "name",   :limit => 16, :null => false
+    t.string "family", :limit => 16, :null => false
+  end
+
+  create_table "groups", :force => true do |t|
+    t.integer  "martial_art_id",               :null => false
+    t.string   "name",                         :null => false
+    t.integer  "from_age",                     :null => false
+    t.integer  "to_age",                       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.date     "closed_on"
+    t.integer  "monthly_price"
+    t.integer  "yearly_price"
+    t.string   "contract",       :limit => 16
+    t.string   "summary"
+    t.text     "description"
+    t.boolean  "school_breaks"
+    t.string   "color",          :limit => 16
+    t.integer  "target_size"
+    t.foreign_key ["martial_art_id"], "martial_arts", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "groups_martial_art_id_fkey"
+  end
+
+  create_table "ranks", :force => true do |t|
+    t.string  "name",            :limit => 16, :null => false
+    t.string  "colour",          :limit => 48, :null => false
+    t.integer "position",                      :null => false
+    t.integer "martial_art_id",                :null => false
+    t.integer "standard_months",               :null => false
+    t.integer "group_id"
+    t.foreign_key ["group_id"], "groups", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "ranks_group_id_fkey"
+    t.foreign_key ["martial_art_id"], "martial_arts", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "ranks_martial_art_id_fkey"
+  end
+
+  create_table "technique_applications", :force => true do |t|
+    t.string   "name",       :null => false
+    t.integer  "rank_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.index ["rank_id", "name"], :name => "index_technique_applications_on_rank_id_and_name", :unique => true
+    t.index ["rank_id"], :name => "fk__technique_applications_rank_id"
+    t.foreign_key ["rank_id"], "ranks", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_technique_applications_rank_id"
+  end
+
+  create_table "application_steps", :force => true do |t|
+    t.integer  "technique_application_id", :null => false
+    t.integer  "position",                 :null => false
+    t.text     "decription"
+    t.string   "image_filename"
+    t.string   "image_content_type"
+    t.binary   "image_content_data"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+    t.index ["technique_application_id", "position"], :name => "index_application_steps_on_technique_application_id_and_positio"
+    t.index ["technique_application_id"], :name => "fk__application_steps_technique_application_id"
+    t.foreign_key ["technique_application_id"], "technique_applications", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_application_steps_technique_application_id"
   end
 
   create_table "members", :force => true do |t|
@@ -86,30 +145,6 @@ ActiveRecord::Schema.define(:version => 20140308114911) do
     t.foreign_key ["role_id"], "roles", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_appointments_role_id"
   end
 
-  create_table "martial_arts", :force => true do |t|
-    t.string "name",   :limit => 16, :null => false
-    t.string "family", :limit => 16, :null => false
-  end
-
-  create_table "groups", :force => true do |t|
-    t.integer  "martial_art_id",               :null => false
-    t.string   "name",                         :null => false
-    t.integer  "from_age",                     :null => false
-    t.integer  "to_age",                       :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.date     "closed_on"
-    t.integer  "monthly_price"
-    t.integer  "yearly_price"
-    t.string   "contract",       :limit => 16
-    t.string   "summary"
-    t.text     "description"
-    t.boolean  "school_breaks"
-    t.string   "color",          :limit => 16
-    t.integer  "target_size"
-    t.foreign_key ["martial_art_id"], "martial_arts", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "groups_martial_art_id_fkey"
-  end
-
   create_table "group_schedules", :force => true do |t|
     t.integer  "group_id",   :null => false
     t.integer  "weekday",    :null => false
@@ -147,6 +182,30 @@ ActiveRecord::Schema.define(:version => 20140308114911) do
     t.index ["practice_id"], :name => "fk__attendances_practice_id"
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "attendances_member_id_fkey"
     t.foreign_key ["practice_id"], "practices", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_attendances_practice_id"
+  end
+
+  create_table "wazas", :force => true do |t|
+    t.string   "name",        :null => false
+    t.string   "translation"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.index ["name"], :name => "index_wazas_on_name", :unique => true
+  end
+
+  create_table "basic_techniques", :force => true do |t|
+    t.string   "name",        :null => false
+    t.string   "translation"
+    t.integer  "waza_id",     :null => false
+    t.text     "description"
+    t.integer  "rank_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.index ["name"], :name => "index_basic_techniques_on_name", :unique => true
+    t.index ["rank_id"], :name => "fk__basic_techniques_rank_id"
+    t.index ["waza_id"], :name => "fk__basic_techniques_waza_id"
+    t.foreign_key ["rank_id"], "ranks", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_basic_techniques_rank_id"
+    t.foreign_key ["waza_id"], "wazas", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_basic_techniques_waza_id"
   end
 
   create_table "birthday_celebrations", :force => true do |t|
@@ -315,17 +374,6 @@ ActiveRecord::Schema.define(:version => 20140308114911) do
   create_table "events_groups", :force => true do |t|
     t.integer "event_id"
     t.integer "group_id"
-  end
-
-  create_table "ranks", :force => true do |t|
-    t.string  "name",            :limit => 16, :null => false
-    t.string  "colour",          :limit => 48, :null => false
-    t.integer "position",                      :null => false
-    t.integer "martial_art_id",                :null => false
-    t.integer "standard_months",               :null => false
-    t.integer "group_id"
-    t.foreign_key ["group_id"], "groups", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "ranks_group_id_fkey"
-    t.foreign_key ["martial_art_id"], "martial_arts", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "ranks_martial_art_id_fkey"
   end
 
   create_table "graduates", :force => true do |t|

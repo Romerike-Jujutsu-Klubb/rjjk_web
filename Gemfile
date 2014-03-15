@@ -21,6 +21,7 @@ gem 'mechanize'
 gem 'nokogiri'
 gem 'paper_trail' # http://railscasts.com/episodes/255-undo-with-paper-trail?view=similar
 gem 'prawn'
+gem 'puma'
 gem 'rails-i18n'
 gem 'rake'
 gem 'RedCloth'

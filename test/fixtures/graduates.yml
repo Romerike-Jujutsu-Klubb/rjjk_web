@@ -2,7 +2,7 @@ one:
   member: lars
   graduation: panda
   passed: true
-  rank: one
+  rank: kyu_5
   paid_graduation: true
   paid_belt: true
 
@@ -10,7 +10,7 @@ two:
   member: uwe
   graduation: panda
   passed: false
-  rank: one
+  rank: kyu_5
   paid_graduation: true
   paid_belt: false
 
