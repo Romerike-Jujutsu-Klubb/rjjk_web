@@ -1,8 +1,8 @@
 <% @content_width = 1024 %>
 
-<h3><%= @rank.name %> <%= @rank.colour %>
+<h2><%= @rank.name %> <%= @rank.colour %>
   <%= link_to('Rediger', {:action => 'edit', :id => @rank}, class: 'btn btn-primary pull-right') if technical_committy? %>
-</h3>
+</h2>
 
 <p>Normert tid: <%= @rank.standard_months %> måneder</p>
 
