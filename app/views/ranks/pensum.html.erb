@@ -1,19 +1,17 @@
 <% @content_width = 1024 %>
 
-<h1>Grader</h1>
-
 <table class="table table-condensed">
   <tr>
-    <th align="left">Navn</th>
-    <th align="left">Minste alder</th>
-    <th>Måneder</th>
+    <th align="left">Grad</th>
+    <th class="text-center">Måneder</th>
+    <th class="text-center">Minste alder</th>
   </tr>
 
   <% for rank in @ranks %>
       <tr>
         <td><%= link_to "#{rank.name} #{rank.colour}", rank %></td>
-        <td align="center"><%= h rank.minimum_age %> år</td>
         <td align="center"><%= h rank.standard_months %></td>
+        <td align="center"><%= h rank.minimum_age %> år</td>
       </tr>
   <% end %>
 </table>
