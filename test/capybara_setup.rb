@@ -62,6 +62,17 @@ class ActionDispatch::IntegrationTest
           "Screenshot does not match for #{name.inspect}\n#{file_name}\n#{org_name}\n#{new_name}\n#{caller[0]}"
     end
   end
+
+  def visit_with_login(path, redirected_path = path)
+    visit path
+    if current_path == '/user/login'
+      fill_in 'user_login', :with => 'admin'
+      fill_in 'user_password', :with => 'atest'
+      click_button 'Logg inn'
+    end
+    assert_equal redirected_path, current_path
+  end
+
 end
 
 module Capybara

@@ -1,27 +1,44 @@
-<h3><%=@rank.name%> <%=@rank.colour%></h3>
+<h3><%= @rank.name %> <%= @rank.colour %>
+  <%= link_to('Rediger', {:action => 'edit', :id => @rank}, class: 'btn btn-primary pull-right') if technical_committy? %>
+</h3>
 
-Normert tid: <%=@rank.standard_months%> måneder
+<p>Normert tid: <%= @rank.standard_months %> måneder</p>
 
-<%= link_to 'Edit', :action => 'edit', :id => @rank %> |
-<%= link_to 'Back', :action => 'index' %>
+<%= textalize @rank.description %>
 
-<h3>Grunnteknikker</h3>
+<% if @rank.basic_techniques.any? %>
+    <h3>Grunnteknikker</h3>
 
-<table class="table">
-  <% @rank.basic_techniques.group_by(&:waza).each do |waza, bts| %>
-      <tr>
-        <td><%= waza.name %></td>
-        <td><%=bts.map{|bt| link_to bt.name, bt}.join(', ').html_safe%></td>
-      </tr>
-  <% end %>
-</table>
+    <table class="table">
+      <% @rank.basic_techniques.group_by(&:waza).each do |waza, bts| %>
+          <tr>
+            <td><%= waza.name %></td>
+            <td><%= bts.map { |bt| link_to bt.name, bt }.join(', ').html_safe %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>
 
-<h3>Applikasjoner</h3>
+<% if @rank.katas.any? %>
+    <h3>Kata</h3>
 
-<table class="table">
-  <% @rank.technique_applications.each do |app| %>
-      <tr>
-        <td><%= link_to app.name, app %></td>
-      </tr>
-  <% end %>
-</table>
+    <table class="table">
+      <% @rank.katas.sort_by(&:name).each do |app| %>
+          <tr>
+            <td><%= link_to app.name, app %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>
+
+<% if @rank.applications.any? %>
+    <h3>Applikasjoner</h3>
+
+    <table class="table">
+      <% @rank.applications.sort_by(&:name).each do |app| %>
+          <tr>
+            <td><%= link_to app.name, app %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>

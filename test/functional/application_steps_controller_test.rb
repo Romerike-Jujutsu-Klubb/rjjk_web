@@ -20,7 +20,7 @@ class ApplicationStepsControllerTest < ActionController::TestCase
     assert_difference('ApplicationStep.count') do
       post :create, application_step: {
           technique_application_id: @application_step.technique_application_id,
-          decription: @application_step.decription,
+          description: @application_step.description,
           image_content_data: @application_step.image_content_data,
           image_content_type: @application_step.image_content_type,
           image_filename: @application_step.image_filename,
@@ -44,7 +44,7 @@ class ApplicationStepsControllerTest < ActionController::TestCase
   test 'should update application_step' do
     put :update, id: @application_step, application_step: {
         technique_application_id: @application_step.technique_application_id,
-        decription: @application_step.decription,
+        description: @application_step.description,
         image_content_data: @application_step.image_content_data,
         image_content_type: @application_step.image_content_type,
         image_filename: @application_step.image_filename,

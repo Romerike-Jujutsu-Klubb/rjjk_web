@@ -11,15 +11,19 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :rank_id %><br />
-    <%= f.select :rank_id, @ranks.to_options, prompt:'Velg grad' %>
+  <div class="form-group">
+    <%= f.label :kata %>
+    <%= f.check_box :kata, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :rank_id %>
+    <%= f.select :rank_id, @ranks.to_options, {prompt:'Velg grad'}, class: 'form-control' %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: 'btn btn-primary' %>
   </div>
 <% end %>

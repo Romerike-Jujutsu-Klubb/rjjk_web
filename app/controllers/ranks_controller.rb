@@ -1,9 +1,17 @@
 class RanksController < ApplicationController
-  before_filter :admin_required
+  USER_ACTIONS = [:pensum, :show]
+  before_filter :authenticate_user, :only => USER_ACTIONS
+  before_filter :technical_committy_required, except: USER_ACTIONS
 
   def index
     @ranks = Rank.order(:martial_art_id, :position).all
     @martial_arts = @ranks.group_by(&:martial_art)
+  end
+
+  def pensum
+    current_rank = current_user.member.current_rank
+    @ranks = Rank.kwr.where('group_id = ? AND position <= ?',
+        current_rank.group_id, current_rank.position + 1).order(:position).all
   end
 
   def show
@@ -31,14 +39,14 @@ class RanksController < ApplicationController
     @rank ||= Rank.find(params[:id])
     @martial_arts = MartialArt.all(:order => 'name')
     @groups = Group.all(:order => 'from_age')
-    render :action => 'edit'
+    render :edit
   end
 
   def update
     @rank = Rank.find(params[:id])
     if @rank.update_attributes(params[:rank])
       flash[:notice] = 'Rank was successfully updated.'
-      redirect_to :action => :index
+      redirect_to @rank
     else
       edit
     end

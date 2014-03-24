@@ -1,7 +1,7 @@
 class AttendancesController < ApplicationController
-  user_actions = [:announce, :plan, :review]
-  before_filter :admin_required, :except => user_actions
-  before_filter :authenticate_user, :only => user_actions
+  USER_ACTIONS = [:announce, :plan, :review]
+  before_filter :admin_required, :except => USER_ACTIONS
+  before_filter :authenticate_user, :only => USER_ACTIONS
 
   caches_page :history_graph, :month_chart, :month_per_year_chart
   update_actions = [:announce, :create, :destroy, :review, :update]

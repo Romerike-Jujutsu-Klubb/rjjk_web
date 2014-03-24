@@ -1,7 +1,4 @@
 RjjkWeb::Application.routes.draw do
-  resources :attacks
-
-
   get 'attendances/review/:practice_id' => 'attendances#review'
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
   get ':controller/report(/:year/:month)' => '#report'
@@ -10,6 +7,7 @@ RjjkWeb::Application.routes.draw do
   get 'mitt/oppmote' => 'attendances#plan'
   get 'attendances/plan' # må være etter mitt/oppmote
   get 'news/list'
+  get 'pensum' => 'ranks#pensum'
   get 'search/index'
   get 'user/change_password'
   get 'user/forgot_password'

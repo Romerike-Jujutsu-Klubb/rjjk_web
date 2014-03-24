@@ -1,4 +1,8 @@
 class TechniqueApplicationsController < ApplicationController
+  USER_ACTIONS = [:index, :show]
+  before_filter :authenticate_user, :only => USER_ACTIONS
+  before_filter :technical_committy_required, except: USER_ACTIONS
+
   def index
     @technique_applications = TechniqueApplication.all
     respond_to do |format|
@@ -16,7 +20,7 @@ class TechniqueApplicationsController < ApplicationController
   end
 
   def new
-    @technique_application = TechniqueApplication.new
+    @technique_application ||= TechniqueApplication.new(params[:technique_application])
     load_form_data
     respond_to do |format|
       format.html { render :new }

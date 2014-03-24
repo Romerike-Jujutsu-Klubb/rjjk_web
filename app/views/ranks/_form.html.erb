@@ -1,23 +1,41 @@
-<%= error_messages_for 'rank' %>
+<%= form_for @rank do |f| %>
+    <%= f.error_messages %>
 
-<!--[form:rank]-->
-<p><label for="rank_martial_art_id">Stil</label><br/>
-<%=select 'rank', 'martial_art_id', @martial_arts.map{|ma| [ma.name, ma.id]} %></p>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <%=f.label :martial_art_id, :Stil%>
+          <%= f.select :martial_art_id, @martial_arts.map { |ma| [ma.name, ma.id] },
+                  {}, class: 'form-control' %>
+        </div>
 
-<p><label for="rank_group_id">Gruppe</label><br/>
-<%=select 'rank', 'group_id', @groups.map{|g| [g.name, g.id]} %></p>
+        <div class="form-group">
+          <%=f.label :group_id, :Gruppe%>
+          <%= f.select :group_id, @groups.map { |g| [g.name, g.id] }, {}, class:'form-control' %>
+        </div>
 
-<p><label for="rank_name">Navn</label><br/>
-<%= text_field 'rank', 'name'  %></p>
+        <p><label for="rank_name">Navn</label><br/>
+          <%= f.text_field :name, class:'form-control' %></p>
 
-<p><label for="rank_colour">Beltebeskrivelse</label><br/>
-<%= text_field 'rank', 'colour', :size => 32 %></p>
+        <p><label for="rank_colour">Beltebeskrivelse</label><br/>
+          <%= f.text_field :colour, :size => 32, class:'form-control' %></p>
 
-<p><label for="rank_position">Posisjon</label><br/>
-<%= text_field 'rank', 'position', :size => 4 %></p>
+        <p><label for="rank_position">Posisjon</label><br/>
+          <%= f.text_field :position, :size => 4, class:'form-control' %></p>
 
-<p><label for="rank_standard_months">Måneder</label><br/>
-<%= text_field 'rank', 'standard_months'  %></p>
+        <p><label for="rank_standard_months">Måneder</label><br/>
+          <%= f.text_field :standard_months, class:'form-control' %></p>
 
-<!--[eoform:rank]-->
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="rank_description">Beskrivelse</label>
+          <%= f.text_area :description, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
 
+    <%= submit_tag 'Save', class: 'btn btn-primary' %>
+    <%= link_to 'Show', :action => 'show', :id => @rank %> |
+    <%= link_to 'Back', :action => 'index' %>
+<% end %>

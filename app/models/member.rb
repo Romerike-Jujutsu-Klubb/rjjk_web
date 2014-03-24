@@ -241,7 +241,10 @@ class Member < ActiveRecord::Base
   def passive?(date = Date.today, group = nil)
     nkf_member.medlemsstatus == 'P' ||
         (joined_on < 2.months.ago.to_date &&
-            attendances.select { |a| (group.nil? || a.group_schedule.group_id == group.id) && a.date <= (date + 31) && a.date > (date - 92) }.empty?)
+            attendances.select do |a|
+              (group.nil? || a.group_schedule.group_id == group.id) &&
+                  a.date <= (date + 31) && a.date > (date - 92)
+            end.empty?)
   end
 
   def senior?
@@ -326,5 +329,9 @@ class Member < ActiveRecord::Base
 
   def admin?
     elections.current.any? || appointments.current.any?
+  end
+
+  def technical_committy?
+    (current_rank >= Rank.kwr.where(name: '1. kyu').first) && active?
   end
 end

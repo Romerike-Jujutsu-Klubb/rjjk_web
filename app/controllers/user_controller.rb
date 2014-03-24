@@ -1,4 +1,3 @@
-# encoding: UTF-8
 class UserController < ApplicationController
   before_filter :authenticate_user, :except => [:login, :logout, :signup, :forgot_password]
   before_filter :admin_required, :except => [:welcome, :like, :login, :logout, :signup, :forgot_password, :change_password]

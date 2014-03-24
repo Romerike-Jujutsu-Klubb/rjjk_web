@@ -1,15 +1,34 @@
+<h3><%= @technique_application.name %>
+  <% if @technique_application.rank_id %>
+      (<%= link_to("#{@technique_application.rank.label}", @technique_application.rank) %>)
+  <% end %>
+  <%= link_to('Rediger', edit_technique_application_path(@technique_application), class: 'btn btn-primary pull-right') if admin? %>
+</h3>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @technique_application.name %>
-</p>
 
-<p>
-  <b>Rank:</b>
-  <%= @technique_application.rank_id %>
-</p>
+<table class="table table-striped">
+  <% @technique_application.application_steps.order(:position).each.with_index do |as, i| %>
+      <tr>
+        <td><%= as.position %></td>
+        <td>
+          <% if as.image_content_data %>
+              <img src="<%=url_for controller: :application_steps, action: :image, id: as.id, format: 'jpg' %>"
+                   class="pull-left col-md-6" style="margin:0 1em 0 0;padding:4px" />
+          <% end %>
+            <%= as.description %>
+        </td>
+      </tr>
+  <% end %>
+</table>
 
-
-<%= link_to 'Edit', edit_technique_application_path(@technique_application) %> |
-<%= link_to 'Back', technique_applications_path %>
+<%=javascript_tag do %>
+    $('td img').addClass('img-thumbnail');
+    $('td img').colorbox({
+      title: function() { return $(this).attr('title') },
+      href: function() { return $(this).attr('src').replace("inline", "show") },
+      maxWidth: '100%',
+      maxHeight: '100%',
+    });
+<% end %>

@@ -13,7 +13,6 @@ class AttendanceNagger
         ExceptionNotifier.notify_exception(ActiveRecord::RecordNotFound.new(msg))
         next
       end
-      logger.error "Sending plan to #{member.inspect}"
       AttendanceMailer.plan(member).deliver
     end
   rescue Exception

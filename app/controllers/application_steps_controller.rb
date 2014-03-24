@@ -21,6 +21,25 @@ class ApplicationStepsController < ApplicationController
     end
   end
 
+  def image
+    step = ApplicationStep.
+        select('id, image_filename, image_content_type, image_content_data').
+        find(params[:id])
+    begin
+      imgs = Magick::ImageList.new
+      imgs.from_blob step.image_content_data
+    rescue java.lang.NullPointerException, java.lang.OutOfMemoryError
+      redirect_to '/assets/pdficon_large.png'
+      return
+    end
+    width = 320
+    img_width = imgs.first.columns
+    ratio = width.to_f / img_width
+    imgs.each { |img| img.crop_resized!(width, img.rows * ratio) }
+    send_data(imgs.to_blob, disposition: 'inline',
+        type: step.image_content_type, filename: step.image_filename)
+  end
+
   # GET /application_steps/new
   # GET /application_steps/new.json
   def new

@@ -16,7 +16,8 @@ module RjjkWeb
     config.assets.precompile += %w(print.css)
     config.assets.version = '1.0'
     config.encoding = Encoding::UTF_8
-    config.filter_parameters += [:content_data, :file, :image, :password]
+    config.filter_parameters += [:content_data, :file, :image,
+        :image_content_data, :password]
     config.i18n.enforce_available_locales = true # must be the first i18n config
     config.i18n.default_locale = :nb
     config.time_zone = 'Copenhagen'

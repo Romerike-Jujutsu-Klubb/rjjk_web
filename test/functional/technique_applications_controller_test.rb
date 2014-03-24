@@ -18,11 +18,11 @@ class TechniqueApplicationsControllerTest < ActionController::TestCase
 
   test 'should create application' do
     assert_difference('TechniqueApplication.count') do
-      post :create, technique_application: { name: @technique_application.name, rank_id: @technique_application.rank_id }
+      post :create, technique_application: { name: @technique_application.name + '_2', rank_id: @technique_application.rank_id }
       assert_no_errors :technique_application
     end
 
-    assert_redirected_to application_path(assigns(:technique_application))
+    assert_redirected_to technique_application_path(assigns(:technique_application))
   end
 
   test 'should show application' do

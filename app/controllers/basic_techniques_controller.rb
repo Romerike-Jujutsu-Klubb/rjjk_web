@@ -1,6 +1,8 @@
 class BasicTechniquesController < ApplicationController
-  # GET /basic_techniques
-  # GET /basic_techniques.json
+  USER_ACTIONS = [:index, :show]
+  before_filter :authenticate_user, :only => USER_ACTIONS
+  before_filter :technical_committy_required, except: USER_ACTIONS
+
   def index
     @basic_techniques = BasicTechnique.includes(:rank).order(:name).all
     respond_to do |format|
@@ -9,8 +11,6 @@ class BasicTechniquesController < ApplicationController
     end
   end
 
-  # GET /basic_techniques/1
-  # GET /basic_techniques/1.json
   def show
     @basic_technique = BasicTechnique.find(params[:id])
     respond_to do |format|
@@ -19,8 +19,6 @@ class BasicTechniquesController < ApplicationController
     end
   end
 
-  # GET /basic_techniques/new
-  # GET /basic_techniques/new.json
   def new
     @basic_technique = BasicTechnique.new
     load_form_data
@@ -30,18 +28,14 @@ class BasicTechniquesController < ApplicationController
     end
   end
 
-  # GET /basic_techniques/1/edit
   def edit
     @basic_technique = BasicTechnique.find(params[:id])
     load_form_data
     render :edit
   end
 
-  # POST /basic_techniques
-  # POST /basic_techniques.json
   def create
     @basic_technique = BasicTechnique.new(params[:basic_technique])
-
     respond_to do |format|
       if @basic_technique.save
         format.html { redirect_to @basic_technique, notice: 'Basic technique was successfully created.' }
@@ -53,11 +47,8 @@ class BasicTechniquesController < ApplicationController
     end
   end
 
-  # PUT /basic_techniques/1
-  # PUT /basic_techniques/1.json
   def update
     @basic_technique = BasicTechnique.find(params[:id])
-
     respond_to do |format|
       if @basic_technique.update_attributes(params[:basic_technique])
         format.html { redirect_to @basic_technique, notice: 'Basic technique was successfully updated.' }
@@ -69,12 +60,9 @@ class BasicTechniquesController < ApplicationController
     end
   end
 
-  # DELETE /basic_techniques/1
-  # DELETE /basic_techniques/1.json
   def destroy
     @basic_technique = BasicTechnique.find(params[:id])
     @basic_technique.destroy
-
     respond_to do |format|
       format.html { redirect_to basic_techniques_url }
       format.json { head :no_content }

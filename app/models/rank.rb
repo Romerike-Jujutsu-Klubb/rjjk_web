@@ -1,10 +1,16 @@
 class Rank < ActiveRecord::Base
+  include Comparable
+
   belongs_to :martial_art
   belongs_to :group
+  has_many :applications, class_name: :TechniqueApplication, conditions: ['kata = ?', false]
   has_many :basic_techniques, dependent: :nullify
   has_many :embus, dependent: :destroy
   has_many :graduates, dependent: :destroy
+  has_many :katas, class_name: :TechniqueApplication, conditions: ['kata = ?', true]
   has_many :technique_applications, dependent: :nullify
+
+  scope :kwr, where(martial_art_id: MartialArt.kwr.first.id)
 
   validates_presence_of :position, :standard_months, :group, :group_id,
       :martial_art, :martial_art_id
@@ -20,4 +26,16 @@ class Rank < ActiveRecord::Base
         0.5).round
   end
 
+  def label
+    "#{name} #{colour}"
+  end
+
+  def kwr?
+    martial_art.kwr?
+  end
+
+  def <=>(other)
+    return kwr? ? 1 : -1 if other.kwr? != kwr?
+    position <=> other.position
+  end
 end

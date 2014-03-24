@@ -83,16 +83,4 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
     end
   end
 
-  private
-
-  def visit_with_login(path)
-    visit path
-    if current_path == '/user/login'
-      fill_in 'user_login', :with => 'admin'
-      fill_in 'user_password', :with => 'atest'
-      click_button 'Logg inn'
-    end
-    assert_equal path, current_path
-  end
-
 end

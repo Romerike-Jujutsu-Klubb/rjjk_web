@@ -12,5 +12,6 @@ class PublicRecordImporterTest < ActionMailer::TestCase
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
     assert_match %r{Ny informasjon registrert i Brønnøysund.*Hei Uwe!.*Her er oppdatert informasjon fra Brønnøysundregisteret:.*Kontaktperson:.*Anita Tveter.*Styreleder:.*Anita Tveter.*Styremedlemmer:.*Lars Erling Bråten.*Henning Løvstad.*Kaija Wergeland Østnes.*Fratrådt.*Varamedlemmer:.*Hans Petter Skolsegg.*Svein Robert Rolijordet}m, mail.body.decoded
+  rescue SocketError
   end
 end

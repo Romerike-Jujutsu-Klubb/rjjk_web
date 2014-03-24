@@ -1,5 +1,5 @@
 class TechniqueApplication < ActiveRecord::Base
-  attr_accessible :name, :rank_id
+  attr_accessible :kata, :name, :rank_id
 
   belongs_to :rank
   has_many :application_steps, dependent: :destroy

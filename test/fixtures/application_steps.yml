@@ -1,7 +1,7 @@
 one:
   technique_application: defence_against_wrist_grip_in_front
   position: 1
-  decription: MyText
+  description: MyText
   image_filename: MyString
   image_content_type: MyString
   image_content_data: 
@@ -9,7 +9,7 @@ one:
 two:
   technique_application: defence_against_wrist_grip_in_front
   position: 2
-  decription: MyText
+  description: MyText
   image_filename: MyString
   image_content_type: MyString
   image_content_data: 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140310000520) do
+ActiveRecord::Schema.define(:version => 20140322072836) do
 
   create_table "annual_meetings", :force => true do |t|
     t.datetime "start_at"
@@ -53,15 +53,17 @@ ActiveRecord::Schema.define(:version => 20140310000520) do
     t.integer "martial_art_id",                :null => false
     t.integer "standard_months",               :null => false
     t.integer "group_id"
+    t.text    "description"
     t.foreign_key ["group_id"], "groups", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "ranks_group_id_fkey"
     t.foreign_key ["martial_art_id"], "martial_arts", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "ranks_martial_art_id_fkey"
   end
 
   create_table "technique_applications", :force => true do |t|
-    t.string   "name",       :null => false
+    t.string   "name",                          :null => false
+    t.boolean  "kata",       :default => false, :null => false
     t.integer  "rank_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.index ["rank_id", "name"], :name => "index_technique_applications_on_rank_id_and_name", :unique => true
     t.index ["rank_id"], :name => "fk__technique_applications_rank_id"
     t.foreign_key ["rank_id"], "ranks", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_technique_applications_rank_id"
@@ -70,7 +72,7 @@ ActiveRecord::Schema.define(:version => 20140310000520) do
   create_table "application_steps", :force => true do |t|
     t.integer  "technique_application_id", :null => false
     t.integer  "position",                 :null => false
-    t.text     "decription"
+    t.text     "description"
     t.string   "image_filename"
     t.string   "image_content_type"
     t.binary   "image_content_data"

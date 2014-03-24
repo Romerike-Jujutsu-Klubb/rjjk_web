@@ -124,6 +124,10 @@ class User < ActiveRecord::Base
     role == UserSystem::ADMIN_ROLE || member.try(:admin?)
   end
 
+  def technical_committy?
+    member.try(:technical_committy?)
+  end
+
   protected
 
   attr_accessor :password, :password_confirmation

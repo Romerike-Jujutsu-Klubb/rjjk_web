@@ -130,7 +130,7 @@ h1,h2,h3 {color: #994;}
 	width: 148px;
 	text-decoration: none;
 }
-.subnav li a:hover {
+.subnav li a:hover, .subnav li a.active {
 	background: #9C997C;
 	color: #000;
 }

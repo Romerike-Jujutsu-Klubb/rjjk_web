@@ -14,6 +14,7 @@ class PublicRecordImporter
       PublicRecordMailer.new_record(record).deliver
     end
   rescue Exception
+    raise if Rails.env.test?
     logger.error 'Execption importing public record.'
     logger.error $!.message
     logger.error $!.backtrace.join("\n")

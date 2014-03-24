@@ -38,6 +38,13 @@ module UserSystem
     access_denied('Du må være administrator for å se denne siden.')
   end
 
+  #   before_filter :technical_committy_required
+  def technical_committy_required
+    return false unless authenticate_user
+    return true if current_user.technical_committy?
+    access_denied('Du må være i teknisk komite for å se denne siden.')
+  end
+
   # overwrite if you want to have special behavior in case the user is not authorized
   # to access the current operation. 
   # The default action is to redirect to the login screen.
@@ -45,8 +52,9 @@ module UserSystem
   # a popup window might just close itself for instance
   def access_denied(message = 'Access denied!')
     flash.alert = message
+    flash.notice = message
     store_detour(params)
-    redirect_to :controller => :user, :action => :login, :id => nil
+    redirect_to controller: :user, action: :login, id: nil
   end
 
   def login_from_cookie
@@ -99,6 +107,10 @@ module UserSystem
 
   def admin?
     current_user.try(:admin?)
+  end
+
+  def technical_committy?
+    current_user.try(:technical_committy?)
   end
 
   def current_user
