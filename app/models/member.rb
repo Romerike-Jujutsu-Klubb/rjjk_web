@@ -332,6 +332,6 @@ class Member < ActiveRecord::Base
   end
 
   def technical_committy?
-    (current_rank >= Rank.kwr.where(name: '1. kyu').first) && active?
+    current_rank && (current_rank >= Rank.kwr.where(name: '1. kyu').first) && active?
   end
 end

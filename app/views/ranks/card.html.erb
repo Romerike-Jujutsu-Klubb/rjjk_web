@@ -1,0 +1,15 @@
+<h1>Ferdighetskort <%=@rank.name%></h1>
+<table>
+  <% waza = nil %>
+  <% @rank.basic_techniques.sort_by(&:waza).each do |bt| %>
+      <tr>
+        <th><%= bt.waza.name if bt.waza.name != waza %></th>
+        <td><%= bt.name %></td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+      </tr>
+      <% waza = bt.waza.name %>
+  <% end %>
+</table>

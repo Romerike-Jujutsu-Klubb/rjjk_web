@@ -1,10 +1,13 @@
 <% @content_width = 1024 %>
 
-<h2>Pensum</h2>
+<h2>Pensum
+  <%= link_to 'Huskekort', {action: :pdf}, class: 'btn btn-warning pull-right' %>
+</h2>
 
 <table class="table table-condensed">
   <tr>
     <th align="left">Grad</th>
+    <th>Kort</th>
     <th class="text-center">Måneder</th>
     <th class="text-center">Minste alder</th>
   </tr>
@@ -12,6 +15,7 @@
   <% for rank in @ranks %>
       <tr>
         <td><%= link_to "#{rank.name} #{rank.colour}", rank %></td>
+        <td><%= link_to 'Kort', action: :card, id: rank.id %></td>
         <td align="center"><%= h rank.standard_months %></td>
         <td align="center"><%= h rank.minimum_age %> år</td>
       </tr>

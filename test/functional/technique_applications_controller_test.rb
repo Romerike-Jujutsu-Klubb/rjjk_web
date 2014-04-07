@@ -3,6 +3,7 @@ require 'test_helper'
 class TechniqueApplicationsControllerTest < ActionController::TestCase
   setup do
     @technique_application = technique_applications(:defence_against_wrist_grip_in_front)
+    login(:lars)
   end
 
   test 'should get index' do

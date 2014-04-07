@@ -16,7 +16,12 @@ class Formatter
       formatted_severity = sprintf('%-5s', "#{severity}")
     end
 
-    formatted_time = time.strftime('%Y-%m-%d %H:%M:%S.') << time.usec.to_s[0..2].rjust(3)
+    if Rails.env.development?
+      formatted_time = time.strftime('%H:%M:%S.')
+    else
+      formatted_time = time.strftime('%Y-%m-%d %H:%M:%S.')
+    end
+    formatted_time << time.usec.to_s[0..2].rjust(3)
     color = SEVERITY_TO_COLOR_MAP[severity]
 
     "\033[0;37m#{formatted_time}\033[0m [\033[#{color}m#{formatted_severity}\033[0m] #{msg.strip}\n"

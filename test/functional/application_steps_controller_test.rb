@@ -3,6 +3,7 @@ require 'test_helper'
 class ApplicationStepsControllerTest < ActionController::TestCase
   setup do
     @application_step = application_steps(:one)
+    login(:lars)
   end
 
   test 'should get index' do

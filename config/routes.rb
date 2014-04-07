@@ -8,6 +8,7 @@ RjjkWeb::Application.routes.draw do
   get 'attendances/plan' # må være etter mitt/oppmote
   get 'news/list'
   get 'pensum' => 'ranks#pensum'
+  get 'pensum/pdf' => 'ranks#pdf'
   get 'search/index'
   get 'user/change_password'
   get 'user/forgot_password'

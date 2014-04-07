@@ -4,3 +4,6 @@ panda:
 tiger:
   held_on: '2007-10-09'
   group: tiger
+voksne:
+  held_on: '2007-10-10'
+  group: voksne

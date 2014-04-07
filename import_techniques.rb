@@ -3,6 +3,7 @@
 PROJECT_DIR = File.expand_path(File.dirname(__FILE__))
 IMPORT_DIR_PROD = '/home/donv/backup_laptop/workspace/KC/RJJK/pensum/2010'
 if File.exists? IMPORT_DIR_PROD
+  system "svn up #{IMPORT_DIR_PROD}"
   IMPORT_DIR = IMPORT_DIR_PROD
 else
   IMPORT_DIR = File.expand_path '../RJJK/pensum/2010', PROJECT_DIR

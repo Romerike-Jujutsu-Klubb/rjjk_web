@@ -3,6 +3,7 @@ require 'test_helper'
 class BasicTechniquesControllerTest < ActionController::TestCase
   setup do
     @basic_technique = basic_techniques(:osoto_otoshi)
+    login(:lars)
   end
 
   test 'should get index' do

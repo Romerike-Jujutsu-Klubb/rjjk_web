@@ -1,5 +1,5 @@
 class RanksController < ApplicationController
-  USER_ACTIONS = [:pensum, :show]
+  USER_ACTIONS = [:card, :pdf, :pensum, :show]
   before_filter :authenticate_user, :only => USER_ACTIONS
   before_filter :technical_committy_required, except: USER_ACTIONS
 
@@ -16,6 +16,19 @@ class RanksController < ApplicationController
 
   def show
     @rank = Rank.find(params[:id])
+  end
+
+  def card
+    @rank = Rank.find(params[:id])
+    render layout: 'print'
+  end
+
+  def pdf
+    @rank = current_user.member.next_rank
+    filename = "Skill_Card_#{@rank.name}.pdf"
+    send_data SkillCard.pdf(@rank.group.ranks.
+        select { |r| r.position <= @rank.position }.sort_by(&:position)),
+        :type => 'text/pdf', :filename => filename, :disposition => 'attachment'
   end
 
   def new

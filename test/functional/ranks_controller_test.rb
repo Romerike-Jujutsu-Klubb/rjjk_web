@@ -5,7 +5,7 @@ class RanksControllerTest < ActionController::TestCase
 
   def setup
     @first_id = ranks(:kyu_5).id
-    login(:admin)
+    login(:lars)
   end
 
   def test_index

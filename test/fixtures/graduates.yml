@@ -1,8 +1,8 @@
 one:
   member: lars
-  graduation: panda
+  graduation: voksne
   passed: true
-  rank: kyu_5
+  rank: kyu_1
   paid_graduation: true
   paid_belt: true
 

@@ -1,8 +1,8 @@
 class Certificates
   def self.pdf(date, content)
     Prawn::Document.new :page_size => 'A4', :page_layout => :landscape, :margin => 0 do
-      page_width = Prawn::Document::PageGeometry::SIZES['A4'][1]
-      page_height = Prawn::Document::PageGeometry::SIZES['A4'][0]
+      page_width = PDF::Core::PageGeometry::SIZES['A4'][1]
+      page_height = PDF::Core::PageGeometry::SIZES['A4'][0]
       org_name_width = 100
       name_width = 430
       org_right_center = page_width - 140
@@ -164,8 +164,8 @@ class Certificates
           text_box c[:censor2][:name], :at => [censor_name_x, sensor_y - 35], :size => 18, :align => :left
         end
         if c[:censor3]
-          text_box c[:censor3][:title], :at => [censor_title_x, sensor_y - 60], :size => 18, :align => :left
-          text_box c[:censor3][:name], :at => [censor_name_x, sensor_y - 60], :size => 18, :align => :left
+          text_box c[:censor3][:title], :at => [censor_title_x, sensor_y - 65], :size => 18, :align => :left
+          text_box c[:censor3][:name], :at => [censor_name_x, sensor_y - 65], :size => 18, :align => :left
         end
         unless c[:group] == 'Grizzly'
           draw_text c[:group], :at => [120 + 36, 300 + 36], :size => 18
