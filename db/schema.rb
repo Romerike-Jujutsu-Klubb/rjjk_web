@@ -59,11 +59,11 @@ ActiveRecord::Schema.define(:version => 20140322072836) do
   end
 
   create_table "technique_applications", :force => true do |t|
-    t.string   "name",                          :null => false
-    t.boolean  "kata",       :default => false, :null => false
+    t.string   "name",       :null => false
+    t.string   "system",     :null => false
     t.integer  "rank_id"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.index ["rank_id", "name"], :name => "index_technique_applications_on_rank_id_and_name", :unique => true
     t.index ["rank_id"], :name => "fk__technique_applications_rank_id"
     t.foreign_key ["rank_id"], "ranks", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_technique_applications_rank_id"

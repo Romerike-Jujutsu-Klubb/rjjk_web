@@ -2,6 +2,7 @@
 
 PROJECT_DIR = File.expand_path(File.dirname(__FILE__))
 IMPORT_DIR_PROD = '/home/donv/backup_laptop/workspace/KC/RJJK/pensum/2010'
+puts "Checking #{IMPORT_DIR_PROD.inspect}: #{File.exists? IMPORT_DIR_PROD}"
 if File.exists? IMPORT_DIR_PROD
   system "svn up #{IMPORT_DIR_PROD}"
   IMPORT_DIR = IMPORT_DIR_PROD
@@ -93,13 +94,13 @@ ranks.each do |rank_name, rank_dir|
     # find all sections filter for apps and iterate
     applications = doc.css('div.section h3').map(&:parent)
     applications.each do |a|
+      system = a.parent.css('h2').first.try(:content).try(:gsub, /\s*Applikasjoner\s*$/i, '') || 'Annet'
       name = a.css('h3').first.content.strip
-      puts "#{name}:"
+      puts "#{name} (#{system}):"
       begin
         unless DUMP
           ta = TechniqueApplication.where(name: name, rank_id: rank.id).
-              first_or_create!
-          ta.update_attributes! kata: !!(name =~ /giwaken|tenshiken/i)
+              first_or_create!(system: system)
           ta.application_steps.delete_all
         end
         steps = a.css('p')

@@ -2,7 +2,7 @@ class CreateTechniqueApplications < ActiveRecord::Migration
   def change
     create_table :technique_applications do |t|
       t.string :name, null: false
-      t.boolean :kata, null: false, default: false
+      t.string :system, null: false
       t.integer :rank_id
 
       t.timestamps

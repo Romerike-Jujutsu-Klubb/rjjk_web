@@ -3,11 +3,11 @@ class Rank < ActiveRecord::Base
 
   belongs_to :martial_art
   belongs_to :group
-  has_many :applications, class_name: TechniqueApplication.name, conditions: ['kata = ?', false]
+  has_many :applications, class_name: TechniqueApplication.name, conditions: ['system <> ?', 'Kata']
   has_many :basic_techniques, dependent: :nullify
   has_many :embus, dependent: :destroy
   has_many :graduates, dependent: :destroy
-  has_many :katas, class_name: TechniqueApplication.name, conditions: ['kata = ?', true]
+  has_many :katas, class_name: TechniqueApplication.name, conditions: ['system = ?', 'Kata']
   has_many :technique_applications, dependent: :nullify
 
   scope :kwr, where(martial_art_id: MartialArt.kwr.first.id)
