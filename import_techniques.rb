@@ -21,6 +21,7 @@ end
 
 require 'martial_art'
 require 'group'
+require 'application_step'
 require 'technique_application'
 require 'rank'
 require 'waza'
