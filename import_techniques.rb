@@ -8,17 +8,23 @@ if File.exists? IMPORT_DIR_PROD
 else
   IMPORT_DIR = File.expand_path '../RJJK/pensum/2010', PROJECT_DIR
 end
-$: << PROJECT_DIR
 
 DUMP = ARGV.include? '-d'
 
 if DUMP
   puts 'Only dumping.  No storing.'
   require 'nokogiri'
-else
+elsif !defined?(Rails)
   require 'config/boot'
   require 'config/environment'
 end
+
+require 'martial_art'
+require 'group'
+require 'technique_application'
+require 'rank'
+require 'waza'
+require 'basic_technique'
 
 ranks = [['5. kyu', 'gult'], ['4. kyu', 'oransje'], ['3. kyu', 'groent'],
     ['2. kyu', 'blaatt'], ['1. kyu', 'brunt'], ['1. dan', 'shodan']]
