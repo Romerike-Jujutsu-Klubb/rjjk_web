@@ -1,7 +1,9 @@
 defence_against_wrist_grip_in_front:
   name: Forsvar mot håndleddsgrep forfra
   rank: kyu_5
+  system: Juho
 
 defence_against_wrist_grip_from_behind:
   name: Forsvar mot håndleddsgrep bakfra
   rank: kyu_5
+  system: Juho

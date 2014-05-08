@@ -45,10 +45,12 @@ class SkillCard
         if rank.technique_applications.any?
           rows = [['', "Applikasjoner #{rank.name}".upcase, 'G', 'F', 'A', 'I']]
           rank.technique_applications.group_by(&:system).each do |system_name, apps|
-            rows << [{content: UnicodeUtils.upcase(system_name), rowspan: apps.size, rotate: 90},
-                UnicodeUtils.upcase(apps[0].name), nil, nil, nil, nil]
-            rows += apps[1..-1].sort_by(&:name).map do |ta|
-              [UnicodeUtils.upcase(ta.name), nil, nil, nil, nil]
+            apps.each_slice(14) do |app_slice|
+              rows << [{content: UnicodeUtils.upcase(system_name), rowspan: app_slice.size, rotate: 90},
+                  UnicodeUtils.upcase(app_slice[0].name), nil, nil, nil, nil]
+              rows += app_slice[1..-1].sort_by(&:name).map do |ta|
+                [UnicodeUtils.upcase(ta.name), nil, nil, nil, nil]
+              end
             end
           end
 
