@@ -1,0 +1,33 @@
+<%= form_for(@basic_technique_link) do |f| %>
+  <% if @basic_technique_link.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@basic_technique_link.errors.count, "error") %> prohibited this basic_technique_link from being saved:</h2>
+
+      <ul>
+      <% @basic_technique_link.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :basic_technique_id %><br />
+    <%= f.number_field :basic_technique_id %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </div>
+  <div class="field">
+    <%= f.label :position %><br />
+    <%= f.number_field :position %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

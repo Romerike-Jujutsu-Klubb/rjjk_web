@@ -3,13 +3,13 @@
 <div class="padded" class="stretch">
 
 <div align="center">
-<%= link_to image_tag('rjjk_logo_&_txt_320.png', :id => :logo_img), '/' %>
+  <%= link_to image_tag('rjjk_logo_&_txt_320.png', :id => :logo_img), '/' %>
 </div>
 
 <form action="/search" role="search">
   <div class="input-group">
     <%= search_field nil, nil, :name => :q, :value => @query, :placeholder => 'Søk',
-                     :class => 'search-query form-control', :onmouseup => 'select()' %>
+            :class => 'search-query form-control', :onmouseup => 'select()' %>
     <div class="input-group-btn">
       <button class="btn btn-default" type="submit">
         <i class="glyphicon glyphicon-search"></i>
@@ -61,8 +61,8 @@
     <h3 align="center">Last opp media</h3>
     <%= form_for :image, :url => {:controller => :images, :action => :upload} do |f| %>
         <%= f.file_field :file, :onchange => 'form.submit()',
-                         :size => '10', :style => 'width: 100%',
-                         :class => 'hide ie_show', :multiple => true %>
+                :size => '10', :style => 'width: 100%',
+                :class => 'hide ie_show', :multiple => true %>
         <div class="input-append ie_hide">
           <input id="pretty-input" style="width: 100%" type="text" onclick="$('input[id=image_file]').click();">
           <a class="btn" onclick="$('input[id=image_file]').click();">Velg
@@ -108,36 +108,42 @@
                     <h3>Påmeldt til neste trening</h3>
                     <br clear="all"/>
                     <span class="pull-right" style="font-size: 30pt;background-attachment: scroll;
-                    background-clip: border-box;
-                    background-color: rgb(0, 0, 255);
-                    background-image: none;
-                    background-origin: padding-box;
-                    background-size: auto;
-                    border-bottom-color: rgb(255, 255, 255);
-                    border-bottom-left-radius: 23px;
-                    border-bottom-right-radius: 23px;
-                    border-bottom-style: solid;
-                    border-bottom-width: 3px;
-                    border-left-color: rgb(255, 255, 255);
-                    border-left-style: solid;
-                    border-left-width: 3px;
-                    border-right-color: rgb(255, 255, 255);
-                    border-right-style: solid;
-                    border-right-width: 3px;
-                    border-top-color: rgb(255, 255, 255);
-                    border-top-left-radius: 23px;
-                    border-top-right-radius: 23px;
-                    border-top-style: solid;
-                    border-top-width: 3px;
-                    color: rgb(255, 255, 255);
+                            background-clip: border-box;
+                            background-color: rgb(0, 0, 255);
+                            background-image: none;
+                            background-origin: padding-box;
+                            background-size: auto;
+                            border-bottom-color: rgb(255, 255, 255);
+                            border-bottom-left-radius: 23px;
+                            border-bottom-right-radius: 23px;
+                            border-bottom-style: solid;
+                            border-bottom-width: 3px;
+                            border-left-color: rgb(255, 255, 255);
+                            border-left-style: solid;
+                            border-left-width: 3px;
+                            border-right-color: rgb(255, 255, 255);
+                            border-right-style: solid;
+                            border-right-width: 3px;
+                            border-top-color: rgb(255, 255, 255);
+                            border-top-left-radius: 23px;
+                            border-top-right-radius: 23px;
+                            border-top-style: solid;
+                            border-top-width: 3px;
+                            color: rgb(255, 255, 255);
                             padding: 0.25em;
-                    "><%=@other_attendees.size + ([Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED].include?(@your_attendance_next_practice.status) ? 1 : 0)%></span>
+                    "><%= @other_attendees.size + ([Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED].include?(@your_attendance_next_practice.status) ? 1 : 0) %></span>
                     <ul>
                       <% if [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED].include? @your_attendance_next_practice.status %>
                           <li><%= @your_attendance_next_practice.member.name %></li>
                       <% end %>
                       <% @other_attendees.each do |a| %>
-                          <li><%= a.member.name %></li>
+                          <li>
+                            <% if admin? %>
+                                <%= link_to a.member.name, a.member %>
+                            <% else %>
+                                <%= a.member.name %>
+                            <% end %>
+                          </li>
                       <% end %>
                     </ul>
                     <% if @other_absentees.any? %>
@@ -157,13 +163,13 @@
             <%= @other_absentees.size %> har meldt fravær.
         <% end %>
         <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::Status::ABSENT),
-                    :class => 'btn btn-default btn-xs', :title => 'Kan ikke allikevel...') do %>
+                :class => 'btn btn-default btn-xs', :title => 'Kan ikke allikevel...') do %>
             <i class="glyphicon glyphicon-thumbs-down"></i> Angre
         <% end %>
     <% elsif @your_attendance_next_practice %>
         Du kommer ikke.
         <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::Status::WILL_ATTEND),
-                    :class => 'btn btn-default btn-xs', :title => 'Kommer allikevel!') do %>
+                :class => 'btn btn-default btn-xs', :title => 'Kommer allikevel!') do %>
             <i class="glyphicon glyphicon-thumbs-up"></i>
         <% end %>
         <% unless @other_attendees.empty? %>
@@ -181,16 +187,16 @@
 
         <div class="input-group">
           <div class="input-group-btn">
-        Kommer du?
-          <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::Status::WILL_ATTEND),
-                      :class => 'btn btn-default btn-xs', :title => 'kommer!') do %>
-              <i class="glyphicon glyphicon-thumbs-up"></i>
-          <% end %>
-          <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::Status::ABSENT),
-                      :class => 'btn btn-default btn-xs', :title => 'kan ikke...') do %>
-              <i class="glyphicon glyphicon-thumbs-down"></i>
-          <% end %>
-        </div>
+            Kommer du?
+            <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::Status::WILL_ATTEND),
+                    :class => 'btn btn-default btn-xs', :title => 'kommer!') do %>
+                <i class="glyphicon glyphicon-thumbs-up"></i>
+            <% end %>
+            <%= link_to(with_detour(:controller => :attendances, :action => :announce, :id => Attendance::Status::ABSENT),
+                    :class => 'btn btn-default btn-xs', :title => 'kan ikke...') do %>
+                <i class="glyphicon glyphicon-thumbs-down"></i>
+            <% end %>
+          </div>
         </div>
     <% end %>
     <br/>
@@ -200,14 +206,14 @@
     <% last_year = Date.today.year %>
     <% last_mon = nil %>
     <div class="events">
-      <h3>Hva
-        skjer? <%= link_to image_tag('ical.png', :style => 'width: 24px;height: 24px'),
-                           {:only_path => false, :protocol => 'webcal',
-                            :controller => :events, :action => :calendar,
-                            :format => :ics}, :title => 'Abonnér på hendelseskalender!' %></h3>
+      <h3>Hva skjer?
+        <%= link_to image_tag('ical.png', :style => 'width: 24px;height: 24px'),
+                {:only_path => false, :protocol => 'webcal',
+                        :controller => :events, :action => :calendar,
+                        :format => :ics}, :title => 'Abonnér på hendelseskalender!' %></h3>
 
       <% @layout_events.each do |event| %>
-          <% ingress = nil # event.ingress  %>
+          <% ingress = nil # event.ingress    %>
           <% ingress = nil if ingress.blank? %>
           <% body = event.body %>
           <% if event.start_at.year != last_year %>
@@ -223,21 +229,25 @@
                 <% if event.start_at.min != 0 || event.start_at.hour != 0 %>
                     <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.strftime('%d. kl. %H:%M') %>
                 <% else %>
-                    <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>.
+                    <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>
+                    .
                 <% end %>
             <% else %>
                 <% if event.end_at.to_date == event.start_at.to_date %>
-                    <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>.<br/>
+                    <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>
+                    .<br/>
                     kl. <%= event.start_at.strftime('%H:%M') %>
                     -<%= event.end_at.strftime('%H:%M') %>
                 <% else %>
                     <% if event.start_at.min == 0 && event.start_at.hour == 0 && event.end_at.hour == 0 && event.end_at.min == 0 %>
                         <%= event.start_at.mday %>-<%= event.end_at.mday %>.
                     <% else %>
-                        <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>.
+                        <%= t(:date)[:day_names][event.start_at.wday] %> <%= event.start_at.mday %>
+                        .
                         <%= event.start_at.strftime('%H:%M') %>
                         -
-                        <%= t(:date)[:day_names][event.end_at.wday] %>  <%= event.end_at.mday %>.
+                        <%= t(:date)[:day_names][event.end_at.wday] %>  <%= event.end_at.mday %>
+                        .
                         <%= event.end_at.strftime('%H:%M') %>
                     <% end %>
                 <% end %>
@@ -246,14 +256,14 @@
 
           <h4 style="margin-bottom: 0">
             <% if body %>
-                <%= link_to event.name, :controller => :events, :action => :show, :id => event.id %>
+                <%= link_to event.name, event %>
             <% else %>
                 <%= event.name %>
             <% end %>
             <%= link_to image_tag('ical.png', :style => 'width: 24px;height: 24px'),
-                        {:controller => :events, :action => :calendar,
-                         :id => event.id, :format => :ics},
-                        :title => "Sett '#{event.name}' på din kalender!" %>
+                    {:controller => :events, :action => :calendar,
+                            :id => event.id, :format => :ics},
+                    :title => "Sett '#{event.name}' på din kalender!" %>
           </h4>
 
           <% if user? -%>
@@ -317,12 +327,13 @@
   <% @groups.each do |g| %>
       <li>
         <%= link_to g.name, g %>
-        <span style="white-space:nowrap">(<%= g.from_age %>-<%= g.to_age %> år)</span>
+        <span style="white-space:nowrap">(<%= g.from_age %>-<%= g.to_age %>
+          år)</span>
         <% if admin? %>
             <ul>
               <% g.instructors.each do |m| %>
                   <li><%= m.name %>
-                    <% roles = g.group_schedules.map{|gs| gs.group_instructors.active.select{|gi| gi.member_id == m.id}.map(&:role)}.flatten.uniq %>
+                    <% roles = g.group_schedules.map { |gs| gs.group_instructors.active.select { |gi| gi.member_id == m.id }.map(&:role) }.flatten.uniq %>
                     <% if roles != [GroupInstructor::Role::INSTRUCTOR] %>
                         (<%= roles.join(', ') %>)
                     <% end %>

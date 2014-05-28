@@ -1,9 +1,6 @@
 class AddDescriptionToRanks < ActiveRecord::Migration
   def change
     add_column :ranks, :description, :text
-
-    unless Rails.env.test?
-      load "#{Rails.root}/import_techniques.rb"
-    end
+    load "#{Rails.root}/import_techniques.rb" unless Rails.env.test?
   end
 end

@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Basic technique:</b>
+  <%= @basic_technique_link.basic_technique_id %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @basic_technique_link.title %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%= @basic_technique_link.url %>
+</p>
+
+<p>
+  <b>Position:</b>
+  <%= @basic_technique_link.position %>
+</p>
+
+
+<%= link_to 'Edit', edit_basic_technique_link_path(@basic_technique_link) %> |
+<%= link_to 'Back', basic_technique_links_path %>

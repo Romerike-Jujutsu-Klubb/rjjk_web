@@ -20,7 +20,7 @@ class Graduation < ActiveRecord::Base
   end
 
   def body
-    nil
+    true
   end
 
   def size

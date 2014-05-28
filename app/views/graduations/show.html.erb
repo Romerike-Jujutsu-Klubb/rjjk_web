@@ -1,8 +1,11 @@
-<% for column in Graduation.content_columns %>
-<p>
-  <strong><%= column.human_name %>:</strong> <%=h @graduation.send(column.name) %>
-</p>
-<% end %>
+<h2>Gradering</h2>
 
-<%= link_to 'Edit', :action => :edit, :id => @graduation %> |
-<%= link_to 'Back', :action => :index %>
+<table class="table">
+  <tr><th>Dato</th><td><%=@graduation.held_on%></td></tr>
+  <tr><th>Gruppe</th><td><%=@graduation.group.name%></td></tr>
+  <tr><th>Eksminator</th><td><%=@graduation.censors.map(&:member).map(&:name).join(', ')%></td></tr>
+  <tr><th>Påmeldte</th><td><%=@graduation.graduates.count%></td></tr>
+</table>
+
+<%= link_to 'Endre', edit_graduation_path(@graduation), class: 'btn btn-primary' %>
+<%= back_or_link_to 'Tilbake', graduations_path, class: 'btn btn-default' %>

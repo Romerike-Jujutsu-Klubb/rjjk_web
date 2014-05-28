@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140322072836) do
+ActiveRecord::Schema.define(:version => 20140518092704) do
 
   create_table "annual_meetings", :force => true do |t|
     t.datetime "start_at"
@@ -208,6 +208,19 @@ ActiveRecord::Schema.define(:version => 20140322072836) do
     t.index ["waza_id"], :name => "fk__basic_techniques_waza_id"
     t.foreign_key ["rank_id"], "ranks", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_basic_techniques_rank_id"
     t.foreign_key ["waza_id"], "wazas", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_basic_techniques_waza_id"
+  end
+
+  create_table "basic_technique_links", :force => true do |t|
+    t.integer  "basic_technique_id",                :null => false
+    t.string   "title",              :limit => 64
+    t.string   "url",                :limit => 128, :null => false
+    t.integer  "position",                          :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.index ["basic_technique_id", "position"], :name => "index_basic_technique_links_on_basic_technique_id_and_position", :unique => true
+    t.index ["basic_technique_id", "url"], :name => "index_basic_technique_links_on_basic_technique_id_and_url", :unique => true
+    t.index ["basic_technique_id"], :name => "fk__basic_technique_links_basic_technique_id"
+    t.foreign_key ["basic_technique_id"], "basic_techniques", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_basic_technique_links_basic_technique_id"
   end
 
   create_table "birthday_celebrations", :force => true do |t|

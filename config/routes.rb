@@ -36,6 +36,7 @@ RjjkWeb::Application.routes.draw do
   resources :appointments
   resources :annual_meetings
   resources :attendances
+  resources :basic_technique_links
   resources :basic_techniques
   resources :birthday_celebrations
   resources :board_meetings

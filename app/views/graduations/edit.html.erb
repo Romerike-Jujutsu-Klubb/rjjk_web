@@ -121,7 +121,7 @@
           <% end %>
         </div>
         <br/>
-        <%= form_for @censor, :url => with_detour(censors_path), :html => {:method => :post} do |f| %>
+        <%= form_for @censor, :url => with_detour(censors_path, anchor: :censors), :html => {:method => :post} do |f| %>
             <%= f.hidden_field :graduation_id %>
 
             <div class="input-group">

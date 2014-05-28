@@ -45,7 +45,7 @@ class CensorsControllerTest < ActionController::TestCase
     post :create, :censor => {:graduation_id => graduations(:tiger).id, :member_id => members(:uwe).id}
     assert_no_errors :censor
     assert_response :redirect
-    assert_redirected_to :action => :index
+    assert_redirected_to action: :index
 
     assert_equal num_censors + 1, Censor.count
   end
