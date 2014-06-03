@@ -37,11 +37,11 @@
                end
             %>
             <td valign="top" align="center">
-              <div id="button_<%=week%>_<%=gs.id%>" class="btn-group">
+              <div id="button_<%= week %>_<%= gs.id %>" class="btn-group">
                 <%= link_to(initial_disabled ? '#' : {:controller => :attendances, :action => :announce, :id => 'toggle', :gs_id => gs.id, :year => year, :week => week},
-                            :method => initial_disabled ? nil : :post, :remote => !initial_disabled, :id => "btn_#{year}_#{week}_#{gs.id}",
-                            :class => "btn #{initial_class}", :style => 'width: 7.5em',
-                            :onclick => initial_disabled ? 'return false' : "$(this).toggleClass('btn-success').removeClass('btn-info btn-warning btn-danger') ; $(this).find('i').toggleClass('icon-thumbs-up').removeClass('icon-thumbs-down icon-plus icon-hand-right') ; $(this).find('span').text($(this).hasClass('btn-success') ? 'Kommer!' : 'Kommer du?') ; return false") do %>
+                        :method => initial_disabled ? nil : :post, :remote => !initial_disabled, :id => "btn_#{year}_#{week}_#{gs.id}",
+                        :class => "btn #{initial_class}", :style => 'width: 7.5em',
+                        :onclick => initial_disabled ? 'return false' : "$(this).toggleClass('btn-success').removeClass('btn-info btn-warning btn-danger') ; $(this).find('i').toggleClass('icon-thumbs-up').removeClass('icon-thumbs-down icon-plus icon-hand-right') ; $(this).find('span').text($(this).hasClass('btn-success') ? 'Kommer!' : 'Kommer du?') ; return false") do %>
                     <i class="<%= initial_icon %>"></i>
                     <span><%= initial_text %></span>
                 <% end %>
@@ -49,68 +49,72 @@
                   <button type="button" class="<%= 'disabled' if initial_disabled %> btn btn-default dropdown-toggle" <%= 'data-toggle="dropdown"'.html_safe unless initial_disabled %>>
                     <span class="caret"></span>
                   </button>
-                <ul class="dropdown-menu" align="left">
-                  <% Attendance::STATES.each do |state, link_text, link_icon, link_class| %>
-                      <li>
-                        <%= link_to({:controller => :attendances, :action => :announce, :id => state, :gs_id => gs.id, :year => year, :week => week},
-                                    :method => :post, :remote => true, :id => "btn_#{year}_#{week}_#{gs.id}",
-                                    :onclick => "$('#btn_#{year}_#{week}_#{gs.id}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('#{link_class}').html($(this).html()); $('[data-toggle=dropdown]').parent().removeClass('open'); return true",
-                            ) do %>
-                            <i class="<%= link_icon %>"></i>
-                            <span><%= link_text %></span>
-                        <% end %>
-                      </li>
-                  <% end %>
-                </ul>
-              </div>
+                  <ul class="dropdown-menu" align="left">
+                    <% Attendance::STATES.each do |state, link_text, link_icon, link_class| %>
+                        <li>
+                          <%= link_to({:controller => :attendances, :action => :announce, :id => state, :gs_id => gs.id, :year => year, :week => week},
+                                  :method => :post, :remote => true, :id => "btn_#{year}_#{week}_#{gs.id}",
+                                  :onclick => "$('#btn_#{year}_#{week}_#{gs.id}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('#{link_class}').html($(this).html()); $('[data-toggle=dropdown]').parent().removeClass('open'); return true",
+                              ) do %>
+                              <i class="<%= link_icon %>"></i>
+                              <span><%= link_text %></span>
+                          <% end %>
+                        </li>
+                    <% end %>
+                  </ul>
+                </div>
               </div>
               <%= javascript_tag do %>
                   $(function() {
-                  $('#button_<%=week%>_<%=gs.id%>').popover({content: 'Oppmøte registrert', placement: 'top', container: 'body'});
-                  $('#button_<%=week%>_<%=gs.id%>').popover('show');
+                  $('#button_<%= week %>_<%= gs.id %>').popover({content:
+                  'Oppmøte registrert', placement: 'top', container: 'body'});
+                  $('#button_<%= week %>_<%= gs.id %>').popover('show');
                   });
               <% end if @reviewed_attendance && @reviewed_attendance.group_schedule == gs && @reviewed_attendance.practice.year == year && @reviewed_attendance.practice.week == week %>
               <br/>
-              <% attendances = gs.practices.find { |p| p.year == year && p.week == week }.
-                      attendances.select { |a| [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(a.status) } %>
-              <% absences = gs.practices.find { |p| p.year == year && p.week == week }.
-                      attendances.select { |a| Attendance::ABSENT_STATES.include?(a.status) } %>
-              <% others = attendances.select { |a| a.member_id != current_user.member.id } %>
-              <% if others.any? %>
-                  <small>
-                    <a class="colorbox" href="#layout_attendance_details_<%= gs.id %>"
-                       title="Påmeldt til neste trening">
-                      <%= others[rand others.size].member.first_name %>
-                      <% if others.size > 1 %>
-                          og
-                          <%= others.size - 1 %>
-                          <%= others.size == 2 ? 'annen' : 'andre' %>
-                      <% end %>
-                    </a>
-                    kommer.
-                  </small>
-                  <div style="display:none">
-                    <div id="layout_attendance_details_<%= gs.id %>">
-                      <img style="float: left; width: 100px; height: 100px; margin-right: 1em; margin-left: 0.5em"
-                           src="/assets/rjjk_logo_&_txt_320.png"/>
+              <% practice = gs.practices.find { |p| p.year == year && p.week == week } %>
+              <% if practice %>
+                  <% attendances = practice.attendances.
+                          select { |a| [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(a.status) } %>
+                  <% absences = practice.attendances.
+                          select { |a| Attendance::ABSENT_STATES.include?(a.status) } %>
+                  <% others = attendances.select { |a| a.member_id != current_user.member.id } %>
+                  <% if others.any? %>
+                      <small>
+                        <a class="colorbox" href="#layout_attendance_details_<%= gs.id %>"
+                           title="Påmeldt til neste trening">
+                          <%= others[rand others.size].member.first_name %>
+                          <% if others.size > 1 %>
+                              og
+                              <%= others.size - 1 %>
+                              <%= others.size == 2 ? 'annen' : 'andre' %>
+                          <% end %>
+                        </a>
+                        kommer.
+                      </small>
+                      <div style="display:none">
+                        <div id="layout_attendance_details_<%= gs.id %>">
+                          <img style="float: left; width: 100px; height: 100px; margin-right: 1em; margin-left: 0.5em"
+                               src="/assets/rjjk_logo_&_txt_320.png"/>
 
-                      <h3>Påmeldt til neste trening</h3>
-                      <br clear="all"/>
-                      <ul>
-                        <% attendances.each do |a| %>
-                            <li><%= a.member.name %></li>
-                        <% end %>
-                      </ul>
-                      <% if absences.any? %>
-                          <h4>Disse kommer ikke</h4>
+                          <h3>Påmeldt til neste trening</h3>
+                          <br clear="all"/>
                           <ul>
-                            <% absences.each do |a| %>
+                            <% attendances.each do |a| %>
                                 <li><%= a.member.name %></li>
                             <% end %>
                           </ul>
-                      <% end %>
-                    </div>
-                  </div>
+                          <% if absences.any? %>
+                              <h4>Disse kommer ikke</h4>
+                              <ul>
+                                <% absences.each do |a| %>
+                                    <li><%= a.member.name %></li>
+                                <% end %>
+                              </ul>
+                          <% end %>
+                        </div>
+                      </div>
+                  <% end %>
               <% end %>
             </td>
         <% end %>
@@ -150,7 +154,7 @@
   <% end %>
   <% @months.each do |fields| %>
       <tr>
-          <td><%= fields[0] %></td>
+        <td><%= fields[0] %></td>
         <% fields[1..-1].each do |f| %>
             <td align="center"><%= f unless f == 0 %></td>
         <% end %>
