@@ -22,10 +22,9 @@
                 ['Forhindret', Attendance::Status::ABSENT],
            ].each do |text, status| %>
             [<%= link_to text, UserSystem.with_login(@member.user,
-              :controller => :attendances, :action => :review,
-              :group_schedule_id => a.practice.group_schedule_id,
-              :date => a.practice.date,
-              :attendance => {:status => status}) %>]&nbsp;&nbsp;
+              controller: :attendances, action: :review, date: a.practice.date,
+              group_schedule_id: a.practice.group_schedule_id,
+              status: status) %>]&nbsp;&nbsp;
         <% end %>
       </li>
   <% end %>
@@ -45,7 +44,11 @@
                     ['Bortreist', Attendance::Status::HOLIDAY],
                     ['Forhindret', Attendance::Status::ABSENT],
                ].each do |text, status| %>
-                [<%= link_to text, UserSystem.with_login(@member.user, :controller => :attendances, :action => :review, :id => a.id, :attendance => {:status => status}) %>]&nbsp;&nbsp;
+                [<%= link_to text, UserSystem.with_login(@member.user,
+                  controller: :attendances, action: :review,
+                  date: a.practice.date,
+                  group_schedule_id: a.practice.group_schedule_id,
+                  status: status) %>]&nbsp;&nbsp;
             <% end %>
           </li>
       <% end %>

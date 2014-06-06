@@ -238,7 +238,7 @@ class AttendancesController < ApplicationController
     @attendance = Attendance.
         where(:member_id => current_user.member.id, :practice_id => practice.id).
         first_or_create
-    @attendance.update_attributes! params[:attendance]
+    @attendance.update_attributes! status: params[:status]
 
     if request.xhr?
       render :text => @attendance.status
