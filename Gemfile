@@ -35,7 +35,6 @@ gem 'simple_drilldown'
 gem 'simple_workflow'
 gem 'tinymce-rails'
 gem 'tinymce-rails-langs'
-gem 'torqbox'
 gem 'unicode_utils'
 gem 'will_paginate'
 

@@ -4,6 +4,7 @@ load 'deploy/assets'
 set :stages, %w(beta production)
 set :default_stage, 'beta'
 set :default_environment, {'JRUBY_OPTS' => '--2.0 --server'}
+# set :migrate_env, 'JRUBY_OPTS="--2.0 --server -J-Xmx3G"'
 
 require 'rubygems'
 require 'bundler/capistrano'
