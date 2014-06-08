@@ -98,7 +98,12 @@ class TrialAttendancesController < ApplicationController
     respond_to do |format|
       format.html do
         if (request.xhr?)
-          render :partial => '/members/trial_attendance_create_link', :locals => {:nkf_member_trial_id => @trial_attendance.nkf_member_trial_id, :group_schedule_id => @trial_attendance.group_schedule_id, :date => @trial_attendance.date}
+          render partial: '/members/trial_attendance_create_link',
+              locals: {
+                  nkf_member_trial_id: @trial_attendance.nkf_member_trial_id,
+                  group_schedule_id: @trial_attendance.group_schedule_id,
+                  date: @trial_attendance.date
+              }
         else
           redirect_to(trial_attendances_url)
         end
