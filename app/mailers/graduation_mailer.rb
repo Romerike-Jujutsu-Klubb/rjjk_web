@@ -9,7 +9,7 @@ class GraduationMailer < ActionMailer::Base
     @group = group
     @title = 'Disse gruppene mangler gradering'
 
-    month_start = Date.civil(Date.today.year, (Date.today.mon >= 7) ? 12 : 6)
+    month_start = Date.civil(Date.today.year, (Date.today.mon >= 6) ? 12 : 6)
     suggested_date = month_start + (7 - month_start.wday) + @group.group_schedules.first.weekday
 
     @email_url = with_login(@instructor.user,
