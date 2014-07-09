@@ -2,7 +2,8 @@ class CensorsController < ApplicationController
   before_filter :admin_required
 
   def index
-    @censors = Censor.paginate :page => params[:page], :per_page => 10
+    @censors = Censor.includes(:graduation).order('graduations.held_on DESC').
+        paginate(page: params[:page], per_page: 10)
   end
 
   def list_instructors

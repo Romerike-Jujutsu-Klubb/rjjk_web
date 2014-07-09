@@ -12,12 +12,13 @@ class Attendance < ActiveRecord::Base
   end
 
   STATES = [
-      [Status::WILL_ATTEND, 'Kommer!', 'icon-thumbs-up', 'btn-success'],
-      [Status::HOLIDAY, 'Bortreist', 'icon-hand-right', 'btn-warning'],
-      [Status::SICK, 'Syk', 'icon-plus', 'btn-danger'],
-      [Status::ABSENT, 'Annet', 'icon-thumbs-down', 'btn-info'],
+      [Status::WILL_ATTEND, 'Kommer!',   'icon-thumbs-up',   'btn-success'],
+      [Status::HOLIDAY,     'Bortreist', 'icon-hand-right',  'btn-warning'],
+      [Status::SICK,        'Syk',       'icon-plus',        'btn-danger'],
+      [Status::ABSENT,      'Annet',     'icon-thumbs-down', 'btn-info'],
   ]
 
+  PRESENT_STATES = [Status::ASSISTANT, Status::ATTENDED, Status::INSTRUCTOR, Status::PRESENT]
   ABSENT_STATES = [Status::HOLIDAY, Status::SICK, Status::ABSENT]
 
   scope :by_group_id, lambda { |group_id| includes(:practice => :group_schedule).where('group_schedules.group_id = ?', group_id)}

@@ -62,28 +62,26 @@ class AttendancesControllerTest < ActionController::TestCase
     practice = practices(:voksne_2013_42_thursday)
     get :review,
         group_schedule_id: practice.group_schedule_id,
-        date: practice.date,
-        attendance: {status: :X}
+        year: practice.year, week: practice.week, status: :X
     assert_response :redirect
-    assert_redirected_to :controller => :attendances, :action => :plan
+    assert_redirected_to 'http://test.host/mitt/oppmote'
   end
 
   def test_should_announce_toggle_off
     practice = practices(:voksne_2013_42_thursday)
     assert_equal 1, practice.attendances.count
-    xhr :post, :announce, :gs_id => practice.group_schedule_id,
-        :week => practice.week, :year => practice.year, :id => 'toggle'
+    xhr :post, :announce, group_schedule_id: practice.group_schedule_id,
+        year: practice.year, week: practice.week, status: 'toggle'
     assert_response :success
-    assert_equal 1, practice.attendances.count
-    assert_equal Attendance::Status::ABSENT, practice.attendances[0].status
+    assert_equal 0, practice.attendances.count
   end
 
   def test_should_announce_toggle_on
     login(:lars)
     practice = practices(:voksne_2013_42_thursday)
     assert_equal 1, practice.attendances.count
-    xhr :post, :announce, :gs_id => practice.group_schedule_id,
-        :week => practice.week, :year => practice.year, :id => 'toggle'
+    xhr :post, :announce, group_schedule_id: practice.group_schedule_id,
+        year: practice.year, week: practice.week, status: 'toggle'
     assert_response :success
     assert_equal 2, practice.attendances.count
   end
@@ -94,7 +92,7 @@ class AttendancesControllerTest < ActionController::TestCase
   end
 
   def test_should_get_month_chart
-    get :month_chart, :year => 2013, :month => 10, :size => '800x300', :format => 'png'
+    get :month_chart, year: 2013, month: 10, size: '800x300', format: 'png'
     assert_response :success
   end
 

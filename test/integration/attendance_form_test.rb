@@ -1,4 +1,4 @@
-require File.expand_path('../test_helper', File.dirname(__FILE__))
+require 'test_helper'
 
 class AttendanceFormTest < ActionDispatch::IntegrationTest
   fixtures :all
@@ -36,7 +36,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
     # Attendance 'X' NOT present
     lars_row = find('table:first-of-type tbody tr:nth-of-type(5)')
     assert lars_row
-    assert_equal ['Lars Bråten', '46', 'gult', '', 'X', '', '', '', '1 / 1'],
+    assert_equal ['Lars Bråten', '46', 'brunt', '', 'X', '', '', '', '1 / 1'],
         lars_row.all('td').map(&:text)
 
     # Mark Lars as present
@@ -54,7 +54,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
       # Attendance 'X' present
       lars_row = find('table:first-of-type tbody tr:nth-of-type(5)')
       assert lars_row
-      assert_equal ['Lars Bråten', '46', 'gult', 'X', 'X', '', '', '', '2 / 2'],
+      assert_equal ['Lars Bråten', '46', 'brunt', 'X', 'X', '', '', '', '2 / 2'],
           lars_row.all('td').map(&:text)
       lars_row.find('td:nth-of-type(4)').find('a', :text => 'X')
     end

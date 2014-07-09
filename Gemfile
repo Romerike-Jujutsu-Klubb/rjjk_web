@@ -39,7 +39,7 @@ gem 'unicode_utils'
 gem 'will_paginate'
 
 group :assets do
-  gem 'bootstrap-sass'
+  gem 'bootstrap-sass', '<3.2.0.0'
   gem 'coffee-rails'
   gem 'sass-rails'
   gem 'therubyrhino'
@@ -50,6 +50,7 @@ end
 group :development do
   gem 'rdoc'
   gem 'capistrano', '<3.0.0'
+  gem 'rack-mini-profiler'
 end
 
 group :test do

@@ -10,7 +10,7 @@ class Rank < ActiveRecord::Base
   has_many :katas, class_name: TechniqueApplication.name, conditions: ['system = ?', 'Kata']
   has_many :technique_applications, dependent: :nullify
 
-  scope :kwr, where(martial_art_id: MartialArt.kwr.first.id)
+  scope :kwr, where(martial_art_id: MartialArt.kwr.first.try(:id))
 
   validates_presence_of :position, :standard_months, :group, :group_id,
       :martial_art, :martial_art_id

@@ -8,7 +8,7 @@ lars_panda_2013_41:
   practice: panda_2013_41
   status: X
 
-lars_voksne_2013_41_attended:
+lars_voksne_2013_41_tuesday_attended:
   member: lars
   practice: voksne_2013_41_tuesday
   status: X
@@ -18,15 +18,20 @@ lars_voksne_2013_41_thursday_attended:
   practice: voksne_2013_41_thursday
   status: X
 
+uwe_voksne_2013_41_thursday_attended:
+  member: uwe
+  practice: voksne_2013_41_thursday
+  status: X
+
+uwe_voksne_2013_42_tuesday_planned:
+  member: uwe
+  practice: voksne_2013_42_tuesday
+  status: P
+
 uwe_panda_2013_42_planned:
   member: uwe
   practice: panda_2013_42
   status: P
-
-uwe_voksne_2013_42_tuesday_attended:
-  member: uwe
-  practice: voksne_2013_42_tuesday
-  status: X
 
 uwe_voksne_2013_42_thursday_planned:
   member: uwe

@@ -1,8 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'censors_controller'
-
-# Re-raise errors caught by the controller.
-class CensorsController; def rescue_action(e) raise e end; end
+require 'test_helper'
 
 class CensorsControllerTest < ActionController::TestCase
   fixtures :users, :censors

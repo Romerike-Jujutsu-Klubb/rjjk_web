@@ -1,24 +1,48 @@
 <% @content_width = 880 %>
 
 <div>
-<a class="carousel-control left" style="position: inherit; margin-top: -0.05em" href="<%= url_for :year => @first_date.year, :month => @first_date.month %>">&lsaquo;</a>
-<a class="carousel-control right" style="position: inherit; margin-top: -0.05em" href="<%= url_for :year => (@last_date + 1).year, :month => (@last_date + 1).month %>">&rsaquo;</a>
+  <a class="carousel-control left" style="position: inherit; margin-top: -0.05em" href="<%= url_for :year => @first_date.year, :month => @first_date.month %>">&lsaquo;</a>
+  <a class="carousel-control right" style="position: inherit; margin-top: -0.05em" href="<%= url_for :year => (@last_date + 1).year, :month => (@last_date + 1).month %>">&rsaquo;</a>
 
-<h2>Medlemsrapport <%= t(:date)[:month_names][@month] %> <%= @year %></h2>
-<table class="table">
-  <tr>
-    <th width="70%">Nye medlemmer</th>
-    <td><%= @members_in.size %></td>
-  </tr>
-  <tr>
-    <th>Utmeldinger</th>
-    <td><%= @members_out.size %></td>
-  </tr>
-</table>
+  <h2>Medlemsrapport <%= t(:date)[:month_names][@month] %> <%= @year %></h2>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th width="70%">Gruppe</th>
+      <th>Antall</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <th>Totalt</th>
+      <th><%= @members_after.size %></th>
+    </tr>
+    </tfoot>
+    <tbody>
+    <% @members_after.group_by { |m| m.groups.sort_by(&:to_age).last }.each do |group, members| %>
+        <tr>
+          <td><%= group.name %></td>
+          <td><%= members.size %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <table class="table">
+    <tr>
+      <th width="70%">Nye medlemmer</th>
+      <td><%= @members_in.size %></td>
+    </tr>
+    <tr>
+      <th>Utmeldinger</th>
+      <td><%= @members_out.size %></td>
+    </tr>
+  </table>
 </div>
 
 <%= image_tag url_for(:action => :history_graph, :id => '832x600', :format => :png),
-              :title => 'Medlemmer graf', :class => 'img-rounded', :style => 'width: 100%' %>
+        :title => 'Medlemmer graf', :class => 'img-rounded', :style => 'width: 100%' %>
 
 <% if @members_in.any? %>
     <table class="table">

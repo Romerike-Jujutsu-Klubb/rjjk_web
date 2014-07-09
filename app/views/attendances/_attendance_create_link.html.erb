@@ -1,6 +1,5 @@
 <%= link_to(('&nbsp;' * 4).html_safe, {
-        :controller => :attendances, :action => :announce,
-        :member_id => member_id, :gs_id => group_schedule_id,
-        :year => date.year, :week => date.cweek,
-        :id => Attendance::Status::ATTENDED
-}, :method => :post, :remote => true, :style => 'text-decoration: none') %>
+        controller: :attendances, action: :announce,
+        member_id: member_id, group_schedule_id: group_schedule_id,
+        year: date.year, week: date.cweek, status: Attendance::Status::ATTENDED
+}, method: :post, remote: true, style: 'text-decoration: none') %>

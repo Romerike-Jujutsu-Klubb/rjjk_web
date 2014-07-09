@@ -162,10 +162,10 @@ class AttendancesController < ApplicationController
 
   def announce
     m = (params[:member_id] && Member.find(params[:member_id])) || current_user.member
-    year = params[:year]
-    week = params[:week]
-    gs_id = params[:gs_id]
-    if year && week && gs_id
+    year = params[:year].to_i
+    week = params[:week].to_i
+    gs_id = params[:group_schedule_id]
+    if year > 0 && week > 0 && gs_id
       practice = Practice.where(:group_schedule_id => gs_id,
           :year => year,
           :week => week).first_or_create!
@@ -175,18 +175,26 @@ class AttendancesController < ApplicationController
     criteria = {:member_id => m.id, :practice_id => practice.id}
     @attendance = Attendance.includes(:practice).where(criteria).first_or_initialize
 
-    new_status = params[:id]
+    new_status = params[:status]
     if new_status == 'toggle'
-      if @attendance.status == Attendance::Status::WILL_ATTEND
+      if !@attendance.practice.passed? && @attendance.status == Attendance::Status::WILL_ATTEND
+        new_status = nil
+        @attendance.destroy
+        @attendance = nil
+      elsif @attendance.status == Attendance::Status::ATTENDED
         new_status = Attendance::Status::ABSENT
       else
-        new_status = Attendance::Status::WILL_ATTEND
+        new_status = @attendance.practice.passed? ? Attendance::Status::ATTENDED : Attendance::Status::WILL_ATTEND
       end
     end
-    @attendance.status = new_status
-    @attendance.save!
+    @attendance.update_attributes!(status: new_status) if new_status
     if request.xhr?
-      render :partial => 'attendance_delete_link', :locals => {:attendance => @attendance}
+      if params[:status] == 'toggle'
+        render partial: 'plan_practice', locals: {gs: practice.group_schedule,
+            year: year, week: week, attendance: @attendance}
+      else
+        render :partial => 'attendance_delete_link', :locals => {:attendance => @attendance}
+      end
     else
       back_or_redirect_to(@attendance)
     end
@@ -194,20 +202,32 @@ class AttendancesController < ApplicationController
 
   def plan
     today = Date.today
+
     @weeks = [[today.year, today.cweek], [(today + 7).year, (today + 7).cweek]]
     if today.month >= 6 && today.month <= 7
       @weeks += [[(today + 14).year, (today + 14).cweek], [(today + 21).year, (today + 21).cweek]]
     end
+
     member = current_user.member
+    last_unconfirmed = member.attendances.includes(:practice).
+        where("attendances.status = 'P' AND (practices.year < ? OR (year = ? AND week < ?))",
+        today.year, today.year, today.cweek).order(:year, :week).last
+    if last_unconfirmed
+      @weeks.unshift [last_unconfirmed.date.year, last_unconfirmed.date.cweek]
+    end
+    if flash[:attendance_id]
+      @reviewed_attendance = Attendance.find(flash[:attendance_id])
+      @weeks.unshift [@reviewed_attendance.date.year, @reviewed_attendance.date.cweek]
+      @weeks.sort!.uniq!
+    end
+
     @group_schedules = member.groups.reject(&:school_breaks).map(&:group_schedules).flatten
     @weeks.each do |w|
       @group_schedules.each { |gs| gs.practices.where(:year => today.year, :week => today.cweek).first_or_create! }
       @group_schedules.each { |gs| gs.practices.where(:year => (today + 7).year, :week => (today + 7).cweek).first_or_create! }
     end
     @planned_attendances = Attendance.includes(:practice).
-        where('member_id = ? AND (practices.year > ? OR (practices.year = ? AND practices.week >= ?)) AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
-        member, today.year, today.year, today.cweek,
-        @weeks.last[0], @weeks.last[0], @weeks.last[1]).
+        where("member_id = ? AND (practices.year, practices.week) IN (#{@weeks.map { |y, w| "(#{y}, #{w})" }.join(', ')})", member.id).
         all
     start_date = 6.months.ago.to_date.beginning_of_month
     attendances = Attendance.includes(:practice).
@@ -227,25 +247,42 @@ class AttendancesController < ApplicationController
         @months << ['Siden gradering', *@attended_groups.map { |g| (by_group[g] || []).size }]
       end
     end
-    @reviewed_attendance = Attendance.find(flash[:attendance_id]) if flash[:attendance_id]
   end
 
   def review
     group_schedule_id = params[:group_schedule_id]
-    date = Date.parse(params[:date])
-    practice = Practice.where(:group_schedule_id => group_schedule_id,
-        :year => date.year, :week => date.cweek).first_or_create!
+    year = params[:year].to_i
+    week = params[:week].to_i
+    unless year > 0 && week > 0 && group_schedule_id
+      redirect_to({action: :plan}, notice: 'Year and week is required')
+      return
+    end
+    practice = Practice.where(group_schedule_id: group_schedule_id,
+        year: year, week: week).first_or_create!
     @attendance = Attendance.
-        where(:member_id => current_user.member.id, :practice_id => practice.id).
+        where(member_id: current_user.member.id, practice_id: practice.id).
         first_or_create
-    @attendance.update_attributes! status: params[:status]
+    new_status = params[:status]
+    if new_status == 'toggle'
+      new_status =
+          case @attendance.status
+          when Attendance::Status::WILL_ATTEND, Attendance::Status::ABSENT, Attendance::Status::HOLIDAY
+            Attendance::Status::ATTENDED
+          when Attendance::Status::ATTENDED, Attendance::Status::INSTRUCTOR, Attendance::Status::ASSISTANT
+            Attendance::Status::ABSENT
+          when nil
+            Attendance::Status::ATTENDED
+          end
+    end
+    @attendance.update_attributes! status: new_status
 
     if request.xhr?
-      render :text => @attendance.status
+      render partial: 'plan_practice', locals: {gs: practice.group_schedule,
+          year: year, week: week, attendance: @attendance}
     else
       flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  #{t(:attendances)[@attendance.status.to_sym]}"
-      flash[:atendance_id] = @attendance.id
-      back_or_redirect_to(:action => :plan)
+      flash[:attendance_id] = @attendance.id
+      back_or_redirect_to attendance_plan_path
     end
   end
 

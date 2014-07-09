@@ -11,7 +11,7 @@ RjjkWeb::Application.configure do
   config.action_mailer.default_url_options = {:host => 'example.com'}
   config.active_record.mass_assignment_sanitizer = :strict
   config.active_support.deprecation = :stderr
-  config.after_initialize { Timecop.freeze(Time.local 2013, 10, 17, 18, 46, 0) }
+  config.after_initialize { Timecop.freeze(Time.local 2013, 10, 17, 18, 46, 0) } # Week 42
   config.middleware.use ExceptionNotification::Rack, {
       :ignore_exceptions => [],
       :email => {

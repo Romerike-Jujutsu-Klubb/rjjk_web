@@ -14,6 +14,7 @@ class ActionDispatch::IntegrationTest
   include Capybara::DSL
 
   Capybara.default_driver = :selenium
+  Capybara.default_wait_time = 30
 
   self.use_transactional_fixtures = false
   TEST_START = Time.now.change(sec: 0)
@@ -24,8 +25,8 @@ class ActionDispatch::IntegrationTest
   end
 
   teardown do
-    DatabaseCleaner.clean       # Truncate the database
-    Capybara.reset_sessions!    # Forget the (simulated) browser state
+    DatabaseCleaner.clean # Truncate the database
+    Capybara.reset_sessions! # Forget the (simulated) browser state
     Capybara.use_default_driver # Revert Capybara.current_driver to Capybara.default_driver
     fail(@test_screenshot_errors.join("\n")) if @test_screenshot_errors
   end
@@ -36,10 +37,10 @@ class ActionDispatch::IntegrationTest
     svn_file_name = "#{SCREENSHOT_DIR_ABS}/.svn/text-base/#{name}.png.svn-base"
     org_name = "#{SCREENSHOT_DIR_ABS}/#{name}_0.png~"
     new_name = "#{SCREENSHOT_DIR_ABS}/#{name}_1.png~"
+    FileUtils.mkdir_p File.dirname(org_name)
     unless File.exists?(svn_file_name)
       svn_info = `svn info #{file_name}`
       if svn_info.blank?
-        FileUtils.mkdir_p File.dirname(org_name)
         # http://www.akikoskinen.info/image-diffs-with-git/
         puts `git show HEAD~0:#{SCREENSHOT_DIR}/#{name}.png > #{org_name}`
         FileUtils.rm_f org_name if File.size(org_name) == 0
@@ -63,25 +64,14 @@ class ActionDispatch::IntegrationTest
     end
   end
 
-  def visit_with_login(path, redirected_path = path)
+  def visit_with_login(path, redirected_path: path, user: :admin)
     visit path
     if current_path == '/user/login'
-      fill_in 'user_login', :with => 'admin'
-      fill_in 'user_password', :with => 'atest'
+      fill_in 'user_login', with: user
+      fill_in 'user_password', with: 'atest'
       click_button 'Logg inn'
     end
     assert_equal redirected_path, current_path
   end
 
-end
-
-module Capybara
-  self.default_wait_time = 15
-  module Node
-    class Element
-      def hover
-        @session.driver.browser.action.move_to(self.native).perform
-      end
-    end
-  end
 end

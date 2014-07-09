@@ -1,10 +1,10 @@
 RjjkWeb::Application.routes.draw do
-  get 'attendances/review/:date/:group_schedule_id/:status' => 'attendances#review'
+  match 'attendances/:action/:year/:week/:group_schedule_id/:status(/:member_id)' => 'attendances'
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
   get ':controller/report(/:year/:month)' => '#report'
   get 'info/versjon'
   get 'members/search'
-  get 'mitt/oppmote' => 'attendances#plan'
+  get 'mitt/oppmote' => 'attendances#plan', as: :attendance_plan
   get 'attendances/plan' # må være etter mitt/oppmote
   get 'news/list'
   get 'pensum' => 'ranks#pensum'
