@@ -50,7 +50,6 @@ end
 group :development do
   gem 'rdoc'
   gem 'capistrano', '<3.0.0'
-  gem 'rack-mini-profiler'
 end
 
 group :test do
@@ -62,4 +61,8 @@ group :test do
   gem 'selenium-webdriver'
   gem 'simplecov'
   gem 'timecop'
+end
+
+group :development, :beta do
+  gem 'rack-mini-profiler'
 end

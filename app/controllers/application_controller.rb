@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :reject_baidu_bot
   before_filter :store_current_user_in_thread
+  before_filter {Rack::MiniProfiler.authorize_request if current_user.try(:admin?)} if Rails.env.beta?
   after_filter :clear_user
 
   def render(*args)
