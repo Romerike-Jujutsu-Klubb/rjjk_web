@@ -1,6 +1,4 @@
 class Role < ActiveRecord::Base
-  attr_accessible :name, :years_on_the_board
-
   has_many :appointments
   has_many :elections
 

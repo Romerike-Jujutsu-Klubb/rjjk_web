@@ -1,14 +1,15 @@
 class Image < ActiveRecord::Base
   include UserSystem
 
-  default_scope :select => (column_names - %w(content_data)).map{|c| "images.#{c}"}
-  scope :with_image, :select =>	'*'
-  scope :published, where(:public => true, :approved => true)
-  scope :images, where("content_type LIKE 'image/%'")
+  default_scope { select((column_names - %w(content_data)).map { |c| "images.#{c}" }) }
+  scope :with_image, -> { select('*') }
+  scope :published, -> { where(:public => true, :approved => true) }
+  scope :images, -> { where("content_type LIKE 'image/%'") }
 
   belongs_to :user
   has_many :user_images, :dependent => :destroy
-  has_many :likers, :class_name => 'User', :through => :user_images, :conditions => "user_images.rel_type = 'LIKE'", :source => :user
+  has_many :likers, -> { where("user_images.rel_type = 'LIKE'") },
+      class_name: 'User', through: :user_images, source: :user
 
   before_create do
     self.user_id ||= current_user.try(:id)
@@ -41,6 +42,7 @@ class Image < ActiveRecord::Base
     def initialize(image)
       @image = image
     end
+
     def each(&block)
       chunk_size = 10 * 1024 * 1024
       image_length = Image.connection.execute("SELECT LENGTH(content_data) as length FROM images WHERE id = #{@image.id}")[0]['length']

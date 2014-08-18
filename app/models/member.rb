@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Member < ActiveRecord::Base
   JUNIOR_AGE_LIMIT = 15
   ASPIRANT_AGE_LIMIT = 10
@@ -12,9 +13,9 @@ class Member < ActiveRecord::Base
 
   belongs_to :image, :dependent => :destroy
   belongs_to :user, :dependent => :destroy
-  has_one :next_graduate, class_name: :Graduate, include: :graduation,
-      conditions: ->(r) { ['graduations.held_on >= ?', Date.today] },
-      order: 'graduations.held_on'
+  has_one :next_graduate,
+      -> { includes(:graduation).where('graduations.held_on >= ?', Date.today).order('graduations.held_on') },
+      class_name: :Graduate
   has_one :nkf_member, :dependent => :nullify
   has_many :appointments, :dependent => :destroy
   has_many :attendances, :dependent => :destroy
@@ -23,16 +24,15 @@ class Member < ActiveRecord::Base
   has_many :elections, :dependent => :destroy
   has_many :graduates, :dependent => :destroy
   has_many :group_instructors, :dependent => :destroy
-  has_many :passed_graduates, :class_name => 'Graduate',
-      :conditions => {:graduates => {:passed => true}}
+  has_many :passed_graduates,
+      -> { where :graduates => {:passed => true} }, :class_name => 'Graduate'
   has_many :ranks, :through => :passed_graduates
   has_many :signatures, :dependent => :destroy
   has_and_belongs_to_many :groups
 
   scope :active, ->(from_date = nil, to_date = nil) do
     from_date ||= Date.today; to_date ||= from_date
-    {conditions: ['joined_on <= ? AND left_on IS NULL OR left_on > ?',
-        to_date, from_date]}
+    where('joined_on <= ? AND left_on IS NULL OR left_on > ?', to_date, from_date)
   end
   SEARCH_FIELDS = [
       :billing_email, :email, :first_name, :last_name, :parent_email,
@@ -65,7 +65,7 @@ class Member < ActiveRecord::Base
   end
 
   def self.paginate_active(page)
-    paginate :page => page, :per_page => MEMBERS_PER_PAGE, :conditions => ACTIVE_CONDITIONS, :order => 'first_name, last_name'
+    where(ACTIVE_CONDITIONS).order(:first_name, :last_name).paginate(page: page, per_page: MEMBERS_PER_PAGE)
   end
 
   def self.count_active

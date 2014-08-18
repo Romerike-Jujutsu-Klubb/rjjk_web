@@ -24,14 +24,12 @@
 
           <div class="form-group col-md-3">
             <%= f.label :publish_at, 'Publiser fra' %>
-            <%= f.datetime_picker :publish_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
-                    :class => 'form-control' %>
+            <%= f.text_field :publish_at, value: @news_item.publish_at.try(:strftime, '%F %R'), class: 'datetime form-control' %>
           </div>
 
           <div class="form-group col-md-3">
             <%= f.label :expire_at, 'til' %>
-            <%= f.datetime_picker :expire_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
-                    :class => 'form-control' %>
+            <%= f.text_field :expire_at, value: @news_item.expire_at.try(:strftime, '%F %R'), class: 'datetime form-control' %>
           </div>
         </div>
 

@@ -6,8 +6,11 @@ class InformationPageNotifier
 #   Newly revised pages should be sent to all members unless they got it within the last 6 months,
 #     or the change is significat (or should that be in a news item?)
   def self.notify_outdated_pages
-    recipients = Member.active(Date.today).includes(:user).where('users.role = ?', 'ADMIN').all
-    pages = InformationPage.where('(hidden IS NULL OR hidden = ?) AND (revised_at IS NULL OR revised_at < ?)', false, 6.months.ago).
+    recipients = Member.active(Date.today).includes(:user).references(:users).
+        where('users.role = ?', 'ADMIN').all
+    pages = InformationPage.
+        where('(hidden IS NULL OR hidden = ?) AND (revised_at IS NULL OR revised_at < ?)',
+            false, 6.months.ago).
         order(:revised_at).limit(3).all
     return if pages.empty?
     recipients.each do |recipient|

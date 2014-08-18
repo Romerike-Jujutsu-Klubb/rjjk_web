@@ -56,10 +56,8 @@ class NkfMember < ActiveRecord::Base
   validates_uniqueness_of :member_id, :allow_nil => true
 
   def self.find_free_members
-    Member.all(
-        :conditions => "(left_on IS NULL OR left_on >= '2009-01-01') AND id NOT IN (SELECT member_id FROM nkf_members WHERE member_id IS NOT NULL)",
-        :order => 'first_name, last_name'
-    )
+    Member.where("(left_on IS NULL OR left_on >= '2009-01-01') AND id NOT IN (SELECT member_id FROM nkf_members WHERE member_id IS NOT NULL)").
+        order('first_name, last_name').all
   end
 
   def self.update_group_prices
@@ -103,7 +101,7 @@ class NkfMember < ActiveRecord::Base
       u = Member.create_corresponding_user! converted_attributes
       member = create_member!(
           converted_attributes.update :instructor => false, :nkf_fee => true,
-                                      :payment_problem => false, :user => u
+              :payment_problem => false, :user => u
       )
       member.nkf_member = self
       member

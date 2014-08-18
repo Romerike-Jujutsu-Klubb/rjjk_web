@@ -3,8 +3,7 @@
 
     <div class="form-group">
       <%= f.label :held_on, 'Dato' %>
-      <%= f.datepicker :held_on, :dateFormat => 'yy-mm-dd', :firstDay => 1,
-              :size => 18, :class => 'form-control', :style => 'width: 7.5em' %>
+      <%= f.text_field :held_on, size: 18, class: 'date form-control', style: 'width: 7.5em' %>
       <% if @graduation.held_on %>
           <% if @graduation.held_on == Date.today %>
               I DAG!

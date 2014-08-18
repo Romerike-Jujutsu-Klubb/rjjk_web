@@ -3,14 +3,16 @@ class Rank < ActiveRecord::Base
 
   belongs_to :martial_art
   belongs_to :group
-  has_many :applications, class_name: TechniqueApplication.name, conditions: ['system <> ?', 'Kata']
+  has_many :applications, -> { where('system <> ?', 'Kata') },
+      class_name: TechniqueApplication.name
   has_many :basic_techniques, dependent: :nullify
   has_many :embus, dependent: :destroy
   has_many :graduates, dependent: :destroy
-  has_many :katas, class_name: TechniqueApplication.name, conditions: ['system = ?', 'Kata']
+  has_many :katas, -> { where 'system = ?', 'Kata' },
+      class_name: TechniqueApplication.name
   has_many :technique_applications, dependent: :nullify
 
-  scope :kwr, where(martial_art_id: MartialArt.kwr.first.try(:id))
+  scope :kwr, -> { where(martial_art_id: MartialArt.kwr.first.try(:id)) }
 
   validates_presence_of :position, :standard_months, :group, :group_id,
       :martial_art, :martial_art_id

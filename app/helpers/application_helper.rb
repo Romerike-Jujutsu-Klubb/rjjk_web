@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'redbox_helper'
 
 module ApplicationHelper

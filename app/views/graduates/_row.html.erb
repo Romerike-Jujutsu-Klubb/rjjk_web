@@ -26,8 +26,8 @@
   <% end %>
   <td>
     <%= form_for graduate, :html => {:remote => true, :style => 'display: inline'} do |f| %>
-        <%= f.select :rank_id, Rank.all(:conditions => "martial_art_id = #{graduate.graduation.group.martial_art_id}",
-                :order => 'position').map { |r| ["#{r.name} #{r.colour}", r.id] },
+        <%= f.select :rank_id, Rank.where("martial_art_id = #{graduate.graduation.group.martial_art_id}").
+                order(:position).all.map { |r| ["#{r.name} #{r.colour}", r.id] },
                 {}, :onchange => "$('#rank_btn_#{graduate.id}').click()" %>
         <%= f.submit :id => "rank_btn_#{graduate.id}", :class => 'hidden' %>
     <% end %>

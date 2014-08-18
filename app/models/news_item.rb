@@ -8,7 +8,7 @@ class NewsItem < ActiveRecord::Base
   extend UserSystem
   include UserSystem
 
-  scope :current, where("(publication_state IS NULL OR publication_state = '#{PublicationState::PUBLISHED}') AND (publish_at IS NULL OR publish_at <= CURRENT_TIMESTAMP) AND (expire_at IS NULL OR expire_at >= CURRENT_TIMESTAMP)")
+  scope :current, -> {where("(publication_state IS NULL OR publication_state = '#{PublicationState::PUBLISHED}') AND (publish_at IS NULL OR publish_at <= CURRENT_TIMESTAMP) AND (expire_at IS NULL OR expire_at >= CURRENT_TIMESTAMP)")}
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :created_by
 
@@ -23,7 +23,7 @@ class NewsItem < ActiveRecord::Base
   validates_inclusion_of :publication_state, :in => PublicationState.constants.map(&:to_s)
 
   def self.front_page_items
-    (admin? ? self : current).order('created_at DESC').limit(10).includes(:creator => :member).all
+    (admin? ? self : current).order('created_at DESC').limit(10).includes(creator: :member).all
   end
 
   def initialize(*args)

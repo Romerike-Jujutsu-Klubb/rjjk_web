@@ -2,10 +2,11 @@
 class NkfMembersController < ApplicationController
   before_filter :admin_required
 
-  cache_sweeper :member_sweeper, :only => [:create_member, :update_member]
+  # FIXME(uwe):  Verify caching
+  # cache_sweeper :member_sweeper, :only => [:create_member, :update_member]
 
   def index
-    @nkf_members = NkfMember.all :order => 'fornavn, etternavn'
+    @nkf_members = NkfMember.order(:fornavn, :etternavn).all
   end
 
   def show

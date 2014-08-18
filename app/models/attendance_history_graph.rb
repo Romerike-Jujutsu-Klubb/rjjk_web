@@ -22,7 +22,7 @@ class AttendanceHistoryGraph
     weeks.reverse!
     totals = Array.new(weeks.size - 1, nil)
     totals_sessions = Array.new(weeks.size - 1, 0)
-    Group.all(:order => 'martial_art_id, from_age DESC, to_age').each do |group|
+    Group.order('martial_art_id, from_age DESC, to_age').all.each do |group|
       attendances = weeks.each_cons(2).map do |w1, w2|
         Attendance.by_group_id(group.id).includes(:practice).
             where('(practices.year > ? OR (practices.year = ? AND practices.week > ?)) AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
@@ -82,7 +82,7 @@ class AttendanceHistoryGraph
     g.x_axis_label='Dag'
     first_date = Date.civil(year, month, 1)
     last_date = Date.civil(year, month, -1)
-    attendances = Attendance.includes(:practice).
+    attendances = Attendance.includes(:practice).references(:practices).
         where('practices.year = ? AND practices.week >= ? AND practices.week <= ? AND attendances.status NOT IN (?)',
               year, first_date.cweek, last_date.cweek, Attendance::ABSENT_STATES).
         all.select { |a| a.date >= first_date && a.date <= last_date && a.date <= Date.today }

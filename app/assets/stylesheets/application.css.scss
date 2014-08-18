@@ -1,0 +1,12 @@
+@import "dark_ritual";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import 'dark_ritual_adaption';
+@import 'font-awesome';
+@import 'colorbox-rails';
+@import 'bootstrap-datetimepicker';
+
+#cboxPrevious,
+#cboxNext,
+#cboxSlideshow,
+#cboxClose {border:0;}

@@ -1,6 +1,4 @@
 class TechniqueApplication < ActiveRecord::Base
-  attr_accessible :name, :rank_id, :system
-
   belongs_to :rank
   has_many :application_steps, dependent: :destroy
 

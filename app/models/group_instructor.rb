@@ -1,6 +1,5 @@
+# encoding: utf-8
 class GroupInstructor < ActiveRecord::Base
-  attr_accessible :assistant, :group_schedule, :group_schedule_id, :group_semester_id, :member_id
-
   module Role
     CHIEF = 'Hovedinstruktør'
     INSTRUCTOR = 'Instruktør'
@@ -13,6 +12,7 @@ class GroupInstructor < ActiveRecord::Base
 
   scope :active,
       ->(date = Date.today) { includes(:group_semester => :semester).
+          references(:semesters).
           where('semesters.start_on <= :date AND semesters.end_on >= :date',
           :date => date) }
 

@@ -3,10 +3,11 @@ class AttendancesController < ApplicationController
   before_filter :authenticate_user, :only => USER_ACTIONS
   before_filter :admin_required, :except => USER_ACTIONS
 
-  caches_page :history_graph, :month_chart, :month_per_year_chart
-  update_actions = [:announce, :create, :destroy, :review, :update]
-  cache_sweeper :attendance_image_sweeper, :only => update_actions
-  cache_sweeper :grade_history_image_sweeper, :only => update_actions
+  # FIXME(uwe):  check caching
+  # caches_page :history_graph, :month_chart, :month_per_year_chart
+  # update_actions = [:announce, :create, :destroy, :review, :update]
+  # cache_sweeper :attendance_image_sweeper, :only => update_actions
+  # cache_sweeper :grade_history_image_sweeper, :only => update_actions
 
   def index
     @attendances = Attendance.all
@@ -118,7 +119,7 @@ class AttendancesController < ApplicationController
     @month = @date.month
     @first_date = @date
     @last_date = @date.end_of_month
-    @attendances = Attendance.includes(:practice => :group_schedule).
+    @attendances = Attendance.includes(:practice => :group_schedule).references(:practices).
         where('practices.year = ? AND practices.week >= ? AND practices.week <= ? AND attendances.status NOT IN (?)',
         @year, @first_date.cweek, @last_date.cweek, Attendance::ABSENT_STATES).
         all.select { |a| (@first_date..@last_date).include? a.date }
@@ -209,9 +210,10 @@ class AttendancesController < ApplicationController
     end
 
     member = current_user.member
-    last_unconfirmed = member.attendances.includes(:practice).
-        where("attendances.status = 'P' AND (practices.year < ? OR (year = ? AND week < ?))",
-        today.year, today.year, today.cweek).order(:year, :week).last
+    last_unconfirmed = member.attendances.includes(:practice).references(:practices).
+        where("attendances.status = 'P' AND (practices.year < ? OR (practices.year = ? AND practices.week < ?))",
+        today.year, today.year, today.cweek).
+        order('practices.year, practices.week').last
     if last_unconfirmed
       @weeks.unshift [last_unconfirmed.date.year, last_unconfirmed.date.cweek]
     end
@@ -226,11 +228,11 @@ class AttendancesController < ApplicationController
       @group_schedules.each { |gs| gs.practices.where(:year => today.year, :week => today.cweek).first_or_create! }
       @group_schedules.each { |gs| gs.practices.where(:year => (today + 7).year, :week => (today + 7).cweek).first_or_create! }
     end
-    @planned_attendances = Attendance.includes(:practice).
+    @planned_attendances = Attendance.includes(:practice).references(:practices).
         where("member_id = ? AND (practices.year, practices.week) IN (#{@weeks.map { |y, w| "(#{y}, #{w})" }.join(', ')})", member.id).
         all
     start_date = 6.months.ago.to_date.beginning_of_month
-    attendances = Attendance.includes(:practice).
+    attendances = Attendance.includes(:practice).references(:practices).
         where('member_id = ? AND attendances.status = ? AND ((practices.year = ? AND practices.week >= ?) OR (practices.year = ?))',
         member, Attendance::Status::ATTENDED, start_date.year, start_date.cweek, today.year).
         all
@@ -315,7 +317,8 @@ class AttendancesController < ApplicationController
         @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
 
         @instructors = Member.active(@date).
-            includes({:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank]}, :groups).find_all_by_instructor(true).
+            includes({:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank]}, :groups).
+            where(instructor: true).
             select { |m| m.groups.any? { |g| g.martial_art_id == @group.martial_art_id } }
         @instructors.delete_if { |m| m.attendances.select { |a| ((@dates.first - 92.days)..@dates.last).include?(a.date) && a.group_schedule.group_id == @group.id }.empty? }
         @instructors += GroupInstructor.includes(:group_schedule).
@@ -325,7 +328,7 @@ class AttendancesController < ApplicationController
 
         current_members = @group.members.active(first_date, last_date).
             includes({:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank], :groups => :group_schedules}, :nkf_member)
-        attended_members = Member.
+        attended_members = Member.references(:practices).
             includes(:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank]).
             where('members.id NOT IN (?) AND practices.group_schedule_id IN (?) AND (year > ? OR ( year = ? AND week >= ?)) AND (year < ? OR ( year = ? AND week <= ?))',
             @instructors.map(&:id), @group.group_schedules.map(&:id), first_date.cwyear, first_date.cwyear, first_date.cweek, last_date.cwyear, last_date.cwyear, last_date.cweek).

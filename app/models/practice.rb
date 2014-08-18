@@ -1,6 +1,4 @@
 class Practice < ActiveRecord::Base
-  attr_accessible :group_schedule_id, :message_nagged_at, :message, :status, :week, :year
-
   belongs_to :group_schedule
 
   has_many :attendances, :dependent => :destroy

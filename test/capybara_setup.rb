@@ -1,4 +1,4 @@
-require 'capybara/rails'
+require 'minitest/rails/capybara'
 require 'image_compare'
 
 # Transactional fixtures do not work with Selenium tests, because Capybara

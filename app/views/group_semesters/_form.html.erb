@@ -21,11 +21,11 @@
   </div>
   <div class="field">
     <%= f.label :first_session %>
-    <%= f.datepicker :first_session, :dateFormat => 'yy-mm-dd', :firstDay => 1 %>
+    <%= f.text_field :first_session, class: 'date' %>
   </div>
   <div class="field">
     <%= f.label :last_session %>
-    <%= f.datepicker :last_session, :dateFormat => 'yy-mm-dd', :firstDay => 1 %>
+    <%= f.text_field :last_session, class: 'date' %>
   </div>
   <div class="actions">
     <%= f.submit 'Lagre' %>

@@ -5,6 +5,8 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   include UserSystem
 
+  attr_accessor :password, :password_confirmation
+
   has_one :member
   has_many :embus, :dependent => :destroy
   has_many :images, :dependent => :destroy
@@ -59,11 +61,11 @@ class User < ActiveRecord::Base
   end
 
   def self.find_administrators
-    find(:all, :conditions => ['role = ?', UserSystem::ADMIN_ROLE])
+    where('role = ?', UserSystem::ADMIN_ROLE).all
   end
 
   def self.authenticate(login, pass)
-    users = includes(:member).
+    users = includes(:member).references(:members).
         where('(login = ? OR users.email = ? OR (members.email IS NOT NULL AND members.email = ?)) AND verified = ? AND (deleted IS NULL OR deleted = ?)',
         login, login, login, true, false).all
     users.
@@ -130,8 +132,6 @@ class User < ActiveRecord::Base
 
   protected
 
-  attr_accessor :password, :password_confirmation
-
   def validate_password?
     @password_needs_confirmation
   end
@@ -150,7 +150,7 @@ class User < ActiveRecord::Base
   def new_security_token(duration)
     write_attribute('security_token', self.class.hashed(self.salted_password + Time.now.to_i.to_s + rand.to_s))
     write_attribute('token_expiry', Time.at(Time.now.to_i + User.token_lifetime(duration)))
-    update
+    save
     self.security_token
   end
 

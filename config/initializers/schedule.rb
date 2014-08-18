@@ -1,3 +1,4 @@
+# encoding: utf-8
 unless Rails.env == 'test'
   scheduler = Rufus::Scheduler.new :max_work_threads => 1
 

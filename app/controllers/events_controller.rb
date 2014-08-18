@@ -32,7 +32,7 @@ class EventsController < ApplicationController
       flash[:notice] = 'Event was successfully created.'
       redirect_to(@event)
     else
-      render :action => "new"
+      render :action => 'new'
     end
   end
 
@@ -49,7 +49,7 @@ class EventsController < ApplicationController
       flash[:notice] = 'Event was successfully updated.'
       redirect_to :action => :edit
     else
-      render :action => "edit"
+      render :action => 'edit'
     end
   end
 
@@ -104,7 +104,11 @@ class EventsController < ApplicationController
       end
     end
     respond_to do |format|
-      format.ics { send_data(cal.export, :filename => "RJJK.ics", :disposition => "inline; filename=RJJK.ics", :type => "text/calendar") }
+      format.ics { send_data(cal.export, :filename => 'RJJK.ics', :disposition => 'inline; filename=RJJK.ics', :type => 'text/calendar') }
+      format.all do
+        puts "unknown format"
+        send_data(cal.export, filename: 'RJJK.ics', disposition: 'inline; filename=RJJK.ics', type: 'text/calendar')
+      end
     end
   end
 

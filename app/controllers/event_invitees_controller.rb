@@ -2,8 +2,6 @@
 class EventInviteesController < ApplicationController
   before_filter :admin_required, :except => [:index, :show]
 
-  # GET /event_invitees
-  # GET /event_invitees.json
   def index
     @event_invitees = EventInvitee.order(:name).all
 
@@ -13,8 +11,6 @@ class EventInviteesController < ApplicationController
     end
   end
 
-  # GET /event_invitees/1
-  # GET /event_invitees/1.json
   def show
     @event_invitee = EventInvitee.find(params[:id])
 
@@ -24,8 +20,6 @@ class EventInviteesController < ApplicationController
     end
   end
 
-  # GET /event_invitees/new
-  # GET /event_invitees/new.json
   def new
     @event_invitee = EventInvitee.new params[:event_invitee]
     load_users
@@ -36,14 +30,11 @@ class EventInviteesController < ApplicationController
     end
   end
 
-  # GET /event_invitees/1/edit
   def edit
     @event_invitee = EventInvitee.find(params[:id])
     load_users
   end
 
-  # POST /event_invitees
-  # POST /event_invitees.json
   def create
     @event_invitee = EventInvitee.new(params[:event_invitee])
 
@@ -61,8 +52,6 @@ class EventInviteesController < ApplicationController
     end
   end
 
-  # PUT /event_invitees/1
-  # PUT /event_invitees/1.json
   def update
     @event_invitee = EventInvitee.find(params[:id])
 
@@ -80,8 +69,6 @@ class EventInviteesController < ApplicationController
     end
   end
 
-  # DELETE /event_invitees/1
-  # DELETE /event_invitees/1.json
   def destroy
     @event_invitee = EventInvitee.find(params[:id])
     @event_invitee.destroy

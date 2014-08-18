@@ -13,8 +13,7 @@
 
   <div class="form-group">
     <%= f.label :start_at, 'Tidspunkt' %><br />
-    <%= f.datetime_picker :start_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
-                          :class => 'form-control' %>
+    <%= f.text_field :start_at, class: 'datetime form-control' %>
   </div>
   <div class="form-group">
     <%= f.label :minutes, 'Referat' %> <%=@board_meeting.minutes_filename%>

@@ -10,7 +10,8 @@
   <p>
     <% current_size = @group.members.select(&:active?).size %>
     <% if @group.target_size %>
-        <% free_spots = @group.target_size - current_size %>
+        <% actual_free_spots = @group.target_size - current_size %>
+        <% free_spots = user? ? actual_free_spots : [actual_free_spots, 5].max %>
         <% if free_spots > 0 %>
             <%= free_spots %> ledige plasser.<br/>
             <%= link_to 'Meld deg på!', 'http://www.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)' %>

@@ -5,8 +5,6 @@ class EventInviteeMessage < ActiveRecord::Base
     SIGNUP_REJECTION = 'SIGNUP_REJECTION'
   end
 
-  attr_accessible :body, :event_invitee, :event_invitee_id, :event_message_id, :message_type, :ready_at, :sent_at, :subject
-
   belongs_to :event_invitee
 
   validates_presence_of :body, :event_invitee, :event_invitee_id, :message_type, :subject

@@ -1,14 +1,21 @@
 class ApplicationController < ActionController::Base
   DEFAULT_LAYOUT = 'dark_ritual'
-  protect_from_forgery
+  protect_from_forgery with: :exception
   include UserSystem
-  include ActionController::Caching::Sweeping if defined?(JRUBY_VERSION)
+  # include ActionController::Caching::Sweeping if defined?(JRUBY_VERSION)
   layout DEFAULT_LAYOUT
   helper :user
 
   before_filter :reject_baidu_bot
   before_filter :store_current_user_in_thread
-  before_filter {Rack::MiniProfiler.authorize_request if current_user.try(:admin?)} if Rails.env.beta?
+
+  if Rails.env.beta?
+    before_filter { Rack::MiniProfiler.authorize_request if current_user.try(:admin?) }
+  end
+
+  # FIXME(uwe):  Set permitted params in each controller/action
+  before_filter do params.permit! end
+
   after_filter :clear_user
 
   def render(*args)
@@ -26,7 +33,7 @@ class ApplicationController < ActionController::Base
       @information_pages = @information_pages.where('title <> ?', 'Velkommen') unless user?
     end
     unless @image
-      loop do
+      3.times do
         begin
           Image.uncached do
             image_query = Image.
@@ -42,7 +49,6 @@ class ApplicationController < ActionController::Base
           break
         rescue Exception
           ExceptionNotifier.notify_exception($!)
-          retry
         end
       end
     end

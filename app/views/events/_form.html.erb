@@ -16,19 +16,17 @@
 
         <p style="float: left; margin-right: 1em; padding-bottom: 0">
           <%= f.label :name, 'Hendelse' %>
-          <%= f.text_field :name, :size => 52, :class => 'input-xlarge' %>
+          <%= f.text_field :name, size: 52, class: 'input-xlarge' %>
         </p>
 
         <p style="float: left; margin-right: 1em; padding-bottom: 0">
           <%= f.label :start_at, 'Fra' %>
-          <%= f.datetime_picker :start_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
-                                :class => 'input-medium' %>
+          <%= f.text_field :start_at, value: @event.start_at.try(:strftime, '%F %R'), class: 'datetime input-medium' %>
         </p>
 
         <p style="float: left; margin-right: 1em; padding-bottom: 0">
           <%= f.label :end_at, 'Til (valgfritt)' %>
-          <%= f.datetime_picker :end_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
-                                :class => 'input-medium' %>
+          <%= f.text_field :end_at, class: 'datetime input-medium' %>
         </p>
 
         <br clear="all"/>

@@ -1,6 +1,5 @@
+# encoding: utf-8
 class GroupSemester < ActiveRecord::Base
-  attr_accessible :first_session, :group_id, :last_session, :semester_id
-
   belongs_to :chief_instructor, :class_name => :Member
   belongs_to :group
   belongs_to :semester

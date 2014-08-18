@@ -20,7 +20,7 @@
 	prv_name = 0
 	style = 'STYLE="background: #c3c3c3;"'
 
-	@martial_art = MartialArt.find(:all)
+	@martial_art = MartialArt.all
 	def department_name(ma_id)
 		for ma in @martial_art
 			return ma.name if ma.id == ma_id

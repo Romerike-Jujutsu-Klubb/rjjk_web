@@ -1,8 +1,8 @@
-# Load the rails application
+# Load the Rails application.
 require File.expand_path('../application', __FILE__)
 
-# Initialize the rails application
-RjjkWeb::Application.initialize!
+# Initialize the Rails application.
+Rails.application.initialize!
 
 #FIXME(uwe): Report to RedCloth
 require 'redcloth/textile_doc'
@@ -45,7 +45,7 @@ module RedCloth
   end
 end
 
-ActionView::Base.field_error_proc = Proc.new { |html_tag, _| "<span class=\"fieldWithErrors\">#{html_tag}</span>".html_safe }
+# ActionView::Base.field_error_proc = Proc.new { |html_tag, _| "<span class=\"fieldWithErrors\">#{html_tag}</span>".html_safe }
 
 class TimeOfDay
   def min

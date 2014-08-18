@@ -1,5 +1,4 @@
 class Signature < ActiveRecord::Base
-  attr_accessible :content_type, :file, :image, :member_id, :name
   belongs_to :member
 
   def file=(file)

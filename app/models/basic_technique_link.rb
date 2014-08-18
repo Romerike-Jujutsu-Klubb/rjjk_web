@@ -1,5 +1,4 @@
 class BasicTechniqueLink < ActiveRecord::Base
-  attr_accessible :basic_technique_id, :position, :title, :url
   acts_as_list scope: :basic_technique_id
 
   belongs_to :basic_technique

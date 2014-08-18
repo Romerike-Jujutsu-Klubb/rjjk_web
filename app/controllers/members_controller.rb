@@ -1,9 +1,11 @@
 class MembersController < ApplicationController
   before_filter :admin_required
 
-  caches_page :age_chart, :image, :thumbnail, :history_graph, :grade_history_graph,
-              :grade_history_graph_percentage
-  cache_sweeper :member_sweeper, :only => [:add_group, :create, :update, :destroy]
+  # FIXME(uwe):  Verify caching
+  # caches_page :age_chart, :image, :thumbnail, :history_graph, :grade_history_graph,
+  #             :grade_history_graph_percentage
+  # FIXME(uwe):  Verify caching
+  # cache_sweeper :member_sweeper, :only => [:add_group, :create, :update, :destroy]
 
   def search
     @title = 'Søk i medlemsregisteret'
@@ -15,11 +17,11 @@ class MembersController < ApplicationController
   end
 
   def index
-    @members = Member.paginate :page => params[:page], :per_page => Member::MEMBERS_PER_PAGE, :order => 'first_name, last_name'
+    @members = Member.order('first_name, last_name').
+        paginate(page: params[:page], per_page: Member::MEMBERS_PER_PAGE)
     @member_count = Member.count
   end
 
-  # GET /members/yaml
   def yaml
     @members = Member.find_active
     @members.each { |m| m['image'] = nil }
@@ -48,9 +50,9 @@ class MembersController < ApplicationController
   def grade_history_graph
     if params[:id] && params[:id].to_i <= 1280
       g = MemberGradeHistoryGraph.history_graph :size => params[:id].to_i,
-                                                :interval => params[:interval].try(:to_i).try(:days),
-                                                :step => params[:step].try(:to_i).try(:days),
-                                                :percentage => params[:percentage].try(:to_i)
+          :interval => params[:interval].try(:to_i).try(:days),
+          :step => params[:step].try(:to_i).try(:days),
+          :percentage => params[:percentage].try(:to_i)
     else
       g = MemberGradeHistoryGraph.history_graph
     end
@@ -71,7 +73,8 @@ class MembersController < ApplicationController
   end
 
   def list_inactive
-    @members = Member.paginate :page => params[:page], :per_page => Member::MEMBERS_PER_PAGE, :conditions => 'left_on IS NOT NULL', :order => 'last_name'
+    @members = Member.where('left_on IS NOT NULL').order('last_name').
+        paginate(page: params[:page], per_page: Member::MEMBERS_PER_PAGE)
     @member_count = Member.count(:conditions => 'left_on IS NOT NULL')
     render :action => :index
   end
@@ -83,7 +86,7 @@ class MembersController < ApplicationController
 
   def new
     @member ||= Member.new
-    @groups = Group.all(:include => :martial_art, :order => 'martial_arts.name, groups.name')
+    @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').all
   end
 
   def create
@@ -137,7 +140,25 @@ class MembersController < ApplicationController
   end
 
   def destroy
-    Member.find(params[:id]).destroy
+    # FIXME(uwe): Remove when moved to Rails 4.2
+    # https://github.com/rails/rails/issues/12380
+    # https://github.com/rails/rails/pull/12450
+    Member.transaction do
+
+      member = Member.find(params[:id])
+      if (user = member.user)
+        member.user_id = nil
+        member.save(validate: false)
+        user.destroy
+      end
+      # EMXIF
+
+      Member.find(params[:id]).destroy
+
+      # FIXME(uwe): Remove when moved to Rails 4.2
+    end
+    # EMXIF
+
     redirect_to :action => 'index'
   end
 
@@ -159,7 +180,7 @@ class MembersController < ApplicationController
 
   def email_list
     @groups = Group.active(Date.today).includes(:members).all
-    @former_members = Member.all(:conditions => 'left_on IS NOT NULL')
+    @former_members = Member.where('left_on IS NOT NULL').all
     @administrators = User.find_administrators
     @administrator_emails = @administrators.map { |m| m.email }.compact.uniq
     @missing_administrator_emails = @administrators.size - @administrator_emails.size
@@ -178,8 +199,8 @@ class MembersController < ApplicationController
       end
     end
     send_data(output,
-              :type => content_type,
-              :filename => 'Epostliste.csv')
+        :type => content_type,
+        :filename => 'Epostliste.csv')
   end
 
   def income
@@ -190,9 +211,9 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id])
     if @member.image?
       send_data(@member.image.data,
-                :disposition => 'inline',
-                :type => @member.image.content_type,
-                :filename => @member.image.filename)
+          :disposition => 'inline',
+          :type => @member.image.content_type,
+          :filename => @member.image.filename)
     else
       render :text => 'Bilde mangler'
     end
@@ -202,9 +223,9 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id])
     if thumbnail = @member.thumbnail
       send_data(thumbnail,
-                :disposition => 'inline',
-                :type => @member.image.content_type,
-                :filename => @member.image.name)
+          :disposition => 'inline',
+          :type => @member.image.content_type,
+          :filename => @member.image.name)
     else
       render :text => 'Bilde mangler'
     end

@@ -5,8 +5,6 @@ class EventMessage < ActiveRecord::Base
     REMINDER = 'REMINDER'
   end
 
-  attr_accessible :body, :event_id, :message_type, :ready_at, :subject
-
   belongs_to :event
   has_many :event_invitee_messages
 

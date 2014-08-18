@@ -2,7 +2,8 @@ class PracticesController < ApplicationController
   # GET /practices
   # GET /practices.json
   def index
-    @practices = Practice.includes(:group_schedule => :group).order('year DESC, week DESC, group_schedules.weekday DESC, end_at DESC, start_at DESC, name').all
+    @practices = Practice.includes(:group_schedule => :group).references(:group_schedules).
+        order('year DESC, week DESC, group_schedules.weekday DESC, end_at DESC, start_at DESC, name').all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -86,7 +87,7 @@ class PracticesController < ApplicationController
   private
 
   def load_form_data
-    @group_schedules = GroupSchedule.includes(:group).
+    @group_schedules = GroupSchedule.includes(:group).references(:groups).
         order('weekday, start_at, groups.from_age').all.select do |gs|
       gs.group.active?(@practice.new_record? ? Date.today : @practice.date)
     end

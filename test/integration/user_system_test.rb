@@ -2,7 +2,7 @@ require 'test_helper'
 require 'user_controller'
 require 'user_notify'
 
-class UserSystemTest < ActionController::IntegrationTest
+class UserSystemTest < ActionDispatch::IntegrationTest
   self.use_transactional_fixtures = false
   fixtures :users
 

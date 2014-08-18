@@ -33,8 +33,8 @@ class RanksController < ApplicationController
 
   def new
     @rank ||= Rank.new
-    @martial_arts = MartialArt.all(:order => 'name')
-    @groups = Group.all(:order => 'from_age')
+    @martial_arts = MartialArt.order(:name).all
+    @groups = Group.order(:from_age).all
   end
 
   def create
@@ -50,8 +50,8 @@ class RanksController < ApplicationController
 
   def edit
     @rank ||= Rank.find(params[:id])
-    @martial_arts = MartialArt.all(:order => 'name')
-    @groups = Group.all(:order => 'from_age')
+    @martial_arts = MartialArt.order(:name).all
+    @groups = Group.order(:from_age).all
     render :edit
   end
 

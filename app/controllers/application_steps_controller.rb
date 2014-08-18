@@ -1,7 +1,8 @@
 class ApplicationStepsController < ApplicationController
   before_filter :technical_committy_required
 
-  caches_page :image
+  # FIXME(uwe):  Check caching
+  # caches_page :image
 
   def index
     @application_steps = ApplicationStep.all

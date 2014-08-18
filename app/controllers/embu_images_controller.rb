@@ -1,8 +1,6 @@
 class EmbuImagesController < ApplicationController
   before_filter :authenticate_user
 
-  # GET /embu_images
-  # GET /embu_images.json
   def index
     @embu_images = EmbuImage.all
 
@@ -12,8 +10,6 @@ class EmbuImagesController < ApplicationController
     end
   end
 
-  # GET /embu_images/1
-  # GET /embu_images/1.json
   def show
     @embu_image = EmbuImage.find(params[:id])
 
@@ -23,8 +19,6 @@ class EmbuImagesController < ApplicationController
     end
   end
 
-  # GET /embu_images/new
-  # GET /embu_images/new.json
   def new
     @embu_image ||= EmbuImage.new
     @embus = Embu.all
@@ -36,15 +30,12 @@ class EmbuImagesController < ApplicationController
     end
   end
 
-  # GET /embu_images/1/edit
   def edit
     @embu_image = EmbuImage.find(params[:id])
     @embus = Embu.all
     @images = Image.order(:name).all
   end
 
-  # POST /embu_images
-  # POST /embu_images.json
   def create
     @embu_image = EmbuImage.new(params[:embu_image])
 
@@ -59,8 +50,6 @@ class EmbuImagesController < ApplicationController
     end
   end
 
-  # PUT /embu_images/1
-  # PUT /embu_images/1.json
   def update
     @embu_image = EmbuImage.find(params[:id])
 
@@ -75,8 +64,6 @@ class EmbuImagesController < ApplicationController
     end
   end
 
-  # DELETE /embu_images/1
-  # DELETE /embu_images/1.json
   def destroy
     @embu_image = EmbuImage.find(params[:id])
     @embu_image.destroy

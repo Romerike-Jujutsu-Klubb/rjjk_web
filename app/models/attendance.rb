@@ -12,18 +12,18 @@ class Attendance < ActiveRecord::Base
   end
 
   STATES = [
-      [Status::WILL_ATTEND, 'Kommer!',   'icon-thumbs-up',   'btn-success'],
-      [Status::HOLIDAY,     'Bortreist', 'icon-hand-right',  'btn-warning'],
-      [Status::SICK,        'Syk',       'icon-plus',        'btn-danger'],
-      [Status::ABSENT,      'Annet',     'icon-thumbs-down', 'btn-info'],
+      [Status::WILL_ATTEND, 'Kommer!', 'icon-thumbs-up', 'btn-success'],
+      [Status::HOLIDAY, 'Bortreist', 'icon-hand-right', 'btn-warning'],
+      [Status::SICK, 'Syk', 'icon-plus', 'btn-danger'],
+      [Status::ABSENT, 'Annet', 'icon-thumbs-down', 'btn-info'],
   ]
 
   PRESENT_STATES = [Status::ASSISTANT, Status::ATTENDED, Status::INSTRUCTOR, Status::PRESENT]
   ABSENT_STATES = [Status::HOLIDAY, Status::SICK, Status::ABSENT]
 
-  scope :by_group_id, lambda { |group_id| includes(:practice => :group_schedule).where('group_schedules.group_id = ?', group_id)}
-  scope :last_months, lambda { |count| limit = count.months.ago; where('(year = ? AND week >= ?) OR year > ?', limit.year, limit.to_date.cweek, limit.year) }
-  scope :on_date, lambda { |date| where('year = ? AND week = ?', date.year, date.cweek) }
+  scope :by_group_id, -> group_id { includes(practice: :group_schedule).references(:group_schedules).where('group_schedules.group_id = ?', group_id) }
+  scope :last_months, -> count { limit = count.months.ago; where('(year = ? AND week >= ?) OR year > ?', limit.year, limit.to_date.cweek, limit.year) }
+  scope :on_date, -> date { where('year = ? AND week = ?', date.year, date.cweek) }
 
   belongs_to :member
   belongs_to :practice
@@ -33,7 +33,7 @@ class Attendance < ActiveRecord::Base
   validates_presence_of :member_id, :status
   validates_uniqueness_of :member_id, :scope => :practice_id
 
-  validate :on => :update do
+  validate on: :update do
     errors.add(:status, 'kan ikke endres for treningen du var på.') if status_was == Status::ATTENDED && status == Status::WILL_ATTEND
   end
 

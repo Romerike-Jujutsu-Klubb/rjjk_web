@@ -1,36 +1,43 @@
-RjjkWeb::Application.routes.draw do
-  match 'attendances/:action/:year/:week/:group_schedule_id/:status(/:member_id)' => 'attendances'
+Rails.application.routes.draw do
+  get 'attendances/:action/:year/:week/:group_schedule_id/:status(/:member_id)', controller: :attendances
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
-  get ':controller/report(/:year/:month)' => '#report'
+  get ':controller/report(/:year/:month)', action: :report
   get 'info/versjon'
   get 'members/search'
+  get 'members/grade_history_graph' => 'members#grade_history_graph'
+  get ':controller/history_graph', action: :history_graph
   get 'mitt/oppmote' => 'attendances#plan', as: :attendance_plan
   get 'attendances/plan' # må være etter mitt/oppmote
+  post 'attendances/announce' => 'attendances#announce'
   get 'news/list'
   get 'pensum' => 'ranks#pensum'
   get 'pensum/pdf' => 'ranks#pdf'
   get 'search/index'
   get 'user/change_password'
+  post 'user/change_password'
   get 'user/forgot_password'
+  post 'user/forgot_password'
   get 'user/login'
+  post 'user/login'
   get 'user/logout'
+  post 'user/signup'
   get 'user/welcome'
 
-  match ':controller/month_per_year_chart/:month/:size.:format', action: :month_per_year_chart
-  match ':controller/active_contracts', action: :active_contracts
-  match ':controller/form', action: :form
-  match ':controller/form/:id', action: :form
-  match ':controller/form_index', action: :form_index
-  match ':controller/calendar', action: :calendar
-  match ':controller/create', action: :create
-  match ':controller/email_list', action: :email_list
-  match ':controller/excel_export', action: :excel_export
-  match ':controller/gallery(/:id)', action: :gallery
-  match ':controller/list_active', action: :list_active
-  match ':controller/list_inactive', action: :list_active
-  match ':controller/mine(/:id)', action: :mine
-  match ':controller/telephone_list', action: :telephone_list
-  match ':controller/yaml', action: :yaml
+  get ':controller/month_per_year_chart/:month/:size.:format', action: :month_per_year_chart
+  get ':controller/active_contracts', action: :active_contracts
+  match ':controller/form', action: :form, via: [:get, :post]
+  match ':controller/form/:id', action: :form, via: [:get, :post]
+  match ':controller/form_index', action: :form_index, via: [:get, :post]
+  get ':controller/calendar', action: :calendar
+  post ':controller/create', action: :create
+  get ':controller/email_list', action: :email_list
+  get ':controller/excel_export', action: :excel_export
+  get ':controller/gallery(/:id)', action: :gallery
+  get ':controller/list_active', action: :list_active
+  get ':controller/list_inactive', action: :list_active
+  get ':controller/mine(/:id)', action: :mine
+  get ':controller/telephone_list', action: :telephone_list
+  get ':controller/yaml', action: :yaml
 
   resources :application_steps
   resources :appointments
@@ -79,15 +86,15 @@ RjjkWeb::Application.routes.draw do
   resources :wazas
 
   root to: 'welcome#index'
-  match ':controller/service.wsdl', action: :wsdl
-  match 'documents/*path_info', controller: :documents, action: :webdav
+  get ':controller/service.wsdl', action: :wsdl
+  get 'documents/*path_info', controller: :documents, action: :webdav
 
-  match ':controller/:action/:year/:month/:size.:format'
-  match ':controller/:action/:id/:width.:format'
-  match ':controller/:action/:id/:width'
-  match ':controller/:action/:id.:format'
-  match ':controller/:action.:format'
-  match ':controller/:action/:id'
-  match ':controller/:action'
-  match ':controller', action: :index
+  get ':controller/:action/:year/:month/:size.:format'
+  get ':controller/:action/:id/:width.:format'
+  get ':controller/:action/:id/:width'
+  get ':controller/:action/:id.:format'
+  get ':controller/:action.:format'
+  get ':controller/:action/:id'
+  get ':controller/:action'
+  get ':controller', action: :index
 end

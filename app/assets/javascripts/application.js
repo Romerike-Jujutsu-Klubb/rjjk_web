@@ -1,13 +1,14 @@
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui/datepicker
-//= require jquery-ui/slider
-//= require jquery-ui-timepicker-addon
+//= require turbolinks
 //= require tinymce-jquery
 //= require gmaps4rails/gmaps4rails.base
 //= require gmaps4rails/gmaps4rails.googlemaps
-//= require bootstrap
 //= require colorbox-rails.js
+//= require bootstrap
+//= require moment
+//= require moment/nb
+//= require bootstrap-datetimepicker
 $(function () {
     $(".colorbox").colorbox({
         inline: true,
@@ -58,4 +59,8 @@ $().ready(function () {
         $($this.data('replace')).replaceWith(data);
         $this.trigger('ajax:replaced');
     });
+
+    // http://eonasdan.github.io/bootstrap-datetimepicker/#options
+    $('.date,[dateFormat]').datetimepicker({format: 'YYYY-MM-DD', pickTime: false});
+    $('.datetime,[dateFormat][timeFormat]').datetimepicker({format: 'YYYY-MM-DD H.mm'});
 });

@@ -1,8 +1,7 @@
 <%= form_for(@board_meeting, html: {class: 'form-inline col-xs-7 pull-right',
         style: 'margin-top: 4px', role: :form}) do |f| %>
     <div class="input-group">
-      <%= f.datetime_picker :start_at, :dateFormat => 'yy-mm-dd', :firstDay => 1,
-              :class => 'form-control', placeholder: 'Velg tidspunkt' %>
+      <%= f.text_field :start_at, class: 'datetime form-control', placeholder: 'Velg tidspunkt' %>
       <span class="input-group-btn">
         <%= f.submit 'Sett opp nytt styremøte', class: 'btn btn-primary' %>
       </span>

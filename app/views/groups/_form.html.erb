@@ -60,7 +60,7 @@
 
           <div class="form-group pull-left">
             <%= f.label :closed_on, 'Avsluttet' %>
-            <%= f.datepicker :closed_on, :dateFormat => 'yy-mm-dd', :firstDay => 1, :class => 'form-control input-sm' %>
+            <%= f.text_field :closed_on, class: 'date form-control input-sm' %>
           </div>
 
           <br clear="all"/>
@@ -68,8 +68,7 @@
           <div class="form-group" style="float: left ; margin-right: 1em">
             <%= f.fields_for :current_semester, @group.current_semester do |csf| %>
                 <%= csf.label :first_session, 'Første trening' %>
-                <%= csf.datepicker :first_session, :dateFormat => 'yy-mm-dd',
-                        :firstDay => 1, :class => 'form-control input-sm',
+                <%= csf.text_field :first_session, class: 'date form-control input-sm',
                         :placeholder => 'etter ferien' %>
             <% end %>
           </div>
@@ -77,8 +76,7 @@
           <div class="form-group" style="float: left ; margin-right: 1em">
             <%= f.fields_for :current_semester, @group.current_semester do |csf| %>
                 <%= csf.label :last_session, 'Siste trening' %>
-                <%= csf.datepicker :last_session, :dateFormat => 'yy-mm-dd',
-                        :firstDay => 1, :class => 'form-control input-sm',
+                <%= csf.text_field :last_session, class: 'date form-control input-sm',
                         :placeholder => 'før ferien' %>
             <% end %>
           </div>

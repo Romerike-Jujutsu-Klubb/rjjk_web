@@ -1,4 +1,4 @@
-RjjkWeb::Application.configure do
+Rails.application.configure do
   config.action_controller.perform_caching = true
   config.action_mailer.default_url_options = {:host => 'beta.jujutsu.no'}
   config.action_mailer.raise_delivery_errors = true
@@ -21,4 +21,4 @@ email_notification_options = {
         :exception_recipients => %w{uwe@kubosch.no}
     }
 }
-RjjkWeb::Application.config.middleware.use ExceptionNotification::Rack, email_notification_options
+Rails.application.config.middleware.use ExceptionNotification::Rack, email_notification_options

@@ -3,7 +3,7 @@ class UserController < ApplicationController
   before_filter :admin_required, :except => [:welcome, :like, :login, :logout, :signup, :forgot_password, :change_password]
 
   def index
-    @users = User.all(:order => 'last_name, first_name')
+    @users = User.order(:last_name, :first_name).all
   end
 
   def show

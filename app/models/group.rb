@@ -4,20 +4,19 @@ class Group < ActiveRecord::Base
   scope :inactive, -> date { where('closed_on IS NOT NULL AND closed_on < ?', date) }
 
   belongs_to :martial_art
-  has_one :current_semester, :class_name => :GroupSemester,
-      :include => :semester,
-      :conditions => 'CURRENT_DATE BETWEEN semesters.start_on AND semesters.end_on'
-  has_many :graduations, :order => :held_on, :dependent => :destroy
+  has_one :current_semester,
+           ->{references(:semesters).includes(:semester).where('CURRENT_DATE BETWEEN semesters.start_on AND semesters.end_on')},
+      :class_name => :GroupSemester
+  has_many :graduations, ->{order(:held_on)}, :dependent => :destroy
   has_many :group_schedules, :dependent => :destroy
   has_many :group_semesters, :dependent => :destroy
-  has_one :next_graduation, :class_name => :Graduation,
-      :conditions => ->(r){['graduations.held_on >= ?', Date.today]},
-      :order => 'graduations.held_on'
-  has_one :next_semester, :class_name => :GroupSemester,
-      :include => :semester,
-      :conditions => 'semesters.start_on > CURRENT_DATE',
-      :order => 'semesters.start_on'
-  has_many :ranks, :order => :position, :dependent => :destroy
+  has_one :next_graduation,
+      ->{where('graduations.held_on >= ?', Date.today).order('graduations.held_on')},
+      :class_name => :Graduation
+  has_one :next_semester,
+      ->{includes(:semester).where('semesters.start_on > CURRENT_DATE').order('semesters.start_on')},
+          :class_name => :GroupSemester
+  has_many :ranks, ->{order(:position)}, :dependent => :destroy
   has_and_belongs_to_many :members, :conditions => 'left_on IS NULL OR left_on > DATE(CURRENT_TIMESTAMP)'
 
   accepts_nested_attributes_for :current_semester

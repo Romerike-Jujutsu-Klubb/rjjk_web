@@ -1,17 +1,21 @@
 class EventInvitee < ActiveRecord::Base
-  attr_accessible :address, :comment, :email, :event, :event_id, :name, :organization, :payed, :phone, :user_id, :will_attend, :will_work
-
   belongs_to :event
   belongs_to :user
-  has_one :invitation, :class_name => 'EventInviteeMessage', :conditions => "message_type = '#{EventMessage::MessageType::INVITATION}'", :dependent => :destroy
-  has_one :signup_confirmation, :class_name => 'EventInviteeMessage', :conditions => "message_type = '#{EventInviteeMessage::MessageType::SIGNUP_CONFIRMATION}'", :dependent => :destroy
-  has_one :signup_rejection, :class_name => 'EventInviteeMessage', :conditions => "message_type = '#{EventInviteeMessage::MessageType::SIGNUP_REJECTION}'", :dependent => :destroy
-  has_many :event_invitee_messages, :dependent => :destroy,
-           :conditions => "message_type IS NULL OR message_type <> '#{EventMessage::MessageType::INVITATION}'"
+  has_one :invitation, -> { where("message_type = '#{EventMessage::MessageType::INVITATION}'") },
+      :class_name => 'EventInviteeMessage', :dependent => :destroy
+  has_one :signup_confirmation,
+      -> { where("message_type = '#{EventInviteeMessage::MessageType::SIGNUP_CONFIRMATION}'") },
+      :class_name => 'EventInviteeMessage', :dependent => :destroy
+  has_one :signup_rejection,
+      -> { where("message_type = '#{EventInviteeMessage::MessageType::SIGNUP_REJECTION}'") },
+      :class_name => 'EventInviteeMessage', :dependent => :destroy
+  has_many :event_invitee_messages,
+      -> { where("message_type IS NULL OR message_type <> '#{EventMessage::MessageType::INVITATION}'") },
+      :dependent => :destroy
 
   validates_presence_of :event, :event_id, :name, :email
   validates_uniqueness_of :user_id, :scope => :event_id, :allow_nil => true
-  validates_inclusion_of :will_work, :in => [nil, false], :if => proc{|r| r.will_attend == false}
+  validates_inclusion_of :will_work, :in => [nil, false], :if => proc { |r| r.will_attend == false }
 
   before_create do
     if user

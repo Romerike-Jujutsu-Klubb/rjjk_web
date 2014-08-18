@@ -1,12 +1,14 @@
 class GraduatesController < ApplicationController
   before_filter :admin_required
-  cache_sweeper :grade_history_image_sweeper, :only => [:create, :update, :destroy]
+
+  # FIXME(uwe):  Fixe cache sweeping!
+  # cache_sweeper :grade_history_image_sweeper, :only => [:create, :update, :destroy]
 
   def index
     if params[:id]
       @graduates = Graduate.all(:conditions => "member_id = #{params[:id]}", :order => 'rank_id')
     else
-      @graduates = Graduate.all(:conditions => "member_id > 0", :order => 'member_id, rank_id DESC')
+      @graduates = Graduate.where('member_id > 0').order('member_id, rank_id DESC').all
     end
   end
 

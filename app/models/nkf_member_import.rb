@@ -260,7 +260,7 @@ class NkfMemberImport
     logger.debug "Columns: #{columns.inspect}"
     tid_col_idx = header_fields.index 'tid'
     # email_col_idx  = header_fields.index 'epost'
-    missing_trials = NkfMemberTrial.all :conditions => ['tid NOT IN (?)', member_trial_rows.map { |t| t[tid_col_idx] }]
+    missing_trials = NkfMemberTrial.where('tid NOT IN (?)', member_trial_rows.map { |t| t[tid_col_idx] }).all
     missing_trials.each do |t|
       m = Member.find_by_email(t.epost)
       t.trial_attendances.each do |ta|

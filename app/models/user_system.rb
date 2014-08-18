@@ -1,3 +1,4 @@
+# encoding: utf-8
 module UserSystem
   ADMIN_ROLE = 'ADMIN'
 
