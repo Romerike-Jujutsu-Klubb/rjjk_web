@@ -5,8 +5,9 @@ class ImagesController < ApplicationController
   before_filter :authenticate_user, :only => PERSONAL_ACTIONS
 
   # FIXME(uwe):  Check caching
-  # caches_page :show, :inline
-  # cache_sweeper :image_sweeper, :only => [:update, :destroy]
+  caches_page :show, :inline
+  cache_sweeper :image_sweeper, :only => [:update, :destroy]
+  # EMXIF
 
   def index
     list

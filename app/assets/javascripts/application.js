@@ -4,11 +4,13 @@
 //= require tinymce-jquery
 //= require gmaps4rails/gmaps4rails.base
 //= require gmaps4rails/gmaps4rails.googlemaps
-//= require colorbox-rails.js
-//= require bootstrap
+//= require colorbox-rails
+//= require bootstrap-sprockets
 //= require moment
 //= require moment/nb
 //= require bootstrap-datetimepicker
+//= require nprogress
+//= require nprogress-turbolinks
 $(function () {
     $(".colorbox").colorbox({
         inline: true,
@@ -21,6 +23,8 @@ $(function () {
         returnFocus: false
     });
 });
+
+NProgress.configure({showSpinner: false,  ease: 'ease',  speed: 500});
 
 $().ready(function () {
     $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {

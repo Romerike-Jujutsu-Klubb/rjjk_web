@@ -8,9 +8,9 @@ Rails.application.configure do
   config.assets.digest = true
   config.cache_classes = true
   config.consider_all_requests_local = false
+  config.eager_load = true
   config.i18n.fallbacks = true
   config.serve_static_assets = false
-  config.threadsafe!
 end
 
 email_notification_options = {
