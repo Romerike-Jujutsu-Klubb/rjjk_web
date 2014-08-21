@@ -46,7 +46,7 @@ class UserTest < ActiveSupport::TestCase
 
   def test_generate_security_token__reuses_token_when_not_stale
     user = users(:unverified_user)
-    Timecop.freeze(Time.now + User.token_lifetime / 2) do
+    Timecop.freeze(Time.now + User.token_lifetime / 2 - 1.minute) do
       assert_equal user.security_token, user.generate_security_token
     end
   end

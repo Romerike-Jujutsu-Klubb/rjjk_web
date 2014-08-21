@@ -1,4 +1,3 @@
-
 class CorrespondencesController < ApplicationController
   # GET /correspondences
   # GET /correspondences.json

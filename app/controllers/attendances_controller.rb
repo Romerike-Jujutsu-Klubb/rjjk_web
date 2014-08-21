@@ -4,18 +4,13 @@ class AttendancesController < ApplicationController
   before_filter :admin_required, :except => USER_ACTIONS
 
   # FIXME(uwe):  check caching
-  # caches_page :history_graph, :month_chart, :month_per_year_chart
-  # update_actions = [:announce, :create, :destroy, :review, :update]
-  # cache_sweeper :attendance_image_sweeper, :only => update_actions
-  # cache_sweeper :grade_history_image_sweeper, :only => update_actions
+  caches_page :history_graph, :month_chart, :month_per_year_chart
+  update_actions = [:announce, :create, :destroy, :review, :update]
+  cache_sweeper :attendance_image_sweeper, :only => update_actions
+  cache_sweeper :grade_history_image_sweeper, :only => update_actions
 
   def index
     @attendances = Attendance.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml { render :xml => @attendances }
-    end
   end
 
   def since_graduation
@@ -27,11 +22,6 @@ class AttendancesController < ApplicationController
 
   def show
     @attendance = Attendance.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml { render :xml => @attendance }
-    end
   end
 
   def new
@@ -44,11 +34,7 @@ class AttendancesController < ApplicationController
     group_id = params[:group]
     @members = Member.order(:first_name, :last_name).all
     @group_schedules = GroupSchedule.where(group_id ? {:group_id => group_id} : {}).all
-
-    respond_to do |format|
-      format.html { render :action => 'new' }
-      format.xml { render :xml => @attendance }
-    end
+    render :action => 'new'
   end
 
   def edit
@@ -58,58 +44,41 @@ class AttendancesController < ApplicationController
   def create
     @attendance = Attendance.new(params[:attendance], :without_protection => true)
     @attendance.practice = Practice.find(@attendance.practice_id) if @attendance.practice_id
-    respond_to do |format|
-      if @attendance.save
-        flash[:notice] = 'Attendance was successfully created.'
-        format.html do
-          if request.xhr?
-            flash.clear
-            render :partial => '/attendances/attendance_delete_link', :locals => {:attendance => @attendance}
-          else
-            back_or_redirect_to(@attendance)
-          end
-          format.xml { render :xml => @attendance, :status => :created, :location => @attendance }
-        end
+    if @attendance.save
+      flash[:notice] = 'Attendance was successfully created.'
+      if request.xhr?
+        flash.clear
+        render :partial => '/attendances/attendance_delete_link', :locals => {:attendance => @attendance}
       else
-        format.html { new }
-        format.xml { render :xml => @attendance.errors, :status => :unprocessable_entity }
+        back_or_redirect_to(@attendance)
       end
+    else
+      new
     end
   end
 
   def update
     @attendance = Attendance.find(params[:id])
-
-    respond_to do |format|
-      if @attendance.update_attributes(params[:attendance])
-        flash[:notice] = 'Attendance was successfully updated.'
-        format.html { redirect_to(@attendance) }
-        format.xml { head :ok }
-      else
-        format.html { render :action => 'edit' }
-        format.xml { render :xml => @attendance.errors, :status => :unprocessable_entity }
-      end
+    if @attendance.update_attributes(params[:attendance])
+      flash[:notice] = 'Attendance was successfully updated.'
+      redirect_to(@attendance)
+    else
+      render :action => 'edit'
     end
   end
 
   def destroy
     @attendance = Attendance.find(params[:id])
     @attendance.destroy
-
-    respond_to do |format|
-      format.html do
-        if request.xhr?
-          flash.clear
-          render :partial => '/attendances/attendance_create_link', :locals => {
-              :member_id => @attendance.member_id,
-              :group_schedule_id => @attendance.practice.group_schedule_id,
-              :date => @attendance.date, :status => Attendance::Status::ATTENDED
-          }
-        else
-          redirect_to(attendances_url)
-        end
-      end
-      format.xml { head :ok }
+    if request.xhr?
+      flash.clear
+      render :partial => '/attendances/attendance_create_link', :locals => {
+          :member_id => @attendance.member_id,
+          :group_schedule_id => @attendance.practice.group_schedule_id,
+          :date => @attendance.date, :status => Attendance::Status::ATTENDED
+      }
+    else
+      redirect_to(attendances_url)
     end
   end
 

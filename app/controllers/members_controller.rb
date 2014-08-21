@@ -2,10 +2,10 @@ class MembersController < ApplicationController
   before_filter :admin_required
 
   # FIXME(uwe):  Verify caching
-  # caches_page :age_chart, :image, :thumbnail, :history_graph, :grade_history_graph,
-  #             :grade_history_graph_percentage
+  caches_page :age_chart, :image, :thumbnail, :history_graph, :grade_history_graph,
+      :grade_history_graph_percentage
+  cache_sweeper :member_sweeper, :only => [:add_group, :create, :update, :destroy]
   # FIXME(uwe):  Verify caching
-  # cache_sweeper :member_sweeper, :only => [:add_group, :create, :update, :destroy]
 
   def search
     @title = 'Søk i medlemsregisteret'
@@ -44,7 +44,7 @@ class MembersController < ApplicationController
     else
       g = MemberHistoryGraph.history_graph
     end
-    send_data(g, :disposition => 'inline', :type => 'image/png', :filename => 'RJJK_Medlemshistorikk.png')
+    send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Medlemshistorikk.png')
   end
 
   def grade_history_graph
