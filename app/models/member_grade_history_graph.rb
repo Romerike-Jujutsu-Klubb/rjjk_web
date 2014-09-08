@@ -1,3 +1,4 @@
+# encoding: utf-8
 class MemberGradeHistoryGraph
   ACTIVE_CLAUSE = <<EOF
 EXISTS (

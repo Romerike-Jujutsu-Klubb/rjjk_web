@@ -18,7 +18,7 @@ class MemberTest < ActiveSupport::TestCase
   end
 
   def test_update_image
-    members(:lars).update_attributes :image_file => Image.new
+    members(:lars).update_attributes image_file: Image.new
   rescue SocketError
   end
 end

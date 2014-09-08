@@ -1,3 +1,4 @@
+# encoding: utf-8
 class AttendanceHistoryGraph
   def history_graph(size = 480)
     g = Gruff::Line.new(size)

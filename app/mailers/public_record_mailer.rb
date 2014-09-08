@@ -1,3 +1,4 @@
+# encoding: utf-8
 class PublicRecordMailer < ActionMailer::Base
   include UserSystem
   include MailerHelper

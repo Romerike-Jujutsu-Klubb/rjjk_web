@@ -1,8 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'martial_arts_controller'
-
-# Re-raise errors caught by the controller.
-class MartialArtsController; def rescue_action(e) raise e end; end
+require 'test_helper'
 
 class MartialArtsControllerTest < ActionController::TestCase
   fixtures :martial_arts

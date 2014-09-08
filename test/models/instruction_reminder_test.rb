@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'test_helper'
 class InstructionReminderTest < ActionMailer::TestCase
   def test_notify_missing_instructors

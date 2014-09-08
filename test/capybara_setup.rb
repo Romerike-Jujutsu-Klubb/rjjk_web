@@ -13,6 +13,7 @@ class ActionDispatch::IntegrationTest
 
   include Capybara::DSL
 
+  # FIXME(uwe):  Try Capybara.javascript_driver = :webkit
   Capybara.default_driver = :selenium
   Capybara.default_wait_time = 30
 
@@ -46,8 +47,8 @@ class ActionDispatch::IntegrationTest
         FileUtils.rm_f org_name if File.size(org_name) == 0
         svn_file_name = org_name
       else
-        wc_root = svn_info.slice /(?<=^Working Copy Root Path: ).*$/
-        checksum = svn_info.slice /(?<=^Checksum: ).*$/
+        wc_root = svn_info.slice /(?<=Working Copy Root Path: ).*$/
+        checksum = svn_info.slice /(?<=Checksum: ).*$/
         svn_file_name = "#{wc_root}/.svn/pristine/#{checksum[0..1]}/#{checksum}.svn-base"
       end
     end
@@ -64,7 +65,10 @@ class ActionDispatch::IntegrationTest
     end
   end
 
-  def visit_with_login(path, redirected_path: path, user: :admin)
+  def visit_with_login(path, options = {})
+    redirected_path = options.delete(:redirected_path) || path
+    user = options.delete(:user) || :admin
+    raise "Unknown options: #{options}" unless options.empty?
     visit path
     if current_path == '/user/login'
       fill_in 'user_login', with: user

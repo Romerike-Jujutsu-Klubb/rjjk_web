@@ -1,3 +1,4 @@
+# encoding: utf-8
 class BirthdayCelebrationsController < ApplicationController
   before_filter :admin_required
 

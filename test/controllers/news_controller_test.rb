@@ -1,8 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'news_controller'
-
-# Re-raise errors caught by the controller.
-class NewsController; def rescue_action(e) raise e end; end
+require 'test_helper'
 
 class NewsControllerTest < ActionController::TestCase
   fixtures :users, :news_items

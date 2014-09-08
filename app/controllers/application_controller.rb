@@ -2,7 +2,9 @@ class ApplicationController < ActionController::Base
   DEFAULT_LAYOUT = 'dark_ritual'
   protect_from_forgery with: :exception
   include UserSystem
+  # FIXME(uwe): Start using the new caching system
   # include ActionController::Caching::Sweeping if defined?(JRUBY_VERSION)
+  # EMXIF
   layout DEFAULT_LAYOUT
   helper :user
 
@@ -14,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   # FIXME(uwe):  Set permitted params in each controller/action
-  before_filter do params.permit! end
+  before_filter { params.permit! }
 
   after_filter :clear_user
 

@@ -1,12 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'graduates_controller'
-
-# Re-raise errors caught by the controller.
-class GraduatesController
-  def rescue_action(e)
-    raise e
-  end
-end
+require 'test_helper'
 
 class GraduatesControllerTest < ActionController::TestCase
   fixtures :users, :members, :graduations, :ranks, :graduates

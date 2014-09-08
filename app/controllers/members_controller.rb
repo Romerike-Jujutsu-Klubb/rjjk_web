@@ -1,10 +1,11 @@
+# encoding: utf-8
 class MembersController < ApplicationController
   before_filter :admin_required
 
   # FIXME(uwe):  Verify caching
   caches_page :age_chart, :image, :thumbnail, :history_graph, :grade_history_graph,
       :grade_history_graph_percentage
-  cache_sweeper :member_sweeper, :only => [:add_group, :create, :update, :destroy]
+  cache_sweeper :member_sweeper, only: [:add_group, :create, :update, :destroy]
   # FIXME(uwe):  Verify caching
 
   def search

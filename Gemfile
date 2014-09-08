@@ -34,6 +34,7 @@ gem 'nokogiri'
 gem 'nprogress-rails'
 # gem 'paper_trail' # http://railscasts.com/episodes/255-undo-with-paper-trail?view=similar
 gem 'prawn'
+gem 'prawn-table'
 gem 'puma'
 gem 'rails-i18n'
 gem 'rails-observers'

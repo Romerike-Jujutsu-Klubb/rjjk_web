@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'attendances/:action/:year/:week/:group_schedule_id/:status(/:member_id)', controller: :attendances
+  match 'attendances/:action/:year/:week/:group_schedule_id/:status(/:member_id)',
+      controller: :attendances, via: [:get, :post]
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
   get ':controller/report(/:year/:month)', action: :report
   get 'info/versjon'

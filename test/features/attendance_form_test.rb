@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'test_helper'
 
 class AttendanceFormTest < ActionDispatch::IntegrationTest
@@ -47,7 +48,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
     assert_difference 'Attendance.count' do
       new_instructor_row.find('td:nth-of-type(2)').click
       assert_equal '/attendances/new', current_path
-      select('Lars Bråten', :from => 'attendance_member_id')
+      select('Lars Bråten', from: 'attendance_member_id')
       click_button('Create')
       assert_equal "/attendances/form/2013/10/#{groups(:panda).id}", current_path
 
@@ -56,7 +57,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
       assert lars_row
       assert_equal ['Lars Bråten', '46', 'brunt', 'X', 'X', '', '', '', '2 / 2'],
           lars_row.all('td').map(&:text)
-      lars_row.find('td:nth-of-type(4)').find('a', :text => 'X')
+      lars_row.find('td:nth-of-type(4)').find('a', text: 'X')
     end
 
     assert_difference 'TrialAttendance.count' do

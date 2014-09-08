@@ -1,3 +1,4 @@
+# encoding: utf-8
 class AttendancesController < ApplicationController
   USER_ACTIONS = [:announce, :plan, :review]
   before_filter :authenticate_user, :only => USER_ACTIONS
