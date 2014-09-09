@@ -3,12 +3,6 @@ require 'test_helper'
 class InfoControllerTest < ActionController::TestCase
   fixtures :users, :information_pages
 
-  def setup
-    @controller = InfoController.new
-    @request = ActionController::TestRequest.new
-    @response = ActionController::TestResponse.new
-  end
-
   def test_index
     get :index
     assert_response :success

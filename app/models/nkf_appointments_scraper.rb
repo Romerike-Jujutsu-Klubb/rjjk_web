@@ -1,3 +1,4 @@
+# encoding: utf-8
 class NkfAppointmentsScraper
   def self.import_appointments
     agent = Mechanize.new

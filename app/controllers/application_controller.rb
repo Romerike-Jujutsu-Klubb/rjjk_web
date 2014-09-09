@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include UserSystem
   # FIXME(uwe): Start using the new caching system
-  # include ActionController::Caching::Sweeping if defined?(JRUBY_VERSION)
+  include ActionController::Caching::Sweeping if defined?(JRUBY_VERSION)
   # EMXIF
   layout DEFAULT_LAYOUT
   helper :user

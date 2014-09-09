@@ -4,10 +4,6 @@ class GraduatesControllerTest < ActionController::TestCase
   fixtures :users, :members, :graduations, :ranks, :graduates
 
   def setup
-    @controller = GraduatesController.new
-    @request = ActionController::TestRequest.new
-    @response = ActionController::TestResponse.new
-
     @first_id = graduates(:one).id
     login(:admin)
   end

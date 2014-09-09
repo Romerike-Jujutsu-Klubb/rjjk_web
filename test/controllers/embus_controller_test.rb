@@ -7,7 +7,7 @@ class EmbusControllerTest < ActionController::TestCase
   end
 
   teardown do
-
+    @embu = nil
   end
 
   test 'should get index' do

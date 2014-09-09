@@ -3,12 +3,6 @@ require 'test_helper'
 class NewsControllerTest < ActionController::TestCase
   fixtures :users, :news_items
 
-  def setup
-    @controller = NewsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
-
   def test_index
     get :index
     assert_response :success

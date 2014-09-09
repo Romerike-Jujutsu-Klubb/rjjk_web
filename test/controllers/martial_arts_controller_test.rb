@@ -4,10 +4,6 @@ class MartialArtsControllerTest < ActionController::TestCase
   fixtures :martial_arts
 
   def setup
-    @controller = MartialArtsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-
     @first_id = martial_arts(:keiwaryu).id
     login(:admin)
   end

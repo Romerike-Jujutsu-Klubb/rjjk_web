@@ -4,10 +4,6 @@ class CensorsControllerTest < ActionController::TestCase
   fixtures :users, :censors
 
   def setup
-    @controller = CensorsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-
     @first_id = censors(:one).id
     login :admin
   end

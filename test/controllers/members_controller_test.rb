@@ -3,10 +3,6 @@ require 'test_helper'
 
 class MembersControllerTest < ActionController::TestCase
   def setup
-    @controller = MembersController.new
-    @request = ActionController::TestRequest.new
-    @response = ActionController::TestResponse.new
-
     @first_id = members(:lars).id
     login(:admin)
   end

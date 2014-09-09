@@ -4,10 +4,6 @@ class GraduationsControllerTest < ActionController::TestCase
   fixtures :users, :martial_arts, :graduations
 
   def setup
-    @controller = GraduationsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-
     @first_id = graduations(:panda).id
     login(:admin)
   end

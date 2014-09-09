@@ -2,10 +2,6 @@ require 'test_helper'
 
 class UserControllerTest < ActionController::TestCase
   def setup
-    @controller = UserController.new
-    @request = ActionController::TestRequest.new
-    @response = ActionController::TestResponse.new
-    @request.host = 'localhost'
     Mail::TestMailer.inject_one_error = false
     Mail::TestMailer.deliveries = []
   end

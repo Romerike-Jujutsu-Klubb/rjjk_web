@@ -4,9 +4,6 @@ class ImagesControllerTest < ActionController::TestCase
   fixtures :images
 
   def setup
-    @controller = ImagesController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
     @first_id = images(:one).id
     login(:admin)
   end

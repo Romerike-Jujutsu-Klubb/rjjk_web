@@ -10,7 +10,7 @@ Rails.application.configure do
   config.active_support.deprecation = :stderr
   config.cache_classes = true
   config.consider_all_requests_local = true
-  config.eager_load = false
+  config.eager_load = true
   config.serve_static_assets = true
   config.static_cache_control = 'public, max-age=3600'
 
