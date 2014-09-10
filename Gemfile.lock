@@ -44,7 +44,7 @@ GEM
     arel (5.0.1.20140414130214)
     bootstrap-sass (3.2.0.2)
       sass (~> 3.2)
-    bootstrap3-datetimepicker-rails (3.1.2)
+    bootstrap3-datetimepicker-rails (3.1.3)
       momentjs-rails (>= 2.8.1)
     builder (3.2.2)
     capistrano (2.15.5)
@@ -74,7 +74,7 @@ GEM
       rails (>= 3.1.1)
     database_cleaner (1.3.0)
     docile (1.1.5)
-    domain_name (0.5.20)
+    domain_name (0.5.21)
       unf (>= 0.0.5, < 1.0.0)
     draper (1.3.1)
       actionpack (>= 3.0)
@@ -103,6 +103,9 @@ GEM
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-turbolinks (2.1.0)
+      railties (>= 3.1.0)
+      turbolinks
     json (1.8.1-java)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -213,11 +216,11 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    selenium-webdriver (2.42.0)
-      childprocess (>= 0.5.0)
+    selenium-webdriver (2.43.0)
+      childprocess (~> 0.5)
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
-      websocket (~> 1.0.4)
+      websocket (~> 1.0)
     simple_drilldown (0.0.3)
       rails
     simple_workflow (1.0.4)
@@ -262,7 +265,7 @@ GEM
     unicode_utils (1.4.0)
     valuable (0.9.8)
     webrobots (0.1.1)
-    websocket (1.0.7)
+    websocket (1.2.1)
     will_paginate (3.0.7)
     xpath (2.0.0)
       nokogiri (~> 1.3)
@@ -291,6 +294,7 @@ DEPENDENCIES
   gruff
   jbuilder
   jquery-rails
+  jquery-turbolinks
   mechanize
   minitest-rails-capybara
   minitest-reporters
