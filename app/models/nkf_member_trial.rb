@@ -1,10 +1,16 @@
 class NkfMemberTrial < ActiveRecord::Base
+  SEARCH_FIELDS = [:fornavn, :etternavn, :epost]
+
   has_many :trial_attendances, :dependent => :destroy
 
-  scope :for_group, ->(group){where('alder BETWEEN ? AND ?', group.from_age, group.to_age)}
+  scope :for_group, ->(group) { where('alder BETWEEN ? AND ?', group.from_age, group.to_age) }
+  scope :search, ->(query) do
+        where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) LIKE ?" }.join(' OR '), *(["%#{UnicodeUtils.upcase(query)}%"] * SEARCH_FIELDS.size)).
+            order(:fornavn, :etternavn).all
+      end
 
   validates_presence_of :alder, :epost, :etternavn, :fodtdato,
-                        :fornavn, :medlems_type, :postnr, :reg_dato, :sted, :stilart, :tid
+      :fornavn, :medlems_type, :postnr, :reg_dato, :sted, :stilart, :tid
   validates_inclusion_of :res_sms, :in => [true, false]
 
   def age
@@ -17,15 +23,7 @@ class NkfMemberTrial < ActiveRecord::Base
     "#{fornavn} #{etternavn}"
   end
 
-  def self.find_by_contents(query, options = {})
-    search_fields = [:fornavn, :etternavn, :epost]
-    all({
-            :conditions => [search_fields.map { |c| "UPPER(#{c}) LIKE ?" }.join(' OR '), *(["%#{UnicodeUtils.upcase(query)}%"] * search_fields.size)],
-            :order => 'fornavn, etternavn',
-        }.update(options))
-  end
-
   def group
-    Group.active(Date.today).all.find{|g|g.contains_age age}
+    Group.active(Date.today).all.find { |g| g.contains_age age }
   end
 end

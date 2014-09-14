@@ -5,8 +5,8 @@ class SearchController < ApplicationController
 
       if admin?
         @members = Member.search(@query).all
-        @users = User.search(@query) - @members.map(&:user)
-        @trials = NkfMemberTrial.find_by_contents(@query)
+        @users = User.search(@query).all - @members.map(&:user)
+        @trials = NkfMemberTrial.search(@query).all
       end
 
       @pages = InformationPage.
