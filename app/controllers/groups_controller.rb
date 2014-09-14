@@ -12,9 +12,10 @@ class GroupsController < ApplicationController
   end
 
   def yaml
-    @groups = Group.all
+    @groups = Group.active.all
     @groups.each { |g| g['members'] = g.members.map { |m| m.id } }
-    render :text => @groups.map { |g| g.attributes }.to_yaml, :content_type => 'text/yaml', :layout => false
+    render text: @groups.map { |g| g.attributes }.to_yaml,
+        content_type: 'text/yaml', layout: false
   end
 
   def show

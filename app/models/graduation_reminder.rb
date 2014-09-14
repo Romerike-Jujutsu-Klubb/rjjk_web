@@ -45,9 +45,9 @@ class GraduationReminder
   end
 
   def self.notify_missing_aprovals
-    Censor.includes(:graduation, :member).
+    Censor.includes(:graduation, :member).references(:graduations).
         where('approved_grades_at IS NULL AND graduations.held_on < CURRENT_DATE AND user_id IS NOT NULL').
-        order(:held_on).
+        order('graduations.held_on').
         each do |e|
       GraduationMailer.missing_approval(e).deliver
     end

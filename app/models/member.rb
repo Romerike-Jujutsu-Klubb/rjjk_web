@@ -239,7 +239,7 @@ class Member < ActiveRecord::Base
   end
 
   def passive?(date = Date.today, group = nil)
-    nkf_member.medlemsstatus == 'P' ||
+    nkf_member.try(:medlemsstatus) == 'P' ||
         (joined_on < 2.months.ago.to_date &&
             attendances.select do |a|
               (group.nil? || a.group_schedule.group_id == group.id) &&
