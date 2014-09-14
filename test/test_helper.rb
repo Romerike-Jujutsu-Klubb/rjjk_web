@@ -5,11 +5,6 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
-# if ENV['RM_INFO'] || ENV['TEAMCITY_VERSION']
-#   require 'minitest/reporters'
-#   MiniTest::Reporters.use!
-# end
-
 class ActiveSupport::TestCase
   fixtures :all
 

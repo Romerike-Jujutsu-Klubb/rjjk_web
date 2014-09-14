@@ -11,7 +11,7 @@ lars:
   nkf_fee: true
   payment_problem: false
   postal_code: 1472
-  user_id: 1000001
+  user: lars
 
 uwe:
   address: Møllesvingen 5
@@ -25,7 +25,7 @@ uwe:
   nkf_fee: true
   payment_problem: false
   postal_code: 1479
-  user_id: 1000000
+  user: admin
 
 sebastian:
   address: Møllesvingen 5

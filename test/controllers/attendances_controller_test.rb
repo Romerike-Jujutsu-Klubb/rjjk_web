@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class AttendancesControllerTest < ActionController::TestCase
-  fixtures :attendances
-
   def setup
     super
     login(:admin)

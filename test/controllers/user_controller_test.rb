@@ -22,8 +22,8 @@ class UserControllerTest < ActionController::TestCase
     assert_equal @controller.url_for(:controller => :welcome, :action => :index, :only_path => false), @response.redirect_url
     assert cookies[:token]
     assert_not_equal 'random_token_string', cookies[:token]
-    assert_equal false, User.find(1000001).token_expired?
-    assert_not_equal 'random_token_string', User.find(1000001).security_token
+    assert_equal false, users(:lars).token_expired?
+    assert_not_equal 'random_token_string', users(:lars).security_token
   end
 
   def test_autologin_with_token

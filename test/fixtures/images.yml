@@ -3,7 +3,7 @@ one:
   content_type: image/png
   content_data: !binary |
     iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==
-  user_id: 1000001
+  user: lars
 two:
   name: picture two
   content_type: image/gif
@@ -12,4 +12,4 @@ two:
                  OTk6enp56enmlpaWNjY6Ojo4SEhP/++f/++f/++f/++f/++f/++f/++f/++f/+
                  +f/++f/++f/++f/++f/++SH+Dk1hZGUgd2l0aCBHSU1QACwAAAAADAAMAAAFLC
                  AgjoEwnuNAFOhpEMTRiggcz4BNJHrv/zCFcLiwMWYNG84BwwEeECcgggoBADs=
-  user_id: 1000001
+  user: lars
