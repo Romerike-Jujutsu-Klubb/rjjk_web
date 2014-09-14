@@ -5,8 +5,8 @@ class Group < ActiveRecord::Base
 
   belongs_to :martial_art
   has_one :current_semester,
-           ->{references(:semesters).includes(:semester).where('CURRENT_DATE BETWEEN semesters.start_on AND semesters.end_on')},
-      :class_name => :GroupSemester
+      -> { references(:semesters).includes(:semester).where('CURRENT_DATE BETWEEN semesters.start_on AND semesters.end_on') },
+      class_name: :GroupSemester
   has_many :graduations, ->{order(:held_on)}, :dependent => :destroy
   has_many :group_schedules, :dependent => :destroy
   has_many :group_semesters, :dependent => :destroy

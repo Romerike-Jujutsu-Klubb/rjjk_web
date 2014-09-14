@@ -32,7 +32,7 @@ class Semester < ActiveRecord::Base
   end
 
   def name
-    "#{start_on} - #{end_on}"
+    "#{start_on} → #{end_on.strftime('%m-%d')}"
   end
 
   def current?

@@ -2,12 +2,7 @@ Romerike Jujutsu Klubb<br/>
 
 <% if flash[:notice] || flash['notice'] %>
     <div class="notice">
-      <div class="inner">
-        <p>
-          <%= flash[:notice] %>
-          <%= flash['notice'].try(:html_safe) %>
-        </p>
-      </div>
+      <div class="inner"><p><%= flash[:notice].try(:html_safe) %></p></div>
     </div>
 <% end %>
 <span style="font-size: 10pt; text-align: center">

@@ -1,6 +1,6 @@
 # encoding: utf-8
 unless Rails.env == 'test'
-  scheduler = Rufus::Scheduler.new :max_work_threads => 1
+  scheduler = Rufus::Scheduler.new max_work_threads: 1
 
   # Users
   scheduler.cron('0 7    * * mon') { AttendanceNagger.send_attendance_plan }

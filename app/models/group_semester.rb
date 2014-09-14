@@ -1,9 +1,9 @@
 # encoding: utf-8
 class GroupSemester < ActiveRecord::Base
-  belongs_to :chief_instructor, :class_name => :Member
+  belongs_to :chief_instructor, class_name: :Member
   belongs_to :group
   belongs_to :semester
-  has_many :group_instructors, :dependent => :destroy
+  has_many :group_instructors, dependent: :destroy
 
   validates_presence_of :group, :group_id, :semester, :semester_id
 
@@ -18,4 +18,7 @@ class GroupSemester < ActiveRecord::Base
     end
   end
 
+  def name
+    "#{semester.name} - #{group.name}"
+  end
 end
