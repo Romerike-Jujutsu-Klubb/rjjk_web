@@ -24,14 +24,14 @@ class MembersController < ApplicationController
   end
 
   def yaml
-    @members = Member.find_active
+    @members = Member.active.all
     @members.each { |m| m['image'] = nil }
     render :text => @members.map { |m| m.attributes }.to_yaml, :content_type => 'text/yaml', :layout => false
   end
 
   def list_active
     @members = Member.paginate_active(params[:page])
-    @member_count = Member.count_active
+    @member_count = Member.active.count
     render :index
   end
 
@@ -81,7 +81,7 @@ class MembersController < ApplicationController
   end
 
   def excel_export
-    @members = Member.find_active
+    @members = Member.active.all
     render :layout => false
   end
 
@@ -133,10 +133,10 @@ class MembersController < ApplicationController
     update_memberships
     if @member.update_attributes(params[:member])
       flash[:notice] = 'Medlemmet oppdatert.'
-      redirect_to :action => :edit, :id => @member
+      redirect_to action: :edit, id: @member
     else
-      @groups = Group.all(:include => :martial_art, :order => 'martial_arts.name, groups.name')
-      render :action => 'edit'
+      @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').all
+      render action: 'edit'
     end
   end
 
@@ -172,7 +172,7 @@ class MembersController < ApplicationController
     @female_twenty_twentyfive= member_count(false, 20, 25)
     @male_twentysix_and_over = member_count(true, 26, 100)
     @female_twentysix_and_over= member_count(false, 26, 100)
-    @incomplete_members = Member.find_active.select { |m| m.birthdate.nil? }
+    @incomplete_members = Member.active.all.select { |m| m.birthdate.nil? }
   end
 
   def telephone_list
@@ -234,7 +234,7 @@ class MembersController < ApplicationController
 
   def cms_comparison
     @cms_members = CmsMember.find_active
-    @members = Member.find_active
+    @members = Member.active.all
     @inactive_cms_members = CmsMember.find_inactive
 
     @new_cms_members = @cms_members.select { |cmsm| @members.find { |m| m.cms_contract_id == cmsm.cms_contract_id }.nil? }

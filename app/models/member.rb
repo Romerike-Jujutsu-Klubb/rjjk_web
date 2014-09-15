@@ -32,7 +32,7 @@ class Member < ActiveRecord::Base
 
   scope :active, ->(from_date = nil, to_date = nil) do
     from_date ||= Date.today; to_date ||= from_date
-    where('joined_on <= ? AND left_on IS NULL OR left_on > ?', to_date, from_date)
+    where('joined_on <= ? AND left_on IS NULL OR left_on >= ?', to_date, from_date)
   end
   SEARCH_FIELDS = [
       :billing_email, :email, :first_name, :last_name, :parent_email,
@@ -60,16 +60,8 @@ class Member < ActiveRecord::Base
   validates_length_of :postal_code, :is => 4, :if => Proc.new { |m| m.postal_code && !m.postal_code.empty? }
   validates_uniqueness_of :rfid, :if => Proc.new { |r| r.rfid and not r.rfid.empty? }
 
-  def self.find_active
-    find(:all, :conditions => ACTIVE_CONDITIONS, :order => 'last_name, first_name')
-  end
-
   def self.paginate_active(page)
-    where(ACTIVE_CONDITIONS).order(:first_name, :last_name).paginate(page: page, per_page: MEMBERS_PER_PAGE)
-  end
-
-  def self.count_active
-    count :conditions => ACTIVE_CONDITIONS
+    active.order(:first_name, :last_name).paginate(page: page, per_page: MEMBERS_PER_PAGE)
   end
 
   def self.instructors(date = Date.today)
@@ -198,7 +190,9 @@ class Member < ActiveRecord::Base
             (age.nil? || age >= r.minimum_age) &&
             (r.group.from_age..r.group.to_age).include?(age)
       }
-      next_rank ||= Rank.first(:conditions => ['martial_art_id = ? AND position = ?', ma, current_rank.position + 1])
+      next_rank ||= Rank.
+          where('martial_art_id = ? AND position = ?', ma, current_rank.position + 1).
+          first
     end
     next_rank ||= ma.ranks.find { |r|
       !future_ranks(graduation.held_on, ma).include?(r) &&
