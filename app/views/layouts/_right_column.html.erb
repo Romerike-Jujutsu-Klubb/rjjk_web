@@ -347,7 +347,7 @@
                   </li>
               <% end %>
               <% g.group_schedules.each do |gs| %>
-                  <% if gs.group_instructors.active.empty? %>
+                  <% if gs.group_instructors.active.empty? && gs.group.current_semester %>
                       <li>
                         <%= link_to "#{gs.weekday_name} mangler!",
                                 controller: :group_instructors, action: :new,

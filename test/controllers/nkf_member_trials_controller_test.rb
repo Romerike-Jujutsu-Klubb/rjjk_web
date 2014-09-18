@@ -36,7 +36,7 @@ class NkfMemberTrialsControllerTest < ActionController::TestCase
   end
 
   test 'should get edit' do
-    get :edit, :id => nkf_member_trials(:one).to_param
+    get :edit, id: nkf_member_trials(:one).to_param
     assert_response :success
   end
 

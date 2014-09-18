@@ -3,6 +3,7 @@ require 'test_helper'
 class GroupInstructorsControllerTest < ActionController::TestCase
   setup do
     @group_instructor = group_instructors(:one)
+    login(:admin)
   end
 
   test 'should get index' do
@@ -49,6 +50,7 @@ class GroupInstructorsControllerTest < ActionController::TestCase
   test 'should destroy group_instructor' do
     assert_difference('GroupInstructor.count', -1) do
       delete :destroy, id: @group_instructor
+      assert_no_errors :group_instructor
     end
 
     assert_redirected_to group_instructors_path
