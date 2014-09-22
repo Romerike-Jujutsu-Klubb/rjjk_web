@@ -5,9 +5,9 @@ class NkfAppointmentsScraper
     front_page = login(agent)
 
     admin_form = front_page.form('ks_reg_medladm')
-    admin_form.field_with(:name => 'frm_27_v13').options[3].select
+    admin_form.field_with(name: 'frm_27_v13').options[3].select
     board_admin_front_page = agent.submit(admin_form)
-    board_admin_page = board_admin_front_page.link_with(:text => 'Vis administrator').click
+    board_admin_page = board_admin_front_page.link_with(text: 'Vis administrator').click
 
     tables = board_admin_page.search('table')
     rows = tables[4].search('tr')[1..-1].map { |tr| tr.search('td').map(&:text).map(&:strip) }

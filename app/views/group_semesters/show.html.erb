@@ -2,12 +2,17 @@
 
 <p>
   <b>Gruppe:</b>
-  <%= @group_semester.group_id %>
+  <%= @group_semester.group.name %>
 </p>
 
 <p>
   <b>Semester:</b>
-  <%= @group_semester.semester_id %>
+  <%= @group_semester.semester.name %>
+</p>
+
+<p>
+  <b>Hivedinstruktør:</b>
+  <%= @group_semester.chief_instructor.try(:name) %>
 </p>
 
 <p>
