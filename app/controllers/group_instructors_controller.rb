@@ -24,6 +24,7 @@ class GroupInstructorsController < ApplicationController
   def edit
     @group_instructor ||= GroupInstructor.find(params[:id])
     load_form_data
+    render action: :edit
   end
 
   def create
@@ -40,9 +41,7 @@ class GroupInstructorsController < ApplicationController
     if @group_instructor.update_attributes(params[:group_instructor])
       redirect_to group_instructors_path, notice: 'GroupInstructor was successfully updated.'
     else
-      @groups = Group.all
-      @group_instructors = Member.instructors
-      render action: :edit
+      edit
     end
   end
 

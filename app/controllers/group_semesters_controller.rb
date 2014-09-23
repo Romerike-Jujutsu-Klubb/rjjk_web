@@ -39,6 +39,7 @@ class GroupSemestersController < ApplicationController
 
     respond_to do |format|
       if @group_semester.save
+        create_practices
         format.html { redirect_to @group_semester, notice: 'Group semester was successfully created.' }
         format.json { render json: @group_semester, status: :created, location: @group_semester }
       else
@@ -53,6 +54,7 @@ class GroupSemestersController < ApplicationController
 
     respond_to do |format|
       if @group_semester.update_attributes(params[:group_semester])
+        create_practices
         format.html { redirect_to @group_semester, notice: 'Group semester was successfully updated.' }
         format.json { head :no_content }
       else
@@ -78,6 +80,17 @@ class GroupSemestersController < ApplicationController
     @groups = Group.active(@group_semester.semester.try(:start_on) || Date.today).order(:from_age).all
     @semesters = Semester.order('start_on DESC').all
     @instructors = Member.instructors(@group_semester.first_session || @group_semester.semester.try(:start_on)).all
+  end
+
+  def create_practices
+    if @group_semester.first_session && @group_semester.last_session
+      schedules = @group_semester.group.group_schedules
+      (@group_semester.first_session..@group_semester.last_session).each do |date|
+        if (gs = schedules.find { |grsc| grsc.weekday == date.cwday })
+          Practice.where(group_schedule_id: gs.id, year: date.year, week: date.cweek).first_or_create!
+        end
+      end
+    end
   end
 
 end

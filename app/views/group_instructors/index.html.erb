@@ -19,7 +19,7 @@
 
       <% instructions.each do |instruction| %>
           <tr>
-            <td><%= instruction.group_schedule.group.name %></td>
+            <td><%= link_to instruction.group_schedule.group.name, instruction.group_semester %></td>
             <td><%= instruction.group_schedule.weekday_name %></td>
             <td><%= instruction.member.name %></td>
             <td><%= instruction.role %></td>

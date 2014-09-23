@@ -1,30 +1,41 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Gruppe:</b>
+<h1>
   <%= @group_semester.group.name %>
-</p>
-
-<p>
-  <b>Semester:</b>
   <%= @group_semester.semester.name %>
-</p>
+</h1>
 
 <p>
-  <b>Hivedinstruktør:</b>
+  <b>Hovedinstruktør:</b>
   <%= @group_semester.chief_instructor.try(:name) %>
 </p>
 
-<p>
-  <b>Første trening:</b>
-  <%= @group_semester.first_session %>
-</p>
+<div class="row">
+  <div class="col-md-6">
+    <b>Første trening:</b>
+    <%= @group_semester.first_session %>
+  </div>
 
-<p>
-  <b>Siste trening:</b>
-  <%= @group_semester.last_session %>
-</p>
+  <div class="col-md-6">
+    <b>Siste trening:</b>
+    <%= @group_semester.last_session %>
+  </div>
+</div>
 
+<%= link_to 'Rediger', edit_group_semester_path(@group_semester), class: 'btn btn-primary' %>
+<%= back_or_link_to 'Tilbake', group_semesters_path, class: 'btn btn-default' %>
 
-<%= link_to 'Rediger', edit_group_semester_path(@group_semester) %> |
-<%= back_or_link_to 'Tilbake', group_semesters_path %>
+<h2>Treninger</h2>
+
+<table class="table">
+  <% @group_semester.practices.sort_by(&:date).each do |practice| %>
+      <tr>
+        <td><%= practice.date %></td>
+        <td>
+          <%= form_for practice do |f| %>
+              <%=f.text_area :message %>
+              <%=f.submit %>
+          <% end %>
+        </td>
+        <td><%= practice.status %></td>
+      </tr>
+  <% end %>
+</table>
