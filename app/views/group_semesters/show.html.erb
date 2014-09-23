@@ -31,8 +31,10 @@
         <td><%= practice.date %></td>
         <td>
           <%= form_for practice do |f| %>
-              <%=f.text_area :message %>
-              <%=f.submit %>
+              <%=f.text_area :message, rows: 5, style: 'width: 100%' %>
+              <br/>
+              <%=f.submit class: 'btn btn-default' %>
+              <%=link_to 'Vis', practice, class: 'btn btn-default'%>
           <% end %>
         </td>
         <td><%= practice.status %></td>
