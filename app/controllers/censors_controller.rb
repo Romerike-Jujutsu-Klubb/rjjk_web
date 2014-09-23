@@ -8,7 +8,7 @@ class CensorsController < ApplicationController
 
   def list_instructors
     @graduation = Graduation.find(params[:id])
-    @instructors = Member.all(:conditions => 'left_on IS NULL AND instructor = true', :order => 'first_name, last_name')
+    @instructors = Member.where('left_on IS NULL AND instructor = true').order(:first_name, :last_name).all
     @instructors -= @graduation.censors.map(&:member)
     rstr =<<EOH
     <div style="height:512px; width:284px; overflow: auto; overflow-x: hidden;">

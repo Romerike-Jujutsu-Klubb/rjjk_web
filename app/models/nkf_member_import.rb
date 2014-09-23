@@ -228,7 +228,7 @@ class NkfMemberImport
       end
       record = NkfMember.find_by_medlemsnummer(row[0]) || NkfMember.new
       if record.member_id.nil?
-        member = Member.all(:conditions => ['UPPER(first_name) = ? AND UPPER(last_name) = ?', UnicodeUtils.upcase(attributes['fornavn']), UnicodeUtils.upcase(attributes['etternavn'])]).find { |m| m.nkf_member.nil? }
+        member = Member.where('UPPER(first_name) = ? AND UPPER(last_name) = ?', UnicodeUtils.upcase(attributes['fornavn']), UnicodeUtils.upcase(attributes['etternavn'])).all.find { |m| m.nkf_member.nil? }
         if member
           attributes['member_id'] = member.id
         end

@@ -6,7 +6,7 @@ class GraduatesController < ApplicationController
 
   def index
     if params[:id]
-      @graduates = Graduate.all(:conditions => "member_id = #{params[:id]}", :order => 'rank_id')
+      @graduates = Graduate.where("member_id = #{params[:id]}").order(:rank_id).all
     else
       @graduates = Graduate.where('member_id > 0').order('member_id, rank_id DESC').all
     end

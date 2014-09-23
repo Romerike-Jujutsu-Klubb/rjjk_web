@@ -110,13 +110,13 @@ class ImagesController < ApplicationController
   end
 
   def image_list
-    @images = Image.all(:conditions => "name NOT LIKE '%.MP4'", :order => 'UPPER(name)')
+    @images = Image.where("name NOT LIKE '%.MP4'").order('UPPER(name)').all
     render :layout => false
   end
 
   def media_list
     media_extensions = %w{mp4 mov flv}
-    @media = Image.all(:conditions => media_extensions.map { |e| "UPPER(name) LIKE '%.#{e.upcase}'" }.join(' OR '), :order => 'UPPER(name)')
+    @media = Image.where(media_extensions.map { |e| "UPPER(name) LIKE '%.#{e.upcase}'" }.join(' OR ')).order('UPPER(name)').all
     render :layout => false
   end
 
