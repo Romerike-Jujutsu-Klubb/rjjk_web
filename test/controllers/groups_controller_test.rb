@@ -49,4 +49,15 @@ class GroupsControllerTest < ActionController::TestCase
 
     assert_redirected_to groups_path
   end
+
+  def test_yaml
+    get :yaml
+    assert_response :success
+    assert_match /Panda/, response.body
+    assert_match /Tiger/, response.body
+    assert_match /Voksne/, response.body
+    assert_match /#{members(:uwe).id}/, response.body
+    assert_match /#{members(:lars).id}/, response.body
+    assert_no_match /Closed/, response.body
+  end
 end

@@ -18,3 +18,11 @@ voksne:
   from_age: 14
   to_age: 99
   target_size: 30
+
+closed:
+  name: Closed
+  martial_art: keiwaryu
+  from_age: 6
+  to_age: 99
+  target_size: 30
+  closed_on: 2013-09-17

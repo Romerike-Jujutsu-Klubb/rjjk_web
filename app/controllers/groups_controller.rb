@@ -6,16 +6,16 @@ class GroupsController < ApplicationController
     @closed_groups = Group.inactive(Date.today).all
     respond_to do |format|
       format.html # index.html.erb
-      format.xml { render :xml => @groups }
-      format.yaml { render :text => @groups.to_yaml, :content_type => 'text/yaml' }
+      format.xml { render xml: @groups }
+      format.yaml { render text: @groups.to_yaml, content_type: 'text/yaml' }
     end
   end
 
   def yaml
     @groups = Group.active.all
-    @groups.each { |g| g['members'] = g.members.map { |m| m.id } }
-    render text: @groups.map { |g| g.attributes }.to_yaml,
-        content_type: 'text/yaml', layout: false
+    attrs = @groups.map { |g| g.attributes }
+    @groups.each { |g| attrs.find { |g2| g2['id'] == g.id }['members'] = g.members.map { |m| m.id } }
+    render text: attrs.to_yaml, content_type: 'text/yaml', layout: false
   end
 
   def show
@@ -74,7 +74,7 @@ class GroupsController < ApplicationController
         format.html { back_or_redirect_to(@group) }
         format.xml { head :ok }
       else
-        format.html { edit ; render :action => :edit }
+        format.html { edit; render :action => :edit }
         format.xml { render :xml => @group.errors, :status => :unprocessable_entity }
       end
     end
