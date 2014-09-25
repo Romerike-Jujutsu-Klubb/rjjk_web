@@ -106,7 +106,6 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.ics { send_data(cal.export, :filename => 'RJJK.ics', :disposition => 'inline; filename=RJJK.ics', :type => 'text/calendar') }
       format.all do
-        puts "unknown format"
         send_data(cal.export, filename: 'RJJK.ics', disposition: 'inline; filename=RJJK.ics', type: 'text/calendar')
       end
     end
