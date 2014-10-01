@@ -2,7 +2,7 @@ class PageAliasesController < ApplicationController
   before_filter :admin_required
 
   def index
-    @page_aliases = PageAlias.order(:old_path, :new_path).all
+    @page_aliases = PageAlias.order(:old_path, :new_path).to_a
 
     respond_to do |format|
       format.html # index.html.erb

@@ -23,7 +23,7 @@ class NewsItem < ActiveRecord::Base
   validates_inclusion_of :publication_state, :in => PublicationState.constants.map(&:to_s)
 
   def self.front_page_items
-    (admin? ? self : current).order('created_at DESC').limit(10).includes(creator: :member).all
+    (admin? ? self : current).order('created_at DESC').limit(10).includes(creator: :member).to_a
   end
 
   def initialize(*args)

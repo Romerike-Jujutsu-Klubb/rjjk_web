@@ -7,8 +7,8 @@ class GraduationsController < ApplicationController
   def index
     @graduations = Graduation.includes(:group).references(:groups).
         order('held_on DESC, group_id DESC').where('groups.martial_art_id = 1').
-        all.group_by(&:held_on)
-    @groups = Group.order('from_age DESC').all
+        to_a.group_by(&:held_on)
+    @groups = Group.order('from_age DESC').to_a
   end
 
   def show
@@ -17,7 +17,7 @@ class GraduationsController < ApplicationController
 
   def new
     @graduation ||= Graduation.new(params[:graduation])
-    @groups = Group.active(nil).order(:from_age).all
+    @groups = Group.active(nil).order(:from_age).to_a
   end
 
   def create
@@ -40,7 +40,7 @@ class GraduationsController < ApplicationController
     @groups = Group.all
     @graduate = Graduate.new(:graduation_id => @graduation.id)
     @censor = Censor.new :graduation_id => @graduation.id
-    @members = Member.active(@graduation.held_on).all.
+    @members = Member.active(@graduation.held_on).to_a.
         sort_by { |m| [@graduation.group.members.include?(m) ? 0 : 1, m.name] } -
         @graduation.graduates.map(&:member)
     @instructors = Member.instructors
@@ -66,7 +66,7 @@ class GraduationsController < ApplicationController
     date = graduation.held_on
 
     content = graduation.graduates.sort_by { |g| -g.rank.position }.map do |g|
-      censors = graduation.censors.all.sort_by { |c| -(c.member.current_rank.try(:position) || 99) }
+      censors = graduation.censors.to_a.sort_by { |c| -(c.member.current_rank.try(:position) || 99) }
       {:name => g.member.name, :rank => "#{g.rank.name} #{g.rank.colour}", :group => g.rank.group.name,
           :censor1 => censors[0] ? {:title => (censors[0].member.title), :name => censors[0].member.name, :signature => censors[0].member.signatures.sample.try(:image)} : nil,
           :censor2 => censors[1] ? {:title => (censors[1].member.title), :name => censors[1].member.name, :signature => censors[1].member.signatures.sample.try(:image)} : nil,
@@ -137,12 +137,12 @@ class GraduationsController < ApplicationController
 
   def load_graduates
     @graduation = Graduation.includes(:group => {:martial_art => {:ranks => :group}}).find(params[:id])
-    @censors = Censor.includes(:member).where(:graduation_id => @graduation.id).all
+    @censors = Censor.includes(:member).where(:graduation_id => @graduation.id).to_a
     @graduates = Graduate.where('graduates.graduation_id = ? AND graduates.member_id != 0', params[:id]).
         #includes({:graduation => :martial_art}, {:member => [{:attendances => :group_schedule}, {:graduates => [:graduation, :rank]}]}, {:rank => :group}).
         includes({:graduation => {:group => :martial_art}}, :member, {:rank => :group}).
-        #order('ranks_graduates.position DESC, members.first_name, members.last_name').all
-        order('ranks.position DESC, members.first_name, members.last_name').all
+        #order('ranks_graduates.position DESC, members.first_name, members.last_name').to_a
+        order('ranks.position DESC, members.first_name, members.last_name').to_a
   end
 
   def admin_or_censor_required

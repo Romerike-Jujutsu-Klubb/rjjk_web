@@ -4,9 +4,9 @@ class SearchController < ApplicationController
       @query = params[:q].strip
 
       if admin?
-        @members = Member.search(@query).all
-        @users = User.search(@query).all - @members.map(&:user)
-        @trials = NkfMemberTrial.search(@query).all
+        @members = Member.search(@query).to_a
+        @users = User.search(@query).to_a - @members.map(&:user)
+        @trials = NkfMemberTrial.search(@query).to_a
       end
 
       @pages = InformationPage.

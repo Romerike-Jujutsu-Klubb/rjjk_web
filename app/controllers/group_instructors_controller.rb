@@ -3,7 +3,7 @@ class GroupInstructorsController < ApplicationController
 
   def index
     group_instructors = GroupInstructor.includes(group_semester: :semester, group_schedule: :group).
-        order('group_schedules.weekday, group_schedules.start_at, groups.from_age').all.to_a
+        order('group_schedules.weekday, group_schedules.start_at, groups.from_age').to_a
     group_instructors.sort_by! { |gi| [gi.group_semester.semester.current? ? 0 : 1, gi.group_semester.semester.future? ? 0 : 1, gi.group_semester.semester.future? ? gi.group_semester.semester.start_on : Date.today - gi.group_semester.semester.end_on] }
     @semesters = group_instructors.group_by { |gi| gi.group_semester.semester }
     if Semester.current && !@semesters.include?(Semester.current)
@@ -54,9 +54,9 @@ class GroupInstructorsController < ApplicationController
   private
 
   def load_form_data
-    @group_schedules ||= GroupSchedule.includes(:group).references(:groups).order('weekday, groups.from_age').all.select { |gs| gs.group.active? }
+    @group_schedules ||= GroupSchedule.includes(:group).references(:groups).order('weekday, groups.from_age').to_a.select { |gs| gs.group.active? }
     @group_instructors ||= Member.instructors
-    @group_semesters ||= GroupSemester.includes(:semester).order('semesters.start_on DESC').all
+    @group_semesters ||= GroupSemester.includes(:semester).order('semesters.start_on DESC').to_a
   end
 
 end

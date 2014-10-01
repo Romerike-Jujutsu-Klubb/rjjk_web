@@ -67,7 +67,7 @@ class Member < ActiveRecord::Base
   def self.instructors(date = Date.today)
     active(date).
         where('instructor = true OR id IN (SELECT member_id FROM group_instructors GROUP BY member_id)').
-        order('first_name, last_name').all
+        order('first_name, last_name').to_a
   end
 
   def self.create_corresponding_user!(attrs)
@@ -136,7 +136,7 @@ class Member < ActiveRecord::Base
   end
 
   def attendances_since_graduation(before_date = Date.today, group = nil)
-    groups = group ? [group] : Group.includes(:martial_art).all
+    groups = group ? [group] : Group.includes(:martial_art).to_a
     groups.map do |g|
       ats = attendances
       ats = ats.by_group_id(g.id)

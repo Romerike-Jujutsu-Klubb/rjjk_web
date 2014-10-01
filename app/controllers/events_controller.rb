@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_filter :admin_required, :except => [:calendar, :index, :show]
 
   def index
-    @events = Event.order('start_at DESC').all
+    @events = Event.order('start_at DESC').to_a
   end
 
   def show
@@ -21,7 +21,7 @@ class EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
-    @groups = Group.where('closed_on IS NULL OR closed_on >= ?', @event.start_at.to_date).all
+    @groups = Group.where('closed_on IS NULL OR closed_on >= ?', @event.start_at.to_date).to_a
   end
 
   def create
@@ -64,7 +64,7 @@ class EventsController < ApplicationController
     if params[:example]
       recipients = [current_user]
     elsif params[:recipients] == 'all'
-      recipients = Group.all.map { |g| g.members.active(event.start_at.to_date) }.flatten.compact.uniq
+      recipients = Group.all.to_a.map { |g| g.members.active(event.start_at.to_date) }.flatten.compact.uniq
     elsif params[:recipients] == 'invited'
       recipients = event.event_invitees
     elsif params[:recipients] == 'groups'

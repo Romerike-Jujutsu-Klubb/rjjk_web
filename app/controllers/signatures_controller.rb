@@ -35,7 +35,7 @@ class SignaturesController < ApplicationController
   # GET /signatures/new.json
   def new
     @signature = Signature.new
-    @members = Member.active(Date.today).order(:birthdate, :first_name, :last_name).all
+    @members = Member.active(Date.today).order(:birthdate, :first_name, :last_name).to_a
 
     respond_to do |format|
       format.html # new.html.erb
@@ -46,7 +46,7 @@ class SignaturesController < ApplicationController
   # GET /signatures/1/edit
   def edit
     @signature = Signature.find(params[:id])
-    @members = Member.active(Date.today).order(:birthdate, :first_name, :last_name).all
+    @members = Member.active(Date.today).order(:birthdate, :first_name, :last_name).to_a
   end
 
   # POST /signatures

@@ -4,7 +4,7 @@ class BasicTechniquesController < ApplicationController
   before_filter :technical_committy_required, except: USER_ACTIONS
 
   def index
-    @basic_techniques = BasicTechnique.includes(:rank).order(:name).all
+    @basic_techniques = BasicTechnique.includes(:rank).order(:name).to_a
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @basic_techniques }
@@ -72,8 +72,8 @@ class BasicTechniquesController < ApplicationController
   private
 
   def load_form_data
-    @wazas = Waza.all
+    @wazas = Waza.all.to_a
     @ranks = Rank.includes(:martial_art).
-        where(martial_arts: {name: 'Kei Wa Ryu'} ).order(:position).all
+        where(martial_arts: {name: 'Kei Wa Ryu'}).order(:position).to_a
   end
 end

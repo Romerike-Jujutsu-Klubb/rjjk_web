@@ -6,9 +6,9 @@ class GraduatesController < ApplicationController
 
   def index
     if params[:id]
-      @graduates = Graduate.where("member_id = #{params[:id]}").order(:rank_id).all
+      @graduates = Graduate.where("member_id = #{params[:id]}").order(:rank_id).to_a
     else
-      @graduates = Graduate.where('member_id > 0').order('member_id, rank_id DESC').all
+      @graduates = Graduate.where('member_id > 0').order('member_id, rank_id DESC').to_a
     end
   end
 
@@ -24,7 +24,7 @@ class GraduatesController < ApplicationController
 
   def annual_summary
     @year = params[:id]
-    @graduates = Graduate.includes(:graduation).where("DATE_PART('YEAR', graduations.held_on) = ?", @year).order('rank_id').all
+    @graduates = Graduate.includes(:graduation).where("DATE_PART('YEAR', graduations.held_on) = ?", @year).order('rank_id').to_a
     @by_group = @graduates.group_by { |gr| gr.rank.group }
     @by_rank = @graduates.group_by { |gr| gr.rank }
   end

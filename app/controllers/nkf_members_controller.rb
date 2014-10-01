@@ -6,7 +6,7 @@ class NkfMembersController < ApplicationController
   cache_sweeper :member_sweeper, :only => [:create_member, :update_member]
 
   def index
-    @nkf_members = NkfMember.order(:fornavn, :etternavn).all
+    @nkf_members = NkfMember.order(:fornavn, :etternavn).to_a
   end
 
   def show
@@ -58,7 +58,7 @@ class NkfMembersController < ApplicationController
     c = NkfMemberComparison.new
     @orphan_nkf_members = c.orphan_nkf_members
     @orphan_members = c.orphan_members
-    @groups = Group.order('from_age DESC, to_age DESC').all
+    @groups = Group.order('from_age DESC, to_age DESC').to_a
     @members = c.members
   end
 
@@ -91,7 +91,7 @@ class NkfMembersController < ApplicationController
   end
 
   def age_vs_contract
-    members = NkfMember.where(:medlemsstatus => 'A').all
+    members = NkfMember.where(:medlemsstatus => 'A').to_a
     @wrong_contracts = members.select { |m|
       (m.member.age < 10 && m.kont_sats !~ /^Barn/) ||
           (m.member.age >= 10 && m.member.age < 15 && m.kont_sats !~ /^Ungdom/) ||

@@ -2,7 +2,7 @@ class PublicRecordsController < ApplicationController
   # GET /public_records
   # GET /public_records.json
   def index
-    @public_records = PublicRecord.order('created_at DESC').all
+    @public_records = PublicRecord.order('created_at DESC').to_a
 
     respond_to do |format|
       format.html # index.html.erb

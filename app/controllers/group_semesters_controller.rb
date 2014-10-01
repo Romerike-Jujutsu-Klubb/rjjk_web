@@ -2,7 +2,7 @@ class GroupSemestersController < ApplicationController
   before_filter :admin_required
 
   def index
-    @group_semesters = GroupSemester.includes(:semester).order('semesters.start_on DESC').all
+    @group_semesters = GroupSemester.includes(:semester).order('semesters.start_on DESC').to_a
 
     respond_to do |format|
       format.html # index.html.erb
@@ -77,9 +77,9 @@ class GroupSemestersController < ApplicationController
   private
 
   def load_form_data
-    @groups = Group.active(@group_semester.semester.try(:start_on) || Date.today).order(:from_age).all
-    @semesters = Semester.order('start_on DESC').all
-    @instructors = Member.instructors(@group_semester.first_session || @group_semester.semester.try(:start_on)).all
+    @groups = Group.active(@group_semester.semester.try(:start_on) || Date.today).order(:from_age).to_a
+    @semesters = Semester.order('start_on DESC').to_a
+    @instructors = Member.instructors(@group_semester.first_session || @group_semester.semester.try(:start_on)).to_a
   end
 
   def create_practices

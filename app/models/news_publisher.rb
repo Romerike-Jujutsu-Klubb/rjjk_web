@@ -8,7 +8,7 @@ class NewsPublisher
   (expire_at IS NULL OR expire_at > CURRENT_TIMESTAMP) AND
   (updated_at IS NULL OR updated_at < CURRENT_TIMESTAMP - interval '10' minute)").first
     if news_item
-      recipients = Rails.env == 'production' ? Member.active(Date.today) : Member.where(:first_name => 'Uwe').all
+      recipients = Rails.env == 'production' ? Member.active(Date.today) : Member.where(:first_name => 'Uwe').to_a
       recipients.each do |m|
         NewsletterMailer.newsletter(news_item, m).deliver
       end

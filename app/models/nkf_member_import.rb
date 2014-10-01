@@ -228,7 +228,7 @@ class NkfMemberImport
       end
       record = NkfMember.find_by_medlemsnummer(row[0]) || NkfMember.new
       if record.member_id.nil?
-        member = Member.where('UPPER(first_name) = ? AND UPPER(last_name) = ?', UnicodeUtils.upcase(attributes['fornavn']), UnicodeUtils.upcase(attributes['etternavn'])).all.find { |m| m.nkf_member.nil? }
+        member = Member.where('UPPER(first_name) = ? AND UPPER(last_name) = ?', UnicodeUtils.upcase(attributes['fornavn']), UnicodeUtils.upcase(attributes['etternavn'])).to_a.find { |m| m.nkf_member.nil? }
         if member
           attributes['member_id'] = member.id
         end
@@ -261,7 +261,7 @@ class NkfMemberImport
     logger.debug "Columns: #{columns.inspect}"
     tid_col_idx = header_fields.index 'tid'
     # email_col_idx  = header_fields.index 'epost'
-    missing_trials = NkfMemberTrial.where('tid NOT IN (?)', member_trial_rows.map { |t| t[tid_col_idx] }).all
+    missing_trials = NkfMemberTrial.where('tid NOT IN (?)', member_trial_rows.map { |t| t[tid_col_idx] }).to_a
     missing_trials.each do |t|
       m = Member.find_by_email(t.epost)
       t.trial_attendances.each do |ta|

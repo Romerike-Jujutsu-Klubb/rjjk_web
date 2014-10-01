@@ -23,13 +23,13 @@ class AttendanceHistoryGraph
     weeks.reverse!
     totals = Array.new(weeks.size - 1, nil)
     totals_sessions = Array.new(weeks.size - 1, 0)
-    Group.order('martial_art_id, from_age DESC, to_age').all.each do |group|
+    Group.order('martial_art_id, from_age DESC, to_age').to_a.each do |group|
       attendances = weeks.each_cons(2).map do |w1, w2|
         Attendance.by_group_id(group.id).includes(:practice).
             where('(practices.year > ? OR (practices.year = ? AND practices.week > ?)) AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
-                  w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).all +
+                  w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).to_a +
             TrialAttendance.by_group_id(group.id).where('(year > ? OR (year = ? AND week > ?)) AND (year < ? OR (year = ? AND week <= ?))',
-                                                        w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).all
+                                                        w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).to_a
       end
       sessions = attendances.map { |ats| ats.map(&:practice_id).uniq.size }
       values = attendances.each_with_index.map { |a, i| sessions[i] > 0 ? a.size / sessions[i] : nil }
@@ -86,7 +86,7 @@ class AttendanceHistoryGraph
     attendances = Attendance.includes(:practice).references(:practices).
         where('practices.year = ? AND practices.week >= ? AND practices.week <= ? AND attendances.status NOT IN (?)',
               year, first_date.cweek, last_date.cweek, Attendance::ABSENT_STATES).
-        all.select { |a| a.date >= first_date && a.date <= last_date && a.date <= Date.today }
+        to_a.select { |a| a.date >= first_date && a.date <= last_date && a.date <= Date.today }
     group_schedules = attendances.map(&:group_schedule).uniq
     groups = group_schedules.map(&:group).uniq.sort_by(&:from_age)
     dates = attendances.map(&:date).sort.uniq

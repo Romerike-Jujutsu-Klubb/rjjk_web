@@ -7,7 +7,7 @@ class NewsController < ApplicationController
   end
 
   def list
-    @news_items = NewsItem.order('created_at DESC').limit(30).includes(:creator => :member).all
+    @news_items = NewsItem.order('created_at DESC').limit(30).includes(:creator => :member).to_a
     render :action => :index
   end
 
@@ -62,7 +62,7 @@ class NewsController < ApplicationController
   private
 
   def load_images
-    @images = Image.published.images.select('id, name').order('created_at DESC').all
+    @images = Image.published.images.select('id, name').order('created_at DESC').to_a
   end
 
 end

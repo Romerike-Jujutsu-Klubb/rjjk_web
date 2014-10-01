@@ -2,8 +2,8 @@ class GroupsController < ApplicationController
   before_filter :admin_required, :except => :show
 
   def index
-    @groups = Group.active(Date.today).order('to_age, from_age DESC').all
-    @closed_groups = Group.inactive(Date.today).all
+    @groups = Group.active(Date.today).order('to_age, from_age DESC').to_a
+    @closed_groups = Group.inactive(Date.today).to_a
     respond_to do |format|
       format.html # index.html.erb
       format.xml { render xml: @groups }
@@ -12,7 +12,7 @@ class GroupsController < ApplicationController
   end
 
   def yaml
-    @groups = Group.active.all
+    @groups = Group.active.to_a
     attrs = @groups.map { |g| g.attributes }
     @groups.each { |g| attrs.find { |g2| g2['id'] == g.id }['members'] = g.members.map { |m| m.id } }
     render text: attrs.to_yaml, content_type: 'text/yaml', layout: false

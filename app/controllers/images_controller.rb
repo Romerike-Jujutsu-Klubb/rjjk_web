@@ -110,13 +110,13 @@ class ImagesController < ApplicationController
   end
 
   def image_list
-    @images = Image.where("name NOT LIKE '%.MP4'").order('UPPER(name)').all
+    @images = Image.where("name NOT LIKE '%.MP4'").order('UPPER(name)').to_a
     render :layout => false
   end
 
   def media_list
     media_extensions = %w{mp4 mov flv}
-    @media = Image.where(media_extensions.map { |e| "UPPER(name) LIKE '%.#{e.upcase}'" }.join(' OR ')).order('UPPER(name)').all
+    @media = Image.where(media_extensions.map { |e| "UPPER(name) LIKE '%.#{e.upcase}'" }.join(' OR ')).order('UPPER(name)').to_a
     render :layout => false
   end
 
@@ -127,7 +127,7 @@ class ImagesController < ApplicationController
     image_select = image_select.where('approved = ?', true) unless admin?
     image_select = image_select.where('public = ?', true) unless user?
     @image = image_select.where(:id => params[:id]).first || image_select.first
-    @images = image_select.all
+    @images = image_select.to_a
   end
 
   def mine
@@ -135,7 +135,7 @@ class ImagesController < ApplicationController
     image_select = Image.select(fields).where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'").order('created_at DESC')
     image_select = image_select.where('user_id = ?', current_user.id)
     image_select = image_select.includes(:user)
-    @images = image_select.all
+    @images = image_select.to_a
     @image = Image.find_by_id(params[:id]) || @images.first
     render :action => :gallery
   end

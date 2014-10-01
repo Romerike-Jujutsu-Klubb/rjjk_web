@@ -24,7 +24,7 @@ class MembersController < ApplicationController
   end
 
   def yaml
-    @members = Member.active.all
+    @members = Member.active.to_a
     @members.each { |m| m['image'] = nil }
     render :text => @members.map { |m| m.attributes }.to_yaml, :content_type => 'text/yaml', :layout => false
   end
@@ -81,13 +81,13 @@ class MembersController < ApplicationController
   end
 
   def excel_export
-    @members = Member.active.all
+    @members = Member.active.to_a
     render :layout => false
   end
 
   def new
     @member ||= Member.new
-    @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').all
+    @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').to_a
   end
 
   def create
@@ -124,7 +124,7 @@ class MembersController < ApplicationController
 
   def edit
     @member = Member.find(params[:id])
-    @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').where(:closed_on => nil).all
+    @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').where(:closed_on => nil).to_a
     @groups |= @member.groups
   end
 
@@ -135,7 +135,7 @@ class MembersController < ApplicationController
       flash[:notice] = 'Medlemmet oppdatert.'
       redirect_to action: :edit, id: @member
     else
-      @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').all
+      @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').to_a
       render action: 'edit'
     end
   end
@@ -172,16 +172,16 @@ class MembersController < ApplicationController
     @female_twenty_twentyfive= member_count(false, 20, 25)
     @male_twentysix_and_over = member_count(true, 26, 100)
     @female_twentysix_and_over= member_count(false, 26, 100)
-    @incomplete_members = Member.active.all.select { |m| m.birthdate.nil? }
+    @incomplete_members = Member.active.to_a.select { |m| m.birthdate.nil? }
   end
 
   def telephone_list
-    @groups = Group.active(Date.today).includes(:members).all
+    @groups = Group.active(Date.today).includes(:members).to_a
   end
 
   def email_list
-    @groups = Group.active(Date.today).includes(:members).all
-    @former_members = Member.where('left_on IS NOT NULL').all
+    @groups = Group.active(Date.today).includes(:members).to_a
+    @former_members = Member.where('left_on IS NOT NULL').to_a
     @administrators = User.find_administrators
     @administrator_emails = @administrators.map { |m| m.email }.compact.uniq
     @missing_administrator_emails = @administrators.size - @administrator_emails.size
@@ -234,7 +234,7 @@ class MembersController < ApplicationController
 
   def cms_comparison
     @cms_members = CmsMember.find_active
-    @members = Member.active.all
+    @members = Member.active.to_a
     @inactive_cms_members = CmsMember.find_inactive
 
     @new_cms_members = @cms_members.select { |cmsm| @members.find { |m| m.cms_contract_id == cmsm.cms_contract_id }.nil? }
@@ -282,8 +282,8 @@ class MembersController < ApplicationController
     @month = @date.month
     @first_date = @date.beginning_of_month - 1
     @last_date = @date.end_of_month
-    @members_before = Member.active(@first_date).all
-    @members_after = Member.active(@last_date).all
+    @members_before = Member.active(@first_date).to_a
+    @members_after = Member.active(@last_date).to_a
     @members_in = @members_after - @members_before
     @members_out = @members_before - @members_after
   end

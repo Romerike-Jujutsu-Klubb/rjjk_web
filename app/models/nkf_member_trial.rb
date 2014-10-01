@@ -24,6 +24,6 @@ class NkfMemberTrial < ActiveRecord::Base
   end
 
   def group
-    Group.active(Date.today).all.find { |g| g.contains_age age }
+    Group.active(Date.today).to_a.find { |g| g.contains_age age }
   end
 end

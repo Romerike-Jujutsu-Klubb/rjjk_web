@@ -22,7 +22,7 @@ class EmbuImagesController < ApplicationController
   def new
     @embu_image ||= EmbuImage.new
     @embus = Embu.all
-    @images = Image.order(:name).all
+    @images = Image.order(:name).to_a
 
     respond_to do |format|
       format.html { render action: 'new' }
@@ -33,7 +33,7 @@ class EmbuImagesController < ApplicationController
   def edit
     @embu_image = EmbuImage.find(params[:id])
     @embus = Embu.all
-    @images = Image.order(:name).all
+    @images = Image.order(:name).to_a
   end
 
   def create

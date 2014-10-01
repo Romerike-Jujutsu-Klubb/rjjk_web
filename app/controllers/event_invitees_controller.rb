@@ -3,7 +3,7 @@ class EventInviteesController < ApplicationController
   before_filter :admin_required, :except => [:index, :show]
 
   def index
-    @event_invitees = EventInvitee.order(:name).all
+    @event_invitees = EventInvitee.order(:name).to_a
 
     respond_to do |format|
       format.html # index.html.erb
@@ -82,7 +82,7 @@ class EventInviteesController < ApplicationController
   private
 
   def load_users
-    @users = [@event_invitee.user].compact + (User.order(:first_name, :last_name).all - @event_invitee.event.users)
+    @users = [@event_invitee.user].compact + (User.order(:first_name, :last_name).to_a - @event_invitee.event.users)
   end
 
 end

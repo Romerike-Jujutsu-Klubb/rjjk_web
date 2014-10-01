@@ -53,7 +53,7 @@ class Group < ActiveRecord::Base
   end
 
   def update_prices
-    contracts = NkfMember.where(:kontraktstype => contract).all
+    contracts = NkfMember.where(:kontraktstype => contract).to_a
     return if contracts.empty?
     self.monthly_price = contracts.map(&:kontraktsbelop).group_by { |x| x }.group_by { |k, v| v.size }.sort.last.last.map(&:first).first
     self.yearly_price = contracts.map(&:kont_belop).group_by { |x| x }.group_by { |k, v| v.size }.sort.last.last.map(&:first).first
@@ -77,7 +77,7 @@ class Group < ActiveRecord::Base
     NkfMemberTrial.for_group(self).
         includes(:trial_attendances => {:practice => :group_schedule}).
         order('fornavn, etternavn').
-        all
+        to_a
   end
 
   def waiting_list

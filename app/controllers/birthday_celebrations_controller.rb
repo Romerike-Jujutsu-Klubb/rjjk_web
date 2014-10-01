@@ -3,7 +3,7 @@ class BirthdayCelebrationsController < ApplicationController
   before_filter :admin_required
 
   def index
-    @birthday_celebrations = BirthdayCelebration.order('held_on DESC').all
+    @birthday_celebrations = BirthdayCelebration.order('held_on DESC').to_a
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @birthday_celebrations }
@@ -28,15 +28,15 @@ class BirthdayCelebrationsController < ApplicationController
         :censor2 => bc.sensor1 ? {:title => (bc.sensor2.title), :name => bc.sensor2.name} : nil,
         :censor3 => bc.sensor1 ? {:title => (bc.sensor3.title), :name => bc.sensor3.name} : nil,
     }
-    content = participants.map{|n| general.dup.update({:name => n})}
+    content = participants.map { |n| general.dup.update({:name => n}) }
     filename = "Certificates_birthday_#{date}.pdf"
     send_data Certificates.pdf(date, content), :type => 'text/pdf',
-              :filename => filename, :disposition => 'attachment'
+        :filename => filename, :disposition => 'attachment'
   end
 
   def new
     @birthday_celebration = BirthdayCelebration.new
-    @members = Member.order(:first_name).active(Date.today).all.select{|m| m.age >= 15}
+    @members = Member.order(:first_name).active(Date.today).to_a.select { |m| m.age >= 15 }
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @birthday_celebration }
@@ -45,7 +45,7 @@ class BirthdayCelebrationsController < ApplicationController
 
   def edit
     @birthday_celebration = BirthdayCelebration.find(params[:id])
-    @members = Member.order(:first_name).active(@birthday_celebration.held_on).all.select{|m| m.age >= 15}
+    @members = Member.order(:first_name).active(@birthday_celebration.held_on).to_a.select { |m| m.age >= 15 }
   end
 
   def create

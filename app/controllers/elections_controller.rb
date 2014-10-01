@@ -72,9 +72,9 @@ class ElectionsController < ApplicationController
     @annual_meetings = AnnualMeeting.all
     @roles = Role.
         where('years_on_the_board IS NOT NULL OR id = ?', @election.role_id).
-        order(:name).all
+        order(:name).to_a
     @members = ([@election.member].compact + Member.active(@election.annual_meeting.try(:date)).
-        order(:first_name, :last_name).all).uniq
+        order(:first_name, :last_name).to_a).uniq
   end
 
 end

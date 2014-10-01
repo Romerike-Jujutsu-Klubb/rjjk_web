@@ -4,7 +4,7 @@ class UserController < ApplicationController
   before_filter :admin_required, :except => [:welcome, :like, :login, :logout, :signup, :forgot_password, :change_password]
 
   def index
-    @users = User.order(:last_name, :first_name).all
+    @users = User.order(:last_name, :first_name).to_a
   end
 
   def show
@@ -208,7 +208,7 @@ class UserController < ApplicationController
   # Generate a template user for certain actions on get
   def generate_filled_in
     @user = (params[:id] && User.find_by_id(params[:id])) || current_user || User.find_by_id(session[:user_id])
-    @members = Member.select('id, first_name, last_name').where(:email => @user.email).all
+    @members = Member.select('id, first_name, last_name').where(:email => @user.email).to_a
     case request.method
     when 'GET'
       render

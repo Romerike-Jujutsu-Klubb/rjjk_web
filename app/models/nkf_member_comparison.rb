@@ -10,10 +10,10 @@ class NkfMemberComparison
   end
 
   def fetch
-    @orphan_nkf_members = NkfMember.where('member_id IS NULL').order('fornavn, etternavn').all
+    @orphan_nkf_members = NkfMember.where('member_id IS NULL').order('fornavn, etternavn').to_a
     @orphan_members = NkfMember.find_free_members
     @members = []
-    nkf_members = NkfMember.where('member_id IS NOT NULL').order('fornavn, etternavn').all
+    nkf_members = NkfMember.where('member_id IS NOT NULL').order('fornavn, etternavn').to_a
     nkf_members.each do |nkfm|
       member = nkfm.member
       member.attributes = nkfm.converted_attributes

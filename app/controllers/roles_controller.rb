@@ -4,7 +4,7 @@ class RolesController < ApplicationController
   # GET /roles
   # GET /roles.json
   def index
-    @roles = Role.order('years_on_the_board DESC NULLS LAST, name').all
+    @roles = Role.order('years_on_the_board DESC NULLS LAST, name').to_a
 
     respond_to do |format|
       format.html # index.html.erb

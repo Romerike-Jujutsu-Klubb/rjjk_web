@@ -4,7 +4,7 @@ class SemestersController < ApplicationController
   # GET /semesters
   # GET /semesters.json
   def index
-    @semesters = Semester.order('start_on DESC').all
+    @semesters = Semester.order('start_on DESC').to_a
     @semester ||= Semester.where('CURRENT_DATE BETWEEN start_on AND end_on').first
 
     respond_to do |format|
@@ -47,7 +47,7 @@ class SemestersController < ApplicationController
 
     respond_to do |format|
       if @semester.save
-        Group.where('school_breaks = ?', true).all.each do |g|
+        Group.where('school_breaks = ?', true).to_a.each do |g|
           @semester.group_semesters.create!(:group_id => g.id) unless @semester.group_semesters.exists?(:group_id => g.id)
         end
 

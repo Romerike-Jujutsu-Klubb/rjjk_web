@@ -4,14 +4,14 @@ class RanksController < ApplicationController
   before_filter :technical_committy_required, except: USER_ACTIONS
 
   def index
-    @ranks = Rank.order(:martial_art_id, :position).all
+    @ranks = Rank.order(:martial_art_id, :position).to_a
     @martial_arts = @ranks.group_by(&:martial_art)
   end
 
   def pensum
     current_rank = current_user.member.current_rank
     @ranks = Rank.kwr.where('group_id = ? AND position <= ?',
-        current_rank.group_id, current_rank.position + 1).order(:position).all
+        current_rank.group_id, current_rank.position + 1).order(:position).to_a
   end
 
   def show
@@ -33,8 +33,8 @@ class RanksController < ApplicationController
 
   def new
     @rank ||= Rank.new
-    @martial_arts = MartialArt.order(:name).all
-    @groups = Group.order(:from_age).all
+    @martial_arts = MartialArt.order(:name).to_a
+    @groups = Group.order(:from_age).to_a
   end
 
   def create
@@ -50,8 +50,8 @@ class RanksController < ApplicationController
 
   def edit
     @rank ||= Rank.find(params[:id])
-    @martial_arts = MartialArt.order(:name).all
-    @groups = Group.order(:from_age).all
+    @martial_arts = MartialArt.order(:name).to_a
+    @groups = Group.order(:from_age).to_a
     render :edit
   end
 
