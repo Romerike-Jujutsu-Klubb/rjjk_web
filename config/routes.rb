@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get ':controller/history_graph', action: :history_graph
   get 'mitt/oppmote' => 'attendances#plan', as: :attendance_plan
   get 'attendances/plan' # må være etter mitt/oppmote
-  post 'attendances/announce/:year/:week/:group_schedule_id/:status(/:member_id)' =>
+  post 'attendances/announce(/:year/:week/:group_schedule_id)/:status(/:member_id)' =>
           'attendances#announce'
   get 'news/list'
   get 'pensum' => 'ranks#pensum'

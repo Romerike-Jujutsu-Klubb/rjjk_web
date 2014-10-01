@@ -74,10 +74,10 @@ class AttendancesController < ApplicationController
     if request.xhr?
       flash.clear
       render :partial => '/attendances/attendance_create_link', :locals => {
-          :member_id => @attendance.member_id,
-          :group_schedule_id => @attendance.practice.group_schedule_id,
-          :date => @attendance.date, :status => Attendance::Status::ATTENDED
-      }
+              :member_id => @attendance.member_id,
+              :group_schedule_id => @attendance.practice.group_schedule_id,
+              :date => @attendance.date, :status => Attendance::Status::ATTENDED
+          }
     else
       redirect_to(attendances_url)
     end
@@ -91,7 +91,7 @@ class AttendancesController < ApplicationController
     @last_date = @date.end_of_month
     @attendances = Attendance.includes(:practice => :group_schedule).references(:practices).
         where('practices.year = ? AND practices.week >= ? AND practices.week <= ? AND attendances.status NOT IN (?)',
-        @year, @first_date.cweek, @last_date.cweek, Attendance::ABSENT_STATES).
+            @year, @first_date.cweek, @last_date.cweek, Attendance::ABSENT_STATES).
         all.select { |a| (@first_date..@last_date).include? a.date }
     monthly_per_group = @attendances.group_by { |a| a.group_schedule.group }.sort_by { |g, ats| g.from_age }
     @monthly_summary_per_group = {}
@@ -137,11 +137,10 @@ class AttendancesController < ApplicationController
     week = params[:week].to_i
     gs_id = params[:group_schedule_id]
     if year > 0 && week > 0 && gs_id
-      practice = Practice.where(:group_schedule_id => gs_id,
-          :year => year,
-          :week => week).first_or_create!
+      practice = Practice.where(group_schedule_id: gs_id,
+          year: year, week: week).first_or_create!
     else
-      practice = m.groups.where(:name => 'Voksne').first.next_practice
+      practice = m.groups.where(name: 'Voksne').first.next_practice
     end
     criteria = {member_id: m.id, practice_id: practice.id}
     @attendance = Attendance.includes(:practice).where(criteria).first_or_initialize
@@ -162,7 +161,7 @@ class AttendancesController < ApplicationController
     if request.xhr?
       if params[:status] == 'toggle'
         render partial: 'plan_practice', locals: {gs: practice.group_schedule,
-            year: year, week: week, attendance: @attendance}
+                year: year, week: week, attendance: @attendance}
       else
         render :partial => 'attendance_delete_link', :locals => {:attendance => @attendance}
       end
@@ -182,7 +181,7 @@ class AttendancesController < ApplicationController
     member = current_user.member
     last_unconfirmed = member.attendances.includes(:practice).references(:practices).
         where("attendances.status = 'P' AND (practices.year < ? OR (practices.year = ? AND practices.week < ?))",
-        today.year, today.year, today.cweek).
+            today.year, today.year, today.cweek).
         order('practices.year, practices.week').last
     if last_unconfirmed
       @weeks.unshift [last_unconfirmed.date.year, last_unconfirmed.date.cweek]
@@ -203,7 +202,7 @@ class AttendancesController < ApplicationController
     start_date = 6.months.ago.to_date.beginning_of_month
     attendances = Attendance.includes(practice: {group_schedule: :group}).references(:practices).
         where('member_id = ? AND attendances.status = ? AND ((practices.year = ? AND practices.week >= ?) OR (practices.year = ?))',
-        member, Attendance::Status::ATTENDED, start_date.year, start_date.cweek, today.year).
+            member, Attendance::Status::ATTENDED, start_date.year, start_date.cweek, today.year).
         all
     @attended_groups = attendances.map { |a| a.practice.group_schedule.group }.uniq.sort_by { |g| -g.from_age }
     per_month = attendances.group_by { |a| d = a.date; [d.year, d.mon] }
@@ -249,7 +248,7 @@ class AttendancesController < ApplicationController
 
     if request.xhr?
       render partial: 'plan_practice', locals: {gs: practice.group_schedule,
-          year: year, week: week, attendance: @attendance}
+              year: year, week: week, attendance: @attendance}
     else
       flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  #{t(:attendances)[@attendance.status.to_sym]}"
       flash[:attendance_id] = @attendance.id
@@ -300,7 +299,7 @@ class AttendancesController < ApplicationController
         attended_members = Member.references(:practices).
             includes(:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank]).
             where('members.id NOT IN (?) AND practices.group_schedule_id IN (?) AND (year > ? OR ( year = ? AND week >= ?)) AND (year < ? OR ( year = ? AND week <= ?))',
-            @instructors.map(&:id), @group.group_schedules.map(&:id), first_date.cwyear, first_date.cwyear, first_date.cweek, last_date.cwyear, last_date.cwyear, last_date.cweek).
+                @instructors.map(&:id), @group.group_schedules.map(&:id), first_date.cwyear, first_date.cwyear, first_date.cweek, last_date.cwyear, last_date.cwyear, last_date.cweek).
             all
         @members = current_members | attended_members
         @trials = @group.trials

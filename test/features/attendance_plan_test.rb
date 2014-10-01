@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class AttendancePlanTest < ActionDispatch::IntegrationTest
-  fixtures :all
-
   def test_plan
     visit_with_login '/mitt/oppmote'
     screenshot('attendance/plan/index')

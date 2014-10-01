@@ -20,6 +20,7 @@ class ActionDispatch::IntegrationTest
   Capybara.default_wait_time = 30
 
   self.use_transactional_fixtures = false
+  fixtures :all
   TEST_START = Time.now.change(sec: 0)
 
   setup do
@@ -46,12 +47,17 @@ class ActionDispatch::IntegrationTest
       if svn_info.blank?
         # http://www.akikoskinen.info/image-diffs-with-git/
         puts `git show HEAD~0:#{SCREENSHOT_DIR}/#{name}.png > #{org_name}`
-        FileUtils.rm_f org_name if File.size(org_name) == 0
-        svn_file_name = org_name
+        if File.size(org_name) == 0
+          FileUtils.rm_f org_name
+        else
+          svn_file_name = org_name
+        end
       else
         wc_root = svn_info.slice /(?<=Working Copy Root Path: ).*$/
         checksum = svn_info.slice /(?<=Checksum: ).*$/
-        svn_file_name = "#{wc_root}/.svn/pristine/#{checksum[0..1]}/#{checksum}.svn-base"
+        if checksum
+          svn_file_name = "#{wc_root}/.svn/pristine/#{checksum[0..1]}/#{checksum}.svn-base"
+        end
       end
     end
     old_file_size = nil
@@ -61,6 +67,7 @@ class ActionDispatch::IntegrationTest
       old_file_size = File.size(file_name)
       sleep 0.5
     end
+    return unless File.exist?(svn_file_name)
     if ImageCompare.compare(file_name, svn_file_name)
       (@test_screenshot_errors ||= []) <<
           "Screenshot does not match for #{name.inspect}\n#{file_name}\n#{org_name}\n#{new_name}\n#{caller[0]}"
@@ -72,12 +79,20 @@ class ActionDispatch::IntegrationTest
     user = options.delete(:user) || :admin
     raise "Unknown options: #{options}" unless options.empty?
     visit path
-    if current_path == '/user/login'
-      fill_in 'user_login', with: user
-      fill_in 'user_password', with: 'atest'
-      click_button 'Logg inn'
-    end
+    fill_login_form(user) if current_path == '/user/login'
     assert_equal redirected_path, current_path
+  end
+
+  def login_and_visit(path)
+    visit '/user/login'
+    fill_login_form :admin
+    visit path
+  end
+
+  def fill_login_form(user)
+    fill_in 'user_login', with: user
+    fill_in 'user_password', with: 'atest'
+    click_button 'Logg inn'
   end
 
   def wait_for_ajax

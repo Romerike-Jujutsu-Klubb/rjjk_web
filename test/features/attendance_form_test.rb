@@ -2,8 +2,6 @@
 require 'test_helper'
 
 class AttendanceFormTest < ActionDispatch::IntegrationTest
-  fixtures :all
-
   def test_select_panda_october
     visit_with_login '/attendances/form_index'
     screenshot('attendance_form_index')
