@@ -35,9 +35,7 @@ class AttendancePlanTest < ActionDispatch::IntegrationTest
     next_button.find('span.caret').click
     next_button.click_link('Annet')
     assert_equal 'Annet', next_button.text
-    puts "Attendance.count: #{Attendance.count}"
     wait_for_ajax
-    puts "Attendance.count: #{Attendance.count}"
     visit "/mitt/oppmote?a=#{Time.now.to_i}"
     next_button = find('#button_42_545305079')
     assert_equal 'Annet', next_button.text

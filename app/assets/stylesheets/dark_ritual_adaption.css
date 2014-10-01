@@ -57,6 +57,10 @@
     margin-bottom: 1em;
 }
 
+div.main_right > div.padded > div {
+    margin-bottom: 1em;
+}
+
 div.main_right div.events p {
     padding: 0;
 }

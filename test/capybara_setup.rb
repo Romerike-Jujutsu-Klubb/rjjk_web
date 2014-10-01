@@ -101,7 +101,6 @@ class ActionDispatch::IntegrationTest
     Timeout.timeout(Capybara.default_wait_time) do
       loop do
         active = page.evaluate_script('jQuery.active')
-        puts "jQuery.active: #{active}"
         break if active == 0
         sleep 0.01
       end
