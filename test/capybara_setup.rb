@@ -23,6 +23,8 @@ class ActionDispatch::IntegrationTest
   fixtures :all
   TEST_START = Time.now.change(sec: 0)
 
+  Minitest.after_run { Timecop.return }
+
   setup do
     Capybara.current_session.driver.browser.manage.window.resize_to(*WINDOW_SIZE)
     Timecop.travel TEST_START
