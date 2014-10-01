@@ -13,10 +13,7 @@ class ActionDispatch::IntegrationTest
 
   include Capybara::DSL
 
-  # FIXME(uwe):  Try Capybara.javascript_driver = :webkit
   Capybara.default_driver = :selenium
-  # require 'capybara/poltergeist'
-  # Capybara.default_driver = :poltergeist
   Capybara.default_wait_time = 30
 
   self.use_transactional_fixtures = false
