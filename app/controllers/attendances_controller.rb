@@ -143,7 +143,7 @@ class AttendancesController < ApplicationController
     else
       practice = m.groups.where(:name => 'Voksne').first.next_practice
     end
-    criteria = {:member_id => m.id, :practice_id => practice.id}
+    criteria = {member_id: m.id, practice_id: practice.id}
     @attendance = Attendance.includes(:practice).where(criteria).first_or_initialize
 
     new_status = params[:status]
@@ -192,21 +192,20 @@ class AttendancesController < ApplicationController
       @weeks.unshift [@reviewed_attendance.date.year, @reviewed_attendance.date.cweek]
       @weeks.sort!.uniq!
     end
-
     @group_schedules = member.groups.reject(&:school_breaks).map(&:group_schedules).flatten
     @weeks.each do |w|
-      @group_schedules.each { |gs| gs.practices.where(:year => today.year, :week => today.cweek).first_or_create! }
-      @group_schedules.each { |gs| gs.practices.where(:year => (today + 7).year, :week => (today + 7).cweek).first_or_create! }
+      @group_schedules.each { |gs| gs.practices.where(year: today.year, week: today.cweek).first_or_create! }
+      @group_schedules.each { |gs| gs.practices.where(year: (today + 7).year, week: (today + 7).cweek).first_or_create! }
     end
     @planned_attendances = Attendance.includes(:practice).references(:practices).
         where("member_id = ? AND (practices.year, practices.week) IN (#{@weeks.map { |y, w| "(#{y}, #{w})" }.join(', ')})", member.id).
         all
     start_date = 6.months.ago.to_date.beginning_of_month
-    attendances = Attendance.includes(:practice).references(:practices).
+    attendances = Attendance.includes(practice: {group_schedule: :group}).references(:practices).
         where('member_id = ? AND attendances.status = ? AND ((practices.year = ? AND practices.week >= ?) OR (practices.year = ?))',
         member, Attendance::Status::ATTENDED, start_date.year, start_date.cweek, today.year).
         all
-    @attended_groups = attendances.map { |a| a.group_schedule.group }.uniq.sort_by { |g| -g.from_age }
+    @attended_groups = attendances.map { |a| a.practice.group_schedule.group }.uniq.sort_by { |g| -g.from_age }
     per_month = attendances.group_by { |a| d = a.date; [d.year, d.mon] }
     @months = per_month.keys.sort.reverse.map do |ym|
       per_group = per_month[ym].group_by { |a| a.group_schedule.group }

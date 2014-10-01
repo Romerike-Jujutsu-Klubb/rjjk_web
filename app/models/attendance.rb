@@ -18,12 +18,21 @@ class Attendance < ActiveRecord::Base
       [Status::ABSENT, 'Annet', 'icon-thumbs-down', 'btn-info'],
   ]
 
+  PAST_STATES = [
+      [Status::ATTENDED, 'Var der!', 'icon-thumbs-up', 'btn-success'],
+      [Status::HOLIDAY, 'Bortreist', 'icon-hand-right', 'btn-warning'],
+      [Status::SICK, 'Syk', 'icon-plus', 'btn-danger'],
+      [Status::ABSENT, 'Annet', 'icon-thumbs-down', 'btn-info'],
+  ]
+
   PRESENT_STATES = [Status::ASSISTANT, Status::ATTENDED, Status::INSTRUCTOR, Status::PRESENT]
   ABSENT_STATES = [Status::HOLIDAY, Status::SICK, Status::ABSENT]
 
   scope :by_group_id, -> group_id { includes(practice: :group_schedule).references(:group_schedules).where('group_schedules.group_id = ?', group_id) }
   scope :last_months, -> count { limit = count.months.ago; where('(year = ? AND week >= ?) OR year > ?', limit.year, limit.to_date.cweek, limit.year) }
   scope :on_date, -> date { where('year = ? AND week = ?', date.year, date.cweek) }
+  scope :after_date, -> date { includes(practice: :group_schedule).references(:group_schedules).where('year > ? OR (year = ? AND week > ?) OR (year = ? AND week = ? AND group_schedules.weekday > ?)', date.year, date.year, date.cweek, date.year, date.cweek, date.cwday) }
+  scope :until_date, -> date { includes(practice: :group_schedule).references(:group_schedules).where('year < ? OR (year = ? AND week < ?) OR (year = ? AND week = ? AND group_schedules.weekday <= ?)', date.year, date.year, date.cweek, date.year, date.cweek, date.cwday) }
 
   belongs_to :member
   belongs_to :practice

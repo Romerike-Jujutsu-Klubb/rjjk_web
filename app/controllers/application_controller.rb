@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
     if (m = current_user.try(:member)) && (group = m.groups.find { |g| g.name == 'Voksne' })
       @next_practice = group.next_practice
       @next_schedule = @next_practice.group_schedule
-      attendances_next_practice = @next_practice.attendances.all
+      attendances_next_practice = @next_practice.attendances.to_a
       @your_attendance_next_practice = attendances_next_practice.find { |a| a.member_id == m.id }
       attendances_next_practice.delete @your_attendance_next_practice
       @other_attendees = attendances_next_practice.select { |a| [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED].include? a.status }
@@ -68,12 +68,12 @@ class ApplicationController < ActionController::Base
     unless @layout_events
       @layout_events = Event.
           where('(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)', Date.today, Date.today).
-          order('start_at, end_at').limit(5).all
-      @layout_events += Graduation.where('held_on >= CURRENT_DATE').all
+          order('start_at, end_at').limit(5).to_a
+      @layout_events += Graduation.where('held_on >= CURRENT_DATE').to_a
       @layout_events.sort_by!(&:start_at)
     end
     unless @groups
-      @groups = Group.active(Date.today).order('to_age, from_age DESC').includes(:current_semester).all
+      @groups = Group.active(Date.today).order('to_age, from_age DESC').includes(:current_semester).to_a
     end
   end
 

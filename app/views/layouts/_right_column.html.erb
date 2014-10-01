@@ -347,13 +347,13 @@
                   </li>
               <% end %>
               <% g.group_schedules.each do |gs| %>
-                  <% if gs.group_instructors.active.empty? && gs.group.current_semester %>
+                  <% if gs.group_instructors.active.empty? && g.current_semester %>
                       <li>
                         <%= link_to "#{gs.weekday_name} mangler!",
                                 controller: :group_instructors, action: :new,
                                 group_instructor: {
                                         group_schedule_id: gs.id,
-                                        group_semester_id: gs.group.current_semester.id,
+                                        group_semester_id: g.current_semester.id,
                                 } %>
                       </li>
                   <% end %>

@@ -136,15 +136,15 @@ class Member < ActiveRecord::Base
   end
 
   def attendances_since_graduation(before_date = Date.today, group = nil)
-    groups = group ? [group] : Group.all
+    groups = group ? [group] : Group.includes(:martial_art).all
     groups.map do |g|
+      ats = attendances
+      ats = ats.by_group_id(g.id)
       if (c = current_graduate(g.martial_art, before_date))
-        ats = attendances.select { |a| a.date > c.graduation.held_on }
-      else
-        ats = attendances.to_a
+        ats = ats.after_date(c.graduation.held_on)
       end
-      ats.select! { |a| a.group_schedule.group == g && a.date <= before_date }
-      ats
+      ats = ats.until_date(before_date)
+      ats.to_a
     end.flatten.sort_by(&:date).reverse
   end
 

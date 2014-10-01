@@ -6,7 +6,9 @@
      practice_end = Date.commercial(year, week, gs.weekday).at(gs.end_at)
      practice_passed = Time.now > practice_end
      initial_text = practice_passed ? 'Trente du?' : 'Kommer du?'
-     link_target = {controller: :attendances, action: practice_passed ? :review : :announce, status: 'toggle', group_schedule_id: gs.id, year: year, week: week}
+     link_target = {controller: :attendances,
+             action: practice_passed ? :review : :announce, year: year,
+             week: week, group_schedule_id: gs.id, status: 'toggle'}
      link_method = :post
      if attendance
        if Attendance::PRESENT_STATES.include?(attendance.status)
@@ -36,24 +38,22 @@
         <i class="<%= initial_icon %>"></i>
         <span><%= initial_text %></span>
     <% end %>
-    <div class="btn-group">
-      <button type="button" class="<%= 'disabled' if initial_disabled %> btn btn-default dropdown-toggle" <%= 'data-toggle="dropdown"'.html_safe unless initial_disabled %>>
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" align="left">
-        <% Attendance::STATES.each do |state, link_text, link_icon, link_class| %>
-            <li>
-              <%= link_to({:controller => :attendances, :action => :announce, :id => state, :gs_id => gs.id, :year => year, :week => week},
-                      :method => :post, :remote => true, :id => "btn_#{year}_#{week}_#{gs.id}",
-                      :onclick => "$('#btn_#{year}_#{week}_#{gs.id}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('#{link_class}').html($(this).html()); $('[data-toggle=dropdown]').parent().removeClass('open'); return true",
-                  ) do %>
-                  <i class="<%= link_icon %>"></i>
-                  <span><%= link_text %></span>
-              <% end %>
-            </li>
-        <% end %>
-      </ul>
-    </div>
+    <button type="button" class="<%= 'disabled' if initial_disabled %> btn btn-default dropdown-toggle" <%= 'data-toggle="dropdown"'.html_safe unless initial_disabled %>>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <% (practice_passed ? Attendance::PAST_STATES : Attendance::STATES).each do |state, link_text, link_icon, link_class| %>
+          <li>
+            <%= link_to({controller: :attendances, action: :announce, year: year, week: week, group_schedule_id: gs.id, status: state},
+                    :method => :post, :remote => true, :id => "btn_#{year}_#{week}_#{gs.id}",
+                    :onclick => "$('#btn_#{year}_#{week}_#{gs.id}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('#{link_class}').html($(this).html()); $('[data-toggle=dropdown]').parent().removeClass('open'); return true",
+                ) do %>
+                <i class="<%= link_icon %>"></i>
+                <span><%= link_text %></span>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
   </div>
   <%= javascript_tag do %>
       $(function() {

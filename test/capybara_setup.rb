@@ -15,6 +15,8 @@ class ActionDispatch::IntegrationTest
 
   # FIXME(uwe):  Try Capybara.javascript_driver = :webkit
   Capybara.default_driver = :selenium
+  # require 'capybara/poltergeist'
+  # Capybara.default_driver = :poltergeist
   Capybara.default_wait_time = 30
 
   self.use_transactional_fixtures = false
@@ -76,6 +78,17 @@ class ActionDispatch::IntegrationTest
       click_button 'Logg inn'
     end
     assert_equal redirected_path, current_path
+  end
+
+  def wait_for_ajax
+    Timeout.timeout(Capybara.default_wait_time) do
+      loop do
+        active = page.evaluate_script('jQuery.active')
+        puts "jQuery.active: #{active}"
+        break if active == 0
+        sleep 0.01
+      end
+    end
   end
 
 end
