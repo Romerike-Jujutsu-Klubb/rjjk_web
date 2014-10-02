@@ -32,7 +32,13 @@ EOF
                         AND (joined_on IS NULL OR joined_on <= ?)
                         AND (left_on IS NULL OR left_on > ?)'
 
-  def self.history_graph(options = {})
+  def initialize
+    @practices = {}
+    @active_members = {}
+    @group = Group.includes(:group_schedules).find_by_name('Voksne')
+  end
+
+  def history_graph(options = {})
     size = options[:size] || 480
     interval = options[:interval] || 8.weeks
     step = options[:step] || 1.weeks
@@ -88,23 +94,22 @@ EOF
     g.to_blob
   end
 
-  def self.totals(rank, dates, interval, percentage)
+  def totals(rank, dates, interval, percentage)
     dates.each.map do |date|
       prev_date = date - interval
       next_date = date + interval
-      practices = Group.find_by_name('Voksne').trainings_in_period(prev_date..date)
-      active_members = Member.
-          select((Member.column_names - %w(image)).join(',')).
+      @practices[date] ||= @group.trainings_in_period(prev_date..date)
+      @active_members[date] ||= Member.
           where(percentage ?
               [ATTENDANCE_CLAUSE, prev_date.cwyear, prev_date.cwyear, prev_date.cweek,
-               date.cwyear, date.cwyear, date.cweek, (practices * percentage) / 100,
+               date.cwyear, date.cwyear, date.cweek, (@practices[date] * percentage) / 100,
                date, date] :
               [ACTIVE_CLAUSE, prev_date.cwyear, prev_date.cwyear, prev_date.cweek, date.cwyear, date.cwyear, date.cweek,
                next_date, date.cwyear, date.cwyear, date.cweek, next_date.cwyear, next_date.cwyear, next_date.cweek,
                date, date]).
-          includes(:graduates => [{:graduation => {:group => :martial_art}}, :rank]).to_a
-      ranks = active_members.select { |m| m.graduates.select { |g| g.graduation.martial_art.name =='Kei Wa Ryu' && g.graduation.held_on <= date }.sort_by { |g| g.graduation.held_on }.last.try(:rank) == rank }.size
-      logger.debug "#{prev_date} #{date} #{next_date} Active members: #{active_members.size}, ranks: #{ranks}"
+          includes(graduates: [{graduation: {group: :martial_art}}, :rank]).to_a
+      ranks = @active_members[date].select { |m| m.graduates.select { |g| g.graduation.martial_art.name =='Kei Wa Ryu' && g.graduation.held_on <= date }.sort_by { |g| g.graduation.held_on }.last.try(:rank) == rank }.size
+      logger.debug "#{prev_date} #{date} #{next_date} Active members: #{@active_members[date].size}, ranks: #{ranks}"
       ranks
     end
   end

@@ -176,7 +176,7 @@
     <% if Rails.env != 'development' %>
         <% history_chart_link = image_tag(url_for(:controller => :members, :action => :history_graph, :format => :png, :id => 268), :title => 'Historikk graf', :class => 'img-rounded', :style => 'width: 100%; border: 0') %>
         <% attendance_chart_link = image_tag(url_for(:controller => :attendances, :action => :history_graph, :format => :png, :id => 268), :title => 'Oppmøte graf', :class => 'img-rounded', :style => 'width: 100%; border: 0') %>
-        <% grades_chart_link = image_tag(url_for(:controller => :members, :action => :grade_history_graph, :format => :png, :id => 268), :title => 'Historikk over grader', :class => 'img-rounded', :style => 'width: 100%; border: 0') %>
+        <% grades_chart_link = image_tag(url_for(controller: :members, action: :grade_history_graph, format: :png, id: 268), title: 'Historikk over grader', class: 'img-rounded', style: 'width: 100%; border: 0') %>
         <% age_chart_link = image_tag(url_for(:controller => :members, :action => :age_chart, :format => :png, :id => 268), :title => 'Aldersfordeling', :class => 'img-rounded', :style => 'width: 100%; border: 0') %>
         <% good_attendance_chart_link = image_tag(url_for(:controller => :members, :action => :grade_history_graph_percentage, :format => :png, :id => 268, :percentage => 50, :step => 30, :interval => 92), :title => 'Jevnt oppmøte voksne per grad', :class => 'img-rounded', :style => 'width: 100%; border: 0') %>
     <% else %>

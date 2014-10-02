@@ -50,14 +50,14 @@ class MembersController < ApplicationController
 
   def grade_history_graph
     if params[:id] && params[:id].to_i <= 1280
-      g = MemberGradeHistoryGraph.history_graph :size => params[:id].to_i,
-          :interval => params[:interval].try(:to_i).try(:days),
-          :step => params[:step].try(:to_i).try(:days),
-          :percentage => params[:percentage].try(:to_i)
+      g = MemberGradeHistoryGraph.new.history_graph size: params[:id].to_i,
+          interval: params[:interval].try(:to_i).try(:days),
+          step: params[:step].try(:to_i).try(:days),
+          percentage: params[:percentage].try(:to_i)
     else
-      g = MemberGradeHistoryGraph.history_graph
+      g = MemberGradeHistoryGraph.new.history_graph
     end
-    send_data(g, :disposition => 'inline', :type => 'image/png', :filename => 'RJJK_MedlemsGradsHistorikk.png')
+    send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_MedlemsGradsHistorikk.png')
   end
 
   def grade_history_graph_percentage
