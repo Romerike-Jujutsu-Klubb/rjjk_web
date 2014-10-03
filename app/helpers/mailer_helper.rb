@@ -6,7 +6,11 @@ module MailerHelper
   end
 
   def safe_email(member)
-    %Q{"#{member.name}" <#{Rails.env == 'production' ? member.email : 'uwe@kubosch.no'}>}
+    if Rails.env.production?
+      member.emails
+    else
+      %Q{"#{member.name}" <uwe@kubosch.no>}
+    end
   end
 
 end

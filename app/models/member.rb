@@ -14,7 +14,7 @@ class Member < ActiveRecord::Base
   belongs_to :image, :dependent => :destroy
   belongs_to :user, :dependent => :destroy
   has_one :next_graduate,
-      -> { includes(:graduation).where('graduations.held_on >= ?', Date.today).order('graduations.held_on') },
+  -> { includes(:graduation).where('graduations.held_on >= ?', Date.today).order('graduations.held_on') },
       class_name: :Graduate
   has_one :nkf_member, :dependent => :nullify
   has_many :appointments, :dependent => :destroy
@@ -24,8 +24,8 @@ class Member < ActiveRecord::Base
   has_many :elections, :dependent => :destroy
   has_many :graduates, :dependent => :destroy
   has_many :group_instructors, :dependent => :destroy
-  has_many :passed_graduates,
-      -> { where :graduates => {:passed => true} }, :class_name => 'Graduate'
+  has_many :passed_graduates, -> { where graduates: {passed: true} },
+      class_name: 'Graduate'
   has_many :ranks, :through => :passed_graduates
   has_many :signatures, :dependent => :destroy
   has_and_belongs_to_many :groups
@@ -39,7 +39,7 @@ class Member < ActiveRecord::Base
       :parent_name, :phone_home, :phone_mobile, :phone_parent, :phone_work]
   scope :search, ->(query) {
     where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ ?" }.
-        join(' OR '), *(["#{UnicodeUtils.upcase(query).split(/\s+/).join('|')}"] * SEARCH_FIELDS.size)).
+            join(' OR '), *(["#{UnicodeUtils.upcase(query).split(/\s+/).join('|')}"] * SEARCH_FIELDS.size)).
         order(:first_name, :last_name)
   }
 
@@ -306,7 +306,8 @@ class Member < ActiveRecord::Base
   end
 
   def emails
-    emails = [%Q{"#{name}" <#{email}>}]
+    emails = []
+    emails << %Q{"#{name}" <#{email}>} if email
     if billing_email
       emails << (parent_name ? %Q{"#{parent_name}" <#{billing_email}>} : billing_email)
     end

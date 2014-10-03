@@ -6,6 +6,3 @@ Har du problemer med å lese denne e-posten, klikk her:
 <%= textify @news_item.summary %>
 
 <%= textify @news_item.body %>
-
-Ønsker du ikke flere nyhetsbrev fra oss, vennligst klikk på denne linken:
-<%= url_for :only_path => false, :controller => :news, :action => :unsubscribe, :email => @user.email %>

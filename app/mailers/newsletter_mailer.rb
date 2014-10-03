@@ -1,5 +1,7 @@
 class NewsletterMailer < ActionMailer::Base
   helper :application
+  include MailerHelper
+
   default from: {
       'production' => '"Romerike Jujutsu Klubb" <post@jujutsu.no>',
       'beta' => 'beta@jujutsu.no',
@@ -17,9 +19,8 @@ class NewsletterMailer < ActionMailer::Base
 
   def newsletter(news_item, member)
     @news_item = news_item
-    @user = member
-    recipients = Rails.env == 'production' ? @user.emails : %Q{"#{@user.name}" <uwe@kubosch.no>}
-    mail to: recipients, subject: "[RJJK] #{@news_item.title}"
+    @user = member.user
+    mail to: safe_email(member), subject: rjjk_prefix(@news_item.title)
   end
 
   def event_invitee_message(event_invitee_message)

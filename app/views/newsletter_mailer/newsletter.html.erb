@@ -51,12 +51,14 @@
   <tr>
     <td valign="top" align="center">
       <table width="551" class="table" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td align="left" style="padding:10px 0 10px 10px; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#888888;text-align: center;">
-            <%= link_to 'Klikk her', {:only_path => false, :controller => :news, :action => :show, :id => @news_item.id, :email => Base64.encode64(@user.email)}, :style => 'color: #454545' %>
-            hvis du har problemer med å lese nyhetsbrevet.
-          </td>
-        </tr>
+        <% if @user %>
+            <tr>
+              <td align="left" style="padding:10px 0 10px 10px; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#888888;text-align: center;">
+                <%= link_to 'Klikk her', {only_path: false, controller: :news, action: :show, id: @news_item.id, email: Base64.encode64(@user.email)}, style: 'color: #454545' %>
+                hvis du har problemer med å lese nyhetsbrevet.
+              </td>
+            </tr>
+        <% end %>
         <tr>
           <td align="left" bgcolor="#ffffff" style="border:1px solid #9c9c9c; padding:5px;">
             <div style="padding: 0; margin: 0;" class="clearfix">
@@ -110,10 +112,6 @@
             For å forsikre om at nyhetsbrevene våre kommer fram, legg
             <a href='mailto:"Romerike Jujutsu Klubb" <post@jujutsu.no>' style="color:#545454;text-decoration: none;font-weight: bold;">post@jujutsu.no</a>
             i adresseboken din.
-            <!--
-            <br/><%= link_to 'Ikke send', {:only_path => false, :controller => :newsletters, :action => :unsubscribe, :email => Base64.encode64(@user.email)}, :style => 'color: #545454;text-decoration: none;font-weight: bold;' %>
-            flere nyhetsbrev til meg
-            -->
           </td>
         </tr>
       </table>
