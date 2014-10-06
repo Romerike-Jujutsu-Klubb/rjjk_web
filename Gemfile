@@ -47,7 +47,7 @@ gem 'ri_cal'
 gem 'rmagick4j'
 gem 'rufus-scheduler'
 gem 'sass-rails'
-gem 'schema_plus'
+gem 'schema_plus', '!=1.6.0'
 gem 'simple_drilldown'
 gem 'simple_workflow'
 gem 'therubyrhino'
@@ -68,9 +68,9 @@ group :doc do
 end
 
 group :test do
-  gem 'minitest-rails-capybara'
   gem 'chunky_png'
   gem 'database_cleaner'
+  gem 'minitest-rails-capybara'
   gem 'minitest-reporters'
   gem 'mocha', :require => 'mocha/setup'
   gem 'selenium-webdriver'
