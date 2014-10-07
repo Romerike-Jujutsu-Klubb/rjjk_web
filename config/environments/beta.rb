@@ -12,13 +12,3 @@ Rails.application.configure do
   config.i18n.fallbacks = true
   config.serve_static_assets = false
 end
-
-email_notification_options = {
-    :ignore_exceptions => [],
-    :email => {
-        :email_prefix => '[RJJK BETA] ',
-        :sender_address => '"RJJK BETA Exception Notifier" <noreply@beta.jujutsu.no>',
-        :exception_recipients => %w{uwe@kubosch.no}
-    }
-}
-Rails.application.config.middleware.use ExceptionNotification::Rack, email_notification_options

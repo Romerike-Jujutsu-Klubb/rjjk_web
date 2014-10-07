@@ -31,7 +31,7 @@ class NkfMemberImport
       a = NkfMemberComparison.new
       if a.any?
         NkfReplication.update_members(a).deliver
-        logger.info 'Sent member comparison mail.'
+        logger.info 'Sent update_members mail.'
       end
     rescue Exception
       logger.error 'Execption sending update_members email.'
@@ -44,7 +44,7 @@ class NkfMemberImport
       a = NkfAppointmentsScraper.import_appointments
       NkfReplication.update_appointments(a).deliver if a.any?
     rescue Exception
-      logger.error 'Execption sending update_members email.'
+      logger.error 'Execption sending update_appointments email.'
       logger.error $!.message
       logger.error $!.backtrace.join("\n")
       ExceptionNotifier.notify_exception($!)

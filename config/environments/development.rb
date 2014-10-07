@@ -13,14 +13,4 @@ Rails.application.configure do
   config.cache_classes = false
   config.consider_all_requests_local = true
   config.eager_load = false
-
-  config.middleware.use ExceptionNotification::Rack, {
-      :ignore_exceptions => [],
-      :email => {
-          :email_prefix => '[RJJK][Development] ',
-          :sender_address => '"RJJK Development Exception Notifier" <noreply@jujutsu.no>',
-          :exception_recipients => %w{uwe@kubosch.no}
-      }
-  }
-
 end
