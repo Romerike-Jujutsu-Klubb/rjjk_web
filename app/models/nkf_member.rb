@@ -100,8 +100,8 @@ class NkfMember < ActiveRecord::Base
     transaction do
       u = Member.create_corresponding_user! converted_attributes
       member = create_member!(
-          converted_attributes.update :instructor => false, :nkf_fee => true,
-              :payment_problem => false, :user => u
+          converted_attributes.update instructor: false, nkf_fee: true,
+              payment_problem: false, user: u
       )
       member.nkf_member = self
       member

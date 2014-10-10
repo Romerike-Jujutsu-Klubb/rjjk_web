@@ -100,23 +100,28 @@ class Member < ActiveRecord::Base
     end
 
     potential_emails = [email, full_email]
+    blocking_users = []
     potential_emails.compact.each do |potential_email|
       existing_user = User.where('(login = ? OR email = ?) AND NOT EXISTS (SELECT id FROM members WHERE user_id = users.id)',
           potential_email, potential_email).first
       return existing_user if existing_user
 
-      next if User.where('login = ? OR email = ?', *([potential_email] * 2)).exists?
+      if (user_with_email = User.where('login = ? OR email = ?', *([potential_email] * 2)).first)
+        logger.info "A user with this email already exists: #{user_with_email}"
+        blocking_users << user_with_email
+        next
+      end
 
       new_user = User.new(
-          :login => potential_email, :first_name => first_name, :last_name => last_name,
-          :email => potential_email, :password => passwd, :password_confirmation => passwd,
+          login: potential_email, first_name: first_name, last_name: last_name,
+          email: potential_email, password: passwd, password_confirmation: passwd,
       )
       new_user.password_needs_confirmation = true
       new_user.save!
 
       return new_user
     end
-    raise "Unable to create user for member (#{potential_emails}): #{attrs}"
+    raise "Unable to create user for member #{inspect}\npotential emails: #{potential_emails}\nattributes: #{attrs}\nblocking users: #{blocking_users.inspect}"
   end
 
   # describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki

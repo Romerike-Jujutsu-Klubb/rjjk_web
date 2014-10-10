@@ -1,6 +1,6 @@
 class NkfMemberComparison
   attr_reader :errors, :group_changes, :members, :member_changes, :new_members,
-              :orphan_members, :orphan_nkf_members
+      :orphan_members, :orphan_nkf_members
 
   def initialize
     ActiveRecord::Base.transaction do
@@ -28,8 +28,14 @@ class NkfMemberComparison
     @errors = []
 
     @new_members = @orphan_nkf_members.map do |nkf_member|
-      nkf_member.create_corresponding_member!
-    end
+      begin
+        nkf_member.create_corresponding_member!
+      rescue Exception
+        logger.error $!
+        @errors << ['New member', nkf_member, $!]
+        nil
+      end
+    end.compact
 
     @member_changes = @members.map do |m|
       begin
