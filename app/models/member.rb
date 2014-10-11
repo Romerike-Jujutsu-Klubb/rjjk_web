@@ -121,7 +121,7 @@ class Member < ActiveRecord::Base
 
       return new_user
     end
-    raise "Unable to create user for member #{inspect}\npotential emails: #{potential_emails}\nattributes: #{attrs}\nblocking users: #{blocking_users.inspect}"
+    raise "Unable to create user for member #{attrs}\npotential emails: #{potential_emails}\nattributes: #{attrs}\nblocking users: #{blocking_users.inspect}"
   end
 
   # describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
