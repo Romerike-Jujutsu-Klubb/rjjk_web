@@ -76,30 +76,13 @@ class Member < ActiveRecord::Base
     passwd = (0..4).map { [*((0..9).to_a + ('a'..'z').to_a)][rand(36)] }.join
 
     # Full name and email
-    full_email = %Q{"#{first_name} #{last_name}" <#{email}>}
-    max_length = 64
+    full_email = make_usable_full_email(email, first_name, last_name)
+    full_email_with_birthyear = make_usable_full_email(email, first_name, last_name, attrs[:birthdate].year)
+    full_email_with_birthdate = make_usable_full_email(email, first_name, last_name, attrs[:birthdate])
+    full_email_with_join_year = make_usable_full_email(email, first_name, last_name, attrs[:joined_on].year)
 
-    # First and last names only
-    if full_email.size > max_length
-      logger.debug "Full email too long: #{full_email}"
-      full_email = %Q{"#{first_name.split(/\s+/).first} #{last_name.split(/\s+/).last}" <#{email}>}
-    end
-
-    # Squeezed name and full email
-    if full_email.size > max_length
-      logger.debug "Full email too long: #{full_email}"
-      max_name_size = max_length - email.size - 5
-      (cut_name = "#{first_name} #{last_name}")[(max_name_size / 2) - 2 .. (-max_name_size / 2)]
-      full_email = %Q{"#{cut_name}" <#{email}>}
-    end
-
-    # Fallback to non-valid email...
-    if full_email.size > max_length
-      logger.debug "Full email too long: #{full_email}"
-      (full_email = %Q{#{first_name} #{last_name} <#{email}>})[(max_length / 2) - 2 .. (-max_length / 2)]
-    end
-
-    potential_emails = [email, full_email]
+    potential_emails = [email, full_email, full_email_with_birthyear,
+        full_email_with_birthdate, full_email_with_join_year]
     blocking_users = []
     potential_emails.compact.each do |potential_email|
       existing_user = User.where('(login = ? OR email = ?) AND NOT EXISTS (SELECT id FROM members WHERE user_id = users.id)',
@@ -122,6 +105,33 @@ class Member < ActiveRecord::Base
       return new_user
     end
     raise "Unable to create user for member #{attrs}\npotential emails: #{potential_emails}\nattributes: #{attrs}\nblocking users: #{blocking_users.inspect}"
+  end
+
+  def self.make_usable_full_email(email, first_name, last_name, birthdate = nil)
+    birth_suffix = (" (#{birthdate})" if birthdate)
+    full_email = %Q{"#{first_name} #{last_name}#{birth_suffix}" <#{email}>}
+    max_length = 64
+
+    # First and last names only
+    if full_email.size > max_length
+      logger.debug "Full email too long: #{full_email}"
+      full_email = %Q{"#{first_name.split(/\s+/).first} #{last_name.split(/\s+/).last}#{birth_suffix}" <#{email}>}
+    end
+
+    # Squeezed name and full email
+    if full_email.size > max_length
+      logger.debug "Full email too long: #{full_email}"
+      max_name_size = max_length - email.size - 5
+      (cut_name = "#{first_name} #{last_name}#{birth_suffix}")[(max_name_size / 2) - 2 .. (-max_name_size / 2)]
+      full_email = %Q{"#{cut_name}" <#{email}>}
+    end
+
+    # Fallback to non-valid email...
+    if full_email.size > max_length
+      logger.debug "Full email too long: #{full_email}"
+      (full_email = %Q{#{first_name} #{last_name}#{birth_suffix} <#{email}>})[(max_length / 2) - 2 .. (-max_length / 2)]
+    end
+    full_email
   end
 
   # describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
