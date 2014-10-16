@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'info/versjon'
   get 'members/search'
   get 'members/grade_history_graph' => 'members#grade_history_graph'
-  get ':controller/history_graph', action: :history_graph
+  get ':controller/history_graph/:id.:format', action: :history_graph
   get 'mitt/oppmote' => 'attendances#plan', as: :attendance_plan
   get 'attendances/plan' # må være etter mitt/oppmote
   post 'attendances/announce(/:year/:week/:group_schedule_id)/:status(/:member_id)' =>

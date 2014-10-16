@@ -77,7 +77,7 @@ class Member < ActiveRecord::Base
 
     # Full name and email
     full_email = make_usable_full_email(email, first_name, last_name)
-    full_email_with_birthyear = make_usable_full_email(email, first_name, last_name, attrs[:birthdate].year)
+    full_email_with_birthyear = make_usable_full_email(email, first_name, last_name, attrs[:birthdate][0..3])
     full_email_with_birthdate = make_usable_full_email(email, first_name, last_name, attrs[:birthdate])
     full_email_with_join_year = make_usable_full_email(email, first_name, last_name, attrs[:joined_on].year)
 

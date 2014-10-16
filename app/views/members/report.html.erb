@@ -41,8 +41,10 @@
   </table>
 </div>
 
-<%= image_tag url_for(:action => :history_graph, :id => '832x600', :format => :png),
-        :title => 'Medlemmer graf', :class => 'img-rounded', :style => 'width: 100%' %>
+<%= image_tag url_for(action: :history_graph, id: '832x600', format: :png),
+        title: 'Medlemmer graf', class: 'img-rounded', style: 'width: 100%' %>
+
+<!-- FIXME(uwe): Hvis medlem er meldt inn og ut i samme måned?  Ref. Test Testesen. -->
 
 <% if @members_in.any? %>
     <table class="table">
@@ -53,7 +55,7 @@
       </tr>
       <% @members_in.each do |m| %>
           <tr>
-            <td><%= m.name %></td>
+            <td><%=link_to m.name, m %></td>
             <td><%= m.age(m.joined_on) %></td>
             <td><%= m.joined_on %></td>
             <td><%= m.left_on %></td>
@@ -71,7 +73,7 @@
       </tr>
       <% @members_out.each do |m| %>
           <tr>
-            <td><%= m.name %></td>
+            <td><%=link_to m.name, m %></td>
             <td><%= m.age(m.left_on) %></td>
             <td><%= m.left_on %></td>
           </tr>
