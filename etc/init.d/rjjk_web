@@ -1,4 +1,4 @@
-[!/bin/bash
+#!/bin/bash
 #
 # rjjk_web      Startup script for the RJJK web application
 #
@@ -29,7 +29,7 @@ run() {
 	if [ "$USER" != "$RUN_AS_USER" ]; then
 		echo Running as $USER
         echo su - $RUN_AS_USER -c \"$cmd\"
-        su - $RUN_AS_USER -c "rvm use jruby ; $cmd"
+        su - $RUN_AS_USER -c "$cmd"
     else
     	echo $cmd
         eval $cmd
