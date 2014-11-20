@@ -24,25 +24,6 @@ end
 
 desc 'End maintenance'
 task :end_maintenance, :roles => [:app] do
-
-  echo -n Waiting for server to start
-  for j in {1..60} ; do
-    if (exec >/dev/null 2>&1 6<>/dev/tcp/127.0.0.1/3000) ; then
-      break
-    fi
-    echo -n .
-    sleep 1
-  done
-  echo -n "$j "
-  if (exec >/dev/null 2>&1 6<>/dev/tcp/127.0.0.1/3000) ; then
-    echo OK
-    sleep 5
-    echo "$APP with pid=$PID restarted."
-  else
-    echo FAILED
-    echo "$APP with pid=$PID failed to restart."
-  fi
-
   run "#{try_sudo} cd #{current_path}/public ; cp 503_down.html 503.html"
 end
 
