@@ -84,9 +84,8 @@
           <div class="form-group pull-left">
             <%= f.fields_for :next_semester, @group.next_semester do |csf| %>
                 <%= csf.label :first_session, 'Første trening neste semester' %>
-                <%= csf.datepicker :first_session, :dateFormat => 'yy-mm-dd',
-                        :firstDay => 1, :class => 'form-control input-sm',
-                        :placeholder => 'etter ferien' %>
+                <%= csf.text_field :first_session, class: 'date form-control input-sm',
+                        placeholder: 'etter ferien' %>
             <% end %>
           </div>
 

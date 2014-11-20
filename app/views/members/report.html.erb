@@ -20,14 +20,22 @@
     </tr>
     </tfoot>
     <tbody>
+
+    # TODO(uwe): Separate honorary/passive members
+
+    <% before_by_group = @members_before.group_by { |m| m.groups.sort_by(&:to_age).last } %>
     <% @members_after.group_by { |m| m.groups.sort_by(&:to_age).last }.each do |group, members| %>
+        <% diff = members.size - before_by_group[group].size%>
         <tr>
           <td><%= group.name %></td>
-          <td><%= members.size %></td>
+          <td><%= members.size %>
+          <%= diff != 0 ? "(#{diff > 0 ? '+' : nil}#{diff})" : nil %></td>
         </tr>
     <% end %>
     </tbody>
   </table>
+
+  # TODO(uwe): Display trial members, maybe with attendances
 
   <table class="table">
     <tr>
