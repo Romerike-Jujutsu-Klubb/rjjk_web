@@ -9,6 +9,7 @@ set :default_environment, {'JRUBY_OPTS' => '--2.0 --server'}
 require 'rubygems'
 require 'bundler/capistrano'
 require 'capistrano/ext/multistage'
+require "rvm/capistrano"
 
 desc 'Fix permission'
 task :fix_permissions, :roles => [:app, :db, :web] do
@@ -30,3 +31,12 @@ end
 before 'deploy:create_symlink', :announce_maintenance
 after 'deploy:create_symlink', :announce_maintenance
 after 'deploy', :end_maintenance
+
+set :rvm_ruby_string, :jruby        # use the same ruby as used locally for deployment
+set :rvm_autolibs_flag, 'read-only' # more info: rvm help autolibs
+
+before 'deploy:setup', 'rvm:install_rvm'  # install/update RVM
+before 'deploy:setup', 'rvm:install_ruby' # install Ruby and create gemset, OR:
+
+# before 'deploy', 'rvm:install_rvm'  # install/update RVM
+# before 'deploy', 'rvm:install_ruby' # install Ruby and create gemset (both if missing)

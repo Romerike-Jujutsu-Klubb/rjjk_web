@@ -60,6 +60,7 @@ gem 'will_paginate'
 
 group :development do
   gem 'capistrano', '<3.0.0'
+  gem 'rvm-capistrano'
 end
 
 group :doc do

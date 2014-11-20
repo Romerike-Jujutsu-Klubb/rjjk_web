@@ -17,9 +17,6 @@ APP_DIR="/u/apps/$APP/current"
 LOG_DIR="/u/apps/$APP/shared/log"
 
 START_CMD="cd $APP_DIR ;
-  export JAVA_HOME=/usr/java/default ;
-  export JRUBY_HOME=/usr/local/jruby ;
-  export PATH=\$JRUBY_HOME/bin:\$JAVA_HOME/bin:\$PATH ;
   export JRUBY_OPTS='--2.0 -J-Xmx2G --server -J-Djava.awt.headless=true -J-Dawt.toolkit=sun.awt.HToolkit' ;
   jruby --version ;
   jruby -S bundle exec puma -d -p $PORT -e $RAILS_ENV --pidfile $pidfile
@@ -32,7 +29,7 @@ run() {
 	if [ "$USER" != "$RUN_AS_USER" ]; then
 		echo Running as $USER
         echo su - $RUN_AS_USER -c \"$cmd\"
-        su - $RUN_AS_USER -c "$cmd"
+        su - $RUN_AS_USER -c "rvm use jruby ; $cmd"
     else
     	echo $cmd
         eval $cmd
