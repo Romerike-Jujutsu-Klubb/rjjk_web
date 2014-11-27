@@ -79,7 +79,7 @@ class Member < ActiveRecord::Base
     full_email = make_usable_full_email(email, first_name, last_name)
     full_email_with_birthyear = make_usable_full_email(email, first_name, last_name, attrs[:birthdate][0..3])
     full_email_with_birthdate = make_usable_full_email(email, first_name, last_name, attrs[:birthdate])
-    full_email_with_join_year = make_usable_full_email(email, first_name, last_name, attrs[:joined_on].year)
+    full_email_with_join_year = make_usable_full_email(email, first_name, last_name, attrs[:joined_on][0..3])
 
     potential_emails = [email, full_email, full_email_with_birthyear,
         full_email_with_birthdate, full_email_with_join_year]

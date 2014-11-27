@@ -77,21 +77,11 @@ class NkfMemberImport
     session_id = html_search_body.scan(/Download27\('(.*?)'\)/)[0][0]
     detail_codes = html_search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
     more_pages = html_search_body.scan(/<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)<\/a>/).map { |r| r[0] }
-    more_pages.each_slice(CONCURRENT_REQUESTS) do |page_numbers|
-      threads = page_numbers.map do |p|
-        Thread.start do
-          begin
-            more_search_url = search_url + p
-            more_search_body = http_get(more_search_url, true).body
-            synchronize do
-              detail_codes += more_search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
-            end
-          ensure
-            ActiveRecord::Base.connection.close
-          end
-        end
+    in_parallel(more_pages) do |page_number|
+      more_search_body = http_get(search_url + page_number, true).body
+      synchronize do
+        detail_codes += more_search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
       end
-      threads.each(&:join)
     end
 
     raise 'Could not find session id' unless session_id
@@ -111,37 +101,50 @@ class NkfMemberImport
     members_body = http_get("pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{session_id}").body.force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
     import_rows = members_body.split("\n").map { |line| line.chomp.split(';', -1)[0..-2] }
     import_rows[0] << 'ventekid'
-    detail_codes.each_slice(CONCURRENT_REQUESTS) do |detail_code_slice|
-      threads = detail_code_slice.map do |dc|
-        Thread.start do
-          begin
-            details_body = http_get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}").body
-            if details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
-              member_id = $1
-              if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
-                active = true
-              else
-                active = false
-              end
-              if details_body =~ /<span class="kid_1">(\d+)<\/span><span class="kid_2">(\d+)<\/span>/
-                waiting_kid = "#$1#$2"
-              else
-                waiting_kid = nil
-              end
-              raise 'Both Active status and waiting kid was found' if active && waiting_kid
-              raise 'Neither active status nor waiting kid was found' if !active && !waiting_kid
-              import_rows.find { |ir| ir[0] == member_id } << waiting_kid
-            else
-              raise "Could not find member id:\n#{details_body}"
-            end
-          ensure
-            ActiveRecord::Base.connection.close
-          end
+    in_parallel(detail_codes) { |dc| add_waiting_kid(import_rows, dc) }
+    import_rows
+  end
+
+  def in_parallel(values)
+    queue = Queue.new
+    values.each { |value| queue << value }
+    threads = CONCURRENT_REQUESTS.times.map do |i|
+      Thread.start do
+        begin
+          loop { yield queue.pop(true) }
+        rescue ThreadError
+        ensure
+          ActiveRecord::Base.connection.close
         end
       end
-      threads.each { |t| t.join }
     end
-    import_rows
+    threads.each { |t| t.join }
+  end
+
+  def add_waiting_kid(import_rows, dc)
+    begin
+      details_body = http_get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}").body
+      if details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
+        member_id = $1
+        if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
+          active = true
+        else
+          active = false
+        end
+        if details_body =~ /<span class="kid_1">(\d+)<\/span><span class="kid_2">(\d+)<\/span>/
+          waiting_kid = "#$1#$2"
+        else
+          waiting_kid = nil
+        end
+        raise 'Both Active status and waiting kid was found' if active && waiting_kid
+        raise 'Neither active status nor waiting kid was found' if !active && !waiting_kid
+        import_rows.find { |ir| ir[0] == member_id } << waiting_kid
+      else
+        raise "Could not find member id:\n#{details_body}"
+      end
+    ensure
+      ActiveRecord::Base.connection.close
+    end
   end
 
   def get_member_trial_rows(session_id, extra_function_code)
@@ -160,55 +163,46 @@ class NkfMemberImport
     member_trial_rows[0] << 'epost_faktura'
     member_trial_rows[0] << 'stilart'
 
-    trial_ids.each_slice(CONCURRENT_REQUESTS) do |trial_ids_slice|
-      threads = trial_ids_slice.each.map do |tid|
-        Thread.start do
-          begin
-            trial_details_url = "page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=" + extra_function_code
-            trial_details_body = http_get(trial_details_url).body.force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
-            if trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
-              first_name = $1
-              if trial_details_body =~ /name="frm_28_v09" value="(.*?)"/
-                last_name = $1
-                if trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
-                  invoice_email = $1
-                  if trial_details_body =~ /<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren\/stilart -<\/option>.*?<option selected value="\d+">([^<]*)<\/option>.*<\/select>/
-                    martial_art = $1
-                    trial_row = member_trial_rows.find { |ir| ir.size < member_trial_rows[0].size && ir[1] == last_name && ir[2] == first_name }
-                    if trial_row
-                      trial_row << tid
-                      trial_row << (invoice_email.blank? ? nil : invoice_email)
-                      trial_row << martial_art
-                    else
-                      logger.error '*' * 80
-                      logger.error "Fant ikke prøvetidsmedlem:  #{tid.inspect}"
-                      logger.error "First name: #{first_name.inspect}"
-                      logger.error "Last name: #{last_name.inspect}"
-                      logger.error "invoice_email: #{invoice_email.inspect}"
-                      logger.error "martial_art: #{martial_art.inspect}"
-                      logger.error trial_details_body
-                      logger.error member_trial_rows
-                      logger.error '=' * 80
-                    end
-                  else
-                    raise 'Could not find martial art'
-                  end
-                else
-                  raise 'Could not find first name'
-                end
+    in_parallel(trial_ids) do |tid|
+      trial_details_url = "page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=" + extra_function_code
+      trial_details_body = http_get(trial_details_url).body.force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
+      if trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
+        first_name = $1
+        if trial_details_body =~ /name="frm_28_v09" value="(.*?)"/
+          last_name = $1
+          if trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
+            invoice_email = $1
+            if trial_details_body =~ /<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren\/stilart -<\/option>.*?<option selected value="\d+">([^<]*)<\/option>.*<\/select>/
+              martial_art = $1
+              trial_row = member_trial_rows.find { |ir| ir.size < member_trial_rows[0].size && ir[1] == last_name && ir[2] == first_name }
+              if trial_row
+                trial_row << tid
+                trial_row << (invoice_email.blank? ? nil : invoice_email)
+                trial_row << martial_art
               else
+                logger.error '*' * 80
+                logger.error "Fant ikke prøvetidsmedlem:  #{tid.inspect}"
+                logger.error "First name: #{first_name.inspect}"
+                logger.error "Last name: #{last_name.inspect}"
+                logger.error "invoice_email: #{invoice_email.inspect}"
+                logger.error "martial_art: #{martial_art.inspect}"
                 logger.error trial_details_body
-                raise 'Could not find last name'
+                logger.error member_trial_rows
+                logger.error '=' * 80
               end
             else
-              raise 'Could not find invoice email'
+              raise 'Could not find martial art'
             end
-          ensure
-            ActiveRecord::Base.connection.close
+          else
+            raise 'Could not find first name'
           end
+        else
+          logger.error trial_details_body
+          raise 'Could not find last name'
         end
+      else
+        raise 'Could not find invoice email'
       end
-      threads.each(&:join)
     end
     member_trial_rows
   end

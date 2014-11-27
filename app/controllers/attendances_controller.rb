@@ -279,6 +279,7 @@ class AttendancesController < ApplicationController
         weekdays = [2, 4]
         @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
         current_members = []
+        attended_members = []
       else
         @group = Group.includes(:martial_art).find(params[:group_id])
         weekdays = @group.group_schedules.map { |gs| gs.weekday }

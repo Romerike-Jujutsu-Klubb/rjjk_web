@@ -1,5 +1,6 @@
 class GroupSemestersController < ApplicationController
-  before_filter :admin_required
+  before_filter :admin_required, except: :show
+  before_filter :authenticate_user, only: :show
 
   def index
     @group_semesters = GroupSemester.includes(:semester).order('semesters.start_on DESC').to_a

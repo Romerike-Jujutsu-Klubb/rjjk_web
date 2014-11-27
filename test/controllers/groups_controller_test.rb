@@ -33,7 +33,7 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   def test_should_get_edit
-    get :edit, :id => groups(:panda).id
+    get :edit, id: groups(:panda).id
     assert_response :success
   end
 
