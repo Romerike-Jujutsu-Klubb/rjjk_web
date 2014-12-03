@@ -9,7 +9,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_equal '[RJJK] Kommer du?', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_match "Følg linken til\r\n    <a href=\"http://example.com/mitt/oppmote?key=random_token_string+++++++++++++++++++++\">Mitt oppmøte</a>", mail.body.encoded
+    assert_match "Følg linken til\r\n    <a href=\"http://example.com/mitt/oppmote?key=random_token_string\">Mitt oppmøte</a>", mail.body.encoded
   end
 
   def test_send_message_reminder

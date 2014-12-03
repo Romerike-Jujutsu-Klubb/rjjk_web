@@ -43,7 +43,7 @@ module ApplicationHelper
     html = RedCloth.new(s.strip).to_html
     html.force_encoding(Encoding::UTF_8)
     if @email
-      base = url_for(:controller => :welcome, :action => :index, :only_path => false)
+      base = url_for(controller: :welcome, action: :index, only_path: false)
 
       html.gsub!(/\b(href|src)="(?:#{base}|\/)([^?"]*)(\?[^"]*)?"/i) do |m|
         %Q{#$1="#{base}#$2#$3#{$3 ? '&' : '?'}email=#{Base64.encode64(@email)}#{"&newsletter_id=#{@newsletter.id}" if @newsletter}"}

@@ -22,3 +22,10 @@ current_tiger:
   semester: current
   first_session: 2013-08-21
   last_session: 2099-12-14
+
+next_panda:
+  group: panda
+  semester: next
+  first_session: 2100-01-09
+  last_session: 2100-06-14
+  chief_instructor: uwe

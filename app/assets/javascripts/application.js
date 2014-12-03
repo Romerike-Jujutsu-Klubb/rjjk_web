@@ -6,6 +6,7 @@
 //= require gmaps4rails/gmaps4rails.base
 //= require gmaps4rails/gmaps4rails.googlemaps
 //= require colorbox-rails
+//= require expanding
 //= require bootstrap-sprockets
 //= require moment
 //= require moment/nb

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140518092704) do
+ActiveRecord::Schema.define(version: 20141125223318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -421,6 +421,7 @@ ActiveRecord::Schema.define(version: 20140518092704) do
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.integer  "chief_instructor_id"
+    t.text     "summary"
     t.index ["chief_instructor_id"], :name => "fk__group_semesters_chief_instructor_id"
     t.index ["group_id"], :name => "fk__group_semesters_group_id"
     t.index ["semester_id"], :name => "fk__group_semesters_semester_id"

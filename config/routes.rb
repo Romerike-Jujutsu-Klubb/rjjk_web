@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get ':controller/report(/:year/:month)', action: :report
   get 'info/versjon'
   get 'members/search'
-  get 'members/grade_history_graph' => 'members#grade_history_graph'
+  get 'members/grade_history_graph/:id(/:percentage/:step/:interval).:format' => 'members#grade_history_graph'
   get ':controller/history_graph/:id.:format', action: :history_graph
   get 'mitt/oppmote' => 'attendances#plan', as: :attendance_plan
   get 'attendances/plan' # må være etter mitt/oppmote

@@ -15,6 +15,7 @@ class GroupSemestersControllerTest < ActionController::TestCase
   test 'should get new' do
     get :new
     assert_response :success
+    assert_tag tag: 'textarea', attributes: {name: 'group_semester[summary]'}
   end
 
   test 'should create group_semester' do
@@ -37,17 +38,21 @@ class GroupSemestersControllerTest < ActionController::TestCase
   test 'should get edit' do
     get :edit, id: @group_semester
     assert_response :success
+    assert_tag tag: 'textarea', attributes: {name: 'group_semester[summary]'}
   end
 
   test 'should update group_semester' do
     put :update, id: @group_semester, group_semester: {
-        first_session: @group_semester.first_session,
-        group_id: @group_semester.group_id,
-        last_session: @group_semester.last_session,
-        semester_id: @group_semester.semester_id
-    }
+            first_session: @group_semester.first_session,
+            group_id: @group_semester.group_id,
+            last_session: @group_semester.last_session,
+            semester_id: @group_semester.semester_id,
+            summary: 'Practice, practice!',
+        }
     assert_no_errors :group_semester
     assert_redirected_to group_semester_path(assigns(:group_semester))
+    @group_semester.reload
+    assert_equal 'Practice, practice!', @group_semester.summary
   end
 
   test 'should destroy group_semester' do

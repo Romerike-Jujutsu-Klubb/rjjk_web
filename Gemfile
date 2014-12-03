@@ -73,7 +73,8 @@ group :test do
   gem 'database_cleaner'
   gem 'minitest-rails-capybara'
   gem 'minitest-reporters'
-  gem 'mocha', :require => 'mocha/setup'
+  gem 'mocha', require: 'mocha/setup'
+  gem 'rubycritic', require: false
   gem 'selenium-webdriver'
   gem 'simplecov'
   gem 'timecop'
