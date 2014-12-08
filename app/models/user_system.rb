@@ -74,7 +74,7 @@ module UserSystem
   end
 
   def self.with_login(user = current_user, options)
-    options.merge :key => user.generate_security_token, :only_path => false
+    options.merge key: user.generate_security_token, only_path: false
   end
 
   def with_login(user = current_user, options)

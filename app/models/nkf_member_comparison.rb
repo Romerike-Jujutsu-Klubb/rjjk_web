@@ -10,15 +10,20 @@ class NkfMemberComparison
   end
 
   def fetch
-    @orphan_nkf_members = NkfMember.where('member_id IS NULL').order('fornavn, etternavn').to_a
+    @orphan_nkf_members = NkfMember.where(member_id: nil).
+        order(:fornavn, :etternavn).to_a
     @orphan_members = NkfMember.find_free_members
     @members = []
-    nkf_members = NkfMember.where('member_id IS NOT NULL').order('fornavn, etternavn').to_a
+    nkf_members = NkfMember.where('member_id IS NOT NULL').
+        order(:fornavn, :etternavn).to_a
     nkf_members.each do |nkfm|
       member = nkfm.member
       member.attributes = nkfm.converted_attributes
-      nkf_group_names = member.nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /).map { |n| n.split('/')[3] }
-      if member.changed? || (nkf_group_names.sort != member.groups.map { |g| g.name }.sort)
+      nkf_group_names = member.nkf_member.
+          gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /).
+          map { |n| n.split('/')[3] }
+      if member.changed? || (nkf_group_names.sort != member.groups.
+          map { |g| g.name }.sort)
         @members << nkfm.member
       end
     end
@@ -71,7 +76,8 @@ class NkfMemberComparison
   end
 
   def any?
-    @new_members.any? || @member_changes.any? || @group_changes.any?
+    @new_members.any? || @member_changes.any? || @group_changes.any? ||
+        @errors.any?
   end
 
 end
