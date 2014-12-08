@@ -17,6 +17,7 @@ APP_DIR="/u/apps/$APP/current"
 LOG_DIR="/u/apps/$APP/shared/log"
 
 START_CMD="cd $APP_DIR ;
+  source \"$HOME/.rvm/scripts/rvm\" ; rvm use jruby ;
   export JRUBY_OPTS='--2.0 -J-Xmx2G --server -J-Djava.awt.headless=true -J-Dawt.toolkit=sun.awt.HToolkit' ;
   jruby --version ;
   jruby -S bundle exec puma -d -p $PORT -e $RAILS_ENV --pidfile $PIDFILE >$LOG_DIR/stdout.log 2>&1
@@ -33,10 +34,10 @@ START_CMD="cd $APP_DIR ;
   if (exec >/dev/null 2>&1 6<>/dev/tcp/127.0.0.1/$PORT) ; then
     echo OK
     sleep 5
-    echo '$APP with pid=$PID restarted.'
+    echo '$APP restarted.'
   else
     echo FAILED
-    echo '$APP with pid=$PID failed to restart.'
+    echo '$APP failed to restart.'
   fi
 "
 
@@ -50,7 +51,7 @@ run() {
         su - $RUN_AS_USER -c "$cmd"
     else
     	echo $cmd
-        eval $cmd
+        eval "$cmd"
     fi
 }
 
