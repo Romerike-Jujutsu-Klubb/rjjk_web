@@ -13,6 +13,7 @@
 //= require bootstrap-datetimepicker
 //= require nprogress
 //= require nprogress-turbolinks
+//= require chosen-jquery
 $(function () {
     $(".colorbox").colorbox({
         inline: true,
@@ -54,6 +55,7 @@ $().ready(function () {
         }, 50)
     });
     $('.stretch').parent('.row').addClass("row-stretch");
+    $('.chosen-select').chosen();
 })
 
 // http://makandracards.com/makandra/1383-rails-3-make-link_to-remote-true-replace-html-elements-with-jquery

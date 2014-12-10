@@ -18,6 +18,11 @@ gem 'acts_as_tree'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap-sass'
 gem 'bootstrap3-datetimepicker-rails'
+# gem "bootstrap-switch-rails"
+# gem "bootstrap-wysihtml5-rails"
+# gem "bootstrap-select-rails"
+gem 'chosen-rails'
+gem 'chosen-sass-bootstrap-rails'
 gem 'coffee-rails'
 gem 'colorbox-rails'
 gem 'draper' # https://github.com/drapergem/draper
@@ -59,6 +64,7 @@ gem 'unicode_utils'
 gem 'will_paginate'
 
 group :development do
+  # gem 'bullet'
   gem 'capistrano', '<3.0.0'
   gem 'rvm-capistrano'
 end
