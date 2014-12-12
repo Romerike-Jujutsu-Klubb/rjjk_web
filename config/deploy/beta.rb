@@ -10,23 +10,22 @@ after 'deploy:update', 'deploy:cleanup'
 
 role :web, 'kubosch.no'
 role :app, 'kubosch.no'
-role :db,  'kubosch.no', :primary => true
+role :db,  'kubosch.no', primary: true
 
 set :user, 'capistrano'
-set :use_sudo, false
 set(:rails_env) { fetch(:stage) }
 
 namespace :deploy do
   desc 'The spinner task is used by :cold_deploy to start the application up'
-  task :spinner, :roles => :app do
-    send(run_method, "/sbin/service #{application} start")
+  task :spinner, roles: :app do
+    run "#{try_sudo} systemctl start #{application}"
   end
   
   desc 'Restart the service'
-  task :restart, :roles => :app do
-    send(run_method, "/sbin/service #{application} stop")
+  task :restart, roles: :app do
+    run "#{try_sudo} systemctl stop #{application}"
     sleep 5
-    send(run_method, "/u/apps/#{application}/current/copy_production_to_beta.sh")
-    send(run_method, "/sbin/service #{application} start")
+    run "/u/apps/#{application}/current/copy_production_to_beta.sh"
+    run "#{try_sudo} systemctl start #{application}"
   end
 end

@@ -123,10 +123,10 @@ class GraduationsController < ApplicationController
       group = Group.includes(:members).find(params[:group_id])
       members = group.members.active(graduation.held_on) - graduation.graduates.map(&:member)
       graduation.graduates << members.map do |member|
-        Graduate.new :member_id => member.id,
-            :rank_id => member.next_rank(graduation).id,
-            :passed => graduation.group.school_breaks?,
-            :paid_graduation => true, :paid_belt => true
+        Graduate.new member_id: member.id,
+            rank_id: member.next_rank(graduation).id,
+            passed: graduation.group.school_breaks?,
+            paid_graduation: true, paid_belt: true
       end
       flash[:notice] = "Group #{group.name} was added to the graduation."
     end

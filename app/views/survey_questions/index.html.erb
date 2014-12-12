@@ -1,0 +1,31 @@
+<h1>Listing survey_questions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Survey</th>
+      <th>Title</th>
+      <th>Choices</th>
+      <th>Free text</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @survey_questions.each do |survey_question| %>
+      <tr>
+        <td><%= survey_question.survey_id %></td>
+        <td><%= survey_question.title %></td>
+        <td><%= survey_question.choices %></td>
+        <td><%= survey_question.free_text %></td>
+        <td><%= link_to 'Show', survey_question %></td>
+        <td><%= link_to 'Edit', edit_survey_question_path(survey_question) %></td>
+        <td><%= link_to 'Destroy', survey_question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Survey question', new_survey_question_path %>

@@ -1,0 +1,27 @@
+<h1>Listing survey_answer_translations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Answer</th>
+      <th>Normalized answer</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @survey_answer_translations.each do |survey_answer_translation| %>
+      <tr>
+        <td><%= survey_answer_translation.answer %></td>
+        <td><%= survey_answer_translation.normalized_answer %></td>
+        <td><%= link_to 'Show', survey_answer_translation %></td>
+        <td><%= link_to 'Edit', edit_survey_answer_translation_path(survey_answer_translation) %></td>
+        <td><%= link_to 'Destroy', survey_answer_translation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Survey answer translation', new_survey_answer_translation_path %>

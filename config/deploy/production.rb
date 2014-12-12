@@ -6,7 +6,6 @@ role :app, 'kubosch.no'
 role :db,  'kubosch.no', primary: true
 
 set :user, 'capistrano'
-set :use_sudo, false
 
 set :keep_releases, 30
 after 'deploy:update', 'deploy:cleanup'
@@ -14,11 +13,11 @@ after 'deploy:update', 'deploy:cleanup'
 namespace :deploy do
   desc 'The spinner task is used by :cold_deploy to start the application up'
   task :spinner, roles: :app do
-    send(run_method, "/sbin/service #{application} start")
+    run "systemctl start #{application}"
   end
   
   desc 'Restart the service'
   task :restart, roles: :app do
-    send(run_method, "/sbin/service #{application} restart")
+    run "#{try_sudo} systemctl restart #{application}"
   end
 end

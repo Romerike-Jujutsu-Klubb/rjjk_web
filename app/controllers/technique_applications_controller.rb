@@ -1,7 +1,7 @@
 class TechniqueApplicationsController < ApplicationController
   USER_ACTIONS = [:index, :show]
-  before_filter :authenticate_user, :only => USER_ACTIONS
-  before_filter :technical_committy_required, except: USER_ACTIONS
+  before_action :authenticate_user, only: USER_ACTIONS
+  before_action :technical_committy_required, except: USER_ACTIONS
 
   def index
     @technique_applications = TechniqueApplication.all

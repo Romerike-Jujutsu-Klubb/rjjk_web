@@ -1,6 +1,6 @@
 <% if not @news_items.empty? %>
     <% @news_item = @news_items[0] %>
-    <%= render :partial => 'news/item', :locals => {:full => false} %>
+    <%= render 'news/item', full: false %>
 
     <div class="divider1"></div>
 
@@ -22,6 +22,9 @@
                 <div class="details">
                   <%= "Skrevet av #{news_item.creator.name}" if news_item.creator %>
                   <%= news_item.created_at.strftime '%Y-%m-%d' %>
+                  <% if news_item.expire_at && news_item.expire_at < Time.now %>
+                      <br/>Utløpt <b><%= "#{news_item.expire_at.strftime('%F %R')}" %></b>.
+                  <% end %>
                 </div>
                 <% texts = [news_item.summary, news_item.body].select { |text| !text.blank? } %>
                 <%= textilize(texts[0].strip).html_safe if texts[0] %>

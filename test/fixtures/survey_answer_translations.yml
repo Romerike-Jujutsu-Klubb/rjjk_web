@@ -1,0 +1,7 @@
+one:
+  answer: MyString
+  normalized_answer: MyString
+
+two:
+  answer: MyString
+  normalized_answer: MyString

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141125223318) do
+ActiveRecord::Schema.define(version: 20141204155251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20141125223318) do
     t.integer  "rank_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["rank_id", "name"], :name => "index_technique_applications_on_rank_id_and_name"
+    t.index ["rank_id", "name"], :name => "index_technique_applications_on_rank_id_and_name", :unique => true
     t.index ["rank_id"], :name => "fk__technique_applications_rank_id"
     t.foreign_key ["rank_id"], "ranks", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_technique_applications_rank_id"
   end
@@ -126,8 +126,8 @@ ActiveRecord::Schema.define(version: 20141125223318) do
     t.string  "parent_2_name",        limit: 64
     t.string  "parent_2_mobile",      limit: 16
     t.string  "billing_email",        limit: 64
-    t.index ["image_id"], :name => "index_members_on_image_id"
-    t.index ["user_id"], :name => "index_members_on_user_id"
+    t.index ["image_id"], :name => "index_members_on_image_id", :unique => true
+    t.index ["user_id"], :name => "index_members_on_user_id", :unique => true
   end
 
   create_table "roles", force: true do |t|
@@ -169,7 +169,7 @@ ActiveRecord::Schema.define(version: 20141125223318) do
     t.datetime "updated_at",                      null: false
     t.string   "message"
     t.datetime "message_nagged_at"
-    t.index ["group_schedule_id", "year", "week"], :name => "index_practices_on_group_schedule_id_and_year_and_week"
+    t.index ["group_schedule_id", "year", "week"], :name => "index_practices_on_group_schedule_id_and_year_and_week", :unique => true
     t.index ["group_schedule_id"], :name => "fk__practices_group_schedule_id"
     t.foreign_key ["group_schedule_id"], "group_schedules", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_practices_group_schedule_id"
   end
@@ -183,7 +183,7 @@ ActiveRecord::Schema.define(version: 20141125223318) do
     t.integer  "rating"
     t.string   "comment",              limit: 250
     t.integer  "practice_id",                      null: false
-    t.index ["member_id", "practice_id"], :name => "index_attendances_on_member_id_and_practice_id"
+    t.index ["member_id", "practice_id"], :name => "index_attendances_on_member_id_and_practice_id", :unique => true
     t.index ["practice_id"], :name => "fk__attendances_practice_id"
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "attendances_member_id_fkey"
     t.foreign_key ["practice_id"], "practices", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_attendances_practice_id"
@@ -195,7 +195,7 @@ ActiveRecord::Schema.define(version: 20141125223318) do
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["name"], :name => "index_wazas_on_name"
+    t.index ["name"], :name => "index_wazas_on_name", :unique => true
   end
 
   create_table "basic_techniques", force: true do |t|
@@ -206,7 +206,7 @@ ActiveRecord::Schema.define(version: 20141125223318) do
     t.integer  "rank_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["name"], :name => "index_basic_techniques_on_name"
+    t.index ["name"], :name => "index_basic_techniques_on_name", :unique => true
     t.index ["rank_id"], :name => "fk__basic_techniques_rank_id"
     t.index ["waza_id"], :name => "fk__basic_techniques_waza_id"
     t.foreign_key ["rank_id"], "ranks", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_basic_techniques_rank_id"
@@ -220,8 +220,8 @@ ActiveRecord::Schema.define(version: 20141125223318) do
     t.integer  "position",                       null: false
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
-    t.index ["basic_technique_id", "position"], :name => "index_basic_technique_links_on_basic_technique_id_and_position"
-    t.index ["basic_technique_id", "url"], :name => "index_basic_technique_links_on_basic_technique_id_and_url"
+    t.index ["basic_technique_id", "position"], :name => "index_basic_technique_links_on_basic_technique_id_and_position", :unique => true
+    t.index ["basic_technique_id", "url"], :name => "index_basic_technique_links_on_basic_technique_id_and_url", :unique => true
     t.index ["basic_technique_id"], :name => "fk__basic_technique_links_basic_technique_id"
     t.foreign_key ["basic_technique_id"], "basic_techniques", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_basic_technique_links_basic_technique_id"
   end
@@ -257,7 +257,7 @@ ActiveRecord::Schema.define(version: 20141125223318) do
     t.datetime "requested_at"
     t.datetime "confirmed_at"
     t.datetime "approved_grades_at"
-    t.index ["graduation_id", "member_id"], :name => "index_censors_on_graduation_id_and_member_id"
+    t.index ["graduation_id", "member_id"], :name => "index_censors_on_graduation_id_and_member_id", :unique => true
     t.foreign_key ["graduation_id"], "graduations", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "censors_graduation_id_fkey"
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "censors_member_id_fkey"
   end
@@ -444,7 +444,7 @@ ActiveRecord::Schema.define(version: 20141125223318) do
   create_table "groups_members", id: false, force: true do |t|
     t.integer "group_id",  null: false
     t.integer "member_id", null: false
-    t.index ["group_id", "member_id"], :name => "index_groups_members_on_group_id_and_member_id"
+    t.index ["group_id", "member_id"], :name => "index_groups_members_on_group_id_and_member_id", :unique => true
     t.foreign_key ["group_id"], "groups", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "groups_members_group_id_fkey"
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "groups_members_member_id_fkey"
   end
@@ -581,7 +581,7 @@ ActiveRecord::Schema.define(version: 20141125223318) do
     t.string   "new_path"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["old_path"], :name => "index_page_aliases_on_old_path"
+    t.index ["old_path"], :name => "index_page_aliases_on_old_path", :unique => true
   end
 
   create_table "public_records", force: true do |t|
@@ -604,12 +604,77 @@ ActiveRecord::Schema.define(version: 20141125223318) do
     t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_signatures_member_id"
   end
 
+  create_table "survey_answer_translations", force: true do |t|
+    t.string   "answer",            null: false
+    t.string   "normalized_answer", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "surveys", force: true do |t|
+    t.string   "category",     limit: 8
+    t.integer  "days_active"
+    t.integer  "days_passive"
+    t.integer  "days_left"
+    t.integer  "group_id"
+    t.boolean  "ready"
+    t.string   "title",        limit: 64, null: false
+    t.integer  "position",                null: false
+    t.datetime "expires_at"
+    t.text     "header"
+    t.text     "footer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["group_id"], :name => "fk__surveys_group_id"
+    t.foreign_key ["group_id"], "groups", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_surveys_group_id"
+  end
+
+  create_table "survey_questions", force: true do |t|
+    t.integer  "survey_id",                   null: false
+    t.integer  "position",                    null: false
+    t.string   "title",           limit: 254, null: false
+    t.string   "choices",         limit: 254
+    t.boolean  "select_multiple"
+    t.boolean  "free_text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["survey_id"], :name => "fk__survey_questions_survey_id"
+    t.foreign_key ["survey_id"], "surveys", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_survey_questions_survey_id"
+  end
+
+  create_table "survey_requests", force: true do |t|
+    t.integer  "survey_id",    null: false
+    t.integer  "member_id",    null: false
+    t.datetime "sent_at"
+    t.datetime "reminded_at"
+    t.datetime "completed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["member_id"], :name => "fk__survey_requests_member_id"
+    t.index ["survey_id", "member_id"], :name => "index_survey_requests_on_survey_id_and_member_id", :unique => true
+    t.index ["survey_id"], :name => "fk__survey_requests_survey_id"
+    t.foreign_key ["member_id"], "members", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_survey_requests_member_id"
+    t.foreign_key ["survey_id"], "surveys", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_survey_requests_survey_id"
+  end
+
+  create_table "survey_answers", force: true do |t|
+    t.integer  "survey_request_id",  null: false
+    t.integer  "survey_question_id", null: false
+    t.string   "answer",             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["survey_question_id"], :name => "fk__survey_answers_survey_question_id"
+    t.index ["survey_request_id"], :name => "fk__survey_answers_survey_request_id"
+    t.foreign_key ["survey_question_id"], "survey_questions", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_survey_answers_survey_question_id"
+    t.foreign_key ["survey_request_id"], "survey_requests", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_survey_answers_survey_request_id"
+  end
+
   create_table "trial_attendances", force: true do |t|
     t.integer  "nkf_member_trial_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "practice_id",         null: false
-    t.index ["nkf_member_trial_id", "practice_id"], :name => "index_trial_attendances_on_nkf_member_trial_id_and_practice_id"
+    t.index ["nkf_member_trial_id", "practice_id"], :name => "index_trial_attendances_on_nkf_member_trial_id_and_practice_id", :unique => true
     t.index ["practice_id"], :name => "fk__trial_attendances_practice_id"
     t.foreign_key ["nkf_member_trial_id"], "nkf_member_trials", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "trial_attendances_nkf_member_trial_id_fkey"
     t.foreign_key ["practice_id"], "practices", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "fk_trial_attendances_practice_id"
@@ -621,7 +686,7 @@ ActiveRecord::Schema.define(version: 20141125223318) do
     t.string   "rel_type",   limit: 16, null: false
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
-    t.index ["user_id", "image_id", "rel_type"], :name => "index_user_images_on_user_id_and_image_id_and_rel_type"
+    t.index ["user_id", "image_id", "rel_type"], :name => "index_user_images_on_user_id_and_image_id_and_rel_type", :unique => true
   end
 
 end

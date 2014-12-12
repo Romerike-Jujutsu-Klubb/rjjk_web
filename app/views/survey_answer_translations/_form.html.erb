@@ -1,0 +1,25 @@
+<%= form_for(@survey_answer_translation) do |f| %>
+  <% if @survey_answer_translation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@survey_answer_translation.errors.count, "error") %> prohibited this survey_answer_translation from being saved:</h2>
+
+      <ul>
+      <% @survey_answer_translation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :answer %><br>
+    <%= f.text_field :answer %>
+  </div>
+  <div class="field">
+    <%= f.label :normalized_answer %><br>
+    <%= f.text_field :normalized_answer %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

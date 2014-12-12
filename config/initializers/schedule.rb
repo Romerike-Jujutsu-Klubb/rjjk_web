@@ -1,4 +1,7 @@
 # encoding: utf-8
+
+# http://www.gotealeaf.com/blog/handling-emails-in-rails?utm_source=rubyweekly&utm_medium=email
+
 unless Rails.env == 'test'
   scheduler = Rufus::Scheduler.new max_work_threads: 1
 
@@ -10,6 +13,7 @@ unless Rails.env == 'test'
   scheduler.cron('5 8-23 * * *') { AttendanceNagger.send_attendance_changes }
   scheduler.cron('8/15 * * * *') { AttendanceNagger.send_attendance_review }
   scheduler.cron('9 9-23 * * *') { EventNotifier.send_event_messages }
+  scheduler.cron('10 10 * * *') { StartSurvey.send_survey }
 
   # Admin Hourly
   scheduler.cron('15 9-23 * * *') { NkfMemberImport.import_nkf_changes }

@@ -3,10 +3,15 @@
 <% @blank_lines -= (missing_contract ? 3 : 1) %>
 <tr class="<%= cycle('odd', 'even') %>">
   <td nowrap="true" onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'">
-    <%= h member.first_name %> <%= h member.last_name %> <%= '(Permisjon)' if member.nkf_member.medlemsstatus == 'P' -%>
+    <b>
+      <%= h member.first_name %> <%= h member.last_name %> <%= '(Permisjon)' if member.nkf_member.medlemsstatus == 'P' -%>
+    </b>
     <% if missing_contract %>
         <br/><%= member.invoice_email %>
         <br/><%= member.nkf_member.ventekid %>
+    <% end %>
+    <% if member.phones %>
+        <br/><%= member.phones.join(' / ') %>
     <% end %>
   </td>
   <td nowrap="true" align="right">
@@ -40,9 +45,9 @@
                     <% @date_totals[d] ||= 0 %>
                     <% @date_totals[d] += 1 %>
                 <% end %>
-                <%= render :partial => 'attendance_delete_link', :locals => {:attendance => attendance} %>
+                <%= render 'attendance_delete_link', attendance: attendance %>
             <% else %>
-                <%= render :partial => 'attendance_create_link', :locals => {:member_id => member.id, :group_schedule_id => group_schedule.id, :date => d} %>
+                <%= render 'attendance_create_link', member_id: member.id, group_schedule_id: group_schedule.id, date: d %>
             <% end %>
             <%= javascript_tag do %>
                 $("#attendance_<%= member.id %>_<%= d.day %>").bind("ajax:complete", function(et, e){

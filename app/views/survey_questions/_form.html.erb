@@ -1,0 +1,46 @@
+<%= form_for(@survey_question) do |f| %>
+    <% if @survey_question.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@survey_question.errors.count, "error") %>
+            prohibited this survey_question from being saved:</h2>
+
+          <ul>
+            <% @survey_question.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :survey_id %>
+      <%= f.select :survey_id, @surveys.to_options(:title), class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :title %>
+      <%= f.text_field :title, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :choices, 'Standardvalg' %>
+      <%= f.text_area :choices, class: 'form-control expanding' %>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <%= f.label :free_text %>
+          <%= f.check_box :free_text, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <%= f.label :select_multiple %>
+          <%= f.check_box :select_multiple, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <%= f.submit class: 'btn btn-primary' %>
+    </div>
+<% end %>

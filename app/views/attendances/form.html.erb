@@ -22,7 +22,7 @@
 
 <% unless @instructors.empty? %>
     <% for member in @instructors %>
-        <%= render :partial => 'attendance_row', :locals => {:member => member} %>
+        <%= render 'attendance_row', member: member %>
     <% end %>
 
     <tr class="<%= cycle('odd', 'even') %>">
@@ -50,7 +50,7 @@
 <% @date_totals = {} %>
 
 <% for member in @members %>
-    <%= render :partial => 'attendance_row', :locals => {:member => member} %>
+    <%= render 'attendance_row', member: member %>
 <% end %>
 
 <% @trials.each do |trial| %>
@@ -102,9 +102,9 @@ Gradering er ..." %>
                     <% member_trial_total += 1 -%>
                     <% @date_totals[d] ||= 0 -%>
                     <% @date_totals[d] += 1 -%>
-                    <%= render :partial => 'trial_attendance_delete_link', :locals => {:trial_attendance => trial_attendance} %>
+                    <%= render 'trial_attendance_delete_link', trial_attendance: trial_attendance %>
                 <% else %>
-                    <%= render :partial => 'trial_attendance_create_link', :locals => {:nkf_member_trial_id => trial.id, :group_schedule_id => group_schedule.id, :date => d} %>
+                    <%= render 'trial_attendance_create_link', nkf_member_trial_id: trial.id, group_schedule_id: group_schedule.id, date: d %>
                 <% end %>
               </td>
 
@@ -148,7 +148,7 @@ Gradering er ..." %>
 
     <%= render :partial => 'attendance_form_header' %>
     <% for member in @passive_members %>
-        <%= render :partial => 'attendance_row', :locals => {:member => member} %>
+        <%= render 'attendance_row', member: member %>
     <% end %>
 
     <tr class="<%= cycle('odd', 'even') %>">

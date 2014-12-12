@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Survey:</strong>
+  <%= @survey_request.survey_id %>
+</p>
+
+<p>
+  <strong>Member:</strong>
+  <%= @survey_request.member_id %>
+</p>
+
+<p>
+  <strong>Completed at:</strong>
+  <%= @survey_request.completed_at %>
+</p>
+
+<table class="table">
+<% @survey_request.survey_answers.includes(:survey_question).
+        references(:survey_questions).order('survey_questions.position').
+        each do |sa| %>
+  <tr>
+    <td><%=sa.survey_question.title%></td>
+    <td><%=sa.answer%></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Edit', edit_survey_request_path(@survey_request) %> |
+<%= link_to 'Back', survey_requests_path %>

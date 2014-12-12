@@ -45,6 +45,6 @@
   </div>
 
   <div class="col-md-3" style="height: 680px; overflow:auto; border: 1px solid black">
-    <%= render :partial => '/images/list', :locals => {:images => @images} %>
+    <%= render '/images/list', images: @images %>
   </div>
 </div>

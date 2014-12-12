@@ -11,10 +11,10 @@
         <tr>
           <td><label><%= group.name %></label></td>
           <td><%= select :group_name, group.name, [[nil, nil]] + options, {},
-                  :onchange => 'document.location = options[selectedIndex].value' %></td>
+                  onchange: 'document.location = options[selectedIndex].value' %></td>
         </tr>
     <% end %>
   </table>
 </form>
 
-<%= link_to 'Andre', :action => :form, :group_id => 'others' %>
+<%= link_to 'Andre', action: :form, group_id: 'others' %>

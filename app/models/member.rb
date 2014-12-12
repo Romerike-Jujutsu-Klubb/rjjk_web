@@ -11,8 +11,8 @@ class Member < ActiveRecord::Base
     address.blank? || (!latitude.blank? && !longitude.blank?)
   end
 
-  belongs_to :image, :dependent => :destroy
-  belongs_to :user, :dependent => :destroy
+  belongs_to :image, dependent: :destroy
+  belongs_to :user, dependent: :destroy
   has_one :next_graduate,
   -> { includes(:graduation).where('graduations.held_on >= ?', Date.today).order('graduations.held_on') },
       class_name: :Graduate
@@ -27,7 +27,8 @@ class Member < ActiveRecord::Base
   has_many :passed_graduates, -> { where graduates: {passed: true} },
       class_name: 'Graduate'
   has_many :ranks, :through => :passed_graduates
-  has_many :signatures, :dependent => :destroy
+  has_many :signatures, dependent: :destroy
+  has_many :survey_requests, dependent: :destroy
   has_and_belongs_to_many :groups
 
   scope :active, ->(from_date = nil, to_date = nil) do
@@ -104,7 +105,7 @@ class Member < ActiveRecord::Base
 
       return new_user
     end
-    raise "Unable to create user for member #{attrs}\npotential emails: #{potential_emails}\nattributes: #{attrs}\nblocking users: #{blocking_users.inspect}"
+    raise "Unable to create user for member #{attrs}\npotential phones: #{potential_emails}\nattributes: #{attrs}\nblocking users: #{blocking_users.inspect}"
   end
 
   def self.make_usable_full_email(email, first_name, last_name, birthdate = nil)
@@ -330,6 +331,17 @@ class Member < ActiveRecord::Base
       emails << (parent_2_name ? %Q{"#{parent_2_name}" <#{parent_email}>} : parent_email)
     end
     emails.uniq
+  end
+
+  def phones
+    phones = []
+    phones << phone_home
+    phones << phone_mobile
+    phones << phone_parent
+    phones << phone_work
+    phones << billing_phone_home
+    phones << billing_phone_mobile
+    phones.reject(&:blank?).uniq
   end
 
   def title(date = Date.today)

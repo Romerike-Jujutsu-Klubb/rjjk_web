@@ -1,0 +1,19 @@
+first_question:
+  survey: first_survey
+  position: 1
+  title: First question
+  choices: First choice
+  free_text: false
+
+second_question:
+  survey: first_survey
+  position: 2
+  title: Second question
+  choices: Choice one
+  free_text: false
+
+summary_question: # No choices, free text
+  survey: first_survey
+  position: 3
+  title: What do you think of this survey?
+  free_text: true

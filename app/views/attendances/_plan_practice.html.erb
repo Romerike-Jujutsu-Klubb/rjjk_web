@@ -57,9 +57,8 @@
   </div>
   <%= javascript_tag do %>
       $(function() {
-      $('#button_<%= week %>_<%= gs.id %>').popover({content:
-      'Oppmøte registrert', placement: 'top', container: 'body'});
-      $('#button_<%= week %>_<%= gs.id %>').popover('show');
+          $('#button_<%= week %>_<%= gs.id %>').popover({content: 'Oppmøte registrert', placement: 'top', container: 'body'});
+          $('#button_<%= week %>_<%= gs.id %>').popover('show');
       });
   <% end if @reviewed_attendance && @reviewed_attendance.group_schedule == gs && @reviewed_attendance.practice.year == year && @reviewed_attendance.practice.week == week %>
   <br/>

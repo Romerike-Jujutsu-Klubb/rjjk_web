@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Answer:</strong>
+  <%= @survey_answer_translation.answer %>
+</p>
+
+<p>
+  <strong>Normalized answer:</strong>
+  <%= @survey_answer_translation.normalized_answer %>
+</p>
+
+<%= link_to 'Edit', edit_survey_answer_translation_path(@survey_answer_translation) %> |
+<%= link_to 'Back', survey_answer_translations_path %>

@@ -1,4 +1,6 @@
 class BoardMeeting < ActiveRecord::Base
+  validates_presence_of :start_at
+
   def minutes=(file)
     return if file == ''
     self.minutes_filename = file.original_filename if minutes_filename.blank?

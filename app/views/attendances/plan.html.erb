@@ -1,3 +1,9 @@
+<style type="text/css">
+    .popover-content {
+        font: normal 1.4em Verdana;
+        text-align: center;
+    }
+</style>
 <% @weeks.each.with_index do |(year, week), i| %>
 
     <h4><%= [year, week] == [(Date.today - 7).year, (Date.today - 7).cweek] ? 'Forrige uke' : [year, week] == [Date.today.year, Date.today.cweek] ? 'Denne uken' : [year, week] == [(Date.today + 7).year, (Date.today + 7).cweek] ? 'Neste uke' : "Uke #{week}#{" #{year}" if year != Date.today.year}" %></h4>

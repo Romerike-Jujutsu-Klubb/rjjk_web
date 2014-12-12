@@ -252,7 +252,7 @@ class AttendancesController < ApplicationController
     else
       flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  #{t(:attendances)[@attendance.status.to_sym]}"
       flash[:attendance_id] = @attendance.id
-      back_or_redirect_to attendance_plan_path
+      redirect_to attendance_plan_path
     end
   end
 

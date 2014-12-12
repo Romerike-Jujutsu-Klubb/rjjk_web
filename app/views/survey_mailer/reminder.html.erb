@@ -1,0 +1,16 @@
+<h2><%= @title %></h2>
+
+<p>
+  <%= @survey_request.survey.header %>
+</p>
+
+<% @survey_request.survey.survey_questions.order(:position).each do |question| %>
+    <p>
+      <%= question.title %>
+    </p>
+<% end %>
+
+<p>
+  For å svare på spørsmålene, kan du følge denne linken:
+  <%= link_to url_for(@email_url.except(:key, :email)), @email_url %>
+</p>
