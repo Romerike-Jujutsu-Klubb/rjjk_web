@@ -1,11 +1,11 @@
 first_survey:
   title: First survey
   position: 1
-  header: MyText
-  footer: MyText
+  header: First header text
+  footer: Second footer text
 
 second_survey:
   title: Second survey
   position: 2
-  header: MyText
-  footer: MyText
+  header: Second header text
+  footer: Second footer text

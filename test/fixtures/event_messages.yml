@@ -1,13 +1,13 @@
 one:
   event: one
-  message_type: MyString
-  subject: MyString
-  body: MyText
+  message_type: Event message one type
+  subject: Event message one subject
+  body: Event message one body
   ready_at: 2012-09-27 18:31:58
 
 two:
   event: one
-  message_type: MyString
-  subject: MyString
-  body: MyText
+  message_type: Event message two type
+  subject: Event message two subject
+  body: Event message two body
   ready_at: 2012-09-27 18:31:58

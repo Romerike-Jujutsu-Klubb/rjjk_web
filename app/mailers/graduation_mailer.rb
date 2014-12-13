@@ -4,13 +4,10 @@ class GraduationMailer < ActionMailer::Base
   layout 'email'
   default from: Rails.env == 'production' ? 'noreply@jujutsu.no' : "#{Rails.env}@jujutsu.no"
 
-  def missing_graduation(instructor, group)
+  def missing_graduation(instructor, group, suggested_date)
     @instructor = instructor
     @group = group
     @title = 'Disse gruppene mangler gradering'
-
-    month_start = Date.civil(Date.today.year, (Date.today.mon >= 6) ? 12 : 6)
-    suggested_date = month_start + (7 - month_start.wday) + @group.group_schedules.first.weekday
 
     @email_url = with_login(@instructor.user,
         :controller => :graduations, :action => :new,

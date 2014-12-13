@@ -64,7 +64,7 @@ class SurveyRequestsController < ApplicationController
       logger.error "values: #{values.inspect}"
       free_text_answer = values.delete(:answer_free)
       logger.error "free_text_answer: #{free_text_answer.inspect}"
-      values[:answer] = free_text_answer if free_text_answer
+      values[:answer] = [*values[:answer], free_text_answer] if free_text_answer
     end
 
     if @survey_request.update(params[:survey_request])

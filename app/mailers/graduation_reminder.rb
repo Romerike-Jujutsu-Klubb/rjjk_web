@@ -6,11 +6,17 @@ class GraduationReminder
     groups = Group.active(today).to_a
     planned_groups = Graduation.where('held_on >= ?', today).to_a.map(&:group)
     missing_groups = groups - planned_groups
+    month_start = Date.civil(Date.today.year, (Date.today.mon >= 6) ? 12 : 6)
+    second_week = month_start + (7 - month_start.wday)
     missing_groups.each do |g|
       instructor = Semester.current.group_semesters.
           find { |gs| gs.group_id == g.id }.try(:chief_instructor)
       next unless instructor
-      GraduationMailer.missing_graduation(instructor, g).deliver
+
+      suggested_date = second_week + g.group_schedules.first.weekday
+      next if suggested_date <= Date.today
+
+      GraduationMailer.missing_graduation(instructor, g, suggested_date).deliver
     end
   rescue
     raise if Rails.env.test?

@@ -362,7 +362,8 @@ class NkfMemberImport
         raise EOFError.new('Servlet Error') if body =~ /<TITLE>Servlet Error<\/TITLE>/i
         return process_response(response)
       end
-    rescue EOFError, SystemCallError, Timeout::Error, Errno::ECONNREFUSED
+    rescue EOFError, Errno::ECONNREFUSED, SocketError, SystemCallError,
+        Timeout::Error
       logger.error $!.message
       if backoff > 15.minutes
         if $!.respond_to?(:message=)
