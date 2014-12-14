@@ -20,7 +20,7 @@ class NewsControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, :id => news_items(:first).id
+    get :show, id: news_items(:first).id
 
     assert_response :success
     assert_template 'show'
@@ -43,10 +43,10 @@ class NewsControllerTest < ActionController::TestCase
     num_news_items = NewsItem.count
 
     login(:admin)
-    post :create, :news_item => {:title => 'another news item'}
+    post :create, news_item: {title: 'another news item'}
 
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to action: 'list'
 
     assert_equal num_news_items + 1, NewsItem.count
   end
@@ -70,6 +70,16 @@ class NewsControllerTest < ActionController::TestCase
     post :update, id: news_items(:first).id, news_item: {}
     assert_response :redirect
     assert_redirected_to action: :show, id: news_items(:first).id
+  end
+
+  def test_expire
+    n = news_items(:first)
+    login(:admin)
+    post :expire, id: n.id
+    assert_response :redirect
+    assert_redirected_to action: :index
+    n.reload
+    assert_equal NewsItem::PublicationState::EXPIRED, n.publication_state
   end
 
   def test_destroy

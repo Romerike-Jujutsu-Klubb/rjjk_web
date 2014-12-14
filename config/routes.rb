@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post 'attendances/announce(/:year/:week/:group_schedule_id)/:status(/:member_id)' =>
           'attendances#announce'
   get 'news/list'
+  post 'news/expire' => 'news#expire'
   get 'pensum' => 'ranks#pensum'
   get 'pensum/pdf' => 'ranks#pdf'
   get 'search/index'

@@ -29,8 +29,8 @@
     <% if user? %>
         <ul class="controls">
           <li><%= detour_to 'Endre', edit_news_item_path(@news_item), :class => :edit %></li>
-          <li><%= detour_to 'Utløpt', {:controller => :news, :action => :expire, :id => @news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
-          <li><%= detour_to 'Slett', {:controller => :news, :action => :destroy, :id => @news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :delete %></li>
+          <li><%= detour_to 'Utløpt', {controller: :news, action: :expire, id: @news_item}, class: :edit, confirm: 'Er du sikker?', method: :post %></li>
+          <li><%= detour_to 'Slett', {controller: :news, action: :destroy, id: @news_item}, class: :edit, confirm: 'Er du sikker?', method: :delete %></li>
           <% if admin? %>
               <li><%= back_or_link_to 'Tilbake', nil, :class => :edit %></li>
           <% end %>
