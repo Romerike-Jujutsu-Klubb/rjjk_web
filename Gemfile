@@ -10,7 +10,6 @@ source 'https://rubygems.org/'
 gem 'rails'
 
 gem 'actionpack-page_caching'
-# gem 'activerecord-jdbc-adapter'
 gem 'activerecord-jdbcpostgresql-adapter'
 gem 'activerecord-time'
 gem 'acts_as_list'
@@ -52,7 +51,7 @@ gem 'ri_cal'
 gem 'rmagick4j'
 gem 'rufus-scheduler'
 gem 'sass-rails'
-gem 'schema_plus', '!=1.6.0'
+gem 'schema_plus'
 gem 'simple_drilldown'
 gem 'simple_workflow'
 gem 'therubyrhino'
@@ -67,11 +66,6 @@ group :development do
   # gem 'bullet'
   gem 'capistrano', '<3.0.0'
   gem 'rvm-capistrano'
-end
-
-group :doc do
-  gem 'rdoc'
-  gem 'sdoc'
 end
 
 group :test do
