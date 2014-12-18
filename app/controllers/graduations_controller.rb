@@ -114,7 +114,7 @@ class GraduationsController < ApplicationController
     @graduation = Graduation.find(params[:id])
     @graduation.censors.where(:member_id => current_user.member.id).update_all(:approved_grades_at => Time.now)
     flash.notice = 'Gradering godkjent!'
-    redirect_to :action => :edit, :id => @graduation.id
+    redirect_to edit_graduation_path(@graduation)
   end
 
   def add_group

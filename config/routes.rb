@@ -3,6 +3,7 @@ Rails.application.routes.draw do
       controller: :attendances, via: [:get, :post]
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
   patch 'graduations/add_group/:id' => 'graduations#add_group'
+  post 'graduations/approve/:id' => 'graduations#approve'
   get 'info/versjon'
   get 'members/search'
   get 'members/:action/:id(/:percentage/:step/:interval).:format' => 'members'

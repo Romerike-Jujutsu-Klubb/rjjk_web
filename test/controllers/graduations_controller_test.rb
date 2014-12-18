@@ -77,8 +77,26 @@ class GraduationsControllerTest < ActionController::TestCase
   end
 
   def test_certificates
-    get :certificates, :id => @first_id
+    get :certificates, id: @first_id
     assert_response :success
+  end
+
+  def test_censor_form
+    get :censor_form, id: @first_id
+    assert_response :success
+  end
+
+  def test_censor_form_pdf
+    get :censor_form_pdf, id: @first_id
+    assert_response :success
+  end
+
+  def test_approve
+    assert_equal [nil, nil], graduations(:panda).censors.map(&:approved_grades_at)
+    post :approve, id: @first_id
+    assert_response :redirect
+    assert_redirected_to edit_graduation_path(@first_id)
+    assert_equal [nil, Time.now], graduations(:panda).censors(true).map(&:approved_grades_at)
   end
 
 end
