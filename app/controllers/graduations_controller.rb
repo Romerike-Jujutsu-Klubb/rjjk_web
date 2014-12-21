@@ -1,6 +1,6 @@
 # encoding: utf-8
 class GraduationsController < ApplicationController
-  CENSOR_ACTIONS = [:edit, :update]
+  CENSOR_ACTIONS = [:approve, :edit, :update]
   before_filter :admin_required, :except => CENSOR_ACTIONS
   before_filter :authenticate_user, :only => CENSOR_ACTIONS
 

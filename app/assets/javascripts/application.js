@@ -14,6 +14,7 @@
 //= require nprogress
 //= require nprogress-turbolinks
 //= require chosen-jquery
+//= require remember_tab
 $(function () {
     $(".colorbox").colorbox({
         inline: true,
@@ -30,25 +31,7 @@ $(function () {
 NProgress.configure({showSpinner: false,  ease: 'ease',  speed: 500});
 
 $().ready(function () {
-    $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-        tab = $('#' + $(e.target).attr('href').substr(1));
-        window.location.hash = $(e.target).attr("href").substr(1);
-
-        if (!tab.html()) {
-            tab.html('<div class="text-center" style="padding: 3em">Loading...</div>');
-            tab.load(tab.attr('data-target'));
-        }
-        return true;
-    });
     $(window).on('popstate', function () {
-        if (window.location.hash) {
-            $('a[href="' + window.location.hash + '"]').tab('show');
-        } else {
-            default_tab = $('li.active > a[data-toggle="tab"]');
-            if (default_tab[0]) {
-                window.history.replaceState({}, window.title, window.location + default_tab.attr("href"));
-            }
-        }
         $('.stretch').parent('.row').scrollTop(0);
         setTimeout(function () {
             $('.stretch').parent('.row').scrollTop(0)
@@ -56,7 +39,7 @@ $().ready(function () {
     });
     $('.stretch').parent('.row').addClass("row-stretch");
     $('.chosen-select').chosen();
-})
+});
 
 // http://makandracards.com/makandra/1383-rails-3-make-link_to-remote-true-replace-html-elements-with-jquery
 // link_to 'Do something', path_returning_partial, :remote => true, :"data-replace" => '#some_id'
