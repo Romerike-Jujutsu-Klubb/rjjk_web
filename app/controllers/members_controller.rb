@@ -24,9 +24,9 @@ class MembersController < ApplicationController
   end
 
   def yaml
-    @members = Member.active.to_a
-    @members.each { |m| m['image'] = nil }
-    render :text => @members.map { |m| m.attributes }.to_yaml, :content_type => 'text/yaml', :layout => false
+    @members = Member.active.without_image.to_a
+    render text: @members.map{|m| m.attributes.update('rank_pos' => m.current_rank.try(:position), 'rank_name' => m.current_rank.try(:name))}.to_yaml, content_type: 'text/yaml',
+        layout: false
   end
 
   def list_active
@@ -189,10 +189,10 @@ class MembersController < ApplicationController
 
   def export_emails
     content_type = if request.user_agent =~ /windows/i
-                     'application/vnd.ms-excel'
-                   else
-                     'text/csv'
-                   end
+      'application/vnd.ms-excel'
+    else
+      'text/csv'
+    end
 
     CSV::Writer.generate(output = '') do |csv|
       @Params.find(:all).each do |param|

@@ -31,6 +31,7 @@ class Member < ActiveRecord::Base
   has_many :survey_requests, dependent: :destroy
   has_and_belongs_to_many :groups
 
+  scope :without_image, -> { select(column_names - ['image_id']) }
   scope :active, ->(from_date = nil, to_date = nil) do
     from_date ||= Date.today; to_date ||= from_date
     where('joined_on <= ? AND left_on IS NULL OR left_on >= ?', to_date, from_date)
