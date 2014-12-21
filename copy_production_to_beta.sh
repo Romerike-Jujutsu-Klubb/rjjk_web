@@ -4,7 +4,7 @@ DB_NAME=rjjk_web_beta
 MARKER_PREFIX="/tmp/${DB_NAME}_backup_"
 MARKER_FILE="${MARKER_PREFIX}`date +%Y-%m-%d`"
 
-export JRUBY_OPTS="--2.0 --dev -J-Xmx2G"
+export JRUBY_OPTS="--dev -J-Xmx2G"
 export RAILS_ENV=beta
 
 if [ -e $MARKER_FILE ] ; then

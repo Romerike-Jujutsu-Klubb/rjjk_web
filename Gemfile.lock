@@ -108,7 +108,7 @@ GEM
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     docile (1.1.5)
-    domain_name (0.5.22)
+    domain_name (0.5.23)
       unf (>= 0.0.5, < 1.0.0)
     draper (1.4.0)
       actionpack (>= 3.0)
@@ -136,9 +136,9 @@ GEM
     hike (1.2.3)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
-    i18n (0.6.11)
+    i18n (0.7.0)
     ice_nine (0.11.1)
-    jbuilder (2.2.5)
+    jbuilder (2.2.6)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
     jdbc-postgres (9.3.1102)
@@ -197,7 +197,7 @@ GEM
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     nokogiri (1.6.5-java)
-    nprogress-rails (0.1.6.3)
+    nprogress-rails (0.1.6.4)
     ntlm-http (0.1.1)
     parser (2.1.9)
       ast (>= 1.1, < 3.0)
@@ -373,7 +373,7 @@ DEPENDENCIES
   prawn-table
   puma
   rack-mini-profiler
-  rails
+  rails (< 4.2.0)
   rails-i18n
   rails-observers
   rake

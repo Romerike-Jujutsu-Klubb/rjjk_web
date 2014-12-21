@@ -18,7 +18,7 @@ LOG_DIR="/u/apps/$APP/shared/log"
 
 START_CMD="cd $APP_DIR ;
   source \"$HOME/.rvm/scripts/rvm\" ; rvm use jruby ;
-  export JRUBY_OPTS='--2.0 -J-Xmx2G --server -J-Djava.awt.headless=true -J-Dawt.toolkit=sun.awt.HToolkit' ;
+  export JRUBY_OPTS='-J-Xmx2G --server -J-Djava.awt.headless=true -J-Dawt.toolkit=sun.awt.HToolkit' ;
   jruby --version ;
   jruby -S bundle exec puma -d -p $PORT -e $RAILS_ENV --pidfile $PIDFILE >$LOG_DIR/stdout.log 2>&1
 

@@ -3,8 +3,8 @@ load 'deploy/assets'
 
 set :stages, %w(beta production)
 set :default_stage, 'beta'
-set :default_environment, {'JRUBY_OPTS' => '--2.0 --dev'}
-# set :migrate_env, 'JRUBY_OPTS="--2.0 --server -J-Xmx3G"'
+set :default_environment, {'JRUBY_OPTS' => '--dev'}
+# set :migrate_env, 'JRUBY_OPTS="--dev -J-Xmx3G"'
 default_run_options[:pty] = true
 
 require 'rubygems'

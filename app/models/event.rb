@@ -1,11 +1,11 @@
 class Event < ActiveRecord::Base
-  scope :chronological, :order => 'start_at'
+  scope :chronological, -> { order :start_at }
 
-  has_many :event_invitees, :dependent => :destroy
-  has_many :event_messages, :dependent => :destroy
-  has_many :users, :through => :event_invitees
+  has_many :event_invitees, dependent: :destroy
+  has_many :event_messages, dependent: :destroy
+  has_many :users, through: :event_invitees
   has_and_belongs_to_many :groups
-  has_one :invitation, :class_name => 'EventMessage'
+  has_one :invitation, class_name: 'EventMessage'
   has_one :graduation # optional
 
   before_validation do |r|
@@ -32,7 +32,7 @@ class Event < ActiveRecord::Base
         if inv =~ /^(.*) <(.*@.*)>$/
           name, email = $1, $2
         elsif inv =~ /^(.*@.*)$/
-            name, email = $1, $1
+          name, email = $1, $1
         else
           name, email = inv, inv
         end
@@ -45,7 +45,7 @@ class Event < ActiveRecord::Base
   def ingress
     description.try(:slice, %r{\A.*?(?:<br ?/><br ?/>|</p>|\Z)}im)
   end
-  
+
   def body
     ingress = self.ingress
     if ingress && description.size > ingress.size
