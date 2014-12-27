@@ -1,13 +1,14 @@
-<h1>Hei <%= @instructor.first_name %></h1>
-
-<p><%= @group.name %> mangler gradering for dette semesteret.</p>
+<h1>Hei <%= @member.first_name %> !</h1>
 
 <p>
-  Du kan opprette gradering ved å følge denne linken:
-  <%= link_to "Opprett gradering for #{@group.name}", @email_url %>
+  Det er på tide å sende invitasjon til
+  årsmøtet <%= @annual_meeting.start_at.year %>.
+  For å sende invitasjon kan du gå inn på linken under.
 </p>
-
 <p>
-  Gradering er vanligvis andre uken i
-  <%= Date.today.mon >= 7 ? 'desember' : 'juni' %>.
+  <%= link_to "Årsmøte #{Date.today.year}", @email_url %>
+</p>
+<p>
+  Årsmøtet skal holdes i februar og invitasjon skal sendes ut senest 4 uker før
+  møtet.
 </p>

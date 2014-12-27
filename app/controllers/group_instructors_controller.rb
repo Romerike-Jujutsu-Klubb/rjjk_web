@@ -2,9 +2,13 @@ class GroupInstructorsController < ApplicationController
   before_action :admin_required
 
   def index
-    group_instructors = GroupInstructor.includes(group_semester: :semester, group_schedule: :group).
-        order('group_schedules.weekday, group_schedules.start_at, groups.from_age').to_a
-    group_instructors.sort_by! { |gi| [gi.group_semester.semester.current? ? 0 : 1, gi.group_semester.semester.future? ? 0 : 1, gi.group_semester.semester.future? ? gi.group_semester.semester.start_on : Date.today - gi.group_semester.semester.end_on] }
+    group_instructors = GroupInstructor.
+        includes(group_semester: :semester, group_schedule: :group).
+        order('group_schedules.weekday, group_schedules.start_at, groups.from_age').
+        to_a
+    group_instructors.
+        sort_by! { |gi| [gi.group_semester.semester.current? ? 0 : 1, gi.group_semester.semester.future? ? 0 : 1, gi.group_semester.semester.future? ? gi.group_semester.semester.start_on : Date.today - gi.group_semester.semester.end_on,
+        gi.group_schedule.group.from_age, gi.group_schedule.weekday, -(gi.member.current_rank.try(:position) || -999)] }
     @semesters = group_instructors.group_by { |gi| gi.group_semester.semester }
     if Semester.current && !@semesters.include?(Semester.current)
       @semesters = {Semester.current => []}.update @semesters
@@ -28,6 +32,11 @@ class GroupInstructorsController < ApplicationController
   end
 
   def create
+    if (semester_id = params[:group_instructor].delete(:semester_id))
+      group_schedule = GroupSchedule.find(params[:group_instructor][:group_schedule_id])
+      group_semester = GroupSemester.where(group_id: group_schedule.group_id, semester_id: semester_id).first
+      params[:group_instructor][:group_semester_id] = group_semester.id
+    end
     @group_instructor = GroupInstructor.new(params[:group_instructor])
     if @group_instructor.save
       redirect_to group_instructors_path, notice: 'GroupInstructor was successfully created.'
@@ -56,7 +65,7 @@ class GroupInstructorsController < ApplicationController
   def load_form_data
     @group_schedules ||= GroupSchedule.includes(:group).references(:groups).order('weekday, groups.from_age').to_a.select { |gs| gs.group.active? }
     @group_instructors ||= Member.instructors
-    @group_semesters ||= GroupSemester.includes(:semester).order('semesters.start_on DESC').to_a
+    @semesters ||= Semester.order('start_on DESC').limit(10).to_a
   end
 
 end

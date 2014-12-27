@@ -1,11 +1,11 @@
 <h1>Hei <%= @member.first_name %> !</h1>
 
 <p>
-  Det er på tide å sette opp dato for årsmøtet <%=Date.today.year%>. For å registrere datoen
+  Det er på tide å sette opp dato for årsmøtet <%=@year%>. For å registrere datoen
   kan du gå inn på linken under.
 </p>
 <p>
-  <%= link_to "Årsmøte #{Date.today.year}", @email_url %>
+  <%= link_to "Årsmøte #{@year}", @email_url %>
 </p>
 <p>
   Årsmøtet skal holdes i februar.

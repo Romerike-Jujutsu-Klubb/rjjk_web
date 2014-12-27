@@ -2,10 +2,15 @@
 require 'test_helper'
 
 class AttendanceFormTest < ActionDispatch::IntegrationTest
+  def test_index
+    login_and_visit '/'
+    click_link 'Oppmøtelister'
+    assert_current_path '/attendances/form_index'
+    screenshot('attendance_form_index')
+    end
   def test_select_panda_october
     visit_with_login '/attendances/form_index'
-    screenshot('attendance_form_index')
-    select('Oktober 2013', :from => 'group_name_Panda')
+    select('Oktober 2013', from: 'group_name_Panda')
     assert_equal ['Uwe Kubosch',
         'Totalt 1',
         'Lars Bråten',

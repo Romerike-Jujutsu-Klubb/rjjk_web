@@ -1,5 +1,7 @@
 require 'simplecov'
-SimpleCov.start 'rails'
+SimpleCov.start 'rails' do
+  add_filter '/app/views/'
+end
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
@@ -10,9 +12,9 @@ MiniTest::Reporters.use!
 class ActiveSupport::TestCase
   fixtures :all
 
-  def login(login)
+  def login(login = :admin)
     u = users(login)
-    @request.session[:user_id] = u.id
+    request.session[:user_id] = u.id
     Thread.current[:user] = u
   end
 
@@ -39,3 +41,4 @@ class Mail::TestMailer
 end
 
 require_relative 'capybara_setup'
+require 'ish'

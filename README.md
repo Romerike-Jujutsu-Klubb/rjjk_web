@@ -3,6 +3,7 @@ RJJK Web
 
 ## Huskeliste
 
+* FIXME(uwe):  Feil i import fra Brønnøysund!
 * Optimere grafer
 * Tillate testing uten (Internet) nettverk.
 * Oppdatere gems

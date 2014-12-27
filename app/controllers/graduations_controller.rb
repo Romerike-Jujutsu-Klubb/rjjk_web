@@ -112,7 +112,8 @@ class GraduationsController < ApplicationController
 
   def approve
     @graduation = Graduation.find(params[:id])
-    @graduation.censors.where(:member_id => current_user.member.id).update_all(:approved_grades_at => Time.now)
+    @graduation.censors.where(member_id: current_user.member.id).
+        update_all(approved_grades_at: Time.now)
     flash.notice = 'Gradering godkjent!'
     redirect_to edit_graduation_path(@graduation)
   end

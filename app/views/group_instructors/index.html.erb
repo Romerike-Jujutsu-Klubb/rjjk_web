@@ -1,3 +1,8 @@
+<%= link_to new_group_instructor_path, class: 'btn btn-primary pull-right' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    Registrer gruppeinstruktør
+<% end %>
+
 <h1>Gruppeinstruktører</h1>
 
 <% @semesters.each do |s, instructions| %>
@@ -7,7 +12,7 @@
         <h3>Tidligere semester (<%= s.name %>)</h3>
     <% end %>
 
-    <table class="table">
+    <table class="table table-striped">
       <tr>
         <th>Gruppe</th>
         <th>Dag</th>
@@ -17,23 +22,38 @@
         <th></th>
       </tr>
 
-      <% instructions.each do |instruction| %>
+      <% instructions.group_by { |gi| gi.group_schedule.group }.each do |group, group_instructions| %>
+          <% group_instruction = group_instructions.first %>
           <tr>
-            <td><%= link_to instruction.group_schedule.group.name, instruction.group_semester %></td>
-            <td><%= instruction.group_schedule.weekday_name %></td>
-            <td><%= instruction.member.name %></td>
-            <td><%= instruction.role %></td>
-            <td><%= link_to 'Endre', edit_group_instructor_path(instruction) %></td>
-            <td><%= link_to 'Slett', instruction, data: {confirm: 'Er du sikker?'}, method: :delete %></td>
+            <td rowspan="<%= group_instructions.size %>"><%= link_to group_instruction.group_schedule.group.name, group_instruction.group_semester %></td>
+            <td rowspan="<%= group_instructions.select { |gi| gi.group_schedule.weekday == group_instruction.group_schedule.weekday }.size %>"><%= group_instruction.group_schedule.weekday_name %></td>
+            <td><%= group_instruction.member.name %></td>
+            <td><%= group_instruction.role %></td>
+            <td><%= link_to 'Endre', edit_group_instructor_path(group_instruction) %></td>
+            <td><%= link_to 'Slett', group_instruction, data: {confirm: 'Er du sikker?'}, method: :delete %></td>
           </tr>
+
+          <% group_instructions[1..-1].group_by { |gi| gi.group_schedule.weekday }.each do |weekday, day_instructions| %>
+              <% day_instruction = day_instructions.first %>
+              <tr>
+                <% if day_instruction.group_schedule.weekday != group_instruction.group_schedule.weekday %>
+                    <td rowspan="<%= day_instructions.size %>"><%= day_instruction.group_schedule.weekday_name %></td>
+                <% end %>
+                <td><%= day_instruction.member.name %></td>
+                <td><%= day_instruction.role %></td>
+                <td><%= link_to 'Endre', edit_group_instructor_path(day_instruction) %></td>
+                <td><%= link_to 'Slett', day_instruction, data: {confirm: 'Er du sikker?'}, method: :delete %></td>
+              </tr>
+              <% day_instructions[1..-1].each do |day_instruction| %>
+                  <tr>
+                    <td><%= day_instruction.member.name %></td>
+                    <td><%= day_instruction.role %></td>
+                    <td><%= link_to 'Endre', edit_group_instructor_path(day_instruction) %></td>
+                    <td><%= link_to 'Slett', day_instruction, data: {confirm: 'Er du sikker?'}, method: :delete %></td>
+                  </tr>
+              <% end %>
+          <% end %>
       <% end %>
     </table>
-
-    <% if s.current? %>
-        <%= link_to 'Registrer gruppeinstruktør', new_group_instructor_path %>
-    <% end %>
-
-    <br/>
-    <br/>
 
 <% end %>

@@ -10,8 +10,7 @@ class AttendanceMailer < ActionMailer::Base
     @title = 'Planlegging oppmøte'
     @timestamp = Time.now
     @email_url = with_login(member.user, :controller => :attendances, :action => :plan)
-    mail to: Rails.env == 'production' ? member.email : %Q{"#{member.name}" <uwe@kubosch.no>},
-         subject: '[RJJK] Kommer du?'
+    mail to: safe_email(member), subject: rjjk_prefix('Kommer du?')
   end
 
   def message_reminder(practice, instructor)
@@ -30,10 +29,10 @@ class AttendanceMailer < ActionMailer::Base
     @recipient = recipient
     @members = attendees
     @title = "Trening i #{group_schedule.start_at.day_phase}"
+    @title = "Trening i #{@group_schedule.start_at.day_phase}: #{attendees.size == 0 ? 'Ingen' : attendees.size} deltaker#{'e' if attendees.size > 1} påmeldt"
     @timestamp = Time.now
     @email_url = with_login(recipient.user, :controller => :attendances, :action => :plan)
-    mail to: Rails.env == 'production' ? recipient.email : %Q{"#{recipient.name}" <uwe@kubosch.no>},
-         subject: "[RJJK] Trening i #{@group_schedule.start_at.day_phase}: #{attendees.size == 0 ? 'Ingen' : attendees.size} deltaker#{'e' if attendees.size > 1} påmeldt"
+    mail to: safe_email(recipient), subject: rjjk_prefix(@title)
   end
 
   def changes(practice, group_schedule, recipient, new_attendees, new_absentees, attendees)
@@ -43,9 +42,6 @@ class AttendanceMailer < ActionMailer::Base
     @new_attendees = new_attendees
     @new_absentees = new_absentees
     @attendees = attendees
-    @title = "Trening i #{group_schedule.start_at.day_phase}"
-    @timestamp = Time.now
-    @email_url = with_login(recipient.user, :controller => :attendances, :action => :plan)
     change_msg = []
     if new_attendees.any?
       change_msg << "#{new_attendees.size} ny#{'e' if new_attendees.size > 1} deltaker#{'e' if new_attendees.size > 1} påmeldt"
@@ -53,8 +49,10 @@ class AttendanceMailer < ActionMailer::Base
     if new_absentees.any?
       change_msg << "#{new_absentees.size} avbud"
     end
-    mail to: Rails.env == 'production' ? recipient.email : %Q{"#{recipient.name}" <uwe@kubosch.no>},
-         subject: "[RJJK] Trening i #{@group_schedule.start_at.day_phase}: #{change_msg.join(', ')}"
+    @title = "Trening i #{@group_schedule.start_at.day_phase}: #{change_msg.join(', ')}"
+    @timestamp = Time.now
+    @email_url = with_login(recipient.user, :controller => :attendances, :action => :plan)
+    mail to: safe_email(recipient), subject: rjjk_prefix(@title)
   end
 
   def review(member, completed_attendances, older_attendances)
@@ -63,8 +61,7 @@ class AttendanceMailer < ActionMailer::Base
     @older_attendances = older_attendances
     @title = 'Hvordan var treningen?'
     @timestamp = completed_attendances[0].date
-    mail to: Rails.env == 'production' ? member.email : %Q{"#{member.name}" <uwe@kubosch.no>},
-         subject: "[RJJK] #{@title}"
+    mail to: safe_email(member), subject: rjjk_prefix(@title)
   end
 
 end

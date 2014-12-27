@@ -1,30 +1,33 @@
 class AnnualMeetingReminder
   def self.notify_missing_date
-    return if AnnualMeeting.where('start_at >= ?', Date.today.beginning_of_year).
-        exists?
-    # FIXME(uwe): Send to the board
-    Member.where('email = ?', 'uwe@kubosch.no').each do |m|
-      AnnualMeetingMailer.missing_date(m).deliver
-    end
-  rescue
+    month = Date.today.mon
+    return if month >= 2 && month < 10
+    return if AnnualMeeting.where('start_at >= ?', Date.today).exists?
+    am = AnnualMeeting.last
+    board_members = am.elections.includes(:role).references(:roles).
+        where('roles.years_on_the_board IS NOT NULL').to_a.map(&:member)
+    board_members.each { |m| AnnualMeetingMailer.missing_date(m, am.start_at.year + 1).deliver }
+  rescue Exception
+    raise if Rails.env.test?
     logger.error "Exception sending missing annual meeting date reminder: #{$!}"
     logger.error $!.backtrace.join("\n")
     ExceptionNotifier.notify_exception($!)
   end
 
   def self.notify_missing_invitation
-    today = Date.today
-    members = Member.active(today).
-        includes(:ranks, :attendances => {:practice => {:group_schedule => :group}}).
-        all
-    overdue_graduates = members.select do |m|
-      next_rank = m.next_rank
-      attendances = m.attendances_since_graduation
-      minimum_attendances = next_rank.minimum_attendances
-      attendances.size >= minimum_attendances
+    return if Date.today.mon >= 2 && Date.today.mon < 10
+    next_meeting = AnnualMeeting.where('start_at >= ?', Date.today).
+        order(:start_at).first
+    return if next_meeting.try(:invitation_sent_at)
+    return if next_meeting.start_at > 6.weeks.from_now
+    am = AnnualMeeting.last
+    board_members = am.elections.includes(:role).references(:roles).
+        where('roles.years_on_the_board IS NOT NULL').to_a.map(&:member)
+    board_members.each do |m|
+      AnnualMeetingMailer.missing_invitation(next_meeting, m).deliver
     end
-    AnnualMeetingMailer.create_missing_invitation(overdue_graduates).deliver if overdue_graduates.any?
   rescue Exception
+    raise if Rails.env.test?
     logger.error "Exception sending overdue graduates message: #{$!}"
     logger.error $!.backtrace.join("\n")
     ExceptionNotifier.notify_exception($!)

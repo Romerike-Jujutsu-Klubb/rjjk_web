@@ -17,11 +17,12 @@ class GroupInstructor < ActiveRecord::Base
           :date => date) }
 
   validates_presence_of :group_schedule, :group_schedule_id, :member,
-      :member_id, :group_semester, :group_semester_id
+      :member_id, :group_semester_id
+  validates_presence_of :group_semester, if: :group_semester_id
   validates_uniqueness_of :member_id, scope: [:group_schedule_id, :group_semester_id]
 
   validate do
-    if group_semester.group_id != group_schedule.group_id
+    if group_semester && group_schedule && group_semester.group_id != group_schedule.group_id
       errors.add :group_semester, 'må være likt som gruppe-tiden'
     end
   end

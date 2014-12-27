@@ -104,4 +104,10 @@ class ActionDispatch::IntegrationTest
     end
   end
 
+  def assert_current_path(path)
+    start = Time.now
+    sleep 0.1 while (Time.now - start) < Capybara.default_wait_time && current_path != path
+    assert_equal path, current_path
+  end
+
 end
