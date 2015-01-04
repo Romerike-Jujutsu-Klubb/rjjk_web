@@ -2,7 +2,7 @@ class AnnualMeetingsController < ApplicationController
   before_filter :admin_required
 
   def index
-    @annual_meetings = AnnualMeeting.all
+    @annual_meetings = AnnualMeeting.order(:start_at).reverse_order.all
   end
 
   def show

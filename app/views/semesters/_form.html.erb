@@ -12,17 +12,19 @@
         </div>
     <% end %>
 
-    <div class="field" style="float: left; margin-right: 1em">
-      <%= f.label :start_on, 'Fra' %>
-      <%= f.text_field :start_on, class: 'date', :size => 18 %>
+    <div class="row">
+      <div class="form-group col-md-3">
+        <%= f.label :start_on, 'Fra' %>
+        <%= f.text_field :start_on, class: 'date form-control', size: 18 %>
+      </div>
+
+      <div class="form-group col-md-3">
+        <%= f.label :end_on, 'Til' %>
+        <%= f.text_field :end_on, class: 'date form-control', size: 18 %>
+      </div>
     </div>
 
-    <div class="field">
-      <%= f.label :end_on, 'Til' %>
-      <%= f.text_field :end_on, class: 'date', :size => 18 %>
-    </div>
-
-    <div class="actions">
-      <%= f.submit %>
-    </div>
+    <%= f.submit 'Lagre', class: 'btn btn-primary' %>
+    <%= back_or_link_to 'Tilbake', semesters_path, class: 'btn btn-default glyphicon glyphicon-back' %>
+    <%= link_to('Show', @semester, class: 'btn btn-default') unless @semester.new_record? %>
 <% end %>

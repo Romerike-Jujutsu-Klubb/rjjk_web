@@ -523,6 +523,7 @@ ActiveRecord::Schema.define(version: 20141204155251) do
     t.integer  "tid",                      null: false
     t.string   "epost_faktura", limit: 64
     t.string   "stilart",       limit: 64, null: false
+    t.index ["tid"], :name => "index_nkf_member_trials_on_tid", :unique => true
   end
 
   create_table "nkf_members", force: true do |t|
@@ -605,8 +606,8 @@ ActiveRecord::Schema.define(version: 20141204155251) do
   end
 
   create_table "survey_answer_translations", force: true do |t|
-    t.string   "answer",            null: false
-    t.string   "normalized_answer", null: false
+    t.string   "answer",            limit: 254, null: false
+    t.string   "normalized_answer", limit: 254, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -645,6 +646,7 @@ ActiveRecord::Schema.define(version: 20141204155251) do
   create_table "survey_requests", force: true do |t|
     t.integer  "survey_id",    null: false
     t.integer  "member_id",    null: false
+    t.text     "comment"
     t.datetime "sent_at"
     t.datetime "reminded_at"
     t.datetime "completed_at"
@@ -658,9 +660,9 @@ ActiveRecord::Schema.define(version: 20141204155251) do
   end
 
   create_table "survey_answers", force: true do |t|
-    t.integer  "survey_request_id",  null: false
-    t.integer  "survey_question_id", null: false
-    t.string   "answer",             null: false
+    t.integer  "survey_request_id",              null: false
+    t.integer  "survey_question_id",             null: false
+    t.string   "answer",             limit: 254, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["survey_question_id"], :name => "fk__survey_answers_survey_question_id"

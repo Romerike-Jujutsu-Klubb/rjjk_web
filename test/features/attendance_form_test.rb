@@ -7,26 +7,28 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
     click_link 'Oppmøtelister'
     assert_current_path '/attendances/form_index'
     screenshot('attendance_form_index')
-    end
+  end
+
   def test_select_panda_october
     visit_with_login '/attendances/form_index'
     select('Oktober 2013', from: 'group_name_Panda')
+    assert_current_path "/attendances/form/2013/10/#{groups(:panda).id}"
     assert_equal ['Uwe Kubosch',
-        'Totalt 1',
-        'Lars Bråten',
-        'Erik Hansen MyString',
-        'Hans Eriksen faktura@eriksen.org',
-        'Totalt 3'], all('tr td:first-child').map(&:text).reject(&:blank?)
+            'Totalt 1',
+            'Lars Bråten',
+            'Erik Hansen MyString',
+            'Hans Eriksen faktura@eriksen.org',
+            'Totalt 3'], all('tr td:first-child').map(&:text).reject(&:blank?)
   end
 
   def test_record_panda_october
     visit_with_login "/attendances/form/2013/10/#{groups(:panda).id}"
     assert_equal ['Uwe Kubosch',
-        'Totalt 1',
-        'Lars Bråten',
-        'Erik Hansen MyString',
-        'Hans Eriksen faktura@eriksen.org',
-        'Totalt 3'], all('tr td:first-child').map(&:text).reject(&:blank?)
+            'Totalt 1',
+            'Lars Bråten',
+            'Erik Hansen MyString',
+            'Hans Eriksen faktura@eriksen.org',
+            'Totalt 3'], all('tr td:first-child').map(&:text).reject(&:blank?)
 
     uwe_row = find('table:first-of-type tbody tr:first-of-type')
     assert uwe_row
@@ -67,7 +69,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
       erik_row = find('table:first-of-type tbody tr:nth-of-type(6)')
       assert erik_row
       assert_equal ['Erik Hansen MyString', '7',
-          'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', '', '', '', ''],
+              'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', '', '', '', ''],
           erik_row.all('td').map(&:text)
       assert_difference 'TrialAttendance.count' do
         erik_row.find('td:nth-of-type(4)').find('a').click
@@ -78,7 +80,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
       hans_row = find('table:first-of-type tbody tr:nth-of-type(7)')
       assert hans_row
       assert_equal ['Hans Eriksen faktura@eriksen.org', '6',
-          'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', 'X', '', '', '2'],
+              'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', 'X', '', '', '2'],
           hans_row.all('td').map(&:text)
       assert_difference 'TrialAttendance.count' do
         hans_row.find('td:nth-of-type(4)').find('a').click

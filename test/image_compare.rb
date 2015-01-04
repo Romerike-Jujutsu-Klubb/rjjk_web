@@ -18,8 +18,8 @@ class ImageCompare
 
     sizes = images.map(&:width).uniq + images.map(&:height).uniq
     if sizes.size != 2
-      puts "Image size has changed for #{name}: #{sizes}"
-      return nil
+      puts "Image size has changed for #{name}: #{images.map{|i| "#{i.width}x#{i.height}"}.join(' => ')}"
+      return true
     end
 
     diff = []

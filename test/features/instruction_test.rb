@@ -16,13 +16,15 @@ class InstructionTest < ActionDispatch::IntegrationTest
     assert_current_path '/group_instructors/new'
     screenshot('instruction/new')
     select 'Panda Torsdag', from: 'group_instructor_group_schedule_id'
-    sleep 60
+    screenshot('instruction/new_with_group_schedule_selected')
     select 'Uwe Kubosch', from: 'group_instructor_member_id'
-    select '2013: 07-01→12-31', from: 'group_instructor_member_id'
+    screenshot('instruction/new_with_member_selected')
+    select '2100: 01-01→12-31', from: 'group_instructor_semester_id'
+    screenshot('instruction/new_with_semester_selected')
     screenshot('instruction/new_filled_in')
     click_button 'Lagre'
-    assert_equal '/group_instructors', current_path
-    find
+    assert_current_path '/group_instructors'
+    assert has_content? 'GroupInstructor was successfully created.'
   end
 
 end

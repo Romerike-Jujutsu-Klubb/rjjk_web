@@ -286,7 +286,7 @@ class NkfMemberImport
       if record.changed?
         c = record.changes
         if record.save
-          @trial_changes << {:record => record, :changes => c}
+          @trial_changes << {record: record, changes: c}
         else
           logger.error "ERROR: #{columns}"
           logger.error "ERROR: #{row}"

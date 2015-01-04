@@ -30,11 +30,11 @@
        end
      end
   %>
-  <div id="button_<%= week %>_<%= gs.id %>" class="btn-group">
+  <div id="button_<%= year %>_<%= week %>_<%= gs.id %>" class="btn-group">
     <%= link_to(link_target, method: link_method, remote: !initial_disabled,
             id: "btn_#{year}_#{week}_#{gs.id}", class: "btn #{initial_class}",
             style: 'width: 7.5em', onclick: initial_disabled ? 'return false' : nil,
-            :'data-replace' => initial_disabled || "#practice_#{week}_#{gs.id}") do %>
+            data: {replace: initial_disabled || "#practice_#{week}_#{gs.id}"}) do %>
         <i class="<%= initial_icon %>"></i>
         <span><%= initial_text %></span>
     <% end %>
@@ -45,8 +45,8 @@
       <% (practice_passed ? Attendance::PAST_STATES : Attendance::STATES).each do |state, link_text, link_icon, link_class| %>
           <li>
             <%= link_to({controller: :attendances, action: :announce, year: year, week: week, group_schedule_id: gs.id, status: state},
-                    :method => :post, :remote => true, :id => "btn_#{year}_#{week}_#{gs.id}",
-                    :onclick => "$('#btn_#{year}_#{week}_#{gs.id}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('#{link_class}').html($(this).html()); $('[data-toggle=dropdown]').parent().removeClass('open'); return true",
+                    method: :post, remote: true, id: "btn_#{year}_#{week}_#{gs.id}",
+                    onclick: "$('#btn_#{year}_#{week}_#{gs.id}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('#{link_class}').html($(this).html()); $('[data-toggle=dropdown]').parent().removeClass('open'); return true",
                 ) do %>
                 <i class="<%= link_icon %>"></i>
                 <span><%= link_text %></span>
@@ -57,8 +57,8 @@
   </div>
   <%= javascript_tag do %>
       $(function() {
-          $('#button_<%= week %>_<%= gs.id %>').popover({content: 'Oppmøte registrert', placement: 'top', container: 'body'});
-          $('#button_<%= week %>_<%= gs.id %>').popover('show');
+          $('#button_<%= year %>_<%= week %>_<%= gs.id %>').popover({content: 'Oppmøte registrert', placement: 'top', container: 'body'});
+          $('#button_<%= year %>_<%= week %>_<%= gs.id %>').popover('show');
       });
   <% end if @reviewed_attendance && @reviewed_attendance.group_schedule == gs && @reviewed_attendance.practice.year == year && @reviewed_attendance.practice.week == week %>
   <br/>

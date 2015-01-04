@@ -10,3 +10,4 @@ RJJK Web
 * Testdekning: 80%
 * Penere "Last opp media" på høyresiden.
 * Penere "Mitt oppmøte".  Sette knapper over hverandre.
+* Legg til "Hvem er på?" med http://faye.jcoglan.com/ruby.html

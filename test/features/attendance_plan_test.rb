@@ -30,14 +30,14 @@ class AttendancePlanTest < ActionDispatch::IntegrationTest
 
   def test_dropdown_changes_are_persistent
     visit_with_login '/mitt/oppmote'
-    next_button = find('#button_42_545305079')
+    next_button = find('#button_2013_42_545305079')
     assert_equal 'Kommer!', next_button.text
     next_button.find('span.caret').click
     next_button.click_link('Annet')
     assert_equal 'Annet', next_button.text
     wait_for_ajax
     visit "/mitt/oppmote?a=#{Time.now.to_i}"
-    next_button = find('#button_42_545305079')
+    next_button = find('#button_2013_42_545305079')
     assert_equal 'Annet', next_button.text
   end
 
