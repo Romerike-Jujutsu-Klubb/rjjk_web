@@ -250,13 +250,3 @@ ul.nav.nav-tabs {
     background-color: #F7F7F7;
     padding: 0;
 }
-
-/* Allow equal hight columns */
-.stretch {
-    margin-bottom: -99999px;
-    padding-bottom: 99999px;
-}
-
-.row-stretch {
-    overflow-y: hidden;
-}

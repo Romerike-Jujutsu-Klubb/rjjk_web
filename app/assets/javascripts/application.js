@@ -15,6 +15,8 @@
 //= require nprogress-turbolinks
 //= require chosen-jquery
 //= require remember_tab
+//= require stretch-columns
+// Switch to Bootstrap modal
 $(function () {
     $(".colorbox").colorbox({
         inline: true,
@@ -31,13 +33,6 @@ $(function () {
 NProgress.configure({showSpinner: false,  ease: 'ease',  speed: 500});
 
 $().ready(function () {
-    $(window).on('popstate', function () {
-        $('.stretch').parent('.row').scrollTop(0);
-        setTimeout(function () {
-            $('.stretch').parent('.row').scrollTop(0)
-        }, 50)
-    });
-    $('.stretch').parent('.row').addClass("row-stretch");
     $('.chosen-select').chosen();
 });
 

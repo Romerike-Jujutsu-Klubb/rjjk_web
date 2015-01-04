@@ -1,0 +1,13 @@
+/* Allow equal hight columns */
+.stretch {
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+
+.row-stretch {
+    overflow-y: hidden;
+}
+
+select.form-control {
+    display: inline-block;
+}
