@@ -45,8 +45,6 @@ module RedCloth
   end
 end
 
-# ActionView::Base.field_error_proc = Proc.new { |html_tag, _| "<span class=\"fieldWithErrors\">#{html_tag}</span>".html_safe }
-
 class TimeOfDay
   def min
     minute
@@ -64,7 +62,6 @@ class TimeOfDay
     self < self.class.new(17, 0) ? 'dag' : 'kveld'
   end
 end
-
 
 module Prawn
   class Table

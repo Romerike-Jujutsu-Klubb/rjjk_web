@@ -15,10 +15,7 @@
 #   inflect.acronym 'RESTful'
 # end
 
-# config.i18n.enforce_available_locales = true # must be the first i18n config
-
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.plural /^(embu)$/i, '\1s'
   inflect.singular /^(embu)s/i, '\1'
 end
-

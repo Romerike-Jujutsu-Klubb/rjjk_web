@@ -40,7 +40,7 @@ end
 private
 
 def notify_wrong_contracts
-  members = NkfMember.where(:medlemsstatus => 'A').all
+  members = NkfMember.where(medlemsstatus: 'A').all
   wrong_contracts = members.select { |m|
     m.member &&
         (m.member.age < 10 && m.kont_sats !~ /^Barn/) ||
@@ -59,7 +59,7 @@ def notify_missing_semesters
     SemesterMailer.missing_current_semester.deliver
     return
   end
-  unless Semester.where('? BETWEEN start_on AND end_on', Date.today + 6.months).exists?
+  unless Semester.where('? BETWEEN start_on AND end_on', Date.today + 4.months).exists?
     SemesterMailer.missing_next_semester.deliver
   end
 rescue
@@ -72,7 +72,7 @@ def create_missing_group_semesters
   groups = Group.active.all
   Semester.all.each do |s|
     groups.each do |g|
-      cond = {:group_id => g.id, :semester_id => s.id}
+      cond = {group_id: g.id, semester_id: s.id}
       GroupSemester.create! cond unless GroupSemester.exists? cond
     end
   end
