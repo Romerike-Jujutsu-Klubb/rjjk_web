@@ -28,6 +28,16 @@ class AttendancesControllerTest < ActionController::TestCase
     assert_redirected_to attendance_path(assigns(:attendance))
   end
 
+  def test_create_with_group_schedule_id_and_year_and_week
+    assert_difference('Attendance.count') do
+      post :create, attendance: {member_id: members(:uwe).id,
+          group_schedule_id: group_schedules(:panda).id, year: 2010, week: 42,
+          status: 'X'}
+      assert_no_errors(:attendance)
+    end
+    assert_redirected_to attendance_path(assigns(:attendance))
+  end
+
   def test_should_show_attendance
     get :show, :id => attendances(:lars_panda_2010_42).id
     assert_response :success

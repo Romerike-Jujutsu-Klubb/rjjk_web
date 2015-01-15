@@ -10,7 +10,7 @@
         <% options = (0..months).map { |i| ["#{t Date::MONTHNAMES[1 + (7 + i) % 12]} #{2009 + (8 + i) / 12}", url_for(:action => :form, :year => (start_date + i.months).year, :month => (start_date + i.months).month, :group_id => group.id)] }.reverse %>
         <tr>
           <td><label><%= group.name %></label></td>
-          <td><%= select :group_name, group.name, [[nil, nil]] + options,
+          <td><%= select :group_name, group.name, options,
                   {prompt: 'Velg måned'},
                   onchange: 'document.location = options[selectedIndex].value',
                   class: 'form-control' %></td>

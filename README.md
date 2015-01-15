@@ -11,3 +11,21 @@ RJJK Web
 * Penere "Last opp media" på høyresiden.
 * Penere "Mitt oppmøte".  Sette knapper over hverandre.
 * Legg til "Hvem er på?" med http://faye.jcoglan.com/ruby.html
+
+## Tester
+
+Tester kjøres med
+
+    rake test
+
+
+## Ytelsestester
+
+Du kan kjøre ytelsestester med
+
+    ./siege.sh
+    ./siege_news.sh
+
+Resultatene lagres i
+
+    doc/siege/

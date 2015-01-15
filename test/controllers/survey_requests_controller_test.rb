@@ -40,7 +40,7 @@ class SurveyRequestsControllerTest < ActionController::TestCase
   end
 
   test 'should update survey_request' do
-    patch :update, id: @survey_request, survey_request: { completed_at: @survey_request.completed_at, member_id: @survey_request.member_id, survey_id: @survey_request.survey_id }
+    patch :update, id: @survey_request, survey_request: {completed_at: @survey_request.completed_at, member_id: @survey_request.member_id, survey_id: @survey_request.survey_id}
     assert_redirected_to survey_request_path(assigns(:survey_request))
   end
 
@@ -50,5 +50,10 @@ class SurveyRequestsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to survey_requests_path
+  end
+
+  def test_answer_form
+    get :answer_form, id: survey_requests(:sent).id
+    assert_response :success
   end
 end

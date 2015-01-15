@@ -16,7 +16,7 @@
             <% choices = sq.choices.try(:split, "\n") %>
             <% answers = answer.answers %>
             <% if sq.free_text %>
-                <% other_value = (answer.answers - choices).first %>
+                <% other_value = (answer.answers - (choices || [])).first %>
                 <% answers << 'annet' if other_value %>
                 <% choices << [:Annet, :annet] if choices %>
             <% end %>
@@ -38,12 +38,14 @@
                     }" %>
                   </div>
               <% end %>
+
               <% if sq.free_text %>
                   <div class="col-md-6">
-                    <%= sa.text_field :answer_free, disabled: !other_value,
+                    <% show_free_text = other_value || choices.blank? %>
+                    <%= sa.text_field :answer_free, disabled: !show_free_text,
                             value: other_value, class: 'form-control expanding',
                             placeholder: 'Skriv beskrivelse her.',
-                            style: ('display:none' unless other_value)
+                            style: ('display:none' unless show_free_text)
                     %>
                   </div>
               <% end %>
@@ -54,5 +56,5 @@
         <br/>
     <% end %>
     <br/>
-    <%= f.submit class: 'btn btn-primary' %>
+    <%= f.submit 'Send inn svar', class: 'btn btn-primary' %>
 <% end %>

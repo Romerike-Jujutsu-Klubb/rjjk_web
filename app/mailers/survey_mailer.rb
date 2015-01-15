@@ -1,9 +1,8 @@
 class SurveyMailer < ActionMailer::Base
   include UserSystem
   include MailerHelper
-  default from: Rails.env == 'production' ?
-          'medlem@jujutsu.no' : "#{Rails.env}@jujutsu.no",
-      bcc: 'uwe@kubosch.no'
+  default bcc: 'uwe@kubosch.no',
+      from: Rails.env == 'production' ? 'medlem@jujutsu.no' : "#{Rails.env}@jujutsu.no"
   layout 'email'
 
   def survey(survey_request)
@@ -13,8 +12,7 @@ class SurveyMailer < ActionMailer::Base
     @timestamp = Time.now
     @email_url = with_login(survey_request.member.user,
         controller: :survey_requests, action: :answer_form, id: survey_request.id)
-    mail to: safe_email(survey_request.member),
-        subject: rjjk_prefix(@title)
+    mail to: safe_email(survey_request.member), subject: rjjk_prefix(@title)
   end
 
   def reminder(survey_request)
@@ -24,7 +22,6 @@ class SurveyMailer < ActionMailer::Base
     @timestamp = Time.now
     @email_url = with_login(survey_request.member.user,
         controller: :survey_requests, action: :answer_form, id: survey_request.id)
-    mail to: safe_email(survey_request.member),
-        subject: rjjk_prefix(@title)
+    mail to: safe_email(survey_request.member), subject: rjjk_prefix(@title)
   end
 end

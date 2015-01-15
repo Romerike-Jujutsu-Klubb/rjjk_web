@@ -13,7 +13,14 @@ unless Rails.env == 'test'
   scheduler.cron('5 8-23 * * *') { AttendanceNagger.send_attendance_changes }
   scheduler.cron('8/15 * * * *') { AttendanceNagger.send_attendance_review }
   scheduler.cron('9 9-23 * * *') { EventNotifier.send_event_messages }
-  scheduler.cron('10 10 * * *') { StartSurvey.send_survey }
+
+  # TODO(uwe): Limit messages to once per week: news, survey, info
+  # TODO(uwe): Email board meeting minutes
+  # TODO(uwe): Register shirt sizes for members.
+  # TODO(uwe): Register jacket sizes for members?
+  # TODO(uwe): Lage info side om jakkene.
+
+  scheduler.cron('10 10 * * *') { SurveySender.send_surveys }
 
   # Admin Hourly
   scheduler.cron('15 9-23 * * *') { NkfMemberImport.import_nkf_changes }

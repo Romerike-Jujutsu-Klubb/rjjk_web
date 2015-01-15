@@ -45,17 +45,17 @@ class AttendancePlanTest < ActionDispatch::IntegrationTest
     visit_with_login "/attendances/review/2013/41/#{group_schedules(:voksne_thursday).id}/I",
         redirected_path: '/mitt/oppmote'
     screenshot('attendance/plan/review_old')
-    assert_equal ['Trente du? Lars trente.', 'Var der! Lars trente.', 'Ubekreftet', 'Kommer!', 'Kommer du?', 'Kommer du?'],
+    assert_equal ['Trente du? Lars trente.', 'Var der! Lars trente.', 'Ubekreftet', 'Kommer!', 'Kommer du?', 'Kommer du?', 'Oktober', '1'],
         all('td').map(&:text).reject(&:blank?)
 
     first('a.btn').click
     assert has_css?('a.btn', text: 'Var der!', count: 2)
-    assert_equal ['Var der! Lars trente.', 'Var der! Lars trente.', 'Ubekreftet', 'Kommer!', 'Kommer du?', 'Kommer du?'],
+    assert_equal ['Var der! Lars trente.', 'Var der! Lars trente.', 'Ubekreftet', 'Kommer!', 'Kommer du?', 'Kommer du?', 'Oktober', '1'],
         all('td').map(&:text).reject(&:blank?)
 
     all('a.btn')[1].click
     assert has_css?('a.btn', text: 'Annet')
-    assert_equal ['Var der! Lars trente.', 'Annet Lars trente.', 'Ubekreftet', 'Kommer!', 'Kommer du?', 'Kommer du?'],
+    assert_equal ['Var der! Lars trente.', 'Annet Lars trente.', 'Ubekreftet', 'Kommer!', 'Kommer du?', 'Kommer du?', 'Oktober', '1'],
         all('td').map(&:text).reject(&:blank?)
   end
 

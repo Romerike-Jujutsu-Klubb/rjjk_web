@@ -5,7 +5,7 @@ require 'chunky_png'
 class ImageCompare
   include ChunkyPNG::Color
 
-  def self.compare(file_name, old_file_name)
+  def self.compare(file_name, old_file_name, dimensions = nil)
     name = file_name.chomp('.png')
     org_file_name = "#{name}_0.png~"
     new_file_name = "#{name}_1.png~"
@@ -16,9 +16,13 @@ class ImageCompare
         ChunkyPNG::Image.from_file(file_name),
     ]
 
+    if dimensions
+      images.map! { |i| i.dimension.to_a == dimensions ? i : i.crop(0, 0, *dimensions) }
+    end
+
     sizes = images.map(&:width).uniq + images.map(&:height).uniq
     if sizes.size != 2
-      puts "Image size has changed for #{name}: #{images.map{|i| "#{i.width}x#{i.height}"}.join(' => ')}"
+      puts "Image size has changed for #{name}: #{images.map { |i| "#{i.width}x#{i.height}" }.join(' => ')}"
       return true
     end
 

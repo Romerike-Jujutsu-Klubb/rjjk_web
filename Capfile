@@ -38,7 +38,8 @@ set :rvm_autolibs_flag, 'read-only'
 
 namespace :rvm do
   task :trust_keys, roles: [:app] do
-    run 'gpg2 --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3'
+    run 'gpg2 --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3',
+        shell: :bash
   end
 end
 
@@ -48,11 +49,11 @@ before 'deploy:setup', 'rvm:install_ruby' # install Ruby and create gemset
 before 'deploy:spinner', 'deploy:reload_daemons'
 before 'deploy:restart', 'deploy:reload_daemons'
 
-task :symlinks do
-  run "#{try_sudo} rm -f /usr/lib/systemd/system/#{application}.service ; #{try_sudo} ln -s /u/apps/#{application}/current/usr/lib/systemd/system/#{application}.service /usr/lib/systemd/system/#{application}.service"
-end
-
 namespace :deploy do
+  task :symlinks do
+    run "#{try_sudo} rm -f /usr/lib/systemd/system/#{application}.service ; #{try_sudo} ln -s /u/apps/#{application}/current/usr/lib/systemd/system/#{application}.service /usr/lib/systemd/system/#{application}.service"
+  end
+
   task :reload_daemons do
     run "#{try_sudo} systemctl daemon-reload"
   end

@@ -9,8 +9,15 @@ source 'https://rubygems.org/'
 
 gem 'rails', '< 4.2.0'
 
+platform :jruby do
+  gem 'activerecord-jdbcpostgresql-adapter'
+end
+
+platform :ruby do
+  gem 'pg'
+end
+
 gem 'actionpack-page_caching'
-gem 'activerecord-jdbcpostgresql-adapter'
 gem 'activerecord-time'
 gem 'acts_as_list'
 gem 'acts_as_tree'
@@ -48,9 +55,8 @@ gem 'RedCloth'
 gem 'red_cloth_formatters_plain'
 gem 'redbox', '~> 1.0.4'
 gem 'ri_cal'
-gem 'rmagick4j'
 gem 'rufus-scheduler'
-gem 'sass-rails'
+gem 'sass-rails', '>=4.0.5'
 gem 'schema_plus'
 gem 'simple_drilldown'
 gem 'simple_workflow'
@@ -74,6 +80,7 @@ group :test do
   gem 'minitest-rails-capybara'
   gem 'minitest-reporters'
   gem 'mocha', require: 'mocha/setup'
+  gem 'poltergeist'
   gem 'rubycritic', require: false
   gem 'selenium-webdriver'
   gem 'simplecov'

@@ -61,6 +61,10 @@
                 :html => {:method => :post} do |f| %>
             <%= f.hidden_field :graduation_id %>
             <div class="input-group">
+
+              <!--FIXME(uwe): Lage bedre oversikt over de som ikke er lagt til graderingen.-->
+              <!--http://api.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html#method-i-grouped_options_for_select-->
+
               <%= f.select :member_id, [['Velg deltaker', nil]] + @members.map { |m| [m.name, m.id] },
                       {}, :class => 'form-control', :onchange => 'form.submit()' %>
               <span class="input-group-btn">

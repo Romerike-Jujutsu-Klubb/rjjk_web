@@ -43,13 +43,18 @@ class AttendancesController < ApplicationController
   end
 
   def create
-    @attendance = Attendance.new(params[:attendance], :without_protection => true)
-    @attendance.practice = Practice.find(@attendance.practice_id) if @attendance.practice_id
+    if params[:attendance][:group_schedule_id]
+      params[:attendance][:practice_id] = Practice.find_by_group_schedule_id_and_year_and_week(
+          params[:attendance].delete(:group_schedule_id),
+          params[:attendance].delete(:year), params[:attendance].delete(:week)
+      ).id
+    end
+    @attendance = Attendance.new(params[:attendance], without_protection: true)
     if @attendance.save
       flash[:notice] = 'Attendance was successfully created.'
       if request.xhr?
         flash.clear
-        render :partial => '/attendances/attendance_delete_link', :locals => {:attendance => @attendance}
+        render partial: '/attendances/attendance_delete_link', locals: {attendance: @attendance}
       else
         back_or_redirect_to(@attendance)
       end
@@ -201,8 +206,8 @@ class AttendancesController < ApplicationController
         to_a
     start_date = 6.months.ago.to_date.beginning_of_month
     attendances = Attendance.includes(practice: {group_schedule: :group}).references(:practices).
-        where('member_id = ? AND attendances.status = ? AND ((practices.year = ? AND practices.week >= ?) OR (practices.year = ?))',
-            member, Attendance::Status::ATTENDED, start_date.year, start_date.cweek, today.year).
+        where('member_id = ? AND attendances.status IN (?) AND ((practices.year = ? AND practices.week >= ?) OR (practices.year = ?))',
+            member, Attendance::PRESENT_STATES, start_date.year, start_date.cweek, today.year).
         to_a
     @attended_groups = attendances.map { |a| a.practice.group_schedule.group }.uniq.sort_by { |g| -g.from_age }
     per_month = attendances.group_by { |a| d = a.date; [d.year, d.mon] }
