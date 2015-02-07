@@ -12,21 +12,12 @@ class ActionDispatch::IntegrationTest
 
   Capybara.default_driver = rand(10) == 0 ? :selenium : :poltergeist
 
-  # FIXME(uwe): Fix select tag rendering
-  # https://github.com/teampoltergeist/poltergeist/issues/570
-
   WINDOW_SIZE = [1024, 768]
   SCREENSHOT_DIR = 'doc/screenshots'
   SCREENSHOT_DIR_ABS = "#{Rails.root}/#{SCREENSHOT_DIR}/#{Capybara.default_driver}"
 
-
   Capybara.default_wait_time = 30
-
   self.use_transactional_fixtures = false
-  fixtures :all
-  TEST_START = Time.now.change(sec: 0)
-
-  Minitest.after_run { Timecop.return }
 
   setup do
     if Capybara.default_driver == :selenium
@@ -34,13 +25,13 @@ class ActionDispatch::IntegrationTest
     else
       page.driver.resize(*WINDOW_SIZE)
     end
-    Timecop.travel TEST_START
+    Timecop.travel TEST_TIME
   end
 
   teardown do
     DatabaseCleaner.clean # Truncate the database
     Capybara.reset_sessions! # Forget the (simulated) browser state
-    Capybara.use_default_driver # Revert Capybara.current_driver to Capybara.default_driver
+    Timecop.freeze TEST_TIME
     fail(@test_screenshot_errors.join("\n")) if @test_screenshot_errors
   end
 
@@ -93,12 +84,12 @@ class ActionDispatch::IntegrationTest
     raise "Unknown options: #{options}" unless options.empty?
     visit path
     fill_login_form(user) if current_path == '/user/login'
-    assert_equal redirected_path, current_path
+    assert_current_path redirected_path
   end
 
-  def login_and_visit(path)
+  def login_and_visit(path, user = :admin)
     visit '/user/login'
-    fill_login_form :admin
+    fill_login_form user
     visit path
   end
 

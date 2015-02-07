@@ -18,7 +18,6 @@ class AttendanceReviewFeatureTest < ActionDispatch::IntegrationTest
     assert_equal ['Forrige uke', 'Var der! Du og Lars trente.', 'Annet Lars trente.', 'Denne uken', 'Ubekreftet', 'Kommer!', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1'],
         all('td').map(&:text).reject(&:blank?)
 
-    screenshot('dummy')
     first('a', text: 'Du og Lars').click
     screenshot('attendance/plan/review_old_popup')
   end

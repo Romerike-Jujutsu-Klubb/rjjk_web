@@ -12,6 +12,10 @@ MiniTest::Reporters.use!
 class ActiveSupport::TestCase
   fixtures :all
 
+  TEST_TIME = Time.local(2013, 10, 17, 18, 46, 0) # Week 42, thursday
+  Timecop.freeze(TEST_TIME)
+  Minitest.after_run { Timecop.return }
+
   def login(login = :admin)
     u = users(login)
     request.session[:user_id] = u.id
@@ -20,7 +24,7 @@ class ActiveSupport::TestCase
 
   def assert_no_errors(symbol)
     v = assigns(symbol)
-    assert v
+    assert v, "Assignment #{symbol} not found in the controller."
     assert_equal [], v.errors.full_messages
   end
 

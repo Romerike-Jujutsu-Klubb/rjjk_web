@@ -1,23 +1,27 @@
 set :application, 'rjjk_web'
-set :repository, "svn+ssh://capistrano@kubosch.no/var/svn/trunk/#{application}"
-
-role :web, 'kubosch.no'
-role :app, 'kubosch.no'
-role :db,  'kubosch.no', primary: true
-
-set :user, 'capistrano'
-
+set :scm, :svn
+set :repo_url, "svn+ssh://capistrano@kubosch.no/var/svn/trunk/#{fetch :application}"
+set :deploy_to, -> { "/u/apps/#{fetch :application}" }
 set :keep_releases, 30
-after 'deploy:update', 'deploy:cleanup'
+
+role :app, %w{capistrano@kubosch.no}
+role :web, %w{capistrano@kubosch.no}
+role :db,  %w{capistrano@kubosch.no}
+
+server 'kubosch.no', user: 'capistrano', roles: %w{web app}, my_property: :my_value
 
 namespace :deploy do
   desc 'The spinner task is used by :cold_deploy to start the application up'
-  task :spinner, roles: :app do
-    run "systemctl start #{application}"
+  task :spinner do
+    on roles :all do
+      execute :sudo, "systemctl start #{fetch :application}"
+    end
   end
-  
+
   desc 'Restart the service'
-  task :restart, roles: :app do
-    run "#{try_sudo} systemctl restart #{application}"
+  task :restart do
+    on roles :all do
+      execute :sudo, "systemctl restart #{fetch :application}"
+    end
   end
 end

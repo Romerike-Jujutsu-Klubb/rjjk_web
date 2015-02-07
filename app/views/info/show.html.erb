@@ -11,12 +11,13 @@
     </ul>
 <% end %>
 
+<%=render 'layouts/modal_image' %>
+
 <%= javascript_tag do %>
-    $('.main img').addClass('img-thumbnail');
-    $('.main img').colorbox({
-      title: function() { return $(this).attr('title') },
-      href: function() { return $(this).attr('src').replace("inline", "show") },
-      maxWidth: '100%',
-      maxHeight: '100%',
+    $('.main img').addClass('img-thumbnail').css({cursor: 'pointer'});
+    $('.main img').on('click', function() {
+      $('#imageModal .modal-title').html($(this).attr('title'));
+      $('#modalImage').attr('src', $(this).attr('src').replace("inline", "show"));
+      $('#imageModal').modal();
     });
 <% end %>

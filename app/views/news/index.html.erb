@@ -33,8 +33,8 @@
                 <% if user? %>
                     <ul class="controls">
                       <li><%= detour_to 'Endre', edit_news_item_path(news_item), :class => :edit %></li>
-                      <li><%= detour_to 'Utløpt', {:controller => :news, :action => :expire, :id => news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :post %></li>
-                      <li><%= detour_to 'Slett', {:controller => :news, :action => :destroy, :id => news_item}, :class => :edit, :confirm => 'Er du sikker?', :method => :delete %></li>
+                      <li><%= detour_to 'Utløpt', {controller: :news, action: :expire, id: news_item}, class: :edit, :confirm => 'Er du sikker?', method: :post %></li>
+                      <li><%= detour_to 'Slett', {controller: :news, action: :destroy, id: news_item}, class: :edit, :confirm => 'Er du sikker?', method: :delete %></li>
                     </ul>
                 <% end %>
               </div>
@@ -48,7 +48,7 @@
     <p>
     <ul class="controls">
       <li>
-        <%= link_to 'Eldre nyheter', {:controller => :news, :action => :list, :id => nil}, :class => :edit %>
+        <%= link_to 'Eldre nyheter', {controller: :news, action: :list, id: nil}, class: :edit %>
       </li>
     </ul>
     </p>
