@@ -5,7 +5,9 @@ admin:
   email: admin@test.com
   verified: true
   role: ADMIN
-  
+  security_token: 0123456789abcdef0123456789abcdef01234567
+  token_expiry: <%=(Time.now + User.token_lifetime).utc.strftime("%Y-%m-%d %H:%M:%S") %>
+
 lars:
   login: lars
   salted_password: de6db7cdf638e5ba522b9e5728d551315bf750f4 # atest
@@ -49,3 +51,10 @@ unverified_user:
   security_token: another_random_token_string
   token_expiry: <%=(Time.now + User.token_lifetime).utc.strftime("%Y-%m-%d %H:%M:%S") %>
   deleted: false
+
+newbie:
+  login: newbie
+  salted_password: ef94c16f6c124a4e84cc215c164767bfa25f6e92 # atest
+  salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
+  email: newbie@example.com
+  verified: true

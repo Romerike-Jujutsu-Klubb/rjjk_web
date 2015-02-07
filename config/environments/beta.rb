@@ -1,5 +1,7 @@
 Rails.application.configure do
   config.action_controller.perform_caching = true
+  # config.action_controller.asset_host = 'http://beta.jujutsu.no'
+  config.action_mailer.asset_host = 'http://beta.jujutsu.no'
   config.action_mailer.default_url_options = {host: 'beta.jujutsu.no'}
   config.action_mailer.raise_delivery_errors = true
   config.active_record.dump_schema_after_migration = false

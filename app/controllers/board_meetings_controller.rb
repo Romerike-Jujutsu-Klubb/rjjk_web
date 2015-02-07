@@ -2,7 +2,7 @@ class BoardMeetingsController < ApplicationController
   before_filter :admin_required
 
   def index
-    @board_meetings = BoardMeeting.all
+    @board_meetings = BoardMeeting.order(:start_at).reverse_order.all
     load_form_data
     respond_to do |format|
       format.html # index.html.erb

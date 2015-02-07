@@ -12,21 +12,22 @@ class Attendance < ActiveRecord::Base
   end
 
   STATES = [
-      [Status::WILL_ATTEND, 'Kommer!', 'icon-thumbs-up', 'btn-success'],
-      [Status::HOLIDAY, 'Bortreist', 'icon-hand-right', 'btn-warning'],
-      [Status::SICK, 'Syk', 'icon-plus', 'btn-danger'],
-      [Status::ABSENT, 'Annet', 'icon-thumbs-down', 'btn-info'],
+      [Status::WILL_ATTEND, 'Kommer!', 'thumbs-up', 'success'],
+      [Status::HOLIDAY, 'Bortreist', 'hand-right', 'warning'],
+      [Status::SICK, 'Syk', 'plus', 'danger'],
+      [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
   ]
 
   PAST_STATES = [
-      [Status::ATTENDED, 'Var der!', 'icon-thumbs-up', 'btn-success'],
-      [Status::HOLIDAY, 'Bortreist', 'icon-hand-right', 'btn-warning'],
-      [Status::SICK, 'Syk', 'icon-plus', 'btn-danger'],
-      [Status::ABSENT, 'Annet', 'icon-thumbs-down', 'btn-info'],
+      [Status::ATTENDED, 'Var der!', 'thumbs-up', 'success'],
+      [Status::HOLIDAY, 'Bortreist', 'hand-right', 'warning'],
+      [Status::SICK, 'Syk', 'plus', 'danger'],
+      [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
   ]
 
   PRESENT_STATES = [Status::ASSISTANT, Status::ATTENDED, Status::INSTRUCTOR, Status::PRESENT]
   ABSENT_STATES = [Status::HOLIDAY, Status::SICK, Status::ABSENT]
+  PRESENCE_STATES = [*PRESENT_STATES, Status::WILL_ATTEND]
 
   scope :by_group_id, -> group_id { includes(practice: :group_schedule).references(:group_schedules).where('group_schedules.group_id = ?', group_id) }
   scope :last_months, -> count { limit = count.months.ago; where('(year = ? AND week >= ?) OR year > ?', limit.year, limit.to_date.cweek, limit.year) }
@@ -52,6 +53,10 @@ class Attendance < ActiveRecord::Base
 
   def date
     practice.date
+  end
+
+  def present?
+    PRESENCE_STATES.include?(status)
   end
 
   #def self.find_member_count_for_month(group, year, month)

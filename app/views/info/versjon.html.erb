@@ -12,3 +12,12 @@
 <h3>Ruby</h3>
 
 <%= RUBY_DESCRIPTION %>
+
+<h3>Kjøretid</h3>
+
+<p>
+  <%= uptime.to_i / (3600 *24) %> dager
+  <%= (uptime.to_i % (3600 *24)) / 3600 %> timer
+  <%= (uptime.to_i % 3600) / 60 %> minutter
+  <%= uptime.to_i % 60 %> sekunder
+</p>

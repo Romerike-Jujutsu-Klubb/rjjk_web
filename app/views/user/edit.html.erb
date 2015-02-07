@@ -1,17 +1,17 @@
 <div title="<%= title_helper %>" class="form">
-  <%= head_helper 'Edit User', :error => true %>
+  <%= head_helper 'Edit User', error: true %>
 
     <%=form_for(@user) do %>
       <%= render 'edit', user: @user, submit: true %>
     <% end %>
     </br>
-    <%=form_tag(url_for(:action => "#{controller.action_name}")) do %>
+    <%=form_tag(url_for(action: :change_password)) do %>
       <%= render 'password', submit: true %>
     <% end %>
 
     <%=form_tag(url_for(:action => "#{controller.action_name}")) do %>
       <div class="user_delete">
-        <%= hidden_field 'user', 'form', :value => 'delete' %>
+        <%= hidden_field 'user', 'form', value: 'delete' %>
         <%= submit_tag 'Slett bruker' %>
       </div>
     <% end %>

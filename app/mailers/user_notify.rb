@@ -29,7 +29,8 @@ class UserNotify < ActionMailer::Base
   def forgot_password(user, url=nil)
     setup_email(user)
 
-    @subject += 'Glemt passord'
+    @title = 'Glemt passord'
+    @subject += @title
 
     @name = "#{user.first_name} #{user.last_name}"
     @login = user.login

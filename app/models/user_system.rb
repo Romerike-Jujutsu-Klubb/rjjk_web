@@ -4,23 +4,23 @@ module UserSystem
 
   CONFIG = {
       # Source address for user emails
-      :email_from => 'webmaster@jujutsu.no',
+      email_from: 'webmaster@jujutsu.no',
 
       # Destination email for system errors
-      :admin_email => 'webmaster@jujutsu.no',
+      admin_email: 'webmaster@jujutsu.no',
 
       # Sent in emails to users
-      :app_url => 'http://jujutsu.no/',
+      app_url: 'http://jujutsu.no/',
 
       # Sent in emails to users
-      :app_name => 'RJJK',
+      app_name: 'RJJK',
 
       # Email charset
-      :mail_charset => 'utf-8',
+      mail_charset: 'utf-8',
 
       # Security token lifetime in hours
-      :security_token_life_hours => 24 * 7,
-      :autologin_token_life_hours => 24 * 365,
+      security_token_life_hours: 24 * 7,
+      autologin_token_life_hours: 24 * 365,
   }
 
   protected

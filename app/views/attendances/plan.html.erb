@@ -4,11 +4,14 @@
         text-align: center;
     }
 </style>
-<% @weeks.each.with_index do |(year, week), i| %>
 
-    <h4><%= [year, week] == [(Date.today - 7).year, (Date.today - 7).cweek] ? 'Forrige uke' : [year, week] == [Date.today.year, Date.today.cweek] ? 'Denne uken' : [year, week] == [(Date.today + 7).year, (Date.today + 7).cweek] ? 'Neste uke' : "Uke #{week}#{" #{year}" if year != Date.today.year}" %></h4>
-
-    <table width="100%" cellpadding="4">
+<table width="100%" cellpadding="5">
+  <% @weeks.each.with_index do |(year, week), i| %>
+      <tr>
+        <td colspan="4">
+          <h4><%= [year, week] == [(Date.today - 7).year, (Date.today - 7).cweek] ? 'Forrige uke' : [year, week] == [Date.today.year, Date.today.cweek] ? 'Denne uken' : [year, week] == [(Date.today + 7).year, (Date.today + 7).cweek] ? 'Neste uke' : "Uke #{week}#{" #{year}" if year != Date.today.year}" %></h4>
+        </td>
+      </tr>
       <tr>
         <% @group_schedules.each do |gs| %>
             <% date = Date.commercial(year, week, gs.weekday) %>
@@ -21,15 +24,14 @@
       </tr>
       <tr>
         <% @group_schedules.each do |gs| %>
-            <td valign="top" align="center">
+            <td valign="top">
               <% attendance = @planned_attendances.find { |a| a.group_schedule == gs && a.practice.year == year && a.practice.week == week } %>
               <%= render 'plan_practice', gs: gs, year: year, week: week, attendance: attendance %>
             </td>
         <% end %>
       </tr>
-    </table>
-
-<% end %>
+  <% end %>
+</table>
 
 <br/>
 

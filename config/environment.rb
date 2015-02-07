@@ -71,11 +71,11 @@ module Prawn
         # from the final width if the text is long.
         def natural_content_width
           @natural_content_width ||= rotated ?
-              with_font do
+              with_font {
                 b = text_box(:width => spanned_content_height + FPTolerance)
                 b.render(:dry_run => true)
                 b.height
-              end :
+              } :
               [styled_width_of(@content), @pdf.bounds.width].min
         end
 

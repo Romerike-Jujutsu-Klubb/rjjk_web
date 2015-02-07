@@ -27,7 +27,7 @@ class NkfAppointmentsScraper
       member_name = r[0]
       m = Member.
           where("(members.last_name || ' ' || members.first_name) = ?",
-          member_name).
+              member_name).
           first
       next "Ukjent medlem: #{member_name}" if m.nil?
       if role.on_the_board?
@@ -43,7 +43,9 @@ class NkfAppointmentsScraper
             first_or_initialize(to: r[6].blank? ? nil : Date.strptime(r[6], '%d.%m.%Y'))
       end
     end
-    appointments.select(&:changed?).each(&:save!).sort_by(&:from)
+    appointments.select { |a| a.is_a?(String) } +
+        appointments.select { |a| !a.is_a?(String) && a.changed? }.
+            each(&:save!).sort_by(&:from)
   end
 
   def self.login(agent)

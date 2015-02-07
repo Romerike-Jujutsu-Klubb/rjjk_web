@@ -10,77 +10,7 @@
 
       <% if @your_attendance_next_practice &&
               [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(@your_attendance_next_practice.status) %>
-          Du
-          <% unless @other_attendees.empty? %>
-              og
-              <% if @other_attendees.size == 1 %>
-                  <%= @other_attendees[0].member.first_name %>
-              <% else %>
-                  <a class="colorbox" href="#layout_attendance_details"
-                     title="Påmeldt til neste trening">
-                    <%= @other_attendees.size %>
-                    andre
-                  </a>
-
-                  <div style="display:none">
-                    <div id="layout_attendance_details" style="padding: 1em">
-                      <img style="float: left; width: 100px; height: 100px; margin-right: 1em; margin-left: 0.5em"
-                           src="/assets/rjjk_logo_&_txt_320.png"/>
-
-                      <h3>Påmeldt til neste trening</h3>
-                      <br clear="all"/>
-                    <span class="pull-right" style="font-size: 30pt;background-attachment: scroll;
-                            background-clip: border-box;
-                            background-color: rgb(0, 0, 255);
-                            background-image: none;
-                            background-origin: padding-box;
-                            background-size: auto;
-                            border-bottom-color: rgb(255, 255, 255);
-                            border-bottom-left-radius: 23px;
-                            border-bottom-right-radius: 23px;
-                            border-bottom-style: solid;
-                            border-bottom-width: 3px;
-                            border-left-color: rgb(255, 255, 255);
-                            border-left-style: solid;
-                            border-left-width: 3px;
-                            border-right-color: rgb(255, 255, 255);
-                            border-right-style: solid;
-                            border-right-width: 3px;
-                            border-top-color: rgb(255, 255, 255);
-                            border-top-left-radius: 23px;
-                            border-top-right-radius: 23px;
-                            border-top-style: solid;
-                            border-top-width: 3px;
-                            color: rgb(255, 255, 255);
-                            padding: 0.25em;
-                    "><%= @other_attendees.size + ([Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED].include?(@your_attendance_next_practice.status) ? 1 : 0) %></span>
-                      <ul>
-                        <% if [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED].include? @your_attendance_next_practice.status %>
-                            <li><%= @your_attendance_next_practice.member.name %></li>
-                        <% end %>
-                        <% @other_attendees.each do |a| %>
-                            <li>
-                              <% if admin? %>
-                                  <%= link_to a.member.name, a.member %>
-                              <% else %>
-                                  <%= a.member.name %>
-                              <% end %>
-                            </li>
-                        <% end %>
-                      </ul>
-                      <% if @other_absentees.any? %>
-                          <h3>Disse kommer ikke</h3>
-                          <ul>
-                            <% @other_absentees.each do |a| %>
-                                <li><%= a.member.name %></li>
-                            <% end %>
-                          </ul>
-                      <% end %>
-                    </div>
-                  </div>
-              <% end %>
-          <% end %>
-          kommer.
+          <%=render 'attendances/details_link', practice: @next_practice %>
           <% unless @other_absentees.empty? %>
               <%= @other_absentees.size %> har meldt fravær.
           <% end %>
@@ -103,23 +33,20 @@
               <%= @other_absentees.size %> har meldt fravær.
           <% end %>
       <% else %>
-          <% if @other_attendees.any? %>
-              <%= @other_attendees.size %> andre kommer.
-          <% end %>
-
-          <div class="input-group">
+          <div class="input-group input-group-sm">
+            <span class="input-group-addon">Kommer du?</span>
             <div class="input-group-btn">
-              Kommer du?
               <%= link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::WILL_ATTEND),
-                      class: 'btn btn-default btn-xs', title: 'kommer!', method: :post) do %>
+                      class: 'btn btn-default', title: 'Kommer!', method: :post) do %>
                   <i class="glyphicon glyphicon-thumbs-up"></i>
               <% end %>
               <%= link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT),
-                      class: 'btn btn-default btn-xs', title: 'kan ikke...', method: :post) do %>
+                      class: 'btn btn-default', title: 'Kan ikke...', method: :post) do %>
                   <i class="glyphicon glyphicon-thumbs-down"></i>
               <% end %>
             </div>
           </div>
+          <%=render 'attendances/details_link', practice: @next_practice %>
       <% end %>
     </div>
 <% end %>

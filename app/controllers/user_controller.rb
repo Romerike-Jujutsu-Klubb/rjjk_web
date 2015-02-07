@@ -90,7 +90,7 @@ class UserController < ApplicationController
     rescue Exception => ex
       report_exception ex
     end
-    redirect_to :controller => :user, :action => :welcome
+    redirect_to controller: :user, action: :welcome
   end
 
   def forgot_password
@@ -113,7 +113,7 @@ class UserController < ApplicationController
         User.transaction do
           users.each do |user|
             key = user.generate_security_token
-            url = url_for(:action => 'change_password')
+            url = url_for(action: :change_password, only_path: false)
             url += "?user[id]=#{user.id}&key=#{key}"
             UserNotify.forgot_password(user, url).deliver
           end

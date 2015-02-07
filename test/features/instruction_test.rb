@@ -5,8 +5,7 @@ class InstructionTest < ActionDispatch::IntegrationTest
   def test_index
     login_and_visit '/'
     click_link 'Instruksjon'
-    sleep 1
-    assert_equal '/group_instructors', current_path
+    assert_current_path '/group_instructors'
     screenshot('instruction/index')
   end
 

@@ -49,18 +49,19 @@ class Member < ActiveRecord::Base
   before_validation { NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? } }
 
   # validates_presence_of :address, :cms_contract_id
-  validates_length_of :billing_postal_code, :is => 4, :if => Proc.new { |m| m.billing_postal_code && !m.billing_postal_code.empty? }
+  validates_length_of :billing_postal_code, is: 4, if: Proc.new { |m| m.billing_postal_code && !m.billing_postal_code.empty? }
   validates_presence_of :birthdate, :joined_on
-  validates_presence_of :user, :user_id, :unless => :left_on
-  validates_uniqueness_of :cms_contract_id, :if => :cms_contract_id
+  validates_uniqueness_of :cms_contract_id, if: :cms_contract_id
+  validates_length_of :email, maximum: 128
   validates_presence_of :first_name, :last_name
-  validates_inclusion_of :instructor, :in => [true, false]
+  validates_inclusion_of :instructor, in: [true, false]
   validates_inclusion_of :male, :in => [true, false]
   validates_inclusion_of :nkf_fee, :in => [true, false]
   validates_inclusion_of :payment_problem, :in => [true, false]
   #validates_presence_of :postal_code
-  validates_length_of :postal_code, :is => 4, :if => Proc.new { |m| m.postal_code && !m.postal_code.empty? }
+  validates_length_of :postal_code, is: 4, allow_blank: true
   validates_uniqueness_of :rfid, :if => Proc.new { |r| r.rfid and not r.rfid.empty? }
+  validates_presence_of :user, :user_id, unless: :left_on
 
   def self.paginate_active(page)
     active.order(:first_name, :last_name).paginate(page: page, per_page: MEMBERS_PER_PAGE)

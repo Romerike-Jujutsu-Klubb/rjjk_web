@@ -1,6 +1,6 @@
 class RanksController < ApplicationController
   USER_ACTIONS = [:card, :pdf, :pensum, :show]
-  before_filter :authenticate_user, :only => USER_ACTIONS
+  before_filter :authenticate_user, only: USER_ACTIONS
   before_filter :technical_committy_required, except: USER_ACTIONS
 
   def index
@@ -9,9 +9,9 @@ class RanksController < ApplicationController
   end
 
   def pensum
-    current_rank = current_user.member.current_rank
+    next_rank = current_user.member.next_rank
     @ranks = Rank.kwr.where('group_id = ? AND position <= ?',
-        current_rank.group_id, current_rank.position + 1).order(:position).to_a
+        next_rank.group_id, next_rank.position).order(:position).to_a
   end
 
   def show
@@ -28,7 +28,7 @@ class RanksController < ApplicationController
     filename = "Skill_Card_#{@rank.name}.pdf"
     send_data SkillCard.pdf(@rank.group.ranks.
         select { |r| r.position <= @rank.position }.sort_by(&:position)),
-        :type => 'text/pdf', :filename => filename, :disposition => 'attachment'
+        type: 'text/pdf', filename: filename, disposition: 'attachment'
   end
 
   def new
@@ -41,7 +41,7 @@ class RanksController < ApplicationController
     @rank = Rank.new(params[:rank])
     if @rank.save
       flash[:notice] = 'Rank was successfully created.'
-      redirect_to :action => 'index'
+      redirect_to action: :index
     else
       new
       render :action => 'new'

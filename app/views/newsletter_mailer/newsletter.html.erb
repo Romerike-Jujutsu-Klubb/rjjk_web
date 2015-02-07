@@ -68,7 +68,7 @@
                     <table width="485" class="logotable" border="0" cellspacing="0" cellpadding="0">
                       <tr>
                         <td>
-                          <img src="<%= url_for(:only_path => false, :controller => :welcome, :action => :index) + 'assets/rjjk_logo_&_txt_320.png' %>" alt="RJJK Logo" width="160" height="160" />
+                          <img src="<%= asset_url 'rjjk_logo_&_txt_320.png' %>" alt="RJJK Logo" width="160" height="160" />
                         </td>
                         <td align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#acabab;">
                           <p style="margin:0 0 10px 0; font-size:18px; color:#E20916;"><%= @news_item.title %></p>

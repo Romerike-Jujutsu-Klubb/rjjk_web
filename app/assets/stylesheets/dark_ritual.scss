@@ -13,7 +13,7 @@ a {color: #682;}
 a:hover {color: #9A6;}
 
 body {
-	background: #333 url(/assets/dark_ritual/bg.gif);
+	background: #333 asset_url('dark_ritual/bg.gif');
 	color: #333;
 	font: normal 82.5% "Lucida Sans Unicode",sans-serif;
 	margin: 3% 0;
@@ -55,7 +55,7 @@ h1,h2,h3 {color: #994;}
 /* structure */
 .container {
 	font-size: 1.2em;
-	background: url(/assets/dark_ritual/bgcontainer.png) repeat-y;
+	background: asset_url('dark_ritual/bgcontainer.png') repeat-y;
 	margin: 0 auto;
 	border: 12px solid #222;
 }
@@ -65,7 +65,7 @@ h1,h2,h3 {color: #994;}
 	float: left;
 	width: 700px;
 	height: 100px;
-	background: url(/assets/dark_ritual/header.png) no-repeat;
+	background: asset_url('dark_ritual/header.png') no-repeat;
 	font: normal 2.4em Verdana,sans-serif;
 	text-align: center;	
 	padding-top: 50px;
@@ -137,7 +137,7 @@ h1,h2,h3 {color: #994;}
 
 /* footer */
 .footer {
-	background: url(/assets/dark_ritual/bgfooter.gif) repeat-x;
+	background: asset_url('dark_ritual/bgfooter.gif') repeat-x;
 	color: #CCC;
 	font-size: 0.9em;
 	line-height: 39px;

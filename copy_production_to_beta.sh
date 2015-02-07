@@ -15,6 +15,7 @@ rm -f ${MARKER_PREFIX}*
 cd /u/apps/rjjk_web_beta/current
 
 echo "Re-creating database"
+ruby -v
 bundle exec rake db:drop db:create
 
 echo "Transferring database"

@@ -39,3 +39,17 @@ sebastian:
   nkf_fee: true
   payment_problem: false
   postal_code: 1479
+
+newbie:
+  address: Rookie Road 5
+  birthdate: 1990-05-17
+  first_name: Newbie
+  groups: voksne
+  instructor: false
+  joined_on: 2013-07-25
+  last_name: Neuer
+  male: true
+  nkf_fee: true
+  payment_problem: false
+  postal_code: 1472
+  user: newbie

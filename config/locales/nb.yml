@@ -1,13 +1,5 @@
 nb:
   activerecord:
-    models:
-      annual_meeting: Årsmøte
-      group: Gruppe
-      group_schedule: Trening
-      group_instructor: Gruppeinstruktør
-      member: medlem
-      practice: Trening
-      user: Bruker
     attributes:
       attendance:
         member_id: Medlem
@@ -42,6 +34,17 @@ nb:
         login: Brukernavn
         password: Passord
         password_confirmation: Bekreft passord
+    errors:
+      template:
+        header:
+    models:
+      annual_meeting: Årsmøte
+      group: Gruppe
+      group_schedule: Trening
+      group_instructor: Gruppeinstruktør
+      member: medlem
+      practice: Trening
+      user: Bruker
   April: April
   August: August
   connect: Koble

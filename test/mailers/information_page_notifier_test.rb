@@ -19,7 +19,7 @@ class InformationPageNotifierTest < ActionMailer::TestCase
 
   def test_send_weekly_info_page
     assert InformationPageNotifier.send_weekly_info_page
-    assert_equal 2, ActionMailer::Base.deliveries.size
+    assert_equal 3, ActionMailer::Base.deliveries.size
     mail = ActionMailer::Base.deliveries[0]
     assert_equal '[RJJK][test] My first article', mail.subject
     assert_equal '"Lars Bråten" <uwe@kubosch.no>', mail.header['To'].to_s
@@ -28,6 +28,13 @@ class InformationPageNotifierTest < ActionMailer::TestCase
     assert_match 'A very interresting topic!', mail.body.encoded
 
     email = ActionMailer::Base.deliveries[1]
+    assert_equal '[RJJK][test] My first article', email.subject
+    assert_equal 'Newbie Neuer <uwe@kubosch.no>', email.header['To'].to_s
+    assert_equal %w(test@jujutsu.no), email.from
+    assert_match 'My first article', email.body.encoded
+    assert_match 'A very interresting topic!', email.body.encoded
+
+    email = ActionMailer::Base.deliveries[2]
     assert_equal '[RJJK][test] My first article', email.subject
     assert_equal 'Uwe Kubosch <uwe@kubosch.no>', email.header['To'].to_s
     assert_equal %w(test@jujutsu.no), email.from
@@ -39,7 +46,7 @@ class InformationPageNotifierTest < ActionMailer::TestCase
     members(:uwe).update_attributes! left_on: 1.month.from_now
 
     assert InformationPageNotifier.send_weekly_info_page
-    assert_equal 1, ActionMailer::Base.deliveries.size
+    assert_equal 2, ActionMailer::Base.deliveries.size
 
     email = ActionMailer::Base.deliveries[0]
     assert_equal '[RJJK][test] My first article', email.subject
@@ -47,5 +54,13 @@ class InformationPageNotifierTest < ActionMailer::TestCase
     assert_equal %w(test@jujutsu.no), email.from
     assert_match 'My first article', email.body.encoded
     assert_match 'A very interresting topic!', email.body.encoded
+
+    email = ActionMailer::Base.deliveries[1]
+    assert_equal '[RJJK][test] My first article', email.subject
+    assert_equal 'Newbie Neuer <uwe@kubosch.no>', email.header['To'].to_s
+    assert_equal %w(test@jujutsu.no), email.from
+    assert_match 'My first article', email.body.encoded
+    assert_match 'A very interresting topic!', email.body.encoded
+
   end
 end

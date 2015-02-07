@@ -45,14 +45,14 @@ class AttendanceNagger
 
   def self.send_message_reminder
     tomorrow = Date.tomorrow
-    practices = Practice.includes(:group_schedule => :group).references(:group_schedules).
-        where('message IS NULL AND message_nagged_at IS NULL AND year = ? AND week = ? AND group_schedules.weekday = ? AND group_schedules.start_at <= ? AND groups.school_breaks = ?',
-            tomorrow.year, tomorrow.cweek, tomorrow.cwday, Time.now.time_of_day + 3600, false).to_a
+    practices = Practice.includes(group_schedule: :group).references(:group_schedules).
+        where('message IS NULL AND message_nagged_at IS NULL AND year = ? AND week = ? AND group_schedules.weekday = ? AND (group_schedules.start_at <= ? OR group_schedules.start_at <= ?) AND (groups.school_breaks IS NULL OR groups.school_breaks = ?)',
+            tomorrow.year, tomorrow.cweek, tomorrow.cwday, Time.now.time_of_day, Time.now.time_of_day + 3600, false).to_a
     practices.each do |pr|
       pr.group_schedule.group_instructors.each do |gi|
         AttendanceMailer.message_reminder(pr, gi.member).deliver
       end
-      pr.update_attributes :message_nagged_at => Time.now
+      pr.update_attributes message_nagged_at: Time.now
     end
   rescue Exception
     logger.error $!

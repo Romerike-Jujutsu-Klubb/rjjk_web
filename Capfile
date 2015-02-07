@@ -1,60 +1,8 @@
-load 'deploy'
-load 'deploy/assets'
+require 'capistrano/setup'
+require 'capistrano/deploy'
+require 'capistrano/rvm'
+require 'capistrano/bundler'
+require 'capistrano/rails/assets'
+require 'capistrano/rails/migrations'
 
-set :stages, %w(beta production)
-set :default_stage, 'beta'
-set :default_environment, {'JRUBY_OPTS' => '--dev'}
-# set :migrate_env, 'JRUBY_OPTS="--dev -J-Xmx3G"'
-default_run_options[:pty] = true
-
-require 'rubygems'
-require 'bundler/capistrano'
-require 'capistrano/ext/multistage'
-require 'rvm/capistrano'
-
-desc 'Fix permission'
-task :fix_permissions, roles: [:app, :db, :web] do
-  run "chmod +rx #{current_path}"
-end
-
-after 'deploy:create_symlink', :fix_permissions
-
-desc 'Announce maintenance'
-task :announce_maintenance, roles: [:app] do
-  run "cd #{current_path}/public ; cp 503_update.html 503.html"
-end
-
-desc 'End maintenance'
-task :end_maintenance, roles: [:app] do
-  run "cd #{current_path}/public ; cp 503_down.html 503.html"
-end
-
-before 'deploy:create_symlink', :announce_maintenance
-after 'deploy:create_symlink', :announce_maintenance
-after 'deploy', :end_maintenance
-
-set :rvm_ruby_string, :jruby
-set :rvm_autolibs_flag, 'read-only'
-
-namespace :rvm do
-  task :trust_keys, roles: [:app] do
-    run 'gpg2 --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3',
-        shell: :bash
-  end
-end
-
-before 'rvm:install_rvm', 'rvm:trust_keys'
-before 'deploy:setup', 'rvm:install_rvm' # install/update RVM
-before 'deploy:setup', 'rvm:install_ruby' # install Ruby and create gemset
-before 'deploy:spinner', 'deploy:reload_daemons'
-before 'deploy:restart', 'deploy:reload_daemons'
-
-namespace :deploy do
-  task :symlinks do
-    run "#{try_sudo} rm -f /usr/lib/systemd/system/#{application}.service ; #{try_sudo} ln -s /u/apps/#{application}/current/usr/lib/systemd/system/#{application}.service /usr/lib/systemd/system/#{application}.service"
-  end
-
-  task :reload_daemons do
-    run "#{try_sudo} systemctl daemon-reload"
-  end
-end
+Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }

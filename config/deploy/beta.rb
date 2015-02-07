@@ -1,31 +1,33 @@
 set :application, 'rjjk_web_beta'
-set :scm, :none
-set :repository, '.'
-set :deploy_via, :copy
-set :copy_via, :sftp
-set :copy_local_tar, '/usr/bin/tar' if `uname` =~ /Darwin/
+set :scm, :copy
+set :repo_url, '.'
+set :deploy_to, -> { "/u/apps/#{fetch :application}" }
 set :keep_releases, 1
-before('deploy') { `rake tmp:clear` ; FileUtils.rm_rf 'coverage'  ; FileUtils.rm_rf Dir['log/*'] }
-after 'deploy:update', 'deploy:cleanup'
+# after 'deploy:update', 'deploy:cleanup'
+set :exclude_dir, %w(coverage doc log test tmp)
 
-role :web, 'kubosch.no'
-role :app, 'kubosch.no'
-role :db,  'kubosch.no', primary: true
+role :app, %w{capistrano@kubosch.no}
+role :web, %w{capistrano@kubosch.no}
+role :db, %w{capistrano@kubosch.no}
 
-set :user, 'capistrano'
-set(:rails_env) { fetch(:stage) }
+server 'kubosch.no', user: 'capistrano', roles: %w{web app}, my_property: :my_value
 
 namespace :deploy do
   desc 'The spinner task is used by :cold_deploy to start the application up'
-  task :spinner, roles: :app do
-    run "#{try_sudo} systemctl start #{application}"
+  task :spinner do
+    on roles :all do
+      execute :sudo, "systemctl start #{fetch :application}"
+    end
   end
-  
+
   desc 'Restart the service'
-  task :restart, roles: :app do
-    run "#{try_sudo} systemctl stop #{application}"
-    sleep 5
-    run "/u/apps/#{application}/current/copy_production_to_beta.sh"
-    run "#{try_sudo} systemctl start #{application}"
+  task :restart do
+    on roles :all do
+      execute :sudo, "systemctl stop #{fetch :application}"
+      # TODO(uwe):  Add better delay check
+      sleep 5
+      execute "#{fetch :rvm_path}/bin/rvm #{fetch :rvm_ruby_version} do #{current_path}/copy_production_to_beta.sh"
+      execute :sudo, "systemctl start #{fetch :application}"
+    end
   end
 end

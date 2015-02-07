@@ -19,11 +19,13 @@ class NkfMemberComparison
     nkf_members.each do |nkfm|
       member = nkfm.member
       member.attributes = nkfm.converted_attributes
-      nkf_group_names = member.nkf_member.
-          gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /).
-          map { |n| n.split('/')[3] }
-      if member.changed? || (nkf_group_names.sort != member.groups.
-          map { |g| g.name }.sort)
+      if nkfm.gren_stilart_avd_parti___gren_stilart_avd_parti
+        nkf_group_names = nkfm.gren_stilart_avd_parti___gren_stilart_avd_parti.
+            split(/ - /).map { |n| n.split('/')[3] }
+      else
+        nkf_group_names = []
+      end
+      if member.changed? || (nkf_group_names.sort != member.groups.map(&:name).sort)
         @members << nkfm.member
       end
     end
@@ -58,7 +60,14 @@ class NkfMemberComparison
 
     @group_changes = Hash.new { |h, k| h[k] = [[], []] }
     (@new_members + @members).each do |member|
-      nkf_group_names = member.nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /).map { |n| n.split('/')[3] }
+      if member.nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti
+        nkf_group_names = member.nkf_member.
+            gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /).
+            map { |n| n.split('/')[3] }
+      else
+        logger.error "No groups: #{member.nkf_member.inspect}"
+        nkf_group_names = []
+      end
       member_groups = member.groups.map { |g| g.name }
       (nkf_group_names - member_groups).each do |gn|
         if (group = Group.find_by_name(gn))

@@ -82,4 +82,9 @@ class InfoControllerTest < ActionController::TestCase
       InformationPage.find(information_page.id)
     end
   end
+
+  def test_versjon
+    get :versjon
+  end
+
 end

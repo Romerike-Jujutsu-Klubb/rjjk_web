@@ -1,6 +1,9 @@
 <% @content_width = 1024 %>
 
-<%= link_to 'Ny gradering', new_graduation_path, :class => 'btn btn-primary pull-right' %>
+<%= link_to new_graduation_path, class: 'btn btn-primary pull-right' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    Ny gradering
+<% end %>
 
 <h1>Graderinger</h1>
 

@@ -5,7 +5,6 @@
 //= require tinymce-jquery
 //= require gmaps4rails/gmaps4rails.base
 //= require gmaps4rails/gmaps4rails.googlemaps
-//= require colorbox-rails
 //= require expanding
 //= require bootstrap-sprockets
 //= require moment
@@ -17,19 +16,6 @@
 //= require remember_tab
 //= require stretch-columns
 // Switch to Bootstrap modal
-$(function () {
-    $(".colorbox").colorbox({
-        inline: true,
-        title: function () {
-            return $(this).attr("title")
-        },
-        href: function () {
-            return $(this).attr("href")
-        },
-        returnFocus: false
-    });
-});
-
 NProgress.configure({showSpinner: false,  ease: 'ease',  speed: 500});
 
 $().ready(function () {

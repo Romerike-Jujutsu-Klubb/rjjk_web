@@ -41,7 +41,7 @@
 }
 
 #member_search input.submit {
-    /* background: #939B00 url('/assets/buttonbg.gif') repeat-x; */
+    /* background: #939B00 asset_url('buttonbg.gif') repeat-x; */
     background: #ffb400;
     border: solid 1px #EC9D48;
     font-weight: bold;
@@ -117,36 +117,36 @@ ul.controls li a {
 
 ul.controls li a.printerfriendly {
     padding: 0em 1.0em 0em 20px;
-    background-image: url('/assets/icon-printerfriendly.gif');
+    background-image: asset_url('icon-printerfriendly.gif');
 }
 
 ul.controls li a.comments {
     padding: 0em 1.0em 0em 20px;
-    background-image: url('/assets/icon-comments.gif');
+    background-image: asset_url('icon-comments.gif');
 }
 
 ul.controls li a.more {
     padding: 0em 1.0em 0em 20px;
-    background-image: url('/assets/icon-more.gif');
+    background-image: asset_url('icon-more.gif');
 }
 
 ul.controls li a.edit {
     padding: 0em 1.0em 0em 20px;
-    background-image: url('/assets/icon-more.gif');
+    background-image: asset_url('icon-more.gif');
 }
 
 ul.controls li a.back {
     padding: 0em 1.0em 0em 20px;
-    background-image: url('/assets/icon-back.png');
+    background-image: asset_url('icon-back.png');
 }
 
 ul.controls li a.delete {
     padding: 0em 1.0em 0em 20px;
-    background-image: url('/assets/button-delete-16x16.png');
+    background-image: asset_url('button-delete-16x16.png');
 }
 
 .header {
-    background: url(/assets/dark_ritual/header_left.png) left no-repeat, url(/assets/dark_ritual/header_right.png) right no-repeat, url(/assets/dark_ritual/header_lines.png) left repeat;
+    background: asset_url('dark_ritual/header_left.png') left no-repeat, asset_url('dark_ritual/header_right.png') right no-repeat, asset_url('dark_ritual/header_lines.png') left repeat;
     background-color: #F4F4F4;
     height: 150px;
 }
@@ -159,11 +159,11 @@ ul.controls li a.delete {
     /* http://css-tricks.com/examples/CSS3Gradient/ */
     /* http://stackoverflow.com/questions/2504071/is-it-possible-to-combine-a-background-image-and-css3-gradients */
     /* Safari 5.1+, Chrome 10+ */
-    background: url(/assets/dark_ritual/bg_shadow_left.png) 27% 0% repeat-y, url(/assets/dark_ritual/bg_shadow_right.png) top right repeat-y, -webkit-linear-gradient(left, #222222, #222222 25%, #F7F7F7, #F7F7F7 25%, #F7F7F7);
+    background: asset_url('dark_ritual/bg_shadow_left.png') 27% 0% repeat-y, asset_url('dark_ritual/bg_shadow_right.png') top right repeat-y, -webkit-linear-gradient(left, #222222, #222222 25%, #F7F7F7, #F7F7F7 25%, #F7F7F7);
     /* Safari 4-5, Chrome 1-9 */
-    background: url(/assets/dark_ritual/bg_shadow_left.png) 27% 0% repeat-y, url(/assets/dark_ritual/bg_shadow_right.png) top right repeat-y, -webkit-gradient(linear, left top, right top, color-stop(0%, #222222), color-stop(25%, #222222), color-stop(25%, #F7F7F7));
+    background: asset_url('dark_ritual/bg_shadow_left.png') 27% 0% repeat-y, asset_url('dark_ritual/bg_shadow_right.png') top right repeat-y, -webkit-gradient(linear, left top, right top, color-stop(0%, #222222), color-stop(25%, #222222), color-stop(25%, #F7F7F7));
     /* Firefox 3.6+ */
-    background: url(/assets/dark_ritual/bg_shadow_left.png) 27% 0% repeat-y, url(/assets/dark_ritual/bg_shadow_right.png) top right repeat-y, -moz-linear-gradient(left, #222222, #222222 25%, #F7F7F7, #F7F7F7 25%, #F7F7F7);
+    background: asset_url('dark_ritual/bg_shadow_left.png') 27% 0% repeat-y, asset_url('dark_ritual/bg_shadow_right.png') top right repeat-y, -moz-linear-gradient(left, #222222, #222222 25%, #F7F7F7, #F7F7F7 25%, #F7F7F7);
     background-origin: padding-box, padding-box;
     background-color: #F7F7F7;
 }
@@ -246,7 +246,7 @@ ul.nav.nav-tabs {
 }
 
 .main {
-    background: url(/assets/dark_ritual/bg_shadow_left.png) top left repeat-y, url(/assets/dark_ritual/bg_shadow_right.png) top right repeat-y;
+    background: asset_url('dark_ritual/bg_shadow_left.png') top left repeat-y, asset_url('dark_ritual/bg_shadow_right.png') top right repeat-y;
     background-color: #F7F7F7;
     padding: 0;
 }

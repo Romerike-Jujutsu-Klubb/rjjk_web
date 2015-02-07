@@ -17,4 +17,8 @@ class Survey < ActiveRecord::Base
   def completed_members
     survey_requests.completed.map(&:member)
   end
+
+  def ready_members
+    included_members.order(:joined_on) - pending_members - completed_members
+  end
 end

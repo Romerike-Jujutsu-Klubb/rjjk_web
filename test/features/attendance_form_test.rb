@@ -6,7 +6,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
     login_and_visit '/'
     click_link 'Oppmøtelister'
     assert_current_path '/attendances/form_index'
-    screenshot('attendance_form_index')
+    screenshot('attendance/form/index')
   end
 
   def test_select_panda_october

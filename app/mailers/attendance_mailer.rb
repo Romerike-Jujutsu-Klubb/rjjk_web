@@ -9,7 +9,7 @@ class AttendanceMailer < ActionMailer::Base
     @member = member
     @title = 'Planlegging oppmøte'
     @timestamp = Time.now
-    @email_url = with_login(member.user, :controller => :attendances, :action => :plan)
+    @email_url = with_login(member.user, controller: :attendances, action: :plan)
     mail to: safe_email(member), subject: rjjk_prefix('Kommer du?')
   end
 
@@ -18,7 +18,7 @@ class AttendanceMailer < ActionMailer::Base
     @instructor = instructor
     @title = "Tema for morgendagens trening for #{practice.group_schedule.group.name}"
     @timestamp = @practice.date
-    @email_url = with_login(instructor.user, :controller => :practices, :action => :edit, :id => practice.id)
+    @email_url = with_login(instructor.user, controller: :practices, action: :edit, id: practice.id)
     mail to: Rails.env == 'production' ? @instructor.email : %Q{"#{@instructor.name}" <uwe@kubosch.no>},
          subject: rjjk_prefix(@title)
   end
@@ -31,7 +31,7 @@ class AttendanceMailer < ActionMailer::Base
     @title = "Trening i #{group_schedule.start_at.day_phase}"
     @title = "Trening i #{@group_schedule.start_at.day_phase}: #{attendees.size == 0 ? 'Ingen' : attendees.size} deltaker#{'e' if attendees.size > 1} påmeldt"
     @timestamp = Time.now
-    @email_url = with_login(recipient.user, :controller => :attendances, :action => :plan)
+    @email_url = with_login(recipient.user, controller: :attendances, action: :plan)
     mail to: safe_email(recipient), subject: rjjk_prefix(@title)
   end
 

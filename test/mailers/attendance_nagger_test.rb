@@ -12,9 +12,38 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_match "Følg linken til\r\n    <a href=\"http://example.com/mitt/oppmote?key=random_token_string\">Mitt oppmøte</a>", mail.body.encoded
   end
 
-  def test_send_message_reminder
+  def test_send_message_reminder_same_day
     AttendanceNagger.send_message_reminder
-    assert_equal 0, Mail::TestMailer.deliveries.size
+    assert_equal 2, Mail::TestMailer.deliveries.size, ->{Mail::TestMailer.deliveries}
+    mail = ActionMailer::Base.deliveries[0]
+    assert_equal '[RJJK][test] Tema for morgendagens trening for Panda', mail.subject
+    assert_equal %w(uwe@kubosch.no), mail.to
+    assert_equal %w(test@jujutsu.no), mail.from
+    assert_match 'Har du en melding til de som skal trene i morgen?', mail.body.encoded
+
+    mail = ActionMailer::Base.deliveries[1]
+    assert_equal '[RJJK][test] Tema for morgendagens trening for Panda', mail.subject
+    assert_equal %w(uwe@kubosch.no), mail.to
+    assert_equal %w(test@jujutsu.no), mail.from
+    assert_match 'Har du en melding til de som skal trene i morgen?', mail.body.encoded
+  end
+
+  def test_send_message_reminder_day_before
+    Timecop.freeze(Time.local 2013, 10, 16, 18, 46, 0)
+    AttendanceNagger.send_message_reminder
+    assert_equal 2, Mail::TestMailer.deliveries.size
+
+    mail = ActionMailer::Base.deliveries[0]
+    assert_equal '[RJJK][test] Tema for morgendagens trening for Panda', mail.subject
+    assert_equal %w(uwe@kubosch.no), mail.to
+    assert_equal %w(test@jujutsu.no), mail.from
+    assert_match 'Har du en melding til de som skal trene i morgen?', mail.body.encoded
+
+    mail = ActionMailer::Base.deliveries[1]
+    assert_equal '[RJJK][test] Tema for morgendagens trening for Panda', mail.subject
+    assert_equal %w(uwe@kubosch.no), mail.to
+    assert_equal %w(test@jujutsu.no), mail.from
+    assert_match 'Har du en melding til de som skal trene i morgen?', mail.body.encoded
   end
 
   def test_send_attendance_summary

@@ -30,7 +30,6 @@ gem 'bootstrap3-datetimepicker-rails'
 gem 'chosen-rails'
 gem 'chosen-sass-bootstrap-rails'
 gem 'coffee-rails'
-gem 'colorbox-rails'
 gem 'draper' # https://github.com/drapergem/draper
 gem 'dynamic_form'
 gem 'exception_notification'
@@ -53,7 +52,6 @@ gem 'rails-observers'
 gem 'rake'
 gem 'RedCloth'
 gem 'red_cloth_formatters_plain'
-gem 'redbox', '~> 1.0.4'
 gem 'ri_cal'
 gem 'rufus-scheduler'
 gem 'sass-rails', '>=4.0.5'
@@ -70,8 +68,11 @@ gem 'will_paginate'
 
 group :development do
   # gem 'bullet'
-  gem 'capistrano', '<3.0.0'
-  gem 'rvm-capistrano'
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-rvm'
+  gem 'capistrano-scm-copy'
 end
 
 group :test do

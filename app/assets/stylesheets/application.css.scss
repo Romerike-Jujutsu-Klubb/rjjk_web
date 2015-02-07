@@ -1,16 +1,10 @@
 @import "dark_ritual";
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "bootstrap_adaption";
 @import 'dark_ritual_adaption';
-@import 'font-awesome';
-@import 'colorbox-rails';
 @import 'bootstrap-datetimepicker';
 @import 'nprogress';
 @import 'nprogress-bootstrap';
 @import 'chosen_bootstrap';
 @import 'stretch-columns';
-
-#cboxPrevious,
-#cboxNext,
-#cboxSlideshow,
-#cboxClose {border:0;}

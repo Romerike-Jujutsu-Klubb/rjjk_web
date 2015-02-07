@@ -70,7 +70,7 @@ class NkfMemberImport
     login
 
     search_url = 'page/portal/ks_utv/ks_reg_medladm?f_informasjon=skjul&f_utvalg=vis&frm_27_v04=40001062&frm_27_v05=1&frm_27_v06=1&frm_27_v07=1034&frm_27_v10=162&frm_27_v12=O&frm_27_v15=Romerike%20Jujutsu%20Klubb&frm_27_v16=Stasjonsvn.%2017&frm_27_v17=P.b.%20157&frm_27_v18=2011&frm_27_v20=47326154&frm_27_v22=post%40jujutsu.no&frm_27_v23=70350537706&frm_27_v25=http%3A%2F%2Fjujutsu.no%2F&frm_27_v27=N&frm_27_v29=0&frm_27_v34=%3D&frm_27_v37=-1&frm_27_v44=%3D&frm_27_v45=%3D&frm_27_v46=11&frm_27_v47=11&frm_27_v49=N&frm_27_v50=134002.PNG&frm_27_v53=-1&p_ks_reg_medladm_action=SEARCH&p_page_search='
-    html_search_body = http_get(search_url, true).body
+    html_search_body = http_get(search_url, true)
     extra_function_codes = html_search_body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
     raise html_search_body if extra_function_codes.empty?
     extra_function_code = extra_function_codes[0][0]
@@ -78,7 +78,7 @@ class NkfMemberImport
     detail_codes = html_search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
     more_pages = html_search_body.scan(/<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)<\/a>/).map { |r| r[0] }
     in_parallel(more_pages) do |page_number|
-      more_search_body = http_get(search_url + page_number, true).body
+      more_search_body = http_get(search_url + page_number, true)
       synchronize do
         detail_codes += more_search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
       end
@@ -98,7 +98,7 @@ class NkfMemberImport
   private
 
   def get_member_rows(session_id, detail_codes)
-    members_body = http_get("pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{session_id}").body.force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
+    members_body = http_get("pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{session_id}").force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
     import_rows = members_body.split("\n").map { |line| line.chomp.split(';', -1)[0..-2] }
     import_rows[0] << 'ventekid'
     in_parallel(detail_codes) { |dc| add_waiting_kid(import_rows, dc) }
@@ -123,7 +123,7 @@ class NkfMemberImport
 
   def add_waiting_kid(import_rows, dc)
     begin
-      details_body = http_get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}").body
+      details_body = http_get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}")
       if details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
         member_id = $1
         if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
@@ -149,23 +149,24 @@ class NkfMemberImport
 
   def get_member_trial_rows(session_id, extra_function_code)
     trial_csv_url = 'pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + session_id
-    member_trials_csv_body = http_get(trial_csv_url).body.force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
+    member_trials_csv_body = http_get(trial_csv_url).force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
     member_trial_rows = member_trials_csv_body.split("\n").map { |line| line.chomp.split(';') }
 
     trial_ids = []
     (member_trial_rows.size.to_f / 20).ceil.times do |page|
       trial_url = "page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_page_search=#{page + 1}&p_cr_par=#{extra_function_code}"
-      member_trials_body = http_get(trial_url).body
-      trial_ids += member_trials_body.scan(/edit_click28\('(.*?)'\)/).map { |tid| tid[0] }
+      member_trials_body = http_get(trial_url)
+      new_trial_ids = member_trials_body.scan(/edit_click28\('(.*?)'\)/).map { |tid| tid[0] }
+      trial_ids += new_trial_ids
     end
 
     member_trial_rows[0] << 'tid'
     member_trial_rows[0] << 'epost_faktura'
     member_trial_rows[0] << 'stilart'
 
-    in_parallel(trial_ids) do |tid|
+    trial_ids.each do |tid|
       trial_details_url = "page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=" + extra_function_code
-      trial_details_body = http_get(trial_details_url).body.force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
+      trial_details_body = http_get(trial_details_url).force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
       if trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
         first_name = $1
         if trial_details_body =~ /name="frm_28_v09" value="(.*?)"/
@@ -303,25 +304,25 @@ class NkfMemberImport
   end
 
   def login
-    login_content = http_get('page/portal/ks_utv/st_login').body
+    login_content = http_get('page/portal/ks_utv/st_login')
 
-    token_body = http_get('pls/portal/portal.wwptl_login.show_site2pstoretoken?p_url=http%3A%2F%2Fwww.kampsport.no%2Fportal%2Fpls%2Fportal%2Fmyports.st_login_proc.set_language%3Fref_path%3D7513_ST_LOGIN_463458038&p_cancel=http%3A%2F%2Fwww.kampsport.no%2Fportal%2Fpage%2Fportal%2Fks_utv%2Fst_login').body
+    token_body = http_get('pls/portal/portal.wwptl_login.show_site2pstoretoken?p_url=http%3A%2F%2Fwww.kampsport.no%2Fportal%2Fpls%2Fportal%2Fmyports.st_login_proc.set_language%3Fref_path%3D7513_ST_LOGIN_463458038&p_cancel=http%3A%2F%2Fwww.kampsport.no%2Fportal%2Fpage%2Fportal%2Fks_utv%2Fst_login')
     token_fields = token_body.scan /<input .*?name="(.*?)".*?value ?="(.*?)".*?>/i
     token = token_fields.find { |t| t[0] == 'site2pstoretoken' }[1]
     http_get('pls/portal/myports.st_login_proc.create_user?CreUser=40001062')
 
-    url = URI.parse('http://login.kampsport.no/')
     login_form_fields = login_content.scan /<input .*?name="(.*?)".*?value ?="(.*?)".*?>/
     login_form_fields.delete_if { |f| %w{site2pstoretoken ssousername password}.include? f[0] }
     login_form_fields += [['site2pstoretoken', token], %w{ssousername 40001062}, %w{password CokaBrus42}]
     login_params = login_form_fields.map { |field| "#{field[0]}=#{ERB::Util.url_encode field[1]}" }.join '&'
+    url = URI.parse('http://login.kampsport.no/')
     Net::HTTP.start(url.host, url.port) do |http|
       login_response = http.post('/pls/orasso/orasso.wwsso_app_admin.ls_login', login_params, cookie_header)
       unless login_response.code == '302'
         logger.error "Wrong URL: #{login_response.code}"
         redo
       end
-      process_response login_response
+      process_response(login_response, false)
       raise 'Missing session cookie' if @cookies.empty?
       return login_response['location']
     end
@@ -350,22 +351,23 @@ class NkfMemberImport
   def http_get(url_string, binary = false)
     logger.debug "Getting #{url_string}"
     url = URI.parse(url_string =~ %r{^http://} ? url_string : "http://www.kampsport.no/portal/#{url_string}")
+    cache_file = "#{Rails.root}/tmp/cache/nkf/#{Digest::MD5.hexdigest url.request_uri}"
+    if Rails.env.test? && File.exists?(cache_file) && File.ctime(cache_file) > 1.day.ago
+      logger.debug "Used cached response #{cache_file}"
+      return File.read(cache_file, encoding: Encoding::ASCII_8BIT)
+    end
     backoff = 1
     begin
-      Net::HTTP.start(url.host, url.port) do |http|
-        response = http.get(url_string =~ %r{^http://} ? url_string.gsub(%r{^http://[^/]+}, '') : "/portal/#{url_string}", cookie_header.update(binary ? {'Content-Type' => 'application/octet-stream'} : {}))
-        body = response.body
-        raise Timeout::Error if body =~ /ks_medlprofil timed out|Siden er utl.pt/
-        raise EOFError.new('Internal error') if body =~ /The server encountered an internal error or/
-        raise EOFError.new('Try refreshing') if body =~ /An error occurred while processing the request. Try refreshing your browser. If the problem persists contact the site administrator/
-        raise EOFError.new('Lytter returnerte feil') if body =~ /Feil: Lytteren returnerte den f.lgende meldingen: 503 Service Unavailable/
-        raise EOFError.new('Servlet Error') if body =~ /<TITLE>Servlet Error<\/TITLE>/i
-        return process_response(response)
+      body = http_get_response(url, binary).body
+      FileUtils.mkpath File.dirname(cache_file)
+      if Rails.env.test?
+        File.write(cache_file, body, encoding: Encoding::ASCII_8BIT)
       end
+      return body
     rescue EOFError, Errno::ECONNREFUSED, SocketError, SystemCallError,
         Timeout::Error
       logger.error $!.message
-      if backoff > 15.minutes
+      if backoff > 10.seconds # 15.minutes
         if $!.respond_to?(:message=)
           $!.message = "Backoff limit reached (#{backoff}): #{$!.message}"
         end
@@ -378,12 +380,25 @@ class NkfMemberImport
     end
   end
 
-  def process_response(response)
+  def http_get_response(url, binary)
+    Net::HTTP.start(url.host, url.port) do |http|
+      response = http.get(url.request_uri, cookie_header.update(binary ? {'Content-Type' => 'application/octet-stream'} : {}))
+      body = response.body
+      raise Timeout::Error if body =~ /ks_medlprofil timed out|Siden er utl.pt/
+      raise EOFError.new('Internal error') if body =~ /The server encountered an internal error or/
+      raise EOFError.new('Try refreshing') if body =~ /An error occurred while processing the request. Try refreshing your browser. If the problem persists contact the site administrator/
+      raise EOFError.new('Lytter returnerte feil') if body =~ /Feil: Lytteren returnerte den f.lgende meldingen: 503 Service Unavailable/
+      raise EOFError.new('Servlet Error') if body =~ /<TITLE>Servlet Error<\/TITLE>/i
+      process_response(response, binary)
+    end
+  end
+
+  def process_response(response, binary)
     store_cookie(response)
     if response.code == '302'
       redirect_url = response['location']
       logger.debug "Following redirect to #{redirect_url}"
-      return http_get redirect_url
+      return http_get_response(URI.parse(redirect_url), binary)
     elsif response.code != '200'
       raise "Got response code #{response.code}"
     end

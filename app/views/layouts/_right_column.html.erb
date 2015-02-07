@@ -3,13 +3,13 @@
 <div class="padded">
 
   <div align="center">
-    <%= link_to image_tag('rjjk_logo_&_txt_320.png', :id => :logo_img), '/' %>
+    <%= link_to image_tag('rjjk_logo_&_txt_320.png', id: :logo_img), '/' %>
   </div>
 
   <form action="/search" role="search">
     <div class="input-group">
-      <%= search_field nil, nil, :name => :q, :value => @query, :placeholder => 'Søk',
-              :class => 'search-query form-control', :onmouseup => 'select()' %>
+      <%= search_field nil, nil, name: :q, value: @query, placeholder: 'Søk',
+              class: 'search-query form-control', onmouseup: 'select()' %>
       <div class="input-group-btn">
         <button class="btn btn-default" type="submit">
           <i class="glyphicon glyphicon-search"></i>
@@ -22,9 +22,9 @@
 
   <% if @image && !@image.new_record? && (controller.class != ImagesController || !%w{gallery mine}.include?(controller.action_name)) %>
       <div align="center">
-        <%= link_to :controller => :images, :action => :gallery, :id => @image.id do %>
+        <%= link_to controller: :images, action: :gallery, id: @image.id do %>
             <% if @image.video? %>
-                <%= video_tag url_for(:controller => :images, :action => :show, :id => @image.id, :format => @image.format), :title => @image.name || 'Film', :style => 'width: 100%; border: 0', :controls => true, :autobuffer => true %>
+                <%= video_tag url_for(controller: :images, action: :show, id: @image.id, format: @image.format), title: @image.name || 'Film', style: 'width: 100%; border: 0', controls: true, autobuffer: true %>
             <% else %>
                 <% image_width_1200 = @image.width_max(column_width_1200) %>
                 <% image_width_992 = @image.width_max(column_width_992) %>
@@ -43,10 +43,10 @@
                         }
                     }
                 </style>
-                <%= image_tag url_for(:controller => :images, :action => :inline, :id => @image.id,
-                                :width => image_width_1200, :format => @image.format),
-                        :id => :gallery_img,
-                        :title => @image.name || 'Bilde', :class => 'img-rounded' %>
+                <%= image_tag url_for(controller: :images, action: :inline, id: @image.id,
+                                width: image_width_1200, format: @image.format),
+                        id: :gallery_img,
+                        title: @image.name || 'Bilde', class: 'img-rounded' %>
             <% end %>
             <br clear="all"/>
             <%= @image.description %>

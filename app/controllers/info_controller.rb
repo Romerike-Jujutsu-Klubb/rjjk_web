@@ -65,6 +65,8 @@ class InfoController < ApplicationController
     redirect_to :controller => :news, :action => :index
   end
 
+  def versjon ; end
+
   private
 
   def load_images

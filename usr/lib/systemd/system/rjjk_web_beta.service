@@ -13,4 +13,4 @@ PIDFile=/u/apps/rjjk_web_beta/shared/pids/server.pid
 TimeoutSec=300
 
 [Install]
-WantedBy=graphical.target
+WantedBy=multi-user.target
