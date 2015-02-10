@@ -1,6 +1,6 @@
 class BasicTechniquesController < ApplicationController
   USER_ACTIONS = [:index, :show]
-  before_filter :authenticate_user, :only => USER_ACTIONS
+  before_filter :authenticate_user, only: USER_ACTIONS
   before_filter :technical_committy_required, except: USER_ACTIONS
 
   def index

@@ -1,30 +1,22 @@
-<p id="notice"><%= notice %></p>
+<h2><%= @basic_technique.name %></h2>
 
-<p>
-  <b>Name:</b>
-  <%= @basic_technique.name %>
-</p>
+<h4>
+  <%= @basic_technique.waza.name %> waza,
+  <%= @basic_technique.rank.label %>
+</h4>
 
-<p>
-  <b>Translation:</b>
-  <%= @basic_technique.translation %>
-</p>
+<% if @basic_technique.translation.present? %>
+    <p><%= @basic_technique.translation %></p>
+<% elsif current_user.technical_committy? %>
+    <p>Oversettelse mangler!</p>
+<% end %>
 
-<p>
-  <b>Waza:</b>
-  <%= @basic_technique.waza_id %>
-</p>
+<% if @basic_technique.description.present? %>
+    <p><%= @basic_technique.description %></p>
+<% elsif current_user.technical_committy? %>
+    <p>Beskrivelse mangler!</p>
+<% end %>
 
-<p>
-  <b>Description:</b>
-  <%= @basic_technique.description %>
-</p>
-
-<p>
-  <b>Rank:</b>
-  <%= @basic_technique.rank_id %>
-</p>
-
-
-<%= link_to 'Edit', edit_basic_technique_path(@basic_technique) %> |
-<%= link_to 'Back', basic_techniques_path %>
+<br/>
+<%= link_to('Endre', edit_basic_technique_path(@basic_technique), class: 'btn btn-primary') if current_user.technical_committy? %>
+<%= back_or_link_to 'Tilbake', @basic_technique.rank, class: 'btn btn-default' %>

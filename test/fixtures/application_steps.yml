@@ -4,7 +4,8 @@ one:
   description: MyText
   image_filename: MyString
   image_content_type: MyString
-  image_content_data: 
+  image_content_data: !binary |
+    iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==
 
 two:
   technique_application: defence_against_wrist_grip_in_front
@@ -12,4 +13,13 @@ two:
   description: MyText
   image_filename: MyString
   image_content_type: MyString
-  image_content_data: 
+  image_content_data:
+
+defence_against_dual_hair_grip_with_kneeing_step_1:
+  technique_application: defence_against_dual_hair_grip_with_kneeing
+  position: 1
+  description: Panic!
+  image_filename: MyString
+  image_content_type: MyString
+  image_content_data: !binary |
+    iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==

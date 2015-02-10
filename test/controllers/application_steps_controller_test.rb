@@ -61,4 +61,37 @@ class ApplicationStepsControllerTest < ActionController::TestCase
 
     assert_redirected_to application_steps_path
   end
+
+  test 'should hide image from public user' do
+    logout
+    get :image, id: @application_step
+    assert_response :redirect
+    assert_redirected_to login_path
+  end
+
+  test 'should show image to unranked member' do
+    login :newbie
+    get :image, id: @application_step
+    assert_response :success
+  end
+
+  test 'should hide high-rank image from unranked member' do
+    login :newbie
+    get :image, id: application_steps(:defence_against_dual_hair_grip_with_kneeing_step_1)
+    assert_redirected_to login_path
+  end
+
+  test 'should show image to ranked member' do
+    login :lars
+    get :image, id: @application_step
+    assert_response :success
+  end
+
+  test 'should redirect to dummy image if no image content' do
+    login :lars
+    get :image, id: application_steps(:two).id
+    assert_response :redirect
+    assert_redirected_to '/assets/pdficon_large.png'
+  end
+
 end

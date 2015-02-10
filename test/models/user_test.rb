@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  fixtures :users
   self.use_transactional_fixtures = false
 
   def test_authenticate
@@ -126,4 +125,10 @@ class UserTest < ActiveSupport::TestCase
     assert !u.save
   end
 
+  def test_technical_committy
+    assert_equal true, users(:admin).technical_committy?
+    assert_equal true, users(:lars).technical_committy?
+    assert_equal nil, users(:long_user).technical_committy?
+    assert_equal nil, users(:newbie).technical_committy?
+  end
 end

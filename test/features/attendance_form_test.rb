@@ -7,6 +7,15 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
     click_link 'Oppmøtelister'
     assert_current_path '/attendances/form_index'
     screenshot('attendance/form/index')
+    find('#group_name_Panda').click
+    sleep 0.5
+    screenshot('attendance/form/index_select_panda')
+    find('#group_name_Tiger').click
+    sleep 0.5
+    screenshot('attendance/form/index_select_tiger')
+    find('#group_name_Voksne').click
+    sleep 0.5
+    screenshot('attendance/form/index_select_voksne')
   end
 
   def test_select_panda_october
@@ -32,7 +41,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
 
     uwe_row = find('table:first-of-type tbody tr:first-of-type')
     assert uwe_row
-    assert_equal ['Uwe Kubosch', '42', '', '', '', 'P', '', '', '1 / 1'],
+    assert_equal ['Uwe Kubosch', '42', 'svart', '', '', 'P', '', '', '1 / 1'],
         uwe_row.all('td').map(&:text)
     assert_difference 'Attendance.count' do
       uwe_row.find('td:nth-of-type(4)').find('a').click

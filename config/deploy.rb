@@ -24,6 +24,7 @@ set :pty, true
 
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp')
 
 # Default value for default_env is {}
 set :default_env, { JRUBY_OPTS: '"--dev -J-Xmx2G"' }
@@ -31,8 +32,6 @@ set :default_env, { JRUBY_OPTS: '"--dev -J-Xmx2G"' }
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-# after 'deploy:updated', :announce_maintenance
-# after 'deploy:finishing', :end_maintenance
 # before 'deploy:spinner', 'deploy:reload_daemons'
 before 'deploy:restart', 'deploy:reload_daemons'
 after 'deploy:publishing', 'deploy:restart'
@@ -53,7 +52,7 @@ end
 desc 'Announce maintenance'
 task :announce_maintenance do
   on roles :all do
-    within "#{fetch :current_path}/public" do
+    within "#{current_path}/public" do
       with rails_env: fetch(:rails_env) do
         puts 'execute 1'
         execute :cp, '503_update.html 503.html'
@@ -65,7 +64,7 @@ end
 desc 'End maintenance'
 task :end_maintenance do
   on roles :all do
-    within "#{fetch :current_path}/public" do
+    within "#{current_path}/public" do
       with rails_env: fetch(:rails_env) do
         puts 'execute 2'
         execute :cp, '503_down.html 503.html'
@@ -74,11 +73,14 @@ task :end_maintenance do
   end
 end
 
+after 'deploy:updated', :announce_maintenance
+after 'deploy:finishing', :end_maintenance
+
 namespace :deploy do
   task :symlinks do
     on roles :all do
       puts 'execute 3'
-      execute :sudo, "rm -f /usr/lib/systemd/system/#{fetch :application}.service ; sudo ln -s /u/apps/#{fetch :application}/current/usr/lib/systemd/system/#{fetch :application}.service /usr/lib/systemd/system/#{fetch :application}.service"
+      execute :sudo, "rm -f /usr/lib/systemd/system/#{fetch :application}.service ; sudo ln -s #{current_path}/usr/lib/systemd/system/#{fetch :application}.service /usr/lib/systemd/system/#{fetch :application}.service"
     end
   end
 

@@ -25,9 +25,8 @@
                   <div class="col-md-6">
                     <%= sa.select :answer, choices, {selected: answers},
                             multiple: sq.select_multiple,
-                            class: "form-control #{'chosen-select' if sq.select_multiple}",
-                            prompt: 'Velg svar eller "Annet"', include_blank: true,
-                            data: {placeholder: "Choose an answer..."},
+                            class: 'form-control chosen-select',
+                            data: {placeholder: 'Velg et svar eller'},
                             onchange: "other_selected = $(this).val() && $(this).val().indexOf('annet') > -1;
                     tf = $('#survey_request_survey_answers_attributes_#{sa.index}_answer_free');
                     tf.prop('disabled', !other_selected);

@@ -15,7 +15,7 @@
       <% @rank.basic_techniques.group_by(&:waza).each do |waza, bts| %>
           <tr>
             <td><%= waza.name %></td>
-            <td><%= bts.map { |bt| link_to bt.name, bt }.join(', ').html_safe %></td>
+            <td><%= bts.map { |bt| detour_to bt.name, bt }.join(', ').html_safe %></td>
           </tr>
       <% end %>
     </table>

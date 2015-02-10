@@ -21,3 +21,11 @@ sebastian_12_mon:
   rank: mon_12
   paid_graduation: true
   paid_belt: false
+
+uwe_nidan:
+  member: uwe
+  graduation: voksne
+  passed: true
+  rank: nidan
+  paid_graduation: true
+  paid_belt: true

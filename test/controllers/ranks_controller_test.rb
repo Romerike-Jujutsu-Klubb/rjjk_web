@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'test_helper'
 
 class RanksControllerTest < ActionController::TestCase
@@ -47,7 +48,7 @@ class RanksControllerTest < ActionController::TestCase
 
     post :create, rank: {
         group_id: groups(:panda).id, martial_art_id: martial_arts(:keiwaryu).id,
-        name: '5.kyu', colour: 'gult', position: 3, standard_months: 6
+        name: '3.kyu', colour: 'grønt', position: -3, standard_months: 12
     }
     assert_no_errors :rank
     assert_response :redirect

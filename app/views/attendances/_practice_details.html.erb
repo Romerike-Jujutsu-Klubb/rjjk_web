@@ -33,7 +33,9 @@
 "><%= other_attendees.size %></span>
 
 <ul>
-  <% other_attendees.each do |a| %>
+  <% other_attendees.
+          sort_by { |a| [a.member.next_rank, a.member.joined_on, -a.member.age] }.
+          each do |a| %>
       <li>
         <% if admin? %>
             <%= link_to a.member.name, a.member %>

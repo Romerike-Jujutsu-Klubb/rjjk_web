@@ -5,27 +5,27 @@ class AttendancePlanTest < ActionDispatch::IntegrationTest
 
   def test_plan
     screenshot('attendance/plan/index')
-    assert_equal ['Denne uken', 'Ubekreftet', 'Kommer!', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1'],
+    assert_equal ['Denne uken', 'Ubekreftet', 'Kommer!', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '3'],
         all('td').map(&:text).reject(&:blank?)
 
     first('a.btn').click
     assert has_css?('a.btn', text: 'Var der!')
-    assert_equal ['Denne uken', 'Var der!', 'Kommer!', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1'],
+    assert_equal ['Denne uken', 'Var der!', 'Kommer!', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '3'],
         all('td').map(&:text).reject(&:blank?)
 
     first('a.btn').click
     assert has_css?('a.btn', text: 'Annet')
-    assert_equal ['Denne uken', 'Annet', 'Kommer!', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1'],
+    assert_equal ['Denne uken', 'Annet', 'Kommer!', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '3'],
         all('td').map(&:text).reject(&:blank?)
 
     all('a.btn')[1].click
     assert has_css?('a.btn', text: 'Kommer du?', count: 3), all('a.btn').map(&:text)
-    assert_equal ['Denne uken', 'Annet', 'Kommer du?', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1'],
+    assert_equal ['Denne uken', 'Annet', 'Kommer du?', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '3'],
         all('td').map(&:text).reject(&:blank?)
 
     all('a.btn')[1].click
     assert has_css?('a.btn', text: 'Kommer du?', count: 2)
-    assert_equal ['Denne uken', 'Annet', 'Kommer!', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1'],
+    assert_equal ['Denne uken', 'Annet', 'Kommer!', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '3'],
         all('td').map(&:text).reject(&:blank?)
   end
 

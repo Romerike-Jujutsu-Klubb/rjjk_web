@@ -24,8 +24,7 @@ Rails.application.routes.draw do
   post 'user/change_password'
   get 'user/forgot_password'
   post 'user/forgot_password'
-  get 'user/login'
-  post 'user/login'
+  match 'user/login' => 'user#login', as: :login, via: [:get, :post]
   get 'user/logout'
   post 'user/signup'
   get 'user/welcome'

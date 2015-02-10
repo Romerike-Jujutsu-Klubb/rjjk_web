@@ -14,22 +14,11 @@ class AttendanceNaggerTest < ActionMailer::TestCase
 
   def test_send_message_reminder_same_day
     AttendanceNagger.send_message_reminder
-    assert_equal 2, Mail::TestMailer.deliveries.size, ->{Mail::TestMailer.deliveries}
-    mail = ActionMailer::Base.deliveries[0]
-    assert_equal '[RJJK][test] Tema for morgendagens trening for Panda', mail.subject
-    assert_equal %w(uwe@kubosch.no), mail.to
-    assert_equal %w(test@jujutsu.no), mail.from
-    assert_match 'Har du en melding til de som skal trene i morgen?', mail.body.encoded
-
-    mail = ActionMailer::Base.deliveries[1]
-    assert_equal '[RJJK][test] Tema for morgendagens trening for Panda', mail.subject
-    assert_equal %w(uwe@kubosch.no), mail.to
-    assert_equal %w(test@jujutsu.no), mail.from
-    assert_match 'Har du en melding til de som skal trene i morgen?', mail.body.encoded
+    assert_equal 0, Mail::TestMailer.deliveries.size, ->{Mail::TestMailer.deliveries.to_s}
   end
 
   def test_send_message_reminder_day_before
-    Timecop.freeze(Time.local 2013, 10, 16, 18, 46, 0)
+    Timecop.freeze(Time.local 2013, 10, 16, 18, 46, 0) do
     AttendanceNagger.send_message_reminder
     assert_equal 2, Mail::TestMailer.deliveries.size
 
@@ -44,6 +33,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
     assert_match 'Har du en melding til de som skal trene i morgen?', mail.body.encoded
+    end
   end
 
   def test_send_attendance_summary

@@ -21,6 +21,6 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
     assert_equal '[RJJK][test] Disse medlemmene mangler gradering', mail.subject
-    assert_match /Voksne.*Lars Bråten.*4. kyu.*4.*5/m, mail.decoded
+    assert_match /Voksne.*Newbie Neuer.*5. kyu.*0.*0/m, mail.decoded
   end
 end

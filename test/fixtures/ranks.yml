@@ -27,15 +27,15 @@ kyu_5:
   colour: 'gult'
   position: -5
   martial_art: keiwaryu
-  standard_months: 6
+  standard_months: 0
   group: voksne
 
 kyu_4:
   name: '4. kyu'
   colour: 'oransje'
-  position: 2
+  position: -4
   martial_art: keiwaryu
-  standard_months: -4
+  standard_months: 6
   group: voksne
 
 kyu_1:
@@ -43,13 +43,29 @@ kyu_1:
   colour: 'brunt'
   position: -1
   martial_art: keiwaryu
-  standard_months: 1
+  standard_months: 24
   group: voksne
 
 shodan:
   name: 'shodan'
   colour: 'svart'
-  position: 0
+  position: 1
   martial_art: keiwaryu
-  standard_months: 1
+  standard_months: 24
+  group: voksne
+
+nidan:
+  name: 'nidan'
+  colour: 'svart'
+  position: 2
+  martial_art: keiwaryu
+  standard_months: 24
+  group: voksne
+
+sandan:
+  name: 'sandan'
+  colour: 'svart'
+  position: 3
+  martial_art: keiwaryu
+  standard_months: 24
   group: voksne

@@ -1,5 +1,8 @@
+# encoding: utf-8
 class ApplicationStepsController < ApplicationController
-  before_filter :technical_committy_required
+  USER_ACTIONS = [:image]
+  before_filter :technical_committy_required, except: USER_ACTIONS
+  before_filter :authenticate_user, only: USER_ACTIONS
 
   # FIXME(uwe):  Check caching
   caches_page :image
@@ -25,10 +28,15 @@ class ApplicationStepsController < ApplicationController
     step = ApplicationStep.
         select('id, image_filename, image_content_type, image_content_data').
         find(params[:id])
+    if step.technique_application.rank > current_user.member.next_rank
+      redirect_to login_path,
+          notice: 'Du må ha høyere grad for å se på dette pensumet.'
+      return
+    end
     begin
       imgs = Magick::ImageList.new
       imgs.from_blob step.image_content_data
-    rescue java.lang.NullPointerException, java.lang.OutOfMemoryError
+    rescue NoMethodError, java.lang.NullPointerException, java.lang.OutOfMemoryError
       redirect_to '/assets/pdficon_large.png'
       return
     end

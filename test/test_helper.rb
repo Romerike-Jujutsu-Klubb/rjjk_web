@@ -22,6 +22,11 @@ class ActiveSupport::TestCase
     Thread.current[:user] = u
   end
 
+  def logout
+    request.session.delete(:user_id)
+    Thread.current[:user] = nil
+  end
+
   def assert_no_errors(symbol)
     v = assigns(symbol)
     assert v, "Assignment #{symbol} not found in the controller."
