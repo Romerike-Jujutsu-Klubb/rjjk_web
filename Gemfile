@@ -44,7 +44,7 @@ gem 'momentjs-rails'
 gem 'nokogiri'
 gem 'nprogress-rails'
 # gem 'paper_trail' # http://railscasts.com/episodes/255-undo-with-paper-trail?view=similar
-gem 'prawn'
+gem 'prawn', '<2.0.0'
 gem 'prawn-table'
 gem 'puma'
 gem 'rails-i18n'
