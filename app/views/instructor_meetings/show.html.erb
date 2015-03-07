@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Start at:</strong>
+  <%= @instructor_meeting.start_at %>
+</p>
+
+<p>
+  <strong>End at:</strong>
+  <%= @instructor_meeting.end_at %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @instructor_meeting.title %>
+</p>
+
+<p>
+  <strong>Agenda:</strong>
+  <%= @instructor_meeting.agenda %>
+</p>
+
+<%= link_to 'Edit', edit_instructor_meeting_path(@instructor_meeting) %> |
+<%= link_to 'Back', instructor_meetings_path %>

@@ -15,7 +15,7 @@ class AttendanceHistoryGraph
     #g.x_axis_label = 'År / Måned'
     g.x_axis_label=''
     g.y_axis_increment = 5
-    #first_date = find(:first, :order => 'joined_on').joined_on
+    #first_date = self.class.order(:joined_on).first.joined_on
     #first_date = 5.years.ago.to_date
     first_date = Date.civil(2010, 8, 01)
     weeks = []

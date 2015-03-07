@@ -195,7 +195,7 @@ class MembersController < ApplicationController
     end
 
     CSV::Writer.generate(output = '') do |csv|
-      @Params.find(:all).each do |param|
+      @Params.all.each do |param|
         csv << [param]
       end
     end

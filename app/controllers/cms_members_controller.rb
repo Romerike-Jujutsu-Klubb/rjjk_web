@@ -77,7 +77,7 @@ class CmsMembersController < ApplicationController
   end
 
   def excel_export
-    @cms_members = CmsMember.find(:all)
+    @cms_members = CmsMember.all
     render :layout => false
   end
   

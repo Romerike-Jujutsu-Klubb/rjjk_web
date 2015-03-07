@@ -13,7 +13,7 @@ class EnsureUniqueGroupMemberships < ActiveRecord::Migration
       t.integer :martial_art_id, :null => false
       t.integer :member_id, :null => false
     end
-    Member.find(:all).each do |m|
+    Member.all.each do |m|
       m.martial_arts = m.groups.map{|g|g.martial_art}
       m.save!
     end

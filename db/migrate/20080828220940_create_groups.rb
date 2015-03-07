@@ -21,7 +21,7 @@ class CreateGroups < ActiveRecord::Migration
       j = Group.create! :martial_art_id => keiwaryu.id, :name => 'Juniorer', :from_age => 10, :to_age => 14
       s = Group.create! :martial_art_id => keiwaryu.id, :name => 'Seniorer', :from_age => 14, :to_age => 999
       a = Group.create! :martial_art_id => aikikai.id, :name => 'Seniorer', :from_age => 14, :to_age => 999
-      Member.find(:all).each do |m|
+      Member.all.each do |m|
         m.martial_arts.each do |ma|
           if ma == aikikai
             group = a
@@ -41,7 +41,7 @@ class CreateGroups < ActiveRecord::Migration
     add_column :members, :senior, :boolean
     add_column :cms_members, :senior, :boolean
     s = Group.find_by_name 'Seniorer'
-    Member.find(:all).each do |m|
+    Member.all.each do |m|
       senior = m.groups.include? s
       puts "Marking #{m.name} senior: #{senior}"
       m.update_attributes! :senior => senior

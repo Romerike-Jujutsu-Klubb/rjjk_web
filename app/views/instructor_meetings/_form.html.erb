@@ -1,0 +1,41 @@
+<%= form_for(@instructor_meeting) do |f| %>
+    <% if @instructor_meeting.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@instructor_meeting.errors.count, "error") %>
+            prohibited this instructor_meeting from being saved:</h2>
+
+          <ul>
+            <% @instructor_meeting.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="row">
+      <div class="form-group col-md-6">
+        <%= f.label :start_at, 'Start' %>
+        <%= f.text_field :start_at, class: 'datetime form-control' %>
+      </div>
+      <div class="form-group col-md-6">
+        <%= f.label :end_at, 'Slutt' %>
+        <%= f.text_field :end_at, class: 'time form-control' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :title, 'Tema' %>
+      <%= f.text_area :title, class: 'form-control expanding', maxlength: 254 %>
+    </div>
+    <div class="form-group">
+      <%= f.label :agenda %><br>
+      <%= f.text_area :agenda, rows: 10, class: 'form-control expanding' %>
+    </div>
+    <div class="actions">
+      <%= f.submit 'Lagre', class: 'btn btn-primary' %>
+      <%= link_to 'Tilbake', instructor_meetings_path, class: 'btn btn-default' %>
+    </div>
+<% end %>
+
+<%=javascript_tag do %>
+    $('#instructor_meeting_start_at').focus();
+<% end %>

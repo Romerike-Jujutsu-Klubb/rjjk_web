@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204155251) do
+ActiveRecord::Schema.define(version: 20150212162029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -475,6 +475,15 @@ ActiveRecord::Schema.define(version: 20141204155251) do
     t.datetime "revised_at"
     t.datetime "mailed_at"
     t.foreign_key ["parent_id"], "information_pages", ["id"], :on_update => :no_action, :on_delete => :no_action, :name => "information_pages_parent_id_fkey"
+  end
+
+  create_table "instructor_meetings", force: true do |t|
+    t.datetime "start_at",               null: false
+    t.time     "end_at",                 null: false
+    t.string   "title",      limit: 254, null: false
+    t.text     "agenda",                 null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

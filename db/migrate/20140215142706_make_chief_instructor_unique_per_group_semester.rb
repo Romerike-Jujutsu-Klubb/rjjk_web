@@ -1,3 +1,4 @@
+# encoding: utf-8
 class MakeChiefInstructorUniquePerGroupSemester < ActiveRecord::Migration
   def up
     groups = execute 'SELECT id FROM groups WHERE closed_on IS NULL ORDER BY id'

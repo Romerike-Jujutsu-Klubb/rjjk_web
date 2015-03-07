@@ -13,7 +13,7 @@ require 'yaml'
 
 def dump(model_plural)
   model_class = model_plural.to_s.singularize.camelize.constantize
-  models = model_class.find(:all)
+  models = model_class.all
   puts "Found #{models.size} #{model_plural}"
   models.each{|m| m.image = m.thumbnail} if model_class == Member
   File.open("#{EXPORT_DIR}/#{model_plural}.yml", 'w') do |outfile|

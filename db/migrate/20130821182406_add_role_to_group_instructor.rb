@@ -1,3 +1,4 @@
+# encoding: utf-8
 class AddRoleToGroupInstructor < ActiveRecord::Migration
   def up
     add_column :group_instructors, :role, :string, :limit => 16

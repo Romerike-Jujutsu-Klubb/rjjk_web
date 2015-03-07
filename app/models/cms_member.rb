@@ -8,11 +8,11 @@ class CmsMember < ActiveRecord::Base
   validates_uniqueness_of :cms_contract_id
   
   def self.find_active
-    find(:all, :conditions => ACTIVE_CONDITIONS, :order => 'last_name, first_name')
+    where(ACTIVE_CONDITIONS).order(:last_name, :first_name)
   end
   
   def self.find_inactive
-    find(:all, :conditions => "not (#{ACTIVE_CONDITIONS})", :order => 'last_name, first_name')
+    where("not (#{ACTIVE_CONDITIONS})").order(:last_name, :first_name)
   end
   
   def fee
