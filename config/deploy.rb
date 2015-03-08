@@ -54,7 +54,6 @@ task :announce_maintenance do
   on roles :all do
     within "#{current_path}/public" do
       with rails_env: fetch(:rails_env) do
-        puts 'execute 1'
         execute :cp, '503_update.html 503.html'
       end
     end
@@ -66,7 +65,6 @@ task :end_maintenance do
   on roles :all do
     within "#{current_path}/public" do
       with rails_env: fetch(:rails_env) do
-        puts 'execute 2'
         execute :cp, '503_down.html 503.html'
       end
     end
@@ -79,14 +77,12 @@ after 'deploy:finishing', :end_maintenance
 namespace :deploy do
   task :symlinks do
     on roles :all do
-      puts 'execute 3'
       execute :sudo, "rm -f /usr/lib/systemd/system/#{fetch :application}.service ; sudo ln -s #{current_path}/usr/lib/systemd/system/#{fetch :application}.service /usr/lib/systemd/system/#{fetch :application}.service"
     end
   end
 
   task :reload_daemons do
     on roles :all do
-      puts 'execute 4'
       execute :sudo, 'systemctl daemon-reload'
     end
   end
