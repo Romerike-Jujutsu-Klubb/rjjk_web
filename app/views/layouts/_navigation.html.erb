@@ -1,6 +1,6 @@
 <ul>
-  <li><%= link_to 'Forsiden', '/' %></li>
-  <li><%= link_to 'Nyheter', :controller => :news %></li>
+  <li><%= link_to 'Forsiden', root_path %></li>
+  <li><%= link_to 'Nyheter', controller: :news %></li>
 </ul>
 
 <% if user? %>
@@ -8,13 +8,13 @@
     <ul>
       <% if member? %>
           <% if current_user.member.groups.reject(&:school_breaks).any? %>
-              <li><%= detour_to 'Mitt oppmøte', :controller => :attendances, :action => :plan %></li>
+              <li><%= detour_to 'Mitt oppmøte', controller: :attendances, action: :plan %></li>
           <% end %>
-          <li><%= link_to 'Min Embu', :controller => :embus, :action => :index %></li>
+          <li><%= link_to 'Min Embu', controller: :embus, action: :index %></li>
       <% end %>
-      <li><%= link_to 'Mine media', :controller => :images, :action => :mine %></li>
-      <li><%= menu_item 'Pensum', controller: 'ranks', action: :pensum %></li>
-      <li><%= detour_to 'Logg ut', :controller => 'user', :action => :logout %></li>
+      <li><%= link_to 'Mine media', controller: :images, action: :mine %></li>
+      <li><%= menu_item 'Pensum', controller: :ranks, action: :pensum %></li>
+      <li><%= detour_to 'Logg ut', controller: :user, action: :logout %></li>
     </ul>
 <% end %>
 
@@ -24,6 +24,7 @@
     <div id="instructor_menu">
       <ul>
         <li><%= menu_item 'Oppmøtelister', controller: :attendances, action: :form_index %></li>
+        <li><%= menu_item 'Graderinger', controller: :graduations %></li>
       </ul>
     </div>
 <% end %>
@@ -33,10 +34,10 @@
 
     <div id="admin_menu">
       <ul>
-        <li><%= link_to 'Ny nyhet', :controller => 'news', :action => 'new' %></li>
-        <li><%= link_to 'Ny side', :controller => 'info', :action => 'new' %></li>
-        <li><%= link_to 'Ny hendelse', :controller => 'events', :action => 'new' %></li>
-        <li><%= link_to 'Brukere', :controller => 'user', :action => :index %></li>
+        <li><%= link_to 'Ny nyhet', controller: :news, action: :new %></li>
+        <li><%= link_to 'Ny side', controller: :info, action: :new %></li>
+        <li><%= link_to 'Ny hendelse', controller: :events, action: :new %></li>
+        <li><%= link_to 'Brukere', controller: :user, action: :index %></li>
       </ul>
     </div>
 
@@ -45,30 +46,29 @@
     <div id="members_menu">
       <ul>
         <!--
-          <li><%= menu_item 'Medlemsliste NY!', :controller => 'members_drilldown', :action => :index %></li>
+          <li><%= menu_item 'Medlemsliste NY!', controller: :members_drilldown, action: :index %></li>
           -->
-        <li><%= menu_item 'Medlemsliste', :controller => 'members', :action => :list_active %></li>
-        <li><%= menu_item 'Graderinger', :controller => 'graduations' %></li>
-        <li><%= menu_item 'Instruksjon', :controller => 'group_instructors' %></li>
-        <li><%= menu_item 'Instruktørsamling', controller: 'instructor_meetings' %></li>
+        <li><%= menu_item 'Medlemsliste', controller: :members, action: :list_active %></li>
+        <li><%= menu_item 'Instruksjon', controller: :group_instructors %></li>
+        <li><%= menu_item 'Instruktørsamling', controller: :instructor_meetings %></li>
         <li><%= menu_item 'Styremøter', controller: :board_meetings %></li>
-        <li><%= menu_item 'Bursdager', :controller => 'birthday_celebrations' %></li>
-        <li><%= menu_item 'Treningstider', :controller => 'group_schedules' %></li>
-        <li><%= menu_item 'Grupper', :controller => 'groups' %></li>
-        <li><%= menu_item 'Grader', controller: 'ranks', anchor: 'KeiWaRyu_Voksne' %></li>
-        <li><%= menu_item 'Roller', :controller => 'roles' %></li>
-        <li><%= menu_item 'Styret', :controller => 'elections' %></li>
-        <li><%= menu_item 'Verv', :controller => 'appointments' %></li>
+        <li><%= menu_item 'Bursdager', controller: :birthday_celebrations %></li>
+        <li><%= menu_item 'Treningstider', controller: :group_schedules %></li>
+        <li><%= menu_item 'Grupper', controller: :groups %></li>
+        <li><%= menu_item 'Grader', controller: :ranks, anchor: :KeiWaRyu_Voksne %></li>
+        <li><%= menu_item 'Roller', controller: :roles %></li>
+        <li><%= menu_item 'Styret', controller: :elections %></li>
+        <li><%= menu_item 'Verv', controller: :appointments %></li>
         <!--
-          <li><%= menu_item 'Stiler', :controller => 'martial_arts' %></li>
-          <li><%= menu_item 'Inntekt', :controller => 'members', :action => :income %></li>
-          <li><%= menu_item 'NKF Rapport', :controller => 'members', :action => :NKF_report %></li>
-          <li><%= menu_item 'CMS-Kontrakter', :controller => 'cms_members', :action => :active_contracts %></li>
-          <li><%= menu_item 'CMS Avstemming', :controller => 'members', :action => :cms_comparison %></li>
-          <li><%= menu_item 'NKF Medlemsliste', :controller => 'nkf_members', :action => :index %></li>
-          <li><%= menu_item 'NKF Avstemming', :controller => 'nkf_members', :action => :comparison %></li>
+          <li><%= menu_item 'Stiler', controller: :martial_arts %></li>
+          <li><%= menu_item 'Inntekt', controller: :members, action: :income %></li>
+          <li><%= menu_item 'NKF Rapport', controller: :members, action: :NKF_report %></li>
+          <li><%= menu_item 'CMS-Kontrakter', controller: :cms_members, action: :active_contracts %></li>
+          <li><%= menu_item 'CMS Avstemming', controller: :members, action: :cms_comparison %></li>
+          <li><%= menu_item 'NKF Medlemsliste', controller: :nkf_members, action: :index %></li>
+          <li><%= menu_item 'NKF Avstemming', controller: :nkf_members, action: :comparison %></li>
           -->
-        <li><%= menu_item 'Versjon', :controller => 'info', :action => :versjon %></li>
+        <li><%= menu_item 'Versjon', controller: :info, action: :versjon %></li>
       </ul>
     </div>
 <% end %>
@@ -77,11 +77,10 @@
 <ul>
   <% @information_pages.each do |page| %>
       <li>
-        <%= link_to page.title + (page.visible? ? '' : ' (skjult)'), :controller => :info, :action => :show, :id => page.title %>
-        <%#=link_to 'ned', :controller => :info, :action => :move_down, :id => page.id%>
+        <%= link_to page.title + (page.visible? ? '' : ' (skjult)'), controller: :info, action: :show, id: page.title %>
       </li>
   <% end %>
   <% unless user? %>
-      <li><%= detour_to 'Logg inn', :controller => 'user', :action => :login %></li>
+      <li><%= detour_to 'Logg inn', controller: :user, action: :login %></li>
   <% end %>
 </ul>
