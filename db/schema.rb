@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150212162029) do
+ActiveRecord::Schema.define(version: 20150308133553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -318,6 +318,7 @@ ActiveRecord::Schema.define(version: 20150212162029) do
     t.date     "resigned_on"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "guardian"
     t.index ["annual_meeting_id"], :name => "fk__elections_annual_meeting_id"
     t.index ["member_id"], :name => "fk__elections_member_id"
     t.index ["role_id"], :name => "fk__elections_role_id"

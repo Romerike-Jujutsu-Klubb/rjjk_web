@@ -1,8 +1,6 @@
 class RolesController < ApplicationController
   before_filter :admin_required
 
-  # GET /roles
-  # GET /roles.json
   def index
     @roles = Role.order('years_on_the_board DESC NULLS LAST, name').to_a
 
@@ -12,8 +10,6 @@ class RolesController < ApplicationController
     end
   end
 
-  # GET /roles/1
-  # GET /roles/1.json
   def show
     @role = Role.find(params[:id])
 
@@ -23,8 +19,6 @@ class RolesController < ApplicationController
     end
   end
 
-  # GET /roles/new
-  # GET /roles/new.json
   def new
     @role = Role.new
 
@@ -34,19 +28,16 @@ class RolesController < ApplicationController
     end
   end
 
-  # GET /roles/1/edit
   def edit
     @role = Role.find(params[:id])
   end
 
-  # POST /roles
-  # POST /roles.json
   def create
     @role = Role.new(params[:role])
 
     respond_to do |format|
       if @role.save
-        format.html { redirect_to @role, notice: 'Job position was successfully created.' }
+        format.html { redirect_to roles_path, notice: 'Job position was successfully created.' }
         format.json { render json: @role, status: :created, location: @role }
       else
         format.html { render action: "new" }
@@ -55,8 +46,6 @@ class RolesController < ApplicationController
     end
   end
 
-  # PUT /roles/1
-  # PUT /roles/1.json
   def update
     @role = Role.find(params[:id])
 
@@ -71,8 +60,6 @@ class RolesController < ApplicationController
     end
   end
 
-  # DELETE /roles/1
-  # DELETE /roles/1.json
   def destroy
     @role = Role.find(params[:id])
     @role.destroy

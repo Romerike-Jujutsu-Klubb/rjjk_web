@@ -2,7 +2,9 @@ class ElectionsController < ApplicationController
   before_filter :admin_required
 
   def index
-    @elections = Election.all
+    @meetings = Election.includes(:annual_meeting, :role).
+        order('annual_meetings.start_at DESC, years, roles.name').to_a.
+        group_by(&:annual_meeting)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @elections }
@@ -18,10 +20,10 @@ class ElectionsController < ApplicationController
   end
 
   def new
-    @election = Election.new
+    @election ||= Election.new
     load_form_data
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render action: 'new' }
       format.json { render json: @election }
     end
   end
@@ -33,12 +35,16 @@ class ElectionsController < ApplicationController
 
   def create
     @election = Election.new(params[:election])
+    @election.years = @election.role.try(:years_on_the_board)
     respond_to do |format|
       if @election.save
-        format.html { redirect_to @election, notice: 'Board appointment was successfully created.' }
+        format.html do
+          redirect_to @election.member.age < 15 ? edit_election_path(@election)
+              : elections_path, notice: 'Board appointment was successfully created.'
+        end
         format.json { render json: @election, status: :created, location: @election }
       else
-        format.html { render action: "new" }
+        format.html { new }
         format.json { render json: @election.errors, status: :unprocessable_entity }
       end
     end
@@ -48,10 +54,10 @@ class ElectionsController < ApplicationController
     @election = Election.find(params[:id])
     respond_to do |format|
       if @election.update_attributes(params[:election])
-        format.html { redirect_to @election, notice: 'Board appointment was successfully updated.' }
+        format.html { redirect_to elections_path, notice: 'Board appointment was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @election.errors, status: :unprocessable_entity }
       end
     end
@@ -69,7 +75,7 @@ class ElectionsController < ApplicationController
   private
 
   def load_form_data
-    @annual_meetings = AnnualMeeting.all
+    @annual_meetings = AnnualMeeting.order(:start_at).reverse_order.to_a
     @roles = Role.
         where('years_on_the_board IS NOT NULL OR id = ?', @election.role_id).
         order(:name).to_a

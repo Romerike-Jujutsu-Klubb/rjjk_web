@@ -1,26 +1,27 @@
 <%= form_for(@role) do |f| %>
-  <% if @role.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@role.errors.count, "error") %> prohibited this role from being saved:</h2>
+    <% if @role.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@role.errors.count, "error") %> prohibited this role
+            from being saved:</h2>
 
-      <ul>
-      <% @role.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @role.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :name, 'Navn' %><br/>
+      <%= f.text_field :name, class: 'form-control' %>
     </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, class: 'form-control' %>
-  </div>
-  <div class="form-group">
-    <%= f.label :years_on_the_board %><br />
-    <%= f.number_field :years_on_the_board, class: 'form-control' %>
-  </div>
-  <div class="actions">
-    <%= f.submit class: 'btn btn-primary pull-right' %>
-    <%= back_or_link_to 'Tilbake', roles_path, class: 'btn btn-default' %>
-  </div>
+    <div class="form-group">
+      <%= f.label :years_on_the_board, 'År i styret' %><br/>
+      <%= f.select :years_on_the_board, [nil, 1, 2], {}, class: 'form-control' %>
+    </div>
+    <div class="actions">
+      <%= f.submit 'Lagre', class: 'btn btn-primary' %>
+      <%= back_or_link_to 'Tilbake', roles_path, class: 'btn btn-default' %>
+    </div>
 <% end %>

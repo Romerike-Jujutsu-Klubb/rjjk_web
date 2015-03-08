@@ -1,25 +1,35 @@
 <%= link_to 'Registrer nytt valg', new_election_path, class: 'btn btn-primary pull-right' %>
 
-<h1>Listing elections</h1>
+<h1>Styreverv</h1>
 
-<table class="table">
-  <tr>
-    <th>Årsmøte</th>
-    <th>Rolle</th>
-    <th>Medlem</th>
-    <th>Trukket</th>
-    <th></th>
-  </tr>
+<% @meetings.each do |meeting, elections| %>
 
-<% @elections.each do |election| %>
-  <tr>
-    <td><%= election.annual_meeting.start_at.to_date %></td>
-    <td><%= election.role.name %></td>
-    <td><%= link_to election.member.name, edit_election_path(election) %></td>
-    <td><%= election.resigned_on %></td>
-    <td><%= link_to '', election, method: :delete,
-            data: { confirm: 'Are you sure?' },
-            class: 'glyphicon glyphicon-trash' %></td>
-  </tr>
+    <h2><%= detour_to meeting.start_at.year, meeting %></h2>
+    <% withdrawn = elections.any?(&:resigned_on) %>
+
+    <table class="table">
+      <tr>
+        <th>Rolle</th>
+        <th>Medlem/Foresatt</th>
+        <% if withdrawn %>
+            <th>Trukket</th>
+        <% end %>
+        <th></th>
+      </tr>
+
+      <% elections.each do |election| %>
+          <tr>
+            <td><%= election.role.name %></td>
+            <td>
+              <%= detour_to election.elected_name, edit_election_path(election) %>
+            </td>
+            <% if withdrawn %>
+                <td><%= election.resigned_on %></td>
+            <% end %>
+            <td><%= link_to '', election, method: :delete,
+                    data: {confirm: 'Are you sure?'},
+                    class: 'glyphicon glyphicon-trash' %></td>
+          </tr>
+      <% end %>
+    </table>
 <% end %>
-</table>

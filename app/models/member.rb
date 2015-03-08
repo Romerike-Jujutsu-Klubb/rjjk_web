@@ -299,6 +299,25 @@ class Member < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def guardians
+    guardians = {}
+    if parent_name
+      guardians[1] = {
+          name: parent_name,
+          email: parent_email,
+          phone: phone_parent,
+      }
+    end
+    if parent_2_name
+      guardians[2] = {
+          name: parent_2_name,
+          email: billing_email,
+          phone: parent_2_mobile,
+      }
+    end
+    guardians
+  end
+
   def image_file=(file)
     return if file.blank?
     self.create_image! :user_id => user_id, :name => file.original_filename,

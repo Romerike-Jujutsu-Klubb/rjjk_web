@@ -6,6 +6,9 @@ nb:
       current_semester:
         first_session: Første trening
         last_session: Siste trening
+      election:
+        role_id: Rolle
+        member_id: Medlem
       graduation:
         held_on: Dato
       group:

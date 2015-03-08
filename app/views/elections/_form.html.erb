@@ -1,36 +1,51 @@
 <%= form_for(@election) do |f| %>
-  <% if @election.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@election.errors.count, "error") %> prohibited this election from being saved:</h2>
+    <% if @election.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= @election.errors.count %> feil forhindret lagring av valget:
+          </h2>
 
-      <ul>
-      <% @election.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @election.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :annual_meeting_id, 'Årsmøte' %>
+      <%= f.select :annual_meeting_id, options_from_collection_for_select(@annual_meetings, :id, :date, @election.annual_meeting_id), {}, class: 'form-control' %>
     </div>
-  <% end %>
+    <div class="form-group">
+      <%= f.label :role_id, 'Stilling' %>
+      <%= f.select :role_id, options_from_collection_for_select(@roles, :id, :name, @election.role_id),
+              {prompt: 'Velg rolle'}, class: 'form-control' %>
+    </div>
 
-  <div class="form-group">
-    <%= f.label :annual_meeting_id, 'Årsmøte' %><br />
-    <%= f.select :annual_meeting_id, options_from_collection_for_select(@annual_meetings, :id, :date, @election.annual_meeting_id), {}, class: 'form-control' %>
-  </div>
-  <div class="form-group">
-    <%= f.label :role_id, 'Stilling' %><br />
-    <%= f.select :role_id, options_from_collection_for_select(@roles, :id, :name, @election.role_id), {}, class: 'form-control' %>
-  </div>
-  <div class="form-group">
-    <%= f.label :member_id, 'Medlem' %><br />
-    <%= f.select :member_id, options_from_collection_for_select(@members, :id, :name, @election.member_id), {}, class: 'form-control' %>
-  </div>
-  <div class="form-group">
-    <%= f.label :resigned_on, 'Trukket seg' %>
-    <%= f.text_field :resigned_on, class: 'date form-control' %>
-  </div>
+    <div class="form-group">
+      <%= f.label :member_id, 'Medlem' %>
+      <%= f.select :member_id, options_from_collection_for_select(@members, :id, :name, @election.member_id),
+              {prompt: 'Velg medlem'}, class: 'form-control' %>
+    </div>
+    <% if @election.member %>
+        <div class="form-group">
+          <%= f.label :guardian, 'Foresatt' %>
+          <%= f.select :guardian,
+                  [*@election.member.guardians.map { |i,g| ["#{g[:name]} (#{g[:email] || 'e-post mangler'})", i] }],
+                  {include_blank: @election.guardian ? 'Ingen foresatt' : 'Velg foresatt hvis passende'},
+                  class: 'form-control' %>
+        </div>
+    <% end %>
 
-  <div class="actions">
-    <%= f.submit 'Lagre', class: 'btn btn-primary' %>
-    <%= link_to 'Vis', @election %> |
-    <%= link_to 'Tilbake', elections_path %>
-  </div>
+    <% unless @election.new_record? %>
+        <div class="form-group">
+          <%= f.label :resigned_on, 'Trukket seg' %>
+          <%= f.text_field :resigned_on, class: 'date form-control' %>
+        </div>
+    <% end %>
+
+    <div class="actions">
+      <%= f.submit 'Lagre', class: 'btn btn-primary' %>
+      <%= link_to 'Til styreoversikt', elections_path, class: 'btn btn-default' %>
+    </div>
 <% end %>

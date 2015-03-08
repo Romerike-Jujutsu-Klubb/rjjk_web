@@ -21,7 +21,7 @@ START_CMD="cd $APP_DIR ;
   source \"$HOME/.rvm/scripts/rvm\" ; rvm use jruby ;
   export JRUBY_OPTS='${GC_OPTS} -J-Xmx2G --server -J-Djava.awt.headless=true -J-Dawt.toolkit=sun.awt.HToolkit' ;
   jruby --version ;
-  jruby -S bundle exec puma -d -t 0:20 -p $PORT -e $RAILS_ENV --pidfile $PIDFILE >$LOG_DIR/stdout.log 2>&1
+  jruby -S bundle exec puma -d -t 4:20 -p $PORT -e $RAILS_ENV --pidfile $PIDFILE >$LOG_DIR/stdout.log 2>&1
 
   echo -n 'Waiting for server to start'
   for j in {1..60} ; do
