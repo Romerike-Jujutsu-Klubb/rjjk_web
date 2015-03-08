@@ -22,7 +22,7 @@ class RolesControllerTest < ActionController::TestCase
       post :create, role: {name: @role.name, years_on_the_board: @role.years_on_the_board}
     end
 
-    assert_redirected_to role_path(assigns(:role))
+    assert_redirected_to roles_path
   end
 
   test 'should show role' do

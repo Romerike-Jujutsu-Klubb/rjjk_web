@@ -9,7 +9,6 @@ class ElectionsControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:elections)
   end
 
   test 'should get new' do
@@ -24,7 +23,7 @@ class ElectionsControllerTest < ActionController::TestCase
           role_id: @election.role_id, years: 2 }
     end
 
-    assert_redirected_to election_path(assigns(:election))
+    assert_redirected_to elections_path
   end
 
   test 'should show election' do
@@ -39,7 +38,7 @@ class ElectionsControllerTest < ActionController::TestCase
 
   test 'should update election' do
     put :update, id: @election, election: { annual_meeting_id: @election.annual_meeting_id, member_id: @election.member_id, resigned_on: @election.resigned_on, role_id: @election.role_id }
-    assert_redirected_to election_path(assigns(:election))
+    assert_redirected_to elections_path
   end
 
   test 'should destroy election' do

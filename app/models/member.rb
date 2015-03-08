@@ -23,7 +23,7 @@ class Member < ActiveRecord::Base
   has_many :correspondences, :dependent => :destroy
   has_many :elections, :dependent => :destroy
   has_many :graduates, :dependent => :destroy
-  has_many :group_instructors, :dependent => :destroy
+  has_many :group_instructors, dependent: :destroy
   has_many :passed_graduates, -> { where graduates: {passed: true} },
       class_name: 'Graduate'
   has_many :ranks, :through => :passed_graduates
@@ -372,6 +372,10 @@ class Member < ActiveRecord::Base
 
   def admin?
     elections.current.any? || appointments.current.any?
+  end
+
+  def instructor?(date = Date.today)
+    instructor || group_instructors.active(date).any?
   end
 
   def technical_committy?

@@ -130,6 +130,10 @@ class User < ActiveRecord::Base
     member.try(:technical_committy?)
   end
 
+  def instructor?
+    member.try(:instructor?)
+  end
+
   protected
 
   def validate_password?

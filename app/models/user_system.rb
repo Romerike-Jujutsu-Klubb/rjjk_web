@@ -35,8 +35,15 @@ module UserSystem
   #   before_filter :admin_required
   def admin_required
     return false unless authenticate_user
-    return true if current_user.admin?
+    return true if admin?
     access_denied('Du må være administrator for å se denne siden.')
+  end
+
+  #   before_filter :instructor_required
+  def instructor_required
+    return false unless authenticate_user
+    return true if instructor?
+    access_denied('Du må være instruktør for å se denne siden.')
   end
 
   #   before_filter :technical_committy_required
@@ -108,6 +115,10 @@ module UserSystem
 
   def admin?
     current_user.try(:admin?)
+  end
+
+  def instructor?
+    admin? || current_user.try(:instructor?)
   end
 
   def technical_committy?

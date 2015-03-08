@@ -1,8 +1,8 @@
 # encoding: utf-8
 class AttendancesController < ApplicationController
   USER_ACTIONS = [:announce, :plan, :review]
-  before_filter :authenticate_user, :only => USER_ACTIONS
-  before_filter :admin_required, :except => USER_ACTIONS
+  before_filter :authenticate_user, only: USER_ACTIONS
+  before_filter :instructor_required, except: USER_ACTIONS
 
   # FIXME(uwe):  check caching
   caches_page :history_graph, :month_chart, :month_per_year_chart

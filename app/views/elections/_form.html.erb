@@ -25,7 +25,7 @@
     <div class="form-group">
       <%= f.label :member_id, 'Medlem' %>
       <%= f.select :member_id, options_from_collection_for_select(@members, :id, :name, @election.member_id),
-              {prompt: 'Velg medlem'}, class: 'form-control' %>
+              {prompt: 'Velg medlem'}, class: 'form-control chosen-select' %>
     </div>
     <% if @election.member %>
         <div class="form-group">

@@ -32,7 +32,7 @@ class NkfAppointmentsScraper
       next "Ukjent medlem: #{member_name}" if m.nil?
       if role.on_the_board?
         annual_meeting = AnnualMeeting.
-            where('DATE(start_at) = ?', Date.strptime(r[5], '%d.%m.%Y')).first
+            where("DATE(start_at AT TIME ZONE 'CET') = ?", Date.strptime(r[5], '%d.%m.%Y')).first
         next "Ukjent årsmøtedato: #{r[5]} (#{r[0]} #{role_name})" if annual_meeting.nil?
         Election.includes(:member, :role).
             where(annual_meeting_id: annual_meeting.id, role_id: role.id, years: role.years_on_the_board, member_id: m.id).
