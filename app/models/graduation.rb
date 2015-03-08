@@ -1,11 +1,11 @@
 class Graduation < ActiveRecord::Base
   belongs_to :group
-  has_many :censors, :dependent => :destroy
-  has_many :graduates, :dependent => :destroy
+  has_many :censors, dependent: :destroy
+  has_many :graduates, dependent: :destroy
 
   validates_presence_of :group, :held_on
 
-  validates_uniqueness_of :held_on, :scope => :group_id
+  validates_uniqueness_of :held_on, scope: :group_id
 
   def start_at
     held_on.try(:at, group_schedule.try(:start_at) || TimeOfDay.new(17, 45))

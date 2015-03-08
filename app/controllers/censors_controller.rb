@@ -44,11 +44,11 @@ EOH
     gid = params[:graduation_id].to_i
     mid = params[:member_id].to_i
     name = params[:name]
-    if Censor.first(:conditions => "member_id = #{mid} AND graduation_id = #{gid}")
-      render :text => 'Censor already exists'
+    if Censor.first(conditions: "member_id = #{mid} AND graduation_id = #{gid}")
+      render text: 'Censor already exists'
     else
-      Censor.create!(:graduation_id => gid, :member_id => mid)
-      render :text => "Added #{name} as new sensor to graduation"
+      Censor.create!(graduation_id: gid, member_id: mid)
+      render text: "Added #{name} as new sensor to graduation"
     end
   end
 
@@ -59,9 +59,9 @@ EOH
     @censor.attributes = params[:censor]
     if @censor.save
       flash[:notice] = 'Censor was successfully created.'
-      back_or_redirect_to :action => :index
+      back_or_redirect_to action: :index
     else
-      render :action => 'new'
+      render action: :new
     end
   end
 

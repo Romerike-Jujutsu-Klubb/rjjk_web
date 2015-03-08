@@ -83,10 +83,10 @@
         <h4>Eksaminatorer</h4>
 
         <div id="examiners_row" class="row">
-          <% @graduation.censors.select { |c| c.examiner }.each do |cen| %>
+          <% @graduation.censors.select(&:examiner).each do |cen| %>
               <div class="col-md-12">
-                <%= link_to({:controller => :censors, :action => :destroy, :id => cen.id},
-                        :data => {:remote => true, :method => :delete}) do %>
+                <%= link_to({controller: :censors, action: :destroy, id: cen.id},
+                        :data => {remote: true, method: :delete}) do %>
                     <img src="<%= asset_path 'button-delete-16x16.png' %>" style="border: 0;" title="Slett eksaminator <%= cen.member.name %>" ALT="Slett eksaminator <%= cen.member.name %>"/>
                 <% end %>
                 <%= cen.member.name %>
@@ -95,15 +95,15 @@
         </div>
         <br/>
 
-        <%= form_for @censor, :url => with_detour(censors_path), :html => {:method => :post} do |f| %>
+        <%= form_for @censor, url: with_detour(censors_path), html: {method: :post} do |f| %>
             <%= f.hidden_field :graduation_id %>
-            <%= f.hidden_field :examiner, :value => 1 %>
+            <%= f.hidden_field :examiner, value: 1 %>
 
             <div class="input-group">
               <%= f.select :member_id, ['Velg instruktør'] + @instructors.map { |m| [m.name, m.id] }.sort,
-                      {}, :class => 'form-control', :onchange => 'form.submit()' %>
+                      {}, class: 'form-control', onchange: 'form.submit()' %>
               <span class="input-group-btn">
-              <%= f.submit 'Legg til', :class => 'btn btn-default' %>
+              <%= f.submit 'Legg til', class: 'btn btn-default' %>
             </span>
             </div>
         <% end %>
@@ -113,10 +113,10 @@
         <h4>Sensorer</h4>
 
         <div id="censors_row" class="row">
-          <% @graduation.censors.each do |cen| %>
+          <% @graduation.censors.reject(&:examiner).each do |cen| %>
               <div class="col-md-4">
-                <%= link_to({:controller => :censors, :action => :destroy, :id => cen.id},
-                        :data => {:remote => true, :method => :delete}) do %>
+                <%= link_to({controller: :censors, action: :destroy, id: cen.id},
+                        :data => {remote: true, method: :delete}) do %>
                     <img src="<%= asset_path 'button-delete-16x16.png' %>" style="border: 0;" title="Slett sensor <%= cen.member.name %>" ALT="Slett sensor <%= cen.member.name %>"/>
                 <% end %>
                 <%= cen.member.name %>
@@ -125,14 +125,14 @@
           <% end %>
         </div>
         <br/>
-        <%= form_for @censor, :url => with_detour(censors_path, anchor: :censors), :html => {:method => :post} do |f| %>
+        <%= form_for @censor, url: with_detour(censors_path, anchor: :censors), html: {method: :post} do |f| %>
             <%= f.hidden_field :graduation_id %>
 
             <div class="input-group">
               <%= f.select :member_id, ['Velg sensor'] + @instructors.map { |m| [m.name, m.id] }.sort,
-                      {}, :class => 'form-control', :onchange => 'form.submit()' %>
+                      {}, class: 'form-control', onchange: 'form.submit()' %>
               <span class="input-group-btn">
-              <%= f.submit 'Legg til', :class => 'btn btn-default' %>
+              <%= f.submit 'Legg til', class: 'btn btn-default' %>
             </span>
             </div>
         <% end %>
