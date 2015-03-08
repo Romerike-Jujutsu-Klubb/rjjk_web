@@ -8,7 +8,7 @@
           <% if @graduation.held_on == Date.today %>
               I DAG!
           <% elsif @graduation.held_on > Date.today %>
-              Om <%= @graduation.held_on - Date.today %> dager.
+              Om <%= (@graduation.held_on - Date.today).to_i %> dager.
           <% else %>
               For <%= Date.today - @graduation.held_on %> dager siden.
           <% end %>

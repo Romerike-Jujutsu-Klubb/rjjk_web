@@ -148,7 +148,7 @@ class GraduationsController < ApplicationController
 
   def admin_or_censor_required
     return false unless authenticate_user
-    return true if @approval || current_user.role == ADMIN_ROLE
+    return true if @approval || admin?
     access_denied('Du må være administrator eller sensor for å redigere graderinger.')
   end
 
