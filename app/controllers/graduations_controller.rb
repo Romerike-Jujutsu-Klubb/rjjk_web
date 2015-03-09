@@ -43,7 +43,7 @@ class GraduationsController < ApplicationController
     @members = Member.active(@graduation.held_on).to_a.
         sort_by { |m| [@graduation.group.members.include?(m) ? 0 : 1, m.name] } -
         @graduation.graduates.map(&:member)
-    @instructors = Member.instructors
+    @instructors = Member.instructors - @graduation.censors.map(&:member)
   end
 
   def update

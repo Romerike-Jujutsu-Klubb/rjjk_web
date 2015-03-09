@@ -73,14 +73,19 @@ EOH
     @censor = Censor.find(params[:id])
     if @censor.update_attributes(params[:censor])
       flash[:notice] = 'Censor was successfully updated.'
-      redirect_to :action => 'show', :id => @censor
+      redirect_to action: :show, id: @censor
     else
-      render :action => 'edit'
+      render action: :edit
     end
   end
 
   def destroy
-    Censor.find(params[:id]).destroy
-    redirect_to :action => 'index'
+    censor = Censor.find(params[:id])
+    censor.destroy!
+    if request.xhr?
+      render js: "$('#censor_#{censor.id}').remove()"
+    else
+      redirect_to action: :index
+    end
   end
 end
