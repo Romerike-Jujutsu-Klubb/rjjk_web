@@ -1,6 +1,7 @@
 # encoding: utf-8
 class NkfAppointmentsScraper
   def self.import_appointments
+    logger.info 'Import appointments'
     agent = Mechanize.new
     front_page = login(agent)
 
@@ -30,16 +31,17 @@ class NkfAppointmentsScraper
               member_name).
           first
       next "Ukjent medlem: #{member_name}" if m.nil?
+      date = Date.strptime(r[5], '%d.%m.%Y')
       if role.on_the_board?
         annual_meeting = AnnualMeeting.
-            where("DATE(start_at AT TIME ZONE 'CET') = ?", Date.strptime(r[5], '%d.%m.%Y')).first
+            where("DATE((start_at AT TIME ZONE 'UTC') AT TIME ZONE 'CET') = ?", date).first
         next "Ukjent årsmøtedato: #{r[5]} (#{r[0]} #{role_name})" if annual_meeting.nil?
         Election.includes(:member, :role).
             where(annual_meeting_id: annual_meeting.id, role_id: role.id, years: role.years_on_the_board, member_id: m.id).
             first_or_initialize
       else
         Appointment.includes(:member, :role).
-            where(role_id: role.id, member_id: m.id, from: Date.strptime(r[5], '%d.%m.%Y')).
+            where(role_id: role.id, member_id: m.id, from: date).
             first_or_initialize(to: r[6].blank? ? nil : Date.strptime(r[6], '%d.%m.%Y'))
       end
     end
