@@ -61,7 +61,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_update
-    post :update, id: @first_id, image: {}
+    post :update, id: @first_id, image: {approved: true}
     assert_response :redirect
     assert_redirected_to action: :edit, id: @first_id
   end
