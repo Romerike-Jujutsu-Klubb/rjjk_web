@@ -20,7 +20,9 @@ unless Rails.env == 'test'
   # TODO(uwe): Register jacket sizes for members?
   # TODO(uwe): Lage info side om jakkene.
 
-  scheduler.cron('10 10 * * *') { SurveySender.send_surveys }
+  unless Rails.env.production?
+    scheduler.cron('10 10 * * *') { SurveySender.send_surveys }
+  end
 
   # Admin Hourly
   scheduler.cron('15 9-23 * * *') { NkfMemberImport.import_nkf_changes }
