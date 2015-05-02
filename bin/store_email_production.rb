@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+ENV['RAILS_ENV'] = 'production'
 require_relative '../config/environment'
 RawIncomingEmail.create content: $stdin.read
 
