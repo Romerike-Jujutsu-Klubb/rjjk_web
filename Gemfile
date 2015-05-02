@@ -1,10 +1,3 @@
-# http://torquebox.org/4x/builds/
-# http://torquebox.org/4x/builds/LATEST/docs/TorqueBox/Scheduling/Scheduler.html#schedule-class_method
-# https://github.com/tmm1/rblineprof
-# https://github.com/tmm1/stackprof
-# source 'http://torquebox.org/4x/builds/gem-repo/'
-# gem 'torquebox-web', '>=4.x.incremental.173'
-
 source 'https://rubygems.org/'
 
 gem 'rails', '< 4.2.0'
@@ -34,7 +27,7 @@ gem 'draper' # https://github.com/drapergem/draper
 gem 'dynamic_form'
 gem 'exception_notification'
 # gem 'fb_graph'
-gem 'gmaps4rails', '<2.0.0'
+gem 'gmaps4rails', '<2.0.0' # TODO(uwe): switch to https://rubygems.org/gems/geocoder ?
 gem 'gruff'
 gem 'jbuilder'
 gem 'jquery-rails'
@@ -44,7 +37,7 @@ gem 'momentjs-rails'
 gem 'nokogiri'
 gem 'nprogress-rails'
 # gem 'paper_trail' # http://railscasts.com/episodes/255-undo-with-paper-trail?view=similar
-gem 'prawn', '<2.0.0'
+gem 'prawn', '<2.0.0' # TODO(uwe): Upgrade?
 gem 'prawn-table'
 gem 'puma'
 gem 'rails-i18n'

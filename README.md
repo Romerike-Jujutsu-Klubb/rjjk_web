@@ -29,3 +29,8 @@ Du kan kjøre ytelsestester med
 Resultatene lagres i
 
     doc/siege/
+
+## Profiling
+
+* https://github.com/tmm1/rblineprof
+* https://github.com/tmm1/stackprof

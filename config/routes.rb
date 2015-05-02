@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :raw_incoming_emails
+
   match 'attendances/:action/:year/:week/:group_schedule_id/:status(/:member_id)',
       controller: :attendances, via: [:get, :post]
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'

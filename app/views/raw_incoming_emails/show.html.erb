@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @raw_incoming_email.content %>
+</p>
+
+<%= link_to 'Edit', edit_raw_incoming_email_path(@raw_incoming_email) %> |
+<%= link_to 'Back', raw_incoming_emails_path %>
