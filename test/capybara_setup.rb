@@ -29,7 +29,6 @@ class ActionDispatch::IntegrationTest
   end
 
   teardown do
-    Timecop.freeze TEST_TIME
     DatabaseCleaner.clean # Truncate the database
     Capybara.reset_sessions! # Forget the (simulated) browser state
     fail(@test_screenshot_errors.join("\n")) if @test_screenshot_errors

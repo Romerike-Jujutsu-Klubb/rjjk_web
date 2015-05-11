@@ -17,7 +17,13 @@ class ImageCompare
     ]
 
     if dimensions
-      images.map! { |i| i.dimension.to_a == dimensions ? i : i.crop(0, 0, *dimensions) }
+      images.map! do |i|
+        if i.dimension.to_a == dimensions || i.width < dimensions[0] || i.height < dimensions[1]
+          i
+        else
+          i.crop(0, 0, *dimensions)
+        end
+      end
     end
 
     sizes = images.map(&:width).uniq + images.map(&:height).uniq
@@ -26,29 +32,42 @@ class ImageCompare
       return true
     end
 
-    diff = []
-    images.first.height.times do |y|
-      images.first.row(y).each_with_index do |pixel, x|
-        unless pixel == images.last[x, y]
-          diff << [x, y]
-        end
-      end
-    end
+    org_img = images.first
+    new_img = images.last
 
-    if diff.empty?
+    if org_img.pixels == new_img.pixels
       File.delete(org_file_name) if File.exists?(org_file_name)
       File.delete(new_file_name) if File.exists?(new_file_name)
       return false
     end
 
-    x, y = diff.map { |xy| xy[0] }, diff.map { |xy| xy[1] }
-    (1..2).each do |i|
-      images.each do |image|
-        image.rect(x.min - i, y.min - i, x.max + i, y.max + i, ChunkyPNG::Color.rgb(255, 0, 0))
+    top = bottom = nil
+    left = org_img.width
+    right = 0
+    org_img.height.times do |y|
+      (0...left).find do |x|
+        unless org_img[x, y] == new_img[x, y]
+          top ||= y
+          bottom = y
+          right = x if right < x
+          left = x
+        end
+      end
+      (org_img.width - 1).step(right + 1, -1).find do |x|
+        unless org_img[x, y] == new_img[x, y]
+          top ||= y
+          bottom = y
+          right = x
+        end
       end
     end
-    images.first.save(org_file_name)
-    images.last.save(new_file_name)
+    (1..2).each do |i|
+      images.each do |image|
+        image.rect(left - 1, top - 1, right + 1, bottom + 1, ChunkyPNG::Color.rgb(255, 0, 0))
+      end
+    end
+    org_img.save(org_file_name)
+    new_img.save(new_file_name)
     true
   end
 end

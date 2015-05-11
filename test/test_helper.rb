@@ -13,8 +13,8 @@ class ActiveSupport::TestCase
   fixtures :all
 
   TEST_TIME = Time.local(2013, 10, 17, 18, 46, 0) # Week 42, thursday
-  Timecop.freeze(TEST_TIME)
-  Minitest.after_run { Timecop.return }
+  setup { Timecop.freeze(TEST_TIME) }
+  teardown { Timecop.return }
 
   def login(login = :admin)
     u = users(login)
@@ -51,3 +51,9 @@ end
 
 require_relative 'capybara_setup'
 require 'ish'
+
+VCR.configure do |config|
+  config.cassette_library_dir = "#{Rails.root}/test/vcr_cassettes"
+  config.hook_into :webmock
+  config.ignore_localhost = true
+end

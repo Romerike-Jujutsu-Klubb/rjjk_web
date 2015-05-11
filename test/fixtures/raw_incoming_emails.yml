@@ -1,7 +1,101 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+kasserer:
+  content: |
+    Received: from [192.168.0.100] (unknown [10.0.0.100])
+    	by fili.kubosch.no (Postfix) with ESMTP id 41F388558159;
+    	Sat,  2 May 2015 18:45:39 +0200 (CEST)
+    From: RJJK Test <test@jujutsu.no>
+    Content-Type: text/plain; charset=us-ascii
+    Content-Transfer-Encoding: 7bit
+    Date: Sat, 2 May 2015 18:45:38 +0200
+    Subject: Melding til kasserer
+    To: kasserer@jujutsu.no
+    Message-Id: <8959768B-D337-43CB-B1FF-4FE29B5B0815@kubosch.no>
+    Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2098\))
+    X-Mailer: Apple Mail (2.2098)
 
-one:
-  content: 
+    Meldingstekst kasserer
 
-two:
-  content: 
+materialforvalter:
+  content: |
+    Received: from [192.168.0.100] (unknown [10.0.0.100])
+    	by fili.kubosch.no (Postfix) with ESMTP id 41F388558159;
+    	Sat,  2 May 2015 18:45:39 +0200 (CEST)
+    From: RJJK Test <test@jujutsu.no>
+    Content-Type: text/plain; charset=us-ascii
+    Content-Transfer-Encoding: 7bit
+    Date: Sat, 2 May 2015 18:45:38 +0200
+    Subject: Melding til materialforvalter
+    To: materialforvalter@jujutsu.no
+    Message-Id: <8959768B-D337-43CB-B1FF-4FE29B5B0815@kubosch.no>
+    Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2098\))
+    X-Mailer: Apple Mail (2.2098)
+
+    Meldingstekst materialforvalter
+
+medlem:
+  content: |
+    Received: from [192.168.0.100] (unknown [10.0.0.100])
+    	by fili.kubosch.no (Postfix) with ESMTP id 41F388558159;
+    	Sat,  2 May 2015 18:45:39 +0200 (CEST)
+    From: Uwe Kubosch <uwe@kubosch.no>
+    Content-Type: text/plain; charset=us-ascii
+    Content-Transfer-Encoding: 7bit
+    Date: Sat, 2 May 2015 18:45:38 +0200
+    Subject: Melding til medlem
+    To: medlem@jujutsu.no
+    Message-Id: <8959768B-D337-43CB-B1FF-4FE29B5B0815@kubosch.no>
+    Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2098\))
+    X-Mailer: Apple Mail (2.2098)
+
+    Meldingstekst medlem
+
+post:
+  content: |
+    Received: from [192.168.0.100] (unknown [10.0.0.100])
+    	by fili.kubosch.no (Postfix) with ESMTP id 41F388558159;
+    	Sat,  2 May 2015 18:45:39 +0200 (CEST)
+    From: Uwe Kubosch <uwe@kubosch.no>
+    Content-Type: text/plain; charset=us-ascii
+    Content-Transfer-Encoding: 7bit
+    Date: Sat, 2 May 2015 18:45:38 +0200
+    Subject: Melding til post
+    To: post@jujutsu.no
+    Message-Id: <8959768B-D337-43CB-B1FF-4FE29B5B0815@kubosch.no>
+    Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2098\))
+    X-Mailer: Apple Mail (2.2098)
+
+    Meldingstekst post
+
+styret:
+  content: |
+    Received: from [192.168.0.100] (unknown [10.0.0.100])
+    	by fili.kubosch.no (Postfix) with ESMTP id 41F388558159;
+    	Sat,  2 May 2015 18:45:39 +0200 (CEST)
+    From: Uwe Kubosch <uwe@kubosch.no>
+    Content-Type: text/plain; charset=us-ascii
+    Content-Transfer-Encoding: 7bit
+    Date: Sat, 2 May 2015 18:45:38 +0200
+    Subject: Melding til styret
+    To: styret@jujutsu.no
+    Message-Id: <8959768B-D337-43CB-B1FF-4FE29B5B0815@kubosch.no>
+    Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2098\))
+    X-Mailer: Apple Mail (2.2098)
+
+    Meldingstekst styret
+
+ukjent:
+  content: |
+    Received: from [192.168.0.100] (unknown [10.0.0.100])
+    	by fili.kubosch.no (Postfix) with ESMTP id 41F388558159;
+    	Sat,  2 May 2015 18:45:39 +0200 (CEST)
+    From: Uwe Kubosch <uwe@kubosch.no>
+    Content-Type: text/plain; charset=us-ascii
+    Content-Transfer-Encoding: 7bit
+    Date: Sat, 2 May 2015 18:45:38 +0200
+    Subject: Melding til ukjent
+    To: ukjent@jujutsu.no
+    Message-Id: <8959768B-D337-43CB-B1FF-4FE29B5B0815@kubosch.no>
+    Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2098\))
+    X-Mailer: Apple Mail (2.2098)
+
+    Meldingstekst ukjent

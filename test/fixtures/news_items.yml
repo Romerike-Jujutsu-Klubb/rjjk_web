@@ -1,6 +1,7 @@
 first:
   title: My first news item
   created_at: 2007-07-12T00:08:23+2
+  updated_at: 2007-07-12T00:08:23+2
   publication_state: PUBLISHED
   publish_at: 2007-07-12T13:37:00+2
   expire_at: 2199-12-31T23:59:59+1

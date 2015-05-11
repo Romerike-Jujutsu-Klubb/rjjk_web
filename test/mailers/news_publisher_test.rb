@@ -26,7 +26,9 @@ class NewsPublisherTest < ActionMailer::TestCase
   end
 
   def test_weekly_info_page_is_not_sent_to_leaving_members
-    members(:uwe).update_attributes! left_on: 1.month.from_now
+    VCR.use_cassette 'GoogleMaps Uwe' do
+      members(:uwe).update_attributes! left_on: 1.month.from_now
+    end
     assert NewsPublisher.send_news
     assert_equal 3, ActionMailer::Base.deliveries.size
   end

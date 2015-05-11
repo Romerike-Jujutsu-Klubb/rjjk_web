@@ -39,6 +39,7 @@ class NkfMemberComparison
         nkf_member.create_corresponding_member!
       rescue Exception
         logger.error $!
+        logger.error $!.backtrace.join("\n")
         @errors << ['New member', nkf_member, $!]
         nil
       end

@@ -1,22 +1,6 @@
 # config valid only for current version of Capistrano
 lock '~>3.4'
 
-# Default branch is :master
-# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
-
-# Default deploy_to directory is /var/www/my_app_name
-# set :deploy_to, '/var/www/my_app_name'
-
-# Default value for :scm is :git
-# set :scm, :git
-
-# Default value for :format is :pretty
-# set :format, :pretty
-
-# Default value for :log_level is :debug
-# set :log_level, :debug
-
-# Default value for :pty is false
 set :pty, true
 
 # Default value for :linked_files is []
@@ -26,11 +10,7 @@ set :pty, true
 # set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp')
 
-# Default value for default_env is {}
 set :default_env, { JRUBY_OPTS: '"--dev -J-Xmx2G"' }
-
-# Default value for keep_releases is 5
-# set :keep_releases, 5
 
 # before 'deploy:spinner', 'deploy:reload_daemons'
 before 'deploy:restart', 'deploy:reload_daemons'
@@ -71,8 +51,10 @@ task :end_maintenance do
   end
 end
 
+after 'deploy:started', :announce_maintenance
 after 'deploy:updated', :announce_maintenance
-after 'deploy:finishing', :end_maintenance
+after 'deploy:published', :announce_maintenance
+after 'deploy:finished', :end_maintenance
 
 namespace :deploy do
   task :symlinks do

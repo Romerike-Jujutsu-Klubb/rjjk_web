@@ -4,11 +4,7 @@ require 'open-uri'
 # http://hotell.difi.no/api/json/brreg/enhetsregisteret?orgnr=982452716
 
 class PublicRecordImporter
-  if Rails.env.test?
-    URL = File.expand_path 'test/fixtures/brreg_2014.html', Rails.root
-  else
-    URL = 'http://w2.brreg.no/enhet/sok/detalj.jsp?orgnr=982452716'
-  end
+  URL = 'http://w2.brreg.no/enhet/sok/detalj.jsp?orgnr=982452716'
 
   def self.import_public_record
     doc = Nokogiri::HTML(open(URL))

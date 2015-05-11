@@ -5,6 +5,9 @@
 unless Rails.env == 'test'
   scheduler = Rufus::Scheduler.new max_work_threads: 1
 
+  # email
+  scheduler.cron('* * * * *') { IncomingEmailProcessor.forward_emails }
+
   # Users
   scheduler.cron('0 7    * * mon') { AttendanceNagger.send_attendance_plan }
   scheduler.cron('0 8    * * thu') { InformationPageNotifier.send_weekly_info_page }

@@ -59,19 +59,21 @@ class MembersControllerTest < ActionController::TestCase
   def test_create
     num_members = Member.count
 
-    post :create, member: {
-        male: true,
-        first_name: 'Lars',
-        last_name: 'Bråten',
-        address: 'Torsvei 8b',
-        postal_code: 1472,
-        payment_problem: false,
-        instructor: false,
-        nkf_fee: true,
-        joined_on: '2007-06-21',
-        birthdate: '1967-06-21',
-        user_id: users(:unverified_user).id,
-    }
+    VCR.use_cassette 'GoogleMaps Lars' do
+      post :create, member: {
+              male: true,
+              first_name: 'Lars',
+              last_name: 'Bråten',
+              address: 'Torsvei 8b',
+              postal_code: 1472,
+              payment_problem: false,
+              instructor: false,
+              nkf_fee: true,
+              joined_on: '2007-06-21',
+              birthdate: '1967-06-21',
+              user_id: users(:unverified_user).id,
+          }
+    end
 
     assert_no_errors :member
     assert_response :redirect
@@ -91,10 +93,12 @@ class MembersControllerTest < ActionController::TestCase
   end
 
   def test_update
-    post :update, id: @first_id, member: {}
+    VCR.use_cassette 'GoogleMaps Lars' do
+      post :update, id: @first_id, member: {}
+    end
     assert_no_errors :member
     assert_response :redirect
-    assert_redirected_to action: 'edit', id: @first_id
+    assert_redirected_to action: :edit, id: @first_id
   rescue SocketError
   end
 

@@ -1,6 +1,6 @@
 source 'https://rubygems.org/'
 
-gem 'rails', '< 4.2.0'
+gem 'rails', '~>4.1.10'
 
 platform :jruby do
   gem 'activerecord-jdbcpostgresql-adapter'
@@ -51,6 +51,7 @@ gem 'sass-rails', '>=4.0.5'
 gem 'schema_plus'
 gem 'simple_drilldown'
 gem 'simple_workflow'
+gem 'slim-rails'
 gem 'therubyrhino'
 gem 'tinymce-rails'
 gem 'tinymce-rails-langs'
@@ -79,6 +80,8 @@ group :test do
   gem 'selenium-webdriver'
   gem 'simplecov'
   gem 'timecop'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development, :beta do

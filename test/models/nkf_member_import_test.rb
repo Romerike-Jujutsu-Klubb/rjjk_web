@@ -3,7 +3,9 @@ require 'test_helper'
 
 class NkfMemberImportTest < ActionMailer::TestCase
   def test_import_members
-    NkfMemberImport.import_nkf_changes
+    VCR.use_cassette('NKF Import Changes') do
+      NkfMemberImport.import_nkf_changes
+    end
 
     assert_equal 3, Mail::TestMailer.deliveries.size
 

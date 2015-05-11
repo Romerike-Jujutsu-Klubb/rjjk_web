@@ -6,7 +6,7 @@ admin:
   verified: true
   role: ADMIN
   security_token: 0123456789abcdef0123456789abcdef01234567
-  token_expiry: <%=(Time.now + User.token_lifetime).utc.strftime("%Y-%m-%d %H:%M:%S") %>
+  token_expiry: <%=(ActiveSupport::TestCase::TEST_TIME + User.token_lifetime).utc.strftime("%Y-%m-%d %H:%M:%S") %>
 
 lars:
   login: lars
@@ -16,7 +16,7 @@ lars:
   verified: true
   deleted: false
   security_token: random_token_string
-  token_expiry: <%=(Time.now + User.token_lifetime).utc.strftime("%Y-%m-%d %H:%M:%S") %>
+  token_expiry: <%=(ActiveSupport::TestCase::TEST_TIME + User.token_lifetime).utc.strftime("%Y-%m-%d %H:%M:%S") %>
 
 long_user:
   login: long_user
@@ -49,7 +49,7 @@ unverified_user:
   email: unverified_user@example.com
   verified: false
   security_token: another_random_token_string
-  token_expiry: <%=(Time.now + User.token_lifetime).utc.strftime("%Y-%m-%d %H:%M:%S") %>
+  token_expiry: <%=(ActiveSupport::TestCase::TEST_TIME + User.token_lifetime).utc.strftime("%Y-%m-%d %H:%M:%S") %>
   deleted: false
 
 newbie:

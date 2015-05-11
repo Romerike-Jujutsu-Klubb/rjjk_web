@@ -43,7 +43,9 @@ class InformationPageNotifierTest < ActionMailer::TestCase
   end
 
   def test_weekly_info_page_is_not_sent_to_leaving_members
-    members(:uwe).update_attributes! left_on: 1.month.from_now
+    VCR.use_cassette 'GoogleMaps Uwe' do
+      members(:uwe).update_attributes! left_on: 1.month.from_now
+    end
 
     assert InformationPageNotifier.send_weekly_info_page
     assert_equal 2, ActionMailer::Base.deliveries.size

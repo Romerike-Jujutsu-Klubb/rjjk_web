@@ -18,7 +18,9 @@ class MemberTest < ActiveSupport::TestCase
   end
 
   def test_update_image
-    members(:lars).update_attributes image_file: Image.new
+    VCR.use_cassette 'GoogleMaps Lars' do
+      members(:lars).update_attributes image_file: Image.new
+    end
   rescue SocketError
   end
 end

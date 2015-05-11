@@ -1,28 +1,20 @@
 class RawIncomingEmailsController < ApplicationController
   before_action :set_raw_incoming_email, only: [:show, :edit, :update, :destroy]
 
-  # GET /raw_incoming_emails
-  # GET /raw_incoming_emails.json
   def index
-    @raw_incoming_emails = RawIncomingEmail.all
+    @raw_emails = RawIncomingEmail.order(:created_at).decorate
   end
 
-  # GET /raw_incoming_emails/1
-  # GET /raw_incoming_emails/1.json
   def show
   end
 
-  # GET /raw_incoming_emails/new
   def new
     @raw_incoming_email = RawIncomingEmail.new
   end
 
-  # GET /raw_incoming_emails/1/edit
   def edit
   end
 
-  # POST /raw_incoming_emails
-  # POST /raw_incoming_emails.json
   def create
     @raw_incoming_email = RawIncomingEmail.new(raw_incoming_email_params)
 
@@ -37,8 +29,6 @@ class RawIncomingEmailsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /raw_incoming_emails/1
-  # PATCH/PUT /raw_incoming_emails/1.json
   def update
     respond_to do |format|
       if @raw_incoming_email.update(raw_incoming_email_params)
@@ -51,8 +41,6 @@ class RawIncomingEmailsController < ApplicationController
     end
   end
 
-  # DELETE /raw_incoming_emails/1
-  # DELETE /raw_incoming_emails/1.json
   def destroy
     @raw_incoming_email.destroy
     respond_to do |format|

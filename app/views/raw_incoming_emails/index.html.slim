@@ -1,0 +1,34 @@
+- @content_width = 1024
+
+h1 Listing raw_incoming_emails
+
+table.table
+  thead
+    tr
+      th Received
+      th From
+      th To
+      th Processed
+      th Content
+
+  tbody
+    - @raw_emails.each do |raw_email|
+      tr
+        td(nowrap)
+          = raw_email.created_at.strftime('%F')
+          br
+          = raw_email.created_at.strftime('%R')
+        td = raw_email.mail.from[0][0..25]
+        td = raw_email.mail.to.try(:join, ' ')
+        td(nowrap)
+          = raw_email.processed_at.try(:strftime, '%F')
+          br
+          = raw_email.processed_at.try(:strftime, '%R')
+        td
+          - if raw_email.mail.multipart?
+            = raw_email.mail.parts[0].body.decoded.force_encoding(raw_email.mail.charset || 'ISO-8859-1').encode('utf-8')[0..80]
+          - else
+            = raw_email.mail.decoded.force_encoding(raw_email.mail.charset || 'ISO-8859-1').encode('utf-8')[0..80]
+br
+
+= link_to 'New Raw incoming email', new_raw_incoming_email_path
