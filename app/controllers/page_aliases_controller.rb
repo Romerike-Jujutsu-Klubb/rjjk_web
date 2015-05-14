@@ -1,5 +1,5 @@
 class PageAliasesController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   def index
     @page_aliases = PageAlias.order(:old_path, :new_path).to_a
