@@ -14,7 +14,7 @@ class AnnualMeetingReminderTest < ActionMailer::TestCase
     assert_equal 1, Mail::TestMailer.deliveries.size
 
     mail = ActionMailer::Base.deliveries[0]
-    assert_equal '[RJJK][test] På tide å sette dato for årsmøte 2014', mail.subject
+    assert_equal '[RJJK][TEST] På tide å sette dato for årsmøte 2014', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
     assert_match '<title>På tide å sette dato for årsmøte 2014</title>', mail.body.encoded
@@ -38,7 +38,7 @@ class AnnualMeetingReminderTest < ActionMailer::TestCase
       assert_equal 1, Mail::TestMailer.deliveries.size
 
       mail = ActionMailer::Base.deliveries[0]
-      assert_equal '[RJJK][test] På tide å sende ut innkalling til årsmøte 2014', mail.subject
+      assert_equal '[RJJK][TEST] På tide å sende ut innkalling til årsmøte 2014', mail.subject
       assert_equal %w(uwe@kubosch.no), mail.to
       assert_equal %w(test@jujutsu.no), mail.from
       assert_match "", mail.body.encoded

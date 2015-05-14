@@ -37,7 +37,7 @@ medlem:
     Received: from [192.168.0.100] (unknown [10.0.0.100])
     	by fili.kubosch.no (Postfix) with ESMTP id 41F388558159;
     	Sat,  2 May 2015 18:45:39 +0200 (CEST)
-    From: Uwe Kubosch <uwe@kubosch.no>
+    From: RJJK Test <test@jujutsu.no>
     Content-Type: text/plain; charset=us-ascii
     Content-Transfer-Encoding: 7bit
     Date: Sat, 2 May 2015 18:45:38 +0200
@@ -54,7 +54,7 @@ post:
     Received: from [192.168.0.100] (unknown [10.0.0.100])
     	by fili.kubosch.no (Postfix) with ESMTP id 41F388558159;
     	Sat,  2 May 2015 18:45:39 +0200 (CEST)
-    From: Uwe Kubosch <uwe@kubosch.no>
+    From: RJJK Test <test@jujutsu.no>
     Content-Type: text/plain; charset=us-ascii
     Content-Transfer-Encoding: 7bit
     Date: Sat, 2 May 2015 18:45:38 +0200
@@ -71,7 +71,7 @@ styret:
     Received: from [192.168.0.100] (unknown [10.0.0.100])
     	by fili.kubosch.no (Postfix) with ESMTP id 41F388558159;
     	Sat,  2 May 2015 18:45:39 +0200 (CEST)
-    From: Uwe Kubosch <uwe@kubosch.no>
+    From: RJJK Test <test@jujutsu.no>
     Content-Type: text/plain; charset=us-ascii
     Content-Transfer-Encoding: 7bit
     Date: Sat, 2 May 2015 18:45:38 +0200
@@ -88,7 +88,7 @@ ukjent:
     Received: from [192.168.0.100] (unknown [10.0.0.100])
     	by fili.kubosch.no (Postfix) with ESMTP id 41F388558159;
     	Sat,  2 May 2015 18:45:39 +0200 (CEST)
-    From: Uwe Kubosch <uwe@kubosch.no>
+    From: RJJK Test <test@jujutsu.no>
     Content-Type: text/plain; charset=us-ascii
     Content-Transfer-Encoding: 7bit
     Date: Sat, 2 May 2015 18:45:38 +0200

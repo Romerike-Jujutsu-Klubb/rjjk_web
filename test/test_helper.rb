@@ -9,10 +9,11 @@ require 'rails/test_help'
 
 MiniTest::Reporters.use!
 
+TEST_TIME = Time.local(2013, 10, 17, 18, 46, 0) # Week 42, thursday
+
 class ActiveSupport::TestCase
   fixtures :all
 
-  TEST_TIME = Time.local(2013, 10, 17, 18, 46, 0) # Week 42, thursday
   setup { Timecop.freeze(TEST_TIME) }
   teardown { Timecop.return }
 
@@ -46,6 +47,7 @@ class Mail::TestMailer
     end
     deliver_without_error! mail
   end
+
   alias_method_chain :deliver!, :error
 end
 

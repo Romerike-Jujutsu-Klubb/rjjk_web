@@ -7,7 +7,7 @@ class SurveySenderTest < ActionMailer::TestCase
     assert_equal 1, ActionMailer::Base.deliveries.size
 
     mail = ActionMailer::Base.deliveries[0]
-    assert_equal '[RJJK][test] First survey', mail.subject
+    assert_equal '[RJJK][TEST] First survey', mail.subject
     assert_equal 'Uwe Kubosch <uwe@kubosch.no>', mail.header['To'].to_s
     assert_equal %w(test@jujutsu.no), mail.from
     assert_match '<title>First survey</title>', mail.body.encoded
