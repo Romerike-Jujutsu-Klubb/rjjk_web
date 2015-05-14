@@ -9,7 +9,7 @@ table.table
       th From
       th To
       th Processed
-      th Content
+      th Subject
 
   tbody
     - @raw_emails.each do |raw_email|
@@ -25,10 +25,11 @@ table.table
           br
           = raw_email.processed_at.try(:strftime, '%R')
         td
-          - if raw_email.mail.multipart?
-            = raw_email.mail.parts[0].body.decoded.force_encoding(raw_email.mail.charset || 'ISO-8859-1').encode('utf-8')[0..80]
-          - else
-            = raw_email.mail.decoded.force_encoding(raw_email.mail.charset || 'ISO-8859-1').encode('utf-8')[0..80]
+          = raw_email.mail.subject
+          /- if raw_email.mail.multipart?
+          /  = raw_email.mail.parts[0].body.decoded.force_encoding(raw_email.mail.charset || 'ISO-8859-1').encode('utf-8')[0..80]
+          /- else
+          /  = raw_email.mail.decoded.force_encoding(raw_email.mail.charset || 'ISO-8859-1').encode('utf-8')[0..80]
 br
 
 = link_to 'New Raw incoming email', new_raw_incoming_email_path
