@@ -81,6 +81,7 @@ class IncomingEmailProcessor
   rescue
     logger.error "Exception sending email: #{$!}"
     logger.error $!.backtrace.join("\n")
+    ExceptionNotifier.notify_exception($!)
     false
   end
 end
