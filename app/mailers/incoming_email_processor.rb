@@ -44,7 +44,7 @@ class IncomingEmailProcessor
   # FIXME(uwe):  Manipulate and send the Mail object insetad of RawIncomingEmail
   def self.check_target(raw_email, email, target, destination)
     return false unless [*email.to, *email.cc, *email.bcc].flatten.compact.
-        any? { |t| t =~ /#{target}@(beta.)?jujutsu.no/ }
+        any? { |t| t =~ /#{target}@(beta.)?jujutsu.no/i }
     logger.debug 'send!'
     if destination.is_a?(Array)
       destinations = destination
@@ -60,7 +60,7 @@ class IncomingEmailProcessor
           %Q{"[RJJK][#{Rails.env.upcase}][#{target.to_s.capitalize}] #{destination[:name]} <#{destination[:email]}>" <uwe@kubosch.no>}
 
       outgoing_email = raw_email.content.
-          gsub(/^(To|Cc|Bcc):(.*\b#{target}@(?:beta.)?jujutsu.no\b.*)\n/) { "#$1: #{recipient}\n" }
+          gsub(/^(To|Cc|Bcc):(.*\b#{target}@(?:beta.)?jujutsu.no\b.*)\n/i) { "#$1: #{recipient}\n" }
       if reply_to
         outgoing_email = outgoing_email.gsub(/^Reply-to:.*\n/, '')
         outgoing_email = outgoing_email.sub(/^From:/, "Reply-to: #{reply_to}\nFrom:")
