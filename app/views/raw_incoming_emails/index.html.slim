@@ -15,7 +15,7 @@ table.table
   tbody
     - @raw_emails.each.with_index do |raw_email, row_index|
       tr
-        td = row_index
+        td = link_to row_index, raw_email
         td(nowrap)
           = raw_email.created_at.strftime('%F')
           br
@@ -35,7 +35,7 @@ table.table
           br
           = raw_email.postponed_at.try(:strftime, '%R')
         td
-          = raw_email.mail.subject
+          = link_to raw_email.mail.subject, raw_email
 br
 
 = link_to 'New Raw incoming email', new_raw_incoming_email_path
