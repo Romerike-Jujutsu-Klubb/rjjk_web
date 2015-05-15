@@ -1,16 +1,16 @@
 - @content_width = 1024
 
-h1 Listing raw_incoming_emails
+h1 Innkommende e-post
 
 table.table
   thead
     tr
       th
-      th Received
-      th From / To
-      th Processed
-      th Postponed
-      th Subject
+      th Mottatt
+      th Fra / Til
+      th Behandlet
+      th Utsatt
+      th Emne
 
   tbody
     - @raw_emails.each.with_index do |raw_email, row_index|
