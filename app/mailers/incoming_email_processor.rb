@@ -43,7 +43,7 @@ class IncomingEmailProcessor
 
   # FIXME(uwe):  Manipulate and send the Mail object insetad of RawIncomingEmail
   def self.check_target(raw_email, email, target, destination)
-    return false unless [*email.to, *email.cc, *email.bcc].flatten.compact.
+    return false unless [email.to, email.cc, email.bcc].flatten.compact.
         any? { |t| t =~ /#{target}@(beta.)?jujutsu.no/i }
     logger.debug 'send!'
     if destination.is_a?(Array)
