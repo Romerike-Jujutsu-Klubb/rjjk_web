@@ -19,17 +19,25 @@ class IncomingEmailProcessor
   }
 
   def self.forward_emails
-    RawIncomingEmail.where(processed_at: nil).order(:created_at).each do |raw_email|
+    RawIncomingEmail.where(processed_at: nil, postponed_at: nil).
+        order(:created_at).limit(1).each do |raw_email|
       logger.debug "Forward email (#{raw_email.id}):"
       logger.debug raw_email.content
       email = Mail.read_from_string(raw_email.content)
       logger.debug "to: #{email.to}"
+      logger.debug "cc: #{email.cc}"
+      logger.debug "bcc: #{email.bcc}"
       sent = false
       RECIPIENTS.each do |target, destination|
-        sent = check_target(raw_email, email, target, destination)
-        break if sent
+        sent ||= check_target(raw_email, email, target, destination)
       end
-      break if sent
+      if sent
+        logger.info 'Mail processed OK!'
+        raw_email.update! processed_at: Time.now
+      else
+        logger.info 'Mail postponed.'
+        raw_email.update! postponed_at: Time.now
+      end
     end
   end
 
@@ -76,7 +84,6 @@ class IncomingEmailProcessor
         end
       end
     end
-    raw_email.update! processed_at: Time.now
     return true
   rescue
     logger.error "Exception sending email: #{$!}"

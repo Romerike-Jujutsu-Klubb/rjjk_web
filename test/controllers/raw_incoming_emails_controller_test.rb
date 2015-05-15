@@ -3,6 +3,7 @@ require 'test_helper'
 class RawIncomingEmailsControllerTest < ActionController::TestCase
   setup do
     @raw_incoming_email = raw_incoming_emails(:kasserer)
+    login :admin
   end
 
   test 'should get index' do

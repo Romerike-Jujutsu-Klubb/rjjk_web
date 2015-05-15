@@ -5,25 +5,37 @@ h1 Listing raw_incoming_emails
 table.table
   thead
     tr
+      th
       th Received
-      th From
-      th To
+      th From / To
       th Processed
+      th Postponed
       th Subject
 
   tbody
-    - @raw_emails.each do |raw_email|
+    - @raw_emails.each.with_index do |raw_email, row_index|
       tr
+        td = row_index
         td(nowrap)
           = raw_email.created_at.strftime('%F')
           br
           = raw_email.created_at.strftime('%R')
-        td = raw_email.mail.from[0][0..25]
-        td = raw_email.mail.to.try(:join, ' ')
+        td
+          | From:&nbsp;
+          = raw_email.mail.from[0][0..25]
+          br
+          | To:&nbsp;
+          = raw_email.mail.to.try(:join, ' ')
+          = raw_email.mail.cc.try(:join, ' ')
+          = raw_email.mail.bcc.try(:join, ' ')
         td(nowrap)
           = raw_email.processed_at.try(:strftime, '%F')
           br
           = raw_email.processed_at.try(:strftime, '%R')
+        td(nowrap)
+          = raw_email.postponed_at.try(:strftime, '%F')
+          br
+          = raw_email.postponed_at.try(:strftime, '%R')
         td
           = raw_email.mail.subject
           /- if raw_email.mail.multipart?

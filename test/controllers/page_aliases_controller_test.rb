@@ -3,7 +3,7 @@ require 'test_helper'
 class PageAliasesControllerTest < ActionController::TestCase
   setup do
     @page_alias = page_aliases(:one)
-    login(:admin)
+    login :admin
   end
 
   test 'should get index' do
