@@ -1,8 +1,8 @@
-<p id="notice"><%= notice %></p>
+<% @content_width = 1024 %>
 
 <pre>
 <%= @raw_incoming_email.content %>
 </pre>
 
-<%= link_to 'Edit', edit_raw_incoming_email_path(@raw_incoming_email) %> |
-<%= link_to 'Back', raw_incoming_emails_path %>
+<%= link_to 'Edit', edit_raw_incoming_email_path(@raw_incoming_email), class: 'btn btn-primary' %>
+<%= link_to 'Back', raw_incoming_emails_path, class: 'btn btn-default' %>

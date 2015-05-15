@@ -25,6 +25,7 @@ class IncomingEmailProcessor
       logger.debug raw_email.content
       email = Mail.read_from_string(raw_email.content)
       logger.debug "to: #{email.to}"
+      logger.debug "smtp_envelope_to: #{email.smtp_envelope_to.inspect}"
       logger.debug "cc: #{email.cc}"
       logger.debug "bcc: #{email.bcc}"
       sent = false

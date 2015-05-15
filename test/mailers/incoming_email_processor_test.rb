@@ -50,8 +50,9 @@ class IncomingEmailProcessorTest < ActionMailer::TestCase
   def assert_styret_email(mail_index, name, email)
     mail = ActionMailer::Base.deliveries[mail_index]
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_equal %Q{"[RJJK][TEST][Styret] #{name} <#{email}>" <uwe@kubosch.no>},
+    assert_equal %Q{"RJJK Styret <#{email}>" <uwe@kubosch.no>},
         mail.header['To'].to_s
+    assert_equal %w{uwe@kubosch.no}, mail.smtp_envelope_to
     assert_equal %w(styret@jujutsu.no), mail.reply_to
     assert_equal '[RJJK][TEST][Styret] Melding til styret', mail.subject
     assert_match 'Meldingstekst styret', mail.body.encoded

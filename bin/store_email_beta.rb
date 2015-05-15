@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+puts "ARGV: #{ARGV}"
+
 ENV['RAILS_ENV'] = 'beta'
 require_relative '../config/environment'
 RawIncomingEmail.create content: $stdin.read
