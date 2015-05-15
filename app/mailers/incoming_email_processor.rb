@@ -47,6 +47,7 @@ class IncomingEmailProcessor
         any? { |t| t =~ /#{target}@(beta.)?jujutsu.no/i }
     logger.debug 'send!'
     if destination.is_a?(Array)
+      mailing_list = true
       destinations = destination
       subject = "[RJJK]#{"[#{Rails.env.upcase}]" unless Rails.env.production?}[#{target.to_s.capitalize}] #{email.subject}"
       reply_to = "#{target}@jujutsu.no"
@@ -55,9 +56,17 @@ class IncomingEmailProcessor
     end
     logger.debug destinations.inspect
     destinations.each do |destination|
-      recipient = Rails.env.production? ?
-          %Q{"[RJJK][#{target.to_s.capitalize}] #{destination[:name]}" <#{destination[:email]}>} :
-          %Q{"[RJJK][#{Rails.env.upcase}][#{target.to_s.capitalize}] #{destination[:name]} <#{destination[:email]}>" <uwe@kubosch.no>}
+      recipient = if Rails.env.production?
+        if mailing_list
+          %Q{"RJJK #{target.to_s.capitalize}" <#{destination[:email]}>}
+        else
+          %Q{"[RJJK][#{target.to_s.capitalize}] #{destination[:name]}" <#{destination[:email]}>}
+        end
+      elsif mailing_list
+        %Q{"RJJK #{target.to_s.capitalize} <#{destination[:email]}>" <uwe@kubosch.no>}
+      else
+        %Q{"[RJJK][#{Rails.env.upcase}][#{target.to_s.capitalize}] #{destination[:name]} <#{destination[:email]}>" <uwe@kubosch.no>}
+      end
 
       outgoing_email = raw_email.content.
           gsub(/^(To|Cc|Bcc):(.*\b#{target}@(?:beta.)?jujutsu.no\b.*)\n/i) { "#$1: #{recipient}\n" }
