@@ -25,7 +25,7 @@ class NewsPublisherTest < ActionMailer::TestCase
     assert_match 'My first news item', mail.body.encoded
   end
 
-  def test_weekly_info_page_is_not_sent_to_leaving_members
+  def test_news_is_not_sent_to_leaving_members
     VCR.use_cassette 'GoogleMaps Uwe' do
       members(:uwe).update_attributes! left_on: 1.month.from_now
     end

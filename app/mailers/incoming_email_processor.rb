@@ -2,7 +2,7 @@
 require 'mail'
 
 class IncomingEmailProcessor
-  RECIPIENTS = {
+  TARGETS = {
       kasserer: {name: 'Kasia Krohn', email: 'kasiakrohn@gmail.com'},
       materialforvalter: {name: 'Tommy Musaus', email: 'tommy.musaus@hellvikhus.no'},
       medlem: {name: 'Svein Robert Rolijordet', email: 'srr@resvero.com'},
@@ -17,6 +17,7 @@ class IncomingEmailProcessor
       test: {name: 'don Valentin', email: 'donv@kubosch.no'},
       web: {name: 'Uwe Kubosch', email: 'uwe@kubosch.no'},
   }
+  ENV_STR = Rails.env.upcase unless Rails.env.production?
 
   def self.forward_emails
     RawIncomingEmail.where(processed_at: nil, postponed_at: nil).
@@ -24,81 +25,70 @@ class IncomingEmailProcessor
       logger.debug "Forward email (#{raw_email.id}):"
       logger.debug raw_email.content
       email = Mail.read_from_string(raw_email.content)
+      logger.debug "email.header['X-Envelope-From']: #{email.header['X-Envelope-From'].inspect}"
+      logger.debug "email.header['X-Envelope-To']: #{email.header['X-Envelope-To'].inspect}"
       logger.debug "to: #{email.to}"
       logger.debug "smtp_envelope_to: #{email.smtp_envelope_to.inspect}"
       logger.debug "cc: #{email.cc}"
       logger.debug "bcc: #{email.bcc}"
       sent = false
-      RECIPIENTS.each do |target, destination|
-        sent ||= check_target(raw_email, email, target, destination)
+      postponed = false
+
+      sender = email.header['X-Envelope-From'].try(:to_s) || email.from[0]
+      logger.debug "sender: #{sender.inspect}"
+      original_recipients =
+          email.header['X-Envelope-To'].try(:to_s).try(:split, ', ') || email.to
+      logger.debug "original_recipients: #{original_recipients.inspect}"
+      tags = []
+      if ENV_STR
+        tags << ENV_STR
+        tags << 'RJJK'
       end
+
+      # FIXME(uwe): Separate sending to each list with subject and reply_to
+      new_recipients = original_recipients.map do |r|
+        if r =~ /^(.*)@#{"#{Rails.env}." unless Rails.env.production?}jujutsu.no$/
+          target = $1.downcase.to_sym
+          if (recipient = TARGETS[target])
+            if recipient.is_a?(Array)
+              Rails.logger.debug "Found list: #{target}"
+              list = recipient
+              tags << 'RJJK'
+              tags << target.to_s.capitalize
+              email.reply_to = "#{target}@jujutsu.no"
+            else
+              Rails.logger.debug "Found target: #{target}"
+              list = [recipient]
+            end
+            list.map { |l| l[:email] }
+          else
+          end
+        else
+          Rails.logger.error "Unexpected incoming email recipient: #{r.inspect}"
+          postponed = true
+          nil
+        end
+      end.flatten.compact.uniq
+      logger.debug "new_recipients: #{new_recipients.inspect}"
+
+      if new_recipients.any?
+        email.subject.prepend("#{tags.uniq.map{|t| "[#{t}]" }.join} ") if tags.any?
+        email.smtp_envelope_from = sender
+        email.smtp_envelope_to = (Rails.env.production? || Rails.env.test?) ? new_recipients :
+            'uwe@kubosch.no'
+        email.delivery_method(Rails.env.test? ? :test : :sendmail)
+        email.deliver
+        sent = true
+      end
+
       if sent
         logger.info 'Mail processed OK!'
         raw_email.update! processed_at: Time.now
-      else
+      end
+      if postponed
         logger.info 'Mail postponed.'
         raw_email.update! postponed_at: Time.now
       end
     end
-  end
-
-  # FIXME(uwe):  Manipulate and send the Mail object insetad of RawIncomingEmail
-  def self.check_target(raw_email, email, target, destination)
-    return false unless [email.to, email.cc, email.bcc].flatten.compact.
-        any? { |t| t =~ /#{target}@(beta.)?jujutsu.no/i }
-    logger.debug 'send!'
-    if destination.is_a?(Array)
-      mailing_list = true
-      destinations = destination
-      subject = "[RJJK]#{"[#{Rails.env.upcase}]" unless Rails.env.production?}[#{target.to_s.capitalize}] #{email.subject}"
-      reply_to = "#{target}@jujutsu.no"
-    else
-      destinations = [destination]
-    end
-    logger.debug destinations.inspect
-    destinations.each do |destination|
-      recipient = if Rails.env.production?
-        if mailing_list
-          %Q{"RJJK #{target.to_s.capitalize}" <#{destination[:email]}>}
-        else
-          %Q{"[RJJK][#{target.to_s.capitalize}] #{destination[:name]}" <#{destination[:email]}>}
-        end
-      elsif mailing_list
-        %Q{"RJJK #{target.to_s.capitalize} <#{destination[:email]}>" <uwe@kubosch.no>}
-      else
-        %Q{"[RJJK][#{Rails.env.upcase}][#{target.to_s.capitalize}] #{destination[:name]} <#{destination[:email]}>" <uwe@kubosch.no>}
-      end
-
-      outgoing_email = raw_email.content.
-          gsub(/^(To|Cc|Bcc):(.*\b#{target}@(?:beta.)?jujutsu.no\b.*)\n/i) { "#$1: #{recipient}\n" }
-      if reply_to
-        outgoing_email = outgoing_email.gsub(/^Reply-to:.*\n/, '')
-        outgoing_email = outgoing_email.sub(/^From:/, "Reply-to: #{reply_to}\nFrom:")
-      end
-      if reply_to
-        outgoing_email = outgoing_email.gsub(/^Subject:.*\n/, '')
-        outgoing_email = outgoing_email.sub(/^From:/, "Subject: #{subject}\nFrom:")
-      end
-
-      logger.debug 'Outgoing message:'
-      logger.debug outgoing_email
-      if Rails.env.test?
-        ActionMailer::Base.deliveries << Mail.read_from_string(outgoing_email)
-      else
-        Net::SMTP.start('mail.kubosch.no') do |smtp|
-          response = smtp.send_message(outgoing_email, email.from[0], recipient)
-          logger.debug "Response: #{response.inspect}"
-          unless response.success?
-            raise "Bad response sending email: #{response.status.inspect} #{response.string.inspect} #{response.inspect}"
-          end
-        end
-      end
-    end
-    return true
-  rescue
-    logger.error "Exception sending email: #{$!}"
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
-    false
   end
 end
