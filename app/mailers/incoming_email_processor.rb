@@ -62,6 +62,9 @@ class IncomingEmailProcessor
             end
             list.map { |l| l[:email] }
           else
+            Rails.logger.error "Unknown incoming email target: #{target.inspect}"
+            postponed = true
+            nil
           end
         else
           Rails.logger.error "Unexpected incoming email recipient: #{r.inspect}"
@@ -90,5 +93,8 @@ class IncomingEmailProcessor
         raw_email.update! postponed_at: Time.now
       end
     end
+  rescue Exception
+    logger.error $!
+    ExceptionNotifier.notify_exception($!)
   end
 end
