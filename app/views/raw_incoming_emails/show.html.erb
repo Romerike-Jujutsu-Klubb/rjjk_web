@@ -1,7 +1,7 @@
 <% @content_width = 1024 %>
 
 <pre>
-<%= @raw_incoming_email.content %>
+<%= @raw_incoming_email.content.force_encoding('ASCII').encode('utf-8') %>
 </pre>
 
 <%= link_to 'Edit', edit_raw_incoming_email_path(@raw_incoming_email), class: 'btn btn-primary' %>
