@@ -17,7 +17,7 @@ class IncomingEmailProcessor
       test: {name: 'don Valentin', email: 'donv@kubosch.no'},
       web: {name: 'Uwe Kubosch', email: 'uwe@kubosch.no'},
   }
-  ENV_STR = Rails.env.upcase unless Rails.env.production?
+  ENV_STR = Rails.env.production? ? nil : Rails.env.upcase
 
   def self.forward_emails
     RawIncomingEmail.where(processed_at: nil, postponed_at: nil).
