@@ -1,9 +1,11 @@
 <% @content_width = 1024 %>
 
-<pre>
-<%= @raw_incoming_email.content.force_encoding('ASCII').
-    encode('utf-8', :invalid => :replace, :undef => :replace, :replace => '?') %>
-</pre>
+<div style="position: absolute; right: 2.4rem">
+  <%= link_to 'Endre', edit_raw_incoming_email_path(@raw_incoming_email), class: 'btn btn-primary' %>
+  <%= link_to 'Slett', raw_incoming_email_path(@raw_incoming_email),
+          class: 'btn btn-danger', method: :delete,
+          data: {confirm: 'Er du sikker på at du vil slette denne e-posten?'} %>
+  <%= link_to 'Liste', raw_incoming_emails_path, class: 'btn btn-default' %>
+</div>
 
-<%= link_to 'Edit', edit_raw_incoming_email_path(@raw_incoming_email), class: 'btn btn-primary' %>
-<%= link_to 'Back', raw_incoming_emails_path, class: 'btn btn-default' %>
+<%= render 'part', part: @raw_incoming_email.mail %>
