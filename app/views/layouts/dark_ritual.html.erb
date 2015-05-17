@@ -2,8 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-  <title><%= "#{Rails.env.upcase} " unless Rails.env.production? %>Romerike
-    Jujutsu Klubb</title>
+  <title><%= "#{Rails.env.upcase} " unless Rails.env.production? %><%= @layout_title || 'Romerike Jujutsu Klubb' %></title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
   <meta name="description" content="description"/>
   <meta name="keywords" content="jujutsu aikijutsu jujitsu jiu jitsu strømmen lørenskog skedsmo lillestrøm romerike kampsport kampkunst selvforsvar trygghet trening trim"/>
