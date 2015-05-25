@@ -3,7 +3,7 @@
 # * Send one per day, or so.
 # * Resend after a week or so, not before
 # * Store sending of survey
-# * Sore answers
+# * Store answers
 # * Send no more than one survey per week.
 # * Check survey conditions: active members / left members / passive members / panda / tiger / voksne
 
@@ -20,7 +20,8 @@ class SurveySender
       Survey.order(:position).each do |survey|
         unrequested_member = survey.ready_members.select(&:active?).first
         if unrequested_member
-          request = survey.survey_requests.first_or_create!(member_id: unrequested_member.id)
+          request = survey.survey_requests.
+              where(member_id: unrequested_member.id).first_or_create!
         else
           request = survey.survey_requests.pending.
               select { |sr| sr.reminded_at.nil? || sr.reminded_at < 1.week.ago }.
@@ -32,10 +33,10 @@ class SurveySender
 
       if request.sent_at.nil?
         SurveyMailer.survey(request).deliver
-        request.update sent_at: Time.now
+        request.update! sent_at: Time.now
       else
         SurveyMailer.reminder(request).deliver
-        request.update reminded_at: Time.now
+        request.update! reminded_at: Time.now
       end
     rescue
       logger.error 'Execption sending survey request.'

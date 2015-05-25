@@ -1,5 +1,5 @@
 class Certificates
-  def self.pdf(date, content)
+  def self.pdf(date, content, layout = 3)
     Prawn::Document.new :page_size => 'A4', :page_layout => :landscape, :margin => 0 do
       page_width = PDF::Core::PageGeometry::SIZES['A4'][1]
       page_height = PDF::Core::PageGeometry::SIZES['A4'][0]
@@ -15,7 +15,7 @@ class Certificates
       censor_name_x = 350
 
       create_stamp('border') do
-        case 3
+        case layout
         when 1
           rotate 0.5 do
             image "#{Rails::root}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.jpg",

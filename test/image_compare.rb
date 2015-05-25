@@ -11,9 +11,15 @@ class ImageCompare
     new_file_name = "#{name}_1.png~"
 
     return nil unless File.exists? old_file_name
+
+    old_file = File.read(old_file_name)
+    new_file = File.read(file_name)
+
+    return false if old_file == new_file
+
     images = [
-        ChunkyPNG::Image.from_file(old_file_name),
-        ChunkyPNG::Image.from_file(file_name),
+        ChunkyPNG::Image.from_blob(old_file),
+        ChunkyPNG::Image.from_blob(new_file),
     ]
 
     if dimensions

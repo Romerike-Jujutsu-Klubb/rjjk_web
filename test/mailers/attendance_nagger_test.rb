@@ -4,12 +4,20 @@ require 'test_helper'
 class AttendanceNaggerTest < ActionMailer::TestCase
   def test_send_attendance_plan
     AttendanceNagger.send_attendance_plan
-    assert_equal 1, Mail::TestMailer.deliveries.size
+    assert_equal 2, Mail::TestMailer.deliveries.size
+
     mail = ActionMailer::Base.deliveries[0]
     assert_equal '[RJJK][TEST] Kommer du?', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
     assert_match "Følg linken til\r\n    <a href=\"http://example.com/mitt/oppmote?key=random_token_string+++++++++++++++++++++\">Mitt oppmøte</a>", mail.body.encoded
+
+    mail = ActionMailer::Base.deliveries[1]
+    assert_equal '[RJJK][TEST] Kommer du?', mail.subject
+    assert_equal %w(uwe@kubosch.no), mail.to
+    assert_equal %w(test@jujutsu.no), mail.from
+    assert_match %r{Følg linken til\s*<a href="http://example.com/mitt/oppmote\?key=[0-9a-f]{40}">Mitt oppmøte</a>},
+        mail.body.encoded
   end
 
   def test_send_message_reminder_same_day
@@ -38,7 +46,8 @@ class AttendanceNaggerTest < ActionMailer::TestCase
 
   def test_send_attendance_summary
     AttendanceNagger.send_attendance_summary
-    assert_equal 2, Mail::TestMailer.deliveries.size
+    assert_equal 3, Mail::TestMailer.deliveries.size
+
     mail = ActionMailer::Base.deliveries[0]
     assert_equal '[RJJK][TEST] Trening i kveld: 1 deltaker påmeldt', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
@@ -46,6 +55,12 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_match "<ul>\r\n      <li>Uwe Kubosch</li>\r\n</ul>", mail.body.encoded
 
     mail = ActionMailer::Base.deliveries[1]
+    assert_equal '[RJJK][TEST] Trening i kveld: 1 deltaker påmeldt', mail.subject
+    assert_equal %w(uwe@kubosch.no), mail.to
+    assert_equal %w(test@jujutsu.no), mail.from
+    assert_match "<ul>\r\n      <li>Uwe Kubosch</li>\r\n</ul>", mail.body.encoded
+
+    mail = ActionMailer::Base.deliveries[2]
     assert_equal '[RJJK][TEST] Trening i kveld: 1 deltaker påmeldt', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
@@ -54,7 +69,8 @@ class AttendanceNaggerTest < ActionMailer::TestCase
 
   def test_send_attendance_changes
     AttendanceNagger.send_attendance_changes
-    assert_equal 2, Mail::TestMailer.deliveries.size
+    assert_equal 3, Mail::TestMailer.deliveries.size
+
     mail = ActionMailer::Base.deliveries[0]
     assert_equal '[RJJK][TEST] Trening i kveld: 1 ny deltaker påmeldt', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
@@ -62,6 +78,12 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_match "Nylig påmeldt</h3>\r\n\r\n    <ul>\r\n          <li>Uwe Kubosch</li>", mail.body.encoded
 
     mail = ActionMailer::Base.deliveries[1]
+    assert_equal '[RJJK][TEST] Trening i kveld: 1 ny deltaker påmeldt', mail.subject
+    assert_equal %w(uwe@kubosch.no), mail.to
+    assert_equal %w(test@jujutsu.no), mail.from
+    assert_match "Nylig påmeldt</h3>\r\n\r\n    <ul>\r\n          <li>Uwe Kubosch</li>", mail.body.encoded
+
+    mail = ActionMailer::Base.deliveries[2]
     assert_equal '[RJJK][TEST] Trening i kveld: 1 ny deltaker påmeldt', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from

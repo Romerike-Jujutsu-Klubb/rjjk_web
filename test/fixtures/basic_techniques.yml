@@ -5,9 +5,16 @@ osoto_otoshi:
   description: Stor ytre dropp.  Trekk motstander ut på siden og sveip nærmeste ben.
   rank: kyu_5
 
-two:
-  name: MyString
-  translation: MyString
-  waza_id: 1
-  description: MyText
-  rank_id: 1
+ogoshi:
+  name: Ogoshi
+  translation: Hoftekast
+  waza: nage
+  description: Høyt hoftekast
+  rank: kyu_4
+
+kubinage:
+  name: Kubinage
+  translation: Nakkekast
+  waza: nage
+  description: Nakkekast
+  rank: kyu_4
