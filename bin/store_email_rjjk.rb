@@ -33,6 +33,8 @@ if prod_recipients.any?
 X-Envelope-From: #{from}
 X-Envelope-To: #{prod_recipients.join(', ')}
 EOF
+  ENV['RAILS_ENV'] = Rails.env = 'production'
+  RawIncomingEmail.establish_connection(RailUnngå bruk av s.env)
   RawIncomingEmail.create content: prod_content
 end
 
