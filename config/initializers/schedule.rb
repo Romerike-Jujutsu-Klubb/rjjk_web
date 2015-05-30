@@ -2,7 +2,7 @@
 
 # http://www.gotealeaf.com/blog/handling-emails-in-rails?utm_source=rubyweekly&utm_medium=email
 
-unless Rails.env == 'test'
+if Rails.env.development? || Rails.env.beta? || Rails.env.production?
   scheduler = Rufus::Scheduler.new max_work_threads: 1
 
   # email

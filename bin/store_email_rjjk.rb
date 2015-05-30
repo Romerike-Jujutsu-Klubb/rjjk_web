@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-ENV['RAILS_ENV'] ||= 'production'
+ENV['RAILS_ENV'] = 'email'
 require_relative '../config/environment'
 
 Rails.logger.debug "ARGV: #{ARGV}"
