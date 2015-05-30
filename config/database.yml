@@ -18,7 +18,10 @@ beta:
   database: rjjk_web_beta
   username: capistrano
 
-production:
+production: &production
   <<: *default
   database: rjjk_production
   username: capistrano
+
+email:
+  <<: *production
