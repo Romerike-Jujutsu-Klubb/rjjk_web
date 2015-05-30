@@ -3,7 +3,8 @@ source 'https://rubygems.org/'
 gem 'rails', '~>4.1.10'
 
 platform :jruby do
-  gem 'activerecord-jdbcpostgresql-adapter'
+  gem 'activerecord-jdbc-adapter', '!=1.3.16'
+  gem 'activerecord-jdbcpostgresql-adapter', '!=1.3.16'
 end
 
 platform :ruby do
@@ -52,7 +53,8 @@ gem 'schema_plus'
 gem 'simple_drilldown'
 gem 'simple_workflow'
 gem 'slim-rails'
-gem 'therubyrhino'
+gem 'therubyracer', platform: :ruby
+gem 'therubyrhino', platform: :jruby
 gem 'tinymce-rails'
 gem 'tinymce-rails-langs'
 gem 'turbolinks'
