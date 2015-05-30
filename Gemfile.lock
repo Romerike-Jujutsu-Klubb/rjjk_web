@@ -413,7 +413,7 @@ DEPENDENCIES
   capistrano-rvm
   capistrano-scm-copy
   chosen-rails
-  chosen-sass-bootstrap-rails
+  chosen-sass-bootstrap-rails (>= 0.0.4)
   chunky_png
   coffee-rails
   database_cleaner

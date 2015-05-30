@@ -22,7 +22,7 @@ gem 'bootstrap3-datetimepicker-rails'
 # gem "bootstrap-wysihtml5-rails"
 # gem "bootstrap-select-rails"
 gem 'chosen-rails'
-gem 'chosen-sass-bootstrap-rails'
+gem 'chosen-sass-bootstrap-rails', '>= 0.0.4'
 gem 'coffee-rails'
 gem 'draper' # https://github.com/drapergem/draper
 gem 'dynamic_form'
