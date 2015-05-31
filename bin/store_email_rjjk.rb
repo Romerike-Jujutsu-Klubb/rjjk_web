@@ -3,6 +3,7 @@
 ENV['RAILS_ENV'] = 'email'
 
 # FIXME(uwe): Why this setup?!  Remove observers!
+Dir.chdir File.dirname(File.dirname(__FILE__))
 puts 1
 require 'bundler'
 puts 2
