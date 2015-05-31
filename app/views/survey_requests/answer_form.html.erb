@@ -22,11 +22,12 @@
             <% end %>
             <div class="row">
               <% if choices %>
+                  <% choices.unshift([nil, nil]) unless sq.select_multiple %>
                   <div class="col-md-6">
                     <%= sa.select :answer, choices, {selected: answers},
                             multiple: sq.select_multiple,
                             class: 'form-control chosen-select',
-                            data: {placeholder: 'Velg et svar eller'},
+                            data: {placeholder: 'Velg et svar eller "Annet"'},
                             onchange: "other_selected = $(this).val() && $(this).val().indexOf('annet') > -1;
                     tf = $('#survey_request_survey_answers_attributes_#{sa.index}_answer_free');
                     tf.prop('disabled', !other_selected);

@@ -11,7 +11,7 @@ platform :ruby do
   gem 'pg'
 end
 
-gem 'actionpack-page_caching'
+gem 'actionpack-page_caching', github: 'rails/actionpack-page_caching'
 gem 'activerecord-time'
 gem 'acts_as_list'
 gem 'acts_as_tree'
@@ -42,7 +42,7 @@ gem 'prawn', '<2.0.0' # TODO(uwe): Upgrade?
 gem 'prawn-table'
 gem 'puma'
 gem 'rails-i18n'
-gem 'rails-observers', git: 'https://github.com/rails/rails-observers.git'
+gem 'rails-observers', github: 'rails/rails-observers'
 gem 'rake'
 gem 'RedCloth'
 gem 'red_cloth_formatters_plain'
