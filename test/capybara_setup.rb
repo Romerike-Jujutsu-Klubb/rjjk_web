@@ -68,7 +68,7 @@ class ActionDispatch::IntegrationTest
       page.save_screenshot(file_name)
       break if old_file_size == File.size(file_name)
       old_file_size = File.size(file_name)
-      sleep 0.5
+      sleep 0.25
     end
     return unless File.exist?(svn_file_name)
     if ImageCompare.compare(file_name, svn_file_name, WINDOW_SIZE)
