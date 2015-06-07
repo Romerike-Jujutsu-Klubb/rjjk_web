@@ -10,8 +10,7 @@ class AnnualMeetingReminderTest < ActionMailer::TestCase
 
   def test_notify_missing_date
     annual_meetings(:two).destroy
-    AnnualMeetingReminder.notify_missing_date
-    assert_equal 1, Mail::TestMailer.deliveries.size
+    assert_mail_deliveries(1) { AnnualMeetingReminder.notify_missing_date }
 
     mail = ActionMailer::Base.deliveries[0]
     assert_equal '[RJJK][TEST] På tide å sette dato for årsmøte 2014', mail.subject

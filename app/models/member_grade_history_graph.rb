@@ -41,7 +41,7 @@ EOF
   def history_graph(options = {})
     size = options[:size] || 480
     interval = options[:interval] || 8.weeks
-    step = options[:step] || 1.weeks
+    step = (options[:step] || 1.weeks).to_i
     percentage = options[:percentage]
 
     ranks = MartialArt.find_by_name('Kei Wa Ryu').ranks.reverse

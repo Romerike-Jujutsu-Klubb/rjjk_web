@@ -3,8 +3,8 @@ require 'test_helper'
 
 class NkfMemberTrialReminderTest < ActionMailer::TestCase
   def test_notify_overdue_trials
-    NkfMemberTrialReminder.notify_overdue_trials
-    assert_equal 1, Mail::TestMailer.deliveries.size
+    assert_mail_deliveries(1) { NkfMemberTrialReminder.notify_overdue_trials }
+
     mail = ActionMailer::Base.deliveries[0]
     assert_equal '[RJJK][TEST] Utløpt prøvetid', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to

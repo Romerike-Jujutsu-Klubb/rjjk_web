@@ -22,54 +22,61 @@ class AttendanceNaggerTest < ActionMailer::TestCase
 
   def test_send_message_reminder_same_day
     AttendanceNagger.send_message_reminder
-    assert_equal 0, Mail::TestMailer.deliveries.size, ->{Mail::TestMailer.deliveries.to_s}
+    assert_mail_deliveries 0
   end
 
   def test_send_message_reminder_day_before
     Timecop.freeze(Time.local 2013, 10, 16, 18, 46, 0) do
-    AttendanceNagger.send_message_reminder
-    assert_equal 2, Mail::TestMailer.deliveries.size
+      assert_mail_deliveries(2) { AttendanceNagger.send_message_reminder }
 
-    mail = ActionMailer::Base.deliveries[0]
-    assert_equal '[RJJK][TEST] Tema for morgendagens trening for Panda', mail.subject
-    assert_equal %w(uwe@kubosch.no), mail.to
-    assert_equal %w(test@jujutsu.no), mail.from
-    assert_match 'Har du en melding til de som skal trene i morgen?', mail.body.encoded
+      mail = ActionMailer::Base.deliveries[0]
+      assert_equal '[RJJK][TEST] Tema for morgendagens trening for Panda',
+          mail.subject
+      assert_equal %w(uwe@kubosch.no), mail.to
+      assert_equal %w(test@jujutsu.no), mail.from
+      assert_match 'Har du en melding til de som skal trene i morgen?',
+          mail.body.encoded
 
-    mail = ActionMailer::Base.deliveries[1]
-    assert_equal '[RJJK][TEST] Tema for morgendagens trening for Panda', mail.subject
-    assert_equal %w(uwe@kubosch.no), mail.to
-    assert_equal %w(test@jujutsu.no), mail.from
-    assert_match 'Har du en melding til de som skal trene i morgen?', mail.body.encoded
+      mail = ActionMailer::Base.deliveries[1]
+      assert_equal '[RJJK][TEST] Tema for morgendagens trening for Panda',
+          mail.subject
+      assert_equal %w(uwe@kubosch.no), mail.to
+      assert_equal %w(test@jujutsu.no), mail.from
+      assert_match 'Har du en melding til de som skal trene i morgen?',
+          mail.body.encoded
     end
   end
 
   def test_send_attendance_summary
-    AttendanceNagger.send_attendance_summary
-    assert_equal 3, Mail::TestMailer.deliveries.size
+    assert_mail_deliveries(3) { AttendanceNagger.send_attendance_summary }
 
     mail = ActionMailer::Base.deliveries[0]
-    assert_equal '[RJJK][TEST] Trening i kveld: 1 deltaker påmeldt', mail.subject
+    assert_equal '[RJJK][TEST] Trening i kveld: 1 deltaker påmeldt',
+        mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_match "<ul>\r\n      <li>Uwe Kubosch</li>\r\n</ul>", mail.body.encoded
+    assert_match "<ul>\r\n      <li>Uwe Kubosch</li>\r\n</ul>",
+        mail.body.encoded
 
     mail = ActionMailer::Base.deliveries[1]
-    assert_equal '[RJJK][TEST] Trening i kveld: 1 deltaker påmeldt', mail.subject
+    assert_equal '[RJJK][TEST] Trening i kveld: 1 deltaker påmeldt',
+        mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_match "<ul>\r\n      <li>Uwe Kubosch</li>\r\n</ul>", mail.body.encoded
+    assert_match "<ul>\r\n      <li>Uwe Kubosch</li>\r\n</ul>",
+        mail.body.encoded
 
     mail = ActionMailer::Base.deliveries[2]
-    assert_equal '[RJJK][TEST] Trening i kveld: 1 deltaker påmeldt', mail.subject
+    assert_equal '[RJJK][TEST] Trening i kveld: 1 deltaker påmeldt',
+        mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_match "<ul>\r\n      <li>Uwe Kubosch</li>\r\n</ul>", mail.body.encoded
+    assert_match "<ul>\r\n      <li>Uwe Kubosch</li>\r\n</ul>",
+        mail.body.encoded
   end
 
   def test_send_attendance_changes
-    AttendanceNagger.send_attendance_changes
-    assert_equal 3, Mail::TestMailer.deliveries.size
+    assert_mail_deliveries(3) { AttendanceNagger.send_attendance_changes }
 
     mail = ActionMailer::Base.deliveries[0]
     assert_equal '[RJJK][TEST] Trening i kveld: 1 ny deltaker påmeldt', mail.subject

@@ -59,3 +59,15 @@ VCR.configure do |config|
   config.hook_into :webmock
   config.ignore_localhost = true
 end
+
+class ActionMailer::TestCase
+  def assert_mail_deliveries(count, initial = 0, &block)
+    if block
+      assert_equal initial, Mail::TestMailer.deliveries.size,
+          -> { "Unexpected mail deliveries before block:\n#{Mail::TestMailer.deliveries}\n" }
+      block.call
+    end
+    assert_equal initial + count, Mail::TestMailer.deliveries.size,
+        -> { Mail::TestMailer.deliveries.to_s }
+  end
+end

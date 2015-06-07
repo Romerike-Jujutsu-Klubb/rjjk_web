@@ -36,7 +36,7 @@ class ApplicationStepsController < ApplicationController
     begin
       imgs = Magick::ImageList.new
       imgs.from_blob step.image_content_data
-    rescue NoMethodError, java.lang.NullPointerException, java.lang.OutOfMemoryError
+    rescue NoMethodError, *(defined?(JRUBY_VERSION) ? [java.lang.NullPointerException, java.lang.OutOfMemoryError] : [TypeError])
       redirect_to '/assets/pdficon_large.png'
       return
     end

@@ -3,8 +3,9 @@ require 'test_helper'
 
 class IncomingEmailProcessorTest < ActionMailer::TestCase
   def test_forward_emails
-    5.times { IncomingEmailProcessor.forward_emails }
-    assert_equal 5, ActionMailer::Base.deliveries.size
+    assert_mail_deliveries 5 do
+      5.times { IncomingEmailProcessor.forward_emails }
+    end
 
     mail = ActionMailer::Base.deliveries[0]
     assert_equal %w(test@jujutsu.no), mail.from

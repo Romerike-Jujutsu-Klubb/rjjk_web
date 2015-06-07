@@ -6,8 +6,12 @@ class UserSystemTest < ActionDispatch::IntegrationTest
   self.use_transactional_fixtures = false
   fixtures :users
 
-  def setup
+  setup do
     Mail::TestMailer.inject_one_error = false
+    Mail::TestMailer.deliveries = []
+  end
+
+  teardown do
     Mail::TestMailer.deliveries = []
   end
 
