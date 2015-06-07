@@ -8,6 +8,7 @@ platform :jruby do
 end
 
 platform :ruby do
+  gem 'oily_png'
   gem 'pg'
 end
 

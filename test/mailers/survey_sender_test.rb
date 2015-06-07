@@ -28,10 +28,11 @@ class SurveySenderTest < ActionMailer::TestCase
         mail.body.decoded
     assert survey_requests(:unsent).sent_at
 
-    assert_difference 'SurveyRequest.count' do
-      SurveySender.send_surveys
+    assert_mail_deliveries 1, 1 do
+      assert_difference 'SurveyRequest.count' do
+        SurveySender.send_surveys
+      end
     end
-    assert_equal 2, ActionMailer::Base.deliveries.size
 
     mail = ActionMailer::Base.deliveries[1]
     assert_equal '[RJJK][TEST] First survey', mail.subject
@@ -51,7 +52,7 @@ class SurveySenderTest < ActionMailer::TestCase
     assert_match %r{For å svare på spørsmålene, kan du følge denne linken:\s*<a href="http://example.com/svar/98593450[89]\?key=[0-9a-f]{40}">http://example.com/svar/98593450[89]</a>},
         mail.body.decoded
 
-    assert_mail_deliveries 3 do
+    assert_mail_deliveries 1, 2 do
       assert_no_difference 'SurveyRequest.count' do
         SurveySender.send_surveys
       end
