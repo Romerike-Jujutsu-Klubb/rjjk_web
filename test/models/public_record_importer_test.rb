@@ -5,11 +5,12 @@ class PublicRecordImporterTest < ActionMailer::TestCase
   def test_import_public_record
     assert_difference('PublicRecord.count') do
       VCR.use_cassette 'BRREG' do
-        PublicRecordImporter.import_public_record
+        assert_mail_deliveries 1 do
+          PublicRecordImporter.import_public_record
+        end
       end
     end
 
-    assert_equal 1, Mail::TestMailer.deliveries.size
     mail = ActionMailer::Base.deliveries[0]
     assert_equal '[RJJK][TEST] Ny informasjon registrert i Brønnøysund', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to

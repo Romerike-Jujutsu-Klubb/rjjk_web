@@ -11,7 +11,7 @@ set :pty, true
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp')
 
 set :default_env, { JRUBY_OPTS: '"--dev -J-Xmx2G"' }
-set :rvm_ruby_version, 'jruby'
+set :rvm_ruby_version, 'jruby-head'
 
 # before 'deploy:spinner', 'deploy:reload_daemons'
 before 'deploy:restart', 'deploy:reload_daemons'

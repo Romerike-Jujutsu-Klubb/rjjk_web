@@ -1,3 +1,4 @@
 /.bundle
+/archive.tar.gz
 /log/*.log
 /tmp

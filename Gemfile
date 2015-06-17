@@ -3,8 +3,8 @@ source 'https://rubygems.org/'
 gem 'rails', '~>4.2.1'
 
 platform :jruby do
-  # gem 'activerecord-jdbc-adapter', '!=1.3.16'
-  gem 'activerecord-jdbcpostgresql-adapter' # , '!=1.3.16'
+  gem 'activerecord-jdbc-adapter', github: 'jruby/activerecord-jdbc-adapter'
+  gem 'activerecord-jdbcpostgresql-adapter', github: 'jruby/activerecord-jdbc-adapter'
 end
 
 platform :ruby do

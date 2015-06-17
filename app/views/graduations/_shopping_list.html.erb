@@ -1,0 +1,8 @@
+<table class="table">
+  <% @graduation.graduates.group_by{|gr| gr.rank}.sort.each do |rank, graduates| %>
+  <tr>
+    <th><%=rank.label%></th>
+    <td><%=graduates.size%></td>
+  </tr>
+  <% end %>
+</table>

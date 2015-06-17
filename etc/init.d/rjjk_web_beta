@@ -18,10 +18,10 @@ LOG_DIR="/u/apps/$APP/shared/log"
 GC_OPTS='-J-verbose:gc -J-XX:+PrintGCTimeStamps -J-XX:+PrintGCDateStamps -J-Xloggc:${LOG_DIR}/gc.log'
 
 START_CMD="cd $APP_DIR ;
-  source \"$HOME/.rvm/scripts/rvm\" ; rvm use jruby ;
+  source \"$HOME/.rvm/scripts/rvm\" ; rvm use jruby-head ;
   export JRUBY_OPTS='${GC_OPTS} -J-Xmx2G --server -J-Djava.awt.headless=true -J-Dawt.toolkit=sun.awt.HToolkit' ;
-  jruby --version ;
-  jruby -S bundle exec puma -d -t 4:20 -p $PORT -e $RAILS_ENV --pidfile $PIDFILE >$LOG_DIR/stdout.log 2>&1
+  ruby --version ;
+  ruby -S bundle exec puma -d -t 4:20 -p $PORT -e $RAILS_ENV --pidfile $PIDFILE >$LOG_DIR/stdout.log 2>&1
 
   echo -n 'Waiting for server to start'
   for j in {1..60} ; do

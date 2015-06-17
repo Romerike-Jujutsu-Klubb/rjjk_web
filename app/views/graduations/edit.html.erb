@@ -17,6 +17,7 @@
   <li><a href="#censors" data-toggle="tab">
     Eksaminatorer / Sensorer</a>
   <li><a href="#forms" data-toggle="tab">Skjema</a></li>
+  <li><a href="#shopping-list" data-toggle="tab">Handleliste belter</a></li>
   <li><a href="#form" data-toggle="tab">Dato / Gruppe</a></li>
 </ul>
 
@@ -143,15 +144,12 @@
 
   </div>
 
+  <div class="tab-pane" id="shopping-list">
+    <%= render 'shopping_list' %>
+  </div>
+
   <div class="tab-pane" id="forms">
-    <ul>
-      <li>Sensor:
-        <%= link_to 'PDF', action: :censor_form_pdf, id: @graduation.id %>
-        /
-        <%= link_to 'HTML', action: :censor_form, id: @graduation.id %>
-      </li>
-      <li><%= link_to 'Diplomer', {action: :certificates, id: @graduation.id} %></li>
-    </ul>
+    <%= render 'forms_tab' %>
   </div>
 
   <div class="tab-pane" id="form">
