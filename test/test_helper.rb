@@ -61,6 +61,7 @@ VCR.configure do |config|
 end
 
 class ActionMailer::TestCase
+  # FIXME(uwe): Check out assert_emails core method
   def assert_mail_deliveries(count, initial = 0, &block)
     if block
       assert_equal initial, Mail::TestMailer.deliveries.size,
