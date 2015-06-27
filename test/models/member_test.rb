@@ -21,6 +21,10 @@ class MemberTest < ActiveSupport::TestCase
     VCR.use_cassette 'GoogleMaps Lars' do
       members(:lars).update_attributes image_file: Image.new
     end
-  rescue SocketError
+  end
+
+  test 'next_rank' do
+    assert_equal ['sandan', 'shodan', '11. mon', '5. kyu'],
+        Member.order(:joined_on).all.map(&:next_rank).map(&:name)
   end
 end

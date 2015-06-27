@@ -156,15 +156,23 @@ class Member < ActiveRecord::Base
 
   def attendances_since_graduation(before_date = Date.today, group = nil)
     groups = group ? [group] : Group.includes(:martial_art).to_a
-    groups.map do |g|
+    queries = groups.map do |g|
       ats = attendances
       ats = ats.by_group_id(g.id)
       if (c = current_graduate(g.martial_art, before_date))
         ats = ats.after_date(c.graduation.held_on)
       end
-      ats = ats.until_date(before_date)
-      ats.to_a
-    end.flatten.sort_by(&:date).reverse
+      ats.until_date(before_date)
+    end
+    case queries.size
+    when 0
+      Attendance.none
+    when 1
+      queries.first.order(:year, :week).reverse_order
+    else
+      # query = queries.inject(:or) # Rails 5
+      queries.map(&:to_a).flatten.sort_by(&:date).reverse
+    end
   end
 
   def current_rank(martial_art = nil, date = Date.today)
@@ -184,48 +192,47 @@ class Member < ActiveRecord::Base
     [years > 0 ? "#{years} år" : nil, years == 0 || months > 0 ? "#{months} mnd" : nil].compact.join(' ')
   end
 
-  def next_rank(graduation = Graduation.new(held_on: Date.today))
+  def next_rank(graduation = Graduation.new(held_on: Date.today, group: groups.sort_by(&:from_age).last))
     age = self.age(graduation.held_on)
-    ma = graduation.group.try(:martial_art) || MartialArt.find_by_name('Kei Wa Ryu')
+    ma = graduation.group.try(:martial_art) || MartialArt.includes(:ranks).find_by_name('Kei Wa Ryu')
     current_rank = current_rank(ma, graduation.held_on)
+    ranks = ma.ranks.to_a
     if current_rank
-      next_rank = ma.ranks.find { |r|
+      next_rank = ranks.find { |r|
         !future_ranks(graduation.held_on, ma).include?(r) &&
             r.position > current_rank.position &&
-            (age.nil? || age >= r.minimum_age) &&
             (r.group.from_age..r.group.to_age).include?(age) &&
+            (age.nil? || age >= r.minimum_age) &&
             attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
       }
-      next_rank ||= ma.ranks.find { |r|
+      next_rank ||= ranks.find { |r|
         !future_ranks(graduation.held_on, ma).include?(r) &&
             r.position > current_rank.position &&
-            (age.nil? || age >= r.minimum_age) &&
             (age.nil? || age >= r.group.from_age) &&
+            (age.nil? || age >= r.minimum_age) &&
             attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
       }
-      next_rank ||= ma.ranks.find { |r|
+      next_rank ||= ranks.find { |r|
         !future_ranks(graduation.held_on, ma).include?(r) &&
             r.position > current_rank.position &&
-            (age.nil? || age >= r.minimum_age) &&
-            (r.group.from_age..r.group.to_age).include?(age)
+            (r.group.from_age..r.group.to_age).include?(age) &&
+            (age.nil? || age >= r.minimum_age)
       }
-      next_rank ||= Rank.
-          where('martial_art_id = ? AND position = ?', ma, current_rank.position + 1).
-          first
+      next_rank ||= ranks.find{|r| r.position > current_rank.position}
     end
-    next_rank ||= ma.ranks.find { |r|
+    next_rank ||= ranks.find { |r|
       !future_ranks(graduation.held_on, ma).include?(r) &&
-          (age.nil? || age >= r.minimum_age) &&
           (r.group.from_age..r.group.to_age).include?(age) &&
+          (age.nil? || age >= r.minimum_age) &&
           attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
     }
-    next_rank ||= ma.ranks.find { |r|
+    next_rank ||= ranks.find { |r|
       !future_ranks(graduation.held_on, ma).include?(r) &&
           (age.nil? || age >= r.minimum_age) &&
           attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
     }
-    next_rank ||= ma.ranks.find { |r| age.nil? || (age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age)) }
-    next_rank ||= ma.ranks.first
+    next_rank ||= ranks.find { |r| age.nil? || (age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age)) }
+    next_rank ||= ranks.first
     next_rank
   end
 

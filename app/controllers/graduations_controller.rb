@@ -33,8 +33,30 @@ class GraduationsController < ApplicationController
 
   def edit
     @graduation = Graduation
-        .includes(censors: :member,
-            graduates: {member: [{attendances: :practice, graduates: [{graduation: :group}, :rank]}, :nkf_member]},
+        .includes(
+            censors: {member: {graduates: {rank: :martial_art}}},
+            graduates: {
+                graduation: {
+                    group: {
+                        martial_art: {ranks: [{group: [:martial_art, :ranks]}, :martial_art]}
+                    }
+                },
+                member: [
+                    {
+                        attendances: {
+                            practice: :group_schedule
+                        },
+                        graduates: [
+                            {
+                                graduation: :group
+                            },
+                            :rank
+                        ]
+                    },
+                    :nkf_member
+                ],
+                rank: [{group: [:group_schedules, :ranks]}, :martial_art],
+            },
             group: {members: :nkf_member})
         .find(params[:id])
     @approval = @graduation.censors.

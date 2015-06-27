@@ -20,7 +20,10 @@ class ImageCompare
 
     images = load_images(old_file_name, file_name)
 
-    return false unless images
+    unless images
+      clean_tmp_files(new_file_name, org_file_name)
+      return false
+    end
 
     crop_images(images, dimensions) if dimensions
     org_img = images.first
@@ -28,8 +31,7 @@ class ImageCompare
     return true if sizes_changed?(org_img, new_img, name)
 
     if org_img.pixels == new_img.pixels
-      File.delete(org_file_name) if File.exists?(org_file_name)
-      File.delete(new_file_name) if File.exists?(new_file_name)
+      clean_tmp_files(new_file_name, org_file_name)
       return false
     end
 
@@ -38,6 +40,11 @@ class ImageCompare
     org_img.save(org_file_name)
     new_img.save(new_file_name)
     true
+  end
+
+  def self.clean_tmp_files(new_file_name, org_file_name)
+    File.delete(org_file_name) if File.exists?(org_file_name)
+    File.delete(new_file_name) if File.exists?(new_file_name)
   end
 
   private
