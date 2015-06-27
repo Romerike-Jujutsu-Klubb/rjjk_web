@@ -22,7 +22,7 @@ table.table
           = raw_email.created_at.strftime('%R')
         td
           | From:&nbsp;
-          = raw_email.mail.from.map { |m| m[0..25] }.join(' ')
+          = [*raw_email.mail.from].map { |m| m[0..25] }.join(' ')
           br
           | To:&nbsp;
           = [raw_email.mail.to, raw_email.mail.cc, raw_email.mail.bcc].flatten.compact.join(' ')

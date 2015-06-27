@@ -20,8 +20,8 @@ module RedCloth
             # RedCloth::Formatters::HTML.clean_html
             # not very secure, but it's ok as output is still
             # meant to be escaped if it needs to be shown
-            text.gsub!( /<!\[CDATA\[/, '' )
-            text.gsub!( /<(\/*)([A-Za-z]\w*)([^>]*?)(\s?\/?)>/ ){|m| block_given? ? yield(m) : ""}
+            text.gsub!(/<!\[CDATA\[/, '')
+            text.gsub!(/<(\/*)([A-Za-z]\w*)([^>]*?)(\s?\/?)>/) { |m| block_given? ? yield(m) : "" }
           end
           CGI.unescapeHTML(text)
         end
@@ -49,15 +49,19 @@ class TimeOfDay
   def min
     minute
   end
+
   def day
     nil
   end
+
   def month
     nil
   end
+
   def year
     nil
   end
+
   def day_phase
     self < self.class.new(17, 0) ? 'dag' : 'kveld'
   end
@@ -100,8 +104,8 @@ module Prawn
             @pdf.move_down((@pdf.font.line_gap + @pdf.font.descender)/2)
             with_text_color do
               text_box(:width => rotated ? spanned_content_height : spanned_content_width + FPTolerance,
-                       :height => rotated ? spanned_content_width : spanned_content_height + FPTolerance,
-                       :at => [2, (rotated ? (spanned_content_height + FPTolerance - natural_content_height) / 2 : @pdf.cursor) ]).render
+                  :height => rotated ? spanned_content_width : spanned_content_height + FPTolerance,
+                  :at => [2, (rotated ? (spanned_content_height + FPTolerance - natural_content_height) / 2 : @pdf.cursor)]).render
             end
           end
         end

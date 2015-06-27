@@ -14,4 +14,14 @@ class RankTest < ActiveSupport::TestCase
     assert_equal 14, ranks(:kyu_4).minimum_age
     assert_equal ranks(:mon_10), member.next_rank(graduation)
   end
+
+  test 'label' do
+    assert_equal [
+            '12. mon blå stripe', '11. mon blå stripe m/svart bånd',
+            '10. mon gule kanter', '5. kyu gult', '4. kyu oransje',
+            '1. kyu brunt', 'shodan svart', 'nidan svart m/2 striper',
+            'sandan svart m/3 striper',
+        ],
+        Rank.order(:position).all.map(&:label)
+  end
 end

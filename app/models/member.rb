@@ -150,7 +150,8 @@ class Member < ActiveRecord::Base
   end
 
   def current_graduate(martial_art, date = Date.today)
-    graduates.select { |g| g.passed? && g.graduation.held_on < date && (martial_art.nil? || g.rank.martial_art_id == martial_art.id) }.sort_by { |g| g.rank.position }.last
+    graduates.sort_by { |g| -g.rank.position }
+        .find { |g| g.passed? && g.graduation.held_on < date && (martial_art.nil? || g.rank.martial_art_id == martial_art.id) }
   end
 
   def attendances_since_graduation(before_date = Date.today, group = nil)
@@ -183,7 +184,7 @@ class Member < ActiveRecord::Base
     [years > 0 ? "#{years} år" : nil, years == 0 || months > 0 ? "#{months} mnd" : nil].compact.join(' ')
   end
 
-  def next_rank(graduation = Graduation.new(:held_on => Date.today))
+  def next_rank(graduation = Graduation.new(held_on: Date.today))
     age = self.age(graduation.held_on)
     ma = graduation.group.try(:martial_art) || MartialArt.find_by_name('Kei Wa Ryu')
     current_rank = current_rank(ma, graduation.held_on)
@@ -229,7 +230,10 @@ class Member < ActiveRecord::Base
   end
 
   def future_graduates(after, martial_art_id)
-    graduates.select { |g| g.passed? && g.graduation.group.martial_art_id == martial_art_id && g.graduation.held_on > after }
+    graduates.select do |g|
+      g.passed? && g.graduation.group.martial_art_id == martial_art_id &&
+          g.graduation.held_on > after
+    end
   end
 
   def future_ranks(after, martial_art_id)
@@ -251,12 +255,13 @@ class Member < ActiveRecord::Base
   end
 
   def passive?(date = Date.today, group = nil)
-    nkf_member.try(:medlemsstatus) == 'P' ||
-        (joined_on < 2.months.ago.to_date &&
-            attendances.select do |a|
-              (group.nil? || a.group_schedule.group_id == group.id) &&
-                  a.date <= (date + 31) && a.date > (date - 92)
-            end.empty?)
+    return true if nkf_member.try(:medlemsstatus) == 'P'
+    return false if joined_on >= date - 2.months
+    query = attendances
+    query = query.by_group_id(group.id) if group
+    query = query.after_date(date - 92)
+    query = query.until_date(date + 31)
+    query.empty?
   end
 
   def senior?

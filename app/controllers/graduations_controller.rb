@@ -1,6 +1,6 @@
 # encoding: utf-8
 class GraduationsController < ApplicationController
-  CENSOR_ACTIONS = [:approve, :create, :edit, :new, :update]
+  CENSOR_ACTIONS = [:approve, :create, :edit, :index, :new, :update]
   before_filter :admin_required, except: CENSOR_ACTIONS
   before_filter :authenticate_user, only: CENSOR_ACTIONS
 
@@ -32,17 +32,27 @@ class GraduationsController < ApplicationController
   end
 
   def edit
-    @graduation = Graduation.includes(group: :members).find(params[:id])
+    @graduation = Graduation
+        .includes(censors: :member,
+            graduates: {member: [{attendances: :practice, graduates: [{graduation: :group}, :rank]}, :nkf_member]},
+            group: {members: :nkf_member})
+        .find(params[:id])
     @approval = @graduation.censors.
         select { |c| c.member == current_user.member }.
         sort_by { |c| c.approved_grades_at ? 0 : 1 }.last
     return unless admin_or_censor_required
-    @groups = Group.all
+    @groups = Group.order(:from_age).includes(members: [:attendances, :nkf_member]).to_a
+    @groups.unshift(@groups.delete(@graduation.group))
     @graduate = Graduate.new(graduation_id: @graduation.id)
     @censor = Censor.new graduation_id: @graduation.id
-    @members = Member.active(@graduation.held_on).to_a.
-        sort_by { |m| [@graduation.group.members.include?(m) ? 0 : 1, m.name] } -
-        @graduation.graduates.map(&:member)
+    @ranks = Rank.where(martial_art_id: @graduation.group.martial_art_id)
+        .order(:position).to_a
+
+    included_members = @graduation.graduates.map(&:member)
+    @excluded_members = @groups
+        .map { |g| [g, g.members.active(@graduation.held_on).sort_by(&:name) - included_members] }
+        .select { |_g, members| members.any? }
+
     @instructors = Member.instructors - @graduation.censors.map(&:member)
   end
 

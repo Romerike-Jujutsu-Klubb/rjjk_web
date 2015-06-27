@@ -39,11 +39,13 @@
                   <% for rank in group.ranks.sort_by { |r| r.position} %>
                       <tr>
                         <td align="center"><%= h rank.position %></td>
-                        <td><%= link_to "#{rank.name} #{rank.colour}", rank %></td>
-                        <td><%= link_to 'Kort', action: :card, id: rank.id %></td>
+                        <td><%= link_to "#{rank.label}", rank %></td>
+                        <td><%= link_to 'Kort', {action: :card, id: rank.id}, class: 'btn btn-sm btn-default' %></td>
                         <td align="center"><%= h rank.minimum_age %> år</td>
                         <td align="center"><%= h rank.standard_months %></td>
-                        <td><%= link_to 'Rediger', :action => 'edit', :id => rank %></td>
+                        <td>
+                          <%= detour_to 'Rediger', {action: 'edit', id: rank}, class: 'btn btn-primary btn-sm' %>
+                        </td>
                         <!--
     <td><%= link_to 'Slett', {:action => 'destroy', :id => rank}, data: {:confirm => 'Are you sure?'}, :method => :post %></td>
 -->
@@ -61,4 +63,4 @@
 
 <br/>
 
-<%= link_to 'Legg til grad', :action => 'new' %>
+<%= link_to 'Legg til grad', {action: 'new'}, class: 'btn btn-primary' %>

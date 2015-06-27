@@ -1,7 +1,7 @@
 <table class="table">
-  <% @graduation.graduates.group_by{|gr| gr.rank}.sort.each do |rank, graduates| %>
+  <% @graduation.graduates.sort_by(&:rank).group_by{|gr| gr.rank.colour}.each do |colour, graduates| %>
   <tr>
-    <th><%=rank.label%></th>
+    <th><%=colour%></th>
     <td><%=graduates.size%></td>
   </tr>
   <% end %>

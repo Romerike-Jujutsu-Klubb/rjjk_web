@@ -59,7 +59,7 @@ class RanksController < ApplicationController
     @rank = Rank.find(params[:id])
     if @rank.update_attributes(params[:rank])
       flash[:notice] = 'Rank was successfully updated.'
-      redirect_to @rank
+      back_or_redirect_to @rank
     else
       edit
     end

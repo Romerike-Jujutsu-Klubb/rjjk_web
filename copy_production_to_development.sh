@@ -16,6 +16,6 @@ echo "Transferring database"
 time ssh root@kubosch.no "pg_dump -U capistrano rjjk_production | gzip" |
     gunzip | sed -e s/capistrano/uwe/ | psql $DB_NAME
 
-rvm use jruby
+rvm use jruby-head
 export JRUBY_OPTS=--dev
-RAILS_ENV=development jruby -S bundle exec rake db:migrate
+RAILS_ENV=development rake db:migrate

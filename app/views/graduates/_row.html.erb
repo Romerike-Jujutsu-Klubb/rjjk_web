@@ -15,21 +15,20 @@
   </td>
   <% unless graduate.passed? && graduate.graduation.group.school_breaks? %>
       <td>
-        <%= form_for graduate, :html => {:remote => true} do |f| %>
-            <%= f.radio_button :passed, true, :onchange => "$('#passed_btn_#{graduate.id}').click()" %>
+        <%= form_for graduate, html: {remote: true} do |f| %>
+            <%= f.radio_button :passed, true, onchange: "$('#passed_btn_#{graduate.id}').click()" %>
             Ja<br/>
-            <%= f.radio_button :passed, false, :onchange => "$('#passed_btn_#{graduate.id}').click()" %>
+            <%= f.radio_button :passed, false, onchange: "$('#passed_btn_#{graduate.id}').click()" %>
             Nei
-            <%= f.submit :id => "passed_btn_#{graduate.id}", :class => 'hidden' %>
+            <%= f.submit id: "passed_btn_#{graduate.id}", class: 'hidden' %>
         <% end %>
       </td>
   <% end %>
   <td>
-    <%= form_for graduate, :html => {:remote => true, :style => 'display: inline'} do |f| %>
-        <%= f.select :rank_id, Rank.where("martial_art_id = #{graduate.graduation.group.martial_art_id}").
-                order(:position).to_a.map { |r| ["#{r.name} #{r.colour}", r.id] },
-                {}, :onchange => "$('#rank_btn_#{graduate.id}').click()" %>
-        <%= f.submit :id => "rank_btn_#{graduate.id}", :class => 'hidden' %>
+    <%= form_for graduate, html: {remote: true, style: 'display: inline'} do |f| %>
+        <%= f.select :rank_id, @ranks.map { |r| [r.label, r.id] },
+                {}, onchange: "$('#rank_btn_#{graduate.id}').click()" %>
+        <%= f.submit id: "rank_btn_#{graduate.id}", class: 'hidden' %>
     <% end %>
 
     <% graduated = graduate.member.graduates.find { |gr2| gr2 != graduate && gr2.passed && gr2.rank_id == graduate.rank_id } %>

@@ -21,7 +21,7 @@
                 <% choices << [:Annet, :annet] if choices %>
             <% end %>
             <div class="row">
-              <% if choices %>
+              <% if choices.present? %>
                   <% choices.unshift([nil, nil]) unless sq.select_multiple %>
                   <div class="col-md-6">
                     <%= sa.select :answer, choices, {selected: answers},
@@ -37,15 +37,22 @@
                       tf.hide()
                     }" %>
                   </div>
-              <% end %>
 
-              <% if sq.free_text %>
-                  <div class="col-md-6">
-                    <% show_free_text = other_value || choices.blank? %>
-                    <%= sa.text_field :answer_free, disabled: !show_free_text,
+                  <% if sq.free_text %>
+                      <div class="col-md-6">
+                        <% show_free_text = other_value || choices.blank? %>
+                        <%= sa.text_field :answer_free, disabled: !show_free_text,
+                                value: other_value, class: 'form-control expanding',
+                                placeholder: 'Skriv beskrivelse her.',
+                                style: ('display:none' unless show_free_text)
+                        %>
+                      </div>
+                  <% end %>
+              <% elsif sq.free_text %>
+                  <div class="col-md-12">
+                    <%= sa.text_area :answer_free,
                             value: other_value, class: 'form-control expanding',
-                            placeholder: 'Skriv beskrivelse her.',
-                            style: ('display:none' unless show_free_text)
+                            placeholder: 'Skriv beskrivelse her.', rows: 3
                     %>
                   </div>
               <% end %>
@@ -55,6 +62,5 @@
         <% end %>
         <br/>
     <% end %>
-    <br/>
     <%= f.submit 'Send inn svar', class: 'btn btn-primary' %>
 <% end %>

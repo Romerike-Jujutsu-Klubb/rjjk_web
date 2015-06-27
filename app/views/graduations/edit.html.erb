@@ -62,12 +62,9 @@
                 html: {method: :post} do |f| %>
             <%= f.hidden_field :graduation_id %>
             <div class="input-group">
-
-              <!--FIXME(uwe): Lage bedre oversikt over de som ikke er lagt til graderingen.-->
-              <!--http://api.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html#method-i-grouped_options_for_select-->
-
-              <%= f.select :member_id, [['Velg deltaker', nil]] + @members.map { |m| [m.name, m.id] },
-                      {}, class: 'form-control', onchange: 'form.submit()' %>
+              <%= f.select :member_id,
+                      grouped_options_for_select(@excluded_members.map { |g, members| [g.name, members.map{|m| ["#{m.name} #{m.age(@graduation.held_on)} år", m.id]}] }),
+                      {prompt: 'Velg deltaker'}, class: 'form-control', onchange: 'form.submit()' %>
               <span class="input-group-btn">
           <%= f.submit 'Legg til', class: 'btn btn-default' %>
         </span>
@@ -79,69 +76,7 @@
   </div>
 
   <div class="tab-pane" id="censors">
-    <div class="row">
-      <div class="col-md-3">
-        <h4>Eksaminatorer</h4>
-
-        <div id="examiners_row" class="row">
-          <% @graduation.censors.select(&:examiner).
-                  sort_by { |c| c.member.current_rank }.reverse.each do |cen| %>
-              <div id="censor_<%= cen.id %>" class="col-md-12">
-                <%= link_to({controller: :censors, action: :destroy, id: cen.id},
-                        data: {remote: true, method: :delete}) do %>
-                    <img src="<%= asset_path 'button-delete-16x16.png' %>" style="border: 0;" title="Slett eksaminator <%= cen.member.name %>" ALT="Slett eksaminator <%= cen.member.name %>"/>
-                <% end %>
-                <%= cen.member.name %>
-              </div>
-          <% end %>
-        </div>
-        <br/>
-
-        <%= form_for @censor, url: with_detour(censors_path, anchor: :censors), html: {method: :post} do |f| %>
-            <%= f.hidden_field :graduation_id %>
-            <%= f.hidden_field :examiner, value: 1 %>
-
-            <div class="input-group">
-              <%= f.select :member_id, ['Velg instruktør'] + @instructors.map { |m| [m.name, m.id] }.sort,
-                      {}, class: 'form-control', onchange: 'form.submit()' %>
-              <span class="input-group-btn">
-              <%= f.submit 'Legg til', class: 'btn btn-default' %>
-            </span>
-            </div>
-        <% end %>
-      </div>
-
-      <div class="col-md-9">
-        <h4>Sensorer</h4>
-
-        <div id="censors_row" class="row">
-          <% @graduation.censors.reject(&:examiner).
-                  sort_by { |c| c.member.current_rank }.reverse.each do |cen| %>
-              <div id="censor_<%= cen.id %>" class="col-md-4">
-                <%= link_to({controller: :censors, action: :destroy, id: cen.id},
-                        data: {remote: true, method: :delete}) do %>
-                    <img src="<%= asset_path 'button-delete-16x16.png' %>" style="border: 0;" title="Slett sensor <%= cen.member.name %>" ALT="Slett sensor <%= cen.member.name %>"/>
-                <% end %>
-                <%= cen.member.name %>
-                <%= '(Godkjent)' if cen.approved_grades_at %>
-              </div>
-          <% end %>
-        </div>
-        <br/>
-        <%= form_for @censor, url: with_detour(censors_path, anchor: :censors), html: {method: :post} do |f| %>
-            <%= f.hidden_field :graduation_id %>
-
-            <div class="input-group">
-              <%= f.select :member_id, ['Velg sensor'] + @instructors.map { |m| [m.name, m.id] }.sort,
-                      {}, class: 'form-control', onchange: 'form.submit()' %>
-              <span class="input-group-btn">
-              <%= f.submit 'Legg til', class: 'btn btn-default' %>
-            </span>
-            </div>
-        <% end %>
-      </div>
-    </div>
-
+    <%= render 'censors_tab' %>
   </div>
 
   <div class="tab-pane" id="shopping-list">

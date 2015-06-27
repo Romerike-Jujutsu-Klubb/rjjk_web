@@ -51,8 +51,9 @@ class ImagesController < ApplicationController
     begin
       imgs = Magick::ImageList.new
       imgs.from_blob Image.with_image.find(params[:id]).content_data
-    rescue java.lang.NullPointerException, java.lang.OutOfMemoryError
-      redirect_to @image.video? ? '/assets/video-icon-tran.png' : '/assets/pdficon_large.png'
+    rescue java.lang.NullPointerException, java.lang.OutOfMemoryError,
+        javax.imageio.IIOException, Java::JavaLang::ArrayIndexOutOfBoundsException
+      redirect_to ActionController::Base.helpers.asset_path @image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
       return
     end
     width = params[:width].to_i

@@ -6,6 +6,10 @@ class UserControllerTest < ActionController::TestCase
     Mail::TestMailer.deliveries = []
   end
 
+  def teardown
+    Mail::TestMailer.deliveries = []
+  end
+
   def test_login__valid_login__redirects_as_specified
     add_stored_detour :controller => :welcome, :action => :index
     post :login, :user => {:login => 'lars', :password => 'atest'}
@@ -80,11 +84,11 @@ class UserControllerTest < ActionController::TestCase
   end
 
   def test_signup__cannot_set_arbitrary_attributes
-    post_signup :login => 'newuser',
-                :password => 'password', :password_confirmation => 'password',
-                :email => 'skunk@example.com',
-                :verified => '1',
-                :role => 'superadmin'
+    post_signup login: 'newuser',
+        password: 'password', password_confirmation: 'password',
+        email: 'skunk@example.com',
+        verified: '1',
+        role: 'superadmin'
     user = User.find_by_email('skunk@example.com')
     assert !user.verified
     assert_nil user.role

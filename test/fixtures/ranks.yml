@@ -8,7 +8,8 @@ mon_12:
 
 mon_11:
   name: '11. mon'
-  colour: 'blå stripe m/svart bånd'
+  colour: 'blå stripe'
+  decoration: 'm/svart bånd'
   position: -16
   martial_art: keiwaryu
   standard_months: 6
@@ -16,7 +17,7 @@ mon_11:
 
 mon_10:
   name: '10. mon'
-  colour: '2 gule striper'
+  colour: 'gule kanter'
   position: -15
   martial_art: keiwaryu
   standard_months: 6
@@ -57,6 +58,7 @@ shodan:
 nidan:
   name: 'nidan'
   colour: 'svart'
+  decoration: 'm/2 striper'
   position: 2
   martial_art: keiwaryu
   standard_months: 24
@@ -65,6 +67,7 @@ nidan:
 sandan:
   name: 'sandan'
   colour: 'svart'
+  decoration: 'm/3 striper'
   position: 3
   martial_art: keiwaryu
   standard_months: 24

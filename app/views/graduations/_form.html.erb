@@ -10,18 +10,18 @@
           <% elsif @graduation.held_on > Date.today %>
               Om <%= (@graduation.held_on - Date.today).to_i %> dager.
           <% else %>
-              For <%= Date.today - @graduation.held_on %> dager siden.
+              For <%= (Date.today - @graduation.held_on).to_i %> dager siden.
           <% end %>
       <% end %>
     </div>
 
     <div class="form-group">
       <%= f.label :group_id, 'Gruppe' %>
-      <%= f.select :group_id, @groups.map { |c| [c.name, c.id] }, {}, :class => 'form-control' %>
+      <%= f.select :group_id, @groups.map { |c| [c.name, c.id] }, {}, class: 'form-control' %>
     </div>
 
     <div class="form-group">
-      <%= f.submit 'Lagre', :class => 'btn btn-primary' %>
+      <%= f.submit 'Lagre', class: 'btn btn-primary' %>
 
       <% unless @graduation.new_record? %>
           <%= link_to 'Vis', {:action => 'show', :id => @graduation}, :class => 'btn btn-default' %>

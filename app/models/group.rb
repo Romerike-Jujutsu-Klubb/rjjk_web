@@ -17,6 +17,7 @@ class Group < ActiveRecord::Base
       ->{includes(:semester).where('semesters.start_on > CURRENT_DATE').order('semesters.start_on')},
           :class_name => :GroupSemester
   has_many :ranks, ->{order(:position)}, :dependent => :destroy
+  # FIXME(uwe): Add model GroupMembership and change to has_many through:
   has_and_belongs_to_many :members, conditions: 'left_on IS NULL OR left_on > DATE(CURRENT_TIMESTAMP)'
 
   accepts_nested_attributes_for :current_semester

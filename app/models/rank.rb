@@ -29,7 +29,7 @@ class Rank < ActiveRecord::Base
   end
 
   def label
-    "#{name} #{colour}"
+    "#{name} #{colour}#{" #{decoration}" if decoration.present?}"
   end
 
   def kwr?
