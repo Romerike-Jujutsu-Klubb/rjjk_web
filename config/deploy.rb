@@ -11,7 +11,7 @@ set :pty, true
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp')
 
 set :default_env, { JRUBY_OPTS: '"--dev -J-Xmx2G"' }
-set :rvm_ruby_version, 'jruby-head'
+set :rvm_ruby_version, File.read(File.expand_path('../.ruby-version', File.dirname(__FILE__))).strip
 
 # before 'deploy:spinner', 'deploy:reload_daemons'
 before 'deploy:restart', 'deploy:reload_daemons'
@@ -52,15 +52,21 @@ task :end_maintenance do
   end
 end
 
+# FIXME(uwe):  Make sure this works
 after 'deploy:started', :announce_maintenance
 after 'deploy:updated', :announce_maintenance
 after 'deploy:published', :announce_maintenance
 after 'deploy:finished', :end_maintenance
+before 'deploy:restart', :announce_maintenance
 
 namespace :deploy do
   task :symlinks do
     on roles :all do
-      execute :sudo, "rm -f /usr/lib/systemd/system/#{fetch :application}.service ; sudo ln -s #{current_path}/usr/lib/systemd/system/#{fetch :application}.service /usr/lib/systemd/system/#{fetch :application}.service"
+      execute :sudo, <<-SCRIPT
+        echo "Updating init script"
+        rm -f /usr/lib/systemd/system/#{fetch :application}.service
+        sudo cp -a #{current_path}/usr/lib/systemd/system/#{fetch :application}.service /usr/lib/systemd/system/#{fetch :application}.service
+      SCRIPT
     end
   end
 

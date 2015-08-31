@@ -3,8 +3,8 @@ source 'https://rubygems.org/'
 gem 'rails', '~>4.2.1'
 
 platform :jruby do
-  gem 'activerecord-jdbc-adapter', github: 'jruby/activerecord-jdbc-adapter'
-  gem 'activerecord-jdbcpostgresql-adapter', github: 'jruby/activerecord-jdbc-adapter'
+  gem 'activerecord-jdbc-adapter', github: 'jruby/activerecord-jdbc-adapter', branch: '1-3-stable'
+  gem 'activerecord-jdbcpostgresql-adapter', github: 'jruby/activerecord-jdbc-adapter', branch: '1-3-stable'
 end
 
 platform :ruby do
@@ -17,7 +17,7 @@ gem 'activerecord-time'
 gem 'acts_as_list'
 gem 'acts_as_tree'
 # gem 'bcrypt', '~> 3.1.7'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '!=3.3.5'
 gem 'bootstrap3-datetimepicker-rails'
 # gem "bootstrap-switch-rails"
 # gem "bootstrap-wysihtml5-rails"

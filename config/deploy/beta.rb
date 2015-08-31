@@ -5,6 +5,7 @@ set :deploy_to, -> { "/u/apps/#{fetch :application}" }
 set :keep_releases, 1
 # after 'deploy:update', 'deploy:cleanup'
 set :exclude_dir, %w(coverage doc log test tmp)
+set :include_dir, '{.ruby-version,*}'
 
 role :app, %w{capistrano@kubosch.no}
 role :web, %w{capistrano@kubosch.no}

@@ -51,23 +51,23 @@ class IncomingEmailProcessor
           target = $1.downcase.to_sym
           if (recipient = TARGETS[target])
             if recipient.is_a?(Array)
-              Rails.logger.debug "Found list: #{target}"
+              logger.debug "Found list: #{target}"
               list = recipient
               tags << 'RJJK'
               tags << target.to_s.capitalize
               email.reply_to = "#{target}@jujutsu.no"
             else
-              Rails.logger.debug "Found target: #{target}"
+              logger.debug "Found target: #{target}"
               list = [recipient]
             end
             list.map { |l| l[:email] }
           else
-            Rails.logger.error "Unknown incoming email target: #{target.inspect}"
+            logger.error "Unknown incoming email target: #{target.inspect}"
             postponed = true
             nil
           end
         else
-          Rails.logger.error "Unexpected incoming email recipient: #{r.inspect}"
+          logger.error "Unexpected incoming email recipient: #{r.inspect}"
           postponed = true
           nil
         end
@@ -80,8 +80,14 @@ class IncomingEmailProcessor
         email.smtp_envelope_to = (Rails.env.production? || Rails.env.test?) ? new_recipients :
             'uwe@kubosch.no'
         email.delivery_method(Rails.env.test? ? :test : :sendmail)
-        email.deliver
-        sent = true
+        begin
+          email.deliver
+          sent = true
+        rescue
+          logger.error "Exception delivering incoming email: #{$!.class} #{$!}"
+          logger.error $!.backtrace.join("\n")
+          postponed = true
+        end
       end
 
       if sent
@@ -94,7 +100,8 @@ class IncomingEmailProcessor
       end
     end
   rescue Exception
-    logger.error $!
+    logger.error "Exception processing incoming email: #{$!.class} #{$!}"
+    logger.error $!.backtrace.join("\n")
     ExceptionNotifier.notify_exception($!)
   end
 end
