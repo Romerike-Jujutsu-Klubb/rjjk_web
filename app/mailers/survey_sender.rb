@@ -32,10 +32,10 @@ class SurveySender
       return unless request
 
       if request.sent_at.nil?
-        SurveyMailer.survey(request).deliver
+        SurveyMailer.survey(request).deliver_now
         request.update! sent_at: Time.now
       else
-        SurveyMailer.reminder(request).deliver
+        SurveyMailer.reminder(request).deliver_now
         request.update! reminded_at: Time.now
       end
     rescue

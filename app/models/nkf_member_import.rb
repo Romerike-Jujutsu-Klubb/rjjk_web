@@ -18,7 +18,7 @@ class NkfMemberImport
     begin
       i = NkfMemberImport.new
       if i.any?
-        NkfReplication.import_changes(i).deliver
+        NkfReplication.import_changes(i).deliver_now
         logger.info 'Sent NKF member import mail.'
         logger.info 'Oppdaterer kontrakter'
         NkfMember.update_group_prices
@@ -33,7 +33,7 @@ class NkfMemberImport
     begin
       a = NkfMemberComparison.new
       if a.any?
-        NkfReplication.update_members(a).deliver
+        NkfReplication.update_members(a).deliver_now
         logger.info 'Sent update_members mail.'
       end
     rescue Exception
@@ -45,7 +45,7 @@ class NkfMemberImport
 
     begin
       a = NkfAppointmentsScraper.import_appointments
-      NkfReplication.update_appointments(a).deliver if a.any?
+      NkfReplication.update_appointments(a).deliver_now if a.any?
     rescue Exception
       logger.error 'Execption sending update_appointments email.'
       logger.error $!.message

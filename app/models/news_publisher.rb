@@ -10,7 +10,7 @@ class NewsPublisher
         first
     if news_item
       Member.active(2.months.from_now).each do |m|
-        NewsletterMailer.newsletter(news_item, m).deliver
+        NewsletterMailer.newsletter(news_item, m).deliver_now
       end
       news_item.update_attributes! mailed_at: now
     end

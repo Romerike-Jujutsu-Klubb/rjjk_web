@@ -38,7 +38,7 @@ class UserController < ApplicationController
     key = user.generate_security_token
     url = url_for(:action => 'welcome')
     url += "?user[id]=#{user.id}&key=#{key}"
-    UserNotify.signup(user, user.password, url).deliver
+    UserNotify.signup(user, user.password, url).deliver_now
   end
 
   def signup
@@ -56,7 +56,7 @@ class UserController < ApplicationController
         @user.password_needs_confirmation = true
         if @user.save
           url = url_for(with_login(@user, :action => :welcome))
-          UserNotify.signup(@user, params['user']['password'], url).deliver
+          UserNotify.signup(@user, params['user']['password'], url).deliver_now
           flash['notice'] = 'Signup successful! Please check your registered email account to verify your account registration and continue with the login.'
           redirect_to :action => 'login'
         end
@@ -86,7 +86,7 @@ class UserController < ApplicationController
       render and return
     end
     begin
-      UserNotify.change_password(@user, params['user']['password']).deliver
+      UserNotify.change_password(@user, params['user']['password']).deliver_now
     rescue Exception => ex
       report_exception ex
     end
@@ -115,7 +115,7 @@ class UserController < ApplicationController
             key = user.generate_security_token
             url = url_for(action: :change_password, only_path: false)
             url += "?user[id]=#{user.id}&key=#{key}"
-            UserNotify.forgot_password(user, url).deliver
+            UserNotify.forgot_password(user, url).deliver_now
           end
           flash['message'] = "En e-post med veiledning for å sette nytt passord er sendt til #{CGI.escapeHTML(email)}."
           unless authenticated_user?

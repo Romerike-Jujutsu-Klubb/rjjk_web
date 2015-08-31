@@ -6,7 +6,7 @@ class AnnualMeetingReminder
     am = AnnualMeeting.order(:start_at).last
     board_members = am.elections.includes(:role).references(:roles).
         where('roles.years_on_the_board IS NOT NULL').to_a.map(&:member)
-    board_members.each { |m| AnnualMeetingMailer.missing_date(m, am.start_at.year + 1).deliver }
+    board_members.each { |m| AnnualMeetingMailer.missing_date(m, am.start_at.year + 1).deliver_now }
   rescue Exception
     raise if Rails.env.test?
     logger.error "Exception sending missing annual meeting date reminder: #{$!}"
@@ -24,7 +24,7 @@ class AnnualMeetingReminder
     board_members = am.elections.includes(:role).references(:roles).
         where('roles.years_on_the_board IS NOT NULL').to_a.map(&:member)
     board_members.each do |m|
-      AnnualMeetingMailer.missing_invitation(next_meeting, m).deliver
+      AnnualMeetingMailer.missing_invitation(next_meeting, m).deliver_now
     end
   rescue Exception
     raise if Rails.env.test?

@@ -15,7 +15,7 @@ class PublicRecordImporter
         first_or_initialize
     if record.new_record?
       record.save!
-      PublicRecordMailer.new_record(record).deliver
+      PublicRecordMailer.new_record(record).deliver_now
     end
   rescue Exception
     raise if Rails.env.test?

@@ -13,7 +13,7 @@ class InformationPageNotifier
         order(:revised_at).limit(3).to_a
     return if pages.empty?
     recipients.each do |recipient|
-      InformationPageMailer.notify_outdated_pages(recipient, pages).deliver
+      InformationPageMailer.notify_outdated_pages(recipient, pages).deliver_now
     end
   rescue
     logger.error 'Execption sending information page notification'
@@ -37,7 +37,7 @@ class InformationPageNotifier
     if page
       Member.active(3.months.from_now).order(:first_name, :last_name).each do |m|
         if m.user
-          InformationPageMailer.send_weekly_page(m, page).deliver
+          InformationPageMailer.send_weekly_page(m, page).deliver_now
         else
           logger.error "Member without user: #{m.inspect}"
         end

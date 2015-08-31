@@ -26,7 +26,7 @@ class EventNotifier
 
     EventInviteeMessage.where('ready_at IS NOT NULL AND sent_at IS NULL').to_a.each do |eim|
       begin
-        NewsletterMailer.event_invitee_message(eim).deliver
+        NewsletterMailer.event_invitee_message(eim).deliver_now
         eim.update_attributes! sent_at: now
       rescue
         logger.error "Exception sending event message for #{eim.inspect}\n#{$!}"

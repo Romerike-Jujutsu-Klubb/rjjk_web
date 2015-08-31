@@ -79,7 +79,7 @@ class ApplicationController < ActionController::Base
 
   def reject_baidu_bot
     if request.headers['HTTP_REFERER'] =~ /baidu/i
-      BaiduMailer.reject(request.headers['HTTP_REFERER']).deliver
+      BaiduMailer.reject(request.headers['HTTP_REFERER']).deliver_now
       redirect_to request.headers['HTTP_REFERER']
       false
     else

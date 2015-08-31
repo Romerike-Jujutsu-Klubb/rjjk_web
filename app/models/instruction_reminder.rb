@@ -10,7 +10,7 @@ class InstructionReminder
       end
     end.flatten
     if missing_chief_instructions.any? || missing_instructions.any?
-      InstructionMailer.missing_instructors(missing_chief_instructions, missing_instructions).deliver
+      InstructionMailer.missing_instructors(missing_chief_instructions, missing_instructions).deliver_now
     end
   rescue
     raise if Rails.env.test?

@@ -16,7 +16,7 @@ class ActionDispatch::IntegrationTest
   SCREENSHOT_DIR = 'doc/screenshots'
   SCREENSHOT_DIR_ABS = "#{Rails.root}/#{SCREENSHOT_DIR}/#{Capybara.default_driver}"
 
-  Capybara.default_wait_time = 30
+  Capybara.default_max_wait_time = 30
   self.use_transactional_fixtures = false
 
   setup do
@@ -99,7 +99,7 @@ class ActionDispatch::IntegrationTest
   end
 
   def wait_for_ajax
-    Timeout.timeout(Capybara.default_wait_time) do
+    Timeout.timeout(Capybara.default_max_wait_time) do
       loop do
         active = page.evaluate_script('jQuery.active')
         break if active == 0
@@ -110,7 +110,7 @@ class ActionDispatch::IntegrationTest
 
   def assert_current_path(path)
     start = Time.now
-    sleep 0.1 while (Time.now - start) < Capybara.default_wait_time && current_path != path
+    sleep 0.1 while (Time.now - start) < Capybara.default_max_wait_time && current_path != path
     assert_equal path, current_path
   end
 

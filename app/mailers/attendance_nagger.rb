@@ -13,7 +13,7 @@ class AttendanceNagger
         ExceptionNotifier.notify_exception(ActiveRecord::RecordNotFound.new(msg))
         next
       end
-      AttendanceMailer.plan(member).deliver
+      AttendanceMailer.plan(member).deliver_now
     end
   rescue Exception
     logger.error $!
@@ -34,7 +34,7 @@ class AttendanceNagger
       attendees = attendances.map(&:member) - non_attendees
       recipients = gs.group.members.select { |m| !m.passive? } - non_attendees
       recipients.each do |recipient|
-        AttendanceMailer.summary(practice, gs, recipient, attendees, non_attendees).deliver
+        AttendanceMailer.summary(practice, gs, recipient, attendees, non_attendees).deliver_now
       end
     end
   rescue Exception
@@ -50,7 +50,7 @@ class AttendanceNagger
             tomorrow.year, tomorrow.cweek, tomorrow.cwday, Time.now.time_of_day, Time.now.time_of_day + 3600, false).to_a
     practices.each do |pr|
       pr.group_schedule.group_instructors.each do |gi|
-        AttendanceMailer.message_reminder(pr, gi.member).deliver
+        AttendanceMailer.message_reminder(pr, gi.member).deliver_now
       end
       pr.update_attributes message_nagged_at: Time.now
     end
@@ -91,7 +91,7 @@ class AttendanceNagger
           displayed_absentees = new_absentees
         end
         logger.error "Sending changes to #{recipient.inspect}"
-        AttendanceMailer.changes(practice, gs, recipient, new_attendees, displayed_absentees, attendees).deliver
+        AttendanceMailer.changes(practice, gs, recipient, new_attendees, displayed_absentees, attendees).deliver_now
       end
     end
   rescue Exception
@@ -115,7 +115,7 @@ class AttendanceNagger
               includes(:practice => :group_schedule).references(:practices).
               order('practices.year, practices.week, group_schedules.weekday').to_a.
               select { |a| a.date <= Date.today }.reverse
-      AttendanceMailer.review(member, completed_attendances, older_attendances).deliver
+      AttendanceMailer.review(member, completed_attendances, older_attendances).deliver_now
       completed_attendances.each { |a| a.update_attributes :sent_review_email_at => now }
     end
   rescue Exception

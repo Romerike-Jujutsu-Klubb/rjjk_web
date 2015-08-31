@@ -75,7 +75,7 @@ class EventsController < ApplicationController
       event_invitee_message = EventInviteeMessage.new(
           :event_invitee => event_invitee, :message_type => EventMessage::MessageType::INVITATION)
       event_invitee_message.id = -event.id
-      NewsletterMailer.event_invitee_message(event_invitee_message).deliver
+      NewsletterMailer.event_invitee_message(event_invitee_message).deliver_now
     end
     render :text => ''
   end
