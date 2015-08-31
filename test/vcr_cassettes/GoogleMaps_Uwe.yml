@@ -7,10 +7,14 @@ http_interactions:
       encoding: US-ASCII
       string: ''
     headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
-      - '*/*'
+      - "*/*"
       User-Agent:
       - Ruby
+      Host:
+      - maps.googleapis.com
   response:
     status:
       code: 200
@@ -19,27 +23,21 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sat, 09 May 2015 23:12:33 GMT
+      - Mon, 31 Aug 2015 20:08:04 GMT
       Expires:
-      - Sun, 10 May 2015 23:12:33 GMT
+      - Tue, 01 Sep 2015 20:08:04 GMT
       Cache-Control:
       - public, max-age=86400
       Access-Control-Allow-Origin:
-      - '*'
+      - "*"
       Server:
       - mafe
+      Content-Length:
+      - '818'
       X-Xss-Protection:
       - 1; mode=block
       X-Frame-Options:
       - SAMEORIGIN
-      Alternate-Protocol:
-      - 80:quic,p=1
-      Accept-Ranges:
-      - none
-      Vary:
-      - Accept-Encoding
-      Transfer-Encoding:
-      - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-

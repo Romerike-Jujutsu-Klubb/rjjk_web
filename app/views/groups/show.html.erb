@@ -14,10 +14,10 @@
         <% free_spots = user? ? actual_free_spots : [actual_free_spots, 5].max %>
         <% if free_spots > 0 %>
             <%= free_spots %> ledige plasser.<br/>
-            <%= link_to 'Meld deg på!', 'http://www.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)' %>
+            <%= link_to 'Meld deg på!', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)' %>
         <% else %>
             Gruppen er full.  Sett deg på<br/>
-            <%= link_to 'venteliste', 'http://www.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)' %>.
+            <%= link_to 'venteliste', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)' %>.
         <% end %>
     <% else %>
         <%= current_size %> aktive.
