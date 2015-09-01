@@ -37,7 +37,8 @@ class Rank < ActiveRecord::Base
   end
 
   def <=>(other)
-    return 1 unless other
+    return 1 if other.nil?
+    return nil unless other.is_a? Rank
     return kwr? ? 1 : -1 if other.kwr? != kwr?
     position <=> other.position
   end
