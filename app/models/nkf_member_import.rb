@@ -280,6 +280,15 @@ class NkfMemberImport
         column = 'medlems_type' if column == 'type'
         if row[i] =~ /^(\d\d)\.(\d\d)\.(\d{4})$/
           row[i] = "#$3-#$2-#$1"
+        elsif column == 'res_sms'
+          row[i] = case row[i]
+          when 'J'
+            true
+          when 'N'
+            false
+          else
+            raise "Unknown boolean value for res_sms: #{row[i].inspect}"
+          end
         end
         attributes[column] = row[i]
       end
