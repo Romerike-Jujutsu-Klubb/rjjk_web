@@ -15,7 +15,7 @@ class GroupSemestersControllerTest < ActionController::TestCase
   test 'should get new' do
     get :new
     assert_response :success
-    assert_tag tag: 'textarea', attributes: {name: 'group_semester[summary]'}
+    assert_select 'textarea[name="group_semester[summary]"]'
   end
 
   test 'should create group_semester' do
@@ -38,7 +38,7 @@ class GroupSemestersControllerTest < ActionController::TestCase
   test 'should get edit' do
     get :edit, id: @group_semester
     assert_response :success
-    assert_tag tag: 'textarea', attributes: {name: 'group_semester[summary]'}
+    assert_select 'textarea[name="group_semester[summary]"]'
   end
 
   test 'should update group_semester' do
