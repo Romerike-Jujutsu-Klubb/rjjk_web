@@ -21,7 +21,7 @@ Rails.application.configure do
   config.eager_load = true
   config.i18n.fallbacks = true
   config.log_formatter = ::Logger::Formatter.new
-  config.log_level = :debug
+  config.log_level = :info
   # config.log_tags = [ :subdomain, :uuid ]
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
   config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?

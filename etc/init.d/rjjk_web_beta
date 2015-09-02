@@ -50,7 +50,7 @@ function start() {
 
   echo -n " (${PID}): "
 
-  for i in {1..90} ; do
+  for i in {1..60} ; do
     if [[ -s $PID_FILE ]] ; then
       PID=$(< $PID_FILE)
       break
