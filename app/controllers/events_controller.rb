@@ -84,13 +84,14 @@ class EventsController < ApplicationController
     event_id = params[:id]
     cal = RiCal.Calendar do
       if event_id
-        events = [Event.find(event_id)]
+        events = [Event, Graduation].flat_map{|clas| clas.where(id: event_id).to_a}
       else
-        events = Event.order(:start_at, :end_at)
+        events = Event.order(:start_at, :end_at) +
+            Graduation.where(held_on: Time.zone.today).order(:held_on).all
       end
       events.each do |e|
         event do
-          uid "event#{e.id}@jujutsu.no"
+          uid "#{e.class.name.underscore}.#{e.id}@#{"#{Rails.env}." unless Rails.env.production?}jujutsu.no"
           summary e.name
           description RedCloth.new(e.description.strip).to_plain if e.description
           dtstart e.start_at

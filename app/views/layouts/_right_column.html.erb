@@ -84,9 +84,9 @@
       <div class="events">
         <h3>Hva skjer?
           <%= link_to image_tag('ical.png', :style => 'width: 24px;height: 24px'),
-                  {:only_path => false, :protocol => 'webcal',
-                          :controller => :events, :action => :calendar,
-                          :format => :ics}, :title => 'Abonnér på hendelseskalender!' %></h3>
+                  {only_path: false, protocol: 'webcal', controller: :events,
+                          action: :calendar, format: :ics},
+                  title: 'Abonnér på hendelseskalender!' %></h3>
 
         <% @layout_events.each do |event| %>
             <% ingress = nil # event.ingress     %>
@@ -136,10 +136,10 @@
               <% else %>
                   <%= event.name %>
               <% end %>
-              <%= link_to image_tag('ical.png', :style => 'width: 24px;height: 24px'),
-                      {:controller => :events, :action => :calendar,
-                              :id => event.id, :format => :ics},
-                      :title => "Sett '#{event.name}' på din kalender!" %>
+              <%= link_to image_tag('ical.png', style: 'width: 24px;height: 24px'),
+                      {controller: :events, action: :calendar, id: event.id,
+                              format: :ics},
+                      title: "Sett '#{event.name}' på din kalender!" %>
             </h4>
 
             <% if user? -%>

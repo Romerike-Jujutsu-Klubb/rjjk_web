@@ -35,4 +35,7 @@ class Graduation < ActiveRecord::Base
     group.try(:martial_art) || MartialArt.find_by_name('Kei Wa Ryu')
   end
 
+  def description
+    name
+  end
 end

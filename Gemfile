@@ -64,7 +64,6 @@ gem 'unicode_utils'
 gem 'will_paginate'
 
 group :development do
-  # gem 'bullet'
   gem 'capistrano'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
@@ -88,5 +87,6 @@ group :test do
 end
 
 group :development, :beta do
+  gem 'anemone'
   gem 'rack-mini-profiler'
 end
