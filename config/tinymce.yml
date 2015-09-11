@@ -1,3 +1,5 @@
+convert_urls: true
+# document_base_url: "http://www.site.com/path1/"
 formats:
   avrundet:
     selector: img
@@ -25,7 +27,8 @@ plugins:
   - link
   - table
   - textcolor
-# table_styles: "Standard=table;Kompakt=table table-condensed;Pysjamas=table table-striped;Linjert=table table-bordered"
+relative_urls: false
+remove_script_host: true
 style_formats:
   - title: 'Bold text'
     inline: 'b'
@@ -55,3 +58,4 @@ style_formats:
   - title: 'Table Pysjamas'
     selector: 'table'
     classes: 'table table-striped'
+# table_styles: "Standard=table;Kompakt=table table-condensed;Pysjamas=table table-striped;Linjert=table table-bordered"
