@@ -26,9 +26,13 @@
       </div>
     </div>
 
-    <%= submit_tag 'Lagre', :id => 'save', :class => 'btn btn-default' %>
-    <%= back_or_link_to 'Tilbake', {:action => :index}, :class => 'btn btn-default' %>
-    <%= link_to 'Til NKF avstemming', {:controller => :nkf_members, :action => :comparison, :id => 0}, :class => 'btn btn-default' %>
+    <br/>
+
+    <div class="btn-toolbar pull-right">
+      <%= back_or_link_to 'Tilbake', {action: :index}, class: 'btn btn-link' %>
+      <%= link_to 'Til NKF avstemming', {controller: :nkf_members, action: :comparison, id: 0}, class: 'btn btn-link' %>
+      <%= submit_tag 'Lagre', id: 'save', class: 'btn btn-primary' %>
+    </div>
 <% end %>
 
 <%= javascript_tag do %>

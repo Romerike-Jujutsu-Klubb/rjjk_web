@@ -387,7 +387,11 @@ class Member < ActiveRecord::Base
   end
 
   def instructor?(date = Date.today)
-    instructor || group_instructors.active(date).any?
+    instructor || group_instructor?(date)
+  end
+
+  def group_instructor?(date = Date.today)
+    group_instructors.active(date).any?
   end
 
   def technical_committy?
