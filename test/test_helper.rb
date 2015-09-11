@@ -65,7 +65,7 @@ class ActionMailer::TestCase
   def assert_mail_deliveries(count, initial = 0, &block)
     if block
       assert_equal initial, Mail::TestMailer.deliveries.size,
-          -> { "Unexpected mail deliveries before block:\n#{Mail::TestMailer.deliveries}\n" }
+          -> { "Unexpected mail deliveries before block:\n#{Mail::TestMailer.deliveries}\n#{Mail::TestMailer.deliveries(&:body).join("\n")}\n" }
       block.call
     end
     assert_equal initial + count, Mail::TestMailer.deliveries.size,
