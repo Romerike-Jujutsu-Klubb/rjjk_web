@@ -3,7 +3,6 @@ set :scm, :copy
 set :repo_url, '.'
 set :deploy_to, -> { "/u/apps/#{fetch :application}" }
 set :keep_releases, 1
-# after 'deploy:update', 'deploy:cleanup'
 set :exclude_dir, %w(coverage doc log test tmp)
 set :include_dir, '{.ruby-version,*}'
 
@@ -25,8 +24,6 @@ namespace :deploy do
   task :restart do
     on roles :all do
       execute :sudo, "systemctl stop #{fetch :application}"
-      # TODO(uwe):  Add better delay check
-      sleep 5
       execute "#{fetch :rvm_path}/bin/rvm #{fetch :rvm_ruby_version} do #{current_path}/copy_production_to_beta.sh"
       execute :sudo, "systemctl start #{fetch :application}"
     end

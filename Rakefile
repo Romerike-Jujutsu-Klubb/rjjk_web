@@ -21,10 +21,10 @@ task :smoke_test do
   end
   puts "Crawling #{url}"
   Anemone.crawl(url) do |anemone|
+    pages = 0
     not_found = []
-    errors = []
     anemone.on_every_page do |page|
-      # puts "#{page.code} : #{page.url}"
+      pages += 1
       print case page.code / 100
           when 2
             '.'
@@ -43,7 +43,7 @@ task :smoke_test do
         pp not_found
         abort('Site NOT OK!')
       end
-      puts 'Site OK!'
+      puts "Site OK: #{pages} pages."
     end
   end
 end
