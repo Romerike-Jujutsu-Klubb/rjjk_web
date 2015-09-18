@@ -1,11 +1,9 @@
 lock '~>3.4'
 
-set :pty, true
-
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'public/attendances', 'public/images', 'public/members', 'tmp')
-
 set :default_env, {JRUBY_OPTS: '"--dev -J-Xmx2G"'}
 set :rvm_ruby_version, File.read(File.expand_path('../.ruby-version', File.dirname(__FILE__))).strip
+set :pty, true
 
 before 'deploy:restart', 'deploy:reload_daemons'
 after 'deploy:publishing', 'deploy:restart'
@@ -56,3 +54,13 @@ task :smoke_test do
   system "rake smoke_test RAILS_ENV=#{fetch(:rails_env)}"
 end
 after :deploy, :smoke_test
+
+desc 'Update the MRI bundle'
+task :bundle_mri do
+  on roles :all do
+    within(current_path) do
+      execute "#{fetch :rvm_path}/bin/rvm 2.2.2 do bundle --gemfile=#{current_path}/Gemfile"
+    end
+  end
+end
+after :deploy, :bundle_mri

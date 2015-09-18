@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :raw_incoming_emails
+  resources :raw_incoming_emails # FIXME(uwe): Move down?
 
   match 'attendances/:action/:year/:week/:group_schedule_id/:status(/:member_id)',
       controller: :attendances, via: [:get, :post]
