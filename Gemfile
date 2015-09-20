@@ -4,11 +4,13 @@ gem 'rails', '~>4.2.1'
 
 platform :jruby do
   gem 'activerecord-jdbcpostgresql-adapter'
+  gem 'therubyrhino'
 end
 
 platform :ruby do
   gem 'oily_png'
   gem 'pg'
+  gem 'therubyracer'
 end
 
 gem 'actionpack-page_caching', github: 'rails/actionpack-page_caching'
@@ -54,8 +56,6 @@ gem 'schema_plus'
 gem 'simple_drilldown'
 gem 'simple_workflow'
 gem 'slim-rails'
-gem 'therubyracer', platform: :ruby
-gem 'therubyrhino', platform: :jruby
 gem 'tinymce-rails'
 gem 'tinymce-rails-langs'
 gem 'turbolinks'
