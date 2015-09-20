@@ -5,5 +5,5 @@ set :default_env, {JRUBY_OPTS: '"--dev -J-Xmx2G"'}
 set :rvm_ruby_version, File.read(File.expand_path('../.ruby-version', File.dirname(__FILE__))).strip
 set :pty, true
 
-after 'deploy:update', 'deploy:cleanup'
+after 'deploy:updated', 'deploy:cleanup'
 after 'deploy:publishing', 'deploy:restart'
