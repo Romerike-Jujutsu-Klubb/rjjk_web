@@ -10,10 +10,10 @@
           <% if current_user.member.groups.reject(&:school_breaks).any? %>
               <li><%= detour_to 'Mitt oppmøte', controller: :attendances, action: :plan %></li>
           <% end %>
+          <li><%= menu_item 'Pensum', controller: :ranks, action: :pensum %></li>
           <li><%= link_to 'Min Embu', controller: :embus, action: :index %></li>
       <% end %>
       <li><%= link_to 'Mine media', controller: :images, action: :mine %></li>
-      <li><%= menu_item 'Pensum', controller: :ranks, action: :pensum %></li>
       <li><%= detour_to 'Logg ut', controller: :user, action: :logout %></li>
     </ul>
 <% end %>

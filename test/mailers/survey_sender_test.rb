@@ -60,7 +60,7 @@ class SurveySenderTest < ActionMailer::TestCase
 
     mail = ActionMailer::Base.deliveries[2]
     assert_equal '[RJJK][TEST] First survey', mail.subject
-    assert_equal '"Lars Bråten" <uwe@kubosch.no>', mail.header['To'].to_s
+    assert_equal '"Lars Bråten" <uwe@kubosch.no>', mail.header['To'].to_s, ->{mail}
     assert_equal %w(test@jujutsu.no), mail.from
     assert_match '<title>First survey</title>', mail.body.encoded
     assert_match %r{<a style="color: #454545" href="http://example.com/svar/985934507\?email=bGFyc0BleGFtcGxlLmNvbQ%3D%3D%0A&amp;key=random_token_string\+{21}">Klikk her</a>\s*hvis du har problemer med å lese e-posten.},

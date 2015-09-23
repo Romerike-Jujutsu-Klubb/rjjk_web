@@ -27,6 +27,16 @@ class Member < ActiveRecord::Base
   has_many :passed_graduates, -> { where graduates: {passed: true} },
       class_name: 'Graduate'
   has_many :ranks, :through => :passed_graduates
+  has_many :recent_attendances, -> do
+    from_date = Time.zone.today - 92
+    to_date = Time.zone.today + 31
+    includes(practice: :group_schedule).references(:group_schedules)
+        .where('year > ? OR (year = ? AND week > ?) OR (year = ? AND week = ? AND group_schedules.weekday > ?)',
+            from_date.year, from_date.year, from_date.cweek, from_date.year, from_date.cweek, from_date.cwday)
+        .where('year < ? OR (year = ? AND week < ?) OR (year = ? AND week = ? AND group_schedules.weekday <= ?)',
+            to_date.year, to_date.year, to_date.cweek, to_date.year, to_date.cweek, to_date.cwday)
+  end,
+      class_name: Attendance
   has_many :signatures, dependent: :destroy
   has_many :survey_requests, dependent: :destroy
   has_and_belongs_to_many :groups
@@ -264,11 +274,24 @@ class Member < ActiveRecord::Base
   def passive?(date = Date.today, group = nil)
     return true if nkf_member.try(:medlemsstatus) == 'P'
     return false if joined_on >= date - 2.months
-    query = attendances
-    query = query.by_group_id(group.id) if group
-    query = query.after_date(date - 92)
-    query = query.until_date(date + 31)
-    query.empty?
+    start_date = date - 92
+    end_date = date + 31
+    if date == Date.today && recent_attendances.loaded?
+      set = recent_attendances.select{|a| Attendance::PRESENT_STATES.include? a.status }
+      set = set.select{|a| a.group_id == group.id} if group
+      set.empty?
+    elsif attendances.loaded?
+      set = attendances.select{|a| Attendance::PRESENT_STATES.include? a.status }
+      set = set.select{|a| a.group_id == group.id} if group
+      set = set.select{|a| a.date > start_date && a.date <= end_date }
+      set.empty?
+    else
+      query = attendances.where('attendances.status IN (?)', Attendance::PRESENCE_STATES)
+      query = query.by_group_id(group.id) if group
+      query = query.after_date(start_date)
+      query = query.until_date(end_date)
+      query.empty?
+    end
   end
 
   def senior?

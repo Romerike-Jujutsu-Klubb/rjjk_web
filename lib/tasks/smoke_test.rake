@@ -8,7 +8,9 @@ task :smoke_test do
     url = "http://#{"#{Rails.env}." unless Rails.env.production?}jujutsu.no/"
   end
   puts "Crawling #{url}"
-  Anemone.crawl(url) do |anemone|
+  start = Time.now
+  Anemone.crawl(url, threads: 4, discard_page_bodies: true) do |anemone|
+    slowest_page = nil
     pages = 0
     not_found = []
     anemone.on_every_page do |page|
@@ -24,6 +26,7 @@ task :smoke_test do
             'X'
           end
       not_found << {page.referer.to_s => page.url.to_s} if page.code == 404
+      slowest_page = page if slowest_page.nil? || page.response_time > slowest_page.response_time
     end
     anemone.after_crawl do
       puts
@@ -31,7 +34,9 @@ task :smoke_test do
         pp not_found
         abort('Site NOT OK!')
       end
-      puts "Site OK: #{pages} pages."
+      duration = Time.now - start
+      puts "Slowest page: #{slowest_page.response_time}ms #{slowest_page.url}"
+      puts "Site OK: #{pages} pages in #{duration}s:  #{(pages / duration).round(1)} pages/s"
     end
   end
 end

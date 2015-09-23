@@ -15,8 +15,6 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    RedCloth (4.2.9)
-    RedCloth (4.2.9-java)
     abstract_type (0.0.7)
     actionmailer (4.2.4)
       actionpack (= 4.2.4)
@@ -198,6 +196,7 @@ GEM
     json (1.8.3)
     json (1.8.3-java)
     key_struct (0.4.2)
+    kramdown (1.8.0)
     libv8 (3.16.14.11)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -308,8 +307,6 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.0.0)
     rake (10.4.2)
-    red_cloth_formatters_plain (0.2.1)
-      RedCloth (>= 4.2.3)
     reek (1.6.5)
       parser (~> 2.2.0.pre.7)
       rainbow (>= 1.99, < 3.0)
@@ -490,7 +487,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  RedCloth
   actionpack-page_caching!
   activerecord-jdbcpostgresql-adapter
   activerecord-time
@@ -517,6 +513,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   jquery-turbolinks
+  kramdown
   mechanize
   minitest-rails-capybara
   minitest-reporters
@@ -535,7 +532,6 @@ DEPENDENCIES
   rails-i18n
   rails-observers!
   rake
-  red_cloth_formatters_plain
   ri_cal
   rubycritic
   rufus-scheduler

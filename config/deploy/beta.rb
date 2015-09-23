@@ -13,6 +13,7 @@ role :db, %w{capistrano@kubosch.no}
 server 'kubosch.no', user: 'capistrano', roles: %w{web app}, my_property: :my_value
 
 namespace :deploy do
+  Rake::Task[:restart].clear_actions
   desc 'Restart the service'
   task :restart do
     on roles :all do

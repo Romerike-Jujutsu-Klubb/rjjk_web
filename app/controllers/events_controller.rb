@@ -86,14 +86,21 @@ class EventsController < ApplicationController
       if event_id
         events = [Event, Graduation].flat_map{|clas| clas.where(id: event_id).to_a}
       else
-        events = Event.order(:start_at, :end_at) +
-            Graduation.where(held_on: Time.zone.today).order(:held_on).all
+        today = Time.zone.today
+        events = Event
+            .where('(end_at IS NOT NULL AND end_at >= ?) OR start_at >= ?', today, today)
+            .order(:start_at, :end_at).to_a +
+            Graduation.where('held_on >= ?', today).order(:held_on).to_a
       end
       events.each do |e|
         event do
           uid "#{e.class.name.underscore}.#{e.id}@#{"#{Rails.env}." unless Rails.env.production?}jujutsu.no"
           summary e.name
-          description RedCloth.new(e.description.strip).to_plain if e.description
+          if e.description
+            description Kramdown::Document
+                    .new(e.description.strip, html_to_native: true).to_kramdown
+                    .gsub(/\{:.*?\}\s*/, '')
+          end
           dtstart e.start_at
           dtend e.end_at || e.start_at
           # location "Datek Wireless AS, Instituttveien, Kjeller"
