@@ -34,10 +34,11 @@ module ApplicationHelper
 
   def textalize(s)
     return '' if s.nil?
+    # .gsub('æ', '&aelig;').gsub('ø', '&oslash;').gsub('å', 'aa')
     s.gsub! /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i do |m|
       mail_to m, nil # , :encode => :javascript
     end
-    html = RedCloth.new(s.strip).to_html
+    html = Kramdown::Document.new(s.strip).to_html
     html.force_encoding(Encoding::UTF_8)
     if @email
       base = url_for(controller: :welcome, action: :index, only_path: false)
@@ -53,7 +54,7 @@ module ApplicationHelper
 
   def textify(s)
     return '' if s.blank?
-    RedCloth.new(s.strip).to_plain
+    Kramdown::Document.new(s.strip).to_kramdown.gsub(/\{: .*?\}\s*/, '')
   end
 
 end

@@ -20,5 +20,6 @@ class NewsPublisher
     logger.error $!.message
     logger.error $!.backtrace.join("\n")
     ExceptionNotifier.notify_exception($!)
+    raise if Rails.env.test?
   end
 end

@@ -15,10 +15,10 @@
       <% end %>
     </div>
     <% texts = [@news_item.summary, @news_item.body].select { |text| !text.blank? } %>
-    <%= textilize(texts[0].strip).html_safe if texts[0] %>
+    <%= textalize(texts[0].strip) if texts[0] %>
     <% if texts[1] %>
         <% if full %>
-            <%= textilize(texts[1].strip).html_safe %>
+            <%= textalize(texts[1].strip) %>
         <% else %>
             <p class="read_more">
               <%= detour_to('Les mer...', @news_item) %>

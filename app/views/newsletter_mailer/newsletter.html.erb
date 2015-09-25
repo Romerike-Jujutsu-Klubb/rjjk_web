@@ -86,9 +86,9 @@
                           <% if false && c.image %>
                               <img src="<%= url_for :only_path => false, :controller => :news_items, :action => :view_image, :id => c.id, :width => c.image_width_max(275), :format => @news_item.format %>" alt="Image" style="margin-left: 5px;" align="right" width="<%=c.image_width_max(275)%>" height="<%=c.image_height_at(275)%>" />
                           <% end %>
-                          <%# = textilize c.heading unless c.heading.blank? %>
-                          <%= textilize(c.summary).try(:html_safe) %>
-                          <%= textilize(c.body).try(:html_safe) %>
+                          <%# = textalize c.heading unless c.heading.blank? %>
+                          <%= textalize(c.summary) %>
+                          <%= textalize(c.body) %>
                           <br clear="all" />
                         </div>
                     <% end %>

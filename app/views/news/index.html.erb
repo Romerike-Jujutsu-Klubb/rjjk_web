@@ -27,7 +27,7 @@
                   <% end %>
                 </div>
                 <% texts = [news_item.summary, news_item.body].select { |text| !text.blank? } %>
-                <%= textilize(texts[0].strip).html_safe if texts[0] %>
+                <%= textalize(texts[0].strip) if texts[0] %>
                 <p class="read_more"><%= detour_to('Les mer...', news_item) if texts[1] %></p>
 
                 <% if user? %>
