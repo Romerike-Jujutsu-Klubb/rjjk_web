@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 Rails.application.routes.draw do
   resources :raw_incoming_emails # FIXME(uwe): Move down?
 
@@ -76,6 +77,9 @@ Rails.application.routes.draw do
   resources :group_schedules
   resources :group_semesters
   resources :groups
+  # FIXME(uwe):  Bad links!  Remove January 2015
+  get '/info/groups/:id', to: redirect { |path_params, req| "/groups/#{path_params[:id]}" }
+  # EMXIF
   resources :images
   resources :information_pages, controller: :info, path: :info
   resources :instructor_meetings
