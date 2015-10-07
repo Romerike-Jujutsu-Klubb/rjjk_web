@@ -27,6 +27,9 @@ if Rails.env.development? || Rails.env.beta? || Rails.env.production?
     scheduler.cron('10 10 * * *') { SurveySender.send_surveys }
   end
 
+  # Board weekly
+  scheduler.cron('0 11 * * mon') { AnnualMeetingReminder.notify_missing_date }
+
   # Admin Hourly
   scheduler.cron('15 9-23 * * *') { NkfMemberImport.import_nkf_changes }
   scheduler.cron('10 * * * *') { AttendanceNagger.send_message_reminder }
@@ -37,7 +40,6 @@ if Rails.env.development? || Rails.env.beta? || Rails.env.production?
   scheduler.cron('0 4 * * *') { create_missing_group_semesters }
   scheduler.cron('0 6 * * *') { GraduationReminder.notify_missing_graduations }
   scheduler.cron('0 10 * * *') { GraduationReminder.notify_missing_aprovals }
-  scheduler.cron('0 11 * * *') { AnnualMeetingReminder.notify_missing_date }
 
   # Admin Weekly
   scheduler.cron('0 1 * * mon') { GraduationReminder.notify_overdue_graduates }
