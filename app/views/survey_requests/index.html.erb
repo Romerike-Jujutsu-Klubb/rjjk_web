@@ -13,8 +13,8 @@
   <tbody>
     <% @survey_requests.each do |survey_request| %>
       <tr>
-        <td><%= survey_request.survey_id %></td>
-        <td><%= survey_request.member_id %></td>
+        <td><%= link_to survey_request.survey.title, survey_request.survey %></td>
+        <td><%= link_to survey_request.member.name, survey_request.member %></td>
         <td><%= survey_request.completed_at %></td>
         <td><%= link_to 'Show', survey_request %></td>
         <td><%= link_to 'Edit', edit_survey_request_path(survey_request) %></td>
