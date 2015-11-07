@@ -1,12 +1,13 @@
 class AttendanceNagger
   def self.send_attendance_plan
     today = Date.today
-    Member.active(today).where('NOT EXISTS (SELECT a.id FROM attendances a INNER JOIN practices p ON a.practice_id = p.id WHERE member_id = members.id AND year = ? AND week = ?)',
-        today.cwyear, today.cweek).
-        select { |m| m.age >= 14 }.
-        select { |m| m.groups.any? { |g| g.name == 'Voksne' } }.
-        select { |m| !m.passive? }.
-        each do |member|
+    Member.active(today)
+        .where('NOT EXISTS (SELECT a.id FROM attendances a INNER JOIN practices p ON a.practice_id = p.id WHERE member_id = members.id AND year = ? AND week = ?)',
+            today.cwyear, today.cweek)
+        .select { |m| m.age >= 14 }
+        .select { |m| m.groups.any? { |g| g.name == 'Voksne' } }
+        .select { |m| m.active? }
+        .each do |member|
       if member.user.nil?
         msg = "USER IS MISSING!  #{member.inspect}"
         logger.error msg

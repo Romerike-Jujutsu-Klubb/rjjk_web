@@ -4,6 +4,7 @@ require File.expand_path('../application', __FILE__)
 # Initialize the Rails application.
 Rails.application.initialize!
 
+# FIXME(uwe): Remove or include in the activerecord-time gem
 class TimeOfDay
   def min
     minute
@@ -25,7 +26,9 @@ class TimeOfDay
     self < self.class.new(17, 0) ? 'dag' : 'kveld'
   end
 end
+# EMXIF
 
+# FIXME(uwe): Remove or report
 module Prawn
   class Table
     class Cell
@@ -72,3 +75,4 @@ module Prawn
     end
   end
 end
+# EMXIF

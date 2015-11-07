@@ -1,4 +1,6 @@
 class Image < ActiveRecord::Base
+  CHUNK_SIZE = 10 * 1024 * 1024
+
   include UserSystem
 
   default_scope { select((column_names - %w(content_data)).map { |c| "images.#{c}" }) }
@@ -44,10 +46,9 @@ class Image < ActiveRecord::Base
     end
 
     def each(&block)
-      chunk_size = 10 * 1024 * 1024
       image_length = Image.connection.execute("SELECT LENGTH(content_data) as length FROM images WHERE id = #{@image.id}")[0]['length']
-      (1..image_length).step(chunk_size) do |i|
-        data = Image.connection.execute("SELECT SUBSTRING(content_data FROM #{i} FOR #{[image_length - i + 1, chunk_size].min}) as chunk FROM images WHERE id = #{@image.id}")[0]['chunk']
+      (1..image_length).step(CHUNK_SIZE) do |i|
+        data = Image.connection.execute("SELECT SUBSTRING(content_data FROM #{i} FOR #{[image_length - i + 1, CHUNK_SIZE].min}) as chunk FROM images WHERE id = #{@image.id}")[0]['chunk']
         block.call(data) if data
       end
     end
