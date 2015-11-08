@@ -19,6 +19,9 @@ namespace :deploy do
         echo "Updating init script"
         rm -f /usr/lib/systemd/system/#{fetch :application}.service
         sudo cp -a #{current_path}/usr/lib/systemd/system/#{fetch :application}.service /usr/lib/systemd/system/#{fetch :application}.service
+        echo "Updating httpd config"
+        rm -f /etc/httpd/conf.d/*-#{fetch :application}.conf
+        sudo cp -a #{current_path}/etc/httpd/conf.d/*-#{fetch :application}.conf /etc/httpd/conf.d/50-#{fetch :application}.conf
       SCRIPT
     end
   end
