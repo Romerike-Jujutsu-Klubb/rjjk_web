@@ -136,7 +136,6 @@ EOF
     loop do
       pending_image = evaluate_script IMAGE_WAIT_SCRIPT
       break unless pending_image
-      puts "image not loaded: #{pending_image.inspect}"
       assert (Time.now - start) < timeout,
           "Image not loaded after #{timeout}s: #{pending_image.inspect}"
       sleep 0.1
