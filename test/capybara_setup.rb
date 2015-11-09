@@ -63,7 +63,7 @@ class ActionDispatch::IntegrationTest
         end
       end
     end
-    assert_images_loaded timeout: 90
+    assert_images_loaded
     take_stable_screeenshot(file_name)
     return unless File.exist?(svn_file_name)
     if ImageCompare.compare(file_name, svn_file_name, WINDOW_SIZE)
@@ -137,7 +137,7 @@ EOF
       pending_image = evaluate_script IMAGE_WAIT_SCRIPT
       break unless pending_image
       puts "image not loaded: #{pending_image.inspect}"
-      assert (Time.now - start) > timeout,
+      assert (Time.now - start) < timeout,
           "Image not loaded after #{timeout}s: #{pending_image.inspect}"
       sleep 0.1
     end
