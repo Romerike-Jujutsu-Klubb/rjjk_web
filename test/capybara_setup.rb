@@ -63,17 +63,22 @@ class ActionDispatch::IntegrationTest
         end
       end
     end
+    assert_images_loaded timeout: 90
+    take_stable_screeenshot(file_name)
+    return unless File.exist?(svn_file_name)
+    if ImageCompare.compare(file_name, svn_file_name, WINDOW_SIZE)
+      (@test_screenshot_errors ||= []) <<
+          "Screenshot does not match for #{name.inspect}\n#{file_name}\n#{org_name}\n#{new_name}\n#{caller[0]}"
+    end
+  end
+
+  def take_stable_screeenshot(file_name)
     old_file_size = nil
     loop do
       page.save_screenshot(file_name)
       break if old_file_size == File.size(file_name)
       old_file_size = File.size(file_name)
       sleep 0.25
-    end
-    return unless File.exist?(svn_file_name)
-    if ImageCompare.compare(file_name, svn_file_name, WINDOW_SIZE)
-      (@test_screenshot_errors ||= []) <<
-          "Screenshot does not match for #{name.inspect}\n#{file_name}\n#{org_name}\n#{new_name}\n#{caller[0]}"
     end
   end
 
@@ -114,4 +119,27 @@ class ActionDispatch::IntegrationTest
     assert_equal path, current_path
   end
 
+  IMAGE_WAIT_SCRIPT = <<EOF
+function pending_image() {
+  var images = document.images;
+  for (var i = 0; i < images.length; i++) {
+    if (!images[i].complete) {
+        return images[i].src;
+    }
+  }
+  return false;
+}()
+EOF
+
+  def assert_images_loaded(timeout: Capybara.default_max_wait_time)
+    start = Time.now
+    loop do
+      pending_image = evaluate_script IMAGE_WAIT_SCRIPT
+      break unless pending_image
+      puts "image not loaded: #{pending_image.inspect}"
+      assert (Time.now - start) > timeout,
+          "Image not loaded after #{timeout}s: #{pending_image.inspect}"
+      sleep 0.1
+    end
+  end
 end
