@@ -37,6 +37,7 @@ class Attendance < ActiveRecord::Base
 
   belongs_to :member
   belongs_to :practice
+  has_one :group_schedule, through: :practice
 
   accepts_nested_attributes_for :practice
 
@@ -45,10 +46,6 @@ class Attendance < ActiveRecord::Base
 
   validate on: :update do
     errors.add(:status, 'kan ikke endres for treningen du var på.') if status_was == Status::ATTENDED && status == Status::WILL_ATTEND
-  end
-
-  def group_schedule
-    practice.group_schedule
   end
 
   def date

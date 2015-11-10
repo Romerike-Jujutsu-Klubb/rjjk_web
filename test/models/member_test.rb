@@ -27,4 +27,21 @@ class MemberTest < ActiveSupport::TestCase
     assert_equal ['sandan', 'shodan', '11. mon', '5. kyu'],
         Member.order(:joined_on).all.map(&:next_rank).map(&:name)
   end
+
+  test 'passive?' do
+    assert_equal false, members(:lars).passive?
+    assert_equal false, members(:newbie).passive?
+    assert_equal true, members(:sebastian).passive?
+    assert_equal false, members(:uwe).passive?
+  end
+
+  test 'passive? preloaded attendances for group' do
+    members = Member.includes(:attendances).order(:first_name)
+    assert_equal [false, false, true, false], members.map{|m| m.passive?(Date.today, groups(:voksne))}
+  end
+
+  test 'passive? preloaded recent_attendances' do
+    members = Member.includes(:recent_attendances).order(:first_name)
+    assert_equal [false, false, true, false], members.map{|m| m.passive?(Date.today, groups(:voksne))}
+  end
 end

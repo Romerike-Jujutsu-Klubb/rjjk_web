@@ -278,11 +278,11 @@ class Member < ActiveRecord::Base
     end_date = date + 31
     if date == Date.today && recent_attendances.loaded?
       set = recent_attendances.select{|a| Attendance::PRESENT_STATES.include? a.status }
-      set = set.select{|a| a.group_id == group.id} if group
+      set = set.select{|a| a.group_schedule.group_id == group.id} if group
       set.empty?
     elsif attendances.loaded?
       set = attendances.select{|a| Attendance::PRESENT_STATES.include? a.status }
-      set = set.select{|a| a.group_id == group.id} if group
+      set = set.select{|a| a.group_schedule.group_id == group.id} if group
       set = set.select{|a| a.date > start_date && a.date <= end_date }
       set.empty?
     else
