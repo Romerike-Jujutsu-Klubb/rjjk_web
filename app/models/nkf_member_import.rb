@@ -397,7 +397,7 @@ class NkfMemberImport
     Net::HTTP.start(url.host, url.port) do |http|
       response = http.get(url.request_uri, cookie_header.update(binary ? {'Content-Type' => 'application/octet-stream'} : {}))
       body = response.body
-      content_length = resonse['content-length'].to_i
+      content_length = response['content-length'].to_i
       if content_length > 0 && body.size != content_length
         error_msg = "Unexpected content length: header: #{content_length}, body: #{body.size}"
         raise EOFError.new(error_msg) if retries >= 3
