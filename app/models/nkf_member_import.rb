@@ -393,16 +393,16 @@ class NkfMemberImport
     end
   end
 
-  def http_get_response(url, binary, retry = 0)
+  def http_get_response(url, binary, retries = 0)
     Net::HTTP.start(url.host, url.port) do |http|
       response = http.get(url.request_uri, cookie_header.update(binary ? {'Content-Type' => 'application/octet-stream'} : {}))
       body = response.body
       content_length = resonse['content-length'].to_i
       if content_length > 0 && body.size != content_length
         error_msg = "Unexpected content length: header: #{content_length}, body: #{body.size}"
-        raise EOFError.new(error_msg) if retry >= 3
+        raise EOFError.new(error_msg) if retries >= 3
         logger.error error_msg
-        return http_get_response(url, binary, retry + 1)
+        return http_get_response(url, binary, retries + 1)
       end
       raise Timeout::Error if body =~ /ks_medlprofil timed out|Siden er utl.pt/
       raise EOFError.new('Internal error') if body =~ /The server encountered an internal error or/
