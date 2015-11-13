@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 # Separate slow tests and run in CI
 # TODO(uwe):  Maybe use https://github.com/httprb/http.rb ?
 # TODO(uwe):  Use https://github.com/vcr/vcr ?
@@ -6,8 +6,6 @@ require 'net/http'
 require 'uri'
 require 'erb'
 require 'pp'
-
-# http://www.reinteractive.net/posts/145-making-crawling-and-scraping-websites-slightly-less-painful-with-anemone?utm_source=rubyweekly&utm_medium=email
 
 class NkfMemberImport
   CONCURRENT_REQUESTS = 7
@@ -139,8 +137,8 @@ class NkfMemberImport
         else
           waiting_kid = nil
         end
-        raise 'Both Active status and waiting kid was found' if active && waiting_kid
-        raise 'Neither active status nor waiting kid was found' if !active && !waiting_kid
+        raise 'Both Active status and waiting kid were found' if active && waiting_kid
+        raise "Neither active status nor waiting kid were found:\n#{details_body}" if !active && !waiting_kid
         import_rows.find { |ir| ir[0] == member_id } << waiting_kid
       else
         raise "Could not find member id:\n#{details_body}"
