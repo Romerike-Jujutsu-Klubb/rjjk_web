@@ -277,7 +277,7 @@ class AttendancesController < ApplicationController
     if params[:group_id]
       if params[:group_id] == 'others'
         @instructors = []
-        @members = Member.includes(:attendances => {:group_schedule => :group}).
+        @members = Member.includes(attendances: {group_schedule: :group}).
             where('id NOT in (SELECT DISTINCT member_id FROM groups_members) AND (left_on IS NULL OR left_on > ?)', @date).
             to_a
         @trials = []
@@ -291,13 +291,13 @@ class AttendancesController < ApplicationController
         @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
 
         @instructors = Member.active(@date).
-            includes({:attendances => {:practice => :group_schedule}, :graduates => [:graduation, :rank]}, :groups).
+            includes({attendances: {practice: :group_schedule}, graduates: [:graduation, :rank]}, :groups, :nkf_member).
             where(instructor: true).
             select { |m| m.groups.any? { |g| g.martial_art_id == @group.martial_art_id } }
         @instructors.delete_if { |m| m.attendances.select { |a| ((@dates.first - 92.days)..@dates.last).include?(a.date) && a.group_schedule.group_id == @group.id }.empty? }
-        @instructors += GroupInstructor.includes(:group_schedule).
-            where('member_id NOT IN (?)', @instructors.map(&:id)).
-            where(:group_schedules => {:group_id => @group.id}).to_a.
+        @instructors += GroupInstructor.includes(:group_schedule, member: [{attendances: {practice: :group_schedule}}, :nkf_member]).
+            where('group_instructors.member_id NOT IN (?)', @instructors.map(&:id)).
+            where(group_schedules: {group_id: @group.id}).to_a.
             select { |gi| @dates.any? { |d| gi.active?(d) } }.map(&:member).uniq
 
         current_members = @group.members.active(first_date, last_date).

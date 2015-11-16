@@ -82,9 +82,7 @@ class ActionDispatch::IntegrationTest
     end
   end
 
-  def visit_with_login(path, options = {})
-    redirected_path = options.delete(:redirected_path) || path
-    user = options.delete(:user) || :admin
+  def visit_with_login(path, redirected_path: path, user: :admin)
     raise "Unknown options: #{options}" unless options.empty?
     visit path
     fill_login_form(user) if current_path == '/user/login'

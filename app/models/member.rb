@@ -1,4 +1,3 @@
-# encoding: utf-8
 class Member < ActiveRecord::Base
   JUNIOR_AGE_LIMIT = 15
   ASPIRANT_AGE_LIMIT = 10
@@ -16,17 +15,33 @@ class Member < ActiveRecord::Base
   has_one :next_graduate,
   -> { includes(:graduation).where('graduations.held_on >= ?', Date.today).order('graduations.held_on') },
       class_name: :Graduate
-  has_one :nkf_member, :dependent => :nullify
-  has_many :appointments, :dependent => :destroy
-  has_many :attendances, :dependent => :destroy
-  has_many :censors, :dependent => :destroy
-  has_many :correspondences, :dependent => :destroy
-  has_many :elections, :dependent => :destroy
-  has_many :graduates, :dependent => :destroy
+  has_one :nkf_member, dependent: :nullify
+  has_many :appointments, dependent: :destroy
+  has_many :attendances, dependent: :destroy
+  has_many :censors, dependent: :destroy
+  has_many :correspondences, dependent: :destroy
+  has_many :elections, dependent: :destroy
+  has_many :graduates, dependent: :destroy
   has_many :group_instructors, dependent: :destroy
+
+  # FIXME(uwe):  Use Attendance scopes instead?
+  has_many :last_6_months_attendances, -> do
+    from_date = 6.months.ago.to_date
+    to_date = Time.zone.today
+    includes(practice: :group_schedule).references(:group_schedules)
+        .where('year > ? OR (year = ? AND week > ?) OR (year = ? AND week = ? AND group_schedules.weekday > ?)',
+            from_date.year, from_date.year, from_date.cweek, from_date.year, from_date.cweek, from_date.cwday)
+        .where('year < ? OR (year = ? AND week < ?) OR (year = ? AND week = ? AND group_schedules.weekday <= ?)',
+            to_date.year, to_date.year, to_date.cweek, to_date.year, to_date.cweek, to_date.cwday)
+  end,
+      class_name: Attendance
+  # EMXIF
+
   has_many :passed_graduates, -> { where graduates: {passed: true} },
       class_name: 'Graduate'
-  has_many :ranks, :through => :passed_graduates
+  has_many :ranks, through: :passed_graduates
+
+  # FIXME(uwe):  Use Attendance scopes instead?
   has_many :recent_attendances, -> do
     from_date = Time.zone.today - 92
     to_date = Time.zone.today + 31
@@ -37,6 +52,8 @@ class Member < ActiveRecord::Base
             to_date.year, to_date.year, to_date.cweek, to_date.year, to_date.cweek, to_date.cwday)
   end,
       class_name: Attendance
+  # EMXIF
+
   has_many :signatures, dependent: :destroy
   has_many :survey_requests, dependent: :destroy
   has_and_belongs_to_many :groups

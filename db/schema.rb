@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20150617115412) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-  add_index "technique_applications", ["rank_id", "name"], name: "index_technique_applications_on_rank_id_and_name"
+  add_index "technique_applications", ["rank_id", "name"], name: "index_technique_applications_on_rank_id_and_name", unique: true
 
   create_table "application_steps", force: :cascade do |t|
     t.integer  "technique_application_id", null: false, index: {name: "fk__application_steps_technique_application_id"}, foreign_key: {references: "technique_applications", name: "fk_application_steps_technique_application_id", on_update: :no_action, on_delete: :no_action}
@@ -114,8 +114,8 @@ ActiveRecord::Schema.define(version: 20150617115412) do
     t.float   "latitude"
     t.float   "longitude"
     t.boolean "gmaps"
-    t.integer "image_id",             index: {name: "index_members_on_image_id"}
-    t.integer "user_id",              index: {name: "index_members_on_user_id"}
+    t.integer "image_id",             index: {name: "index_members_on_image_id", unique: true}
+    t.integer "user_id",              index: {name: "index_members_on_user_id", unique: true}
     t.string  "parent_email",         limit: 64
     t.string  "parent_2_name",        limit: 64
     t.string  "parent_2_mobile",      limit: 16
@@ -157,10 +157,10 @@ ActiveRecord::Schema.define(version: 20150617115412) do
     t.string   "message",           limit: 255
     t.datetime "message_nagged_at"
   end
-  add_index "practices", ["group_schedule_id", "year", "week"], name: "index_practices_on_group_schedule_id_and_year_and_week"
+  add_index "practices", ["group_schedule_id", "year", "week"], name: "index_practices_on_group_schedule_id_and_year_and_week", unique: true
 
   create_table "attendances", force: :cascade do |t|
-    t.integer  "member_id",            null: false, index: {name: "index_attendances_on_member_id_and_practice_id", with: ["practice_id"]}, foreign_key: {references: "members", name: "attendances_member_id_fkey", on_update: :no_action, on_delete: :no_action}
+    t.integer  "member_id",            null: false, index: {name: "index_attendances_on_member_id_and_practice_id", with: ["practice_id"], unique: true}, foreign_key: {references: "members", name: "attendances_member_id_fkey", on_update: :no_action, on_delete: :no_action}
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status",               limit: 1,   null: false
@@ -171,7 +171,7 @@ ActiveRecord::Schema.define(version: 20150617115412) do
   end
 
   create_table "wazas", force: :cascade do |t|
-    t.string   "name",        limit: 255, null: false, index: {name: "index_wazas_on_name"}
+    t.string   "name",        limit: 255, null: false, index: {name: "index_wazas_on_name", unique: true}
     t.string   "translation", limit: 255
     t.text     "description"
     t.datetime "created_at",  null: false
@@ -179,7 +179,7 @@ ActiveRecord::Schema.define(version: 20150617115412) do
   end
 
   create_table "basic_techniques", force: :cascade do |t|
-    t.string   "name",        limit: 255, null: false, index: {name: "index_basic_techniques_on_name"}
+    t.string   "name",        limit: 255, null: false, index: {name: "index_basic_techniques_on_name", unique: true}
     t.string   "translation", limit: 255
     t.integer  "waza_id",     null: false, index: {name: "fk__basic_techniques_waza_id"}, foreign_key: {references: "wazas", name: "fk_basic_techniques_waza_id", on_update: :no_action, on_delete: :no_action}
     t.text     "description"
@@ -196,8 +196,8 @@ ActiveRecord::Schema.define(version: 20150617115412) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
   end
-  add_index "basic_technique_links", ["basic_technique_id", "position"], name: "index_basic_technique_links_on_basic_technique_id_and_position"
-  add_index "basic_technique_links", ["basic_technique_id", "url"], name: "index_basic_technique_links_on_basic_technique_id_and_url"
+  add_index "basic_technique_links", ["basic_technique_id", "position"], name: "index_basic_technique_links_on_basic_technique_id_and_position", unique: true
+  add_index "basic_technique_links", ["basic_technique_id", "url"], name: "index_basic_technique_links_on_basic_technique_id_and_url", unique: true
 
   create_table "birthday_celebrations", force: :cascade do |t|
     t.date     "held_on",      null: false
@@ -224,7 +224,7 @@ ActiveRecord::Schema.define(version: 20150617115412) do
   end
 
   create_table "censors", force: :cascade do |t|
-    t.integer  "graduation_id",      null: false, index: {name: "index_censors_on_graduation_id_and_member_id", with: ["member_id"]}, foreign_key: {references: "graduations", name: "censors_graduation_id_fkey", on_update: :no_action, on_delete: :no_action}
+    t.integer  "graduation_id",      null: false, index: {name: "index_censors_on_graduation_id_and_member_id", with: ["member_id"], unique: true}, foreign_key: {references: "graduations", name: "censors_graduation_id_fkey", on_update: :no_action, on_delete: :no_action}
     t.integer  "member_id",          null: false, foreign_key: {references: "members", name: "censors_member_id_fkey", on_update: :no_action, on_delete: :no_action}
     t.boolean  "examiner"
     t.datetime "requested_at"
@@ -396,7 +396,7 @@ ActiveRecord::Schema.define(version: 20150617115412) do
   end
 
   create_table "groups_members", id: false, force: :cascade do |t|
-    t.integer "group_id",  null: false, index: {name: "index_groups_members_on_group_id_and_member_id", with: ["member_id"]}, foreign_key: {references: "groups", name: "groups_members_group_id_fkey", on_update: :no_action, on_delete: :no_action}
+    t.integer "group_id",  null: false, index: {name: "index_groups_members_on_group_id_and_member_id", with: ["member_id"], unique: true}, foreign_key: {references: "groups", name: "groups_members_group_id_fkey", on_update: :no_action, on_delete: :no_action}
     t.integer "member_id", null: false, foreign_key: {references: "members", name: "groups_members_member_id_fkey", on_update: :no_action, on_delete: :no_action}
   end
 
@@ -478,7 +478,7 @@ ActiveRecord::Schema.define(version: 20150617115412) do
     t.date     "reg_dato",      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "tid",           null: false, index: {name: "index_nkf_member_trials_on_tid"}
+    t.integer  "tid",           null: false, index: {name: "index_nkf_member_trials_on_tid", unique: true}
     t.string   "epost_faktura", limit: 64
     t.string   "stilart",       limit: 64, null: false
   end
@@ -534,7 +534,7 @@ ActiveRecord::Schema.define(version: 20150617115412) do
   end
 
   create_table "page_aliases", force: :cascade do |t|
-    t.string   "old_path",   limit: 255, index: {name: "index_page_aliases_on_old_path"}
+    t.string   "old_path",   limit: 255, index: {name: "index_page_aliases_on_old_path", unique: true}
     t.string   "new_path",   limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -610,7 +610,7 @@ ActiveRecord::Schema.define(version: 20150617115412) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-  add_index "survey_requests", ["survey_id", "member_id"], name: "index_survey_requests_on_survey_id_and_member_id"
+  add_index "survey_requests", ["survey_id", "member_id"], name: "index_survey_requests_on_survey_id_and_member_id", unique: true
 
   create_table "survey_answers", force: :cascade do |t|
     t.integer  "survey_request_id",  null: false, index: {name: "fk__survey_answers_survey_request_id"}, foreign_key: {references: "survey_requests", name: "fk_survey_answers_survey_request_id", on_update: :no_action, on_delete: :no_action}
@@ -621,14 +621,14 @@ ActiveRecord::Schema.define(version: 20150617115412) do
   end
 
   create_table "trial_attendances", force: :cascade do |t|
-    t.integer  "nkf_member_trial_id", null: false, index: {name: "index_trial_attendances_on_nkf_member_trial_id_and_practice_id", with: ["practice_id"]}, foreign_key: {references: "nkf_member_trials", name: "trial_attendances_nkf_member_trial_id_fkey", on_update: :no_action, on_delete: :no_action}
+    t.integer  "nkf_member_trial_id", null: false, index: {name: "index_trial_attendances_on_nkf_member_trial_id_and_practice_id", with: ["practice_id"], unique: true}, foreign_key: {references: "nkf_member_trials", name: "trial_attendances_nkf_member_trial_id_fkey", on_update: :no_action, on_delete: :no_action}
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "practice_id",         null: false, index: {name: "fk__trial_attendances_practice_id"}, foreign_key: {references: "practices", name: "fk_trial_attendances_practice_id", on_update: :no_action, on_delete: :no_action}
   end
 
   create_table "user_images", force: :cascade do |t|
-    t.integer  "user_id",    null: false, index: {name: "index_user_images_on_user_id_and_image_id_and_rel_type", with: ["image_id", "rel_type"]}
+    t.integer  "user_id",    null: false, index: {name: "index_user_images_on_user_id_and_image_id_and_rel_type", with: ["image_id", "rel_type"], unique: true}
     t.integer  "image_id",   null: false
     t.string   "rel_type",   limit: 16, null: false
     t.datetime "created_at", null: false

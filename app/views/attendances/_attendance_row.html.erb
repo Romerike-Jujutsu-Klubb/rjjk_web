@@ -34,10 +34,12 @@
       <td><%= h member.birthdate %>&nbsp;</td>
   <% end %>
   <% member_total = 0 %>
+  <% attendances = member.attendances.to_a %>
+  <% group_schedules = @group.group_schedules.to_a %>
   <% @dates.each do |d| %>
       <% if @group %>
-          <% group_schedule = @group.group_schedules.to_a.find { |gs| gs.weekday == d.cwday } %>
-          <% attendance = member.attendances.find { |a| a.practice.group_schedule_id == group_schedule.id && a.date == d } %>
+          <% group_schedule = group_schedules.find { |gs| gs.weekday == d.cwday } %>
+          <% attendance = attendances.find { |a| a.practice.group_schedule_id == group_schedule.id && a.date == d } %>
           <td id="attendance_<%= member.id %>_<%= d.day %>" align="center">
             <% if attendance %>
                 <% unless Attendance::ABSENT_STATES.include?(attendance.status) %>
@@ -59,7 +61,7 @@
           <td>&nbsp;</td>
       <% end %>
   <% end %>
-  <% half_year_total = member.attendances.select { |a| a.group_schedule.group_id == @group.id && a.date >= (@dates.last - 6.months) }.size %>
+  <% half_year_total = member.last_6_months_attendances.by_group_id(@group.id).size %>
   <td align="center">
     <%= half_year_total %>
     /
