@@ -1,30 +1,40 @@
 class InfoController < ApplicationController
-  before_filter :admin_required, :except => [:index, :show, :show_content]
+  before_filter :admin_required, except: [:index, :show, :show_content]
 
   def index
-    @information_pages = InformationPage.paginate :page => params[:page], :per_page => 10
+    @information_pages = InformationPage.paginate page: params[:page], per_page: 10
   end
 
   def show
     @information_page ||= InformationPage.where('UPPER(title) = ?', UnicodeUtils.upcase(params[:id])).first
     @information_page ||= InformationPage.find_by_id(params[:id].to_i)
-    if @information_page.nil? && (page_alias = PageAlias.where(old_path: request.path).first)
-      redirect_to page_alias.new_path, :status => :moved_permanently
+    return if @information_page
+    if page_alias = PageAlias.where(old_path: request.path).first
+      redirect_to page_alias.new_path, status: :moved_permanently
       return
     end
-    raise ActiveRecord::RecordNotFound unless @information_page
+    utf8_title = params[:id].encode(Encoding::ISO_8859_1).force_encoding(Encoding::UTF_8)
+    if page = InformationPage.where('UPPER(title) = ?', UnicodeUtils.upcase(utf8_title)).first
+      redirect_to page, status: :moved_permanently
+      return
+    end
+    if page = InformationPage.where('UPPER(title) = ?', UnicodeUtils.upcase(utf8_title.chomp("'"))).first
+      redirect_to page, status: :moved_permanently
+      return
+    end
+    raise ActiveRecord::RecordNotFound
   end
 
   def move_down
     @information_page = InformationPage.find(params[:id])
     @information_page.move_lower
     @information_page.save!
-    render :action => :show
+    render action: :show
   end
 
   def show_content
     @information_page = InformationPage.find(params[:id])
-    render :action => :show, :layout => false
+    render action: :show, layout: false
   end
 
   def new
