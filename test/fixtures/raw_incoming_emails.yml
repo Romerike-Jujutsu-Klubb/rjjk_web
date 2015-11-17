@@ -88,6 +88,24 @@ styret:
 
     Meldingstekst styret
 
+styret_answer:
+  created_at: 2013-10-15 13:37:05
+  content: |
+    Received: from [192.168.0.100] (unknown [10.0.0.100])
+    	by fili.kubosch.no (Postfix) with ESMTP id 41F388558159;
+    	Sat,  2 May 2015 18:45:39 +0200 (CEST)
+    From: RJJK Test <test@jujutsu.no>
+    Content-Type: text/plain; charset=us-ascii
+    Content-Transfer-Encoding: 7bit
+    Date: Sat, 2 May 2015 18:45:38 +0200
+    Subject: Re: [BETA][RJJK][Styret] Melding til styret
+    To: styret@test.jujutsu.no
+    Message-Id: <8959768B-D337-43CB-B1FF-4FE29B5B0815@kubosch.no>
+    Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2098\))
+    X-Mailer: Apple Mail (2.2098)
+
+    Meldingstekst styret
+
 ukjent:
   created_at: 2013-10-15 13:37:05
   content: |

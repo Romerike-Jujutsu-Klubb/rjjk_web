@@ -4,17 +4,11 @@ ENV['RAILS_ENV'] = 'email'
 
 # FIXME(uwe): Why this setup?!  Remove observers!
 Dir.chdir File.dirname(File.dirname(__FILE__))
-puts 1
 require 'bundler'
-puts 2
 require 'bundler/setup'
-puts 3
 require 'active_support/core_ext/module/concerning'
-puts 4
 require 'rails/observers/active_model/observing'
-puts 5
 require 'rails/observers/activerecord/observer'
-puts 6
 # EMXIF
 
 require_relative '../config/environment'

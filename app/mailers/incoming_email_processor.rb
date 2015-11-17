@@ -1,4 +1,3 @@
-# encoding: utf-8
 require 'mail'
 
 class IncomingEmailProcessor
@@ -75,6 +74,7 @@ class IncomingEmailProcessor
       logger.debug "new_recipients: #{new_recipients.inspect}"
 
       if new_recipients.any?
+        email.subject.gsub! /\[[^\]]*\]\s*/, ''
         email.subject.prepend("#{tags.uniq.map{|t| "[#{t}]" }.join} ") if tags.any?
         email.smtp_envelope_from = sender
         email.smtp_envelope_to = (Rails.env.production? || Rails.env.test?) ? new_recipients :

@@ -83,7 +83,6 @@ class ActionDispatch::IntegrationTest
   end
 
   def visit_with_login(path, redirected_path: path, user: :admin)
-    raise "Unknown options: #{options}" unless options.empty?
     visit path
     fill_login_form(user) if current_path == '/user/login'
     assert_current_path redirected_path

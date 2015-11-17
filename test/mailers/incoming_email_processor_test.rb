@@ -1,10 +1,9 @@
-# encoding: utf-8
 require 'test_helper'
 
 class IncomingEmailProcessorTest < ActionMailer::TestCase
   def test_forward_emails
-    assert_mail_deliveries 5 do
-      5.times { IncomingEmailProcessor.forward_emails }
+    assert_mail_deliveries 6 do
+      6.times { IncomingEmailProcessor.forward_emails }
     end
 
     mail = ActionMailer::Base.deliveries[0]
@@ -37,12 +36,20 @@ class IncomingEmailProcessorTest < ActionMailer::TestCase
 
     mail = ActionMailer::Base.deliveries[4]
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_equal 'styret@test.jujutsu.no',
-        mail.header['To'].to_s
+    assert_equal 'styret@test.jujutsu.no', mail.header['To'].to_s
     assert_equal %w(srr@resvero.com trondevensen@icloud.com kasiakrohn@gmail.com reslokken@gmail.com uwe@kubosch.no),
         mail.smtp_envelope_to
     assert_equal %w(styret@jujutsu.no), mail.reply_to
     assert_equal '[TEST][RJJK][Styret] Melding til styret', mail.subject
+    assert_match 'Meldingstekst styret', mail.body.encoded
+
+    mail = ActionMailer::Base.deliveries[5]
+    assert_equal %w(test@jujutsu.no), mail.from
+    assert_equal 'styret@test.jujutsu.no', mail.header['To'].to_s
+    assert_equal %w(srr@resvero.com trondevensen@icloud.com kasiakrohn@gmail.com reslokken@gmail.com uwe@kubosch.no),
+        mail.smtp_envelope_to
+    assert_equal %w(styret@jujutsu.no), mail.reply_to
+    assert_equal '[TEST][RJJK][Styret] Re: Melding til styret', mail.subject
     assert_match 'Meldingstekst styret', mail.body.encoded
   end
 
