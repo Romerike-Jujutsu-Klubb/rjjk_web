@@ -9,7 +9,8 @@ second_question:
   survey: first_survey
   position: 2
   title: Second question
-  choices: Choice one
+  choices: Choice one, Choice two
+  select_multiple: true
   free_text: false
 
 summary_question: # No choices, free text

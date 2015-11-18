@@ -60,7 +60,7 @@ class ImageCompare
 
   def self.sizes_changed?(org_image, new_image, name)
     if org_image.dimension != new_image.dimension
-      puts "Image size has changed for #{name}: #{images.map { |i| "#{i.width}x#{i.height}" }.join(' => ')}"
+      puts "Image size has changed for #{name}: #{[org_image, new_image].map { |i| "#{i.width}x#{i.height}" }.join(' => ')}"
       return true
     end
   end

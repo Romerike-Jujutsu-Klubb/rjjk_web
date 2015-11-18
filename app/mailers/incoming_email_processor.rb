@@ -17,7 +17,8 @@ class IncomingEmailProcessor
       web: {name: 'Uwe Kubosch', email: 'uwe@kubosch.no'},
   }
   ENV_STR = Rails.env.production? ? nil : Rails.env.upcase
-  DOMAIN = "#{"#{Rails.env}." unless Rails.env.production?}jujutsu.no"
+  DOMAIN = "#{"#{Rails.env}." unless (Rails.env.production? || Rails.env.test?)}jujutsu.no"
+  PREFIX_PATTERN = '(\b(?:Re|Fwd):\s*)'
 
   def self.forward_emails
     RawIncomingEmail.where(processed_at: nil, postponed_at: nil).
@@ -75,9 +76,7 @@ class IncomingEmailProcessor
       logger.debug "new_recipients: #{new_recipients.inspect}"
 
       if new_recipients.any?
-        email.subject.gsub! /\[[^\]]*\]\s*/, ''
-        email.subject.gsub! /\b(Re:\s*){2,}/, '\1'
-        email.subject.prepend("#{tags.uniq.map{|t| "[#{t}]" }.join} ") if tags.any?
+        email.subject = prefix_subject(email.subject, tags)
         email.smtp_envelope_from = sender
         email.smtp_envelope_to = (Rails.env.production? || Rails.env.test?) ? new_recipients :
             'uwe@kubosch.no'
@@ -105,5 +104,12 @@ class IncomingEmailProcessor
     logger.error "Exception processing incoming email: #{$!.class} #{$!}"
     logger.error $!.backtrace.join("\n")
     ExceptionNotifier.notify_exception($!)
+  end
+
+  def self.prefix_subject(subject, tags)
+    subject = subject.to_s
+    subject.gsub! /\[[^\]]*\]\s*/, ''
+    subject.gsub! /#{PREFIX_PATTERN * 2}+/, '\1'
+    subject.prepend("#{tags.uniq.map { |t| "[#{t}]" }.join} ") if tags.any?
   end
 end
