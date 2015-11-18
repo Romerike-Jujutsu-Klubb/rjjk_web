@@ -45,7 +45,7 @@ class ImagesController < ApplicationController
       return
     end
     if @image.video?
-      redirect_to '/assets/video-icon-tran.png'
+      redirect_to ActionController::Base.helpers.asset_path 'video-icon-tran.png'
       return
     end
     begin
