@@ -17,6 +17,7 @@ class IncomingEmailProcessor
       web: {name: 'Uwe Kubosch', email: 'uwe@kubosch.no'},
   }
   ENV_STR = Rails.env.production? ? nil : Rails.env.upcase
+  DOMAIN = "#{"#{Rails.env}." unless Rails.env.production?}jujutsu.no"
 
   def self.forward_emails
     RawIncomingEmail.where(processed_at: nil, postponed_at: nil).
@@ -46,7 +47,7 @@ class IncomingEmailProcessor
 
       # FIXME(uwe): Separate sending to each list with subject and reply_to
       new_recipients = original_recipients.map do |r|
-        if r =~ /^(.*)@#{"#{Rails.env}." unless Rails.env.production?}jujutsu.no$/
+        if r =~ /^(.*)@#{DOMAIN}$/
           target = $1.downcase.to_sym
           if (recipient = TARGETS[target])
             if recipient.is_a?(Array)
@@ -54,7 +55,7 @@ class IncomingEmailProcessor
               list = recipient
               tags << 'RJJK'
               tags << target.to_s.capitalize
-              email.reply_to = "#{target}@jujutsu.no"
+              email.reply_to = "#{target}@#{DOMAIN}"
             else
               logger.debug "Found target: #{target}"
               list = [recipient]
