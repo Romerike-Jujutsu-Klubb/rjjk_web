@@ -45,28 +45,22 @@ class GraduationsControllerTest < ActionController::TestCase
   end
 
   def test_create
-    num_graduations = Graduation.count
-
-    post :create, graduation: {held_on: '2007-10-07', group_id: groups(:panda).id}
-
+    assert_difference 'Graduation.count' do
+      post :create, graduation: {held_on: '2007-10-07', group_id: groups(:panda).id}
+    end
     assert_no_errors :graduation
     assert_response :redirect
-    assert_redirected_to action: :index
-
-    assert_equal num_graduations + 1, Graduation.count
+    assert_redirected_to graduation_edit_path(assigns(:graduation))
   end
 
   def test_create_for_instructor
     login(:lars)
-    num_graduations = Graduation.count
-
-    post :create, graduation: {held_on: '2007-10-07', group_id: groups(:panda).id}
-
+    assert_difference 'Graduation.count' do
+      post :create, graduation: {held_on: '2007-10-07', group_id: groups(:panda).id}
+    end
     assert_no_errors :graduation
     assert_response :redirect
-    assert_redirected_to action: :index
-
-    assert_equal num_graduations + 1, Graduation.count
+    assert_redirected_to graduation_edit_path(assigns(:graduation))
   end
 
   def test_edit

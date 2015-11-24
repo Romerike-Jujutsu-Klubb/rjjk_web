@@ -1,0 +1,55 @@
+<% if @graduation.graduates.any? %>
+    <table class="table col-md-9">
+      <thead>
+      <tr>
+        <th>Deltakere (<%= @graduation.graduates.size %>)</th>
+        <% unless @graduation.group.school_breaks? %>
+            <th>Bestått</th>
+        <% end %>
+        <th>Grad</th>
+        <% unless @graduation.approved? %>
+            <th>Fjern</th>
+        <% end %>
+      </tr>
+      </thead>
+      <tbody>
+      <% @graduation.graduates.sort_by { |gr| -gr.rank.position }.each do |gr| %>
+          <%= render 'graduates/row', graduate: gr %>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <p>Det er ikke lagt til noen deltakere på denne graderingen enda.</p>
+<% end %>
+
+<% unless @graduation.approved? %>
+    <div class="row">
+      <div class="col-md-6">
+        <%= form_for @graduation,
+            url: with_detour(controller: :graduations, action: :add_group, id: @graduation.id) do |f| %>
+            <div class="input-group">
+              <%= select_tag :group_id, options_for_select([['Velg gruppe', nil]] + @groups.map { |g| [g.name, g.id] }, @graduation.group_id),
+                  class: 'form-control' %>
+              <span class="input-group-btn">
+          <%= f.submit 'Legg til alle', class: 'btn btn-default' %>
+      </span>
+            </div>
+        <% end %>
+      </div>
+
+      <div class="col-md-6">
+        <%= form_for @graduate, url: with_detour(graduates_path),
+            html: {method: :post} do |f| %>
+            <%= f.hidden_field :graduation_id %>
+            <div class="input-group">
+              <%= f.select :member_id,
+                  grouped_options_for_select(@excluded_members.map { |g, members| [g.name, members.map { |m| ["#{m.name} #{m.age(@graduation.held_on)} år", m.id] }] }),
+                  {prompt: 'Velg deltaker'}, class: 'form-control', onchange: 'form.submit()' %>
+              <span class="input-group-btn">
+      <%= f.submit 'Legg til', class: 'btn btn-default' %>
+    </span>
+            </div>
+        <% end %>
+      </div>
+    </div>
+<% end %>

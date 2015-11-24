@@ -38,4 +38,8 @@ class Graduation < ActiveRecord::Base
   def description
     name
   end
+
+  def approved?
+    censors.all(&:approved?)
+  end
 end

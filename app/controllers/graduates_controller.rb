@@ -45,9 +45,9 @@ class GraduatesController < ApplicationController
     @graduate.passed = @graduate.graduation.group.school_breaks? if @graduate.passed.nil?
     if @graduate.save
       flash[:notice] = 'Graduate was successfully created.'
-      back_or_redirect_to :action => :index
+      back_or_redirect_to action: :index
     else
-      render :action => 'new'
+      render action: :new
     end
   end
 
@@ -61,10 +61,13 @@ class GraduatesController < ApplicationController
       if @graduate.update_attributes(params[:graduate])
         format.html do
           flash[:notice] = 'Graduate was successfully updated.'
-          redirect_to :action => 'show', :id => @graduate
+          redirect_to action: :show, id: @graduate
         end
         format.json { head :no_content }
-        format.js
+        format.js do
+          @ranks = Rank.where(martial_art_id: @graduate.graduation.group.martial_art_id)
+              .order(:position).to_a
+        end
       else
         format.html { render action: :edit }
         format.json { render json: @graduate.errors, status: :unprocessable_entity }
@@ -76,8 +79,8 @@ class GraduatesController < ApplicationController
     @graduate = Graduate.find(params[:id])
     @graduate.destroy
     respond_to do |format|
-      format.html { redirect_to :action => :index }
-      format.js { render :js => %Q{$("#graduate_#{@graduate.id}").remove()} }
+      format.html { redirect_to action: :index }
+      format.js { render js: %Q{$("#graduate_#{@graduate.id}").remove()} }
     end
   end
 end
