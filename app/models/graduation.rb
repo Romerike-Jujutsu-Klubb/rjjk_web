@@ -40,6 +40,6 @@ class Graduation < ActiveRecord::Base
   end
 
   def approved?
-    censors.all(&:approved?)
+    censors.all?(&:approved?)
   end
 end
