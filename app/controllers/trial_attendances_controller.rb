@@ -8,7 +8,7 @@ class TrialAttendancesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml { render :xml => @trial_attendances }
+      format.xml { render xml: @trial_attendances }
     end
   end
 
@@ -19,7 +19,7 @@ class TrialAttendancesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml { render :xml => @trial_attendance }
+      format.xml { render xml: @trial_attendance }
     end
   end
 
@@ -30,7 +30,7 @@ class TrialAttendancesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml { render :xml => @trial_attendance }
+      format.xml { render xml: @trial_attendance }
     end
   end
 
@@ -47,28 +47,28 @@ class TrialAttendancesController < ApplicationController
       trial_id = params[:trial_attendance][:nkf_member_trial_id]
     else
       practice_id = Practice.
-          where(:group_schedule_id => params[:group_schedule_id],
-          :year => params[:year], :week => params[:week]).
+          where(group_schedule_id: params[:group_schedule_id],
+              year: params[:year], week: params[:week]).
           first_or_create!.id
       trial_id = params[:nkf_member_trial_id]
     end
-    @trial_attendance = TrialAttendance.new(:practice_id => practice_id,
-        :nkf_member_trial_id => trial_id)
+    @trial_attendance = TrialAttendance.new(practice_id: practice_id,
+        nkf_member_trial_id: trial_id)
 
     respond_to do |format|
       if @trial_attendance.save
         format.html {
           if request.xhr?
-            render :partial => 'attendances/trial_attendance_delete_link',
-                :locals => {:trial_attendance => @trial_attendance}
+            render partial: 'attendances/trial_attendance_delete_link',
+                locals: {trial_attendance: @trial_attendance}
           else
-            redirect_to(@trial_attendance, :notice => 'TrialAttendance was successfully created.')
+            redirect_to(@trial_attendance, notice: 'TrialAttendance was successfully created.')
           end
         }
-        format.xml { render :xml => @trial_attendance, :status => :created, :location => @trial_attendance }
+        format.xml { render xml: @trial_attendance, status: :created, location: @trial_attendance }
       else
-        format.html { render :action => "new" }
-        format.xml { render :xml => @trial_attendance.errors, :status => :unprocessable_entity }
+        format.html { render action: :new }
+        format.xml { render xml: @trial_attendance.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -80,17 +80,15 @@ class TrialAttendancesController < ApplicationController
 
     respond_to do |format|
       if @trial_attendance.update_attributes(params[:trial_attendance])
-        format.html { redirect_to(@trial_attendance, :notice => 'TrialAttendance was successfully updated.') }
+        format.html { redirect_to(@trial_attendance, notice: 'TrialAttendance was successfully updated.') }
         format.xml { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml { render :xml => @trial_attendance.errors, :status => :unprocessable_entity }
+        format.html { render action: :edit }
+        format.xml { render xml: @trial_attendance.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /trial_attendances/1
-  # DELETE /trial_attendances/1.xml
   def destroy
     @trial_attendance = TrialAttendance.find(params[:id])
     @trial_attendance.destroy
@@ -98,11 +96,10 @@ class TrialAttendancesController < ApplicationController
     respond_to do |format|
       format.html do
         if (request.xhr?)
-          render partial: '/members/trial_attendance_create_link',
+          render partial: '/attendances/trial_attendance_create_link',
               locals: {
                   nkf_member_trial_id: @trial_attendance.nkf_member_trial_id,
-                  group_schedule_id: @trial_attendance.group_schedule_id,
-                  date: @trial_attendance.date
+                  practice_id: @trial_attendance.practice_id,
               }
         else
           redirect_to(trial_attendances_url)
