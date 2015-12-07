@@ -50,7 +50,7 @@ class GraduationsControllerTest < ActionController::TestCase
     end
     assert_no_errors :graduation
     assert_response :redirect
-    assert_redirected_to graduation_edit_path(assigns(:graduation))
+    assert_redirected_to edit_graduation_path(assigns(:graduation))
   end
 
   def test_create_for_instructor
@@ -60,7 +60,7 @@ class GraduationsControllerTest < ActionController::TestCase
     end
     assert_no_errors :graduation
     assert_response :redirect
-    assert_redirected_to graduation_edit_path(assigns(:graduation))
+    assert_redirected_to edit_graduation_path(assigns(:graduation))
   end
 
   def test_edit

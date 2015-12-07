@@ -52,7 +52,7 @@
                 <% else %>
                     <br/>Har ingen grad fra før.
                 <% end %>
-                <br/><span style="color: red; ">Anbefalt neste grad er <%= next_rank.name %>
+                <br/><span style="color: red; ">Anbefalt neste grad er <%= next_rank.label %>
     .</span>
             <% end %>
             <% if below_minimum_age %>
@@ -95,7 +95,7 @@
   </td>
   <% unless graduate.graduation.approved? %>
       <td>
-        <%= link_to({:controller => :graduates, :action => :destroy, :id => graduate.id}, :method => :delete, :remote => true) do %>
+        <%= link_to({:controller => :graduates, :action => :destroy, :id => graduate.id}, method: :delete, remote: true) do %>
             <IMG SRC="<%= asset_path 'button-delete-16x16.png' %>" STYLE="border: 0;" title="Slett" ALT="Slett"></A>
         <% end %>
       </td>
