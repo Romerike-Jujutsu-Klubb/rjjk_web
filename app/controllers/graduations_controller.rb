@@ -1,4 +1,3 @@
-# encoding: utf-8
 class GraduationsController < ApplicationController
   CENSOR_ACTIONS = [:approve, :create, :edit, :index, :new, :update]
   before_filter :admin_required, except: CENSOR_ACTIONS
@@ -181,7 +180,8 @@ class GraduationsController < ApplicationController
   def admin_or_censor_required
     return false unless authenticate_user
     return true if @approval || admin?
-    access_denied('Du må være administrator eller sensor for å redigere graderinger.')
+    return true if @graduation.group.current_semester.group_instructors.map(&:member).include?(current_user.member)
+    access_denied('Du må være gruppeinstruktør, eksaminator, sensor eller administrator for å redigere graderinger.')
   end
 
 end
