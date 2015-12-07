@@ -1,8 +1,0 @@
-<table class="table">
-  <% @graduation.graduates.sort_by(&:rank).group_by{|gr| gr.rank.colour}.each do |colour, graduates| %>
-  <tr>
-    <th><%=colour%></th>
-    <td><%=graduates.size%></td>
-  </tr>
-  <% end %>
-</table>
