@@ -1,5 +1,7 @@
 class GraduationsController < ApplicationController
-  CENSOR_ACTIONS = [:approve, :create, :edit, :index, :new, :update]
+  include GraduationAccess
+
+  CENSOR_ACTIONS = [:add_group, :approve, :create, :edit, :index, :new, :update]
   before_filter :admin_required, except: CENSOR_ACTIONS
   before_filter :authenticate_user, only: CENSOR_ACTIONS
 
@@ -61,7 +63,7 @@ class GraduationsController < ApplicationController
     @approval = @graduation.censors.
         select { |c| c.member == current_user.member }.
         sort_by { |c| c.approved_grades_at ? 0 : 1 }.last
-    return unless admin_or_censor_required
+    return unless admin_or_censor_required(@graduation, @approval)
     @groups = Group.order(:from_age).includes(members: [:attendances, :nkf_member]).to_a
     @groups.unshift(@groups.delete(@graduation.group))
     @graduate = Graduate.new(graduation_id: @graduation.id)
@@ -176,12 +178,4 @@ class GraduationsController < ApplicationController
         #order('ranks_graduates.position DESC, members.first_name, members.last_name').to_a
         order('ranks.position DESC, members.first_name, members.last_name').to_a
   end
-
-  def admin_or_censor_required
-    return false unless authenticate_user
-    return true if @approval || admin?
-    return true if @graduation.group.current_semester.group_instructors.map(&:member).include?(current_user.member)
-    access_denied('Du må være gruppeinstruktør, eksaminator, sensor eller administrator for å redigere graderinger.')
-  end
-
 end

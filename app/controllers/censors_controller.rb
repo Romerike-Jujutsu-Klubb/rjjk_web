@@ -1,5 +1,7 @@
 class CensorsController < ApplicationController
-  before_filter :admin_required
+  include GraduationAccess
+
+  before_filter :admin_required, except: [:create, :destroy]
 
   def index
     @censors = Censor.includes(:graduation).order('graduations.held_on DESC').
@@ -57,6 +59,7 @@ EOH
         params[:censor][:graduation_id], params[:censor][:member_id]).first ||
         Censor.new
     @censor.attributes = params[:censor]
+    admin_or_censor_required(@censor.graduation)
     if @censor.save
       flash[:notice] = 'Censor was successfully created.'
       back_or_redirect_to action: :index
