@@ -1,0 +1,7 @@
+br
+.row
+  .col-md-6.col-md-offset-3
+    .btn-toolbar
+      = link_to 'Diplomer', {action: :certificates, id: @graduation.id}, class: 'btn btn-danger'
+      = link_to 'Sensor PDF', {action: :censor_form_pdf, id: @graduation.id}, class: 'btn btn-primary'
+      = link_to 'Sensor HTML', {action: :censor_form, id: @graduation.id}, class: 'btn btn-primary'

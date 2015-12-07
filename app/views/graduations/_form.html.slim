@@ -1,0 +1,34 @@
+br
+= form_for @graduation do |f|
+  = f.error_messages
+
+  .row
+    .col-md-3.col-md-offset-3
+      .form-group
+        = f.label :held_on, 'Dato'
+        = f.text_field :held_on, size: 18, class: 'date form-control'
+    - if @graduation.held_on
+      .col-md-2
+        .form-group
+          br
+          p.form-control-static
+            - if @graduation.held_on == Date.today
+              | I DAG!
+            - elsif @graduation.held_on > Date.today
+              | Om #{(@graduation.held_on - Date.today).to_i} dager.
+            - else
+              | For #{(Date.today - @graduation.held_on).to_i} dager siden.
+
+  .row
+    .col-md-6.col-md-offset-3
+      .form-group
+        = f.label :group_id, 'Gruppe'
+        = f.select :group_id, @groups.map { |c| [c.name, c.id] }, {}, class: 'form-control'
+
+  .row
+    .col-md-6.col-md-offset-3
+      .btn-toolbar.pull-right
+        = back_or_link_to 'Tilbake', {action: :index}, class: 'btn btn-default'
+        - unless @graduation.new_record?
+          = link_to 'Vis', {action: 'show', id: @graduation}, class: 'btn btn-default'
+        = f.submit 'Lagre', class: 'btn btn-primary'
