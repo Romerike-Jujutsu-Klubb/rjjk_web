@@ -69,7 +69,7 @@ class GraduatesController < ApplicationController
               .order(:position).to_a
         end
       else
-        format.html { render action: :edit }
+        format.html { render action: :edit, layout: !request.xhr? }
         format.json { render json: @graduate.errors, status: :unprocessable_entity }
       end
     end
