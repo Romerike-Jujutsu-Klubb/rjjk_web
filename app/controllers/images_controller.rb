@@ -82,7 +82,7 @@ class ImagesController < ApplicationController
   def upload
     image_params = params[:image]
     image_params.delete(:file).each { |file| @image = Image.create! image_params.merge file: file }
-    back_or_redirect_to action: :gallery, id: @image.id
+    redirect_to action: :gallery, id: @image.id
   end
 
   def edit
