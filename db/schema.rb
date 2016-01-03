@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151118223915) do
+ActiveRecord::Schema.define(version: 20160102174009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -219,8 +219,9 @@ ActiveRecord::Schema.define(version: 20151118223915) do
   end
 
   create_table "graduations", force: :cascade do |t|
-    t.date    "held_on",  null: false
-    t.integer "group_id", null: false
+    t.date     "held_on",               null: false
+    t.integer  "group_id",              null: false
+    t.datetime "shopping_list_sent_at"
   end
 
   create_table "censors", force: :cascade do |t|
@@ -230,6 +231,9 @@ ActiveRecord::Schema.define(version: 20151118223915) do
     t.datetime "requested_at"
     t.datetime "confirmed_at"
     t.datetime "approved_grades_at"
+    t.datetime "lock_reminded_at"
+    t.datetime "locked_at"
+    t.boolean  "declined"
   end
 
   create_table "cms_members", force: :cascade do |t|
@@ -360,12 +364,15 @@ ActiveRecord::Schema.define(version: 20151118223915) do
   end
 
   create_table "graduates", force: :cascade do |t|
-    t.integer "member_id",       null: false, foreign_key: {references: "members", name: "graduates_member_id_fkey", on_update: :no_action, on_delete: :no_action}
-    t.integer "graduation_id",   null: false, foreign_key: {references: "graduations", name: "graduates_graduation_id_fkey", on_update: :no_action, on_delete: :no_action}
-    t.boolean "passed"
-    t.integer "rank_id",         null: false, foreign_key: {references: "ranks", name: "graduates_rank_id_fkey", on_update: :no_action, on_delete: :no_action}
-    t.boolean "paid_graduation", null: false
-    t.boolean "paid_belt",       null: false
+    t.integer  "member_id",          null: false, foreign_key: {references: "members", name: "graduates_member_id_fkey", on_update: :no_action, on_delete: :no_action}
+    t.integer  "graduation_id",      null: false, foreign_key: {references: "graduations", name: "graduates_graduation_id_fkey", on_update: :no_action, on_delete: :no_action}
+    t.boolean  "passed"
+    t.integer  "rank_id",            null: false, foreign_key: {references: "ranks", name: "graduates_rank_id_fkey", on_update: :no_action, on_delete: :no_action}
+    t.boolean  "paid_graduation",    null: false
+    t.boolean  "paid_belt",          null: false
+    t.datetime "invitation_sent_at"
+    t.datetime "confirmed_at"
+    t.boolean  "declined"
   end
 
   create_table "semesters", force: :cascade do |t|

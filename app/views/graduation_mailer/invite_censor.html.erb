@@ -1,0 +1,15 @@
+<h1>Hei <%= @censor.member.first_name %> !</h1>
+
+<p>
+  Romerike Jujutsu Klubb vil med dette invitere deg til å være sensor på
+  gradering for <%= @censor.graduation.group.name %>
+  den <%= @censor.graduation.held_on %>.
+</p>
+<p>
+  Har du mulighet til delta? Klikk på en av linkene nedenfor for å gi beskjed
+  om du kan eller ikke.
+</p>
+<ul>
+  <li><%= link_to 'Jeg kommer :)', @confirm_url %></li>
+  <li><%= link_to 'Beklager, jeg kommer ikke.', @decline_url %></li>
+</ul>

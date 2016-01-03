@@ -63,7 +63,7 @@ class SurveySenderTest < ActionMailer::TestCase
     assert_equal '"Lars Bråten" <uwe@kubosch.no>', mail.header['To'].to_s
     assert_equal %w(test@jujutsu.no), mail.from
     assert_match '<title>First survey</title>', mail.body.encoded
-    assert_match %r{<a style="color: #454545" href="http://example.com/svar/985934507\?email=bGFyc0BleGFtcGxlLmNvbQ%3D%3D%0A&amp;key=random_token_string\+{21}">Klikk her</a>\s*hvis du har problemer med å lese e-posten.},
+    assert_match %r{<a style="color: #454545" href="http://example.com/svar/985934507\?email=bGFyc0BleGFtcGxlLmNvbQ%3D%3D%0A&amp;key=random_token_string">Klikk her</a>\s*hvis du har problemer med å lese e-posten.},
         mail.body.decoded
     assert_match "<p style=\"margin:0 0 10px 0; font-size:18px; color:#E20916;\">First survey</p>",
         mail.body.decoded
@@ -73,7 +73,7 @@ class SurveySenderTest < ActionMailer::TestCase
     assert_match 'First question', mail.body.encoded
     assert_match 'Second question', mail.body.encoded
     assert_match 'What do you think of this survey?', mail.body.encoded
-    assert_match "For å svare på spørsmålene, kan du følge denne linken:\n  <a href=\"http://example.com/svar/985934507?key=random_token_string+++++++++++++++++++++\">http://example.com/svar/985934507</a>",
+    assert_match "For å svare på spørsmålene, kan du følge denne linken:\n  <a href=\"http://example.com/svar/985934507?key=random_token_string\">http://example.com/svar/985934507</a>",
         mail.body.decoded
     assert survey_requests(:sent).reminded_at
   end

@@ -1,0 +1,52 @@
+- @content_width = 1024
+
+.row
+
+  .col-md-9
+    = tinymce
+
+    = form_for @news_item, html: {role: 'form'} do |f|
+      = f.error_messages
+
+      .row
+        .form-group.col-md-12
+          = f.label :title, 'Tittel'
+          = f.text_field :title, class: 'form-control'
+
+      .row
+        .form-group.col-md-4
+          = f.label :publication_state, 'Publiseringsstatus'
+          = f.select :publication_state, NewsItem::PublicationState.constants.map { |s| [t(s.downcase), s] }, \
+                  {}, :class => 'form-control'
+
+        .form-group.col-md-4
+          = f.label :publish_at, 'Publiser fra'
+          = f.text_field :publish_at, value: @news_item.publish_at.try(:strftime, '%F %R'), class: 'datetime form-control'
+
+        .form-group.col-md-4
+          = f.label :expire_at, 'til'
+          = f.text_field :expire_at, value: @news_item.expire_at.try(:strftime, '%F %R'), class: 'datetime form-control'
+
+      p
+        | Sammendrag
+        = f.text_area :summary, class: :tinymce, style: 'height: 120px'
+        javascript:
+          $(window).load(function () {
+            tinyMCE.DOM.setStyle(tinyMCE.DOM.get('news_item_summary_ifr'), 'height', '120px');
+          })
+
+      p
+        | Mer informasjon (valgfritt)
+        = f.text_area :body, :class => :tinymce
+
+      .btn-toolbar.pull-right
+        = back_or_link_to 'Avbryt', news_items_path, class: 'btn btn-default'
+        = f.submit 'Lagre', id: :save, class: 'btn btn-primary'
+
+  .col-md-3
+    .pull-right style="width: 196px; height: 680px; overflow:auto; border: 1px solid black"
+      = render '/images/list', images: @images
+
+javascript:
+  $('#news_item_title').focus();
+  $('#news_item_title').select();

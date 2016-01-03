@@ -9,7 +9,7 @@
   <% @weeks.each.with_index do |(year, week), i| %>
       <tr>
         <td colspan="4">
-          <h4><%= [year, week] == [(Date.today - 7).year, (Date.today - 7).cweek] ? 'Forrige uke' : [year, week] == [Date.today.year, Date.today.cweek] ? 'Denne uken' : [year, week] == [(Date.today + 7).year, (Date.today + 7).cweek] ? 'Neste uke' : "Uke #{week}#{" #{year}" if year != Date.today.year}" %></h4>
+          <h4><%= [year, week] == [(Date.today - 7).cwyear, (Date.today - 7).cweek] ? 'Forrige uke' : [year, week] == [Date.today.cwyear, Date.today.cweek] ? 'Denne uken' : [year, week] == [(Date.today + 7).cwyear, (Date.today + 7).cweek] ? 'Neste uke' : "Uke #{week}#{" #{year}" if year != Date.today.cwyear}" %></h4>
         </td>
       </tr>
       <tr>

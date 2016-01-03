@@ -38,7 +38,11 @@ if Rails.env.development? || Rails.env.beta? || Rails.env.production?
   scheduler.cron('0 0 * * *') { notify_wrong_contracts }
   scheduler.cron('0 3 * * *') { notify_missing_semesters }
   scheduler.cron('0 4 * * *') { create_missing_group_semesters }
-  scheduler.cron('0 6 * * *') { GraduationReminder.notify_missing_graduations }
+  scheduler.cron('0 5 * * *') { GraduationReminder.notify_missing_graduations }
+  scheduler.cron('0 6 * * *') { GraduationReminder.notify_censors }
+  # scheduler.cron('0 * * * *') { GraduationReminder.notify_missing_locks }
+  # scheduler.cron('0 * * * *') { GraduationReminder.notify_graduates }
+  # scheduler.cron('0 * * * *') { GraduationReminder.send_shopping_list }
   scheduler.cron('0 10 * * *') { GraduationReminder.notify_missing_aprovals }
 
   # Admin Weekly

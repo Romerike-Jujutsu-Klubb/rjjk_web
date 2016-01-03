@@ -49,6 +49,21 @@ class GraduationReminder
     ExceptionNotifier.notify_exception($!)
   end
 
+  def self.notify_censors
+    Censor.includes(:graduation, :member).references(:graduations)
+        .where('(examiner IS NULL OR examiner = ?) AND confirmed_at IS NULL AND (requested_at IS NULL OR requested_at < ?)', false, 1.week.ago)
+        .order('graduations.held_on')
+        .limit(1)
+        .each do |censor|
+      GraduationMailer.invite_censor(censor).deliver_now
+      censor.update! requested_at: Time.zone.now
+    end
+  rescue
+    logger.error "Exception sending censor invitation: #{$!}"
+    logger.error $!.backtrace.join("\n")
+    ExceptionNotifier.notify_exception($!)
+  end
+
   def self.notify_missing_aprovals
     Censor.includes(:graduation, :member).references(:graduations).
         where('approved_grades_at IS NULL AND graduations.held_on < CURRENT_DATE AND user_id IS NOT NULL').

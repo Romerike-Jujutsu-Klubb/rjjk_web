@@ -90,7 +90,7 @@ class AttendancesController < ApplicationController
 
   def report
     @date = (params[:year] && params[:month] && Date.new(params[:year].to_i, params[:month].to_i, 1)) || Date.today.beginning_of_month
-    @year = @date.year
+    @year = @date.cwyear
     @month = @date.month
     @first_date = @date
     @last_date = @date.end_of_month
@@ -178,28 +178,28 @@ class AttendancesController < ApplicationController
   def plan
     today = Date.today
 
-    @weeks = [[today.year, today.cweek], [(today + 7).year, (today + 7).cweek]]
+    @weeks = [[today.cwyear, today.cweek], [(today + 7).cwyear, (today + 7).cweek]]
     if today.month >= 6 && today.month <= 7
-      @weeks += [[(today + 14).year, (today + 14).cweek], [(today + 21).year, (today + 21).cweek]]
+      @weeks += [[(today + 14).cwyear, (today + 14).cweek], [(today + 21).cwyear, (today + 21).cweek]]
     end
 
     member = current_user.member
     last_unconfirmed = member.attendances.includes(:practice).references(:practices).
         where("attendances.status = 'P' AND (practices.year < ? OR (practices.year = ? AND practices.week < ?))",
-            today.year, today.year, today.cweek).
+            today.cwyear, today.cwyear, today.cweek).
         order('practices.year, practices.week').last
     if last_unconfirmed
-      @weeks.unshift [last_unconfirmed.date.year, last_unconfirmed.date.cweek]
+      @weeks.unshift [last_unconfirmed.date.cwyear, last_unconfirmed.date.cweek]
     end
     if flash[:attendance_id]
       @reviewed_attendance = Attendance.find(flash[:attendance_id])
-      @weeks.unshift [@reviewed_attendance.date.year, @reviewed_attendance.date.cweek]
+      @weeks.unshift [@reviewed_attendance.date.cwyear, @reviewed_attendance.date.cweek]
       @weeks.sort!.uniq!
     end
     @group_schedules = member.groups.reject(&:school_breaks).map(&:group_schedules).flatten
     @weeks.each do |w|
-      @group_schedules.each { |gs| gs.practices.where(year: today.year, week: today.cweek).first_or_create! }
-      @group_schedules.each { |gs| gs.practices.where(year: (today + 7).year, week: (today + 7).cweek).first_or_create! }
+      @group_schedules.each { |gs| gs.practices.where(year: today.cwyear, week: today.cweek).first_or_create! }
+      @group_schedules.each { |gs| gs.practices.where(year: (today + 7).cwyear, week: (today + 7).cweek).first_or_create! }
     end
     @planned_attendances = Attendance.includes(:practice).references(:practices).
         where("member_id = ? AND (practices.year, practices.week) IN (#{@weeks.map { |y, w| "(#{y}, #{w})" }.join(', ')})", member.id).
@@ -207,10 +207,10 @@ class AttendancesController < ApplicationController
     start_date = 6.months.ago.to_date.beginning_of_month
     attendances = Attendance.includes(practice: {group_schedule: :group}).references(:practices).
         where('member_id = ? AND attendances.status IN (?) AND ((practices.year = ? AND practices.week >= ?) OR (practices.year = ?))',
-            member, Attendance::PRESENT_STATES, start_date.year, start_date.cweek, today.year).
+            member, Attendance::PRESENT_STATES, start_date.cwyear, start_date.cweek, today.cwyear).
         to_a
     @attended_groups = attendances.map { |a| a.practice.group_schedule.group }.uniq.sort_by { |g| -g.from_age }
-    per_month = attendances.group_by { |a| d = a.date; [d.year, d.mon] }
+    per_month = attendances.group_by { |a| d = a.date; [d.cwyear, d.mon] }
     @months = per_month.keys.sort.reverse.map do |ym|
       per_group = per_month[ym].group_by { |a| a.group_schedule.group }
       [t(:date)[:month_names][ym[1]], *@attended_groups.map { |g| (per_group[g] || []).size }]

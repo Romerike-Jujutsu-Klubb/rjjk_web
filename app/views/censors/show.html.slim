@@ -1,0 +1,44 @@
+h3 = @censor.member.name
+p
+  | #{@censor.declined ? 'ble' : 'er'} satt opp som
+  strong =<> @censor.examiner ? 'eksaminator' : 'sensor'
+  | på gradering for
+  =<> @censor.graduation.group.name
+  =< link_to @censor.graduation.held_on, @censor.graduation
+  | .
+
+- if @censor.declined?
+  p
+    => @censor.member.male ? 'Han' : 'Hun'
+    | avslo dette
+    b< #{@censor.confirmed_at.to_date}.
+- elsif @censor.requested_at
+  .row
+    .col-xs-3 Forespurt:
+    .col-xs-3
+      =< @censor.requested_at.to_date
+    - if @censor.confirmed_at
+      .col-xs-3 Brekreftet:
+      .col-xs-3 =< @censor.confirmed_at.to_date
+    - else
+      .col-xs-6 Ikke bekreftet enda.
+
+  - if @censor.lock_reminded_at
+    p
+      - if @censor.locked_at
+        | Bekreftet deltakerlisten
+        = @censor.locked_at
+      - else
+        | Påmindelse om å se over deltakerlisten:
+        = @censor.lock_reminded_at
+
+  - if @censor.approved_grades_at
+    p
+      Bekreftet grader:
+      = @censor.approved_grades_at
+  br
+
+
+.btn-toolbar.pull-right
+  = link_to 'Back', censors_path, class: 'btn btn-default'
+  = link_to 'Edit', edit_censor_path(@censor), class: 'btn btn-primary'

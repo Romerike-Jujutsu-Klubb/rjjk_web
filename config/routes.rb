@@ -58,7 +58,10 @@ Rails.application.routes.draw do
   resources :basic_techniques
   resources :birthday_celebrations
   resources :board_meetings
-  resources :censors
+  resources :censors do
+    get :confirm, on: :member
+    get :decline, on: :member
+  end
   resources :cms_members
   resources :correspondences
   resources :elections

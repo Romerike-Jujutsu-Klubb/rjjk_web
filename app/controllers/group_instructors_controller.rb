@@ -32,11 +32,7 @@ class GroupInstructorsController < ApplicationController
   end
 
   def create
-    if (semester_id = params[:group_instructor].delete(:semester_id))
-      group_schedule = GroupSchedule.find(params[:group_instructor][:group_schedule_id])
-      group_semester = GroupSemester.where(group_id: group_schedule.group_id, semester_id: semester_id).first
-      params[:group_instructor][:group_semester_id] = group_semester.id
-    end
+    convert_semester_id
     @group_instructor = GroupInstructor.new(params[:group_instructor])
     if @group_instructor.save
       redirect_to group_instructors_path, notice: 'GroupInstructor was successfully created.'
@@ -46,8 +42,9 @@ class GroupInstructorsController < ApplicationController
   end
 
   def update
+    convert_semester_id
     @group_instructor = GroupInstructor.find(params[:id])
-    if @group_instructor.update_attributes(params[:group_instructor])
+    if @group_instructor.update(params[:group_instructor])
       redirect_to group_instructors_path, notice: 'GroupInstructor was successfully updated.'
     else
       edit
@@ -66,6 +63,14 @@ class GroupInstructorsController < ApplicationController
     @group_schedules ||= GroupSchedule.includes(:group).references(:groups).order('weekday, groups.from_age').to_a.select { |gs| gs.group.active? }
     @group_instructors ||= Member.instructors
     @semesters ||= Semester.order('start_on DESC').limit(10).to_a
+  end
+
+  def convert_semester_id
+    if (semester_id = params[:group_instructor].delete(:semester_id))
+      group_schedule = GroupSchedule.find(params[:group_instructor][:group_schedule_id])
+      group_semester = GroupSemester.where(group_id: group_schedule.group_id, semester_id: semester_id).first
+      params[:group_instructor][:group_semester_id] = group_semester.id
+    end
   end
 
 end

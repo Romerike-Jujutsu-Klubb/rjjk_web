@@ -20,6 +20,7 @@ class ActionDispatch::IntegrationTest
   self.use_transactional_fixtures = false
 
   setup do
+    @screenshot_abs_dir = SCREENSHOT_DIR_ABS
     if Capybara.default_driver == :selenium
       Capybara.current_session.driver.browser.manage.window.resize_to(*WINDOW_SIZE)
     else
@@ -34,22 +35,33 @@ class ActionDispatch::IntegrationTest
     fail(@test_screenshot_errors.join("\n")) if @test_screenshot_errors
   end
 
+  def screenshot_group(name)
+    @screenshot_abs_dir = "#{SCREENSHOT_DIR_ABS}/#{name}"
+    @screenshot_dir = "#{SCREENSHOT_DIR}/#{name}"
+    @screenshot_counter = 0
+    FileUtils.rm_rf @screenshot_abs_dir if name.present?
+  end
+
   def screenshot(name)
+    if @screenshot_counter
+      name = "#{'%02i' % @screenshot_counter}_#{name}"
+      @screenshot_counter += 1
+    end
     if Capybara.default_driver == :selenium
       return unless Capybara.current_session.driver.browser.manage.window.size == Selenium::WebDriver::Dimension.new(*WINDOW_SIZE)
     else
       return unless Capybara.current_session.driver.client.window_size == WINDOW_SIZE
     end
-    file_name = "#{SCREENSHOT_DIR_ABS}/#{name}.png"
-    svn_file_name = "#{SCREENSHOT_DIR_ABS}/.svn/text-base/#{name}.png.svn-base"
-    org_name = "#{SCREENSHOT_DIR_ABS}/#{name}_0.png~"
-    new_name = "#{SCREENSHOT_DIR_ABS}/#{name}_1.png~"
+    file_name = "#{@screenshot_abs_dir}/#{name}.png"
+    svn_file_name = "#{@screenshot_abs_dir}/.svn/text-base/#{name}.png.svn-base"
+    org_name = "#{@screenshot_abs_dir}/#{name}_0.png~"
+    new_name = "#{@screenshot_abs_dir}/#{name}_1.png~"
     FileUtils.mkdir_p File.dirname(org_name)
     unless File.exists?(svn_file_name)
       svn_info = `svn info #{file_name}`
       if svn_info.blank?
         # http://www.akikoskinen.info/image-diffs-with-git/
-        puts `git show HEAD~0:#{SCREENSHOT_DIR}/#{name}.png > #{org_name}`
+        puts `git show HEAD~0:#{@screenshot_dir}/#{name}.png > #{org_name}`
         if File.size(org_name) == 0
           FileUtils.rm_f org_name
         else

@@ -25,8 +25,14 @@ class MembersController < ApplicationController
 
   def yaml
     @members = Member.active.without_image.to_a
-    render text: @members.map{|m| m.attributes.update('rank_pos' => m.current_rank.try(:position), 'rank_name' => m.current_rank.try(:name))}.to_yaml, content_type: 'text/yaml',
-        layout: false
+    records = @members.map do |m|
+      m.attributes.update(
+          'rank_pos' => m.current_rank.try(:position),
+          'rank_name' => m.current_rank.try(:name),
+          'active' => m.active?,
+      )
+    end
+    render text: records.to_yaml, content_type: 'text/yaml', layout: false
   end
 
   def list_active
