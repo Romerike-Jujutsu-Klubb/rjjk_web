@@ -91,7 +91,6 @@ class AttendanceNagger
         else
           displayed_absentees = new_absentees
         end
-        logger.error "Sending changes to #{recipient.inspect}"
         AttendanceMailer.changes(practice, gs, recipient, new_attendees, displayed_absentees, attendees).deliver_now
       end
     end

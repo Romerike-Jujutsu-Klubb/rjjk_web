@@ -30,10 +30,6 @@
       p
         | Sammendrag
         = f.text_area :summary, class: :tinymce, style: 'height: 120px'
-        javascript:
-          $(window).load(function () {
-            tinyMCE.DOM.setStyle(tinyMCE.DOM.get('news_item_summary_ifr'), 'height', '120px');
-          })
 
       p
         | Mer informasjon (valgfritt)
@@ -48,5 +44,9 @@
       = render '/images/list', images: @images
 
 javascript:
+  $(window).load(function () {
+    tinyMCE.DOM.setStyle(tinyMCE.DOM.get('news_item_summary_ifr'), 'height', '120px');
+  });
+
   $('#news_item_title').focus();
   $('#news_item_title').select();

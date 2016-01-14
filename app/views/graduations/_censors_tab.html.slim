@@ -1,0 +1,55 @@
+.row
+  .col-md-4
+    h4 Eksaminatorer
+
+    #examiners_row.row
+      - @graduation.censors.select(&:examiner).sort_by { |c| c.member.current_rank }.reverse.each do |cen|
+        .col-md-12 id="censor_#{cen.id}"
+          = link_to({controller: :censors, action: :destroy, id: cen.id}, \
+                  data: {remote: true, method: :delete}) do
+            img src="#{asset_path 'button-delete-16x16.png'}" style="border: 0;" title="Slett eksaminator #{cen.member.name}" ALT="Slett eksaminator <%= cen.member.name %>"
+          = cen.member.name
+
+    br
+
+    = form_for @censor, url: with_detour(censors_path, anchor: :censors), html: {method: :post} do |f|
+      = f.hidden_field :graduation_id
+      = f.hidden_field :examiner, value: 1
+
+      .input-group
+        = f.select :member_id, ['Velg instruktør'] + @instructors.map { |m| [m.name, m.id] }.sort, \
+                {}, class: 'form-control', onchange: 'form.submit()'
+        span.input-group-btn
+          = f.submit 'Legg til', class: 'btn btn-default'
+
+  .col-md-8
+    h4 Sensorer
+
+    #censors_row.row
+      - @graduation.censors.reject(&:examiner).sort_by { |c| c.member.current_rank }.reverse.each do |cen|
+        .col-md-4 id="censor_#{cen.id}"
+          = link_to({controller: :censors, action: :destroy, id: cen.id}, \
+                  data: {remote: true, method: :delete}) do
+            img src="#{asset_path 'button-delete-16x16.png'}" style="border: 0;" title="Slett sensor #{cen.member.name}" ALT="Slett sensor #{cen.member.name}"
+
+          = cen.member.name
+          - if cen.confirmed_at
+            - if cen.declined
+              i.fa.fa-thumbs-down title="Avslått"
+            - else
+              i.fa.fa-check title="Bekreftet"
+          - else
+            i.fa.fa-question title="Ubekreftet"
+
+          = '(Godkjent)' if cen.approved_grades_at
+
+    br
+
+    = form_for @censor, url: with_detour(censors_path, anchor: :censors), html: {method: :post} do |f|
+      = f.hidden_field :graduation_id
+
+      .input-group
+        = f.select :member_id, ['Velg sensor'] + @instructors.map { |m| [m.name, m.id] }.sort, \
+                {}, class: 'form-control', onchange: 'form.submit()'
+        span.input-group-btn
+        = f.submit 'Legg til', class: 'btn btn-default'

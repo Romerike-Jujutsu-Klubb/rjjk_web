@@ -12,10 +12,10 @@ class NewsPublisher
       Member.active(2.months.from_now).each do |m|
         NewsletterMailer.newsletter(news_item, m).deliver_now
       end
-      news_item.update_attributes! mailed_at: now
+      news_item.update! mailed_at: now
     end
     logger.debug 'Sending news...OK'
-  rescue
+  rescue Exception
     logger.error 'Execption sending news'
     logger.error $!.message
     logger.error $!.backtrace.join("\n")

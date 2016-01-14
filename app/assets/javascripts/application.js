@@ -35,5 +35,6 @@ $().ready(function () {
     // http://eonasdan.github.io/bootstrap-datetimepicker/#options
     $('.date,[dateFormat]').datetimepicker({format: 'YYYY-MM-DD'});
     $('.datetime,[dateFormat][timeFormat]').datetimepicker({format: 'YYYY-MM-DD H:mm'});
+    // $('.datetime,[dateFormat][timeFormat]').datetimepicker({format: 'YYYY-MM-DD H:mm', defaultDate: data-default-date attribute if set});
     $('.time,[timeFormat]').datetimepicker({format: 'H:mm'});
 });

@@ -44,6 +44,7 @@ if Rails.env.development? || Rails.env.beta? || Rails.env.production?
   # scheduler.cron('0 * * * *') { GraduationReminder.notify_graduates }
   # scheduler.cron('0 * * * *') { GraduationReminder.send_shopping_list }
   scheduler.cron('0 10 * * *') { GraduationReminder.notify_missing_aprovals }
+  # scheduler.cron('0 10 * * *') { GraduationReminder.notify_graduate_result }
 
   # Admin Weekly
   scheduler.cron('0 1 * * mon') { GraduationReminder.notify_overdue_graduates }
