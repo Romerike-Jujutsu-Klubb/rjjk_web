@@ -1,14 +1,14 @@
 .text-center
   = detour_to 'Legg til bilde', controller: :images, action: :new
 
-table
+table.table
   - for image in images
     tr
       td align="center"
         = link_to(image_path(image), title: image.name, author: 'RJJK', caption: image.name) do
           = image_tag(url_for(only_path: false, controller: 'images', action: :inline, id: image.id, format: image.format), width: 160, title: image.name, alt: image.name)
         br
-        small = truncate(image.name, length: 26)
+        small = truncate(image.name.chomp('.jpg').gsub('_', ' '), length: 29)
         br
         = detour_to 'Rediger', controller: :images, action: :edit, id: image.id
         = detour_to 'Slett', {controller: :images, action: :destroy, id: image.id}, data: {confirm: 'Are you sure?'}, method: :delete
