@@ -38,9 +38,9 @@ gem 'jbuilder'
 gem 'jquery-rails'
 gem 'jquery-turbolinks'
 gem 'kramdown'
-gem 'mechanize'
+gem 'mechanize', '!=2.7.4'
 gem 'momentjs-rails'
-gem 'nokogiri'
+gem 'nokogiri', '~> 1.6.8.rc3'
 gem 'nprogress-rails'
 # gem 'paper_trail' # http://railscasts.com/episodes/255-undo-with-paper-trail?view=similar
 gem 'prawn', '<2.0.0' # TODO(uwe): Upgrade?
@@ -63,6 +63,10 @@ gem 'uglifier'
 gem 'unicode_utils'
 gem 'will_paginate'
 
+group :production, :beta do
+  gem 'lograge'
+end
+
 group :development do
   gem 'capistrano'
   gem 'capistrano-bundler'
@@ -80,7 +84,7 @@ group :test do
   gem 'poltergeist'
   gem 'rubycritic', require: false
   gem 'selenium-webdriver'
-  gem 'simplecov'
+  gem 'simplecov', require: false
   gem 'timecop'
   gem 'vcr'
   gem 'webmock'

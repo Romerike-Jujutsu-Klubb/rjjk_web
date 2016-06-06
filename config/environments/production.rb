@@ -24,6 +24,7 @@ Rails.application.configure do
   config.log_level = :info
   # config.log_tags = [ :subdomain, :uuid ]
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  config.lograge.enabled = true
   config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
 end
 
