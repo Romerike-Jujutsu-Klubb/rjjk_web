@@ -40,21 +40,34 @@ module ApplicationHelper
     end
     html = Kramdown::Document.new(with_emails.strip).to_html
     html.force_encoding(Encoding::UTF_8)
-    if @email
-      base = url_for(controller: :welcome, action: :index, only_path: false)
+    html_with_base = absolute_links(html)
+    html_with_bold_links = html_with_base.gsub /(<a href="[^"]*")>/i, %Q{\\1 style="color: #CD071E;text-decoration:none;font-weight:bold;">}
+    html_with_bold_links.html_safe
+  end
 
-      html.gsub!(/\b(href|src)="(?:#{base}|\/)([^?"]*)(\?[^"]*)?"/i) do |m|
-        %Q{#$1="#{base}#$2#$3#{$3 ? '&' : '?'}email=#{Base64.encode64(@email)}#{"&newsletter_id=#{@newsletter.id}" if @newsletter}"}
+  def absolute_links(html)
+    base = url_for(controller: :welcome, action: :index, only_path: false)
+
+    html_with_base = html.gsub(/\b(href|src)="(?:#{base}|\/)([^?"]*)(\?[^"]*)?"/i) do |m|
+      with_base = %Q{#$1="#{base}#$2#$3"}
+
+      params = []
+      params << "email=#{Base64.encode64(@email)}" if @email
+      params << "newsletter_id=#{@newsletter.id}" if @newsletter
+
+      if params.any?
+        %Q{#{with_base}#{$3 ? '&' : '?'}#{params.join('&')}}
+      else
+        with_base
       end
-
-      html.gsub! /(<a href="[^"]*")>/i, %Q{\\1 style="color: #CD071E;text-decoration:none;font-weight:bold;">}
     end
-    html.html_safe
   end
 
   def textify(s)
     return '' if s.blank?
-    Kramdown::Document.new(s.strip).to_kramdown.gsub(/\{: .*?\}\s*/, '')
+    h = Kramdown::Document.new(s.strip).to_kramdown.gsub(/\{: .*?\}\s*/, '')
+    h2 = absolute_links(h)
+    h2
   end
 
 end
