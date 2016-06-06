@@ -156,13 +156,19 @@ class GraduationsController < ApplicationController
       graduation = Graduation.includes(:graduates).find(params[:id])
       group = Group.includes(:members).find(params[:group_id])
       members = group.members.active(graduation.held_on) - graduation.graduates.map(&:member)
-      graduation.graduates << members.map do |member|
-        Graduate.new member_id: member.id,
+      success_count = 0
+      failures = []
+      members.each do |member|
+        if Graduate.create graduation_id: graduation.id, member_id: member.id,
             rank_id: member.next_rank(graduation).id,
             passed: graduation.group.school_breaks?,
             paid_graduation: true, paid_belt: true
+          success_count += 1
+        else
+          failures << member
+        end
       end
-      flash[:notice] = "Group #{group.name} was added to the graduation."
+      flash[:notice] = "Gruppe #{group.name} Ble lagt til graderingen.  #{success_count} nye kandidater. #{"#{failures.map(&:name).join(', ')} kunne ikke legges til." if failures.any?}"
     end
     back_or_redirect_to action: :edit
   end
