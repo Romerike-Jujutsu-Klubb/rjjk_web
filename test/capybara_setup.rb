@@ -1,3 +1,4 @@
+# TODO(uwe): Use capybara-screenshot-diff gem instead
 require 'minitest/rails/capybara'
 require 'image_compare'
 require 'capybara/poltergeist'

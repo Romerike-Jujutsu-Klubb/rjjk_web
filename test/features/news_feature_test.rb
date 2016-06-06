@@ -5,8 +5,12 @@ class NewsFeatureTest < ActionDispatch::IntegrationTest
     visit '/news'
     assert_current_path '/news'
     screenshot('news/index_public')
-    find('.post img').click
+    all('.post img')[0].click
     screenshot('news/index_public_image')
+    click_button 'Close'
+    assert has_no_css?('button', text: 'Close')
+    all('.post img')[1].click
+    screenshot('news/index_public_image_2')
   end
 
   def test_index_member

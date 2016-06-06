@@ -5,6 +5,7 @@ first:
   publication_state: PUBLISHED
   publish_at: 2007-07-12T13:37:00+2
   expire_at: 2199-12-31T23:59:59+1
+  summary: <p><img title="one.jpg" src="/images/inline/<%= ActiveRecord::FixtureSet.identify(:one) %>.jpg" alt="one.jpg" width="160" /></p>
 
 another:
   title: My second news item

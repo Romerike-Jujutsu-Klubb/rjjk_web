@@ -1,6 +1,8 @@
-require 'simplecov'
-SimpleCov.start 'rails' do
-  add_filter '/app/views/'
+if RUBY_ENGINE != 'jruby' || org.jruby.RubyInstanceConfig.FULL_TRACE_ENABLED
+  require 'simplecov'
+  SimpleCov.start 'rails' do
+    add_filter '/app/views/'
+  end
 end
 
 ENV['RAILS_ENV'] ||= 'test'
