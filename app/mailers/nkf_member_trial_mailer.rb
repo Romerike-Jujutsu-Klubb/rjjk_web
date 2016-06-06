@@ -16,10 +16,4 @@ class NkfMemberTrialMailer < ActionMailer::Base
     @trials = trials
     mail subject: rjjk_prefix(@title)
   end
-
-  def send_waiting_lists(lists)
-    @title = 'Ventelister'
-    @lists = lists
-    mail subject: rjjk_prefix(@title)
-  end
 end

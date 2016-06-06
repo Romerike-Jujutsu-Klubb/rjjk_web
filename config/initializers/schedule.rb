@@ -51,7 +51,6 @@ if Rails.env.development? || Rails.env.beta? || Rails.env.production?
   scheduler.cron('0 2 * * mon') { InformationPageNotifier.notify_outdated_pages }
   scheduler.cron('0 3 * * mon') { InstructionReminder.notify_missing_instructors }
   scheduler.cron('0 4 * * mon') { NkfMemberTrialReminder.notify_overdue_trials }
-  scheduler.cron('0 5 * * mon') { NkfMemberTrialReminder.send_waiting_lists }
   scheduler.cron('0 6 * * mon') { notify_missing_group_semesters }
   scheduler.cron('0 7 * * mon') { PublicRecordImporter.import_public_record }
 end
