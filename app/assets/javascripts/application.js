@@ -41,6 +41,7 @@ $().ready(function () {
                 if (attr) {
                     $(this).data('DateTimePicker').date(attr);
                 }
+                $(this).val('');
             }
         });
     $('.time,[timeFormat]').datetimepicker({format: 'HH:mm'});
