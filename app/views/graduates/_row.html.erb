@@ -3,12 +3,13 @@
    fn = mbr.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
    ln = mbr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
    below_minimum_age = mbr.age(graduate.graduation.held_on) && mbr.age(graduate.graduation.held_on) < graduate.rank.minimum_age
-   not_in_age_group = !(graduate.rank.group.from_age..graduate.rank.group.to_age).include?(mbr.age(graduate.graduation.held_on))
+   not_in_rank_age = !(graduate.rank.group.from_age..graduate.rank.group.to_age).include?(mbr.age(graduate.graduation.held_on))
+   not_in_group_age = mbr.age(graduate.graduation.held_on - 1.month) > graduate.graduation.group.to_age || mbr.age(graduate.graduation.held_on) < graduate.graduation.group.from_age
 %>
 <tr id="graduate_<%= graduate.id %>">
   <td>
     <%= link_to "#{fn} #{ln}", :controller => :members, :action => :edit, :id => mbr.id %>
-    <% if below_minimum_age || not_in_age_group %>
+    <% if below_minimum_age || not_in_rank_age || not_in_group_age %>
         (<span style="color: red; white-space: nowrap"><%= mbr.age(graduate.graduation.held_on) %>
     år</span>)
     <% end %>
@@ -55,10 +56,16 @@
                 <br/><span style="color: red; ">Anbefalt neste grad er <%= next_rank.label %>
     .</span>
             <% end %>
+
+            <% if not_in_group_age %>
+                <br/><span style="color: red">Feil gruppe!  <%= graduate.graduation.group.name %>
+    er <%= graduate.graduation.group.from_age %>-<%= graduate.graduation.group.to_age %> år.</span>
+            <% end %>
+
             <% if below_minimum_age %>
                 <br/><span style="color: red">Aldersgrense for <%= graduate.rank.name %>
     er <%= graduate.rank.minimum_age %> år.</span>
-            <% elsif not_in_age_group %>
+            <% elsif not_in_rank_age %>
                 <br/><span style="color: red">Aldersgruppe for <%= graduate.rank.name %>
     er <%= graduate.rank.group.from_age %>-<%= graduate.rank.group.to_age %>
     år.</span>

@@ -159,16 +159,24 @@ class GraduationsController < ApplicationController
       success_count = 0
       failures = []
       members.each do |member|
-        if Graduate.create graduation_id: graduation.id, member_id: member.id,
+        g = Graduate.new graduation_id: graduation.id, member_id: member.id,
             rank_id: member.next_rank(graduation).id,
             passed: graduation.group.school_breaks?,
             paid_graduation: true, paid_belt: true
-          success_count += 1
+        if g.save
+           success_count += 1
         else
-          failures << member
+          failures << g
         end
       end
-      flash[:notice] = "Gruppe #{group.name} Ble lagt til graderingen.  #{success_count} nye kandidater. #{"#{failures.map(&:name).join(', ')} kunne ikke legges til." if failures.any?}"
+
+      flash[:notice] = "Gruppe #{group.name} ble lagt til graderingen.  #{success_count} nye kandidater. #{"#{failures.map(&:member).map(&:name).join(', ')} kunne ikke legges til." if failures.any?}"
+      if failures.any?
+        flash[:error] = "Disse kunne ikke legges til: #{failures.map(&:member).map(&:name).join(', ')}"
+        failures.each do |fg|
+          logger.error "Failed record: #{fg.member.name}: #{fg.errors.full_messages} #{fg.rank.name} #{fg.inspect}"
+        end
+      end
     end
     back_or_redirect_to action: :edit
   end

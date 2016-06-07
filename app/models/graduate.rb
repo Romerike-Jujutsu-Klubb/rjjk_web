@@ -5,7 +5,8 @@ class Graduate < ActiveRecord::Base
 
   validates_presence_of :graduation, :graduation_id, :member, :member_id, :rank, :rank_id
   validates_uniqueness_of :member_id, scope: :graduation_id
-  validates_uniqueness_of :member_id, scope: [:passed, :rank_id], if: :passed
+  validates_uniqueness_of :member_id, scope: [:passed, :rank_id], if: :passed,
+      message: 'har allerede bestått denne graden.'
 
   def training_start_date
     member.current_graduate(graduation.group.martial_art, graduation.held_on - 1).try(:graduation).try(:held_on).try(:+, 1) ||
