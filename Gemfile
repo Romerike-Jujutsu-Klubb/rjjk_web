@@ -63,7 +63,7 @@ gem 'uglifier'
 gem 'unicode_utils'
 gem 'will_paginate'
 
-group :production, :beta do
+group :beta, :email, :production do
   gem 'lograge'
 end
 
