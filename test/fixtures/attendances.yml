@@ -37,3 +37,8 @@ uwe_voksne_2013_42_thursday_planned:
   member: uwe
   practice: voksne_2013_42_thursday
   status: P
+
+newbie_voksne_2013_41_tuesday_absent:
+  member: newbie
+  practice: voksne_2013_41_tuesday
+  status: X

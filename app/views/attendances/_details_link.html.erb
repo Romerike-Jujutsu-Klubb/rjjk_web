@@ -1,40 +1,42 @@
 <% if practice %>
     <% attendances = practice.attendances.
-            select { |a| [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(a.status) } %>
+        select { |a| [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(a.status) } %>
     <% absences = practice.attendances.
-            select { |a| Attendance::ABSENT_STATES.include?(a.status) } %>
+        select { |a| Attendance::ABSENT_STATES.include?(a.status) } %>
     <% others = attendances.select { |a| a.member_id != current_user.member.id } %>
     <% attendance = practice.attendances.find { |a| a.member_id == current_user.member.id } %>
-    <% if others.any? %>
-        <small>
-          <a data-toggle="modal" data-target="#attendance_details_<%= practice.id %>"
-             title="<%=practice.passed? ? 'Oppmøte' : 'Påmeldt til'%> trening <%= t(:date)[:day_names][practice.group_schedule.weekday].downcase %> <%= practice.date.day %>. <%= t(:date)[:month_names][practice.date.mon].downcase %>">
-            <% if attendance.present? %>
-                Du
-                <% if others.size > 0 %>
-                    og
-                    <% if others.size == 1 %>
-                        <%= others.first.member.first_name %>
-                    <% else %>
-                        <%= others.size %> andre
-                    <% end %>
-                <% end %>
-            <% else %>
-                <%= others[rand others.size].member.first_name %>
-                <% if others.size > 1 %>
-                    og
-                    <%= others.size - 1 %>
-                    <%= others.size == 2 ? 'annen' : 'andre' %>
-                <% end %>
-            <% end %>
-          </a>
-          <%= practice.passed? ? 'trente' : 'kommer' %>.
-        </small>
-        <%= render layout: 'layouts/modal', locals: {id: "attendance_details_#{practice.id}"} do %>
-            <%=render 'attendances/practice_details',
+    <% if attendances.any? %>
+        <% if attendances.size > 2 %>
+            <a data-toggle="modal" data-target="#attendance_details_<%= practice.id %>"
+               title="<%= practice.passed? ? 'Oppmøte' : 'Påmeldt til' %> trening <%= t(:date)[:day_names][practice.group_schedule.weekday].downcase %> <%= practice.date.day %>. <%= t(:date)[:month_names][practice.date.mon].downcase %>">
+              <% if attendance.present? %>
+                  Du
+              <% else %>
+                  <%= others.shift.member.first_name %>
+              <% end %>
+              og
+              <%= others.size %>
+              <%= others.size == 1 ? 'annen' : 'andre' %>
+            </a>
+            <%= render layout: 'layouts/modal', locals: {id: "attendance_details_#{practice.id}"} do %>
+                <%= render 'attendances/practice_details',
                     your_attendance: attendance,
                     other_attendees: attendances,
                     other_absentees: absences %>
+            <% end %>
+        <% elsif attendance.present? %>
+            Du
+            <% if others.any? %>
+                og <%= others.first.member.first_name %>
+            <% end %>
+        <% elsif others.any? %>
+            <%= others.shift.member.first_name %>
+            <% if others.any? %>
+                og <%= others.first.member.first_name %>
+            <% end %>
+        <% else %>
+            Ingen
         <% end %>
+        <%= practice.passed? ? 'trente' : 'kommer' %>.
     <% end %>
 <% end %>

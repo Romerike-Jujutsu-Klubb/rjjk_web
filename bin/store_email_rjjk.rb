@@ -34,6 +34,31 @@ EX_UNAVAILABLE=69
 # Clean up when done or when aborting.
 # trap(0, 1, 2, 3, 15){"rm -f in.$$"}
 
+begin
+  require 'open3'
+  Rails.logger.info 'Checking Spamassassin'
+  Open3.popen3('spamassassin') do |stdin, stdout, stderr, wait_thr|
+    Rails.logger.info "Spamassassin: send content to process"
+    stdin << content
+    Rails.logger.info "Spamassassin: close stdin"
+    stdin.close
+    Rails.logger.info "Spamassassin: read stdout"
+    content = stdout.read
+    Rails.logger.info "Spamassassin: #{content}"
+    Rails.logger.info "Spamassassin: read stderr"
+    Rails.logger.info "Spamassassin: #{stderr.read}"
+    Rails.logger.info "Spamassassin: finish process"
+    exit_status = wait_thr.value # Process::Status object returned.
+    Rails.logger.info "Spamassassin reported: #{exit_status.inspect}"
+    if content =~ /^X-Spam-Status: Yes/
+      Rails.logger.info 'Mail is SPAM.'
+      # exit 1
+    end
+  end
+rescue Exception
+  Rails.logger.error "Exception scanning for SPAM: #{$!}"
+end
+
 prod_recipients = to.grep /@jujutsu.no/
 beta_recipients = to.grep /@beta.jujutsu.no/
 rest_recipients = to - prod_recipients - beta_recipients
@@ -59,6 +84,8 @@ EOF
 end
 
 if rest_recipients.any?
+  Rails.logger.info "Sending to rest: #{from} => #{rest_recipients}"
+  Rails.logger.info content.lines.grep(/spam/i)
   mail = Mail.read_from_string(content)
   mail.smtp_envelope_from = from
   mail.smtp_envelope_to = rest_recipients

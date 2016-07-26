@@ -15,14 +15,14 @@
               <%= @other_absentees.size %> har meldt fravær.
           <% end %>
           <%= link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT),
-                  class: 'btn btn-default btn-xs', title: 'Kan ikke allikevel...', method: :post) do %>
+                  class: 'btn btn-default btn-sm', title: 'Kan ikke allikevel...', method: :post) do %>
               <i class="glyphicon glyphicon-thumbs-down"></i> Angre
           <% end %>
       <% elsif @your_attendance_next_practice %>
           Du kommer ikke.
           <%= link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::WILL_ATTEND),
-                  class: 'btn btn-default btn-xs', title: 'Kommer allikevel!', method: :post) do %>
-              <i class="glyphicon glyphicon-thumbs-up"></i>
+                  class: 'btn btn-default btn-sm', title: 'Kommer allikevel!', method: :post) do %>
+              <i class="glyphicon glyphicon-thumbs-up"></i> Kommer allikevel
           <% end %>
           <% unless @other_attendees.empty? %>
               <br/>

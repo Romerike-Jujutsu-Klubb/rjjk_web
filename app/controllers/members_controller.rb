@@ -82,7 +82,7 @@ class MembersController < ApplicationController
   def list_inactive
     @members = Member.where('left_on IS NOT NULL').order('last_name').
         paginate(page: params[:page], per_page: Member::MEMBERS_PER_PAGE)
-    @member_count = Member.count(:conditions => 'left_on IS NOT NULL')
+    @member_count = Member.where('left_on IS NOT NULL').count
     render :action => :index
   end
 

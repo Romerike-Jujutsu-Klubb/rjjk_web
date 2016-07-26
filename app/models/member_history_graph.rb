@@ -37,7 +37,7 @@ class MemberHistoryGraph
     g.data('Tiger', juniors_jj(dates))
     g.data('Panda', aspirants(dates))
     g.data('Gratis', gratis(dates))
-    g.data('Prøvetid', dates.map{|d| NkfMemberTrial.count(:conditions => ['reg_dato <= ?', d])}.without_consecutive_zeros)
+    g.data('Prøvetid', dates.map{|d| NkfMemberTrial.where('reg_dato <= ?', d).count}.without_consecutive_zeros)
 
     g.minimum_value = 0
     

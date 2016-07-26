@@ -40,7 +40,7 @@ gem 'jquery-turbolinks'
 gem 'kramdown'
 gem 'mechanize', '!=2.7.4'
 gem 'momentjs-rails'
-gem 'nokogiri', '~> 1.6.8.rc3'
+gem 'nokogiri'
 gem 'nprogress-rails'
 # gem 'paper_trail' # http://railscasts.com/episodes/255-undo-with-paper-trail?view=similar
 gem 'prawn', '<2.0.0' # TODO(uwe): Upgrade?
@@ -53,6 +53,7 @@ gem 'ri_cal'
 gem 'rufus-scheduler'
 gem 'sass-rails', '>=4.0.5'
 gem 'schema_plus'
+gem 'script_relocator', github: 'donv/script_relocator'
 gem 'simple_drilldown'
 gem 'simple_workflow'
 gem 'slim-rails'
@@ -76,6 +77,7 @@ group :development do
 end
 
 group :test do
+  gem 'capybara-screenshot-diff', github: 'donv/capybara-screenshot-diff'
   gem 'chunky_png'
   gem 'database_cleaner'
   gem 'minitest-rails-capybara'

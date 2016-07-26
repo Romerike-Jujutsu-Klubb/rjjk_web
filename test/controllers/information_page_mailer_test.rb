@@ -12,7 +12,7 @@ class InformationPageMailerTest < ActionMailer::TestCase
 
   test 'send_weekly_page' do
     mail = InformationPageMailer.send_weekly_page members(:lars), information_pages(:first)
-    assert_equal '[RJJK][TEST] My first article', mail.subject
+    assert_equal '[RJJK][TEST] Til info: My first article', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
     assert_match 'My first article', mail.body.encoded

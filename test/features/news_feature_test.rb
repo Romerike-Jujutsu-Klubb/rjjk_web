@@ -58,12 +58,11 @@ class NewsFeatureTest < ActionDispatch::IntegrationTest
   end
 
   def select_date(date_field_id, day)
-    execute_script %Q{$('##{date_field_id}').focus()}
-    # fill_in 'news_item[publish_at]', with: '2015-09-08 0:00'
+    find("##{date_field_id}").click
     screenshot("form_#{date_field_id}_selected")
-    find("##{date_field_id} + .bootstrap-datetimepicker-widget").find('td', text: day).click
-    # click_button('15')
+    execute_script("$('##{date_field_id} + .bootstrap-datetimepicker-widget td.day:contains(#{day})').click()")
+    assert has_field?(date_field_id, with: /^2013-10-#{day}/)
     screenshot("form_#{date_field_id}_selected_date_#{day}")
+    find('body').click
   end
-
 end

@@ -3,7 +3,7 @@ class RawIncomingEmailsController < ApplicationController
   before_action :set_raw_incoming_email, only: [:show, :edit, :update, :destroy]
 
   def index
-    @raw_emails = RawIncomingEmail.order('created_at DESC').decorate
+    @raw_emails = RawIncomingEmail.order(created_at: :desc).limit(1000).decorate
   end
 
   def show
