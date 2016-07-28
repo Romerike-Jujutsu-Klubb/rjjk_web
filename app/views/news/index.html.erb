@@ -4,36 +4,7 @@
     <div id="primarycontainer">
       <div id="primarycontent">
         <% @news_items[1..-1].each_with_index do |news_item, i| %>
-            <div class="post">
-              <h4>
-                <%= news_item.title %>
-                <% if news_item.publication_state != NewsItem::PublicationState::PUBLISHED %>
-                    (<%= t news_item.publication_state.downcase %>)
-                <% end %>
-              </h4>
-
-              <div class="contentarea">
-                <div class="details">
-                  <%= "Skrevet av #{news_item.creator.name}" if news_item.creator %>
-                  <%= news_item.created_at.strftime '%Y-%m-%d' %>
-                  <% if news_item.expire_at && news_item.expire_at < Time.now %>
-                      <br/>Utløpt
-                      <b><%= "#{news_item.expire_at.strftime('%F %R')}" %></b>.
-                  <% end %>
-                </div>
-                <% texts = [news_item.summary, news_item.body].select { |text| !text.blank? } %>
-                <%= textalize(texts[0].strip) if texts[0] %>
-                <p class="read_more"><%= detour_to('Les mer...', news_item) if texts[1] %></p>
-
-                <% if user? %>
-                    <ul class="controls">
-                      <li><%= detour_to 'Endre', edit_news_item_path(news_item), :class => :edit %></li>
-                      <li><%= detour_to 'Utløpt', {controller: :news, action: :expire, id: news_item}, class: :edit, :confirm => 'Er du sikker?', method: :post %></li>
-                      <li><%= detour_to 'Slett', {controller: :news, action: :destroy, id: news_item}, class: :edit, :confirm => 'Er du sikker?', method: :delete %></li>
-                    </ul>
-                <% end %>
-              </div>
-            </div>
+            <%= render 'news/item', news_item: news_item, full: false, focus: false %>
         <% end %>
       </div>
     </div>
