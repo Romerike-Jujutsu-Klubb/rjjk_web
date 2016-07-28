@@ -1,20 +1,14 @@
 <% if not @news_items.empty? %>
-    <% @news_item = @news_items[0] %>
-    <%= render 'news/item', full: false %>
-
-    <div class="divider1"></div>
+    <%= render 'news/item', news_item: @news_items[0], full: false, focus: true %>
 
     <div id="primarycontainer">
       <div id="primarycontent">
         <% @news_items[1..-1].each_with_index do |news_item, i| %>
-            <% if i > 0 %>
-                <div class="divider2"></div>
-            <% end %>
             <div class="post">
               <h4>
                 <%= news_item.title %>
                 <% if news_item.publication_state != NewsItem::PublicationState::PUBLISHED %>
-                (<%= t news_item.publication_state.downcase %>)
+                    (<%= t news_item.publication_state.downcase %>)
                 <% end %>
               </h4>
 
@@ -23,7 +17,8 @@
                   <%= "Skrevet av #{news_item.creator.name}" if news_item.creator %>
                   <%= news_item.created_at.strftime '%Y-%m-%d' %>
                   <% if news_item.expire_at && news_item.expire_at < Time.now %>
-                      <br/>Utløpt <b><%= "#{news_item.expire_at.strftime('%F %R')}" %></b>.
+                      <br/>Utløpt
+                      <b><%= "#{news_item.expire_at.strftime('%F %R')}" %></b>.
                   <% end %>
                 </div>
                 <% texts = [news_item.summary, news_item.body].select { |text| !text.blank? } %>
@@ -54,7 +49,7 @@
     </p>
 <% end %>
 
-<%=render 'layouts/modal_image' %>
+<%= render 'layouts/modal_image' %>
 
 <%= javascript_tag do %>
     $('.post img').addClass('img-thumbnail').css({cursor: 'pointer'});

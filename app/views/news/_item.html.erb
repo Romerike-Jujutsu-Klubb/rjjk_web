@@ -1,36 +1,44 @@
 <div id="normalcontent" class="post">
-  <h3>
-    <%= @news_item.title %>
-    <% if @news_item.publication_state != NewsItem::PublicationState::PUBLISHED %>
-    (<%= t @news_item.publication_state.downcase %>)
-    <% end %>
-  </h3>
+  <% if full || focus %>
+      <h3>
+  <% else %>
+      <h4>
+  <% end %>
+  <%= news_item.title %>
+  <% if news_item.publication_state != NewsItem::PublicationState::PUBLISHED %>
+      (<%= t news_item.publication_state.downcase %>)
+  <% end %>
+  <% unless full || focus %>
+      </h4>
+  <% else %>
+      </h3>
+  <% end %>
 
   <div class="contentarea">
     <div class="details">
-      <%= "Skrevet av #{@news_item.creator.name}" if @news_item.creator %>
-      <%= @news_item.created_at.strftime '%Y-%m-%d' %>
-      <% if @news_item.expire_at && @news_item.expire_at < Time.now %>
-          <br/>Utløpt <b><%= "#{@news_item.expire_at.strftime('%F %R')}" %></b>.
+      <%= "Skrevet av #{news_item.creator.name}" if news_item.creator %>
+      <%= news_item.created_at.strftime '%Y-%m-%d' %>
+      <% if news_item.expire_at && news_item.expire_at < Time.now %>
+          <b>Utløpt</b> <%= "#{news_item.expire_at.strftime('%F %R')}" %>.
       <% end %>
     </div>
-    <% texts = [@news_item.summary, @news_item.body].select { |text| !text.blank? } %>
+    <% texts = [news_item.summary, news_item.body].select { |text| !text.blank? } %>
     <%= textalize(texts[0].strip) if texts[0] %>
     <% if texts[1] %>
         <% if full %>
             <%= textalize(texts[1].strip) %>
         <% else %>
             <p class="read_more">
-              <%= detour_to('Les mer...', @news_item) %>
+              <%= detour_to('Les mer...', news_item) %>
             </p>
         <% end %>
     <% end %>
 
     <% if user? %>
         <ul class="controls">
-          <li><%= detour_to 'Endre', edit_news_item_path(@news_item), :class => :edit %></li>
-          <li><%= detour_to 'Utløpt', {controller: :news, action: :expire, id: @news_item}, class: :edit, confirm: 'Er du sikker?', method: :post %></li>
-          <li><%= detour_to 'Slett', {controller: :news, action: :destroy, id: @news_item}, class: :edit, confirm: 'Er du sikker?', method: :delete %></li>
+          <li><%= detour_to 'Endre', edit_news_item_path(news_item), :class => :edit %></li>
+          <li><%= detour_to 'Utløpt', {controller: :news, action: :expire, id: news_item}, class: :edit, confirm: 'Er du sikker?', method: :post %></li>
+          <li><%= detour_to 'Slett', {controller: :news, action: :destroy, id: news_item}, class: :edit, confirm: 'Er du sikker?', method: :delete %></li>
           <% if admin? %>
               <li><%= back_or_link_to 'Tilbake', nil, :class => :edit %></li>
           <% end %>
