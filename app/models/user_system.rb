@@ -101,9 +101,7 @@ module UserSystem
 
   def store_current_user_in_thread
     return true if login_from_params
-    if session[:user_id]
-      self.current_user = User.find_by_id(session[:user_id])
-    end
+    self.current_user = User.find_by_id(session[:user_id]) if session[:user_id]
     login_from_cookie unless current_user
     true
   end

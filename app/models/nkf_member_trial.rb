@@ -5,8 +5,8 @@ class NkfMemberTrial < ActiveRecord::Base
 
   scope :for_group, ->(group) { where('alder BETWEEN ? AND ?', group.from_age, group.to_age) }
   scope :search, ->(query) do
-        where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) LIKE ?" }.join(' OR '), *(["%#{UnicodeUtils.upcase(query)}%"] * SEARCH_FIELDS.size)).
-            order(:fornavn, :etternavn).all
+        where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) LIKE ?" }.join(' OR '), *(["%#{UnicodeUtils.upcase(query)}%"] * SEARCH_FIELDS.size))
+            .order(:fornavn, :etternavn).all
       end
 
   validates_presence_of :alder, :epost, :etternavn, :fodtdato,

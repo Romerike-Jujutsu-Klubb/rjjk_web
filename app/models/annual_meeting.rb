@@ -2,9 +2,9 @@ class AnnualMeeting < ActiveRecord::Base
   has_many :elections, dependent: :destroy
 
   validate do
-    if id && start_at && self.class.
-        where('id <> ? AND EXTRACT(YEAR FROM start_at) = ?', id, start_at.year).
-        exists?
+    if id && start_at && self.class
+        .where('id <> ? AND EXTRACT(YEAR FROM start_at) = ?', id, start_at.year)
+        .exists?
       errors.add(:start_at, 'kan bare ha et årsmøte per år.')
     end
   end
@@ -18,7 +18,7 @@ class AnnualMeeting < ActiveRecord::Base
   end
 
   def board_members
-    elections.includes(:role).references(:roles).
-        where('roles.years_on_the_board IS NOT NULL').to_a.map(&:member)
+    elections.includes(:role).references(:roles)
+        .where('roles.years_on_the_board IS NOT NULL').to_a.map(&:member)
   end
 end

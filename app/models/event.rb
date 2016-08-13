@@ -23,7 +23,7 @@ class Event < ActiveRecord::Base
   validates_presence_of :start_at
 
   before_update do |r|
-    if !r.invitees.blank?
+    unless r.invitees.blank?
       r.invitees = r.invitees.gsub /^\s+/, ''
       r.invitees = r.invitees.gsub /\s+$/, ''
       r.invitees = r.invitees.gsub /\s+/, ' '
@@ -48,11 +48,7 @@ class Event < ActiveRecord::Base
 
   def body
     ingress = self.ingress
-    if ingress && description.size > ingress.size
-      description[ingress.size..-1]
-    else
-      nil
-    end
+    description[ingress.size..-1] if ingress && description.size > ingress.size
   end
 
   def size

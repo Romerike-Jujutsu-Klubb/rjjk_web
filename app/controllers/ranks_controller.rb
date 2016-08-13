@@ -26,8 +26,8 @@ class RanksController < ApplicationController
   def pdf
     @rank = current_user.member.next_rank
     filename = "Skill_Card_#{@rank.name}.pdf"
-    send_data SkillCard.pdf(@rank.group.ranks.
-        select { |r| r.position <= @rank.position }.sort_by(&:position)),
+    send_data SkillCard.pdf(@rank.group.ranks
+        .select { |r| r.position <= @rank.position }.sort_by(&:position)),
         type: 'text/pdf', filename: filename, disposition: 'attachment'
   end
 

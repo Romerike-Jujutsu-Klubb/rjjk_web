@@ -31,9 +31,9 @@ Med vennlig hilsen,
 Uwe Kubosch
 Romerike Jujutsu Klubb
 }
-      elsif message_type == MessageType::SIGNUP_REJECTION
-        self.subject ||= "Påmelding til #{event_invitee.event.name}"
-        self.body ||= %{Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
+    elsif message_type == MessageType::SIGNUP_REJECTION
+      self.subject ||= "Påmelding til #{event_invitee.event.name}"
+      self.body ||= %{Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
 men må dessverre meddele at du ikke har fått plass pga. plassmangel.
 
 Vi har din kontaktinfo og vil ta kontakt hvis det skulle bli ledig plass.

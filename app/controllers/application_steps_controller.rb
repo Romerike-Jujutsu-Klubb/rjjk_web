@@ -24,9 +24,9 @@ class ApplicationStepsController < ApplicationController
   end
 
   def image
-    step = ApplicationStep.
-        select('id, image_filename, image_content_type, image_content_data').
-        find(params[:id])
+    step = ApplicationStep
+        .select('id, image_filename, image_content_type, image_content_data')
+        .find(params[:id])
     if step.technique_application.rank > current_user.member.next_rank
       redirect_to login_path,
           notice: 'Du må ha høyere grad for å se på dette pensumet.'

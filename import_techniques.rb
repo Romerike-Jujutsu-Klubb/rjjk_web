@@ -39,7 +39,7 @@ ranks.each do |rank_name, rank_dir|
   Dir.chdir("#{IMPORT_DIR}/#{rank_dir}") do
     manifest = Nokogiri::HTML(File.read('pensum.html')) { |c| c.strict.nonet }
     appendix = manifest.css('head link').map do |link|
-      Nokogiri::HTML(File.read link['href']).css('body').children.to_html
+      Nokogiri::HTML(File.read(link['href'])).css('body').children.to_html
     end.join
 
     doc = Nokogiri::HTML(manifest.css('body').children.to_html + appendix)
@@ -71,15 +71,13 @@ ranks.each do |rank_name, rank_dir|
     basics = split.map { |n, t| [n.sub(/\s+waza\s*/, ''), t.split(/,\s*/).map(&:downcase)] }
     basics.each do |waza_name, tecs|
       puts "#{waza_name && waza_name.strip}: #{tecs.inspect}"
-      unless DUMP
-        waza = Waza.where(:name => waza_name).first_or_create!
-      end
+      waza = Waza.where(:name => waza_name).first_or_create! unless DUMP
       tecs.each do |t|
         unless DUMP
           begin
-            bt = waza.basic_techniques.
-                where(BasicTechnique.arel_table[:name].matches(t)).
-                first_or_create!(name: t)
+            bt = waza.basic_techniques
+                .where(BasicTechnique.arel_table[:name].matches(t))
+                .first_or_create!(name: t)
             bt.update_attributes!(name: t, rank_id: rank.id)
           rescue
             puts "Failed: #{t}: #{$!}"
@@ -99,8 +97,8 @@ ranks.each do |rank_name, rank_dir|
       puts "#{name} (#{system}):"
       begin
         unless DUMP
-          ta = TechniqueApplication.where(name: name, rank_id: rank.id).
-              first_or_create!(system: system)
+          ta = TechniqueApplication.where(name: name, rank_id: rank.id)
+              .first_or_create!(system: system)
           ta.application_steps.delete_all
         end
         steps = a.css('p')

@@ -13,9 +13,9 @@ class User < ActiveRecord::Base
   # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
   SEARCH_FIELDS = [:email, :first_name, :last_name, :login]
   scope :search, ->(query) {
-    where(SEARCH_FIELDS.map { |c| "to_tsvector(UPPER(#{c})) @@ to_tsquery(?)" }.
-        join(' OR '), *(["#{UnicodeUtils.upcase(query).split(/\s+/).join(' | ')}"] * SEARCH_FIELDS.size)).
-        order(:first_name, :last_name)
+    where(SEARCH_FIELDS.map { |c| "to_tsvector(UPPER(#{c})) @@ to_tsquery(?)" }
+        .join(' OR '), *(["#{UnicodeUtils.upcase(query).split(/\s+/).join(' | ')}"] * SEARCH_FIELDS.size))
+        .order(:first_name, :last_name)
   }
 
   CHANGEABLE_FIELDS = %w(first_name last_name email)
@@ -65,12 +65,12 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(login, pass)
-    users = includes(:member).references(:members).
-        where('(login = ? OR users.email = ? OR (members.email IS NOT NULL AND members.email = ?)) AND verified = ? AND (deleted IS NULL OR deleted = ?)',
+    users = includes(:member).references(:members)
+        .where('(login = ? OR users.email = ? OR (members.email IS NOT NULL AND members.email = ?)) AND verified = ? AND (deleted IS NULL OR deleted = ?)',
         login, login, login, true, false).to_a
-    users.
-        select { |u| u.salted_password == salted_password(u.salt, hashed(pass)) }.
-        first
+    users
+        .select { |u| u.salted_password == salted_password(u.salt, hashed(pass)) }
+        .first
   end
 
   # Allow logins for deleted accounts, but only via this method

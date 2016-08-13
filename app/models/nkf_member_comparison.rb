@@ -10,19 +10,19 @@ class NkfMemberComparison
   end
 
   def fetch
-    @orphan_nkf_members = NkfMember.where(member_id: nil).
-        order(:fornavn, :etternavn).to_a
+    @orphan_nkf_members = NkfMember.where(member_id: nil)
+        .order(:fornavn, :etternavn).to_a
     @orphan_members = NkfMember.find_free_members
     @members = []
-    nkf_members = NkfMember.where('member_id IS NOT NULL').
-        order(:fornavn, :etternavn).to_a
+    nkf_members = NkfMember.where('member_id IS NOT NULL')
+        .order(:fornavn, :etternavn).to_a
     nkf_members.each do |nkfm|
       member = nkfm.member
       member.attributes = nkfm.converted_attributes
       nkf_group_names =
           if nkfm.gren_stilart_avd_parti___gren_stilart_avd_parti
-            nkfm.gren_stilart_avd_parti___gren_stilart_avd_parti.
-                split(/ - /).map { |n| n.split('/')[3] }
+            nkfm.gren_stilart_avd_parti___gren_stilart_avd_parti
+                .split(/ - /).map { |n| n.split('/')[3] }
           else
             []
           end
@@ -63,9 +63,9 @@ class NkfMemberComparison
     @group_changes = Hash.new { |h, k| h[k] = [[], []] }
     (@new_members + @members).each do |member|
       if member.nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti
-        nkf_group_names = member.nkf_member.
-            gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /).
-            map { |n| n.split('/')[3] }
+        nkf_group_names = member.nkf_member
+            .gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /)
+            .map { |n| n.split('/')[3] }
       else
         logger.error "No groups: #{member.nkf_member.inspect}"
         nkf_group_names = []

@@ -9,8 +9,8 @@ class GraduationReminder
     month_start = Date.civil(Date.today.year, (Date.today.mon >= 6) ? 12 : 6)
     second_week = month_start + (7 - month_start.wday)
     missing_groups.each do |g|
-      instructor = Semester.current.group_semesters.
-          find { |gs| gs.group_id == g.id }.try(:chief_instructor)
+      instructor = Semester.current.group_semesters
+          .find { |gs| gs.group_id == g.id }.try(:chief_instructor)
       next unless instructor
 
       suggested_date = second_week + g.group_schedules.first.weekday
@@ -28,9 +28,9 @@ class GraduationReminder
 
   def self.notify_overdue_graduates
     today = Date.today
-    members = Member.active(today).
-        includes(:ranks, attendances: { practice: { :group_schedule => :group } }).
-        to_a
+    members = Member.active(today)
+        .includes(:ranks, attendances: { practice: { :group_schedule => :group } })
+        .to_a
     overdue_graduates = members.select do |m|
       minimum_attendances = m.next_rank.minimum_attendances
       attendances_since_graduation = m.attendances_since_graduation.size
@@ -70,10 +70,10 @@ class GraduationReminder
   end
 
   def self.notify_missing_aprovals
-    Censor.includes(:graduation, :member).references(:graduations).
-        where('approved_grades_at IS NULL AND graduations.held_on < CURRENT_DATE AND user_id IS NOT NULL').
-        order('graduations.held_on').
-        each do |censor|
+    Censor.includes(:graduation, :member).references(:graduations)
+        .where('approved_grades_at IS NULL AND graduations.held_on < CURRENT_DATE AND user_id IS NOT NULL')
+        .order('graduations.held_on')
+        .each do |censor|
       GraduationMailer.missing_approval(censor).store(censor.member.user_id)
     end
   rescue

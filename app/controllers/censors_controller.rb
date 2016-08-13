@@ -5,8 +5,8 @@ class CensorsController < ApplicationController
   before_filter :admin_required, except: [:create, :destroy, *CENSOR_ACTIONS]
 
   def index
-    @censors = Censor.includes(:graduation).order('graduations.held_on DESC').
-        paginate(page: params[:page], per_page: 10)
+    @censors = Censor.includes(:graduation).order('graduations.held_on DESC')
+        .paginate(page: params[:page], per_page: 10)
   end
 
   def list_instructors
@@ -22,11 +22,11 @@ class CensorsController < ApplicationController
         <td width=20>&nbsp;</td>
       </tr>
 EOH
-    for instr in @instructors
+    @instructors.each do |instr|
       fn = instr.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
       ln = instr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
       nm = fn << ' ' << ln
-      rstr = rstr << "<tr id='censor_#{instr.id}'>" <<
+      rstr = rstr << "<tr id='censor_#{instr.id}'>" \
           "<td><a href='#' onClick='add_censor(" + instr.id.to_s + ",\"" + nm + "\");'>" <<
           nm << '</a></td>'
       '</tr>'

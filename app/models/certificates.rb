@@ -18,7 +18,7 @@ class Certificates
         case layout
         when 1
           rotate 0.5 do
-            image "#{Rails::root}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.jpg",
+            image "#{Rails.root}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.jpg",
                   :at => [1, page_height - 4],
                   :width => page_width,
                   :height => page_height
@@ -29,7 +29,7 @@ class Certificates
           fill_rectangle [(page_width - logo_width) / 2 - 5, page_height - 1], logo_width + 5, logo_width
           fill_color '000000'
 
-          image "#{Rails::root}/app/views/graduations/logo_RJJK_notext.jpg",
+          image "#{Rails.root}/app/views/graduations/logo_RJJK_notext.jpg",
                 :at => [(page_width - logo_width) / 2, page_height - 5],
                 :width => logo_width
           # Mask old labels
@@ -39,29 +39,29 @@ class Certificates
           fill_color '000000'
         when 2
           scale = -0.05
-          image "#{Rails::root}/app/views/graduations/Style_of_Phoenix_border_A4_Landscape.jpg",
+          image "#{Rails.root}/app/views/graduations/Style_of_Phoenix_border_A4_Landscape.jpg",
                 :at => [page_width * (0 - scale) - 1, page_height * (1 + scale / 2) - 1],
                 :width => page_width * (1 + scale),
                 :height => page_height * (1 + scale)
           logo_width = 85 * (1 + scale)
 
-          image "#{Rails::root}/app/views/graduations/logo_RJJK_notext.jpg",
+          image "#{Rails.root}/app/views/graduations/logo_RJJK_notext.jpg",
                 :at => [(page_width - logo_width) / 2, page_height - 5],
                 :width => logo_width
         when 3
           scale = -0.025
           logo_width = 120
-          image "#{Rails::root}/app/views/graduations/logo_RJJK_notext.jpg",
+          image "#{Rails.root}/app/views/graduations/logo_RJJK_notext.jpg",
                 :at => [(page_width - logo_width) / 2 - 2, page_height - 1],
                 :width => logo_width
-          image "#{Rails::root}/app/views/graduations/custome_rank_certificate.png",
+          image "#{Rails.root}/app/views/graduations/custome_rank_certificate.png",
                 :at => [0, page_height * (1 + scale) - 1],
                 :width => page_width,
                 :height => page_height * (1 + scale)
           kanji_scale = 2.5
           kanji_width = 126 / kanji_scale
           kanji_height = 674 / kanji_scale
-          image "#{Rails::root}/app/views/graduations/KeiWaRyuKanji.png",
+          image "#{Rails.root}/app/views/graduations/KeiWaRyuKanji.png",
                 :at => [org_right_center - kanji_width / 2, (page_height * 0.4) + kanji_height / 2],
                 :width => kanji_width, :height => kanji_height
         end

@@ -10,9 +10,9 @@ class GroupInstructor < ActiveRecord::Base
   belongs_to :member
 
   scope :active, ->(date = Date.today) do
-    includes(group_semester: :semester).
-        references(:semesters).
-        where('semesters.start_on <= :date AND semesters.end_on >= :date',
+    includes(group_semester: :semester)
+        .references(:semesters)
+        .where('semesters.start_on <= :date AND semesters.end_on >= :date',
             date: date)
   end
 

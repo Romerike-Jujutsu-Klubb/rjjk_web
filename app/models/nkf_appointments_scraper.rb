@@ -20,28 +20,28 @@ class NkfAppointmentsScraper
       }[r[1]] || r[1]
       role = Role.where(name: role_name).first_or_create!
       member_name = r[0]
-      m = Member.
-          where("(members.last_name || ' ' || members.first_name) = ?",
-              member_name).
-          first
+      m = Member
+          .where("(members.last_name || ' ' || members.first_name) = ?",
+              member_name)
+          .first
       next "Ukjent medlem: #{member_name}" if m.nil?
       date = Date.strptime(r[5], '%d.%m.%Y')
       if role.on_the_board?
-        annual_meeting = AnnualMeeting.
-            where("DATE((start_at AT TIME ZONE 'UTC') AT TIME ZONE 'CET') = ?", date).first
+        annual_meeting = AnnualMeeting
+            .where("DATE((start_at AT TIME ZONE 'UTC') AT TIME ZONE 'CET') = ?", date).first
         next "Ukjent årsmøtedato: #{r[5]} (#{r[0]} #{role_name})" if annual_meeting.nil?
-        Election.includes(:member, :role).
-            where(annual_meeting_id: annual_meeting.id, role_id: role.id, years: role.years_on_the_board, member_id: m.id).
-            first_or_initialize
+        Election.includes(:member, :role)
+            .where(annual_meeting_id: annual_meeting.id, role_id: role.id, years: role.years_on_the_board, member_id: m.id)
+            .first_or_initialize
       else
-        Appointment.includes(:member, :role).
-            where(role_id: role.id, member_id: m.id, from: date).
-            first_or_initialize(to: r[6].blank? ? nil : Date.strptime(r[6], '%d.%m.%Y'))
+        Appointment.includes(:member, :role)
+            .where(role_id: role.id, member_id: m.id, from: date)
+            .first_or_initialize(to: r[6].blank? ? nil : Date.strptime(r[6], '%d.%m.%Y'))
       end
     end
     appointments.select { |a| a.is_a?(String) } +
-        appointments.select { |a| !a.is_a?(String) && a.changed? }.
-            each(&:save!).sort_by(&:from)
+        appointments.select { |a| !a.is_a?(String) && a.changed? }
+            .each(&:save!).sort_by(&:from)
   end
 
   def self.login(agent)

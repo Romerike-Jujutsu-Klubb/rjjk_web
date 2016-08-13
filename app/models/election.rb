@@ -5,8 +5,8 @@ class Election < ActiveRecord::Base
 
   validates_presence_of :member_id, :role_id
 
-  scope :current, -> { includes(:annual_meeting).references(:annual_meetings).
-      where(<<~SQL, now: Time.now) }
+  scope :current, -> { includes(:annual_meeting).references(:annual_meetings)
+      .where(<<~SQL, now: Time.now)
         annual_meetings.start_at <= :now
           AND (annual_meetings.start_at + interval '1 year' * years + interval '1 month') >= :now
           AND NOT EXISTS (
@@ -16,6 +16,7 @@ class Election < ActiveRecord::Base
               AND am2.start_at <= :now
           )
         SQL
+  }
 
   def from
     annual_meeting.start_at.to_date

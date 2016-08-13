@@ -49,7 +49,7 @@ class MemberHistoryGraph
     # g.draw_vertical_legend
 
     precision = 1
-    g.maximum_value = (g.maximum_value.to_s[0..precision].to_i + 1) * (10**(Math::log10(g.maximum_value.to_i).to_i - precision)) if g.maximum_value > 0
+    g.maximum_value = (g.maximum_value.to_s[0..precision].to_i + 1) * (10**(Math.log10(g.maximum_value.to_i).to_i - precision)) if g.maximum_value > 0
     g.maximum_value = [100, g.maximum_value].max
     g.marker_count = g.maximum_value / 10
     g.to_blob
@@ -68,30 +68,35 @@ class MemberHistoryGraph
   end
 
   def self.totals_jj(dates)
-    dates.map {|date| Member.includes(groups: :martial_art).references(:martial_arts).
-        where("(#{eval ACTIVE_CLAUSE}) AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')").
-        count}
+    dates.map {|date| Member.includes(groups: :martial_art).references(:martial_arts)
+        .where("(#{eval ACTIVE_CLAUSE}) AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')")
+        .count
+    }
   end
 
   def self.seniors_jj(dates)
-    dates.map {|date| Member.
-        where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate < '#{self.senior_birthdate(date)}' AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')").
-        references(:martial_arts).includes(groups: :martial_art).count}
+    dates.map {|date| Member
+        .where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate < '#{self.senior_birthdate(date)}' AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')")
+        .references(:martial_arts).includes(groups: :martial_art).count
+    }
   end
 
   def self.juniors_jj(dates)
-    dates.map {|date| Member.where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate BETWEEN ? AND ? AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')", self.senior_birthdate(date), self.junior_birthdate(date)).
-        references(:martial_arts).includes(groups: :martial_art).count}
+    dates.map {|date| Member.where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate BETWEEN ? AND ? AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')", self.senior_birthdate(date), self.junior_birthdate(date))
+        .references(:martial_arts).includes(groups: :martial_art).count
+    }
   end
 
   def self.seniors_ad(dates)
-    dates.map {|date| Member.where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate < '#{self.senior_birthdate(date)}' AND martial_arts.name = 'Aikikai'").
-        references(:martial_arts).includes(groups: :martial_art).count}
+    dates.map {|date| Member.where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate < '#{self.senior_birthdate(date)}' AND martial_arts.name = 'Aikikai'")
+        .references(:martial_arts).includes(groups: :martial_art).count
+    }
   end
 
   def self.juniors_ad(dates)
-    dates.map {|date| Member.where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate >= '#{self.senior_birthdate(date)}' AND martial_arts.name = 'Aikikai'").
-        references(:martial_arts).includes(groups: :martial_art).count}
+    dates.map {|date| Member.where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate >= '#{self.senior_birthdate(date)}' AND martial_arts.name = 'Aikikai'")
+        .references(:martial_arts).includes(groups: :martial_art).count
+    }
   end
 
   def self.aspirants(dates)

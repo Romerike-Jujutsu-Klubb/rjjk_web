@@ -2,9 +2,9 @@ class ElectionsController < ApplicationController
   before_filter :admin_required
 
   def index
-    @meetings = Election.includes(:annual_meeting, :role).
-        order('annual_meetings.start_at DESC, years, roles.name').to_a.
-        group_by(&:annual_meeting)
+    @meetings = Election.includes(:annual_meeting, :role)
+        .order('annual_meetings.start_at DESC, years, roles.name').to_a
+        .group_by(&:annual_meeting)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @elections }
@@ -76,10 +76,10 @@ class ElectionsController < ApplicationController
 
   def load_form_data
     @annual_meetings = AnnualMeeting.order(:start_at).reverse_order.to_a
-    @roles = Role.
-        where('years_on_the_board IS NOT NULL OR id = ?', @election.role_id).
-        order(:name).to_a
-    @members = ([@election.member].compact + Member.active(@election.annual_meeting.try(:date)).
-        order(:first_name, :last_name).to_a).uniq
+    @roles = Role
+        .where('years_on_the_board IS NOT NULL OR id = ?', @election.role_id)
+        .order(:name).to_a
+    @members = ([@election.member].compact + Member.active(@election.annual_meeting.try(:date))
+        .order(:first_name, :last_name).to_a).uniq
   end
 end

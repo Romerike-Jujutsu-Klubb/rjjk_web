@@ -18,8 +18,8 @@ class AnnualMeetingReminder
 
   def self.notify_missing_invitation
     return if Date.today.mon >= 2 && Date.today.mon < 10
-    next_meeting = AnnualMeeting.where('start_at >= ?', Date.today).
-        order(:start_at).first
+    next_meeting = AnnualMeeting.where('start_at >= ?', Date.today)
+        .order(:start_at).first
     return if next_meeting.try(:invitation_sent_at)
     return if next_meeting.start_at > 6.weeks.from_now
     am = AnnualMeeting.order(:start_at).last

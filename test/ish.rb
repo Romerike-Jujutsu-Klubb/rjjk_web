@@ -31,8 +31,8 @@ class ApproxTime
     @acceptable_delta = acceptable_delta
   end
 
-  def ==(o)
-    return false if @time.nil? || o.nil?
-    (@time - o).abs < @acceptable_delta
+  def ==(other)
+    return false if @time.nil? || other.nil?
+    (@time - other).abs < @acceptable_delta
   end
 end

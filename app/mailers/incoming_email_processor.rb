@@ -21,8 +21,8 @@ class IncomingEmailProcessor
   PREFIX_PATTERN = '(\b(?:Re|Fwd):\s*)'
 
   def self.forward_emails
-    RawIncomingEmail.where(processed_at: nil, postponed_at: nil).
-        order(:created_at).limit(1).each do |raw_email|
+    RawIncomingEmail.where(processed_at: nil, postponed_at: nil)
+        .order(:created_at).limit(1).each do |raw_email|
       logger.debug "Forward email (#{raw_email.id}):"
       logger.debug raw_email.content
       email = Mail.read_from_string(raw_email.content)

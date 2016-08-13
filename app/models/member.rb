@@ -67,9 +67,9 @@ class Member < ActiveRecord::Base
       :billing_email, :email, :first_name, :last_name, :parent_email,
       :parent_name, :phone_home, :phone_mobile, :phone_parent, :phone_work]
   scope :search, ->(query) {
-    where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ ?" }.
-            join(' OR '), *(["#{UnicodeUtils.upcase(query).split(/\s+/).join('|')}"] * SEARCH_FIELDS.size)).
-        order(:first_name, :last_name)
+    where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ ?" }
+            .join(' OR '), *(["#{UnicodeUtils.upcase(query).split(/\s+/).join('|')}"] * SEARCH_FIELDS.size))
+        .order(:first_name, :last_name)
   }
 
   NILLABLE_FIELDS = [:parent_name, :phone_home, :phone_mobile, :phone_work]
@@ -95,9 +95,9 @@ class Member < ActiveRecord::Base
   end
 
   def self.instructors(date = Date.today)
-    active(date).
-        where('instructor = true OR id IN (SELECT member_id FROM group_instructors GROUP BY member_id)').
-        order('first_name, last_name').to_a
+    active(date)
+        .where('instructor = true OR id IN (SELECT member_id FROM group_instructors GROUP BY member_id)')
+        .order('first_name, last_name').to_a
   end
 
   def self.create_corresponding_user!(attrs)

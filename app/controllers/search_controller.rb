@@ -9,8 +9,8 @@ class SearchController < ApplicationController
         @trials = NkfMemberTrial.search(@query).to_a
       end
 
-      @pages = InformationPage.
-          where('UPPER(title) LIKE ? OR UPPER(body) LIKE ?',
+      @pages = InformationPage
+          .where('UPPER(title) LIKE ? OR UPPER(body) LIKE ?',
                 *(["%#{UnicodeUtils.upcase(@query)}%"] * 2))
     end
   end

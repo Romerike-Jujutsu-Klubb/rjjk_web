@@ -45,9 +45,7 @@ class AttendanceMailer < ActionMailer::Base
     if new_attendees.any?
       change_msg << "#{new_attendees.size} ny#{'e' if new_attendees.size > 1} deltaker#{'e' if new_attendees.size > 1} påmeldt"
     end
-    if new_absentees.any?
-      change_msg << "#{new_absentees.size} avbud"
-    end
+    change_msg << "#{new_absentees.size} avbud" if new_absentees.any?
     @title = "Trening i #{@group_schedule.start_at.day_phase}: #{change_msg.join(', ')}"
     @timestamp = Time.now
     @email_url = with_login(recipient.user, :controller => :attendances, :action => :plan)

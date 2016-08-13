@@ -19,8 +19,8 @@ class Rank < ActiveRecord::Base
   validates_uniqueness_of :position, scope: :martial_art_id
 
   def minimum_age
-    group.from_age + (group.ranks.select { |r| r.position <= self.position }[1..-1].
-        inject(0.0) { |s, r| s + r.standard_months.to_f } / 12.0).to_i
+    group.from_age + (group.ranks.select { |r| r.position <= self.position }[1..-1]
+        .inject(0.0) { |s, r| s + r.standard_months.to_f } / 12.0).to_i
   end
 
   def minimum_attendances

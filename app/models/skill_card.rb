@@ -13,7 +13,7 @@ class SkillCard
         logo_width = 180
         float do
           transparent(0.05) do
-            image "#{Rails::root}/app/views/graduations/logo_RJJK_notext.jpg",
+            image "#{Rails.root}/app/views/graduations/logo_RJJK_notext.jpg",
                 :width => logo_width, :position => :center, :vposition => :center
           end
         end

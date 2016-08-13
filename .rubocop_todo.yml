@@ -218,51 +218,6 @@ Style/BlockDelimiters:
 
 # Offense count: 9
 # Cop supports --auto-correct.
-Style/BlockEndNewline:
-  Exclude:
-    - 'app/controllers/group_instructors_controller.rb'
-    - 'app/models/appointment.rb'
-    - 'app/models/election.rb'
-    - 'app/models/member_grade_history_graph.rb'
-    - 'app/models/member_history_graph.rb'
-
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: braces, no_braces, context_dependent
-Style/BracesAroundHashParameters:
-  Exclude:
-    - 'app/controllers/birthday_celebrations_controller.rb'
-    - 'app/controllers/graduations_controller.rb'
-    - 'config/deploy.rb'
-    - 'config/initializers/exception_notification.rb'
-    - 'test/mailers/nkf_replication_test.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: IndentWhenRelativeTo, SupportedStyles, IndentOneStep, IndentationWidth.
-# SupportedStyles: case, end
-Style/CaseIndentation:
-  Exclude:
-    - 'app/models/nkf_member_import.rb'
-
-# Offense count: 9
-# Cop supports --auto-correct.
-Style/ColonMethodCall:
-  Exclude:
-    - 'app/models/certificates.rb'
-    - 'app/models/member_history_graph.rb'
-    - 'app/models/skill_card.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/CommentIndentation:
-  Exclude:
-    - 'app/mailers/information_page_notifier.rb'
-    - 'app/models/nkf_appointments_scraper.rb'
-
-# Offense count: 9
-# Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, SingleLineConditionsOnly.
 # SupportedStyles: assign_to_condition, assign_inside_condition
 Style/ConditionalAssignment:
@@ -278,13 +233,6 @@ Style/ConditionalAssignment:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 150
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: leading, trailing
-Style/DotPosition:
-  Enabled: false
-
 # Offense count: 5
 Style/DoubleNegation:
   Exclude:
@@ -292,29 +240,6 @@ Style/DoubleNegation:
     - 'app/models/member.rb'
     - 'app/models/role.rb'
     - 'app/models/user_system.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/ElseAlignment:
-  Exclude:
-    - 'app/controllers/members_controller.rb'
-    - 'app/models/event_invitee_message.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: empty, nil, both
-Style/EmptyElse:
-  Exclude:
-    - 'app/models/event.rb'
-    - 'app/models/nkf_member.rb'
-
-# Offense count: 1
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: for, each
-Style/For:
-  Exclude:
-    - 'app/controllers/censors_controller.rb'
 
 # Offense count: 470
 # Cop supports --auto-correct.
@@ -336,18 +261,6 @@ Style/GuardClause:
 # SupportedStyles: ruby19, ruby19_no_mixed_keys, hash_rockets
 Style/HashSyntax:
   Enabled: false
-
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: MaxLineLength.
-Style/IfUnlessModifier:
-  Exclude:
-    - 'app/controllers/user_controller.rb'
-    - 'app/mailers/attendance_mailer.rb'
-    - 'app/models/attendance_history_graph.rb'
-    - 'app/models/nkf_member_import.rb'
-    - 'app/models/user_system.rb'
-    - 'import_techniques.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -398,21 +311,6 @@ Style/IndentationWidth:
     - 'db/migrate/008_update_login_sugar.rb'
     - 'db/migrate/20080902132010_widen_rank_color_name.rb'
     - 'db/migrate/20080902133038_widen_rank_color_name_again.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/LineEndConcatenation:
-  Exclude:
-    - 'app/controllers/censors_controller.rb'
-    - 'app/controllers/graduations_controller.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: require_parentheses, require_no_parentheses, require_no_parentheses_except_multiline
-Style/MethodDefParentheses:
-  Exclude:
-    - 'test/features/news_feature_test.rb'
 
 # Offense count: 1
 # Configuration parameters: EnforcedStyle, SupportedStyles.
@@ -499,20 +397,6 @@ Style/MultilineTernaryOperator:
 Style/MutableConstant:
   Enabled: false
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/NegatedIf:
-  Exclude:
-    - 'app/models/event.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/NestedParenthesizedCalls:
-  Exclude:
-    - 'app/models/nkf_member.rb'
-    - 'import_techniques.rb'
-    - 'test/mailers/attendance_nagger_test.rb'
-
 # Offense count: 9
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, MinBodyLength, SupportedStyles.
@@ -560,11 +444,6 @@ Style/NumericPredicate:
     - 'app/models/member_history_graph.rb'
     - 'app/models/nkf_member_import.rb'
     - 'test/capybara_setup.rb'
-
-# Offense count: 1
-Style/OpMethod:
-  Exclude:
-    - 'test/ish.rb'
 
 # Offense count: 1
 Style/OptionalArguments:

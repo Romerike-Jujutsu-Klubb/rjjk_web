@@ -56,8 +56,8 @@ class NkfMember < ActiveRecord::Base
   validates_uniqueness_of :member_id, :allow_nil => true
 
   def self.find_free_members
-    Member.where("(left_on IS NULL OR left_on >= '2009-01-01') AND id NOT IN (SELECT member_id FROM nkf_members WHERE member_id IS NOT NULL)").
-        order('first_name, last_name').to_a
+    Member.where("(left_on IS NULL OR left_on >= '2009-01-01') AND id NOT IN (SELECT member_id FROM nkf_members WHERE member_id IS NOT NULL)")
+        .order('first_name, last_name').to_a
   end
 
   def self.update_group_prices
@@ -86,8 +86,6 @@ class NkfMember < ActiveRecord::Base
             v = nil
           end
           new_attributes[mapped_attribute] = v
-        else
-          # Ignoring attribute
         end
       else
         logger.error "Unknown attribute: #{k}"
@@ -99,8 +97,8 @@ class NkfMember < ActiveRecord::Base
   def create_corresponding_member!
     transaction do
       u = Member.create_corresponding_user! converted_attributes
-      member = create_member!(converted_attributes.update instructor: false,
-              nkf_fee: true, payment_problem: false, user: u)
+      member = create_member!(converted_attributes.update(instructor: false,
+              nkf_fee: true, payment_problem: false, user: u))
 
       # FIXME(uwe):  Is this line needed?  Is the value not set by create_member! ?
       member.nkf_member = self

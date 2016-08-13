@@ -35,8 +35,8 @@ class NewsItem < ActiveRecord::Base
 
   def cleanup_html(field)
     return unless field
-    field.gsub(/(<td[^>]*>\s*)<p>((?:(?!<\/td>).)*)<\/p>(\s*<\/td>)/, '\1\2\3').
-        gsub(/<table>/, '<table class="table">').
-        gsub(/\s*<p>(\s*|&nbsp;)*<\/p>\s*/, '')
+    field.gsub(/(<td[^>]*>\s*)<p>((?:(?!<\/td>).)*)<\/p>(\s*<\/td>)/, '\1\2\3')
+        .gsub(/<table>/, '<table class="table">')
+        .gsub(/\s*<p>(\s*|&nbsp;)*<\/p>\s*/, '')
   end
 end

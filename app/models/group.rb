@@ -43,10 +43,10 @@ class Group < ActiveRecord::Base
 
   def registered_trainings_in_period(period)
     return 0 if group_schedules.empty?
-    Practice.
-        where(*["status = 'X' AND group_schedule_id IN (?) AND (year > ? OR (year = ? AND week >= ?)) AND (year < ? OR (year = ? AND week <= ?))",
-        group_schedules.map(&:id), *([[period.first.year] * 2, period.first.cweek, [period.last.year] * 2, period.last.cweek]).flatten]).
-        all.size
+    Practice
+        .where(*["status = 'X' AND group_schedule_id IN (?) AND (year > ? OR (year = ? AND week >= ?)) AND (year < ? OR (year = ? AND week <= ?))",
+        group_schedules.map(&:id), *([[period.first.year] * 2, period.first.cweek, [period.last.year] * 2, period.last.cweek]).flatten])
+        .all.size
   end
 
   def active?(date = Date.today)
@@ -69,16 +69,16 @@ class Group < ActiveRecord::Base
   end
 
   def instructors
-    group_schedules.map(&:group_instructors).flatten.select(&:active?).
-        map(&:member).uniq.
-        sort_by { |m| -(m.current_rank.try(:position) || -99) }
+    group_schedules.map(&:group_instructors).flatten.select(&:active?)
+        .map(&:member).uniq
+        .sort_by { |m| -(m.current_rank.try(:position) || -99) }
   end
 
   def trials
-    NkfMemberTrial.for_group(self).
-        includes(:trial_attendances => { :practice => :group_schedule }).
-        order('fornavn, etternavn').
-        to_a
+    NkfMemberTrial.for_group(self)
+        .includes(:trial_attendances => { :practice => :group_schedule })
+        .order('fornavn, etternavn')
+        .to_a
   end
 
   def waiting_list

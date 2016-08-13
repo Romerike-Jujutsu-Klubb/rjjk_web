@@ -151,9 +151,7 @@ class UserController < ApplicationController
                 unclean_params.delete_if { |k, *| not User::CHANGEABLE_FIELDS.include?(k) }
               end
           @user.attributes = user_params
-          if @user.save
-            flash.now['notice'] = 'User has been updated.'
-          end
+          flash.now['notice'] = 'User has been updated.' if @user.save
         when 'change_password'
           change_password
         when 'delete'

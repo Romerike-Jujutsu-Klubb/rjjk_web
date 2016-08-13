@@ -108,7 +108,7 @@ class NkfMemberImport
   def in_parallel(values)
     queue = Queue.new
     values.each { |value| queue << value }
-    threads = CONCURRENT_REQUESTS.times.map do
+    threads = Array.new(CONCURRENT_REQUESTS) do
       Thread.start do
         begin
           loop { yield queue.pop(true) }
@@ -217,16 +217,14 @@ class NkfMemberImport
       attributes = {}
       columns.each_with_index do |column, i|
         next if %w{aktivitetsomrade_id aktivitetsomrade_navn alder avtalegiro
-                 beltefarge dan_graderingsserifikat forbundskontingent}.
-            include? column
+                 beltefarge dan_graderingsserifikat forbundskontingent}
+            .include? column
         attributes[column] = row[i] && row[i].strip
       end
       record = NkfMember.find_by_medlemsnummer(row[0]) || NkfMember.new
       if record.member_id.nil?
         member = Member.where('UPPER(first_name) = ? AND UPPER(last_name) = ?', UnicodeUtils.upcase(attributes['fornavn']), UnicodeUtils.upcase(attributes['etternavn'])).to_a.find { |m| m.nkf_member.nil? }
-        if member
-          attributes['member_id'] = member.id
-        end
+        attributes['member_id'] = member.id if member
       end
       begin
         record.attributes = attributes

@@ -18,8 +18,8 @@ class AttendanceHistoryGraph
     totals_sessions = Array.new(weeks.size - 1, 0)
     Group.order('martial_art_id, from_age DESC, to_age').to_a.each do |group|
       attendances = weeks.each_cons(2).map do |w1, w2|
-        Attendance.by_group_id(group.id).includes(:practice).
-            where('(practices.year > ? OR (practices.year = ? AND practices.week > ?)) AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
+        Attendance.by_group_id(group.id).includes(:practice)
+            .where('(practices.year > ? OR (practices.year = ? AND practices.week > ?)) AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
                   w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).to_a +
             TrialAttendance.by_group_id(group.id).where('(year > ? OR (year = ? AND week > ?)) AND (year < ? OR (year = ? AND week <= ?))',
                                                         w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).to_a
@@ -65,21 +65,19 @@ class AttendanceHistoryGraph
     g.x_axis_label = 'Dag'
     first_date = Date.civil(year, month, 1)
     last_date = Date.civil(year, month, -1)
-    attendances = Attendance.includes(:practice).references(:practices).
-        where('practices.year = ? AND practices.week >= ? AND practices.week <= ? AND attendances.status NOT IN (?)',
-              year, first_date.cweek, last_date.cweek, Attendance::ABSENT_STATES).
-        to_a.select { |a| a.date >= first_date && a.date <= last_date && a.date <= Date.today }
+    attendances = Attendance.includes(:practice).references(:practices)
+        .where('practices.year = ? AND practices.week >= ? AND practices.week <= ? AND attendances.status NOT IN (?)',
+              year, first_date.cweek, last_date.cweek, Attendance::ABSENT_STATES)
+        .to_a.select { |a| a.date >= first_date && a.date <= last_date && a.date <= Date.today }
     group_schedules = attendances.map(&:group_schedule).uniq
     groups = group_schedules.map(&:group).uniq.sort_by(&:from_age)
     dates = attendances.map(&:date).sort.uniq
     g.labels = Hash[*dates.map { |d| [d.day, d.day.to_s] }.flatten]
     groups.each do |group|
-      values = dates.select { |d| group.group_schedules.map(&:weekday).include? d.cwday }.
-          map { |d| [d.day, attendances.select { |a| a.group_schedule.group == group && a.date == d }.size] }
+      values = dates.select { |d| group.group_schedules.map(&:weekday).include? d.cwday }
+          .map { |d| [d.day, attendances.select { |a| a.group_schedule.group == group && a.date == d }.size] }
       values.map! { |k, v| [k, v > 0 ? v : nil] }
-      if values.any? { |v| v }
-        g.dataxy(group.name, values, nil, group.color)
-      end
+      g.dataxy(group.name, values, nil, group.color) if values.any? { |v| v }
     end
     g.y_axis_increment = 5 if g.maximum_value && g.maximum_value >= 10
     g.minimum_value = 0

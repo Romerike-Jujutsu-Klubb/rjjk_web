@@ -6,9 +6,9 @@ class GraduationsController < ApplicationController
   before_filter :authenticate_user, only: CENSOR_ACTIONS
 
   def index
-    @graduations = Graduation.includes(:group).references(:groups).
-        order('held_on DESC, group_id DESC').where('groups.martial_art_id = 1').
-        to_a.group_by(&:held_on)
+    @graduations = Graduation.includes(:group).references(:groups)
+        .order('held_on DESC, group_id DESC').where('groups.martial_art_id = 1')
+        .to_a.group_by(&:held_on)
     @groups = Group.order('from_age DESC').to_a
   end
 
@@ -60,9 +60,9 @@ class GraduationsController < ApplicationController
             },
             group: { members: :nkf_member })
         .find(params[:id])
-    @approval = @graduation.censors.
-        select { |c| c.member == current_user.member }.
-        sort_by { |c| c.approved_grades_at ? 0 : 1 }.last
+    @approval = @graduation.censors
+        .select { |c| c.member == current_user.member }
+        .sort_by { |c| c.approved_grades_at ? 0 : 1 }.last
     return unless admin_or_censor_required(@graduation, @approval)
     @groups = Group.order(:from_age).includes(members: [:attendances, :nkf_member]).to_a
     @groups.unshift(@groups.delete(@graduation.group))
@@ -129,8 +129,8 @@ class GraduationsController < ApplicationController
         member_current_rank = graduate.member.current_rank(graduate.graduation.martial_art, graduate.graduation.held_on)
         [
             "<font size='18'>" + graduate.member.first_name + '</font> ' + graduate.member.last_name + (graduate.member.birthdate && " (#{graduate.member.age} år)" || '') + "\n" +
-                (member_current_rank && "#{member_current_rank.name} #{member_current_rank.colour}" || 'Ugradert') + "\n" +
-                "Treninger: #{graduate.member.attendances_since_graduation(graduation.held_on).count}" + ' (' + graduate.current_rank_age + ")\n" +
+                (member_current_rank && "#{member_current_rank.name} #{member_current_rank.colour}" || 'Ugradert') + "\n" \
+                "Treninger: #{graduate.member.attendances_since_graduation(graduation.held_on).count}" + ' (' + graduate.current_rank_age + ")\n" \
                 "#{graduate.rank.name} #{graduate.rank.colour}",
             '',
             '',
@@ -145,8 +145,8 @@ class GraduationsController < ApplicationController
 
   def approve
     @graduation = Graduation.find(params[:id])
-    @graduation.censors.where(member_id: current_user.member.id).
-        update_all(approved_grades_at: Time.now)
+    @graduation.censors.where(member_id: current_user.member.id)
+        .update_all(approved_grades_at: Time.now)
     flash.notice = 'Gradering godkjent!'
     redirect_to edit_graduation_path(@graduation)
   end
@@ -188,7 +188,7 @@ class GraduationsController < ApplicationController
     @censors = Censor.includes(:member).where(graduation_id: @graduation.id).to_a
     @graduates = Graduate.where('graduates.graduation_id = ? AND graduates.member_id != 0', params[:id]).
         # includes({:graduation => :martial_art}, {:member => [{:attendances => :group_schedule}, {:graduates => [:graduation, :rank]}]}, {:rank => :group}).
-        includes({ graduation: { group: :martial_art } }, :member, { rank: :group }).
+        includes({ graduation: { group: :martial_art } }, :member, rank: :group).
         # order('ranks_graduates.position DESC, members.first_name, members.last_name').to_a
         order('ranks.position DESC, members.first_name, members.last_name').to_a
   end

@@ -46,10 +46,10 @@ class TrialAttendancesController < ApplicationController
       practice_id = params[:trial_attendance][:practice_id]
       trial_id = params[:trial_attendance][:nkf_member_trial_id]
     else
-      practice_id = Practice.
-          where(group_schedule_id: params[:group_schedule_id],
-              year: params[:year], week: params[:week]).
-          first_or_create!.id
+      practice_id = Practice
+          .where(group_schedule_id: params[:group_schedule_id],
+              year: params[:year], week: params[:week])
+          .first_or_create!.id
       trial_id = params[:nkf_member_trial_id]
     end
     @trial_attendance = TrialAttendance.new(practice_id: practice_id,

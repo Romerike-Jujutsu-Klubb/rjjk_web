@@ -27,7 +27,7 @@ class BirthdayCelebrationsController < ApplicationController
         :censor2 => bc.sensor1 ? { :title => (bc.sensor2.title), :name => bc.sensor2.name } : nil,
         :censor3 => bc.sensor1 ? { :title => (bc.sensor3.title), :name => bc.sensor3.name } : nil,
     }
-    content = participants.map { |n| general.dup.update({ :name => n }) }
+    content = participants.map { |n| general.dup.update(:name => n) }
     filename = "Certificates_birthday_#{date}.pdf"
     send_data Certificates.pdf(date, content), :type => 'text/pdf',
         :filename => filename, :disposition => 'attachment'
