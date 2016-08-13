@@ -2,8 +2,8 @@
 
 PROJECT_DIR = File.expand_path(File.dirname(__FILE__))
 IMPORT_DIR_PROD = '/u/apps/rjjk_web_beta/RJJK/pensum/2010'
-puts "Checking #{IMPORT_DIR_PROD.inspect}: #{File.exists? IMPORT_DIR_PROD}"
-if File.exists? IMPORT_DIR_PROD
+puts "Checking #{IMPORT_DIR_PROD.inspect}: #{File.exist? IMPORT_DIR_PROD}"
+if File.exist? IMPORT_DIR_PROD
   system "svn up #{IMPORT_DIR_PROD}"
   IMPORT_DIR = IMPORT_DIR_PROD
 else

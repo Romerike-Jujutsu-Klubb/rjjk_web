@@ -88,7 +88,7 @@ class Member < ActiveRecord::Base
   validates_inclusion_of :payment_problem, :in => [true, false]
   # validates_presence_of :postal_code
   validates_length_of :postal_code, is: 4, allow_blank: true
-  validates_uniqueness_of :rfid, :if => Proc.new { |r| r.rfid && (not r.rfid.empty?) }
+  validates_uniqueness_of :rfid, :if => Proc.new { |r| r.rfid && !r.rfid.empty? }
   validates_presence_of :user, :user_id, unless: :left_on
 
   def self.paginate_active(page)
@@ -103,7 +103,9 @@ class Member < ActiveRecord::Base
 
   def self.create_corresponding_user!(attrs)
     attrs.symbolize_keys!
-    email, first_name, last_name = attrs[:email], attrs[:first_name], attrs[:last_name]
+    email = attrs[:email]
+    first_name = attrs[:first_name]
+    last_name = attrs[:last_name]
     passwd = (0..4).map { [*((0..9).to_a + ('a'..'z').to_a)][rand(36)] }.join
 
     # Full name and email
@@ -140,13 +142,13 @@ class Member < ActiveRecord::Base
 
   def self.make_usable_full_email(email, first_name, last_name, birthdate = nil)
     birth_suffix = (" (#{birthdate})" if birthdate)
-    full_email = %{"#{first_name} #{last_name}#{birth_suffix}" <#{email}>}
+    full_email = %("#{first_name} #{last_name}#{birth_suffix}" <#{email}>)
     max_length = 64
 
     # First and last names only
     if full_email.size > max_length
       logger.debug "Full email too long: #{full_email}"
-      full_email = %{"#{first_name.split(/\s+/).first} #{last_name.split(/\s+/).last}#{birth_suffix}" <#{email}>}
+      full_email = %("#{first_name.split(/\s+/).first} #{last_name.split(/\s+/).last}#{birth_suffix}" <#{email}>)
     end
 
     # Squeezed name and full email
@@ -154,13 +156,13 @@ class Member < ActiveRecord::Base
       logger.debug "Full email too long: #{full_email}"
       max_name_size = max_length - email.size - 5
       (cut_name = "#{first_name} #{last_name}#{birth_suffix}")[(max_name_size / 2) - 2..(-max_name_size / 2)]
-      full_email = %{"#{cut_name}" <#{email}>}
+      full_email = %("#{cut_name}" <#{email}>)
     end
 
     # Fallback to non-valid email...
     if full_email.size > max_length
       logger.debug "Full email too long: #{full_email}"
-      (full_email = %{#{first_name} #{last_name}#{birth_suffix} <#{email}>})[(max_length / 2) - 2..(-max_length / 2)]
+      (full_email = %(#{first_name} #{last_name}#{birth_suffix} <#{email}>))[(max_length / 2) - 2..(-max_length / 2)]
     end
     full_email
   end
@@ -222,7 +224,7 @@ class Member < ActiveRecord::Base
     days = (to_date - date).to_i
     years = (to_date - date).to_i / 365
     months = (days - (years * 365)) / 30
-    [years > 0 ? "#{years} år" : nil, years == 0 || months > 0 ? "#{months} mnd" : nil].compact.join(' ')
+    [years.positive? ? "#{years} år" : nil, years.zero? || months.positive? ? "#{months} mnd" : nil].compact.join(' ')
   end
 
   def next_rank(graduation = Graduation.new(held_on: Date.today, group: groups.sort_by(&:from_age).last))
@@ -402,12 +404,12 @@ class Member < ActiveRecord::Base
 
   def emails
     emails = []
-    emails << %{"#{name}" <#{email}>} if email
+    emails << %("#{name}" <#{email}>) if email
     if billing_email
-      emails << (parent_name ? %{"#{parent_name}" <#{billing_email}>} : billing_email)
+      emails << (parent_name ? %("#{parent_name}" <#{billing_email}>) : billing_email)
     end
     if parent_email
-      emails << (parent_2_name ? %{"#{parent_2_name}" <#{parent_email}>} : parent_email)
+      emails << (parent_2_name ? %("#{parent_2_name}" <#{parent_email}>) : parent_email)
     end
     emails.uniq
   end

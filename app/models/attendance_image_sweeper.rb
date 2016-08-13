@@ -15,7 +15,7 @@ class AttendanceImageSweeper < ActionController::Caching::Sweeper
 
   private
 
-  def expire_image(attendance)
+  def expire_image(_attendance)
     cache_dir = ActionController::Base.page_cache_directory
     cached_files = Dir.glob(cache_dir + '/attendances/**/*')
     Rails.logger.info("Expire cached files: #{cached_files}")

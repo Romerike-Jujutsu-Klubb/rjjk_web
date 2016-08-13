@@ -25,8 +25,6 @@ class PublicRecordImporter
     ExceptionNotifier.notify_exception($!)
   end
 
-  private
-
   def self.find_field(doc, name)
     found = false
     doc.css('tr').map do |row|

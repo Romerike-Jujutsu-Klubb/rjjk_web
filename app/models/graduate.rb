@@ -34,20 +34,19 @@ class Graduate < ActiveRecord::Base
   end
 
   def registration_percentage
-    return 1 if planned_trainings == 0
-    registered_trainings.to_f / planned_trainings
+    planned_trainings.zero? ? 1 : registered_trainings.to_f / planned_trainings
   end
 
   def estimated_attendances
     registered_attendances = training_attendances
-    return registered_attendances if planned_trainings == 0
+    return registered_attendances if planned_trainings.zero?
     registered_trainings = registrered_trainings
     return registered_attendances if registered_trainings
     registered_attendances / registration_percentage
   end
 
   def minimum_attendances
-    ([rank.minimum_attendances * registration_percentage, rank.minimum_age <= 12 ? registered_trainings * 0.5 : nil].compact.min).round
+    [rank.minimum_attendances * registration_percentage, rank.minimum_age <= 12 ? registered_trainings * 0.5 : nil].compact.min.round
   end
 
   def current_rank_age

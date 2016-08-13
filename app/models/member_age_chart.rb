@@ -6,9 +6,9 @@ class MemberAgeChart
     g.title = 'Antall aktive medlemmer'
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     g.hide_legend = true
-    g.colors = %w{darkblue}
+    g.colors = %w(darkblue)
     g.labels = {}
-    (0..60).to_a.each { |a| g.labels[a] = a % 5 == 0 ? a.to_rfc2445_string : '' }
+    (0..60).to_a.each { |a| g.labels[a] = (a % 5).zero? ? a.to_rfc2445_string : '' }
     members = Member.active(Date.today).to_a
     g.data('Antall per årstrinn', g.labels.keys.map { |age| members.select { |m| m.age == age }.size })
     g.minimum_value = 0

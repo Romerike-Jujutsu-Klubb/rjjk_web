@@ -28,6 +28,6 @@ Rails.application.configure do
   config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
 end
 
-%w{render_template render_partial render_collection}.each do |event|
+%w(render_template render_partial render_collection).each do |event|
   ActiveSupport::Notifications.unsubscribe "#{event}.action_view"
 end

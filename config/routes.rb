@@ -80,7 +80,7 @@ Rails.application.routes.draw do
   resources :group_semesters
   resources :groups
   # FIXME(uwe):  Bad links!  Remove January 2015
-  get '/info/groups/:id', to: redirect { |path_params, req| "/groups/#{path_params[:id]}" }
+  get '/info/groups/:id', to: redirect { |path_params, _req| "/groups/#{path_params[:id]}" }
   # EMXIF
   resources :images do
     post :upload, on: :collection

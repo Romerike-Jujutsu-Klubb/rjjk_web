@@ -10,11 +10,11 @@ class UserMessageMailer < ActionMailer::Base
     body = um.body
 
     # Add security key
-    body.gsub! /href="([^"]*)"/, %{href="\\1?key=#{url_key}"}
+    body.gsub! /href="([^"]*)"/, %(href="\\1?key=#{url_key}")
 
     # Add host and port
     url_opts = Rails.application.config.action_mailer.default_url_options
-    body.gsub! /href="(\/[^"]*)"/, %{href="#{url_opts[:protocol]}://#{url_opts[:host]}#{":#{url_opts[:port]}" if url_opts[:port] && url_opts[:port] != 80}\\1"}
+    body.gsub! %r{href="(/[^"]*)"}, %(href="#{url_opts[:protocol]}://#{url_opts[:host]}#{":#{url_opts[:port]}" if url_opts[:port] && url_opts[:port] != 80}\\1")
 
     mail from: um.from, to: safe_email(um.user), subject: tmss_prefix(@title) do |format|
       format.html { render inline: body, layout: 'email' }

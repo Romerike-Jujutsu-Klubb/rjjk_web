@@ -56,7 +56,7 @@ class NkfMemberImport
   end
 
   def any?
-    @exception || size > 0
+    @exception || size.positive?
   end
 
   def initialize
@@ -76,7 +76,9 @@ class NkfMemberImport
     extra_function_code = extra_function_codes[0][0]
     session_id = html_search_body.scan(/Download27\('(.*?)'\)/)[0][0]
     detail_codes = html_search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
-    more_pages = html_search_body.scan(/<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)<\/a>/).map { |r| r[0] }
+    more_pages = html_search_body
+        .scan(%r{<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)</a>})
+        .map { |r| r[0] }
     in_parallel(more_pages) do |page_number|
       more_search_body = http_get(search_url + page_number, true)
       synchronize do
@@ -122,29 +124,27 @@ class NkfMemberImport
   end
 
   def add_waiting_kid(import_rows, dc)
-    begin
-      details_body = http_get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}")
-      if details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
-        member_id = $1
-        active =
-            if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
-              true
-            else
-              false
-            end
-        waiting_kid =
-            if details_body =~ /<span class="kid_1">(\d+)<\/span><span class="kid_2">(\d+)<\/span>/
-              "#{$1}#{$2}"
-            end
-        raise 'Both Active status and waiting kid were found' if active && waiting_kid
-        raise "Neither active status nor waiting kid were found:\n#{details_body}" if !active && !waiting_kid
-        import_rows.find { |ir| ir[0] == member_id } << waiting_kid
-      else
-        raise "Could not find member id:\n#{details_body}"
-      end
-    ensure
-      ActiveRecord::Base.connection.close
+    details_body = http_get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}")
+    if details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
+      member_id = $1
+      active =
+          if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
+            true
+          else
+            false
+          end
+      waiting_kid =
+          if details_body =~ %r{<span class="kid_1">(\d+)</span><span class="kid_2">(\d+)</span>}
+            "#{$1}#{$2}"
+          end
+      raise 'Both Active status and waiting kid were found' if active && waiting_kid
+      raise "Neither active status nor waiting kid were found:\n#{details_body}" if !active && !waiting_kid
+      import_rows.find { |ir| ir[0] == member_id } << waiting_kid
+    else
+      raise "Could not find member id:\n#{details_body}"
     end
+  ensure
+    ActiveRecord::Base.connection.close
   end
 
   def get_member_trial_rows(session_id, extra_function_code)
@@ -173,7 +173,7 @@ class NkfMemberImport
           last_name = $1
           if trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
             invoice_email = $1
-            if trial_details_body =~ /<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren\/stilart -<\/option>.*?<option selected value="\d+">([^<]*)<\/option>.*<\/select>/
+            if trial_details_body =~ %r{<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren/stilart -</option>.*?<option selected value="\d+">([^<]*)</option>.*</select>}
               martial_art = $1
               trial_row = member_trial_rows.find { |ir| ir.size < member_trial_rows[0].size && ir[1] == last_name && ir[2] == first_name }
               if trial_row
@@ -216,8 +216,8 @@ class NkfMemberImport
     import_rows.each do |row|
       attributes = {}
       columns.each_with_index do |column, i|
-        next if %w{aktivitetsomrade_id aktivitetsomrade_navn alder avtalegiro
-                 beltefarge dan_graderingsserifikat forbundskontingent}
+        next if %w(aktivitetsomrade_id aktivitetsomrade_navn alder avtalegiro
+                 beltefarge dan_graderingsserifikat forbundskontingent)
             .include? column
         attributes[column] = row[i] && row[i].strip
       end
@@ -311,7 +311,7 @@ class NkfMemberImport
   end
 
   def field2column(field_name)
-    field_name.tr('ø', 'o').tr('Ø', 'O').tr('å', 'a').tr('Å', 'A').gsub(/[ -.\/]/, '_').downcase
+    field_name.tr('ø', 'o').tr('Ø', 'O').tr('å', 'a').tr('Å', 'A').gsub(%r{[ -./]}, '_').downcase
   end
 
   def login
@@ -323,8 +323,8 @@ class NkfMemberImport
     http_get('pls/portal/myports.st_login_proc.create_user?CreUser=40001062')
 
     login_form_fields = login_content.scan /<input .*?name="(.*?)".*?value ?="(.*?)".*?>/
-    login_form_fields.delete_if { |f| %w{site2pstoretoken ssousername password}.include? f[0] }
-    login_form_fields += [['site2pstoretoken', token], %w{ssousername 40001062}, %w{password CokaBrus42}]
+    login_form_fields.delete_if { |f| %w(site2pstoretoken ssousername password).include? f[0] }
+    login_form_fields += [['site2pstoretoken', token], %w(ssousername 40001062), %w(password CokaBrus42)]
     login_params = login_form_fields.map { |field| "#{field[0]}=#{ERB::Util.url_encode field[1]}" }.join '&'
     url = URI.parse('http://nkflogin.kampsport.no/')
     Net::HTTP.start(url.host, url.port) do |http|
@@ -363,7 +363,7 @@ class NkfMemberImport
     logger.debug "Getting #{url_string}"
     url = URI.parse(url_string =~ %r{^http://} ? url_string : "http://nkfwww.kampsport.no/portal/#{url_string}")
     cache_file = "#{Rails.root}/tmp/cache/nkf/#{Digest::MD5.hexdigest url.request_uri}"
-    if Rails.env.test? && File.exists?(cache_file) && File.ctime(cache_file) > 1.day.ago
+    if Rails.env.test? && File.exist?(cache_file) && File.ctime(cache_file) > 1.day.ago
       logger.debug "Used cached response #{cache_file}"
       return File.read(cache_file, encoding: Encoding::ASCII_8BIT)
     end
@@ -396,7 +396,7 @@ class NkfMemberImport
       response = http.get(url.request_uri, cookie_header.update(binary ? { 'Content-Type' => 'application/octet-stream' } : {}))
       body = response.body
       content_length = response['content-length'].to_i
-      if content_length > 0 && body.size != content_length
+      if content_length.positive? && body.size != content_length
         error_msg = "Unexpected content length: header: #{content_length}, body: #{body.size}"
         raise EOFError.new(error_msg) if retries >= 3
         logger.error error_msg
@@ -406,7 +406,7 @@ class NkfMemberImport
       raise EOFError.new('Internal error') if body =~ /The server encountered an internal error or/
       raise EOFError.new('Try refreshing') if body =~ /An error occurred while processing the request. Try refreshing your browser. If the problem persists contact the site administrator/
       raise EOFError.new('Lytter returnerte feil') if body =~ /Feil: Lytteren returnerte den f.lgende meldingen: 503 Service Unavailable/
-      raise EOFError.new('Servlet Error') if body =~ /<TITLE>Servlet Error<\/TITLE>/i
+      raise EOFError.new('Servlet Error') if body =~ %r{<TITLE>Servlet Error</TITLE>}i
       process_response(response, binary)
     end
   end

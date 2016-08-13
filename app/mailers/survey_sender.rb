@@ -14,36 +14,29 @@
 # SurveyAnswerTranslation answer:string normalized_answer:string
 class SurveySender
   def self.send_surveys
-    begin
-      logger.info 'Checking surveys!'
-      request = nil
-      Survey.order(:position).each do |survey|
-        unrequested_member = survey.ready_members.select(&:active?).first
-        request =
-            if unrequested_member
-              survey.survey_requests
-                  .where(member_id: unrequested_member.id).first_or_create!
-            else
-              survey.survey_requests.pending
-                  .select { |sr| sr.reminded_at.nil? || sr.reminded_at < 1.week.ago }
-                  .first
-            end
-        break if request
-      end
-      return unless request
+    logger.info 'Checking surveys!'
+    request = nil
+    Survey.order(:position).each do |survey|
+      unrequested_member = survey.ready_members.select(&:active?).first
+      request =
+          if unrequested_member
+            survey.survey_requests
+                .where(member_id: unrequested_member.id).first_or_create!
+          else
+            survey.survey_requests.pending
+                .select { |sr| sr.reminded_at.nil? || sr.reminded_at < 1.week.ago }
+                .first
+          end
+      break if request
+    end
+    return unless request
 
-      if request.sent_at.nil?
-        SurveyMailer.survey(request).store(request.member.user_id, tag: :suvey_request)
-        request.update! sent_at: Time.now
-      else
-        SurveyMailer.reminder(request).store(request.member.user_id, tag: :survey_reminder)
-        request.update! reminded_at: Time.now
-      end
-    rescue
-      logger.error 'Execption sending survey request.'
-      logger.error $!.message
-      logger.error $!.backtrace.join("\n")
-      ExceptionNotifier.notify_exception($!)
+    if request.sent_at.nil?
+      SurveyMailer.survey(request).store(request.member.user_id, tag: :suvey_request)
+      request.update! sent_at: Time.now
+    else
+      SurveyMailer.reminder(request).store(request.member.user_id, tag: :survey_reminder)
+      request.update! reminded_at: Time.now
     end
   end
 end

@@ -45,7 +45,7 @@ class Group < ActiveRecord::Base
     return 0 if group_schedules.empty?
     Practice
         .where(*["status = 'X' AND group_schedule_id IN (?) AND (year > ? OR (year = ? AND week >= ?)) AND (year < ? OR (year = ? AND week <= ?))",
-        group_schedules.map(&:id), *([[period.first.year] * 2, period.first.cweek, [period.last.year] * 2, period.last.cweek]).flatten])
+        group_schedules.map(&:id), *[[period.first.year] * 2, period.first.cweek, [period.last.year] * 2, period.last.cweek].flatten])
         .all.size
   end
 
@@ -56,8 +56,8 @@ class Group < ActiveRecord::Base
   def update_prices
     contracts = NkfMember.where(:kontraktstype => contract).to_a
     return if contracts.empty?
-    self.monthly_price = contracts.map(&:kontraktsbelop).group_by { |x| x }.group_by { |k, v| v.size }.sort.last.last.map(&:first).first
-    self.yearly_price = contracts.map(&:kont_belop).group_by { |x| x }.group_by { |k, v| v.size }.sort.last.last.map(&:first).first
+    self.monthly_price = contracts.map(&:kontraktsbelop).group_by { |x| x }.group_by { |_k, v| v.size }.sort.last.last.map(&:first).first
+    self.yearly_price = contracts.map(&:kont_belop).group_by { |x| x }.group_by { |_k, v| v.size }.sort.last.last.map(&:first).first
   end
 
   def next_schedule

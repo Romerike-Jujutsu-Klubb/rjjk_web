@@ -95,7 +95,7 @@ class TrialAttendancesController < ApplicationController
 
     respond_to do |format|
       format.html do
-        if (request.xhr?)
+        if request.xhr?
           render partial: '/attendances/trial_attendance_create_link',
               locals: {
                   nkf_member_trial_id: @trial_attendance.nkf_member_trial_id,

@@ -45,21 +45,6 @@ class User < ActiveRecord::Base
     @password_needs_confirmation = false
   end
 
-  def email
-    member.try(:email) || super
-  end
-
-  def emails
-    result = [%{"#{name}" <#{attributes['email']}>}]
-    result += member.emails if member
-    result.sort_by! { |e| -e.size }
-    result.uniq { |e| e =~ /<(.*@.*)>/ ? $1 : e }
-  end
-
-  def name
-    member.try(:name) || (first_name.present? || last_name.present? ? [first_name, last_name].select(&:present?).join(' ') : login)
-  end
-
   def self.find_administrators
     where('role = ?', UserSystem::ADMIN_ROLE).all
   end
@@ -67,7 +52,7 @@ class User < ActiveRecord::Base
   def self.authenticate(login, pass)
     users = includes(:member).references(:members)
         .where('(login = ? OR users.email = ? OR (members.email IS NOT NULL AND members.email = ?)) AND verified = ? AND (deleted IS NULL OR deleted = ?)',
-        login, login, login, true, false).to_a
+            login, login, login, true, false).to_a
     users
         .select { |u| u.salted_password == salted_password(u.salt, hashed(pass)) }
         .first
@@ -92,6 +77,33 @@ class User < ActiveRecord::Base
     u
   end
 
+  def self.salted_password(salt, hashed_password)
+    hashed(salt + hashed_password)
+  end
+
+  def self.hashed(str)
+    Digest::SHA1.hexdigest("Man må like å lide!--#{str}--")[0..39]
+  end
+
+  def self.token_lifetime(duration = :short)
+    UserSystem::CONFIG[duration == :login ? :autologin_token_life_hours : :security_token_life_hours].hours
+  end
+
+  def email
+    member.try(:email) || super
+  end
+
+  def emails
+    result = [%("#{name}" <#{attributes['email']}>)]
+    result += member.emails if member
+    result.sort_by! { |e| -e.size }
+    result.uniq { |e| e =~ /<(.*@.*)>/ ? $1 : e }
+  end
+
+  def name
+    member.try(:name) || (first_name.present? || last_name.present? ? [first_name, last_name].select(&:present?).join(' ') : login)
+  end
+
   def token_expired?
     security_token && token_expiry && (Time.now >= token_expiry)
   end
@@ -112,10 +124,6 @@ class User < ActiveRecord::Base
     self.password = pass
     self.password_confirmation = confirm.nil? ? pass : confirm
     @password_needs_confirmation = true
-  end
-
-  def self.token_lifetime(duration = :short)
-    UserSystem::CONFIG[duration == :login ? :autologin_token_life_hours : :security_token_life_hours].hours
   end
 
   def remaining_token_lifetime
@@ -140,10 +148,6 @@ class User < ActiveRecord::Base
     @password_needs_confirmation
   end
 
-  def self.hashed(str)
-    Digest::SHA1.hexdigest("Man må like å lide!--#{str}--")[0..39]
-  end
-
   def crypt_password
     if @password_needs_confirmation
       write_attribute('salt', self.class.hashed("salt-#{Time.now}"))
@@ -156,9 +160,5 @@ class User < ActiveRecord::Base
     write_attribute('token_expiry', Time.at(Time.now.to_i + User.token_lifetime(duration)))
     save
     security_token
-  end
-
-  def self.salted_password(salt, hashed_password)
-    hashed(salt + hashed_password)
   end
 end

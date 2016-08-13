@@ -21,7 +21,7 @@ def dump(model_plural)
   end
 end
 
-if File.exists? EXPORT_DIR
+if File.exist? EXPORT_DIR
   dump :members
   dump :martial_arts
   dump :groups

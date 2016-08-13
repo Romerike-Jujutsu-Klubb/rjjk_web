@@ -4,8 +4,8 @@ set :repo_url, "svn+ssh://capistrano@kubosch.no/var/svn/trunk/#{fetch :applicati
 set :deploy_to, -> { "/u/apps/#{fetch :application}" }
 set :keep_releases, 30
 
-role :app, %w{capistrano@kubosch.no}
-role :web, %w{capistrano@kubosch.no}
-role :db,  %w{capistrano@kubosch.no}
+role :app, %w(capistrano@kubosch.no)
+role :web, %w(capistrano@kubosch.no)
+role :db,  %w(capistrano@kubosch.no)
 
-server 'kubosch.no', user: 'capistrano', roles: %w{web app}
+server 'kubosch.no', user: 'capistrano', roles: %w(web app)

@@ -32,23 +32,6 @@ Lint/AssignmentInCondition:
     - 'app/controllers/members_controller.rb'
     - 'app/controllers/semesters_controller.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AlignWith, SupportedStyles.
-# SupportedStyles: either, start_of_block, start_of_line
-Lint/BlockAlignment:
-  Exclude:
-    - 'app/models/nkf_member_trial.rb'
-
-# Offense count: 5
-# Cop supports --auto-correct.
-Lint/DeprecatedClassMethods:
-  Exclude:
-    - 'app/models/nkf_member_import.rb'
-    - 'export_to_attendance.rb'
-    - 'import_from_attendance.rb'
-    - 'import_techniques.rb'
-
 # Offense count: 10
 Lint/Eval:
   Exclude:
@@ -60,18 +43,6 @@ Lint/HandleExceptions:
     - 'app/models/nkf_member_import.rb'
     - 'test/controllers/members_controller_test.rb'
     - 'test/models/public_record_importer_test.rb'
-
-# Offense count: 4
-Lint/IneffectiveAccessModifier:
-  Exclude:
-    - 'app/models/public_record_importer.rb'
-    - 'app/models/user.rb'
-    - 'app/models/user_system.rb'
-
-# Offense count: 1
-Lint/ParenthesesAsGroupedExpression:
-  Exclude:
-    - 'test/integration/user_system_test.rb'
 
 # Offense count: 23
 Lint/RescueException:
@@ -93,47 +64,6 @@ Lint/RescueException:
 Lint/ShadowedException:
   Exclude:
     - 'app/models/nkf_member_import.rb'
-
-# Offense count: 1
-Lint/ShadowingOuterLocalVariable:
-  Exclude:
-    - 'app/controllers/members_controller.rb'
-
-# Offense count: 14
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'app/controllers/attendances_controller.rb'
-    - 'app/controllers/survey_requests_controller.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'app/models/group.rb'
-    - 'app/models/member_history_graph.rb'
-    - 'app/models/nkf_member.rb'
-    - 'app/models/nkf_member_import.rb'
-    - 'config/routes.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods.
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'app/mailers/attendance_mailer.rb'
-    - 'app/models/attendance_image_sweeper.rb'
-    - 'app/models/grade_history_image_sweeper.rb'
-
-# Offense count: 1
-# Configuration parameters: ContextCreatingMethods.
-Lint/UselessAccessModifier:
-  Exclude:
-    - 'app/models/public_record_importer.rb'
-
-# Offense count: 3
-Lint/UselessAssignment:
-  Exclude:
-    - 'app/controllers/members_controller.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'app/models/member_history_graph.rb'
 
 # Offense count: 207
 Metrics/AbcSize:
@@ -411,73 +341,10 @@ Style/Next:
     - 'import_from_attendance.rb'
     - 'import_techniques.rb'
 
-# Offense count: 6
-# Cop supports --auto-correct.
-Style/Not:
-  Exclude:
-    - 'app/controllers/user_controller.rb'
-    - 'app/helpers/user_helper.rb'
-    - 'app/models/member.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedOctalStyle, SupportedOctalStyles.
-# SupportedOctalStyles: zero_with_o, zero_only
-Style/NumericLiteralPrefix:
-  Exclude:
-    - 'app/models/attendance_history_graph.rb'
-    - 'app/models/member_history_graph.rb'
-
-# Offense count: 24
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: predicate, comparison
-Style/NumericPredicate:
-  Exclude:
-    - 'app/controllers/attendances_controller.rb'
-    - 'app/controllers/group_schedules_controller.rb'
-    - 'app/mailers/attendance_mailer.rb'
-    - 'app/models/attendance_history_graph.rb'
-    - 'app/models/graduate.rb'
-    - 'app/models/member.rb'
-    - 'app/models/member_age_chart.rb'
-    - 'app/models/member_history_graph.rb'
-    - 'app/models/nkf_member_import.rb'
-    - 'test/capybara_setup.rb'
-
 # Offense count: 1
 Style/OptionalArguments:
   Exclude:
     - 'app/models/user_system.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/ParallelAssignment:
-  Exclude:
-    - 'app/models/event.rb'
-    - 'app/models/member.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: AllowSafeAssignment.
-Style/ParenthesesAroundCondition:
-  Exclude:
-    - 'app/controllers/trial_attendances_controller.rb'
-    - 'app/mailers/incoming_email_processor.rb'
-
-# Offense count: 41
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: lower_case_q, upper_case_q
-Style/PercentQLiterals:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -492,38 +359,6 @@ Style/Proc:
 Style/RaiseArgs:
   Exclude:
     - 'app/models/nkf_member_import.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/RedundantBegin:
-  Exclude:
-    - 'app/mailers/survey_sender.rb'
-    - 'app/models/nkf_member_import.rb'
-
-# Offense count: 9
-# Cop supports --auto-correct.
-Style/RedundantParentheses:
-  Exclude:
-    - 'app/controllers/birthday_celebrations_controller.rb'
-    - 'app/controllers/graduations_controller.rb'
-    - 'app/controllers/trial_attendances_controller.rb'
-    - 'app/models/graduate.rb'
-    - 'app/models/group.rb'
-
-# Offense count: 15
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-    - 'app/mailers/user_message_mailer.rb'
-    - 'app/models/event_invitee_message.rb'
-    - 'app/models/image.rb'
-    - 'app/models/news_item.rb'
-    - 'app/models/nkf_member_import.rb'
-    - 'db/migrate/20150617115412_add_decoration_to_ranks.rb'
-    - 'test/models/public_record_importer_test.rb'
 
 # Offense count: 4
 # Cop supports --auto-correct.

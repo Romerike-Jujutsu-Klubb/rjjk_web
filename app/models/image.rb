@@ -63,7 +63,7 @@ class Image < ActiveRecord::Base
   end
 
   def video?
-    content_type =~ /^video\//
+    content_type =~ %r{^video/}
   end
 
   def width_max(max_width)

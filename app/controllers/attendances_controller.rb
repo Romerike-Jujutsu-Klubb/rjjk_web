@@ -97,7 +97,7 @@ class AttendancesController < ApplicationController
         .where('practices.year = ? AND practices.week >= ? AND practices.week <= ? AND attendances.status NOT IN (?)',
             @year, @first_date.cweek, @last_date.cweek, Attendance::ABSENT_STATES)
         .to_a.select { |a| (@first_date..@last_date).cover? a.date }
-    monthly_per_group = @attendances.group_by { |a| a.group_schedule.group }.sort_by { |g, ats| g.from_age }
+    monthly_per_group = @attendances.group_by { |a| a.group_schedule.group }.sort_by { |g, _ats| g.from_age }
     @monthly_summary_per_group = {}
     monthly_per_group.each do |g, attendances|
       @monthly_summary_per_group[g] = {}
@@ -196,9 +196,8 @@ class AttendancesController < ApplicationController
       @weeks.sort!.uniq!
     end
     @group_schedules = member.groups.reject(&:school_breaks).map(&:group_schedules).flatten
-    @weeks.each do |w|
-      @group_schedules.each { |gs| gs.practices.where(year: today.cwyear, week: today.cweek).first_or_create! }
-      @group_schedules.each { |gs| gs.practices.where(year: (today + 7).cwyear, week: (today + 7).cweek).first_or_create! }
+    @weeks.each do |year, week|
+      @group_schedules.each { |gs| gs.practices.where(year: year, week: week).first_or_create! }
     end
     @planned_attendances = Attendance.includes(:practice).references(:practices)
         .where("member_id = ? AND (practices.year, practices.week) IN (#{@weeks.map { |y, w| "(#{y}, #{w})" }.join(', ')})", member.id)

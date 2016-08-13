@@ -5,7 +5,7 @@ class AddDecorationToRanks < ActiveRecord::Migration
     reversible do |dir|
       dir.up do
         Rank.order(:position).each do |rank|
-          if rank.colour =~ /^(.*)\s+(m\/.*)$/
+          if rank.colour =~ %r{^(.*)\s+(m/.*)$}
             puts "Change #{{ colour: $1, decoration: $2 }}"
             rank.update! colour: $1, decoration: $2
           end

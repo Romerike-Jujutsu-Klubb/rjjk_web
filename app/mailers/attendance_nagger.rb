@@ -4,6 +4,7 @@ class AttendanceNagger
     Member.active(today)
         .where('NOT EXISTS (SELECT a.id FROM attendances a INNER JOIN practices p ON a.practice_id = p.id WHERE member_id = members.id AND year = ? AND week = ?)',
             today.cwyear, today.cweek)
+        .order(:joined_on)
         .select { |m| m.age >= 14 }
         .select { |m| m.groups.any? { |g| g.name == 'Voksne' } }
         .select(&:active?)

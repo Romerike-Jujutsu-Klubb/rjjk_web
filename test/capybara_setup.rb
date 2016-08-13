@@ -11,7 +11,7 @@ require 'capybara/screenshot/diff'
 class ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  Capybara.default_driver = rand(10) == 0 ? :selenium : :poltergeist
+  Capybara.default_driver = rand(10).zero? ? :selenium : :poltergeist
   Capybara::Screenshot.add_driver_path = true
   Capybara::Screenshot.window_size = [1024, 768]
   Capybara::Screenshot.enabled = false
@@ -49,7 +49,7 @@ class ActionDispatch::IntegrationTest
     Timeout.timeout(Capybara.default_max_wait_time) do
       loop do
         active = page.evaluate_script('jQuery.active')
-        break if active == 0
+        break if active.zero?
         sleep 0.01
       end
     end

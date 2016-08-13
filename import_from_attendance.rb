@@ -23,7 +23,7 @@ def load(model_plural)
   end
 end
 
-if File.exists? EXPORT_DIR
+if File.exist? EXPORT_DIR
   load :attendances
 else
   puts "USB stick on '#{EXPORT_DIR}' not found!"

@@ -17,7 +17,7 @@ class IncomingEmailProcessor
       web: { name: 'Uwe Kubosch', email: 'uwe@kubosch.no' },
   }
   ENV_STR = Rails.env.production? ? nil : Rails.env.upcase
-  DOMAIN = "#{"#{Rails.env}." unless (Rails.env.production? || Rails.env.test?)}jujutsu.no"
+  DOMAIN = "#{"#{Rails.env}." unless Rails.env.production? || Rails.env.test?}jujutsu.no"
   PREFIX_PATTERN = '(\b(?:Re|Fwd):\s*)'
 
   def self.forward_emails

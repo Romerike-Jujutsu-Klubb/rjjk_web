@@ -6,11 +6,11 @@ set :keep_releases, 1
 set :exclude_dir, %w(coverage doc log test tmp)
 set :include_dir, '{.ruby-version,*}'
 
-role :app, %w{capistrano@kubosch.no}
-role :web, %w{capistrano@kubosch.no}
-role :db, %w{capistrano@kubosch.no}
+role :app, %w(capistrano@kubosch.no)
+role :web, %w(capistrano@kubosch.no)
+role :db, %w(capistrano@kubosch.no)
 
-server 'kubosch.no', user: 'capistrano', roles: %w{web app}, my_property: :my_value
+server 'kubosch.no', user: 'capistrano', roles: %w(web app), my_property: :my_value
 
 namespace :deploy do
   Rake::Task[:restart].clear_actions

@@ -15,10 +15,12 @@ class EventInviteeMessage < ActiveRecord::Base
     super
     if message_type == EventMessage::MessageType::INVITATION
       self.subject ||= "Invitasjon til #{event_invitee.event.name}"
-      self.body ||= event_invitee.event.description.gsub(/<br \/>/, "\n").gsub(/<p>(.*?)<\/p>/m, "\\1\n").gsub(/<a .*?>(.*?)<\/a>/, "\\1").html_safe
+      self.body ||= event_invitee.event.description.gsub(%r{<br />}, "\n")
+          .gsub(%r{<p>(.*?)</p>}m, "\\1\n").gsub(%r{<a .*?>(.*?)</a>}, "\\1")
+          .html_safe
     elsif message_type == MessageType::SIGNUP_CONFIRMATION
       self.subject ||= "Bekreftelse av påmelding #{event_invitee.event.name}"
-      self.body ||= %{Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
+      self.body ||= %(Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
 og kan bekrefte at du har fått plass.
 
 Deltakeravgiften på kr 800,- kan betales til konto 7035.05.37706.
@@ -30,10 +32,10 @@ Har du noen spørsmål, så ta kontakt med Svein Robert på medlem@jujutsu.no el
 Med vennlig hilsen,
 Uwe Kubosch
 Romerike Jujutsu Klubb
-}
+)
     elsif message_type == MessageType::SIGNUP_REJECTION
       self.subject ||= "Påmelding til #{event_invitee.event.name}"
-      self.body ||= %{Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
+      self.body ||= %(Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
 men må dessverre meddele at du ikke har fått plass pga. plassmangel.
 
 Vi har din kontaktinfo og vil ta kontakt hvis det skulle bli ledig plass.
@@ -44,7 +46,7 @@ Har du noen spørsmål, så ta kontakt med Uwe på uwe@kubosch.no eller på tele
 Med vennlig hilsen,
 Uwe Kubosch
 Romerike Jujutsu Klubb
-}
+)
     end
   end
 end

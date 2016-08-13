@@ -243,7 +243,7 @@ class MembersController < ApplicationController
     @inactive_cms_members = CmsMember.find_inactive
 
     @new_cms_members = @cms_members.select { |cmsm| @members.find { |m| m.cms_contract_id == cmsm.cms_contract_id }.nil? }
-    @new_inactive_members = @members.select { |m| cmsm = @inactive_cms_members.find { |cmsm| cmsm.cms_contract_id == m.cms_contract_id } && m.left_on == cmsm.left_on }
+    @new_inactive_members = @members.select { |m| (cmsm = @inactive_cms_members.find { |cmsm2| cmsm2.cms_contract_id == m.cms_contract_id }) && m.left_on == cmsm.left_on }
     @members_not_in_cms = @members.select { |m| @cms_members.find { |cmsm| cmsm.cms_contract_id == m.cms_contract_id }.nil? }
   end
 

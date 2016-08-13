@@ -29,7 +29,7 @@ class UserSystemTest < ActionDispatch::IntegrationTest
     assert_equal ["\"newuser\" <newemail@example.com>"], mail.to
     assert_match(/Brukernavn:\s+\w+\n/, mail.body)
     assert_match(/Passord\s*:\s+\w+\n/, mail.body)
-    assert (mail.body =~ /key=(.*?)"/)
+    assert(mail.body =~ /key=(.*?)"/)
     key = $1
 
     assert user = User.find_by_login('newuser')

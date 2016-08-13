@@ -22,6 +22,10 @@ module UserSystem
       autologin_token_life_hours: 24 * 365,
   }
 
+  def self.with_login(user = current_user, options)
+    options.merge key: user.generate_security_token, only_path: false
+  end
+
   protected
 
   #   before_filter :authenticate_user
@@ -77,10 +81,6 @@ module UserSystem
       params.delete 'key'
     end
     current_user
-  end
-
-  def self.with_login(user = current_user, options)
-    options.merge key: user.generate_security_token, only_path: false
   end
 
   def with_login(user = current_user, options)

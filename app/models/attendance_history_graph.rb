@@ -7,10 +7,10 @@ class AttendanceHistoryGraph
     g.legend_font_size = 14
     g.marker_font_size = 14
     g.hide_dots = true
-    g.colors = %w{blue orange black green}
+    g.colors = %w(blue orange black green)
     g.x_axis_label = ''
     g.y_axis_increment = 5
-    first_date = Date.civil(2010, 8, 01)
+    first_date = Date.civil(2010, 8, 1)
     weeks = []
     Date.today.step(first_date, -28) { |date| weeks << [date.cwyear, date.cweek] }
     weeks.reverse!
@@ -25,7 +25,7 @@ class AttendanceHistoryGraph
                                                         w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).to_a
       end
       sessions = attendances.map { |ats| ats.map(&:practice_id).uniq.size }
-      values = attendances.each_with_index.map { |a, i| sessions[i] > 0 ? a.size / sessions[i] : nil }
+      values = attendances.each_with_index.map { |a, i| sessions[i].positive? ? a.size / sessions[i] : nil }
       if values.any? { |v| v }
         g.data(group.name, values, group.color)
         sessions.each_with_index do |session, i|
@@ -61,7 +61,7 @@ class AttendanceHistoryGraph
     g.title_font_size = 18
     g.legend_font_size = 14
     g.marker_font_size = 14
-    g.colors = %w{blue orange black green}
+    g.colors = %w(blue orange black green)
     g.x_axis_label = 'Dag'
     first_date = Date.civil(year, month, 1)
     last_date = Date.civil(year, month, -1)
@@ -76,7 +76,7 @@ class AttendanceHistoryGraph
     groups.each do |group|
       values = dates.select { |d| group.group_schedules.map(&:weekday).include? d.cwday }
           .map { |d| [d.day, attendances.select { |a| a.group_schedule.group == group && a.date == d }.size] }
-      values.map! { |k, v| [k, v > 0 ? v : nil] }
+      values.map! { |k, v| [k, v.positive? ? v : nil] }
       g.dataxy(group.name, values, nil, group.color) if values.any? { |v| v }
     end
     g.y_axis_increment = 5 if g.maximum_value && g.maximum_value >= 10
@@ -90,7 +90,7 @@ class AttendanceHistoryGraph
     g.title_font_size = 18
     g.legend_font_size = 14
     g.marker_font_size = 14
-    g.colors = %w{blue orange black green}
+    g.colors = %w(blue orange black green)
     g.y_axis_label = 'Oppmøte'
     g.x_axis_label = 'År'
     result = Attendance.connection.execute <<EOF

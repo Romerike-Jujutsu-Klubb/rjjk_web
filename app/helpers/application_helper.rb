@@ -28,7 +28,7 @@ module ApplicationHelper
   end
 
   def wday(wday_index)
-    %w{Søndag Mandag Tirsdag Onsdag Torsdag Fredag Lørdag Søndag}[wday_index]
+    %w(Søndag Mandag Tirsdag Onsdag Torsdag Fredag Lørdag Søndag)[wday_index]
   end
 
   def textalize(s)
@@ -39,22 +39,22 @@ module ApplicationHelper
     html = Kramdown::Document.new(with_emails.strip).to_html
     html.force_encoding(Encoding::UTF_8)
     html_with_base = absolute_links(html)
-    html_with_bold_links = html_with_base.gsub /(<a href="[^"]*")>/i, %{\\1 style="color: #CD071E;text-decoration:none;font-weight:bold;">}
+    html_with_bold_links = html_with_base.gsub /(<a href="[^"]*")>/i, %(\\1 style="color: #CD071E;text-decoration:none;font-weight:bold;">)
     html_with_bold_links.html_safe
   end
 
   def absolute_links(html)
     base = url_for(controller: :welcome, action: :index, only_path: false)
 
-    html_with_base = html.gsub(/\b(href|src)="(?:#{base}|\/)([^?"]*)(\?[^"]*)?"/i) do |m|
-      with_base = %{#{$1}="#{base}#{$2}#{$3}"}
+    html.gsub(%r{\b(href|src)="(?:#{base}|/)([^?"]*)(\?[^"]*)?"}i) do |_m|
+      with_base = %(#{$1}="#{base}#{$2}#{$3}")
 
       params = []
       params << "email=#{Base64.encode64(@email)}" if @email
       params << "newsletter_id=#{@newsletter.id}" if @newsletter
 
       if params.any?
-        %{#{with_base}#{$3 ? '&' : '?'}#{params.join('&')}}
+        %(#{with_base}#{$3 ? '&' : '?'}#{params.join('&')})
       else
         with_base
       end

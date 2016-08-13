@@ -95,7 +95,7 @@ class UserController < ApplicationController
   end
 
   def forgot_password
-    if authenticated_user? && (not admin?)
+    if authenticated_user? && !admin?
       flash['message'] = 'Du er nå logget på. Du kan nå endre passordet ditt.'
       redirect_to :action => 'change_password'
       return
@@ -148,7 +148,7 @@ class UserController < ApplicationController
               if current_user.admin?
                 unclean_params
               else
-                unclean_params.delete_if { |k, *| not User::CHANGEABLE_FIELDS.include?(k) }
+                unclean_params.delete_if { |k, *| !User::CHANGEABLE_FIELDS.include?(k) }
               end
           @user.attributes = user_params
           flash.now['notice'] = 'User has been updated.' if @user.save
@@ -190,7 +190,7 @@ class UserController < ApplicationController
   protected
 
   def protect?(action)
-    !%w{login signup forgot_password}.include?(action)
+    !%w(login signup forgot_password).include?(action)
   end
 
   # Generate a template user for certain actions on get

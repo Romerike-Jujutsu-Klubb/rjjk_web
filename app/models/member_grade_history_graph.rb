@@ -58,7 +58,7 @@ EOF
     end
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     g.hide_dots = true
-    g.colors = %w{yellow yellow orange orange green green blue blue yellow yellow orange orange green green blue blue brown yellow orange green blue brown black black black}.last(ranks.size)
+    g.colors = %w(yellow yellow orange orange green green blue blue yellow yellow orange orange green green blue blue brown yellow orange green blue brown black black black).last(ranks.size)
 
     # first_date = Member.order(:joined_on).first.joined_on
     # first_date = 5.years.ago.to_date
