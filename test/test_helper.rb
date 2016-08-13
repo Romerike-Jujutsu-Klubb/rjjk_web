@@ -35,7 +35,6 @@ class ActiveSupport::TestCase
     assert v, "Assignment #{symbol} not found in the controller."
     assert_equal [], v.errors.full_messages
   end
-
 end
 
 class Mail::TestMailer

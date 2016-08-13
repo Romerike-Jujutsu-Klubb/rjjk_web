@@ -97,5 +97,4 @@ class NkfMembersController < ApplicationController
           (m.member.age >= 15 && m.kont_sats !~ /^(Voksne|Styre|Trenere|Æresmedlem)/)
     }
   end
-
 end

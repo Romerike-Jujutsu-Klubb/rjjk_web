@@ -17,5 +17,4 @@ class InformationPageMailerTest < ActionMailer::TestCase
     assert_match 'My first article', mail.body.encoded
     assert_match 'A very interresting topic!', mail.body.encoded
   end
-
 end

@@ -12,5 +12,4 @@ module MailerHelper
       %Q{#{member.name} <uwe@kubosch.no>}
     end
   end
-
 end

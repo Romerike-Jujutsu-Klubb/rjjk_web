@@ -47,5 +47,4 @@ Romerike Jujutsu Klubb
 }
     end
   end
-
 end

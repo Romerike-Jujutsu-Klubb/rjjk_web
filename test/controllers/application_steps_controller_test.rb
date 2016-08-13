@@ -93,5 +93,4 @@ class ApplicationStepsControllerTest < ActionController::TestCase
     assert_response :redirect
     assert_redirected_to '/assets/pdficon_large.png'
   end
-
 end

@@ -86,5 +86,4 @@ class InfoControllerTest < ActionController::TestCase
   def test_versjon
     get :versjon
   end
-
 end

@@ -10,6 +10,7 @@ module Work
   Job = Struct.new(:worker, :params)
 
   module_function
+
   def enqueue(worker, *params)
     @queue << Job.new(worker, params)
   end
@@ -39,5 +40,4 @@ module Work
     @running = false
     @workers.each(&:join)
   end
-
 end

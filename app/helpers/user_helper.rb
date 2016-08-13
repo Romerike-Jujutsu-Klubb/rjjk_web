@@ -1,5 +1,4 @@
 module UserHelper
-
   DEFAULT_HEAD_OPTIONS = {
     :notice => true,
     :message => true,
@@ -28,5 +27,4 @@ module UserHelper
    end
    s.html_safe
   end
-
 end

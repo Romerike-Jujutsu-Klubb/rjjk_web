@@ -64,5 +64,4 @@ class NewsController < ApplicationController
   def load_images
     @images = Image.published.images.select(:id, :name).order(created_at: :desc).to_a
   end
-
 end

@@ -16,5 +16,4 @@ class NkfMemberTrialMailerTest < ActionMailer::TestCase
     assert_equal %w(test@jujutsu.no), mail.from
     assert_match 'Følgende prøvemedlemmer har utløpt prøvetid', mail.body.decoded
   end
-
 end

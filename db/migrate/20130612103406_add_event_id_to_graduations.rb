@@ -29,7 +29,6 @@ class AddEventIdToGraduations < ActiveRecord::Migration
     def group_schedule
       group.group_schedules.find { |gs| gs.weekday == held_on.cwday }
     end
-
   end
 
   class Event < ActiveRecord::Base
@@ -41,5 +40,4 @@ class AddEventIdToGraduations < ActiveRecord::Migration
 
   class GroupSchedule < ActiveRecord::Base
   end
-
 end

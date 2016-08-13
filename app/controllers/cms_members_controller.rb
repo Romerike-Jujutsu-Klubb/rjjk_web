@@ -84,5 +84,4 @@ class CmsMembersController < ApplicationController
   def import
     @new_members, @updated_members = CmsImport.import
   end
-
 end

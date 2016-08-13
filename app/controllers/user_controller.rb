@@ -224,5 +224,4 @@ class UserController < ApplicationController
     logger.warn ex
     logger.warn ex.backtrace.join("\n")
   end
-
 end

@@ -51,6 +51,7 @@ class RawIncomingEmailsController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_raw_incoming_email
       @raw_incoming_email = RawIncomingEmail.find(params[:id]).decorate

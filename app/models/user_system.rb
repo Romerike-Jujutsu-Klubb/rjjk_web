@@ -132,5 +132,4 @@ module UserSystem
     session[:user_id] = (user && user.id) if defined?(session)
     Thread.current[:user] = user
   end
-
 end

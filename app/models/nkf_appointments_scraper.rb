@@ -60,4 +60,3 @@ class NkfAppointmentsScraper
     agent.submit(login_form)
   end
 end
-

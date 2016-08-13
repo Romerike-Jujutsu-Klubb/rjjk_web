@@ -24,5 +24,4 @@ class InstructionTest < ActionDispatch::IntegrationTest
     assert_current_path '/group_instructors'
     assert has_content? 'GroupInstructor was successfully created.'
   end
-
 end

@@ -23,5 +23,4 @@ class Embu < ActiveRecord::Base
     # images.create :name => file.original_filename, :content_data => content, :content_type => file.content_type
     images.create :file => file
   end
-
 end

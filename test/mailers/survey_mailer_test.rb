@@ -16,5 +16,4 @@ class SurveyMailerTest < ActionMailer::TestCase
     assert_equal ['test@jujutsu.no'], mail.from
     assert_match 'First survey', mail.body.encoded
   end
-
 end

@@ -58,5 +58,4 @@ class Attendance < ActiveRecord::Base
   # def self.find_member_count_for_month(group, year, month)
   #  all.where('group_schedule_id IN ? AND year = ?', group.group_schedules.map{|gs| gs.id}, year, month)
   # end
-
 end

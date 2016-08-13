@@ -82,5 +82,4 @@ class ElectionsController < ApplicationController
     @members = ([@election.member].compact + Member.active(@election.annual_meeting.try(:date)).
         order(:first_name, :last_name).to_a).uniq
   end
-
 end

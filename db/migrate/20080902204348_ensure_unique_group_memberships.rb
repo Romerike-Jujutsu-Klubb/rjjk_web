@@ -27,5 +27,4 @@ class EnsureUniqueGroupMemberships < ActiveRecord::Migration
     has_and_belongs_to_many :martial_arts
     has_and_belongs_to_many :groups
   end
-
 end

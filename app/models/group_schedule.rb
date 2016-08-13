@@ -20,5 +20,4 @@ class GroupSchedule < ActiveRecord::Base
   def to_s
     "#{group.name} #{weekday_name}"
   end
-
 end

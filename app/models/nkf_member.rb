@@ -109,5 +109,4 @@ class NkfMember < ActiveRecord::Base
       member
     end
   end
-
 end

@@ -4,5 +4,4 @@ class RawIncomingEmailDecorator < Draper::Decorator
   def mail
     @mail ||= Mail.read_from_string(content)
   end
-
 end

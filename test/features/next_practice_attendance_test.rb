@@ -12,5 +12,4 @@ class NextPracticeAttendanceTest < ActionDispatch::IntegrationTest
     find('#next_practice i.glyphicon-thumbs-up').click
     screenshot('next_practice/will_attend')
   end
-
 end

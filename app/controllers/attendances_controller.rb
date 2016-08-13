@@ -350,5 +350,4 @@ class AttendancesController < ApplicationController
     g = AttendanceHistoryGraph.new.month_per_year_chart params[:month].to_i, size
     send_data(g, :disposition => 'inline', :type => 'image/png', :filename => 'RJJK_Oppmøtehistorikk.png')
   end
-
 end

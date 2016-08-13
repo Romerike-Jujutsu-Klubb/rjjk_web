@@ -175,5 +175,4 @@ class Certificates
       end
     end.render
   end
-
 end

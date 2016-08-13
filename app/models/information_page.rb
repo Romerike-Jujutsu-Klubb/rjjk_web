@@ -11,5 +11,4 @@ class InformationPage < ActiveRecord::Base
   def visible?
     !hidden
   end
-
 end

@@ -66,8 +66,6 @@ class SkillCard
           app_table.draw
         end
       end
-
     end.render
   end
-
 end

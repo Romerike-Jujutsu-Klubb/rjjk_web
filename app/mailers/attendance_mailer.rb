@@ -62,5 +62,4 @@ class AttendanceMailer < ActionMailer::Base
     @timestamp = completed_attendances[0].date
     mail to: safe_email(member), subject: rjjk_prefix(@title)
   end
-
 end

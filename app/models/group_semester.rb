@@ -37,5 +37,4 @@ class GroupSemester < ActiveRecord::Base
     q = q.where('year < ? OR (year = ? and week <= ?)', last_session.year, last_session.year, last_session.cweek)
     q
   end
-
 end

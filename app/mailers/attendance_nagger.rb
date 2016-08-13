@@ -126,5 +126,4 @@ class AttendanceNagger
     logger.error $!
     ExceptionNotifier.notify_exception($!)
   end
-
 end

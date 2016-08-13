@@ -68,7 +68,6 @@ module ApplicationHelper
     h2 = absolute_links(h)
     h2
   end
-
 end
 
 class Array

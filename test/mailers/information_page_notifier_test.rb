@@ -63,6 +63,5 @@ class InformationPageNotifierTest < ActionMailer::TestCase
     assert_equal %w(test@jujutsu.no), email.from
     assert_match 'My first article', email.body
     assert_match 'A very interresting topic!', email.body
-
   end
 end

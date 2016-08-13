@@ -16,5 +16,4 @@ class SemesterMailerTest < ActionMailer::TestCase
     assert_equal %w(test@jujutsu.no), mail.from
     assert_match 'Du trenger å starte å planlegge neste semester!', mail.body.encoded
   end
-
 end

@@ -72,5 +72,4 @@ class GroupInstructorsController < ApplicationController
       params[:group_instructor][:group_semester_id] = group_semester.id
     end
   end
-
 end

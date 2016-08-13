@@ -96,5 +96,4 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
       end
     end
   end
-
 end

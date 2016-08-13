@@ -93,5 +93,4 @@ class GroupSemestersController < ApplicationController
       end
     end
   end
-
 end

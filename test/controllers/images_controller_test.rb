@@ -89,5 +89,4 @@ class ImagesControllerTest < ActionController::TestCase
     # assert_not_nil assigns(:image)
     assert_not_nil assigns(:images)
   end
-
 end

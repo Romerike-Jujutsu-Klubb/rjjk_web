@@ -45,6 +45,5 @@ class SurveySender
       logger.error $!.backtrace.join("\n")
       ExceptionNotifier.notify_exception($!)
     end
-
   end
 end

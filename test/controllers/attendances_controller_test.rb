@@ -113,5 +113,4 @@ class AttendancesControllerTest < ActionController::TestCase
     get :form, :date => '2013-10-01', :group_id => groups(:panda).id
     assert_response :success
   end
-
 end

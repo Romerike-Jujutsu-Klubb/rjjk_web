@@ -15,6 +15,5 @@ class RemoveGeneratedEventsForGraduations < ActiveRecord::Migration
   end
 
   class Event < ActiveRecord::Base
-
   end
 end

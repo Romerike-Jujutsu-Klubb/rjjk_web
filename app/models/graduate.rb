@@ -53,5 +53,4 @@ class Graduate < ActiveRecord::Base
   def current_rank_age
     member.current_rank_age(graduation.group.martial_art, graduation.held_on)
   end
-
 end

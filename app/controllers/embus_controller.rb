@@ -78,5 +78,4 @@ class EmbusController < ApplicationController
     @embus = Embu.mine.where('user_id = ?', current_user.id).order('created_at DESC').to_a
     @ranks = Rank.order('position DESC').to_a
   end
-
 end

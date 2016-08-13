@@ -30,5 +30,4 @@ class NkfReplicationTest < ActionMailer::TestCase
     assert_equal %w(test@jujutsu.no), mail.from
     assert_match /Opprettet følgende nye medlemmer:\s+Erik Hansen\s+Oppdaterte følgende eksisterende medlemmer:\s+Erik Hansen\s+first_name: "H" => "a"\s+Gruppemedlemskap:\s+hhh dfgfg\s+Lagt til: hhgf\s+Fjernet : abc/, mail.body.encoded
   end
-
 end

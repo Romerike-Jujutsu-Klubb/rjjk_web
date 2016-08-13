@@ -33,5 +33,4 @@ class NkfReplicationMailer < ActionMailer::Base
     @wrong_contracts = wrong_contracts
     mail subject: 'Medlemmer med feil kontrakt'
   end
-
 end

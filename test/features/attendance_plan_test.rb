@@ -46,5 +46,4 @@ class AttendancePlanTest < ActionDispatch::IntegrationTest
     next_button = find('#button_2013_42_545305079')
     assert_equal 'Annet', next_button.text
   end
-
 end

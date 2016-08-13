@@ -88,5 +88,4 @@ class Group < ActiveRecord::Base
     active_trial_count = (target_size - active_size)
     trial_list[active_trial_count..-1] || []
   end
-
 end

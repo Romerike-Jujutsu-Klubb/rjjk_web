@@ -161,6 +161,4 @@ class User < ActiveRecord::Base
   def self.salted_password(salt, hashed_password)
     hashed(salt + hashed_password)
   end
-
 end
-

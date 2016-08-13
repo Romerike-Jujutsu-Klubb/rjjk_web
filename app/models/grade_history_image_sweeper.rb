@@ -21,5 +21,4 @@ class GradeHistoryImageSweeper < ActionController::Caching::Sweeper
     Rails.logger.info("Expire cached files: #{cached_files}")
     FileUtils.rm_f(cached_files) rescue Errno::ENOENT
   end
-
 end

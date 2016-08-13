@@ -89,5 +89,4 @@ class Image < ActiveRecord::Base
       save!
     end
   end
-
 end

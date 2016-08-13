@@ -37,5 +37,4 @@ class CertificatesTest < ActiveSupport::TestCase
     doc = Certificates.pdf(Date.new(2015, 5, 21), @content, 2)
     assert doc
   end
-
 end

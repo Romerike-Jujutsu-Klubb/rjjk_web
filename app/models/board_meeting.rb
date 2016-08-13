@@ -7,5 +7,4 @@ class BoardMeeting < ActiveRecord::Base
     self.minutes_content_type = file.content_type
     self.minutes_content_data = file.read
   end
-
 end

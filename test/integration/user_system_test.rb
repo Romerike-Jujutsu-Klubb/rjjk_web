@@ -76,7 +76,6 @@ class UserSystemTest < ActionDispatch::IntegrationTest
     assert_equal user, User.authenticate(user.login, 'newpassword')
   end
 
-
   private
 
   def assert_logged_in(user)
@@ -92,5 +91,4 @@ class UserSystemTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     assert_equal controller.url_for(action: :login, id: nil), response.redirect_url
   end
-
 end

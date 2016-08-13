@@ -132,5 +132,4 @@ EOF
     g.minimum_value = 0
     g.to_blob
   end
-
 end

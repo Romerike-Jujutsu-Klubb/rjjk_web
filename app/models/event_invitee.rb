@@ -32,5 +32,4 @@ class EventInvitee < ActiveRecord::Base
   def email
     user.try(:email) || super
   end
-
 end

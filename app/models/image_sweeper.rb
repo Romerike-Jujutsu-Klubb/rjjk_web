@@ -15,5 +15,4 @@ class ImageSweeper < ActionController::Caching::Sweeper
     ApplicationController.expire_page(Rails.application.routes.url_for(controller: :images, action: :show, id: image.id, format: image.format, only_path: true))
     ApplicationController.expire_page(Rails.application.routes.url_for(controller: :images, action: :inline, id: image.id, format: image.format, only_path: true))
   end
-
 end

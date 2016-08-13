@@ -7,5 +7,4 @@ class Signature < ActiveRecord::Base
     self.image = file.read
     self.content_type = file.content_type
   end
-
 end

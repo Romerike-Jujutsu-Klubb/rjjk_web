@@ -68,5 +68,4 @@ class UserNotify < ActionMailer::Base
   def send_email
     mail subject: @subject, to: @recipients
   end
-
 end

@@ -10,5 +10,4 @@ class InstructionMailer < ActionMailer::Base
     @title = 'Treningsgrupper som mangler instruktør'
     mail subject: rjjk_prefix(@title)
   end
-
 end

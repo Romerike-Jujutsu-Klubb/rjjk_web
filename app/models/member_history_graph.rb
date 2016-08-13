@@ -109,5 +109,4 @@ class MemberHistoryGraph
   def self.junior_birthdate(date)
     date - ASPIRANT_AGE_LIMIT.years
   end
-
 end

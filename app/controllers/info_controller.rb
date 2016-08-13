@@ -88,5 +88,4 @@ class InfoController < ApplicationController
       params[:information_page][:revised_at] = Time.now
     end
   end
-
 end

@@ -5,5 +5,4 @@ class EmbuIntegrationTest < ActionDispatch::IntegrationTest
     visit_with_login '/embus', redirected_path: '/embus/980190962/edit', user: :lars
     screenshot('my_embu')
   end
-
 end

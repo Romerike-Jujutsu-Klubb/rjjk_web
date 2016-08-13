@@ -150,7 +150,6 @@ class MembersController < ApplicationController
     # https://github.com/rails/rails/issues/12380
     # https://github.com/rails/rails/pull/12450
     Member.transaction do
-
       member = Member.find(params[:id])
       if (user = member.user)
         member.user_id = nil
@@ -315,5 +314,4 @@ class MembersController < ApplicationController
       @member.groups = []
     end
   end
-
 end

@@ -48,7 +48,6 @@ class NewsFeatureTest < ActionDispatch::IntegrationTest
 
   private
 
-
   def tinymce_fill_in name, options = {}
     if page.driver.browser == :chrome
       fail 'huh?!'

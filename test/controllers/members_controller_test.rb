@@ -132,5 +132,4 @@ class MembersControllerTest < ActionController::TestCase
         :interval => 365, :percentage => 67, :step => 30
     assert_response :success
   end
-
 end

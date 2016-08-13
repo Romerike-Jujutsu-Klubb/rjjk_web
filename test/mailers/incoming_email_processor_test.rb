@@ -52,5 +52,4 @@ class IncomingEmailProcessorTest < ActionMailer::TestCase
     assert_equal '[TEST][RJJK][Styret] Re: Melding til styret', mail.subject
     assert_match 'Meldingstekst styret', mail.body.encoded
   end
-
 end

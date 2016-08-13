@@ -20,5 +20,4 @@ class UserMessageMailer < ActionMailer::Base
       format.html { render inline: body, layout: 'email' }
     end
   end
-
 end

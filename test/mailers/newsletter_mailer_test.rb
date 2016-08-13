@@ -18,5 +18,4 @@ class NewsletterMailerTest < ActionMailer::TestCase
     # assert_match /SÅ SØTE BÆR!/, mail.body.encoded # text version
     mail.deliver_now
   end
-
 end

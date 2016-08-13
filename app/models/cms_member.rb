@@ -48,5 +48,4 @@ class CmsMember < ActiveRecord::Base
      (nkf_fee? ? (155.0 / 12).ceil : 0)
     end
   end
-
 end

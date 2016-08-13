@@ -4,5 +4,4 @@ class EmbuImage < ActiveRecord::Base
 
   validates_presence_of :embu_id, :image_id
   validates_uniqueness_of :image_id, :scope => :embu_id
-
 end

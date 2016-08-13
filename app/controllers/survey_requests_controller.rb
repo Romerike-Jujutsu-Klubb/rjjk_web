@@ -78,6 +78,7 @@ class SurveyRequestsController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_survey_request
     @survey_request = SurveyRequest.find(params[:id])

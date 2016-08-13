@@ -33,5 +33,4 @@ class NewsletterMailer < ActionMailer::Base
     mail to: safe_email(@event_invitee), subject: rjjk_prefix(@subject),
         bcc: 'Uwe Kubosch <uwe@kubosch.no>'
   end
-
 end

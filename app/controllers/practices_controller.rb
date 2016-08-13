@@ -92,5 +92,4 @@ class PracticesController < ApplicationController
       gs.group.active?(@practice.new_record? ? Date.today : @practice.date)
     end
   end
-
 end

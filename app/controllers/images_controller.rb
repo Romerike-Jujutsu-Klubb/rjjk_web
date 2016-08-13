@@ -141,5 +141,4 @@ class ImagesController < ApplicationController
     @image = Image.find_by_id(params[:id]) || @images.first
     render action: :gallery
   end
-
 end

@@ -90,5 +90,4 @@ class NkfMemberComparison
     @new_members.any? || @member_changes.any? || @group_changes.any? ||
         @errors.any?
   end
-
 end
