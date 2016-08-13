@@ -59,7 +59,10 @@ class GroupSemestersController < ApplicationController
         format.html { redirect_to @group_semester, notice: 'Group semester was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { edit; render action: 'edit' }
+        format.html do
+          edit
+          render action: 'edit'
+        end
         format.json { render json: @group_semester.errors, status: :unprocessable_entity }
       end
     end

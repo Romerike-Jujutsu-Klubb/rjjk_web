@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   CHANGEABLE_FIELDS = %w(first_name last_name email)
   attr_accessor :password_needs_confirmation
 
-  before_validation { self.login = email if self.login.blank? }
+  before_validation { self.login = email if login.blank? }
   after_save { @password_needs_confirmation = false }
   after_validation :crypt_password
 
@@ -89,15 +89,15 @@ class User < ActiveRecord::Base
     end
     logger.info "Authenticated by token: #{u.inspect}.  Extending token lifetime."
     u.update_attributes :verified => true, :token_expiry => Time.now + token_lifetime
-    return u
+    u
   end
 
   def token_expired?
-    self.security_token && self.token_expiry && (Time.now >= self.token_expiry)
+    security_token && token_expiry && (Time.now >= token_expiry)
   end
 
   def generate_security_token(duration = :short)
-    if self.security_token.nil? || self.token_expiry.nil? || token_stale?(duration)
+    if security_token.nil? || token_expiry.nil? || token_stale?(duration)
       new_security_token(duration)
     else
       security_token
@@ -119,7 +119,7 @@ class User < ActiveRecord::Base
   end
 
   def remaining_token_lifetime
-    self.token_expiry.to_i - Time.now.to_i
+    token_expiry.to_i - Time.now.to_i
   end
 
   def admin?
@@ -141,7 +141,7 @@ class User < ActiveRecord::Base
   end
 
   def self.hashed(str)
-    return Digest::SHA1.hexdigest("Man må like å lide!--#{str}--")[0..39]
+    Digest::SHA1.hexdigest("Man må like å lide!--#{str}--")[0..39]
   end
 
   def crypt_password
@@ -152,10 +152,10 @@ class User < ActiveRecord::Base
   end
 
   def new_security_token(duration)
-    write_attribute('security_token', self.class.hashed(self.salted_password + Time.now.to_i.to_s + rand.to_s))
+    write_attribute('security_token', self.class.hashed(salted_password + Time.now.to_i.to_s + rand.to_s))
     write_attribute('token_expiry', Time.at(Time.now.to_i + User.token_lifetime(duration)))
     save
-    self.security_token
+    security_token
   end
 
   def self.salted_password(salt, hashed_password)

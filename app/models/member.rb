@@ -60,7 +60,8 @@ class Member < ActiveRecord::Base
 
   scope :without_image, -> { select(column_names - ['image_id']) }
   scope :active, ->(from_date = nil, to_date = nil) do
-    from_date ||= Date.today; to_date ||= from_date
+    from_date ||= Date.today
+    to_date ||= from_date
     where('joined_on <= ? AND left_on IS NULL OR left_on >= ?', to_date, from_date)
   end
   SEARCH_FIELDS = [
@@ -166,7 +167,7 @@ class Member < ActiveRecord::Base
 
   # describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
   def gmaps4rails_address
-    "#{self.address}, #{self.postal_code}, Norway"
+    "#{address}, #{postal_code}, Norway"
   end
 
   def gmaps4rails_infowindow
@@ -212,7 +213,7 @@ class Member < ActiveRecord::Base
   end
 
   def current_rank_date(martial_art = nil, date = Date.today)
-    graduate = self.current_graduate(martial_art, date)
+    graduate = current_graduate(martial_art, date)
     graduate && graduate.graduation.held_on || joined_on
   end
 
@@ -377,7 +378,7 @@ class Member < ActiveRecord::Base
 
   def image_file=(file)
     return if file.blank?
-    self.create_image! :user_id => user_id, :name => file.original_filename,
+    create_image! :user_id => user_id, :name => file.original_filename,
         :content_type => file.content_type, :content_data => file.read
   end
 
@@ -386,9 +387,9 @@ class Member < ActiveRecord::Base
   end
 
   def thumbnail(x = 120, y = 160)
-    return unless self.image?
-    magick_image = Magick::Image.from_blob(Image.with_image.find(self.image_id).content_data).first
-    return magick_image.crop_resized(x, y).to_blob
+    return unless image?
+    magick_image = Magick::Image.from_blob(Image.with_image.find(image_id).content_data).first
+    magick_image.crop_resized(x, y).to_blob
   end
 
   def cms_member

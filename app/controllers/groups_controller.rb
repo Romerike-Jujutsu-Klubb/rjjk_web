@@ -74,7 +74,10 @@ class GroupsController < ApplicationController
         format.html { back_or_redirect_to(@group) }
         format.xml { head :ok }
       else
-        format.html { edit; render :action => :edit }
+        format.html do
+          edit
+          render :action => :edit
+        end
         format.xml { render :xml => @group.errors, :status => :unprocessable_entity }
       end
     end

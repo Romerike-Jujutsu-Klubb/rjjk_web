@@ -510,23 +510,6 @@ Style/RedundantParentheses:
     - 'app/models/graduate.rb'
     - 'app/models/group.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: AllowMultipleReturnValues.
-Style/RedundantReturn:
-  Exclude:
-    - 'app/models/member.rb'
-    - 'app/models/user.rb'
-
-# Offense count: 22
-# Cop supports --auto-correct.
-Style/RedundantSelf:
-  Exclude:
-    - 'app/models/member.rb'
-    - 'app/models/member_history_graph.rb'
-    - 'app/models/rank.rb'
-    - 'app/models/user.rb'
-
 # Offense count: 15
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
@@ -550,34 +533,6 @@ Style/RescueModifier:
     - 'app/models/grade_history_image_sweeper.rb'
     - 'app/models/member_sweeper.rb'
     - 'app/models/survey_answer.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/SelfAssignment:
-  Exclude:
-    - 'app/helpers/user_helper.rb'
-
-# Offense count: 9
-# Cop supports --auto-correct.
-# Configuration parameters: AllowAsExpressionSeparator.
-Style/Semicolon:
-  Exclude:
-    - 'app/controllers/attendances_controller.rb'
-    - 'app/controllers/group_semesters_controller.rb'
-    - 'app/controllers/groups_controller.rb'
-    - 'app/models/attendance.rb'
-    - 'app/models/member.rb'
-    - 'app/models/member_grade_history_graph.rb'
-    - 'app/models/member_history_graph.rb'
-    - 'db/migrate/20120604144204_create_member_images.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: only_raise, only_fail, semantic
-Style/SignalException:
-  Exclude:
-    - 'test/features/news_feature_test.rb'
 
 # Offense count: 94
 # Cop supports --auto-correct.

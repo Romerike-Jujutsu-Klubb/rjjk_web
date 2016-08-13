@@ -1,6 +1,5 @@
 class NewsPublisher
   def self.send_news
-    logger.debug 'Sending news'
     now = Time.now
     news_item = NewsItem.where('mailed_at IS NULL')
         .where("publication_state IS NULL OR publication_state = 'PUBLISHED'")
@@ -9,17 +8,10 @@ class NewsPublisher
         .where("updated_at IS NULL OR updated_at < timestamp ? - interval '10 minutes'", now)
         .first
     if news_item
-      Member.active(2.months.from_now).each do |m|
+      Member.active(2.months.from_now).order(:joined_on).each do |m|
         NewsletterMailer.newsletter(news_item, m).store(m, tag: :newsletter)
       end
       news_item.update! mailed_at: now
     end
-    logger.debug 'Sending news...OK'
-  rescue Exception
-    logger.error 'Execption sending news'
-    logger.error $!.message
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
-    raise if Rails.env.test?
   end
 end

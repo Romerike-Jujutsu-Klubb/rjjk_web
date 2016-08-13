@@ -209,7 +209,10 @@ class AttendancesController < ApplicationController
             member, Attendance::PRESENT_STATES, start_date.cwyear, start_date.cweek, today.cwyear)
         .to_a
     @attended_groups = attendances.map { |a| a.practice.group_schedule.group }.uniq.sort_by { |g| -g.from_age }
-    per_month = attendances.group_by { |a| d = a.date; [d.cwyear, d.mon] }
+    per_month = attendances.group_by do |a|
+      d = a.date
+      [d.cwyear, d.mon]
+    end
     @months = per_month.keys.sort.reverse.map do |ym|
       per_group = per_month[ym].group_by { |a| a.group_schedule.group }
       [t(:date)[:month_names][ym[1]], *@attended_groups.map { |g| (per_group[g] || []).size }]

@@ -43,7 +43,12 @@ class MemberHistoryGraph
     labels = {}
     current_year = nil
     current_month = nil
-    dates.each_with_index { |date, i| if date.month != current_month && [1, 8].include?(date.month) then labels[i] = (date.year != current_year ? "#{date.strftime('%m')}\n    #{date.strftime('%Y')}" : "#{date.strftime('%m')}"); current_year = date.year; current_month = date.month end }
+    dates.each_with_index do |date, i|
+      next unless date.month != current_month && [1, 8].include?(date.month)
+      labels[i] = (date.year != current_year ? "#{date.strftime('%m')}\n    #{date.strftime('%Y')}" : "#{date.strftime('%m')}")
+      current_year = date.year
+      current_month = date.month
+    end
     g.labels = labels
 
     # g.draw_vertical_legend
@@ -76,31 +81,31 @@ class MemberHistoryGraph
 
   def self.seniors_jj(dates)
     dates.map {|date| Member
-        .where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate < '#{self.senior_birthdate(date)}' AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')")
+        .where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate < '#{senior_birthdate(date)}' AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')")
         .references(:martial_arts).includes(groups: :martial_art).count
     }
   end
 
   def self.juniors_jj(dates)
-    dates.map {|date| Member.where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate BETWEEN ? AND ? AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')", self.senior_birthdate(date), self.junior_birthdate(date))
+    dates.map {|date| Member.where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate BETWEEN ? AND ? AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')", senior_birthdate(date), junior_birthdate(date))
         .references(:martial_arts).includes(groups: :martial_art).count
     }
   end
 
   def self.seniors_ad(dates)
-    dates.map {|date| Member.where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate < '#{self.senior_birthdate(date)}' AND martial_arts.name = 'Aikikai'")
+    dates.map {|date| Member.where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate < '#{senior_birthdate(date)}' AND martial_arts.name = 'Aikikai'")
         .references(:martial_arts).includes(groups: :martial_art).count
     }
   end
 
   def self.juniors_ad(dates)
-    dates.map {|date| Member.where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate >= '#{self.senior_birthdate(date)}' AND martial_arts.name = 'Aikikai'")
+    dates.map {|date| Member.where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate >= '#{senior_birthdate(date)}' AND martial_arts.name = 'Aikikai'")
         .references(:martial_arts).includes(groups: :martial_art).count
     }
   end
 
   def self.aspirants(dates)
-    dates.map { |date| Member.where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate >= '#{self.junior_birthdate(date)}'").count }
+    dates.map { |date| Member.where("(#{eval ACTIVE_CLAUSE}) AND birthdate IS NOT NULL AND birthdate >= '#{junior_birthdate(date)}'").count }
   end
 
   def self.was_senior?(date)

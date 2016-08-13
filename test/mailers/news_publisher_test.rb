@@ -9,16 +9,16 @@ class NewsPublisherTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[0]
     assert_equal '[RJJK][TEST] My first news item', mail.subject
-    assert_equal ["\"Lars Bråten\" <lars@example.com>"], mail.to
+    assert_equal ["\"Uwe Kubosch\" <admin@test.com>"], mail.to
     assert_equal %w(test@jujutsu.no), mail.from
+    assert_match 'My first news item', mail.html_body
     assert_match 'src="http://example.com/images/inline/980190962.jpg"', mail.html_body
     assert_match 'src="http://example.com/images/inline/980190962.jpg"', mail.plain_body
 
     mail = UserMessage.pending[1]
     assert_equal '[RJJK][TEST] My first news item', mail.subject
-    assert_equal ["\"Uwe Kubosch\" <admin@test.com>"], mail.to
+    assert_equal ["\"Lars Bråten\" <lars@example.com>"], mail.to
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_match 'My first news item', mail.html_body
 
     mail = UserMessage.pending[2]
     assert_equal '[RJJK][TEST] My first news item', mail.subject

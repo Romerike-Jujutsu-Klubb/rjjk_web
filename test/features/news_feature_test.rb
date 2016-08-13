@@ -50,7 +50,7 @@ class NewsFeatureTest < ActionDispatch::IntegrationTest
 
   def tinymce_fill_in(name, options = {})
     if page.driver.browser == :chrome
-      fail 'huh?!'
+      raise 'huh?!'
     else
       page.execute_script("tinyMCE.get('#{name}').setContent('#{options[:with]}')")
     end

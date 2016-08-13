@@ -15,11 +15,11 @@ module UserHelper
     s = "<h3>#{label}</h3>"
     if flash['notice'] && (not opts[:notice].nil?) && opts[:notice]
       notice = "<div><p style=\"padding-left: 0.5em;padding-bottom: 0.5em;color: #08C\">#{flash['notice']}</p></div>"
-      s = s + notice
+      s += notice
     end
     if flash['message'] && (not opts[:message].nil?) && opts[:message]
       message = "<div><p style=\"padding-left: 0.5em;padding-bottom: 0.5em;color: #08C\">#{flash['message']}</p></div>"
-      s = s + message
+      s += message
     end
     if (not opts[:error].nil?) && opts[:error]
       error = error_messages_for('user')

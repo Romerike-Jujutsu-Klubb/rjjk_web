@@ -84,11 +84,12 @@ EOF
     labels = {}
     current_year = nil
     current_month = nil
-    dates.each_with_index { |date, i|
-      if date.month != current_month && [1, 8].include?(date.month)
-        labels[i] = (date.year != current_year ? "#{date.strftime('%m')}\n    #{date.strftime('%Y')}" : "#{date.strftime('%m')}"); current_year = date.year; current_month = date.month
-      end
-    }
+    dates.each_with_index do |date, i|
+      next unless date.month != current_month && [1, 8].include?(date.month)
+      labels[i] = (date.year != current_year ? "#{date.strftime('%m')}\n    #{date.strftime('%Y')}" : "#{date.strftime('%m')}")
+      current_year = date.year
+      current_month = date.month
+    end
     g.labels = labels
     g.y_axis_increment = 5
     g.to_blob
