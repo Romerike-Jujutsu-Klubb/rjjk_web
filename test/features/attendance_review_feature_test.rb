@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'capybara_setup'
 
 class AttendanceReviewFeatureTest < ActionDispatch::IntegrationTest
   setup {screenshot_section :attendance}

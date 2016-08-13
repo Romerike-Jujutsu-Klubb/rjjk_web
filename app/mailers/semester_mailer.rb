@@ -1,18 +1,22 @@
 class SemesterMailer < ActionMailer::Base
+  include MailerHelper
   layout 'email'
   default from: Rails.env == 'production' ? 'noreply@jujutsu.no' : "#{Rails.env}@jujutsu.no",
-          to: Rails.env == 'production' ? %w(curt.mekiassen@as.online.no uwe@kubosch.no) : 'uwe@kubosch.no'
+          to: 'uwe@kubosch.no', bcc: 'uwe@kubosch.no'
 
-  def missing_current_semester
-    mail subject: '[RJJK] Planlegge semesteret'
+  def missing_current_semester(recipient)
+    @recipient = recipient
+    mail to: safe_email(recipient), subject: rjjk_prefix('Planlegge semesteret')
   end
 
-  def missing_next_semester
-    mail subject: '[RJJK] Planlegge neste semester'
+  def missing_next_semester(recipient)
+    @recipient = recipient
+    mail to: safe_email(recipient), subject: rjjk_prefix('Planlegge neste semester')
   end
 
-  def missing_session_dates(group)
+  def missing_session_dates(recipient, group)
+    @recipient = recipient
     @group = group
-    mail subject: '[RJJK] Planlegge neste semester'
+    mail to: safe_email(recipient), subject: rjjk_prefix('Planlegge neste semester')
   end
 end

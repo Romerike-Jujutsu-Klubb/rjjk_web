@@ -1,4 +1,3 @@
-# encoding: utf-8
 class EventsController < ApplicationController
   before_filter :admin_required, :except => [:calendar, :index, :show]
 
@@ -75,7 +74,8 @@ class EventsController < ApplicationController
       event_invitee_message = EventInviteeMessage.new(
           :event_invitee => event_invitee, :message_type => EventMessage::MessageType::INVITATION)
       event_invitee_message.id = -event.id
-      NewsletterMailer.event_invitee_message(event_invitee_message).deliver_now
+      NewsletterMailer.event_invitee_message(event_invitee_message)
+          .store(recipient.user_id, tag: :event_invite)
     end
     render :text => ''
   end

@@ -1,4 +1,3 @@
-# encoding: utf-8
 require 'test_helper'
 
 class NkfMemberImportTest < ActionMailer::TestCase
@@ -8,7 +7,7 @@ class NkfMemberImportTest < ActionMailer::TestCase
     end
 
     mail = ActionMailer::Base.deliveries[0]
-    assert_match /^Hentet \d{3} endringer fra NKF$/, mail.subject
+    assert_match /^\[RJJK\]\[TEST\] Hentet \d{3} endringer fra NKF$/, mail.subject
     assert_equal 'uwe@kubosch.no', mail.header[:to].value
     assert_equal 'test@jujutsu.no', mail.header[:from].value
     assert_match "NKF Import\n\nEndringer fra NKF-portalen.\n", mail.body.decoded

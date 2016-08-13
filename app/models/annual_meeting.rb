@@ -1,4 +1,3 @@
-# encoding: utf-8
 class AnnualMeeting < ActiveRecord::Base
   has_many :elections, dependent: :destroy
 
@@ -16,5 +15,10 @@ class AnnualMeeting < ActiveRecord::Base
 
   def date
     start_at.try(:to_date)
+  end
+
+  def board_members
+    elections.includes(:role).references(:roles).
+        where('roles.years_on_the_board IS NOT NULL').to_a.map(&:member)
   end
 end

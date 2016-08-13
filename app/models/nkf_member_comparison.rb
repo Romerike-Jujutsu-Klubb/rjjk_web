@@ -19,12 +19,13 @@ class NkfMemberComparison
     nkf_members.each do |nkfm|
       member = nkfm.member
       member.attributes = nkfm.converted_attributes
-      if nkfm.gren_stilart_avd_parti___gren_stilart_avd_parti
-        nkf_group_names = nkfm.gren_stilart_avd_parti___gren_stilart_avd_parti.
-            split(/ - /).map { |n| n.split('/')[3] }
-      else
-        nkf_group_names = []
-      end
+      nkf_group_names =
+          if nkfm.gren_stilart_avd_parti___gren_stilart_avd_parti
+            nkfm.gren_stilart_avd_parti___gren_stilart_avd_parti.
+                split(/ - /).map { |n| n.split('/')[3] }
+          else
+            []
+          end
       if member.changed? || (nkf_group_names.sort != member.groups.map(&:name).sort)
         @members << nkfm.member
       end

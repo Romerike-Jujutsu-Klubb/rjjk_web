@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'capybara_setup'
 
 class CanAccessHomeTest < Capybara::Rails::TestCase
   test 'sanity' do

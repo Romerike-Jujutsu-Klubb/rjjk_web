@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'capybara_setup'
 
 class NextPracticeAttendanceTest < ActionDispatch::IntegrationTest
   def setup

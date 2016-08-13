@@ -7,7 +7,7 @@ class Member < ActiveRecord::Base
   acts_as_gmappable check_process: :prevent_geocoding, validation: false
 
   def prevent_geocoding
-    address.blank? || (!latitude.blank? && !longitude.blank?)
+    address.blank? || (latitude.present? && longitude.present?)
   end
 
   belongs_to :image, dependent: :destroy
@@ -107,9 +107,9 @@ class Member < ActiveRecord::Base
 
     # Full name and email
     full_email = make_usable_full_email(email, first_name, last_name)
-    full_email_with_birthyear = make_usable_full_email(email, first_name, last_name, attrs[:birthdate][0..3])
-    full_email_with_birthdate = make_usable_full_email(email, first_name, last_name, attrs[:birthdate])
-    full_email_with_join_year = make_usable_full_email(email, first_name, last_name, attrs[:joined_on][0..3])
+    full_email_with_birthyear = make_usable_full_email(email, first_name, last_name, attrs[:birthdate].to_s[0..3])
+    full_email_with_birthdate = make_usable_full_email(email, first_name, last_name, attrs[:birthdate].to_s)
+    full_email_with_join_year = make_usable_full_email(email, first_name, last_name, attrs[:joined_on].to_s[0..3])
 
     potential_emails = [email, full_email, full_email_with_birthyear,
         full_email_with_birthdate, full_email_with_join_year]
@@ -174,6 +174,11 @@ class Member < ActiveRecord::Base
     html << "<img src='/members/thumbnail/#{id}.#{image.format}' width='128' style='float: left; margin-right: 1em'>" if image?
     html<< name
     html
+  end
+
+  def create_corresponding_user!
+    new_user = self.class.create_corresponding_user!(attributes)
+    update! user_id: new_user.id
   end
 
   def current_graduate(martial_art, date = Date.today)

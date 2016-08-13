@@ -1,4 +1,3 @@
-# encoding: utf-8
 class GroupSemester < ActiveRecord::Base
   belongs_to :chief_instructor, class_name: :Member
   belongs_to :group
@@ -14,6 +13,15 @@ class GroupSemester < ActiveRecord::Base
       end
       if last_session && !(semester.start_on..semester.end_on).include?(last_session)
         errors.add :last_session, 'må være innenfor det tilhørende semesteret.'
+      end
+    end
+  end
+
+  def self.create_missing_group_semesters
+    groups = Group.active.all
+    Semester.all.each do |s|
+      groups.each do |g|
+        GroupSemester.where(group_id: g.id, semester_id: s.id).first_or_create!
       end
     end
   end

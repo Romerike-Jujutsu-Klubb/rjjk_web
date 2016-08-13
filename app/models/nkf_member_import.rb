@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Separate slow tests and run in CI
 # TODO(uwe):  Maybe use https://github.com/httprb/http.rb ?
 # TODO(uwe):  Use https://github.com/vcr/vcr ?
@@ -16,7 +15,7 @@ class NkfMemberImport
     begin
       i = NkfMemberImport.new
       if i.any?
-        NkfReplication.import_changes(i).deliver_now
+        NkfReplicationMailer.import_changes(i).deliver_now
         logger.info 'Sent NKF member import mail.'
         logger.info 'Oppdaterer kontrakter'
         NkfMember.update_group_prices
@@ -31,7 +30,7 @@ class NkfMemberImport
     begin
       a = NkfMemberComparison.new
       if a.any?
-        NkfReplication.update_members(a).deliver_now
+        NkfReplicationMailer.update_members(a).deliver_now
         logger.info 'Sent update_members mail.'
       end
     rescue Exception
@@ -43,7 +42,7 @@ class NkfMemberImport
 
     begin
       a = NkfAppointmentsScraper.import_appointments
-      NkfReplication.update_appointments(a).deliver_now if a.any?
+      NkfReplicationMailer.update_appointments(a).deliver_now if a.any?
     rescue Exception
       logger.error 'Execption sending update_appointments email.'
       logger.error $!.message
@@ -127,16 +126,16 @@ class NkfMemberImport
       details_body = http_get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}")
       if details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
         member_id = $1
-        if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
-          active = true
-        else
-          active = false
-        end
-        if details_body =~ /<span class="kid_1">(\d+)<\/span><span class="kid_2">(\d+)<\/span>/
-          waiting_kid = "#$1#$2"
-        else
-          waiting_kid = nil
-        end
+        active =
+            if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
+              true
+            else
+              false
+            end
+        waiting_kid =
+            if details_body =~ /<span class="kid_1">(\d+)<\/span><span class="kid_2">(\d+)<\/span>/
+              "#$1#$2"
+            end
         raise 'Both Active status and waiting kid were found' if active && waiting_kid
         raise "Neither active status nor waiting kid were found:\n#{details_body}" if !active && !waiting_kid
         import_rows.find { |ir| ir[0] == member_id } << waiting_kid

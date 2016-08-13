@@ -1,4 +1,3 @@
-# encoding: utf-8
 class Semester < ActiveRecord::Base
   has_many :group_semesters, :dependent => :destroy
 

@@ -1,4 +1,3 @@
-# encoding: UTF-8
 require 'gruff'
 class MemberAgeChart
   def self.chart(size = 480)

@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'capybara_setup'
 
 class NewsFeatureTest < ActionDispatch::IntegrationTest
   def test_index_public
@@ -59,6 +59,7 @@ class NewsFeatureTest < ActionDispatch::IntegrationTest
 
   def select_date(date_field_id, day)
     find("##{date_field_id}").click
+    assert has_css?("##{date_field_id} + .bootstrap-datetimepicker-widget")
     screenshot("form_#{date_field_id}_selected")
     execute_script("$('##{date_field_id} + .bootstrap-datetimepicker-widget td.day:contains(#{day})').click()")
     assert has_field?(date_field_id, with: /^2013-10-#{day}/)

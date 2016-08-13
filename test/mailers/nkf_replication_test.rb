@@ -1,4 +1,3 @@
-# encoding: UTF-8
 require 'test_helper'
 
 class NkfReplicationTest < ActionMailer::TestCase
@@ -12,8 +11,8 @@ class NkfReplicationTest < ActionMailer::TestCase
     import.stubs(:import_rows).returns([1])
     import.stubs(:exception).returns(nil)
 
-    mail = NkfReplication.import_changes(import)
-    assert_equal 'Hentet 1 endringer fra NKF', mail.subject
+    mail = NkfReplicationMailer.import_changes(import)
+    assert_equal '[RJJK][TEST] Hentet 1 endringer fra NKF', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
     assert_match /NKF Import\s+Endringer fra NKF-portalen.\s+/, mail.body.encoded
@@ -25,7 +24,7 @@ class NkfReplicationTest < ActionMailer::TestCase
     comparison.stubs(:member_changes).returns([[mock('member_change', :first_name => 'Erik', :last_name => 'Hansen'), {'first_name' => 'Hans'}]])
     comparison.stubs(:group_changes).returns({mock(:first_name => 'hhh', :last_name => 'dfgfg') => [[mock('added_group', :name => 'hhgf')], [mock('removed_group', :name => 'abc')]]})
     comparison.stubs(:errors).returns([])
-    mail = NkfReplication.update_members(comparison)
+    mail = NkfReplicationMailer.update_members(comparison)
     assert_equal '[RJJK][TEST] Oppdateringer fra NKF: 1 nye, 1 endrede, 1 gruppeendringer', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from

@@ -1,4 +1,4 @@
-class NkfReplication < ActionMailer::Base
+class NkfReplicationMailer < ActionMailer::Base
   include MailerHelper
 
   layout 'email'
@@ -7,7 +7,7 @@ class NkfReplication < ActionMailer::Base
 
   def import_changes(nkf_member_import)
     @import = nkf_member_import
-    mail subject: (@import.exception ? 'Det oppsto en feil ved henting av' :
+    mail subject: rjjk_prefix(@import.exception ? 'Det oppsto en feil ved henting av' :
             "Hentet #{@import.size}") + ' endringer fra NKF'
   end
 

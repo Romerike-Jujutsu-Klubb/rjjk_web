@@ -1,4 +1,3 @@
-# encoding: utf-8
 class MembersController < ApplicationController
   before_filter :admin_required
 

@@ -14,9 +14,10 @@ class AttendanceNagger
         ExceptionNotifier.notify_exception(ActiveRecord::RecordNotFound.new(msg))
         next
       end
-      AttendanceMailer.plan(member).deliver_now
+      AttendanceMailer.plan(member).store(member.user_id, tag: :attendance_plan)
     end
   rescue Exception
+    raise if Rails.env.test?
     logger.error $!
     ExceptionNotifier.notify_exception($!)
   end
@@ -26,6 +27,7 @@ class AttendanceNagger
     group_schedules = GroupSchedule.includes(:group).references(:groups).
         where('weekday = ? AND start_at >= ? AND (groups.school_breaks IS NULL OR groups.school_breaks = ?)',
             now.to_date.cwday, now.time_of_day, false)
+        .order('groups.from_age', 'groups.to_age')
     group_schedules.each do |gs|
       attendances = Attendance.includes(:member, :practice => :group_schedule).
           where(:practices => {:group_schedule_id => gs.id, :year => now.year, :week => now.to_date.cweek}).to_a
@@ -33,15 +35,13 @@ class AttendanceNagger
       practice = attendances[0].practice
       non_attendees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:member)
       attendees = attendances.map(&:member) - non_attendees
-      recipients = gs.group.members.select { |m| !m.passive? } - non_attendees
+      recipients = gs.group.members.order(:joined_on, :id)
+          .select { |m| !m.passive? } - non_attendees
       recipients.each do |recipient|
-        AttendanceMailer.summary(practice, gs, recipient, attendees, non_attendees).deliver_now
+        AttendanceMailer.summary(practice, gs, recipient, attendees, non_attendees)
+            .store(recipient.user_id, tag: :attendance_summary)
       end
     end
-  rescue Exception
-    logger.error $!
-    ExceptionNotifier.notify_exception($!)
-    raise
   end
 
   def self.send_message_reminder
@@ -51,7 +51,7 @@ class AttendanceNagger
             tomorrow.year, tomorrow.cweek, tomorrow.cwday, Time.now.time_of_day, Time.now.time_of_day + 3600, false).to_a
     practices.each do |pr|
       pr.group_schedule.group_instructors.each do |gi|
-        AttendanceMailer.message_reminder(pr, gi.member).deliver_now
+        AttendanceMailer.message_reminder(pr, gi.member).store(gi.member.user_id, tag: :instructor_message_reminder)
       end
       pr.update_attributes message_nagged_at: Time.now
     end
@@ -91,7 +91,9 @@ class AttendanceNagger
         else
           displayed_absentees = new_absentees
         end
-        AttendanceMailer.changes(practice, gs, recipient, new_attendees, displayed_absentees, attendees).deliver_now
+        AttendanceMailer
+            .changes(practice, gs, recipient, new_attendees, displayed_absentees, attendees)
+            .store(recipient, tag: :attendance_change)
       end
     end
   rescue Exception
@@ -115,7 +117,8 @@ class AttendanceNagger
               includes(:practice => :group_schedule).references(:practices).
               order('practices.year, practices.week, group_schedules.weekday').to_a.
               select { |a| a.date <= Date.today }.reverse
-      AttendanceMailer.review(member, completed_attendances, older_attendances).deliver_now
+      AttendanceMailer.review(member, completed_attendances, older_attendances)
+          .store(member.user_id, tag: :attendance_review)
       completed_attendances.each { |a| a.update_attributes :sent_review_email_at => now }
     end
   rescue Exception

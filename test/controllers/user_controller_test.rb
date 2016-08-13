@@ -1,15 +1,6 @@
 require 'test_helper'
 
 class UserControllerTest < ActionController::TestCase
-  def setup
-    Mail::TestMailer.inject_one_error = false
-    Mail::TestMailer.deliveries = []
-  end
-
-  def teardown
-    Mail::TestMailer.deliveries = []
-  end
-
   def test_login__valid_login__redirects_as_specified
     add_stored_detour :controller => :welcome, :action => :index
     post :login, :user => {:login => 'lars', :password => 'atest'}
@@ -72,14 +63,14 @@ class UserControllerTest < ActionController::TestCase
                 :email => 'newemail@example.com'
     assert_not_logged_in
     assert_redirected_to_login
-    assert_equal 1, Mail::TestMailer.deliveries.size
+    assert_equal 1, UserMessage.pending.size
 
-    mail = Mail::TestMailer.deliveries[0]
-    assert_equal 'uwe@kubosch.no', mail.to_addrs[0].to_s
-    assert_match /Brukernavn:\s+\w+\r\n/, mail.encoded
-    assert_match /Passord\s*:\s+\w+\r\n/, mail.encoded
+    mail = UserMessage.pending[0]
+    assert_equal ["\"newuser\" <newemail@example.com>"], mail.to
+    assert_match /Brukernavn:\s+\w+\n/, mail.body
+    assert_match /Passord\s*:\s+\w+\n/, mail.body
     user = User.find_by_email('newemail@example.com')
-    assert_match /key=#{user.security_token}/, mail.body.decoded
+    assert_match /key=#{user.security_token}/, mail.body
     assert !user.verified
   end
 
@@ -97,16 +88,6 @@ class UserControllerTest < ActionController::TestCase
   def test_signup__validates_password_min_length
     post_signup :login => 'tesla_rhea', :password => 'bad', :password_confirmation => 'bad', :email => 'someone@example.com'
     assert_password_validation_fails
-  end
-
-  def test_signup__raises_delivery_errors
-    Mail::TestMailer.inject_one_error = true
-    post_signup :login => 'newtesla',
-                :password => 'newpassword', :password_confirmation => 'newpassword',
-                :email => 'newtesla@example.com'
-    assert_not_logged_in
-    assert_equal 0, Mail::TestMailer.deliveries.size
-    assert_contains 'confirmation email not sent', flash['message']
   end
 
   def test_signup__mismatched_passwords
@@ -171,9 +152,9 @@ class UserControllerTest < ActionController::TestCase
     set_logged_in user
     post :change_password, :user => {:password => 'changed_password', :password_onfirmation => 'changed_password'}
     assert_no_errors :user
-    assert_equal 1, Mail::TestMailer.deliveries.size
-    mail = Mail::TestMailer.deliveries[0]
-    assert_equal %w(uwe@kubosch.no), mail.to
+    assert_equal 1, UserMessage.pending.size
+    mail = UserMessage.pending[0]
+    assert_equal ["\"Lars Bråten\" <lars@example.com>"], mail.to
     assert_equal user, User.authenticate(user.login, 'changed_password')
   end
 
@@ -184,42 +165,27 @@ class UserControllerTest < ActionController::TestCase
     assert_equal 1, user.errors.size
     assert_not_nil user.errors['password']
     assert_response :success
-    assert_equal 0, Mail::TestMailer.deliveries.size
-  end
-
-  def test_change_password__succeeds_despite_delivery_errors
-    set_logged_in users(:lars)
-    Mail::TestMailer.inject_one_error = true
-    post :change_password, :user => {:password => 'changed_password', :password_confirmation => 'changed_password'}
-    assert_equal 0, Mail::TestMailer.deliveries.size
-    assert_equal users(:lars), User.authenticate(users(:lars).login, 'changed_password')
+    assert_equal 0, UserMessage.pending.size
   end
 
   def test_forgot_password__when_logged_in_redirects_to_change_password
     user = users(:lars)
     set_logged_in user
     post :forgot_password, :user => {:email => user.email}
-    assert_equal 0, Mail::TestMailer.deliveries.size
+    assert_equal 0, UserMessage.pending.size
     assert_response :redirect
     assert_equal @controller.url_for(:action => 'change_password'), @response.redirect_url
   end
 
   def test_forgot_password__requires_valid_email_address
     post :forgot_password, :user => {:email => ''}
-    assert_equal 0, Mail::TestMailer.deliveries.size
+    assert_equal 0, UserMessage.pending.size
     assert_match /Skriv inn en gyldig e-postadresse./, @response.body
   end
 
   def test_forgot_password__ignores_unknown_email_address
     post :forgot_password, :user => {:email => 'unknown_email@example.com'}
-    assert_equal 0, Mail::TestMailer.deliveries.size
-  end
-
-  def test_forgot_password__reports_delivery_error
-    Mail::TestMailer.inject_one_error = true
-    post :forgot_password, :user => {:email => users(:lars).email}
-    assert_equal 0, Mail::TestMailer.deliveries.size
-    assert_match /Beklager!  Link for innlogging kunne ikke sendes til lars@example.com/, @response.body
+    assert_equal 0, UserMessage.pending.size
   end
 
   def test_invalid_login
@@ -263,7 +229,7 @@ class UserControllerTest < ActionController::TestCase
     assert_equal 1, user.errors.size
     assert_not_nil user.errors['password']
     assert_response :success
-    assert_equal 0, Mail::TestMailer.deliveries.size
+    assert_equal 0, UserMessage.pending.size
   end
 
   def assert_contains(target, container)

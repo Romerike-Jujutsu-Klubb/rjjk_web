@@ -1,4 +1,3 @@
-# encoding: utf-8
 class ApplicationStepsController < ApplicationController
   USER_ACTIONS = [:image]
   before_filter :technical_committy_required, except: USER_ACTIONS

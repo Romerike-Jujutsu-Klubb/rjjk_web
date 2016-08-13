@@ -17,7 +17,7 @@ gem 'actionpack-page_caching', github: 'rails/actionpack-page_caching'
 gem 'activerecord-time'
 gem 'acts_as_list'
 gem 'acts_as_tree'
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt'
 # gem 'bootstrap', github: 'twbs/bootstrap-rubygem' # TODO(uwe): Move to Bootstrap 4?
 gem 'bootstrap-sass', '!=3.3.5'
 gem 'bootstrap3-datetimepicker-rails'
@@ -53,13 +53,20 @@ gem 'ri_cal'
 gem 'rufus-scheduler'
 gem 'sass-rails', '>=4.0.5'
 gem 'schema_plus'
-gem 'script_relocator', github: 'donv/script_relocator'
+
+# FIXME(uwe): https://github.com/sparklemotion/nokogiri/issues/1382
+# FIXME(uwe): https://github.com/sparklemotion/nokogiri/pull/1478
+gem 'script_relocator', github: 'donv/script_relocator', platform: :ruby
+# EMXIF
+
 gem 'simple_drilldown'
 gem 'simple_workflow'
 gem 'slim-rails'
 gem 'tinymce-rails'
 gem 'tinymce-rails-langs'
-gem 'turbolinks'
+# FIXME(uwe): https://github.com/kossnocorp/jquery.turbolinks/pull/58
+# gem 'turbolinks', '<5'
+# EMXIF
 gem 'uglifier'
 gem 'unicode_utils'
 gem 'will_paginate'
@@ -77,6 +84,10 @@ group :development do
 end
 
 group :test do
+  # FIXME(uwe): Needed for https://github.com/jnicklas/capybara/pull/1728
+  # Remove when 2.8.0 is released
+  gem 'capybara', github: 'jnicklas/capybara'
+  # EMXIF
   gem 'capybara-screenshot-diff', github: 'donv/capybara-screenshot-diff'
   gem 'chunky_png'
   gem 'database_cleaner'
@@ -84,6 +95,7 @@ group :test do
   gem 'minitest-reporters'
   gem 'mocha', require: 'mocha/setup'
   gem 'poltergeist'
+  gem 'rubocop'
   gem 'rubycritic', require: false
   gem 'selenium-webdriver'
   gem 'simplecov', require: false

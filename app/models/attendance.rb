@@ -1,4 +1,3 @@
-# encoding: utf-8
 class Attendance < ActiveRecord::Base
   module Status
     ABSENT = 'F'

@@ -1,4 +1,3 @@
-# encoding: utf-8
 require 'digest/sha1'
 
 # this model expects a certain database layout and its based on the name/login pattern. 
@@ -51,13 +50,14 @@ class User < ActiveRecord::Base
   end
 
   def emails
-    result = [attributes['email']]
+    result = [%{"#{name}" <#{attributes['email']}>}]
     result += member.emails if member
-    result.uniq
+    result.sort_by! {|e| -e.size}
+    result.uniq {|e| e =~ /<(.*@.*)>/ ? $1 : e}
   end
 
   def name
-    member.try(:name) || "#{first_name} #{last_name}"
+    member.try(:name) || (first_name.present? || last_name.present? ? [first_name, last_name].select(&:present?).join(' ') : login)
   end
 
   def self.find_administrators

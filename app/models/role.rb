@@ -23,6 +23,13 @@ class Role < ActiveRecord::Base
     end
   end
 
+  scope :by_name, -> (name) { where(name: name) }
+  # scope :active, -> (date = Date.today) { where(name: name).first }
+
+  def self.[](name)
+    by_name(name).first&.elections&.current&.first&.member
+  end
+
   def on_the_board?
     !!years_on_the_board
   end

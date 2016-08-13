@@ -1,0 +1,19 @@
+one:
+  user: admin
+  tag: MyString
+  from: MyString
+  subject: MyString
+  key: MyString
+  html_body: MyHTML
+  sent_at: 2016-07-28 14:29:13
+  read_at: 2016-07-28 14:29:13
+
+two:
+  user: admin
+  tag: MyString
+  from: MyString
+  subject: MyString
+  key: MyString
+  html_body: MyHTML
+  sent_at: 2016-07-28 14:29:13
+  read_at: 2016-07-28 14:29:13

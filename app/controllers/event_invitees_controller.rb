@@ -1,4 +1,3 @@
-# encoding: utf-8
 class EventInviteesController < ApplicationController
   before_filter :admin_required, :except => [:index, :show]
 

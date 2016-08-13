@@ -15,7 +15,7 @@ class PublicRecordImporter
         first_or_initialize
     if record.new_record?
       record.save!
-      PublicRecordMailer.new_record(record).deliver_now
+      PublicRecordMailer.new_record(record).store(Role[:Leder], tag: :new_public_record)
     end
   rescue Exception
     raise if Rails.env.test?

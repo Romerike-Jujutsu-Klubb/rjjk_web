@@ -1,4 +1,3 @@
-# encoding: UTF-8
 class EmbusController < ApplicationController
   before_filter :authenticate_user
 

@@ -1,4 +1,3 @@
-# encoding: UTF-8
 class Array
   def without_consecutive_zeros
     each_with_index{|v, i| self[i] = (v > 0 || (i > 0 && self[i-1].to_i > 0) || self[i+1].to_i > 0 ? v : nil)}

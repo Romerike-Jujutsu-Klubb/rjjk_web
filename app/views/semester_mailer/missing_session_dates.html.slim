@@ -1,0 +1,13 @@
+h1 Hei #{@recipient.name}!
+
+p Du trenger å planlegge treningsstart og -stop for neste semester!
+
+p
+  ' Du kan finne datoene på Skedsmo Komunes websider:
+  = link_to 'https://www.skedsmo.kommune.no/Skole-og-barnehage/Finn-skole/Fellessider/Skoleruta/', 'https://www.skedsmo.kommune.no/Skole-og-barnehage/Finn-skole/Fellessider/Skoleruta/'
+
+p Gå til denne linken for å skrive inn datoene:
+
+p = link_to 'Fyll in datoer', only_path: false, controller: :groups, action: :edit, id: @group.id
+
+p Dette blir bra!

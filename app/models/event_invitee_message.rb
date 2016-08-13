@@ -1,4 +1,3 @@
-# encoding: utf-8
 class EventInviteeMessage < ActiveRecord::Base
   module MessageType
     SIGNUP_CONFIRMATION = 'SIGNUP_CONFIRMATION'

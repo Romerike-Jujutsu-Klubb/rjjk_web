@@ -16,7 +16,8 @@ class GraduationReminder
       suggested_date = second_week + g.group_schedules.first.weekday
       next if suggested_date <= Date.today
 
-      GraduationMailer.missing_graduation(instructor, g, suggested_date).deliver_now
+      GraduationMailer.missing_graduation(instructor, g, suggested_date)
+          .store(instructor, tag: :missing_graduation)
     end
   rescue
     raise if Rails.env.test?
@@ -41,7 +42,11 @@ class GraduationReminder
       next if m.next_graduate
       true
     end
-    GraduationMailer.overdue_graduates(overdue_graduates).deliver_now if overdue_graduates.any?
+    if overdue_graduates.any?
+      # TODO(uwe): Send to chief instructor for each group
+      GraduationMailer.overdue_graduates(overdue_graduates)
+          .store(Role[:'Hovedinstruktør'], tag: :overdue_graduates)
+    end
   rescue Exception
     raise if Rails.env.test?
     logger.error "Exception sending overdue graduates message: #{$!}"
@@ -55,7 +60,7 @@ class GraduationReminder
         .order('graduations.held_on')
         .limit(1)
         .each do |censor|
-      GraduationMailer.invite_censor(censor).deliver_now
+      GraduationMailer.invite_censor(censor).store(censor.member.user_id, tag: :censor_invite)
       censor.update! requested_at: Time.zone.now
     end
   rescue
@@ -68,8 +73,8 @@ class GraduationReminder
     Censor.includes(:graduation, :member).references(:graduations).
         where('approved_grades_at IS NULL AND graduations.held_on < CURRENT_DATE AND user_id IS NOT NULL').
         order('graduations.held_on').
-        each do |e|
-      GraduationMailer.missing_approval(e).deliver_now
+        each do |censor|
+      GraduationMailer.missing_approval(censor).store(censor.member.user_id)
     end
   rescue
     logger.error "Exception sending missing approvals message: #{$!}"

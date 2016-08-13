@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 Rails.application.routes.draw do
   resources :raw_incoming_emails # FIXME(uwe): Move down?
 
@@ -107,6 +106,7 @@ Rails.application.routes.draw do
   resources :surveys
   resources :technique_applications
   resources :trial_attendances
+  resources :user_messages
   resources :users, controller: :user, path: :user
   resources :wazas
 

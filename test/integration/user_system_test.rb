@@ -23,13 +23,13 @@ class UserSystemTest < ActionDispatch::IntegrationTest
 
     assert_not_logged_in
     assert_redirected_to_login
-    assert_equal 1, Mail::TestMailer.deliveries.size
+    assert_equal 1, UserMessage.pending.size
 
-    mail = Mail::TestMailer.deliveries[0]
-    assert_equal 'uwe@kubosch.no', mail.to_addrs[0].to_s
-    assert_match(/Brukernavn:\s+\w+\r\n/, mail.encoded)
-    assert_match(/Passord\s*:\s+\w+\r\n/, mail.encoded)
-    assert (mail.decoded =~ /key=(.*?)"/)
+    mail = UserMessage.pending[0]
+    assert_equal ["\"newuser\" <newemail@example.com>"], mail.to
+    assert_match(/Brukernavn:\s+\w+\n/, mail.body)
+    assert_match(/Passord\s*:\s+\w+\n/, mail.body)
+    assert (mail.body =~ /key=(.*?)"/)
     key = $1
 
     assert user = User.find_by_login('newuser')
@@ -57,11 +57,11 @@ class UserSystemTest < ActionDispatch::IntegrationTest
   def test_forgot_password_allows_change_password_after_mailing_key
     user = users(:lars)
     post url_for(controller: :user, action: :forgot_password), user: {email: user.email}
-    assert_equal 1, Mail::TestMailer.deliveries.size
-    mail = Mail::TestMailer.deliveries[0]
-    assert_equal %w(uwe@kubosch.no), mail.to
-    assert_equal 2, mail.body.parts.size
-    body = mail.html_part.body.decoded
+    assert_equal 1, UserMessage.pending.size
+    mail = UserMessage.pending[0]
+    assert_equal ["\"Lars Bråten\" <lars@example.com>"], mail.to
+    assert mail.plain_body
+    body = mail.html_body
     assert body =~ /user\[id\]=(.+?)&amp;key=(.+?)"/,
         "Unable to find user id and key in the message: #{body.inspect}"
     id = $1

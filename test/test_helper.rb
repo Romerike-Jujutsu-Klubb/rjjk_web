@@ -53,7 +53,7 @@ class Mail::TestMailer
   alias_method_chain :deliver!, :error
 end
 
-require_relative 'capybara_setup'
+# FIMXME(uwe): Remove?
 require 'ish'
 
 VCR.configure do |config|
@@ -63,6 +63,8 @@ VCR.configure do |config|
 end
 
 class ActionMailer::TestCase
+  fixtures :all
+
   # FIXME(uwe): Check out assert_emails core method
   def assert_mail_deliveries(count, initial = 0, &block)
     if block
@@ -72,5 +74,15 @@ class ActionMailer::TestCase
     end
     assert_equal initial + count, Mail::TestMailer.deliveries.size,
         -> { Mail::TestMailer.deliveries.to_s }
+  end
+
+  def assert_mail_stored(count, initial = 0, &block)
+    if block
+      assert_equal initial, UserMessage.pending.count,
+          -> { "Unexpected user messages before block:\n#{UserMessage.pending}\n#{UserMessage.pending.map(&:body).join("\n")}\n" }
+      block.call
+    end
+    assert_equal initial + count, UserMessage.pending.count,
+        -> { UserMessage.all.map(&:inspect).to_s }
   end
 end

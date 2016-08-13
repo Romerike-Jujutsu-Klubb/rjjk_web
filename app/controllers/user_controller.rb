@@ -1,4 +1,3 @@
-# encoding: utf-8
 class UserController < ApplicationController
   before_filter :authenticate_user, :except => [:login, :logout, :signup, :forgot_password]
   before_filter :admin_required, :except => [:welcome, :like, :login, :logout, :signup, :forgot_password, :change_password]
@@ -38,7 +37,7 @@ class UserController < ApplicationController
     key = user.generate_security_token
     url = url_for(:action => 'welcome')
     url += "?user[id]=#{user.id}&key=#{key}"
-    UserNotify.signup(user, user.password, url).deliver_now
+    UserNotify.signup(user, user.password, url).store(user.id, :login_link)
   end
 
   def signup
@@ -56,7 +55,8 @@ class UserController < ApplicationController
         @user.password_needs_confirmation = true
         if @user.save
           url = url_for(with_login(@user, :action => :welcome))
-          UserNotify.signup(@user, params['user']['password'], url).deliver_now
+          UserNotify.signup(@user, params['user']['password'], url)
+              .store(@user.id, tag: :signup)
           flash['notice'] = 'Signup successful! Please check your registered email account to verify your account registration and continue with the login.'
           redirect_to :action => 'login'
         end
@@ -83,10 +83,11 @@ class UserController < ApplicationController
     rescue Exception => ex
       report_exception ex
       flash.now['message'] = 'Your password could not be changed at this time. Please retry.'
-      render and return
+      return
     end
     begin
-      UserNotify.change_password(@user, params['user']['password']).deliver_now
+      UserNotify.change_password(@user, params['user']['password'])
+          .store(@user.id, tag: :change_password)
     rescue Exception => ex
       report_exception ex
     end
@@ -115,7 +116,7 @@ class UserController < ApplicationController
             key = user.generate_security_token
             url = url_for(action: :change_password, only_path: false)
             url += "?user[id]=#{user.id}&key=#{key}"
-            UserNotify.forgot_password(user, url).deliver_now
+            UserNotify.forgot_password(user, url).store(user, tag: :forgot_password)
           end
           flash['message'] = "En e-post med veiledning for å sette nytt passord er sendt til #{CGI.escapeHTML(email)}."
           unless authenticated_user?
@@ -143,11 +144,12 @@ class UserController < ApplicationController
         case form
         when 'edit'
           unclean_params = params['user']
-          if current_user.admin?
-            user_params = unclean_params
-          else
-            user_params = unclean_params.delete_if { |k, *| not User::CHANGEABLE_FIELDS.include?(k) }
-          end
+          user_params =
+              if current_user.admin?
+                unclean_params
+              else
+                unclean_params.delete_if { |k, *| not User::CHANGEABLE_FIELDS.include?(k) }
+              end
           @user.attributes = user_params
           if @user.save
             flash.now['notice'] = 'User has been updated.'

@@ -9,10 +9,22 @@ GIT
 
 GIT
   remote: git://github.com/donv/script_relocator.git
-  revision: d721063015cd3deabd6ff1e5ace24dd1e81546ea
+  revision: 61ddcbfc5502ea868aa0ca5df3732a42838ad978
   specs:
     script_relocator (0.1.1)
       nokogiri (~> 1.6)
+
+GIT
+  remote: git://github.com/jnicklas/capybara.git
+  revision: 25e37be19aaccc86edb7fbabf7253eff3a32be09
+  specs:
+    capybara (2.8.0.dev)
+      addressable
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (~> 2.0)
 
 GIT
   remote: git://github.com/rails/actionpack-page_caching.git
@@ -92,6 +104,8 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    bcrypt (3.1.11)
+    bcrypt (3.1.11-java)
     bootstrap-sass (3.3.4.1)
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.2.19)
@@ -116,13 +130,6 @@ GEM
       sshkit (~> 1.2)
     capistrano-scm-copy (0.7.0)
       capistrano (~> 3.0)
-    capybara (2.7.1)
-      addressable
-      mime-types (>= 1.16)
-      nokogiri (>= 1.3.3)
-      rack (>= 1.0.0)
-      rack-test (>= 0.5.4)
-      xpath (~> 2.0)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     chosen-rails (1.5.2)
@@ -293,6 +300,7 @@ GEM
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
+    powerpack (0.1.1)
     prawn (1.3.0)
       pdf-core (~> 0.4.0)
       ttfunk (~> 1.4.0)
@@ -344,6 +352,12 @@ GEM
     rmagick (2.15.4)
     rmagick4j (0.4.0-java)
     robotex (1.0.0)
+    rubocop (0.42.0)
+      parser (>= 2.3.1.1, < 3.0)
+      powerpack (~> 0.1)
+      rainbow (>= 1.99.1, < 3.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
     ruby_parser (3.8.2)
       sexp_processor (~> 4.1)
@@ -477,9 +491,8 @@ GEM
     tinymce-rails-langs (4.20160310)
       tinymce-rails (~> 4.1, >= 4.1.10)
     ttfunk (1.4.0)
-    turbolinks (5.0.0)
-      turbolinks-source (~> 5)
-    turbolinks-source (5.0.0)
+    turbolinks (2.5.3)
+      coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (3.0.0)
@@ -488,6 +501,7 @@ GEM
       unf_ext
     unf (0.1.4-java)
     unf_ext (0.0.7.2)
+    unicode-display_width (1.1.0)
     unicode_utils (1.4.0)
     valuable (0.9.12)
     vcr (3.0.3)
@@ -522,6 +536,7 @@ DEPENDENCIES
   acts_as_list
   acts_as_tree
   anemone
+  bcrypt
   bootstrap-sass (!= 3.3.5)
   bootstrap3-datetimepicker-rails
   capistrano
@@ -529,6 +544,7 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm
   capistrano-scm-copy
+  capybara!
   capybara-screenshot-diff!
   chosen-rails
   chosen-sass-bootstrap-rails (>= 0.0.4)
@@ -565,6 +581,7 @@ DEPENDENCIES
   rails-observers!
   rake
   ri_cal
+  rubocop
   rubycritic
   rufus-scheduler
   sass-rails (>= 4.0.5)
@@ -580,7 +597,6 @@ DEPENDENCIES
   timecop
   tinymce-rails
   tinymce-rails-langs
-  turbolinks
   uglifier
   unicode_utils
   vcr

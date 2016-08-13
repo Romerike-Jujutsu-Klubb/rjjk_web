@@ -1,4 +1,3 @@
-# encoding: utf-8
 class GroupInstructor < ActiveRecord::Base
   module Role
     CHIEF = 'Hovedinstruktør'

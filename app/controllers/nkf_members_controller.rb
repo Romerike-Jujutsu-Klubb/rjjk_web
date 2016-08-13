@@ -1,4 +1,3 @@
-# encoding: utf-8
 class NkfMembersController < ApplicationController
   before_filter :admin_required
 

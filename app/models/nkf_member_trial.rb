@@ -26,4 +26,8 @@ class NkfMemberTrial < ActiveRecord::Base
   def group
     Group.active(Date.today).to_a.find { |g| g.contains_age age }
   end
+
+  def emails
+    [epost, epost_faktura].compact.map(&:strip).uniq.sort
+  end
 end

@@ -1,4 +1,3 @@
-# encoding: utf-8
 class InstructionMailer < ActionMailer::Base
   include MailerHelper
   layout 'email'

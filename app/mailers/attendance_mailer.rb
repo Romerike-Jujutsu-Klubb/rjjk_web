@@ -1,4 +1,3 @@
-# encoding: utf-8
 class AttendanceMailer < ActionMailer::Base
   include UserSystem
   include MailerHelper

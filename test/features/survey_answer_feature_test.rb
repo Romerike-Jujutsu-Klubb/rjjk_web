@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'capybara_setup'
 
 class SurveyAnswerFeatureTest < ActionDispatch::IntegrationTest
   def test_show_form

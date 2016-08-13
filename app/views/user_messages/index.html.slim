@@ -1,0 +1,35 @@
+h1 Listing user_messages
+
+table
+  thead
+    tr
+      th User
+      th Tag
+      th From
+      th Subject
+      th Key
+      th Body
+      th Sent at
+      th Read at
+      th
+      th
+      th
+
+  tbody
+    - @user_messages.each do |user_message|
+      tr
+        td = user_message.user_id
+        td = user_message.tag
+        td = user_message.from
+        td = user_message.subject
+        td = user_message.key
+        td = user_message.body
+        td = user_message.sent_at
+        td = user_message.read_at
+        td = link_to 'Show', user_message
+        td = link_to 'Edit', edit_user_message_path(user_message)
+        td = link_to 'Destroy', user_message, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New User message', new_user_message_path

@@ -4,9 +4,11 @@ class AnnualMeetingReminder
     return if month >= 2 && month < 10
     return if AnnualMeeting.where('start_at >= ?', Date.today).exists?
     am = AnnualMeeting.order(:start_at).last
-    board_members = am.elections.includes(:role).references(:roles).
-        where('roles.years_on_the_board IS NOT NULL').to_a.map(&:member)
-    board_members.each { |m| AnnualMeetingMailer.missing_date(m, am.start_at.year + 1).deliver_now }
+    board_members = am.board_members
+    board_members.each do |m|
+      AnnualMeetingMailer.missing_date(m, am.start_at.year + 1)
+          .store(m.user_id, tag: :annual_meeting_missing_date)
+    end
   rescue Exception
     raise if Rails.env.test?
     logger.error "Exception sending missing annual meeting date reminder: #{$!}"
@@ -21,10 +23,8 @@ class AnnualMeetingReminder
     return if next_meeting.try(:invitation_sent_at)
     return if next_meeting.start_at > 6.weeks.from_now
     am = AnnualMeeting.order(:start_at).last
-    board_members = am.elections.includes(:role).references(:roles).
-        where('roles.years_on_the_board IS NOT NULL').to_a.map(&:member)
-    board_members.each do |m|
-      AnnualMeetingMailer.missing_invitation(next_meeting, m).deliver_now
+    am.board_members.each do |m|
+      AnnualMeetingMailer.missing_invitation(next_meeting, m).store(m.user_id, tag: :annual_meeting_missing_invitation)
     end
   rescue Exception
     raise if Rails.env.test?
@@ -32,5 +32,4 @@ class AnnualMeetingReminder
     logger.error $!.backtrace.join("\n")
     ExceptionNotifier.notify_exception($!)
   end
-
 end

@@ -9,3 +9,9 @@ lars:
   role: chairman
   member: lars
   years: 2
+
+chief_instructor:
+  annual_meeting: one
+  role: chief_instructor
+  member: uwe
+  years: 2

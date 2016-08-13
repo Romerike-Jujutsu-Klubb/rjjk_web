@@ -19,23 +19,24 @@ class SurveySender
       request = nil
       Survey.order(:position).each do |survey|
         unrequested_member = survey.ready_members.select(&:active?).first
-        if unrequested_member
-          request = survey.survey_requests.
-              where(member_id: unrequested_member.id).first_or_create!
-        else
-          request = survey.survey_requests.pending.
-              select { |sr| sr.reminded_at.nil? || sr.reminded_at < 1.week.ago }.
-              first
-        end
+        request =
+            if unrequested_member
+              survey.survey_requests.
+                  where(member_id: unrequested_member.id).first_or_create!
+            else
+              survey.survey_requests.pending.
+                  select { |sr| sr.reminded_at.nil? || sr.reminded_at < 1.week.ago }.
+                  first
+            end
         break if request
       end
       return unless request
 
       if request.sent_at.nil?
-        SurveyMailer.survey(request).deliver_now
+        SurveyMailer.survey(request).store(request.member.user_id, tag: :suvey_request)
         request.update! sent_at: Time.now
       else
-        SurveyMailer.reminder(request).deliver_now
+        SurveyMailer.reminder(request).store(request.member.user_id, tag: :survey_reminder)
         request.update! reminded_at: Time.now
       end
     rescue

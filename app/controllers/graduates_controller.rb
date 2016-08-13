@@ -5,11 +5,12 @@ class GraduatesController < ApplicationController
   # cache_sweeper :grade_history_image_sweeper, :only => [:create, :update, :destroy]
 
   def index
-    if params[:id]
-      @graduates = Graduate.where("member_id = #{params[:id]}").order(:rank_id).to_a
-    else
-      @graduates = Graduate.where('member_id > 0').order('member_id, rank_id DESC').to_a
-    end
+    @graduates =
+        if params[:id]
+          Graduate.where("member_id = #{params[:id]}").order(:rank_id).to_a
+        else
+          Graduate.where('member_id > 0').order('member_id, rank_id DESC').to_a
+        end
   end
 
   def show_last_grade
