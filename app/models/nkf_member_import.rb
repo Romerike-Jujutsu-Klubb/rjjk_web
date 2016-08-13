@@ -118,7 +118,7 @@ class NkfMemberImport
         end
       end
     end
-    threads.each { |t| t.join }
+    threads.each(&:join)
   end
 
   def add_waiting_kid(import_rows, dc)
@@ -134,7 +134,7 @@ class NkfMemberImport
             end
         waiting_kid =
             if details_body =~ /<span class="kid_1">(\d+)<\/span><span class="kid_2">(\d+)<\/span>/
-              "#$1#$2"
+              "#{$1}#{$2}"
             end
         raise 'Both Active status and waiting kid were found' if active && waiting_kid
         raise "Neither active status nor waiting kid were found:\n#{details_body}" if !active && !waiting_kid
@@ -274,7 +274,7 @@ class NkfMemberImport
       columns.each_with_index do |column, i|
         column = 'medlems_type' if column == 'type'
         if row[i] =~ /^(\d\d)\.(\d\d)\.(\d{4})$/
-          row[i] = "#$3-#$2-#$1"
+          row[i] = "#{$3}-#{$2}-#{$1}"
         elsif column == 'res_sms'
           row[i] =
               case row[i]

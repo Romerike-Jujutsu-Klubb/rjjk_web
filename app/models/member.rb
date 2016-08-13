@@ -69,7 +69,7 @@ class Member < ActiveRecord::Base
       :parent_name, :phone_home, :phone_mobile, :phone_parent, :phone_work]
   scope :search, ->(query) {
     where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ ?" }
-            .join(' OR '), *(["#{UnicodeUtils.upcase(query).split(/\s+/).join('|')}"] * SEARCH_FIELDS.size))
+            .join(' OR '), *([UnicodeUtils.upcase(query).split(/\s+/).join('|')] * SEARCH_FIELDS.size))
         .order(:first_name, :last_name)
   }
 

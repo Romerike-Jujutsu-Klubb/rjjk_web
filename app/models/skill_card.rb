@@ -27,7 +27,7 @@ class SkillCard
           rank.basic_techniques.group_by { |bt| bt.waza.name }.each do |waza_name, techs|
             rows << [{ content: UnicodeUtils.upcase(waza_name), rowspan: techs.size, rotate: 90 },
                 UnicodeUtils.upcase(techs[0].name), nil, nil, nil, nil]
-            rows += techs[1..-1].sort_by { |bt| bt.name }.map do |bt|
+            rows += techs[1..-1].sort_by(&:name).map do |bt|
               [UnicodeUtils.upcase(bt.name), nil, nil, nil, nil]
             end
           end

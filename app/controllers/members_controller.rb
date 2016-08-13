@@ -12,7 +12,7 @@ class MembersController < ApplicationController
     if params[:q]
       query = params[:q]
       @members = Member.search(query)
-      @members = @members.sort_by { |member| member.last_name }
+      @members = @members.sort_by(&:last_name)
     end
   end
 
@@ -187,7 +187,7 @@ class MembersController < ApplicationController
     @groups = Group.active(Date.today).includes(:members).to_a
     @former_members = Member.where('left_on IS NOT NULL').to_a
     @administrators = User.find_administrators
-    @administrator_emails = @administrators.map { |m| m.email }.compact.uniq
+    @administrator_emails = @administrators.map(&:email).compact.uniq
     @missing_administrator_emails = @administrators.size - @administrator_emails.size
   end
 

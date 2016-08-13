@@ -6,7 +6,7 @@ module ApplicationHelper
     link_to name,
         { controller: options[:controller], action: options[:action],
             id: options[:id], anchor: options[:anchor] },
-        class: ((controller.controller_name.to_s == options[:controller].to_s) ? 'active' : nil)
+        class: (controller.controller_name.to_s == options[:controller].to_s ? 'active' : nil)
   end
 
   def yes_no(bool)
@@ -47,7 +47,7 @@ module ApplicationHelper
     base = url_for(controller: :welcome, action: :index, only_path: false)
 
     html_with_base = html.gsub(/\b(href|src)="(?:#{base}|\/)([^?"]*)(\?[^"]*)?"/i) do |m|
-      with_base = %{#$1="#{base}#$2#$3"}
+      with_base = %{#{$1}="#{base}#{$2}#{$3}"}
 
       params = []
       params << "email=#{Base64.encode64(@email)}" if @email

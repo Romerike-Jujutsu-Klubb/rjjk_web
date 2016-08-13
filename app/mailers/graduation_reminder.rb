@@ -6,7 +6,7 @@ class GraduationReminder
     groups = Group.active(today).to_a
     planned_groups = Graduation.where('held_on >= ?', today).to_a.map(&:group)
     missing_groups = groups - planned_groups
-    month_start = Date.civil(Date.today.year, (Date.today.mon >= 6) ? 12 : 6)
+    month_start = Date.civil(Date.today.year, Date.today.mon >= 6 ? 12 : 6)
     second_week = month_start + (7 - month_start.wday)
     missing_groups.each do |g|
       instructor = Semester.current.group_semesters

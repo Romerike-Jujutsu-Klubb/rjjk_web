@@ -219,7 +219,7 @@ class AttendancesController < ApplicationController
     end
     if member.current_rank
       attendances_since_graduation = member.attendances_since_graduation
-      if attendances_since_graduation.size > 0
+      unless attendances_since_graduation.empty?
         by_group = attendances_since_graduation.group_by { |a| a.group_schedule.group }
         @months << ['Siden gradering', *@attended_groups.map { |g| (by_group[g] || []).size }]
       end
@@ -289,7 +289,7 @@ class AttendancesController < ApplicationController
         attended_members = []
       else
         @group = Group.includes(:martial_art).find(params[:group_id])
-        weekdays = @group.group_schedules.map { |gs| gs.weekday }
+        weekdays = @group.group_schedules.map(&:weekday)
         @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
 
         @instructors = Member.active(@date)

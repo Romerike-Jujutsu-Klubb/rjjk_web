@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   SEARCH_FIELDS = [:email, :first_name, :last_name, :login]
   scope :search, ->(query) {
     where(SEARCH_FIELDS.map { |c| "to_tsvector(UPPER(#{c})) @@ to_tsquery(?)" }
-        .join(' OR '), *(["#{UnicodeUtils.upcase(query).split(/\s+/).join(' | ')}"] * SEARCH_FIELDS.size))
+        .join(' OR '), *([UnicodeUtils.upcase(query).split(/\s+/).join(' | ')] * SEARCH_FIELDS.size))
         .order(:first_name, :last_name)
   }
 

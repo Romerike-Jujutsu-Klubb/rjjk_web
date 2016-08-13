@@ -52,6 +52,6 @@ class Event < ActiveRecord::Base
   end
 
   def size
-    event_invitees.select { |ei| ei.will_attend }.size
+    event_invitees.select(&:will_attend).size
   end
 end

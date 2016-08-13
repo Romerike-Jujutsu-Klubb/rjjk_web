@@ -28,7 +28,7 @@ class AttendanceMailer < ActionMailer::Base
     @recipient = recipient
     @members = attendees
     @title = "Trening i #{group_schedule.start_at.day_phase}"
-    @title = "Trening i #{@group_schedule.start_at.day_phase}: #{attendees.size == 0 ? 'Ingen' : attendees.size} deltaker#{'e' if attendees.size > 1} påmeldt"
+    @title = "Trening i #{@group_schedule.start_at.day_phase}: #{attendees.empty? ? 'Ingen' : attendees.size} deltaker#{'e' if attendees.size > 1} påmeldt"
     @timestamp = Time.now
     @email_url = with_login(recipient.user, controller: :attendances, action: :plan)
     mail to: safe_email(recipient), subject: rjjk_prefix(@title)

@@ -6,7 +6,7 @@ class AttendanceNagger
             today.cwyear, today.cweek)
         .select { |m| m.age >= 14 }
         .select { |m| m.groups.any? { |g| g.name == 'Voksne' } }
-        .select { |m| m.active? }
+        .select(&:active?)
         .each do |member|
       if member.user.nil?
         msg = "USER IS MISSING!  #{member.inspect}"

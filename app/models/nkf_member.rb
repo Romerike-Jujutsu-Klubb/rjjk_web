@@ -79,7 +79,7 @@ class NkfMember < ActiveRecord::Base
         mapped_attribute = FIELD_MAP[k.to_sym]
         if mapped_attribute
           if v =~ /^\s*(\d{2}).(\d{2}).(\d{4})\s*$/
-            v = "#$3-#$2-#$1"
+            v = "#{$3}-#{$2}-#{$1}"
           elsif v =~ /Mann|Kvinne/
             v = v == 'Mann'
           elsif v.blank? && mapped_attribute =~ /parent|email|mobile|phone/

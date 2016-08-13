@@ -67,7 +67,7 @@ class EventsController < ApplicationController
     elsif params[:recipients] == 'invited'
       recipients = event.event_invitees
     elsif params[:recipients] == 'groups'
-      recipients = event.groups.map { |g| g.members }.flatten
+      recipients = event.groups.map(&:members).flatten
     end
     recipients.each do |recipient|
       event_invitee = EventInvitee.new(:event => event, :name => recipient.name, :email => recipient.email)

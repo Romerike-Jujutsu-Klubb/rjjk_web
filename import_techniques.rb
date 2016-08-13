@@ -63,7 +63,7 @@ ranks.each do |rank_name, rank_dir|
       if l2 !~ /:/
         l1.strip + ' ' + l2.strip
       else
-        (l1 =~ /:/) ? l1 : nil
+        l1 =~ /:/ ? l1 : nil
       end
     end.compact.flatten
 

@@ -70,7 +70,7 @@ class NkfMemberComparison
         logger.error "No groups: #{member.nkf_member.inspect}"
         nkf_group_names = []
       end
-      member_groups = member.groups.map { |g| g.name }
+      member_groups = member.groups.map(&:name)
       (nkf_group_names - member_groups).each do |gn|
         if (group = Group.find_by_name(gn))
           member.groups << group
