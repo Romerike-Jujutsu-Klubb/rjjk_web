@@ -70,9 +70,9 @@ Rails.application.routes.draw do
   resources :event_invitees
   resources :event_messages
   resources :events
-  #resources :events do
+  # resources :events do
   #  get :calendar, :on => :collection
-  #end
+  # end
   resources :graduates
   resources :graduations
   resources :group_instructors

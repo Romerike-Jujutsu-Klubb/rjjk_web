@@ -42,7 +42,7 @@ class InfoControllerTest < ActionController::TestCase
     num_information_pages = InformationPage.count
 
     login(:admin)
-    post :create, :information_page => {:title => 'an article'}
+    post :create, :information_page => { :title => 'an article' }
     assert_no_errors :information_page
 
     assert_response :redirect

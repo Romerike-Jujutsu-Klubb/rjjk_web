@@ -7,7 +7,7 @@ class AddGroupToGraduations < ActiveRecord::Migration
         graduation.destroy
         next
       end
-      group_id_freq = graduation_groups.group_by{|g|g}
+      group_id_freq = graduation_groups.group_by { |g| g }
       main_group_id = group_id_freq.values.sort_by(&:size).last.first
       graduation.update_attributes! :group_id => main_group_id
     end

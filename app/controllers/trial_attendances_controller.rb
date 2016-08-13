@@ -60,7 +60,7 @@ class TrialAttendancesController < ApplicationController
         format.html {
           if request.xhr?
             render partial: 'attendances/trial_attendance_delete_link',
-                locals: {trial_attendance: @trial_attendance}
+                locals: { trial_attendance: @trial_attendance }
           else
             redirect_to(@trial_attendance, notice: 'TrialAttendance was successfully created.')
           end

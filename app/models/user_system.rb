@@ -53,7 +53,7 @@ module UserSystem
   end
 
   # overwrite if you want to have special behavior in case the user is not authorized
-  # to access the current operation. 
+  # to access the current operation.
   # The default action is to redirect to the login screen.
   # Example use :
   # a popup window might just close itself for instance

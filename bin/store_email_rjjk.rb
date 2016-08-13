@@ -29,7 +29,7 @@ SENDMAIL = '/usr/sbin/sendmail -G -i' # NEVER NEVER NEVER use "-t" here.
 
 # Exit codes from <sysexits.h>
 EX_TEMPFAIL = 75
-EX_UNAVAILABLE=69
+EX_UNAVAILABLE = 69
 
 # Clean up when done or when aborting.
 # trap(0, 1, 2, 3, 15){"rm -f in.$$"}

@@ -7,16 +7,16 @@ class Group < ActiveRecord::Base
   has_one :current_semester,
       -> { references(:semesters).includes(:semester).where('CURRENT_DATE BETWEEN semesters.start_on AND semesters.end_on') },
       class_name: :GroupSemester
-  has_many :graduations, ->{order(:held_on)}, :dependent => :destroy
+  has_many :graduations, -> { order(:held_on) }, :dependent => :destroy
   has_many :group_schedules, :dependent => :destroy
   has_many :group_semesters, :dependent => :destroy
   has_one :next_graduation,
-      ->{where('graduations.held_on >= ?', Date.today).order('graduations.held_on')},
+      -> { where('graduations.held_on >= ?', Date.today).order('graduations.held_on') },
       :class_name => :Graduation
   has_one :next_semester,
-      ->{includes(:semester).where('semesters.start_on > CURRENT_DATE').order('semesters.start_on')},
+      -> { includes(:semester).where('semesters.start_on > CURRENT_DATE').order('semesters.start_on') },
           :class_name => :GroupSemester
-  has_many :ranks, ->{order(:position)}, :dependent => :destroy
+  has_many :ranks, -> { order(:position) }, :dependent => :destroy
   # FIXME(uwe): Add model GroupMembership and change to has_many through:
   has_and_belongs_to_many :members, conditions: 'left_on IS NULL OR left_on > DATE(CURRENT_TIMESTAMP)'
 
@@ -45,7 +45,7 @@ class Group < ActiveRecord::Base
     return 0 if group_schedules.empty?
     Practice.
         where(*["status = 'X' AND group_schedule_id IN (?) AND (year > ? OR (year = ? AND week >= ?)) AND (year < ? OR (year = ? AND week <= ?))",
-        group_schedules.map(&:id), *([[period.first.year]*2, period.first.cweek, [period.last.year]*2, period.last.cweek]).flatten]).
+        group_schedules.map(&:id), *([[period.first.year] * 2, period.first.cweek, [period.last.year] * 2, period.last.cweek]).flatten]).
         all.size
   end
 
@@ -76,7 +76,7 @@ class Group < ActiveRecord::Base
 
   def trials
     NkfMemberTrial.for_group(self).
-        includes(:trial_attendances => {:practice => :group_schedule}).
+        includes(:trial_attendances => { :practice => :group_schedule }).
         order('fornavn, etternavn').
         to_a
   end

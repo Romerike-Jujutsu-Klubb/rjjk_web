@@ -35,10 +35,10 @@ class GraduatesControllerTest < ActionController::TestCase
   def test_create
     num_graduates = Graduate.count
 
-    post :create, :graduate => {:member_id => members(:lars).id,
+    post :create, :graduate => { :member_id => members(:lars).id,
                                 :graduation_id => graduations(:tiger).id,
                                 :passed => true, :rank_id => ranks(:kyu_4).id,
-                                :paid_graduation => true, :paid_belt => true}
+                                :paid_graduation => true, :paid_belt => true }
     assert_no_errors :graduate
     assert_response :redirect
     assert_redirected_to :action => :index

@@ -11,7 +11,7 @@ class GroupInstructorsController < ApplicationController
         gi.group_schedule.group.from_age, gi.group_schedule.weekday, -(gi.member.current_rank.try(:position) || -999)] }
     @semesters = group_instructors.group_by { |gi| gi.group_semester.semester }
     if Semester.current && !@semesters.include?(Semester.current)
-      @semesters = {Semester.current => []}.update @semesters
+      @semesters = { Semester.current => [] }.update @semesters
     end
   end
 

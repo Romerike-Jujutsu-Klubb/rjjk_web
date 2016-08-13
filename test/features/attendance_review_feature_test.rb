@@ -1,7 +1,7 @@
 require 'capybara_setup'
 
 class AttendanceReviewFeatureTest < ActionDispatch::IntegrationTest
-  setup {screenshot_section :attendance}
+  setup { screenshot_section :attendance }
 
   def test_review_displays_old_attendance
     screenshot_group :review

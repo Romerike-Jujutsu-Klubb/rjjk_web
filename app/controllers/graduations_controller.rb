@@ -35,11 +35,11 @@ class GraduationsController < ApplicationController
   def edit
     @graduation = Graduation
         .includes(
-            censors: {member: {graduates: {rank: :martial_art}}},
+            censors: { member: { graduates: { rank: :martial_art } } },
             graduates: {
                 graduation: {
                     group: {
-                        martial_art: {ranks: [{group: [:martial_art, :ranks]}, :martial_art]}
+                        martial_art: { ranks: [{ group: [:martial_art, :ranks] }, :martial_art] }
                     }
                 },
                 member: [
@@ -56,9 +56,9 @@ class GraduationsController < ApplicationController
                     },
                     :nkf_member
                 ],
-                rank: [{group: [:group_schedules, :ranks]}, :martial_art],
+                rank: [{ group: [:group_schedules, :ranks] }, :martial_art],
             },
-            group: {members: :nkf_member})
+            group: { members: :nkf_member })
         .find(params[:id])
     @approval = @graduation.censors.
         select { |c| c.member == current_user.member }.
@@ -100,10 +100,10 @@ class GraduationsController < ApplicationController
 
     content = graduation.graduates.sort_by { |g| -g.rank.position }.map do |g|
       censors = graduation.censors.to_a.sort_by { |c| -(c.member.current_rank.try(:position) || 99) }
-      {name: g.member.name, rank: g.rank.label, group: g.rank.group.name,
-          censor1: censors[0] ? {title: (censors[0].member.title), name: censors[0].member.name, signature: censors[0].member.signatures.sample.try(:image)} : nil,
-          censor2: censors[1] ? {title: (censors[1].member.title), name: censors[1].member.name, signature: censors[1].member.signatures.sample.try(:image)} : nil,
-          censor3: censors[2] ? {title: (censors[2].member.title), name: censors[2].member.name, signature: censors[2].member.signatures.sample.try(:image)} : nil,
+      { name: g.member.name, rank: g.rank.label, group: g.rank.group.name,
+          censor1: censors[0] ? { title: (censors[0].member.title), name: censors[0].member.name, signature: censors[0].member.signatures.sample.try(:image) } : nil,
+          censor2: censors[1] ? { title: (censors[1].member.title), name: censors[1].member.name, signature: censors[1].member.signatures.sample.try(:image) } : nil,
+          censor3: censors[2] ? { title: (censors[2].member.title), name: censors[2].member.name, signature: censors[2].member.signatures.sample.try(:image) } : nil,
       }
     end
     filename = "Certificates_#{graduation.group.martial_art.name}_#{graduation.held_on}.pdf"
@@ -136,7 +136,7 @@ class GraduationsController < ApplicationController
             '',
         ]
       end
-      table([['Utøver', 'Bra', 'Kan bli bedre']] + data, header: true, cell_style: {inline_format: true, width: 180, padding: 8})
+      table([['Utøver', 'Bra', 'Kan bli bedre']] + data, header: true, cell_style: { inline_format: true, width: 180, padding: 8 })
       start_new_page
     end
 
@@ -184,12 +184,12 @@ class GraduationsController < ApplicationController
   private
 
   def load_graduates
-    @graduation = Graduation.includes(group: {martial_art: {ranks: :group}}).find(params[:id])
+    @graduation = Graduation.includes(group: { martial_art: { ranks: :group } }).find(params[:id])
     @censors = Censor.includes(:member).where(graduation_id: @graduation.id).to_a
     @graduates = Graduate.where('graduates.graduation_id = ? AND graduates.member_id != 0', params[:id]).
-        #includes({:graduation => :martial_art}, {:member => [{:attendances => :group_schedule}, {:graduates => [:graduation, :rank]}]}, {:rank => :group}).
-        includes({graduation: {group: :martial_art}}, :member, {rank: :group}).
-        #order('ranks_graduates.position DESC, members.first_name, members.last_name').to_a
+        # includes({:graduation => :martial_art}, {:member => [{:attendances => :group_schedule}, {:graduates => [:graduation, :rank]}]}, {:rank => :group}).
+        includes({ graduation: { group: :martial_art } }, :member, { rank: :group }).
+        # order('ranks_graduates.position DESC, members.first_name, members.last_name').to_a
         order('ranks.position DESC, members.first_name, members.last_name').to_a
   end
 end

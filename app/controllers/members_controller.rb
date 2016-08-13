@@ -174,9 +174,9 @@ class MembersController < ApplicationController
     @male_thirteen_nineteen = member_count(true, 13, 19)
     @female_thirteen_nineteen = member_count(false, 13, 19)
     @male_twenty_twentyfive = member_count(true, 20, 25)
-    @female_twenty_twentyfive= member_count(false, 20, 25)
+    @female_twenty_twentyfive = member_count(false, 20, 25)
     @male_twentysix_and_over = member_count(true, 26, 100)
-    @female_twentysix_and_over= member_count(false, 26, 100)
+    @female_twentysix_and_over = member_count(false, 26, 100)
     @incomplete_members = Member.active.to_a.select { |m| m.birthdate.nil? }
   end
 
@@ -295,11 +295,11 @@ class MembersController < ApplicationController
 
   private
 
-  def year_end(offset=0)
+  def year_end(offset = 0)
     Date.parse((Date.today.year - offset).to_s + '-12-31').strftime('%Y-%m-%d')
   end
 
-  def year_start(offset=0)
+  def year_start(offset = 0)
     Date.parse((Date.today.year - offset).to_s + '-01-01').strftime('%Y-%m-%d')
   end
 

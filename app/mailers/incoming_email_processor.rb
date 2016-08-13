@@ -2,19 +2,19 @@ require 'mail'
 
 class IncomingEmailProcessor
   TARGETS = {
-      kasserer: {name: 'Kasia Krohn', email: 'kasiakrohn@gmail.com'},
-      materialforvalter: {name: 'Tommy Musaus', email: 'tommy.musaus@hellvikhus.no'},
-      medlem: {name: 'Svein Robert Rolijordet', email: 'srr@resvero.com'},
-      post: {name: 'Svein Robert Rolijordet', email: 'srr@resvero.com'},
+      kasserer: { name: 'Kasia Krohn', email: 'kasiakrohn@gmail.com' },
+      materialforvalter: { name: 'Tommy Musaus', email: 'tommy.musaus@hellvikhus.no' },
+      medlem: { name: 'Svein Robert Rolijordet', email: 'srr@resvero.com' },
+      post: { name: 'Svein Robert Rolijordet', email: 'srr@resvero.com' },
       styret: [
-          {name: 'Svein Robert Rolijordet', email: 'srr@resvero.com'},
-          {name: 'Trond Evensen', email: 'trondevensen@icloud.com'},
-          {name: 'Kasia Krohn', email: 'kasiakrohn@gmail.com'},
-          {name: 'Torstein Resløkken', email: 'reslokken@gmail.com'},
-          {name: 'Uwe Kubosch', email: 'uwe@kubosch.no'},
+          { name: 'Svein Robert Rolijordet', email: 'srr@resvero.com' },
+          { name: 'Trond Evensen', email: 'trondevensen@icloud.com' },
+          { name: 'Kasia Krohn', email: 'kasiakrohn@gmail.com' },
+          { name: 'Torstein Resløkken', email: 'reslokken@gmail.com' },
+          { name: 'Uwe Kubosch', email: 'uwe@kubosch.no' },
       ],
-      test: {name: 'don Valentin', email: 'donv@kubosch.no'},
-      web: {name: 'Uwe Kubosch', email: 'uwe@kubosch.no'},
+      test: { name: 'don Valentin', email: 'donv@kubosch.no' },
+      web: { name: 'Uwe Kubosch', email: 'uwe@kubosch.no' },
   }
   ENV_STR = Rails.env.production? ? nil : Rails.env.upcase
   DOMAIN = "#{"#{Rails.env}." unless (Rails.env.production? || Rails.env.test?)}jujutsu.no"

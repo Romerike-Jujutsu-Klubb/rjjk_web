@@ -84,7 +84,7 @@ class EventsController < ApplicationController
     event_id = params[:id]
     cal = RiCal.Calendar do
       if event_id
-        events = [Event, Graduation].flat_map{|clas| clas.where(id: event_id).to_a}
+        events = [Event, Graduation].flat_map { |clas| clas.where(id: event_id).to_a }
       else
         today = Time.zone.today
         events = Event

@@ -2,7 +2,7 @@ class CreateNkfMembers < ActiveRecord::Migration
   def self.up
     create_table :nkf_members do |t|
       t.integer :member_id
-      
+
       t.integer :medlemsnummer
       t.string :etternavn
       t.string :fornavn

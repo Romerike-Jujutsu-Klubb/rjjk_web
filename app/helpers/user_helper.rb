@@ -4,7 +4,7 @@ module UserHelper
     :notice => true,
     :message => true,
     :error => false
-  }.freeze unless defined? DEFAULT_HEAD_OPTIONS 
+  }.freeze unless defined? DEFAULT_HEAD_OPTIONS
 
   def title_helper
     "#{controller.class.name} #{controller.action_name}"

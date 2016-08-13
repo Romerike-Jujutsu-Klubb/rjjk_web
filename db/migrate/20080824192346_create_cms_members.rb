@@ -31,18 +31,18 @@ class CreateCmsMembers < ActiveRecord::Migration
       t.column "account_no",           :string,  :limit => 16
       t.column "billing_phone_home",   :string,  :limit => 32
       t.column "billing_phone_mobile", :string,  :limit => 32
-      
+
       t.timestamps
     end
     columns = (Member.column_names - ['id', 'created_at', 'updated_at']).sort.join(', ')
     cms_columns = (CmsMember.column_names - ['id', 'created_at', 'updated_at']).sort.join(', ')
     execute "INSERT INTO cms_members(#{cms_columns}) (SELECT #{columns} FROM members)"
   end
-  
+
   def self.down
     drop_table :cms_members
   end
 
-  class CmsMember < ActiveRecord::Base ; end
-  class Member < ActiveRecord::Base ; end
+  class CmsMember < ActiveRecord::Base; end
+  class Member < ActiveRecord::Base; end
 end

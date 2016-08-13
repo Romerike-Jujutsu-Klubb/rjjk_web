@@ -71,7 +71,7 @@ class CmsMembersController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   def active_contracts
     @members = CmsMember.find_active
   end
@@ -80,9 +80,9 @@ class CmsMembersController < ApplicationController
     @cms_members = CmsMember.all
     render :layout => false
   end
-  
+
   def import
     @new_members, @updated_members = CmsImport.import
   end
-  
+
 end

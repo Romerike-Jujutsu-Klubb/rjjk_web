@@ -69,7 +69,7 @@ class UserController < ApplicationController
 
   def logout
     self.current_user = nil
-    cookies[:token] = {:value => '', :expires => 0.days.from_now}
+    cookies[:token] = { :value => '', :expires => 0.days.from_now }
     flash['notice'] = 'Velkommen tilbake!'
     back_or_redirect_to '/'
   end

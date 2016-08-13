@@ -19,9 +19,9 @@ class AttendancesControllerTest < ActionController::TestCase
 
   def test_should_create_attendance
     assert_difference('Attendance.count') do
-      post :create, attendance: {member_id: members(:uwe).id,
+      post :create, attendance: { member_id: members(:uwe).id,
           practice_id: practices(:panda_2010_42).id,
-          status: 'X'}
+          status: 'X' }
       assert_no_errors(:attendance)
     end
 
@@ -30,9 +30,9 @@ class AttendancesControllerTest < ActionController::TestCase
 
   def test_create_with_group_schedule_id_and_year_and_week
     assert_difference('Attendance.count') do
-      post :create, attendance: {member_id: members(:uwe).id,
+      post :create, attendance: { member_id: members(:uwe).id,
           group_schedule_id: group_schedules(:panda).id, year: 2010, week: 42,
-          status: 'X'}
+          status: 'X' }
       assert_no_errors(:attendance)
     end
     assert_redirected_to attendance_path(assigns(:attendance))

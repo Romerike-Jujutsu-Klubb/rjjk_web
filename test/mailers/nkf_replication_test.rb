@@ -21,8 +21,8 @@ class NkfReplicationTest < ActionMailer::TestCase
   test 'update_members' do
     comparison = mock('comparison')
     comparison.stubs(:new_members).returns([mock('new_member', :first_name => 'Erik', :last_name => 'Hansen')])
-    comparison.stubs(:member_changes).returns([[mock('member_change', :first_name => 'Erik', :last_name => 'Hansen'), {'first_name' => 'Hans'}]])
-    comparison.stubs(:group_changes).returns({mock(:first_name => 'hhh', :last_name => 'dfgfg') => [[mock('added_group', :name => 'hhgf')], [mock('removed_group', :name => 'abc')]]})
+    comparison.stubs(:member_changes).returns([[mock('member_change', :first_name => 'Erik', :last_name => 'Hansen'), { 'first_name' => 'Hans' }]])
+    comparison.stubs(:group_changes).returns({ mock(:first_name => 'hhh', :last_name => 'dfgfg') => [[mock('added_group', :name => 'hhgf')], [mock('removed_group', :name => 'abc')]] })
     comparison.stubs(:errors).returns([])
     mail = NkfReplicationMailer.update_members(comparison)
     assert_equal '[RJJK][TEST] Oppdateringer fra NKF: 1 nye, 1 endrede, 1 gruppeendringer', mail.subject

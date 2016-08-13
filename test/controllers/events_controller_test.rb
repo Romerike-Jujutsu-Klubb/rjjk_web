@@ -18,7 +18,7 @@ class EventsControllerTest < ActionController::TestCase
 
   def test_should_create_event
     assert_difference('Event.count') do
-      post :create, :event => {:name => 'Stuff', :start_at => '2012-02-18'}
+      post :create, :event => { :name => 'Stuff', :start_at => '2012-02-18' }
       assert_no_errors :event
     end
 
@@ -37,7 +37,7 @@ class EventsControllerTest < ActionController::TestCase
   end
 
   def test_should_update_event
-    put :update, id: events(:one).id, event: { }
+    put :update, id: events(:one).id, event: {}
     assert_redirected_to edit_event_path(assigns(:event))
   end
 

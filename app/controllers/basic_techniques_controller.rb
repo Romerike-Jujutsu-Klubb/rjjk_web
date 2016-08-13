@@ -74,6 +74,6 @@ class BasicTechniquesController < ApplicationController
   def load_form_data
     @wazas = Waza.all.to_a
     @ranks = Rank.includes(:martial_art).
-        where(martial_arts: {name: 'Kei Wa Ryu'}).order(:position).to_a
+        where(martial_arts: { name: 'Kei Wa Ryu' }).order(:position).to_a
   end
 end

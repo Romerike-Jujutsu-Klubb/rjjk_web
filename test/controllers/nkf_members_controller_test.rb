@@ -18,7 +18,7 @@ class NkfMembersControllerTest < ActionController::TestCase
 
   test 'should create nkf_member' do
     assert_difference('NkfMember.count') do
-      post :create, :nkf_member => {:kjonn => 'Mann'}
+      post :create, :nkf_member => { :kjonn => 'Mann' }
       assert_no_errors :nkf_member
     end
 
@@ -36,7 +36,7 @@ class NkfMembersControllerTest < ActionController::TestCase
   end
 
   test 'should update nkf_member' do
-    put :update, :id => nkf_members(:erik).to_param, :nkf_member => { }
+    put :update, :id => nkf_members(:erik).to_param, :nkf_member => {}
     assert_redirected_to :controller => :nkf_members, :action => :comparison, :id => 0
   end
 

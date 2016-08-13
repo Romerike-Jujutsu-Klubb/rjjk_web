@@ -120,7 +120,7 @@ class UserTest < ActionMailer::TestCase
   def test_create__validates_unique_email
     u = User.new
     u.login = 'new_user'
-    u.email= users(:lars).email
+    u.email = users(:lars).email
     u.change_password('password')
     assert !u.save
   end

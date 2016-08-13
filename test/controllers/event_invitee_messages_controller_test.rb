@@ -13,7 +13,7 @@ class EventInviteeMessagesControllerTest < ActionController::TestCase
   end
 
   test "should get new" do
-    get :new, event_invitee_message: {event_invitee_id: event_invitees(:one).id}
+    get :new, event_invitee_message: { event_invitee_id: event_invitees(:one).id }
     assert_response :success
   end
 

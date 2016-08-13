@@ -17,9 +17,9 @@ class UserSystemTest < ActionDispatch::IntegrationTest
 
   def test_signup_and_verify
     post url_for(controller: :user, action: :signup),
-        user: {login: 'newuser',
+        user: { login: 'newuser',
             password: 'password', password_confirmation: 'password',
-            email: 'newemail@example.com'}
+            email: 'newemail@example.com' }
 
     assert_not_logged_in
     assert_redirected_to_login
@@ -56,7 +56,7 @@ class UserSystemTest < ActionDispatch::IntegrationTest
 
   def test_forgot_password_allows_change_password_after_mailing_key
     user = users(:lars)
-    post url_for(controller: :user, action: :forgot_password), user: {email: user.email}
+    post url_for(controller: :user, action: :forgot_password), user: { email: user.email }
     assert_equal 1, UserMessage.pending.size
     mail = UserMessage.pending[0]
     assert_equal ["\"Lars Bråten\" <lars@example.com>"], mail.to
@@ -67,9 +67,9 @@ class UserSystemTest < ActionDispatch::IntegrationTest
     id = $1
     key = $2
     post url_for(controller: :user, action: :change_password),
-        user: {password: 'newpassword',
+        user: { password: 'newpassword',
             password_confirmation: 'newpassword',
-            id: id},
+            id: id },
         key: key
     user.reload
     assert_logged_in user

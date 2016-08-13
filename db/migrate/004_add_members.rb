@@ -13,7 +13,7 @@ class AddMembers < ActiveRecord::Migration
       t.column :male,               :boolean, :null => false
       t.column :joined_on,          :date
       t.column :contract_id,        :integer, :references => nil
-      t.column :department ,        :string,  :limit => 100      
+      t.column :department,        :string,  :limit => 100
       t.column :cms_contract_id,    :integer, :references => nil
       t.column :left_on,            :date
       t.column :parent_name,        :string,  :limit => 100
@@ -22,12 +22,12 @@ class AddMembers < ActiveRecord::Migration
       t.column :billing_type,       :string,  :limit => 100
       t.column :billing_name,       :string,  :limit => 100
       t.column :billing_address,    :string,  :limit => 100
-      t.column :billing_postal_code,:string,  :limit => 4
+      t.column :billing_postal_code, :string,  :limit => 4
       t.column :payment_problem,    :boolean,                                                                   :null => false
       t.column :comment,            :string
       t.column :instructor,         :boolean, :null => false
       t.column :nkf_fee,            :boolean, :null => false
-      
+
       t.timestamps
     end
   end

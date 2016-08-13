@@ -1,6 +1,6 @@
 require 'digest/sha1'
 
-# this model expects a certain database layout and its based on the name/login pattern. 
+# this model expects a certain database layout and its based on the name/login pattern.
 class User < ActiveRecord::Base
   include UserSystem
 
@@ -52,8 +52,8 @@ class User < ActiveRecord::Base
   def emails
     result = [%{"#{name}" <#{attributes['email']}>}]
     result += member.emails if member
-    result.sort_by! {|e| -e.size}
-    result.uniq {|e| e =~ /<(.*@.*)>/ ? $1 : e}
+    result.sort_by! { |e| -e.size }
+    result.uniq { |e| e =~ /<(.*@.*)>/ ? $1 : e }
   end
 
   def name

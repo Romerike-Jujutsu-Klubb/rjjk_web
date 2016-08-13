@@ -25,7 +25,7 @@ class CreateRanks < ActiveRecord::Migration
       t.column :paid_graduation, :boolean, :null => false
       t.column :paid_belt, :boolean, :null => false
     end
-    
+
     MartialArt.create! :name => 'Kei Wa Ryu'
     MartialArt.create! :name => 'Aikikai'
   end
@@ -37,6 +37,6 @@ class CreateRanks < ActiveRecord::Migration
     drop_table :ranks
     drop_table :martial_arts
   end
-  
-  class MartialArt < ActiveRecord::Base ; end
+
+  class MartialArt < ActiveRecord::Base; end
 end

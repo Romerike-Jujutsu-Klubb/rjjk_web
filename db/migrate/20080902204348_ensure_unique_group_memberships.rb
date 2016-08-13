@@ -4,7 +4,7 @@ class EnsureUniqueGroupMemberships < ActiveRecord::Migration
     add_index :groups_members, [:group_id, :member_id], :unique => true
     remove_column :groups_members, :created_at
     remove_column :groups_members, :updated_at
-    
+
     drop_table :martial_arts_members
   end
 
@@ -14,7 +14,7 @@ class EnsureUniqueGroupMemberships < ActiveRecord::Migration
       t.integer :member_id, :null => false
     end
     Member.all.each do |m|
-      m.martial_arts = m.groups.map{|g|g.martial_art}
+      m.martial_arts = m.groups.map { |g| g.martial_art }
       m.save!
     end
 
@@ -22,10 +22,10 @@ class EnsureUniqueGroupMemberships < ActiveRecord::Migration
     add_column :groups_members, :created_at, :datetime
     remove_index :groups_members, [:group_id, :member_id]
   end
-  
+
   class Member < ActiveRecord::Base
     has_and_belongs_to_many :martial_arts
     has_and_belongs_to_many :groups
   end
-  
+
 end

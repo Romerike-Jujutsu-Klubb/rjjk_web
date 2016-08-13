@@ -46,7 +46,7 @@ class GraduationsControllerTest < ActionController::TestCase
 
   def test_create
     assert_difference 'Graduation.count' do
-      post :create, graduation: {held_on: '2007-10-07', group_id: groups(:panda).id}
+      post :create, graduation: { held_on: '2007-10-07', group_id: groups(:panda).id }
     end
     assert_no_errors :graduation
     assert_response :redirect
@@ -56,7 +56,7 @@ class GraduationsControllerTest < ActionController::TestCase
   def test_create_for_instructor
     login(:lars)
     assert_difference 'Graduation.count' do
-      post :create, graduation: {held_on: '2007-10-07', group_id: groups(:panda).id}
+      post :create, graduation: { held_on: '2007-10-07', group_id: groups(:panda).id }
     end
     assert_no_errors :graduation
     assert_response :redirect

@@ -8,7 +8,7 @@ class NewsItem < ActiveRecord::Base
   extend UserSystem
   include UserSystem
 
-  scope :current, -> {where("(publication_state IS NULL OR publication_state = '#{PublicationState::PUBLISHED}') AND (publish_at IS NULL OR publish_at <= CURRENT_TIMESTAMP) AND (expire_at IS NULL OR expire_at >= CURRENT_TIMESTAMP)")}
+  scope :current, -> { where("(publication_state IS NULL OR publication_state = '#{PublicationState::PUBLISHED}') AND (publish_at IS NULL OR publish_at <= CURRENT_TIMESTAMP) AND (expire_at IS NULL OR expire_at >= CURRENT_TIMESTAMP)") }
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :created_by
 

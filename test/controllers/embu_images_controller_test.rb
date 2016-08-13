@@ -36,7 +36,7 @@ class EmbuImagesControllerTest < ActionController::TestCase
   end
 
   test 'should update embu_image' do
-    put :update, id: @embu_image, embu_image: {  }
+    put :update, id: @embu_image, embu_image: {}
     assert_no_errors :embu_image
     assert_redirected_to embu_image_path(assigns(:embu_image))
   end

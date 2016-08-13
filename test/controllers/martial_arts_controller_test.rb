@@ -45,7 +45,7 @@ class MartialArtsControllerTest < ActionController::TestCase
   def test_create
     num_martial_arts = MartialArt.count
 
-    post :create, :martial_art => {:family => 'Karate', :name => 'Wado Ryu'}
+    post :create, :martial_art => { :family => 'Karate', :name => 'Wado Ryu' }
     assert_no_errors :martial_art
     assert_response :redirect
     assert_redirected_to :action => 'list'

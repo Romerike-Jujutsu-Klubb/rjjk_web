@@ -13,7 +13,7 @@ class CensorsController < ApplicationController
     @graduation = Graduation.find(params[:id])
     @instructors = Member.where('left_on IS NULL AND instructor = true').order(:first_name, :last_name).to_a
     @instructors -= @graduation.censors.map(&:member)
-    rstr =<<EOH
+    rstr = <<EOH
     <div style="height:512px; width:284px; overflow: auto; overflow-x: hidden;">
     <table STYLE="height: 128px;" CELLPADDING="0" CELLSPACING="0" width="100%">
       <tr>

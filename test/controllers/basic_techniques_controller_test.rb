@@ -23,7 +23,7 @@ class BasicTechniquesControllerTest < ActionController::TestCase
           description: @basic_technique.description,
           name: @basic_technique.name + ' 2', rank_id: @basic_technique.rank_id,
           translation: @basic_technique.translation,
-          waza_id: @basic_technique.waza_id}
+          waza_id: @basic_technique.waza_id }
     end
 
     assert_redirected_to basic_technique_path(assigns(:basic_technique))
@@ -40,7 +40,7 @@ class BasicTechniquesControllerTest < ActionController::TestCase
   end
 
   test 'should update basic_technique' do
-    put :update, id: @basic_technique, basic_technique: {description: @basic_technique.description, name: @basic_technique.name, rank_id: @basic_technique.rank_id, translation: @basic_technique.translation, waza_id: @basic_technique.waza_id}
+    put :update, id: @basic_technique, basic_technique: { description: @basic_technique.description, name: @basic_technique.name, rank_id: @basic_technique.rank_id, translation: @basic_technique.translation, waza_id: @basic_technique.waza_id }
     assert_redirected_to basic_technique_path(assigns(:basic_technique))
   end
 

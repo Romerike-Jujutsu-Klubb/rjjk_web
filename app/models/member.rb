@@ -37,7 +37,7 @@ class Member < ActiveRecord::Base
       class_name: Attendance
   # EMXIF
 
-  has_many :passed_graduates, -> { where graduates: {passed: true} },
+  has_many :passed_graduates, -> { where graduates: { passed: true } },
       class_name: 'Graduate'
   has_many :ranks, through: :passed_graduates
 
@@ -85,7 +85,7 @@ class Member < ActiveRecord::Base
   validates_inclusion_of :male, :in => [true, false]
   validates_inclusion_of :nkf_fee, :in => [true, false]
   validates_inclusion_of :payment_problem, :in => [true, false]
-  #validates_presence_of :postal_code
+  # validates_presence_of :postal_code
   validates_length_of :postal_code, is: 4, allow_blank: true
   validates_uniqueness_of :rfid, :if => Proc.new { |r| r.rfid and not r.rfid.empty? }
   validates_presence_of :user, :user_id, unless: :left_on
@@ -152,14 +152,14 @@ class Member < ActiveRecord::Base
     if full_email.size > max_length
       logger.debug "Full email too long: #{full_email}"
       max_name_size = max_length - email.size - 5
-      (cut_name = "#{first_name} #{last_name}#{birth_suffix}")[(max_name_size / 2) - 2 .. (-max_name_size / 2)]
+      (cut_name = "#{first_name} #{last_name}#{birth_suffix}")[(max_name_size / 2) - 2..(-max_name_size / 2)]
       full_email = %Q{"#{cut_name}" <#{email}>}
     end
 
     # Fallback to non-valid email...
     if full_email.size > max_length
       logger.debug "Full email too long: #{full_email}"
-      (full_email = %Q{#{first_name} #{last_name}#{birth_suffix} <#{email}>})[(max_length / 2) - 2 .. (-max_length / 2)]
+      (full_email = %Q{#{first_name} #{last_name}#{birth_suffix} <#{email}>})[(max_length / 2) - 2..(-max_length / 2)]
     end
     full_email
   end
@@ -172,7 +172,7 @@ class Member < ActiveRecord::Base
   def gmaps4rails_infowindow
     html = ''
     html << "<img src='/members/thumbnail/#{id}.#{image.format}' width='128' style='float: left; margin-right: 1em'>" if image?
-    html<< name
+    html << name
     html
   end
 
@@ -250,7 +250,7 @@ class Member < ActiveRecord::Base
             (r.group.from_age..r.group.to_age).include?(age) &&
             (age.nil? || age >= r.minimum_age)
       }
-      next_rank ||= ranks.find{|r| r.position > current_rank.position}
+      next_rank ||= ranks.find { |r| r.position > current_rank.position }
     end
     next_rank ||= ranks.find { |r|
       !future_ranks(graduation.held_on, ma).include?(r) &&
@@ -299,13 +299,13 @@ class Member < ActiveRecord::Base
     start_date = date - 92
     end_date = date + 31
     if date == Date.today && recent_attendances.loaded?
-      set = recent_attendances.select{|a| Attendance::PRESENT_STATES.include? a.status }
-      set = set.select{|a| a.group_schedule.group_id == group.id} if group
+      set = recent_attendances.select { |a| Attendance::PRESENT_STATES.include? a.status }
+      set = set.select { |a| a.group_schedule.group_id == group.id } if group
       set.empty?
     elsif attendances.loaded?
-      set = attendances.select{|a| Attendance::PRESENT_STATES.include? a.status }
-      set = set.select{|a| a.group_schedule.group_id == group.id} if group
-      set = set.select{|a| a.date > start_date && a.date <= end_date }
+      set = attendances.select { |a| Attendance::PRESENT_STATES.include? a.status }
+      set = set.select { |a| a.group_schedule.group_id == group.id } if group
+      set = set.select { |a| a.date > start_date && a.date <= end_date }
       set.empty?
     else
       query = attendances.where('attendances.status IN (?)', Attendance::PRESENCE_STATES)

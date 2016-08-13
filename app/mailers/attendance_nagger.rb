@@ -30,7 +30,7 @@ class AttendanceNagger
         .order('groups.from_age', 'groups.to_age')
     group_schedules.each do |gs|
       attendances = Attendance.includes(:member, :practice => :group_schedule).
-          where(:practices => {:group_schedule_id => gs.id, :year => now.year, :week => now.to_date.cweek}).to_a
+          where(:practices => { :group_schedule_id => gs.id, :year => now.year, :week => now.to_date.cweek }).to_a
       next if attendances.empty?
       practice = attendances[0].practice
       non_attendees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:member)
@@ -79,7 +79,7 @@ class AttendanceNagger
       new_attendees = new_attendances & attendees
       new_absentees = new_attendances & absentees
       uwe = Member.find_by_first_name_and_last_name('Uwe', 'Kubosch')
-      recipients = gs.group.members.select { |m| !m.passive? } - absentees
+      recipients = gs.group.members.order(:joined_on).select { |m| !m.passive? } - absentees
       recipients.each do |recipient|
         if recipient != uwe
           next if new_attendances.empty?

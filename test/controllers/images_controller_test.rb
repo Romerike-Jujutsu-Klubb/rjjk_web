@@ -42,7 +42,7 @@ class ImagesControllerTest < ActionController::TestCase
 
     num_images = Image.count(:all)
 
-    post :create, image: {name: 'new file', content_type: 'image/png', content_data: 'qwerty'}
+    post :create, image: { name: 'new file', content_type: 'image/png', content_data: 'qwerty' }
 
     assert_response :redirect
     assert_redirected_to action: :gallery, id: assigns(:image).id
@@ -61,7 +61,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_update
-    post :update, id: @first_id, image: {approved: true}
+    post :update, id: @first_id, image: { approved: true }
     assert_response :redirect
     assert_redirected_to action: :edit, id: @first_id
   end
@@ -86,7 +86,7 @@ class ImagesControllerTest < ActionController::TestCase
     assert_response :success
     assert_template 'gallery'
 
-    #assert_not_nil assigns(:image)
+    # assert_not_nil assigns(:image)
     assert_not_nil assigns(:images)
   end
 

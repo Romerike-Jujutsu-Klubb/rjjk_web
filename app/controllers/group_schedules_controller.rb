@@ -3,7 +3,7 @@ class GroupSchedulesController < ApplicationController
 
   def index
     @group_schedules = GroupSchedule.all.to_a.
-        select {|gs| gs.group.active?}.
+        select { |gs| gs.group.active? }.
         sort_by { |gs| [gs.weekday == 0 ? 7 : gs.weekday, gs.start_at, gs.end_at, gs.group.from_age] }
     respond_to do |format|
       format.html # index.html.erb

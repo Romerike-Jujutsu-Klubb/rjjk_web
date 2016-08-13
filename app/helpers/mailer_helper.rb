@@ -1,7 +1,7 @@
 module MailerHelper
   include ApplicationHelper
 
-  def rjjk_prefix(subject=nil)
+  def rjjk_prefix(subject = nil)
     "[RJJK]#{"[#{Rails.env.upcase}]" unless Rails.env.production?} #{subject}".strip
   end
 

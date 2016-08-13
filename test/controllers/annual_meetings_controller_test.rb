@@ -19,7 +19,7 @@ class AnnualMeetingsControllerTest < ActionController::TestCase
 
   test 'should create annual_meeting' do
     assert_difference('AnnualMeeting.count') do
-      post :create, annual_meeting: {invitation_sent_at: @annual_meeting.invitation_sent_at, public_record_updated_at: @annual_meeting.public_record_updated_at, start_at: @annual_meeting.start_at}
+      post :create, annual_meeting: { invitation_sent_at: @annual_meeting.invitation_sent_at, public_record_updated_at: @annual_meeting.public_record_updated_at, start_at: @annual_meeting.start_at }
     end
 
     assert_redirected_to annual_meeting_path(assigns(:annual_meeting))

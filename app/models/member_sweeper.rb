@@ -1,20 +1,20 @@
 class MemberSweeper < ActionController::Caching::Sweeper
   observe :member
-  
+
   def after_create(member)
     expire_image(member)
   end
-  
+
   def after_update(member)
     expire_image(member)
   end
-  
+
   def after_destroy(member)
     expire_image(member)
   end
-  
+
   private
-  
+
   def expire_image(member)
     if member.image
       ActionController::Base.expire_page(Rails.application.routes.url_for(only_path: true, controller: 'members', action: 'image',     id: member.id, format: member.image.format))
@@ -25,5 +25,5 @@ class MemberSweeper < ActionController::Caching::Sweeper
     Rails.logger.info("Expire cached files: #{cached_files}")
     FileUtils.rm_f(cached_files) rescue Errno::ENOENT
   end
-  
+
 end

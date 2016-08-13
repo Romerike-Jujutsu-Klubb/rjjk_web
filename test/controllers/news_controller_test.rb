@@ -43,7 +43,7 @@ class NewsControllerTest < ActionController::TestCase
     num_news_items = NewsItem.count
 
     login(:admin)
-    post :create, news_item: {title: 'another news item'}
+    post :create, news_item: { title: 'another news item' }
 
     assert_response :redirect
     assert_redirected_to action: 'list'

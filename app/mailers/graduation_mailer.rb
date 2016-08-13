@@ -11,7 +11,7 @@ class GraduationMailer < ActionMailer::Base
 
     @email_url = with_login(@instructor.user,
         controller: :graduations, action: :new,
-        graduation: {group_id: @group.id, held_on: suggested_date})
+        graduation: { group_id: @group.id, held_on: suggested_date })
     mail subject: rjjk_prefix(@title), to: safe_email(@instructor)
   end
 

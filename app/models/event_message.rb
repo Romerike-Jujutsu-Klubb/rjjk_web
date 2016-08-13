@@ -10,5 +10,5 @@ class EventMessage < ActiveRecord::Base
 
   validates_presence_of :body, :event_id, :message_type, :subject
   validates_uniqueness_of :event_id, :scope => :message_type,
-                          :if => proc{|mt| mt.message_type == MessageType::INVITATION}
+                          :if => proc { |mt| mt.message_type == MessageType::INVITATION }
 end

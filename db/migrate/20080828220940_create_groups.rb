@@ -5,13 +5,13 @@ class CreateGroups < ActiveRecord::Migration
       t.string :name, :null => false
       t.integer :from_age, :null => false
       t.integer :to_age, :null => false
-      
+
       t.timestamps
     end
     create_table :groups_members, :id => false do |t|
       t.integer :group_id, :null => false
       t.integer :member_id, :null => false
-      
+
       t.timestamps
     end
     keiwaryu = MartialArt.find_by_name('Kei Wa Ryu')
@@ -36,7 +36,7 @@ class CreateGroups < ActiveRecord::Migration
     remove_column :cms_members, :senior
     remove_column :members, :senior
   end
-  
+
   def self.down
     add_column :members, :senior, :boolean
     add_column :cms_members, :senior, :boolean
@@ -50,7 +50,7 @@ class CreateGroups < ActiveRecord::Migration
     drop_table :groups
   end
 
-  class Group < ActiveRecord::Base ; end
-  class MartialArt < ActiveRecord::Base ; end
-  class Member < ActiveRecord::Base ; end
+  class Group < ActiveRecord::Base; end
+  class MartialArt < ActiveRecord::Base; end
+  class Member < ActiveRecord::Base; end
 end

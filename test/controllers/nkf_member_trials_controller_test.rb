@@ -41,7 +41,7 @@ class NkfMemberTrialsControllerTest < ActionController::TestCase
   end
 
   test 'should update nkf_member_trial' do
-    put :update, :id => nkf_member_trials(:one).to_param, :nkf_member_trial => { }
+    put :update, :id => nkf_member_trials(:one).to_param, :nkf_member_trial => {}
     assert_no_errors :nkf_member_trial
     assert_redirected_to nkf_member_trial_path(assigns(:nkf_member_trial))
   end

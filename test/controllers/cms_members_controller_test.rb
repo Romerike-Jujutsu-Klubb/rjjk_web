@@ -39,7 +39,7 @@ class CmsMembersControllerTest < ActionController::TestCase
   end
 
   def test_should_update_cms_member
-    put :update, :id => cms_members(:one).id, :cms_member => { }
+    put :update, :id => cms_members(:one).id, :cms_member => {}
     assert_no_errors :cms_member
     assert_redirected_to cms_member_path(assigns(:cms_member))
   end

@@ -12,7 +12,7 @@ class UserMessage < ActiveRecord::Base
   end
   validates_length_of :subject, maximum: 160, :allow_blank => false
   validates_length_of :key, maximum: 64, :allow_blank => false
-  validates :tag, length: {maximum: 64}
+  validates :tag, length: { maximum: 64 }
 
   def to
     user.emails

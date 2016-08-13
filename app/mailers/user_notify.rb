@@ -2,7 +2,7 @@ class UserNotify < ActionMailer::Base
   layout 'email'
   default from: UserSystem::CONFIG[:email_from].to_s
 
-  def signup(user, password, url=nil)
+  def signup(user, password, url = nil)
     setup_email(user)
 
     @subject += "Velkommen til #{UserSystem::CONFIG[:app_name]}!"
@@ -26,7 +26,7 @@ class UserNotify < ActionMailer::Base
     send_email
   end
 
-  def forgot_password(user, url=nil)
+  def forgot_password(user, url = nil)
     setup_email(user)
 
     @title = 'Glemt passord'
@@ -40,7 +40,7 @@ class UserNotify < ActionMailer::Base
     send_email
   end
 
-  def change_password(user, password, url=nil)
+  def change_password(user, password, url = nil)
     setup_email(user)
 
     @subject += 'Passordbytte'

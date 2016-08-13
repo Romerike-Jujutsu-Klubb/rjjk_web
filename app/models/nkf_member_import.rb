@@ -240,7 +240,7 @@ class NkfMemberImport
         logger.debug "Found changes: #{c.inspect}"
         if record.save
           logger.debug "Found changes: #{c.inspect}"
-          (was_new_record ? @new_records : @changes) << {:record => record, :changes => c}
+          (was_new_record ? @new_records : @changes) << { :record => record, :changes => c }
         else
           logger.error "ERROR: #{record.errors.to_a.join(', ')}"
           @error_records << record
@@ -299,7 +299,7 @@ class NkfMemberImport
       if record.changed?
         c = record.changes
         if record.save
-          @trial_changes << {record: record, changes: c}
+          @trial_changes << { record: record, changes: c }
         else
           logger.error "ERROR: #{columns}"
           logger.error "ERROR: #{row}"
@@ -357,7 +357,7 @@ class NkfMemberImport
 
   def cookie_header
     return {} if @cookies.empty?
-    {'Cookie' => @cookies.join(';')}
+    { 'Cookie' => @cookies.join(';') }
   end
 
   def http_get(url_string, binary = false)
@@ -394,7 +394,7 @@ class NkfMemberImport
 
   def http_get_response(url, binary, retries = 0)
     Net::HTTP.start(url.host, url.port) do |http|
-      response = http.get(url.request_uri, cookie_header.update(binary ? {'Content-Type' => 'application/octet-stream'} : {}))
+      response = http.get(url.request_uri, cookie_header.update(binary ? { 'Content-Type' => 'application/octet-stream' } : {}))
       body = response.body
       content_length = response['content-length'].to_i
       if content_length > 0 && body.size != content_length

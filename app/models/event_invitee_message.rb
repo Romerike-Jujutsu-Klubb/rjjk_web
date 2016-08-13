@@ -8,7 +8,7 @@ class EventInviteeMessage < ActiveRecord::Base
 
   validates_presence_of :body, :event_invitee, :event_invitee_id, :message_type, :subject
   validates_uniqueness_of :event_invitee_id, :scope => :message_type,
-                          :if => proc{|eim| eim.message_type == EventMessage::MessageType::INVITATION}
+                          :if => proc { |eim| eim.message_type == EventMessage::MessageType::INVITATION }
   validates_uniqueness_of :event_invitee_id, :scope => :event_message_id, :if => :event_message_id
 
   def initialize(*args)

@@ -10,8 +10,8 @@ class Embu < ActiveRecord::Base
 
   def image=(file)
     return if file == ''
-    #content = file.read.force_encoding("ASCII-8BIT")
-    #if existing_image = Image.find_by_content_data(content)
+    # content = file.read.force_encoding("ASCII-8BIT")
+    # if existing_image = Image.find_by_content_data(content)
     #  if existing_embu_image = EmbuImage.find_by_embu_id_and_image_id(id, existing_image.id)
     #    logger.info "Embu image already exists"
     #    return existing_embu_image
@@ -19,8 +19,8 @@ class Embu < ActiveRecord::Base
     #    logger.info "Image already exists.  Creating EmbuImage."
     #    return EmbuImage.create! :embu_id => id, :image_id => existing_image.id
     #  end
-    #end
-    #images.create :name => file.original_filename, :content_data => content, :content_type => file.content_type
+    # end
+    # images.create :name => file.original_filename, :content_data => content, :content_type => file.content_type
     images.create :file => file
   end
 
