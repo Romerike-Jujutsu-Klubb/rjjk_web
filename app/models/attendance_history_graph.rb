@@ -6,16 +6,10 @@ class AttendanceHistoryGraph
     g.title_font_size = 18
     g.legend_font_size = 14
     g.marker_font_size = 14
-    # g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
-    # g.legend_font_size = 14
     g.hide_dots = true
     g.colors = %w{blue orange black green}
-    # g.y_axis_label = 'Oppmøte'
-    # g.x_axis_label = 'År / Måned'
     g.x_axis_label = ''
     g.y_axis_increment = 5
-    # first_date = self.class.order(:joined_on).first.joined_on
-    # first_date = 5.years.ago.to_date
     first_date = Date.civil(2010, 8, 01)
     weeks = []
     Date.today.step(first_date, -28) { |date| weeks << [date.cwyear, date.cweek] }
@@ -38,13 +32,8 @@ class AttendanceHistoryGraph
           totals[i] = totals[i].to_i + values[i] if values[i]
           totals_sessions[i] += session
         end
-        # g.maximum_value = [g.maximum_value, values.compact.max].max
       end
     end
-
-    # averages = totals.each_with_index.map{|t, i| totals_sessions[i] > 0 ? t / totals_sessions[i] : nil}
-    # g.data("Gjennomsnitt", averages)
-    # g.data("Totalt", totals)
 
     g.minimum_value = 0
 
@@ -62,11 +51,6 @@ class AttendanceHistoryGraph
     end
     g.labels = labels
 
-    # g.draw_vertical_legend
-
-    # g.maximum_value ||= 0
-    # g.maximum_value = g.maximum_value + 10 - g.maximum_value % 10
-    # g.marker_count = g.maximum_value / 5
     g.to_blob
   end
 
@@ -78,7 +62,6 @@ class AttendanceHistoryGraph
     g.legend_font_size = 14
     g.marker_font_size = 14
     g.colors = %w{blue orange black green}
-    # g.y_axis_label = 'Oppmøte'
     g.x_axis_label = 'Dag'
     first_date = Date.civil(year, month, 1)
     last_date = Date.civil(year, month, -1)

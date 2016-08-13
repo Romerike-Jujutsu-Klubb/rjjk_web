@@ -32,7 +32,7 @@ class ApproxTime
   end
 
   def ==(o)
-    return false if @time.nil? or o.nil?
+    return false if @time.nil? || o.nil?
     (@time - o).abs < @acceptable_delta
   end
 end

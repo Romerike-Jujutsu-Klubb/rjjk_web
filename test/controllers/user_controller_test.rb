@@ -233,7 +233,7 @@ class UserControllerTest < ActionController::TestCase
   end
 
   def assert_contains(target, container)
-    assert !container.nil?, %Q( Failed to find "#{target}" in nil String )
+    assert !container.nil?, %( Failed to find "#{target}" in nil String )
     assert container.include?(target), "#{container.inspect} does not contain #{target.inspect}"
   end
 end

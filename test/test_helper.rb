@@ -69,7 +69,7 @@ class ActionMailer::TestCase
     if block
       assert_equal initial, Mail::TestMailer.deliveries.size,
           -> { "Unexpected mail deliveries before block:\n#{Mail::TestMailer.deliveries}\n#{Mail::TestMailer.deliveries(&:body).join("\n")}\n" }
-      block.call
+      yield
     end
     assert_equal initial + count, Mail::TestMailer.deliveries.size,
         -> { Mail::TestMailer.deliveries.to_s }
@@ -79,7 +79,7 @@ class ActionMailer::TestCase
     if block
       assert_equal initial, UserMessage.pending.count,
           -> { "Unexpected user messages before block:\n#{UserMessage.pending}\n#{UserMessage.pending.map(&:body).join("\n")}\n" }
-      block.call
+      yield
     end
     assert_equal initial + count, UserMessage.pending.count,
         -> { UserMessage.all.map(&:inspect).to_s }

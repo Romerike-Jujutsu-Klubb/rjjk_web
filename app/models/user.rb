@@ -93,11 +93,11 @@ class User < ActiveRecord::Base
   end
 
   def token_expired?
-    self.security_token and self.token_expiry and (Time.now >= self.token_expiry)
+    self.security_token && self.token_expiry && (Time.now >= self.token_expiry)
   end
 
   def generate_security_token(duration = :short)
-    if self.security_token.nil? or self.token_expiry.nil? or token_stale?(duration)
+    if self.security_token.nil? || self.token_expiry.nil? || token_stale?(duration)
       new_security_token(duration)
     else
       security_token

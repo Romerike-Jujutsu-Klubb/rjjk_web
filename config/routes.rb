@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get 'members/search'
   get 'members/:action/:id(/:percentage/:step/:interval).:format' => 'members'
   get 'mitt/oppmote' => 'attendances#plan', as: :attendance_plan
-  get 'attendances/plan' # må være etter mitt/oppmote
+  get 'attendances/plan' # mmust be after mitt/oppmote
   post 'attendances/announce(/:year/:week/:group_schedule_id)/:status(/:member_id)' =>
           'attendances#announce'
   get 'news/list'

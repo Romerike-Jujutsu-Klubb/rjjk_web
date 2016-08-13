@@ -87,7 +87,7 @@ class Member < ActiveRecord::Base
   validates_inclusion_of :payment_problem, :in => [true, false]
   # validates_presence_of :postal_code
   validates_length_of :postal_code, is: 4, allow_blank: true
-  validates_uniqueness_of :rfid, :if => Proc.new { |r| r.rfid and not r.rfid.empty? }
+  validates_uniqueness_of :rfid, :if => Proc.new { |r| r.rfid && (not r.rfid.empty?) }
   validates_presence_of :user, :user_id, unless: :left_on
 
   def self.paginate_active(page)
@@ -139,13 +139,13 @@ class Member < ActiveRecord::Base
 
   def self.make_usable_full_email(email, first_name, last_name, birthdate = nil)
     birth_suffix = (" (#{birthdate})" if birthdate)
-    full_email = %Q{"#{first_name} #{last_name}#{birth_suffix}" <#{email}>}
+    full_email = %{"#{first_name} #{last_name}#{birth_suffix}" <#{email}>}
     max_length = 64
 
     # First and last names only
     if full_email.size > max_length
       logger.debug "Full email too long: #{full_email}"
-      full_email = %Q{"#{first_name.split(/\s+/).first} #{last_name.split(/\s+/).last}#{birth_suffix}" <#{email}>}
+      full_email = %{"#{first_name.split(/\s+/).first} #{last_name.split(/\s+/).last}#{birth_suffix}" <#{email}>}
     end
 
     # Squeezed name and full email
@@ -153,13 +153,13 @@ class Member < ActiveRecord::Base
       logger.debug "Full email too long: #{full_email}"
       max_name_size = max_length - email.size - 5
       (cut_name = "#{first_name} #{last_name}#{birth_suffix}")[(max_name_size / 2) - 2..(-max_name_size / 2)]
-      full_email = %Q{"#{cut_name}" <#{email}>}
+      full_email = %{"#{cut_name}" <#{email}>}
     end
 
     # Fallback to non-valid email...
     if full_email.size > max_length
       logger.debug "Full email too long: #{full_email}"
-      (full_email = %Q{#{first_name} #{last_name}#{birth_suffix} <#{email}>})[(max_length / 2) - 2..(-max_length / 2)]
+      (full_email = %{#{first_name} #{last_name}#{birth_suffix} <#{email}>})[(max_length / 2) - 2..(-max_length / 2)]
     end
     full_email
   end
@@ -233,7 +233,7 @@ class Member < ActiveRecord::Base
       next_rank = ranks.find { |r|
         !future_ranks(graduation.held_on, ma).include?(r) &&
             r.position > current_rank.position &&
-            (r.group.from_age..r.group.to_age).include?(age) &&
+            (r.group.from_age..r.group.to_age).cover?(age) &&
             (age.nil? || age >= r.minimum_age) &&
             attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
       }
@@ -247,14 +247,14 @@ class Member < ActiveRecord::Base
       next_rank ||= ranks.find { |r|
         !future_ranks(graduation.held_on, ma).include?(r) &&
             r.position > current_rank.position &&
-            (r.group.from_age..r.group.to_age).include?(age) &&
+            (r.group.from_age..r.group.to_age).cover?(age) &&
             (age.nil? || age >= r.minimum_age)
       }
       next_rank ||= ranks.find { |r| r.position > current_rank.position }
     end
     next_rank ||= ranks.find { |r|
       !future_ranks(graduation.held_on, ma).include?(r) &&
-          (r.group.from_age..r.group.to_age).include?(age) &&
+          (r.group.from_age..r.group.to_age).cover?(age) &&
           (age.nil? || age >= r.minimum_age) &&
           attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
     }
@@ -263,7 +263,7 @@ class Member < ActiveRecord::Base
           (age.nil? || age >= r.minimum_age) &&
           attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
     }
-    next_rank ||= ranks.find { |r| age.nil? || (age >= r.minimum_age && (r.group.from_age..r.group.to_age).include?(age)) }
+    next_rank ||= ranks.find { |r| age.nil? || (age >= r.minimum_age && (r.group.from_age..r.group.to_age).cover?(age)) }
     next_rank ||= ranks.first
     next_rank
   end
@@ -401,12 +401,12 @@ class Member < ActiveRecord::Base
 
   def emails
     emails = []
-    emails << %Q{"#{name}" <#{email}>} if email
+    emails << %{"#{name}" <#{email}>} if email
     if billing_email
-      emails << (parent_name ? %Q{"#{parent_name}" <#{billing_email}>} : billing_email)
+      emails << (parent_name ? %{"#{parent_name}" <#{billing_email}>} : billing_email)
     end
     if parent_email
-      emails << (parent_2_name ? %Q{"#{parent_2_name}" <#{parent_email}>} : parent_email)
+      emails << (parent_2_name ? %{"#{parent_2_name}" <#{parent_email}>} : parent_email)
     end
     emails.uniq
   end

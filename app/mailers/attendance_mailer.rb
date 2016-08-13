@@ -18,7 +18,7 @@ class AttendanceMailer < ActionMailer::Base
     @title = "Tema for morgendagens trening for #{practice.group_schedule.group.name}"
     @timestamp = @practice.date
     @email_url = with_login(instructor.user, controller: :practices, action: :edit, id: practice.id)
-    mail to: Rails.env == 'production' ? @instructor.email : %Q{"#{@instructor.name}" <uwe@kubosch.no>},
+    mail to: Rails.env == 'production' ? @instructor.email : %{"#{@instructor.name}" <uwe@kubosch.no>},
          subject: rjjk_prefix(@title)
   end
 

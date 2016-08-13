@@ -18,7 +18,7 @@ class EventInviteeMessage < ActiveRecord::Base
       self.body ||= event_invitee.event.description.gsub(/<br \/>/, "\n").gsub(/<p>(.*?)<\/p>/m, "\\1\n").gsub(/<a .*?>(.*?)<\/a>/, "\\1").html_safe
     elsif message_type == MessageType::SIGNUP_CONFIRMATION
       self.subject ||= "Bekreftelse av påmelding #{event_invitee.event.name}"
-      self.body ||= %Q{Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
+      self.body ||= %{Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
 og kan bekrefte at du har fått plass.
 
 Deltakeravgiften på kr 800,- kan betales til konto 7035.05.37706.
@@ -33,7 +33,7 @@ Romerike Jujutsu Klubb
 }
       elsif message_type == MessageType::SIGNUP_REJECTION
         self.subject ||= "Påmelding til #{event_invitee.event.name}"
-        self.body ||= %Q{Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
+        self.body ||= %{Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
 men må dessverre meddele at du ikke har fått plass pga. plassmangel.
 
 Vi har din kontaktinfo og vil ta kontakt hvis det skulle bli ledig plass.

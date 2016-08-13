@@ -99,7 +99,7 @@ class MemberHistoryGraph
   end
 
   def self.was_senior?(date)
-    birthdate.nil? or ((date - birthdate) / 365) > JUNIOR_AGE_LIMIT
+    birthdate.nil? || ((date - birthdate) / 365) > JUNIOR_AGE_LIMIT
   end
 
   def self.senior_birthdate(date)

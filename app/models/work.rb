@@ -16,7 +16,7 @@ module Work
   end
 
   def start
-    @workers = @n_threads.times.map { Thread.new { process_jobs } }
+    @workers = Array.new(@n_threads) { Thread.new { process_jobs } }
   end
 
   def process_jobs

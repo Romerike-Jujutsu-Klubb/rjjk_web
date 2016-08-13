@@ -108,7 +108,7 @@ class NkfMemberImport
   def in_parallel(values)
     queue = Queue.new
     values.each { |value| queue << value }
-    threads = CONCURRENT_REQUESTS.times.map do |i|
+    threads = CONCURRENT_REQUESTS.times.map do
       Thread.start do
         begin
           loop { yield queue.pop(true) }
@@ -278,14 +278,15 @@ class NkfMemberImport
         if row[i] =~ /^(\d\d)\.(\d\d)\.(\d{4})$/
           row[i] = "#$3-#$2-#$1"
         elsif column == 'res_sms'
-          row[i] = case row[i]
-          when 'J'
-            true
-          when 'N'
-            false
-          else
-            raise "Unknown boolean value for res_sms: #{row[i].inspect}"
-          end
+          row[i] =
+              case row[i]
+              when 'J'
+                true
+              when 'N'
+                false
+              else
+                raise "Unknown boolean value for res_sms: #{row[i].inspect}"
+              end
         end
         attributes[column] = row[i]
       end
@@ -312,7 +313,7 @@ class NkfMemberImport
   end
 
   def field2column(field_name)
-    field_name.gsub('ø', 'o').gsub('Ø', 'O').gsub('å', 'a').gsub('Å', 'A').gsub(/[ -.\/]/, '_').downcase
+    field_name.tr('ø', 'o').tr('Ø', 'O').tr('å', 'a').tr('Å', 'A').gsub(/[ -.\/]/, '_').downcase
   end
 
   def login

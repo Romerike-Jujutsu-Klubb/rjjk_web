@@ -95,7 +95,7 @@ class UserController < ApplicationController
   end
 
   def forgot_password
-    if authenticated_user? and not admin?
+    if authenticated_user? && (not admin?)
       flash['message'] = 'Du er nå logget på. Du kan nå endre passordet ditt.'
       redirect_to :action => 'change_password'
       return

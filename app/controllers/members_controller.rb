@@ -192,11 +192,12 @@ class MembersController < ApplicationController
   end
 
   def export_emails
-    content_type = if request.user_agent =~ /windows/i
-      'application/vnd.ms-excel'
-    else
-      'text/csv'
-    end
+    content_type =
+        if request.user_agent =~ /windows/i
+          'application/vnd.ms-excel'
+        else
+          'text/csv'
+        end
 
     CSV::Writer.generate(output = '') do |csv|
       @Params.all.each do |param|

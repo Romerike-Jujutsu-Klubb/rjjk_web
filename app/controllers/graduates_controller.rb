@@ -81,7 +81,7 @@ class GraduatesController < ApplicationController
     @graduate.destroy
     respond_to do |format|
       format.html { redirect_to action: :index }
-      format.js { render js: %Q{$("#graduate_#{@graduate.id}").remove()} }
+      format.js { render js: %{$("#graduate_#{@graduate.id}").remove()} }
     end
   end
 end

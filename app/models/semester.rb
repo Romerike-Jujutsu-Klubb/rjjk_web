@@ -35,7 +35,7 @@ class Semester < ActiveRecord::Base
   end
 
   def current?
-    (start_on..end_on).include? Date.today
+    (start_on..end_on).cover? Date.today
   end
 
   def future?
