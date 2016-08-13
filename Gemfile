@@ -36,7 +36,7 @@ gem 'gmaps4rails', '<2.0.0' # TODO(uwe): switch to https://rubygems.org/gems/geo
 gem 'gruff'
 gem 'jbuilder'
 gem 'jquery-rails'
-gem 'jquery-turbolinks'
+# gem 'jquery-turbolinks'
 gem 'kramdown'
 gem 'mechanize', '!=2.7.4'
 gem 'momentjs-rails'

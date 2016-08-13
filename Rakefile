@@ -7,6 +7,8 @@ Rails::TestTask.new('test:features' => 'test:prepare') do |t|
 end
 Rake::Task['test:run'].enhance ['test:features']
 
-require 'rubocop/rake_task'
-RuboCop::RakeTask.new
-Rake::Task[:test].enhance(['rubocop:auto_correct'])
+if Rails.env.test?
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new
+  Rake::Task[:test].enhance(['rubocop:auto_correct'])
+end

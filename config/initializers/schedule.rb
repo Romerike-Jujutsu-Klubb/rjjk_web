@@ -21,7 +21,8 @@ if Rails.env.development? || Rails.env.beta? || Rails.env.production?
   scheduler.cron('5 8-23 * * *') { AttendanceNagger.send_attendance_changes }
   scheduler.cron('8/15 * * * *') { AttendanceNagger.send_attendance_review }
   scheduler.cron('9 9-23 * * *') { EventNotifier.send_event_messages }
-  scheduler.every(10.seconds) { UserMessageSender.send }
+  # Delay 1 minute to avoid noise during asset compilation
+  scheduler.every(10.seconds, first_in: 1.minute) { UserMessageSender.send }
 
   # TODO(uwe): Limit messages to once per week: news, survey, info
   # TODO(uwe): Email board meeting minutes

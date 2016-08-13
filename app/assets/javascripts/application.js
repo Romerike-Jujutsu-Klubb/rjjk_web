@@ -1,5 +1,5 @@
 //= require jquery
-//= require jquery.turbolinks
+// require jquery.turbolinks
 //= require jquery_ujs
 // require turbolinks
 //= require tinymce-jquery
