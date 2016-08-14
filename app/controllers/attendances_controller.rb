@@ -140,7 +140,7 @@ class AttendancesController < ApplicationController
     year = params[:year].to_i
     week = params[:week].to_i
     gs_id = params[:group_schedule_id]
-    if year > 0 && week > 0 && gs_id
+    if year.positive? && week.positive? && gs_id
       practice = Practice.where(group_schedule_id: gs_id,
           year: year, week: week).first_or_create!
     else
@@ -229,7 +229,7 @@ class AttendancesController < ApplicationController
     group_schedule_id = params[:group_schedule_id]
     year = params[:year].to_i
     week = params[:week].to_i
-    unless year > 0 && week > 0 && group_schedule_id
+    unless year.positive? && week.positive? && group_schedule_id
       redirect_to({ action: :plan }, notice: 'Year and week is required')
       return
     end

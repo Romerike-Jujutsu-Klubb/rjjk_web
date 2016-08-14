@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'capybara_setup'
 
 class InstructionTest < ActionDispatch::IntegrationTest
   def test_index

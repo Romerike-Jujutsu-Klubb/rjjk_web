@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'capybara_setup'
 
 class AttendanceFormTest < ActionDispatch::IntegrationTest
   def test_index
@@ -21,6 +21,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
     visit_with_login '/attendances/form_index'
     select('Oktober 2013', from: 'group_name_Panda')
     assert_current_path "/attendances/form/2013/10/#{groups(:panda).id}"
+    assert has_css? 'tr td:first-child'
     assert_equal ['Uwe Kubosch',
             'Totalt 1',
             'Lars Bråten',

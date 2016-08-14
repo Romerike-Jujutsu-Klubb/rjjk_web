@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+started_at = Time.now
+
 ENV['RAILS_ENV'] = 'email'
 
 # FIXME(uwe): Why this setup?!  Remove observers!
@@ -92,5 +94,7 @@ if rest_recipients.any?
   mail.delivery_method :sendmail
   mail.deliver
 end
+
+Rails.logger.info "Finished after #{Time.now - started_at}s"
 
 exit 0

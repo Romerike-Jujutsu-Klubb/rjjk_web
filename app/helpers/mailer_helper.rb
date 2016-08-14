@@ -9,7 +9,7 @@ module MailerHelper
     if Rails.env.production?
       member.emails
     else
-      %(#{member.name} <uwe@kubosch.no>)
+      %("#{member.name}" <uwe@kubosch.no>)
     end
   end
 end
