@@ -25,7 +25,7 @@ class InfoController < ApplicationController
         redirect_to page, status: :moved_permanently
         return
       end
-    rescue ArgumentError
+    rescue ArgumentError # rubocop: disable Lint/HandleExceptions
     end
     raise ActiveRecord::RecordNotFound
   end

@@ -10,7 +10,7 @@ class NkfMemberImportTest < ActionMailer::TestCase
     assert_match(/^\[RJJK\]\[TEST\] Hentet \d{3} endringer fra NKF$/,
         mail.subject)
     assert_equal 'uwe@kubosch.no', mail.header[:to].value
-    assert_equal 'test@jujutsu.no', mail.header[:from].value
+    assert_equal 'noreply@test.jujutsu.no', mail.header[:from].value
     assert_match "NKF Import\n\nEndringer fra NKF-portalen.\n", mail.body.decoded
     assert_match(/\b\d{3} medlemmer opprettet\n\n/, mail.body.decoded)
     assert_match "Endringer prøvetid:\n", mail.body.decoded
@@ -20,14 +20,14 @@ class NkfMemberImportTest < ActionMailer::TestCase
     assert_match(/\[RJJK\]\[TEST\] Oppdateringer fra NKF: \d{3} nye, \d{3} gruppeendringer/,
         mail.subject)
     assert_equal 'uwe@kubosch.no', mail.header[:to].value
-    assert_equal 'test@jujutsu.no', mail.header[:from].value
+    assert_equal 'noreply@test.jujutsu.no', mail.header[:from].value
     assert_match "Opprettet følgende nye medlemmer:\r\n\r\n    Abdorahman Lutf Muhammad\r\n",
         mail.body.encoded
 
     mail = ActionMailer::Base.deliveries[2]
     assert_equal '[RJJK][TEST] Verv fra NKF: 7', mail.subject
     assert_equal 'uwe@kubosch.no', mail.header[:to].value
-    assert_equal 'test@jujutsu.no', mail.header[:from].value
+    assert_equal 'noreply@test.jujutsu.no', mail.header[:from].value
     assert_match '<h3>Verv registrert i NKF registeret</h3>', mail.body.decoded
     assert_match %r{<td>Uwe Kubosch</td>\s*<td>Hovedinstruktør</td>\s*<td>2013-01-01</td>\s*<td></td>},
         mail.body.decoded

@@ -84,9 +84,7 @@ if prod_recipients.any?
   create_record('production', from, prod_recipients, content)
 end
 
-if beta_recipients.any?
-  create_record('beta', from, beta_recipients, content)
-end
+create_record('beta', from, beta_recipients, content) if beta_recipients.any?
 
 if rest_recipients.any?
   require 'bundler/setup'

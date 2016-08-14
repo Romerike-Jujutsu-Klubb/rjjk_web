@@ -8,7 +8,7 @@ class InformationPageNotifierTest < ActionMailer::TestCase
     mail = UserMessage.pending[0]
     assert_equal '[RJJK][TEST] Oppdatering av informasjonssider', mail.subject
     assert_equal ["\"Uwe Kubosch\" <admin@test.com>"], mail.to
-    assert_equal %w(test@jujutsu.no), mail.from
+    assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_match 'Føgende sider trengs å sees over:', mail.body
     assert_match 'My second article', mail.body
     assert_match 'Se over at innholdet er OK, og huk av på "Revidert" før du lagrer.', mail.body
