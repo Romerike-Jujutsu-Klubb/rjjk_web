@@ -67,10 +67,10 @@ class UserControllerTest < ActionController::TestCase
 
     mail = UserMessage.pending[0]
     assert_equal ["\"newuser\" <newemail@example.com>"], mail.to
-    assert_match /Brukernavn:\s+\w+\n/, mail.body
-    assert_match /Passord\s*:\s+\w+\n/, mail.body
+    assert_match(/Brukernavn:\s+\w+\n/, mail.body)
+    assert_match(/Passord\s*:\s+\w+\n/, mail.body)
     user = User.find_by_email('newemail@example.com')
-    assert_match /key=#{user.security_token}/, mail.body
+    assert_match(/key=#{user.security_token}/, mail.body)
     assert !user.verified
   end
 
@@ -180,7 +180,7 @@ class UserControllerTest < ActionController::TestCase
   def test_forgot_password__requires_valid_email_address
     post :forgot_password, :user => { :email => '' }
     assert_equal 0, UserMessage.pending.size
-    assert_match /Skriv inn en gyldig e-postadresse./, @response.body
+    assert_match(/Skriv inn en gyldig e-postadresse./, @response.body)
   end
 
   def test_forgot_password__ignores_unknown_email_address

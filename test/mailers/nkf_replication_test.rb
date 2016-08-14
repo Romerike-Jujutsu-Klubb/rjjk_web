@@ -15,7 +15,7 @@ class NkfReplicationTest < ActionMailer::TestCase
     assert_equal '[RJJK][TEST] Hentet 1 endringer fra NKF', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_match /NKF Import\s+Endringer fra NKF-portalen.\s+/, mail.body.encoded
+    assert_match(/NKF Import\s+Endringer fra NKF-portalen.\s+/, mail.body.encoded)
   end
 
   test 'update_members' do
@@ -28,6 +28,7 @@ class NkfReplicationTest < ActionMailer::TestCase
     assert_equal '[RJJK][TEST] Oppdateringer fra NKF: 1 nye, 1 endrede, 1 gruppeendringer', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_match /Opprettet følgende nye medlemmer:\s+Erik Hansen\s+Oppdaterte følgende eksisterende medlemmer:\s+Erik Hansen\s+first_name: "H" => "a"\s+Gruppemedlemskap:\s+hhh dfgfg\s+Lagt til: hhgf\s+Fjernet : abc/, mail.body.encoded
+    assert_match(/Opprettet følgende nye medlemmer:\s+Erik Hansen\s+Oppdaterte følgende eksisterende medlemmer:\s+Erik Hansen\s+first_name: "H" => "a"\s+Gruppemedlemskap:\s+hhh dfgfg\s+Lagt til: hhgf\s+Fjernet : abc/,
+        mail.body.encoded)
   end
 end

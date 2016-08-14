@@ -16,6 +16,6 @@
 # end
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.plural /^(embu)$/i, '\1s'
-  inflect.singular /^(embu)s/i, '\1'
+  inflect.plural(/^(embu)$/i, '\1s')
+  inflect.singular(/^(embu)s/i, '\1')
 end

@@ -13,9 +13,9 @@ class Event < ActiveRecord::Base
     if r.invitees.nil? || r.invitees.blank?
       r.invitees = nil
     else
-      r.invitees = r.invitees.gsub /^\s+/, ''
-      r.invitees = r.invitees.gsub /\s+$/, ''
-      r.invitees = r.invitees.gsub /\s+/, ' '
+      r.invitees = r.invitees.gsub(/^\s+/, '')
+      r.invitees = r.invitees.gsub(/\s+$/, '')
+      r.invitees = r.invitees.gsub(/\s+/, ' ')
       r.invitees = r.invitees.split(/\s*,\s*/).sort_by(&:upcase).join(",\n") + "\n"
     end
   end
@@ -24,9 +24,9 @@ class Event < ActiveRecord::Base
 
   before_update do |r|
     unless r.invitees.blank?
-      r.invitees = r.invitees.gsub /^\s+/, ''
-      r.invitees = r.invitees.gsub /\s+$/, ''
-      r.invitees = r.invitees.gsub /\s+/, ' '
+      r.invitees = r.invitees.gsub(/^\s+/, '')
+      r.invitees = r.invitees.gsub(/\s+$/, '')
+      r.invitees = r.invitees.gsub(/\s+/, ' ')
       r.invitees = r.invitees.split(/\s*,\s*/).sort_by(&:upcase).join(",\n") + "\n"
       r.invitees.split(/\s*,\s*/).each do |inv|
         if inv =~ /^(.*) <(.*@.*)>$/

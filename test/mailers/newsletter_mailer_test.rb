@@ -14,7 +14,7 @@ class NewsletterMailerTest < ActionMailer::TestCase
     assert_equal '[RJJK][TEST] Så søte bær!', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_match /S=C3=A5 s=C3=B8te b=C3=A6r!/, mail.body.encoded # HTML version
+    assert_match(/S=C3=A5 s=C3=B8te b=C3=A6r!/, mail.body.encoded) # HTML version
     mail.deliver_now
   end
 end

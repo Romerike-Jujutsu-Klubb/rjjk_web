@@ -318,11 +318,11 @@ class NkfMemberImport
     login_content = http_get('page/portal/ks_utv/st_login')
 
     token_body = http_get('pls/portal/portal.wwptl_login.show_site2pstoretoken?p_url=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpls%2Fportal%2Fmyports.st_login_proc.set_language%3Fref_path%3D7513_ST_LOGIN_463458038&p_cancel=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpage%2Fportal%2Fks_utv%2Fst_login')
-    token_fields = token_body.scan /<input .*?name="(.*?)".*?value ?="(.*?)".*?>/i
+    token_fields = token_body.scan(/<input .*?name="(.*?)".*?value ?="(.*?)".*?>/i)
     token = token_fields.find { |t| t[0] == 'site2pstoretoken' }[1]
     http_get('pls/portal/myports.st_login_proc.create_user?CreUser=40001062')
 
-    login_form_fields = login_content.scan /<input .*?name="(.*?)".*?value ?="(.*?)".*?>/
+    login_form_fields = login_content.scan(/<input .*?name="(.*?)".*?value ?="(.*?)".*?>/)
     login_form_fields.delete_if { |f| %w(site2pstoretoken ssousername password).include? f[0] }
     login_form_fields += [['site2pstoretoken', token], %w(ssousername 40001062), %w(password CokaBrus42)]
     login_params = login_form_fields.map { |field| "#{field[0]}=#{ERB::Util.url_encode field[1]}" }.join '&'
@@ -342,7 +342,7 @@ class NkfMemberImport
   def store_cookie(response)
     return unless response['set-cookie']
     header = response['set-cookie']
-    header.gsub! /expires=.{3},/, ''
+    header.gsub!(/expires=.{3},/, '')
     header.split(',').each do |cookie|
       cookie_value = cookie.strip.slice(/^.*?;/).chomp(';')
       if cookie_value =~ /^(.*?)=(.*)$/

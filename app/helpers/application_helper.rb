@@ -33,13 +33,15 @@ module ApplicationHelper
 
   def textalize(s)
     return '' if s.nil?
-    with_emails = s.gsub /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i do |m|
+    with_emails = s.gsub(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i) do |m|
       mail_to m, nil # , :encode => :javascript
     end
     html = Kramdown::Document.new(with_emails.strip).to_html
     html.force_encoding(Encoding::UTF_8)
     html_with_base = absolute_links(html)
-    html_with_bold_links = html_with_base.gsub /(<a href="[^"]*")>/i, %(\\1 style="color: #CD071E;text-decoration:none;font-weight:bold;">)
+    html_with_bold_links = html_with_base
+        .gsub(/(<a href="[^"]*")>/i,
+            %(\\1 style="color: #CD071E;text-decoration:none;font-weight:bold;">))
     html_with_bold_links.html_safe
   end
 

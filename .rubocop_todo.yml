@@ -6,24 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 39
-Lint/AmbiguousRegexpLiteral:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-    - 'app/mailers/incoming_email_processor.rb'
-    - 'app/mailers/user_message_mailer.rb'
-    - 'app/models/event.rb'
-    - 'app/models/nkf_member_import.rb'
-    - 'bin/store_email_rjjk.rb'
-    - 'config/initializers/inflections.rb'
-    - 'test/controllers/groups_controller_test.rb'
-    - 'test/controllers/user_controller_test.rb'
-    - 'test/mailers/graduation_reminder_test.rb'
-    - 'test/mailers/instruction_reminder_test.rb'
-    - 'test/mailers/newsletter_mailer_test.rb'
-    - 'test/mailers/nkf_replication_test.rb'
-    - 'test/models/nkf_member_import_test.rb'
-
 # Offense count: 5
 # Configuration parameters: AllowSafeAssignment.
 Lint/AssignmentInCondition:

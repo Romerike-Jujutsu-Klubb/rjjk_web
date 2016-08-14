@@ -61,8 +61,8 @@ rescue Exception
   Rails.logger.error "Exception scanning for SPAM: #{$!}"
 end
 
-prod_recipients = to.grep /@jujutsu.no/
-beta_recipients = to.grep /@beta.jujutsu.no/
+prod_recipients = to.grep(/@jujutsu.no/)
+beta_recipients = to.grep(/@beta.jujutsu.no/)
 rest_recipients = to - prod_recipients - beta_recipients
 
 if prod_recipients.any?
