@@ -12,4 +12,8 @@ module MailerHelper
       %("#{member.name}" <uwe@kubosch.no>)
     end
   end
+
+  def noreply_address
+    "noreply@#{"#{Rails.env}." unless Rails.env.production?}jujutsu.no"
+  end
 end

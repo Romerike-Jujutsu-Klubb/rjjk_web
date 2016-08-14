@@ -1,8 +1,9 @@
 class AttendanceMailer < ActionMailer::Base
   include UserSystem
   include MailerHelper
-  default from: Rails.env == 'production' ? 'noreply@jujutsu.no' : "#{Rails.env}@jujutsu.no"
+
   layout 'email'
+  default from: noreply_address
 
   def plan(member)
     @member = member

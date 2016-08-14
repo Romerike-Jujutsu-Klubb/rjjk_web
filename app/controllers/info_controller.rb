@@ -13,14 +13,19 @@ class InfoController < ApplicationController
       redirect_to page_alias.new_path, status: :moved_permanently
       return
     end
-    utf8_title = params[:id].encode(Encoding::ISO_8859_1).force_encoding(Encoding::UTF_8)
-    if page = InformationPage.where('UPPER(title) = ?', UnicodeUtils.upcase(utf8_title)).first
-      redirect_to page, status: :moved_permanently
-      return
-    end
-    if page = InformationPage.where('UPPER(title) = ?', UnicodeUtils.upcase(utf8_title.chomp("'"))).first
-      redirect_to page, status: :moved_permanently
-      return
+    begin
+      utf8_param = params[:id].encode(Encoding::ISO_8859_1)
+          .force_encoding(Encoding::UTF_8)
+      utf8_title = UnicodeUtils.upcase(utf8_param)
+      if page = InformationPage.where('UPPER(title) = ?', utf8_title).first
+        redirect_to page, status: :moved_permanently
+        return
+      end
+      if page = InformationPage.where('UPPER(title) = ?', utf8_title.chomp("'")).first
+        redirect_to page, status: :moved_permanently
+        return
+      end
+    rescue ArgumentError
     end
     raise ActiveRecord::RecordNotFound
   end

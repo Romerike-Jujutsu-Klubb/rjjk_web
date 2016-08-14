@@ -11,7 +11,7 @@ if %w(development beta production).include?(Rails.env) && !ENV['DISABLE_SCHEDULE
   end
 
   # email
-  scheduler.cron('* * * * *') { IncomingEmailProcessor.forward_emails }
+  scheduler.every(10.seconds) { IncomingEmailProcessor.forward_emails }
 
   # Users
   scheduler.cron('0 7    * * mon') { AttendanceNagger.send_attendance_plan }

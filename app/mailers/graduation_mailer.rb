@@ -2,7 +2,7 @@ class GraduationMailer < ActionMailer::Base
   include UserSystem
   include MailerHelper
   layout 'email'
-  default from: Rails.env == 'production' ? 'noreply@jujutsu.no' : "#{Rails.env}@jujutsu.no"
+  default from: noreply_address
 
   def missing_graduation(instructor, group, suggested_date)
     @instructor = instructor

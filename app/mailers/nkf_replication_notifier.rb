@@ -11,9 +11,5 @@ class NkfReplicationNotifier
       recipient = Role[:Kasserer] || Role[:Leder]
       NkfReplicationMailer.wrong_contracts(wrong_contracts).store(recipient, tag: :wrong_contracts)
     end
-  rescue
-    logger.error "Exception sending contract message: #{$!}"
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
   end
 end

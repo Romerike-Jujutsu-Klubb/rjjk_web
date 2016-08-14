@@ -15,11 +15,6 @@ class InformationPageNotifier
     recipients.each do |recipient|
       InformationPageMailer.notify_outdated_pages(recipient, pages).store(recipient.user_id, tag: :outdated_info)
     end
-  rescue
-    logger.error 'Execption sending information page notification'
-    logger.error $!.message
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
   end
 
   # Flow:
@@ -44,10 +39,5 @@ class InformationPageNotifier
       end
       page.update_attributes! mailed_at: Time.now
     end
-  rescue
-    logger.error 'Execption sending news'
-    logger.error $!.message
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
   end
 end

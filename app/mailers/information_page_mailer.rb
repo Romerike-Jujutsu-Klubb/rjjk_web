@@ -1,9 +1,8 @@
 class InformationPageMailer < ActionMailer::Base
   include UserSystem
   include MailerHelper
-  default from: Rails.env == 'production' ?
-          'noreply@jujutsu.no' : "#{Rails.env}@jujutsu.no"
   layout 'email'
+  default from: noreply_address
 
   def notify_outdated_pages(member, pages)
     @member = member

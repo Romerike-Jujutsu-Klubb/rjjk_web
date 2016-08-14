@@ -28,6 +28,12 @@ class InfoControllerTest < ActionController::TestCase
     assert assigns(:information_page).valid?
   end
 
+  test 'show with unknown utf8 title' do
+    assert_raises ActiveRecord::RecordNotFound do
+      get :show, :id => 'Nøkjelpersoner'
+    end
+  end
+
   def test_new
     login(:admin)
     get :new

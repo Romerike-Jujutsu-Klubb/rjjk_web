@@ -19,11 +19,6 @@ class GraduationReminder
       GraduationMailer.missing_graduation(instructor, g, suggested_date)
           .store(instructor, tag: :missing_graduation)
     end
-  rescue
-    raise if Rails.env.test?
-    logger.error "Exception sending missing graduations message: #{$!}"
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
   end
 
   def self.notify_overdue_graduates
@@ -47,11 +42,6 @@ class GraduationReminder
       GraduationMailer.overdue_graduates(overdue_graduates)
           .store(Role[:'Hovedinstruktør'], tag: :overdue_graduates)
     end
-  rescue Exception
-    raise if Rails.env.test?
-    logger.error "Exception sending overdue graduates message: #{$!}"
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
   end
 
   def self.notify_censors
@@ -63,10 +53,6 @@ class GraduationReminder
       GraduationMailer.invite_censor(censor).store(censor.member.user_id, tag: :censor_invite)
       censor.update! requested_at: Time.zone.now
     end
-  rescue
-    logger.error "Exception sending censor invitation: #{$!}"
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
   end
 
   def self.notify_missing_aprovals
@@ -76,9 +62,5 @@ class GraduationReminder
         .each do |censor|
       GraduationMailer.missing_approval(censor).store(censor.member.user_id)
     end
-  rescue
-    logger.error "Exception sending missing approvals message: #{$!}"
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
   end
 end

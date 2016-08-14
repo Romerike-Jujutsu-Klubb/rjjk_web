@@ -9,10 +9,6 @@ class SemesterReminder
       recipient = Role[:Leder] || Role[:Nestleder] || Role[:Kasserer]
       SemesterMailer.missing_next_semester.store(recipient, tag: :missing_next_semester)
     end
-  rescue
-    logger.error "Exception sending semester message: #{$!}"
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
   end
 
   # Ensure first and last sessions are set
@@ -24,9 +20,5 @@ class SemesterReminder
       recipient = g.current_semester.chief_instructor || Role[:Hovedinstruktør] || Role[:Leder]
       SemesterMailer.missing_session_dates(recipient, g).store(recipient.user_id, tag: :missing_session_dates)
     end
-  rescue
-    logger.error "Exception sending session dates message: #{$!}"
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
   end
 end

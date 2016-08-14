@@ -1,7 +1,7 @@
 class NkfMemberTrialMailer < ActionMailer::Base
   include MailerHelper
   layout 'email'
-  default from: Rails.env == 'production' ? 'noreply@jujutsu.no' : "#{Rails.env}@jujutsu.no",
+  default from: noreply_address,
           to: Rails.env == 'production' ? %w(medlem@jujutsu.no uwe@kubosch.no) : '"medlem@jujutsu.no" <uwe@kubosch.no>'
 
   def notify_trial_end(trial_member)

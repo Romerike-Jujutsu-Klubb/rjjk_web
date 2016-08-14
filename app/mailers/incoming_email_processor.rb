@@ -22,7 +22,7 @@ class IncomingEmailProcessor
 
   def self.forward_emails
     RawIncomingEmail.where(processed_at: nil, postponed_at: nil)
-        .order(:created_at).limit(1).each do |raw_email|
+        .order(:created_at).limit(5).each do |raw_email|
       logger.debug "Forward email (#{raw_email.id}):"
       logger.debug raw_email.content
       email = Mail.read_from_string(raw_email.content)
@@ -100,10 +100,6 @@ class IncomingEmailProcessor
         raw_email.update! postponed_at: Time.now
       end
     end
-  rescue Exception
-    logger.error "Exception processing incoming email: #{$!.class} #{$!}"
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
   end
 
   def self.prefix_subject(subject, tags)

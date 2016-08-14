@@ -17,10 +17,6 @@ class AttendanceNagger
       end
       AttendanceMailer.plan(member).store(member.user_id, tag: :attendance_plan)
     end
-  rescue Exception
-    raise if Rails.env.test?
-    logger.error $!
-    ExceptionNotifier.notify_exception($!)
   end
 
   def self.send_attendance_summary
@@ -56,10 +52,6 @@ class AttendanceNagger
       end
       pr.update_attributes message_nagged_at: Time.now
     end
-  rescue Exception
-    logger.error $!
-    ExceptionNotifier.notify_exception($!)
-    raise
   end
 
   def self.send_attendance_changes
@@ -97,10 +89,6 @@ class AttendanceNagger
             .store(recipient, tag: :attendance_change)
       end
     end
-  rescue Exception
-    logger.error $!
-    ExceptionNotifier.notify_exception($!)
-    raise
   end
 
   def self.send_attendance_review
@@ -122,9 +110,5 @@ class AttendanceNagger
           .store(member.user_id, tag: :attendance_review)
       completed_attendances.each { |a| a.update_attributes :sent_review_email_at => now }
     end
-  rescue Exception
-    raise if Rails.env.test?
-    logger.error $!
-    ExceptionNotifier.notify_exception($!)
   end
 end
