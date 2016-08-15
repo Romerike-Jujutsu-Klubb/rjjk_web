@@ -71,7 +71,7 @@ ranks.each do |rank_name, rank_dir|
     basics = split.map { |n, t| [n.sub(/\s+waza\s*/, ''), t.split(/,\s*/).map(&:downcase)] }
     basics.each do |waza_name, tecs|
       puts "#{waza_name && waza_name.strip}: #{tecs.inspect}"
-      waza = Waza.where(:name => waza_name).first_or_create! unless DUMP
+      waza = Waza.where(name: waza_name).first_or_create! unless DUMP
       tecs.each do |t|
         unless DUMP
           begin

@@ -24,7 +24,7 @@ class MartialArtsControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, :id => @first_id
+    get :show, id: @first_id
 
     assert_response :success
     assert_template 'show'
@@ -45,16 +45,16 @@ class MartialArtsControllerTest < ActionController::TestCase
   def test_create
     num_martial_arts = MartialArt.count
 
-    post :create, :martial_art => { :family => 'Karate', :name => 'Wado Ryu' }
+    post :create, martial_art: { family: 'Karate', name: 'Wado Ryu' }
     assert_no_errors :martial_art
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to action: 'list'
 
     assert_equal num_martial_arts + 1, MartialArt.count
   end
 
   def test_edit
-    get :edit, :id => @first_id
+    get :edit, id: @first_id
 
     assert_response :success
     assert_template 'edit'
@@ -66,7 +66,7 @@ class MartialArtsControllerTest < ActionController::TestCase
   def test_update
     post :update, id: @first_id, martial_art: {}
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => @first_id
+    assert_redirected_to action: 'show', id: @first_id
   end
 
   def test_destroy
@@ -74,9 +74,9 @@ class MartialArtsControllerTest < ActionController::TestCase
       MartialArt.find(@first_id)
     }
 
-    post :destroy, :id => @first_id
+    post :destroy, id: @first_id
     assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_redirected_to action: 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {
       MartialArt.find(@first_id)

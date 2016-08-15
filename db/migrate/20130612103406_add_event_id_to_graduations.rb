@@ -3,7 +3,7 @@ class AddEventIdToGraduations < ActiveRecord::Migration
     add_column :graduations, :event_id, :integer
     Graduation.all.each do |g|
       unless g.event
-        g.create_event(:name => g.name, :start_at => g.start_at, :end_at => g.end_at)
+        g.create_event(name: g.name, start_at: g.start_at, end_at: g.end_at)
         g.save!
       end
     end

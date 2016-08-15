@@ -26,9 +26,9 @@ class SignaturesController < ApplicationController
   def image
     @signature = Signature.find(params[:id])
     send_data(@signature.image,
-              :disposition => 'inline',
-              :type => @signature.content_type,
-              :filename => @signature.name)
+              disposition: 'inline',
+              type: @signature.content_type,
+              filename: @signature.name)
   end
 
   # GET /signatures/new

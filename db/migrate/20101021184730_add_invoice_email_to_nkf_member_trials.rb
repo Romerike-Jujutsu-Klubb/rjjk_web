@@ -1,9 +1,9 @@
 class AddInvoiceEmailToNkfMemberTrials < ActiveRecord::Migration
   def self.up
     execute 'DELETE FROM nkf_member_trials'
-    add_column :nkf_member_trials, :tid, :integer, :null => false
-    add_column :nkf_member_trials, :epost_faktura, :string, :limit => 64
-    add_index :nkf_member_trials, :tid, :unique => true
+    add_column :nkf_member_trials, :tid, :integer, null: false
+    add_column :nkf_member_trials, :epost_faktura, :string, limit: 64
+    add_index :nkf_member_trials, :tid, unique: true
   end
 
   def self.down

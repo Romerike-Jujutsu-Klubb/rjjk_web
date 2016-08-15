@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
   attr_accessor :password, :password_confirmation
 
   has_one :member
-  has_many :embus, :dependent => :destroy
-  has_many :images, :dependent => :destroy
+  has_many :embus, dependent: :destroy
+  has_many :images, dependent: :destroy
 
   # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
   SEARCH_FIELDS = [:email, :first_name, :last_name, :login]
@@ -25,14 +25,14 @@ class User < ActiveRecord::Base
   after_save { @password_needs_confirmation = false }
   after_validation :crypt_password
 
-  validates_presence_of :login, :on => :create
-  validates_length_of :login, :within => 3..64, :on => :create, :allow_blank => true
-  validates_uniqueness_of :login, :on => :create
-  validates_uniqueness_of :email, :on => :create
+  validates_presence_of :login, on: :create
+  validates_length_of :login, within: 3..64, on: :create, allow_blank: true
+  validates_uniqueness_of :login, on: :create
+  validates_uniqueness_of :email, on: :create
 
-  validates_presence_of :password, :if => :validate_password?
-  validates_confirmation_of :password, :if => :validate_password?
-  validates_length_of :password, :within => 5..40, :if => :validate_password?
+  validates_presence_of :password, if: :validate_password?
+  validates_confirmation_of :password, if: :validate_password?
+  validates_length_of :password, within: 5..40, if: :validate_password?
 
   def validate
     if role_changed? && (user.nil? || user.role.nil?)
@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
       return nil
     end
     logger.info "Authenticated by token: #{u.inspect}.  Extending token lifetime."
-    u.update_attributes :verified => true, :token_expiry => Time.now + token_lifetime
+    u.update_attributes verified: true, token_expiry: Time.now + token_lifetime
     u
   end
 

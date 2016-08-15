@@ -1,5 +1,5 @@
 class EventInviteeMessagesController < ApplicationController
-  before_filter :admin_required, :except => [:index, :show]
+  before_filter :admin_required, except: [:index, :show]
 
   # GET /event_invitee_messages
   # GET /event_invitee_messages.json
@@ -20,9 +20,9 @@ class EventInviteeMessagesController < ApplicationController
       @event_invitee_message = EventInviteeMessage.find(item_id)
     else # Test message
       event = Event.find(-item_id)
-      event_invitee = EventInvitee.new(:event => event, :name => 'test', :email => 'test@example.com')
+      event_invitee = EventInvitee.new(event: event, name: 'test', email: 'test@example.com')
       @event_invitee_message = EventInviteeMessage.new(
-          :event_invitee => event_invitee, :message_type => EventMessage::MessageType::INVITATION)
+          event_invitee: event_invitee, message_type: EventMessage::MessageType::INVITATION)
       @event_invitee_message.id = 0
     end
 

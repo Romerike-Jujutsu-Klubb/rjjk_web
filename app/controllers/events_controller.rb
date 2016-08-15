@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_filter :admin_required, :except => [:calendar, :index, :show]
+  before_filter :admin_required, except: [:calendar, :index, :show]
 
   def index
     @events = Event.order('start_at DESC').to_a
@@ -11,7 +11,7 @@ class EventsController < ApplicationController
 
   def attendance_form
     @event = Event.find(params[:id])
-    render :layout => 'print'
+    render layout: 'print'
   end
 
   def new
@@ -31,7 +31,7 @@ class EventsController < ApplicationController
       flash[:notice] = 'Event was successfully created.'
       redirect_to(@event)
     else
-      render :action => 'new'
+      render action: 'new'
     end
   end
 
@@ -43,12 +43,12 @@ class EventsController < ApplicationController
       selected_users = selected_members.map(&:user).compact
       missing_users = selected_users - @event.users
       missing_users.each do |u|
-        EventInvitee.create!(:event => @event, :user_id => u.id)
+        EventInvitee.create!(event: @event, user_id: u.id)
       end
       flash[:notice] = 'Event was successfully updated.'
-      redirect_to :action => :edit
+      redirect_to action: :edit
     else
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
 
@@ -70,14 +70,14 @@ class EventsController < ApplicationController
       recipients = event.groups.map(&:members).flatten
     end
     recipients.each do |recipient|
-      event_invitee = EventInvitee.new(:event => event, :name => recipient.name, :email => recipient.email)
+      event_invitee = EventInvitee.new(event: event, name: recipient.name, email: recipient.email)
       event_invitee_message = EventInviteeMessage.new(
-          :event_invitee => event_invitee, :message_type => EventMessage::MessageType::INVITATION)
+          event_invitee: event_invitee, message_type: EventMessage::MessageType::INVITATION)
       event_invitee_message.id = -event.id
       NewsletterMailer.event_invitee_message(event_invitee_message)
           .store(recipient.user_id, tag: :event_invite)
     end
-    render :text => ''
+    render text: ''
   end
 
   def calendar
@@ -112,7 +112,7 @@ class EventsController < ApplicationController
       end
     end
     respond_to do |format|
-      format.ics { send_data(cal.export, :filename => 'RJJK.ics', :disposition => 'inline; filename=RJJK.ics', :type => 'text/calendar') }
+      format.ics { send_data(cal.export, filename: 'RJJK.ics', disposition: 'inline; filename=RJJK.ics', type: 'text/calendar') }
       format.all do
         send_data(cal.export, filename: 'RJJK.ics', disposition: 'inline; filename=RJJK.ics', type: 'text/calendar')
       end

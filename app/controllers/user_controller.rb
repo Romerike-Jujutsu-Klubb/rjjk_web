@@ -1,6 +1,6 @@
 class UserController < ApplicationController
-  before_filter :authenticate_user, :except => [:login, :logout, :signup, :forgot_password]
-  before_filter :admin_required, :except => [:welcome, :like, :login, :logout, :signup, :forgot_password, :change_password]
+  before_filter :authenticate_user, except: [:login, :logout, :signup, :forgot_password]
+  before_filter :admin_required, except: [:welcome, :like, :login, :logout, :signup, :forgot_password, :change_password]
 
   def index
     @users = User.order(:last_name, :first_name).to_a
@@ -21,7 +21,7 @@ class UserController < ApplicationController
       end
       unless member?
         if (member = Member.find_by_email(user.email))
-          user.update_attributes! :member_id => member.id
+          user.update_attributes! member_id: member.id
           flash['notice'] << "Du er nå registrert som medlem #{member.name}."
         end
       end
@@ -35,7 +35,7 @@ class UserController < ApplicationController
   def send_login_email
     user = User.find(params[:id])
     key = user.generate_security_token
-    url = url_for(:action => 'welcome')
+    url = url_for(action: 'welcome')
     url += "?user[id]=#{user.id}&key=#{key}"
     UserNotify.signup(user, user.password, url).store(user.id, :login_link)
   end
@@ -43,22 +43,22 @@ class UserController < ApplicationController
   def signup
     return if generate_blank_form
     @user = User.new(
-        :login => params['user'][:login],
-        :password => params['user'][:password],
-        :password_confirmation => params['user'][:password_confirmation],
-        :email => params['user'][:email],
-        :first_name => params['user'][:first_name],
-        :last_name => params['user'][:last_name]
+        login: params['user'][:login],
+        password: params['user'][:password],
+        password_confirmation: params['user'][:password_confirmation],
+        email: params['user'][:email],
+        first_name: params['user'][:first_name],
+        last_name: params['user'][:last_name]
     )
     begin
       User.transaction do
         @user.password_needs_confirmation = true
         if @user.save
-          url = url_for(with_login(@user, :action => :welcome))
+          url = url_for(with_login(@user, action: :welcome))
           UserNotify.signup(@user, params['user']['password'], url)
               .store(@user.id, tag: :signup)
           flash['notice'] = 'Signup successful! Please check your registered email account to verify your account registration and continue with the login.'
-          redirect_to :action => 'login'
+          redirect_to action: 'login'
         end
       end
     rescue Exception => ex
@@ -69,7 +69,7 @@ class UserController < ApplicationController
 
   def logout
     self.current_user = nil
-    cookies[:token] = { :value => '', :expires => 0.days.from_now }
+    cookies[:token] = { value: '', expires: 0.days.from_now }
     flash['notice'] = 'Velkommen tilbake!'
     back_or_redirect_to '/'
   end
@@ -97,7 +97,7 @@ class UserController < ApplicationController
   def forgot_password
     if authenticated_user? && !admin?
       flash['message'] = 'Du er nå logget på. Du kan nå endre passordet ditt.'
-      redirect_to :action => 'change_password'
+      redirect_to action: 'change_password'
       return
     end
 
@@ -120,7 +120,7 @@ class UserController < ApplicationController
           end
           flash['message'] = "En e-post med veiledning for å sette nytt passord er sendt til #{CGI.escapeHTML(email)}."
           unless authenticated_user?
-            redirect_to :action => 'login'
+            redirect_to action: 'login'
             return
           end
           back_or_redirect_to '/'
@@ -165,7 +165,7 @@ class UserController < ApplicationController
         logger.warn ex.backtrace
       end
     end
-    redirect_to :action => :edit
+    redirect_to action: :edit
   end
 
   def delete
@@ -183,8 +183,8 @@ class UserController < ApplicationController
   end
 
   def like
-    UserImage.where(:user_id => current_user.id, :image_id => params[:id], :rel_type => 'LIKE').first_or_create!
-    redirect_to :controller => :news, :action => :index
+    UserImage.where(user_id: current_user.id, image_id: params[:id], rel_type: 'LIKE').first_or_create!
+    redirect_to controller: :news, action: :index
   end
 
   protected
@@ -208,7 +208,7 @@ class UserController < ApplicationController
   # Generate a template user for certain actions on get
   def generate_filled_in
     @user = (params[:id] && User.find_by_id(params[:id])) || current_user || User.find_by_id(session[:user_id])
-    @members = Member.select('id, first_name, last_name').where(:email => @user.email).to_a
+    @members = Member.select('id, first_name, last_name').where(email: @user.email).to_a
     case request.method
     when 'GET'
       render

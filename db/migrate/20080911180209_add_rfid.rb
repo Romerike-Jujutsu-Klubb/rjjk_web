@@ -1,6 +1,6 @@
 class AddRfid < ActiveRecord::Migration
   def self.up
-    add_column :members, :rfid, :string, :limit => 25
+    add_column :members, :rfid, :string, limit: 25
   end
 
   def self.down

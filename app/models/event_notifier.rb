@@ -5,8 +5,8 @@ class EventNotifier
 
       # FIXME(uwe): Consider using SQL to optimize the selection.
       EventMessage.where('message_type <> ? AND ready_at IS NOT NULL', EventMessage::MessageType::INVITATION)
-          .order(:ready_at).includes(:event => { :event_invitees => :invitation },
-                                    :event_invitee_messages => :event_invitee).to_a.each do |em|
+          .order(:ready_at).includes(event: { event_invitees: :invitation },
+                                    event_invitee_messages: :event_invitee).to_a.each do |em|
         recipients = em.event.event_invitees
         recipients = recipients.select { |r| r.will_attend || r.invitation.try(:sent_at) }
         already_received = em.event_invitee_messages.map(&:event_invitee)

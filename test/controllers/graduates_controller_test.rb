@@ -16,7 +16,7 @@ class GraduatesControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, :id => @first_id
+    get :show, id: @first_id
 
     assert_response :success
     assert_template 'show'
@@ -35,19 +35,19 @@ class GraduatesControllerTest < ActionController::TestCase
   def test_create
     num_graduates = Graduate.count
 
-    post :create, :graduate => { :member_id => members(:lars).id,
-                                :graduation_id => graduations(:tiger).id,
-                                :passed => true, :rank_id => ranks(:kyu_4).id,
-                                :paid_graduation => true, :paid_belt => true }
+    post :create, graduate: { member_id: members(:lars).id,
+                                graduation_id: graduations(:tiger).id,
+                                passed: true, rank_id: ranks(:kyu_4).id,
+                                paid_graduation: true, paid_belt: true }
     assert_no_errors :graduate
     assert_response :redirect
-    assert_redirected_to :action => :index
+    assert_redirected_to action: :index
 
     assert_equal num_graduates + 1, Graduate.count
   end
 
   def test_edit
-    get :edit, :id => @first_id
+    get :edit, id: @first_id
 
     assert_response :success
     assert_template 'edit'

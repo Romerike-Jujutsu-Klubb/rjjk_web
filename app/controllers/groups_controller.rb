@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_filter :admin_required, :except => :show
+  before_filter :admin_required, except: :show
 
   def index
     @groups = Group.active(Date.today).order('to_age, from_age DESC').to_a
@@ -24,7 +24,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml { render :xml => @group }
+      format.xml { render xml: @group }
     end
   end
 
@@ -48,7 +48,7 @@ class GroupsController < ApplicationController
       redirect_to(@group)
     else
       new
-      render :action => :new
+      render action: :new
     end
   end
 
@@ -63,11 +63,11 @@ class GroupsController < ApplicationController
 
         if @group.school_breaks
           if (current_semester = Semester.current) && !@group.current_semester
-            @group.create_current_semester(:semester_id => current_semester.id)
+            @group.create_current_semester(semester_id: current_semester.id)
           end
 
           if (next_semester = Semester.next) && !@group.next_semester
-            @group.create_next_semester(:semester_id => next_semester.id)
+            @group.create_next_semester(semester_id: next_semester.id)
           end
         end
 
@@ -76,9 +76,9 @@ class GroupsController < ApplicationController
       else
         format.html do
           edit
-          render :action => :edit
+          render action: :edit
         end
-        format.xml { render :xml => @group.errors, :status => :unprocessable_entity }
+        format.xml { render xml: @group.errors, status: :unprocessable_entity }
       end
     end
   end

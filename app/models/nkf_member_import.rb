@@ -238,7 +238,7 @@ class NkfMemberImport
         logger.debug "Found changes: #{c.inspect}"
         if record.save
           logger.debug "Found changes: #{c.inspect}"
-          (was_new_record ? @new_records : @changes) << { :record => record, :changes => c }
+          (was_new_record ? @new_records : @changes) << { record: record, changes: c }
         else
           logger.error "ERROR: #{record.errors.to_a.join(', ')}"
           @error_records << record

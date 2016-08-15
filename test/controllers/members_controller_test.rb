@@ -128,8 +128,8 @@ class MembersControllerTest < ActionController::TestCase
   end
 
   def test_grade_history_graph_percentage_800
-    get :grade_history_graph_percentage, :id => 800, :format => 'png',
-        :interval => 365, :percentage => 67, :step => 30
+    get :grade_history_graph_percentage, id: 800, format: 'png',
+        interval: 365, percentage: 67, step: 30
     assert_response :success
   end
 end

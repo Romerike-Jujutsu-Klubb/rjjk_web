@@ -39,7 +39,7 @@ class Event < ActiveRecord::Base
           name = inv
           email = inv
         end
-        event_invitees.create :name => name, :email => email
+        event_invitees.create name: name, email: email
       end
       r.invitees = nil
     end

@@ -32,7 +32,7 @@ class UserMessageSenderTest < ActionMailer::TestCase
     assert_equal 'text/html; charset=UTF-8', part.content_type
     assert_match html_message, part.body.decoded
     escaped_key = um.key.gsub('/', '%252F')
-    assert_match %(href="http://example.com/user_messages/980190963?email=&amp;key=#{escaped_key}"),
+    assert_match %(href="http://example.com/user_messages/#{um.id}?email=&amp;key=#{escaped_key}"),
         part.body.decoded
   end
 end

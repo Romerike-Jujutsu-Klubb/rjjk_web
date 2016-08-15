@@ -7,16 +7,16 @@ class Group < ActiveRecord::Base
   has_one :current_semester,
       -> { references(:semesters).includes(:semester).where('CURRENT_DATE BETWEEN semesters.start_on AND semesters.end_on') },
       class_name: :GroupSemester
-  has_many :graduations, -> { order(:held_on) }, :dependent => :destroy
-  has_many :group_schedules, :dependent => :destroy
-  has_many :group_semesters, :dependent => :destroy
+  has_many :graduations, -> { order(:held_on) }, dependent: :destroy
+  has_many :group_schedules, dependent: :destroy
+  has_many :group_semesters, dependent: :destroy
   has_one :next_graduation,
       -> { where('graduations.held_on >= ?', Date.today).order('graduations.held_on') },
-      :class_name => :Graduation
+      class_name: :Graduation
   has_one :next_semester,
       -> { includes(:semester).where('semesters.start_on > CURRENT_DATE').order('semesters.start_on') },
-          :class_name => :GroupSemester
-  has_many :ranks, -> { order(:position) }, :dependent => :destroy
+          class_name: :GroupSemester
+  has_many :ranks, -> { order(:position) }, dependent: :destroy
   # FIXME(uwe): Add model GroupMembership and change to has_many through:
   has_and_belongs_to_many :members, conditions: 'left_on IS NULL OR left_on > DATE(CURRENT_TIMESTAMP)'
 
@@ -54,7 +54,7 @@ class Group < ActiveRecord::Base
   end
 
   def update_prices
-    contracts = NkfMember.where(:kontraktstype => contract).to_a
+    contracts = NkfMember.where(kontraktstype: contract).to_a
     return if contracts.empty?
     self.monthly_price = contracts.map(&:kontraktsbelop).group_by { |x| x }.group_by { |_k, v| v.size }.sort.last.last.map(&:first).first
     self.yearly_price = contracts.map(&:kont_belop).group_by { |x| x }.group_by { |_k, v| v.size }.sort.last.last.map(&:first).first
@@ -76,7 +76,7 @@ class Group < ActiveRecord::Base
 
   def trials
     NkfMemberTrial.for_group(self)
-        .includes(:trial_attendances => { :practice => :group_schedule })
+        .includes(trial_attendances: { practice: :group_schedule })
         .order('fornavn, etternavn')
         .to_a
   end

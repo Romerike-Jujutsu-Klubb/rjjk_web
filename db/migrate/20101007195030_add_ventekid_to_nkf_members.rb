@@ -1,6 +1,6 @@
 class AddVentekidToNkfMembers < ActiveRecord::Migration
   def self.up
-    add_column :nkf_members, :ventekid, :string, :limit => 20
+    add_column :nkf_members, :ventekid, :string, limit: 20
   end
 
   def self.down

@@ -34,7 +34,7 @@ class UserTest < ActionMailer::TestCase
   end
 
   def test_generate_security_token
-    user = User.new :login => 'user', :email => 'user@example.com', :salt => 'salt', :salted_password => 'tlas'
+    user = User.new login: 'user', email: 'user@example.com', salt: 'salt', salted_password: 'tlas'
     user.save
     token = user.generate_security_token
     assert_not_nil token

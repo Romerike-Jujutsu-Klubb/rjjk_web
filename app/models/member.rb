@@ -83,12 +83,12 @@ class Member < ActiveRecord::Base
   validates_length_of :email, maximum: 128
   validates_presence_of :first_name, :last_name
   validates_inclusion_of :instructor, in: [true, false]
-  validates_inclusion_of :male, :in => [true, false]
-  validates_inclusion_of :nkf_fee, :in => [true, false]
-  validates_inclusion_of :payment_problem, :in => [true, false]
+  validates_inclusion_of :male, in: [true, false]
+  validates_inclusion_of :nkf_fee, in: [true, false]
+  validates_inclusion_of :payment_problem, in: [true, false]
   # validates_presence_of :postal_code
   validates_length_of :postal_code, is: 4, allow_blank: true
-  validates_uniqueness_of :rfid, :if => Proc.new { |r| r.rfid && !r.rfid.empty? }
+  validates_uniqueness_of :rfid, if: Proc.new { |r| r.rfid && !r.rfid.empty? }
   validates_presence_of :user, :user_id, unless: :left_on
 
   def self.paginate_active(page)
@@ -380,8 +380,8 @@ class Member < ActiveRecord::Base
 
   def image_file=(file)
     return if file.blank?
-    create_image! :user_id => user_id, :name => file.original_filename,
-        :content_type => file.content_type, :content_data => file.read
+    create_image! user_id: user_id, name: file.original_filename,
+        content_type: file.content_type, content_data: file.read
   end
 
   def image?

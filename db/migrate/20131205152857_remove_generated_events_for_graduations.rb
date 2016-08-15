@@ -7,7 +7,7 @@ class RemoveGeneratedEventsForGraduations < ActiveRecord::Migration
   end
 
   def down
-    remove_column :graduations, :event_id, :null => false
+    remove_column :graduations, :event_id, null: false
   end
 
   class Graduation < ActiveRecord::Base

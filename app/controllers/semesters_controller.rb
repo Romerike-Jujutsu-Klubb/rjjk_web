@@ -1,5 +1,5 @@
 class SemestersController < ApplicationController
-  before_filter :admin_required, :except => [:index, :show]
+  before_filter :admin_required, except: [:index, :show]
 
   # GET /semesters
   # GET /semesters.json
@@ -8,7 +8,7 @@ class SemestersController < ApplicationController
     @semester ||= Semester.where('CURRENT_DATE BETWEEN start_on AND end_on').first
 
     respond_to do |format|
-      format.html { render :action => :index }
+      format.html { render action: :index }
       format.json { render json: @semesters }
     end
   end
@@ -48,7 +48,7 @@ class SemestersController < ApplicationController
     respond_to do |format|
       if @semester.save
         Group.where('school_breaks = ?', true).to_a.each do |g|
-          @semester.group_semesters.create!(:group_id => g.id) unless @semester.group_semesters.exists?(:group_id => g.id)
+          @semester.group_semesters.create!(group_id: g.id) unless @semester.group_semesters.exists?(group_id: g.id)
         end
 
         format.html { redirect_to @semester, notice: 'Semester was successfully created.' }

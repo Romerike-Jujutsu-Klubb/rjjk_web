@@ -5,11 +5,11 @@ class Image < ActiveRecord::Base
 
   default_scope { select((column_names - %w(content_data)).map { |c| "images.#{c}" }) }
   scope :with_image, -> { select('*') }
-  scope :published, -> { where(:public => true, :approved => true) }
+  scope :published, -> { where(public: true, approved: true) }
   scope :images, -> { where("content_type LIKE 'image/%'") }
 
   belongs_to :user
-  has_many :user_images, :dependent => :destroy
+  has_many :user_images, dependent: :destroy
   has_many :likers, -> { where("user_images.rel_type = 'LIKE'") },
       class_name: 'User', through: :user_images, source: :user
 
@@ -18,7 +18,7 @@ class Image < ActiveRecord::Base
   end
 
   validates_presence_of :name
-  validates_uniqueness_of :content_data, :on => :create
+  validates_uniqueness_of :content_data, on: :create
 
   after_create do |_|
     next unless @content_file

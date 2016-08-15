@@ -1,5 +1,5 @@
 class Semester < ActiveRecord::Base
-  has_many :group_semesters, :dependent => :destroy
+  has_many :group_semesters, dependent: :destroy
 
   validates_presence_of :end_on, :start_on
 

@@ -11,7 +11,7 @@ class MakeChiefInstructorUniquePerGroupSemester < ActiveRecord::Migration
     end
 
     add_column :group_semesters, :chief_instructor_id, :integer,
-        :references => :members
+        references: :members
 
     execute "UPDATE group_semesters gs SET chief_instructor_id =
         (SELECT m.id FROM group_instructors gi
@@ -46,10 +46,10 @@ class MakeChiefInstructorUniquePerGroupSemester < ActiveRecord::Migration
             INNER JOIN group_schedules gsc ON gsc.id = gi.group_schedule_id
             WHERE gs.semester_id = gi.semester_id
                 AND gs.group_id = gsc.group_id)'
-    change_column :group_instructors, :group_semester_id, :integer, :null => false
+    change_column :group_instructors, :group_semester_id, :integer, null: false
     remove_column :group_instructors, :semester_id
 
-    add_column :group_instructors, :assistant, :boolean, :null => false, :default => false
+    add_column :group_instructors, :assistant, :boolean, null: false, default: false
     execute "UPDATE group_instructors SET assistant = 't' WHERE role = 'Hjelpeinstruktør'"
     remove_column :group_instructors, :role
   end

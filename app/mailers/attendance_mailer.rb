@@ -49,7 +49,7 @@ class AttendanceMailer < ActionMailer::Base
     change_msg << "#{new_absentees.size} avbud" if new_absentees.any?
     @title = "Trening i #{@group_schedule.start_at.day_phase}: #{change_msg.join(', ')}"
     @timestamp = Time.now
-    @email_url = with_login(recipient.user, :controller => :attendances, :action => :plan)
+    @email_url = with_login(recipient.user, controller: :attendances, action: :plan)
     mail to: safe_email(recipient), subject: rjjk_prefix(@title)
   end
 

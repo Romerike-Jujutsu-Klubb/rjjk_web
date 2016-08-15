@@ -32,7 +32,7 @@ EOH
       '</tr>'
     end
     rstr << "</table>\n</div>\n"
-    render :text => rstr
+    render text: rstr
   end
 
   def show

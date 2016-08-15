@@ -3,9 +3,9 @@ class EmbusController < ApplicationController
 
   def index
     if (embu = Embu.mine.last)
-      redirect_to :action => :edit, :id => embu.id
+      redirect_to action: :edit, id: embu.id
     else
-      redirect_to :action => :new
+      redirect_to action: :new
     end
   end
 
@@ -15,15 +15,15 @@ class EmbusController < ApplicationController
 
   def print
     @embu = Embu.mine.find(params[:id])
-    render :layout => 'print'
+    render layout: 'print'
   end
 
   def new
     unless current_user.try(:member)
-      redirect_to :controller => :welcome, :action => :index, :notice => 'Du må være logget på og medlem for å redigere din embu.'
+      redirect_to controller: :welcome, action: :index, notice: 'Du må være logget på og medlem for å redigere din embu.'
       return
     end
-    @embu = Embu.new :rank => current_user.member.next_rank
+    @embu = Embu.new rank: current_user.member.next_rank
     load_data
 
     respond_to do |format|
@@ -38,7 +38,7 @@ class EmbusController < ApplicationController
   end
 
   def create
-    @embu = Embu.new(params[:embu].merge(:user_id => current_user.id))
+    @embu = Embu.new(params[:embu].merge(user_id: current_user.id))
 
     respond_to do |format|
       if @embu.save
@@ -54,7 +54,7 @@ class EmbusController < ApplicationController
   def update
     @embu = Embu.mine.find(params[:id])
     if @embu.update_attributes(params[:embu])
-      redirect_to :action => :edit, :id => @embu.id, notice: 'Embu was successfully updated.'
+      redirect_to action: :edit, id: @embu.id, notice: 'Embu was successfully updated.'
     else
       render action: :edit
     end

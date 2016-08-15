@@ -53,9 +53,9 @@ class InfoController < ApplicationController
     set_revised_at_param
     if @information_page.save
       flash[:notice] = 'InformationPage was successfully created.'
-      redirect_to :action => 'show', :id => @information_page
+      redirect_to action: 'show', id: @information_page
     else
-      render :action => 'new'
+      render action: 'new'
     end
   end
 
@@ -69,15 +69,15 @@ class InfoController < ApplicationController
     set_revised_at_param
     if @information_page.update_attributes(params[:information_page])
       flash[:notice] = 'InformationPage was successfully updated.'
-      redirect_to :action => 'show', :id => @information_page
+      redirect_to action: 'show', id: @information_page
     else
-      render :action => :edit
+      render action: :edit
     end
   end
 
   def destroy
     InformationPage.find(params[:id]).destroy
-    redirect_to :controller => :news, :action => :index
+    redirect_to controller: :news, action: :index
   end
 
   def versjon; end

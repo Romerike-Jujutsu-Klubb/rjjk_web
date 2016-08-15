@@ -1,6 +1,6 @@
 class AddKidToMembers < ActiveRecord::Migration
   def self.up
-    add_column :members, :kid, :string, :limit => 64
+    add_column :members, :kid, :string, limit: 64
   end
 
   def self.down

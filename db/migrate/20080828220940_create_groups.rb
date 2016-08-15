@@ -1,26 +1,26 @@
 class CreateGroups < ActiveRecord::Migration
   def self.up
     create_table :groups do |t|
-      t.integer :martial_art_id, :null => false
-      t.string :name, :null => false
-      t.integer :from_age, :null => false
-      t.integer :to_age, :null => false
+      t.integer :martial_art_id, null: false
+      t.string :name, null: false
+      t.integer :from_age, null: false
+      t.integer :to_age, null: false
 
       t.timestamps
     end
-    create_table :groups_members, :id => false do |t|
-      t.integer :group_id, :null => false
-      t.integer :member_id, :null => false
+    create_table :groups_members, id: false do |t|
+      t.integer :group_id, null: false
+      t.integer :member_id, null: false
 
       t.timestamps
     end
     keiwaryu = MartialArt.find_by_name('Kei Wa Ryu')
     aikikai = MartialArt.find_by_name('Aikikai')
     if keiwaryu && aikikai
-      Group.create! :martial_art_id => keiwaryu.id, :name => 'Aspiranter', :from_age => 6, :to_age => 9
-      j = Group.create! :martial_art_id => keiwaryu.id, :name => 'Juniorer', :from_age => 10, :to_age => 14
-      s = Group.create! :martial_art_id => keiwaryu.id, :name => 'Seniorer', :from_age => 14, :to_age => 999
-      a = Group.create! :martial_art_id => aikikai.id, :name => 'Seniorer', :from_age => 14, :to_age => 999
+      Group.create! martial_art_id: keiwaryu.id, name: 'Aspiranter', from_age: 6, to_age: 9
+      j = Group.create! martial_art_id: keiwaryu.id, name: 'Juniorer', from_age: 10, to_age: 14
+      s = Group.create! martial_art_id: keiwaryu.id, name: 'Seniorer', from_age: 14, to_age: 999
+      a = Group.create! martial_art_id: aikikai.id, name: 'Seniorer', from_age: 14, to_age: 999
       Member.all.each do |m|
         m.martial_arts.each do |ma|
           if ma == aikikai
@@ -44,7 +44,7 @@ class CreateGroups < ActiveRecord::Migration
     Member.all.each do |m|
       senior = m.groups.include? s
       puts "Marking #{m.name} senior: #{senior}"
-      m.update_attributes! :senior => senior
+      m.update_attributes! senior: senior
     end
     drop_table :groups_members
     drop_table :groups

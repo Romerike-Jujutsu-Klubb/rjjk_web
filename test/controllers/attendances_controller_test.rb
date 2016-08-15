@@ -39,17 +39,17 @@ class AttendancesControllerTest < ActionController::TestCase
   end
 
   def test_should_show_attendance
-    get :show, :id => attendances(:lars_panda_2010_42).id
+    get :show, id: attendances(:lars_panda_2010_42).id
     assert_response :success
   end
 
   def test_should_get_edit
-    get :edit, :id => attendances(:lars_panda_2010_42).id
+    get :edit, id: attendances(:lars_panda_2010_42).id
     assert_response :success
   end
 
   def test_should_update_attendance
-    put :update, :id => attendances(:lars_panda_2010_42).id, :attendance => {}
+    put :update, id: attendances(:lars_panda_2010_42).id, attendance: {}
     assert_redirected_to attendance_path(assigns(:attendance))
   end
 
@@ -105,12 +105,12 @@ class AttendancesControllerTest < ActionController::TestCase
   end
 
   def test_should_get_history_chart
-    get :history_graph, :id => '182', :format => 'png'
+    get :history_graph, id: '182', format: 'png'
     assert_response :success
   end
 
   def test_should_get_form
-    get :form, :date => '2013-10-01', :group_id => groups(:panda).id
+    get :form, date: '2013-10-01', group_id: groups(:panda).id
     assert_response :success
   end
 end

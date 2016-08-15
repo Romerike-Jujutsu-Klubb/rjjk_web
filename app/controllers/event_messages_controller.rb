@@ -1,5 +1,5 @@
 class EventMessagesController < ApplicationController
-  before_filter :admin_required, :except => [:index, :show]
+  before_filter :admin_required, except: [:index, :show]
 
   # GET /event_messages
   # GET /event_messages.json

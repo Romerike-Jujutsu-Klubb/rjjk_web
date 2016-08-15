@@ -1,6 +1,6 @@
 class MakeGraduationIdAndMemberIdUniqueForCensors < ActiveRecord::Migration
   def up
-    add_index :censors, [:graduation_id, :member_id], :unique => true
+    add_index :censors, [:graduation_id, :member_id], unique: true
   end
 
   def down

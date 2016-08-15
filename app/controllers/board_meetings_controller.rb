@@ -68,8 +68,8 @@ class BoardMeetingsController < ApplicationController
 
   def minutes
     bm = BoardMeeting.find(params[:id])
-    send_data bm.minutes_content_data, :type => bm.minutes_content_type,
-        :filename => bm.minutes_filename, :disposition => 'attachment'
+    send_data bm.minutes_content_data, type: bm.minutes_content_type,
+        filename: bm.minutes_filename, disposition: 'attachment'
   end
 
   private

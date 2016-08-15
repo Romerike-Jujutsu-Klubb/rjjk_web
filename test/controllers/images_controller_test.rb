@@ -24,7 +24,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, :id => @first_id, :format => 'png'
+    get :show, id: @first_id, format: 'png'
     assert_response :success
   end
 
@@ -81,7 +81,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_gallery
-    get :gallery, :id => @first_id
+    get :gallery, id: @first_id
 
     assert_response :success
     assert_template 'gallery'

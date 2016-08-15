@@ -1,13 +1,13 @@
 class CreatePractices < ActiveRecord::Migration
   def change
     create_table :practices do |t|
-      t.integer :group_schedule_id, :null => false
-      t.integer :year, :null => false
-      t.integer :week, :null => false
-      t.string :status, :null => false, :default => 'X'
+      t.integer :group_schedule_id, null: false
+      t.integer :year, null: false
+      t.integer :week, null: false
+      t.string :status, null: false, default: 'X'
 
       t.timestamps
-      t.index [:group_schedule_id, :year, :week], :unique => true
+      t.index [:group_schedule_id, :year, :week], unique: true
     end
 
     execute 'INSERT INTO practices(group_schedule_id, year, week, created_at, updated_at)
@@ -20,7 +20,7 @@ class CreatePractices < ActiveRecord::Migration
          AND s.year = a.year
          AND s.week = a.week
       )'
-    change_column :attendances, :practice_id, :integer, :null => false
+    change_column :attendances, :practice_id, :integer, null: false
 
     remove_column :attendances, :group_schedule_id
     remove_column :attendances, :year

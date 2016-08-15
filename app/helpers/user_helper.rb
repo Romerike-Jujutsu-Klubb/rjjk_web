@@ -1,8 +1,8 @@
 module UserHelper
   DEFAULT_HEAD_OPTIONS = {
-    :notice => true,
-    :message => true,
-    :error => false
+    notice: true,
+    message: true,
+    error: false
   }.freeze unless defined? DEFAULT_HEAD_OPTIONS
 
   def title_helper

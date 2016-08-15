@@ -10,7 +10,7 @@ ExecStart=/u/apps/rjjk_web/current/etc/init.d/rjjk_web start
 PIDFile=/u/apps/rjjk_web/shared/pids/server.pid
 
 # Timeout for start up/shut down
-TimeoutSec=300
+TimeoutSec=600
 
 [Install]
 WantedBy=multi-user.target

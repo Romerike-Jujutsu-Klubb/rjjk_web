@@ -19,7 +19,7 @@ class InfoControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, :id => information_pages(:first).id
+    get :show, id: information_pages(:first).id
 
     assert_response :success
     assert_template 'show'
@@ -30,7 +30,7 @@ class InfoControllerTest < ActionController::TestCase
 
   test 'show with unknown utf8 title' do
     assert_raises ActiveRecord::RecordNotFound do
-      get :show, :id => 'Nøkjelpersoner'
+      get :show, id: 'Nøkjelpersoner'
     end
   end
 
@@ -48,11 +48,11 @@ class InfoControllerTest < ActionController::TestCase
     num_information_pages = InformationPage.count
 
     login(:admin)
-    post :create, :information_page => { :title => 'an article' }
+    post :create, information_page: { title: 'an article' }
     assert_no_errors :information_page
 
     assert_response :redirect
-    assert_redirected_to :action => :show, :id => InformationPage.find_by_title('an article')
+    assert_redirected_to action: :show, id: InformationPage.find_by_title('an article')
 
     assert_equal num_information_pages + 1, InformationPage.count
   end

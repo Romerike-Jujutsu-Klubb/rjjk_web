@@ -6,8 +6,8 @@ class AttendancesController < ApplicationController
   # FIXME(uwe):  check caching
   caches_page :history_graph, :month_chart, :month_per_year_chart
   update_actions = [:announce, :create, :destroy, :review, :update]
-  cache_sweeper :attendance_image_sweeper, :only => update_actions
-  cache_sweeper :grade_history_image_sweeper, :only => update_actions
+  cache_sweeper :attendance_image_sweeper, only: update_actions
+  cache_sweeper :grade_history_image_sweeper, only: update_actions
 
   def index
     @attendances = Attendance.all
@@ -27,14 +27,14 @@ class AttendancesController < ApplicationController
   def new
     @attendance ||= Attendance.new params[:attendance]
     if @attendance.practice && @attendance.practice.try(:new_record?)
-      practice = Practice.where(:group_schedule_id => @attendance.practice.group_schedule_id, :year => @attendance.practice.year, :week => @attendance.practice.week).first
+      practice = Practice.where(group_schedule_id: @attendance.practice.group_schedule_id, year: @attendance.practice.year, week: @attendance.practice.week).first
       @attendance.practice = practice if practice
     end
     @attendance.status ||= Attendance::Status::ATTENDED
     group_id = params[:group]
     @members = Member.order(:first_name, :last_name).to_a
-    @group_schedules = GroupSchedule.where(group_id ? { :group_id => group_id } : {}).to_a
-    render :action => 'new'
+    @group_schedules = GroupSchedule.where(group_id ? { group_id: group_id } : {}).to_a
+    render action: 'new'
   end
 
   def edit
@@ -68,7 +68,7 @@ class AttendancesController < ApplicationController
       flash[:notice] = 'Attendance was successfully updated.'
       redirect_to(@attendance)
     else
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
 
@@ -77,10 +77,10 @@ class AttendancesController < ApplicationController
     @attendance.destroy
     if request.xhr?
       flash.clear
-      render :partial => '/attendances/attendance_create_link', :locals => {
-              :member_id => @attendance.member_id,
-              :group_schedule_id => @attendance.practice.group_schedule_id,
-              :date => @attendance.date, :status => Attendance::Status::ATTENDED
+      render partial: '/attendances/attendance_create_link', locals: {
+              member_id: @attendance.member_id,
+              group_schedule_id: @attendance.practice.group_schedule_id,
+              date: @attendance.date, status: Attendance::Status::ATTENDED
           }
     else
       redirect_to(attendances_url)
@@ -93,7 +93,7 @@ class AttendancesController < ApplicationController
     @month = @date.month
     @first_date = @date
     @last_date = @date.end_of_month
-    @attendances = Attendance.includes(:practice => :group_schedule).references(:practices)
+    @attendances = Attendance.includes(practice: :group_schedule).references(:practices)
         .where('practices.year = ? AND practices.week >= ? AND practices.week <= ? AND attendances.status NOT IN (?)',
             @year, @first_date.cweek, @last_date.cweek, Attendance::ABSENT_STATES)
         .to_a.select { |a| (@first_date..@last_date).cover? a.date }
@@ -119,7 +119,7 @@ class AttendancesController < ApplicationController
     else
       g = AttendanceHistoryGraph.new.history_graph
     end
-    send_data(g, :disposition => 'inline', :type => 'image/png', :filename => 'RJJK_Oppmøtehistorikk.png')
+    send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Oppmøtehistorikk.png')
   end
 
   def month_chart
@@ -132,7 +132,7 @@ class AttendancesController < ApplicationController
     else
       g = AttendanceHistoryGraph.new.month_chart
     end
-    send_data(g, :disposition => 'inline', :type => 'image/png', :filename => 'RJJK_Oppmøtehistorikk.png')
+    send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Oppmøtehistorikk.png')
   end
 
   def announce
@@ -167,7 +167,7 @@ class AttendancesController < ApplicationController
         render partial: 'plan_practice', locals: { gs: practice.group_schedule,
                 year: year, week: week, attendance: @attendance }
       else
-        render :partial => 'attendance_delete_link', :locals => { :attendance => @attendance }
+        render partial: 'attendance_delete_link', locals: { attendance: @attendance }
       end
     else
       back_or_redirect_to(@attendance)
@@ -302,9 +302,9 @@ class AttendancesController < ApplicationController
             .select { |gi| @dates.any? { |d| gi.active?(d) } }.map(&:member).uniq
 
         current_members = @group.members.active(first_date, last_date)
-            .includes({ :attendances => { :practice => :group_schedule }, :graduates => [:graduation, :rank], :groups => :group_schedules }, :nkf_member)
+            .includes({ attendances: { practice: :group_schedule }, graduates: [:graduation, :rank], groups: :group_schedules }, :nkf_member)
         attended_members = Member.references(:practices)
-            .includes(:attendances => { :practice => :group_schedule }, :graduates => [:graduation, :rank])
+            .includes(attendances: { practice: :group_schedule }, graduates: [:graduation, :rank])
             .where('members.id NOT IN (?) AND practices.group_schedule_id IN (?) AND (year > ? OR ( year = ? AND week >= ?)) AND (year < ? OR ( year = ? AND week <= ?))',
                 @instructors.map(&:id), @group.group_schedules.map(&:id), first_date.cwyear, first_date.cwyear, first_date.cweek, last_date.cwyear, last_date.cwyear, last_date.cweek)
             .to_a
@@ -336,7 +336,7 @@ class AttendancesController < ApplicationController
 
     @birthdate_missing = @members.empty? || @members.find { |m| m.birthdate.nil? }
 
-    render :layout => 'print'
+    render layout: 'print'
   end
 
   def month_per_year_chart
@@ -350,6 +350,6 @@ class AttendancesController < ApplicationController
       size = '800x600'
     end
     g = AttendanceHistoryGraph.new.month_per_year_chart params[:month].to_i, size
-    send_data(g, :disposition => 'inline', :type => 'image/png', :filename => 'RJJK_Oppmøtehistorikk.png')
+    send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Oppmøtehistorikk.png')
   end
 end

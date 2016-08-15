@@ -8,7 +8,7 @@ class PublicRecordMailer < ActionMailer::Base
     @record = record
     @title = 'Ny informasjon registrert i Brønnøysund'
     @chairman = Member.find_by_first_name_and_last_name('Uwe', 'Kubosch')
-    @email_url = with_login(@chairman.user, :controller => :public_records, :action => :index)
+    @email_url = with_login(@chairman.user, controller: :public_records, action: :index)
     mail subject: rjjk_prefix(@title),
          to: Rails.env == 'production' ? @chairman.email : "\"#{@chairman.name}\" <uwe@kubosch.no>"
   end

@@ -44,7 +44,7 @@ class RanksController < ApplicationController
       redirect_to action: :index
     else
       new
-      render :action => 'new'
+      render action: 'new'
     end
   end
 
@@ -67,6 +67,6 @@ class RanksController < ApplicationController
 
   def destroy
     Rank.find(params[:id]).destroy
-    redirect_to :action => 'index'
+    redirect_to action: 'index'
   end
 end

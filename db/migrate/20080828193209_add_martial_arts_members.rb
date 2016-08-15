@@ -1,8 +1,8 @@
 class AddMartialArtsMembers < ActiveRecord::Migration
   def self.up
-    create_table :martial_arts_members, :id => false do |t|
-      t.integer :martial_art_id, :null => false
-      t.integer :member_id, :null => false
+    create_table :martial_arts_members, id: false do |t|
+      t.integer :martial_art_id, null: false
+      t.integer :member_id, null: false
     end
     Member.all.each do |m|
       ma = MartialArt.find_by_family(m.department || 'Jujutsu')
@@ -16,8 +16,8 @@ class AddMartialArtsMembers < ActiveRecord::Migration
   end
 
   def self.down
-    add_column :members, :department, :string, :limit => 100
-    add_column :cms_members, :department, :string, :limit => 100
+    add_column :members, :department, :string, limit: 100
+    add_column :cms_members, :department, :string, limit: 100
     Member.all.each do |m|
       m.department = m.martial_arts[0].family
       m.save!

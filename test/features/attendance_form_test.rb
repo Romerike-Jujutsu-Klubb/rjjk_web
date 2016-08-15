@@ -45,7 +45,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
         uwe_row.all('td').map(&:text)
     assert_difference 'Attendance.count' do
       uwe_row.find('td:nth-of-type(4)').find('a').click
-      uwe_row.find('td:nth-of-type(4)').find('a', :text => 'X')
+      uwe_row.find('td:nth-of-type(4)').find('a', text: 'X')
     end
 
     # Attendance 'X' NOT present
@@ -82,7 +82,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
           erik_row.all('td').map(&:text)
       assert_difference 'TrialAttendance.count' do
         erik_row.find('td:nth-of-type(4)').find('a').click
-        erik_row.find('td:nth-of-type(4)').find('a', :text => 'X')
+        erik_row.find('td:nth-of-type(4)').find('a', text: 'X')
       end
     end
     assert_difference 'TrialAttendance.count' do
@@ -93,7 +93,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
           hans_row.all('td').map(&:text)
       assert_difference 'TrialAttendance.count' do
         hans_row.find('td:nth-of-type(4)').find('a').click
-        hans_row.find('td:nth-of-type(4)').find('a', :text => 'X')
+        hans_row.find('td:nth-of-type(4)').find('a', text: 'X')
       end
     end
   end

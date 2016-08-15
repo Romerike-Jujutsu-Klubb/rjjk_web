@@ -75,19 +75,19 @@ class MembersController < ApplicationController
     else
       g = MemberAgeChart.chart
     end
-    send_data(g, :disposition => 'inline', :type => 'image/png', :filename => 'RJJK_Aldersfordeling.png')
+    send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Aldersfordeling.png')
   end
 
   def list_inactive
     @members = Member.where('left_on IS NOT NULL').order('last_name')
         .paginate(page: params[:page], per_page: Member::MEMBERS_PER_PAGE)
     @member_count = Member.where('left_on IS NOT NULL').count
-    render :action => :index
+    render action: :index
   end
 
   def excel_export
     @members = Member.active.to_a
-    render :layout => false
+    render layout: false
   end
 
   def new
@@ -100,10 +100,10 @@ class MembersController < ApplicationController
     update_memberships
     if @member.save
       flash[:notice] = 'Medlem opprettet.'
-      redirect_to :action => :edit, :id => @member.id
+      redirect_to action: :edit, id: @member.id
     else
       new
-      render :action => 'new'
+      render action: 'new'
     end
   end
 
@@ -115,21 +115,21 @@ class MembersController < ApplicationController
     @member = Member.new(attributes)
     if @member.save
       flash[:notice] = 'Medlem opprettet.'
-      redirect_to :action => :edit, :id => @member.id
+      redirect_to action: :edit, id: @member.id
     else
       new
-      render :action => 'new'
+      render action: 'new'
     end
   end
 
   def show
     edit
-    render :action => :edit
+    render action: :edit
   end
 
   def edit
     @member = Member.find(params[:id])
-    @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').where(:closed_on => nil).to_a
+    @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').where(closed_on: nil).to_a
     @groups |= @member.groups
   end
 
@@ -164,7 +164,7 @@ class MembersController < ApplicationController
     end
     # EMXIF
 
-    redirect_to :action => 'index'
+    redirect_to action: 'index'
   end
 
   def NKF_report
@@ -205,8 +205,8 @@ class MembersController < ApplicationController
       end
     end
     send_data(output,
-        :type => content_type,
-        :filename => 'Epostliste.csv')
+        type: content_type,
+        filename: 'Epostliste.csv')
   end
 
   def income
@@ -217,11 +217,11 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id])
     if @member.image?
       send_data(@member.image.data,
-          :disposition => 'inline',
-          :type => @member.image.content_type,
-          :filename => @member.image.filename)
+          disposition: 'inline',
+          type: @member.image.content_type,
+          filename: @member.image.filename)
     else
-      render :text => 'Bilde mangler'
+      render text: 'Bilde mangler'
     end
   end
 
@@ -229,11 +229,11 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id])
     if thumbnail = @member.thumbnail
       send_data(thumbnail,
-          :disposition => 'inline',
-          :type => @member.image.content_type,
-          :filename => @member.image.name)
+          disposition: 'inline',
+          type: @member.image.content_type,
+          filename: @member.image.name)
     else
-      render :text => 'Bilde mangler'
+      render text: 'Bilde mangler'
     end
   end
 
@@ -251,26 +251,26 @@ class MembersController < ApplicationController
     member = Member.find(params[:id])
     @name = "#{member.first_name} #{member.last_name}"
     @email = member.invoice_email
-    render :layout => 'print'
+    render layout: 'print'
   end
 
   def trial_missing_contract
     @trial = NkfMemberTrial.find(params[:id])
     @name = "#{@trial.fornavn} #{@trial.etternavn}"
     @email = @trial.epost_faktura || @trial.epost
-    render :missing_contract, :layout => 'print'
+    render :missing_contract, layout: 'print'
   end
 
   def add_group
     @member = Member.find(params[:id])
     @member.groups << Group.find(params[:group_id])
-    redirect_to :controller => :nkf_members, :action => :comparison, :id => 0
+    redirect_to controller: :nkf_members, action: :comparison, id: 0
   end
 
   def remove_group
     @member = Member.find(params[:id])
     @member.groups.delete(Group.find(params[:group_id]))
-    redirect_to :controller => :nkf_members, :action => :comparison, :id => 0
+    redirect_to controller: :nkf_members, action: :comparison, id: 0
   end
 
   def map
@@ -304,7 +304,7 @@ class MembersController < ApplicationController
   end
 
   def member_count(male, from_age, to_age)
-    Member.count(:conditions => "left_on IS NULL AND male = #{male} AND birthdate <= '#{year_end(from_age)}' AND birthdate >= '#{year_start(to_age)}'")
+    Member.count(conditions: "left_on IS NULL AND male = #{male} AND birthdate <= '#{year_end(from_age)}' AND birthdate >= '#{year_start(to_age)}'")
   end
 
   def update_memberships

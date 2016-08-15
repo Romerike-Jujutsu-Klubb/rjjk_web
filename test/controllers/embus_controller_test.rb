@@ -43,7 +43,7 @@ class EmbusControllerTest < ActionController::TestCase
 
   test 'should update embu' do
     put :update, id: @embu, embu: @embu.attributes
-    assert_redirected_to edit_embu_path(assigns(:embu), :notice => 'Embu was successfully updated.')
+    assert_redirected_to edit_embu_path(assigns(:embu), notice: 'Embu was successfully updated.')
   end
 
   test 'should destroy embu' do

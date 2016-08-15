@@ -1,7 +1,7 @@
 class CreateDocuments < ActiveRecord::Migration
   def self.up
     create_table :documents do |t|
-      t.binary :content, :null => false
+      t.binary :content, null: false
       t.timestamps
     end
   end

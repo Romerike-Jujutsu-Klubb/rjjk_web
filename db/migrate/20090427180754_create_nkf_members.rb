@@ -29,11 +29,11 @@ class CreateNkfMembers < ActiveRecord::Migration
       t.string :gren_stilart_avd_parti___gren_stilart_avd_parti
       t.string :sist_betalt_dato
       t.string :betalt_t_o_m__dato
-      t.string :konkurranseomrade_id, :references => nil
+      t.string :konkurranseomrade_id, references: nil
       t.string :konkurranseomrade_navn
-      t.string :klubb_id, :references => nil
+      t.string :klubb_id, references: nil
       t.string :klubb
-      t.integer :hovedmedlem_id, :references => nil
+      t.integer :hovedmedlem_id, references: nil
       t.string :hovedmedlem_navn
       t.string :innmeldtdato
       t.string :innmeldtarsak

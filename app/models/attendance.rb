@@ -44,7 +44,7 @@ class Attendance < ActiveRecord::Base
   accepts_nested_attributes_for :practice
 
   validates_presence_of :member_id, :status
-  validates_uniqueness_of :member_id, :scope => :practice_id
+  validates_uniqueness_of :member_id, scope: :practice_id
 
   validate on: :update do
     errors.add(:status, 'kan ikke endres for treningen du var på.') if status_was == Status::ATTENDED && status == Status::WILL_ATTEND

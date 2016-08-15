@@ -18,7 +18,7 @@ class EventsControllerTest < ActionController::TestCase
 
   def test_should_create_event
     assert_difference('Event.count') do
-      post :create, :event => { :name => 'Stuff', :start_at => '2012-02-18' }
+      post :create, event: { name: 'Stuff', start_at: '2012-02-18' }
       assert_no_errors :event
     end
 

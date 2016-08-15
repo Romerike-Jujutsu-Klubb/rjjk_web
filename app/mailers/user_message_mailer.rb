@@ -5,8 +5,8 @@ class UserMessageMailer < ActionMailer::Base
   def send_message(um)
     @title = um.subject
     url_key = ERB::Util.url_encode(um.key)
-    @email_url = { :controller => :user_messages, :action => :show,
-        :id => um.id, :key => url_key, :only_path => false }
+    @email_url = { controller: :user_messages, action: :show,
+        id: um.id, key: url_key, only_path: false }
 
     if (html_body = um.html_body)
       modify_links(html_body, url_key)

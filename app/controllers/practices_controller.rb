@@ -2,7 +2,7 @@ class PracticesController < ApplicationController
   # GET /practices
   # GET /practices.json
   def index
-    @practices = Practice.includes(:group_schedule => :group).references(:group_schedules)
+    @practices = Practice.includes(group_schedule: :group).references(:group_schedules)
         .order('year DESC, week DESC, group_schedules.weekday DESC, end_at DESC, start_at DESC, name').to_a
 
     respond_to do |format|

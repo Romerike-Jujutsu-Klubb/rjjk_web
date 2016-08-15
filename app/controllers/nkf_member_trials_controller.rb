@@ -6,7 +6,7 @@ class NkfMemberTrialsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @nkf_member_trials }
+      format.xml  { render xml: @nkf_member_trials }
     end
   end
 
@@ -15,7 +15,7 @@ class NkfMemberTrialsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @nkf_member_trial }
+      format.xml  { render xml: @nkf_member_trial }
     end
   end
 
@@ -24,7 +24,7 @@ class NkfMemberTrialsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @nkf_member_trial }
+      format.xml  { render xml: @nkf_member_trial }
     end
   end
 
@@ -39,7 +39,7 @@ class NkfMemberTrialsController < ApplicationController
         flash[:notice] = 'NkfMemberTrial was successfully created.'
         redirect_to(@nkf_member_trial)
       else
-        render :action => "new"
+        render action: "new"
       end
   end
 
@@ -52,8 +52,8 @@ class NkfMemberTrialsController < ApplicationController
         format.html { redirect_to(@nkf_member_trial) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @nkf_member_trial.errors, :status => :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.xml  { render xml: @nkf_member_trial.errors, status: :unprocessable_entity }
       end
     end
   end

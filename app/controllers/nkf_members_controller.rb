@@ -2,7 +2,7 @@ class NkfMembersController < ApplicationController
   before_filter :admin_required
 
   # FIXME(uwe):  Verify caching
-  cache_sweeper :member_sweeper, :only => [:create_member, :update_member]
+  cache_sweeper :member_sweeper, only: [:create_member, :update_member]
 
   def index
     @nkf_members = NkfMember.order(:fornavn, :etternavn).to_a
@@ -11,7 +11,7 @@ class NkfMembersController < ApplicationController
   def show
     if params[:id] && respond_to?(params[:id])
       send params[:id]
-      render :action => params[:id] unless response_body
+      render action: params[:id] unless response_body
       return
     end
     @nkf_member = NkfMember.find(params[:id])
@@ -31,7 +31,7 @@ class NkfMembersController < ApplicationController
       flash[:notice] = 'NkfMember was successfully created.'
       redirect_to(@nkf_member)
     else
-      render :action => "new"
+      render action: "new"
     end
   end
 
@@ -41,9 +41,9 @@ class NkfMembersController < ApplicationController
       flash[:notice] = 'NkfMember was successfully updated.'
       # redirect_to(@nkf_member)
       # redirect_to nkf_members_path
-      redirect_to :action => :comparison, :id => 0
+      redirect_to action: :comparison, id: 0
     else
-      render :action => "edit"
+      render action: "edit"
     end
   end
 
@@ -68,7 +68,7 @@ class NkfMembersController < ApplicationController
     else
       flash[:notice] = 'Member creation failed.'
     end
-    redirect_to :action => :comparison, :id => 0
+    redirect_to action: :comparison, id: 0
   end
 
   def update_member
@@ -78,7 +78,7 @@ class NkfMembersController < ApplicationController
     else
       flash[:notice] = 'Member update failed.'
     end
-    redirect_to :action => :comparison, :id => 0
+    redirect_to action: :comparison, id: 0
   end
 
   def import
@@ -86,11 +86,11 @@ class NkfMembersController < ApplicationController
     flash[:notice] = "#{import.changes.size} records imported, #{html_escape(import.error_records.size.to_s)} failed, #{import.import_rows.size - import.changes.size - import.error_records.size} skipped" +
         (import.error_records.any? ? "<br>#{html_escape(import.error_records.map { |r| [r, r.errors.full_messages] }.inspect)}" : '')
 
-    redirect_to :action => :comparison
+    redirect_to action: :comparison
   end
 
   def age_vs_contract
-    members = NkfMember.where(:medlemsstatus => 'A').to_a
+    members = NkfMember.where(medlemsstatus: 'A').to_a
     @wrong_contracts = members.select { |m|
       (m.member.age < 10 && m.kont_sats !~ /^Barn/) ||
           (m.member.age >= 10 && m.member.age < 15 && m.kont_sats !~ /^Ungdom/) ||
