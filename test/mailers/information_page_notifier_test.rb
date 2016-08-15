@@ -24,21 +24,18 @@ class InformationPageNotifierTest < ActionMailer::TestCase
     assert_equal '[RJJK][TEST] Til info: My first article', mail.subject
     assert_equal ["\"Lars Bråten\" <lars@example.com>"], mail.to
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_match 'My first article', mail.body
     assert_match 'A very interresting topic!', mail.body
 
     email = UserMessage.pending[1]
     assert_equal '[RJJK][TEST] Til info: My first article', email.subject
     assert_equal ["\"Newbie Neuer\" <newbie@example.com>"], email.to
     assert_equal %w(test@jujutsu.no), email.from
-    assert_match 'My first article', email.body
     assert_match 'A very interresting topic!', email.body
 
     email = UserMessage.pending[2]
     assert_equal '[RJJK][TEST] Til info: My first article', email.subject
     assert_equal ["\"Uwe Kubosch\" <admin@test.com>"], email.to
     assert_equal %w(test@jujutsu.no), email.from
-    assert_match 'My first article', email.body
     assert_match 'A very interresting topic!', email.body
   end
 
@@ -54,14 +51,12 @@ class InformationPageNotifierTest < ActionMailer::TestCase
     assert_equal '[RJJK][TEST] Til info: My first article', email.subject
     assert_equal ["\"Lars Bråten\" <lars@example.com>"], email.to
     assert_equal %w(test@jujutsu.no), email.from
-    assert_match 'My first article', email.body
     assert_match 'A very interresting topic!', email.body
 
     email = UserMessage.pending[1]
     assert_equal '[RJJK][TEST] Til info: My first article', email.subject
     assert_equal ["\"Newbie Neuer\" <newbie@example.com>"], email.to
     assert_equal %w(test@jujutsu.no), email.from
-    assert_match 'My first article', email.body
     assert_match 'A very interresting topic!', email.body
   end
 end

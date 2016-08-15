@@ -1,6 +1,5 @@
 require 'user_system'
 require 'user'
-require 'user_notify'
 require 'member'
 
 class CreateMemberImages < ActiveRecord::Migration
@@ -29,7 +28,7 @@ class CreateMemberImages < ActiveRecord::Migration
         m.update_attributes! user_id: u.id
         puts "Created user: #{u.inspect}"
         unless m.left_on || m.birthdate > 13.years.ago.to_date
-          UserNotify.created_from_member(u, password).store(u.id, tag: :user_from_member)
+          UserMailer.created_from_member(u, password).store(u.id, tag: :user_from_member)
           puts "Sent email"
         end
       end

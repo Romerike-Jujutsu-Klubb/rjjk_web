@@ -55,7 +55,7 @@
         <tr>
           <td align="left" style="padding:10px 0 10px 10px; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#888888;text-align: center;">
             <% if @email_url %>
-                <%= link_to 'Klikk her', {only_path: false, email: Base64.encode64(@user_email || '')}.merge(@email_url), style: 'color: #454545' %>
+                <%= link_to 'Klikk her', @email_url, style: 'color: #454545' %>
                 hvis du har problemer med å lese e-posten.
             <% end %>
           </td>
@@ -104,10 +104,6 @@
             For å forsikre om at nyhetsbrevene våre kommer fram, legg
             <a href='mailto:"Romerike Jujutsu Klubb" <<%=mailer.message.from.first%>>' style="color:#545454;text-decoration: none;font-weight: bold;"><%=mailer.message.from.first%></a>
             i adresseboken din.
-            <!--
-            <br/><%= link_to 'Ikke send', {:only_path => false, :controller => :newsletters, :action => :unsubscribe, :email => Base64.encode64(@user_email || '')}, :style => 'color: #545454;text-decoration: none;font-weight: bold;' %>
-            flere nyhetsbrev til meg
-            -->
           </td>
         </tr>
       </table>

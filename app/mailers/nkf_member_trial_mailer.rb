@@ -1,6 +1,6 @@
 class NkfMemberTrialMailer < ActionMailer::Base
   include MailerHelper
-  layout 'email'
+
   default from: noreply_address,
           to: Rails.env == 'production' ? %w(medlem@jujutsu.no uwe@kubosch.no) : '"medlem@jujutsu.no" <uwe@kubosch.no>'
 

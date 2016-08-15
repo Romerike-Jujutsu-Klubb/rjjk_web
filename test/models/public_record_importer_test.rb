@@ -14,7 +14,7 @@ class PublicRecordImporterTest < ActionMailer::TestCase
     assert_equal '[RJJK][TEST] Ny informasjon registrert i Brønnøysund', mail.subject
     assert_equal ["\"Uwe Kubosch\" <admin@test.com>"], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
-    assert_match(/Ny informasjon registrert i Brønnøysund.*Hei Uwe!.*Her er oppdatert informasjon fra Brønnøysundregisteret:.*Kontaktperson:.*Svein Robert Rolijordet.*Styreleder:.*Svein Robert Rolijordet.*Styremedlemmer:.*Trond Even Evensen.*Katarzyna Anna Krohn.*Torstein Norum Resløkken.*Varamedlemmer:.*Lars Erling Bråten.*Curt Birger Holm Mekiassen/m,
+    assert_match(/Hei Uwe!.*Her er oppdatert informasjon fra Brønnøysundregisteret:.*Kontaktperson:.*Svein Robert Rolijordet.*Styreleder:.*Svein Robert Rolijordet.*Styremedlemmer:.*Trond Even Evensen.*Katarzyna Anna Krohn.*Torstein Norum Resløkken.*Varamedlemmer:.*Lars Erling Bråten.*Curt Birger Holm Mekiassen/m,
         mail.body)
   rescue SocketError
   end

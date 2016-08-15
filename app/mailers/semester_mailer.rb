@@ -1,6 +1,6 @@
 class SemesterMailer < ActionMailer::Base
   include MailerHelper
-  layout 'email'
+
   default from: noreply_address, to: 'uwe@kubosch.no', bcc: 'uwe@kubosch.no'
 
   def missing_current_semester(recipient)

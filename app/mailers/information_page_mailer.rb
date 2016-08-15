@@ -1,7 +1,7 @@
 class InformationPageMailer < ActionMailer::Base
   include UserSystem
   include MailerHelper
-  layout 'email'
+
   default from: noreply_address
 
   def notify_outdated_pages(member, pages)

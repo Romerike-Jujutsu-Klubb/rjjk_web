@@ -6,7 +6,6 @@ class SurveyMailerTest < ActionMailer::TestCase
     assert_equal '[RJJK][TEST] First survey', mail.subject
     assert_equal ['uwe@kubosch.no'], mail.to
     assert_equal ['test@jujutsu.no'], mail.from
-    assert_match 'First survey', mail.body.encoded
   end
 
   test 'reminder' do

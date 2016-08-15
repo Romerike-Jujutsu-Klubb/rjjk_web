@@ -1,5 +1,6 @@
-class UserNotify < ActionMailer::Base
-  layout 'email'
+class UserMailer < ActionMailer::Base
+  include MailerHelper
+
   default from: UserSystem::CONFIG[:email_from].to_s
 
   def signup(user, password, url = nil)
@@ -58,9 +59,7 @@ class UserNotify < ActionMailer::Base
   private
 
   def setup_email(user)
-    @recipients = Rails.env != 'production' ?
-        %("#{user.emails.join(' ').gsub(/["<>]/, '')}" <uwe@kubosch.no>) :
-        user.emails
+    @recipients = safe_email(user)
     @subject = "[#{UserSystem::CONFIG[:app_name]}] "
     @sent_on = Time.now
   end

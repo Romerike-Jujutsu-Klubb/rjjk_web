@@ -1,13 +1,17 @@
 class UserMessageMailer < ActionMailer::Base
   include MailerHelper
-  default from: 'no-reply@jujutsu.no'
+
+  default from: noreply_address
 
   def send_message(um)
-    @title = um.subject
-    url_key = ERB::Util.url_encode(um.key)
-    @email_url = { controller: :user_messages, action: :show,
-        id: um.id, key: url_key, only_path: false }
+    @title = um.title || um.subject
+    @user_email = um.user_email
+    @email_url = { only_path: false, email: @user_email && Base64.encode64(@user_email) }
+        .merge(um.email_url || { controller: :user_messages, action: :show,
+            id: um.id, key: um.key })
+    @timestamp = um.message_timestamp
 
+    url_key = ERB::Util.url_encode(um.key)
     if (html_body = um.html_body)
       modify_links(html_body, url_key)
     end
@@ -15,7 +19,7 @@ class UserMessageMailer < ActionMailer::Base
       modify_links(plain_body, url_key)
     end
 
-    mail from: um.from, to: safe_email(um.user), subject: rjjk_prefix(@title) do |format|
+    mail from: um.from, to: safe_email(um.user), subject: rjjk_prefix(um.subject) do |format|
       format.html { render html: html_body, layout: 'email' } if html_body
       format.text { render text: plain_body, layout: 'email' } if plain_body
     end

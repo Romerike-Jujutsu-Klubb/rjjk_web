@@ -1,7 +1,7 @@
 class AnnualMeetingMailer < ActionMailer::Base
   include UserSystem
   include MailerHelper
-  layout 'email'
+
   default from: noreply_address
 
   def missing_date(member, year)

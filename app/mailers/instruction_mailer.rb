@@ -1,6 +1,6 @@
 class InstructionMailer < ActionMailer::Base
   include MailerHelper
-  layout 'email'
+
   default from: noreply_address,
           to: Rails.env == 'production' ? %w(uwe@kubosch.no) : 'uwe@kubosch.no'
 

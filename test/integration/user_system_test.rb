@@ -1,20 +1,6 @@
 require 'test_helper'
-require 'user_controller'
-require 'user_notify'
 
 class UserSystemTest < ActionDispatch::IntegrationTest
-  self.use_transactional_fixtures = false
-  fixtures :users
-
-  setup do
-    Mail::TestMailer.inject_one_error = false
-    Mail::TestMailer.deliveries = []
-  end
-
-  teardown do
-    Mail::TestMailer.deliveries = []
-  end
-
   def test_signup_and_verify
     post url_for(controller: :user, action: :signup),
         user: { login: 'newuser',

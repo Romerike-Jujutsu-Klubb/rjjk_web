@@ -9,11 +9,11 @@ module MailerHelper
     "[RJJK]#{"[#{Rails.env.upcase}]" unless Rails.env.production?} #{subject}".strip
   end
 
-  def safe_email(member)
+  def safe_email(member_or_user)
     if Rails.env.production?
-      member.emails
+      member_or_user.emails
     else
-      %("#{member.name}" <uwe@kubosch.no>)
+      %("#{member_or_user.name}" <uwe@kubosch.no>)
     end
   end
 

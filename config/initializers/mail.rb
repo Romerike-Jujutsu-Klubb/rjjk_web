@@ -10,11 +10,12 @@ class Mail::Message
     else
       user_id = user
     end
-    parts = if body.parts.any?
-              body.parts
-            else
-              [self]
-            end
+    parts =
+        if body.parts.any?
+          body.parts
+        else
+          [self]
+        end
     html_part = plain_part = nil
     parts.each do |part|
       if part.content_type =~ %r{text/html}
@@ -25,8 +26,16 @@ class Mail::Message
         raise "Unknown content type: #{part.content_type.inspect}"
       end
     end
+
+    email_url = JSON.load(header['X-Email-URL']&.value)
+    user_email = header['X-User-Email']&.value
+    title = header['X-Title']&.value
+    timestamp = header['X-Message-Timestamp']&.value
+
     UserMessage.create! user_id: user_id, tag: tag, from: from,
-        subject: subject, html_body: html_part&.body&.decoded,
+        subject: subject, email_url: email_url, user_email: user_email,
+        title: title, message_timestamp: timestamp,
+        html_body: html_part&.body&.decoded,
         plain_body: plain_part&.body&.decoded
   end
 end

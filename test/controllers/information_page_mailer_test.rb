@@ -14,7 +14,6 @@ class InformationPageMailerTest < ActionMailer::TestCase
     assert_equal '[RJJK][TEST] Til info: My first article', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_match 'My first article', mail.body.encoded
     assert_match 'A very interresting topic!', mail.body.encoded
   end
 end

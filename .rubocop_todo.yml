@@ -293,7 +293,7 @@ Style/MultilineTernaryOperator:
     - 'app/mailers/incoming_email_processor.rb'
     - 'app/mailers/information_page_mailer.rb'
     - 'app/mailers/nkf_replication_mailer.rb'
-    - 'app/mailers/user_notify.rb'
+    - 'app/mailers/user_mailer.rb'
     - 'app/models/member_grade_history_graph.rb'
     - 'config/environment.rb'
 

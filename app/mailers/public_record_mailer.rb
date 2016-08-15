@@ -1,7 +1,7 @@
 class PublicRecordMailer < ActionMailer::Base
   include UserSystem
   include MailerHelper
-  layout 'email'
+
   default from: noreply_address
 
   def new_record(record)
