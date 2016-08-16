@@ -66,10 +66,11 @@ class ApplicationController < ActionController::Base
     end
 
     unless @layout_events
-      @layout_events = Event
+      @layout_events = Event.includes(:attending_invitees)
           .where('(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)', Date.today, Date.today)
           .order('start_at, end_at').limit(5).to_a
-      @layout_events += Graduation.where('held_on >= CURRENT_DATE').to_a
+      @layout_events += Graduation.includes(:graduates)
+          .where('held_on >= CURRENT_DATE').to_a
       @layout_events.sort_by!(&:start_at)
     end
     unless @groups

@@ -189,7 +189,7 @@ class Member < ActiveRecord::Base
         .find { |g| g.passed? && g.graduation.held_on < date && (martial_art.nil? || g.rank.martial_art_id == martial_art.id) }
   end
 
-  def attendances_since_graduation(before_date = Date.today, group = nil)
+  def attendances_since_graduation(before_date = Date.today, group = nil, includes: nil)
     groups = group ? [group] : Group.includes(:martial_art).to_a
     queries = groups.map do |g|
       ats = attendances
@@ -197,7 +197,9 @@ class Member < ActiveRecord::Base
       if (c = current_graduate(g.martial_art, before_date))
         ats = ats.after_date(c.graduation.held_on)
       end
-      ats.until_date(before_date)
+      ats = ats.until_date(before_date)
+      ats = ats.includes(includes) if includes
+      ats
     end
     case queries.size
     when 0

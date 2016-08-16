@@ -34,8 +34,8 @@ class Attendance < ActiveRecord::Base
     where('(year = ? AND week >= ?) OR year > ?', limit.year, limit.to_date.cweek, limit.year)
   }
   scope :on_date, -> date { where('year = ? AND week = ?', date.year, date.cweek) }
-  scope :after_date, -> date { includes(practice: :group_schedule).references(:group_schedules).where('year > ? OR (year = ? AND week > ?) OR (year = ? AND week = ? AND group_schedules.weekday > ?)', date.year, date.year, date.cweek, date.year, date.cweek, date.cwday) }
-  scope :until_date, -> date { includes(practice: :group_schedule).references(:group_schedules).where('year < ? OR (year = ? AND week < ?) OR (year = ? AND week = ? AND group_schedules.weekday <= ?)', date.year, date.year, date.cweek, date.year, date.cweek, date.cwday) }
+  scope :after_date, -> date { includes(practice: :group_schedule).references(:group_schedules).where('practices.year > ? OR (practices.year = ? AND practices.week > ?) OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday > ?)', date.year, date.year, date.cweek, date.year, date.cweek, date.cwday) }
+  scope :until_date, -> date { includes(practice: :group_schedule).references(:group_schedules).where('practices.year < ? OR (practices.year = ? AND practices.week < ?) OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday <= ?)', date.year, date.year, date.cweek, date.year, date.cweek, date.cwday) }
 
   belongs_to :member
   belongs_to :practice

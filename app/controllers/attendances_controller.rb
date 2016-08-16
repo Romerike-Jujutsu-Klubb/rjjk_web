@@ -217,7 +217,9 @@ class AttendancesController < ApplicationController
       [t(:date)[:month_names][ym[1]], *@attended_groups.map { |g| (per_group[g] || []).size }]
     end
     if member.current_rank
-      attendances_since_graduation = member.attendances_since_graduation
+      attendances_since_graduation = member
+          .attendances_since_graduation(includes: { group_schedule: :group })
+          .to_a
       unless attendances_since_graduation.empty?
         by_group = attendances_since_graduation.group_by { |a| a.group_schedule.group }
         @months << ['Siden gradering', *@attended_groups.map { |g| (by_group[g] || []).size }]

@@ -2,6 +2,7 @@ class Event < ActiveRecord::Base
   scope :chronological, -> { order :start_at }
 
   has_many :event_invitees, dependent: :destroy
+  has_many :attending_invitees, ->{where(will_attend: true)}, dependent: :destroy
   has_many :event_messages, dependent: :destroy
   has_many :users, through: :event_invitees
   has_and_belongs_to_many :groups
@@ -55,6 +56,6 @@ class Event < ActiveRecord::Base
   end
 
   def size
-    event_invitees.select(&:will_attend).size
+    attending_invitees.size
   end
 end
