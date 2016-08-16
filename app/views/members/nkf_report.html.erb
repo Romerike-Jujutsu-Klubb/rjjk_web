@@ -1,0 +1,38 @@
+<h1>NKF Rapport</h1>
+
+<table border="1">
+	<tr>
+		<th align="left">Kjønn </th>
+		<th align="center" colspan="4">Kvinner</th>
+		<th align="center" colspan="4">Menn</th>
+		<th>Totalt</th>
+	</tr>
+	<tr>
+		<th align="left">Alderstrinn</th>
+		<th>6-12</th>
+		<th>13-19</th>
+		<th>20-25</th>
+		<th>26-</th>
+		<th>6-12</th>
+		<th>13-19</th>
+		<th>20-25</th>
+		<th>26-</th>
+	</tr>
+	<tr>
+		<th align="left">Medlemmer</th>
+		<td align="center"><%=@female_six_twelve%></td>
+		<td align="center"><%=@female_thirteen_nineteen%></td>
+		<td align="center"><%=@female_twenty_twentyfive%></td>
+		<td align="center"><%=@female_twentysix_and_over%></td>
+		<td align="center"><%=@male_six_twelve%></td>
+		<td align="center"><%=@male_thirteen_nineteen%></td>
+		<td align="center"><%=@male_twenty_twentyfive%></td>
+		<td align="center"><%=@male_twentysix_and_over%></td>
+		<td align="center"><%=@female_six_twelve + @female_thirteen_nineteen + @female_twenty_twentyfive + 
+		@female_twentysix_and_over + @male_six_twelve + @male_thirteen_nineteen + @male_twenty_twentyfive + 
+		@male_twentysix_and_over%></td>
+	</tr>
+	
+</table>
+
+<%=render :partial => 'incomplete' %>
