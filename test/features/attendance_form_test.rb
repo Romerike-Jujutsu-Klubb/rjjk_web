@@ -25,7 +25,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
     assert_equal ['Uwe Kubosch',
             'Totalt 1',
             'Lars Bråten',
-            'Erik Hansen MyString',
+            'Erik Hansen NKF_mt_two@example.com',
             'Hans Eriksen faktura@eriksen.org',
             'Totalt 3'], all('tr td:first-child').map(&:text).reject(&:blank?)
   end
@@ -35,7 +35,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
     assert_equal ['Uwe Kubosch',
             'Totalt 1',
             'Lars Bråten',
-            'Erik Hansen MyString',
+            'Erik Hansen NKF_mt_two@example.com',
             'Hans Eriksen faktura@eriksen.org',
             'Totalt 3'], all('tr td:first-child').map(&:text).reject(&:blank?)
 
@@ -77,7 +77,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
     assert_difference 'TrialAttendance.count' do
       erik_row = find('table:first-of-type tbody tr:nth-of-type(6)')
       assert erik_row
-      assert_equal ['Erik Hansen MyString', '7',
+      assert_equal ['Erik Hansen NKF_mt_two@example.com', '7',
               'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', '', '', '', ''],
           erik_row.all('td').map(&:text)
       assert_difference 'TrialAttendance.count' do

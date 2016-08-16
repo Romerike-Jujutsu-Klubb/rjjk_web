@@ -8,6 +8,6 @@ class InstructionMailer < ActionMailer::Base
     @chief_semesters = missing_chief_instructions
     @semesters = missing_instructions.group_by(&:group_semester)
     @title = 'Treningsgrupper som mangler instruktør'
-    mail subject: rjjk_prefix(@title)
+    mail subject: @title
   end
 end

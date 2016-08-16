@@ -20,7 +20,7 @@ class NewsletterMailer < ActionMailer::Base
   def newsletter(news_item, member)
     @news_item = news_item
     @user = member.user
-    mail to: safe_email(member), subject: rjjk_prefix(@news_item.title)
+    mail to: member.email, subject: @news_item.title
   end
 
   def event_invitee_message(event_invitee_message)
@@ -30,7 +30,7 @@ class NewsletterMailer < ActionMailer::Base
     @subject = event_invitee_message.subject
     @body = event_invitee_message.body
 
-    mail to: safe_email(@event_invitee), subject: rjjk_prefix(@subject),
+    mail to: @event_invitee.email, subject: @subject,
         bcc: 'Uwe Kubosch <uwe@kubosch.no>'
   end
 end

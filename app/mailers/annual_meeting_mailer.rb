@@ -11,7 +11,7 @@ class AnnualMeetingMailer < ActionMailer::Base
 
     @email_url = with_login(@member.user, controller: :annual_meetings,
         action: :new, annual_meeting: {})
-    mail subject: rjjk_prefix(@title), to: safe_email(@member)
+    mail subject: @title, to: @member.email
   end
 
   def missing_invitation(annual_meeting, member)
@@ -21,6 +21,6 @@ class AnnualMeetingMailer < ActionMailer::Base
     @timestamp = annual_meeting.start_at
     @email_url = with_login(@member.user, controller: :annual_meetings,
         action: :show, id: annual_meeting.id)
-    mail subject: rjjk_prefix(@title), to: safe_email(@member)
+    mail subject: @title, to: @member.email
   end
 end

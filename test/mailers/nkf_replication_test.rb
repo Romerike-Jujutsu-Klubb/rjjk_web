@@ -12,7 +12,7 @@ class NkfReplicationTest < ActionMailer::TestCase
     import.stubs(:exception).returns(nil)
 
     mail = NkfReplicationMailer.import_changes(import)
-    assert_equal '[RJJK][TEST] Hentet 1 endringer fra NKF', mail.subject
+    assert_equal 'Hentet 1 endringer fra NKF', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_match(/NKF Import\s+Endringer fra NKF-portalen.\s+/, mail.body.encoded)
@@ -25,7 +25,7 @@ class NkfReplicationTest < ActionMailer::TestCase
     comparison.stubs(:group_changes).returns(mock(first_name: 'hhh', last_name: 'dfgfg') => [[mock('added_group', name: 'hhgf')], [mock('removed_group', name: 'abc')]])
     comparison.stubs(:errors).returns([])
     mail = NkfReplicationMailer.update_members(comparison)
-    assert_equal '[RJJK][TEST] Oppdateringer fra NKF: 1 nye, 1 endrede, 1 gruppeendringer', mail.subject
+    assert_equal 'Oppdateringer fra NKF: 1 nye, 1 endrede, 1 gruppeendringer', mail.subject
     assert_equal %w(uwe@kubosch.no), mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_match(/Opprettet følgende nye medlemmer:\s+Erik Hansen\s+Oppdaterte følgende eksisterende medlemmer:\s+Erik Hansen\s+first_name: "H" => "a"\s+Gruppemedlemskap:\s+hhh dfgfg\s+Lagt til: hhgf\s+Fjernet : abc/,

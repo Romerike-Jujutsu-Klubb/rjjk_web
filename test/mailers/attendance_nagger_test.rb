@@ -5,7 +5,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_mail_stored(2) { AttendanceNagger.send_attendance_plan }
 
     mail = UserMessage.pending[0]
-    assert_equal '[RJJK][TEST] Kommer du?', mail.subject
+    assert_equal 'Kommer du?', mail.subject
     assert_equal ["\"Lars Bråten\" <lars@example.com>"],
         mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
@@ -13,7 +13,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
         mail.body
 
     mail = UserMessage.pending[1]
-    assert_equal '[RJJK][TEST] Kommer du?', mail.subject
+    assert_equal 'Kommer du?', mail.subject
     assert_equal ["\"Newbie Neuer\" <newbie@example.com>"], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_match %r{Følg linken til\s*<a href="http://example.com/mitt/oppmote\?key=[0-9a-f]{40}">Mitt oppmøte</a>},
@@ -30,14 +30,14 @@ class AttendanceNaggerTest < ActionMailer::TestCase
       assert_mail_stored(2) { AttendanceNagger.send_message_reminder }
 
       mail = UserMessage.pending[0]
-      assert_equal '[RJJK][TEST] Tema for morgendagens trening for Panda',
+      assert_equal 'Tema for morgendagens trening for Panda',
           mail.subject
       assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
       assert_equal %w(noreply@test.jujutsu.no), mail.from
       assert_match 'Har du en melding til de som skal trene i morgen?', mail.body
 
       mail = UserMessage.pending[1]
-      assert_equal '[RJJK][TEST] Tema for morgendagens trening for Panda',
+      assert_equal 'Tema for morgendagens trening for Panda',
           mail.subject
       assert_equal ["\"Uwe Kubosch\" <admin@test.com>"], mail.to
       assert_equal %w(noreply@test.jujutsu.no), mail.from
@@ -49,19 +49,19 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_mail_stored(3) { AttendanceNagger.send_attendance_summary }
 
     mail = UserMessage.pending[0]
-    assert_equal '[RJJK][TEST] Trening i kveld: 1 deltaker påmeldt', mail.subject
+    assert_equal 'Trening i kveld: 1 deltaker påmeldt', mail.subject
     assert_equal ["\"Uwe Kubosch\" <admin@test.com>"], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_match "<ul>\n      <li>Uwe Kubosch</li>\n</ul>", mail.html_body
 
     mail = UserMessage.pending[1]
-    assert_equal '[RJJK][TEST] Trening i kveld: 1 deltaker påmeldt', mail.subject
+    assert_equal 'Trening i kveld: 1 deltaker påmeldt', mail.subject
     assert_equal ["\"Lars Bråten\" <lars@example.com>"], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_match "<ul>\n      <li>Uwe Kubosch</li>\n</ul>", mail.html_body
 
     mail = UserMessage.pending[2]
-    assert_equal '[RJJK][TEST] Trening i kveld: 1 deltaker påmeldt', mail.subject
+    assert_equal 'Trening i kveld: 1 deltaker påmeldt', mail.subject
     assert_equal ["\"Newbie Neuer\" <newbie@example.com>"], mail.to
     assert_equal ["noreply@test.jujutsu.no"], mail.from
     assert_match "<ul>\n      <li>Uwe Kubosch</li>\n</ul>", mail.html_body
@@ -71,19 +71,19 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_mail_stored(3) { AttendanceNagger.send_attendance_changes }
 
     mail = UserMessage.pending[0]
-    assert_equal '[RJJK][TEST] Trening i kveld: 1 ny deltaker påmeldt', mail.subject
+    assert_equal 'Trening i kveld: 1 ny deltaker påmeldt', mail.subject
     assert_equal ["\"Uwe Kubosch\" <admin@test.com>"], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_match "Nylig påmeldt</h3>\n\n    <ul>\n          <li>Uwe Kubosch</li>", mail.body
 
     mail = UserMessage.pending[1]
-    assert_equal '[RJJK][TEST] Trening i kveld: 1 ny deltaker påmeldt', mail.subject
+    assert_equal 'Trening i kveld: 1 ny deltaker påmeldt', mail.subject
     assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_match "Nylig påmeldt</h3>\n\n    <ul>\n          <li>Uwe Kubosch</li>", mail.body
 
     mail = UserMessage.pending[2]
-    assert_equal '[RJJK][TEST] Trening i kveld: 1 ny deltaker påmeldt', mail.subject
+    assert_equal 'Trening i kveld: 1 ny deltaker påmeldt', mail.subject
     assert_equal ["\"Newbie Neuer\" <newbie@example.com>"], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_match "Nylig påmeldt</h3>\n\n    <ul>\n          <li>Uwe Kubosch</li>", mail.body
@@ -93,10 +93,10 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     AttendanceNagger.send_attendance_review
     assert_equal 1, UserMessage.pending.size
     mail = UserMessage.pending[0]
-    assert_equal '[RJJK][TEST] Hvordan var treningen?', mail.subject
+    assert_equal 'Hvordan var treningen?', mail.subject
     assert_equal ["\"Uwe Kubosch\" <admin@test.com>"], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
-    assert_match %r{17:45-18:45\s+Panda.*\[<a href="http://example.com/attendances/review/2013/42/84385526/X\?key=.{40}">Var der!</a>\]}m,
+    assert_match %r{17:45-18:45\s+Panda.*\[<a href="http://example.com/attendances/review/2013/42/84385526/X\?key=.{40}">Trente!</a>\]}m,
         mail.body
   end
 end

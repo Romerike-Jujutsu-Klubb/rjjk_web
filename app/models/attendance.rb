@@ -18,7 +18,7 @@ class Attendance < ActiveRecord::Base
   ]
 
   PAST_STATES = [
-      [Status::ATTENDED, 'Var der!', 'thumbs-up', 'success'],
+      [Status::ATTENDED, 'Trente!', 'thumbs-up', 'success'],
       [Status::HOLIDAY, 'Bortreist', 'hand-right', 'warning'],
       [Status::SICK, 'Syk', 'plus', 'danger'],
       [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],

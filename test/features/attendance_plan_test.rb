@@ -13,8 +13,8 @@ class AttendancePlanTest < ActionDispatch::IntegrationTest
         all('td').map(&:text).reject(&:blank?)
 
     first('a.btn').click
-    assert has_css?('a.btn', text: 'Var der!')
-    assert_equal ['Denne uken', 'Var der! Du trente.', 'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '3'],
+    assert has_css?('a.btn', text: 'Trente!')
+    assert_equal ['Denne uken', 'Trente! Du trente.', 'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '3'],
         all('td').map(&:text).reject(&:blank?)
 
     first('a.btn').click

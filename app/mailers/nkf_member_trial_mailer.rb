@@ -8,13 +8,13 @@ class NkfMemberTrialMailer < ActionMailer::Base
     @trial_member = trial_member
     @title = 'Utløpt prøvetid'
     @greeting = 'Hi'
-    mail to: 'to@example.org', subject: rjjk_prefix(@title)
+    mail to: 'to@example.org', subject: @title
   end
 
   def notify_overdue_trials(recipient, trials)
     @recipient = recipient
     @title = 'Utløpt prøvetid'
     @trials = trials
-    mail to: safe_email(recipient), subject: rjjk_prefix(@title)
+    mail to: recipient.email, subject: @title
   end
 end

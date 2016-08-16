@@ -25,7 +25,7 @@ two:
   postnr: 4321
   sted: MyString
   adresse: MyString
-  epost: MyString
+  epost: NKF_mt_two@example.com
   mobil: MyString
   res_sms: false
   reg_dato: 2010-10-03

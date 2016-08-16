@@ -6,7 +6,7 @@ class InformationPageNotifierTest < ActionMailer::TestCase
     assert_equal 1, UserMessage.pending.size
 
     mail = UserMessage.pending[0]
-    assert_equal '[RJJK][TEST] Oppdatering av informasjonssider', mail.subject
+    assert_equal 'Oppdatering av informasjonssider', mail.subject
     assert_equal ["\"Uwe Kubosch\" <admin@test.com>"], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_match 'Føgende sider trengs å sees over:', mail.body
@@ -21,19 +21,19 @@ class InformationPageNotifierTest < ActionMailer::TestCase
     assert_equal 3, UserMessage.pending.size
 
     mail = UserMessage.pending[0]
-    assert_equal '[RJJK][TEST] Til info: My first article', mail.subject
+    assert_equal 'Til info: My first article', mail.subject
     assert_equal ["\"Lars Bråten\" <lars@example.com>"], mail.to
     assert_equal %w(test@jujutsu.no), mail.from
     assert_match 'A very interresting topic!', mail.body
 
     email = UserMessage.pending[1]
-    assert_equal '[RJJK][TEST] Til info: My first article', email.subject
+    assert_equal 'Til info: My first article', email.subject
     assert_equal ["\"Newbie Neuer\" <newbie@example.com>"], email.to
     assert_equal %w(test@jujutsu.no), email.from
     assert_match 'A very interresting topic!', email.body
 
     email = UserMessage.pending[2]
-    assert_equal '[RJJK][TEST] Til info: My first article', email.subject
+    assert_equal 'Til info: My first article', email.subject
     assert_equal ["\"Uwe Kubosch\" <admin@test.com>"], email.to
     assert_equal %w(test@jujutsu.no), email.from
     assert_match 'A very interresting topic!', email.body
@@ -48,13 +48,13 @@ class InformationPageNotifierTest < ActionMailer::TestCase
     assert_equal 2, UserMessage.pending.size
 
     email = UserMessage.pending[0]
-    assert_equal '[RJJK][TEST] Til info: My first article', email.subject
+    assert_equal 'Til info: My first article', email.subject
     assert_equal ["\"Lars Bråten\" <lars@example.com>"], email.to
     assert_equal %w(test@jujutsu.no), email.from
     assert_match 'A very interresting topic!', email.body
 
     email = UserMessage.pending[1]
-    assert_equal '[RJJK][TEST] Til info: My first article', email.subject
+    assert_equal 'Til info: My first article', email.subject
     assert_equal ["\"Newbie Neuer\" <newbie@example.com>"], email.to
     assert_equal %w(test@jujutsu.no), email.from
     assert_match 'A very interresting topic!', email.body

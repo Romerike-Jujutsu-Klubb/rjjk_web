@@ -20,7 +20,7 @@ class UserMessageMailer < ActionMailer::Base
     end
 
     mail from: um.from, to: safe_email(um.user), subject: rjjk_prefix(um.subject) do |format|
-      format.html { render html: html_body, layout: 'email' } if html_body
+      format.html { render html: html_body.html_safe, layout: 'email' } if html_body
       format.text { render text: plain_body, layout: 'email' } if plain_body
     end
   end

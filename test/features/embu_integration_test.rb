@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'capybara_setup'
 
 class EmbuIntegrationTest < ActionDispatch::IntegrationTest
   def test_display_my_embu

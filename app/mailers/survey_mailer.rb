@@ -12,7 +12,7 @@ class SurveyMailer < ApplicationMailer
     @timestamp = Time.now
     @email_url = with_login(survey_request.member.user,
         controller: :survey_requests, action: :answer_form, id: survey_request.id)
-    mail to: safe_email(survey_request.member), subject: rjjk_prefix(@title)
+    mail to: survey_request.member.email, subject: @title
   end
 
   def reminder(survey_request)
@@ -22,6 +22,6 @@ class SurveyMailer < ApplicationMailer
     @timestamp = Time.now
     @email_url = with_login(survey_request.member.user,
         controller: :survey_requests, action: :answer_form, id: survey_request.id)
-    mail to: safe_email(survey_request.member), subject: rjjk_prefix(@title)
+    mail to: survey_request.member.email, subject: @title
   end
 end

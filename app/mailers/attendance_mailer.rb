@@ -9,7 +9,7 @@ class AttendanceMailer < ActionMailer::Base
     @title = 'Planlegging oppmøte'
     @timestamp = Time.now
     @email_url = with_login(member.user, controller: :attendances, action: :plan)
-    mail to: safe_email(member), subject: rjjk_prefix('Kommer du?')
+    mail to: member.email, subject: 'Kommer du?'
   end
 
   def message_reminder(practice, instructor)
@@ -18,8 +18,7 @@ class AttendanceMailer < ActionMailer::Base
     @title = "Tema for morgendagens trening for #{practice.group_schedule.group.name}"
     @timestamp = @practice.date
     @email_url = with_login(instructor.user, controller: :practices, action: :edit, id: practice.id)
-    mail to: Rails.env == 'production' ? @instructor.email : %("#{@instructor.name}" <uwe@kubosch.no>),
-         subject: rjjk_prefix(@title)
+    mail to: @instructor.email, subject: @title
   end
 
   def summary(practice, group_schedule, recipient, attendees, _absentees)
@@ -31,7 +30,7 @@ class AttendanceMailer < ActionMailer::Base
     @title = "Trening i #{@group_schedule.start_at.day_phase}: #{attendees.empty? ? 'Ingen' : attendees.size} deltaker#{'e' if attendees.size > 1} påmeldt"
     @timestamp = Time.now
     @email_url = with_login(recipient.user, controller: :attendances, action: :plan)
-    mail to: safe_email(recipient), subject: rjjk_prefix(@title)
+    mail to: recipient.email, subject: @title
   end
 
   def changes(practice, group_schedule, recipient, new_attendees, new_absentees, attendees)
@@ -49,7 +48,7 @@ class AttendanceMailer < ActionMailer::Base
     @title = "Trening i #{@group_schedule.start_at.day_phase}: #{change_msg.join(', ')}"
     @timestamp = Time.now
     @email_url = with_login(recipient.user, controller: :attendances, action: :plan)
-    mail to: safe_email(recipient), subject: rjjk_prefix(@title)
+    mail to: recipient.email, subject: @title
   end
 
   def review(member, completed_attendances, older_attendances)
@@ -58,6 +57,6 @@ class AttendanceMailer < ActionMailer::Base
     @older_attendances = older_attendances
     @title = 'Hvordan var treningen?'
     @timestamp = completed_attendances[0].date
-    mail to: safe_email(member), subject: rjjk_prefix(@title)
+    mail to: member.email, subject: @title
   end
 end

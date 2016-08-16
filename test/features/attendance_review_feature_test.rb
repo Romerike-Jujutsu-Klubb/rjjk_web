@@ -8,18 +8,18 @@ class AttendanceReviewFeatureTest < ActionDispatch::IntegrationTest
     visit_with_login "/attendances/review/2013/41/#{group_schedules(:voksne_thursday).id}/I",
         redirected_path: '/mitt/oppmote'
     screenshot('review_old')
-    assert_equal ['Forrige uke', 'Trente du? Lars og Newbie trente.', 'Var der! Du og Lars trente.', 'Denne uken', 'Ubekreftet Du trente.', 'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1', "Siden gradering", "3"],
+    assert_equal ['Forrige uke', 'Trente du? Lars og Newbie trente.', 'Trente! Du og Lars trente.', 'Denne uken', 'Ubekreftet Du trente.', 'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1', "Siden gradering", "3"],
         all('td').map(&:text).reject(&:blank?)
 
     first('a.btn').click
-    assert has_css?('a.btn', text: 'Var der!', count: 2)
-    assert_equal ['Forrige uke', 'Var der! Du og 2 andre trente.', 'Var der! Du og Lars trente.', 'Denne uken', 'Ubekreftet Du trente.', 'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1', "Siden gradering", "3"],
+    assert has_css?('a.btn', text: 'Trente!', count: 2)
+    assert_equal ['Forrige uke', 'Trente! Du og 2 andre trente.', 'Trente! Du og Lars trente.', 'Denne uken', 'Ubekreftet Du trente.', 'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1', "Siden gradering", "3"],
         all('td').map(&:text).reject(&:blank?)
     screenshot('with_presence')
 
     all('a.btn')[1].click
     assert has_css?('a.btn', text: 'Annet')
-    assert_equal ['Forrige uke', 'Var der! Du og 2 andre trente.', 'Annet Lars trente.', 'Denne uken', 'Ubekreftet Du trente.', 'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1', "Siden gradering", "3"],
+    assert_equal ['Forrige uke', 'Trente! Du og 2 andre trente.', 'Annet Lars trente.', 'Denne uken', 'Ubekreftet Du trente.', 'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1', "Siden gradering", "3"],
         all('td').map(&:text).reject(&:blank?)
     screenshot('with_absence')
 

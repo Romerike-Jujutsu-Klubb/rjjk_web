@@ -6,7 +6,7 @@ class NkfReplicationMailer < ActionMailer::Base
 
   def import_changes(nkf_member_import)
     @import = nkf_member_import
-    mail subject: rjjk_prefix(@import.exception ? 'Det oppsto en feil ved henting av' :
+    mail subject: (@import.exception ? 'Det oppsto en feil ved henting av' :
             "Hentet #{@import.size}") + ' endringer fra NKF'
   end
 
@@ -20,12 +20,12 @@ class NkfReplicationMailer < ActionMailer::Base
         @member_changes.any? ? "#{@member_changes.size} endrede" : nil,
         @group_changes.any? ? "#{@group_changes.size} gruppeendringer" : nil
     ].compact.join(', ')
-    mail subject: rjjk_prefix("Oppdateringer fra NKF: #{stats}")
+    mail subject: "Oppdateringer fra NKF: #{stats}"
   end
 
   def update_appointments(appointments)
     @appointments = appointments
-    mail subject: rjjk_prefix("Verv fra NKF: #{appointments.size}")
+    mail subject: "Verv fra NKF: #{appointments.size}"
   end
 
   def wrong_contracts(wrong_contracts)

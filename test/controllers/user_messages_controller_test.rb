@@ -3,6 +3,7 @@ require 'test_helper'
 class UserMessagesControllerTest < ActionController::TestCase
   setup do
     @user_message = user_messages(:one)
+    login
   end
 
   test "should get index" do

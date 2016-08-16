@@ -9,7 +9,7 @@ class InformationPageMailer < ActionMailer::Base
     @pages = pages
     @title = 'Oppdatering av informasjonssider'
     @timestamp = Time.now
-    mail to: safe_email(member), subject: rjjk_prefix(@title)
+    mail to: member.email, subject: @title
   end
 
   def send_weekly_page(member, page)
@@ -18,6 +18,6 @@ class InformationPageMailer < ActionMailer::Base
     @email_url = with_login(member.user, controller: :info, action: :show, id: page.id)
     @title = "Til info: #{page.title}"
     mail from: Rails.env == 'production' ? 'post@jujutsu.no' : "#{Rails.env}@jujutsu.no",
-        to: safe_email(member), subject: rjjk_prefix(@title)
+        to: member.email, subject: @title
   end
 end

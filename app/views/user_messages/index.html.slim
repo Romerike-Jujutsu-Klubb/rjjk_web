@@ -1,34 +1,29 @@
+- @content_width = 1024
+
 h1 Listing user_messages
 
-table
+table.table.table-striped
   thead
     tr
-      th User
-      th Tag
-      th From
+      th User / From
+      th Tag / Key
+      th Sent at / Read at
       th Subject
-      th Key
-      th Body
-      th Sent at
-      th Read at
-      th
-      th
-      th
+      th Action
 
   tbody
     - @user_messages.each do |user_message|
       tr
-        td = user_message.user_id
+        td = user_message.user.name
         td = user_message.tag
+        td = user_message.sent_at&.strftime('%F %T')
+        td rowspan=2 = link_to user_message.subject, user_message
+        td rowspan=2
+          = link_to 'Destroy', user_message, data: { confirm: 'Are you sure?' }, method: :delete
+      tr
         td = user_message.from
-        td = user_message.subject
         td = user_message.key
-        td = user_message.body
-        td = user_message.sent_at
-        td = user_message.read_at
-        td = link_to 'Show', user_message
-        td = link_to 'Edit', edit_user_message_path(user_message)
-        td = link_to 'Destroy', user_message, data: { confirm: 'Are you sure?' }, method: :delete
+        td = user_message.read_at&.strftime('%F %T')
 
 br
 

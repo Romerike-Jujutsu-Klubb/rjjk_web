@@ -12,7 +12,7 @@ class AnnualMeetingReminderTest < ActionMailer::TestCase
     assert_mail_stored(1) { AnnualMeetingReminder.notify_missing_date }
 
     mail = UserMessage.pending[0]
-    assert_equal '[RJJK][TEST] På tide å sette dato for årsmøte 2014', mail.subject
+    assert_equal 'På tide å sette dato for årsmøte 2014', mail.subject
     assert_equal ["\"Uwe Kubosch\" <admin@test.com>"], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_match '<h1>Hei Uwe !</h1>', mail.body
@@ -34,7 +34,7 @@ class AnnualMeetingReminderTest < ActionMailer::TestCase
       assert_equal 1, UserMessage.pending.size
 
       mail = UserMessage.pending[0]
-      assert_equal '[RJJK][TEST] På tide å sende ut innkalling til årsmøte 2014', mail.subject
+      assert_equal 'På tide å sende ut innkalling til årsmøte 2014', mail.subject
       assert_equal ["\"Lars Bråten\" <lars@example.com>"], mail.to
       assert_equal %w(noreply@test.jujutsu.no), mail.from
       assert_match "", mail.body

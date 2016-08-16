@@ -6,8 +6,7 @@ class UserMailer < ActionMailer::Base
   def signup(user, password, url = nil)
     setup_email(user)
 
-    @subject += "Velkommen til #{UserSystem::CONFIG[:app_name]}!"
-
+    @subject = "Velkommen til #{UserSystem::CONFIG[:app_name]}!"
     @name = "#{user.first_name} #{user.last_name}"
     @login = user.login
     @password = password
@@ -20,7 +19,7 @@ class UserMailer < ActionMailer::Base
   def created_from_member(user, password)
     setup_email(user)
 
-    @subject += 'Velkommen til Romerike Jujutsu Klubb!'
+    @subject = 'Velkommen til Romerike Jujutsu Klubb!'
     @user = user
     @password = password
 
@@ -31,8 +30,7 @@ class UserMailer < ActionMailer::Base
     setup_email(user)
 
     @title = 'Glemt passord'
-    @subject += @title
-
+    @subject = @title
     @name = "#{user.first_name} #{user.last_name}"
     @login = user.login
     @url = url || UserSystem::CONFIG[:app_url].to_s
@@ -44,8 +42,7 @@ class UserMailer < ActionMailer::Base
   def change_password(user, password, url = nil)
     setup_email(user)
 
-    @subject += 'Passordbytte'
-
+    @subject = 'Passordbytte'
     @name = "#{user.first_name} #{user.last_name}"
     @login = user.login
     @password = password
@@ -59,8 +56,7 @@ class UserMailer < ActionMailer::Base
   private
 
   def setup_email(user)
-    @recipients = safe_email(user)
-    @subject = "[#{UserSystem::CONFIG[:app_name]}] "
+    @recipients = user.email
     @sent_on = Time.now
   end
 

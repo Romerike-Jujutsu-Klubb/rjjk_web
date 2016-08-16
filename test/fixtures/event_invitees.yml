@@ -1,6 +1,6 @@
 one:
   event: one
-  email: MyString
+  email: ei_one@example.com
   name: MyString
   address: MyString
   organization: MyString
@@ -9,7 +9,7 @@ one:
 
 two:
   event: one
-  email: MyString
+  email: ei_one@example.com
   name: MyString
   address: MyString
   organization: MyString

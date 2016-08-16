@@ -12,14 +12,14 @@ class GraduationMailer < ActionMailer::Base
     @email_url = with_login(@instructor.user,
         controller: :graduations, action: :new,
         graduation: { group_id: @group.id, held_on: suggested_date })
-    mail subject: rjjk_prefix(@title), to: safe_email(@instructor)
+    mail subject: @title, to: @instructor.email
   end
 
   def overdue_graduates(members)
     @members = members
     @title = 'Medlemmer klare for gradering'
     @timestamp = Time.now
-    mail to: 'uwe@kubosch.no', subject: rjjk_prefix('Disse medlemmene mangler gradering')
+    mail to: 'uwe@kubosch.no', subject: 'Disse medlemmene mangler gradering'
   end
 
   def date_info_reminder
@@ -33,7 +33,7 @@ class GraduationMailer < ActionMailer::Base
     @email_url = with_login(@censor.member.user, controller: :censors, action: :show, id: @censor.id)
     @confirm_url = with_login(@censor.member.user, controller: :censors, action: :confirm, id: @censor.id)
     @decline_url = with_login(@censor.member.user, controller: :censors, action: :decline, id: @censor.id)
-    mail to: safe_email(censor.member), subject: rjjk_prefix(@title)
+    mail to: censor.member.email, subject: @title
   end
 
   def missing_approval(censor)
@@ -43,7 +43,7 @@ class GraduationMailer < ActionMailer::Base
     @email_url = with_login(@censor.member.user,
         controller: :graduations, action: :edit,
         id: @censor.graduation_id)
-    mail to: safe_email(censor.member), subject: rjjk_prefix(@title)
+    mail to: censor.member.email, subject: @title
   end
 
   def member_info_reminder

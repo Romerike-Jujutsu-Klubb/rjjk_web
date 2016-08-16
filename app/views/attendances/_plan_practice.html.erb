@@ -13,7 +13,7 @@
      if attendance
        if Attendance::PRESENT_STATES.include?(attendance.status)
          initial_class = 'success'
-         initial_text = 'Var der!'
+         initial_text = 'Trente!'
          initial_icon = 'thumbs-up'
        else
          Attendance::STATES.each do |state, link_text, link_icon, link_class|

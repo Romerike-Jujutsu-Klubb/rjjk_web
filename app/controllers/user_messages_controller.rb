@@ -1,28 +1,23 @@
 class UserMessagesController < ApplicationController
+  before_filter :authenticate_user
   before_action :set_user_message, only: [:show, :edit, :update, :destroy]
 
-  # GET /user_messages
-  # GET /user_messages.json
   def index
-    @user_messages = UserMessage.all
+    query = UserMessage.order(created_at: :desc)
+    query = query.where(user_id: current_user.id) unless admin?
+    @user_messages = query.all
   end
 
-  # GET /user_messages/1
-  # GET /user_messages/1.json
   def show
   end
 
-  # GET /user_messages/new
   def new
     @user_message = UserMessage.new
   end
 
-  # GET /user_messages/1/edit
   def edit
   end
 
-  # POST /user_messages
-  # POST /user_messages.json
   def create
     @user_message = UserMessage.new(user_message_params)
 
@@ -37,8 +32,6 @@ class UserMessagesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /user_messages/1
-  # PATCH/PUT /user_messages/1.json
   def update
     respond_to do |format|
       if @user_message.update(user_message_params)
@@ -51,8 +44,6 @@ class UserMessagesController < ApplicationController
     end
   end
 
-  # DELETE /user_messages/1
-  # DELETE /user_messages/1.json
   def destroy
     @user_message.destroy
     respond_to do |format|

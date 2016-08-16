@@ -2,7 +2,8 @@ class Event < ActiveRecord::Base
   scope :chronological, -> { order :start_at }
 
   has_many :event_invitees, dependent: :destroy
-  has_many :attending_invitees, ->{where(will_attend: true)}, dependent: :destroy
+  has_many :attending_invitees, -> { where(will_attend: true) },
+      class_name: EventInvitee
   has_many :event_messages, dependent: :destroy
   has_many :users, through: :event_invitees
   has_and_belongs_to_many :groups
