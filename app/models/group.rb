@@ -1,7 +1,7 @@
 # FIXME(uwe): Split into AgeGroup and TrainingGroup
 class Group < ActiveRecord::Base
-  scope :active, -> date = nil { date ? where('closed_on IS NULL OR closed_on >= ?', date) : where('closed_on IS NULL') }
-  scope :inactive, -> date { where('closed_on IS NOT NULL AND closed_on < ?', date) }
+  scope :active, -> (date = nil) { date ? where('closed_on IS NULL OR closed_on >= ?', date) : where('closed_on IS NULL') }
+  scope :inactive, -> (date) { where('closed_on IS NOT NULL AND closed_on < ?', date) }
 
   belongs_to :martial_art
   has_one :current_semester,

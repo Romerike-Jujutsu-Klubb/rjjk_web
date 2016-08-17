@@ -66,7 +66,8 @@ class Member < ActiveRecord::Base
   end
   SEARCH_FIELDS = [
       :billing_email, :email, :first_name, :last_name, :parent_email,
-      :parent_name, :phone_home, :phone_mobile, :phone_parent, :phone_work]
+      :parent_name, :phone_home, :phone_mobile, :phone_parent, :phone_work
+  ]
   scope :search, ->(query) {
     where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ ?" }
             .join(' OR '), *([UnicodeUtils.upcase(query).split(/\s+/).join('|')] * SEARCH_FIELDS.size))
@@ -130,7 +131,7 @@ class Member < ActiveRecord::Base
 
       new_user = User.new(
           login: potential_email, first_name: first_name, last_name: last_name,
-          email: potential_email, password: passwd, password_confirmation: passwd,
+          email: potential_email, password: passwd, password_confirmation: passwd
       )
       new_user.password_needs_confirmation = true
       new_user.save!

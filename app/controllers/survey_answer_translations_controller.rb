@@ -52,13 +52,13 @@ class SurveyAnswerTranslationsController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_survey_answer_translation
-      @survey_answer_translation = SurveyAnswerTranslation.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_survey_answer_translation
+    @survey_answer_translation = SurveyAnswerTranslation.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def survey_answer_translation_params
-      params.require(:survey_answer_translation).permit(:answer, :normalized_answer)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def survey_answer_translation_params
+    params.require(:survey_answer_translation).permit(:answer, :normalized_answer)
+  end
 end

@@ -23,11 +23,11 @@ class CreateGroups < ActiveRecord::Migration
       a = Group.create! martial_art_id: aikikai.id, name: 'Seniorer', from_age: 14, to_age: 999
       Member.all.each do |m|
         m.martial_arts.each do |ma|
-          if ma == aikikai
-            group = a
-          else
-            group = m.senior ? s : j
-          end
+          group = if ma == aikikai
+                    a
+                  else
+                    m.senior ? s : j
+                  end
           puts "Adding #{m.name} to #{group.martial_art.name} #{group.name}"
           m.groups << group
         end

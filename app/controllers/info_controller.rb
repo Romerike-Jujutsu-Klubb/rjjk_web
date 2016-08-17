@@ -9,7 +9,7 @@ class InfoController < ApplicationController
     @information_page ||= InformationPage.where('UPPER(title) = ?', UnicodeUtils.upcase(params[:id])).first
     @information_page ||= InformationPage.find_by_id(params[:id].to_i)
     return if @information_page
-    if page_alias = PageAlias.where(old_path: request.path).first
+    if (page_alias = PageAlias.where(old_path: request.path).first)
       redirect_to page_alias.new_path, status: :moved_permanently
       return
     end
@@ -17,11 +17,11 @@ class InfoController < ApplicationController
       utf8_param = params[:id].encode(Encoding::ISO_8859_1)
           .force_encoding(Encoding::UTF_8)
       utf8_title = UnicodeUtils.upcase(utf8_param)
-      if page = InformationPage.where('UPPER(title) = ?', utf8_title).first
+      if (page = InformationPage.where('UPPER(title) = ?', utf8_title).first)
         redirect_to page, status: :moved_permanently
         return
       end
-      if page = InformationPage.where('UPPER(title) = ?', utf8_title.chomp("'")).first
+      if (page = InformationPage.where('UPPER(title) = ?', utf8_title.chomp("'")).first)
         redirect_to page, status: :moved_permanently
         return
       end

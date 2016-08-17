@@ -63,21 +63,21 @@ class NkfMembersController < ApplicationController
 
   def create_member
     nkf_member = NkfMember.find(params[:id])
-    if nkf_member.create_member!
-      flash[:notice] = t(:member_created)
-    else
-      flash[:notice] = 'Member creation failed.'
-    end
+    flash[:notice] = if nkf_member.create_member!
+                       t(:member_created)
+                     else
+                       'Member creation failed.'
+                     end
     redirect_to action: :comparison, id: 0
   end
 
   def update_member
     @member = Member.find(params[:id])
-    if @member.update_attributes(params[:member])
-      flash[:notice] = 'Member was successfully updated.'
-    else
-      flash[:notice] = 'Member update failed.'
-    end
+    flash[:notice] = if @member.update_attributes(params[:member])
+                       'Member was successfully updated.'
+                     else
+                       'Member update failed.'
+                     end
     redirect_to action: :comparison, id: 0
   end
 

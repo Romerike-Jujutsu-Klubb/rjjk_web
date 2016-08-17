@@ -43,12 +43,12 @@ class GroupSemestersControllerTest < ActionController::TestCase
 
   test 'should update group_semester' do
     put :update, id: @group_semester, group_semester: {
-            first_session: @group_semester.first_session,
+        first_session: @group_semester.first_session,
             group_id: @group_semester.group_id,
             last_session: @group_semester.last_session,
             semester_id: @group_semester.semester_id,
             summary: 'Practice, practice!',
-        }
+    }
     assert_no_errors :group_semester
     assert_redirected_to group_semester_path(assigns(:group_semester))
     @group_semester.reload

@@ -52,13 +52,13 @@ class SurveyAnswersController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_survey_answer
-      @survey_answer = SurveyAnswer.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_survey_answer
+    @survey_answer = SurveyAnswer.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def survey_answer_params
-      params.require(:survey_answer).permit(:survey_request_id, :survey_question_id, :answer)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def survey_answer_params
+    params.require(:survey_answer).permit(:survey_request_id, :survey_question_id, :answer)
+  end
 end

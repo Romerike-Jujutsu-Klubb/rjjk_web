@@ -4,8 +4,8 @@ class UserMessage < ActiveRecord::Base
 
   belongs_to :user
 
-  scope :for_user, -> user_id { where user_id: user_id }
-  scope :tagged_as, -> tag { where tag: tag }
+  scope :for_user, -> (user_id) { where user_id: user_id }
+  scope :tagged_as, -> (tag) { where tag: tag }
   scope :pending, -> { where(sent_at: nil, read_at: nil).order(:id) }
 
   before_validation do

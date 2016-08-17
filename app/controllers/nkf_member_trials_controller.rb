@@ -35,12 +35,12 @@ class NkfMemberTrialsController < ApplicationController
   def create
     @nkf_member_trial = NkfMemberTrial.new(params[:nkf_member_trial])
 
-      if @nkf_member_trial.save
-        flash[:notice] = 'NkfMemberTrial was successfully created.'
-        redirect_to(@nkf_member_trial)
-      else
-        render action: "new"
-      end
+    if @nkf_member_trial.save
+      flash[:notice] = 'NkfMemberTrial was successfully created.'
+      redirect_to(@nkf_member_trial)
+    else
+      render action: "new"
+    end
   end
 
   def update

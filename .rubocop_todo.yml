@@ -6,19 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 5
-# Configuration parameters: AllowSafeAssignment.
-Lint/AssignmentInCondition:
-  Exclude:
-    - 'app/controllers/info_controller.rb'
-    - 'app/controllers/members_controller.rb'
-    - 'app/controllers/semesters_controller.rb'
-
-# Offense count: 10
-Lint/Eval:
-  Exclude:
-    - 'app/models/member_history_graph.rb'
-
 # Offense count: 4
 Lint/HandleExceptions:
   Exclude:
@@ -41,11 +28,6 @@ Lint/RescueException:
     - 'app/models/nkf_member_import.rb'
     - 'app/models/public_record_importer.rb'
     - 'bin/store_email_rjjk.rb'
-
-# Offense count: 1
-Lint/ShadowedException:
-  Exclude:
-    - 'app/models/nkf_member_import.rb'
 
 # Offense count: 207
 Metrics/AbcSize:
@@ -128,19 +110,6 @@ Style/BlockDelimiters:
     - 'test/controllers/martial_arts_controller_test.rb'
     - 'test/controllers/members_controller_test.rb'
 
-# Offense count: 9
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, SingleLineConditionsOnly.
-# SupportedStyles: assign_to_condition, assign_inside_condition
-Style/ConditionalAssignment:
-  Exclude:
-    - 'app/controllers/attendances_controller.rb'
-    - 'app/controllers/members_controller.rb'
-    - 'app/controllers/nkf_members_controller.rb'
-    - 'app/mailers/attendance_nagger.rb'
-    - 'app/models/member_grade_history_graph.rb'
-    - 'db/migrate/20080828220940_create_groups.rb'
-
 # Offense count: 292
 Style/Documentation:
   Enabled: false
@@ -166,63 +135,6 @@ Style/GuardClause:
   Enabled: false
   Exclude:
     - 'test/features/news_feature_test.rb'
-
-# Offense count: 11
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: special_inside_parentheses, consistent, align_braces
-Style/IndentHash:
-  Exclude:
-    - 'app/controllers/attendances_controller.rb'
-    - 'app/helpers/user_helper.rb'
-    - 'app/mailers/newsletter_mailer.rb'
-    - 'test/controllers/group_semesters_controller_test.rb'
-    - 'test/controllers/members_controller_test.rb'
-    - 'test/controllers/survey_requests_controller_test.rb'
-
-# Offense count: 16
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: normal, rails
-Style/IndentationConsistency:
-  Exclude:
-    - 'app/controllers/instructor_meetings_controller.rb'
-    - 'app/controllers/nkf_member_trials_controller.rb'
-    - 'app/controllers/raw_incoming_emails_controller.rb'
-    - 'app/controllers/survey_answer_translations_controller.rb'
-    - 'app/controllers/survey_answers_controller.rb'
-    - 'app/controllers/survey_questions_controller.rb'
-    - 'app/controllers/surveys_controller.rb'
-    - 'app/controllers/user_messages_controller.rb'
-    - 'app/helpers/user_helper.rb'
-
-# Offense count: 13
-# Cop supports --auto-correct.
-# Configuration parameters: Width.
-Style/IndentationWidth:
-  Exclude:
-    - 'app/controllers/graduations_controller.rb'
-    - 'app/controllers/members_controller.rb'
-    - 'app/helpers/user_helper.rb'
-    - 'app/models/cms_member.rb'
-    - 'db/migrate/008_update_login_sugar.rb'
-    - 'db/migrate/20080902132010_widen_rank_color_name.rb'
-    - 'db/migrate/20080902133038_widen_rank_color_name_again.rb'
-
-# Offense count: 1
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: snake_case, camelCase
-Style/MethodName:
-  Exclude:
-    - 'app/controllers/members_controller.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: symmetrical, new_line, same_line
-Style/MultilineArrayBraceLayout:
-  Exclude:
-    - 'app/models/member.rb'
 
 # Offense count: 8
 # Cop supports --auto-correct.
@@ -343,33 +255,12 @@ Style/RescueModifier:
 Style/SpecialGlobalVars:
   EnforcedStyle: use_perl_names
 
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: require_parentheses, require_no_parentheses
-Style/StabbyLambdaParentheses:
-  Exclude:
-    - 'app/models/attendance.rb'
-    - 'app/models/group.rb'
-    - 'app/models/trial_attendance.rb'
-    - 'app/models/user_message.rb'
-
 # Offense count: 195
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, ConsistentQuotesInMultiline.
 # SupportedStyles: single_quotes, double_quotes
 Style/StringLiterals:
   Enabled: false
-
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleForMultiline, SupportedStyles.
-# SupportedStyles: comma, consistent_comma, no_comma
-Style/TrailingCommaInArguments:
-  Exclude:
-    - 'app/controllers/members_controller.rb'
-    - 'app/models/member.rb'
-    - 'app/models/skill_card.rb'
 
 # Offense count: 26
 # Cop supports --auto-correct.

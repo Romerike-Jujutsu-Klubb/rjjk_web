@@ -35,17 +35,17 @@ class CmsMember < ActiveRecord::Base
 
   def gender
     if male
-        "Mann"
+      "Mann"
     else
-        "Kvinne"
+      "Kvinne"
     end
   end
 
   def nkf_fee_amount
     if senior?
-     (nkf_fee? ? (279.0 / 12).ceil : 0)
+      (nkf_fee? ? (279.0 / 12).ceil : 0)
     else
-     (nkf_fee? ? (155.0 / 12).ceil : 0)
+      (nkf_fee? ? (155.0 / 12).ceil : 0)
     end
   end
 end

@@ -375,7 +375,7 @@ class NkfMemberImport
         File.write(cache_file, body, encoding: Encoding::ASCII_8BIT)
       end
       return body
-    rescue EOFError, Errno::ECONNREFUSED, SocketError, SystemCallError,
+    rescue EOFError, SocketError, SystemCallError,
         Timeout::Error
       logger.error $!.message
       if backoff > 10.seconds # 15.minutes

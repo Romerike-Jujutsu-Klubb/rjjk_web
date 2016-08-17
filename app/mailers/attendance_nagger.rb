@@ -76,11 +76,11 @@ class AttendanceNagger
       recipients.each do |recipient|
         if recipient != uwe
           next if new_attendances.empty?
-          if new_absentees.size > new_attendances.size
-            displayed_absentees = []
-          else
-            displayed_absentees = new_absentees
-          end
+          displayed_absentees = if new_absentees.size > new_attendances.size
+                                  []
+                                else
+                                  new_absentees
+                                end
         else
           displayed_absentees = new_absentees
         end

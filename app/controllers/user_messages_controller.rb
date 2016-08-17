@@ -1,6 +1,11 @@
 class UserMessagesController < ApplicationController
-  before_filter :authenticate_user
+  before_action :authenticate_user
   before_action :set_user_message, only: [:show, :edit, :update, :destroy]
+  before_action do |_request|
+    if @user_message && !admin? && @user_message.user_id != current_user.id
+      access_denied
+    end
+  end
 
   def index
     query = UserMessage.order(created_at: :desc)
@@ -9,6 +14,9 @@ class UserMessagesController < ApplicationController
   end
 
   def show
+    if @user_message.read_at.nil? && @user_message.user_id == current_user.id
+      @user_message.update! read_at: Time.now
+    end
   end
 
   def new
@@ -54,13 +62,13 @@ class UserMessagesController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user_message
-      @user_message = UserMessage.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user_message
+    @user_message = UserMessage.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_message_params
-      params.require(:user_message).permit(:user_id, :tag, :from, :subject, :key, :body, :sent_at, :read_at)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_message_params
+    params.require(:user_message).permit(:user_id, :tag, :from, :subject, :key, :body, :sent_at, :read_at)
+  end
 end

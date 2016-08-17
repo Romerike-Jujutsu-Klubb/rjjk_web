@@ -20,10 +20,10 @@ class SurveyRequestsControllerTest < ActionController::TestCase
   test 'should create survey_request' do
     assert_difference('SurveyRequest.count') do
       post :create, survey_request: {
-              completed_at: @survey_request.completed_at,
+          completed_at: @survey_request.completed_at,
               member_id: members(:sebastian).id,
               survey_id: @survey_request.survey_id
-          }
+      }
     end
 
     assert_redirected_to survey_request_path(assigns(:survey_request))

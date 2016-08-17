@@ -28,14 +28,14 @@ class Attendance < ActiveRecord::Base
   ABSENT_STATES = [Status::HOLIDAY, Status::SICK, Status::ABSENT]
   PRESENCE_STATES = [*PRESENT_STATES, Status::WILL_ATTEND]
 
-  scope :by_group_id, -> group_id { includes(practice: :group_schedule).references(:group_schedules).where('group_schedules.group_id = ?', group_id) }
-  scope :last_months, -> count {
+  scope :by_group_id, -> (group_id) { includes(practice: :group_schedule).references(:group_schedules).where('group_schedules.group_id = ?', group_id) }
+  scope :last_months, -> (count) {
     limit = count.months.ago
     where('(year = ? AND week >= ?) OR year > ?', limit.year, limit.to_date.cweek, limit.year)
   }
-  scope :on_date, -> date { where('year = ? AND week = ?', date.year, date.cweek) }
-  scope :after_date, -> date { includes(practice: :group_schedule).references(:group_schedules).where('practices.year > ? OR (practices.year = ? AND practices.week > ?) OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday > ?)', date.year, date.year, date.cweek, date.year, date.cweek, date.cwday) }
-  scope :until_date, -> date { includes(practice: :group_schedule).references(:group_schedules).where('practices.year < ? OR (practices.year = ? AND practices.week < ?) OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday <= ?)', date.year, date.year, date.cweek, date.year, date.cweek, date.cwday) }
+  scope :on_date, -> (date) { where('year = ? AND week = ?', date.year, date.cweek) }
+  scope :after_date, -> (date) { includes(practice: :group_schedule).references(:group_schedules).where('practices.year > ? OR (practices.year = ? AND practices.week > ?) OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday > ?)', date.year, date.year, date.cweek, date.year, date.cweek, date.cwday) }
+  scope :until_date, -> (date) { includes(practice: :group_schedule).references(:group_schedules).where('practices.year < ? OR (practices.year = ? AND practices.week < ?) OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday <= ?)', date.year, date.year, date.cweek, date.year, date.cweek, date.cwday) }
 
   belongs_to :member
   belongs_to :practice

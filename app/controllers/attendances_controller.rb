@@ -78,10 +78,10 @@ class AttendancesController < ApplicationController
     if request.xhr?
       flash.clear
       render partial: '/attendances/attendance_create_link', locals: {
-              member_id: @attendance.member_id,
+          member_id: @attendance.member_id,
               group_schedule_id: @attendance.practice.group_schedule_id,
               date: @attendance.date, status: Attendance::Status::ATTENDED
-          }
+      }
     else
       redirect_to(attendances_url)
     end
@@ -110,28 +110,28 @@ class AttendancesController < ApplicationController
   end
 
   def history_graph
-    if params[:id] && params[:id].to_i <= 1280
-      if params[:id] =~ /^\d+x\d+$/
-        g = AttendanceHistoryGraph.new.history_graph params[:id]
-      else
-        g = AttendanceHistoryGraph.new.history_graph params[:id].to_i
-      end
-    else
-      g = AttendanceHistoryGraph.new.history_graph
-    end
+    g = if params[:id] && params[:id].to_i <= 1280
+          if params[:id] =~ /^\d+x\d+$/
+            AttendanceHistoryGraph.new.history_graph params[:id]
+          else
+            AttendanceHistoryGraph.new.history_graph params[:id].to_i
+          end
+        else
+          AttendanceHistoryGraph.new.history_graph
+        end
     send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Oppmøtehistorikk.png')
   end
 
   def month_chart
-    if params[:size] && params[:size].to_i <= 1280
-      if params[:size] =~ /^\d+x\d+$/
-        g = AttendanceHistoryGraph.new.month_chart params[:year].to_i, params[:month].to_i, params[:size]
-      else
-        g = AttendanceHistoryGraph.new.month_chart params[:year].to_i, params[:month].to_i, params[:size].to_i
-      end
-    else
-      g = AttendanceHistoryGraph.new.month_chart
-    end
+    g = if params[:size] && params[:size].to_i <= 1280
+          if params[:size] =~ /^\d+x\d+$/
+            AttendanceHistoryGraph.new.month_chart params[:year].to_i, params[:month].to_i, params[:size]
+          else
+            AttendanceHistoryGraph.new.month_chart params[:year].to_i, params[:month].to_i, params[:size].to_i
+          end
+        else
+          AttendanceHistoryGraph.new.month_chart
+        end
     send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Oppmøtehistorikk.png')
   end
 
@@ -140,12 +140,12 @@ class AttendancesController < ApplicationController
     year = params[:year].to_i
     week = params[:week].to_i
     gs_id = params[:group_schedule_id]
-    if year.positive? && week.positive? && gs_id
-      practice = Practice.where(group_schedule_id: gs_id,
-          year: year, week: week).first_or_create!
-    else
-      practice = m.groups.where(name: 'Voksne').first.next_practice
-    end
+    practice = if year.positive? && week.positive? && gs_id
+                 Practice.where(group_schedule_id: gs_id,
+                     year: year, week: week).first_or_create!
+               else
+                 m.groups.where(name: 'Voksne').first.next_practice
+               end
     criteria = { member_id: m.id, practice_id: practice.id }
     @attendance = Attendance.includes(:practice).where(criteria).first_or_initialize
 
@@ -342,15 +342,15 @@ class AttendancesController < ApplicationController
   end
 
   def month_per_year_chart
-    if params[:size] && params[:size].to_i <= 1600
-      if params[:size] =~ /^\d+x\d+$/
-        size = params[:size]
-      else
-        size = params[:size].to_i
-      end
-    else
-      size = '800x600'
-    end
+    size = if params[:size] && params[:size].to_i <= 1600
+             if params[:size] =~ /^\d+x\d+$/
+               params[:size]
+             else
+               params[:size].to_i
+             end
+           else
+             '800x600'
+           end
     g = AttendanceHistoryGraph.new.month_per_year_chart params[:month].to_i, size
     send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Oppmøtehistorikk.png')
   end

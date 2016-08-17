@@ -60,7 +60,7 @@ class MembersControllerTest < ActionController::TestCase
 
     VCR.use_cassette 'GoogleMaps Lars' do
       post :create, member: {
-              male: true,
+          male: true,
               first_name: 'Lars',
               last_name: 'Bråten',
               address: 'Torsvei 8b',
@@ -71,7 +71,7 @@ class MembersControllerTest < ActionController::TestCase
               joined_on: '2007-06-21',
               birthdate: '1967-06-21',
               user_id: users(:unverified_user).id,
-          }
+      }
     end
 
     assert_no_errors :member

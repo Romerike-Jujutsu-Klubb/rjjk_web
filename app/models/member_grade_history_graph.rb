@@ -70,11 +70,11 @@ EOF
     sums = nil
     data = ranks.map do |rank|
       rank_totals = totals(rank, dates, interval, percentage)
-      if sums
-        sums = sums.zip(rank_totals).map { |s, t| s + t }
-      else
-        sums = rank_totals
-      end
+      sums = if sums
+               sums.zip(rank_totals).map { |s, t| s + t }
+             else
+               rank_totals
+             end
     end
 
     data.reverse.zip(ranks.reverse) { |d, rank| g.data(rank.name, d) }

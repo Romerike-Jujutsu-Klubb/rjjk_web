@@ -1,29 +1,15 @@
 p#notice = notice
 
-p
-  strong User:
-  = @user_message.user_id
-p
-  strong Tag:
-  = @user_message.tag
-p
-  strong From:
-  = @user_message.from
-p
-  strong Subject:
-  = @user_message.subject
-p
-  strong Key:
-  = @user_message.key
-p
-  strong Body:
-  = @user_message.body
-p
-  strong Sent at:
+.pull-right
   = @user_message.sent_at
-p
-  strong Read at:
-  = @user_message.read_at
+.panel.panel-default
+  .panel-heading
+    .pull-right
+      strong From:
+      =< [*@user_message.from].join(', ')
+    =< @user_message.subject
+  .panel-body
+    == @user_message.body
 
 = link_to 'Edit', edit_user_message_path(@user_message)
 '|

@@ -3,11 +3,11 @@ class NewsletterMailer < ActionMailer::Base
   include MailerHelper
 
   default from: {
-          'production' => '"Romerike Jujutsu Klubb" <post@jujutsu.no>',
+      'production' => '"Romerike Jujutsu Klubb" <post@jujutsu.no>',
           'beta' => 'beta@jujutsu.no',
           'test' => 'test@jujutsu.no',
           'development' => 'development@jujutsu.no',
-      }[Rails.env]
+  }[Rails.env]
 
   def event_invitation(event, email)
     @event = event

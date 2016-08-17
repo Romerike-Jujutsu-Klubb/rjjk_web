@@ -42,21 +42,21 @@ class UserSystemTest < ActionDispatch::IntegrationTest
 
   def test_forgot_password_allows_change_password_after_mailing_key
     user = users(:lars)
+
     post url_for(controller: :user, action: :forgot_password), user: { email: user.email }
+
     assert_equal 1, UserMessage.pending.size
     mail = UserMessage.pending[0]
     assert_equal ["\"Lars Bråten\" <lars@example.com>"], mail.to
     assert mail.plain_body
-    body = mail.html_body
-    assert body =~ /user\[id\]=(.+?)&amp;key=(.+?)"/,
-        "Unable to find user id and key in the message: #{body.inspect}"
-    id = $1
-    key = $2
+    assert mail.html_body
+    key = mail.key
+
     post url_for(controller: :user, action: :change_password),
         user: { password: 'newpassword',
-            password_confirmation: 'newpassword',
-            id: id },
+            password_confirmation: 'newpassword' },
         key: key
+
     user.reload
     assert_logged_in user
     assert_equal user, User.authenticate(user.login, 'newpassword')

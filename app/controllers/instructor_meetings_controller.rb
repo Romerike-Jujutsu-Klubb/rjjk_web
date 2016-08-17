@@ -63,13 +63,13 @@ class InstructorMeetingsController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_instructor_meeting
-      @instructor_meeting = InstructorMeeting.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_instructor_meeting
+    @instructor_meeting = InstructorMeeting.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def instructor_meeting_params
-      params.require(:instructor_meeting).permit(:start_at, :end_at, :title, :agenda)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def instructor_meeting_params
+    params.require(:instructor_meeting).permit(:start_at, :end_at, :title, :agenda)
+  end
 end

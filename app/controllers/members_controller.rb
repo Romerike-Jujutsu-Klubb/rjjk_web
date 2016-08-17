@@ -28,7 +28,7 @@ class MembersController < ApplicationController
       m.attributes.update(
           'rank_pos' => m.current_rank.try(:position),
           'rank_name' => m.current_rank.try(:name),
-          'active' => m.active?,
+          'active' => m.active?
       )
     end
     render text: records.to_yaml, content_type: 'text/yaml', layout: false
@@ -41,27 +41,27 @@ class MembersController < ApplicationController
   end
 
   def history_graph
-    if params[:id] && params[:id].to_i <= 1280
-      if params[:id] =~ /^\d+x\d+$/
-        g = MemberHistoryGraph.history_graph params[:id]
-      else
-        g = MemberHistoryGraph.history_graph params[:id].to_i
-      end
-    else
-      g = MemberHistoryGraph.history_graph
-    end
+    g = if params[:id] && params[:id].to_i <= 1280
+          if params[:id] =~ /^\d+x\d+$/
+            MemberHistoryGraph.history_graph params[:id]
+          else
+            MemberHistoryGraph.history_graph params[:id].to_i
+          end
+        else
+          MemberHistoryGraph.history_graph
+        end
     send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Medlemshistorikk.png')
   end
 
   def grade_history_graph
-    if params[:id] && params[:id].to_i <= 1280
-      g = MemberGradeHistoryGraph.new.history_graph size: params[:id].to_i,
-          interval: params[:interval].try(:to_i).try(:days),
-          step: params[:step].try(:to_i).try(:days),
-          percentage: params[:percentage].try(:to_i)
-    else
-      g = MemberGradeHistoryGraph.new.history_graph
-    end
+    g = if params[:id] && params[:id].to_i <= 1280
+          MemberGradeHistoryGraph.new.history_graph size: params[:id].to_i,
+              interval: params[:interval].try(:to_i).try(:days),
+              step: params[:step].try(:to_i).try(:days),
+              percentage: params[:percentage].try(:to_i)
+        else
+          MemberGradeHistoryGraph.new.history_graph
+        end
     send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_MedlemsGradsHistorikk.png')
   end
 
@@ -70,11 +70,11 @@ class MembersController < ApplicationController
   end
 
   def age_chart
-    if params[:id] && params[:id].to_i <= 1280
-      g = MemberAgeChart.chart params[:id].to_i
-    else
-      g = MemberAgeChart.chart
-    end
+    g = if params[:id] && params[:id].to_i <= 1280
+          MemberAgeChart.chart params[:id].to_i
+        else
+          MemberAgeChart.chart
+        end
     send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Aldersfordeling.png')
   end
 
@@ -167,7 +167,7 @@ class MembersController < ApplicationController
     redirect_to action: 'index'
   end
 
-  def NKF_report
+  def nkf_report
     @male_six_twelve = member_count(true, 6, 12)
     @female_six_twelve = member_count(false, 6, 12)
     @male_thirteen_nineteen = member_count(true, 13, 19)
@@ -227,7 +227,7 @@ class MembersController < ApplicationController
 
   def thumbnail
     @member = Member.find(params[:id])
-    if thumbnail = @member.thumbnail
+    if (thumbnail = @member.thumbnail)
       send_data(thumbnail,
           disposition: 'inline',
           type: @member.image.content_type,
@@ -309,10 +309,10 @@ class MembersController < ApplicationController
 
   def update_memberships
     @member.martial_arts = MartialArt.find(params[:martial_art_ids]) if params[:martial_art_ids]
-    if params[:member_group_ids]
-      @member.groups = Group.find(params[:member_group_ids].keys)
-    else
-      @member.groups = []
-    end
+    @member.groups = if params[:member_group_ids]
+                       Group.find(params[:member_group_ids].keys)
+                     else
+                       []
+                     end
   end
 end

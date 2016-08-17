@@ -164,7 +164,7 @@ class GraduationsController < ApplicationController
             passed: graduation.group.school_breaks?,
             paid_graduation: true, paid_belt: true
         if g.save
-           success_count += 1
+          success_count += 1
         else
           failures << g
         end

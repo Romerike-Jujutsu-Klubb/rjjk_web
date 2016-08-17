@@ -113,9 +113,7 @@ class UserController < ApplicationController
       begin
         User.transaction do
           users.each do |user|
-            key = user.generate_security_token
-            url = url_for(action: :change_password, only_path: false)
-            url += "?user[id]=#{user.id}&key=#{key}"
+            url = url_for(action: :change_password)
             UserMailer.forgot_password(user, url).store(user, tag: :forgot_password)
           end
           flash['message'] = "En e-post med veiledning for å sette nytt passord er sendt til #{CGI.escapeHTML(email)}."
