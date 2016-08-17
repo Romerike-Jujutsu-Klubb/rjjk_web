@@ -9,13 +9,13 @@ class CertificatesTest < ActiveSupport::TestCase
             censor1: { title: 'Santa', name: 'Claus',
                 signature: images(:one).content_data },
             censor2: { title: 'Easter', name: 'Bunny' },
-            censor3: { title: 'Tooth', name: 'Fairy' },
+            censor3: { title: 'Tooth', name: 'Fairy' }
         },
         {
             name: 'Heinz Doofenschmirz', rank: 'Ruler of the tristate area',
             censor1: { title: 'Santa', name: 'Claus' },
             censor2: { title: 'Easter', name: 'Bunny' },
-            censor3: { title: 'Tooth', name: 'Fairy' },
+            censor3: { title: 'Tooth', name: 'Fairy' }
         },
     ]
   end

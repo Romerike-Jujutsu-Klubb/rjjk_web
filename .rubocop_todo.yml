@@ -215,25 +215,3 @@ Style/RescueModifier:
 # SupportedStyles: use_perl_names, use_english_names
 Style/SpecialGlobalVars:
   EnforcedStyle: use_perl_names
-
-# Offense count: 25
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleForMultiline, SupportedStyles.
-# SupportedStyles: comma, consistent_comma, no_comma
-Style/TrailingCommaInLiteral:
-  Exclude:
-    - 'app/controllers/birthday_celebrations_controller.rb'
-    - 'app/controllers/graduations_controller.rb'
-    - 'app/controllers/trial_attendances_controller.rb'
-    - 'app/helpers/user_helper.rb'
-    - 'app/mailers/nkf_replication_mailer.rb'
-    - 'config/initializers/exception_notification.rb'
-    - 'test/controllers/annual_meetings_controller_test.rb'
-    - 'test/controllers/event_invitee_messages_controller_test.rb'
-    - 'test/controllers/group_instructors_controller_test.rb'
-    - 'test/controllers/public_records_controller_test.rb'
-    - 'test/controllers/survey_requests_controller_test.rb'
-    - 'test/controllers/technique_applications_controller_test.rb'
-    - 'test/controllers/trial_attendances_controller_test.rb'
-    - 'test/models/certificates_test.rb'
-    - 'test/models/rank_test.rb'

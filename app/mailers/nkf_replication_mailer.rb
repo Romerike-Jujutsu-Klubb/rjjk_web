@@ -19,7 +19,7 @@ class NkfReplicationMailer < ActionMailer::Base
     stats = [
         @new_members.any? ? "#{@new_members.size} nye" : nil,
         @member_changes.any? ? "#{@member_changes.size} endrede" : nil,
-        @group_changes.any? ? "#{@group_changes.size} gruppeendringer" : nil
+        @group_changes.any? ? "#{@group_changes.size} gruppeendringer" : nil,
     ].compact.join(', ')
     mail subject: "Oppdateringer fra NKF: #{stats}"
   end

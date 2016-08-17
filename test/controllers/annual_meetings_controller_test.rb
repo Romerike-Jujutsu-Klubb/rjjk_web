@@ -40,7 +40,7 @@ class AnnualMeetingsControllerTest < ActionController::TestCase
     put :update, id: @annual_meeting, annual_meeting: {
         invitation_sent_at: @annual_meeting.invitation_sent_at,
         public_record_updated_at: @annual_meeting.public_record_updated_at,
-        start_at: @annual_meeting.start_at
+        start_at: @annual_meeting.start_at,
     }
     assert_no_errors :annual_meeting
     assert_redirected_to annual_meeting_path(assigns(:annual_meeting))

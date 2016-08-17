@@ -23,7 +23,7 @@ class TrialAttendancesControllerTest < ActionController::TestCase
     assert_difference('TrialAttendance.count') do
       post :create, trial_attendance: {
           practice_id: practices(:panda_2013_42).id,
-          nkf_member_trial_id: nkf_member_trials(:two).id
+          nkf_member_trial_id: nkf_member_trials(:two).id,
       }
       assert_no_errors :trial_attendance
     end

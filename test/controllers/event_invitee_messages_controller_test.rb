@@ -25,7 +25,7 @@ class EventInviteeMessagesControllerTest < ActionController::TestCase
           body: @event_invitee_message.body,
           event_invitee_id: @event_invitee_message.event_invitee_id,
           sent_at: @event_invitee_message.sent_at,
-          subject: @event_invitee_message.subject
+          subject: @event_invitee_message.subject,
       }
       assert_no_errors :event_invitee_message
     end
@@ -48,7 +48,7 @@ class EventInviteeMessagesControllerTest < ActionController::TestCase
         body: @event_invitee_message.body,
         event_invitee_id: @event_invitee_message.event_invitee_id,
         sent_at: @event_invitee_message.sent_at,
-        subject: @event_invitee_message.subject
+        subject: @event_invitee_message.subject,
     }
     assert_no_errors :event_invitee_message
     assert_redirected_to event_invitee_message_path(assigns(:event_invitee_message))

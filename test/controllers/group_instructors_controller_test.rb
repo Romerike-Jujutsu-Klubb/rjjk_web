@@ -45,7 +45,7 @@ class GroupInstructorsControllerTest < ActionController::TestCase
     put :update, id: @group_instructor, group_instructor: {
         group_schedule_id: @group_instructor.group_schedule_id,
         member_id: @group_instructor.member_id,
-        semester_id: @group_instructor.group_semester.semester_id
+        semester_id: @group_instructor.group_semester.semester_id,
     }
     assert_no_errors :group_instructor
     assert_redirected_to group_instructors_path

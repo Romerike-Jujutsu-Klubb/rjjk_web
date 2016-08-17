@@ -22,7 +22,7 @@ class PublicRecordsControllerTest < ActionController::TestCase
       post :create, public_record: {
           board_members: @public_record.board_members,
           chairman: @public_record.chairman, contact: @public_record.contact,
-          deputies: @public_record.deputies,
+          deputies: @public_record.deputies
       }
     end
 
@@ -43,7 +43,7 @@ class PublicRecordsControllerTest < ActionController::TestCase
     put :update, id: @public_record, public_record: {
         board_members: @public_record.board_members,
         chairman: @public_record.chairman, contact: @public_record.contact,
-        deputies: @public_record.deputies,
+        deputies: @public_record.deputies
     }
     assert_redirected_to public_record_path(assigns(:public_record))
   end
