@@ -34,9 +34,8 @@ end
 members = YAML.load_file(EXPORT_DIR + '/members.yml')
 members.each do |m|
   existing_member = Member.find(m.id)
-  if existing_member.rfid != m.rfid
-    puts "Updating rfid for #{m.name}"
-    existing_member.rfid = m.rfid
-    existing_member.save!
-  end
+  next unless existing_member.rfid != m.rfid
+  puts "Updating rfid for #{m.name}"
+  existing_member.rfid = m.rfid
+  existing_member.save!
 end

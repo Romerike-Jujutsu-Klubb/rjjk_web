@@ -74,15 +74,14 @@ ranks.each do |rank_name, rank_dir|
       puts "#{waza_name && waza_name.strip}: #{tecs.inspect}"
       waza = Waza.where(name: waza_name).first_or_create! unless DUMP
       tecs.each do |t|
-        unless DUMP
-          begin
-            bt = waza.basic_techniques
-                .where(BasicTechnique.arel_table[:name].matches(t))
-                .first_or_create!(name: t)
-            bt.update_attributes!(name: t, rank_id: rank.id)
-          rescue
-            puts "Failed: #{t}: #{$!}"
-          end
+        next if DUMP
+        begin
+          bt = waza.basic_techniques
+              .where(BasicTechnique.arel_table[:name].matches(t))
+              .first_or_create!(name: t)
+          bt.update_attributes!(name: t, rank_id: rank.id)
+        rescue
+          puts "Failed: #{t}: #{$!}"
         end
       end
     end

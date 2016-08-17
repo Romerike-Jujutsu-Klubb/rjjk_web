@@ -34,12 +34,11 @@ class CreateMemberImages < ActiveRecord::Migration
         end
       end
 
-      if m.image
-        i = Image.create! name: m.image_name, content_type: m.image_content_type, content_data: m.image,
-                          user_id: u.id, description: 'Profilbilde', public: false, approved: nil
-        m.update_attributes! image_id: i.id
-        puts "Moved image for member: #{m.inspect}"
-      end
+      next unless m.image
+      i = Image.create! name: m.image_name, content_type: m.image_content_type, content_data: m.image,
+                        user_id: u.id, description: 'Profilbilde', public: false, approved: nil
+      m.update_attributes! image_id: i.id
+      puts "Moved image for member: #{m.inspect}"
     end
 
     remove_column :users, :member_id

@@ -27,12 +27,11 @@ class AttendanceHistoryGraph
       end
       sessions = attendances.map { |ats| ats.map(&:practice_id).uniq.size }
       values = attendances.each_with_index.map { |a, i| sessions[i].positive? ? a.size / sessions[i] : nil }
-      if values.any? { |v| v }
-        g.data(group.name, values, group.color)
-        sessions.each_with_index do |session, i|
-          totals[i] = totals[i].to_i + values[i] if values[i]
-          totals_sessions[i] += session
-        end
+      next unless values.any? { |v| v }
+      g.data(group.name, values, group.color)
+      sessions.each_with_index do |session, i|
+        totals[i] = totals[i].to_i + values[i] if values[i]
+        totals_sessions[i] += session
       end
     end
 
@@ -44,11 +43,10 @@ class AttendanceHistoryGraph
     weeks.each_with_index do |week, i|
       year = week[0]
       month = Date.commercial(week[0], week[1], 2).mon
-      if totals[i] && (current_month.nil? || ((month - current_month > 1) && [1, 8].include?(month)) || year != current_year)
-        labels[i] = year != current_year ? "#{month}\n    #{year}" : month.to_s
-        current_year = year
-        current_month = month
-      end
+      next unless totals[i] && (current_month.nil? || ((month - current_month > 1) && [1, 8].include?(month)) || year != current_year)
+      labels[i] = year != current_year ? "#{month}\n    #{year}" : month.to_s
+      current_year = year
+      current_month = month
     end
     g.labels = labels
 

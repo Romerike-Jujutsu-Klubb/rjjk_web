@@ -14,11 +14,10 @@ class Role < ActiveRecord::Base
         end
       else
         appointments.current.each do |a|
-          if (am = AnnualMeeting.where('DATE(start_at) = ?', a.from).first)
-            a.destroy
-            elections.create! member_id: a.member_id, annual_meeting_id: am.id,
-                years: years_on_the_board
-          end
+          next unless (am = AnnualMeeting.where('DATE(start_at) = ?', a.from).first)
+          a.destroy
+          elections.create! member_id: a.member_id, annual_meeting_id: am.id,
+              years: years_on_the_board
         end
       end
     end

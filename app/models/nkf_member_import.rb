@@ -234,16 +234,15 @@ class NkfMemberImport
         raise
       end
       was_new_record = record.new_record?
-      if record.changed?
-        c = record.changes
+      next unless record.changed?
+      c = record.changes
+      logger.debug "Found changes: #{c.inspect}"
+      if record.save
         logger.debug "Found changes: #{c.inspect}"
-        if record.save
-          logger.debug "Found changes: #{c.inspect}"
-          (was_new_record ? @new_records : @changes) << { record: record, changes: c }
-        else
-          logger.error "ERROR: #{record.errors.to_a.join(', ')}"
-          @error_records << record
-        end
+        (was_new_record ? @new_records : @changes) << { record: record, changes: c }
+      else
+        logger.error "ERROR: #{record.errors.to_a.join(', ')}"
+        @error_records << record
       end
     end
   end
@@ -296,17 +295,16 @@ class NkfMemberImport
       ).first
       record ||= NkfMemberTrial.new
       record.attributes = attributes
-      if record.changed?
-        c = record.changes
-        if record.save
-          @trial_changes << { record: record, changes: c }
-        else
-          logger.error "ERROR: #{columns}"
-          logger.error "ERROR: #{row}"
-          logger.error "ERROR: #{record.attributes}"
-          logger.error "ERROR: #{record.errors.to_a.join(', ')}"
-          @error_records << record
-        end
+      next unless record.changed?
+      c = record.changes
+      if record.save
+        @trial_changes << { record: record, changes: c }
+      else
+        logger.error "ERROR: #{columns}"
+        logger.error "ERROR: #{row}"
+        logger.error "ERROR: #{record.attributes}"
+        logger.error "ERROR: #{record.errors.to_a.join(', ')}"
+        @error_records << record
       end
     end
   end

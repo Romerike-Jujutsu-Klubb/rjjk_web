@@ -6,6 +6,8 @@ class SurveyAnswer < ActiveRecord::Base
   before_validation { self.answer -= ['', 'annet'] if answer.is_a?(Array) }
 
   def answers
-    [*YAML.load(answer)].reject(&:blank?) rescue [answer]
+    [*YAML.load(answer)].reject(&:blank?)
+  rescue
+    [answer]
   end
 end

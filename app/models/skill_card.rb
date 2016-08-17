@@ -43,29 +43,28 @@ class SkillCard
           bt_table.draw
         end
 
-        if rank.technique_applications.any?
-          rows = [['', "Applikasjoner #{rank.name}".upcase, 'G', 'F', 'A', 'I']]
-          rank.technique_applications.group_by(&:system).each do |system_name, apps|
-            apps.each_slice(14) do |app_slice|
-              rows << [{ content: UnicodeUtils.upcase(system_name), rowspan: app_slice.size, rotate: 90 },
-                  UnicodeUtils.upcase(app_slice[0].name), nil, nil, nil, nil]
-              rows += app_slice[1..-1].sort_by(&:name).map do |ta|
-                [UnicodeUtils.upcase(ta.name), nil, nil, nil, nil]
-              end
+        next unless rank.technique_applications.any?
+        rows = [['', "Applikasjoner #{rank.name}".upcase, 'G', 'F', 'A', 'I']]
+        rank.technique_applications.group_by(&:system).each do |system_name, apps|
+          apps.each_slice(14) do |app_slice|
+            rows << [{ content: UnicodeUtils.upcase(system_name), rowspan: app_slice.size, rotate: 90 },
+                UnicodeUtils.upcase(app_slice[0].name), nil, nil, nil, nil]
+            rows += app_slice[1..-1].sort_by(&:name).map do |ta|
+              [UnicodeUtils.upcase(ta.name), nil, nil, nil, nil]
             end
           end
-
-          app_table = make_table(rows, width: bounds.width, header: true,
-              cell_style: { size: FONT_SIZE }, row_colors: %w(F8F8F8 FFFFFF),
-              column_widths: { 0 => 20, 2..-1 => 20 }
-          ) do
-            row(0).font_style = :bold
-            columns(2..-1).align = :center
-          end
-
-          move_down(FONT_SIZE) if cursor < bounds.height
-          app_table.draw
         end
+
+        app_table = make_table(rows, width: bounds.width, header: true,
+            cell_style: { size: FONT_SIZE }, row_colors: %w(F8F8F8 FFFFFF),
+            column_widths: { 0 => 20, 2..-1 => 20 }
+        ) do
+          row(0).font_style = :bold
+          columns(2..-1).align = :center
+        end
+
+        move_down(FONT_SIZE) if cursor < bounds.height
+        app_table.draw
       end
     end.render
   end

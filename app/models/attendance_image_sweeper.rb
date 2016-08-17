@@ -20,6 +20,10 @@ class AttendanceImageSweeper < ActionController::Caching::Sweeper
     cache_dir = ActionController::Base.page_cache_directory
     cached_files = Dir.glob(cache_dir + '/attendances/**/*')
     Rails.logger.info("Expire cached files: #{cached_files}")
-    FileUtils.rm_f(cached_files) rescue Errno::ENOENT
+    begin
+      FileUtils.rm_f(cached_files)
+    rescue Errno::ENOENT
+      # In case they were removed
+    end
   end
 end
