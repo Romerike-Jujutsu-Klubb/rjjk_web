@@ -43,43 +43,6 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 27
 
-# Offense count: 17
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: with_first_parameter, with_fixed_indentation
-Style/AlignParameters:
-  Exclude:
-    - 'app/controllers/search_controller.rb'
-    - 'app/controllers/signatures_controller.rb'
-    - 'app/models/attendance_history_graph.rb'
-    - 'app/models/certificates.rb'
-    - 'app/models/group.rb'
-    - 'app/models/member.rb'
-    - 'db/migrate/20101027061727_create_trial_attendances.rb'
-    - 'test/controllers/user_controller_test.rb'
-
-# Offense count: 24
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, ProceduralMethods, FunctionalMethods, IgnoredMethods.
-# SupportedStyles: line_count_based, semantic, braces_for_chaining
-# ProceduralMethods: benchmark, bm, bmbm, create, each_with_object, measure, new, realtime, tap, with_object
-# FunctionalMethods: let, let!, subject, watch
-# IgnoredMethods: lambda, proc, it
-Style/BlockDelimiters:
-  Exclude:
-    - 'app/controllers/group_instructors_controller.rb'
-    - 'app/controllers/nkf_members_controller.rb'
-    - 'app/controllers/trial_attendances_controller.rb'
-    - 'app/models/member.rb'
-    - 'app/models/member_history_graph.rb'
-    - 'config/environment.rb'
-    - 'test/controllers/censors_controller_test.rb'
-    - 'test/controllers/graduates_controller_test.rb'
-    - 'test/controllers/graduations_controller_test.rb'
-    - 'test/controllers/images_controller_test.rb'
-    - 'test/controllers/martial_arts_controller_test.rb'
-    - 'test/controllers/members_controller_test.rb'
-
 # Offense count: 294
 Style/Documentation:
   Enabled: false
@@ -98,69 +61,6 @@ Style/GuardClause:
   Enabled: false
   Exclude:
     - 'test/features/news_feature_test.rb'
-
-# Offense count: 8
-# Cop supports --auto-correct.
-Style/MultilineBlockLayout:
-  Exclude:
-    - 'app/controllers/group_instructors_controller.rb'
-    - 'app/models/appointment.rb'
-    - 'app/models/election.rb'
-    - 'app/models/member_history_graph.rb'
-
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: symmetrical, new_line, same_line
-Style/MultilineHashBraceLayout:
-  Exclude:
-    - 'app/controllers/graduations_controller.rb'
-    - 'test/controllers/application_steps_controller_test.rb'
-    - 'test/controllers/basic_techniques_controller_test.rb'
-    - 'test/controllers/correspondences_controller_test.rb'
-
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: symmetrical, new_line, same_line
-Style/MultilineMethodCallBraceLayout:
-  Exclude:
-    - 'app/controllers/event_invitee_messages_controller.rb'
-    - 'app/controllers/events_controller.rb'
-    - 'app/controllers/graduations_controller.rb'
-    - 'app/models/nkf_member_import.rb'
-    - 'app/models/skill_card.rb'
-
-# Offense count: 7
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: aligned, indented, indented_relative_to_receiver
-Style/MultilineMethodCallIndentation:
-  Exclude:
-    - 'app/controllers/concerns/graduation_access.rb'
-    - 'app/controllers/events_controller.rb'
-    - 'app/models/annual_meeting.rb'
-    - 'app/models/nkf_appointments_scraper.rb'
-    - 'app/models/nkf_member_import.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: aligned, indented
-Style/MultilineOperationIndentation:
-  Exclude:
-    - 'app/controllers/concerns/graduation_access.rb'
-    - 'app/mailers/graduation_reminder.rb'
-    - 'app/models/group_schedule.rb'
-
-# Offense count: 6
-Style/MultilineTernaryOperator:
-  Exclude:
-    - 'app/controllers/elections_controller.rb'
-    - 'app/mailers/incoming_email_processor.rb'
-    - 'app/mailers/nkf_replication_mailer.rb'
-    - 'app/models/member_grade_history_graph.rb'
-    - 'config/environment.rb'
 
 # Offense count: 55
 # Cop supports --auto-correct.

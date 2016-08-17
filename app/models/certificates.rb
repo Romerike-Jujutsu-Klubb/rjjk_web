@@ -20,9 +20,9 @@ class Certificates
         when 1
           rotate 0.5 do
             image "#{Rails.root}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.jpg",
-                  at: [1, page_height - 4],
-                  width: page_width,
-                  height: page_height
+                at: [1, page_height - 4],
+                width: page_width,
+                height: page_height
           end
           logo_width = 120
 
@@ -31,8 +31,8 @@ class Certificates
           fill_color '000000'
 
           image "#{Rails.root}/app/views/graduations/logo_RJJK_notext.jpg",
-                at: [(page_width - logo_width) / 2, page_height - 5],
-                width: logo_width
+              at: [(page_width - logo_width) / 2, page_height - 5],
+              width: logo_width
           # Mask old labels
           fill_color 'ffffff'
           fill_rectangle [95, 255], 55, 140
@@ -41,30 +41,30 @@ class Certificates
         when 2
           scale = -0.05
           image "#{Rails.root}/app/views/graduations/Style_of_Phoenix_border_A4_Landscape.jpg",
-                at: [page_width * (0 - scale) - 1, page_height * (1 + scale / 2) - 1],
-                width: page_width * (1 + scale),
-                height: page_height * (1 + scale)
+              at: [page_width * (0 - scale) - 1, page_height * (1 + scale / 2) - 1],
+              width: page_width * (1 + scale),
+              height: page_height * (1 + scale)
           logo_width = 85 * (1 + scale)
 
           image "#{Rails.root}/app/views/graduations/logo_RJJK_notext.jpg",
-                at: [(page_width - logo_width) / 2, page_height - 5],
-                width: logo_width
+              at: [(page_width - logo_width) / 2, page_height - 5],
+              width: logo_width
         when 3
           scale = -0.025
           logo_width = 120
           image "#{Rails.root}/app/views/graduations/logo_RJJK_notext.jpg",
-                at: [(page_width - logo_width) / 2 - 2, page_height - 1],
-                width: logo_width
+              at: [(page_width - logo_width) / 2 - 2, page_height - 1],
+              width: logo_width
           image "#{Rails.root}/app/views/graduations/custome_rank_certificate.png",
-                at: [0, page_height * (1 + scale) - 1],
-                width: page_width,
-                height: page_height * (1 + scale)
+              at: [0, page_height * (1 + scale) - 1],
+              width: page_width,
+              height: page_height * (1 + scale)
           kanji_scale = 2.5
           kanji_width = 126 / kanji_scale
           kanji_height = 674 / kanji_scale
           image "#{Rails.root}/app/views/graduations/KeiWaRyuKanji.png",
-                at: [org_right_center - kanji_width / 2, (page_height * 0.4) + kanji_height / 2],
-                width: kanji_width, height: kanji_height
+              at: [org_right_center - kanji_width / 2, (page_height * 0.4) + kanji_height / 2],
+              width: kanji_width, height: kanji_height
         end
         name_y = 455
 
@@ -155,7 +155,7 @@ class Certificates
           text_box c[:censor1][:title], at: [censor_title_x, sensor_y], size: 18, align: :left
           if c[:censor1][:signature]
             image StringIO.new(c[:censor1][:signature]),
-                  at: [censor_name_x, sensor_y + 18], fit: [640, 34]
+                at: [censor_name_x, sensor_y + 18], fit: [640, 34]
           else
             text_box c[:censor1][:name], at: [censor_name_x, sensor_y], size: 18, align: :left
           end

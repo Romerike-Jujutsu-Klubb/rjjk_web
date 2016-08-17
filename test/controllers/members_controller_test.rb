@@ -106,9 +106,9 @@ class MembersControllerTest < ActionController::TestCase
     assert_response :redirect
     assert_redirected_to action: :index
 
-    assert_raise(ActiveRecord::RecordNotFound) {
+    assert_raise(ActiveRecord::RecordNotFound) do
       Member.find(@first_id)
-    }
+    end
   end
 
   def test_grade_history_graph

@@ -4,8 +4,8 @@ class AnnualMeeting < ActiveRecord::Base
 
   validate do
     if id && start_at && self.class
-        .where('id <> ? AND EXTRACT(YEAR FROM start_at) = ?', id, start_at.year)
-        .exists?
+          .where('id <> ? AND EXTRACT(YEAR FROM start_at) = ?', id, start_at.year)
+          .exists?
       errors.add(:start_at, 'kan bare ha et årsmøte per år.')
     end
   end

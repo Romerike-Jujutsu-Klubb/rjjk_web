@@ -33,8 +33,8 @@ class GraduationReminder
       next unless attendances_since_graduation >= minimum_attendances
       group = m.next_rank.group
       next if group.school_breaks? &&
-          (group.next_graduation.nil? ||
-              !m.active?(group.next_graduation.held_on))
+            (group.next_graduation.nil? ||
+                !m.active?(group.next_graduation.held_on))
       next if m.next_graduate
       true
     end

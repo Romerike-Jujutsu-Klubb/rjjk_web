@@ -34,7 +34,7 @@ class UserControllerTest < ActionController::TestCase
     assert_logged_in users(:lars)
     assert_response :redirect
     assert_equal @controller.url_for(controller: :welcome, action: :index, only_path: false),
-                 @response.redirect_url
+        @response.redirect_url
   end
 
   def test_login__wrong_password

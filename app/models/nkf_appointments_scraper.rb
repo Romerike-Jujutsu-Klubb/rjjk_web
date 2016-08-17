@@ -42,7 +42,7 @@ class NkfAppointmentsScraper
     end
     appointments.select { |a| a.is_a?(String) } +
         appointments.select { |a| !a.is_a?(String) && a.changed? }
-            .each(&:save!).sort_by(&:from)
+        .each(&:save!).sort_by(&:from)
   end
 
   def self.login(agent)

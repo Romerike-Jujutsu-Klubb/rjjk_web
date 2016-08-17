@@ -76,9 +76,9 @@ class ImagesControllerTest < ActionController::TestCase
     assert_response :redirect
     assert_redirected_to action: 'list'
 
-    assert_raise(ActiveRecord::RecordNotFound) {
+    assert_raise(ActiveRecord::RecordNotFound) do
       Image.find(@first_id)
-    }
+    end
   end
 
   def test_gallery

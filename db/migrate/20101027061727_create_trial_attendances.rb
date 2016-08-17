@@ -11,8 +11,8 @@ class CreateTrialAttendances < ActiveRecord::Migration
     end
 
     add_index 'trial_attendances', %w(nkf_member_trial_id group_schedule_id year week),
-              unique: true,
-              name: 'ix_trial_attendances__nkf_member_trial_group_schedule_year_week'
+        unique: true,
+        name: 'ix_trial_attendances__nkf_member_trial_group_schedule_year_week'
   end
 
   def self.down

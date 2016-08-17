@@ -40,8 +40,8 @@ class ElectionsController < ApplicationController
     respond_to do |format|
       if @election.save
         format.html do
-          redirect_to @election.member.age < 15 ? edit_election_path(@election)
-              : elections_path, notice: 'Board appointment was successfully created.'
+          redirect_to @election.member.age < 15 ? edit_election_path(@election) : elections_path,
+              notice: 'Board appointment was successfully created.'
         end
         format.json { render json: @election, status: :created, location: @election }
       else

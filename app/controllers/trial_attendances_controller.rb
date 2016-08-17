@@ -58,14 +58,14 @@ class TrialAttendancesController < ApplicationController
 
     respond_to do |format|
       if @trial_attendance.save
-        format.html {
+        format.html do
           if request.xhr?
             render partial: 'attendances/trial_attendance_delete_link',
                 locals: { trial_attendance: @trial_attendance }
           else
             redirect_to(@trial_attendance, notice: 'TrialAttendance was successfully created.')
           end
-        }
+        end
         format.xml { render xml: @trial_attendance, status: :created, location: @trial_attendance }
       else
         format.html { render action: :new }

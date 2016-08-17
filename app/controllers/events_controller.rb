@@ -73,7 +73,8 @@ class EventsController < ApplicationController
     recipients.each do |recipient|
       event_invitee = EventInvitee.new(event: event, name: recipient.name, email: recipient.email)
       event_invitee_message = EventInviteeMessage.new(
-          event_invitee: event_invitee, message_type: EventMessage::MessageType::INVITATION)
+          event_invitee: event_invitee, message_type: EventMessage::MessageType::INVITATION
+      )
       event_invitee_message.id = -event.id
       NewsletterMailer.event_invitee_message(event_invitee_message)
           .store(recipient.user_id, tag: :event_invite)
@@ -99,8 +100,8 @@ class EventsController < ApplicationController
           summary e.name
           if e.description
             description Kramdown::Document
-                    .new(e.description.strip, html_to_native: true).to_kramdown
-                    .gsub(/\{:.*?\}\s*/, '')
+                .new(e.description.strip, html_to_native: true).to_kramdown
+                .gsub(/\{:.*?\}\s*/, '')
           end
           dtstart e.start_at
           dtend e.end_at || e.start_at

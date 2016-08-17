@@ -71,16 +71,16 @@ class MartialArtsControllerTest < ActionController::TestCase
   end
 
   def test_destroy
-    assert_nothing_raised {
+    assert_nothing_raised do
       MartialArt.find(@first_id)
-    }
+    end
 
     post :destroy, id: @first_id
     assert_response :redirect
     assert_redirected_to action: 'list'
 
-    assert_raise(ActiveRecord::RecordNotFound) {
+    assert_raise(ActiveRecord::RecordNotFound) do
       MartialArt.find(@first_id)
-    }
+    end
   end
 end

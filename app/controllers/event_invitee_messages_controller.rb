@@ -23,7 +23,8 @@ class EventInviteeMessagesController < ApplicationController
       event = Event.find(-item_id)
       event_invitee = EventInvitee.new(event: event, name: 'test', email: 'test@example.com')
       @event_invitee_message = EventInviteeMessage.new(
-          event_invitee: event_invitee, message_type: EventMessage::MessageType::INVITATION)
+          event_invitee: event_invitee, message_type: EventMessage::MessageType::INVITATION
+      )
       @event_invitee_message.id = 0
     end
 

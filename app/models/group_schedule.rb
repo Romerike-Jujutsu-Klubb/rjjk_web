@@ -13,7 +13,7 @@ class GroupSchedule < ActiveRecord::Base
   def next_practice(now = Time.now)
     date = now.to_date
     date += 1.week if weekday < date.cwday ||
-        (weekday == date.cwday && end_at <= now.time_of_day)
+          (weekday == date.cwday && end_at <= now.time_of_day)
     Practice.where(group_schedule_id: id, year: date.cwyear,
         week: date.cweek).first_or_create!
   end

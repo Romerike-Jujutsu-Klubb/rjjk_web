@@ -12,7 +12,7 @@ class SearchController < ApplicationController
 
       @pages = InformationPage
           .where('UPPER(title) LIKE ? OR UPPER(body) LIKE ?',
-                *(["%#{UnicodeUtils.upcase(@query)}%"] * 2))
+              *(["%#{UnicodeUtils.upcase(@query)}%"] * 2))
     end
   end
 end

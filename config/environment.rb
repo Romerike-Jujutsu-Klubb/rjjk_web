@@ -37,13 +37,16 @@ module Prawn
         # Returns the width of this text with no wrapping. This will be far off
         # from the final width if the text is long.
         def natural_content_width
-          @natural_content_width ||= rotated ?
-              with_font {
-                b = text_box(width: spanned_content_height + FPTolerance)
-                b.render(dry_run: true)
-                b.height
-              } :
-              [styled_width_of(@content), @pdf.bounds.width].min
+          @natural_content_width ||=
+              if rotated
+                with_font do
+                  b = text_box(width: spanned_content_height + FPTolerance)
+                  b.render(dry_run: true)
+                  b.height
+                end
+              else
+                [styled_width_of(@content), @pdf.bounds.width].min
+              end
         end
 
         def rotated
@@ -53,12 +56,15 @@ module Prawn
         # Returns the natural height of this block of text, wrapped to the
         # preset width.
         def natural_content_height
-          rotated ? [styled_width_of(@content), @pdf.bounds.height].min :
-              with_font do
-                b = text_box(width: spanned_content_width + FPTolerance)
-                b.render(dry_run: true)
-                b.height + b.line_gap
-              end
+          if rotated
+            [styled_width_of(@content), @pdf.bounds.height].min
+          else
+            with_font do
+              b = text_box(width: spanned_content_width + FPTolerance)
+              b.render(dry_run: true)
+              b.height + b.line_gap
+            end
+          end
         end
 
         # Draws the text content into its bounding box.

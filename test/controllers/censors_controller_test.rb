@@ -58,16 +58,16 @@ class CensorsControllerTest < ActionController::TestCase
   end
 
   def test_destroy
-    assert_nothing_raised {
+    assert_nothing_raised do
       Censor.find(@first_id)
-    }
+    end
 
     post :destroy, id: @first_id
     assert_response :redirect
     assert_redirected_to action: 'index'
 
-    assert_raise(ActiveRecord::RecordNotFound) {
+    assert_raise(ActiveRecord::RecordNotFound) do
       Censor.find(@first_id)
-    }
+    end
   end
 end

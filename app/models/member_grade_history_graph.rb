@@ -102,13 +102,17 @@ EOF
       next_date = date + interval
       @practices[date] ||= @group.trainings_in_period(prev_date..date)
       @active_members[date] ||= Member
-          .where(percentage ?
-              [ATTENDANCE_CLAUSE, prev_date.cwyear, prev_date.cwyear, prev_date.cweek,
-               date.cwyear, date.cwyear, date.cweek, (@practices[date] * percentage) / 100,
-               date, date] :
-              [ACTIVE_CLAUSE, prev_date.cwyear, prev_date.cwyear, prev_date.cweek, date.cwyear, date.cwyear, date.cweek,
-               next_date, date.cwyear, date.cwyear, date.cweek, next_date.cwyear, next_date.cwyear, next_date.cweek,
-               date, date])
+          .where(
+              if percentage
+                [ATTENDANCE_CLAUSE, prev_date.cwyear, prev_date.cwyear, prev_date.cweek,
+                    date.cwyear, date.cwyear, date.cweek, (@practices[date] * percentage) / 100,
+                    date, date]
+              else
+                [ACTIVE_CLAUSE, prev_date.cwyear, prev_date.cwyear, prev_date.cweek, date.cwyear, date.cwyear, date.cweek,
+                    next_date, date.cwyear, date.cwyear, date.cweek, next_date.cwyear, next_date.cwyear, next_date.cweek,
+                    date, date]
+              end
+          )
           .includes(graduates: [{ graduation: { group: :martial_art } }, :rank]).to_a
       ranks = @active_members[date].select { |m| m.graduates.select { |g| g.graduation.martial_art.name == 'Kei Wa Ryu' && g.graduation.held_on <= date }.sort_by { |g| g.graduation.held_on }.last.try(:rank) == rank }.size
       logger.debug "#{prev_date} #{date} #{next_date} Active members: #{@active_members[date].size}, ranks: #{ranks}"

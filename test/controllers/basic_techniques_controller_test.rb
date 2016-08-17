@@ -24,7 +24,8 @@ class BasicTechniquesControllerTest < ActionController::TestCase
           description: @basic_technique.description,
           name: @basic_technique.name + ' 2', rank_id: @basic_technique.rank_id,
           translation: @basic_technique.translation,
-          waza_id: @basic_technique.waza_id }
+          waza_id: @basic_technique.waza_id
+      }
     end
 
     assert_redirected_to basic_technique_path(assigns(:basic_technique))
