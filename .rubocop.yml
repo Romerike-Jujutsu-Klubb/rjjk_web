@@ -10,6 +10,9 @@ AllCops:
   Exclude:
     - 'db/schema.rb'
 
+Metrics/ParameterLists:
+  Max: 6
+
 Style/AlignArray:
   Enabled: false
 
@@ -23,6 +26,9 @@ Style/AlignParameters:
   IndentationWidth: 4
 
 Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/DoubleNegation:
   Enabled: false
 
 Style/Encoding:
