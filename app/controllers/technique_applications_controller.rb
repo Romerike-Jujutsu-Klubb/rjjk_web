@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class TechniqueApplicationsController < ApplicationController
   USER_ACTIONS = [:index, :show]
   before_action :authenticate_user, only: USER_ACTIONS

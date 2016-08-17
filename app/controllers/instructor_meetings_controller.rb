@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class InstructorMeetingsController < ApplicationController
   before_action :set_instructor_meeting, only: [:show, :edit, :update, :destroy]
 

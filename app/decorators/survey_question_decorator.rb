@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SurveyQuestionDecorator < Draper::Decorator
   delegate_all
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ImagesController < ApplicationController
   PUBLIC_ACTIONS = [:gallery, :inline, :show]
   PERSONAL_ACTIONS = [:create, :mine, :new, :upload]

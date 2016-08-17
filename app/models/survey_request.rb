@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SurveyRequest < ActiveRecord::Base
   belongs_to :member
   belongs_to :survey

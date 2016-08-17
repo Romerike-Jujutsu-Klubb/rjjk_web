@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MartialArt < ActiveRecord::Base
   has_many :graduations, -> { order(:held_on) }, through: :groups
   has_many :groups, dependent: :destroy

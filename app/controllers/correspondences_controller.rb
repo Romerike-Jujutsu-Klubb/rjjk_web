@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CorrespondencesController < ApplicationController
   # GET /correspondences
   # GET /correspondences.json

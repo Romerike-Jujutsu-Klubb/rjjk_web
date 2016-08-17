@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module UserHelper
   DEFAULT_HEAD_OPTIONS = {
       notice: true,
@@ -12,7 +13,7 @@ module UserHelper
   def head_helper(label, options = {})
     opts = DEFAULT_HEAD_OPTIONS.dup
     opts.update(options.symbolize_keys)
-    s = "<h3>#{label}</h3>"
+    s = "<h3>#{label}</h3>".dup
     if flash['notice'] && !opts[:notice].nil? && opts[:notice]
       notice = "<div><p style=\"padding-left: 0.5em;padding-bottom: 0.5em;color: #08C\">#{flash['notice']}</p></div>"
       s += notice

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module GraduationAccess
   def admin_or_censor_required(graduation, approval = nil)
     return false unless authenticate_user

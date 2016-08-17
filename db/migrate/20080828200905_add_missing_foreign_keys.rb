@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddMissingForeignKeys < ActiveRecord::Migration
   def self.up
     # This was only necessary before adding the foreign_key_migrations plugin

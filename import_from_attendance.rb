@@ -1,4 +1,5 @@
 #!/usr/bin/ruby
+# frozen_string_literal: true
 
 PROJECT_DIR = File.expand_path(File.dirname(__FILE__))
 EXPORT_DIR = '/main'

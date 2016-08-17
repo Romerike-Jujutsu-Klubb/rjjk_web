@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class NkfReplicationNotifier
   def self.notify_wrong_contracts
     members = NkfMember.where(medlemsstatus: 'A').all

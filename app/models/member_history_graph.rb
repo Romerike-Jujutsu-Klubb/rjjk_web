@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Array
   def without_consecutive_zeros
     each_with_index { |v, i| self[i] = (v.positive? || (i.positive? && self[i - 1].to_i.positive?) || self[i + 1].to_i.positive? ? v : nil) }

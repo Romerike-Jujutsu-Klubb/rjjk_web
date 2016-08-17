@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AnnualMeetingReminder
   def self.notify_missing_date
     month = Date.today.mon

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddPropertiesToImages < ActiveRecord::Migration
   def change
     create_table :user_images do |t|

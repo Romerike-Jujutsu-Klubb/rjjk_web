@@ -1,4 +1,5 @@
 #!/usr/bin/env jruby
+# frozen_string_literal: true
 
 PROJECT_DIR = File.expand_path(File.dirname(__FILE__))
 IMPORT_DIR_PROD = '/u/apps/rjjk_web_beta/RJJK/pensum/2010'

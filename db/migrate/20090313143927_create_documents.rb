@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateDocuments < ActiveRecord::Migration
   def self.up
     create_table :documents do |t|

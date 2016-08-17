@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class EventsController < ApplicationController
   before_filter :admin_required, except: [:calendar, :index, :show]
 

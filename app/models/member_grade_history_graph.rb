@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MemberGradeHistoryGraph
   ACTIVE_CLAUSE = <<EOF
 EXISTS (

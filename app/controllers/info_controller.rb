@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class InfoController < ApplicationController
   before_filter :admin_required, except: [:index, :show, :show_content]
 

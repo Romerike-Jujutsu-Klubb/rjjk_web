@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'graduation_mailer'
 
 class GraduationReminder

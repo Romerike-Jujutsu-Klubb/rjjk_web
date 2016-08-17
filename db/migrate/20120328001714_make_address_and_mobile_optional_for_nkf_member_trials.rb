@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MakeAddressAndMobileOptionalForNkfMemberTrials < ActiveRecord::Migration
   def up
     change_column_null :nkf_member_trials, :adresse, true

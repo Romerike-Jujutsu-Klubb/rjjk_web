@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ApplicationMailer < ActionMailer::Base
   def mail(headers = {}, &block)
     headers['X-Title'] = @title if @title

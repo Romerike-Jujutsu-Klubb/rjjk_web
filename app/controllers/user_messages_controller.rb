@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class UserMessagesController < ApplicationController
   before_action :authenticate_user
   before_action :set_user_message, only: [:show, :edit, :update, :destroy]

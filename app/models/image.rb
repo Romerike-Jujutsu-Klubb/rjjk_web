@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Image < ActiveRecord::Base
   CHUNK_SIZE = 10 * 1024 * 1024
 

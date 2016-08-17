@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class InformationPageMailer < ActionMailer::Base
   include UserSystem
   include MailerHelper

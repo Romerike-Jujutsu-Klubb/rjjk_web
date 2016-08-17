@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ApplicationController < ActionController::Base
   DEFAULT_LAYOUT = 'dark_ritual'
   protect_from_forgery with: :exception

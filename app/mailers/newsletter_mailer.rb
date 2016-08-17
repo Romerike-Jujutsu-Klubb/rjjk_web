@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class NewsletterMailer < ActionMailer::Base
   helper :application
   include MailerHelper

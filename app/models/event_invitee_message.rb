@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class EventInviteeMessage < ActiveRecord::Base
   module MessageType
     SIGNUP_CONFIRMATION = 'SIGNUP_CONFIRMATION'

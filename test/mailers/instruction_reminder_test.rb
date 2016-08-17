@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 class InstructionReminderTest < ActionMailer::TestCase
   def test_notify_missing_instructors

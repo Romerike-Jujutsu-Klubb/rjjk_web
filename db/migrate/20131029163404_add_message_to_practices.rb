@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddMessageToPractices < ActiveRecord::Migration
   def change
     add_column :practices, :message, :string

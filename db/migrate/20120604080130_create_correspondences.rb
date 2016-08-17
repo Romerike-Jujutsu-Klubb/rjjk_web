@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateCorrespondences < ActiveRecord::Migration
   def change
     create_table :correspondences do |t|

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddDescriptionToRanks < ActiveRecord::Migration
   def change
     add_column :ranks, :description, :text

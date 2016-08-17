@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Numeric
   def ish(acceptable_delta = 0.001)
     ApproximateValue.new self, acceptable_delta

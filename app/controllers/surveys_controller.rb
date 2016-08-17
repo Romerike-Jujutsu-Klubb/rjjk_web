@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SurveysController < ApplicationController
   before_action :admin_required
   before_action :set_survey, only: [:show, :edit, :update, :destroy]

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # http://www.gotealeaf.com/blog/handling-emails-in-rails?utm_source=rubyweekly&utm_medium=email
 
 if %w(development beta production).include?(Rails.env) && !ENV['DISABLE_SCHEDULER']

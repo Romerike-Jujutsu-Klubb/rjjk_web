@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateAttendances < ActiveRecord::Migration
   def self.up
     create_table :attendances, force: true do |t|

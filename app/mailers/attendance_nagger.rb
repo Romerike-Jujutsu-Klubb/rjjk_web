@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AttendanceNagger
   def self.send_attendance_plan
     today = Date.today

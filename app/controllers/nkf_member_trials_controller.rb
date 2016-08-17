@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class NkfMemberTrialsController < ApplicationController
   before_filter :admin_required
 

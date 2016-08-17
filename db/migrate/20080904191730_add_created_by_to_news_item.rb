@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddCreatedByToNewsItem < ActiveRecord::Migration
   def self.up
     add_column :news_items, :created_by, :integer, references: :users

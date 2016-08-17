@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddInvoiceEmailToNkfMemberTrials < ActiveRecord::Migration
   def self.up
     execute 'DELETE FROM nkf_member_trials'

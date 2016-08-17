@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Election < ActiveRecord::Base
   belongs_to :annual_meeting
   belongs_to :member

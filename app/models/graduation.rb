@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Graduation < ActiveRecord::Base
   belongs_to :group
   has_many :censors, dependent: :destroy

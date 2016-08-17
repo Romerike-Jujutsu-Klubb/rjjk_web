@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class IncreaseEmailSizes < ActiveRecord::Migration
   def up
     change_column :members, :parent_email, :string, limit: 64

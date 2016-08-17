@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RolesController < ApplicationController
   before_filter :admin_required
 

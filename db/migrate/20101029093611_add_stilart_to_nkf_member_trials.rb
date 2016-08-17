@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddStilartToNkfMemberTrials < ActiveRecord::Migration
   def self.up
     add_column :nkf_member_trials, :stilart, :string, limit: 64

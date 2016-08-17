@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Rails.application.configure do
   # config.action_controller.asset_host = 'http://assets.example.com'
   config.action_controller.perform_caching = true

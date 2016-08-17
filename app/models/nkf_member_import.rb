@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Separate slow tests and run in CI
 # TODO(uwe):  Maybe use https://github.com/httprb/http.rb ?
 # TODO(uwe):  Use https://github.com/vcr/vcr ?

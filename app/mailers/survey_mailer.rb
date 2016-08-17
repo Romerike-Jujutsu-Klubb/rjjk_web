@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SurveyMailer < ApplicationMailer
   include UserSystem
   include MailerHelper

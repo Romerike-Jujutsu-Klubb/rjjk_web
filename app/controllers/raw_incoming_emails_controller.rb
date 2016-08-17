@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RawIncomingEmailsController < ApplicationController
   before_action :admin_required
   before_action :set_raw_incoming_email, only: [:show, :edit, :update, :destroy]

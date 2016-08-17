@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddTimestampsToGraduations < ActiveRecord::Migration
   def change
     add_column :censors, :lock_reminded_at, :datetime

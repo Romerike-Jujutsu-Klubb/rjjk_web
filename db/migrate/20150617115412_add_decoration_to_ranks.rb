@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddDecorationToRanks < ActiveRecord::Migration
   def change
     add_column :ranks, :decoration, :string, limit: 16

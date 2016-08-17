@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class GradeHistoryImageSweeper < ActionController::Caching::Sweeper
   observe Graduate
 

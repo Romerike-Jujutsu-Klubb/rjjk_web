@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class InformationPageNotifier
   # Flow:
   #   Pages should be reviewed at least every 6 months.

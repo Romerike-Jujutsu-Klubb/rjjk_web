@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class FixFutureBirthdates < ActiveRecord::Migration
   def self.up
     Member.where('birthdate > ?', Date.today).each do |m|

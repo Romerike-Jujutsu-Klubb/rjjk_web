@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Certificates
   def self.pdf(date, content, layout = 3)
     Prawn::Document.new page_size: 'A4', page_layout: :landscape, margin: 0 do

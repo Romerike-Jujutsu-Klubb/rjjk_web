@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'digest/sha1'
 
 # this model expects a certain database layout and its based on the name/login pattern.

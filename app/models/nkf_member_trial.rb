@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class NkfMemberTrial < ActiveRecord::Base
   SEARCH_FIELDS = [:fornavn, :etternavn, :epost]
 

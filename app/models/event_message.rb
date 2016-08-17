@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class EventMessage < ActiveRecord::Base
   module MessageType
     INFORMATION = 'INFORMATION'

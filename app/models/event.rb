@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Event < ActiveRecord::Base
   scope :chronological, -> { order :start_at }
 

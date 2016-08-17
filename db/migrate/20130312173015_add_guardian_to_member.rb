@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddGuardianToMember < ActiveRecord::Migration
   def change
     add_column :members, :parent_email, :string, limit: 32

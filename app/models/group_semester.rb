@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class GroupSemester < ActiveRecord::Base
   belongs_to :chief_instructor, class_name: :Member
   belongs_to :group

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class UserControllerTest < ActionController::TestCase
@@ -131,16 +132,14 @@ class UserControllerTest < ActionController::TestCase
   end
 
   def test_edit
-    tesla = users(:admin)
-    set_logged_in tesla
+    tesla = login(:admin)
     post :update, user: { first_name: 'Bob', form: 'edit' }
     tesla.reload
     assert_equal 'Bob', tesla.first_name
   end
 
   def test_delete
-    user = users(:admin)
-    set_logged_in user
+    user = login(:admin)
     post :update, 'user' => { 'form' => 'delete' }
     user.reload
     assert user.deleted
@@ -148,8 +147,7 @@ class UserControllerTest < ActionController::TestCase
   end
 
   def test_change_password
-    user = users(:lars)
-    set_logged_in user
+    user = login(:lars)
     post :change_password, user: { password: 'changed_password', password_onfirmation: 'changed_password' }
     assert_no_errors :user
     assert_equal 1, UserMessage.pending.size
@@ -159,7 +157,7 @@ class UserControllerTest < ActionController::TestCase
   end
 
   def test_change_password__confirms_password
-    set_logged_in users(:lars)
+    login(:lars)
     post :change_password, user: { password: 'bad', password_confirmation: 'bad' }
     user = assigns(:user)
     assert_equal 1, user.errors.size
@@ -169,8 +167,7 @@ class UserControllerTest < ActionController::TestCase
   end
 
   def test_forgot_password__when_logged_in_redirects_to_change_password
-    user = users(:lars)
-    set_logged_in user
+    user = login(:lars)
     post :forgot_password, user: { email: user.email }
     assert_equal 0, UserMessage.pending.size
     assert_response :redirect
@@ -196,16 +193,12 @@ class UserControllerTest < ActionController::TestCase
   end
 
   def test_logout
-    set_logged_in users(:lars)
+    login(:lars)
     get :logout
     assert_not_logged_in
   end
 
   private
-
-  def set_logged_in(user) # rubocop: disable Style/AccessorMethodName
-    @request.session[:user_id] = user.id
-  end
 
   def assert_logged_in(user)
     assert_equal user.id, @request.session[:user_id]

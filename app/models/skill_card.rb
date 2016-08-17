@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'prawn/measurement_extensions'
 
 class SkillCard

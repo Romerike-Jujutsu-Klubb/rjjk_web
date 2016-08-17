@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RanksController < ApplicationController
   USER_ACTIONS = [:card, :pdf, :pensum, :show]
   before_action :authenticate_user, only: USER_ACTIONS

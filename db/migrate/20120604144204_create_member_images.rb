@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'user_system'
 require 'user'
 require 'member'

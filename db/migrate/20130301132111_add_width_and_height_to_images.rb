@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddWidthAndHeightToImages < ActiveRecord::Migration
   def change
     add_column :images, :width, :integer

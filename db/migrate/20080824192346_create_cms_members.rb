@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateCmsMembers < ActiveRecord::Migration
   def self.up
     create_table :cms_members do |t|

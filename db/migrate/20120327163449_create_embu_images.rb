@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateEmbuImages < ActiveRecord::Migration
   def change
     create_table :embu_images do |t|

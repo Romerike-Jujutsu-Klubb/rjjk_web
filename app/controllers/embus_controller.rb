@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class EmbusController < ApplicationController
   before_filter :authenticate_user
 

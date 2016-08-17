@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RemoveGeneratedEventsForGraduations < ActiveRecord::Migration
   def up
     Graduation.all.each do |g|

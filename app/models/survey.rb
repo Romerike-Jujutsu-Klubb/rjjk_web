@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Survey < ActiveRecord::Base
   acts_as_list
 

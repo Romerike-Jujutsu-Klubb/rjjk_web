@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class BaiduMailer < ActionMailer::Base
   default from: "#{Rails.env}@jujutsu.no", to: 'uwe@kubosch.no'
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateAnnualMeetings < ActiveRecord::Migration
   def change
     create_table :annual_meetings do |t|

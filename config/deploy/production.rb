@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 set :application, 'rjjk_web'
 set :scm, :svn
 set :repo_url, "svn+ssh://capistrano@kubosch.no/var/svn/trunk/#{fetch :application}"

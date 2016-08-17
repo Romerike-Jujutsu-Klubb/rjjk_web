@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateNkfMemberTrials < ActiveRecord::Migration
   def self.up
     create_table :nkf_member_trials do |t|

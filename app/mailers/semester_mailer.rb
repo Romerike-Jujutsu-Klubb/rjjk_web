@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SemesterMailer < ActionMailer::Base
   include MailerHelper
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddStatusToAttendance < ActiveRecord::Migration
   def change
     add_column :attendances, :status, :string, limit: 1

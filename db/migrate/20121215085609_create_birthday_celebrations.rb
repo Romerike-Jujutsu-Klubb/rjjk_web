@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateBirthdayCelebrations < ActiveRecord::Migration
   def change
     create_table :birthday_celebrations do |t|

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 set :application, 'rjjk_web_beta'
 set :scm, :copy
 set :repo_url, '.'

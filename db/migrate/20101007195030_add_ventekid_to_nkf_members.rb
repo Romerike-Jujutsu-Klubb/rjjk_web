@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddVentekidToNkfMembers < ActiveRecord::Migration
   def self.up
     add_column :nkf_members, :ventekid, :string, limit: 20

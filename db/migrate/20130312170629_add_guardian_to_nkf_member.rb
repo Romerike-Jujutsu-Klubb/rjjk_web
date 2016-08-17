@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddGuardianToNkfMember < ActiveRecord::Migration
   def change
     add_column :nkf_members, :foresatte, :string, limit: 64

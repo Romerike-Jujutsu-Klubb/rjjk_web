@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class BasicTechnique < ActiveRecord::Base
   belongs_to :rank
   belongs_to :waza

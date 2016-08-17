@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SurveyRequestsController < ApplicationController
   USER_ACTIONS = [:answer_form, :save_answers, :thanks]
   before_action :set_survey_request, only: [:show, :edit, :update, :destroy] + USER_ACTIONS

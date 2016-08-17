@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Rails.application.configure do
   config.action_controller.perform_caching = false
   config.action_mailer.asset_host = 'http://localhost:3000'

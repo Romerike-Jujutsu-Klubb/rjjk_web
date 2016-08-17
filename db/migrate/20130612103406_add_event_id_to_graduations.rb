@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddEventIdToGraduations < ActiveRecord::Migration
   def change
     add_column :graduations, :event_id, :integer

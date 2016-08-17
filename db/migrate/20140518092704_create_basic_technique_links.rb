@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateBasicTechniqueLinks < ActiveRecord::Migration
   def change
     create_table :basic_technique_links do |t|

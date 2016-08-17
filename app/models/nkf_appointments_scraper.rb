@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class NkfAppointmentsScraper
   def self.import_appointments
     logger.info 'Import appointments'

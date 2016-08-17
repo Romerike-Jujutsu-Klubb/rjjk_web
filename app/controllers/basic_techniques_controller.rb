@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class BasicTechniquesController < ApplicationController
   USER_ACTIONS = [:index, :show]
   before_filter :authenticate_user, only: USER_ACTIONS
