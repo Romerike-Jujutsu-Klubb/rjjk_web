@@ -47,7 +47,7 @@ class PublicRecordsController < ApplicationController
         format.html { redirect_to @public_record, notice: 'Public record was successfully created.' }
         format.json { render json: @public_record, status: :created, location: @public_record }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @public_record.errors, status: :unprocessable_entity }
       end
     end
@@ -63,7 +63,7 @@ class PublicRecordsController < ApplicationController
         format.html { redirect_to @public_record, notice: 'Public record was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @public_record.errors, status: :unprocessable_entity }
       end
     end

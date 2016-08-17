@@ -27,7 +27,7 @@ EOH
       ln = instr.last_name.split(/\s+/).each(&:capitalize!).join(' ')
       nm = fn << ' ' << ln
       rstr = rstr << "<tr id='censor_#{instr.id}'>" \
-          "<td><a href='#' onClick='add_censor(" + instr.id.to_s + ",\"" + nm + "\");'>" <<
+          "<td><a href='#' onClick='add_censor(" + instr.id.to_s + ',"' + nm + "\");'>" <<
           nm << '</a></td>'
       '</tr>'
     end

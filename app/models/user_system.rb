@@ -83,7 +83,7 @@ module UserSystem
     current_user
   end
 
-  def with_login(user = current_user, options)
+  def with_login(user = current_user, options) # rubocop: disable Style/OptionalArguments
     UserSystem.with_login(user, options)
   end
 

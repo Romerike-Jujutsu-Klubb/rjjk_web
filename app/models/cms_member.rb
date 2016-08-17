@@ -1,5 +1,5 @@
 class CmsMember < ActiveRecord::Base
-  ACTIVE_CONDITIONS = "left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)"
+  ACTIVE_CONDITIONS = 'left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)'
 
   validates_presence_of :address, :first_name, :last_name, :postal_code
   validates_inclusion_of(:instructor, :male, :nkf_fee, :payment_problem, in: [true, false])
@@ -35,9 +35,9 @@ class CmsMember < ActiveRecord::Base
 
   def gender
     if male
-      "Mann"
+      'Mann'
     else
-      "Kvinne"
+      'Kvinne'
     end
   end
 

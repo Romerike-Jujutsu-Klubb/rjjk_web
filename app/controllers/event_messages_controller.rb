@@ -51,7 +51,7 @@ class EventMessagesController < ApplicationController
         format.html { back_or_redirect_to @event_message, notice: 'Event message was successfully created.' }
         format.json { render json: @event_message, status: :created, location: @event_message }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @event_message.errors, status: :unprocessable_entity }
       end
     end
@@ -67,7 +67,7 @@ class EventMessagesController < ApplicationController
         format.html { back_or_redirect_to @event_message, notice: 'Event message was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @event_message.errors, status: :unprocessable_entity }
       end
     end

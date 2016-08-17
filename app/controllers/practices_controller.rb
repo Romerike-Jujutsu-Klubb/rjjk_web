@@ -50,7 +50,7 @@ class PracticesController < ApplicationController
         format.html { redirect_to @practice, notice: 'Scheduled practice was successfully created.' }
         format.json { render json: @practice, status: :created, location: @practice }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @practice.errors, status: :unprocessable_entity }
       end
     end
@@ -66,7 +66,7 @@ class PracticesController < ApplicationController
         format.html { redirect_to @practice, notice: 'Scheduled practice was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @practice.errors, status: :unprocessable_entity }
       end
     end

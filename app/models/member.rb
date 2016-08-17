@@ -78,7 +78,7 @@ class Member < ActiveRecord::Base
   before_validation { NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? } }
 
   # validates_presence_of :address, :cms_contract_id
-  validates_length_of :billing_postal_code, is: 4, if: Proc.new { |m| m.billing_postal_code && !m.billing_postal_code.empty? }
+  validates_length_of :billing_postal_code, is: 4, if: proc { |m| m.billing_postal_code && !m.billing_postal_code.empty? }
   validates_presence_of :birthdate, :joined_on
   validates_uniqueness_of :cms_contract_id, if: :cms_contract_id
   validates_length_of :email, maximum: 128
@@ -89,7 +89,7 @@ class Member < ActiveRecord::Base
   validates_inclusion_of :payment_problem, in: [true, false]
   # validates_presence_of :postal_code
   validates_length_of :postal_code, is: 4, allow_blank: true
-  validates_uniqueness_of :rfid, if: Proc.new { |r| r.rfid && !r.rfid.empty? }
+  validates_uniqueness_of :rfid, if: proc { |r| r.rfid && !r.rfid.empty? }
   validates_presence_of :user, :user_id, unless: :left_on
 
   def self.paginate_active(page)

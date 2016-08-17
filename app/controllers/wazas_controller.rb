@@ -47,7 +47,7 @@ class WazasController < ApplicationController
         format.html { redirect_to @waza, notice: 'Waza was successfully created.' }
         format.json { render json: @waza, status: :created, location: @waza }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @waza.errors, status: :unprocessable_entity }
       end
     end
@@ -63,7 +63,7 @@ class WazasController < ApplicationController
         format.html { redirect_to @waza, notice: 'Waza was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @waza.errors, status: :unprocessable_entity }
       end
     end

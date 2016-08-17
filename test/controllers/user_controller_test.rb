@@ -66,7 +66,7 @@ class UserControllerTest < ActionController::TestCase
     assert_equal 1, UserMessage.pending.size
 
     mail = UserMessage.pending[0]
-    assert_equal ["\"newuser\" <newemail@example.com>"], mail.to
+    assert_equal ['"newuser" <newemail@example.com>'], mail.to
     assert_match(/Brukernavn:\s+\w+\n/, mail.body)
     assert_match(/Passord\s*:\s+\w+\n/, mail.body)
     user = User.find_by_email('newemail@example.com')
@@ -154,7 +154,7 @@ class UserControllerTest < ActionController::TestCase
     assert_no_errors :user
     assert_equal 1, UserMessage.pending.size
     mail = UserMessage.pending[0]
-    assert_equal ["\"Lars Bråten\" <lars@example.com>"], mail.to
+    assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
     assert_equal user, User.authenticate(user.login, 'changed_password')
   end
 
@@ -203,7 +203,7 @@ class UserControllerTest < ActionController::TestCase
 
   private
 
-  def set_logged_in(user)
+  def set_logged_in(user) # rubocop: disable Style/AccessorMethodName
     @request.session[:user_id] = user.id
   end
 

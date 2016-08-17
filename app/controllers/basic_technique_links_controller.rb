@@ -22,7 +22,7 @@ class BasicTechniqueLinksController < ApplicationController
     if @basic_technique_link.save
       redirect_to @basic_technique_link, notice: 'Basic technique link was successfully created.'
     else
-      render action: "new"
+      render action: 'new'
     end
   end
 
@@ -31,7 +31,7 @@ class BasicTechniqueLinksController < ApplicationController
     if @basic_technique_link.update_attributes(params[:basic_technique_link])
       redirect_to @basic_technique_link, notice: 'Basic technique link was successfully updated.'
     else
-      render action: "edit"
+      render action: 'edit'
     end
   end
 

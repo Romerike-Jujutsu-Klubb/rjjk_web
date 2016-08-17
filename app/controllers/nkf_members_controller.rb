@@ -31,7 +31,7 @@ class NkfMembersController < ApplicationController
       flash[:notice] = 'NkfMember was successfully created.'
       redirect_to(@nkf_member)
     else
-      render action: "new"
+      render action: 'new'
     end
   end
 
@@ -43,7 +43,7 @@ class NkfMembersController < ApplicationController
       # redirect_to nkf_members_path
       redirect_to action: :comparison, id: 0
     else
-      render action: "edit"
+      render action: 'edit'
     end
   end
 

@@ -3,7 +3,7 @@ require 'user'
 require 'member'
 
 class CreateMemberImages < ActiveRecord::Migration
-  PASSWORD_CHARS = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+  PASSWORD_CHARS = ('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a
 
   def change
     add_column :members, :image_id, :integer
@@ -11,7 +11,7 @@ class CreateMemberImages < ActiveRecord::Migration
     add_index :members, :image_id, unique: true
     add_index :members, :user_id, unique: true
 
-    execute "UPDATE members SET user_id = (SELECT id FROM users WHERE member_id = members.id)"
+    execute 'UPDATE members SET user_id = (SELECT id FROM users WHERE member_id = members.id)'
 
     Member.all.each do |m|
       u = User.find_by_member_id(m.id)
@@ -29,7 +29,7 @@ class CreateMemberImages < ActiveRecord::Migration
         puts "Created user: #{u.inspect}"
         unless m.left_on || m.birthdate > 13.years.ago.to_date
           UserMailer.created_from_member(u, password).store(u.id, tag: :user_from_member)
-          puts "Sent email"
+          puts 'Sent email'
         end
       end
 

@@ -47,7 +47,7 @@ class CorrespondencesController < ApplicationController
         format.html { redirect_to @correspondence, notice: 'Correspondence was successfully created.' }
         format.json { render json: @correspondence, status: :created, location: @correspondence }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @correspondence.errors, status: :unprocessable_entity }
       end
     end
@@ -63,7 +63,7 @@ class CorrespondencesController < ApplicationController
         format.html { redirect_to @correspondence, notice: 'Correspondence was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @correspondence.errors, status: :unprocessable_entity }
       end
     end

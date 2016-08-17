@@ -66,11 +66,6 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 27
 
-# Offense count: 1
-Style/AccessorMethodName:
-  Exclude:
-    - 'test/controllers/user_controller_test.rb'
-
 # Offense count: 18
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
@@ -220,25 +215,6 @@ Style/Next:
     - 'import_from_attendance.rb'
     - 'import_techniques.rb'
 
-# Offense count: 1
-Style/OptionalArguments:
-  Exclude:
-    - 'app/models/user_system.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/Proc:
-  Exclude:
-    - 'app/models/member.rb'
-
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: compact, exploded
-Style/RaiseArgs:
-  Exclude:
-    - 'app/models/nkf_member_import.rb'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 Style/RescueModifier:
@@ -254,13 +230,6 @@ Style/RescueModifier:
 # SupportedStyles: use_perl_names, use_english_names
 Style/SpecialGlobalVars:
   EnforcedStyle: use_perl_names
-
-# Offense count: 195
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Enabled: false
 
 # Offense count: 26
 # Cop supports --auto-correct.

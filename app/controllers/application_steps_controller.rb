@@ -66,7 +66,7 @@ class ApplicationStepsController < ApplicationController
         format.html { redirect_to @application_step, notice: 'Application step was successfully created.' }
         format.json { render json: @application_step, status: :created, location: @application_step }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @application_step.errors, status: :unprocessable_entity }
       end
     end
@@ -79,7 +79,7 @@ class ApplicationStepsController < ApplicationController
         format.html { redirect_to @application_step, notice: 'Application step was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @application_step.errors, status: :unprocessable_entity }
       end
     end

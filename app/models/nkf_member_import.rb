@@ -398,15 +398,15 @@ class NkfMemberImport
       content_length = response['content-length'].to_i
       if content_length.positive? && body.size != content_length
         error_msg = "Unexpected content length: header: #{content_length}, body: #{body.size}"
-        raise EOFError.new(error_msg) if retries >= 3
+        raise EOFError, error_msg if retries >= 3
         logger.error error_msg
         return http_get_response(url, binary, retries + 1)
       end
       raise Timeout::Error if body =~ /ks_medlprofil timed out|Siden er utl.pt/
-      raise EOFError.new('Internal error') if body =~ /The server encountered an internal error or/
-      raise EOFError.new('Try refreshing') if body =~ /An error occurred while processing the request. Try refreshing your browser. If the problem persists contact the site administrator/
-      raise EOFError.new('Lytter returnerte feil') if body =~ /Feil: Lytteren returnerte den f.lgende meldingen: 503 Service Unavailable/
-      raise EOFError.new('Servlet Error') if body =~ %r{<TITLE>Servlet Error</TITLE>}i
+      raise EOFError, 'Internal error' if body =~ /The server encountered an internal error or/
+      raise EOFError, 'Try refreshing' if body =~ /An error occurred while processing the request. Try refreshing your browser. If the problem persists contact the site administrator/
+      raise EOFError, 'Lytter returnerte feil' if body =~ /Feil: Lytteren returnerte den f.lgende meldingen: 503 Service Unavailable/
+      raise EOFError, 'Servlet Error' if body =~ %r{<TITLE>Servlet Error</TITLE>}i
       process_response(response, binary)
     end
   end

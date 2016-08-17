@@ -40,7 +40,7 @@ class RolesController < ApplicationController
         format.html { redirect_to roles_path, notice: 'Job position was successfully created.' }
         format.json { render json: @role, status: :created, location: @role }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @role.errors, status: :unprocessable_entity }
       end
     end
@@ -54,7 +54,7 @@ class RolesController < ApplicationController
         format.html { redirect_to @role, notice: 'Job position was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @role.errors, status: :unprocessable_entity }
       end
     end

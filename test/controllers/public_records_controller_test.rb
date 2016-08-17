@@ -5,18 +5,18 @@ class PublicRecordsControllerTest < ActionController::TestCase
     @public_record = public_records(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:public_records)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create public_record" do
+  test 'should create public_record' do
     assert_difference('PublicRecord.count') do
       post :create, public_record: {
           board_members: @public_record.board_members,
@@ -28,17 +28,17 @@ class PublicRecordsControllerTest < ActionController::TestCase
     assert_redirected_to public_record_path(assigns(:public_record))
   end
 
-  test "should show public_record" do
+  test 'should show public_record' do
     get :show, id: @public_record
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @public_record
     assert_response :success
   end
 
-  test "should update public_record" do
+  test 'should update public_record' do
     put :update, id: @public_record, public_record: {
         board_members: @public_record.board_members,
         chairman: @public_record.chairman, contact: @public_record.contact,
@@ -47,7 +47,7 @@ class PublicRecordsControllerTest < ActionController::TestCase
     assert_redirected_to public_record_path(assigns(:public_record))
   end
 
-  test "should destroy public_record" do
+  test 'should destroy public_record' do
     assert_difference('PublicRecord.count', -1) do
       delete :destroy, id: @public_record
     end

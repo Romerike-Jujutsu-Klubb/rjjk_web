@@ -58,7 +58,7 @@ class EventInviteeMessagesController < ApplicationController
         format.html { back_or_redirect_to @event_invitee_message, notice: 'Signup confirmation was successfully created.' }
         format.json { render json: @event_invitee_message, status: :created, location: @event_invitee_message }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @event_invitee_message.errors, status: :unprocessable_entity }
       end
     end
@@ -74,7 +74,7 @@ class EventInviteeMessagesController < ApplicationController
         format.html { back_or_redirect_to @event_invitee_message, notice: 'Signup confirmation was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @event_invitee_message.errors, status: :unprocessable_entity }
       end
     end

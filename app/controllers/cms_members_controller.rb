@@ -41,7 +41,7 @@ class CmsMembersController < ApplicationController
         format.html { redirect_to(@cms_member) }
         format.xml  { render xml: @cms_member, status: :created, location: @cms_member }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.xml  { render xml: @cms_member.errors, status: :unprocessable_entity }
       end
     end
@@ -56,7 +56,7 @@ class CmsMembersController < ApplicationController
         format.html { redirect_to(@cms_member) }
         format.xml  { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.xml  { render xml: @cms_member.errors, status: :unprocessable_entity }
       end
     end

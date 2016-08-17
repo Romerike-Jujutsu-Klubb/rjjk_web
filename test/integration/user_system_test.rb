@@ -12,7 +12,7 @@ class UserSystemTest < ActionDispatch::IntegrationTest
     assert_equal 1, UserMessage.pending.size
 
     mail = UserMessage.pending[0]
-    assert_equal ["\"newuser\" <newemail@example.com>"], mail.to
+    assert_equal ['"newuser" <newemail@example.com>'], mail.to
     assert_match(/Brukernavn:\s+\w+\n/, mail.body)
     assert_match(/Passord\s*:\s+\w+\n/, mail.body)
     assert(mail.body =~ /key=(.*?)"/)
@@ -47,7 +47,7 @@ class UserSystemTest < ActionDispatch::IntegrationTest
 
     assert_equal 1, UserMessage.pending.size
     mail = UserMessage.pending[0]
-    assert_equal ["\"Lars Bråten\" <lars@example.com>"], mail.to
+    assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
     assert mail.plain_body
     assert mail.html_body
     key = mail.key

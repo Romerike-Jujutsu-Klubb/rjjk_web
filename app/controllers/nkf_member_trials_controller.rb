@@ -39,7 +39,7 @@ class NkfMemberTrialsController < ApplicationController
       flash[:notice] = 'NkfMemberTrial was successfully created.'
       redirect_to(@nkf_member_trial)
     else
-      render action: "new"
+      render action: 'new'
     end
   end
 
@@ -52,7 +52,7 @@ class NkfMemberTrialsController < ApplicationController
         format.html { redirect_to(@nkf_member_trial) }
         format.xml  { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.xml  { render xml: @nkf_member_trial.errors, status: :unprocessable_entity }
       end
     end

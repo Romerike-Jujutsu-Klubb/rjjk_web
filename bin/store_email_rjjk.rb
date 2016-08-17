@@ -35,16 +35,16 @@ begin
   require 'open3'
   log 'Checking Spamassassin'
   Open3.popen3('spamc') do |stdin, stdout, stderr, wait_thr|
-    log "Spamassassin: send content to process"
+    log 'Spamassassin: send content to process'
     stdin << content
-    log "Spamassassin: close stdin"
+    log 'Spamassassin: close stdin'
     stdin.close
-    log "Spamassassin: read stdout"
+    log 'Spamassassin: read stdout'
     content = stdout.read
     log "Spamassassin: #{content}"
-    log "Spamassassin: read stderr"
+    log 'Spamassassin: read stderr'
     log "Spamassassin: #{stderr.read}"
-    log "Spamassassin: finish process"
+    log 'Spamassassin: finish process'
     exit_status = wait_thr.value # Process::Status object returned.
     log "Spamassassin reported: #{exit_status.inspect}"
     if content =~ /^X-Spam-Status: Yes/
