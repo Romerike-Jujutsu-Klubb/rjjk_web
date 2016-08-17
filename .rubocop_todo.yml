@@ -6,25 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 4
-Lint/HandleExceptions:
-  Exclude:
-    - 'app/models/nkf_member_import.rb'
-    - 'test/controllers/members_controller_test.rb'
-    - 'test/models/public_record_importer_test.rb'
-
-# Offense count: 18
-Lint/RescueException:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/images_controller.rb'
-    - 'app/controllers/user_controller.rb'
-    - 'app/models/annual_meeting_reminder.rb'
-    - 'app/models/nkf_member_comparison.rb'
-    - 'app/models/nkf_member_import.rb'
-    - 'app/models/public_record_importer.rb'
-    - 'bin/store_email_rjjk.rb'
-
 # Offense count: 202
 Metrics/AbcSize:
   Max: 228
