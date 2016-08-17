@@ -10,11 +10,6 @@ class AnnualMeetingReminder
       AnnualMeetingMailer.missing_date(m, am.start_at.year + 1)
           .store(m.user_id, tag: :annual_meeting_missing_date)
     end
-  rescue Exception
-    raise if Rails.env.test?
-    logger.error "Exception sending missing annual meeting date reminder: #{$!}"
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
   end
 
   def self.notify_missing_invitation
@@ -27,10 +22,5 @@ class AnnualMeetingReminder
     am.board_members.each do |m|
       AnnualMeetingMailer.missing_invitation(next_meeting, m).store(m.user_id, tag: :annual_meeting_missing_invitation)
     end
-  rescue Exception
-    raise if Rails.env.test?
-    logger.error "Exception sending overdue graduates message: #{$!}"
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
   end
 end

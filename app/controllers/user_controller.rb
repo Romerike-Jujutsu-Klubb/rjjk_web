@@ -62,7 +62,7 @@ class UserController < ApplicationController
           redirect_to action: 'login'
         end
       end
-    rescue Exception => ex
+    rescue => ex
       report_exception ex
       flash['message'] = 'Error creating account: confirmation email not sent'
     end
@@ -81,7 +81,7 @@ class UserController < ApplicationController
     begin
       @user.change_password(params['user']['password'], params['user']['password_confirmation'])
       @user.save!
-    rescue Exception => ex
+    rescue => ex
       report_exception ex
       flash.now['message'] = 'Your password could not be changed at this time. Please retry.'
       return
@@ -89,7 +89,7 @@ class UserController < ApplicationController
     begin
       UserMailer.change_password(@user, params['user']['password'])
           .store(@user.id, tag: :change_password)
-    rescue Exception => ex
+    rescue => ex
       report_exception ex
     end
     redirect_to controller: :user, action: :welcome
@@ -124,7 +124,7 @@ class UserController < ApplicationController
           end
           back_or_redirect_to '/'
         end
-      rescue Exception => ex
+      rescue => ex
         report_exception ex
         flash.now['message'] = "Beklager!  Link for innlogging kunne ikke sendes til #{CGI.escapeHTML(email)}"
       end
@@ -159,7 +159,7 @@ class UserController < ApplicationController
         else
           raise 'unknown edit action'
         end
-      rescue Exception => ex
+      rescue => ex
         logger.warn ex
         logger.warn ex.backtrace
       end
@@ -172,7 +172,7 @@ class UserController < ApplicationController
     begin
       @user.update_attribute(:deleted, true)
       logout
-    rescue Exception => ex
+    rescue => ex
       flash.now['message'] = "Error: #{ex}."
       back_or_redirect_to '/'
     end

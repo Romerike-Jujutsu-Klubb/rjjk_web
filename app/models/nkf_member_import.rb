@@ -21,7 +21,7 @@ class NkfMemberImport
         logger.info 'Oppdaterer kontrakter'
         NkfMember.update_group_prices
       end
-    rescue Exception
+    rescue
       logger.error 'Execption sending NKF import email.'
       logger.error $!.message
       logger.error $!.backtrace.join("\n")
@@ -34,7 +34,7 @@ class NkfMemberImport
         NkfReplicationMailer.update_members(a).deliver_now
         logger.info 'Sent update_members mail.'
       end
-    rescue Exception
+    rescue
       logger.error 'Execption sending update_members email.'
       logger.error $!.message
       logger.error $!.backtrace.join("\n")
@@ -44,7 +44,7 @@ class NkfMemberImport
     begin
       a = NkfAppointmentsScraper.import_appointments
       NkfReplicationMailer.update_appointments(a).deliver_now if a.any?
-    rescue Exception
+    rescue
       logger.error 'Execption sending update_appointments email.'
       logger.error $!.message
       logger.error $!.backtrace.join("\n")
@@ -115,7 +115,8 @@ class NkfMemberImport
       Thread.start do
         begin
           loop { yield queue.pop(true) }
-        rescue ThreadError
+        rescue ThreadError => e
+          logger.error "ThreadError running parallel tasks: #{e}"
         ensure
           ActiveRecord::Base.connection.close
         end

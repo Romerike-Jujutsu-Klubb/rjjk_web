@@ -90,7 +90,7 @@ class ImagesController < ApplicationController
     @image = Image.with_image.find(params[:id])
     begin
       @image.update_dimensions! unless @image.video?
-    rescue Exception
+    rescue
       @image.width = 320
       @image.height = 240
     end

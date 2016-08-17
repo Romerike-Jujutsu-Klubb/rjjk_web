@@ -80,7 +80,6 @@ class MembersControllerTest < ActionController::TestCase
     assert_redirected_to action: :edit, id: assigns(:member).id
 
     assert_equal num_members + 1, Member.count
-  rescue SocketError
   end
 
   def test_edit
@@ -99,7 +98,6 @@ class MembersControllerTest < ActionController::TestCase
     assert_no_errors :member
     assert_response :redirect
     assert_redirected_to action: :edit, id: @first_id
-  rescue SocketError
   end
 
   def test_destroy

@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
           break unless @image
           @image.update_dimensions! unless @image.video?
           break
-        rescue Exception
+        rescue
           ExceptionNotifier.notify_exception($!)
         end
       end

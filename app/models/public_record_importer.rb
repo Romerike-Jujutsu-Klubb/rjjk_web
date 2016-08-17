@@ -18,12 +18,6 @@ class PublicRecordImporter
       record.save!
       PublicRecordMailer.new_record(record).store(Role[:Leder], tag: :new_public_record)
     end
-  rescue Exception
-    raise if Rails.env.test?
-    logger.error 'Execption importing public record.'
-    logger.error $!.message
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
   end
 
   def self.find_field(doc, name)

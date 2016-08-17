@@ -39,7 +39,7 @@ class NkfMemberComparison
     @new_members = @orphan_nkf_members.map do |nkf_member|
       begin
         nkf_member.create_corresponding_member!
-      rescue Exception
+      rescue
         logger.error $!
         logger.error $!.backtrace.join("\n")
         @errors << ['New member', nkf_member, $!]
