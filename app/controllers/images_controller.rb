@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class ImagesController < ApplicationController
-  PUBLIC_ACTIONS = [:gallery, :inline, :show]
-  PERSONAL_ACTIONS = [:create, :mine, :new, :upload]
+  PUBLIC_ACTIONS = [:gallery, :inline, :show].freeze
+  PERSONAL_ACTIONS = [:create, :mine, :new, :upload].freeze
   before_filter :admin_required, except: PUBLIC_ACTIONS + PERSONAL_ACTIONS
   before_filter :authenticate_user, only: PERSONAL_ACTIONS
 
@@ -53,8 +53,8 @@ class ImagesController < ApplicationController
       imgs = Magick::ImageList.new
       imgs.from_blob Image.with_image.find(params[:id]).content_data
     rescue java.lang.NullPointerException, java.lang.OutOfMemoryError,
-        javax.imageio.IIOException, Java::JavaLang::ArrayIndexOutOfBoundsException
-      logger.error "Exception loading image: #{$!}"
+        javax.imageio.IIOException, Java::JavaLang::ArrayIndexOutOfBoundsException => e
+      logger.error "Exception loading image: #{e}"
       redirect_to ActionController::Base.helpers.asset_path @image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
       return
     end

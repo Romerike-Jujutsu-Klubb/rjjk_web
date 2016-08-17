@@ -68,14 +68,14 @@ class Member < ActiveRecord::Base
   SEARCH_FIELDS = [
       :billing_email, :email, :first_name, :last_name, :parent_email,
       :parent_name, :phone_home, :phone_mobile, :phone_parent, :phone_work
-  ]
+  ].freeze
   scope :search, ->(query) {
     where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ ?" }
             .join(' OR '), *([UnicodeUtils.upcase(query).split(/\s+/).join('|')] * SEARCH_FIELDS.size))
         .order(:first_name, :last_name)
   }
 
-  NILLABLE_FIELDS = [:parent_name, :phone_home, :phone_mobile, :phone_work]
+  NILLABLE_FIELDS = [:parent_name, :phone_home, :phone_mobile, :phone_work].freeze
   before_validation { NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? } }
 
   # validates_presence_of :address, :cms_contract_id

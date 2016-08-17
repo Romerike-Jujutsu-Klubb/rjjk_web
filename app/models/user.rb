@@ -12,14 +12,14 @@ class User < ActiveRecord::Base
   has_many :images, dependent: :destroy
 
   # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
-  SEARCH_FIELDS = [:email, :first_name, :last_name, :login]
+  SEARCH_FIELDS = [:email, :first_name, :last_name, :login].freeze
   scope :search, ->(query) {
     where(SEARCH_FIELDS.map { |c| "to_tsvector(UPPER(#{c})) @@ to_tsquery(?)" }
         .join(' OR '), *([UnicodeUtils.upcase(query).split(/\s+/).join(' | ')] * SEARCH_FIELDS.size))
         .order(:first_name, :last_name)
   }
 
-  CHANGEABLE_FIELDS = %w(first_name last_name email)
+  CHANGEABLE_FIELDS = %w(first_name last_name email).freeze
   attr_accessor :password_needs_confirmation
 
   before_validation { self.login = email if login.blank? }
@@ -36,9 +36,8 @@ class User < ActiveRecord::Base
   validates_length_of :password, within: 5..40, if: :validate_password?
 
   def validate
-    if role_changed? && (user.nil? || user.role.nil?)
-      errors.add(:role, 'Bare administratorer kan gi administratorrettigheter.')
-    end
+    return unless role_changed? && (user.nil? || user.role.nil?)
+    errors.add(:role, 'Bare administratorer kan gi administratorrettigheter.')
   end
 
   def initialize(*args)
@@ -150,10 +149,9 @@ class User < ActiveRecord::Base
   end
 
   def crypt_password
-    if @password_needs_confirmation
-      write_attribute('salt', self.class.hashed("salt-#{Time.now}"))
-      write_attribute('salted_password', self.class.salted_password(salt, self.class.hashed(@password)))
-    end
+    return unless @password_needs_confirmation
+    write_attribute('salt', self.class.hashed("salt-#{Time.now}"))
+    write_attribute('salted_password', self.class.salted_password(salt, self.class.hashed(@password)))
   end
 
   def new_security_token(duration)

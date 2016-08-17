@@ -6,7 +6,7 @@ PROJECT_DIR = File.expand_path(File.dirname(__FILE__))
 EXPORT_DIR = '/media/USBBOOT'
 # EXPORT_DIR = '/tmp'
 
-$: << PROJECT_DIR
+$LOAD_PATH << PROJECT_DIR
 
 require 'config/boot'
 require 'config/environment'

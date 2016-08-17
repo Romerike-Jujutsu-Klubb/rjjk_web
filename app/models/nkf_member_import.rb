@@ -21,11 +21,11 @@ class NkfMemberImport
         logger.info 'Oppdaterer kontrakter'
         NkfMember.update_group_prices
       end
-    rescue
+    rescue => e
       logger.error 'Execption sending NKF import email.'
-      logger.error $!.message
-      logger.error $!.backtrace.join("\n")
-      ExceptionNotifier.notify_exception($!)
+      logger.error e.message
+      logger.error e.backtrace.join("\n")
+      ExceptionNotifier.notify_exception(e)
     end
 
     begin
@@ -34,21 +34,21 @@ class NkfMemberImport
         NkfReplicationMailer.update_members(a).deliver_now
         logger.info 'Sent update_members mail.'
       end
-    rescue
+    rescue => e
       logger.error 'Execption sending update_members email.'
-      logger.error $!.message
-      logger.error $!.backtrace.join("\n")
-      ExceptionNotifier.notify_exception($!)
+      logger.error e.message
+      logger.error e.backtrace.join("\n")
+      ExceptionNotifier.notify_exception(e)
     end
 
     begin
       a = NkfAppointmentsScraper.import_appointments
       NkfReplicationMailer.update_appointments(a).deliver_now if a.any?
-    rescue
+    rescue => e
       logger.error 'Execption sending update_appointments email.'
-      logger.error $!.message
-      logger.error $!.backtrace.join("\n")
-      ExceptionNotifier.notify_exception($!)
+      logger.error e.message
+      logger.error e.backtrace.join("\n")
+      ExceptionNotifier.notify_exception(e)
     end
   end
 
@@ -94,8 +94,8 @@ class NkfMemberImport
 
     import_member_rows(@import_rows)
     import_member_trials(member_trial_rows)
-  rescue
-    @exception = $!
+  rescue => e
+    @exception = e
   end
 
   private
@@ -127,24 +127,23 @@ class NkfMemberImport
 
   def add_waiting_kid(import_rows, dc)
     details_body = http_get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}")
-    if details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
-      member_id = $1
-      active =
-          if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
-            true
-          else
-            false
-          end
-      waiting_kid =
-          if details_body =~ %r{<span class="kid_1">(\d+)</span><span class="kid_2">(\d+)</span>}
-            "#{$1}#{$2}"
-          end
-      raise 'Both Active status and waiting kid were found' if active && waiting_kid
-      raise "Neither active status nor waiting kid were found:\n#{details_body}" if !active && !waiting_kid
-      import_rows.find { |ir| ir[0] == member_id } << waiting_kid
-    else
+    unless details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
       raise "Could not find member id:\n#{details_body}"
     end
+    member_id = $1
+    active =
+        if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
+          true
+        else
+          false
+        end
+    waiting_kid =
+        if details_body =~ %r{<span class="kid_1">(\d+)</span><span class="kid_2">(\d+)</span>}
+          "#{$1}#{$2}"
+        end
+    raise 'Both Active status and waiting kid were found' if active && waiting_kid
+    raise "Neither active status nor waiting kid were found:\n#{details_body}" if !active && !waiting_kid
+    import_rows.find { |ir| ir[0] == member_id } << waiting_kid
   ensure
     ActiveRecord::Base.connection.close
   end
@@ -169,42 +168,38 @@ class NkfMemberImport
     trial_ids.each do |tid|
       trial_details_url = "page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=" + extra_function_code
       trial_details_body = http_get(trial_details_url).force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
-      if trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
-        first_name = $1
-        if trial_details_body =~ /name="frm_28_v09" value="(.*?)"/
-          last_name = $1
-          if trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
-            invoice_email = $1
-            if trial_details_body =~ %r{<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren/stilart -</option>.*?<option selected value="\d+">([^<]*)</option>.*</select>}
-              martial_art = $1
-              trial_row = member_trial_rows.find { |ir| ir.size < member_trial_rows[0].size && ir[1] == last_name && ir[2] == first_name }
-              if trial_row
-                trial_row << tid
-                trial_row << (invoice_email.blank? ? nil : invoice_email)
-                trial_row << martial_art
-              else
-                logger.error '*' * 80
-                logger.error "Fant ikke prøvetidsmedlem:  #{tid.inspect}"
-                logger.error "First name: #{first_name.inspect}"
-                logger.error "Last name: #{last_name.inspect}"
-                logger.error "invoice_email: #{invoice_email.inspect}"
-                logger.error "martial_art: #{martial_art.inspect}"
-                logger.error trial_details_body
-                logger.error member_trial_rows
-                logger.error '=' * 80
-              end
-            else
-              raise 'Could not find martial art'
-            end
-          else
-            raise 'Could not find first name'
-          end
-        else
-          logger.error trial_details_body
-          raise 'Could not find last name'
-        end
-      else
+      unless trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
         raise 'Could not find invoice email'
+      end
+      first_name = $1
+      unless trial_details_body =~ /name="frm_28_v09" value="(.*?)"/
+        logger.error trial_details_body
+        raise 'Could not find last name'
+      end
+      last_name = $1
+      unless trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
+        raise 'Could not find first name'
+      end
+      invoice_email = $1
+      unless trial_details_body =~ %r{<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren/stilart -</option>.*?<option selected value="\d+">([^<]*)</option>.*</select>}
+        raise 'Could not find martial art'
+      end
+      martial_art = $1
+      trial_row = member_trial_rows.find { |ir| ir.size < member_trial_rows[0].size && ir[1] == last_name && ir[2] == first_name }
+      if trial_row
+        trial_row << tid
+        trial_row << (invoice_email.blank? ? nil : invoice_email)
+        trial_row << martial_art
+      else
+        logger.error '*' * 80
+        logger.error "Fant ikke prøvetidsmedlem:  #{tid.inspect}"
+        logger.error "First name: #{first_name.inspect}"
+        logger.error "Last name: #{last_name.inspect}"
+        logger.error "invoice_email: #{invoice_email.inspect}"
+        logger.error "martial_art: #{martial_art.inspect}"
+        logger.error trial_details_body
+        logger.error member_trial_rows
+        logger.error '=' * 80
       end
     end
     member_trial_rows
@@ -374,12 +369,11 @@ class NkfMemberImport
         File.write(cache_file, body, encoding: Encoding::ASCII_8BIT)
       end
       return body
-    rescue EOFError, SocketError, SystemCallError,
-        Timeout::Error
-      logger.error $!.message
+    rescue EOFError, SocketError, SystemCallError, Timeout::Error => e
+      logger.error e.message
       if backoff > 10.seconds # 15.minutes
-        if $!.respond_to?(:message=)
-          $!.message = "Backoff limit reached (#{backoff}): #{$!.message}"
+        if e.respond_to?(:message=)
+          e.message = "Backoff limit reached (#{backoff}): #{e.message}"
         end
         raise
       end

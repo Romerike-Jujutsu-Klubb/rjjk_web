@@ -50,8 +50,8 @@ class ApplicationController < ActionController::Base
           break unless @image
           @image.update_dimensions! unless @image.video?
           break
-        rescue
-          ExceptionNotifier.notify_exception($!)
+        rescue => e
+          ExceptionNotifier.notify_exception(e)
         end
       end
     end
@@ -74,9 +74,8 @@ class ApplicationController < ActionController::Base
           .where('held_on >= CURRENT_DATE').to_a
       @layout_events.sort_by!(&:start_at)
     end
-    unless @groups
-      @groups = Group.active(Date.today).order('to_age, from_age DESC').includes(:current_semester).to_a
-    end
+    return if @groups
+    @groups = Group.active(Date.today).order('to_age, from_age DESC').includes(:current_semester).to_a
   end
 
   def reject_baidu_bot

@@ -2,7 +2,7 @@
 class CensorsController < ApplicationController
   include GraduationAccess
 
-  CENSOR_ACTIONS = [:confirm, :decline]
+  CENSOR_ACTIONS = [:confirm, :decline].freeze
   before_filter :admin_required, except: [:create, :destroy, *CENSOR_ACTIONS]
 
   def index

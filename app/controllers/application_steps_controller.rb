@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class ApplicationStepsController < ApplicationController
-  USER_ACTIONS = [:image]
+  USER_ACTIONS = [:image].freeze
   before_filter :technical_committy_required, except: USER_ACTIONS
   before_filter :authenticate_user, only: USER_ACTIONS
 

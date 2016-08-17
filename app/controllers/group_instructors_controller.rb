@@ -13,9 +13,8 @@ class GroupInstructorsController < ApplicationController
         gi.group_schedule.group.from_age, gi.group_schedule.weekday, -(gi.member.current_rank.try(:position) || -999)]
     end
     @semesters = group_instructors.group_by { |gi| gi.group_semester.semester }
-    if Semester.current && !@semesters.include?(Semester.current)
-      @semesters = { Semester.current => [] }.update @semesters
-    end
+    return unless Semester.current && !@semesters.include?(Semester.current)
+    @semesters = { Semester.current => [] }.update @semesters
   end
 
   def show
@@ -69,10 +68,9 @@ class GroupInstructorsController < ApplicationController
   end
 
   def convert_semester_id
-    if (semester_id = params[:group_instructor].delete(:semester_id))
-      group_schedule = GroupSchedule.find(params[:group_instructor][:group_schedule_id])
-      group_semester = GroupSemester.where(group_id: group_schedule.group_id, semester_id: semester_id).first
-      params[:group_instructor][:group_semester_id] = group_semester.id
-    end
+    return unless (semester_id = params[:group_instructor].delete(:semester_id))
+    group_schedule = GroupSchedule.find(params[:group_instructor][:group_schedule_id])
+    group_semester = GroupSemester.where(group_id: group_schedule.group_id, semester_id: semester_id).first
+    params[:group_instructor][:group_semester_id] = group_semester.id
   end
 end

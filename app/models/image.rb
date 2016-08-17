@@ -80,14 +80,13 @@ class Image < ActiveRecord::Base
   end
 
   def update_dimensions!
-    if width.nil? || height.nil?
-      if attributes[:content_data].nil?
-        self.content_data = self.class.select(:content_data).find(id).content_data
-      end
-      magick_image = Magick::Image.from_blob(content_data).first
-      self.width = magick_image.columns
-      self.height = magick_image.rows
-      save!
+    return unless width.nil? || height.nil?
+    if attributes[:content_data].nil?
+      self.content_data = self.class.select(:content_data).find(id).content_data
     end
+    magick_image = Magick::Image.from_blob(content_data).first
+    self.width = magick_image.columns
+    self.height = magick_image.rows
+    save!
   end
 end

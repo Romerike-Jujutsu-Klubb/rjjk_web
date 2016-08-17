@@ -18,11 +18,11 @@ class EventNotifier
               subject: em.subject, body: em.body, ready_at: now
         end
       end
-    rescue
+    rescue => e
       logger.error 'Execption sending event messages.'
-      logger.error $!.message
-      logger.error $!.backtrace.join("\n")
-      ExceptionNotifier.notify_exception($!)
+      logger.error e.message
+      logger.error e.backtrace.join("\n")
+      ExceptionNotifier.notify_exception(e)
     end
 
     EventInviteeMessage.where('ready_at IS NOT NULL AND sent_at IS NULL').to_a.each do |eim|
@@ -34,10 +34,10 @@ class EventNotifier
           event_invitee_message.deliver_now
         end
         eim.update_attributes! sent_at: now
-      rescue
-        logger.error "Exception sending event message for #{eim.inspect}\n#{$!}"
-        logger.error $!.backtrace.join("\n")
-        ExceptionNotifier.notify_exception($!)
+      rescue => e
+        logger.error "Exception sending event message for #{eim.inspect}\n#{e}"
+        logger.error e.backtrace.join("\n")
+        ExceptionNotifier.notify_exception(e)
       end
     end
   end

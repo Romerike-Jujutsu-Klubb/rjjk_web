@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class RanksController < ApplicationController
-  USER_ACTIONS = [:card, :pdf, :pensum, :show]
+  USER_ACTIONS = [:card, :pdf, :pensum, :show].freeze
   before_action :authenticate_user, only: USER_ACTIONS
   before_action :technical_committy_required, except: USER_ACTIONS
 

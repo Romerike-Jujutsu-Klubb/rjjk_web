@@ -2,7 +2,7 @@
 class GraduationsController < ApplicationController
   include GraduationAccess
 
-  CENSOR_ACTIONS = [:add_group, :approve, :create, :edit, :index, :new, :update]
+  CENSOR_ACTIONS = [:add_group, :approve, :create, :edit, :index, :new, :update].freeze
   before_filter :admin_required, except: CENSOR_ACTIONS
   before_filter :authenticate_user, only: CENSOR_ACTIONS
 

@@ -16,7 +16,7 @@ class IncomingEmailProcessor
       ],
       test: { name: 'don Valentin', email: 'donv@kubosch.no' },
       web: { name: 'Uwe Kubosch', email: 'uwe@kubosch.no' },
-  }
+  }.freeze
   ENV_STR = Rails.env.production? ? nil : Rails.env.upcase
   DOMAIN = "#{"#{Rails.env}." unless Rails.env.production? || Rails.env.test?}jujutsu.no"
   PREFIX_PATTERN = '(\b(?:Re|Fwd):\s*)'
@@ -84,9 +84,9 @@ class IncomingEmailProcessor
         begin
           email.deliver
           sent = true
-        rescue
-          logger.error "Exception delivering incoming email: #{$!.class} #{$!}"
-          logger.error $!.backtrace.join("\n")
+        rescue => e
+          logger.error "Exception delivering incoming email: #{e.class} #{e}"
+          logger.error e.backtrace.join("\n")
           postponed = true
         end
       end

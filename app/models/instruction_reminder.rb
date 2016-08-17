@@ -15,10 +15,5 @@ class InstructionReminder
           .missing_instructors(missing_chief_instructions, missing_instructions)
           .store(Role[:'Hovedinstruktør'], tag: :missing_instructors) # FIXME(uwe): Quotes should not be necessary: JRuby bug in 9.1.2.0
     end
-  rescue
-    raise if Rails.env.test?
-    logger.error "Exception sending instruction message: #{$!}"
-    logger.error $!.backtrace.join("\n")
-    ExceptionNotifier.notify_exception($!)
   end
 end

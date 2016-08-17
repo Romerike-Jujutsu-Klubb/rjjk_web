@@ -15,9 +15,8 @@ class UserMessagesController < ApplicationController
   end
 
   def show
-    if @user_message.read_at.nil? && @user_message.user_id == current_user.id
-      @user_message.update! read_at: Time.now
-    end
+    return unless @user_message.read_at.nil? && @user_message.user_id == current_user.id
+    @user_message.update! read_at: Time.now
   end
 
   def new

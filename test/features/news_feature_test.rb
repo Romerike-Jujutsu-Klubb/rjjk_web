@@ -50,11 +50,8 @@ class NewsFeatureTest < ActionDispatch::IntegrationTest
   private
 
   def tinymce_fill_in(name, options = {})
-    if page.driver.browser == :chrome
-      raise 'huh?!'
-    else
-      page.execute_script("tinyMCE.get('#{name}').setContent('#{options[:with]}')")
-    end
+    raise 'huh?!' if page.driver.browser == :chrome
+    page.execute_script("tinyMCE.get('#{name}').setContent('#{options[:with]}')")
   end
 
   def select_date(date_field_id, day)

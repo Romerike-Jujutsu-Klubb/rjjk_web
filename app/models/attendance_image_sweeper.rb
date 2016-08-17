@@ -22,8 +22,8 @@ class AttendanceImageSweeper < ActionController::Caching::Sweeper
     Rails.logger.info("Expire cached files: #{cached_files}")
     begin
       FileUtils.rm_f(cached_files)
-    rescue Errno::ENOENT
-      Rails.logger.warn("Cached files were removed before deletion: #{$!}")
+    rescue Errno::ENOENT => e
+      Rails.logger.warn("Cached files were removed before deletion: #{e}")
     end
   end
 end

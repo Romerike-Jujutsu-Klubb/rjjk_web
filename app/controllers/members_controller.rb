@@ -10,11 +10,10 @@ class MembersController < ApplicationController
 
   def search
     @title = 'Søk i medlemsregisteret'
-    if params[:q]
-      query = params[:q]
-      @members = Member.search(query)
-      @members = @members.sort_by(&:last_name)
-    end
+    return unless params[:q]
+    query = params[:q]
+    @members = Member.search(query)
+    @members = @members.sort_by(&:last_name)
   end
 
   def index

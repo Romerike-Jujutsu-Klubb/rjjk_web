@@ -6,8 +6,7 @@ class WelcomeController < ApplicationController
       render template: 'news/index'
       return
     end
-    if (@information_page = InformationPage.find_by_title('Velkommen'))
-      render template: 'info/show'
-    end
+    return unless (@information_page = InformationPage.find_by_title('Velkommen'))
+    render template: 'info/show'
   end
 end

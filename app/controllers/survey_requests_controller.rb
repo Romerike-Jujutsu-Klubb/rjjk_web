@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class SurveyRequestsController < ApplicationController
-  USER_ACTIONS = [:answer_form, :save_answers, :thanks]
+  USER_ACTIONS = [:answer_form, :save_answers, :thanks].freeze
   before_action :set_survey_request, only: [:show, :edit, :update, :destroy] + USER_ACTIONS
   before_filter :authenticate_user, only: USER_ACTIONS
   before_filter :admin_required, except: USER_ACTIONS

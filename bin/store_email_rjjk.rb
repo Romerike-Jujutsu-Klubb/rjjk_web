@@ -12,8 +12,8 @@ def log(message = nil)
   open('log/email.log', 'a') do |f|
     f.puts message
   end
-rescue Exception # rubocop: disable  Lint/RescueException
-  puts $!
+rescue Exception => e # rubocop: disable  Lint/RescueException
+  puts e
 end
 
 if to == ['noreply@beta.jujutsu.no']
@@ -53,8 +53,8 @@ begin
       # exit 1
     end
   end
-rescue Exception # rubocop: disable Lint/RescueException
-  log "Exception scanning for SPAM: #{$!}"
+rescue Exception => e # rubocop: disable Lint/RescueException
+  log "Exception scanning for SPAM: #{e}"
 end
 log "Spam check took: #{Time.now - spam_start}s"
 
@@ -76,8 +76,8 @@ EOF
   RawIncomingEmail.configurations = YAML.load_file('config/database.yml')
   RawIncomingEmail.establish_connection(env)
   RawIncomingEmail.create content: content_with_envelope
-rescue Exception # rubocop: disable Lint/RescueException
-  log "Exception storing record: #{$!}"
+rescue Exception => e # rubocop: disable Lint/RescueException
+  log "Exception storing record: #{e}"
   exit EX_TEMPFAIL
 end
 

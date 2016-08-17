@@ -49,7 +49,7 @@ class NkfMember < ActiveRecord::Base
       utmeldtdato: :left_on,
       ventekid: nil,
       yrke: nil,
-  }
+  }.freeze
 
   belongs_to :member
 

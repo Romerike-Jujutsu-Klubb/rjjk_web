@@ -88,12 +88,11 @@ class GroupSemestersController < ApplicationController
   end
 
   def create_practices
-    if @group_semester.first_session && @group_semester.last_session
-      schedules = @group_semester.group.group_schedules
-      (@group_semester.first_session..@group_semester.last_session).each do |date|
-        if (gs = schedules.find { |grsc| grsc.weekday == date.cwday })
-          Practice.where(group_schedule_id: gs.id, year: date.year, week: date.cweek).first_or_create!
-        end
+    return unless @group_semester.first_session && @group_semester.last_session
+    schedules = @group_semester.group.group_schedules
+    (@group_semester.first_session..@group_semester.last_session).each do |date|
+      if (gs = schedules.find { |grsc| grsc.weekday == date.cwday })
+        Practice.where(group_schedule_id: gs.id, year: date.year, week: date.cweek).first_or_create!
       end
     end
   end

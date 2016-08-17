@@ -16,18 +16,18 @@ class Attendance < ActiveRecord::Base
       [Status::HOLIDAY, 'Bortreist', 'hand-right', 'warning'],
       [Status::SICK, 'Syk', 'plus', 'danger'],
       [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
-  ]
+  ].freeze
 
   PAST_STATES = [
       [Status::ATTENDED, 'Trente!', 'thumbs-up', 'success'],
       [Status::HOLIDAY, 'Bortreist', 'hand-right', 'warning'],
       [Status::SICK, 'Syk', 'plus', 'danger'],
       [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
-  ]
+  ].freeze
 
-  PRESENT_STATES = [Status::ASSISTANT, Status::ATTENDED, Status::INSTRUCTOR, Status::PRESENT]
-  ABSENT_STATES = [Status::HOLIDAY, Status::SICK, Status::ABSENT]
-  PRESENCE_STATES = [*PRESENT_STATES, Status::WILL_ATTEND]
+  PRESENT_STATES = [Status::ASSISTANT, Status::ATTENDED, Status::INSTRUCTOR, Status::PRESENT].freeze
+  ABSENT_STATES = [Status::HOLIDAY, Status::SICK, Status::ABSENT].freeze
+  PRESENCE_STATES = [*PRESENT_STATES, Status::WILL_ATTEND].freeze
 
   scope :by_group_id, -> (group_id) { includes(practice: :group_schedule).references(:group_schedules).where('group_schedules.group_id = ?', group_id) }
   scope :last_months, -> (count) {

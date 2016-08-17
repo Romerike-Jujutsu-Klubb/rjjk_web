@@ -4,7 +4,7 @@
 PROJECT_DIR = File.expand_path(File.dirname(__FILE__))
 EXPORT_DIR = '/main'
 
-$: << PROJECT_DIR
+$LOAD_PATH << PROJECT_DIR
 
 require 'config/boot'
 require 'config/environment'

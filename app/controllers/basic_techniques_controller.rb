@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class BasicTechniquesController < ApplicationController
-  USER_ACTIONS = [:index, :show]
+  USER_ACTIONS = [:index, :show].freeze
   before_filter :authenticate_user, only: USER_ACTIONS
   before_filter :technical_committy_required, except: USER_ACTIONS
 

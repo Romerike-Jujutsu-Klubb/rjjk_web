@@ -80,8 +80,8 @@ ranks.each do |rank_name, rank_dir|
               .where(BasicTechnique.arel_table[:name].matches(t))
               .first_or_create!(name: t)
           bt.update_attributes!(name: t, rank_id: rank.id)
-        rescue
-          puts "Failed: #{t}: #{$!}"
+        rescue => e
+          puts "Failed: #{t}: #{e}"
         end
       end
     end
@@ -116,9 +116,9 @@ ranks.each do |rank_name, rank_dir|
             end
           end
         end
-      rescue
-        puts "Failed: #{name}: #{$!}"
-        puts $!.backtrace.join("\n")
+      rescue => e
+        puts "Failed: #{name}: #{e}"
+        puts e.backtrace.join("\n")
       end
       puts
     end

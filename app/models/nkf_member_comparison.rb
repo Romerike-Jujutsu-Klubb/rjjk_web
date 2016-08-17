@@ -39,10 +39,10 @@ class NkfMemberComparison
     @new_members = @orphan_nkf_members.map do |nkf_member|
       begin
         nkf_member.create_corresponding_member!
-      rescue
-        logger.error $!
-        logger.error $!.backtrace.join("\n")
-        @errors << ['New member', nkf_member, $!]
+      rescue => e
+        logger.error e
+        logger.error e.backtrace.join("\n")
+        @errors << ['New member', nkf_member, e]
         nil
       end
     end.compact
@@ -52,11 +52,11 @@ class NkfMemberComparison
         changes = m.changes
         m.save!
         [m, changes] unless changes.empty?
-      rescue
+      rescue => e
         Rails.logger.error "Exception saving member changes for #{m.attributes.inspect}"
-        Rails.logger.error $!.message
-        Rails.logger.error $!.backtrace.join("\n")
-        @errors << ['Changes', m, $!]
+        Rails.logger.error e.message
+        Rails.logger.error e.backtrace.join("\n")
+        @errors << ['Changes', m, e]
         nil
       end
     end.compact
