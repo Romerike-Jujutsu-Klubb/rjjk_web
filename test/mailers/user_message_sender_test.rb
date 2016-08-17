@@ -12,9 +12,16 @@ class UserMessageSenderTest < ActionMailer::TestCase
     sender = 'sender@example.com'
     title = 'Important!'
     plain_message = 'A plain text message'
-    html_message = 'An HTML message'
-    um = UserMessage.create! user_id: users(:admin).id, from: sender,
-        subject: subject, title: title, message_timestamp: TEST_TIME, html_body: html_message, plain_body: plain_message
+    html_message = <<~HTML
+      An HTML message with an <a href="/internal/link">internal link</a>
+      and an <a href="/internal/link?a=2">internal link with parameter</a>
+      and an <a href="http://example.net/external/link">external link</a>
+      and an <a href="http://example.net/external/link?b=4">external link with parameter</a>
+    HTML
+
+    um = UserMessage.create! user_id: users(:admin).id, from: sender, key: '42',
+        subject: subject, title: title, message_timestamp: TEST_TIME,
+        html_body: html_message, plain_body: plain_message
 
     UserMessageSender.send
 
@@ -36,9 +43,14 @@ class UserMessageSenderTest < ActionMailer::TestCase
     assert_match "<title>#{title}</title>", body
     assert_match %(<p style="margin:0 0 10px 0; font-size:18px; color:#E20916;">#{title}</p>), body
     assert_match '17. Oktober 2013', body
-    assert_match html_message, body
     escaped_key = um.key.gsub('/', '%2F')
     assert_match %(href="http://example.com/user_messages/#{um.id}?key=#{escaped_key}"),
         body
+    assert_match <<~HTML, body
+      An HTML message with an <a href="http://example.com/internal/link?key=42">internal link</a>
+      and an <a href="http://example.com/internal/link?a=2&key=42">internal link with parameter</a>
+      and an <a href="http://example.net/external/link?key=42">external link</a>
+      and an <a href="http://example.net/external/link?b=4&key=42">external link with parameter</a>
+    HTML
   end
 end

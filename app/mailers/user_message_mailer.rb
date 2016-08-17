@@ -29,10 +29,19 @@ class UserMessageMailer < ActionMailer::Base
   private
 
   def modify_links(body, url_key)
-    # Add security key
-    body.gsub!(/href="([^"]*)"/, %(href="\\1?key=#{url_key}"))
-    # Add host and port
+    add_host_and_port(body)
+    add_security_key(body, url_key)
+  end
+
+  def add_host_and_port(body)
     url_opts = Rails.application.config.action_mailer.default_url_options
-    body.gsub! %r{href="(/[^"]*)"}, %(href="#{url_opts[:protocol]}://#{url_opts[:host]}#{":#{url_opts[:port]}" if url_opts[:port] && url_opts[:port] != 80}\\1")
+    body.gsub! %r{href="(/[^"]*)"}, %(href="#{url_opts[:protocol] || :http}://#{url_opts[:host]}#{":#{url_opts[:port]}" if url_opts[:port] && url_opts[:port] != 80}\\1")
+  end
+
+  def add_security_key(body, url_key)
+    body.gsub!(%r{href="([^/]*)://([^/]*)([^"?]*)(?:\?([^"]+))?"}) do
+      params = "#{"#{$4}&" if $4}key=#{url_key}"
+      %(href="#{$1}://#{$2}#{$3}?#{params}")
+    end
   end
 end
