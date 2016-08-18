@@ -34,7 +34,7 @@ class EventsControllerTest < ActionController::TestCase
   def test_should_get_edit
     get :edit, id: events(:one).id
     assert_response :success
-    assert_equal '2012-02-18 13:37', css_select('#event_start_at')[0]['value']
+    assert_equal '2017-08-19 13:37', css_select('#event_start_at')[0]['value']
   end
 
   def test_should_update_event
