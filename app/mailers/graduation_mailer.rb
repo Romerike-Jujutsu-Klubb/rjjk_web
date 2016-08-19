@@ -40,8 +40,7 @@ class GraduationMailer < ActionMailer::Base
     @censor = censor
     @title = 'Bekrefte gradering'
     @timestamp = Time.now
-    @email_url = { controller: :graduations, action: :edit,
-        id: @censor.graduation_id }
+    @email_url = { controller: :graduations, action: :edit, id: @censor.graduation_id }
     mail to: censor.member.email, subject: @title
   end
 

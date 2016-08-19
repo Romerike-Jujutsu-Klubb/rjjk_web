@@ -84,10 +84,6 @@ group :development do
 end
 
 group :test do
-  # FIXME(uwe): Needed for https://github.com/jnicklas/capybara/pull/1728
-  # Remove when 2.8.0 is released
-  gem 'capybara', github: 'jnicklas/capybara'
-  # EMXIF
   gem 'capybara-screenshot-diff', github: 'donv/capybara-screenshot-diff'
   gem 'chunky_png'
   gem 'database_cleaner'
