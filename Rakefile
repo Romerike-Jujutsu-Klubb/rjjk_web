@@ -11,5 +11,9 @@ Rake::Task['test:run'].enhance ['test:features']
 if Rails.env.test?
   require 'rubocop/rake_task'
   RuboCop::RakeTask.new
-  Rake::Task[:test].enhance(['rubocop:auto_correct'])
+  Rake::Task[:test].enhance([:'rubocop:auto_correct'])
+
+  # require 'rubycritic/rake_task'
+  # RubyCritic::RakeTask.new
+  # task(:test) { Rake::Task[:rubycritic].invoke }
 end

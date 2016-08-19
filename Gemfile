@@ -92,7 +92,7 @@ group :test do
   gem 'mocha', require: 'mocha/setup'
   gem 'poltergeist'
   gem 'rubocop'
-  gem 'rubycritic', require: false
+  # gem 'rubycritic', require: false
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'timecop'

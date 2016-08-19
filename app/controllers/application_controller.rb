@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 class ApplicationController < ActionController::Base
-  DEFAULT_LAYOUT = 'dark_ritual'
-  protect_from_forgery with: :exception
   include UserSystem
+
   # FIXME(uwe): Start using the new caching system
   include ActionController::Caching::Sweeping if defined?(JRUBY_VERSION)
   # EMXIF
+
+  DEFAULT_LAYOUT = 'dark_ritual'
+
+  protect_from_forgery with: :exception unless Rails.env.beta?
+
   layout DEFAULT_LAYOUT
   helper :user
 
