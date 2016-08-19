@@ -9,7 +9,7 @@ class PublicRecordMailer < ActionMailer::Base
     @record = record
     @title = 'Ny informasjon registrert i Brønnøysund'
     @chairman = Member.find_by_first_name_and_last_name('Uwe', 'Kubosch')
-    @email_url = with_login(@chairman.user, controller: :public_records, action: :index)
+    @email_url = { controller: :public_records, action: :index }
     mail subject: @title, to: @chairman.email
   end
 end

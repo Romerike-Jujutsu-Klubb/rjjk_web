@@ -9,7 +9,7 @@ class AttendanceMailer < ActionMailer::Base
     @member = member
     @title = 'Planlegging oppmøte'
     @timestamp = Time.now
-    @email_url = with_login(member.user, controller: :attendances, action: :plan)
+    @email_url = { controller: :attendances, action: :plan }
     mail to: member.email, subject: 'Kommer du?'
   end
 
@@ -18,7 +18,7 @@ class AttendanceMailer < ActionMailer::Base
     @instructor = instructor
     @title = "Tema for morgendagens trening for #{practice.group_schedule.group.name}"
     @timestamp = @practice.date
-    @email_url = with_login(instructor.user, controller: :practices, action: :edit, id: practice.id)
+    @email_url = { controller: :practices, action: :edit, id: practice.id }
     mail to: @instructor.email, subject: @title
   end
 
@@ -30,7 +30,7 @@ class AttendanceMailer < ActionMailer::Base
     @title = "Trening i #{group_schedule.start_at.day_phase}"
     @title = "Trening i #{@group_schedule.start_at.day_phase}: #{attendees.empty? ? 'Ingen' : attendees.size} deltaker#{'e' if attendees.size > 1} påmeldt"
     @timestamp = Time.now
-    @email_url = with_login(recipient.user, controller: :attendances, action: :plan)
+    @email_url = { controller: :attendances, action: :plan }
     mail to: recipient.email, subject: @title
   end
 
@@ -48,7 +48,7 @@ class AttendanceMailer < ActionMailer::Base
     change_msg << "#{new_absentees.size} avbud" if new_absentees.any?
     @title = "Trening i #{@group_schedule.start_at.day_phase}: #{change_msg.join(', ')}"
     @timestamp = Time.now
-    @email_url = with_login(recipient.user, controller: :attendances, action: :plan)
+    @email_url = { controller: :attendances, action: :plan }
     mail to: recipient.email, subject: @title
   end
 

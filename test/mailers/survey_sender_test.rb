@@ -13,14 +13,14 @@ class SurveySenderTest < ActionMailer::TestCase
     assert_equal 'First survey', mail.subject
     assert_equal ['"Uwe Kubosch" <admin@test.com>'], mail.to
     assert_equal %w(test@jujutsu.no), mail.from
-    assert_equal({ 'controller' => 'survey_requests', 'action' => 'answer_form', 'id' => 397_345_097, 'key' => '0123456789abcdef0123456789abcdef01234567', 'only_path' => false },
+    assert_equal({ 'controller' => 'survey_requests', 'action' => 'answer_form', 'id' => 397_345_097 },
         mail.email_url)
     assert_equal TEST_TIME, mail.message_timestamp
     assert_match 'First header text', mail.body
     assert_match 'First question', mail.body
     assert_match 'Second question', mail.body
     assert_match 'What do you think of this survey?', mail.body
-    assert_match "For å svare på spørsmålene, kan du følge denne linken:\n  <a href=\"http://example.com/svar/397345097?key=0123456789abcdef0123456789abcdef01234567\">http://example.com/svar/397345097</a>",
+    assert_match "For å svare på spørsmålene, kan du følge denne linken:\n  <a href=\"http://example.com/svar/397345097\">http://example.com/svar/397345097</a>",
         mail.body
     assert survey_requests(:unsent).sent_at
 
@@ -38,7 +38,7 @@ class SurveySenderTest < ActionMailer::TestCase
     assert_match 'First question', mail.body
     assert_match 'Second question', mail.body
     assert_match 'What do you think of this survey?', mail.body
-    assert_match %r{For å svare på spørsmålene, kan du følge denne linken:\s*<a href="http://example.com/svar/98593450[89]\?key=[0-9a-f]{40}">http://example.com/svar/98593450[89]</a>},
+    assert_match %r{For å svare på spørsmålene, kan du følge denne linken:\s*<a href="http://example.com/svar/98593450[89]">http://example.com/svar/98593450[89]</a>},
         mail.body
 
     assert_mail_stored 1, 2 do
@@ -55,7 +55,7 @@ class SurveySenderTest < ActionMailer::TestCase
     assert_match 'First question', mail.body
     assert_match 'Second question', mail.body
     assert_match 'What do you think of this survey?', mail.body
-    assert_match "For å svare på spørsmålene, kan du følge denne linken:\n  <a href=\"http://example.com/svar/985934507?key=random_token_string+++++++++++++++++++++\">http://example.com/svar/985934507</a>",
+    assert_match "For å svare på spørsmålene, kan du følge denne linken:\n  <a href=\"http://example.com/svar/985934507\">http://example.com/svar/985934507</a>",
         mail.body
     assert survey_requests(:sent).reminded_at
   end

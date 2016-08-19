@@ -16,7 +16,7 @@ class InformationPageMailer < ActionMailer::Base
   def send_weekly_page(member, page)
     @member = member
     @page = page
-    @email_url = with_login(member.user, controller: :info, action: :show, id: page.id)
+    @email_url = { controller: :info, action: :show, id: page.id }
     @title = "Til info: #{page.title}"
     mail from: Rails.env == 'production' ? 'post@jujutsu.no' : "#{Rails.env}@jujutsu.no",
         to: member.email, subject: @title

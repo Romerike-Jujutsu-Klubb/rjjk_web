@@ -11,8 +11,7 @@ class SurveyMailer < ApplicationMailer
     @user_email = survey_request.member.email
     @title = survey_request.survey.title
     @timestamp = Time.now
-    @email_url = with_login(survey_request.member.user,
-        controller: :survey_requests, action: :answer_form, id: survey_request.id)
+    @email_url = { controller: :survey_requests, action: :answer_form, id: survey_request.id }
     mail to: survey_request.member.email, subject: @title
   end
 
@@ -21,8 +20,7 @@ class SurveyMailer < ApplicationMailer
     @user_email = survey_request.member.email
     @title = survey_request.survey.title
     @timestamp = Time.now
-    @email_url = with_login(survey_request.member.user,
-        controller: :survey_requests, action: :answer_form, id: survey_request.id)
+    @email_url = { controller: :survey_requests, action: :answer_form, id: survey_request.id }
     mail to: survey_request.member.email, subject: @title
   end
 end
