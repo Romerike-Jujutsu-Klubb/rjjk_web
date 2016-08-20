@@ -8,8 +8,22 @@ end
 class MemberHistoryGraph
   JUNIOR_AGE_LIMIT = 15
   ASPIRANT_AGE_LIMIT = 10
-  ACTIVE_CLAUSE = ->(date) { "NOT EXISTS (SELECT kontraktsbelop FROM nkf_members WHERE member_id = members.id AND kontraktsbelop <= 0) AND (joined_on IS NULL OR joined_on <= '#{date.strftime('%Y-%m-%d')}') AND (left_on IS NULL OR left_on > '#{date.strftime('%Y-%m-%d')}')" }
-  NON_PAYING_CLAUSE = ->(date) { "EXISTS (SELECT kontraktsbelop FROM nkf_members WHERE member_id = members.id AND kontraktsbelop <= 0) AND (joined_on IS NULL OR joined_on <= '#{date.strftime('%Y-%m-%d')}') AND (left_on IS NULL OR left_on > '#{date.strftime('%Y-%m-%d')}')" }
+  ACTIVE_CLAUSE = ->(date) do
+    "NOT EXISTS (
+      SELECT kontraktsbelop FROM nkf_members
+      WHERE member_id = members.id AND kontraktsbelop <= 0)
+        AND (joined_on IS NULL OR joined_on <= '#{date.strftime('%Y-%m-%d')}')
+        AND (left_on IS NULL OR left_on > '#{date.strftime('%Y-%m-%d')}'
+    )"
+  end
+  NON_PAYING_CLAUSE = ->(date) do
+    "EXISTS (
+      SELECT kontraktsbelop FROM nkf_members
+      WHERE member_id = members.id AND kontraktsbelop <= 0)
+        AND (joined_on IS NULL OR joined_on <= '#{date.strftime('%Y-%m-%d')}')
+        AND (left_on IS NULL OR left_on > '#{date.strftime('%Y-%m-%d')}'
+    )"
+  end
 
   def self.history_graph(size = 480)
     begin
@@ -91,7 +105,10 @@ class MemberHistoryGraph
 
   def self.juniors_jj(dates)
     dates.map do |date|
-      Member.where("(#{ACTIVE_CLAUSE.call(date)}) AND birthdate IS NOT NULL AND birthdate BETWEEN ? AND ? AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')", senior_birthdate(date), junior_birthdate(date))
+      Member
+          .where("(#{ACTIVE_CLAUSE.call(date)}) AND birthdate IS NOT NULL AND birthdate BETWEEN ? AND ?",
+              senior_birthdate(date), junior_birthdate(date))
+          .where("(martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')")
           .references(:martial_arts).includes(groups: :martial_art).count
     end
   end

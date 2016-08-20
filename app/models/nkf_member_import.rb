@@ -181,7 +181,7 @@ class NkfMemberImport
         raise 'Could not find first name'
       end
       invoice_email = $1
-      unless trial_details_body =~ %r{<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren/stilart -</option>.*?<option selected value="\d+">([^<]*)</option>.*</select>}
+      unless trial_details_body =~ %r{<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren/stilart -</option>.*?<option selected value="\d+">([^<]*)</option>.*</select>} # rubocop: disable Metrics/LineLength
         raise 'Could not find martial art'
       end
       martial_art = $1
@@ -220,7 +220,11 @@ class NkfMemberImport
       end
       record = NkfMember.find_by_medlemsnummer(row[0]) || NkfMember.new
       if record.member_id.nil?
-        member = Member.where('UPPER(first_name) = ? AND UPPER(last_name) = ?', UnicodeUtils.upcase(attributes['fornavn']), UnicodeUtils.upcase(attributes['etternavn'])).to_a.find { |m| m.nkf_member.nil? }
+        member = Member
+            .where('UPPER(first_name) = ? AND UPPER(last_name) = ?',
+                UnicodeUtils.upcase(attributes['fornavn']),
+                UnicodeUtils.upcase(attributes['etternavn']))
+            .to_a.find { |m| m.nkf_member.nil? }
         attributes['member_id'] = member.id if member
       end
       begin

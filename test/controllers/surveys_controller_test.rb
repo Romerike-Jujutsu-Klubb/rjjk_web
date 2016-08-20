@@ -20,7 +20,15 @@ class SurveysControllerTest < ActionController::TestCase
 
   test 'should create survey' do
     assert_difference('Survey.count') do
-      post :create, survey: { category: @survey.category, expires_at: @survey.expires_at, footer: @survey.footer, group_id: @survey.group_id, header: @survey.header, position: @survey.position, title: @survey.title }
+      post :create, survey: {
+          category: @survey.category,
+          expires_at: @survey.expires_at,
+          footer: @survey.footer,
+          group_id: @survey.group_id,
+          header: @survey.header,
+          position: @survey.position,
+          title: @survey.title,
+      }
       assert_no_errors :survey
     end
 
@@ -38,7 +46,15 @@ class SurveysControllerTest < ActionController::TestCase
   end
 
   test 'should update survey' do
-    patch :update, id: @survey, survey: { category: @survey.category, expires_at: @survey.expires_at, footer: @survey.footer, group_id: @survey.group_id, header: @survey.header, position: @survey.position, title: @survey.title }
+    patch :update, id: @survey, survey: {
+        category: @survey.category,
+        expires_at: @survey.expires_at,
+        footer: @survey.footer,
+        group_id: @survey.group_id,
+        header: @survey.header,
+        position: @survey.position,
+        title: @survey.title,
+    }
     assert_redirected_to survey_path(assigns(:survey))
   end
 

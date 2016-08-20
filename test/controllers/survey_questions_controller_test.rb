@@ -37,7 +37,12 @@ class SurveyQuestionsControllerTest < ActionController::TestCase
   end
 
   test 'should update survey_question' do
-    patch :update, id: @survey_question, survey_question: { choices: @survey_question.choices, free_text: @survey_question.free_text, survey_id: @survey_question.survey_id, title: @survey_question.title }
+    patch :update, id: @survey_question, survey_question: {
+        choices: @survey_question.choices,
+        free_text: @survey_question.free_text,
+        survey_id: @survey_question.survey_id,
+        title: @survey_question.title,
+    }
     assert_redirected_to survey_question_path(assigns(:survey_question))
   end
 

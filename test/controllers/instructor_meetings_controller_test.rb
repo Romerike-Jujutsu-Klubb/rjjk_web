@@ -36,7 +36,12 @@ class InstructorMeetingsControllerTest < ActionController::TestCase
   end
 
   test 'should update instructor_meeting' do
-    patch :update, id: @instructor_meeting, instructor_meeting: { agenda: @instructor_meeting.agenda, end_at: @instructor_meeting.end_at, start_at: @instructor_meeting.start_at, title: @instructor_meeting.title }
+    patch :update, id: @instructor_meeting, instructor_meeting: {
+        agenda: @instructor_meeting.agenda,
+        end_at: @instructor_meeting.end_at,
+        start_at: @instructor_meeting.start_at,
+        title: @instructor_meeting.title,
+    }
     assert_redirected_to instructor_meeting_path(assigns(:instructor_meeting))
   end
 

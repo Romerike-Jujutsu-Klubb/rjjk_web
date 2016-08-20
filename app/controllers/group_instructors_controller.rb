@@ -7,10 +7,15 @@ class GroupInstructorsController < ApplicationController
         .includes(group_semester: :semester, group_schedule: :group)
         .order('group_schedules.weekday, group_schedules.start_at, groups.from_age')
         .to_a
-    group_instructors
-        .sort_by! do |gi|
-      [gi.group_semester.semester.current? ? 0 : 1, gi.group_semester.semester.future? ? 0 : 1, gi.group_semester.semester.future? ? gi.group_semester.semester.start_on : Date.today - gi.group_semester.semester.end_on,
-        gi.group_schedule.group.from_age, gi.group_schedule.weekday, -(gi.member.current_rank.try(:position) || -999)]
+    group_instructors.sort_by! do |gi|
+      [
+          gi.group_semester.semester.current? ? 0 : 1,
+          gi.group_semester.semester.future? ? 0 : 1,
+          gi.group_semester.semester.future? ? gi.group_semester.semester.start_on : Date.today - gi.group_semester.semester.end_on,
+          gi.group_schedule.group.from_age,
+          gi.group_schedule.weekday,
+          -(gi.member.current_rank.try(:position) || -999),
+      ]
     end
     @semesters = group_instructors.group_by { |gi| gi.group_semester.semester }
     return unless Semester.current && !@semesters.include?(Semester.current)

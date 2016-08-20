@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 class EnsureUniqueGroupMemberships < ActiveRecord::Migration
   def self.up
-    execute 'DELETE FROM groups_members gm1 WHERE EXISTS (SELECT member_id FROM groups_members gm2 WHERE gm2.member_id = gm1.member_id AND gm2.group_id = gm1.group_id AND gm2.created_at < gm1.created_at)'
+    execute 'DELETE FROM groups_members gm1
+        WHERE EXISTS (
+          SELECT member_id FROM groups_members gm2
+          WHERE gm2.member_id = gm1.member_id AND gm2.group_id = gm1.group_id
+            AND gm2.created_at < gm1.created_at
+        )'
     add_index :groups_members, [:group_id, :member_id], unique: true
     remove_column :groups_members, :created_at
     remove_column :groups_members, :updated_at

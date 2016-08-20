@@ -89,7 +89,7 @@ class UserTest < ActionMailer::TestCase
     assert !u.save
     assert u.errors[:login].any?
 
-    u.login = 'hugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahugeteslahug'
+    u.login = 'hugetesla' * 20
     assert !u.save
     assert u.errors[:login].any?
 
