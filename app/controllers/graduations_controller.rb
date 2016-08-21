@@ -171,7 +171,9 @@ class GraduationsController < ApplicationController
         end
       end
 
-      flash[:notice] = "Gruppe #{group.name} ble lagt til graderingen.  #{success_count} nye kandidater. #{"#{failures.map(&:member).map(&:name).join(', ')} kunne ikke legges til." if failures.any?}"
+      flash[:notice] = "Gruppe #{group.name} ble lagt til graderingen.  " \
+          "#{success_count} nye kandidater. " \
+          "#{"#{failures.map(&:member).map(&:name).join(', ')} kunne ikke legges til." if failures.any?}"
       if failures.any?
         flash[:error] = "Disse kunne ikke legges til: #{failures.map(&:member).map(&:name).join(', ')}"
         failures.each do |fg|

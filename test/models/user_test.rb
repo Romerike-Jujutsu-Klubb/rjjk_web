@@ -67,7 +67,7 @@ class UserTest < ActionMailer::TestCase
     assert !u.save
     assert u.errors['password'].any?
 
-    u.change_password('hugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehugehuge')
+    u.change_password('huge' * 50)
     assert !u.save
     assert u.errors['password'].any?
 
