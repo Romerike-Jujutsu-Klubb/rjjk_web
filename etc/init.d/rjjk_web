@@ -39,6 +39,7 @@ function start() {
   if [[ -s $PID_FILE && -n "$(ps -A | grep "^[ \t]*$(< $PID_FILE)")" ]] ; then
     PID=$(< $PID_FILE)
     echo "$APP already running with pid $PID."
+    cp public/503_down.html public/503.html
     exit 1
   fi
   rm -f $PID_FILE
@@ -55,7 +56,7 @@ function start() {
       PID=$(< $PID_FILE)
       break
     fi
-    if (( i % 10 == 0 )) ; then
+    if (( $i % 10 == 0 )) ; then
       echo -n $i
     else
       echo -n .
@@ -79,13 +80,13 @@ function start() {
       server_responded=1
       break
     fi
-    if (( j == 1 )) ; then
+    if (( $j == 1 )) ; then
       echo -n 'Waiting for server to respond...'
     else
       echo -n .
     fi
-    if (( j > 3 )) ; then
-      if (( j % 10 == 0 )) ; then
+    if (( $j > 3 )) ; then
+      if (( $j % 10 == 0 )) ; then
         echo -n $j
       else
         echo -n .
@@ -94,28 +95,26 @@ function start() {
     sleep 1
   done
   if [[ "$server_responded" == 1 ]]; then
-    echo OK
+    if (( $j > 1 )) ; then
+      echo OK
+    fi
   else
     echo FAILED
   fi
+  cp public/503_down.html public/503.html
 }
 
 function stop() {
-  if [[ ! -s "$PID_FILE" ]]; then
+  cp public/503_update.html public/503.html
+  if [[ ! -s "$PID_FILE" ]] ; then
     echo "$APP is not currently running."
   elif [[ -z "$(ps -A | grep "^[ \t]*$(< $PID_FILE)")" ]] ; then
-    echo "$APP $(< $PID_FILE) is dead!"
+    echo "$APP $(< $PID_FILE) is not currently running."
   else
     PID=$(< $PID_FILE)
-    if [ -z "$FORCE" ] ; then
-      PGID=`ps x -o  "%p %r %y %x %c " | grep $PID | awk '{print $2}'`
-      echo "Sending TERM signal to $APP $PID via process group $PGID"
-      kill -TERM -$PGID
-    else
-      PGID=`ps x -o  "%p %r %y %x %c " | grep $PID | awk '{print $2}'`
-      echo "Sending KILL signal to $APP $PID via process group $PGID"
-      kill -KILL -$PGID
-    fi
+    PGID=`ps x -o  "%p %r %y %x %c " | grep $PID | awk '{print $2}'`
+    echo "Sending KILL signal to $APP $PID via process group $PGID"
+    kill -KILL -$PGID
 
     echo -n "Wait for process $PID to stop..."
     for i in {1..10} ; do
@@ -124,7 +123,7 @@ function stop() {
         rm -f $PID_FILE
         break
       fi
-      if (( j > 3 )) ; then
+      if (( $i > 3 )) ; then
         echo -n .
       fi
       sleep 1
@@ -146,15 +145,6 @@ function restart() {
   start
 }
 
-function run() {
-  exec $JRUBY_CMD $START_CMD "$@"
-}
-
-function zap() {
-  echo "Resetting to stopped state."
-  [ -f $PID_FILE ] && rm $PID_FILE
-}
-
 function status() {
   if [ -f $PID_FILE ] ; then
     PID=`cat $PID_FILE`
@@ -172,40 +162,19 @@ function status() {
 
 function usage() {
   cat <<EOF
-Usage: $0 <command> <options> -- <application options>
+Usage: $0 <command>
 
 * where <command> is one of:
   start         start an instance of the application
   stop          stop all instances of the application
   restart       stop all instances and restart them afterwards
-  run           start the application and stay on top
-  zap           set the application to a stopped state
-
-* and where <options> may contain several of the following:
-
-    -t, --ontop                      Stay on top (does not daemonize)
-    -f, --force                      Force operation
+  status        show application status
 EOF
 
 }
 
 CMD=$1
 shift
-
-for i in "1" "2" ; do
-  case "$1" in
-    "-f"|"--force")
-      FORCE="true"
-      shift
-    ;;
-    "-t"|"--ontop")
-      ONTOP="true"
-      shift
-    ;;
-  esac
-done
-
-[ "$1" == "--" ] && shift
 
 case "$CMD" in
   "start")
@@ -214,15 +183,9 @@ case "$CMD" in
   "stop")
 	stop
     ;;
-  "run")
-    run
-    ;;
   "restart")
     restart
     ;;
-  "zap")
-    zap
-  ;;
   "status")
     status
   ;;
