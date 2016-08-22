@@ -1,0 +1,31 @@
+- @content_width = 1024
+
+= link_to 'New Survey', new_survey_path, class: 'btn btn-primary pull-right'
+
+h1 Listing surveys
+
+table.table
+  thead
+    tr
+      th #
+      th Title
+      th Header
+      th Footer
+      th Category
+      th Group
+      th Expires at
+      th
+  tbody
+    - @surveys.each do |survey|
+      tr
+        td = survey.position
+        td = survey.title
+        td = survey.header
+        td = survey.footer
+        td = survey.category
+        td = survey.group_id
+        td = survey.expires_at
+        td
+          = link_to 'Show', survey, class: 'btn btn-default'
+          = link_to 'Edit', edit_survey_path(survey), class: 'btn btn-default'
+          = link_to 'Destroy', survey, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
