@@ -41,7 +41,7 @@ EOF
   def history_graph(options = {})
     size = options[:size] || 480
     interval = options[:interval] || 8.weeks
-    step = (options[:step] || 1.weeks).to_i
+    step = (options[:step] || 3.months)
     percentage = options[:percentage]
 
     ranks = MartialArt.find_by_name('Kei Wa Ryu').ranks.reverse
@@ -59,15 +59,13 @@ EOF
     end
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     g.hide_dots = true
-    g.colors = %w(yellow yellow orange orange green green blue blue yellow yellow orange orange green green blue blue brown yellow orange green blue brown black black black).last(ranks.size)
+    g.colors = (%w(yellow yellow orange orange green green blue blue) * 2 +
+        %w(brown yellow orange green blue brown black black black)
+               ).last(ranks.size)
 
-    # first_date = Member.order(:joined_on).first.joined_on
     # first_date = 5.years.ago.to_date
-    first_date = Date.civil(2010, 8, 1)
-    # first_date = Date.civil(2011, 1, 1)
-    dates = []
-    Date.today.step(first_date, -step) { |date| dates << date }
-    dates.reverse!
+    first_date = Date.civil(2011, 1, 1)
+    dates = (first_date..Date.today).step(step / 1.day).to_a
     sums = nil
     data = ranks.map do |rank|
       rank_totals = totals(rank, dates, interval, percentage)
@@ -84,12 +82,10 @@ EOF
 
     labels = {}
     current_year = nil
-    current_month = nil
     dates.each_with_index do |date, i|
-      next unless date.month != current_month && [1, 8].include?(date.month)
-      labels[i] = (date.year != current_year ? "#{date.strftime('%m')}\n    #{date.strftime('%Y')}" : date.strftime('%m'))
+      next unless date.year != current_year
+      labels[i] = date.strftime('%Y').to_s
       current_year = date.year
-      current_month = date.month
     end
     g.labels = labels
     g.y_axis_increment = 5

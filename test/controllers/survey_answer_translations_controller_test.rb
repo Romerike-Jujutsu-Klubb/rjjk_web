@@ -38,7 +38,10 @@ class SurveyAnswerTranslationsControllerTest < ActionController::TestCase
   end
 
   test 'should update survey_answer_translation' do
-    patch :update, id: @survey_answer_translation, survey_answer_translation: { answer: @survey_answer_translation.answer, normalized_answer: @survey_answer_translation.normalized_answer }
+    patch :update, id: @survey_answer_translation, survey_answer_translation: {
+        answer: @survey_answer_translation.answer,
+        normalized_answer: @survey_answer_translation.normalized_answer,
+    }
     assert_redirected_to survey_answer_translation_path(assigns(:survey_answer_translation))
   end
 

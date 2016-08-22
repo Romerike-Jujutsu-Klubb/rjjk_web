@@ -307,7 +307,9 @@ class AttendancesController < ApplicationController
         attended_members = Member.references(:practices)
             .includes(attendances: { practice: :group_schedule }, graduates: [:graduation, :rank])
             .where('members.id NOT IN (?) AND practices.group_schedule_id IN (?) AND (year > ? OR ( year = ? AND week >= ?)) AND (year < ? OR ( year = ? AND week <= ?))',
-                @instructors.map(&:id), @group.group_schedules.map(&:id), first_date.cwyear, first_date.cwyear, first_date.cweek, last_date.cwyear, last_date.cwyear, last_date.cweek)
+                @instructors.map(&:id), @group.group_schedules.map(&:id),
+                first_date.cwyear, first_date.cwyear, first_date.cweek,
+                last_date.cwyear, last_date.cwyear, last_date.cweek)
             .to_a
         @members = current_members | attended_members
         @trials = @group.trials

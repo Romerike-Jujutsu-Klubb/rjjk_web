@@ -401,7 +401,11 @@ class NkfMemberImport
       end
       raise Timeout::Error if body =~ /ks_medlprofil timed out|Siden er utl.pt/
       raise EOFError, 'Internal error' if body =~ /The server encountered an internal error or/
-      raise EOFError, 'Try refreshing' if body =~ /An error occurred while processing the request. Try refreshing your browser. If the problem persists contact the site administrator/
+      raise EOFError, 'Try refreshing' if body =~ /
+        An error occurred while processing the request.
+        \ Try refreshing your browser.
+        \ If the problem persists contact the site administrator
+      /x
       raise EOFError, 'Lytter returnerte feil' if body =~ /Feil: Lytteren returnerte den f.lgende meldingen: 503 Service Unavailable/
       raise EOFError, 'Servlet Error' if body =~ %r{<TITLE>Servlet Error</TITLE>}i
       process_response(response, binary)

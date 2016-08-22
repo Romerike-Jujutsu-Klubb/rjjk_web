@@ -19,7 +19,12 @@ class InstructorMeetingsControllerTest < ActionController::TestCase
 
   test 'should create instructor_meeting' do
     assert_difference('InstructorMeeting.count') do
-      post :create, instructor_meeting: { agenda: @instructor_meeting.agenda, end_at: @instructor_meeting.end_at, start_at: @instructor_meeting.start_at, title: @instructor_meeting.title }
+      post :create, instructor_meeting: {
+          agenda: @instructor_meeting.agenda,
+          end_at: @instructor_meeting.end_at,
+          start_at: @instructor_meeting.start_at,
+          title: @instructor_meeting.title,
+      }
     end
 
     assert_redirected_to instructor_meeting_path(assigns(:instructor_meeting))

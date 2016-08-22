@@ -98,7 +98,9 @@ class MemberHistoryGraph
   def self.seniors_jj(dates)
     dates.map do |date|
       Member
-          .where("(#{ACTIVE_CLAUSE.call(date)}) AND birthdate IS NOT NULL AND birthdate < '#{senior_birthdate(date)}' AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')")
+          .where("(#{ACTIVE_CLAUSE.call(date)})")
+          .where('birthdate IS NOT NULL AND birthdate < ?', senior_birthdate(date))
+          .where("(martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')")
           .references(:martial_arts).includes(groups: :martial_art).count
     end
   end
