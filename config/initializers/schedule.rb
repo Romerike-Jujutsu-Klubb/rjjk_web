@@ -30,9 +30,7 @@ if %w(development beta production).include?(Rails.env) && !ENV['DISABLE_SCHEDULE
   # TODO(uwe): Register jacket sizes for members?
   # TODO(uwe): Lage info side om jakkene.
 
-  unless Rails.env.production?
-    scheduler.cron('10 10 * * *') { SurveySender.send_surveys }
-  end
+  scheduler.cron('10 10 * * mon') { SurveySender.send_surveys }
 
   # Board weekly
   scheduler.cron('0 11 * * mon') { AnnualMeetingReminder.notify_missing_date }
