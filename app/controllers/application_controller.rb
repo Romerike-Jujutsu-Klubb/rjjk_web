@@ -82,7 +82,7 @@ class ApplicationController < ActionController::Base
       @layout_events += Graduation.includes(:graduates)
           .where('held_on >= CURRENT_DATE').to_a
       @groups.select(&:school_breaks).each do |g|
-        if (first_session = g.current_semester.first_session) && first_session > Date.today
+        if (first_session = g.current_semester.first_session) && first_session >= Date.today
           @layout_events << Event.new(name: "Oppstart #{g.name}",
               start_at: first_session)
         end
