@@ -52,10 +52,12 @@
               </h4>
           <% end %>
 
-          <%= link_to image_tag('ical.png', style: 'width: 24px;height: 24px'),
-              {controller: :events, action: :calendar, id: event.id,
-                  format: :ics}, class: 'pull-right',
-              title: "Sett '#{event.name}' på din kalender!" %>
+          <% if event.id %>
+              <%= link_to image_tag('ical.png', style: 'width: 24px;height: 24px'),
+                  {controller: :events, action: :calendar, id: event.id,
+                      format: :ics}, class: 'pull-right',
+                  title: "Sett '#{event.name}' på din kalender!" %>
+          <% end %>
           <h4 style="margin-bottom: 0;color: #FFB400">
             <% if body %>
                 <%= link_to event.name, event, style: 'color: #FFB400' %>
