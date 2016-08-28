@@ -108,7 +108,12 @@ class User < ActiveRecord::Base
   end
 
   def name
-    member.try(:name) || (first_name.present? || last_name.present? ? [first_name, last_name].select(&:present?).join(' ') : login)
+    member.try(:name) || (
+    if first_name.present? || last_name.present?
+      [first_name, last_name].select(&:present?).join(' ')
+    else
+      login
+    end)
   end
 
   def token_expired?

@@ -47,7 +47,9 @@ class Graduate < ActiveRecord::Base
   end
 
   def minimum_attendances
-    [rank.minimum_attendances * registration_percentage, rank.minimum_age <= 12 ? registered_trainings * 0.5 : nil].compact.min.round
+    ats = [rank.minimum_attendances * registration_percentage]
+    ats << (registered_trainings * 0.5) if rank.minimum_age <= 12
+    ats.min.round
   end
 
   def current_rank_age

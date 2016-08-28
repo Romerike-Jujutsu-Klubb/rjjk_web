@@ -59,8 +59,10 @@ class Group < ActiveRecord::Base
   def update_prices
     contracts = NkfMember.where(kontraktstype: contract).to_a
     return if contracts.empty?
-    self.monthly_price = contracts.map(&:kontraktsbelop).group_by { |x| x }.group_by { |_k, v| v.size }.sort.last.last.map(&:first).first
-    self.yearly_price = contracts.map(&:kont_belop).group_by { |x| x }.group_by { |_k, v| v.size }.sort.last.last.map(&:first).first
+    self.monthly_price = contracts.map(&:kontraktsbelop).group_by { |x| x }
+        .group_by { |_k, v| v.size }.sort.last.last.map(&:first).first
+    self.yearly_price = contracts.map(&:kont_belop).group_by { |x| x }
+        .group_by { |_k, v| v.size }.sort.last.last.map(&:first).first
   end
 
   def next_schedule

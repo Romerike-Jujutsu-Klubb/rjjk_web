@@ -129,7 +129,8 @@ class NkfMemberImport
 
   def add_waiting_kid(import_rows, dc)
     details_body = http_get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}")
-    unless details_body =~ /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
+    unless details_body =~
+          /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
       raise "Could not find member id:\n#{details_body}"
     end
     member_id = $1
@@ -412,7 +413,9 @@ class NkfMemberImport
         \ Try refreshing your browser.
         \ If the problem persists contact the site administrator
       /x
-      raise EOFError, 'Lytter returnerte feil' if body =~ /Feil: Lytteren returnerte den f.lgende meldingen: 503 Service Unavailable/
+      if body =~ /Feil: Lytteren returnerte den f.lgende meldingen: 503 Service Unavailable/
+        raise EOFError, 'Lytter returnerte feil'
+      end
       raise EOFError, 'Servlet Error' if body =~ %r{<TITLE>Servlet Error</TITLE>}i
       process_response(response, binary)
     end

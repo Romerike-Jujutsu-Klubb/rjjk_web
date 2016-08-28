@@ -20,7 +20,10 @@ class BirthdayCelebrationsControllerTest < ActionController::TestCase
 
   test 'should create birthday_celebration' do
     assert_difference('BirthdayCelebration.count') do
-      post :create, birthday_celebration: { held_on: @birthday_celebration.held_on, participants: @birthday_celebration.participants }
+      post :create, birthday_celebration: {
+          held_on: @birthday_celebration.held_on,
+          participants: @birthday_celebration.participants,
+      }
       assert_no_errors :birthday_celebration
     end
 

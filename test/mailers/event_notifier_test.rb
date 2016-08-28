@@ -22,7 +22,8 @@ class EventNotifierTest < ActionMailer::TestCase
           hvis\ du\ har\ problemer\ med\ å\ lese\ meldingen.
         }x,
         mail.body.parts[1].decoded
-    assert_match "<p style=3D\"margin:0 0 10px 0; font-size:18px; =\r\ncolor:#E20916;\">Event message one subject</p>", mail.body.encoded
+    assert_match "<p style=3D\"margin:0 0 10px 0; font-size:18px; =\r\ncolor:#E20916;\">Event message one subject</p>",
+        mail.body.encoded
     assert_match(/L=C3=B8rdag 19\. August kl\. 13:37\s+2017/, mail.body.encoded.gsub(/=\r\n/, ''))
     assert_match '<p>Event message one body</p>', mail.body.encoded
 
@@ -40,7 +41,8 @@ class EventNotifierTest < ActionMailer::TestCase
           \ href="http://example.com/event_invitee_messages/98019096[45]">
           Klikk\ her</a>\s*hvis\ du\ har\ problemer\ med\ å\ lese\ meldingen.}x,
         mail.body.parts[1].decoded
-    assert_match "<p style=3D\"margin:0 0 10px 0; font-size:18px; =\r\ncolor:#E20916;\">Event message two subject</p>", mail.body.encoded
+    assert_match "<p style=3D\"margin:0 0 10px 0; font-size:18px; =\r\ncolor:#E20916;\">Event message two subject</p>",
+        mail.body.encoded
     assert_match(/L=C3=B8rdag 19\. August kl\. 13:37\s+2017/, mail.body.encoded)
     assert_match '<p>Event message two body</p>', mail.body.encoded
   end

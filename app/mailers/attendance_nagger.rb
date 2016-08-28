@@ -66,8 +66,10 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
   def self.send_attendance_changes
     now = Time.now
     upcoming_group_schedules = GroupSchedule.includes(:group).references(:groups)
-        .where('weekday = ? AND end_at >= ? AND groups.closed_on IS NULL AND (groups.school_breaks IS NULL OR groups.school_breaks = ?)',
-            now.to_date.cwday, now.time_of_day, false).to_a
+        .where('weekday = ? AND end_at >= ? AND groups.closed_on IS NULL',
+            now.to_date.cwday, now.time_of_day)
+        .where('groups.school_breaks IS NULL OR groups.school_breaks = ?', false)
+        .to_a
     upcoming_group_schedules.each do |gs|
       attendances = Attendance.includes(:member, practice: :group_schedule)
           .references(:practices)

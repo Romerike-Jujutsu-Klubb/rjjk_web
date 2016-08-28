@@ -36,7 +36,9 @@ class Certificates
           # Mask old labels
           fill_color 'ffffff'
           fill_rectangle [95, 255], 55, 140
-          fill_rectangle [censor_title_x - 10, graduate_name_y], page_width - censor_title_x * 2 + 25, graduate_name_y - sensor_y + 60
+          fill_rectangle [censor_title_x - 10, graduate_name_y],
+              page_width - censor_title_x * 2 + 25,
+              graduate_name_y - sensor_y + 60
           fill_color '000000'
         when 2
           scale = -0.05

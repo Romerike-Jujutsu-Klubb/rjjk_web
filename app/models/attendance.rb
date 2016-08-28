@@ -64,7 +64,9 @@ OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday > ?)',
   validates_uniqueness_of :member_id, scope: :practice_id
 
   validate on: :update do
-    errors.add(:status, 'kan ikke endres for treningen du var på.') if status_was == Status::ATTENDED && status == Status::WILL_ATTEND
+    if status_was == Status::ATTENDED && status == Status::WILL_ATTEND
+      errors.add(:status, 'kan ikke endres for treningen du var på.')
+    end
   end
 
   def date

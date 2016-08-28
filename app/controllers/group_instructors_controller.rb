@@ -11,7 +11,11 @@ class GroupInstructorsController < ApplicationController
       [
           gi.group_semester.semester.current? ? 0 : 1,
           gi.group_semester.semester.future? ? 0 : 1,
-          gi.group_semester.semester.future? ? gi.group_semester.semester.start_on : Date.today - gi.group_semester.semester.end_on,
+          if gi.group_semester.semester.future?
+            gi.group_semester.semester.start_on
+          else
+            Date.today - gi.group_semester.semester.end_on
+          end,
           gi.group_schedule.group.from_age,
           gi.group_schedule.weekday,
           -(gi.member.current_rank.try(:position) || -999),

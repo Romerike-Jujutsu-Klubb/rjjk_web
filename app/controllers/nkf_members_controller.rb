@@ -86,7 +86,9 @@ class NkfMembersController < ApplicationController
     import = NkfMemberImport.new
     flash[:notice] = "#{import.changes.size} records imported, #{html_escape(import.error_records.size.to_s)} failed, " \
         "#{import.import_rows.size - import.changes.size - import.error_records.size} skipped" +
-        (import.error_records.any? ? "<br>#{html_escape(import.error_records.map { |r| [r, r.errors.full_messages] }.inspect)}" : '')
+        (import.error_records.any? &&
+            "<br>#{html_escape(import.error_records.map { |r| [r, r.errors.full_messages] }.inspect)}" ||
+            '')
 
     redirect_to action: :comparison
   end

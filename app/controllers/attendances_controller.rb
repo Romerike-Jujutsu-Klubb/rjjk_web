@@ -92,7 +92,8 @@ class AttendancesController < ApplicationController
   end
 
   def report
-    @date = (params[:year] && params[:month] && Date.new(params[:year].to_i, params[:month].to_i, 1)) || Date.today.beginning_of_month
+    @date = (params[:year] && params[:month] && Date.new(params[:year].to_i, params[:month].to_i, 1)) ||
+        Date.today.beginning_of_month
     @year = @date.cwyear
     @month = @date.month
     @first_date = @date
@@ -205,13 +206,17 @@ class AttendancesController < ApplicationController
     @weeks.each do |year, week|
       @group_schedules.each { |gs| gs.practices.where(year: year, week: week).first_or_create! }
     end
+    year_weeks = @weeks.map { |y, w| "(#{y}, #{w})" }.join(', ')
     @planned_attendances = Attendance.includes(:practice).references(:practices)
-        .where("member_id = ? AND (practices.year, practices.week) IN (#{@weeks.map { |y, w| "(#{y}, #{w})" }.join(', ')})", member.id)
+        .where("member_id = ? AND (practices.year, practices.week) IN (#{year_weeks})",
+            member.id)
         .to_a
     start_date = 6.months.ago.to_date.beginning_of_month
     attendances = Attendance.includes(practice: { group_schedule: :group }).references(:practices)
-        .where('member_id = ? AND attendances.status IN (?) AND ((practices.year = ? AND practices.week >= ?) OR (practices.year = ?))',
-            member, Attendance::PRESENT_STATES, start_date.cwyear, start_date.cweek, today.cwyear)
+        .where('member_id = ? AND attendances.status IN (?)',
+            member, Attendance::PRESENT_STATES)
+        .where('(practices.year = ? AND practices.week >= ?) OR (practices.year = ?)',
+            start_date.cwyear, start_date.cweek, today.cwyear)
         .to_a
     @attended_groups = attendances.map { |a| a.practice.group_schedule.group }.uniq.sort_by { |g| -g.from_age }
     per_month = attendances.group_by do |a|
@@ -307,7 +312,8 @@ class AttendancesController < ApplicationController
                 a.group_schedule.group_id == @group.id
           end.empty?
         end
-        @instructors += GroupInstructor.includes(:group_schedule, member: [{ attendances: { practice: :group_schedule } }, :nkf_member])
+        @instructors += GroupInstructor
+            .includes(:group_schedule, member: [{ attendances: { practice: :group_schedule } }, :nkf_member])
             .where('group_instructors.member_id NOT IN (?)', @instructors.map(&:id))
             .where(group_schedules: { group_id: @group.id }).to_a
             .select { |gi| @dates.any? { |d| gi.active?(d) } }.map(&:member).uniq

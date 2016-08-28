@@ -97,7 +97,10 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_equal 'Hvordan var treningen?', mail.subject
     assert_equal ['"Uwe Kubosch" <admin@test.com>'], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
-    assert_match %r{17:45-18:45\s+Panda.*\[<a href="http://example.com/attendances/review/2013/42/84385526/X\?key=.{40}">Trente!</a>\]}m,
+    assert_match %r{17:45-18:45\s+Panda.*
+            \[<a\ href="http://example.com/attendances/review/2013/42/84385526/X
+            \?key=.{40}">Trente!</a>\]
+        }mx,
         mail.body
   end
 end

@@ -23,7 +23,8 @@ class AttendanceHistoryGraph
             .where('(practices.year > ? OR (practices.year = ? AND practices.week > ?))
 AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
                 w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).to_a +
-            TrialAttendance.by_group_id(group.id).where('(year > ? OR (year = ? AND week > ?)) AND (year < ? OR (year = ? AND week <= ?))',
+            TrialAttendance.by_group_id(group.id)
+            .where('(year > ? OR (year = ? AND week > ?)) AND (year < ? OR (year = ? AND week <= ?))',
                 w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).to_a
       end
       sessions = attendances.map { |ats| ats.map(&:practice_id).uniq.size }
@@ -44,7 +45,9 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
     weeks.each_with_index do |week, i|
       year = week[0]
       month = Date.commercial(week[0], week[1], 2).mon
-      next unless totals[i] && (current_month.nil? || ((month - current_month > 1) && [1, 8].include?(month)) || year != current_year)
+      next unless totals[i] && (current_month.nil? ||
+          ((month - current_month > 1) && [1, 8].include?(month)) ||
+          year != current_year)
       labels[i] = year != current_year ? "#{month}\n    #{year}" : month.to_s
       current_year = year
       current_month = month

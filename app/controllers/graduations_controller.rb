@@ -155,7 +155,8 @@ class GraduationsController < ApplicationController
             '',
         ]
       end
-      table([['Utøver', 'Bra', 'Kan bli bedre']] + data, header: true, cell_style: { inline_format: true, width: 180, padding: 8 })
+      table([['Utøver', 'Bra', 'Kan bli bedre']] + data, header: true,
+          cell_style: { inline_format: true, width: 180, padding: 8 })
       start_new_page
     end
 

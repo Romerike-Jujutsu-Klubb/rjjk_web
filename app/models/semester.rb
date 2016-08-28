@@ -8,7 +8,8 @@ class Semester < ActiveRecord::Base
     if start_on && end_on && start_on > end_on
       errors.add(:end_on, 'Du må avslutte semesteret etter at det er startet.')
     end
-    if Semester.where('id <> ? AND (start_on BETWEEN ? AND ? OR end_on BETWEEN ? AND ?)', id, start_on, end_on, start_on, end_on).exists?
+    if Semester.where('id <> ? AND (start_on BETWEEN ? AND ? OR end_on BETWEEN ? AND ?)',
+        id, start_on, end_on, start_on, end_on).exists?
       errors.add(:start_on, 'Semestre får ikke overlappe.')
     end
     if Semester.where('id <> ? AND start_on <= ? AND end_on >= ?', id, start_on, start_on).exists?

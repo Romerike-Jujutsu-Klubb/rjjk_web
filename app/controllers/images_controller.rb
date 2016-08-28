@@ -125,7 +125,9 @@ class ImagesController < ApplicationController
 
   def gallery
     fields = 'approved, content_type, description, id, name, public, user_id'
-    image_select = Image.select(fields).where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'").order('created_at DESC')
+    image_select = Image.select(fields)
+        .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
+        .order('created_at DESC')
     image_select = image_select.includes(:user)
     image_select = image_select.where('approved = ?', true) unless admin?
     image_select = image_select.where('public = ?', true) unless user?
@@ -135,7 +137,9 @@ class ImagesController < ApplicationController
 
   def mine
     fields = 'approved, content_type, description, id, name, public, user_id'
-    image_select = Image.select(fields).where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'").order('created_at DESC')
+    image_select = Image.select(fields)
+        .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
+        .order('created_at DESC')
     image_select = image_select.where('user_id = ?', current_user.id)
     image_select = image_select.includes(:user)
     @images = image_select.to_a
