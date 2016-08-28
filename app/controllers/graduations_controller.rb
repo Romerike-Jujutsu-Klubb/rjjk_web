@@ -207,10 +207,8 @@ class GraduationsController < ApplicationController
   def load_graduates
     @graduation = Graduation.includes(group: { martial_art: { ranks: :group } }).find(params[:id])
     @censors = Censor.includes(:member).where(graduation_id: @graduation.id).to_a
-    @graduates = Graduate.where('graduates.graduation_id = ? AND graduates.member_id != 0', params[:id]).
-        # includes({:graduation => :martial_art}, {:member => [{:attendances => :group_schedule}, {:graduates => [:graduation, :rank]}]}, {:rank => :group}).
-        includes({ graduation: { group: :martial_art } }, :member, rank: :group).
-        # order('ranks_graduates.position DESC, members.first_name, members.last_name').to_a
-        order('ranks.position DESC, members.first_name, members.last_name').to_a
+    @graduates = Graduate.where('graduates.graduation_id = ? AND graduates.member_id != 0', params[:id])
+        .includes({ graduation: { group: :martial_art } }, :member, rank: :group)
+        .order('ranks.position DESC, members.first_name, members.last_name').to_a
   end
 end

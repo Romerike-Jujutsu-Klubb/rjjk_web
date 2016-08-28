@@ -22,7 +22,9 @@ class AttendanceMailer < ApplicationMailer
     @group_schedule = group_schedule
     @recipient = recipient
     @members = attendees
-    @title = "Trening i #{@group_schedule.start_at.day_phase}: #{attendees.empty? ? 'Ingen' : attendees.size} deltaker#{'e' if attendees.size > 1} påmeldt"
+    @title = "Trening i #{@group_schedule.start_at.day_phase}: "\
+        "#{attendees.empty? ? 'Ingen' : attendees.size} "\
+        "deltaker#{'e' if attendees.size > 1} påmeldt"
     @timestamp = practice.start_at
     @email_url = { controller: :attendances, action: :plan }
     mail to: recipient.email, subject: @title

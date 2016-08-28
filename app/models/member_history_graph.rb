@@ -69,7 +69,10 @@ class MemberHistoryGraph
     # g.draw_vertical_legend
 
     precision = 1
-    g.maximum_value = (g.maximum_value.to_s[0..precision].to_i + 1) * (10**(Math.log10(g.maximum_value.to_i).to_i - precision)) if g.maximum_value.positive?
+    if g.maximum_value.positive?
+      g.maximum_value = (g.maximum_value.to_s[0..precision].to_i + 1) *
+          (10**(Math.log10(g.maximum_value.to_i).to_i - precision))
+    end
     g.maximum_value = [100, g.maximum_value].max
     g.marker_count = g.maximum_value / 10
     g.to_blob
@@ -117,14 +120,22 @@ class MemberHistoryGraph
 
   def self.seniors_ad(dates)
     dates.map do |date|
-      Member.where("(#{ACTIVE_CLAUSE.call(date)}) AND birthdate IS NOT NULL AND birthdate < '#{senior_birthdate(date)}' AND martial_arts.name = 'Aikikai'")
+      Member
+          .where(ACTIVE_CLAUSE.call(date))
+          .where('birthdate IS NOT NULL AND birthdate < ?',
+              senior_birthdate(date))
+          .where("martial_arts.name = 'Aikikai'")
           .references(:martial_arts).includes(groups: :martial_art).count
     end
   end
 
   def self.juniors_ad(dates)
     dates.map do |date|
-      Member.where("(#{ACTIVE_CLAUSE.call(date)}) AND birthdate IS NOT NULL AND birthdate >= '#{senior_birthdate(date)}' AND martial_arts.name = 'Aikikai'")
+      Member
+          .where(ACTIVE_CLAUSE.call(date))
+          .where('birthdate IS NOT NULL AND birthdate >= ?',
+              senior_birthdate(date))
+          .where("martial_arts.name = 'Aikikai'")
           .references(:martial_arts).includes(groups: :martial_art).count
     end
   end

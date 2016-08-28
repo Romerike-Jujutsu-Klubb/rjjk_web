@@ -106,8 +106,10 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         .where('weekday = ? AND end_at BETWEEN ? AND ? AND groups.closed_on IS NULL AND (groups.school_breaks IS NULL OR groups.school_breaks = ?)',
             now.to_date.cwday, (now - 1.hour).time_of_day, now.time_of_day, false).to_a
     planned_attendances = Attendance.includes(:member, practice: :group_schedule).references(:groups)
-        .where('practices.group_schedule_id IN (?) AND practices.year = ? AND practices.week = ? AND attendances.status = ? AND sent_review_email_at IS NULL',
-            completed_group_schedules.map(&:id), now.year, now.to_date.cweek, Attendance::Status::WILL_ATTEND).to_a
+        .where('practices.group_schedule_id IN (?)', completed_group_schedules.map(&:id))
+        .where('practices.year = ? AND practices.week = ?', now.year, now.to_date.cweek)
+        .where('attendances.status = ? AND sent_review_email_at IS NULL',
+            Attendance::Status::WILL_ATTEND).to_a
     planned_attendances.group_by(&:member).each do |member, completed_attendances|
       older_attendances =
           Attendance.where('member_id = ? AND attendances.id NOT IN (?) AND attendances.status = ?',

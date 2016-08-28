@@ -10,12 +10,16 @@ class AttendancePlanTest < ActionDispatch::IntegrationTest
   def test_plan
     screenshot_group :plan
     screenshot('index')
-    assert_equal ['Denne uken', 'Ubekreftet Du trente.', 'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '3'],
+    assert_equal ['Denne uken', 'Ubekreftet Du trente.', 'Kommer! Du kommer.',
+        'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1',
+        'Siden gradering', '3'],
         all('td').map(&:text).reject(&:blank?)
 
     first('a.btn').click
     assert has_css?('a.btn', text: 'Trente!')
-    assert_equal ['Denne uken', 'Trente! Du trente.', 'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '3'],
+    assert_equal ['Denne uken', 'Trente! Du trente.', 'Kommer! Du kommer.',
+        'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1',
+        'Siden gradering', '3'],
         all('td').map(&:text).reject(&:blank?)
 
     first('a.btn').click

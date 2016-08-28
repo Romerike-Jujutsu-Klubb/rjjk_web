@@ -139,7 +139,9 @@ class Member < ActiveRecord::Base
 
       return new_user
     end
-    raise "Unable to create user for member #{attrs}\npotential phones: #{potential_emails}\nattributes: #{attrs}\nblocking users: #{blocking_users.inspect}"
+    raise "Unable to create user for member #{attrs}
+potential phones: #{potential_emails}\nattributes: #{attrs}
+blocking users: #{blocking_users.inspect}"
   end
 
   def self.make_usable_full_email(email, first_name, last_name, birthdate = nil)

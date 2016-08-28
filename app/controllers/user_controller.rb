@@ -58,7 +58,8 @@ class UserController < ApplicationController
           url = url_for(with_login(@user, action: :welcome))
           UserMailer.signup(@user, params['user']['password'], url)
               .store(@user.id, tag: :signup)
-          flash['notice'] = 'Signup successful! Please check your registered email account to verify your account registration and continue with the login.'
+          flash['notice'] = 'Signup successful! Please check your registered "\
+"email account to verify your account registration and continue with the login.'
           redirect_to action: 'login'
         end
       end

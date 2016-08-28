@@ -19,7 +19,11 @@ class PracticesControllerTest < ActionController::TestCase
 
   test 'should create practice' do
     assert_difference('Practice.count') do
-      post :create, practice: { status: @practice.status, group_schedule_id: @practice.group_schedule_id, week: @practice.week + 1, year: @practice.year }
+      post :create, practice: {
+          status: @practice.status,
+          group_schedule_id: @practice.group_schedule_id,
+          week: @practice.week + 1, year: @practice.year
+      }
     end
 
     assert_redirected_to practice_path(assigns(:practice))

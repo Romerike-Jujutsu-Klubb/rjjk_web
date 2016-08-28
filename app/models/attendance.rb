@@ -29,7 +29,10 @@ class Attendance < ActiveRecord::Base
   ABSENT_STATES = [Status::HOLIDAY, Status::SICK, Status::ABSENT].freeze
   PRESENCE_STATES = [*PRESENT_STATES, Status::WILL_ATTEND].freeze
 
-  scope :by_group_id, -> (group_id) { includes(practice: :group_schedule).references(:group_schedules).where('group_schedules.group_id = ?', group_id) }
+  scope :by_group_id, -> (group_id) {
+    includes(practice: :group_schedule).references(:group_schedules)
+        .where('group_schedules.group_id = ?', group_id)
+  }
   scope :last_months, -> (count) {
     limit = count.months.ago
     where('(year = ? AND week >= ?) OR year > ?', limit.year, limit.to_date.cweek, limit.year)

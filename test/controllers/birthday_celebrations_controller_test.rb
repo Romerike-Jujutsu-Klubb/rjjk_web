@@ -38,7 +38,10 @@ class BirthdayCelebrationsControllerTest < ActionController::TestCase
   end
 
   test 'should update birthday_celebration' do
-    put :update, id: @birthday_celebration, birthday_celebration: { held_on: @birthday_celebration.held_on, participants: @birthday_celebration.participants }
+    put :update, id: @birthday_celebration, birthday_celebration: {
+        held_on: @birthday_celebration.held_on,
+        participants: @birthday_celebration.participants,
+    }
     assert_redirected_to birthday_celebration_path(assigns(:birthday_celebration))
   end
 

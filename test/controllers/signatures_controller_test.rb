@@ -20,7 +20,10 @@ class SignaturesControllerTest < ActionController::TestCase
 
   test 'should create signature' do
     assert_difference('Signature.count') do
-      post :create, signature: { content_type: @signature.content_type, image: @signature.image, member_id: @signature.member_id, name: @signature.name }
+      post :create, signature: {
+          content_type: @signature.content_type, image: @signature.image,
+          member_id: @signature.member_id, name: @signature.name
+      }
       assert_no_errors :signature
     end
 
