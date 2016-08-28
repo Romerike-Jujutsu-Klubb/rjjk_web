@@ -1,10 +1,5 @@
 # frozen_string_literal: true
-class AttendanceMailer < ActionMailer::Base
-  include UserSystem
-  include MailerHelper
-
-  default from: noreply_address
-
+class AttendanceMailer < ApplicationMailer
   def plan(member)
     @member = member
     @title = 'Planlegging oppmøte'
@@ -27,9 +22,8 @@ class AttendanceMailer < ActionMailer::Base
     @group_schedule = group_schedule
     @recipient = recipient
     @members = attendees
-    @title = "Trening i #{group_schedule.start_at.day_phase}"
     @title = "Trening i #{@group_schedule.start_at.day_phase}: #{attendees.empty? ? 'Ingen' : attendees.size} deltaker#{'e' if attendees.size > 1} påmeldt"
-    @timestamp = Time.now
+    @timestamp = practice.start_at
     @email_url = { controller: :attendances, action: :plan }
     mail to: recipient.email, subject: @title
   end

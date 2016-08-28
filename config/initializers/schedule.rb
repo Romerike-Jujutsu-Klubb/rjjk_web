@@ -6,8 +6,8 @@ if %w(development beta production).include?(Rails.env) && !ENV['DISABLE_SCHEDULE
 
   def scheduler.handle_exception(job, e)
     raise e if Rails.env.test?
-    logger.error "Exception during scheduled job(#{job.tags}): #{e}"
-    logger.error e.backtrace.join("\n")
+    Rails.logger.error "Exception during scheduled job(#{job.tags}): #{e}"
+    Rails.logger.error e.backtrace.join("\n")
     ExceptionNotifier.notify_exception(e)
   end
 

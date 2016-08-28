@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 class SurveyMailer < ApplicationMailer
-  include UserSystem
-  include MailerHelper
-
   default bcc: 'uwe@kubosch.no',
-      from: Rails.env == 'production' ? 'medlem@jujutsu.no' : "#{Rails.env}@jujutsu.no"
+      from: "medlem@#{"#{Rails.env}." unless Rails.env.production?}jujutsu.no"
 
   def survey(survey_request)
     @survey_request = survey_request

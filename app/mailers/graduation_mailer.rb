@@ -1,10 +1,5 @@
 # frozen_string_literal: true
-class GraduationMailer < ActionMailer::Base
-  include UserSystem
-  include MailerHelper
-
-  default from: noreply_address
-
+class GraduationMailer < ApplicationMailer
   def missing_graduation(instructor, group, suggested_date)
     @instructor = instructor
     @group = group

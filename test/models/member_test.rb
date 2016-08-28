@@ -2,8 +2,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class MemberTest < ActiveSupport::TestCase
-  fixtures :members
-
   class Image
     def original_filename
       'My Image'
@@ -44,5 +42,11 @@ class MemberTest < ActiveSupport::TestCase
   test 'passive? preloaded recent_attendances' do
     members = Member.includes(:recent_attendances).order(:first_name)
     assert_equal [false, false, true, false], members.map { |m| m.passive?(Date.today, groups(:voksne)) }
+  end
+
+  test 'emails' do
+    assert_equal [
+        ['"Lars Bråten" <lars@example.com>'], [], [], []
+    ], Member.order(:first_name, :last_name).map(&:emails)
   end
 end

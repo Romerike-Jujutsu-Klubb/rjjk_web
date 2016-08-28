@@ -89,12 +89,17 @@ class User < ActiveRecord::Base
     UserSystem::CONFIG[duration == :login ? :autologin_token_life_hours : :security_token_life_hours].hours
   end
 
-  def email
-    member.try(:email) || super
+  def full_email
+    current_email = member&.email || email
+    if current_email =~ /<(.*)>/
+      current_email
+    else
+      %("#{name}" <#{current_email}>)
+    end
   end
 
   def emails
-    result = [%("#{name}" <#{attributes['email']}>)]
+    result = [full_email]
     result += member.emails if member
     result.sort_by! { |e| -e.size }
     result.uniq { |e| e =~ /<(.*@.*)>/ ? $1 : e }

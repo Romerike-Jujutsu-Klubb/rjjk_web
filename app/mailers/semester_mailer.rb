@@ -1,8 +1,6 @@
 # frozen_string_literal: true
-class SemesterMailer < ActionMailer::Base
-  include MailerHelper
-
-  default from: noreply_address, to: 'uwe@kubosch.no', bcc: 'uwe@kubosch.no'
+class SemesterMailer < ApplicationMailer
+  default to: 'uwe@kubosch.no', bcc: 'uwe@kubosch.no'
 
   def missing_current_semester(recipient)
     @recipient = recipient

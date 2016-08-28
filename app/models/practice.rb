@@ -11,8 +11,12 @@ class Practice < ActiveRecord::Base
     Date.commercial(year, week, group_schedule.weekday)
   end
 
+  def start_at
+    date.at(group_schedule.start_at)
+  end
+
   def passed?
-    Time.now > Date.commercial(year, week, group_schedule.weekday).at(group_schedule.end_at)
+    Time.now > date.at(group_schedule.end_at)
   end
 
   def to_s

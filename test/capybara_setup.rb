@@ -17,7 +17,7 @@ class ActionDispatch::IntegrationTest
   Capybara::Screenshot.window_size = [1024, 768]
   Capybara::Screenshot.enabled = RUBY_ENGINE == 'jruby'
   # Capybara::Screenshot::Diff.enabled = false
-  Capybara.default_max_wait_time = 15
+  Capybara.default_max_wait_time = 30
 
   self.use_transactional_fixtures = false
 

@@ -1,10 +1,5 @@
 # frozen_string_literal: true
-class InformationPageMailer < ActionMailer::Base
-  include UserSystem
-  include MailerHelper
-
-  default from: noreply_address
-
+class InformationPageMailer < ApplicationMailer
   def notify_outdated_pages(member, pages)
     @member = member
     @pages = pages

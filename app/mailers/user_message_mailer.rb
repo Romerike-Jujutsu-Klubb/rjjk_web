@@ -1,12 +1,8 @@
 # frozen_string_literal: true
-class UserMessageMailer < ActionMailer::Base
-  include MailerHelper
-
-  default from: noreply_address
-
+class UserMessageMailer < ApplicationMailer
   def send_message(um)
     @title = um.title || um.subject
-    @user_email = um.user_email
+    @user_email = um.user_email || um.user.email
     @email_url = { only_path: false, email: @user_email && Base64.encode64(@user_email) }
         .merge(um.email_url || { controller: :user_messages, action: :show,
             id: um.id, key: um.key })

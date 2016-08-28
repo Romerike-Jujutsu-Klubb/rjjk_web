@@ -17,8 +17,11 @@
       <td class="value"><%= text_field 'user', 'last_name' %></td>
     </tr>
     <tr class="two_columns">
-      <td class="prompt"><label>E-post:</label></td>
-      <td class="value"><%= text_field 'user', 'email' %></td>
+      <td class="prompt" style="vertical-align: top"><label>E-post:</label></td>
+      <td class="value"><%= text_field 'user', 'email' %>
+        <br/>
+        <small><%= (@user.emails - [@user.full_email]).join(' ') %></small>
+      </td>
     </tr>
 <% if admin? %>
     <tr class="two_columns">

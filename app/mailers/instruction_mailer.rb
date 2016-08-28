@@ -1,9 +1,6 @@
 # frozen_string_literal: true
-class InstructionMailer < ActionMailer::Base
-  include MailerHelper
-
-  default from: noreply_address,
-          to: Rails.env == 'production' ? %w(uwe@kubosch.no) : 'uwe@kubosch.no'
+class InstructionMailer < ApplicationMailer
+  default to: Rails.env == 'production' ? %w(uwe@kubosch.no) : 'uwe@kubosch.no'
 
   def missing_instructors(missing_chief_instructions, missing_instructions)
     @chief_semesters = missing_chief_instructions

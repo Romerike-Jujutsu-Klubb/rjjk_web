@@ -1,9 +1,6 @@
 # frozen_string_literal: true
-class NkfReplicationMailer < ActionMailer::Base
-  include MailerHelper
-
-  default from: noreply_address,
-      to: Rails.env.production? ? %w(medlem@jujutsu.no uwe@kubosch.no) : 'uwe@kubosch.no'
+class NkfReplicationMailer < ApplicationMailer
+  default to: %w(medlem@jujutsu.no uwe@kubosch.no)
 
   def import_changes(nkf_member_import)
     @import = nkf_member_import

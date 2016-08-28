@@ -56,7 +56,7 @@
           <td align="left" style="padding:10px 0 10px 10px; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#888888;text-align: center;">
             <% if @email_url %>
                 <%= link_to 'Klikk her', @email_url, style: 'color: #454545' %>
-                hvis du har problemer med å lese e-posten.
+                hvis du har problemer med å lese meldingen.
             <% end %>
           </td>
         </tr>
@@ -73,7 +73,31 @@
                         </td>
                         <td align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#acabab;">
                           <p style="margin:0 0 10px 0; font-size:18px; color:#E20916;"><%= @title %></p>
-                          <%= "#{@timestamp.day}. #{t(:date)[:month_names][@timestamp.month]} #{@timestamp.year}" if @timestamp %>
+
+                          <% if @timestamp %>
+                            <% last_mon = @timestamp.mon %>
+                              <% if @email_end_at.nil? || @email_end_at == @timestamp %>
+                                  <% if @timestamp.min != 0 || @timestamp.hour != 0 %>
+                                      <%= t(:date)[:day_names][@timestamp.wday]%> <%= @timestamp.mday %>. <%= t Date::MONTHNAMES[last_mon] %> kl. <%= @timestamp.strftime('%H:%M') %>
+                                  <% else %>
+                                      <%= t(:date)[:day_names][@timestamp.wday] %> <%= @timestamp.mday %>. <%= t Date::MONTHNAMES[last_mon] %>
+                                  <% end %>
+                              <% else %>
+                                  <% if @email_end_at.to_date == @timestamp.to_date %>
+                                      <%= t(:date)[:day_names][@timestamp.wday]%> <%= @timestamp.mday %>. <%= t Date::MONTHNAMES[last_mon] %><br/>
+                                      kl. <%= @timestamp.strftime('%H:%M') %>-<%= @email_end_at.strftime('%H:%M') %>
+                                  <% else %>
+                                      <% if @timestamp.min == 0 && @timestamp.hour == 0 && @email_end_at.hour == 0 && @email_end_at.min == 0 %>
+                                          <%= @timestamp.mday %>-<%=@email_end_at.mday%>. <%= t Date::MONTHNAMES[last_mon] %>
+                                      <% else %>
+                                          <%= t(:date)[:day_names][@timestamp.wday] %>
+                                      <% end %>
+                                      <%= @email_end_at.strftime('- %H:%M') if @email_end_at.hour != 0 || @email_end_at.min != 0 %>
+                                  <% end %>
+                              <% end %>
+                            <%= @timestamp.year %>
+                          <% end %>
+
                         </td>
                       </tr>
                     </table>

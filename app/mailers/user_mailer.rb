@@ -1,7 +1,5 @@
 # frozen_string_literal: true
-class UserMailer < ActionMailer::Base
-  include MailerHelper
-
+class UserMailer < ApplicationMailer
   default from: UserSystem::CONFIG[:email_from].to_s
 
   def signup(user, password, url = nil)

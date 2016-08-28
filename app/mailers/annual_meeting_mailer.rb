@@ -1,10 +1,5 @@
 # frozen_string_literal: true
-class AnnualMeetingMailer < ActionMailer::Base
-  include UserSystem
-  include MailerHelper
-
-  default from: noreply_address
-
+class AnnualMeetingMailer < ApplicationMailer
   def missing_date(member, year)
     @member = member
     @year = year

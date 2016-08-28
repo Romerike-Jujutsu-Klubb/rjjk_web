@@ -1,10 +1,5 @@
 # frozen_string_literal: true
-class PublicRecordMailer < ActionMailer::Base
-  include UserSystem
-  include MailerHelper
-
-  default from: noreply_address
-
+class PublicRecordMailer < ApplicationMailer
   def new_record(record)
     @record = record
     @title = 'Ny informasjon registrert i Brønnøysund'

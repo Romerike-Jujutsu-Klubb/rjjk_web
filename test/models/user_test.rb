@@ -132,4 +132,16 @@ class UserTest < ActionMailer::TestCase
     assert_equal nil, users(:long_user).technical_committy?
     assert_equal nil, users(:newbie).technical_committy?
   end
+
+  test 'emails' do
+    assert_equal [
+        ['"Uwe Kubosch" <admin@test.com>'],
+        ['"Lars Bråten" <lars@example.com>'],
+        ['"long_user" <long_user@example.com>'],
+        ['"deletable_user" <deletable_user@example.com>'],
+        ['"deleted_user" <deleted_user@example.com>'],
+        ['"unverified_user" <unverified_user@example.com>'],
+        ['"Newbie Neuer" <newbie@example.com>'],
+    ], User.order(:first_name, :last_name).map(&:emails)
+  end
 end

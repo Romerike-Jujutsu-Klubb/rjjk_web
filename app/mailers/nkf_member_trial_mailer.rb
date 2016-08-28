@@ -1,9 +1,6 @@
 # frozen_string_literal: true
-class NkfMemberTrialMailer < ActionMailer::Base
-  include MailerHelper
-
-  default from: noreply_address,
-          to: Rails.env == 'production' ? %w(medlem@jujutsu.no uwe@kubosch.no) : '"medlem@jujutsu.no" <uwe@kubosch.no>'
+class NkfMemberTrialMailer < ApplicationMailer
+  default to: %w(medlem@jujutsu.no uwe@kubosch.no)
 
   def notify_trial_end(trial_member)
     @trial_member = trial_member

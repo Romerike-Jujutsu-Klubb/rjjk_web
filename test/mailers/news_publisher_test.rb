@@ -23,7 +23,7 @@ class NewsPublisherTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[2]
     assert_equal 'My first news item', mail.subject
-    assert_equal ['"Sebastian Kubosch" <"Sebastian Kubosch" <>>'], mail.to
+    assert_equal ['"Sebastian Kubosch" <>'], mail.to
     assert_equal %w(test@jujutsu.no), mail.from
     assert_match 'My first news item', mail.html_body
 
