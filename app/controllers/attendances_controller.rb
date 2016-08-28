@@ -28,7 +28,10 @@ class AttendancesController < ApplicationController
   def new
     @attendance ||= Attendance.new params[:attendance]
     if @attendance.practice && @attendance.practice.try(:new_record?)
-      practice = Practice.where(group_schedule_id: @attendance.practice.group_schedule_id, year: @attendance.practice.year, week: @attendance.practice.week).first
+      practice = Practice
+          .where(group_schedule_id: @attendance.practice.group_schedule_id,
+              year: @attendance.practice.year, week: @attendance.practice.week)
+          .first
       @attendance.practice = practice if practice
     end
     @attendance.status ||= Attendance::Status::ATTENDED
@@ -308,12 +311,16 @@ class AttendancesController < ApplicationController
             .select { |gi| @dates.any? { |d| gi.active?(d) } }.map(&:member).uniq
 
         current_members = @group.members.active(first_date, last_date)
-            .includes({ attendances: { practice: :group_schedule }, graduates: [:graduation, :rank], groups: :group_schedules }, :nkf_member)
+            .includes({ attendances: { practice: :group_schedule },
+                graduates: [:graduation, :rank], groups: :group_schedules },
+                :nkf_member)
         attended_members = Member.references(:practices)
             .includes(attendances: { practice: :group_schedule }, graduates: [:graduation, :rank])
-            .where('members.id NOT IN (?) AND practices.group_schedule_id IN (?) AND (year > ? OR ( year = ? AND week >= ?)) AND (year < ? OR ( year = ? AND week <= ?))',
-                @instructors.map(&:id), @group.group_schedules.map(&:id),
-                first_date.cwyear, first_date.cwyear, first_date.cweek,
+            .where('members.id NOT IN (?)', @instructors.map(&:id))
+            .where('practices.group_schedule_id IN (?)', @group.group_schedules.map(&:id))
+            .where('year > ? OR ( year = ? AND week >= ?)',
+                first_date.cwyear, first_date.cwyear, first_date.cweek)
+            .where('year < ? OR ( year = ? AND week <= ?)',
                 last_date.cwyear, last_date.cwyear, last_date.cweek)
             .to_a
         @members = current_members | attended_members

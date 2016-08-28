@@ -37,12 +37,17 @@ class Attendance < ActiveRecord::Base
   scope :on_date, -> (date) { where('year = ? AND week = ?', date.year, date.cweek) }
   scope :after_date, -> (date) {
     includes(practice: :group_schedule).references(:group_schedules)
-        .where('practices.year > ? OR (practices.year = ? AND practices.week > ?) OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday > ?)',
+        .where('practices.year > ? OR (practices.year = ? AND practices.week > ?)
+OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday > ?)',
             date.year, date.year, date.cweek, date.year, date.cweek, date.cwday)
   }
   scope :until_date, -> (date) {
     includes(practice: :group_schedule).references(:group_schedules)
-        .where('practices.year < ? OR (practices.year = ? AND practices.week < ?) OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday <= ?)',
+        .where(<<~SQL,
+              practices.year < ? OR (practices.year = ? AND practices.week < ?)
+              OR (practices.year = ? AND practices.week = ?
+                AND group_schedules.weekday <= ?)
+            SQL
             date.year, date.year, date.cweek, date.year, date.cweek, date.cwday)
   }
 

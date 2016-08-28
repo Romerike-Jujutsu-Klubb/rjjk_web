@@ -20,7 +20,8 @@ class AttendanceHistoryGraph
     Group.order('martial_art_id, from_age DESC, to_age').to_a.each do |group|
       attendances = weeks.each_cons(2).map do |w1, w2|
         Attendance.by_group_id(group.id).includes(:practice)
-            .where('(practices.year > ? OR (practices.year = ? AND practices.week > ?)) AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
+            .where('(practices.year > ? OR (practices.year = ? AND practices.week > ?))
+AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
                 w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).to_a +
             TrialAttendance.by_group_id(group.id).where('(year > ? OR (year = ? AND week > ?)) AND (year < ? OR (year = ? AND week <= ?))',
                 w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).to_a

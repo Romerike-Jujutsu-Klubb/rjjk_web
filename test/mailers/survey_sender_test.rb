@@ -20,7 +20,9 @@ class SurveySenderTest < ActionMailer::TestCase
     assert_match 'First question', mail.body
     assert_match 'Second question', mail.body
     assert_match 'What do you think of this survey?', mail.body
-    assert_match "For å svare på spørsmålene, kan du følge denne linken:\n  <a href=\"http://example.com/svar/397345097\">http://example.com/svar/397345097</a>",
+    assert_match "For å svare på spørsmålene, kan du følge denne linken:\n  " \
+          '<a href="http://example.com/svar/397345097">' \
+          'http://example.com/svar/397345097</a>',
         mail.body
     assert survey_requests(:unsent).sent_at
 
@@ -38,7 +40,10 @@ class SurveySenderTest < ActionMailer::TestCase
     assert_match 'First question', mail.body
     assert_match 'Second question', mail.body
     assert_match 'What do you think of this survey?', mail.body
-    assert_match %r{For å svare på spørsmålene, kan du følge denne linken:\s*<a href="http://example.com/svar/98593450[89]">http://example.com/svar/98593450[89]</a>},
+    assert_match %r{
+          For\ å\ svare\ på\ spørsmålene,\ kan\ du\ følge\ denne\ linken:\s*
+          <a\ href="http://example.com/svar/98593450[89]">http://example.com/svar/98593450[89]</a>
+        }x,
         mail.body
 
     assert_mail_stored 1, 2 do
@@ -55,7 +60,8 @@ class SurveySenderTest < ActionMailer::TestCase
     assert_match 'First question', mail.body
     assert_match 'Second question', mail.body
     assert_match 'What do you think of this survey?', mail.body
-    assert_match "For å svare på spørsmålene, kan du følge denne linken:\n  <a href=\"http://example.com/svar/985934507\">http://example.com/svar/985934507</a>",
+    assert_match "For å svare på spørsmålene, kan du følge denne linken:\n  " \
+          '<a href="http://example.com/svar/985934507">http://example.com/svar/985934507</a>',
         mail.body
     assert survey_requests(:sent).reminded_at
   end

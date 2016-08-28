@@ -101,7 +101,9 @@ class NkfMemberImport
   private
 
   def get_member_rows(session_id, detail_codes)
-    members_body = http_get("pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{session_id}").force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
+    members_body = http_get('pls/portal/myports.ks_reg_medladm_proc.download'\
+        "?p_cr_par=#{session_id}")
+        .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
     import_rows = members_body.split("\n").map { |line| line.chomp.split(';', -1)[0..-2] }
     import_rows[0] << 'ventekid'
     in_parallel(detail_codes) { |dc| add_waiting_kid(import_rows, dc) }
@@ -166,7 +168,9 @@ class NkfMemberImport
     member_trial_rows[0] << 'stilart'
 
     trial_ids.each do |tid|
-      trial_details_url = "page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=" + extra_function_code
+      trial_details_url = 'page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem' \
+          "?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=" +
+          extra_function_code
       trial_details_body = http_get(trial_details_url).force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
       unless trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
         raise 'Could not find invoice email'

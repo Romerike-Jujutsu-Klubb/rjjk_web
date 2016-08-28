@@ -36,7 +36,11 @@ class PracticesControllerTest < ActionController::TestCase
   end
 
   test 'should update practice' do
-    put :update, id: @practice, practice: { status: @practice.status, group_schedule_id: @practice.group_schedule_id, week: @practice.week, year: @practice.year }
+    put :update, id: @practice, practice: {
+        status: @practice.status,
+        group_schedule_id: @practice.group_schedule_id,
+        week: @practice.week, year: @practice.year
+    }
     assert_redirected_to practice_path(assigns(:practice))
   end
 

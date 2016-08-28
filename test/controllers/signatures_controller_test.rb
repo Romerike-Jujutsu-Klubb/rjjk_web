@@ -38,7 +38,10 @@ class SignaturesControllerTest < ActionController::TestCase
   end
 
   test 'should update signature' do
-    put :update, id: @signature, signature: { content_type: @signature.content_type, image: @signature.image, member_id: @signature.member_id, name: @signature.name }
+    put :update, id: @signature, signature: {
+        content_type: @signature.content_type, image: @signature.image,
+        member_id: @signature.member_id, name: @signature.name
+    }
     assert_redirected_to signature_path(assigns(:signature))
   end
 

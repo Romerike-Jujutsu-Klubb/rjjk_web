@@ -31,7 +31,9 @@ class UserMessageMailer < ApplicationMailer
 
   def add_host_and_port(body)
     url_opts = Rails.application.config.action_mailer.default_url_options
-    body.gsub! %r{href="(/[^"]*)"}, %(href="#{url_opts[:protocol] || :http}://#{url_opts[:host]}#{":#{url_opts[:port]}" if url_opts[:port] && url_opts[:port] != 80}\\1")
+    port = (":#{url_opts[:port]}" if url_opts[:port] && url_opts[:port] != 80)
+    body.gsub! %r{href="(/[^"]*)"},
+        %(href="#{url_opts[:protocol] || :http}://#{url_opts[:host]}#{port}\\1")
   end
 
   def add_security_key(body, url_key)
