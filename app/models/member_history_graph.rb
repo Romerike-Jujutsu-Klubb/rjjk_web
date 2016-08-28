@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 class Array
   def without_consecutive_zeros
-    each_with_index { |v, i| self[i] = (v.positive? || (i.positive? && self[i - 1].to_i.positive?) || self[i + 1].to_i.positive? ? v : nil) }
+    each_with_index do |v, i|
+      non_zero = v.positive? || (i.positive? && self[i - 1].to_i.positive?) ||
+          self[i + 1].to_i.positive?
+      self[i] = (non_zero ? v : nil)
+    end
   end
 end
 
@@ -141,7 +145,11 @@ class MemberHistoryGraph
   end
 
   def self.aspirants(dates)
-    dates.map { |date| Member.where("(#{ACTIVE_CLAUSE.call(date)}) AND birthdate IS NOT NULL AND birthdate >= '#{junior_birthdate(date)}'").count }
+    dates.map do |date|
+      Member.where(ACTIVE_CLAUSE.call(date))
+          .where('birthdate IS NOT NULL AND birthdate >= ?', junior_birthdate(date))
+          .count
+    end
   end
 
   def self.was_senior?(date)

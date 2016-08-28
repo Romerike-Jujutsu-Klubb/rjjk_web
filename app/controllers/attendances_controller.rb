@@ -106,7 +106,9 @@ class AttendancesController < ApplicationController
     monthly_per_group.each do |g, attendances|
       @monthly_summary_per_group[g] = {}
       @monthly_summary_per_group[g][:attendances] = attendances
-      @monthly_summary_per_group[g][:present] = attendances.select { |a| !Attendance::ABSENT_STATES.include?(a.status) && a.date <= Date.today }
+      @monthly_summary_per_group[g][:present] = attendances.select do |a|
+        !Attendance::ABSENT_STATES.include?(a.status) && a.date <= Date.today
+      end
       @monthly_summary_per_group[g][:absent] = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }
       @monthly_summary_per_group[g][:practices] = @monthly_summary_per_group[g][:present].map(&:practice_id).uniq.size
     end

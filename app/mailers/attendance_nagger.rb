@@ -103,8 +103,11 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
   def self.send_attendance_review
     now = Time.now
     completed_group_schedules = GroupSchedule.includes(:group).references(:groups)
-        .where('weekday = ? AND end_at BETWEEN ? AND ? AND groups.closed_on IS NULL AND (groups.school_breaks IS NULL OR groups.school_breaks = ?)',
-            now.to_date.cwday, (now - 1.hour).time_of_day, now.time_of_day, false).to_a
+        .where('weekday = ? AND end_at BETWEEN ? AND ?',
+            now.to_date.cwday, (now - 1.hour).time_of_day, now.time_of_day)
+        .where('groups.closed_on IS NULL')
+        .where('groups.school_breaks IS NULL OR groups.school_breaks = ?',
+            false).to_a
     planned_attendances = Attendance.includes(:member, practice: :group_schedule).references(:groups)
         .where('practices.group_schedule_id IN (?)', completed_group_schedules.map(&:id))
         .where('practices.year = ? AND practices.week = ?', now.year, now.to_date.cweek)

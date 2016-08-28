@@ -310,7 +310,10 @@ class MembersController < ApplicationController
   end
 
   def member_count(male, from_age, to_age)
-    Member.count(conditions: "left_on IS NULL AND male = #{male} AND birthdate <= '#{year_end(from_age)}' AND birthdate >= '#{year_start(to_age)}'")
+    Member
+        .where('left_on IS NULL AND male = ? AND birthdate <= ? AND birthdate >= ?',
+            male, year_end(from_age), year_start(to_age))
+        .count
   end
 
   def update_memberships

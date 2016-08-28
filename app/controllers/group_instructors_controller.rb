@@ -67,7 +67,8 @@ class GroupInstructorsController < ApplicationController
   private
 
   def load_form_data
-    @group_schedules ||= GroupSchedule.includes(:group).references(:groups).order('weekday, groups.from_age').to_a.select { |gs| gs.group.active? }
+    @group_schedules ||= GroupSchedule.includes(:group).references(:groups)
+        .order('weekday, groups.from_age').to_a.select { |gs| gs.group.active? }
     @group_instructors ||= Member.instructors
     @semesters ||= Semester.order('start_on DESC').limit(10).to_a
   end

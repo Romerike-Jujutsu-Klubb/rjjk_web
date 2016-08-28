@@ -45,8 +45,10 @@ class Group < ActiveRecord::Base
   def registered_trainings_in_period(period)
     return 0 if group_schedules.empty?
     Practice
-        .where(*["status = 'X' AND group_schedule_id IN (?) AND (year > ? OR (year = ? AND week >= ?)) AND (year < ? OR (year = ? AND week <= ?))",
-        group_schedules.map(&:id), *[[period.first.year] * 2, period.first.cweek, [period.last.year] * 2, period.last.cweek].flatten])
+        .where("status = 'X' AND group_schedule_id IN (?)", group_schedules.map(&:id))
+        .where('year > ? OR (year = ? AND week >= ?)', *([period.first.year] * 2), period.first.cweek)
+        .where('year < ? OR (year = ? AND week <= ?)',
+            *([period.last.year] * 2), period.last.cweek)
         .all.size
   end
 

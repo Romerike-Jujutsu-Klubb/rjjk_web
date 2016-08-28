@@ -41,7 +41,10 @@ class TechniqueApplicationsControllerTest < ActionController::TestCase
   end
 
   test 'should update application' do
-    put :update, id: @technique_application, technique_application: { name: @technique_application.name, rank_id: @technique_application.rank_id }
+    put :update, id: @technique_application, technique_application: {
+        name: @technique_application.name,
+        rank_id: @technique_application.rank_id,
+    }
     assert_redirected_to technique_application_path(assigns(:technique_application))
   end
 

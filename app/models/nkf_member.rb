@@ -57,15 +57,20 @@ class NkfMember < ActiveRecord::Base
   validates_uniqueness_of :member_id, allow_nil: true
 
   def self.find_free_members
-    Member.where("(left_on IS NULL OR left_on >= '2009-01-01') AND id NOT IN (SELECT member_id FROM nkf_members WHERE member_id IS NOT NULL)")
+    Member
+        .where("(left_on IS NULL OR left_on >= '2009-01-01')")
+        .where('id NOT IN (SELECT member_id FROM nkf_members WHERE member_id IS NOT NULL)')
         .order('first_name, last_name').to_a
   end
 
   def self.update_group_prices
     contract_types = NkfMember.all.group_by(&:kontraktstype)
     contract_types.each do |contract_name, members_with_contracts|
-      monthly_price = members_with_contracts.map(&:kontraktsbelop).group_by { |x| x }.group_by { |_k, v| v.size }.sort.last.last.map(&:first).first
-      yearly_price = members_with_contracts.map(&:kont_belop).group_by { |x| x }.group_by { |_k, v| v.size }.sort.last.last.map(&:first).first
+      monthly_price = members_with_contracts.map(&:kontraktsbelop)
+          .group_by { |x| x }.group_by { |_k, v| v.size }.sort.last.last
+          .map(&:first).first
+      yearly_price = members_with_contracts.map(&:kont_belop).group_by { |x| x }
+          .group_by { |_k, v| v.size }.sort.last.last.map(&:first).first
       Group.where(contract: contract_name).to_a.each do |group|
         logger.info "Update contract #{group} #{contract_name} #{monthly_price} #{yearly_price}"
         group.update_attributes! monthly_price: monthly_price, yearly_price: yearly_price

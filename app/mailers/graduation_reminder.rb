@@ -47,7 +47,8 @@ class GraduationReminder
 
   def self.notify_censors
     Censor.includes(:graduation, :member).references(:graduations)
-        .where('(examiner IS NULL OR examiner = ?) AND confirmed_at IS NULL AND (requested_at IS NULL OR requested_at < ?)', false, 1.week.ago)
+        .where('(examiner IS NULL OR examiner = ?) AND confirmed_at IS NULL', false)
+        .where('requested_at IS NULL OR requested_at < ?', 1.week.ago)
         .order('graduations.held_on')
         .limit(1)
         .each do |censor|
