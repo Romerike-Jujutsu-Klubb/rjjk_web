@@ -296,7 +296,12 @@ class AttendancesController < ApplicationController
             .includes({ attendances: { practice: :group_schedule }, graduates: [:graduation, :rank] }, :groups, :nkf_member)
             .where(instructor: true)
             .select { |m| m.groups.any? { |g| g.martial_art_id == @group.martial_art_id } }
-        @instructors.delete_if { |m| m.attendances.select { |a| ((@dates.first - 92.days)..@dates.last).cover?(a.date) && a.group_schedule.group_id == @group.id }.empty? }
+        @instructors.delete_if do |m|
+          m.attendances.select do |a|
+            ((@dates.first - 92.days)..@dates.last).cover?(a.date) &&
+                a.group_schedule.group_id == @group.id
+          end.empty?
+        end
         @instructors += GroupInstructor.includes(:group_schedule, member: [{ attendances: { practice: :group_schedule } }, :nkf_member])
             .where('group_instructors.member_id NOT IN (?)', @instructors.map(&:id))
             .where(group_schedules: { group_id: @group.id }).to_a

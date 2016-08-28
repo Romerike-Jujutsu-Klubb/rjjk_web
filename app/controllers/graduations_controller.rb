@@ -129,9 +129,12 @@ class GraduationsController < ApplicationController
       data = graduation.graduates.sort_by { |g| [-g.rank.position, g.member.name] }.map do |graduate|
         member_current_rank = graduate.member.current_rank(graduate.graduation.martial_art, graduate.graduation.held_on)
         [
-            "<font size='18'>" + graduate.member.first_name + '</font> ' + graduate.member.last_name + (graduate.member.birthdate && " (#{graduate.member.age} år)" || '') + "\n" +
+            "<font size='18'>" + graduate.member.first_name + '</font> ' +
+                graduate.member.last_name +
+                (graduate.member.birthdate && " (#{graduate.member.age} år)" || '') + "\n" +
                 (member_current_rank && "#{member_current_rank.name} #{member_current_rank.colour}" || 'Ugradert') + "\n" \
-                "Treninger: #{graduate.member.attendances_since_graduation(graduation.held_on).count}" + ' (' + graduate.current_rank_age + ")\n" \
+                "Treninger: #{graduate.member.attendances_since_graduation(graduation.held_on).count}" \
+                ' (' + graduate.current_rank_age + ")\n" \
                 "#{graduate.rank.name} #{graduate.rank.colour}",
             '',
             '',

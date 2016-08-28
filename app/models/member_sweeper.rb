@@ -18,8 +18,14 @@ class MemberSweeper < ActionController::Caching::Sweeper
 
   def expire_image(member)
     if member.image
-      ActionController::Base.expire_page(Rails.application.routes.url_for(only_path: true, controller: 'members', action: 'image',     id: member.id, format: member.image.format))
-      ActionController::Base.expire_page(Rails.application.routes.url_for(only_path: true, controller: 'members', action: 'thumbnail', id: member.id, format: member.image.format))
+      ActionController::Base
+          .expire_page(Rails.application.routes.url_for(only_path: true,
+              controller: 'members', action: 'image', id: member.id,
+              format: member.image.format))
+      ActionController::Base
+          .expire_page(Rails.application.routes.url_for(only_path: true,
+              controller: 'members', action: 'thumbnail', id: member.id,
+              format: member.image.format))
     end
     cache_dir = ActionController::Base.page_cache_directory
     cached_files = Dir.glob(cache_dir + '/members/{age_chart,history_graph}/**/*')
