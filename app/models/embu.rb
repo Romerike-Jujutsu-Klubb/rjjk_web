@@ -21,7 +21,8 @@ class Embu < ActiveRecord::Base
     #    return EmbuImage.create! :embu_id => id, :image_id => existing_image.id
     #  end
     # end
-    # images.create :name => file.original_filename, :content_data => content, :content_type => file.content_type
+    # images.create :name => file.original_filename, :content_data => content,
+    #     :content_type => file.content_type
     images.create file: file
   end
 end

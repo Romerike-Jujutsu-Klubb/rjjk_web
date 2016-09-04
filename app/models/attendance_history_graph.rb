@@ -69,8 +69,9 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
     first_date = Date.civil(year, month, 1)
     last_date = Date.civil(year, month, -1)
     attendances = Attendance.includes(:practice).references(:practices)
-        .where('practices.year = ? AND practices.week >= ? AND practices.week <= ? AND attendances.status NOT IN (?)',
-            year, first_date.cweek, last_date.cweek, Attendance::ABSENT_STATES)
+        .where('practices.year = ? AND practices.week >= ? AND practices.week <= ?',
+            year, first_date.cweek, last_date.cweek)
+        .where('attendances.status NOT IN (?)', Attendance::ABSENT_STATES)
         .to_a.select { |a| a.date >= first_date && a.date <= last_date && a.date <= Date.today }
     group_schedules = attendances.map(&:group_schedule).uniq
     groups = group_schedules.map(&:group).uniq.sort_by(&:from_age)

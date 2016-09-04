@@ -84,7 +84,9 @@ class GroupSemestersController < ApplicationController
   def load_form_data
     @groups = Group.active(@group_semester.semester.try(:start_on) || Date.today).order(:from_age).to_a
     @semesters = Semester.order('start_on DESC').to_a
-    @instructors = Member.instructors(@group_semester.first_session || @group_semester.semester.try(:start_on)).to_a
+    @instructors = Member
+        .instructors(@group_semester.first_session || @group_semester.semester.try(:start_on))
+        .to_a
   end
 
   def create_practices

@@ -22,7 +22,9 @@ class RawIncomingEmailsController < ApplicationController
 
     respond_to do |format|
       if @raw_incoming_email.save
-        format.html { redirect_to @raw_incoming_email, notice: 'Raw incoming email was successfully created.' }
+        format.html do
+          redirect_to @raw_incoming_email, notice: 'Raw incoming email was successfully created.'
+        end
         format.json { render :show, status: :created, location: @raw_incoming_email }
       else
         format.html { render :new }
@@ -34,7 +36,9 @@ class RawIncomingEmailsController < ApplicationController
   def update
     respond_to do |format|
       if @raw_incoming_email.update(raw_incoming_email_params)
-        format.html { redirect_to @raw_incoming_email, notice: 'Raw incoming email was successfully updated.' }
+        format.html do
+          redirect_to @raw_incoming_email, notice: 'Raw incoming email was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @raw_incoming_email }
       else
         format.html { render :edit }
@@ -46,7 +50,9 @@ class RawIncomingEmailsController < ApplicationController
   def destroy
     @raw_incoming_email.destroy
     respond_to do |format|
-      format.html { redirect_to raw_incoming_emails_url, notice: 'Raw incoming email was successfully destroyed.' }
+      format.html do
+        redirect_to raw_incoming_emails_url, notice: 'Raw incoming email was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end

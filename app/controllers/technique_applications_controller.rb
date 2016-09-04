@@ -39,7 +39,9 @@ class TechniqueApplicationsController < ApplicationController
     respond_to do |format|
       if @technique_application.save
         format.html { redirect_to @technique_application, notice: 'Application was successfully created.' }
-        format.json { render json: @technique_application, status: :created, location: @technique_application }
+        format.json do
+          render json: @technique_application, status: :created, location: @technique_application
+        end
       else
         format.html { new }
         format.json { render json: @technique_application.errors, status: :unprocessable_entity }

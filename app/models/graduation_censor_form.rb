@@ -16,12 +16,19 @@ class GraduationCensorForm
           size: 18, align: :center
       move_down 16
       data = graduation.graduates.sort_by { |g| [-g.rank.position, g.member.name] }.map do |graduate|
-        member_current_rank = graduate.member.current_rank(graduate.graduation.martial_art, graduate.graduation.held_on)
+        member_current_rank = graduate.member
+            .current_rank(graduate.graduation.martial_art, graduate.graduation.held_on)
+        rank_color =
+            if member_current_rank
+              "#{member_current_rank.name} #{member_current_rank.colour}"
+            else
+              'Ugradert'
+            end
         [
             "<font size='18'>" + graduate.member.first_name + '</font> ' +
                 graduate.member.last_name +
                 (graduate.member.birthdate && " (#{graduate.member.age} år)" || '') + "\n" +
-                (member_current_rank && "#{member_current_rank.name} #{member_current_rank.colour}" || 'Ugradert') +
+                rank_color +
                 "\n" \
                 "Treninger: #{graduate.member.attendances_since_graduation(graduation.held_on).count}" \
                 ' (' + graduate.current_rank_age + ")\n" \

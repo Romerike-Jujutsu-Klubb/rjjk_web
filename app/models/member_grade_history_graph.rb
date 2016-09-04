@@ -116,7 +116,9 @@ EOF
           g.graduation.martial_art.kwr? && g.graduation.held_on <= date
         end.sort_by { |g| g.graduation.held_on }.last.try(:rank) == rank
       end.size
-      logger.debug "#{prev_date} #{date} #{next_date} Active members: #{@active_members[date].size}, ranks: #{ranks}"
+      logger.debug <<~EOF
+        "#{prev_date} #{date} #{next_date} Active members: #{@active_members[date].size}, ranks: #{ranks}"
+      EOF
       ranks
     end
   end

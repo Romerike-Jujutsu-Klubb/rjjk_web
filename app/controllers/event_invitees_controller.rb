@@ -82,6 +82,7 @@ class EventInviteesController < ApplicationController
   private
 
   def load_users
-    @users = [@event_invitee.user].compact + (User.order(:first_name, :last_name).to_a - @event_invitee.event.users)
+    @users = [@event_invitee.user].compact +
+        (User.order(:first_name, :last_name).to_a - @event_invitee.event.users)
   end
 end

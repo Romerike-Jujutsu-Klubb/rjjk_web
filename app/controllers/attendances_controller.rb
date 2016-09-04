@@ -99,8 +99,9 @@ class AttendancesController < ApplicationController
     @first_date = @date
     @last_date = @date.end_of_month
     @attendances = Attendance.includes(practice: :group_schedule).references(:practices)
-        .where('practices.year = ? AND practices.week >= ? AND practices.week <= ? AND attendances.status NOT IN (?)',
-            @year, @first_date.cweek, @last_date.cweek, Attendance::ABSENT_STATES)
+        .where('practices.year = ? AND practices.week >= ? AND practices.week <= ?',
+            @year, @first_date.cweek, @last_date.cweek)
+        .where('attendances.status NOT IN (?)', Attendance::ABSENT_STATES)
         .to_a.select { |a| (@first_date..@last_date).cover? a.date }
     monthly_per_group = @attendances.group_by { |a| a.group_schedule.group }.sort_by { |g, _ats| g.from_age }
     @monthly_summary_per_group = {}
@@ -110,10 +111,13 @@ class AttendancesController < ApplicationController
       @monthly_summary_per_group[g][:present] = attendances.select do |a|
         !Attendance::ABSENT_STATES.include?(a.status) && a.date <= Date.today
       end
-      @monthly_summary_per_group[g][:absent] = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }
-      @monthly_summary_per_group[g][:practices] = @monthly_summary_per_group[g][:present].map(&:practice_id).uniq.size
+      @monthly_summary_per_group[g][:absent] = attendances
+          .select { |a| Attendance::ABSENT_STATES.include? a.status }
+      @monthly_summary_per_group[g][:practices] =
+          @monthly_summary_per_group[g][:present].map(&:practice_id).uniq.size
     end
-    @by_group_and_member = Hash[monthly_per_group.map { |g, ats| [g, ats.group_by(&:member)] }]
+    @by_group_and_member = Hash[monthly_per_group
+        .map { |g, ats| [g, ats.group_by(&:member)] }]
   end
 
   def history_graph
@@ -165,7 +169,12 @@ class AttendancesController < ApplicationController
       elsif @attendance.status == Attendance::Status::ATTENDED
         new_status = Attendance::Status::ABSENT
       else
-        new_status = @attendance.practice.passed? ? Attendance::Status::ATTENDED : Attendance::Status::WILL_ATTEND
+        new_status =
+            if @attendance.practice.passed?
+              Attendance::Status::ATTENDED
+            else
+              Attendance::Status::WILL_ATTEND
+            end
       end
     end
     @attendance.update_attributes!(status: new_status) if new_status
@@ -191,7 +200,8 @@ class AttendancesController < ApplicationController
 
     member = current_user.member
     last_unconfirmed = member.attendances.includes(:practice).references(:practices)
-        .where("attendances.status = 'P' AND (practices.year < ? OR (practices.year = ? AND practices.week < ?))",
+        .where("attendances.status = 'P'")
+        .where('practices.year < ? OR (practices.year = ? AND practices.week < ?)',
             today.cwyear, today.cwyear, today.cweek)
         .order('practices.year, practices.week').last
     if last_unconfirmed
@@ -218,7 +228,8 @@ class AttendancesController < ApplicationController
         .where('(practices.year = ? AND practices.week >= ?) OR (practices.year = ?)',
             start_date.cwyear, start_date.cweek, today.cwyear)
         .to_a
-    @attended_groups = attendances.map { |a| a.practice.group_schedule.group }.uniq.sort_by { |g| -g.from_age }
+    @attended_groups = attendances.map { |a| a.practice.group_schedule.group }
+        .uniq.sort_by { |g| -g.from_age }
     per_month = attendances.group_by do |a|
       d = a.date
       [d.cwyear, d.mon]

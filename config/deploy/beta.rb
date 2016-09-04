@@ -19,7 +19,8 @@ namespace :deploy do
   task :restart do
     on roles :all do
       execute :sudo, "systemctl stop #{fetch :application}"
-      execute "#{fetch :rvm_path}/bin/rvm #{fetch :rvm_ruby_version} do #{current_path}/bin/copy_production_to_beta.sh"
+      execute "#{fetch :rvm_path}/bin/rvm #{fetch :rvm_ruby_version} do " \
+          "#{current_path}/bin/copy_production_to_beta.sh"
       execute :sudo, "systemctl start #{fetch :application}"
     end
   end

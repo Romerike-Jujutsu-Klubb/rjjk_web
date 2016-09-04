@@ -52,7 +52,9 @@ class BirthdayCelebrationsController < ApplicationController
     @birthday_celebration = BirthdayCelebration.new(params[:birthday_celebration])
     respond_to do |format|
       if @birthday_celebration.save
-        format.html { redirect_to @birthday_celebration, notice: 'Birthday celebration was successfully created.' }
+        format.html do
+          redirect_to @birthday_celebration, notice: 'Birthday celebration was successfully created.'
+        end
         format.json { render json: @birthday_celebration, status: :created, location: @birthday_celebration }
       else
         format.html { render action: :new }
@@ -65,7 +67,9 @@ class BirthdayCelebrationsController < ApplicationController
     @birthday_celebration = BirthdayCelebration.find(params[:id])
     respond_to do |format|
       if @birthday_celebration.update_attributes(params[:birthday_celebration])
-        format.html { redirect_to @birthday_celebration, notice: 'Birthday celebration was successfully updated.' }
+        format.html do
+          redirect_to @birthday_celebration, notice: 'Birthday celebration was successfully updated.'
+        end
         format.json { head :no_content }
       else
         format.html { render action: :edit }

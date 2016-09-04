@@ -14,7 +14,8 @@ class InformationPageNotifier
         .order(:revised_at).limit(3).to_a
     return if pages.empty?
     recipients.each do |recipient|
-      InformationPageMailer.notify_outdated_pages(recipient, pages).store(recipient.user_id, tag: :outdated_info)
+      InformationPageMailer.notify_outdated_pages(recipient, pages)
+          .store(recipient.user_id, tag: :outdated_info)
     end
   end
 

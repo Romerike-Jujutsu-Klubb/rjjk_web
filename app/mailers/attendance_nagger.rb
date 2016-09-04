@@ -57,7 +57,8 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         .to_a
     practices.each do |pr|
       pr.group_schedule.group_instructors.each do |gi|
-        AttendanceMailer.message_reminder(pr, gi.member).store(gi.member.user_id, tag: :instructor_message_reminder)
+        AttendanceMailer.message_reminder(pr, gi.member)
+            .store(gi.member.user_id, tag: :instructor_message_reminder)
       end
       pr.update_attributes message_nagged_at: Time.now
     end

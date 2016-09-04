@@ -38,7 +38,9 @@ class PageAliasesControllerTest < ActionController::TestCase
   end
 
   test 'should update page_alias' do
-    put :update, id: @page_alias, page_alias: { new_path: @page_alias.new_path, old_path: @page_alias.old_path }
+    put :update, id: @page_alias, page_alias: {
+        new_path: @page_alias.new_path, old_path: @page_alias.old_path
+    }
     assert_redirected_to page_alias_path(assigns(:page_alias))
   end
 

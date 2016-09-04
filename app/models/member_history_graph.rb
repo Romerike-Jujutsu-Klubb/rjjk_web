@@ -55,7 +55,8 @@ class MemberHistoryGraph
     g.data('Tiger', juniors_jj(dates))
     g.data('Panda', aspirants(dates))
     g.data('Gratis', gratis(dates))
-    g.data('Prøvetid', dates.map { |d| NkfMemberTrial.where('reg_dato <= ?', d).count }.without_consecutive_zeros)
+    g.data('Prøvetid', dates.map { |d| NkfMemberTrial.where('reg_dato <= ?', d).count }
+        .without_consecutive_zeros)
 
     g.minimum_value = 0
 
@@ -88,7 +89,9 @@ class MemberHistoryGraph
   end
 
   def self.totals(dates)
-    dates.map { |date| Member.where(ACTIVE_CLAUSE.call(date)).count + Member.where(NON_PAYING_CLAUSE.call(date)).count }
+    dates.map do |date|
+      Member.where(ACTIVE_CLAUSE.call(date)).count + Member.where(NON_PAYING_CLAUSE.call(date)).count
+    end
   end
 
   def self.totals_paying(dates)
@@ -102,7 +105,8 @@ class MemberHistoryGraph
   def self.totals_jj(dates)
     dates.map do |date|
       Member.includes(groups: :martial_art).references(:martial_arts)
-          .where("(#{ACTIVE_CLAUSE.call(date)}) AND (martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')")
+          .where(ACTIVE_CLAUSE.call(date))
+          .where("martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai'")
           .count
     end
   end

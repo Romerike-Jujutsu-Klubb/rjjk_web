@@ -51,7 +51,9 @@ class SemestersController < ApplicationController
     respond_to do |format|
       if @semester.save
         Group.where('school_breaks = ?', true).to_a.each do |g|
-          @semester.group_semesters.create!(group_id: g.id) unless @semester.group_semesters.exists?(group_id: g.id)
+          unless @semester.group_semesters.exists?(group_id: g.id)
+            @semester.group_semesters.create!(group_id: g.id)
+          end
         end
 
         format.html { redirect_to @semester, notice: 'Semester was successfully created.' }

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 class UserController < ApplicationController
   before_filter :authenticate_user, except: [:login, :logout, :signup, :forgot_password]
-  before_filter :admin_required, except: [:welcome, :like, :login, :logout, :signup, :forgot_password, :change_password]
+  before_filter :admin_required, except: [:welcome, :like, :login, :logout,
+      :signup, :forgot_password, :change_password]
 
   def index
     @users = User.order(:last_name, :first_name).to_a
@@ -110,7 +111,8 @@ class UserController < ApplicationController
     if email.blank? || email !~ /.+@.+\..+/
       flash.now['message'] = 'Skriv inn en gyldig e-postadresse.'
     elsif (users = User.search(email)).empty?
-      flash.now['message'] = "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{CGI.escapeHTML(email)}"
+      flash.now['message'] =
+          "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{CGI.escapeHTML(email)}"
     else
       begin
         User.transaction do
@@ -118,7 +120,8 @@ class UserController < ApplicationController
             url = url_for(action: :change_password)
             UserMailer.forgot_password(user, url).store(user, tag: :forgot_password)
           end
-          flash['message'] = "En e-post med veiledning for å sette nytt passord er sendt til #{CGI.escapeHTML(email)}."
+          flash['message'] =
+              "En e-post med veiledning for å sette nytt passord er sendt til #{CGI.escapeHTML(email)}."
           unless authenticated_user?
             redirect_to action: 'login'
             return
@@ -207,7 +210,8 @@ class UserController < ApplicationController
 
   # Generate a template user for certain actions on get
   def generate_filled_in
-    @user = (params[:id] && User.find_by_id(params[:id])) || current_user || User.find_by_id(session[:user_id])
+    @user = (params[:id] && User.find_by_id(params[:id])) || current_user ||
+        User.find_by_id(session[:user_id])
     @members = Member.select('id, first_name, last_name').where(email: @user.email).to_a
     case request.method
     when 'GET'

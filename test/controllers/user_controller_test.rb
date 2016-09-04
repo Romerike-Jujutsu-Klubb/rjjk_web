@@ -15,7 +15,8 @@ class UserControllerTest < ActionController::TestCase
 
     assert_logged_in users(:lars)
     assert_response :redirect
-    assert_equal @controller.url_for(controller: :welcome, action: :index, only_path: false), @response.redirect_url
+    assert_equal @controller.url_for(controller: :welcome, action: :index, only_path: false),
+        @response.redirect_url
     assert cookies[:token]
     assert_not_equal 'random_token_string', cookies[:token]
     assert_equal false, users(:lars).token_expired?
@@ -87,7 +88,8 @@ class UserControllerTest < ActionController::TestCase
   end
 
   def test_signup__validates_password_min_length
-    post_signup login: 'tesla_rhea', password: 'bad', password_confirmation: 'bad', email: 'someone@example.com'
+    post_signup login: 'tesla_rhea', password: 'bad', password_confirmation: 'bad',
+        email: 'someone@example.com'
     assert_password_validation_fails
   end
 

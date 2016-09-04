@@ -94,7 +94,8 @@ class Certificates
         fill_rectangle [org_right_center - org_name_width / 2, name_y], org_name_width, 40
         fill_color '000000'
 
-        bounding_box [org_right_center - org_name_width / 2, name_y - 4.5], width: org_name_width, height: 40 do
+        bounding_box [org_right_center - org_name_width / 2, name_y - 4.5],
+            width: org_name_width, height: 40 do
           font 'Helvetica'
           text 'Scandinavian Budo Association', align: :center
         end
@@ -124,7 +125,9 @@ class Certificates
         bounding_box [labels_x, graduate_name_y], width: 80, height: 20 do
           text 'Navn', size: 18, align: :center, style: :italic
         end
-        stroke { line [censor_title_x, graduate_name_y - 18], [page_width - censor_title_x, graduate_name_y - 18] }
+        stroke do
+          line [censor_title_x, graduate_name_y - 18], [page_width - censor_title_x, graduate_name_y - 18]
+        end
 
         bounding_box [labels_x, rank_y], width: 80, height: 20 do
           text 'Grad', size: 18, align: :center, style: :italic
@@ -151,7 +154,8 @@ class Certificates
           text c[:rank], size: 18, align: :center
         end
         bounding_box [(page_width - name_width) / 2, date_y], width: name_width, height: 20 do
-          text "#{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}", size: 18, align: :center
+          text "#{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}",
+              size: 18, align: :center
         end
         if c[:censor1]
           text_box c[:censor1][:title], at: [censor_title_x, sensor_y], size: 18, align: :left

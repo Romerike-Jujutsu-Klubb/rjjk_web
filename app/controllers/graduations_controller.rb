@@ -172,7 +172,8 @@ class GraduationsController < ApplicationController
       if failures.any?
         flash[:error] = "Disse kunne ikke legges til: #{failures.map(&:member).map(&:name).join(', ')}"
         failures.each do |fg|
-          logger.error "Failed record: #{fg.member.name}: #{fg.errors.full_messages} #{fg.rank.name} #{fg.inspect}"
+          logger.error "Failed record: #{fg.member.name}: " \
+              "#{fg.errors.full_messages} #{fg.rank.name} #{fg.inspect}"
         end
       end
     end

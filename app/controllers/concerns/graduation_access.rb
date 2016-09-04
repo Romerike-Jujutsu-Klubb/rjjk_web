@@ -6,6 +6,7 @@ module GraduationAccess
     return true if graduation &&
           graduation.group.current_semester.group_instructors.map(&:member)
                 .include?(current_user.member)
-    access_denied('Du må være gruppeinstruktør, eksaminator, sensor eller administrator for å redigere graderinger.')
+    access_denied('Du må være gruppeinstruktør, eksaminator, sensor eller ' \
+        'administrator for å redigere graderinger.')
   end
 end

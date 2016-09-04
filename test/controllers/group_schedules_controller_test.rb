@@ -19,7 +19,9 @@ class GroupSchedulesControllerTest < ActionController::TestCase
 
   def test_should_create_group_schedule
     assert_difference('GroupSchedule.count') do
-      post :create, group_schedule: { end_at: '18:45', group_id: groups(:panda).id, start_at: '17:45', weekday: 1 }
+      post :create, group_schedule: {
+          end_at: '18:45', group_id: groups(:panda).id, start_at: '17:45', weekday: 1
+      }
       assert_no_errors :group_schedule
     end
 

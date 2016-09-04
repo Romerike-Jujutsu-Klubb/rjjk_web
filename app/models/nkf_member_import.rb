@@ -130,7 +130,7 @@ class NkfMemberImport
   def add_waiting_kid(import_rows, dc)
     details_body = http_get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}")
     unless details_body =~
-          /<input readonly tabindex="-1" class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
+          /class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
       raise "Could not find member id:\n#{details_body}"
     end
     member_id = $1
@@ -153,7 +153,8 @@ class NkfMemberImport
 
   def get_member_trial_rows(session_id, extra_function_code)
     trial_csv_url = 'pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + session_id
-    member_trials_csv_body = http_get(trial_csv_url).force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
+    member_trials_csv_body = http_get(trial_csv_url)
+        .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
     member_trial_rows = member_trials_csv_body.split("\n").map { |line| line.chomp.split(';') }
 
     trial_ids = []
@@ -173,7 +174,8 @@ class NkfMemberImport
       trial_details_url = 'page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem' \
           "?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=" +
           extra_function_code
-      trial_details_body = http_get(trial_details_url).force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
+      trial_details_body = http_get(trial_details_url)
+          .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
       unless trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
         raise 'Could not find invoice email'
       end
@@ -369,15 +371,18 @@ class NkfMemberImport
 
   def http_get(url_string, binary = false)
     logger.debug "Getting #{url_string}"
-    url = URI.parse(url_string =~ %r{^http://} ? url_string : "http://nkfwww.kampsport.no/portal/#{url_string}")
-    cache_file = "#{Rails.root}/tmp/cache/nkf/#{Digest::MD5.hexdigest url.request_uri}"
+    unless url_string =~ %r{^http://}
+      url_string = "http://nkfwww.kampsport.no/portal/#{url_string}"
+    end
+    uri = URI.parse(url_string)
+    cache_file = "#{Rails.root}/tmp/cache/nkf/#{Digest::MD5.hexdigest uri.request_uri}"
     if Rails.env.test? && File.exist?(cache_file) && File.ctime(cache_file) > 1.day.ago
       logger.debug "Used cached response #{cache_file}"
       return File.read(cache_file, encoding: Encoding::ASCII_8BIT)
     end
     backoff = 1
     begin
-      body = http_get_response(url, binary).body
+      body = http_get_response(uri, binary).body
       FileUtils.mkpath File.dirname(cache_file)
       if Rails.env.test?
         File.write(cache_file, body, encoding: Encoding::ASCII_8BIT)

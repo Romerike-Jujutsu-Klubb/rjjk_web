@@ -32,7 +32,12 @@ class NkfMemberImportTest < ActionMailer::TestCase
     assert_match '<h3>Verv registrert i NKF registeret</h3>', mail.body.decoded
     assert_match %r{<td>Uwe Kubosch</td>\s*<td>Hovedinstruktør</td>\s*<td>2013-01-01</td>\s*<td></td>},
         mail.body.decoded
-    assert_match %r{<td>Svein Robert Rolijordet</td>\s*<td>Leder \(2 år\)</td>\s*<td>2014-02-25</td>\s*<td></td>},
+    assert_match %r{
+          <td>Svein\ Robert\ Rolijordet</td>\s*
+          <td>Leder\ \(2\ år\)</td>\s*
+          <td>2014-02-25</td>\s*
+          <td></td>
+        }x,
         mail.body.decoded
     assert_match %r{<td>Bastian Filip Krohn</td>\s*<td>Kasserer</td>\s*<td>2015-02-12</td>\s*<td></td>},
         mail.body.decoded

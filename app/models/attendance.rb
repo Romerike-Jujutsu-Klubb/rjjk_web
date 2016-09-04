@@ -29,13 +29,23 @@ class Attendance < ActiveRecord::Base
   ABSENT_STATES = [Status::HOLIDAY, Status::SICK, Status::ABSENT].freeze
   PRESENCE_STATES = [*PRESENT_STATES, Status::WILL_ATTEND].freeze
 
+  scope :after, -> (limit) {
+    from_date = limit.to_date
+    includes(practice: :group_schedule).references(:group_schedules)
+        .where('year > :year OR (year = :year AND week > :week) OR ' \
+        '(year = :year AND week = :week AND group_schedules.weekday > :wday)',
+            year: from_date.cwyear, week: from_date.cweek, wday: from_date.cwday)
+  }
+  scope :before, -> (limit) {
+    to_date = limit.to_date
+    includes(practice: :group_schedule).references(:group_schedules)
+        .where('year < :year OR (year = :year AND week < :week) OR ' \
+            '(year = :year AND week = :week AND group_schedules.weekday <= :wday)',
+            year: to_date.year, week: to_date.cweek, wday: to_date.cwday)
+  }
   scope :by_group_id, -> (group_id) {
     includes(practice: :group_schedule).references(:group_schedules)
         .where('group_schedules.group_id = ?', group_id)
-  }
-  scope :last_months, -> (count) {
-    limit = count.months.ago
-    where('(year = ? AND week >= ?) OR year > ?', limit.year, limit.to_date.cweek, limit.year)
   }
   scope :on_date, -> (date) { where('year = ? AND week = ?', date.year, date.cweek) }
   scope :after_date, -> (date) {

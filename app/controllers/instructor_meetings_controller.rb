@@ -29,7 +29,9 @@ class InstructorMeetingsController < ApplicationController
 
     respond_to do |format|
       if @instructor_meeting.save
-        format.html { redirect_to @instructor_meeting, notice: 'Instructor meeting was successfully created.' }
+        format.html do
+          redirect_to @instructor_meeting, notice: 'Instructor meeting was successfully created.'
+        end
         format.json { render :show, status: :created, location: @instructor_meeting }
       else
         format.html { render :new }
@@ -43,7 +45,9 @@ class InstructorMeetingsController < ApplicationController
   def update
     respond_to do |format|
       if @instructor_meeting.update(instructor_meeting_params)
-        format.html { redirect_to @instructor_meeting, notice: 'Instructor meeting was successfully updated.' }
+        format.html do
+          redirect_to @instructor_meeting, notice: 'Instructor meeting was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @instructor_meeting }
       else
         format.html { render :edit }
@@ -57,7 +61,9 @@ class InstructorMeetingsController < ApplicationController
   def destroy
     @instructor_meeting.destroy
     respond_to do |format|
-      format.html { redirect_to instructor_meetings_url, notice: 'Instructor meeting was successfully destroyed.' }
+      format.html do
+        redirect_to instructor_meetings_url, notice: 'Instructor meeting was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end

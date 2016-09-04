@@ -55,7 +55,8 @@ class ImagesController < ApplicationController
     rescue java.lang.NullPointerException, java.lang.OutOfMemoryError,
         javax.imageio.IIOException, Java::JavaLang::ArrayIndexOutOfBoundsException => e
       logger.error "Exception loading image: #{e}"
-      redirect_to ActionController::Base.helpers.asset_path @image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
+      icon_name = @image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
+      redirect_to ActionController::Base.helpers.asset_path icon_name
       return
     end
     width = params[:width].to_i

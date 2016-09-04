@@ -61,7 +61,9 @@ class EventInviteeMessagesController < ApplicationController
           back_or_redirect_to @event_invitee_message,
               notice: 'Signup confirmation was successfully created.'
         end
-        format.json { render json: @event_invitee_message, status: :created, location: @event_invitee_message }
+        format.json do
+          render json: @event_invitee_message, status: :created, location: @event_invitee_message
+        end
       else
         format.html { render action: 'new' }
         format.json { render json: @event_invitee_message.errors, status: :unprocessable_entity }

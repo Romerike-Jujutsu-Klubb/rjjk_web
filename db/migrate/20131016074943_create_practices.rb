@@ -12,7 +12,8 @@ class CreatePractices < ActiveRecord::Migration
     end
 
     execute 'INSERT INTO practices(group_schedule_id, year, week, created_at, updated_at)
-            (SELECT DISTINCT group_schedule_id, year, week, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM attendances)'
+            (SELECT DISTINCT group_schedule_id, year, week, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+               FROM attendances)'
 
     add_column :attendances, :practice_id, :integer
     execute 'UPDATE attendances a SET practice_id =

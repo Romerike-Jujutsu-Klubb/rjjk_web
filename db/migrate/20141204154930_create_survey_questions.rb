@@ -23,7 +23,8 @@ class CreateSurveyQuestions < ActiveRecord::Migration
             choices: "Avisannonse\nSøkemotor\nBekjent\nFamilie",
             free_text: true, select_multiple: true
         SurveyQuestion.create! survey_id: survey_id,
-            title: 'Hva syns du om denne spørreundersøkelsen?  Dine tips er viktige for å forbedre klubbdriften.',
+            title: 'Hva syns du om denne spørreundersøkelsen?  ' \
+                'Dine tips er viktige for å forbedre klubbdriften.',
             free_text: true
       end
     end

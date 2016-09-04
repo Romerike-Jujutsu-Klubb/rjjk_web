@@ -81,7 +81,8 @@ class IncomingEmailProcessor
       if new_recipients.any?
         email.subject = prefix_subject(email.subject, tags)
         email.smtp_envelope_from = sender
-        email.smtp_envelope_to = (Rails.env.production? || Rails.env.test? ? new_recipients : 'uwe@kubosch.no')
+        email.smtp_envelope_to =
+            (Rails.env.production? || Rails.env.test? ? new_recipients : 'uwe@kubosch.no')
         email.delivery_method(Rails.env.test? ? :test : :sendmail)
         begin
           email.deliver

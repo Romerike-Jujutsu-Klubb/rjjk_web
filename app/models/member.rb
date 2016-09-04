@@ -25,15 +25,9 @@ class Member < ActiveRecord::Base
   has_many :graduates, dependent: :destroy
   has_many :group_instructors, dependent: :destroy
 
-  # FIXME(uwe):  Use Attendance scopes instead?
   has_many :last_6_months_attendances, -> do
-    from_date = 6.months.ago.to_date
-    to_date = Time.zone.today
     includes(practice: :group_schedule).references(:group_schedules)
-        .where('year > ? OR (year = ? AND week > ?) OR (year = ? AND week = ? AND group_schedules.weekday > ?)',
-            from_date.year, from_date.year, from_date.cweek, from_date.year, from_date.cweek, from_date.cwday)
-        .where('year < ? OR (year = ? AND week < ?) OR (year = ? AND week = ? AND group_schedules.weekday <= ?)',
-            to_date.year, to_date.year, to_date.cweek, to_date.year, to_date.cweek, to_date.cwday)
+        .merge(Attendance.after(count.months.ago.to_date).before(Time.zone.today))
   end,
       class_name: Attendance
   # EMXIF
@@ -42,18 +36,9 @@ class Member < ActiveRecord::Base
       class_name: 'Graduate'
   has_many :ranks, through: :passed_graduates
 
-  # FIXME(uwe):  Use Attendance scopes instead?
-  has_many :recent_attendances, -> do
-    from_date = Time.zone.today - 92
-    to_date = Time.zone.today + 31
-    includes(practice: :group_schedule).references(:group_schedules)
-        .where('year > ? OR (year = ? AND week > ?) OR (year = ? AND week = ? AND group_schedules.weekday > ?)',
-            from_date.year, from_date.year, from_date.cweek, from_date.year, from_date.cweek, from_date.cwday)
-        .where('year < ? OR (year = ? AND week < ?) OR (year = ? AND week = ? AND group_schedules.weekday <= ?)',
-            to_date.year, to_date.year, to_date.cweek, to_date.year, to_date.cweek, to_date.cwday)
-  end,
+  has_many :recent_attendances,
+      -> { merge(Attendance.after(92.days.ago).before(31.days.from_now)) },
       class_name: Attendance
-  # EMXIF
 
   has_many :signatures, dependent: :destroy
   has_many :survey_requests, dependent: :destroy
@@ -113,9 +98,12 @@ class Member < ActiveRecord::Base
 
     # Full name and email
     full_email = make_usable_full_email(email, first_name, last_name)
-    full_email_with_birthyear = make_usable_full_email(email, first_name, last_name, attrs[:birthdate].to_s[0..3])
-    full_email_with_birthdate = make_usable_full_email(email, first_name, last_name, attrs[:birthdate].to_s)
-    full_email_with_join_year = make_usable_full_email(email, first_name, last_name, attrs[:joined_on].to_s[0..3])
+    full_email_with_birthyear =
+        make_usable_full_email(email, first_name, last_name, attrs[:birthdate].to_s[0..3])
+    full_email_with_birthdate =
+        make_usable_full_email(email, first_name, last_name, attrs[:birthdate].to_s)
+    full_email_with_join_year =
+        make_usable_full_email(email, first_name, last_name, attrs[:joined_on].to_s[0..3])
 
     potential_emails = [email, full_email, full_email_with_birthyear,
         full_email_with_birthdate, full_email_with_join_year]
@@ -149,27 +137,31 @@ blocking users: #{blocking_users.inspect}"
 
   def self.make_usable_full_email(email, first_name, last_name, birthdate = nil)
     birth_suffix = (" (#{birthdate})" if birthdate)
-    full_email = %("#{first_name} #{last_name}#{birth_suffix}" <#{email}>)
+    full_name = "#{first_name} #{last_name}#{birth_suffix}"
+    long_email = %("#{full_name}" <#{email}>)
+    full_email = long_email
     max_length = 64
 
     # First and last names only
     if full_email.size > max_length
       logger.debug "Full email too long: #{full_email}"
-      full_email = %("#{first_name.split(/\s+/).first} #{last_name.split(/\s+/).last}#{birth_suffix}" <#{email}>)
+      single_first_name = first_name.split(/\s+/).first
+      single_last_name = last_name.split(/\s+/).last
+      full_email = %("#{single_first_name} #{single_last_name}#{birth_suffix}" <#{email}>)
     end
 
     # Squeezed name and full email
     if full_email.size > max_length
       logger.debug "Full email too long: #{full_email}"
       max_name_size = max_length - email.size - 5
-      (cut_name = "#{first_name} #{last_name}#{birth_suffix}")[(max_name_size / 2) - 2..(-max_name_size / 2)]
+      cut_name = full_name[0..(max_name_size / 2)] + '...' + full_name[-max_name_size / 2 - 2..-1]
       full_email = %("#{cut_name}" <#{email}>)
     end
 
     # Fallback to non-valid email...
     if full_email.size > max_length
       logger.debug "Full email too long: #{full_email}"
-      (full_email = %(#{first_name} #{last_name}#{birth_suffix} <#{email}>))[(max_length / 2) - 2..(-max_length / 2)]
+      full_email = long_email[0..(max_length / 2)] + long_email[-max_length / 2..-1]
     end
     full_email
   end
@@ -240,7 +232,8 @@ blocking users: #{blocking_users.inspect}"
     days = (to_date - date).to_i
     years = (to_date - date).to_i / 365
     months = (days - (years * 365)) / 30
-    [years.positive? ? "#{years} år" : nil, years.zero? || months.positive? ? "#{months} mnd" : nil].compact.join(' ')
+    [years.positive? ? "#{years} år" : nil, years.zero? || months.positive? ? "#{months} mnd" : nil]
+        .compact.join(' ')
   end
 
   def next_rank(graduation = Graduation.new(held_on: Date.today, group: groups.sort_by(&:from_age).last))
