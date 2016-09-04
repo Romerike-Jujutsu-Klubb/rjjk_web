@@ -53,8 +53,8 @@ class NkfMember < ActiveRecord::Base
 
   belongs_to :member
 
-  validates_presence_of :kjonn
-  validates_uniqueness_of :member_id, allow_nil: true
+  validates :kjonn, presence: true
+  validates :member_id, uniqueness: { allow_nil: true }
 
   def self.find_free_members
     Member

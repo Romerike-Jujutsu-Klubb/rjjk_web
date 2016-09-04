@@ -2,8 +2,8 @@
 class ImagesController < ApplicationController
   PUBLIC_ACTIONS = [:gallery, :inline, :show].freeze
   PERSONAL_ACTIONS = [:create, :mine, :new, :upload].freeze
-  before_filter :admin_required, except: PUBLIC_ACTIONS + PERSONAL_ACTIONS
-  before_filter :authenticate_user, only: PERSONAL_ACTIONS
+  before_action :admin_required, except: PUBLIC_ACTIONS + PERSONAL_ACTIONS
+  before_action :authenticate_user, only: PERSONAL_ACTIONS
 
   # FIXME(uwe):  Check caching
   caches_page :show, :inline

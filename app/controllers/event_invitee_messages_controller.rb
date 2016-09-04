@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class EventInviteeMessagesController < ApplicationController
-  before_filter :admin_required, except: [:index, :show]
+  before_action :admin_required, except: [:index, :show]
 
   # GET /event_invitee_messages
   # GET /event_invitee_messages.json

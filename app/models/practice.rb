@@ -5,7 +5,7 @@ class Practice < ActiveRecord::Base
   has_many :attendances, dependent: :destroy
   has_many :trial_attendances, dependent: :destroy
 
-  validates_uniqueness_of :group_schedule_id, scope: [:year, :week]
+  validates :group_schedule_id, uniqueness: { scope: [:year, :week] }
 
   def date
     Date.commercial(year, week, group_schedule.weekday)

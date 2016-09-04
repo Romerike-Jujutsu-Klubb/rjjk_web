@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class UserController < ApplicationController
-  before_filter :authenticate_user, except: [:login, :logout, :signup, :forgot_password]
-  before_filter :admin_required, except: [:welcome, :like, :login, :logout,
+  before_action :authenticate_user, except: [:login, :logout, :signup, :forgot_password]
+  before_action :admin_required, except: [:welcome, :like, :login, :logout,
       :signup, :forgot_password, :change_password]
 
   def index
@@ -108,11 +108,12 @@ class UserController < ApplicationController
     return if generate_blank_form
 
     email = params['user']['email']
+    escaped_email = CGI.escapeHTML(email)
     if email.blank? || email !~ /.+@.+\..+/
       flash.now['message'] = 'Skriv inn en gyldig e-postadresse.'
     elsif (users = User.search(email)).empty?
       flash.now['message'] =
-          "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{CGI.escapeHTML(email)}"
+          "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{escaped_email}"
     else
       begin
         User.transaction do
@@ -121,7 +122,7 @@ class UserController < ApplicationController
             UserMailer.forgot_password(user, url).store(user, tag: :forgot_password)
           end
           flash['message'] =
-              "En e-post med veiledning for å sette nytt passord er sendt til #{CGI.escapeHTML(email)}."
+              "En e-post med veiledning for å sette nytt passord er sendt til #{escaped_email}."
           unless authenticated_user?
             redirect_to action: 'login'
             return
@@ -130,7 +131,8 @@ class UserController < ApplicationController
         end
       rescue => ex
         report_exception ex
-        flash.now['message'] = "Beklager!  Link for innlogging kunne ikke sendes til #{CGI.escapeHTML(email)}"
+        flash.now[:message] =
+            "Beklager!  Link for innlogging kunne ikke sendes til #{escaped_email}"
       end
     end
   end
@@ -186,7 +188,8 @@ class UserController < ApplicationController
   end
 
   def like
-    UserImage.where(user_id: current_user.id, image_id: params[:id], rel_type: 'LIKE').first_or_create!
+    UserImage.where(user_id: current_user.id, image_id: params[:id], rel_type: 'LIKE')
+        .first_or_create!
     redirect_to controller: :news, action: :index
   end
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class GraduatesController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   # FIXME(uwe):  Fixe cache sweeping!
   # cache_sweeper :grade_history_image_sweeper, :only => [:create, :update, :destroy]

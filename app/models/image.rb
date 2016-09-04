@@ -18,8 +18,8 @@ class Image < ActiveRecord::Base
     self.user_id ||= current_user.try(:id)
   end
 
-  validates_presence_of :name
-  validates_uniqueness_of :content_data, on: :create
+  validates :name, presence: true
+  validates :content_data, uniqueness: { on: :create }
 
   after_create do |_|
     next unless @content_file

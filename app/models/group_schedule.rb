@@ -4,7 +4,7 @@ class GroupSchedule < ActiveRecord::Base
   has_many :group_instructors, dependent: :destroy
   has_many :practices, dependent: :destroy
 
-  validates_presence_of :end_at, :group, :start_at, :weekday
+  validates :end_at, :group, :start_at, :weekday, presence: true
 
   def weekday_name
     I18n.t(:date)[:day_names][weekday]

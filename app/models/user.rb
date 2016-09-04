@@ -14,8 +14,8 @@ class User < ActiveRecord::Base
   # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
   SEARCH_FIELDS = [:email, :first_name, :last_name, :login].freeze
   scope :search, ->(query) {
-    where(SEARCH_FIELDS.map { |c| "to_tsvector(UPPER(#{c})) @@ to_tsquery(?)" }
-        .join(' OR '), *([UnicodeUtils.upcase(query).split(/\s+/).join(' | ')] * SEARCH_FIELDS.size))
+    where(SEARCH_FIELDS.map { |c| "to_tsvector(UPPER(#{c})) @@ to_tsquery(:query)" }.join(' OR '),
+        query: UnicodeUtils.upcase(query).split(/\s+/).join(' | '))
         .order(:first_name, :last_name)
   }
 
@@ -26,14 +26,14 @@ class User < ActiveRecord::Base
   after_save { @password_needs_confirmation = false }
   after_validation :crypt_password
 
-  validates_presence_of :login, on: :create
-  validates_length_of :login, within: 3..64, on: :create, allow_blank: true
-  validates_uniqueness_of :login, on: :create
-  validates_uniqueness_of :email, on: :create
+  validates :login, presence: { on: :create }
+  validates :login, length: { within: 3..64, on: :create, allow_blank: true }
+  validates :login, uniqueness: { on: :create }
+  validates :email, uniqueness: { on: :create }
 
-  validates_presence_of :password, if: :validate_password?
-  validates_confirmation_of :password, if: :validate_password?
-  validates_length_of :password, within: 5..40, if: :validate_password?
+  validates :password, presence: { if: :validate_password? }
+  validates :password, confirmation: { if: :validate_password? }
+  validates :password, length: { within: 5..40, if: :validate_password? }
 
   def validate
     return unless role_changed? && (user.nil? || user.role.nil?)
@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
 
   def self.authenticate(login, pass)
     users = includes(:member).references(:members)
-        .where('(login = ? OR users.email = ? OR (members.email IS NOT NULL AND members.email = ?))',
+        .where('login = ? OR users.email = ? OR (members.email IS NOT NULL AND members.email = ?)',
             login, login, login)
         .where('verified = ? AND (deleted IS NULL OR deleted = ?)',
             true, false).to_a
@@ -88,7 +88,8 @@ class User < ActiveRecord::Base
   end
 
   def self.token_lifetime(duration = :short)
-    UserSystem::CONFIG[duration == :login ? :autologin_token_life_hours : :security_token_life_hours].hours
+    duration_key = duration == :login ? :autologin_token_life_hours : :security_token_life_hours
+    UserSystem::CONFIG[duration_key].hours
   end
 
   def full_email
@@ -162,13 +163,13 @@ class User < ActiveRecord::Base
 
   def crypt_password
     return unless @password_needs_confirmation
-    write_attribute('salt', self.class.hashed("salt-#{Time.now}"))
-    write_attribute('salted_password', self.class.salted_password(salt, self.class.hashed(@password)))
+    self['salt'] = self.class.hashed("salt-#{Time.now}")
+    self['salted_password'] = self.class.salted_password(salt, self.class.hashed(@password))
   end
 
   def new_security_token(duration)
-    write_attribute('security_token', self.class.hashed(salted_password + Time.now.to_i.to_s + rand.to_s))
-    write_attribute('token_expiry', Time.at(Time.now.to_i + User.token_lifetime(duration)))
+    self['security_token'] = self.class.hashed(salted_password + Time.now.to_i.to_s + rand.to_s)
+    self['token_expiry'] = Time.at(Time.now.to_i + User.token_lifetime(duration))
     save
     security_token
   end

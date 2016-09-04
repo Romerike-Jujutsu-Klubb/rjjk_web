@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class GroupsController < ApplicationController
-  before_filter :admin_required, except: :show
+  before_action :admin_required, except: :show
 
   def index
     @groups = Group.active(Date.today).order('to_age, from_age DESC').to_a

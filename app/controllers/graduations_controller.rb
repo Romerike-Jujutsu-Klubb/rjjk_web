@@ -3,8 +3,8 @@ class GraduationsController < ApplicationController
   include GraduationAccess
 
   CENSOR_ACTIONS = [:add_group, :approve, :create, :edit, :index, :new, :update].freeze
-  before_filter :admin_required, except: CENSOR_ACTIONS
-  before_filter :authenticate_user, only: CENSOR_ACTIONS
+  before_action :admin_required, except: CENSOR_ACTIONS
+  before_action :authenticate_user, only: CENSOR_ACTIONS
 
   def index
     @graduations = Graduation.includes(:group).references(:groups)
@@ -101,7 +101,8 @@ class GraduationsController < ApplicationController
     date = graduation.held_on
 
     content = graduation.graduates.sort_by { |g| -g.rank.position }.map do |g|
-      censors = graduation.censors.to_a.sort_by { |c| -(c.member.current_rank.try(:position) || 99) }
+      censors = graduation.censors.to_a
+          .sort_by { |c| -(c.member.current_rank.try(:position) || 99) }
       censor_1 =
           if censors[0]
             { title: censors[0].member.title, name: censors[0].member.name,
@@ -167,10 +168,12 @@ class GraduationsController < ApplicationController
       end
 
       flash[:notice] = "Gruppe #{group.name} ble lagt til graderingen.  " \
-          "#{success_count} nye kandidater. " \
-          "#{"#{failures.map(&:member).map(&:name).join(', ')} kunne ikke legges til." if failures.any?}"
+          "#{success_count} nye kandidater. "
+
       if failures.any?
-        flash[:error] = "Disse kunne ikke legges til: #{failures.map(&:member).map(&:name).join(', ')}"
+        failure_list = failures.map(&:member).map(&:name).join(', ')
+        flash[:notice] += "#{failure_list} kunne ikke legges til."
+        flash[:error] = "Disse kunne ikke legges til: #{failure_list}"
         failures.each do |fg|
           logger.error "Failed record: #{fg.member.name}: " \
               "#{fg.errors.full_messages} #{fg.rank.name} #{fg.inspect}"
@@ -185,7 +188,8 @@ class GraduationsController < ApplicationController
   def load_graduates
     @graduation = Graduation.includes(group: { martial_art: { ranks: :group } }).find(params[:id])
     @censors = Censor.includes(:member).where(graduation_id: @graduation.id).to_a
-    @graduates = Graduate.where('graduates.graduation_id = ? AND graduates.member_id != 0', params[:id])
+    @graduates = Graduate.where('graduates.graduation_id = ? AND graduates.member_id != 0',
+        params[:id])
         .includes({ graduation: { group: :martial_art } }, :member, rank: :group)
         .order('ranks.position DESC, members.first_name, members.last_name').to_a
   end

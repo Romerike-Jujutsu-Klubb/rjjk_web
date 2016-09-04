@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class MembersController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   # FIXME(uwe):  Verify caching
   caches_page :age_chart, :image, :thumbnail, :history_graph, :grade_history_graph,
@@ -62,7 +62,8 @@ class MembersController < ApplicationController
         else
           MemberGradeHistoryGraph.new.history_graph
         end
-    send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_MedlemsGradsHistorikk.png')
+    send_data(g, disposition: 'inline', type: 'image/png',
+        filename: 'RJJK_MedlemsGradsHistorikk.png')
   end
 
   def grade_history_graph_percentage
@@ -129,7 +130,8 @@ class MembersController < ApplicationController
 
   def edit
     @member = Member.find(params[:id])
-    @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').where(closed_on: nil).to_a
+    @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name')
+        .where(closed_on: nil).to_a
     @groups |= @member.groups
   end
 
@@ -289,8 +291,11 @@ class MembersController < ApplicationController
   end
 
   def report
-    @date = (params[:year] && params[:month] && Date.new(params[:year].to_i, params[:month].to_i, 1)) ||
-        Date.today.beginning_of_month
+    @date = if params[:year] && params[:month]
+              Date.new(params[:year].to_i, params[:month].to_i, 1)
+            else
+              Date.today.beginning_of_month
+            end
     @year = @date.year
     @month = @date.month
     @first_date = @date.beginning_of_month - 1

@@ -19,19 +19,20 @@ class Group < ActiveRecord::Base
   has_one :next_graduation,
       -> { where('graduations.held_on >= ?', Date.today).order('graduations.held_on') },
       class_name: :Graduation
-  has_one :next_semester,
-      -> { includes(:semester).where('semesters.start_on > CURRENT_DATE').order('semesters.start_on') },
-      class_name: :GroupSemester
+  has_one :next_semester, -> do
+    includes(:semester).where('semesters.start_on > CURRENT_DATE').order('semesters.start_on')
+  end, class_name: :GroupSemester
   has_many :ranks, -> { order(:position) }, dependent: :destroy
   # FIXME(uwe): Add model GroupMembership and change to has_many through:
-  has_and_belongs_to_many :members, conditions: 'left_on IS NULL OR left_on > DATE(CURRENT_TIMESTAMP)'
+  has_and_belongs_to_many :members,
+      conditions: 'left_on IS NULL OR left_on > DATE(CURRENT_TIMESTAMP)'
 
   accepts_nested_attributes_for :current_semester
   accepts_nested_attributes_for :next_semester
 
   before_validation { |r| r.color = nil if r.color.blank? }
 
-  validates_presence_of :from_age, :martial_art, :name, :to_age
+  validates :from_age, :martial_art, :name, :to_age, presence: true
 
   def full_name
     "#{"#{martial_art.name} " if martial_art.name != 'Kei Wa Ryu'}#{name}"
@@ -51,7 +52,8 @@ class Group < ActiveRecord::Base
     return 0 if group_schedules.empty?
     Practice
         .where("status = 'X' AND group_schedule_id IN (?)", group_schedules.map(&:id))
-        .where('year > ? OR (year = ? AND week >= ?)', *([period.first.year] * 2), period.first.cweek)
+        .where('year > ? OR (year = ? AND week >= ?)',
+            *([period.first.year] * 2), period.first.cweek)
         .where('year < ? OR (year = ? AND week <= ?)',
             *([period.last.year] * 2), period.last.cweek)
         .all.size
@@ -74,9 +76,7 @@ class Group < ActiveRecord::Base
     group_schedules.sort_by { |gs| gs.next_practice.date }.first
   end
 
-  def next_practice
-    next_schedule.next_practice
-  end
+  delegate :next_practice, to: :next_schedule
 
   def instructors
     group_schedules.map { |gs| gs.group_instructors.active.includes(:member) }.flatten

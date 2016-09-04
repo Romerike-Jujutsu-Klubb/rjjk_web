@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class EmbusController < ApplicationController
-  before_filter :authenticate_user
+  before_action :authenticate_user
 
   def index
     if (embu = Embu.mine.last)

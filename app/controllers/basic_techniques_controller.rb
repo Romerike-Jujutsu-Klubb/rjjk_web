@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 class BasicTechniquesController < ApplicationController
   USER_ACTIONS = [:index, :show].freeze
-  before_filter :authenticate_user, only: USER_ACTIONS
-  before_filter :technical_committy_required, except: USER_ACTIONS
+  before_action :authenticate_user, only: USER_ACTIONS
+  before_action :technical_committy_required, except: USER_ACTIONS
 
   def index
     @basic_techniques = BasicTechnique.includes(:rank).order(:name).to_a
@@ -39,7 +39,9 @@ class BasicTechniquesController < ApplicationController
     @basic_technique = BasicTechnique.new(params[:basic_technique])
     respond_to do |format|
       if @basic_technique.save
-        format.html { redirect_to @basic_technique, notice: 'Basic technique was successfully created.' }
+        format.html do
+          redirect_to @basic_technique, notice: 'Basic technique was successfully created.'
+        end
         format.json { render json: @basic_technique, status: :created, location: @basic_technique }
       else
         format.html { new }
@@ -52,7 +54,9 @@ class BasicTechniquesController < ApplicationController
     @basic_technique = BasicTechnique.find(params[:id])
     respond_to do |format|
       if @basic_technique.update_attributes(params[:basic_technique])
-        format.html { redirect_to @basic_technique, notice: 'Basic technique was successfully updated.' }
+        format.html do
+          redirect_to @basic_technique, notice: 'Basic technique was successfully updated.'
+        end
         format.json { head :no_content }
       else
         format.html { edit }

@@ -92,7 +92,8 @@ ranks.each do |rank_name, rank_dir|
     # find all sections filter for apps and iterate
     applications = doc.css('div.section h3').map(&:parent)
     applications.each do |a|
-      system = a.parent.css('h2').first.try(:content).try(:gsub, /\s*Applikasjoner\s*$/i, '') || 'Annet'
+      system = a.parent.css('h2').first.try(:content).try(:gsub, /\s*Applikasjoner\s*$/i, '') ||
+          'Annet'
       name = a.css('h3').first.content.strip
       puts "#{name} (#{system}):"
       begin

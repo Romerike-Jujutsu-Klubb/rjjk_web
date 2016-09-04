@@ -24,14 +24,15 @@ class AttendanceHistoryGraph
 AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
                 w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).to_a +
             TrialAttendance.by_group_id(group.id)
-            .where('(year > ? OR (year = ? AND week > ?)) AND (year < ? OR (year = ? AND week <= ?))',
-                w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).to_a
+            .where('year > ? OR (year = ? AND week > ?)', w1[0], w1[0], w1[1])
+            .where('year < ? OR (year = ? AND week <= ?)', w2[0], w2[0], w2[1]).to_a
       end
       sessions = attendances.map { |ats| ats.map(&:practice_id).uniq.size }
-      values = attendances.each_with_index.map { |a, i| sessions[i].positive? ? a.size / sessions[i] : nil }
+      values = attendances.map
+          .with_index { |a, i| sessions[i].positive? ? a.size / sessions[i] : nil }
       next unless values.any? { |v| v }
       g.data(group.name, values, group.color)
-      sessions.each_with_index do |session, i|
+      sessions.each.with_index do |session, i|
         totals[i] = totals[i].to_i + values[i] if values[i]
         totals_sessions[i] += session
       end
@@ -79,7 +80,9 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
     g.labels = Hash[*dates.map { |d| [d.day, d.day.to_s] }.flatten]
     groups.each do |group|
       values = dates.select { |d| group.group_schedules.map(&:weekday).include? d.cwday }
-          .map { |d| [d.day, attendances.select { |a| a.group_schedule.group == group && a.date == d }.size] }
+          .map do |d|
+        [d.day, attendances.select { |a| a.group_schedule.group == group && a.date == d }.size]
+      end
       values.map! { |k, v| [k, v.positive? ? v : nil] }
       g.dataxy(group.name, values, nil, group.color) if values.any? { |v| v }
     end
@@ -111,7 +114,8 @@ EOF
     years = result.map { |r| r['year'] }.sort.uniq
     g.title = "Oppmøte #{I18n.t(:date)[:month_names][month]} #{years[0]}-#{years[-1]}"
     result.group_by { |r| r['name'] }.each do |group, values|
-      g.dataxy(group, values.map { |v| [v['year'], v['count']] }, nil, Group.find_by_name(group).color)
+      g.dataxy(group,
+          values.map { |v| [v['year'], v['count']] }, nil, Group.find_by_name(group).color)
     end
     g.labels = Hash[*years.map { |y| [y, y.to_s] }.flatten]
     g.minimum_value = 0

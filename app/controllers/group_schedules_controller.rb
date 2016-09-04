@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 class GroupSchedulesController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   def index
     @group_schedules = GroupSchedule.all.to_a
         .select { |gs| gs.group.active? }
-        .sort_by { |gs| [gs.weekday.zero? ? 7 : gs.weekday, gs.start_at, gs.end_at, gs.group.from_age] }
+        .sort_by do |gs|
+      [gs.weekday.zero? ? 7 : gs.weekday, gs.start_at, gs.end_at, gs.group.from_age]
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.xml { render xml: @group_schedules }
@@ -14,7 +16,8 @@ class GroupSchedulesController < ApplicationController
 
   def yaml
     @group_schedules = GroupSchedule.all
-    render text: @group_schedules.map(&:attributes).to_yaml, content_type: 'text/yaml', layout: false
+    render text: @group_schedules.map(&:attributes).to_yaml,
+        content_type: 'text/yaml', layout: false
   end
 
   def show

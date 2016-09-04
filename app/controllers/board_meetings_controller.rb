@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class BoardMeetingsController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   def index
     @board_meetings = BoardMeeting.order(:start_at).reverse_order.all
@@ -36,7 +36,9 @@ class BoardMeetingsController < ApplicationController
     @board_meeting = BoardMeeting.new(params[:board_meeting])
     respond_to do |format|
       if @board_meeting.save
-        format.html { redirect_to board_meetings_path, notice: 'Board meeting was successfully created.' }
+        format.html do
+          redirect_to board_meetings_path, notice: 'Board meeting was successfully created.'
+        end
         format.json { render json: @board_meeting, status: :created, location: @board_meeting }
       else
         format.html { render :new }
@@ -49,7 +51,9 @@ class BoardMeetingsController < ApplicationController
     @board_meeting = BoardMeeting.find(params[:id])
     respond_to do |format|
       if @board_meeting.update_attributes(params[:board_meeting])
-        format.html { redirect_to board_meetings_path, notice: 'Board meeting was successfully updated.' }
+        format.html do
+          redirect_to board_meetings_path, notice: 'Board meeting was successfully updated.'
+        end
         format.json { head :no_content }
       else
         format.html { render :edit }

@@ -145,7 +145,9 @@ class NkfMemberImport
           "#{$1}#{$2}"
         end
     raise 'Both Active status and waiting kid were found' if active && waiting_kid
-    raise "Neither active status nor waiting kid were found:\n#{details_body}" if !active && !waiting_kid
+    if !active && !waiting_kid
+      raise "Neither active status nor waiting kid were found:\n#{details_body}"
+    end
     import_rows.find { |ir| ir[0] == member_id } << waiting_kid
   ensure
     ActiveRecord::Base.connection.close
@@ -266,7 +268,8 @@ class NkfMemberImport
     logger.debug "Columns: #{columns.inspect}"
     tid_col_idx = header_fields.index 'tid'
     # email_col_idx  = header_fields.index 'epost'
-    missing_trials = NkfMemberTrial.where('tid NOT IN (?)', member_trial_rows.map { |t| t[tid_col_idx] }).to_a
+    missing_trials = NkfMemberTrial
+        .where('tid NOT IN (?)', member_trial_rows.map { |t| t[tid_col_idx] }).to_a
     missing_trials.each do |t|
       m = Member.find_by_email(t.epost)
       t.trial_attendances.each do |ta|
@@ -334,11 +337,14 @@ class NkfMemberImport
 
     login_form_fields = login_content.scan(/<input .*?name="(.*?)".*?value ?="(.*?)".*?>/)
     login_form_fields.delete_if { |f| %w(site2pstoretoken ssousername password).include? f[0] }
-    login_form_fields += [['site2pstoretoken', token], %w(ssousername 40001062), %w(password CokaBrus42)]
-    login_params = login_form_fields.map { |field| "#{field[0]}=#{ERB::Util.url_encode field[1]}" }.join '&'
+    login_form_fields += [['site2pstoretoken', token],
+        %w(ssousername 40001062), %w(password CokaBrus42)]
+    login_params = login_form_fields.map { |field| "#{field[0]}=#{ERB::Util.url_encode field[1]}" }
+        .join('&')
     url = URI.parse('http://nkflogin.kampsport.no/')
     Net::HTTP.start(url.host, url.port) do |http|
-      login_response = http.post('/pls/orasso/orasso.wwsso_app_admin.ls_login', login_params, cookie_header)
+      login_response = http
+          .post('/pls/orasso/orasso.wwsso_app_admin.ls_login', login_params, cookie_header)
       unless login_response.code == '302'
         logger.error "Wrong URL: #{login_response.code}"
         redo

@@ -4,9 +4,9 @@ class Graduation < ActiveRecord::Base
   has_many :censors, dependent: :destroy
   has_many :graduates, dependent: :destroy
 
-  validates_presence_of :group, :held_on
+  validates :group, :held_on, presence: true
 
-  validates_uniqueness_of :held_on, scope: :group_id
+  validates :held_on, uniqueness: { scope: :group_id }
 
   def start_at
     held_on.try(:at, group_schedule.try(:start_at) || TimeOfDay.new(17, 45))
@@ -24,9 +24,7 @@ class Graduation < ActiveRecord::Base
     true
   end
 
-  def size
-    graduates.size
-  end
+  delegate :size, to: :graduates
 
   def group_schedule
     group.group_schedules.find { |gs| gs.weekday == held_on.try(:cwday) }

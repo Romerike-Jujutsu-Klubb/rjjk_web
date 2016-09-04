@@ -2,7 +2,7 @@
 class Semester < ActiveRecord::Base
   has_many :group_semesters, dependent: :destroy
 
-  validates_presence_of :end_on, :start_on
+  validates :end_on, :start_on, presence: true
 
   validate do
     if start_on && end_on && start_on > end_on

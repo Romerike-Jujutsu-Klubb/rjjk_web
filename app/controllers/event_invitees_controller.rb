@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class EventInviteesController < ApplicationController
-  before_filter :admin_required, except: [:index, :show]
+  before_action :admin_required, except: [:index, :show]
 
   def index
     @event_invitees = EventInvitee.order(:name).to_a

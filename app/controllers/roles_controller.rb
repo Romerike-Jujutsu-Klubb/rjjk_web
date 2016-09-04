@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class RolesController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   def index
     @roles = Role.order('years_on_the_board DESC NULLS LAST, name').to_a

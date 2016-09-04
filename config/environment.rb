@@ -72,7 +72,8 @@ module Prawn
           with_font do
             @pdf.move_down((@pdf.font.line_gap + @pdf.font.descender) / 2)
             with_text_color do
-              text_box(width: rotated ? spanned_content_height : spanned_content_width + FPTolerance,
+              text_box(
+                  width: rotated ? spanned_content_height : spanned_content_width + FPTolerance,
                   height: rotated ? spanned_content_width : spanned_content_height + FPTolerance,
                   at: [
                       2,
@@ -81,7 +82,8 @@ module Prawn
                       else
                         @pdf.cursor
                       end,
-                  ]).render
+                  ]
+              ).render
             end
           end
         end

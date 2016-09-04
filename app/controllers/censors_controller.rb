@@ -3,7 +3,7 @@ class CensorsController < ApplicationController
   include GraduationAccess
 
   CENSOR_ACTIONS = [:confirm, :decline].freeze
-  before_filter :admin_required, except: [:create, :destroy, *CENSOR_ACTIONS]
+  before_action :admin_required, except: [:create, :destroy, *CENSOR_ACTIONS]
 
   def index
     @censors = Censor.includes(:graduation).order('graduations.held_on DESC')
@@ -12,7 +12,8 @@ class CensorsController < ApplicationController
 
   def list_instructors
     @graduation = Graduation.find(params[:id])
-    @instructors = Member.where('left_on IS NULL AND instructor = true').order(:first_name, :last_name).to_a
+    @instructors = Member.where('left_on IS NULL AND instructor = true')
+        .order(:first_name, :last_name).to_a
     @instructors -= @graduation.censors.map(&:member)
     rstr = <<EOH
     <div style="height:512px; width:284px; overflow: auto; overflow-x: hidden;">

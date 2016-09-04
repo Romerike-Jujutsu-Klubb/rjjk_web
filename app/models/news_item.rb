@@ -24,9 +24,9 @@ class NewsItem < ActiveRecord::Base
     news_item.body = cleanup_html(news_item.body)
   end
 
-  validates_presence_of :publication_state
-  validates_length_of :title, maximum: 64
-  validates_inclusion_of :publication_state, in: PublicationState.constants.map(&:to_s)
+  validates :publication_state, presence: true
+  validates :title, length: { maximum: 64 }
+  validates :publication_state, inclusion: { in: PublicationState.constants.map(&:to_s) }
 
   def self.front_page_items
     (admin? ? self : current).order('created_at DESC').limit(10).includes(creator: :member).to_a

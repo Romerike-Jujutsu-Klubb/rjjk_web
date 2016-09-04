@@ -15,9 +15,9 @@ class Rank < ActiveRecord::Base
 
   scope :kwr, -> { where(martial_art_id: MartialArt.kwr.first.try(:id)) }
 
-  validates_presence_of :position, :standard_months, :group, :group_id,
-      :martial_art, :martial_art_id
-  validates_uniqueness_of :position, scope: :martial_art_id
+  validates :position, :standard_months, :group, :group_id,
+      :martial_art, :martial_art_id, presence: true
+  validates :position, uniqueness: { scope: :martial_art_id }
 
   def minimum_age
     group.from_age + (group.ranks.select { |r| r.position <= position }[1..-1]
@@ -33,9 +33,7 @@ class Rank < ActiveRecord::Base
     "#{name} #{colour}#{" #{decoration}" if decoration.present?}"
   end
 
-  def kwr?
-    martial_art.kwr?
-  end
+  delegate :kwr?, to: :martial_art
 
   def <=>(other)
     return 1 if other.nil?

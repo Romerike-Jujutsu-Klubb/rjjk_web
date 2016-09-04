@@ -5,7 +5,7 @@ class GroupSemester < ActiveRecord::Base
   belongs_to :semester
   has_many :group_instructors, dependent: :destroy
 
-  validates_presence_of :group, :group_id, :semester, :semester_id
+  validates :group, :group_id, :semester, :semester_id, presence: true
 
   validate do
     if semester
@@ -20,7 +20,7 @@ class GroupSemester < ActiveRecord::Base
 
   def self.create_missing_group_semesters
     groups = Group.active.all
-    Semester.all.each do |s|
+    Semester.all.find_each do |s|
       groups.each do |g|
         GroupSemester.where(group_id: g.id, semester_id: s.id).first_or_create!
       end

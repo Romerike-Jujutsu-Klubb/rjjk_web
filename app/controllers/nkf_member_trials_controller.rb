@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class NkfMemberTrialsController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   def index
     @nkf_member_trials = NkfMemberTrial.order(:fornavn, :etternavn).to_a

@@ -10,8 +10,11 @@ AllCops:
   Exclude:
     - 'db/schema.rb'
 
-#Metrics/LineLength:
-#  Max: 100
+Rails:
+  Enabled: true
+
+Metrics/LineLength:
+  Max: 100
 
 Metrics/ParameterLists:
   Max: 6

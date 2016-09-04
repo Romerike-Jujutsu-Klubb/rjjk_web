@@ -51,7 +51,8 @@ class RawIncomingEmailsController < ApplicationController
     @raw_incoming_email.destroy
     respond_to do |format|
       format.html do
-        redirect_to raw_incoming_emails_url, notice: 'Raw incoming email was successfully destroyed.'
+        redirect_to raw_incoming_emails_url,
+            notice: 'Raw incoming email was successfully destroyed.'
       end
       format.json { head :no_content }
     end

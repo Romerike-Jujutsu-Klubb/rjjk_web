@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 class InfoController < ApplicationController
-  before_filter :admin_required, except: [:index, :show, :show_content]
+  before_action :admin_required, except: [:index, :show, :show_content]
 
   def index
     @information_pages = InformationPage.paginate page: params[:page], per_page: 10
   end
 
   def show
-    @information_page ||= InformationPage.where('UPPER(title) = ?', UnicodeUtils.upcase(params[:id])).first
+    @information_page ||= InformationPage
+        .where('UPPER(title) = ?', UnicodeUtils.upcase(params[:id])).first
     @information_page ||= InformationPage.find_by_id(params[:id].to_i)
     return if @information_page
     if (page_alias = PageAlias.where(old_path: request.path).first)

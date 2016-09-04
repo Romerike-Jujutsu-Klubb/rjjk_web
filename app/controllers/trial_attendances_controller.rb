@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class TrialAttendancesController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   # GET /trial_attendances
   # GET /trial_attendances.xml
@@ -81,7 +81,9 @@ class TrialAttendancesController < ApplicationController
 
     respond_to do |format|
       if @trial_attendance.update_attributes(params[:trial_attendance])
-        format.html { redirect_to(@trial_attendance, notice: 'TrialAttendance was successfully updated.') }
+        format.html do
+          redirect_to(@trial_attendance, notice: 'TrialAttendance was successfully updated.')
+        end
         format.xml { head :ok }
       else
         format.html { render action: :edit }

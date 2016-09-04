@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class AppointmentsController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   def index
     @appointments = Appointment.all

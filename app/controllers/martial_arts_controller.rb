@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class MartialArtsController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   def index
     list

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class SignaturesController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   # GET /signatures
   # GET /signatures.json

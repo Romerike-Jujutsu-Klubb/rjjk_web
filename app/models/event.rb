@@ -23,7 +23,7 @@ class Event < ActiveRecord::Base
     end
   end
 
-  validates_presence_of :start_at
+  validates :start_at, presence: true
 
   before_update do |r|
     unless r.invitees.blank?
@@ -57,7 +57,5 @@ class Event < ActiveRecord::Base
     description[ingress.size..-1] if ingress && description.size > ingress.size
   end
 
-  def size
-    attending_invitees.size
-  end
+  delegate :size, to: :attending_invitees
 end

@@ -45,7 +45,9 @@ class PublicRecordsController < ApplicationController
 
     respond_to do |format|
       if @public_record.save
-        format.html { redirect_to @public_record, notice: 'Public record was successfully created.' }
+        format.html do
+          redirect_to @public_record, notice: 'Public record was successfully created.'
+        end
         format.json { render json: @public_record, status: :created, location: @public_record }
       else
         format.html { render action: 'new' }
@@ -61,7 +63,9 @@ class PublicRecordsController < ApplicationController
 
     respond_to do |format|
       if @public_record.update_attributes(params[:public_record])
-        format.html { redirect_to @public_record, notice: 'Public record was successfully updated.' }
+        format.html do
+          redirect_to @public_record, notice: 'Public record was successfully updated.'
+        end
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

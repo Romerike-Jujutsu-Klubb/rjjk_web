@@ -15,8 +15,10 @@ class GraduationCensorForm
       text "Gradering #{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}",
           size: 18, align: :center
       move_down 16
-      data = graduation.graduates.sort_by { |g| [-g.rank.position, g.member.name] }.map do |graduate|
-        member_current_rank = graduate.member
+      data = graduation.graduates.sort_by { |g| [-g.rank.position, g.member.name] }
+          .map do |graduate|
+        member = graduate.member
+        member_current_rank = member
             .current_rank(graduate.graduation.martial_art, graduate.graduation.held_on)
         rank_color =
             if member_current_rank
@@ -25,12 +27,12 @@ class GraduationCensorForm
               'Ugradert'
             end
         [
-            "<font size='18'>" + graduate.member.first_name + '</font> ' +
-                graduate.member.last_name +
-                (graduate.member.birthdate && " (#{graduate.member.age} år)" || '') + "\n" +
+            "<font size='18'>" + member.first_name + '</font> ' +
+                member.last_name +
+                (member.birthdate && " (#{member.age} år)" || '') + "\n" +
                 rank_color +
                 "\n" \
-                "Treninger: #{graduate.member.attendances_since_graduation(graduation.held_on).count}" \
+                "Treninger: #{member.attendances_since_graduation(graduation.held_on).count}" \
                 ' (' + graduate.current_rank_age + ")\n" \
                 "#{graduate.rank.name} #{graduate.rank.colour}",
             '',

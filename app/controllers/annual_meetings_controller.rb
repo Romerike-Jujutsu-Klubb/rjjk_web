@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class AnnualMeetingsController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   def index
     @annual_meetings = AnnualMeeting.order(:start_at).reverse_order.all

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class ElectionsController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   def index
     @meetings = Election.includes(:annual_meeting, :role)
@@ -55,7 +55,9 @@ class ElectionsController < ApplicationController
     @election = Election.find(params[:id])
     respond_to do |format|
       if @election.update_attributes(params[:election])
-        format.html { redirect_to elections_path, notice: 'Board appointment was successfully updated.' }
+        format.html do
+          redirect_to elections_path, notice: 'Board appointment was successfully updated.'
+        end
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

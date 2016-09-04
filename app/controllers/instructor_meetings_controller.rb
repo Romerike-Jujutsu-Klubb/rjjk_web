@@ -62,7 +62,8 @@ class InstructorMeetingsController < ApplicationController
     @instructor_meeting.destroy
     respond_to do |format|
       format.html do
-        redirect_to instructor_meetings_url, notice: 'Instructor meeting was successfully destroyed.'
+        redirect_to instructor_meetings_url,
+            notice: 'Instructor meeting was successfully destroyed.'
       end
       format.json { head :no_content }
     end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class BirthdayCelebrationsController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   def index
     @birthday_celebrations = BirthdayCelebration.order('held_on DESC').to_a
@@ -45,7 +45,8 @@ class BirthdayCelebrationsController < ApplicationController
 
   def edit
     @birthday_celebration = BirthdayCelebration.find(params[:id])
-    @members = Member.order(:first_name).active(@birthday_celebration.held_on).to_a.select { |m| m.age >= 15 }
+    @members = Member.order(:first_name).active(@birthday_celebration.held_on)
+        .to_a.select { |m| m.age >= 15 }
   end
 
   def create
@@ -53,9 +54,12 @@ class BirthdayCelebrationsController < ApplicationController
     respond_to do |format|
       if @birthday_celebration.save
         format.html do
-          redirect_to @birthday_celebration, notice: 'Birthday celebration was successfully created.'
+          redirect_to @birthday_celebration,
+              notice: 'Birthday celebration was successfully created.'
         end
-        format.json { render json: @birthday_celebration, status: :created, location: @birthday_celebration }
+        format.json do
+          render json: @birthday_celebration, status: :created, location: @birthday_celebration
+        end
       else
         format.html { render action: :new }
         format.json { render json: @birthday_celebration.errors, status: :unprocessable_entity }
@@ -68,7 +72,8 @@ class BirthdayCelebrationsController < ApplicationController
     respond_to do |format|
       if @birthday_celebration.update_attributes(params[:birthday_celebration])
         format.html do
-          redirect_to @birthday_celebration, notice: 'Birthday celebration was successfully updated.'
+          redirect_to @birthday_celebration,
+              notice: 'Birthday celebration was successfully updated.'
         end
         format.json { head :no_content }
       else

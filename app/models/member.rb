@@ -13,9 +13,9 @@ class Member < ActiveRecord::Base
 
   belongs_to :image, dependent: :destroy
   belongs_to :user, dependent: :destroy
-  has_one :next_graduate,
-      -> { includes(:graduation).where('graduations.held_on >= ?', Date.today).order('graduations.held_on') },
-      class_name: :Graduate
+  has_one :next_graduate, -> do
+    includes(:graduation).where('graduations.held_on >= ?', Date.today).order('graduations.held_on')
+  end, class_name: :Graduate
   has_one :nkf_member, dependent: :nullify
   has_many :appointments, dependent: :destroy
   has_many :attendances, dependent: :destroy
@@ -55,8 +55,8 @@ class Member < ActiveRecord::Base
       :parent_name, :phone_home, :phone_mobile, :phone_parent, :phone_work
   ].freeze
   scope :search, ->(query) {
-    where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ ?" }
-            .join(' OR '), *([UnicodeUtils.upcase(query).split(/\s+/).join('|')] * SEARCH_FIELDS.size))
+    where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ :query" }.join(' OR '),
+        query: UnicodeUtils.upcase(query).split(/\s+/).join('|'))
         .order(:first_name, :last_name)
   }
 
@@ -64,20 +64,20 @@ class Member < ActiveRecord::Base
   before_validation { NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? } }
 
   # validates_presence_of :address, :cms_contract_id
-  validates_length_of :billing_postal_code, is: 4,
-      if: proc { |m| m.billing_postal_code && !m.billing_postal_code.empty? }
-  validates_presence_of :birthdate, :joined_on
-  validates_uniqueness_of :cms_contract_id, if: :cms_contract_id
-  validates_length_of :email, maximum: 128
-  validates_presence_of :first_name, :last_name
-  validates_inclusion_of :instructor, in: [true, false]
-  validates_inclusion_of :male, in: [true, false]
-  validates_inclusion_of :nkf_fee, in: [true, false]
-  validates_inclusion_of :payment_problem, in: [true, false]
+  validates :billing_postal_code, length: { is: 4,
+      if: proc { |m| m.billing_postal_code && !m.billing_postal_code.empty? } }
+  validates :birthdate, :joined_on, presence: true
+  validates :cms_contract_id, uniqueness: { if: :cms_contract_id }
+  validates :email, length: { maximum: 128 }
+  validates :first_name, :last_name, presence: true
+  validates :instructor, inclusion: { in: [true, false] }
+  validates :male, inclusion: { in: [true, false] }
+  validates :nkf_fee, inclusion: { in: [true, false] }
+  validates :payment_problem, inclusion: { in: [true, false] }
   # validates_presence_of :postal_code
-  validates_length_of :postal_code, is: 4, allow_blank: true
-  validates_uniqueness_of :rfid, if: proc { |r| r.rfid && !r.rfid.empty? }
-  validates_presence_of :user, :user_id, unless: :left_on
+  validates :postal_code, length: { is: 4, allow_blank: true }
+  validates :rfid, uniqueness: { if: proc { |r| r.rfid && !r.rfid.empty? } }
+  validates :user, :user_id, presence: { unless: :left_on }
 
   def self.paginate_active(page)
     active.order(:first_name, :last_name).paginate(page: page, per_page: MEMBERS_PER_PAGE)
@@ -85,7 +85,9 @@ class Member < ActiveRecord::Base
 
   def self.instructors(date = Date.today)
     active(date)
-        .where('instructor = true OR id IN (SELECT member_id FROM group_instructors GROUP BY member_id)')
+        .where(<<~SQL)
+          instructor = true OR id IN (SELECT member_id FROM group_instructors GROUP BY member_id)
+        SQL
         .order('first_name, last_name').to_a
   end
 
@@ -236,9 +238,11 @@ blocking users: #{blocking_users.inspect}"
         .compact.join(' ')
   end
 
-  def next_rank(graduation = Graduation.new(held_on: Date.today, group: groups.sort_by(&:from_age).last))
+  def next_rank(graduation =
+      Graduation.new(held_on: Date.today, group: groups.sort_by(&:from_age).last))
     age = self.age(graduation.held_on)
-    ma = graduation.group.try(:martial_art) || MartialArt.includes(:ranks).find_by_name('Kei Wa Ryu')
+    ma = graduation.group.try(:martial_art) ||
+        MartialArt.includes(:ranks).find_by_name('Kei Wa Ryu')
     current_rank = current_rank(ma, graduation.held_on)
     ranks = ma.ranks.to_a
     if current_rank

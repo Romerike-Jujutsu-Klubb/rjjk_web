@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class EventsController < ApplicationController
-  before_filter :admin_required, except: [:calendar, :index, :show]
+  before_action :admin_required, except: [:calendar, :index, :show]
 
   def index
     @events = Event.order('start_at DESC').to_a
@@ -64,7 +64,8 @@ class EventsController < ApplicationController
     if params[:example]
       recipients = [current_user]
     elsif params[:recipients] == 'all'
-      recipients = Group.all.to_a.map { |g| g.members.active(event.start_at.to_date) }.flatten.compact.uniq
+      recipients = Group.all.to_a.map { |g| g.members.active(event.start_at.to_date) }
+          .flatten.compact.uniq
     elsif params[:recipients] == 'invited'
       recipients = event.event_invitees
     elsif params[:recipients] == 'groups'
@@ -96,7 +97,8 @@ class EventsController < ApplicationController
       end
       events.each do |e|
         event do
-          uid "#{e.class.name.underscore}.#{e.id}@#{"#{Rails.env}." unless Rails.env.production?}jujutsu.no"
+          env_prefix = ("#{Rails.env}." unless Rails.env.production?)
+          uid "#{e.class.name.underscore}.#{e.id}@#{env_prefix}jujutsu.no"
           summary e.name
           if e.description
             description Kramdown::Document

@@ -4,9 +4,9 @@ class BasicTechniqueLink < ActiveRecord::Base
 
   belongs_to :basic_technique
 
-  validates_presence_of :basic_technique_id, :position, :url
-  validates_length_of :title, maximum: 64, allow_nil: true
-  validates_length_of :url, in: 12..128
-  validates_uniqueness_of :position, scope: :basic_technique_id
-  validates_uniqueness_of :url, scope: :basic_technique_id
+  validates :basic_technique_id, :position, :url, presence: true
+  validates :title, length: { maximum: 64, allow_nil: true }
+  validates :url, length: { in: 12..128 }
+  validates :position, uniqueness: { scope: :basic_technique_id }
+  validates :url, uniqueness: { scope: :basic_technique_id }
 end

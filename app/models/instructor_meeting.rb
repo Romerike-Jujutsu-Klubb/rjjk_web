@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 class InstructorMeeting < ActiveRecord::Base
-  validates_presence_of :end_at, :start_at
-  validates_length_of :title, maximum: 254
+  validates :end_at, :start_at, presence: true
+  validates :title, length: { maximum: 254 }
 end

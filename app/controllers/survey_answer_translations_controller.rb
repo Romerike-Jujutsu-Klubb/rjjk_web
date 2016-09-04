@@ -29,7 +29,9 @@ class SurveyAnswerTranslationsController < ApplicationController
         format.json { render :show, status: :created, location: @survey_answer_translation }
       else
         format.html { render :new }
-        format.json { render json: @survey_answer_translation.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @survey_answer_translation.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -44,7 +46,9 @@ class SurveyAnswerTranslationsController < ApplicationController
         format.json { render :show, status: :ok, location: @survey_answer_translation }
       else
         format.html { render :edit }
-        format.json { render json: @survey_answer_translation.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @survey_answer_translation.errors, status: :unprocessable_entity
+        end
       end
     end
   end

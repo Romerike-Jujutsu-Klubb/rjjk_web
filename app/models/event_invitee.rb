@@ -10,13 +10,13 @@ class EventInvitee < ActiveRecord::Base
   has_one :signup_rejection,
       -> { where("message_type = '#{EventInviteeMessage::MessageType::SIGNUP_REJECTION}'") },
       class_name: 'EventInviteeMessage', dependent: :destroy
-  has_many :event_invitee_messages,
-      -> { where("message_type IS NULL OR message_type <> '#{EventMessage::MessageType::INVITATION}'") },
-      dependent: :destroy
+  has_many :event_invitee_messages, -> do
+    where("message_type IS NULL OR message_type <> '#{EventMessage::MessageType::INVITATION}'")
+  end, dependent: :destroy
 
-  validates_presence_of :event, :event_id, :name, :email
-  validates_uniqueness_of :user_id, scope: :event_id, allow_nil: true
-  validates_inclusion_of :will_work, in: [nil, false], if: proc { |r| r.will_attend == false }
+  validates :event, :event_id, :name, :email, presence: true
+  validates :user_id, uniqueness: { scope: :event_id, allow_nil: true }
+  validates :will_work, inclusion: { in: [nil, false], if: proc { |r| r.will_attend == false } }
 
   before_create do
     if user

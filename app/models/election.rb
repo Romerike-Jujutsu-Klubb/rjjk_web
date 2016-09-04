@@ -4,7 +4,7 @@ class Election < ActiveRecord::Base
   belongs_to :member
   belongs_to :role
 
-  validates_presence_of :member_id, :role_id
+  validates :member_id, :role_id, presence: true
 
   scope :current, -> {
     includes(:annual_meeting).references(:annual_meetings)

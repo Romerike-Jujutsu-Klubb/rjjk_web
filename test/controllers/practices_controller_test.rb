@@ -4,6 +4,7 @@ require 'test_helper'
 class PracticesControllerTest < ActionController::TestCase
   setup do
     @practice = practices(:panda_2010_42)
+    login(:admin)
   end
 
   test 'should get index' do

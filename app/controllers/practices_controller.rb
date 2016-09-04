@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 class PracticesController < ApplicationController
-  # GET /practices
-  # GET /practices.json
+  before_action :admin_required
+
   def index
     @practices = Practice.includes(group_schedule: :group).references(:group_schedules)
-        .order('year DESC, week DESC, group_schedules.weekday DESC, end_at DESC, start_at DESC, name').to_a
+        .order('year, week, group_schedules.weekday, end_at, start_at, name DESC')
+        .reverse_order.to_a
 
     respond_to do |format|
       format.html # index.html.erb
@@ -12,8 +13,6 @@ class PracticesController < ApplicationController
     end
   end
 
-  # GET /practices/1
-  # GET /practices/1.json
   def show
     @practice = Practice.find(params[:id])
 
@@ -23,8 +22,6 @@ class PracticesController < ApplicationController
     end
   end
 
-  # GET /practices/new
-  # GET /practices/new.json
   def new
     @practice = Practice.new
     load_form_data
@@ -35,20 +32,19 @@ class PracticesController < ApplicationController
     end
   end
 
-  # GET /practices/1/edit
   def edit
     @practice = Practice.find(params[:id])
     load_form_data
   end
 
-  # POST /practices
-  # POST /practices.json
   def create
     @practice = Practice.new(params[:practice])
 
     respond_to do |format|
       if @practice.save
-        format.html { redirect_to @practice, notice: 'Scheduled practice was successfully created.' }
+        format.html do
+          redirect_to @practice, notice: 'Scheduled practice was successfully created.'
+        end
         format.json { render json: @practice, status: :created, location: @practice }
       else
         format.html { render action: 'new' }
@@ -57,14 +53,14 @@ class PracticesController < ApplicationController
     end
   end
 
-  # PUT /practices/1
-  # PUT /practices/1.json
   def update
     @practice = Practice.find(params[:id])
 
     respond_to do |format|
       if @practice.update_attributes(params[:practice])
-        format.html { redirect_to @practice, notice: 'Scheduled practice was successfully updated.' }
+        format.html do
+          redirect_to @practice, notice: 'Scheduled practice was successfully updated.'
+        end
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -73,8 +69,6 @@ class PracticesController < ApplicationController
     end
   end
 
-  # DELETE /practices/1
-  # DELETE /practices/1.json
   def destroy
     @practice = Practice.find(params[:id])
     @practice.destroy

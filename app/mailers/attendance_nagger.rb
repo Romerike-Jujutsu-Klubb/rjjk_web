@@ -25,15 +25,17 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
   def self.send_attendance_summary
     now = Time.now
     group_schedules = GroupSchedule.includes(:group).references(:groups)
-        .where('weekday = ? AND start_at >= ? AND (groups.school_breaks IS NULL OR groups.school_breaks = ?)',
-            now.to_date.cwday, now.time_of_day, false)
+        .where('weekday = ? AND start_at >= ?', now.to_date.cwday, now.time_of_day)
+        .where('groups.school_breaks IS NULL OR groups.school_breaks = ?', false)
         .order('groups.from_age', 'groups.to_age')
     group_schedules.each do |gs|
       attendances = Attendance.includes(:member, practice: :group_schedule)
-          .where(practices: { group_schedule_id: gs.id, year: now.year, week: now.to_date.cweek }).to_a
+          .where(practices: { group_schedule_id: gs.id, year: now.year, week: now.to_date.cweek })
+          .to_a
       next if attendances.empty?
       practice = attendances[0].practice
-      non_attendees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:member)
+      non_attendees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }
+          .map(&:member)
       attendees = attendances.map(&:member) - non_attendees
       recipients = gs.group.members.order(:joined_on, :id)
           .select { |m| !m.passive? } - non_attendees
@@ -79,7 +81,8 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
       new_attendances = attendances.select { |a| a.updated_at >= 1.hour.ago }.map(&:member)
       next if new_attendances.empty?
       practice = attendances[0].practice
-      absentees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:member)
+      absentees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }
+          .map(&:member)
       attendees = attendances.map(&:member) - absentees
       new_attendees = new_attendances & attendees
       new_absentees = new_attendances & absentees
@@ -111,7 +114,8 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         .where('groups.closed_on IS NULL')
         .where('groups.school_breaks IS NULL OR groups.school_breaks = ?',
             false).to_a
-    planned_attendances = Attendance.includes(:member, practice: :group_schedule).references(:groups)
+    planned_attendances = Attendance
+        .includes(:member, practice: :group_schedule).references(:groups)
         .where('practices.group_schedule_id IN (?)', completed_group_schedules.map(&:id))
         .where('practices.year = ? AND practices.week = ?', now.year, now.to_date.cweek)
         .where('attendances.status = ? AND sent_review_email_at IS NULL',

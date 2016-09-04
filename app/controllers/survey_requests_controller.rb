@@ -2,8 +2,8 @@
 class SurveyRequestsController < ApplicationController
   USER_ACTIONS = [:answer_form, :save_answers, :thanks].freeze
   before_action :set_survey_request, only: [:show, :edit, :update, :destroy] + USER_ACTIONS
-  before_filter :authenticate_user, only: USER_ACTIONS
-  before_filter :admin_required, except: USER_ACTIONS
+  before_action :authenticate_user, only: USER_ACTIONS
+  before_action :admin_required, except: USER_ACTIONS
 
   def index
     @survey_requests = SurveyRequest.all
@@ -24,7 +24,9 @@ class SurveyRequestsController < ApplicationController
 
     respond_to do |format|
       if @survey_request.save
-        format.html { redirect_to @survey_request, notice: 'Survey request was successfully created.' }
+        format.html do
+          redirect_to @survey_request, notice: 'Survey request was successfully created.'
+        end
         format.json { render :show, status: :created, location: @survey_request }
       else
         format.html { render :new }
@@ -36,7 +38,9 @@ class SurveyRequestsController < ApplicationController
   def update
     respond_to do |format|
       if @survey_request.update(survey_request_params)
-        format.html { redirect_to @survey_request, notice: 'Survey request was successfully updated.' }
+        format.html do
+          redirect_to @survey_request, notice: 'Survey request was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @survey_request }
       else
         format.html { render :edit }
@@ -48,7 +52,9 @@ class SurveyRequestsController < ApplicationController
   def destroy
     @survey_request.destroy
     respond_to do |format|
-      format.html { redirect_to survey_requests_url, notice: 'Survey request was successfully destroyed.' }
+      format.html do
+        redirect_to survey_requests_url, notice: 'Survey request was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
@@ -59,7 +65,8 @@ class SurveyRequestsController < ApplicationController
   def save_answers
     params[:survey_request][:completed_at] = Time.now
     # params.require(:survey_request).
-    #     permit(:comment, :completed_at, survey_answers_attributes: [:answer, :id, :survey_question_id])
+    #     permit(:comment, :completed_at,
+    #     survey_answers_attributes: [:answer, :id, :survey_question_id])
 
     params[:survey_request][:survey_answers_attributes].each do |_i, values|
       logger.error "values: #{values.inspect}"

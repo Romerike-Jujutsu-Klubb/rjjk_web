@@ -37,7 +37,9 @@ class RawIncomingEmailsControllerTest < ActionController::TestCase
   end
 
   test 'should update raw_incoming_email' do
-    patch :update, id: @raw_incoming_email, raw_incoming_email: { content: @raw_incoming_email.content }
+    patch :update, id: @raw_incoming_email, raw_incoming_email: {
+        content: @raw_incoming_email.content,
+    }
     assert_redirected_to raw_incoming_email_path(assigns(:raw_incoming_email))
   end
 

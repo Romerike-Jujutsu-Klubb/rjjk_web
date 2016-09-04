@@ -80,7 +80,8 @@ class GroupInstructorsController < ApplicationController
   def convert_semester_id
     return unless (semester_id = params[:group_instructor].delete(:semester_id))
     group_schedule = GroupSchedule.find(params[:group_instructor][:group_schedule_id])
-    group_semester = GroupSemester.where(group_id: group_schedule.group_id, semester_id: semester_id).first
+    group_semester = GroupSemester
+        .where(group_id: group_schedule.group_id, semester_id: semester_id).first
     params[:group_instructor][:group_semester_id] = group_semester.id
   end
 end

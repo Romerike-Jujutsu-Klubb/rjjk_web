@@ -4,10 +4,10 @@ class Graduate < ActiveRecord::Base
   belongs_to :member
   belongs_to :rank
 
-  validates_presence_of :graduation, :graduation_id, :member, :member_id, :rank, :rank_id
-  validates_uniqueness_of :member_id, scope: :graduation_id
-  validates_uniqueness_of :member_id, scope: [:passed, :rank_id], if: :passed,
-      message: 'har allerede bestått denne graden.'
+  validates :graduation, :graduation_id, :member, :member_id, :rank, :rank_id, presence: true
+  validates :member_id, uniqueness: { scope: :graduation_id }
+  validates :member_id, uniqueness: { scope: [:passed, :rank_id], if: :passed,
+      message: 'har allerede bestått denne graden.' }
 
   def training_start_date
     member.current_graduate(graduation.group.martial_art, graduation.held_on - 1)

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 class ApplicationStepsController < ApplicationController
   USER_ACTIONS = [:image].freeze
-  before_filter :technical_committy_required, except: USER_ACTIONS
-  before_filter :authenticate_user, only: USER_ACTIONS
+  before_action :technical_committy_required, except: USER_ACTIONS
+  before_action :authenticate_user, only: USER_ACTIONS
 
   # FIXME(uwe):  Check caching
   caches_page :image
@@ -71,8 +71,12 @@ class ApplicationStepsController < ApplicationController
     @application_step = ApplicationStep.new(params[:application_step])
     respond_to do |format|
       if @application_step.save
-        format.html { redirect_to @application_step, notice: 'Application step was successfully created.' }
-        format.json { render json: @application_step, status: :created, location: @application_step }
+        format.html do
+          redirect_to @application_step, notice: 'Application step was successfully created.'
+        end
+        format.json do
+          render json: @application_step, status: :created, location: @application_step
+        end
       else
         format.html { render action: 'new' }
         format.json { render json: @application_step.errors, status: :unprocessable_entity }
@@ -84,7 +88,9 @@ class ApplicationStepsController < ApplicationController
     @application_step = ApplicationStep.find(params[:id])
     respond_to do |format|
       if @application_step.update_attributes(params[:application_step])
-        format.html { redirect_to @application_step, notice: 'Application step was successfully updated.' }
+        format.html do
+          redirect_to @application_step, notice: 'Application step was successfully updated.'
+        end
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

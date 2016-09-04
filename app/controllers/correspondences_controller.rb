@@ -45,7 +45,9 @@ class CorrespondencesController < ApplicationController
 
     respond_to do |format|
       if @correspondence.save
-        format.html { redirect_to @correspondence, notice: 'Correspondence was successfully created.' }
+        format.html do
+          redirect_to @correspondence, notice: 'Correspondence was successfully created.'
+        end
         format.json { render json: @correspondence, status: :created, location: @correspondence }
       else
         format.html { render action: 'new' }
@@ -61,7 +63,9 @@ class CorrespondencesController < ApplicationController
 
     respond_to do |format|
       if @correspondence.update_attributes(params[:correspondence])
-        format.html { redirect_to @correspondence, notice: 'Correspondence was successfully updated.' }
+        format.html do
+          redirect_to @correspondence, notice: 'Correspondence was successfully updated.'
+        end
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

@@ -70,8 +70,8 @@ OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday > ?)',
 
   accepts_nested_attributes_for :practice
 
-  validates_presence_of :member_id, :status
-  validates_uniqueness_of :member_id, scope: :practice_id
+  validates :member_id, :status, presence: true
+  validates :member_id, uniqueness: { scope: :practice_id }
 
   validate on: :update do
     if status_was == Status::ATTENDED && status == Status::WILL_ATTEND
@@ -79,15 +79,14 @@ OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday > ?)',
     end
   end
 
-  def date
-    practice.date
-  end
+  delegate :date, to: :practice
 
   def present?
     PRESENCE_STATES.include?(status)
   end
 
   # def self.find_member_count_for_month(group, year, month)
-  #  all.where('group_schedule_id IN ? AND year = ?', group.group_schedules.map{|gs| gs.id}, year, month)
+  #  all.where('group_schedule_id IN ? AND year = ?',
+  #      group.group_schedules.map{|gs| gs.id}, year, month)
   # end
 end

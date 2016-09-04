@@ -11,9 +11,9 @@ class NkfMemberTrial < ActiveRecord::Base
         .order(:fornavn, :etternavn).all
   end
 
-  validates_presence_of :alder, :epost, :etternavn, :fodtdato,
-      :fornavn, :medlems_type, :postnr, :reg_dato, :sted, :stilart, :tid
-  validates_inclusion_of :res_sms, in: [true, false]
+  validates :alder, :epost, :etternavn, :fodtdato,
+      :fornavn, :medlems_type, :postnr, :reg_dato, :sted, :stilart, :tid, presence: true
+  validates :res_sms, inclusion: { in: [true, false] }
 
   def age
     age = Date.today.year - fodtdato.year

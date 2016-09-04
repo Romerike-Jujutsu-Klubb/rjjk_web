@@ -6,7 +6,7 @@
 # * Store sending of survey
 # * Store answers
 # * Send no more than one survey per week.
-# * Check survey conditions: active members / left members / passive members / panda / tiger / voksne
+# Check survey conditions: active members / left members / passive members / panda / tiger / voksne
 
 # Survey active/passive/left group title position/priority expires_at header footer
 # SurveyQuestion survey_id:integer title:string choices:string free_text:boolean

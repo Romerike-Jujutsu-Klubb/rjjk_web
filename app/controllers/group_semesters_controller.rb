@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class GroupSemestersController < ApplicationController
-  before_filter :admin_required, except: :show
-  before_filter :authenticate_user, only: :show
+  before_action :admin_required, except: :show
+  before_action :authenticate_user, only: :show
 
   def index
     @group_semesters = GroupSemester.includes(:semester).order('semesters.start_on DESC').to_a
@@ -42,7 +42,9 @@ class GroupSemestersController < ApplicationController
     respond_to do |format|
       if @group_semester.save
         create_practices
-        format.html { redirect_to @group_semester, notice: 'Group semester was successfully created.' }
+        format.html do
+          redirect_to @group_semester, notice: 'Group semester was successfully created.'
+        end
         format.json { render json: @group_semester, status: :created, location: @group_semester }
       else
         format.html { new }
@@ -57,7 +59,9 @@ class GroupSemestersController < ApplicationController
     respond_to do |format|
       if @group_semester.update_attributes(params[:group_semester])
         create_practices
-        format.html { redirect_to @group_semester, notice: 'Group semester was successfully updated.' }
+        format.html do
+          redirect_to @group_semester, notice: 'Group semester was successfully updated.'
+        end
         format.json { head :no_content }
       else
         format.html do
@@ -82,7 +86,8 @@ class GroupSemestersController < ApplicationController
   private
 
   def load_form_data
-    @groups = Group.active(@group_semester.semester.try(:start_on) || Date.today).order(:from_age).to_a
+    @groups = Group.active(@group_semester.semester.try(:start_on) || Date.today)
+        .order(:from_age).to_a
     @semesters = Semester.order('start_on DESC').to_a
     @instructors = Member
         .instructors(@group_semester.first_session || @group_semester.semester.try(:start_on))

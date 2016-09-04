@@ -30,7 +30,8 @@ class NewsletterMailer < ApplicationMailer
     @event_invitee = event_invitee_message.event_invitee
     @email = @event_invitee.email
     @title = @subject = event_invitee_message.subject
-    @email_url = { controller: :event_invitee_messages, action: :show, id: @event_invitee_message.id }
+    @email_url = { controller: :event_invitee_messages, action: :show,
+        id: @event_invitee_message.id }
     @timestamp = @event_invitee.event.start_at
     @email_end_at = @event_invitee.event.end_at
     @body = event_invitee_message.body

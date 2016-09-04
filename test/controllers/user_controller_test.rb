@@ -94,7 +94,9 @@ class UserControllerTest < ActionController::TestCase
   end
 
   def test_signup__mismatched_passwords
-    post :signup, user: { login: 'newtesla', password: 'newpassword', password_confirmation: 'wrong' }
+    post :signup, user: {
+        login: 'newtesla', password: 'newpassword', password_confirmation: 'wrong'
+    }
     user = assigns(:user)
     assert_equal 1, user.errors.size
     assert_not_nil user.errors['password']
@@ -150,7 +152,9 @@ class UserControllerTest < ActionController::TestCase
 
   def test_change_password
     user = login(:lars)
-    post :change_password, user: { password: 'changed_password', password_onfirmation: 'changed_password' }
+    post :change_password, user: {
+        password: 'changed_password', password_onfirmation: 'changed_password'
+    }
     assert_no_errors :user
     assert_equal 1, UserMessage.pending.size
     mail = UserMessage.pending[0]

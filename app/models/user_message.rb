@@ -12,8 +12,8 @@ class UserMessage < ActiveRecord::Base
   before_validation do
     self.key ||= BCrypt::Password.create(Time.now.to_i.to_s + rand.to_s).checksum
   end
-  validates_length_of :subject, maximum: 160, allow_blank: false
-  validates_length_of :key, maximum: 64, allow_blank: false
+  validates :subject, length: { maximum: 160, allow_blank: false }
+  validates :key, length: { maximum: 64, allow_blank: false }
   validates :tag, length: { maximum: 64 }
 
   def to

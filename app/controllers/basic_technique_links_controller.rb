@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class BasicTechniqueLinksController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   def index
     @basic_technique_links = BasicTechniqueLink.all

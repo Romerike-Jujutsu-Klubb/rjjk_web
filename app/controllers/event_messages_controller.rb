@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class EventMessagesController < ApplicationController
-  before_filter :admin_required, except: [:index, :show]
+  before_action :admin_required, except: [:index, :show]
 
   # GET /event_messages
   # GET /event_messages.json
@@ -49,7 +49,9 @@ class EventMessagesController < ApplicationController
 
     respond_to do |format|
       if @event_message.save
-        format.html { back_or_redirect_to @event_message, notice: 'Event message was successfully created.' }
+        format.html do
+          back_or_redirect_to @event_message, notice: 'Event message was successfully created.'
+        end
         format.json { render json: @event_message, status: :created, location: @event_message }
       else
         format.html { render action: 'new' }
@@ -65,7 +67,9 @@ class EventMessagesController < ApplicationController
 
     respond_to do |format|
       if @event_message.update_attributes(params[:event_message])
-        format.html { back_or_redirect_to @event_message, notice: 'Event message was successfully updated.' }
+        format.html do
+          back_or_redirect_to @event_message, notice: 'Event message was successfully updated.'
+        end
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

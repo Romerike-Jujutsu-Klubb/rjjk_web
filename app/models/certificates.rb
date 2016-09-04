@@ -27,7 +27,8 @@ class Certificates
           logo_width = 120
 
           fill_color 'ffffff'
-          fill_rectangle [(page_width - logo_width) / 2 - 5, page_height - 1], logo_width + 5, logo_width
+          fill_rectangle [(page_width - logo_width) / 2 - 5, page_height - 1], logo_width + 5,
+              logo_width
           fill_color '000000'
 
           image "#{Rails.root}/app/views/graduations/logo_RJJK_notext.jpg",
@@ -87,7 +88,8 @@ class Certificates
           fill_color 'E20816'
           stroke_color '000000'
           font 'Times-Roman'
-          text 'Romerike Jujutsu Klubb', align: :center, size: 40, mode: :fill_stroke, character_spacing: 1
+          text 'Romerike Jujutsu Klubb', align: :center, size: 40, mode: :fill_stroke,
+              character_spacing: 1
         end
 
         fill_color 'ffffff'
@@ -126,7 +128,8 @@ class Certificates
           text 'Navn', size: 18, align: :center, style: :italic
         end
         stroke do
-          line [censor_title_x, graduate_name_y - 18], [page_width - censor_title_x, graduate_name_y - 18]
+          line [censor_title_x, graduate_name_y - 18],
+              [page_width - censor_title_x, graduate_name_y - 18]
         end
 
         bounding_box [labels_x, rank_y], width: 80, height: 20 do
@@ -142,12 +145,17 @@ class Certificates
         bounding_box [labels_x, sensor_y], width: 80, height: 20 do
           text 'Sensor', size: 18, align: :center, style: :italic
         end
-        stroke { line [censor_title_x, sensor_y - 18], [page_width - censor_title_x, sensor_y - 18] }
-        stroke { line [censor_title_x, sensor_y - 53], [page_width - censor_title_x, sensor_y - 53] }
+        stroke do
+          line [censor_title_x, sensor_y - 18], [page_width - censor_title_x, sensor_y - 18]
+        end
+        stroke do
+          line [censor_title_x, sensor_y - 53], [page_width - censor_title_x, sensor_y - 53]
+        end
       end
       stamp 'border'
       content.each do |c|
-        bounding_box [(page_width - name_width) / 2, graduate_name_y], width: name_width, height: 20 do
+        bounding_box [(page_width - name_width) / 2, graduate_name_y], width: name_width,
+            height: 20 do
           text c[:name], size: 18, align: :center, valign: :bottom
         end
         bounding_box [(page_width - name_width) / 2, rank_y], width: name_width, height: 20 do

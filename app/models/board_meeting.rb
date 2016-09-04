@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class BoardMeeting < ActiveRecord::Base
-  validates_presence_of :start_at
+  validates :start_at, presence: true
 
   def minutes=(file)
     return if file == ''

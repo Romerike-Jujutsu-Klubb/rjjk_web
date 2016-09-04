@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 class AttendancesController < ApplicationController
   USER_ACTIONS = [:announce, :plan, :review].freeze
-  before_filter :authenticate_user, only: USER_ACTIONS
-  before_filter :instructor_required, except: USER_ACTIONS
+  before_action :authenticate_user, only: USER_ACTIONS
+  before_action :instructor_required, except: USER_ACTIONS
 
   # FIXME(uwe):  check caching
   caches_page :history_graph, :month_chart, :month_per_year_chart
@@ -92,8 +92,11 @@ class AttendancesController < ApplicationController
   end
 
   def report
-    @date = (params[:year] && params[:month] && Date.new(params[:year].to_i, params[:month].to_i, 1)) ||
-        Date.today.beginning_of_month
+    @date = if params[:year] && params[:month]
+              Date.new(params[:year].to_i, params[:month].to_i, 1)
+            else
+              Date.today.beginning_of_month
+            end
     @year = @date.cwyear
     @month = @date.month
     @first_date = @date
@@ -103,7 +106,8 @@ class AttendancesController < ApplicationController
             @year, @first_date.cweek, @last_date.cweek)
         .where('attendances.status NOT IN (?)', Attendance::ABSENT_STATES)
         .to_a.select { |a| (@first_date..@last_date).cover? a.date }
-    monthly_per_group = @attendances.group_by { |a| a.group_schedule.group }.sort_by { |g, _ats| g.from_age }
+    monthly_per_group = @attendances.group_by { |a| a.group_schedule.group }
+        .sort_by { |g, _ats| g.from_age }
     @monthly_summary_per_group = {}
     monthly_per_group.each do |g, attendances|
       @monthly_summary_per_group[g] = {}
@@ -136,9 +140,11 @@ class AttendancesController < ApplicationController
   def month_chart
     g = if params[:size] && params[:size].to_i <= 1280
           if params[:size] =~ /^\d+x\d+$/
-            AttendanceHistoryGraph.new.month_chart params[:year].to_i, params[:month].to_i, params[:size]
+            AttendanceHistoryGraph.new.month_chart params[:year].to_i,
+                params[:month].to_i, params[:size]
           else
-            AttendanceHistoryGraph.new.month_chart params[:year].to_i, params[:month].to_i, params[:size].to_i
+            AttendanceHistoryGraph.new.month_chart params[:year].to_i,
+                params[:month].to_i, params[:size].to_i
           end
         else
           AttendanceHistoryGraph.new.month_chart
@@ -195,7 +201,8 @@ class AttendancesController < ApplicationController
 
     @weeks = [[today.cwyear, today.cweek], [(today + 7).cwyear, (today + 7).cweek]]
     if today.month >= 6 && today.month <= 7
-      @weeks += [[(today + 14).cwyear, (today + 14).cweek], [(today + 21).cwyear, (today + 21).cweek]]
+      @weeks += [[(today + 14).cwyear, (today + 14).cweek],
+          [(today + 21).cwyear, (today + 21).cweek]]
     end
 
     member = current_user.member
@@ -264,9 +271,11 @@ class AttendancesController < ApplicationController
     if new_status == 'toggle'
       new_status =
           case @attendance.status
-          when Attendance::Status::WILL_ATTEND, Attendance::Status::ABSENT, Attendance::Status::HOLIDAY
+          when Attendance::Status::WILL_ATTEND, Attendance::Status::ABSENT,
+              Attendance::Status::HOLIDAY
             Attendance::Status::ATTENDED
-          when Attendance::Status::ATTENDED, Attendance::Status::INSTRUCTOR, Attendance::Status::ASSISTANT
+          when Attendance::Status::ATTENDED, Attendance::Status::INSTRUCTOR,
+              Attendance::Status::ASSISTANT
             Attendance::Status::ABSENT
           when nil
             Attendance::Status::ATTENDED
@@ -278,7 +287,8 @@ class AttendancesController < ApplicationController
       render partial: 'plan_practice', locals: { gs: practice.group_schedule,
               year: year, week: week, attendance: @attendance }
     else
-      flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  #{t(:attendances)[@attendance.status.to_sym]}"
+      flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  " \
+          "#{t(:attendances)[@attendance.status.to_sym]}"
       flash[:attendance_id] = @attendance.id
       redirect_to attendance_plan_path
     end
@@ -326,7 +336,8 @@ class AttendancesController < ApplicationController
           end.empty?
         end
         @instructors += GroupInstructor
-            .includes(:group_schedule, member: [{ attendances: { practice: :group_schedule } }, :nkf_member])
+            .includes(:group_schedule, member: [{ attendances: { practice: :group_schedule } },
+                :nkf_member])
             .where('group_instructors.member_id NOT IN (?)', @instructors.map(&:id))
             .where(group_schedules: { group_id: @group.id }).to_a
             .select { |gi| @dates.any? { |d| gi.active?(d) } }.map(&:member).uniq

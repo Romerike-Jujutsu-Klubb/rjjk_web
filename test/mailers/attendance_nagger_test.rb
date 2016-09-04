@@ -10,7 +10,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_equal ['"Lars Bråten" <lars@example.com>'],
         mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
-    assert_match "Følg linken til\n    <a href=\"http://example.com/mitt/oppmote\">Mitt oppmøte</a>",
+    assert_match %r{Følg linken til\s+<a href="http://example.com/mitt/oppmote">Mitt oppmøte</a>},
         mail.body
 
     mail = UserMessage.pending[1]

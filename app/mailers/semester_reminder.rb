@@ -19,7 +19,8 @@ class SemesterReminder
         .select { |g| g.current_semester.last_session.nil? || g.next_semester.first_session.nil? }
         .each do |g|
       recipient = g.current_semester.chief_instructor || Role[:Hovedinstruktør] || Role[:Leder]
-      SemesterMailer.missing_session_dates(recipient, g).store(recipient.user_id, tag: :missing_session_dates)
+      SemesterMailer.missing_session_dates(recipient, g)
+          .store(recipient.user_id, tag: :missing_session_dates)
     end
   end
 end

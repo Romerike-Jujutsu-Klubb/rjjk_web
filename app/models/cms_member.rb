@@ -2,11 +2,11 @@
 class CmsMember < ActiveRecord::Base
   ACTIVE_CONDITIONS = 'left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)'
 
-  validates_presence_of :address, :first_name, :last_name, :postal_code
-  validates_inclusion_of(:instructor, :male, :nkf_fee, :payment_problem, in: [true, false])
-  validates_length_of :postal_code, is: 4
-  validates_length_of :billing_postal_code, is: 4, if: :billing_postal_code
-  validates_uniqueness_of :cms_contract_id
+  validates :address, :first_name, :last_name, :postal_code, presence: true
+  validates(:instructor, :male, :nkf_fee, :payment_problem, inclusion: { in: [true, false] })
+  validates :postal_code, length: { is: 4 }
+  validates :billing_postal_code, length: { is: 4, if: :billing_postal_code }
+  validates :cms_contract_id, uniqueness: true
 
   def self.find_active
     where(ACTIVE_CONDITIONS).order(:last_name, :first_name)

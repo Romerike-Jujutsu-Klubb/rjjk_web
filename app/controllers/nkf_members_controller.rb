@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class NkfMembersController < ApplicationController
-  before_filter :admin_required
+  before_action :admin_required
 
   # FIXME(uwe):  Verify caching
   cache_sweeper :member_sweeper, only: [:create_member, :update_member]
@@ -84,12 +84,15 @@ class NkfMembersController < ApplicationController
 
   def import
     import = NkfMemberImport.new
-    escaped_records_size = html_escape(import.error_records.size.to_s)
+    error_records = import.error_records
+    records_size = error_records.size
+    escaped_records_size = html_escape(records_size.to_s)
     flash[:notice] = "#{import.changes.size} records imported, #{escaped_records_size} failed, " \
-        "#{import.import_rows.size - import.changes.size - import.error_records.size} skipped" +
-        (import.error_records.any? &&
-            "<br>#{html_escape(import.error_records.map { |r| [r, r.errors.full_messages] }.inspect)}" ||
-            '')
+        "#{import.import_rows.size - import.changes.size - records_size} skipped"
+    if error_records.any?
+      error_messages = error_records.map { |r| [r, r.errors.full_messages] }
+      flash[:notice] += "<br>#{html_escape(error_messages.inspect)}"
+    end
 
     redirect_to action: :comparison
   end

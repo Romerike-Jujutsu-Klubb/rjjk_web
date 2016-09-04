@@ -38,7 +38,9 @@ class TechniqueApplicationsController < ApplicationController
     @technique_application = TechniqueApplication.new(params[:technique_application])
     respond_to do |format|
       if @technique_application.save
-        format.html { redirect_to @technique_application, notice: 'Application was successfully created.' }
+        format.html do
+          redirect_to @technique_application, notice: 'Application was successfully created.'
+        end
         format.json do
           render json: @technique_application, status: :created, location: @technique_application
         end
@@ -53,7 +55,9 @@ class TechniqueApplicationsController < ApplicationController
     @technique_application = TechniqueApplication.find(params[:id])
     respond_to do |format|
       if @technique_application.update_attributes(params[:technique_application])
-        format.html { redirect_to @technique_application, notice: 'Application was successfully updated.' }
+        format.html do
+          redirect_to @technique_application, notice: 'Application was successfully updated.'
+        end
         format.json { head :no_content }
       else
         format.html { render :edit }

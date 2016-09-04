@@ -55,7 +55,9 @@ class UserMessagesController < ApplicationController
   def destroy
     @user_message.destroy
     respond_to do |format|
-      format.html { redirect_to user_messages_url, notice: 'User message was successfully destroyed.' }
+      format.html do
+        redirect_to user_messages_url, notice: 'User message was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
@@ -69,6 +71,7 @@ class UserMessagesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_message_params
-    params.require(:user_message).permit(:user_id, :tag, :from, :subject, :key, :body, :sent_at, :read_at)
+    params.require(:user_message)
+        .permit(:user_id, :tag, :from, :subject, :key, :body, :sent_at, :read_at)
   end
 end

@@ -36,12 +36,14 @@ class MemberTest < ActiveSupport::TestCase
 
   test 'passive? preloaded attendances for group' do
     members = Member.includes(:attendances).order(:first_name)
-    assert_equal [false, false, true, false], members.map { |m| m.passive?(Date.today, groups(:voksne)) }
+    assert_equal [false, false, true, false],
+        members.map { |m| m.passive?(Date.today, groups(:voksne)) }
   end
 
   test 'passive? preloaded recent_attendances' do
     members = Member.includes(:recent_attendances).order(:first_name)
-    assert_equal [false, false, true, false], members.map { |m| m.passive?(Date.today, groups(:voksne)) }
+    assert_equal [false, false, true, false],
+        members.map { |m| m.passive?(Date.today, groups(:voksne)) }
   end
 
   test 'emails' do

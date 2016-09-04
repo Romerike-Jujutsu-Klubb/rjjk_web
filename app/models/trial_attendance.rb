@@ -8,9 +8,7 @@ class TrialAttendance < ActiveRecord::Base
   belongs_to :nkf_member_trial
   belongs_to :practice
 
-  validates_presence_of :nkf_member_trial, :practice
+  validates :nkf_member_trial, :practice, presence: true
 
-  def date
-    practice.date
-  end
+  delegate :date, to: :practice
 end

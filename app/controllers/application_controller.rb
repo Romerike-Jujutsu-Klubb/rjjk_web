@@ -13,17 +13,17 @@ class ApplicationController < ActionController::Base
   layout DEFAULT_LAYOUT
   helper :user
 
-  before_filter :reject_baidu_bot
-  before_filter :store_current_user_in_thread
+  before_action :reject_baidu_bot
+  before_action :store_current_user_in_thread
 
   if Rails.env.beta?
-    before_filter { Rack::MiniProfiler.authorize_request if current_user.try(:admin?) }
+    before_action { Rack::MiniProfiler.authorize_request if current_user.try(:admin?) }
   end
 
   # FIXME(uwe):  Set permitted params in each controller/action
-  before_filter { params.permit! }
+  before_action { params.permit! }
 
-  after_filter :clear_user
+  after_action :clear_user
 
   def render(*args)
     load_layout_model unless args[0].is_a?(Hash) && args[0][:text] && !args[0][:layout]
@@ -36,7 +36,9 @@ class ApplicationController < ActionController::Base
     return if request.xhr? || _layout != DEFAULT_LAYOUT
     unless @information_pages
       @information_pages = InformationPage.roots
-      @information_pages = @information_pages.where('hidden IS NULL OR hidden = ?', false) unless admin?
+      unless admin?
+        @information_pages = @information_pages.where('hidden IS NULL OR hidden = ?', false)
+      end
       @information_pages = @information_pages.where('title <> ?', 'Velkommen') unless user?
     end
     unless @image
@@ -44,7 +46,7 @@ class ApplicationController < ActionController::Base
         begin
           Image.uncached do
             image_query = Image
-                .select('approved, content_type, description, height, id, name, public, user_id, width')
+                .select(*%w(approved content_type description height id name public user_id width))
                 .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
                 .order(Rails.env.test? ? :id : 'RANDOM()')
             image_query = image_query.where('approved = ?', true) unless admin?

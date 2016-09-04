@@ -4,8 +4,8 @@ class MartialArt < ActiveRecord::Base
   has_many :groups, dependent: :destroy
   has_many :ranks, -> { order :position }
 
-  validates_presence_of :name, :family
-  validates_uniqueness_of :name, :family
+  validates :name, :family, presence: true
+  validates :name, :family, uniqueness: true
 
   scope :kwr, -> { where(name: 'Kei Wa Ryu') }
 
