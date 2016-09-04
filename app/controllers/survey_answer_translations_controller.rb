@@ -22,7 +22,10 @@ class SurveyAnswerTranslationsController < ApplicationController
 
     respond_to do |format|
       if @survey_answer_translation.save
-        format.html { redirect_to @survey_answer_translation, notice: 'Survey answer translation was successfully created.' }
+        format.html do
+          redirect_to @survey_answer_translation,
+              notice: 'Survey answer translation was successfully created.'
+        end
         format.json { render :show, status: :created, location: @survey_answer_translation }
       else
         format.html { render :new }
@@ -34,7 +37,10 @@ class SurveyAnswerTranslationsController < ApplicationController
   def update
     respond_to do |format|
       if @survey_answer_translation.update(survey_answer_translation_params)
-        format.html { redirect_to @survey_answer_translation, notice: 'Survey answer translation was successfully updated.' }
+        format.html do
+          redirect_to @survey_answer_translation,
+              notice: 'Survey answer translation was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @survey_answer_translation }
       else
         format.html { render :edit }
@@ -46,7 +52,10 @@ class SurveyAnswerTranslationsController < ApplicationController
   def destroy
     @survey_answer_translation.destroy
     respond_to do |format|
-      format.html { redirect_to survey_answer_translations_url, notice: 'Survey answer translation was successfully destroyed.' }
+      format.html do
+        redirect_to survey_answer_translations_url,
+            notice: 'Survey answer translation was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end

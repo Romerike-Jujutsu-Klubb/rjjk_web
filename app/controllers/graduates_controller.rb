@@ -26,7 +26,9 @@ class GraduatesController < ApplicationController
 
   def annual_summary
     @year = params[:id]
-    @graduates = Graduate.includes(:graduation).where("DATE_PART('YEAR', graduations.held_on) = ?", @year).order('rank_id').to_a
+    @graduates = Graduate.includes(:graduation)
+        .where("DATE_PART('YEAR', graduations.held_on) = ?", @year)
+        .order('rank_id').to_a
     @by_group = @graduates.group_by { |gr| gr.rank.group }
     @by_rank = @graduates.group_by(&:rank)
   end

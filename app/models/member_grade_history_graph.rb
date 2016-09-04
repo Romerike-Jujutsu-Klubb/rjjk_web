@@ -104,9 +104,10 @@ EOF
                     date.cwyear, date.cwyear, date.cweek, (@practices[date] * percentage) / 100,
                     date, date]
               else
-                [ACTIVE_CLAUSE, prev_date.cwyear, prev_date.cwyear, prev_date.cweek, date.cwyear, date.cwyear, date.cweek,
-                    next_date, date.cwyear, date.cwyear, date.cweek, next_date.cwyear, next_date.cwyear, next_date.cweek,
-                    date, date]
+                [ACTIVE_CLAUSE, prev_date.cwyear, prev_date.cwyear, prev_date.cweek,
+                    date.cwyear, date.cwyear, date.cweek, next_date, date.cwyear,
+                    date.cwyear, date.cweek, next_date.cwyear, next_date.cwyear,
+                    next_date.cweek, date, date]
               end
           )
           .includes(graduates: [{ graduation: { group: :martial_art } }, :rank]).to_a

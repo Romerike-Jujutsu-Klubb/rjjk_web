@@ -19,10 +19,10 @@ class CreateMemberImages < ActiveRecord::Migration
       u ||= User.find_by_first_name_and_last_name(m.first_name, m.last_name)
       u ||= User.find_by_email(m.email)
       if u.nil? && !m.email.blank?
-        password                      = (1..5).map { PASSWORD_CHARS[rand(PASSWORD_CHARS.size)] }.join('')
-        u                             = User.new login: m.email, email: m.email, first_name: m.first_name, last_name: m.last_name,
-                                                 password: password, password_confirmation: password,
-                                                 role: m.instructor ? 'ADMIN' : nil, member_id: m.id
+        password = (1..5).map { PASSWORD_CHARS[rand(PASSWORD_CHARS.size)] }.join('')
+        u = User.new login: m.email, email: m.email, first_name: m.first_name, last_name: m.last_name,
+            password: password, password_confirmation: password,
+            role: m.instructor ? 'ADMIN' : nil, member_id: m.id
         u.password_needs_confirmation = true
         u.save!
         u.generate_security_token

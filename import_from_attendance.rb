@@ -19,10 +19,11 @@ def load(model_plural)
     attendance = Attendance
         .find_by_member_id_and_year_and_week_and_group_schedule_id(r.member_id,
             r.year, r.week, r.group_schedule_id)
-    if attendance.nil?
-      puts "Adding attendance for #{r.member.name} year #{r.year}, week: #{r.week}, group: #{r.group_schedule.group.name}"
-      Attendance.create! member_id: r.member_id, year: r.year, week: r.week, group_schedule_id: r.group_schedule_id
-    end
+    next unless attendance.nil?
+    puts "Adding attendance for #{r.member.name} year #{r.year}, "\
+        "week: #{r.week}, group: #{r.group_schedule.group.name}"
+    Attendance.create! member_id: r.member_id, year: r.year, week: r.week,
+        group_schedule_id: r.group_schedule_id
   end
 end
 

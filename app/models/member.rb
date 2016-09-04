@@ -79,7 +79,8 @@ class Member < ActiveRecord::Base
   before_validation { NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? } }
 
   # validates_presence_of :address, :cms_contract_id
-  validates_length_of :billing_postal_code, is: 4, if: proc { |m| m.billing_postal_code && !m.billing_postal_code.empty? }
+  validates_length_of :billing_postal_code, is: 4,
+      if: proc { |m| m.billing_postal_code && !m.billing_postal_code.empty? }
   validates_presence_of :birthdate, :joined_on
   validates_uniqueness_of :cms_contract_id, if: :cms_contract_id
   validates_length_of :email, maximum: 128
@@ -120,8 +121,10 @@ class Member < ActiveRecord::Base
         full_email_with_birthdate, full_email_with_join_year]
     blocking_users = []
     potential_emails.compact.each do |potential_email|
-      existing_user = User.where('(login = ? OR email = ?) AND NOT EXISTS (SELECT id FROM members WHERE user_id = users.id)',
-          potential_email, potential_email).first
+      existing_user = User
+          .where('login = :email OR email = :email', email: potential_email)
+          .where('NOT EXISTS (SELECT id FROM members WHERE user_id = users.id)')
+          .first
       return existing_user if existing_user
 
       if (user_with_email = User.where('login = ? OR email = ?', *([potential_email] * 2)).first)
@@ -171,14 +174,18 @@ blocking users: #{blocking_users.inspect}"
     full_email
   end
 
-  # describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
+  # describe how to retrieve the address from your model, if you use directly a
+  # db column, you can dry your code, see wiki
   def gmaps4rails_address
     "#{address}, #{postal_code}, Norway"
   end
 
   def gmaps4rails_infowindow
-    html = ''
-    html << "<img src='/members/thumbnail/#{id}.#{image.format}' width='128' style='float: left; margin-right: 1em'>" if image?
+    html = ''.dup
+    if image?
+      html << "<img src='/members/thumbnail/#{id}.#{image.format}' width='128' " \
+          "style='float: left; margin-right: 1em'>"
+    end
     html << name
     html
   end
@@ -190,7 +197,10 @@ blocking users: #{blocking_users.inspect}"
 
   def current_graduate(martial_art, date = Date.today)
     graduates.sort_by { |g| -g.rank.position }
-        .find { |g| g.passed? && g.graduation.held_on < date && (martial_art.nil? || g.rank.martial_art_id == martial_art.id) }
+        .find do |g|
+      g.passed? && g.graduation.held_on < date &&
+          (martial_art.nil? || g.rank.martial_art_id == martial_art.id)
+    end
   end
 
   def attendances_since_graduation(before_date = Date.today, group = nil, includes: nil)
@@ -272,7 +282,9 @@ blocking users: #{blocking_users.inspect}"
           (age.nil? || age >= r.minimum_age) &&
           attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
     end
-    next_rank ||= ranks.find { |r| age.nil? || (age >= r.minimum_age && (r.group.from_age..r.group.to_age).cover?(age)) }
+    next_rank ||= ranks.find do |r|
+      age.nil? || (age >= r.minimum_age && (r.group.from_age..r.group.to_age).cover?(age))
+    end
     next_rank ||= ranks.first
     next_rank
   end

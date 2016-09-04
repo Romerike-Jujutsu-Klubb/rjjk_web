@@ -135,32 +135,8 @@ class GraduationsController < ApplicationController
   def censor_form_pdf
     graduation = Graduation.find(params[:id])
     filename = "Sensorskjema_#{graduation.held_on}.pdf"
-
-    pdf = Prawn::Document.new do
-      date = graduation.held_on
-      text "Gradering #{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}",
-          size: 18, align: :center
-      move_down 16
-      data = graduation.graduates.sort_by { |g| [-g.rank.position, g.member.name] }.map do |graduate|
-        member_current_rank = graduate.member.current_rank(graduate.graduation.martial_art, graduate.graduation.held_on)
-        [
-            "<font size='18'>" + graduate.member.first_name + '</font> ' +
-                graduate.member.last_name +
-                (graduate.member.birthdate && " (#{graduate.member.age} år)" || '') + "\n" +
-                (member_current_rank && "#{member_current_rank.name} #{member_current_rank.colour}" || 'Ugradert') + "\n" \
-                "Treninger: #{graduate.member.attendances_since_graduation(graduation.held_on).count}" \
-                ' (' + graduate.current_rank_age + ")\n" \
-                "#{graduate.rank.name} #{graduate.rank.colour}",
-            '',
-            '',
-        ]
-      end
-      table([['Utøver', 'Bra', 'Kan bli bedre']] + data, header: true,
-          cell_style: { inline_format: true, width: 180, padding: 8 })
-      start_new_page
-    end
-
-    send_data pdf.render, type: 'text/pdf', filename: filename, disposition: 'attachment'
+    data = GraduationCensorForm.new(graduation).binary
+    send_data data, type: 'text/pdf', filename: filename, disposition: 'attachment'
   end
 
   def approve

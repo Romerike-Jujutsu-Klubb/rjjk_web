@@ -11,7 +11,8 @@ class AttendanceMailerTest < ActionMailer::TestCase
   end
 
   test 'review' do
-    mail = AttendanceMailer.review(members(:lars), [attendances(:lars_panda_2013_41)], [attendances(:lars_panda_2010_42)])
+    mail = AttendanceMailer.review(members(:lars),
+        [attendances(:lars_panda_2013_41)], [attendances(:lars_panda_2010_42)])
     assert_equal 'Hvordan var treningen?', mail.subject
     assert_equal %w(lars@example.com), mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from

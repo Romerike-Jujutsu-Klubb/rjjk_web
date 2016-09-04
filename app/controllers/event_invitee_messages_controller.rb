@@ -57,7 +57,10 @@ class EventInviteeMessagesController < ApplicationController
 
     respond_to do |format|
       if @event_invitee_message.save
-        format.html { back_or_redirect_to @event_invitee_message, notice: 'Signup confirmation was successfully created.' }
+        format.html do
+          back_or_redirect_to @event_invitee_message,
+              notice: 'Signup confirmation was successfully created.'
+        end
         format.json { render json: @event_invitee_message, status: :created, location: @event_invitee_message }
       else
         format.html { render action: 'new' }
@@ -73,7 +76,10 @@ class EventInviteeMessagesController < ApplicationController
 
     respond_to do |format|
       if @event_invitee_message.update_attributes(params[:event_invitee_message])
-        format.html { back_or_redirect_to @event_invitee_message, notice: 'Signup confirmation was successfully updated.' }
+        format.html do
+          back_or_redirect_to @event_invitee_message,
+              notice: 'Signup confirmation was successfully updated.'
+        end
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

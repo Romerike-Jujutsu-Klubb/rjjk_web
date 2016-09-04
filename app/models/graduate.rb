@@ -10,7 +10,8 @@ class Graduate < ActiveRecord::Base
       message: 'har allerede bestått denne graden.'
 
   def training_start_date
-    member.current_graduate(graduation.group.martial_art, graduation.held_on - 1).try(:graduation).try(:held_on).try(:+, 1) ||
+    member.current_graduate(graduation.group.martial_art, graduation.held_on - 1)
+        .try(:graduation).try(:held_on).try(:+, 1) ||
         [member.joined_on, member.attendances.map(&:date).sort.first].compact.min
   end
 

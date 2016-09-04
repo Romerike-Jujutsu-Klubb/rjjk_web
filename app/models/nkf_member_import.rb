@@ -158,7 +158,8 @@ class NkfMemberImport
 
     trial_ids = []
     (member_trial_rows.size.to_f / 20).ceil.times do |page|
-      trial_url = "page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_page_search=#{page + 1}&p_cr_par=#{extra_function_code}"
+      trial_url = 'page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?' \
+          "p_page_search=#{page + 1}&p_cr_par=#{extra_function_code}"
       member_trials_body = http_get(trial_url)
       new_trial_ids = member_trials_body.scan(/edit_click28\('(.*?)'\)/).map { |tid| tid[0] }
       trial_ids += new_trial_ids
@@ -190,7 +191,9 @@ class NkfMemberImport
         raise 'Could not find martial art'
       end
       martial_art = $1
-      trial_row = member_trial_rows.find { |ir| ir.size < member_trial_rows[0].size && ir[1] == last_name && ir[2] == first_name }
+      trial_row = member_trial_rows.find do |ir|
+        ir.size < member_trial_rows[0].size && ir[1] == last_name && ir[2] == first_name
+      end
       if trial_row
         trial_row << tid
         trial_row << (invoice_email.blank? ? nil : invoice_email)
@@ -397,7 +400,9 @@ class NkfMemberImport
 
   def http_get_response(url, binary, retries = 0)
     Net::HTTP.start(url.host, url.port) do |http|
-      response = http.get(url.request_uri, cookie_header.update(binary ? { 'Content-Type' => 'application/octet-stream' } : {}))
+      response = http
+          .get(url.request_uri,
+              cookie_header.update(binary ? { 'Content-Type' => 'application/octet-stream' } : {}))
       body = response.body
       content_length = response['content-length'].to_i
       if content_length.positive? && body.size != content_length

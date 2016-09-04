@@ -21,7 +21,8 @@ class EmbusController < ApplicationController
 
   def new
     unless current_user.try(:member)
-      redirect_to controller: :welcome, action: :index, notice: 'Du må være logget på og medlem for å redigere din embu.'
+      redirect_to controller: :welcome, action: :index,
+          notice: 'Du må være logget på og medlem for å redigere din embu.'
       return
     end
     @embu = Embu.new rank: current_user.member.next_rank

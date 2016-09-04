@@ -11,9 +11,11 @@ class AddMissingForeignKeys < ActiveRecord::Migration
     # add_foreign_key "graduates", ["graduation_id"], "graduations", ["id"], :name => "graduates_graduation_id_fkey"
     # add_foreign_key "graduates", ["rank_id"], "ranks", ["id"], :name => "graduates_rank_id_fkey"
 
-    # add_foreign_key "graduations", ["martial_art_id"], "martial_arts", ["id"], :name => "graduations_martial_art_id_fkey"
+    # add_foreign_key "graduations", ["martial_art_id"], "martial_arts", ["id"],
+    #     :name => "graduations_martial_art_id_fkey"
 
-    # add_foreign_key "information_pages", ["parent_id"], "information_pages", ["id"], :name => "information_pages_parent_id_fkey"
+    # add_foreign_key "information_pages", ["parent_id"], "information_pages",
+    #     ["id"], :name => "information_pages_parent_id_fkey"
 
     # add_foreign_key "ranks", ["martial_art_id"], "martial_arts", ["id"], :name => "ranks_martial_art_id_fkey"
   end

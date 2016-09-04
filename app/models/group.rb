@@ -1,12 +1,17 @@
 # frozen_string_literal: true
 # FIXME(uwe): Split into AgeGroup and TrainingGroup
 class Group < ActiveRecord::Base
-  scope :active, -> (date = nil) { date ? where('closed_on IS NULL OR closed_on >= ?', date) : where('closed_on IS NULL') }
+  scope :active, -> (date = nil) do
+    date ? where('closed_on IS NULL OR closed_on >= ?', date) : where('closed_on IS NULL')
+  end
   scope :inactive, -> (date) { where('closed_on IS NOT NULL AND closed_on < ?', date) }
 
   belongs_to :martial_art
   has_one :current_semester,
-      -> { references(:semesters).includes(:semester).where('CURRENT_DATE BETWEEN semesters.start_on AND semesters.end_on') },
+      -> {
+        references(:semesters).includes(:semester)
+            .where('CURRENT_DATE BETWEEN semesters.start_on AND semesters.end_on')
+      },
       class_name: :GroupSemester
   has_many :graduations, -> { order(:held_on) }, dependent: :destroy
   has_many :group_schedules, dependent: :destroy

@@ -119,7 +119,9 @@ class ImagesController < ApplicationController
 
   def media_list
     media_extensions = %w(mp4 mov flv)
-    @media = Image.where(media_extensions.map { |e| "UPPER(name) LIKE '%.#{e.upcase}'" }.join(' OR ')).order('UPPER(name)').to_a
+    @media = Image
+        .where(media_extensions.map { |e| "UPPER(name) LIKE '%.#{e.upcase}'" }.join(' OR '))
+        .order('UPPER(name)').to_a
     render layout: false
   end
 

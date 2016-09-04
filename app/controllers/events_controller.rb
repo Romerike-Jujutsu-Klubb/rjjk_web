@@ -114,7 +114,10 @@ class EventsController < ApplicationController
       end
     end
     respond_to do |format|
-      format.ics { send_data(cal.export, filename: 'RJJK.ics', disposition: 'inline; filename=RJJK.ics', type: 'text/calendar') }
+      format.ics do
+        send_data(cal.export, filename: 'RJJK.ics',
+          disposition: 'inline; filename=RJJK.ics', type: 'text/calendar')
+      end
       format.all do
         send_data(cal.export, filename: 'RJJK.ics', disposition: 'inline; filename=RJJK.ics', type: 'text/calendar')
       end

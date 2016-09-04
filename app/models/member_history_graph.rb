@@ -64,7 +64,12 @@ class MemberHistoryGraph
     current_month = nil
     dates.each_with_index do |date, i|
       next unless date.month != current_month && [1, 8].include?(date.month)
-      labels[i] = (date.year != current_year ? "#{date.strftime('%m')}\n    #{date.strftime('%Y')}" : date.strftime('%m'))
+      labels[i] =
+          if date.year != current_year
+            "#{date.strftime('%m')}\n    #{date.strftime('%Y')}"
+          else
+            date.strftime('%m')
+          end
       current_year = date.year
       current_month = date.month
     end

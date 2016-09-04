@@ -44,7 +44,8 @@ class UserMessageSenderTest < ActionMailer::TestCase
     assert_match %(<p style="margin:0 0 10px 0; font-size:18px; color:#E20916;">#{title}</p>), body
     assert_match(/17. Oktober\s+2013/, body)
     escaped_key = um.key.gsub('/', '%2F')
-    assert_match %(href="http://example.com/user_messages/#{um.id}?email=YWRtaW5AdGVzdC5jb20%3D%0A&amp;key=#{escaped_key}"),
+    assert_match %(href="http://example.com/user_messages/#{um.id}?) +
+        %(email=YWRtaW5AdGVzdC5jb20%3D%0A&amp;key=#{escaped_key}"),
         body
     assert_match <<~HTML, body
       An HTML message with an <a href="http://example.com/internal/link?key=42">internal link</a>

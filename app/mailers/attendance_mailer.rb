@@ -3,7 +3,6 @@ class AttendanceMailer < ApplicationMailer
   def plan(member)
     @member = member
     @title = 'Planlegging oppmøte'
-    @timestamp = Time.now
     @email_url = { controller: :attendances, action: :plan }
     mail to: member.email, subject: 'Kommer du?'
   end
@@ -39,7 +38,8 @@ class AttendanceMailer < ApplicationMailer
     @attendees = attendees
     change_msg = []
     if new_attendees.any?
-      change_msg << "#{new_attendees.size} ny#{'e' if new_attendees.size > 1} deltaker#{'e' if new_attendees.size > 1} påmeldt"
+      change_msg << "#{new_attendees.size} ny#{'e' if new_attendees.size > 1} " \
+          "deltaker#{'e' if new_attendees.size > 1} påmeldt"
     end
     change_msg << "#{new_absentees.size} avbud" if new_absentees.any?
     @title = "Trening i #{@group_schedule.start_at.day_phase}: #{change_msg.join(', ')}"

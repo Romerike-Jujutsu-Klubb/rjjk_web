@@ -290,7 +290,8 @@ class AttendancesController < ApplicationController
       if params[:group_id] == 'others'
         @instructors = []
         @members = Member.includes(attendances: { group_schedule: :group })
-            .where('id NOT in (SELECT DISTINCT member_id FROM groups_members) AND (left_on IS NULL OR left_on > ?)', @date)
+            .where('id NOT in (SELECT DISTINCT member_id FROM groups_members)')
+            .where('left_on IS NULL OR left_on > ?', @date)
             .to_a
         @trials = []
         weekdays = [2, 4]
@@ -303,7 +304,8 @@ class AttendancesController < ApplicationController
         @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
 
         @instructors = Member.active(@date)
-            .includes({ attendances: { practice: :group_schedule }, graduates: [:graduation, :rank] }, :groups, :nkf_member)
+            .includes({ attendances: { practice: :group_schedule },
+                graduates: [:graduation, :rank] }, :groups, :nkf_member)
             .where(instructor: true)
             .select { |m| m.groups.any? { |g| g.martial_art_id == @group.martial_art_id } }
         @instructors.delete_if do |m|

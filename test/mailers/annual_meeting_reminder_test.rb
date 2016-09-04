@@ -17,7 +17,8 @@ class AnnualMeetingReminderTest < ActionMailer::TestCase
     assert_equal ['"Uwe Kubosch" <admin@test.com>'], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_match '<h1>Hei Uwe !</h1>', mail.body
-    assert_match "Det er på tide å sette opp dato for årsmøtet 2014. For å registrere datoen\n  kan du gå inn på linken under.",
+    assert_match 'Det er på tide å sette opp dato for årsmøtet 2014. ' \
+        "For å registrere datoen\n  kan du gå inn på linken under.",
         mail.body
     assert_match %r{<a href="http://example.com/annual_meetings/new">Årsmøte 2014</a>},
         mail.body

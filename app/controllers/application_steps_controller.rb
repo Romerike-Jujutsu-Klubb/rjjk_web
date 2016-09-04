@@ -24,6 +24,13 @@ class ApplicationStepsController < ApplicationController
     end
   end
 
+  IMAGE_EXCEPTIONS =
+      if defined?(JRUBY_VERSION)
+        [java.lang.NullPointerException, java.lang.OutOfMemoryError]
+      else
+        [TypeError]
+      end
+
   def image
     step = ApplicationStep
         .select('id, image_filename, image_content_type, image_content_data')
@@ -36,7 +43,7 @@ class ApplicationStepsController < ApplicationController
     begin
       imgs = Magick::ImageList.new
       imgs.from_blob step.image_content_data
-    rescue NoMethodError, *(defined?(JRUBY_VERSION) ? [java.lang.NullPointerException, java.lang.OutOfMemoryError] : [TypeError])
+    rescue NoMethodError, *IMAGE_EXCEPTIONS
       redirect_to '/assets/pdficon_large.png'
       return
     end
