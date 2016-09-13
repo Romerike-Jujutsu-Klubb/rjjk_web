@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/donv/capybara-screenshot-diff.git
-  revision: afed7d8794cbde92802a3b9c4b00cff6857ad7cd
+  revision: 0458029426fb7a3c59f8221d42b29029bc39a42c
   specs:
     capybara-screenshot-diff (0.2.0)
       actionpack (~> 4.1)
@@ -73,12 +73,12 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    acts_as_list (0.8.0)
+    acts_as_list (0.8.1)
       activerecord (>= 3.0)
-    acts_as_tree (2.5.0)
+    acts_as_tree (2.5.1)
       activerecord (>= 3.0.0)
     addressable (2.4.0)
-    airbrussh (1.1.0)
+    airbrussh (1.1.1)
       sshkit (>= 1.6.1, != 1.7.0)
     anemone (0.7.2)
       nokogiri (>= 1.3.0)
@@ -86,14 +86,14 @@ GEM
     ansi (1.5.0)
     arel (6.0.3)
     ast (2.3.0)
-    autoprefixer-rails (6.4.1)
+    autoprefixer-rails (6.4.1.1)
       execjs
     bcrypt (3.1.11)
     bcrypt (3.1.11-java)
     bootstrap-sass (3.3.4.1)
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.2.19)
-    bootstrap3-datetimepicker-rails (4.17.37)
+    bootstrap3-datetimepicker-rails (4.17.42)
       momentjs-rails (>= 2.8.1)
     bootstrap_form (2.5.0)
     builder (3.2.2)
@@ -107,7 +107,7 @@ GEM
       capistrano (~> 3.1)
       sshkit (~> 1.2)
     capistrano-harrow (0.5.3)
-    capistrano-rails (1.1.7)
+    capistrano-rails (1.1.8)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
     capistrano-rvm (0.1.2)
@@ -331,7 +331,7 @@ GEM
       sass (~> 3.2.2)
       sprockets (~> 2.8, < 3.0)
       sprockets-rails (~> 2.0)
-    schema_auto_foreign_keys (0.1.2)
+    schema_auto_foreign_keys (0.1.3)
       its-it (~> 1.2)
       schema_plus_foreign_keys (~> 0.1)
       schema_plus_indexes (~> 0.2)
@@ -357,6 +357,9 @@ GEM
       its-it (~> 1.2)
       schema_plus_core
       schema_plus_indexes (~> 0.2)
+    schema_plus_compatibility (0.2.0)
+      activerecord (>= 4.2, < 5.1)
+      schema_monkey (~> 2.1)
     schema_plus_core (1.0.2)
       activerecord (~> 4.2)
       its-it (~> 1.2)
@@ -372,10 +375,11 @@ GEM
       activerecord (~> 4.2)
       its-it (~> 1.2)
       schema_plus_core (~> 1.0)
-    schema_plus_foreign_keys (0.1.6)
-      activerecord (~> 4.2)
+    schema_plus_foreign_keys (0.1.7)
+      activerecord (>= 4.2, < 5.1)
       its-it (~> 1.2)
-      schema_plus_core (~> 1.0)
+      schema_plus_compatibility (~> 0.2)
+      schema_plus_core
       valuable
     schema_plus_indexes (0.2.4)
       activerecord (>= 4.2, < 5.1)
@@ -436,7 +440,7 @@ GEM
     thread_safe (0.3.5-java)
     tilt (1.4.1)
     timecop (0.8.1)
-    tinymce-rails (4.4.2)
+    tinymce-rails (4.4.3)
       railties (>= 3.1.1)
     tinymce-rails-langs (4.20160310)
       tinymce-rails (~> 4.1, >= 4.1.10)
@@ -449,7 +453,7 @@ GEM
       unf_ext
     unf (0.1.4-java)
     unf_ext (0.0.7.2)
-    unicode-display_width (1.1.0)
+    unicode-display_width (1.1.1)
     unicode_utils (1.4.0)
     valuable (0.9.13)
     vcr (3.0.3)
@@ -490,7 +494,7 @@ DEPENDENCIES
   capistrano-scm-copy
   capybara-screenshot-diff!
   chosen-rails
-  chosen-sass-bootstrap-rails (>= 0.0.4)
+  chosen-sass-bootstrap-rails
   chunky_png
   coffee-rails
   database_cleaner
@@ -504,7 +508,7 @@ DEPENDENCIES
   jquery-rails
   kramdown
   lograge
-  mechanize (!= 2.7.4)
+  mechanize
   minitest-rails-capybara
   minitest-reporters
   mocha
@@ -545,4 +549,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   1.12.5
+   1.13.0

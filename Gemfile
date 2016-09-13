@@ -26,7 +26,7 @@ gem 'bootstrap3-datetimepicker-rails'
 # gem "bootstrap-switch-rails"
 # gem "bootstrap-wysihtml5-rails"
 gem 'chosen-rails'
-gem 'chosen-sass-bootstrap-rails', '>= 0.0.4'
+gem 'chosen-sass-bootstrap-rails'
 gem 'coffee-rails'
 gem 'draper' # https://github.com/drapergem/draper
 gem 'dynamic_form'
@@ -39,7 +39,7 @@ gem 'jbuilder'
 gem 'jquery-rails'
 # gem 'jquery-turbolinks'
 gem 'kramdown'
-gem 'mechanize', '!=2.7.4'
+gem 'mechanize'
 gem 'momentjs-rails'
 gem 'nokogiri'
 gem 'nprogress-rails'
