@@ -21,11 +21,11 @@
 
         .form-group.col-md-4
           = f.label :publish_at, 'Publiser fra'
-          = f.text_field :publish_at, value: @news_item.publish_at.try(:strftime, '%F %R'), class: 'datetime form-control', data: {'default-date': Time.now }
+          = f.text_field :publish_at, value: @news_item.publish_at.try(:strftime, '%F %R'), class: 'datetime form-control', data: {'default-date': Time.now.strftime('%F %R') }
 
         .form-group.col-md-4
           = f.label :expire_at, 'til'
-          = f.text_field :expire_at, value: @news_item.expire_at.try(:strftime, '%F %R'), class: 'datetime form-control', data: {'default-date': 1.week.from_now}
+          = f.text_field :expire_at, value: @news_item.expire_at.try(:strftime, '%F %R'), class: 'datetime form-control', data: {'default-date': 1.week.from_now.strftime('%F %R')}
 
       p
         | Sammendrag

@@ -60,8 +60,10 @@ class NewsFeatureTest < ActionDispatch::IntegrationTest
     screenshot("form_#{date_field_id}_selected")
     execute_script("$('##{date_field_id} + .bootstrap-datetimepicker-widget " \
         "td.day:contains(#{day})').click()")
-    assert has_field?(date_field_id, with: /^2013-10-#{day}/)
+    assert has_field?(date_field_id, with: /^2013-10-#{day}/),
+        "Unable to find field #{date_field_id} with value '2013-10-#{day}'.  " \
+        "Found: #{find("##{date_field_id}").value}"
     screenshot("form_#{date_field_id}_selected_date_#{day}")
-    find('body').click
+    find('#news_item_title').click
   end
 end

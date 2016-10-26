@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
         begin
           Image.uncached do
             image_query = Image
-                .select(*%w(approved content_type description height id name public user_id width))
+                .select(%w(approved content_type description height id name public user_id width))
                 .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
                 .order(Rails.env.test? ? :id : 'RANDOM()')
             image_query = image_query.where('approved = ?', true) unless admin?

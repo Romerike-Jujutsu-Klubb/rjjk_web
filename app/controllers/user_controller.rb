@@ -22,7 +22,7 @@ class UserController < ApplicationController
         cookies.permanent[:token] = user.generate_security_token(:login)
       end
       unless member?
-        if (member = Member.find_by_email(user.email))
+        if (member = Member.find_by(email: user.email))
           user.update_attributes! member_id: member.id
           flash['notice'] << "Du er nå registrert som medlem #{member.name}."
         end
@@ -142,7 +142,7 @@ class UserController < ApplicationController
   end
 
   def update
-    @user = User.find_by_id(params[:id]) || current_user
+    @user = User.find_by(id: params[:id]) || current_user
     if params['user']['form']
       form = params['user'].delete('form')
       begin
@@ -174,7 +174,7 @@ class UserController < ApplicationController
   end
 
   def delete
-    @user = current_user || User.find_by_id(session[:user_id])
+    @user = current_user || User.find_by(id: session[:user_id])
     begin
       @user.update_attribute(:deleted, true)
       logout
@@ -213,8 +213,8 @@ class UserController < ApplicationController
 
   # Generate a template user for certain actions on get
   def generate_filled_in
-    @user = (params[:id] && User.find_by_id(params[:id])) || current_user ||
-        User.find_by_id(session[:user_id])
+    @user = (params[:id] && User.find_by(id: params[:id])) || current_user ||
+        User.find_by(id: session[:user_id])
     @members = Member.select('id, first_name, last_name').where(email: @user.email).to_a
     case request.method
     when 'GET'

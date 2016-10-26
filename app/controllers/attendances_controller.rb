@@ -47,9 +47,9 @@ class AttendancesController < ApplicationController
 
   def create
     if params[:attendance][:group_schedule_id]
-      params[:attendance][:practice_id] = Practice.find_by_group_schedule_id_and_year_and_week(
-          params[:attendance].delete(:group_schedule_id),
-          params[:attendance].delete(:year), params[:attendance].delete(:week)
+      params[:attendance][:practice_id] = Practice.find_by(
+          group_schedule_id: params[:attendance].delete(:group_schedule_id),
+          year: params[:attendance].delete(:year), week: params[:attendance].delete(:week)
       ).id
     end
     @attendance = Attendance.new(params[:attendance], without_protection: true)

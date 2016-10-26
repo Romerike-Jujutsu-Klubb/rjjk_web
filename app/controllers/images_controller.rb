@@ -146,7 +146,7 @@ class ImagesController < ApplicationController
     image_select = image_select.where('user_id = ?', current_user.id)
     image_select = image_select.includes(:user)
     @images = image_select.to_a
-    @image = Image.find_by_id(params[:id]) || @images.first
+    @image = Image.find_by(id: params[:id]) || @images.first
     render action: :gallery
   end
 end

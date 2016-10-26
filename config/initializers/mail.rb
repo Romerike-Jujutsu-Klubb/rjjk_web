@@ -28,7 +28,9 @@ class Mail::Message
       end
     end
 
-    email_url = JSON.load(header['X-Email-URL']&.value)
+    if (url_header = header['X-Email-URL'])
+      email_url = JSON.parse(url_header.value)
+    end
     user_email = header['X-User-Email']&.value
     title = header['X-Title']&.value
     timestamp = header['X-Message-Timestamp']&.value

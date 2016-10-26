@@ -28,7 +28,7 @@ fi
 
 source "$HOME/.rvm/scripts/rvm"
 cd $APP_DIR
-rvm use --install `cat .ruby-version`
+rvm use --install `cat .ruby-version-production`
 if [ -z "ruby" ] ; then
   echo "Could not find ruby on your path."
   exit 1
