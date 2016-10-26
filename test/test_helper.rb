@@ -2,7 +2,7 @@
 if defined?(Rake) &&
       (RUBY_ENGINE != 'jruby' || org.jruby.RubyInstanceConfig.FULL_TRACE_ENABLED)
   require 'simplecov'
-  SimpleCov.start('rails') { minimum_coverage 83 }
+  SimpleCov.start('rails') { minimum_coverage 84 }
 end
 
 ENV['RAILS_ENV'] ||= 'test'
