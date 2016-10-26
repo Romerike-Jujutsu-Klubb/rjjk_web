@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class NkfReplicationTest < ActionMailer::TestCase
+class NkfReplicationMailerTest < ActionMailer::TestCase
   test 'import_changes' do
     import = mock('import')
     import.stubs(:size).returns(1)

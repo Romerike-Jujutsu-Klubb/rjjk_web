@@ -3,6 +3,7 @@ if defined?(Rake) &&
       (RUBY_ENGINE != 'jruby' || org.jruby.RubyInstanceConfig.FULL_TRACE_ENABLED)
   require 'simplecov'
   SimpleCov.start 'rails' do
+    minimum_coverage 83
     add_filter '/app/views/'
   end
 end
