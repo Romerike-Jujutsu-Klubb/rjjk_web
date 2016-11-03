@@ -39,6 +39,7 @@ gem 'jbuilder'
 gem 'jquery-rails'
 # gem 'jquery-turbolinks'
 gem 'kramdown'
+gem "lazyload-rails"
 gem 'mechanize'
 gem 'momentjs-rails'
 gem 'nokogiri'

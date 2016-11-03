@@ -5,7 +5,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'public/attendances',
     'public/images', 'public/members', 'tmp')
 set :default_env, JRUBY_OPTS: '--dev -J-Xmx2G', DISABLE_SCHEDULER: true
 set :rvm_ruby_version,
-    File.read(File.expand_path('../.ruby-version-production', File.dirname(__FILE__))).strip
+    File.read(File.expand_path('../.ruby-version-production', __dir__)).strip
 set :pty, true
 
 after 'deploy:updated', 'deploy:cleanup'

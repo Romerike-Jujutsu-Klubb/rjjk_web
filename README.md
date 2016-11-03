@@ -34,3 +34,7 @@ Resultatene lagres i
 
 * https://github.com/tmm1/rblineprof
 * https://github.com/tmm1/stackprof
+
+
+https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Fjujutsu.no%2F&tab=desktop
+

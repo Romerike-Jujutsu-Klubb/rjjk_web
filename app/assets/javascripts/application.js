@@ -15,6 +15,8 @@
 //= require chosen-jquery
 //= require remember_tab
 //= require stretch-columns
+//= require jquery.lazyload
+
 // Switch to Bootstrap modal
 NProgress.configure({showSpinner: false,  ease: 'ease',  speed: 500});
 
@@ -50,4 +52,16 @@ $().ready(function () {
         }
     });
     $('.time,[timeFormat]').datetimepicker({format: 'HH:mm'});
+});
+
+// Lazy load marked images
+$(window).on('load', function () {
+    $("img[data-original]").each(function () {
+        var container = $(this).closest(".lazy-container")[0];
+        if (container) {
+            $(this).lazyload({container: container});
+        } else {
+            $(this).lazyload();
+        }
+    });
 });
