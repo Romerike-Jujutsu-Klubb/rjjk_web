@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 source 'https://rubygems.org/'
 
 gem 'rails', '~>4.2.1'
@@ -39,7 +40,7 @@ gem 'jbuilder'
 gem 'jquery-rails'
 # gem 'jquery-turbolinks'
 gem 'kramdown'
-gem "lazyload-rails"
+gem 'lazyload-rails'
 gem 'mechanize'
 gem 'momentjs-rails'
 gem 'nokogiri'
