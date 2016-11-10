@@ -104,6 +104,6 @@ group :test do
 end
 
 group :development, :beta do
-  gem 'anemone'
+  gem 'medusa', github: 'donv/medusa', branch: 'patch-1'
   gem 'rack-mini-profiler'
 end

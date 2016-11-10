@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 namespace :deploy do
   desc 'The spinner task is used by :cold_deploy to start the application up'
   task :spinner do
