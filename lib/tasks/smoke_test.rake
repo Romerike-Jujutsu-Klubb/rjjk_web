@@ -14,6 +14,10 @@ task :smoke_test do
     pages = 0
     not_found = []
     medusa.on_every_page do |page|
+      unless page.fetched?
+        p page
+        next
+      end
       pages += 1
       print case page.code / 100
             when 2
