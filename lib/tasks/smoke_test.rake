@@ -1,21 +1,5 @@
 # frozen_string_literal: true
 
-module Medusa
-  module Storage
-    class Base
-      def initialize(adapter)
-        @adap = adapter
-        # verify adapter conforms to this class's methods
-        public_methods(false).each do |method|
-          unless @adap.respond_to?(method.to_sym)
-            raise "Storage adapter must support method #{method}"
-          end
-        end
-      end
-    end
-  end
-end
-
 desc 'Verify that the site is up'
 task :smoke_test do
   url = if Rails.env.development?
