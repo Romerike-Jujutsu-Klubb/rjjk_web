@@ -10,7 +10,7 @@ task :bundle_mri do
     within(current_path) do
       with BUNDLE_GEMFILE: "#{current_path}/Gemfile" do
         rvm_cmd('gem install --no-doc bundler')
-        rvm_cmd('bundle check || bundle install --without development,test')
+        rvm_cmd('bundle install --without development,test')
       end
     end
   end

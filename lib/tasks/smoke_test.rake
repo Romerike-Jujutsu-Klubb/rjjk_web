@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'medusa'
+
 desc 'Verify that the site is up'
 task :smoke_test do
   url = if Rails.env.development?
