@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 module UserHelper
-  DEFAULT_HEAD_OPTIONS = {
-      notice: true,
-    message: true,
-    error: false,
-  }.freeze unless defined? DEFAULT_HEAD_OPTIONS
+  unless defined? DEFAULT_HEAD_OPTIONS
+    DEFAULT_HEAD_OPTIONS = {
+        notice: true,
+      message: true,
+      error: false,
+    }.freeze
+  end
 
   def title_helper
     "#{controller.class.name} #{controller.action_name}"

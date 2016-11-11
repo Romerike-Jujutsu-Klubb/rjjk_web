@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class TrialAttendance < ActiveRecord::Base
-  scope :by_group_id, -> (group_id) {
+  scope :by_group_id, ->(group_id) {
     where('group_schedules.group_id = ?', group_id)
         .includes(practice: :group_schedule).references(:group_schedules)
   }

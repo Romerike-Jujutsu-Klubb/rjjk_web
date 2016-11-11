@@ -218,9 +218,11 @@ class NkfMemberImport
   end
 
   def import_member_rows(import_rows)
-    raise "Unknown format: #{import_rows && import_rows[0] &&
-        import_rows[0][0]}" unless import_rows && import_rows[0] &&
-              import_rows[0][0] == 'Medlemsnummer'
+    unless import_rows && import_rows[0] &&
+          import_rows[0][0] == 'Medlemsnummer'
+      raise "Unknown format: #{import_rows && import_rows[0] &&
+          import_rows[0][0]}"
+    end
     header_fields = import_rows.shift
     columns = header_fields.map { |f| field2column(f) }
     logger.debug "Found #{import_rows.size} active members"

@@ -23,7 +23,7 @@ class Role < ActiveRecord::Base
     end
   end
 
-  scope :by_name, -> (name) { where(name: name) }
+  scope :by_name, ->(name) { where(name: name) }
   # scope :active, -> (date = Date.current) { where(name: name).first }
 
   def self.[](name)

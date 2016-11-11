@@ -29,32 +29,32 @@ class Attendance < ActiveRecord::Base
   ABSENT_STATES = [Status::HOLIDAY, Status::SICK, Status::ABSENT].freeze
   PRESENCE_STATES = [*PRESENT_STATES, Status::WILL_ATTEND].freeze
 
-  scope :after, -> (limit) {
+  scope :after, ->(limit) {
     from_date = limit.to_date
     includes(practice: :group_schedule).references(:group_schedules)
         .where('year > :year OR (year = :year AND week > :week) OR ' \
         '(year = :year AND week = :week AND group_schedules.weekday > :wday)',
             year: from_date.cwyear, week: from_date.cweek, wday: from_date.cwday)
   }
-  scope :before, -> (limit) {
+  scope :before, ->(limit) {
     to_date = limit.to_date
     includes(practice: :group_schedule).references(:group_schedules)
         .where('year < :year OR (year = :year AND week < :week) OR ' \
             '(year = :year AND week = :week AND group_schedules.weekday <= :wday)',
             year: to_date.year, week: to_date.cweek, wday: to_date.cwday)
   }
-  scope :by_group_id, -> (group_id) {
+  scope :by_group_id, ->(group_id) {
     includes(practice: :group_schedule).references(:group_schedules)
         .where('group_schedules.group_id = ?', group_id)
   }
-  scope :on_date, -> (date) { where('year = ? AND week = ?', date.year, date.cweek) }
-  scope :after_date, -> (date) { 
-                       includes(practice: :group_schedule).references(:group_schedules)
-      .where('practices.year > ? OR (practices.year = ? AND practices.week > ?)
+  scope :on_date, ->(date) { where('year = ? AND week = ?', date.year, date.cweek) }
+  scope :after_date, ->(date) {
+    includes(practice: :group_schedule).references(:group_schedules)
+        .where('practices.year > ? OR (practices.year = ? AND practices.week > ?)
 OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday > ?)',
             date.year, date.year, date.cweek, date.year, date.cweek, date.cwday)
   }
-  scope :until_date, -> (date) {
+  scope :until_date, ->(date) {
     includes(practice: :group_schedule).references(:group_schedules)
         .where(<<~SQL,
               practices.year < ? OR (practices.year = ? AND practices.week < ?)

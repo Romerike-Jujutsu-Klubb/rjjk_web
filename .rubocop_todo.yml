@@ -18,7 +18,7 @@ Metrics/BlockLength:
 # Offense count: 20
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
-  Max: 409
+  Max: 411
 
 # Offense count: 35
 Metrics/CyclomaticComplexity:
@@ -494,47 +494,6 @@ Style/GuardClause:
     - 'app/models/news_publisher.rb'
     - 'app/models/public_record_importer.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: Width.
-Style/IndentationWidth:
-  Exclude:
-    - 'app/models/attendance.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/MultilineIfModifier:
-  Exclude:
-    - 'app/helpers/user_helper.rb'
-    - 'app/models/nkf_member_import.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: aligned, indented, indented_relative_to_receiver
-Style/MultilineMethodCallIndentation:
-  Exclude:
-    - 'app/models/attendance.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil.
-Style/SafeNavigation:
-  Exclude:
-    - 'db/migrate/20080828192131_add_family_to_martial_art.rb'
-
-# Offense count: 12
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: require_no_space, require_space
-Style/SpaceInLambdaLiteral:
-  Exclude:
-    - 'app/models/attendance.rb'
-    - 'app/models/group.rb'
-    - 'app/models/role.rb'
-    - 'app/models/trial_attendance.rb'
-    - 'app/models/user_message.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
@@ -543,9 +502,3 @@ Style/SpaceInsideBlockBraces:
   Exclude:
     - 'app/models/attendance.rb'
     - 'test/test_helper.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/TrailingWhitespace:
-  Exclude:
-    - 'app/models/attendance.rb'
