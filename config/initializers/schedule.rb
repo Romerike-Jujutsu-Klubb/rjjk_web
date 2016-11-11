@@ -4,11 +4,13 @@
 if %w(development beta production).include?(Rails.env) && !ENV['DISABLE_SCHEDULER']
   scheduler = Rufus::Scheduler.new max_work_threads: 1
 
-  def scheduler.handle_exception(job, e)
+  def scheduler.on_error(job, e)
     raise e if Rails.env.test?
     Rails.logger.error "Exception during scheduled job(#{job.tags}): #{e}"
     Rails.logger.error e.backtrace.join("\n")
     ExceptionNotifier.notify_exception(e)
+  rescue
+    p $!
   end
 
   # email
