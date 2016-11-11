@@ -10,7 +10,7 @@ class GroupInstructor < ActiveRecord::Base
   belongs_to :group_semester
   belongs_to :member
 
-  scope :active, ->(date = Date.today) do
+  scope :active, ->(date = Date.current) do
     includes(group_semester: :semester)
         .references(:semesters)
         .where('semesters.start_on <= :date AND semesters.end_on >= :date',
@@ -28,7 +28,7 @@ class GroupInstructor < ActiveRecord::Base
     end
   end
 
-  def active?(date = Date.today)
+  def active?(date = Date.current)
     group_semester.semester.start_on <= date && (group_semester.semester.end_on >= date)
   end
 

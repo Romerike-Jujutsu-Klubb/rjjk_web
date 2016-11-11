@@ -10,7 +10,7 @@ class MemberAgeChart
     g.colors = %w(darkblue)
     g.labels = {}
     (0..60).to_a.each { |a| g.labels[a] = (a % 5).zero? ? a.to_rfc2445_string : '' }
-    members = Member.active(Date.today).to_a
+    members = Member.active(Date.current).to_a
     g.data('Antall per årstrinn',
         g.labels.keys.map { |age| members.select { |m| m.age == age }.size })
     g.minimum_value = 0

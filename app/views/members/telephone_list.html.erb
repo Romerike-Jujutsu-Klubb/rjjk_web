@@ -11,7 +11,7 @@
     <th><%= link_to 'Jobb' %></th>
   </tr>
   
-<% for member in group.members.active(Date.today) %>
+<% for member in group.members.active(Date.current) %>
   <tr>
     <td><%=h member.last_name %></td>
     <td><%=h member.first_name %></td>

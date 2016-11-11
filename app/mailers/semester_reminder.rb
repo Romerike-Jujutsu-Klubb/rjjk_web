@@ -6,7 +6,7 @@ class SemesterReminder
       SemesterMailer.missing_current_semester(recipient).store(recipient, tag: :missing_semester)
       return
     end
-    unless Semester.where('? BETWEEN start_on AND end_on', Date.today + 4.months).exists?
+    unless Semester.where('? BETWEEN start_on AND end_on', Date.current + 4.months).exists?
       recipient = Role[:Leder] || Role[:Nestleder] || Role[:Kasserer]
       SemesterMailer.missing_next_semester.store(recipient, tag: :missing_next_semester)
     end
@@ -14,7 +14,7 @@ class SemesterReminder
 
   # Ensure first and last sessions are set
   def self.notify_missing_session_dates
-    Group.active(Date.today).includes(:current_semester, :next_semester)
+    Group.active(Date.current).includes(:current_semester, :next_semester)
         .where('groups.school_breaks = ?', true).all
         .select { |g| g.current_semester.last_session.nil? || g.next_semester.first_session.nil? }
         .each do |g|

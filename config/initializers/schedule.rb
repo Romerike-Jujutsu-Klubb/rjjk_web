@@ -9,8 +9,6 @@ if %w(development beta production).include?(Rails.env) && !ENV['DISABLE_SCHEDULE
     Rails.logger.error "Exception during scheduled job(#{job.tags}): #{e}"
     Rails.logger.error e.backtrace.join("\n")
     ExceptionNotifier.notify_exception(e)
-  rescue
-    p $!
   end
 
   # email

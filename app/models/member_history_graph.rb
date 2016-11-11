@@ -47,7 +47,7 @@ class MemberHistoryGraph
 
     first_date = Date.civil(2011, 1, 1)
     dates = []
-    Date.today.step(first_date, -14) { |date| dates << date }
+    Date.current.step(first_date, -14) { |date| dates << date }
     dates.reverse!
     g.data('Totalt', totals(dates))
     g.data('Totalt betalende', totals_jj(dates))

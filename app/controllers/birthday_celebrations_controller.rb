@@ -36,7 +36,7 @@ class BirthdayCelebrationsController < ApplicationController
 
   def new
     @birthday_celebration = BirthdayCelebration.new
-    @members = Member.order(:first_name).active(Date.today).to_a.select { |m| m.age >= 15 }
+    @members = Member.order(:first_name).active(Date.current).to_a.select { |m| m.age >= 15 }
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @birthday_celebration }

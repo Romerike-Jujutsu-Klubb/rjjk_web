@@ -182,11 +182,11 @@ class MembersController < ApplicationController
   end
 
   def telephone_list
-    @groups = Group.active(Date.today).includes(:members).to_a
+    @groups = Group.active(Date.current).includes(:members).to_a
   end
 
   def email_list
-    @groups = Group.active(Date.today).includes(:members).to_a
+    @groups = Group.active(Date.current).includes(:members).to_a
     @former_members = Member.where('left_on IS NOT NULL').to_a
     @administrators = User.find_administrators
     @administrator_emails = @administrators.map(&:email).compact.uniq
@@ -283,7 +283,7 @@ class MembersController < ApplicationController
   end
 
   def map
-    @json = Member.active(Date.today).to_gmaps4rails
+    @json = Member.active(Date.current).to_gmaps4rails
   end
 
   def my_media
@@ -294,7 +294,7 @@ class MembersController < ApplicationController
     @date = if params[:year] && params[:month]
               Date.new(params[:year].to_i, params[:month].to_i, 1)
             else
-              Date.today.beginning_of_month
+              Date.current.beginning_of_month
             end
     @year = @date.year
     @month = @date.month
@@ -309,11 +309,11 @@ class MembersController < ApplicationController
   private
 
   def year_end(offset = 0)
-    Date.parse((Date.today.year - offset).to_s + '-12-31').strftime('%Y-%m-%d')
+    Date.parse((Date.current.year - offset).to_s + '-12-31').strftime('%Y-%m-%d')
   end
 
   def year_start(offset = 0)
-    Date.parse((Date.today.year - offset).to_s + '-01-01').strftime('%Y-%m-%d')
+    Date.parse((Date.current.year - offset).to_s + '-01-01').strftime('%Y-%m-%d')
   end
 
   def member_count(male, from_age, to_age)

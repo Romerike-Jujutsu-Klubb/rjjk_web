@@ -33,41 +33,6 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 27
 
-# Offense count: 76
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: strict, flexible
-Rails/Date:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/attendances_controller.rb'
-    - 'app/controllers/birthday_celebrations_controller.rb'
-    - 'app/controllers/group_instructors_controller.rb'
-    - 'app/controllers/group_semesters_controller.rb'
-    - 'app/controllers/groups_controller.rb'
-    - 'app/controllers/members_controller.rb'
-    - 'app/controllers/practices_controller.rb'
-    - 'app/controllers/signatures_controller.rb'
-    - 'app/mailers/attendance_nagger.rb'
-    - 'app/mailers/graduation_reminder.rb'
-    - 'app/mailers/information_page_notifier.rb'
-    - 'app/mailers/semester_reminder.rb'
-    - 'app/models/annual_meeting_reminder.rb'
-    - 'app/models/appointment.rb'
-    - 'app/models/attendance_history_graph.rb'
-    - 'app/models/cms_member.rb'
-    - 'app/models/graduation.rb'
-    - 'app/models/group.rb'
-    - 'app/models/group_instructor.rb'
-    - 'app/models/member.rb'
-    - 'app/models/member_age_chart.rb'
-    - 'app/models/member_grade_history_graph.rb'
-    - 'app/models/member_history_graph.rb'
-    - 'app/models/nkf_member_trial.rb'
-    - 'app/models/rank.rb'
-    - 'app/models/semester.rb'
-    - 'db/migrate/20080828214833_fix_future_birthdates.rb'
-    - 'test/models/member_test.rb'
-
 # Offense count: 27
 # Cop supports --auto-correct.
 # Configuration parameters: Whitelist.

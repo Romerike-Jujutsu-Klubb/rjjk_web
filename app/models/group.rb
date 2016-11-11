@@ -17,7 +17,7 @@ class Group < ActiveRecord::Base
   has_many :group_schedules, dependent: :destroy
   has_many :group_semesters, dependent: :destroy
   has_one :next_graduation,
-      -> { where('graduations.held_on >= ?', Date.today).order('graduations.held_on') },
+      -> { where('graduations.held_on >= ?', Date.current).order('graduations.held_on') },
       class_name: :Graduation
   has_one :next_semester, -> do
     includes(:semester).where('semesters.start_on > CURRENT_DATE').order('semesters.start_on')
@@ -59,7 +59,7 @@ class Group < ActiveRecord::Base
         .all.size
   end
 
-  def active?(date = Date.today)
+  def active?(date = Date.current)
     closed_on.nil? || closed_on >= date
   end
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class AttendanceNagger
   def self.send_attendance_plan
-    today = Date.today
+    today = Date.current
     Member.active(today)
         .where('NOT EXISTS (
 SELECT a.id FROM attendances a INNER JOIN practices p ON a.practice_id = p.id
@@ -126,7 +126,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
               member.id, completed_attendances.map(&:id), Attendance::Status::WILL_ATTEND)
               .includes(practice: :group_schedule).references(:practices)
               .order('practices.year, practices.week, group_schedules.weekday').to_a
-              .select { |a| a.date <= Date.today }.reverse
+              .select { |a| a.date <= Date.current }.reverse
       AttendanceMailer.review(member, completed_attendances, older_attendances)
           .store(member.user_id, tag: :attendance_review)
       completed_attendances.each { |a| a.update_attributes sent_review_email_at: now }

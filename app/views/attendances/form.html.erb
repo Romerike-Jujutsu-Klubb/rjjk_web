@@ -55,7 +55,7 @@
 
 <% @trials.each do |trial| %>
     <% @member_count += 1 %>
-    <% missing_contract = (trial.reg_dato + 14) < Date.today %>
+    <% missing_contract = (trial.reg_dato + 14) < Date.current %>
     <% @blank_lines -= missing_contract ? 3 : 2 %>
     <tr class="<%= cycle('odd', 'even') %>">
       <td>

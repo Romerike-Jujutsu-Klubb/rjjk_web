@@ -65,7 +65,7 @@ EOF
 
     # first_date = 5.years.ago.to_date
     first_date = Date.civil(2011, 1, 1)
-    dates = (first_date..Date.today).step(step / 1.day).to_a
+    dates = (first_date..Date.current).step(step / 1.day).to_a
     sums = nil
     data = ranks.map do |rank|
       rank_totals = totals(rank, dates, interval, percentage)

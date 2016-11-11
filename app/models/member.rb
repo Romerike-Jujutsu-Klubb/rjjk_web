@@ -14,7 +14,8 @@ class Member < ActiveRecord::Base
   belongs_to :image, dependent: :destroy
   belongs_to :user, dependent: :destroy
   has_one :next_graduate, -> do
-    includes(:graduation).where('graduations.held_on >= ?', Date.today).order('graduations.held_on')
+    includes(:graduation).where('graduations.held_on >= ?', Date.current)
+        .order('graduations.held_on')
   end, class_name: :Graduate
   has_one :nkf_member, dependent: :nullify
   has_many :appointments, dependent: :destroy
@@ -46,7 +47,7 @@ class Member < ActiveRecord::Base
 
   scope :without_image, -> { select(column_names - ['image_id']) }
   scope :active, ->(from_date = nil, to_date = nil) do
-    from_date ||= Date.today
+    from_date ||= Date.current
     to_date ||= from_date
     where('joined_on <= ? AND left_on IS NULL OR left_on >= ?', to_date, from_date)
   end
@@ -83,7 +84,7 @@ class Member < ActiveRecord::Base
     active.order(:first_name, :last_name).paginate(page: page, per_page: MEMBERS_PER_PAGE)
   end
 
-  def self.instructors(date = Date.today)
+  def self.instructors(date = Date.current)
     active(date)
         .where(<<~SQL)
           instructor = true OR id IN (SELECT member_id FROM group_instructors GROUP BY member_id)
@@ -189,7 +190,7 @@ blocking users: #{blocking_users.inspect}"
     update! user_id: new_user.id
   end
 
-  def current_graduate(martial_art, date = Date.today)
+  def current_graduate(martial_art, date = Date.current)
     graduates.sort_by { |g| -g.rank.position }
         .find do |g|
       g.passed? && g.graduation.held_on < date &&
@@ -197,7 +198,7 @@ blocking users: #{blocking_users.inspect}"
     end
   end
 
-  def attendances_since_graduation(before_date = Date.today, group = nil, includes: nil)
+  def attendances_since_graduation(before_date = Date.current, group = nil, includes: nil)
     groups = group ? [group] : Group.includes(:martial_art).to_a
     queries = groups.map do |g|
       ats = attendances
@@ -220,11 +221,11 @@ blocking users: #{blocking_users.inspect}"
     end
   end
 
-  def current_rank(martial_art = nil, date = Date.today)
+  def current_rank(martial_art = nil, date = Date.current)
     current_graduate(martial_art, date).try(:rank)
   end
 
-  def current_rank_date(martial_art = nil, date = Date.today)
+  def current_rank_date(martial_art = nil, date = Date.current)
     graduate = current_graduate(martial_art, date)
     graduate && graduate.graduation.held_on || joined_on
   end
@@ -239,7 +240,7 @@ blocking users: #{blocking_users.inspect}"
   end
 
   def next_rank(graduation =
-      Graduation.new(held_on: Date.today, group: groups.sort_by(&:from_age).last))
+      Graduation.new(held_on: Date.current, group: groups.sort_by(&:from_age).last))
     age = self.age(graduation.held_on)
     ma = graduation.group.try(:martial_art) ||
         MartialArt.includes(:ranks).find_by_name('Kei Wa Ryu')
@@ -307,16 +308,16 @@ blocking users: #{blocking_users.inspect}"
     end
   end
 
-  def active?(date = Date.today)
+  def active?(date = Date.current)
     !passive?(date)
   end
 
-  def passive?(date = Date.today, group = nil)
+  def passive?(date = Date.current, group = nil)
     return true if nkf_member.try(:medlemsstatus) == 'P'
     return false if joined_on >= date - 2.months
     start_date = date - 92
     end_date = date + 31
-    if date == Date.today && recent_attendances.loaded?
+    if date == Date.current && recent_attendances.loaded?
       set = recent_attendances.select { |a| Attendance::PRESENT_STATES.include? a.status }
       set = set.select { |a| a.group_schedule.group_id == group.id } if group
       set.empty?
@@ -346,7 +347,7 @@ blocking users: #{blocking_users.inspect}"
     end
   end
 
-  def age(date = Date.today)
+  def age(date = Date.current)
     return nil unless birthdate
     age = date.year - birthdate.year
     age -= 1 if date < birthdate + age.years
@@ -440,7 +441,7 @@ blocking users: #{blocking_users.inspect}"
     phones.reject(&:blank?).uniq
   end
 
-  def title(date = Date.today)
+  def title(date = Date.current)
     current_rank = current_rank(MartialArt.find_by_name('Kei Wa Ryu'), date)
     current_rank && current_rank.name =~ /dan/ ? 'Sensei' : 'Sempai'
   end
@@ -449,11 +450,11 @@ blocking users: #{blocking_users.inspect}"
     elections.current.any? || appointments.current.any?
   end
 
-  def instructor?(date = Date.today)
+  def instructor?(date = Date.current)
     instructor || group_instructor?(date)
   end
 
-  def group_instructor?(date = Date.today)
+  def group_instructor?(date = Date.current)
     group_instructors.active(date).any?
   end
 

@@ -39,6 +39,6 @@ class Graduation < ActiveRecord::Base
   end
 
   def approved?
-    censors.any? && held_on < Date.today && censors.all?(&:approved?)
+    censors.any? && held_on < Date.current && censors.all?(&:approved?)
   end
 end

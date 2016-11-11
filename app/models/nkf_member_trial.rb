@@ -16,8 +16,8 @@ class NkfMemberTrial < ActiveRecord::Base
   validates :res_sms, inclusion: { in: [true, false] }
 
   def age
-    age = Date.today.year - fodtdato.year
-    age -= 1 if Date.today < fodtdato + age.years
+    age = Date.current.year - fodtdato.year
+    age -= 1 if Date.current < fodtdato + age.years
     age
   end
 
@@ -26,7 +26,7 @@ class NkfMemberTrial < ActiveRecord::Base
   end
 
   def group
-    Group.active(Date.today).to_a.find { |g| g.contains_age age }
+    Group.active(Date.current).to_a.find { |g| g.contains_age age }
   end
 
   def emails

@@ -16,7 +16,7 @@ class AttendancesController < ApplicationController
 
   def since_graduation
     @member = Member.find(params[:id])
-    @date = params[:date].try(:to_date) || Date.today
+    @date = params[:date].try(:to_date) || Date.current
     @graduate = @member.current_graduate(nil, @date)
     @attendances = @member.attendances_since_graduation(@date)
   end
@@ -95,7 +95,7 @@ class AttendancesController < ApplicationController
     @date = if params[:year] && params[:month]
               Date.new(params[:year].to_i, params[:month].to_i, 1)
             else
-              Date.today.beginning_of_month
+              Date.current.beginning_of_month
             end
     @year = @date.cwyear
     @month = @date.month
@@ -113,7 +113,7 @@ class AttendancesController < ApplicationController
       @monthly_summary_per_group[g] = {}
       @monthly_summary_per_group[g][:attendances] = attendances
       @monthly_summary_per_group[g][:present] = attendances.select do |a|
-        !Attendance::ABSENT_STATES.include?(a.status) && a.date <= Date.today
+        !Attendance::ABSENT_STATES.include?(a.status) && a.date <= Date.current
       end
       @monthly_summary_per_group[g][:absent] = attendances
           .select { |a| Attendance::ABSENT_STATES.include? a.status }
@@ -197,7 +197,7 @@ class AttendancesController < ApplicationController
   end
 
   def plan
-    today = Date.today
+    today = Date.current
 
     @weeks = [[today.cwyear, today.cweek], [(today + 7).cwyear, (today + 7).cweek]]
     if today.month >= 6 && today.month <= 7
@@ -295,14 +295,14 @@ class AttendancesController < ApplicationController
   end
 
   def form_index
-    @groups = Group.active(Date.today).order :from_age
+    @groups = Group.active(Date.current).order :from_age
   end
 
   def form
     if params[:year] && params[:month]
       @date = Date.parse("#{params[:year]}-#{params[:month]}-01")
     end
-    @date ||= Date.today
+    @date ||= Date.current
 
     first_date = Date.new(@date.year, @date.month, 1)
     last_date = Date.new(@date.year, @date.month, -1)

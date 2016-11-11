@@ -13,7 +13,7 @@ class AttendanceHistoryGraph
     g.y_axis_increment = 5
     first_date = Date.civil(2010, 8, 1)
     weeks = []
-    Date.today.step(first_date, -28) { |date| weeks << [date.cwyear, date.cweek] }
+    Date.current.step(first_date, -28) { |date| weeks << [date.cwyear, date.cweek] }
     weeks.reverse!
     totals = Array.new(weeks.size - 1, nil)
     totals_sessions = Array.new(weeks.size - 1, 0)
@@ -73,7 +73,7 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
         .where('practices.year = ? AND practices.week >= ? AND practices.week <= ?',
             year, first_date.cweek, last_date.cweek)
         .where('attendances.status NOT IN (?)', Attendance::ABSENT_STATES)
-        .to_a.select { |a| a.date >= first_date && a.date <= last_date && a.date <= Date.today }
+        .to_a.select { |a| a.date >= first_date && a.date <= last_date && a.date <= Date.current }
     group_schedules = attendances.map(&:group_schedule).uniq
     groups = group_schedules.map(&:group).uniq.sort_by(&:from_age)
     dates = attendances.map(&:date).sort.uniq

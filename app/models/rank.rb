@@ -25,7 +25,7 @@ class Rank < ActiveRecord::Base
   end
 
   def minimum_attendances
-    (group.trainings_in_period(standard_months.months.ago.to_date..Date.today) *
+    (group.trainings_in_period(standard_months.months.ago.to_date..Date.current) *
         0.5).round
   end
 

@@ -3,8 +3,8 @@ class GroupsController < ApplicationController
   before_action :admin_required, except: :show
 
   def index
-    @groups = Group.active(Date.today).order('to_age, from_age DESC').to_a
-    @closed_groups = Group.inactive(Date.today).to_a
+    @groups = Group.active(Date.current).order('to_age, from_age DESC').to_a
+    @closed_groups = Group.inactive(Date.current).to_a
     respond_to do |format|
       format.html # index.html.erb
       format.xml { render xml: @groups }

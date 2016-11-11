@@ -2,7 +2,7 @@
 
 <div class="btn-toolbar">
   <%= link_to 'Til listen', {action: :index}, class: 'btn btn-default pull-right' %>
-  <% if @graduation.held_on < Date.today && @approval %>
+  <% if @graduation.held_on < Date.current && @approval %>
       <% if @approval.approved_grades_at.nil? %>
           <%= link_to 'Godkjenn', {action: :approve, id: @graduation.id},
               class: 'btn btn-primary pull-right', method: :post %>

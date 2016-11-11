@@ -86,7 +86,7 @@ class GroupSemestersController < ApplicationController
   private
 
   def load_form_data
-    @groups = Group.active(@group_semester.semester.try(:start_on) || Date.today)
+    @groups = Group.active(@group_semester.semester.try(:start_on) || Date.current)
         .order(:from_age).to_a
     @semesters = Semester.order('start_on DESC').to_a
     @instructors = Member

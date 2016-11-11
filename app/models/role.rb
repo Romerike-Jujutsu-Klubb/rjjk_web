@@ -24,7 +24,7 @@ class Role < ActiveRecord::Base
   end
 
   scope :by_name, -> (name) { where(name: name) }
-  # scope :active, -> (date = Date.today) { where(name: name).first }
+  # scope :active, -> (date = Date.current) { where(name: name).first }
 
   def self.[](name)
     by_name(name).first&.elections&.current&.first&.member

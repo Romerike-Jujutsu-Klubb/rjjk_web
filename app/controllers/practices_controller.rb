@@ -84,7 +84,7 @@ class PracticesController < ApplicationController
   def load_form_data
     @group_schedules = GroupSchedule.includes(:group).references(:groups)
         .order('weekday, start_at, groups.from_age').to_a.select do |gs|
-      gs.group.active?(@practice.new_record? ? Date.today : @practice.date)
+      gs.group.active?(@practice.new_record? ? Date.current : @practice.date)
     end
   end
 end

@@ -3,11 +3,11 @@ require 'graduation_mailer'
 
 class GraduationReminder
   def self.notify_missing_graduations
-    today = Date.today
+    today = Date.current
     groups = Group.active(today).to_a
     planned_groups = Graduation.where('held_on >= ?', today).to_a.map(&:group)
     missing_groups = groups - planned_groups
-    month_start = Date.civil(Date.today.year, Date.today.mon >= 6 ? 12 : 6)
+    month_start = Date.civil(Date.current.year, Date.current.mon >= 6 ? 12 : 6)
     second_week = month_start + (7 - month_start.wday)
     missing_groups.each do |g|
       instructor = Semester.current.group_semesters
@@ -15,7 +15,7 @@ class GraduationReminder
       next unless instructor
 
       suggested_date = second_week + g.group_schedules.first.weekday
-      next if suggested_date <= Date.today
+      next if suggested_date <= Date.current
 
       GraduationMailer.missing_graduation(instructor, g, suggested_date)
           .store(instructor, tag: :missing_graduation)
@@ -23,7 +23,7 @@ class GraduationReminder
   end
 
   def self.notify_overdue_graduates
-    today = Date.today
+    today = Date.current
     members = Member.active(today)
         .includes(:ranks, attendances: { practice: { group_schedule: :group } })
         .to_a

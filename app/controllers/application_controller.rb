@@ -76,19 +76,19 @@ class ApplicationController < ActionController::Base
     end
 
     unless @groups
-      @groups = Group.active(Date.today).order('to_age, from_age DESC')
+      @groups = Group.active(Date.current).order('to_age, from_age DESC')
           .includes(:current_semester, :next_semester).to_a
     end
 
     unless @layout_events
       @layout_events = Event.includes(:attending_invitees)
           .where('(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)',
-              Date.today, Date.today)
+              Date.current, Date.current)
           .order('start_at, end_at').limit(5).to_a
       @layout_events += Graduation.includes(:graduates)
           .where('held_on >= CURRENT_DATE').to_a
       @groups.select(&:school_breaks).each do |g|
-        if (first_session = g.current_semester.first_session) && first_session >= Date.today
+        if (first_session = g.current_semester.first_session) && first_session >= Date.current
           @layout_events << Event.new(name: "Oppstart #{g.name}",
               start_at: first_session)
         end

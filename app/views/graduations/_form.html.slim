@@ -12,12 +12,12 @@ br
         .form-group
           br
           p.form-control-static
-            - if @graduation.held_on == Date.today
+            - if @graduation.held_on == Date.current
               | I DAG!
-            - elsif @graduation.held_on > Date.today
-              | Om #{(@graduation.held_on - Date.today).to_i} dager.
+            - elsif @graduation.held_on > Date.current
+              | Om #{(@graduation.held_on - Date.current).to_i} dager.
             - else
-              | For #{(Date.today - @graduation.held_on).to_i} dager siden.
+              | For #{(Date.current - @graduation.held_on).to_i} dager siden.
 
   .row
     .col-md-6.col-md-offset-3

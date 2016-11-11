@@ -14,7 +14,7 @@ class GroupInstructorsController < ApplicationController
           if gi.group_semester.semester.future?
             gi.group_semester.semester.start_on
           else
-            Date.today - gi.group_semester.semester.end_on
+            Date.current - gi.group_semester.semester.end_on
           end,
           gi.group_schedule.group.from_age,
           gi.group_schedule.weekday,

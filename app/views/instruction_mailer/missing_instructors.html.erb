@@ -3,7 +3,7 @@
 
     <% @chief_semesters.each do |gs| %>
         <h3>
-          <% if gs.semester.start_on <= Date.today %>
+          <% if gs.semester.start_on <= Date.current %>
               Dette semesteret
           <% else %>
               Neste semester
@@ -32,7 +32,7 @@
 
     <% @semesters.each do |gs, instructions| %>
         <h3>
-          <% if gs.semester.start_on <= Date.today %>
+          <% if gs.semester.start_on <= Date.current %>
               Dette semesteret
           <% else %>
               Neste semester
