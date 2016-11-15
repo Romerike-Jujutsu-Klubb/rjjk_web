@@ -3,11 +3,6 @@
 
 started_at = Time.now
 
-from = ARGV[0]
-to = ARGV[1..-1]
-
-Dir.chdir File.expand_path('..', __dir__)
-
 def log(message = nil)
   open('log/email.log', 'a') do |f|
     f.puts message
@@ -16,14 +11,17 @@ rescue Exception => e # rubocop: disable  Lint/RescueException
   puts e
 end
 
+from = ARGV[0]
+to = ARGV[1..-1]
+
+Dir.chdir File.expand_path('..', __dir__)
+
+log "#{started_at.strftime('%F %T')} Got email From: #{from}, To: #{to}"
+
 if to == ['noreply@beta.jujutsu.no']
   log "Ignore recipient: #{to}"
   exit 0
 end
-
-log
-log "From: #{from}"
-log "To: #{to}"
 
 content = $stdin.read
 
@@ -48,7 +46,7 @@ begin
     log 'Spamassassin: finish process'
     exit_status = wait_thr.value # Process::Status object returned.
     log "Spamassassin reported: #{exit_status.inspect}"
-    if content =~ /^X-Spam-Status: Yes/
+    if content.encode(Encoding::BINARY) =~ /^X-Spam-Status: Yes/
       log 'Mail is SPAM.'
       # exit 1
     end
@@ -91,14 +89,22 @@ if rest_recipients.any?
   require 'bundler/setup'
   require 'mail'
   log "Sending to rest: #{from} => #{rest_recipients}"
-  log content.lines.grep(/spam/i)
+  begin
+    log content.encode(Encoding::BINARY).lines.grep(/spam/i)
+  rescue Exception => e
+    puts e
+    log "Exception logging spam lines: #{e}"
+    log "Content Encoding: #{content.encoding}"
+  end
   mail = Mail.read_from_string(content)
   mail.smtp_envelope_from = from
   mail.smtp_envelope_to = rest_recipients
   mail.delivery_method :sendmail
   mail.deliver
+  log "\nDelivered OK to #{rest_recipients}"
 end
 
-log "Finished in #{Time.now - started_at}s"
+finished_at = Time.now
+log "\n#{finished_at.strftime('%F %T')} Finished in #{finished_at - started_at}s\n\n"
 
 exit 0
