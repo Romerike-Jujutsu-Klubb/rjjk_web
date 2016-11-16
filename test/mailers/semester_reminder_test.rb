@@ -2,7 +2,21 @@
 require 'test_helper'
 
 class SemesterReminderTest < ActionMailer::TestCase
-  test 'notify_missing_semesters' do
+  test 'notify_missing_semesters this semester' do
+    GroupInstructor.delete_all
+    GroupSemester.delete_all
+    Semester.delete_all
+    assert_mail_stored(1) { SemesterReminder.notify_missing_semesters }
+  end
+
+  test 'notify_missing_semesters next semester' do
+    GroupInstructor.delete_all
+    GroupSemester.delete_all
+    Semester.where('end_on > ?', 4.months.from_now).delete_all
+    assert_mail_stored(1) { SemesterReminder.notify_missing_semesters }
+  end
+
+  test 'notify_missing_semesters without missing semesters' do
     assert_mail_stored(0) { SemesterReminder.notify_missing_semesters }
   end
 

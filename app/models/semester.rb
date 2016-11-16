@@ -21,11 +21,11 @@ class Semester < ActiveRecord::Base
   end
 
   def self.current
-    where('CURRENT_DATE BETWEEN start_on AND end_on').first
+    where('? BETWEEN start_on AND end_on', Date.current).first
   end
 
   def self.next
-    where('start_on > CURRENT_DATE').order(:start_on).first
+    where('start_on > ?', Date.current).order(:start_on).first
   end
 
   def graduations

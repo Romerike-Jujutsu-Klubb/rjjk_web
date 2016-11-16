@@ -6,7 +6,7 @@ class SemestersController < ApplicationController
   # GET /semesters.json
   def index
     @semesters = Semester.order('start_on DESC').to_a
-    @semester ||= Semester.where('CURRENT_DATE BETWEEN start_on AND end_on').first
+    @semester ||= Semester.where('? BETWEEN start_on AND end_on', Date.current).first
 
     respond_to do |format|
       format.html { render action: :index }

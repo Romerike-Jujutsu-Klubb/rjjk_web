@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 class SemesterReminder
   def self.notify_missing_semesters
-    unless Semester.where('CURRENT_DATE BETWEEN start_on AND end_on').exists?
+    unless Semester.where('? BETWEEN start_on AND end_on', Date.current).exists?
       recipient = Role[:Leder] || Role[:Nestleder] || Role[:Hovedinstruktør]
       SemesterMailer.missing_current_semester(recipient).store(recipient, tag: :missing_semester)
       return
     end
     unless Semester.where('? BETWEEN start_on AND end_on', Date.current + 4.months).exists?
       recipient = Role[:Leder] || Role[:Nestleder] || Role[:Kasserer]
-      SemesterMailer.missing_next_semester.store(recipient, tag: :missing_next_semester)
+      SemesterMailer.missing_next_semester(recipient).store(recipient, tag: :missing_next_semester)
     end
   end
 

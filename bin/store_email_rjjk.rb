@@ -91,7 +91,7 @@ if rest_recipients.any?
   log "Sending to rest: #{from} => #{rest_recipients}"
   begin
     log content.encode(Encoding::BINARY).lines.grep(/spam/i)
-  rescue Exception => e
+  rescue Exception => e # rubocop: disable Lint/RescueException
     puts e
     log "Exception logging spam lines: #{e}"
     log "Content Encoding: #{content.encoding}"

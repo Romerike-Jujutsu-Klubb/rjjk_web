@@ -2,7 +2,8 @@
 class InstructionReminder
   def self.notify_missing_instructors
     semesters = Semester
-        .where("start_on < (CURRENT_DATE + interval '3 months') AND end_on > CURRENT_DATE")
+        .where("start_on < (:current_date::date + interval '3 months')", current_date: Date.current)
+        .where('end_on > :current_date::date', current_date: Date.current)
         .order(:end_on).to_a
     missing_chief_instructions =
         semesters.map(&:group_semesters).flatten.reject(&:chief_instructor_id)

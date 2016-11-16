@@ -18,7 +18,7 @@ class InstructionTest < ActionDispatch::IntegrationTest
     screenshot('instruction/new_with_group_schedule_selected')
     select 'Uwe Kubosch', from: 'group_instructor_member_id'
     screenshot('instruction/new_with_member_selected')
-    select '2100: 01-01→12-31', from: 'group_instructor_semester_id'
+    select '2014: 01-01→06-30', from: 'group_instructor_semester_id'
     screenshot('instruction/new_with_semester_selected')
     screenshot('instruction/new_filled_in')
     click_button 'Lagre'

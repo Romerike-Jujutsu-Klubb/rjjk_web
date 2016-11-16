@@ -10,7 +10,7 @@ class Group < ActiveRecord::Base
   has_one :current_semester,
       -> {
         references(:semesters).includes(:semester)
-            .where('CURRENT_DATE BETWEEN semesters.start_on AND semesters.end_on')
+            .where('? BETWEEN semesters.start_on AND semesters.end_on', Date.current)
       },
       class_name: :GroupSemester
   has_many :graduations, -> { order(:held_on) }, dependent: :destroy
@@ -20,7 +20,7 @@ class Group < ActiveRecord::Base
       -> { where('graduations.held_on >= ?', Date.current).order('graduations.held_on') },
       class_name: :Graduation
   has_one :next_semester, -> do
-    includes(:semester).where('semesters.start_on > CURRENT_DATE').order('semesters.start_on')
+    includes(:semester).where('semesters.start_on > ?', Date.current).order('semesters.start_on')
   end, class_name: :GroupSemester
   has_many :ranks, -> { order(:position) }, dependent: :destroy
   # FIXME(uwe): Add model GroupMembership and change to has_many through:

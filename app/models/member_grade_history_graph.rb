@@ -6,20 +6,20 @@ EXISTS (
   FROM attendances a
     INNER JOIN practices p ON p.id = a.practice_id
   WHERE member_id = members.id
-    AND (p.year > ? OR (p.year = ? AND p.week >= ?))
-    AND (p.year < ? OR (p.year = ? AND p.week <= ?))
+    AND (p.year > :prev_date_year OR (p.year = :prev_date_year AND p.week >= :prev_date_week))
+    AND (p.year < :date_year OR (p.year = :date_year AND p.week <= :date_week))
 )
 AND (
-  ? > CURRENT_DATE
+  :next_date > :current_date
   OR EXISTS (
     SELECT 1
     FROM attendances a
       INNER JOIN practices p ON p.id = a.practice_id
     WHERE member_id = members.id
-      AND (p.year > ? OR (p.year = ? AND p.week >= ?))
-      AND (p.year < ? OR (p.year = ? AND p.week <= ?))))
-AND (joined_on IS NULL OR joined_on <= ?)
-AND (left_on IS NULL OR left_on > ?)
+      AND (p.year > :date_year OR (p.year = :date_year AND p.week >= :date_week))
+      AND (p.year < :next_year OR (p.year = :next_year AND p.week <= :next_week))))
+AND (joined_on IS NULL OR joined_on <= :date)
+AND (left_on IS NULL OR left_on > :date)
 EOF
 
   ATTENDANCE_CLAUSE = '(SELECT COUNT(*)
@@ -104,10 +104,11 @@ EOF
                     date.cwyear, date.cwyear, date.cweek, (@practices[date] * percentage) / 100,
                     date, date]
               else
-                [ACTIVE_CLAUSE, prev_date.cwyear, prev_date.cwyear, prev_date.cweek,
-                    date.cwyear, date.cwyear, date.cweek, next_date, date.cwyear,
-                    date.cwyear, date.cweek, next_date.cwyear, next_date.cwyear,
-                    next_date.cweek, date, date]
+                [ACTIVE_CLAUSE, current_date: Date.current,
+                    prev_date_year: prev_date.cwyear, prev_date_week: prev_date.cweek,
+                    date_year: date.cwyear, date_week: date.cweek,
+                    next_date: next_date, next_year: next_date.cwyear, next_week: next_date.cweek,
+                    date: date]
               end
           )
           .includes(graduates: [{ graduation: { group: :martial_art } }, :rank]).to_a

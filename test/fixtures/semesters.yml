@@ -4,8 +4,8 @@ previous:
 
 current:
   start_on: 2013-07-01
-  end_on: 2099-12-31
+  end_on: 2013-12-31
 
 next:
-  start_on: 2100-01-01
-  end_on: 2199-12-31
+  start_on: 2014-01-01
+  end_on: 2014-06-30
