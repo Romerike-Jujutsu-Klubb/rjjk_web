@@ -29,32 +29,36 @@ content = $stdin.read
 EX_TEMPFAIL = 75
 EX_UNAVAILABLE = 69
 
-spam_start = Time.now
-begin
-  require 'open3'
-  log 'Checking Spamassassin'
-  Open3.popen3('spamc') do |stdin, stdout, stderr, wait_thr|
-    log 'Spamassassin: send content to process'
-    stdin << content
-    log 'Spamassassin: close stdin'
-    stdin.close
-    log 'Spamassassin: read stdout'
-    content = stdout.read
-    log "Spamassassin: #{content}"
-    log 'Spamassassin: read stderr'
-    log "Spamassassin: #{stderr.read}"
-    log 'Spamassassin: finish process'
-    exit_status = wait_thr.value # Process::Status object returned.
-    log "Spamassassin reported: #{exit_status.inspect}"
-    if content.encode(Encoding::BINARY) =~ /^X-Spam-Status: Yes/
-      log 'Mail is SPAM.'
-      # exit 1
+if content.size <= 512000
+  spam_start = Time.now
+  begin
+    require 'open3'
+    log 'Checking Spamassassin'
+    Open3.popen3('spamc') do |stdin, stdout, stderr, wait_thr|
+      log 'Spamassassin: send content to process'
+      stdin << content
+      log 'Spamassassin: close stdin'
+      stdin.close
+      log 'Spamassassin: read stdout'
+      content = stdout.read
+      log "Spamassassin: #{content}"
+      log 'Spamassassin: read stderr'
+      log "Spamassassin: #{stderr.read}"
+      log 'Spamassassin: finish process'
+      exit_status = wait_thr.value # Process::Status object returned.
+      log "Spamassassin reported: #{exit_status.inspect}"
+      if content.encode(Encoding::BINARY) =~ /^X-Spam-Status: Yes/
+        log 'Mail is SPAM.'
+        # exit 1
+      end
     end
+  rescue Exception => e # rubocop: disable Lint/RescueException
+    log "Exception scanning for SPAM: #{e}"
   end
-rescue Exception => e # rubocop: disable Lint/RescueException
-  log "Exception scanning for SPAM: #{e}"
+  log "Spam check took: #{Time.now - spam_start}s"
+else
+  log "Large message: #{content.size} bytes.  Skipping spam detection."
 end
-log "Spam check took: #{Time.now - spam_start}s"
 
 prod_recipients = to.grep(/@jujutsu.no/)
 beta_recipients = to.grep(/@beta.jujutsu.no/)
@@ -96,12 +100,19 @@ if rest_recipients.any?
     log "Exception logging spam lines: #{e}"
     log "Content Encoding: #{content.encoding}"
   end
-  mail = Mail.read_from_string(content)
-  mail.smtp_envelope_from = from
-  mail.smtp_envelope_to = rest_recipients
-  mail.delivery_method :sendmail
-  mail.deliver
-  log "\nDelivered OK to #{rest_recipients}"
+  begin
+    mail = Mail.read_from_string(content)
+    mail.smtp_envelope_from = from
+    mail.smtp_envelope_to = rest_recipients
+    mail.delivery_method :sendmail
+    mail.deliver
+    log "\nDelivered OK to #{rest_recipients}"
+  rescue => e
+    log "Exception sending email: #{e}"
+    log e.backtrace.join("\n")
+    File.write("bad_email-#{Time.now.strftime('%F_%T')}", content)
+    exit 1
+  end
 end
 
 finished_at = Time.now
