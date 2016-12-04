@@ -27,7 +27,9 @@ class Role < ActiveRecord::Base
   # scope :active, -> (date = Date.current) { where(name: name).first }
 
   def self.[](name)
-    by_name(name).first&.elections&.current&.first&.member
+    role = by_name(name).first
+    return nil unless role
+    (role.elections.current.first || role.appointments.current.first)&.member
   end
 
   def on_the_board?

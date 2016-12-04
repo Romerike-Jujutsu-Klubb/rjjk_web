@@ -20,9 +20,9 @@ gem 'acts_as_list'
 gem 'acts_as_tree'
 gem 'bcrypt'
 # gem 'bootstrap', github: 'twbs/bootstrap-rubygem' # TODO(uwe): Move to Bootstrap 4?
-gem 'bootstrap_form'
 gem 'bootstrap-sass', '!=3.3.5'
 gem 'bootstrap3-datetimepicker-rails'
+gem 'bootstrap_form'
 # gem "bootstrap-select-rails"
 # gem "bootstrap-switch-rails"
 # gem "bootstrap-wysihtml5-rails"

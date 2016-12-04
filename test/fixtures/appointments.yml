@@ -9,3 +9,8 @@ uwe_second:
   role: chief_instructor
   from: 2014-02-25
   to: 2016-02-12
+
+equipment_manager:
+  member: newbie
+  role: equipment_manager
+  from: 2006-02-25

@@ -1,0 +1,9 @@
+- if censor.confirmed_at
+  - if censor.declined
+    i.fa.fa-thumbs-down title="Avslått"
+  - else
+    i.fa.fa-check title="Bekreftet"
+- else
+  i.fa.fa-question title="Ubekreftet"
+
+= '(Godkjent)' if censor.approved_grades_at

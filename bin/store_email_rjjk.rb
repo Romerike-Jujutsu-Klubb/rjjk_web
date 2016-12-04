@@ -29,7 +29,7 @@ content = $stdin.read
 EX_TEMPFAIL = 75
 EX_UNAVAILABLE = 69
 
-if content.size <= 512000
+if content.size <= 512_000
   spam_start = Time.now
   begin
     require 'open3'

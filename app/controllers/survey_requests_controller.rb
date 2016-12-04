@@ -9,15 +9,13 @@ class SurveyRequestsController < ApplicationController
     @survey_requests = SurveyRequest.all
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @survey_request = SurveyRequest.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @survey_request = SurveyRequest.new(survey_request_params)
@@ -59,8 +57,7 @@ class SurveyRequestsController < ApplicationController
     end
   end
 
-  def answer_form
-  end
+  def answer_form; end
 
   def save_answers
     params[:survey_request][:completed_at] = Time.now
@@ -82,8 +79,7 @@ class SurveyRequestsController < ApplicationController
     end
   end
 
-  def thanks
-  end
+  def thanks; end
 
   private
 

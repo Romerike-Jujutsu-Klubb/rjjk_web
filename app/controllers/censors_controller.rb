@@ -60,7 +60,7 @@ EOH
   def create
     @censor = Censor.where('graduation_id = ? AND member_id = ?',
         params[:censor][:graduation_id], params[:censor][:member_id]).first ||
-        Censor.new
+        Censor.new(examiner: false)
     @censor.attributes = params[:censor]
     return unless admin_or_censor_required(@censor.graduation)
     if @censor.save

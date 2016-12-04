@@ -19,6 +19,5 @@ class MakeTrialAttendancesReferencePractices < ActiveRecord::Migration
     remove_column :trial_attendances, :week
   end
 
-  def down
-  end
+  def down; end
 end

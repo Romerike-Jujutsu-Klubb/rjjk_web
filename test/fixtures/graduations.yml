@@ -1,9 +1,12 @@
 panda:
   held_on: '2007-10-08'
   group: panda
+  group_notification: true
 tiger:
   held_on: '2007-10-09'
   group: tiger
+  group_notification: true
 voksne:
   held_on: '2007-10-10'
   group: voksne
+  group_notification: true

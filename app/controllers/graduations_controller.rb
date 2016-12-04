@@ -34,34 +34,7 @@ class GraduationsController < ApplicationController
   end
 
   def edit
-    @graduation = Graduation
-        .includes(
-            censors: { member: { graduates: { rank: :martial_art } } },
-            graduates: {
-                graduation: {
-                    group: {
-                        martial_art: { ranks: [{ group: [:martial_art, :ranks] }, :martial_art] },
-                    },
-                },
-                member: [
-                    {
-                        attendances: {
-                            practice: :group_schedule,
-                        },
-                        graduates: [
-                            {
-                                graduation: :group,
-                            },
-                            :rank,
-                        ],
-                    },
-                    :nkf_member,
-                ],
-                rank: [{ group: [:group_schedules, :ranks] }, :martial_art],
-            },
-            group: { members: :nkf_member }
-        )
-        .find(params[:id])
+    @graduation = Graduation.for_edit.find(params[:id])
     @approval = @graduation.censors
         .select { |c| c.member == current_user.member }
         .sort_by { |c| c.approved_grades_at ? 0 : 1 }.last
@@ -82,12 +55,13 @@ class GraduationsController < ApplicationController
   end
 
   def update
-    @graduation = Graduation.find(params[:id])
+    @graduation = Graduation.for_edit.find(params[:id])
     if @graduation.update_attributes(params[:graduation])
       flash[:notice] = 'Graduation was successfully updated.'
-      redirect_to action: :show, id: @graduation
+      redirect_to action: :edit, id: @graduation, anchor: :form
     else
-      render action: :edit
+      new
+      render action: 'new'
     end
   end
 

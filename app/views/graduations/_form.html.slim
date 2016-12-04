@@ -1,14 +1,10 @@
 br
-= form_for @graduation do |f|
-  = f.error_messages
-
+= bootstrap_form_for @graduation do |f|
   .row
-    .col-md-3.col-md-offset-3
-      .form-group
-        = f.label :held_on, 'Dato'
-        = f.text_field :held_on, size: 18, class: 'date form-control'
+    .col-md-4
+      = f.text_field :held_on, size: 18, class: 'date form-control'
     - if @graduation.held_on
-      .col-md-2
+      .col-md-4
         .form-group
           br
           p.form-control-static
@@ -20,13 +16,16 @@ br
               | For #{(Date.current - @graduation.held_on).to_i} dager siden.
 
   .row
-    .col-md-6.col-md-offset-3
-      .form-group
-        = f.label :group_id, 'Gruppe'
-        = f.select :group_id, @groups.map { |c| [c.name, c.id] }, {}, class: 'form-control'
+    .col-md-6
+      = f.select :group_id, @groups.map { |c| [c.name, c.id] },
+          {prompt: 'Velg gruppe'},
+          class: 'form-control'
+    .col-md-6
+      = f.select :group_notification, [['Ja', true], ['Nei, bare utvalgte kandidater', false]],
+              {prompt: @graduation.group_notification.nil?}
 
   .row
-    .col-md-6.col-md-offset-3
+    .col-md-12
       .btn-toolbar.pull-right
         = back_or_link_to 'Tilbake', {action: :index}, class: 'btn btn-default'
         - unless @graduation.new_record?

@@ -17,8 +17,10 @@ class GraduationMailer < ApplicationMailer
     mail to: 'uwe@kubosch.no', subject: 'Disse medlemmene mangler gradering'
   end
 
-  def date_info_reminder
-    mail to: 'to@example.org'
+  def group_date_info(graduation, member)
+    @graduation = graduation
+    @member = member
+    mail subject: "Gradering for #{@graduation.group.name} #{@graduation.held_on}"
   end
 
   def invite_censor(censor)
@@ -31,6 +33,30 @@ class GraduationMailer < ApplicationMailer
     mail to: censor.member.email, subject: @title
   end
 
+  def lock_reminder(censor)
+    @censor = censor
+    @title = 'Bekrefte graderingsoppsett'
+    @timestamp = censor.graduation.held_on
+    mail to: censor.member.email, subject: @title
+  end
+
+  def invite_graduate(graduate)
+    @graduate = graduate
+    @title = 'Invitasjon til gradering'
+    @timestamp = graduate.graduation.held_on
+    # @email_url = { controller: :censors, action: :show, id: @censor.id }
+    @confirm_url = { controller: :graduates, action: :confirm, id: @graduate.id }
+    @decline_url = { controller: :graduate, action: :decline, id: @graduate.id }
+    mail to: graduate.member.email, subject: @title
+  end
+
+  def send_shopping_list(graduation, member)
+    @graduation = graduation
+    @member = member
+    mail subject:
+        "Liste over belter for gradering for #{graduation.group.name} #{graduation.held_on}"
+  end
+
   def missing_approval(censor)
     @censor = censor
     @title = 'Bekrefte gradering'
@@ -39,7 +65,8 @@ class GraduationMailer < ApplicationMailer
     mail to: censor.member.email, subject: @title
   end
 
-  def member_info_reminder
-    mail to: 'to@example.org'
+  def congratulate_graduate(graduate)
+    @graduate = graduate
+    mail to: graduate.member, subject: 'Gratulerer med bestått gradering!'
   end
 end

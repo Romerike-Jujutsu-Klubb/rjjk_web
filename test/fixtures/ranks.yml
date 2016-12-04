@@ -25,7 +25,7 @@ mon_10:
 
 kyu_5:
   name: '5. kyu'
-  colour: 'gult'
+  colour: 'gult belte'
   position: -5
   martial_art: keiwaryu
   standard_months: 0
@@ -33,7 +33,7 @@ kyu_5:
 
 kyu_4:
   name: '4. kyu'
-  colour: 'oransje'
+  colour: 'oransje belte'
   position: -4
   martial_art: keiwaryu
   standard_months: 6
@@ -41,7 +41,7 @@ kyu_4:
 
 kyu_1:
   name: '1. kyu'
-  colour: 'brunt'
+  colour: 'brunt belte'
   position: -1
   martial_art: keiwaryu
   standard_months: 24
@@ -49,7 +49,7 @@ kyu_1:
 
 shodan:
   name: 'shodan'
-  colour: 'svart'
+  colour: 'svart belte'
   position: 1
   martial_art: keiwaryu
   standard_months: 24
@@ -57,7 +57,7 @@ shodan:
 
 nidan:
   name: 'nidan'
-  colour: 'svart'
+  colour: 'svart belte'
   decoration: 'm/2 striper'
   position: 2
   martial_art: keiwaryu
@@ -66,7 +66,7 @@ nidan:
 
 sandan:
   name: 'sandan'
-  colour: 'svart'
+  colour: 'svart belte'
   decoration: 'm/3 striper'
   position: 3
   martial_art: keiwaryu

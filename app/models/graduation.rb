@@ -4,9 +4,54 @@ class Graduation < ActiveRecord::Base
   has_many :censors, dependent: :destroy
   has_many :graduates, dependent: :destroy
 
-  validates :group, :held_on, presence: true
-
+  validates :group, :group_id, :held_on, presence: true
+  validates :group_notification, inclusion: { in: [true, false], message: 'må velges' }
   validates :held_on, uniqueness: { scope: :group_id }
+
+  scope :for_edit, -> do
+    includes(
+        censors: { member: { graduates: { rank: :martial_art } } },
+        graduates: {
+            graduation: {
+                group: {
+                    martial_art: { ranks: [{ group: [:martial_art, :ranks] }, :martial_art] },
+                },
+            },
+            member: [
+                {
+                    attendances: {
+                        practice: :group_schedule,
+                    },
+                    graduates: [
+                        {
+                            graduation: :group,
+                        },
+                        :rank,
+                    ],
+                },
+                :nkf_member,
+            ],
+            rank: [{ group: [:group_schedules, :ranks] }, :martial_art],
+        },
+        group: { members: :nkf_member }
+    )
+  end
+  scope :locked,
+      ->(date) { where(<<~SQL, date) }
+        NOT EXISTS (
+          SELECT locked_at
+          FROM censors WHERE graduation_id = graduations.id
+            AND (locked_at IS NULL OR locked_at <= ?)
+        )
+      SQL
+  scope :approved,
+      ->(date) { where(<<~SQL, date) }
+        NOT EXISTS (
+          SELECT approved_grades_at
+          FROM censors WHERE graduation_id = graduations.id
+            AND (approved_grades_at IS NULL OR approved_grades_at <= ?)
+        )
+      SQL
 
   def start_at
     held_on.try(:at, group_schedule.try(:start_at) || TimeOfDay.new(17, 45))
@@ -39,6 +84,6 @@ class Graduation < ActiveRecord::Base
   end
 
   def approved?
-    censors.any? && held_on < Date.current && censors.all?(&:approved?)
+    held_on && censors.any? && held_on < Date.current && censors.all?(&:approved?)
   end
 end

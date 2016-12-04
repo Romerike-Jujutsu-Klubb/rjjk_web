@@ -1,0 +1,29 @@
+h3 Hei!
+
+' Du er satt opp til gradering #{I18n.t(:"date.day_names")[@graduate.graduation.held_on.cwday].downcase}
+' #{@graduate.graduation.held_on.strftime '%d'}.
+' #{I18n.t(:"date.month_names")[@graduate.graduation.held_on.mon].downcase}
+
+p
+  ' Har du mulighet til delta?  Klikk på en av linkene nedenfor for å gi beskjed
+  ' om du kan eller ikke.
+ul
+  li = link_to 'Jeg kommer :)', @confirm_url
+  li = link_to 'Beklager, jeg kommer ikke.', @decline_url
+
+- attended = @graduate.member.attendances_since_graduation.count
+- limit = @graduate.member.next_rank.minimum_attendances
+- needed = limit - attended
+- current_graduate = @graduate.member.current_graduate(@graduate.graduation.martial_art, @graduate.graduation.held_on)
+
+p
+  ' Krav til gradering er #{limit} treninger.
+  ' Vi har registrert #{attended} treninger på deg siden
+  - if current_graduate
+    ' gradering #{current_graduate.graduation.held_on}.
+  - else
+    ' du startet.
+  - if needed > 0
+    ' Du trenger altså #{needed} treninger til for å oppfylle kravet til gradering.
+    ' Det er #{@graduate.graduation.group.trainings_in_period(Date.current..@graduate.graduation.held_on)}
+    ' treninger frem til graderingen.  Stå på!

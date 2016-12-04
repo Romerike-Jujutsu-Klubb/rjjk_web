@@ -2,9 +2,13 @@
    mbr = graduate.member
    fn = mbr.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
    ln = mbr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
-   below_minimum_age = mbr.age(graduate.graduation.held_on) && mbr.age(graduate.graduation.held_on) < graduate.rank.minimum_age
-   not_in_rank_age = !(graduate.rank.group.from_age..graduate.rank.group.to_age).include?(mbr.age(graduate.graduation.held_on))
-   not_in_group_age = mbr.age(graduate.graduation.held_on - 1.month) > graduate.graduation.group.to_age || mbr.age(graduate.graduation.held_on) < graduate.graduation.group.from_age
+   if graduate.graduation.held_on
+     below_minimum_age = mbr.age(graduate.graduation.held_on) && mbr.age(graduate.graduation.held_on) < graduate.rank.minimum_age
+     not_in_rank_age = !(graduate.rank.group.from_age..graduate.rank.group.to_age).include?(mbr.age(graduate.graduation.held_on))
+     if graduate.graduation.group
+       not_in_group_age = mbr.age(graduate.graduation.held_on - 1.month) > graduate.graduation.group.to_age || mbr.age(graduate.graduation.held_on) < graduate.graduation.group.from_age
+     end
+   end
 %>
 <tr id="graduate_<%= graduate.id %>">
   <td>

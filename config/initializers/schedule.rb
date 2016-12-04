@@ -43,16 +43,18 @@ if %w(development beta production).include?(Rails.env) && !ENV['DISABLE_SCHEDULE
   scheduler.cron('0 0 * * *') { NkfReplicationNotifier.notify_wrong_contracts }
   scheduler.cron('0 3 * * *') { SemesterReminder.notify_missing_semesters }
   scheduler.cron('0 4 * * *') { GroupSemester.create_missing_group_semesters }
+
   scheduler.cron('0 5 * * *') { GraduationReminder.notify_missing_graduations }
+  scheduler.cron('0 6 * * *') { GraduationReminder.notify_groups }
+  scheduler.cron('0 1 * * mon') { GraduationReminder.notify_overdue_graduates }
   scheduler.cron('0 6 * * *') { GraduationReminder.notify_censors }
-  # scheduler.cron('0 * * * *') { GraduationReminder.notify_missing_locks }
-  # scheduler.cron('0 * * * *') { GraduationReminder.notify_graduates }
-  # scheduler.cron('0 * * * *') { GraduationReminder.send_shopping_list }
+  scheduler.cron('0 * * * *') { GraduationReminder.notify_missing_locks }
+  scheduler.cron('0 * * * *') { GraduationReminder.notify_graduates }
   scheduler.cron('0 10 * * *') { GraduationReminder.notify_missing_aprovals }
-  # scheduler.cron('0 10 * * *') { GraduationReminder.notify_graduate_result }
+  scheduler.cron('0 * * * *') { GraduationReminder.send_shopping_list }
+  scheduler.cron('0 10 * * *') { GraduationReminder.congratulate_graduates }
 
   # Admin Weekly
-  scheduler.cron('0 1 * * mon') { GraduationReminder.notify_overdue_graduates }
   scheduler.cron('0 2 * * mon') { InformationPageNotifier.notify_outdated_pages }
   scheduler.cron('0 3 * * mon') { InstructionReminder.notify_missing_instructors }
   scheduler.cron('0 4 * * mon') { NkfMemberTrialReminder.notify_overdue_trials }

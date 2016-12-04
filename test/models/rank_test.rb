@@ -5,8 +5,8 @@ class RankTest < ActiveSupport::TestCase
   fixtures :ranks
 
   def test_minimum_age
-    graduation = Graduation.create!(group_id: groups(:tiger).id,
-        held_on: Date.parse('2014-06-10'))
+    graduation = Graduation.create! group_id: groups(:tiger).id, held_on: Date.parse('2014-06-10'),
+        group_notification: true
     member = members(:sebastian)
     assert_equal 9, member.age
     assert_equal 10, member.age(graduation.held_on)
@@ -19,9 +19,9 @@ class RankTest < ActiveSupport::TestCase
   test 'label' do
     assert_equal [
         '12. mon blå stripe', '11. mon blå stripe m/svart bånd',
-            '10. mon gule kanter', '5. kyu gult', '4. kyu oransje',
-            '1. kyu brunt', 'shodan svart', 'nidan svart m/2 striper',
-            'sandan svart m/3 striper'
+            '10. mon gule kanter', '5. kyu gult belte', '4. kyu oransje belte',
+            '1. kyu brunt belte', 'shodan svart belte', 'nidan svart belte m/2 striper',
+            'sandan svart belte m/3 striper'
     ],
         Rank.order(:position).all.map(&:label)
   end

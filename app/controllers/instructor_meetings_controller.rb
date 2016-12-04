@@ -2,28 +2,18 @@
 class InstructorMeetingsController < ApplicationController
   before_action :set_instructor_meeting, only: [:show, :edit, :update, :destroy]
 
-  # GET /instructor_meetings
-  # GET /instructor_meetings.json
   def index
     @instructor_meetings = InstructorMeeting.all
   end
 
-  # GET /instructor_meetings/1
-  # GET /instructor_meetings/1.json
-  def show
-  end
+  def show; end
 
-  # GET /instructor_meetings/new
   def new
     @instructor_meeting = InstructorMeeting.new
   end
 
-  # GET /instructor_meetings/1/edit
-  def edit
-  end
+  def edit; end
 
-  # POST /instructor_meetings
-  # POST /instructor_meetings.json
   def create
     @instructor_meeting = InstructorMeeting.new(instructor_meeting_params)
 
@@ -40,8 +30,6 @@ class InstructorMeetingsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /instructor_meetings/1
-  # PATCH/PUT /instructor_meetings/1.json
   def update
     respond_to do |format|
       if @instructor_meeting.update(instructor_meeting_params)
@@ -56,8 +44,6 @@ class InstructorMeetingsController < ApplicationController
     end
   end
 
-  # DELETE /instructor_meetings/1
-  # DELETE /instructor_meetings/1.json
   def destroy
     @instructor_meeting.destroy
     respond_to do |format|

@@ -2,7 +2,7 @@
 
 <div class="btn-toolbar">
   <%= link_to 'Til listen', {action: :index}, class: 'btn btn-default pull-right' %>
-  <% if @graduation.held_on < Date.current && @approval %>
+  <% if @approval && @graduation.held_on && @graduation.held_on < Date.current %>
       <% if @approval.approved_grades_at.nil? %>
           <%= link_to 'Godkjenn', {action: :approve, id: @graduation.id},
               class: 'btn btn-primary pull-right', method: :post %>
@@ -25,11 +25,11 @@
 
 <div class="tab-content">
   <div class="tab-pane active" id="graduates">
-    <%=render 'graduates_tab' %>
+    <%=render 'graduates_tab' if @graduation.held_on%>
   </div>
 
   <div class="tab-pane" id="censors">
-    <%= render 'censors_tab' %>
+    <%= render 'censors_tab' if @graduation.held_on %>
   </div>
 
   <div class="tab-pane" id="shopping-list">

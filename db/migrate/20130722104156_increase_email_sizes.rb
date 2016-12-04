@@ -5,6 +5,5 @@ class IncreaseEmailSizes < ActiveRecord::Migration
     change_column :users,   :email,        :string, limit: 64, null: false
   end
 
-  def down
-  end
+  def down; end
 end

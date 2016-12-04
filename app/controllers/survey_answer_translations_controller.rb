@@ -7,15 +7,13 @@ class SurveyAnswerTranslationsController < ApplicationController
     @survey_answer_translations = SurveyAnswerTranslation.all
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @survey_answer_translation = SurveyAnswerTranslation.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @survey_answer_translation = SurveyAnswerTranslation.new(survey_answer_translation_params)

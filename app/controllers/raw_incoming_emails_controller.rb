@@ -7,15 +7,13 @@ class RawIncomingEmailsController < ApplicationController
     @raw_emails = RawIncomingEmail.order(created_at: :desc).limit(300).decorate
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @raw_incoming_email = RawIncomingEmail.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @raw_incoming_email = RawIncomingEmail.new(raw_incoming_email_params)

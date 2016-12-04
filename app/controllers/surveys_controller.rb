@@ -7,15 +7,13 @@ class SurveysController < ApplicationController
     @surveys = Survey.all
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @survey = Survey.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @survey = Survey.new(survey_params)

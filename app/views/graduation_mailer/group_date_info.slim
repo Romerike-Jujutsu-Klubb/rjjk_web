@@ -1,0 +1,16 @@
+h1 Hei #{@member.first_name}!
+
+p
+  | Gradering for #{@graduation.group.name} er satt opp til #{@graduation.held_on}.
+
+p
+  ' Din nåværende registrerte grad hos oss er: #{@member.current_rank.label}.
+  ' Meld ifra så fort du kan hvis dette er feil.
+
+p
+  | Din neste grad er #{@member.next_rank.label}.  Minstekrav for denne graden er
+  =<> @member.next_rank.minimum_attendances
+  | treninger siden forrige gradering og at du har fylt #{@member.next_rank.minimum_age} år.
+
+p
+  | Ny invitasjon til gradering vil sendes nærmere gradering dersom kravene for gradering er oppfylt.

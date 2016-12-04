@@ -23,8 +23,7 @@ class UserMessagesController < ApplicationController
     @user_message = UserMessage.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @user_message = UserMessage.new(user_message_params)

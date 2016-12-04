@@ -7,8 +7,7 @@ class SurveyQuestionsController < ApplicationController
     @survey_questions = SurveyQuestion.all
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @survey_question = SurveyQuestion.new

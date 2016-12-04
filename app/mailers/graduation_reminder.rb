@@ -22,6 +22,20 @@ class GraduationReminder
     end
   end
 
+  def self.notify_groups
+    Graduation.includes(:group).references(:groups)
+        .where('groups.from_age >= 13')
+        .where('group_notification = ?', true)
+        .where('date_info_sent_at IS NULL')
+        .each do |graduation|
+      graduation.group.members.active(graduation.held_on).each do |member|
+        GraduationMailer.group_date_info(graduation, member)
+            .store(member.user_id, tag: :graduation_date_info)
+      end
+      graduation.update! date_info_sent_at: Time.current
+    end
+  end
+
   def self.notify_overdue_graduates
     today = Date.current
     members = Member.active(today)
@@ -47,13 +61,52 @@ class GraduationReminder
 
   def self.notify_censors
     Censor.includes(:graduation, :member).references(:graduations)
-        .where('(examiner IS NULL OR examiner = ?) AND confirmed_at IS NULL', false)
+        .where('censors.created_at <= ?', 1.day.ago)
+        .where(examiner: false, confirmed_at: nil)
+        .where('requested_at IS NULL OR requested_at < ?', 1.week.ago)
+        .order('graduations.held_on')
+        .each do |censor|
+      GraduationMailer.invite_censor(censor).store(censor.member.user_id, tag: :censor_invite)
+      censor.update! requested_at: Time.zone.now
+    end
+  end
+
+  def self.notify_missing_locks
+    Censor.includes(:graduation, :member).references(:graduations)
+        .where(examiner: false, confirmed_at: nil)
         .where('requested_at IS NULL OR requested_at < ?', 1.week.ago)
         .order('graduations.held_on')
         .limit(1)
         .each do |censor|
-      GraduationMailer.invite_censor(censor).store(censor.member.user_id, tag: :censor_invite)
+      GraduationMailer.lock_reminder(censor).store(censor.member.user_id, tag: :censor_invite)
       censor.update! requested_at: Time.zone.now
+    end
+  end
+
+  def self.send_shopping_list
+    Graduation
+        .locked(2.days.ago)
+        .where(shopping_list_sent_at: nil)
+        .order('graduations.held_on')
+        .each do |graduation|
+      eq_manager = Role['Materialforvalter']
+      GraduationMailer.send_shopping_list(graduation, eq_manager)
+          .store(eq_manager, tag: :graduation_shopping_list)
+      graduation.update! shopping_list_sent_at: Time.zone.now
+    end
+  end
+
+  def self.notify_graduates
+    Graduate.includes(graduation: :group).references(:groups)
+        .where('groups.from_age >= 13')
+        .where('graduations.held_on < ?', 3.weeks.from_now)
+        .where('confirmed_at IS NULL AND (invitation_sent_at IS NULL OR invitation_sent_at < ?)',
+            1.week.ago)
+        .order('graduations.held_on')
+        .each do |graduate|
+      GraduationMailer.invite_graduate(graduate)
+          .store(graduate.member.user_id, tag: :graduate_invite)
+      graduate.update! invitation_sent_at: Time.current
     end
   end
 
@@ -61,9 +114,24 @@ class GraduationReminder
     Censor.includes(:graduation, :member).references(:graduations)
         .where('approved_grades_at IS NULL AND graduations.held_on < ?', Date.current)
         .where('user_id IS NOT NULL')
-        .order('graduations.held_on')
         .each do |censor|
       GraduationMailer.missing_approval(censor).store(censor.member.user_id)
+    end
+  end
+
+  def self.congratulate_graduates
+    Graduation.approved(2.days.ago).includes(:group).references(:groups)
+        .where('groups.from_age >= 13')
+        .where('held_on <= ?', 1.week.ago)
+        .order(:held_on)
+        .each do |graduation|
+      graduation.graduates
+          .where(gratz_sent_at: nil, passed: true)
+          .each do |graduate|
+        GraduationMailer.congratulate_graduate(graduate)
+            .store(graduate.member.user_id, tag: :graduate_gratz)
+        graduate.update! gratz_sent_at: Time.current
+      end
     end
   end
 end

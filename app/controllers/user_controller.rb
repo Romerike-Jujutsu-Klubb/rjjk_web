@@ -8,8 +8,7 @@ class UserController < ApplicationController
     @users = User.order(:last_name, :first_name).to_a
   end
 
-  def show
-  end
+  def show; end
 
   def login
     return if generate_blank_form
@@ -184,8 +183,7 @@ class UserController < ApplicationController
     end
   end
 
-  def welcome
-  end
+  def welcome; end
 
   def like
     UserImage.where(user_id: current_user.id, image_id: params[:id], rel_type: 'LIKE')

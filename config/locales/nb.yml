@@ -11,6 +11,7 @@ nb:
         member_id: Medlem
       graduation:
         held_on: Dato
+        group_notification: Gruppevarsel
       group:
         from_age: Nedre aldersgrense
         to_age: Øvre aldersgrense

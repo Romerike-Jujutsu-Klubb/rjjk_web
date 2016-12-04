@@ -42,7 +42,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
 
     uwe_row = find('table:first-of-type tbody tr:first-of-type')
     assert uwe_row
-    assert_equal ['Uwe Kubosch', '42', 'svart', '', '', 'P', '', '', '1 / 1'],
+    assert_equal ['Uwe Kubosch', '42', 'svart belte', '', '', 'P', '', '', '1 / 1'],
         uwe_row.all('td').map(&:text)
     assert_difference 'Attendance.count' do
       uwe_row.find('td:nth-of-type(4)').find('a').click
@@ -52,7 +52,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
     # Attendance 'X' NOT present
     lars_row = find('table:first-of-type tbody tr:nth-of-type(5)')
     assert lars_row
-    assert_equal ['Lars Bråten', '46', 'brunt', '', 'X', '', '', '', '1 / 2'],
+    assert_equal ['Lars Bråten', '46', 'brunt belte', '', 'X', '', '', '', '1 / 2'],
         lars_row.all('td').map(&:text)
 
     # Mark Lars as present
@@ -70,7 +70,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
       # Attendance 'X' present
       lars_row = find('table:first-of-type tbody tr:nth-of-type(5)')
       assert lars_row
-      assert_equal ['Lars Bråten', '46', 'brunt', 'X', 'X', '', '', '', '2 / 3'],
+      assert_equal ['Lars Bråten', '46', 'brunt belte', 'X', 'X', '', '', '', '2 / 3'],
           lars_row.all('td').map(&:text)
       lars_row.find('td:nth-of-type(4)').find('a', text: 'X')
     end
