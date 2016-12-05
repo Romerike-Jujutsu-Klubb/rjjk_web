@@ -10,3 +10,7 @@ voksne:
   held_on: '2007-10-10'
   group: voksne
   group_notification: true
+voksne_upcoming:
+  held_on: '2013-10-24'
+  group: voksne
+  group_notification: true

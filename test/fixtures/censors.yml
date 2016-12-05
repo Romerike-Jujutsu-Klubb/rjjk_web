@@ -13,3 +13,8 @@ two:
   member: lars
   examiner: true
   created_at: 2013-09-10 18:46
+uwe_voksne_upcoming:
+  graduation: voksne_upcoming
+  member: uwe
+  examiner: true
+  created_at: 2013-09-10 18:46

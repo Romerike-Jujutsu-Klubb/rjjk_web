@@ -29,3 +29,11 @@ uwe_nidan:
   rank: nidan
   paid_graduation: true
   paid_belt: true
+
+newbie_kyu_5:
+  member: newbie
+  graduation: voksne_upcoming
+  passed: true
+  rank: kyu_5
+  paid_graduation: true
+  paid_belt: true

@@ -23,7 +23,7 @@ class GraduationReminder
   end
 
   def self.notify_groups
-    Graduation.includes(:group).references(:groups)
+    Graduation.upcoming.includes(:group).references(:groups)
         .where('groups.from_age >= 13')
         .where('group_notification = ?', true)
         .where('date_info_sent_at IS NULL')
@@ -73,18 +73,19 @@ class GraduationReminder
 
   def self.notify_missing_locks
     Censor.includes(:graduation, :member).references(:graduations)
-        .where(examiner: false, confirmed_at: nil)
-        .where('requested_at IS NULL OR requested_at < ?', 1.week.ago)
+        .where(examiner: true)
+        .where.not(confirmed_at: nil)
+        .where(locked_at: nil)
+        .where('lock_reminded_at IS NULL OR lock_reminded_at < ?', 1.week.ago)
         .order('graduations.held_on')
-        .limit(1)
         .each do |censor|
       GraduationMailer.lock_reminder(censor).store(censor.member.user_id, tag: :censor_invite)
-      censor.update! requested_at: Time.zone.now
+      censor.update! lock_reminded_at: Time.zone.now
     end
   end
 
   def self.send_shopping_list
-    Graduation
+    Graduation.upcoming
         .locked(2.days.ago)
         .where(shopping_list_sent_at: nil)
         .order('graduations.held_on')
@@ -99,7 +100,7 @@ class GraduationReminder
   def self.notify_graduates
     Graduate.includes(graduation: :group).references(:groups)
         .where('groups.from_age >= 13')
-        .where('graduations.held_on < ?', 3.weeks.from_now)
+        .where('graduations.held_on BETWEEN ? AND ?', Date.current, 3.weeks.from_now)
         .where('confirmed_at IS NULL AND (invitation_sent_at IS NULL OR invitation_sent_at < ?)',
             1.week.ago)
         .order('graduations.held_on')

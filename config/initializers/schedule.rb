@@ -45,13 +45,13 @@ if %w(development beta production).include?(Rails.env) && !ENV['DISABLE_SCHEDULE
   scheduler.cron('0 4 * * *') { GroupSemester.create_missing_group_semesters }
 
   scheduler.cron('0 5 * * *') { GraduationReminder.notify_missing_graduations }
-  scheduler.cron('0 6 * * *') { GraduationReminder.notify_groups }
   scheduler.cron('0 1 * * mon') { GraduationReminder.notify_overdue_graduates }
+  scheduler.cron('0 6 * * *') { GraduationReminder.notify_groups }
   scheduler.cron('0 6 * * *') { GraduationReminder.notify_censors }
-  scheduler.cron('0 * * * *') { GraduationReminder.notify_missing_locks }
-  scheduler.cron('0 * * * *') { GraduationReminder.notify_graduates }
+  scheduler.cron('0 7 * * *') { GraduationReminder.notify_missing_locks }
+  scheduler.cron('0 8 * * *') { GraduationReminder.notify_graduates }
+  scheduler.cron('0 9 * * *') { GraduationReminder.send_shopping_list }
   scheduler.cron('0 10 * * *') { GraduationReminder.notify_missing_aprovals }
-  scheduler.cron('0 * * * *') { GraduationReminder.send_shopping_list }
   scheduler.cron('0 10 * * *') { GraduationReminder.congratulate_graduates }
 
   # Admin Weekly

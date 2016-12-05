@@ -8,6 +8,8 @@ class Graduation < ActiveRecord::Base
   validates :group_notification, inclusion: { in: [true, false], message: 'må velges' }
   validates :held_on, uniqueness: { scope: :group_id }
 
+  scope :not, ->(scope) { where(scope.where_values.reduce(:and).not) }
+
   scope :for_edit, -> do
     includes(
         censors: { member: { graduates: { rank: :martial_art } } },
@@ -36,22 +38,33 @@ class Graduation < ActiveRecord::Base
         group: { members: :nkf_member }
     )
   end
-  scope :locked,
+  scope :censors_confirmed,
       ->(date) { where(<<~SQL, date) }
+        NOT EXISTS (
+          SELECT confirmed_at
+          FROM censors WHERE graduation_id = graduations.id
+            AND confirmed_at <= ?
+        )
+      SQL
+  scope :locked,
+      ->(date) { where(<<~SQL, date: date, true: true, false: false) }
         NOT EXISTS (
           SELECT locked_at
           FROM censors WHERE graduation_id = graduations.id
-            AND (locked_at IS NULL OR locked_at <= ?)
+            AND (locked_at IS NULL OR locked_at <= :date)
+            AND examiner = :true AND declined = :false
         )
       SQL
   scope :approved,
-      ->(date) { where(<<~SQL, date) }
+      ->(date) { where(<<~SQL, date, false) }
         NOT EXISTS (
           SELECT approved_grades_at
           FROM censors WHERE graduation_id = graduations.id
             AND (approved_grades_at IS NULL OR approved_grades_at <= ?)
+            AND declined = ?
         )
       SQL
+  scope :upcoming, -> { where 'held_on >= ?', Date.current }
 
   def start_at
     held_on.try(:at, group_schedule.try(:start_at) || TimeOfDay.new(17, 45))

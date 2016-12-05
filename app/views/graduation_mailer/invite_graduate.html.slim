@@ -17,7 +17,7 @@ ul
 - current_graduate = @graduate.member.current_graduate(@graduate.graduation.martial_art, @graduate.graduation.held_on)
 
 p
-  ' Krav til gradering er #{limit} treninger.
+  ' Minstekrav til gradering er #{limit} treninger.
   ' Vi har registrert #{attended} treninger på deg siden
   - if current_graduate
     ' gradering #{current_graduate.graduation.held_on}.
