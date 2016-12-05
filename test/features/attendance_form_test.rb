@@ -62,10 +62,10 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
         new_instructor_row.all('td').map(&:text)
     assert_difference 'Attendance.count' do
       new_instructor_row.find('td:nth-of-type(2)').click
-      assert_equal '/attendances/new', current_path
+      assert_current_path '/attendances/new', only_path: true
       select('Lars Bråten', from: 'attendance_member_id')
       click_button('Create')
-      assert_equal "/attendances/form/2013/10/#{groups(:panda).id}", current_path
+      assert_current_path "/attendances/form/2013/10/#{groups(:panda).id}"
 
       # Attendance 'X' present
       lars_row = find('table:first-of-type tbody tr:nth-of-type(5)')

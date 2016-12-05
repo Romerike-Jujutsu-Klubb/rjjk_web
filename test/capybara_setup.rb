@@ -38,6 +38,7 @@ class ActionDispatch::IntegrationTest
   def login_and_visit(path, user = :admin)
     visit '/user/login'
     fill_login_form user
+    assert_current_path '/'
     visit path
   end
 

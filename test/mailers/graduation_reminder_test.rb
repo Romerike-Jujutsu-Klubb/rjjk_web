@@ -134,17 +134,17 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(%r{<a href="http://example.com/graduations/658987981/edit">Tiger den 2007-10-09</a>}, mail.body)
 
     mail = UserMessage.pending[1]
-    assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
-    assert_equal %w(noreply@test.jujutsu.no), mail.from
-    assert_equal 'Bekrefte gradering', mail.subject
-    assert_match(/Hei Lars!/, mail.body)
-    assert_match(%r{<a href="http://example.com/graduations/84385526/edit">Panda den 2007-10-08</a>}, mail.body)
-
-    mail = UserMessage.pending[2]
     assert_equal ['"Uwe Kubosch" <admin@test.com>'], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_equal 'Bekrefte gradering', mail.subject
     assert_match(/Hei Uwe!/, mail.body)
+    assert_match(%r{<a href="http://example.com/graduations/84385526/edit">Panda den 2007-10-08</a>}, mail.body)
+
+    mail = UserMessage.pending[2]
+    assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
+    assert_equal %w(noreply@test.jujutsu.no), mail.from
+    assert_equal 'Bekrefte gradering', mail.subject
+    assert_match(/Hei Lars!/, mail.body)
     assert_match(%r{<a href="http://example.com/graduations/84385526/edit">Panda den 2007-10-08</a>}, mail.body)
   end
 

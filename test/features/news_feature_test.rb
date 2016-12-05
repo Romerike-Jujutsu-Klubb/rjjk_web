@@ -15,7 +15,7 @@ class NewsFeatureTest < ActionDispatch::IntegrationTest
   end
 
   def test_index_member
-    login_and_visit '/news', :sebastian
+    login_and_visit '/news', :newbie
     assert_current_path '/news'
     screenshot('news/index_member')
   end

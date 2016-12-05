@@ -4,14 +4,14 @@ require 'capybara_setup'
 class InstructionTest < ActionDispatch::IntegrationTest
   def test_index
     login_and_visit '/'
-    click_link 'Instruksjon'
+    find('a', text: 'Instruksjon').click
     assert_current_path '/group_instructors'
     screenshot('instruction/index')
   end
 
   def test_add_new
     visit_with_login '/group_instructors'
-    click_link 'Registrer gruppeinstruktør'
+    find('a', text: 'Registrer gruppeinstruktør').click
     assert_current_path '/group_instructors/new'
     screenshot('instruction/new')
     select 'Panda Torsdag', from: 'group_instructor_group_schedule_id'

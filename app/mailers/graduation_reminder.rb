@@ -27,6 +27,7 @@ class GraduationReminder
         .where('groups.from_age >= 13')
         .where('group_notification = ?', true)
         .where('date_info_sent_at IS NULL')
+        .order(:id)
         .each do |graduation|
       graduation.group.members.active(graduation.held_on).each do |member|
         GraduationMailer.group_date_info(graduation, member)
@@ -115,6 +116,7 @@ class GraduationReminder
     Censor.includes(:graduation, :member).references(:graduations)
         .where('approved_grades_at IS NULL AND graduations.held_on < ?', Date.current)
         .where('user_id IS NOT NULL')
+        .order(:id)
         .each do |censor|
       GraduationMailer.missing_approval(censor).store(censor.member.user_id)
     end
