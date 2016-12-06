@@ -38,7 +38,8 @@ class GraduatesController < ApplicationController
   end
 
   def new
-    @graduate = Graduate.new
+    @graduate ||= Graduate.new
+    load_form_data
   end
 
   def create
@@ -51,30 +52,33 @@ class GraduatesController < ApplicationController
       flash[:notice] = 'Graduate was successfully created.'
       back_or_redirect_to action: :index
     else
+      new
       render action: :new
     end
   end
 
   def edit
-    @graduate = Graduate.find(params[:id])
+    @graduate ||= Graduate.find(params[:id])
+    load_form_data
   end
 
   def update
     @graduate = Graduate.includes(:graduation, :member, :rank).find(params[:id])
     respond_to do |format|
-      if @graduate.update_attributes(params[:graduate])
+      if @graduate.update(params[:graduate])
         format.html do
           flash[:notice] = 'Graduate was successfully updated.'
           redirect_to action: :show, id: @graduate
         end
         format.json { head :no_content }
-        format.js do
-          @ranks = Rank.where(martial_art_id: @graduate.graduation.group.martial_art_id)
-              .order(:position).to_a
-        end
+        format.js { edit }
       else
-        format.html { render action: :edit, layout: !request.xhr? }
+        format.html do
+          edit
+          render action: :edit, layout: !request.xhr?
+        end
         format.json { render json: @graduate.errors, status: :unprocessable_entity }
+        format.js { edit }
       end
     end
   end
@@ -86,5 +90,12 @@ class GraduatesController < ApplicationController
       format.html { redirect_to action: :index }
       format.js { render js: %{$("#graduate_#{@graduate.id}").remove()} }
     end
+  end
+
+  private
+
+  def load_form_data
+    @ranks = Rank.where(martial_art_id: @graduate.graduation.group.martial_art_id)
+        .order(:position).to_a
   end
 end

@@ -1,0 +1,18 @@
+= bootstrap_form_for @graduate do |f|
+  = error_messages_for :graduate
+
+  - if @graduate.new_record?
+    = f.hidden_field(:graduation_id)
+    = f.hidden_field(:member_id)
+
+  = f.static_control(:member_id)
+  = f.select :rank_id, @ranks.map{|r| [r.label, r.id]}, prompt: true
+
+  = f.select :passed, [['Ja', true], ['Nei', false]], prompt: true
+  = f.select :paid_graduation, [['Ja', true], ['Nei', false]], prompt: true
+  = f.select :paid_belt, [['Ja', true], ['Nei', false]], prompt: true
+
+  .btn-toolbar.pull-right
+    /= link_to 'Show', :action => 'show', :id => @graduate
+    = link_to 'Tilbake', {action: :index}, class: 'btn btn-link'
+    = f.primary

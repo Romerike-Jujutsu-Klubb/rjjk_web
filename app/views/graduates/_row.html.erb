@@ -17,6 +17,9 @@
         (<span style="color: red; white-space: nowrap"><%= mbr.age(graduate.graduation.held_on) %>
     år</span>)
     <% end %>
+    <% if graduate.changed? %>
+        &nbsp;<span class="text-danger">* IKKE LAGRET! *</span>
+    <% end %>
   </td>
   <% unless graduate.passed? && graduate.graduation.group.school_breaks? %>
       <td>
