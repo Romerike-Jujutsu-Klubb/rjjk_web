@@ -17,6 +17,10 @@ nb:
         member_id: Medlem
       graduate:
         member_id: Medlem
+        paid_belt: Betalt belte
+        paid_graduation: Betalt gradering
+        passed: Bestått
+        rank_id: Grad
       graduation:
         held_on: Dato
         group_notification: Gruppevarsel
