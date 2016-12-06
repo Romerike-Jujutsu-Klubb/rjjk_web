@@ -26,6 +26,7 @@ if %w(development beta production).include?(Rails.env) && !ENV['DISABLE_SCHEDULE
 
   # TODO(uwe): Limit messages to once per week: news, survey, info
   # TODO(uwe): Email board meeting minutes
+  # TODO(uwe): Register belt sizes for members.
   # TODO(uwe): Register shirt sizes for members.
   # TODO(uwe): Register jacket sizes for members?
   # TODO(uwe): Lage info side om jakkene.
