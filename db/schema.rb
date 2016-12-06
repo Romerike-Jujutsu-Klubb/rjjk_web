@@ -230,9 +230,9 @@ ActiveRecord::Schema.define(version: 20161205231833) do
     t.integer  "group_id",              :null=>false
     t.datetime "shopping_list_sent_at"
     t.boolean  "group_notification",    :null=>false
-    t.datetime "date_info_sent_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "date_info_sent_at"
   end
 
   create_table "censors", force: :cascade do |t|
@@ -386,9 +386,9 @@ ActiveRecord::Schema.define(version: 20161205231833) do
     t.datetime "invitation_sent_at"
     t.datetime "confirmed_at"
     t.boolean  "declined"
-    t.datetime "gratz_sent_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "gratz_sent_at"
   end
 
   create_table "semesters", force: :cascade do |t|

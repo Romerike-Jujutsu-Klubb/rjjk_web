@@ -56,7 +56,7 @@ class GraduationsController < ApplicationController
 
   def update
     @graduation = Graduation.for_edit.find(params[:id])
-    if @graduation.update_attributes(params[:graduation])
+    if @graduation.update(params[:graduation])
       flash[:notice] = 'Graduation was successfully updated.'
       redirect_to action: :edit, id: @graduation, anchor: :form
     else
