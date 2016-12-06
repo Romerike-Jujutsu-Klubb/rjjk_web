@@ -29,8 +29,8 @@ class Election < ActiveRecord::Base
   end
 
   def elected_name
-    if guardian
-      "#{member.guardians[guardian][:name]} (for #{member.name})"
+    if guardian_index
+      "#{member.guardians[guardian_index][:name]} (for #{member.name})"
     else
       member.name
     end

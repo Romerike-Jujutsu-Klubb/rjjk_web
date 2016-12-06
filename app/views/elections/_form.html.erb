@@ -29,10 +29,10 @@
     </div>
     <% if @election.member.try(:guardians).try(:any?) %>
         <div class="form-group">
-          <%= f.label :guardian, 'Foresatt' %>
-          <%= f.select :guardian,
+          <%= f.label :guardian_index, 'Foresatt' %>
+          <%= f.select :guardian_index,
                   [*@election.member.guardians.map { |i,g| ["#{g[:name]} (#{g[:email] || 'e-post mangler'})", i] }],
-                  {include_blank: @election.guardian ? 'Ingen foresatt' : 'Velg foresatt hvis passende'},
+                  {include_blank: @election.guardian_index ? 'Ingen foresatt' : 'Velg foresatt hvis passende'},
                   class: 'form-control' %>
         </div>
     <% end %>

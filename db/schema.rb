@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161204175908) do
+ActiveRecord::Schema.define(version: 20161205231833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -136,12 +136,13 @@ ActiveRecord::Schema.define(version: 20161204175908) do
   end
 
   create_table "appointments", force: :cascade do |t|
-    t.integer  "member_id",  :null=>false, :index=>{:name=>"fk__appointments_member_id"}, :foreign_key=>{:references=>"members", :name=>"fk_appointments_member_id", :on_update=>:no_action, :on_delete=>:no_action}
-    t.integer  "role_id",    :null=>false, :index=>{:name=>"fk__appointments_role_id"}, :foreign_key=>{:references=>"roles", :name=>"fk_appointments_role_id", :on_update=>:no_action, :on_delete=>:no_action}
-    t.date     "from",       :null=>false
+    t.integer  "member_id",      :null=>false, :index=>{:name=>"fk__appointments_member_id"}, :foreign_key=>{:references=>"members", :name=>"fk_appointments_member_id", :on_update=>:no_action, :on_delete=>:no_action}
+    t.integer  "role_id",        :null=>false, :index=>{:name=>"fk__appointments_role_id"}, :foreign_key=>{:references=>"roles", :name=>"fk_appointments_role_id", :on_update=>:no_action, :on_delete=>:no_action}
+    t.date     "from",           :null=>false
     t.date     "to"
-    t.datetime "created_at", :null=>false
-    t.datetime "updated_at", :null=>false
+    t.datetime "created_at",     :null=>false
+    t.datetime "updated_at",     :null=>false
+    t.integer  "guardian_index"
   end
 
   create_table "group_schedules", force: :cascade do |t|
@@ -304,7 +305,7 @@ ActiveRecord::Schema.define(version: 20161204175908) do
     t.date     "resigned_on"
     t.datetime "created_at",        :null=>false
     t.datetime "updated_at",        :null=>false
-    t.integer  "guardian"
+    t.integer  "guardian_index"
   end
 
   create_table "embu_images", force: :cascade do |t|

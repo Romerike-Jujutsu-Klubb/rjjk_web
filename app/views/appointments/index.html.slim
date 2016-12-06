@@ -1,0 +1,23 @@
+- @content_width = 1024
+
+= link_to 'Nytt verv', new_appointment_path, class: 'btn btn-primary pull-right'
+
+h1 Verv
+
+table.table
+  tr
+    th Verv
+    th Medlem
+    th Fra
+    th Til
+    th
+    th
+
+  - @appointments.each do |appointment|
+    tr
+      td = detour_to appointment.role.name, appointment.role
+      td = link_to appointment.appointed_name, edit_appointment_path(appointment)
+      td = appointment.from
+      td = appointment.to
+      td = link_to appointment, method: :delete, data: { confirm: 'Er du sikker?' }
+        i.fa.fa-trash

@@ -43,7 +43,7 @@ class AppointmentsControllerTest < ActionController::TestCase
     put :update, id: @appointment, appointment: { from: @appointment.from,
         member_id: @appointment.member_id, role_id: @appointment.role_id,
         to: @appointment.to }
-    assert_redirected_to appointment_path(assigns(:appointment))
+    assert_redirected_to appointments_path
   end
 
   test 'should destroy appointment' do

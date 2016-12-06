@@ -6,4 +6,14 @@ class Appointment < ActiveRecord::Base
   scope :current, -> {
     where('"from" <= ? AND ("to" IS NULL OR "to" >= ?)', *([Date.current] * 2))
   }
+
+  validates :from, :member_id, :role_id, presence: true
+
+  def appointed_name
+    if guardian_index
+      "#{member.guardians[guardian_index][:name]} (for #{member.name})"
+    else
+      member.name
+    end
+  end
 end

@@ -1,6 +1,12 @@
 nb:
   activerecord:
     attributes:
+      appointment:
+        from: Fra
+        guardian_index: Foresatt
+        member_id: Medlem
+        role_id: Rolle
+        to: Til
       attendance:
         member_id: Medlem
       current_semester:
