@@ -50,9 +50,9 @@ class GraduationMailer < ApplicationMailer
     mail to: graduate.member.email, subject: @title
   end
 
-  def send_shopping_list(graduation, member)
+  def send_shopping_list(graduation, appointment)
     @graduation = graduation
-    @member = member
+    @appointment = appointment
     mail subject:
         "Liste over belter for gradering for #{graduation.group.name} #{graduation.held_on}"
   end

@@ -26,10 +26,12 @@ class Role < ActiveRecord::Base
   scope :by_name, ->(name) { where(name: name) }
   # scope :active, -> (date = Date.current) { where(name: name).first }
 
-  def self.[](name)
+  def self.[](name, return_record: false)
     role = by_name(name).first
     return nil unless role
-    (role.elections.current.first || role.appointments.current.first)&.member
+    record = (role.elections.current.first || role.appointments.current.first)
+    return record if return_record
+    record&.member
   end
 
   def on_the_board?

@@ -18,10 +18,9 @@ class InstructionReminder
       end
     end.flatten
     if missing_chief_instructions.any? || missing_instructions.any?
-      # FIXME(uwe): Symbol quotes should not be necessary: JRuby bug in 9.1.2.0
       InstructionMailer
           .missing_instructors(missing_chief_instructions, missing_instructions)
-          .store(Role[:'Hovedinstruktør'], tag: :missing_instructors)
+          .store(Role[:Hovedinstruktør], tag: :missing_instructors)
     end
   end
 end

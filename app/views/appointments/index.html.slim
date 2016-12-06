@@ -16,7 +16,7 @@ table.table
   - @appointments.each do |appointment|
     tr
       td = detour_to appointment.role.name, appointment.role
-      td = link_to appointment.appointed_name, edit_appointment_path(appointment)
+      td = link_to appointment.label, edit_appointment_path(appointment)
       td = appointment.from
       td = appointment.to
       td = link_to appointment, method: :delete, data: { confirm: 'Er du sikker?' }

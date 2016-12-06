@@ -9,11 +9,27 @@ class Appointment < ActiveRecord::Base
 
   validates :from, :member_id, :role_id, presence: true
 
-  def appointed_name
+  def label
     if guardian_index
       "#{member.guardians[guardian_index][:name]} (for #{member.name})"
     else
       member.name
+    end
+  end
+
+  def appointed_name
+    if guardian_index
+      member.guardians[guardian_index][:name]
+    else
+      member.name
+    end
+  end
+
+  def appointed_first_name
+    if guardian_index
+      member.guardians[guardian_index][:name].split(/\s+/).first
+    else
+      member.first_name
     end
   end
 end
