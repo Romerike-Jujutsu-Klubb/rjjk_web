@@ -6,7 +6,7 @@
     = f.hidden_field(:member_id)
 
   = f.static_control :member_id
-    = @graduate.member.name
+    = @graduate.member&.name
   = f.select :rank_id, @ranks.map{|r| [r.label, r.id]}, prompt: true
 
   .row

@@ -106,11 +106,11 @@ class UserController < ApplicationController
     params[:user][:email] ||= params[:user][:login] if params[:user]
     return if generate_blank_form
 
-    email = params['user']['email']
+    email = params[:user][:email]
     escaped_email = CGI.escapeHTML(email)
     if email.blank? || email !~ /.+@.+\..+/
       flash.now['message'] = 'Skriv inn en gyldig e-postadresse.'
-    elsif (users = User.search(email)).empty?
+    elsif (users = (User.search(email) + Member.search(email).map(&:user)).uniq).empty?
       flash.now['message'] =
           "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{escaped_email}"
     else

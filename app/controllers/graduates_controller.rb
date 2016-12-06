@@ -71,15 +71,14 @@ class GraduatesController < ApplicationController
           redirect_to action: :show, id: @graduate
         end
         format.json { head :no_content }
-        format.js { edit }
       else
         format.html do
           edit
           render action: :edit, layout: !request.xhr?
         end
         format.json { render json: @graduate.errors, status: :unprocessable_entity }
-        format.js { edit }
       end
+      format.js { edit }
     end
   end
 
@@ -95,7 +94,10 @@ class GraduatesController < ApplicationController
   private
 
   def load_form_data
-    @ranks = Rank.where(martial_art_id: @graduate.graduation.group.martial_art_id)
-        .order(:position).to_a
+    query = Rank.order(:position)
+    if @graduate.graduation
+      query = query.where(martial_art_id: @graduate.graduation.group.martial_art_id)
+    end
+    @ranks = query.to_a
   end
 end
