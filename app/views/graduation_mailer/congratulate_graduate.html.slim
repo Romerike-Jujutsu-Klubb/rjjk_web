@@ -12,6 +12,9 @@ p
   =< @graduate.member.next_rank.label
   | .  Frem til da kreves minst
   =<> @graduate.member.next_rank.minimum_attendances
-  | treninger og at du har fylt
-  =<> @graduate.member.next_rank.minimum_age
-  | år.
+  | treninger
+  - if @graduate.member.age < @graduate.member.next_rank.minimum_age
+    = ' og at du har fylt'
+    =<> @graduate.member.next_rank.minimum_age
+    | år
+  | .

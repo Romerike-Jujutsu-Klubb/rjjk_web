@@ -169,7 +169,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_equal 'Gratulerer med bestått gradering!', mail.subject
     assert_match(/Vi har registrert din gradering 2007-10-10 til 1. kyu brunt belte./, mail.body)
     assert_match(
-        /Neste grad for deg er shodan svart belte.  Frem til da kreves minst 84 treninger og at du har fylt 18 år./,
+        /Neste grad for deg er shodan svart belte.  Frem til da kreves minst 84 treninger./,
         mail.body
     )
 
@@ -179,6 +179,6 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_equal 'Gratulerer med bestått gradering!', mail.subject
     assert_match(%r{Vi har registrert din gradering 2007-10-10 til nidan svart belte m/2 striper.}, mail.body)
     assert_match(%r{Neste grad for deg er sandan svart belte m/3 striper.}, mail.body)
-    assert_match(/Frem til da kreves minst 84 treninger og at du har fylt 22 år./, mail.body)
+    assert_match(/Frem til da kreves minst 84 treninger./, mail.body)
   end
 end
