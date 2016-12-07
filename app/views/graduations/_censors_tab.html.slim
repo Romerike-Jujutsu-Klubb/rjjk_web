@@ -27,7 +27,7 @@
     h4 Sensorer
 
     #censors_row.row
-      - @graduation.censors.reject(&:examiner).sort_by { |c| c.member.current_rank }.reverse.each do |cen|
+      - @graduation.censors.reject(&:examiner).sort_by { |c| [c.declined ? 0 : c.declined.nil? ? 2 : 1, c.member.current_rank] }.reverse.each do |cen|
         .col-md-6 id="censor_#{cen.id}"
           = link_to({controller: :censors, action: :destroy, id: cen.id}, \
                   data: {remote: true, method: :delete}) do
