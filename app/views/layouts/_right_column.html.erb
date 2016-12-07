@@ -2,7 +2,7 @@
 <% column_width_992 = 218 %>
 <div class="padded">
 
-  <div align="center">
+  <div class="text-center">
     <%= link_to image_tag('rjjk_logo_&_txt_320.png', id: :logo_img), '/' %>
   </div>
 
@@ -21,7 +21,7 @@
   <%= render 'layouts/next_practice' %>
 
   <% if @image && !@image.new_record? && (controller.class != ImagesController || !%w{gallery mine}.include?(controller.action_name)) %>
-      <div align="center">
+      <div class="text-center">
         <%= link_to controller: :images, action: :gallery, id: @image.id do %>
             <% if @image.video? %>
                 <%= video_tag url_for(controller: :images, action: :show, id: @image.id, format: @image.format), title: @image.name || 'Film', style: 'width: 100%; border: 0', controls: true, autobuffer: true %>

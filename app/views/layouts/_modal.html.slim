@@ -1,0 +1,19 @@
+/! Modal
+.modal.fade id=id tabindex="-1" role="dialog" aria-labelledby="#{id}ModalLabel" aria-hidden="true"
+  .modal-dialog class=('modal-lg' if id == :imageModal)
+    .modal-content
+      .modal-header
+        button.close type="button" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true" &times;
+        h4.modal-title id="#{id}ModalLabel" &nbsp;
+      .modal-body = yield
+      .modal-footer
+        button.btn.btn-primary type="button" data-dismiss="modal" Close
+javascript:
+    $('##{id}').on('show.bs.modal', function (event) {
+        var link = $(event.relatedTarget); // Element that triggered the modal
+        var title = link.prop('title');
+        if (title) {
+            $(this).find('.modal-title').text(title);
+        }
+    });

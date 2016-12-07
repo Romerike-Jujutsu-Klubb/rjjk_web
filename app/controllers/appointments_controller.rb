@@ -48,7 +48,7 @@ class AppointmentsController < ApplicationController
   private
 
   def load_form_data
-    @members = Member.all
-    @roles = Role.all
+    @members = Member.order(:first_name, :last_name).to_a
+    @roles = Role.order(:name).to_a
   end
 end
