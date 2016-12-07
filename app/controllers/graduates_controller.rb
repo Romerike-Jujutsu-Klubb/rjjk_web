@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 class GraduatesController < ApplicationController
-  before_action :admin_required
+  include GraduationAccess
+
+  before_action :admin_required, except: [:confirm, :decline, :show]
 
   # FIXME(uwe):  Fixe cache sweeping!
   # cache_sweeper :grade_history_image_sweeper, :only => [:create, :update, :destroy]
@@ -35,6 +37,7 @@ class GraduatesController < ApplicationController
 
   def show
     @graduate = Graduate.find(params[:id])
+    return unless admin_or_graduate_required(@graduate)
   end
 
   def new
@@ -80,6 +83,30 @@ class GraduatesController < ApplicationController
       end
       format.js { edit }
     end
+  end
+
+  # From email link
+  def confirm
+    @graduate = Graduate.find(params[:id])
+    return unless admin_or_graduate_required(@graduate)
+    if @graduate.update(confirmed_at: Time.zone.now, declined: false)
+      flash[:notice] = 'Din deltakelse på gradering er bekreftet.'
+    else
+      flash[:error] = 'Beklager, men noe gikk galt under registreringen av din bekreftelse.'
+    end
+    redirect_to @graduate
+  end
+
+  # From email link
+  def decline
+    @graduate = Graduate.find(params[:id])
+    return unless admin_or_graduate_required(@graduate)
+    if @graduate.update(confirmed_at: Time.zone.now, declined: true)
+      flash[:notice] = 'Ditt avslag på gradering er bekreftet.'
+    else
+      flash[:error] = 'Beklager, men noe gikk galt under registreringen av ditt avslag.'
+    end
+    redirect_to @graduate
   end
 
   def destroy

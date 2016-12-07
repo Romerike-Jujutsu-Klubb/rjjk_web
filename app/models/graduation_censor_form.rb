@@ -22,7 +22,7 @@ class GraduationCensorForm
             .current_rank(graduate.graduation.martial_art, graduate.graduation.held_on)
         rank_color =
             if member_current_rank
-              "#{member_current_rank.name} #{member_current_rank.colour}"
+              "Fra: #{member_current_rank.name} #{member_current_rank.colour}"
             else
               'Ugradert'
             end
@@ -34,7 +34,7 @@ class GraduationCensorForm
                 "\n" \
                 "Treninger: #{member.attendances_since_graduation(graduation.held_on).count}" \
                 ' (' + graduate.current_rank_age + ")\n" \
-                "#{graduate.rank.name} #{graduate.rank.colour}",
+                "Til: #{graduate.rank.name} #{graduate.rank.colour}",
             '',
             '',
         ]

@@ -46,7 +46,7 @@ class GraduationMailer < ApplicationMailer
     @timestamp = graduate.graduation.held_on
     # @email_url = { controller: :censors, action: :show, id: @censor.id }
     @confirm_url = { controller: :graduates, action: :confirm, id: @graduate.id }
-    @decline_url = { controller: :graduate, action: :decline, id: @graduate.id }
+    @decline_url = { controller: :graduates, action: :decline, id: @graduate.id }
     mail to: graduate.member.email, subject: @title
   end
 

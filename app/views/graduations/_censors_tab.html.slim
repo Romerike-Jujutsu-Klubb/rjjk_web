@@ -18,7 +18,7 @@
       = f.hidden_field :examiner, value: 1
 
       .input-group
-        = f.select :member_id, ['Velg instruktør'] + @instructors.map { |m| [m.name, m.id] }.sort, \
+        = f.select :member_id, ['Velg instruktør'] + @instructors.map { |m| [m.name, m.id] }, \
                 {}, class: 'form-control', onchange: 'form.submit()'
         span.input-group-btn
           = f.submit 'Legg til', class: 'btn btn-default'
@@ -41,7 +41,7 @@
       = f.hidden_field :graduation_id
 
       .input-group
-        = f.select :member_id, ['Velg sensor'] + @instructors.map { |m| [m.name, m.id] }.sort, \
+        = f.select :member_id, ['Velg sensor'] + @instructors.map { |m| [m.name, m.id] }, \
                 {}, class: 'form-control', onchange: 'form.submit()'
         span.input-group-btn
         = f.submit 'Legg til', class: 'btn btn-default'

@@ -63,7 +63,7 @@ class GraduationReminder
   def self.notify_censors
     Censor.includes(:graduation, :member).references(:graduations)
         .where('censors.created_at <= ?', 1.day.ago)
-        .where(examiner: false, confirmed_at: nil)
+        .where(confirmed_at: nil)
         .where('requested_at IS NULL OR requested_at < ?', 1.week.ago)
         .order('graduations.held_on')
         .each do |censor|
@@ -114,6 +114,7 @@ class GraduationReminder
 
   def self.notify_missing_aprovals
     Censor.includes(:graduation, :member).references(:graduations)
+        .where(declined: false)
         .where('approved_grades_at IS NULL AND graduations.held_on < ?', Date.current)
         .where('user_id IS NOT NULL')
         .order(:id)

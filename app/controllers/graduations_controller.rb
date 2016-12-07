@@ -51,7 +51,8 @@ class GraduationsController < ApplicationController
         .map { |g| [g, g.members.active(@graduation.held_on).sort_by(&:name) - included_members] }
         .select { |_g, members| members.any? }
 
-    @instructors = Member.instructors - @graduation.censors.map(&:member)
+    @instructors = Member.instructors(@graduation.held_on).to_a.sort_by(&:current_rank).reverse -
+        @graduation.censors.map(&:member)
   end
 
   def update

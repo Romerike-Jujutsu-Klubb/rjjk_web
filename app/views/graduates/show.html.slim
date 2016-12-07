@@ -1,0 +1,49 @@
+- extended = current_user.member != @graduate.member
+h2 Gradering #{@graduate.rank.label} #{@graduate.graduation.held_on}
+
+- if extended
+  .row
+    .col-sm-6
+      h3 Medlem: #{@graduate.member.name}
+    .col-sm-6
+      h3 Gruppe: #{@graduate.graduation.group.name}
+
+- if extended
+  table.table
+    tr
+      th Bestått:
+      td = @graduate.passed ? 'Ja' : 'Nei'
+      th Betalt gradering:
+      td = @graduate.paid_graduation ? 'Ja' : 'Nei'
+      th Betalt belte:
+      td = @graduate.paid_belt ? 'Ja' : 'Nei'
+    tr
+      th Opprettet:
+      td = @graduate.created_at&.to_s(:db)
+      th Oppdatert:
+      td = @graduate.updated_at&.to_s(:db)
+      th Gratulert:
+      td = @graduate.updated_at&.to_s(:db)
+    tr
+      th Invitert:
+      td = @graduate.invitation_sent_at&.to_s(:db)
+      th #{@graduate.declined ? 'Avslått' : 'Bekreftet'}:
+      td = @graduate.confirmed_at&.to_s(:db)
+      th
+
+- if @graduate.declined
+  h3.text-danger.text-center #{extended ? 'Kandidaten' : 'Du'} er avmeldt denne graderingen.
+
+p = @graduate.rank.description
+
+- if true || @graduate.graduation.approved?
+  h3.text-center
+    - if @graduate.passed
+      | #{extended ? 'Kandidaten' : 'Gratulerer, du'} har bestått!
+    - else
+      | Du har ikke bestått.
+
+- if current_user.admin?
+  .btn-toolbar.pull-right
+    = link_to 'Til graderingslisten', graduations_path, class: 'btn btn-link'
+    = link_to 'Rediger', edit_graduation_path(@graduate.graduation), class: 'btn btn-primary'

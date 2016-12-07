@@ -2,19 +2,23 @@ one:
   graduation: panda
   member: lars
   examiner: false
+  declined: false
   created_at: 2013-09-10 18:46
 uwe_panda:
   graduation: panda
   member: uwe
   examiner: true
+  declined: false
   created_at: 2013-09-10 18:46
 two:
   graduation: tiger
   member: lars
   examiner: true
+  declined: false
   created_at: 2013-09-10 18:46
 uwe_voksne_upcoming:
   graduation: voksne_upcoming
   member: uwe
   examiner: true
+  declined: false
   created_at: 2013-09-10 18:46

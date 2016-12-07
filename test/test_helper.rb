@@ -35,6 +35,14 @@ class ActiveSupport::TestCase
     assert v, "Assignment #{symbol} not found in the controller."
     assert_equal [], v.errors.full_messages
   end
+
+  # Added in Rails 5
+  def fixture_file_upload(path, mime_type = nil, binary = false)
+    if self.class.respond_to?(:fixture_path) && self.class.fixture_path
+      path = File.join(self.class.fixture_path, path)
+    end
+    Rack::Test::UploadedFile.new(path, mime_type, binary)
+  end
 end
 
 class Mail::TestMailer

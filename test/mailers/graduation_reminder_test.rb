@@ -71,7 +71,7 @@ class GraduationReminderTest < ActionMailer::TestCase
   end
 
   def test_notify_censors
-    assert_mail_stored(1) { GraduationReminder.notify_censors }
+    assert_mail_stored(4) { GraduationReminder.notify_censors }
 
     mail = UserMessage.pending[0]
     assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
@@ -86,6 +86,15 @@ class GraduationReminderTest < ActionMailer::TestCase
         mail.body)
     assert_match(%r{<a href="http://example.com/censors/980190962/confirm">Jeg kommer :\)</a>}, mail.body)
     assert_match(%r{<a href="http://example.com/censors/980190962/decline">Beklager, jeg kommer ikke.</a>}, mail.body)
+
+    mail = UserMessage.pending[1]
+    assert_equal ['"Uwe Kubosch" <admin@test.com>'], mail.to
+
+    mail = UserMessage.pending[2]
+    assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
+
+    mail = UserMessage.pending[3]
+    assert_equal ['"Uwe Kubosch" <admin@test.com>'], mail.to
   end
 
   def test_notify_missing_locks
@@ -111,12 +120,12 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_equal ['"Newbie Neuer" <newbie@example.com>'], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_equal 'Invitasjon til gradering', mail.subject
-    assert_match(/Hei!/, mail.body)
+    assert_match(/Hei Newbie Neuer!/, mail.body)
     assert_match(/Du er satt opp til gradering torsdag 24. oktober/, mail.body)
     assert_match(/Har du mulighet til delta\?  Klikk på en av linkene nedenfor for å gi beskjed om du kan eller ikke./,
         mail.body)
     assert_match(%r{<a href="http://example.com/graduates/confirm/397971580">Jeg kommer :\)</a>}, mail.body)
-    assert_match(%r{<a href="http://example.com/graduate/decline/397971580">Beklager, jeg kommer ikke.</a>}, mail.body)
+    assert_match(%r{<a href="http://example.com/graduates/decline/397971580">Beklager, jeg kommer ikke.</a>}, mail.body)
     assert_match(/Minstekrav til gradering er 11 treninger. Vi har registrert 1 treninger på deg siden du startet./,
         mail.body)
     assert_match(/Du trenger altså 10 treninger til for å oppfylle kravet til gradering./, mail.body)
@@ -148,7 +157,13 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(%r{<a href="http://example.com/graduations/84385526/edit">Panda den 2007-10-08</a>}, mail.body)
   end
 
-  def test_send_shopping_list
+  def test_send_shopping_list_not_locked
+    assert_mail_stored(0) { GraduationReminder.send_shopping_list }
+  end
+
+  def test_send_shopping_list_locked
+    censors(:uwe_voksne_upcoming).update! locked_at: Time.current
+
     assert_mail_stored(1) { GraduationReminder.send_shopping_list }
 
     mail = UserMessage.pending[0]

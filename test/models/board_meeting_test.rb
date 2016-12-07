@@ -2,7 +2,7 @@
 require 'test_helper'
 
 class BoardMeetingTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'minutes=' do
+    board_meetings(:one).minutes = fixture_file_upload('files/board_meeting_minutes.txt', 'text/plain')
+  end
 end

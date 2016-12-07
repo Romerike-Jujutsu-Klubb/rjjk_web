@@ -29,7 +29,7 @@ class UserController < ApplicationController
       back_or_redirect_to '/'
     else
       @login = params['user']['login']
-      flash['message'] = 'Innlogging feilet.'
+      flash.now['message'] = 'Innlogging feilet.'
     end
   end
 
