@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 class AddMissingTimestamps < ActiveRecord::Migration
   def change
-    add_timestamps :censors
-    add_timestamps :graduates
-    add_timestamps :graduations
-    add_timestamps :martial_arts
-    add_timestamps :members
-    add_timestamps :ranks
-    add_timestamps :users
+    [:censors, :graduates, :graduations, :martial_arts, :members, :ranks, :users].each do |table|
+      add_timestamps table, null: false, default: '2016-12-01'
+      change_column_default table, :created_at, nil
+      change_column_default table, :updated_at, nil
+    end
   end
 end

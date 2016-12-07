@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(version: 20161205231833) do
   create_table "martial_arts", force: :cascade do |t|
     t.string   "name",       :limit=>16, :null=>false
     t.string   "family",     :limit=>16, :null=>false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null=>false
+    t.datetime "updated_at", :null=>false
   end
 
   create_table "groups", force: :cascade do |t|
@@ -59,8 +59,8 @@ ActiveRecord::Schema.define(version: 20161205231833) do
     t.integer  "group_id",        :foreign_key=>{:references=>"groups", :name=>"ranks_group_id_fkey", :on_update=>:no_action, :on_delete=>:no_action}
     t.text     "description"
     t.string   "decoration",      :limit=>16
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null=>false
+    t.datetime "updated_at",      :null=>false
   end
 
   create_table "technique_applications", force: :cascade do |t|
@@ -124,8 +124,8 @@ ActiveRecord::Schema.define(version: 20161205231833) do
     t.string   "parent_2_name",        :limit=>64
     t.string   "parent_2_mobile",      :limit=>16
     t.string   "billing_email",        :limit=>64
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",           :null=>false
+    t.datetime "updated_at",           :null=>false
   end
 
   create_table "roles", force: :cascade do |t|
@@ -230,8 +230,8 @@ ActiveRecord::Schema.define(version: 20161205231833) do
     t.integer  "group_id",              :null=>false
     t.datetime "shopping_list_sent_at"
     t.boolean  "group_notification",    :null=>false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",            :null=>false
+    t.datetime "updated_at",            :null=>false
     t.datetime "date_info_sent_at"
   end
 
@@ -245,8 +245,8 @@ ActiveRecord::Schema.define(version: 20161205231833) do
     t.datetime "lock_reminded_at"
     t.datetime "locked_at"
     t.boolean  "declined"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",         :null=>false
+    t.datetime "updated_at",         :null=>false
   end
 
   create_table "cms_members", force: :cascade do |t|
@@ -386,8 +386,8 @@ ActiveRecord::Schema.define(version: 20161205231833) do
     t.datetime "invitation_sent_at"
     t.datetime "confirmed_at"
     t.boolean  "declined"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",         :null=>false
+    t.datetime "updated_at",         :null=>false
     t.datetime "gratz_sent_at"
   end
 
@@ -471,8 +471,8 @@ ActiveRecord::Schema.define(version: 20161205231833) do
     t.datetime "token_expiry"
     t.boolean  "verified",        :default=>false
     t.boolean  "deleted",         :default=>false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null=>false
+    t.datetime "updated_at",      :null=>false
   end
 
   create_table "news_items", force: :cascade do |t|
