@@ -20,8 +20,8 @@
       <%= f.label :years_on_the_board, 'År i styret' %><br/>
       <%= f.select :years_on_the_board, [['Sitter ikke i styret', nil], ['1 år', 1], ['2 år', 2]], {}, class: 'form-control' %>
     </div>
-    <div class="actions">
-      <%= f.submit 'Lagre', class: 'btn btn-primary' %>
+    <div class="btn-toolbar pull-right">
       <%= back_or_link_to 'Tilbake', roles_path, class: 'btn btn-default' %>
+      <%= f.submit 'Lagre', class: 'btn btn-primary' %>
     </div>
 <% end %>
