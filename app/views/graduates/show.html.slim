@@ -22,26 +22,25 @@ h2 Gradering #{@graduate.rank.label} #{@graduate.graduation.held_on}
       td = @graduate.created_at&.to_s(:db)
       th Oppdatert:
       td = @graduate.updated_at&.to_s(:db)
-      th Gratulert:
-      td = @graduate.updated_at&.to_s(:db)
     tr
       th Invitert:
       td = @graduate.invitation_sent_at&.to_s(:db)
       th #{@graduate.declined ? 'Avslått' : 'Bekreftet'}:
       td = @graduate.confirmed_at&.to_s(:db)
-      th
+      th Gratulert:
+      td = @graduate.updated_at&.to_s(:db)
 
 - if @graduate.declined
   h3.text-danger.text-center #{extended ? 'Kandidaten' : 'Du'} er avmeldt denne graderingen.
 
 p = @graduate.rank.description
 
-- if true || @graduate.graduation.approved?
+- if @graduate.graduation.approved?
   h3.text-center
     - if @graduate.passed
       | #{extended ? 'Kandidaten' : 'Gratulerer, du'} har bestått!
     - else
-      | Du har ikke bestått.
+      | #{extended ? 'Kandidaten' : 'Du'} har ikke bestått.
 
 - if current_user.admin?
   .btn-toolbar.pull-right
