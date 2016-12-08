@@ -1,8 +1,9 @@
 <h1>Hei <%= @censor.member.first_name %>!</h1>
 
 <p>
-  Romerike Jujutsu Klubb vil med dette invitere deg til å være sensor på
-  gradering for <%= @censor.graduation.group.name %>
+  Romerike Jujutsu Klubb vil med dette invitere deg til å være
+  <%= @censor.examiner ? 'eksminator' : 'sensor'%>
+  på gradering for <%= @censor.graduation.group.name %>
   den <%= @censor.graduation.held_on %>.
 </p>
 <p>

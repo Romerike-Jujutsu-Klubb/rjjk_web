@@ -2,7 +2,7 @@
 class CensorsController < ApplicationController
   include GraduationAccess
 
-  CENSOR_ACTIONS = [:confirm, :decline].freeze
+  CENSOR_ACTIONS = [:confirm, :decline, :show].freeze
   before_action :admin_required, except: [:create, :destroy, *CENSOR_ACTIONS]
 
   def index
@@ -39,6 +39,7 @@ EOH
 
   def show
     @censor = Censor.find(params[:id])
+    return unless admin_or_censor_required(@censor.graduation)
   end
 
   def new
