@@ -1,15 +1,15 @@
 <% @content_width = 1024 %>
 
-<div class="btn-toolbar">
-  <%= link_to 'Til listen', {action: :index}, class: 'btn btn-default pull-right' %>
+<div class="btn-toolbar pull-right">
   <% if @approval && @graduation.held_on && @graduation.held_on < Date.current %>
       <% if @approval.approved_grades_at.nil? %>
           <%= link_to 'Godkjenn', {action: :approve, id: @graduation.id},
-              class: 'btn btn-primary pull-right', method: :post %>
+              class: 'btn btn-primary', method: :post %>
       <% else %>
-          <div class="btn btn-success pull-right">Godkjent</div>
+          <div class="btn btn-success">Godkjent</div>
       <% end %>
   <% end %>
+  <%= link_to 'Til listen', {action: :index}, class: 'btn btn-default' %>
 </div>
 
 <h2>Gradering <%= @graduation.group.name %> <%= @graduation.held_on %></h2>
