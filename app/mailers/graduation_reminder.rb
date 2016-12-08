@@ -29,7 +29,7 @@ class GraduationReminder
         .where('date_info_sent_at IS NULL')
         .order(:id)
         .each do |graduation|
-      graduation.group.members.active(graduation.held_on).each do |member|
+      graduation.group.members.active(graduation.held_on).order(:id).each do |member|
         GraduationMailer.group_date_info(graduation, member)
             .store(member.user_id, tag: :graduation_date_info)
       end
