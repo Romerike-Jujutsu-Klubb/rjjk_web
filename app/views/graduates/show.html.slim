@@ -19,19 +19,22 @@ h2 Gradering #{@graduate.rank.label} #{@graduate.graduation.held_on}
       td = @graduate.paid_belt ? 'Ja' : 'Nei'
     tr
       th Opprettet:
-      td = @graduate.created_at&.to_s(:db)
+      td colspan="2" = @graduate.created_at&.to_s(:db)
       th Oppdatert:
-      td = @graduate.updated_at&.to_s(:db)
+      td colspan="2" = @graduate.updated_at&.to_s(:db)
     tr
       th Invitert:
-      td = @graduate.invitation_sent_at&.to_s(:db)
+      td = @graduate.invitation_sent_at&.to_date
       th #{@graduate.declined ? 'Avslått' : 'Bekreftet'}:
-      td = @graduate.confirmed_at&.to_s(:db)
+      td = @graduate.confirmed_at&.to_date
       th Gratulert:
-      td = @graduate.updated_at&.to_s(:db)
+      td = @graduate.updated_at&.to_date
 
-- if @graduate.declined
-  h3.text-danger.text-center #{extended ? 'Kandidaten' : 'Du'} er avmeldt denne graderingen.
+- if @graduate.confirmed_at
+  - if @graduate.declined
+    h3.text-danger.text-center #{extended ? 'Kandidaten' : 'Du'} er avmeldt denne graderingen.
+  - else
+    h3.text-success.text-center #{extended ? 'Kandidaten' : 'Du'} har bekreftet påmelding til denne graderingen.
 
 p = @graduate.rank.description
 

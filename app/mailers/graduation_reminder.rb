@@ -126,8 +126,9 @@ class GraduationReminder
 
   def self.congratulate_graduates
     Graduation.approved(2.days.ago).includes(:group).references(:groups)
+        .where(passed: true)
         .where('groups.from_age >= 13')
-        .where('held_on <= ?', 1.week.ago)
+        .where('held_on BETWEEN ? AND ?', 6.months.ago, 1.week.ago)
         .order(:held_on)
         .each do |graduation|
       graduation.graduates
