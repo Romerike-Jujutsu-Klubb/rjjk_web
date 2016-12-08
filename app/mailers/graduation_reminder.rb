@@ -66,7 +66,7 @@ class GraduationReminder
         .where('graduations.held_on >= ?', Date.current)
         .where(confirmed_at: nil)
         .where('requested_at IS NULL OR requested_at < ?', 1.week.ago)
-        .order('graduations.held_on')
+        .order('graduations.held_on, censors.id')
         .each do |censor|
       GraduationMailer.invite_censor(censor).store(censor.member.user_id, tag: :censor_invite)
       censor.update! requested_at: Time.zone.now
@@ -126,7 +126,6 @@ class GraduationReminder
 
   def self.congratulate_graduates
     Graduation.approved(2.days.ago).includes(:group).references(:groups)
-        .where(passed: true)
         .where('groups.from_age >= 13')
         .where('held_on BETWEEN ? AND ?', 6.months.ago, 1.week.ago)
         .order(:held_on)
