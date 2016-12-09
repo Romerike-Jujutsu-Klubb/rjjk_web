@@ -8,7 +8,7 @@ table.table
     th Gruppe
     td =@graduation.group.name
   tr
-    th Eksminator
+    th Eksaminator
     td =@graduation.censors.select(&:examiner).map(&:member).map(&:name).join(', ')
   tr
     th Sensorer

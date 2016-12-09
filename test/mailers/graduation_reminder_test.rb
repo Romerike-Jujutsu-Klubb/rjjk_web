@@ -76,7 +76,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     mail = UserMessage.pending[0]
     assert_equal ['"Uwe Kubosch" <admin@test.com>'], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
-    assert_equal 'Invitasjon til å være eksminator', mail.subject
+    assert_equal 'Invitasjon til å være eksaminator', mail.subject
     assert_match(/Hei Uwe!/, mail.body)
     assert_match(
         /Jujutsu Klubb vil med dette invitere deg til å være\s+eksaminator\s+på\s+gradering for Voksne\s+den 2013-10-24./,

@@ -25,7 +25,7 @@ class GraduationMailer < ApplicationMailer
 
   def invite_censor(censor)
     @censor = censor
-    @title = "Invitasjon til å være #{@censor.examiner ? 'eksminator' : 'sensor'}"
+    @title = "Invitasjon til å være #{@censor.role_name}"
     @timestamp = censor.graduation.held_on
     @email_url = { controller: :censors, action: :show, id: @censor.id }
     @confirm_url = { controller: :censors, action: :confirm, id: @censor.id }
