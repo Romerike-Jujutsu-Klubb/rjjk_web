@@ -9,6 +9,13 @@ nb:
         to: Til
       attendance:
         member_id: Medlem
+      censor:
+        approved_grades_at: Godkjent grader
+        declined: Avslått
+        confirmed_at: Bekreftet
+        lock_reminded_at: Påmindt kandidatgodkjenning
+        locked_at: Bekreftet kandidater
+        requested_at: Invitert
       current_semester:
         first_session: Første trening
         last_session: Siste trening

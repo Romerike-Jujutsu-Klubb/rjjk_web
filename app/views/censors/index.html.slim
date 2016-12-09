@@ -1,0 +1,30 @@
+- @content_width =1024
+
+= link_to 'New censor', :action => 'new'
+
+h1 Listing censors
+
+table.table.table-condensed
+  tr
+    th Navn
+    th Gradering
+    th Eksaminator
+    th Forespurt
+    th Bekreftet
+    th Godkjent
+
+  - for censor in @censors
+      tr
+        td = censor.member.name
+        td nowrap="nowrap"
+          => censor.graduation.group.name
+          = censor.graduation.held_on
+        td = h censor.examiner
+        td = h censor.requested_at
+        td = h censor.confirmed_at
+        td = h censor.approved_grades_at
+        td = link_to 'Show', :action => 'show', :id => censor
+        td = link_to 'Edit', :action => 'edit', :id => censor
+        td = link_to 'Destroy', {:action => 'destroy', :id => censor}, :data => {:confirm => 'Are you sure?'}, :method => :post
+
+= will_paginate @censors

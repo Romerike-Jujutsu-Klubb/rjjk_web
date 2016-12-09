@@ -1,0 +1,12 @@
+- extended = current_user.member.id != @censor.member_id
+h1
+  = @censor.examiner ? 'Eksaminator' : 'Sensor'
+  - if extended
+    '
+    | #{link_to @censor.member.name, @censor.member}
+
+  h4
+    ' Gradering #{link_to @censor.graduation.held_on, @censor.graduation}
+    ' for #{link_to @censor.graduation.group.name, @censor.graduation.group}
+
+= render 'form', extended: extended

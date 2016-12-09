@@ -1,0 +1,28 @@
+= bootstrap_form_for @censor do |f|
+  = f.error_messages
+
+  = f.hidden_field :graduation_id
+
+  - if extended
+    .row
+      .col-sm-6
+        = f.static_control :requested_at
+          = @censor.requested_at&.to_date
+      .col-sm-6
+        = f.static_control :confirmed_at
+          = @censor.confirmed_at&.to_date
+    .row
+      .col-sm-6
+        = f.static_control :lock_reminded_at
+      .col-sm-6
+        = f.static_control :locked_at
+    .row
+      .col-sm-6
+        = f.static_control :declined
+      .col-sm-6
+        = f.static_control :approved_grades_at
+
+  .btn-toolbar.pull-right
+    = back_or_link_to 'Tilbake', {:action => :index}, :class => 'btn btn-default'
+    = link_to('Vis', @censor, :class => 'btn btn-default') unless @censor.new_record?
+    = submit_tag 'Lagre', :class => 'btn btn-primary'
