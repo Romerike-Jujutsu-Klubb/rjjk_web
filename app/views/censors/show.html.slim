@@ -7,6 +7,13 @@ p
   =< link_to @censor.graduation.held_on, @censor.graduation
   | .
 
+- if current_user.member == @censor.member
+  - if @censor.declined
+    h3.text-danger Du har avlått å være #{@censor.role_name} på denne graderingen.
+  - else
+    h3.text-success Du har bekreftet påmelding til denne graderingen.
+  br
+
 - if @censor.declined?
   p
     => @censor.member.male ? 'Han' : 'Hun'
@@ -15,8 +22,7 @@ p
 - elsif @censor.requested_at
   .row
     .col-xs-3 Forespurt:
-    .col-xs-3
-      =< @censor.requested_at.to_date
+    .col-xs-3 =< @censor.requested_at.to_date
     - if @censor.confirmed_at
       .col-xs-3
         = @censor.declined ? 'Avslått' : 'Brekreftet'
@@ -42,5 +48,5 @@ p
 
 
 .btn-toolbar.pull-right
-  = link_to 'Tilbake', censors_path, class: 'btn btn-default'
+  = back_or_link_to 'Tilbake', nil, class: 'btn btn-default'
   = link_to 'Endre', edit_censor_path(@censor), class: 'btn btn-primary'

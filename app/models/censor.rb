@@ -8,4 +8,8 @@ class Censor < ActiveRecord::Base
   def approved?
     !!approved_grades_at
   end
+
+  def role_name
+    examiner ? 'eksaminator' : 'sensor'
+  end
 end
