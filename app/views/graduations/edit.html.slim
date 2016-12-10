@@ -1,0 +1,42 @@
+- @content_width = 1024
+
+.btn-toolbar.pull-right
+  - if @approval
+    - if @approval.graduation.held_on &.< Date.current
+      - if @approval.approved_grades_at.nil?
+        = link_to 'Godkjenn', approve_graduation_path(@graduation), class: 'btn btn-primary', method: :post
+      - else
+        .btn.btn-success Godkjent
+    - elsif @approval.locked_at.nil?
+      = link_to 'Send innkalling', lock_graduation_path(@graduation), class: 'btn btn-primary', method: :post
+    - else
+      .btn.btn-success Innkalling sendes
+  = link_to 'Til listen', {action: :index}, class: 'btn btn-default'
+
+
+h2 Gradering #{@graduation.group.name} #{@graduation.held_on}
+
+ul.nav.nav-tabs
+  li.active = link_to 'Deltakere', '#graduates', data:{toggle: 'tab'}
+  li = link_to 'Eksaminatorer / Sensorer', '#censors', data:{toggle: 'tab'}
+  li = link_to 'Skjema', '#forms', data:{toggle: 'tab'}
+  li = link_to 'Handleliste belter', '#shopping-list', data:{toggle: 'tab'}
+  li = link_to 'Dato / Gruppe', '#form', data:{toggle: 'tab'}
+
+.tab-content
+  #graduates.tab-pane.active
+    =render 'graduates_tab' if @graduation.held_on
+  #censors.tab-pane
+    = render 'censors_tab' if @graduation.held_on
+  #shopping-list.tab-pane
+    = render 'shopping_list'
+  #forms.tab-pane
+    = render 'forms_tab'
+  #form.tab-pane
+    = render 'form'
+
+javascript:
+    $('a[data-method=delete]').bind('ajax:success', function (event, data, status, xhr) {
+        $(event.target).closest('tr').remove();
+        $(event.target).closest('.row').remove();
+    });

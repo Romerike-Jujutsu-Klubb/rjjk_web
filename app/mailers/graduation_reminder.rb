@@ -77,8 +77,10 @@ class GraduationReminder
     Censor.includes(:graduation, :member).references(:graduations)
         .where(examiner: true)
         .where.not(confirmed_at: nil)
+        .where.not(declined: true)
         .where(locked_at: nil)
         .where('lock_reminded_at IS NULL OR lock_reminded_at < ?', 1.week.ago)
+        .where('graduations.held_on < ?', 5.weeks.from_now)
         .order('graduations.held_on')
         .each do |censor|
       GraduationMailer.lock_reminder(censor).store(censor.member.user_id, tag: :censor_invite)

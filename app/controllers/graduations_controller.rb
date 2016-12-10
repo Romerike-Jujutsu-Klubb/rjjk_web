@@ -123,6 +123,14 @@ class GraduationsController < ApplicationController
     redirect_to edit_graduation_path(@graduation)
   end
 
+  def lock
+    @graduation = Graduation.find(params[:id])
+    @graduation.censors.where(member_id: current_user.member.id)
+        .update_all(locked_at: Time.now)
+    flash.notice = 'Gradering klar for innkalling!'
+    redirect_to edit_graduation_path(@graduation)
+  end
+
   def add_group
     Graduation.transaction do
       graduation = Graduation.includes(:graduates).find(params[:id])
@@ -133,7 +141,7 @@ class GraduationsController < ApplicationController
       members.each do |member|
         g = Graduate.new graduation_id: graduation.id, member_id: member.id,
             rank_id: member.next_rank(graduation).id,
-            passed: graduation.group.school_breaks?,
+            passed: graduation.group.school_breaks? || nil,
             paid_graduation: true, paid_belt: true
         if g.save
           success_count += 1

@@ -5,8 +5,6 @@ Rails.application.routes.draw do
   match 'attendances/:action/:year/:week/:group_schedule_id/:status(/:member_id)',
       controller: :attendances, via: [:get, :post]
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
-  patch 'graduations/add_group/:id' => 'graduations#add_group'
-  post 'graduations/approve/:id' => 'graduations#approve'
   get 'info/versjon'
   get 'members/search'
   get 'members/:action/:id(/:percentage/:step/:interval).:format' => 'members'
@@ -75,7 +73,11 @@ Rails.application.routes.draw do
   #  get :calendar, :on => :collection
   # end
   resources :graduates
-  resources :graduations
+  resources :graduations do
+    patch :add_group, on: :member
+    post :approve, on: :member
+    post :lock, on: :member
+  end
   resources :group_instructors
   resources :group_schedules
   resources :group_semesters

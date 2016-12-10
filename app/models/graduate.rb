@@ -8,6 +8,7 @@ class Graduate < ActiveRecord::Base
   validates :member_id, uniqueness: { scope: :graduation_id }
   validates :member_id, uniqueness: { scope: [:passed, :rank_id], if: :passed,
       message: 'har allerede bestått denne graden.' }
+  validates :passed, inclusion: { in: [true, false], if: ->(g) { g.graduation.approved? } }
 
   def training_start_date
     member.current_graduate(graduation.group.martial_art, graduation.held_on - 1)

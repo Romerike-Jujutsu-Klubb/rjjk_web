@@ -50,7 +50,7 @@ class GraduatesController < ApplicationController
     @graduate.rank_id ||= @graduate.member.next_rank(@graduate.graduation).id
     @graduate.paid_graduation ||= true
     @graduate.paid_belt ||= true
-    @graduate.passed = @graduate.graduation.group.school_breaks? if @graduate.passed.nil?
+    @graduate.passed = true if @graduate.passed.nil? && @graduate.graduation.group.school_breaks?
     if @graduate.save
       flash[:notice] = 'Graduate was successfully created.'
       back_or_redirect_to action: :index
