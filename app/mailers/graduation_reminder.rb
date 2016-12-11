@@ -106,7 +106,8 @@ class GraduationReminder
   def self.notify_graduates
     Graduate.includes(graduation: :group).references(:groups)
         .where('groups.from_age >= 13')
-        .where('graduations.held_on BETWEEN ? AND ?', Date.current, GRADUATES_INVITATION_LIMIT.from_now)
+        .where('graduations.held_on BETWEEN ? AND ?',
+            Date.current, GRADUATES_INVITATION_LIMIT.from_now)
         .where('confirmed_at IS NULL AND (invitation_sent_at IS NULL OR invitation_sent_at < ?)',
             1.week.ago)
         .order('graduations.held_on')

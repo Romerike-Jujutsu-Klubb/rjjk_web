@@ -99,8 +99,8 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_equal 'Bekrefte graderingsoppsett', mail.subject
     assert_match(%r{<h1>Hei Uwe Kubosch!</h1>}, mail.body)
     assert_match(/Det er på tide å legge inn kandidater på graderingen for Voksne 2013-10-24 og låse /, mail.body)
-    assert_match(/oppsettet slik at kandidatene kan få påmindelse om gradering./, mail.body)
-    assert_match(%r{Gå til <a href="http://example.com/graduations/812466982">graderingen</a>, legg inn }, mail.body)
+    assert_match(/oppsettet slik at kandidatene kan få innkalling til gradering./, mail.body)
+    assert_match(%r{Gå til <a href="http://example.com/graduations/812466982/edit">graderingen</a>, legg inn }, mail.body)
     assert_match(/kandidatene, eksaminator og sensorer, og klikk så på "Klar til utsending"./, mail.body)
   end
 
