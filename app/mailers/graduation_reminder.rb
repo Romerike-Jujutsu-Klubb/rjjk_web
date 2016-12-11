@@ -2,6 +2,8 @@
 require 'graduation_mailer'
 
 class GraduationReminder
+  GRADUATES_INVITATION_LIMIT = 3.weeks
+
   def self.notify_missing_graduations
     today = Date.current
     groups = Group.active(today).to_a
@@ -104,7 +106,7 @@ class GraduationReminder
   def self.notify_graduates
     Graduate.includes(graduation: :group).references(:groups)
         .where('groups.from_age >= 13')
-        .where('graduations.held_on BETWEEN ? AND ?', Date.current, 3.weeks.from_now)
+        .where('graduations.held_on BETWEEN ? AND ?', Date.current, GRADUATES_INVITATION_LIMIT.from_now)
         .where('confirmed_at IS NULL AND (invitation_sent_at IS NULL OR invitation_sent_at < ?)',
             1.week.ago)
         .order('graduations.held_on')
@@ -117,12 +119,14 @@ class GraduationReminder
 
   def self.notify_missing_aprovals
     Censor.includes(:graduation, :member).references(:graduations)
-        .where(declined: false)
-        .where('approved_grades_at IS NULL AND graduations.held_on < ?', Date.current)
-        .where('user_id IS NOT NULL')
+        .where.not(declined: true)
+        .where('graduations.held_on < ?', Date.current)
+        .where(approved_grades_at: nil)
+        .where('approval_requested_at IS NULL OR approval_requested_at < ?', 1.day.ago)
         .order(:id)
         .each do |censor|
       GraduationMailer.missing_approval(censor).store(censor.member.user_id)
+      censor.update! approval_requested_at: Time.current
     end
   end
 

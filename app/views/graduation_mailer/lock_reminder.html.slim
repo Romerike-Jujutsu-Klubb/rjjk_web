@@ -3,9 +3,9 @@ h1 Hei #{@censor.member.name}!
 p
   | Det er på tide å legge inn kandidater på graderingen for #{@censor.graduation.group.name}
   =<> @censor.graduation.held_on
-  | og låse oppsettet slik at kandidatene kan få påmindelse om gradering.
+  | og låse oppsettet slik at kandidatene kan få innkalling til gradering.
 
 p
   | Gå til
-  =< link_to 'graderingen', @censor.graduation
+  =< link_to 'graderingen', edit_graduation_path(@censor.graduation)
   | , legg inn kandidatene, eksaminator og sensorer, og klikk så på "Klar til utsending".

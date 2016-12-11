@@ -60,7 +60,7 @@ class GraduationMailer < ApplicationMailer
   def missing_approval(censor)
     @censor = censor
     @title = 'Bekrefte gradering'
-    @timestamp = Time.now
+    @timestamp = @censor.graduation.held_on
     @email_url = { controller: :graduations, action: :edit, id: @censor.graduation_id }
     mail to: censor.member.email, subject: @title
   end

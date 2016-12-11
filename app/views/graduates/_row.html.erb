@@ -21,7 +21,7 @@
         &nbsp;<span class="text-danger">* IKKE LAGRET! *</span>
     <% end %>
   </td>
-  <% unless graduate.passed? && graduate.graduation.group.school_breaks? %>
+  <% if (graduate.graduation.held_on &.<= Date.current) && (!graduate.passed?|| !graduate.graduation.group.school_breaks?) %>
       <td>
         <% if graduate.graduation.approved? %>
             <%= graduate.passed ? 'Ja' : 'Nei' %>

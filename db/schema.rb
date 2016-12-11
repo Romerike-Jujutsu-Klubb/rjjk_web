@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161208065737) do
+ActiveRecord::Schema.define(version: 20161211081531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -236,17 +236,18 @@ ActiveRecord::Schema.define(version: 20161208065737) do
   end
 
   create_table "censors", force: :cascade do |t|
-    t.integer  "graduation_id",      :null=>false, :index=>{:name=>"index_censors_on_graduation_id_and_member_id", :with=>["member_id"], :unique=>true}, :foreign_key=>{:references=>"graduations", :name=>"censors_graduation_id_fkey", :on_update=>:no_action, :on_delete=>:no_action}
-    t.integer  "member_id",          :null=>false, :foreign_key=>{:references=>"members", :name=>"censors_member_id_fkey", :on_update=>:no_action, :on_delete=>:no_action}
-    t.boolean  "examiner",           :null=>false
+    t.integer  "graduation_id",         :null=>false, :index=>{:name=>"index_censors_on_graduation_id_and_member_id", :with=>["member_id"], :unique=>true}, :foreign_key=>{:references=>"graduations", :name=>"censors_graduation_id_fkey", :on_update=>:no_action, :on_delete=>:no_action}
+    t.integer  "member_id",             :null=>false, :foreign_key=>{:references=>"members", :name=>"censors_member_id_fkey", :on_update=>:no_action, :on_delete=>:no_action}
+    t.boolean  "examiner",              :null=>false
     t.datetime "requested_at"
     t.datetime "confirmed_at"
     t.datetime "approved_grades_at"
     t.datetime "lock_reminded_at"
     t.datetime "locked_at"
     t.boolean  "declined"
-    t.datetime "created_at",         :null=>false
-    t.datetime "updated_at",         :null=>false
+    t.datetime "created_at",            :null=>false
+    t.datetime "updated_at",            :null=>false
+    t.datetime "approval_requested_at"
   end
 
   create_table "cms_members", force: :cascade do |t|

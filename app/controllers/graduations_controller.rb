@@ -115,19 +115,24 @@ class GraduationsController < ApplicationController
     send_data data, type: 'text/pdf', filename: filename, disposition: 'attachment'
   end
 
-  def approve
+  def lock
     @graduation = Graduation.find(params[:id])
-    @graduation.censors.where(member_id: current_user.member.id)
-        .update_all(approved_grades_at: Time.now)
-    flash.notice = 'Gradering godkjent!'
+    censor = @graduation.censors.find_by(member_id: current_user.member.id)
+    censor.confirmed_at ||= Time.now
+    censor.locked_at ||= Time.now
+    censor.save!
+    flash.notice = 'Gradering klar for innkalling!'
     redirect_to edit_graduation_path(@graduation)
   end
 
-  def lock
+  def approve
     @graduation = Graduation.find(params[:id])
-    @graduation.censors.where(member_id: current_user.member.id)
-        .update_all(locked_at: Time.now)
-    flash.notice = 'Gradering klar for innkalling!'
+    censor = @graduation.censors.find_by(member_id: current_user.member.id)
+    censor.confirmed_at ||= Time.now
+    censor.locked_at ||= Time.now
+    censor.approved_grades_at ||= Time.now
+    censor.save!
+    flash.notice = 'Gradering godkjent!'
     redirect_to edit_graduation_path(@graduation)
   end
 

@@ -3,7 +3,7 @@
       <thead>
       <tr>
         <th>Deltakere (<%= @graduation.graduates.size %>)</th>
-        <% unless @graduation.group.school_breaks? %>
+        <% if (@graduation.held_on &.<= Date.current) && !@graduation.group.school_breaks? %>
             <th>Bestått</th>
         <% end %>
         <th>Grad</th>
