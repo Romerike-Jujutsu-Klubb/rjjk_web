@@ -35,7 +35,22 @@ $().ready(function () {
     });
 
     // http://eonasdan.github.io/bootstrap-datetimepicker/#options
-    $('.date,[dateFormat]').datetimepicker({format: 'YYYY-MM-DD'});
+    $('.date,[dateFormat]').each(function () {
+        const format = 'YYYY-MM-DD';
+        var value = $(this).val();
+        if (value) {
+            $(this).val('');
+            $(this).datetimepicker({format: format, defaultDate: value});
+        } else {
+            var defaultDate = $(this).data('default-date');
+            if (defaultDate) {
+                $(this).datetimepicker({format: format, defaultDate: defaultDate});
+                $(this).val('');
+            } else {
+                $(this).datetimepicker({format: format, useCurrent: false});
+            }
+        }
+    });
     $('.datetime,[dateFormat][timeFormat]').each(function () {
         var value = $(this).val();
         if (value) {

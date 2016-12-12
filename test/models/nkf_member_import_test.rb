@@ -18,7 +18,7 @@ class NkfMemberImportTest < ActionMailer::TestCase
     assert_match "Nye medlemmer:\n    Sebastian Aagren:\n", mail.body.decoded
 
     mail = ActionMailer::Base.deliveries[1]
-    assert_match(/Oppdateringer fra NKF: \d{3} nye, \d{3} gruppeendringer/,
+    assert_match(/Oppdateringer fra NKF: \d{3} nye, 1 endrede, \d{3} gruppeendringer/,
         mail.subject)
     assert_equal ['medlem@jujutsu.no', 'uwe@kubosch.no'], mail.header[:to].value
     assert_equal 'noreply@test.jujutsu.no', mail.header[:from].value

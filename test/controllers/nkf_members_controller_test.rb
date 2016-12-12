@@ -48,4 +48,27 @@ class NkfMembersControllerTest < ActionController::TestCase
 
     assert_redirected_to nkf_members_path
   end
+
+  test 'should get comparison by show action' do
+    get :show, id: :comparison
+    assert_response :success
+  end
+
+  test 'post create_member' do
+    VCR.use_cassette('nkf_members_controller_create_member') do
+      post :create_member, id: nkf_members(:lars).id
+    end
+  end
+
+  test 'post update_member' do
+    VCR.use_cassette('nkf_members_controller_update_member') do
+      post :update_member, id: nkf_members(:lars).id, member: { first_name: :Uwe }
+    end
+  end
+
+  test 'post import' do
+    VCR.use_cassette('nkf_members_controller_import') do
+      post :import
+    end
+  end
 end

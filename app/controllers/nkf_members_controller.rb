@@ -64,7 +64,7 @@ class NkfMembersController < ApplicationController
 
   def create_member
     nkf_member = NkfMember.find(params[:id])
-    flash[:notice] = if nkf_member.create_member!
+    flash[:notice] = if nkf_member.create_corresponding_member!
                        t(:member_created)
                      else
                        'Member creation failed.'
@@ -86,8 +86,7 @@ class NkfMembersController < ApplicationController
     import = NkfMemberImport.new
     error_records = import.error_records
     records_size = error_records.size
-    escaped_records_size = html_escape(records_size.to_s)
-    flash[:notice] = "#{import.changes.size} records imported, #{escaped_records_size} failed, " \
+    flash[:notice] = "#{import.changes.size} records imported, #{records_size} failed, " \
         "#{import.import_rows.size - import.changes.size - records_size} skipped"
     if error_records.any?
       error_messages = error_records.map { |r| [r, r.errors.full_messages] }
@@ -95,14 +94,5 @@ class NkfMembersController < ApplicationController
     end
 
     redirect_to action: :comparison
-  end
-
-  def age_vs_contract
-    members = NkfMember.where(medlemsstatus: 'A').to_a
-    @wrong_contracts = members.select do |m|
-      (m.member.age < 10 && m.kont_sats !~ /^Barn/) ||
-          (m.member.age >= 10 && m.member.age < 15 && m.kont_sats !~ /^Ungdom/) ||
-          (m.member.age >= 15 && m.kont_sats !~ /^(Voksne|Styre|Trenere|Æresmedlem)/)
-    end
   end
 end

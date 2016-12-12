@@ -1,0 +1,92 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://maps.googleapis.com/maps/api/geocode/json?address=Torsvei%208b,%201472,%20Norway&language=en&sensor=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - maps.googleapis.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 12 Dec 2016 22:49:21 GMT
+      Expires:
+      - Tue, 13 Dec 2016 22:49:21 GMT
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      Content-Length:
+      - '522'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Cache-Control:
+      - public, max-age=86400
+      Age:
+      - '739'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICAicmVzdWx0cyIgOiBbCiAgICAgIHsKICAgICAgICAgImFkZHJlc3Nf
+        Y29tcG9uZW50cyIgOiBbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAg
+        ImxvbmdfbmFtZSIgOiAiOEIiLAogICAgICAgICAgICAgICAic2hvcnRfbmFt
+        ZSIgOiAiOEIiLAogICAgICAgICAgICAgICAidHlwZXMiIDogWyAic3RyZWV0
+        X251bWJlciIgXQogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAg
+        ICAgICAgICAgICJsb25nX25hbWUiIDogIlRvcnMgdmVpIiwKICAgICAgICAg
+        ICAgICAgInNob3J0X25hbWUiIDogIlRvcnMgdmVpIiwKICAgICAgICAgICAg
+        ICAgInR5cGVzIiA6IFsgInJvdXRlIiBdCiAgICAgICAgICAgIH0sCiAgICAg
+        ICAgICAgIHsKICAgICAgICAgICAgICAgImxvbmdfbmFtZSIgOiAiRmplbGxo
+        YW1hciIsCiAgICAgICAgICAgICAgICJzaG9ydF9uYW1lIiA6ICJGamVsbGhh
+        bWFyIiwKICAgICAgICAgICAgICAgInR5cGVzIiA6IFsgInBvc3RhbF90b3du
+        IiBdCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAg
+        ICAgImxvbmdfbmFtZSIgOiAiTMO4cmVuc2tvZyIsCiAgICAgICAgICAgICAg
+        ICJzaG9ydF9uYW1lIiA6ICJMw7hyZW5za29nIiwKICAgICAgICAgICAgICAg
+        InR5cGVzIiA6IFsgImFkbWluaXN0cmF0aXZlX2FyZWFfbGV2ZWxfMiIsICJw
+        b2xpdGljYWwiIF0KICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAg
+        ICAgICAgICAgICAibG9uZ19uYW1lIiA6ICJBa2Vyc2h1cyIsCiAgICAgICAg
+        ICAgICAgICJzaG9ydF9uYW1lIiA6ICJBa2Vyc2h1cyIsCiAgICAgICAgICAg
+        ICAgICJ0eXBlcyIgOiBbICJhZG1pbmlzdHJhdGl2ZV9hcmVhX2xldmVsXzEi
+        LCAicG9saXRpY2FsIiBdCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsK
+        ICAgICAgICAgICAgICAgImxvbmdfbmFtZSIgOiAiTm9yd2F5IiwKICAgICAg
+        ICAgICAgICAgInNob3J0X25hbWUiIDogIk5PIiwKICAgICAgICAgICAgICAg
+        InR5cGVzIiA6IFsgImNvdW50cnkiLCAicG9saXRpY2FsIiBdCiAgICAgICAg
+        ICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgImxvbmdfbmFt
+        ZSIgOiAiMTQ3MiIsCiAgICAgICAgICAgICAgICJzaG9ydF9uYW1lIiA6ICIx
+        NDcyIiwKICAgICAgICAgICAgICAgInR5cGVzIiA6IFsgInBvc3RhbF9jb2Rl
+        IiBdCiAgICAgICAgICAgIH0KICAgICAgICAgXSwKICAgICAgICAgImZvcm1h
+        dHRlZF9hZGRyZXNzIiA6ICJUb3JzIHZlaSA4QiwgMTQ3MiBGamVsbGhhbWFy
+        LCBOb3J3YXkiLAogICAgICAgICAiZ2VvbWV0cnkiIDogewogICAgICAgICAg
+        ICAibG9jYXRpb24iIDogewogICAgICAgICAgICAgICAibGF0IiA6IDU5Ljk0
+        NTg0NzUwMDAwMDAxLAogICAgICAgICAgICAgICAibG5nIiA6IDEwLjk3ODM2
+        NDgKICAgICAgICAgICAgfSwKICAgICAgICAgICAgImxvY2F0aW9uX3R5cGUi
+        IDogIlJPT0ZUT1AiLAogICAgICAgICAgICAidmlld3BvcnQiIDogewogICAg
+        ICAgICAgICAgICAibm9ydGhlYXN0IiA6IHsKICAgICAgICAgICAgICAgICAg
+        ImxhdCIgOiA1OS45NDcxOTY0ODAyOTE1MSwKICAgICAgICAgICAgICAgICAg
+        ImxuZyIgOiAxMC45Nzk3MTM3ODAyOTE1CiAgICAgICAgICAgICAgIH0sCiAg
+        ICAgICAgICAgICAgICJzb3V0aHdlc3QiIDogewogICAgICAgICAgICAgICAg
+        ICAibGF0IiA6IDU5Ljk0NDQ5ODUxOTcwODUsCiAgICAgICAgICAgICAgICAg
+        ICJsbmciIDogMTAuOTc3MDE1ODE5NzA4NQogICAgICAgICAgICAgICB9CiAg
+        ICAgICAgICAgIH0KICAgICAgICAgfSwKICAgICAgICAgInBhcnRpYWxfbWF0
+        Y2giIDogdHJ1ZSwKICAgICAgICAgInBsYWNlX2lkIiA6ICJDaElKNlVLRGdD
+        NTdRVVlSOE1QQS1pRGFLaFEiLAogICAgICAgICAidHlwZXMiIDogWyAic3Ry
+        ZWV0X2FkZHJlc3MiIF0KICAgICAgfQogICBdLAogICAic3RhdHVzIiA6ICJP
+        SyIKfQo=
+    http_version: 
+  recorded_at: Thu, 17 Oct 2013 16:46:00 GMT
+recorded_with: VCR 3.0.3

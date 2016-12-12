@@ -13,6 +13,12 @@ class MembersControllerTest < ActionController::TestCase
     assert_template :index
   end
 
+  def test_search
+    get :search, q: 'Lars'
+    assert_response :success
+    assert_template :search
+  end
+
   def test_list_active
     get :list_active
     assert_response :success
@@ -129,6 +135,11 @@ class MembersControllerTest < ActionController::TestCase
   def test_grade_history_graph_percentage_800
     get :grade_history_graph_percentage, id: 800, format: 'png',
         interval: 365, percentage: 67, step: 30
+    assert_response :success
+  end
+
+  def test_yaml
+    get :yaml
     assert_response :success
   end
 end

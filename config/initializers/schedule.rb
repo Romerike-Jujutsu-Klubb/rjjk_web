@@ -47,25 +47,15 @@ if %w(development beta production).include?(Rails.env) && !ENV['DISABLE_SCHEDULE
 
   scheduler.cron('0 1 * * mon') { GraduationReminder.notify_overdue_graduates }
   scheduler.cron('0 1 * * *') { GraduationReminder.notify_missing_graduations }
-  if Rails.env.development?
-    scheduler.cron('*/5 * * * *') do
-      Rails.logger.error 'Running hyper-scheduled jobs:'
-      GraduationReminder.notify_groups
-      GraduationReminder.notify_censors
-      GraduationReminder.notify_missing_locks
-      GraduationReminder.notify_graduates
-      GraduationReminder.send_shopping_list
-      GraduationReminder.notify_missing_aprovals
-      GraduationReminder.congratulate_graduates
-    end
-  else
-    scheduler.cron('0 2 * * *') { GraduationReminder.notify_groups }
-    scheduler.cron('0 3 * * *') { GraduationReminder.notify_censors }
-    scheduler.cron('0 4 * * *') { GraduationReminder.notify_missing_locks }
-    scheduler.cron('0 5 * * *') { GraduationReminder.notify_graduates }
-    scheduler.cron('0 6 * * *') { GraduationReminder.send_shopping_list }
-    scheduler.cron('0 7 * * *') { GraduationReminder.notify_missing_aprovals }
-    scheduler.cron('0 8 * * *') { GraduationReminder.congratulate_graduates }
+  scheduler.cron('*/5 * * * *') do
+    Rails.logger.error 'Running hyper-scheduled jobs:'
+    GraduationReminder.notify_groups
+    GraduationReminder.notify_censors
+    GraduationReminder.notify_missing_locks
+    GraduationReminder.notify_graduates
+    GraduationReminder.send_shopping_list
+    GraduationReminder.notify_missing_aprovals
+    GraduationReminder.congratulate_graduates
   end
 
   # Admin Weekly

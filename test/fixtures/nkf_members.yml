@@ -1,11 +1,19 @@
 erik:
   fornavn: Erik
   kjonn: Mann
+  gren_stilart_avd_parti___gren_stilart_avd_parti: Kei Wa Ryu
 uwe:
   fornavn: Uwe
   kjonn: Mann
   member: uwe
+  gren_stilart_avd_parti___gren_stilart_avd_parti: Kei Wa Ryu
 lars:
+  adresse_2: Torsvei 8b
+  etternavn: Bråten
+  fodselsdato: 01.03.1967
   fornavn: Lars
+  gren_stilart_avd_parti___gren_stilart_avd_parti: Kei Wa Ryu
+  innmeldtdato: 01.04.2001
   kjonn: Mann
   member: lars
+  postnr: 1472
