@@ -33,28 +33,6 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 27
 
-# Offense count: 27
-# Cop supports --auto-correct.
-# Configuration parameters: Whitelist.
-# Whitelist: find_by_sql
-Rails/DynamicFindBy:
-  Exclude:
-    - 'app/models/attendance_history_graph.rb'
-    - 'app/models/graduation.rb'
-    - 'app/models/member.rb'
-    - 'app/models/member_grade_history_graph.rb'
-    - 'app/models/nkf_member_comparison.rb'
-    - 'app/models/nkf_member_import.rb'
-    - 'app/models/user_system.rb'
-    - 'db/migrate/20080828192131_add_family_to_martial_art.rb'
-    - 'db/migrate/20080828193209_add_martial_arts_members.rb'
-    - 'db/migrate/20080828220940_create_groups.rb'
-    - 'db/migrate/20111205171636_add_group_id_to_ranks.rb'
-    - 'db/migrate/20120604144204_create_member_images.rb'
-    - 'test/controllers/info_controller_test.rb'
-    - 'test/controllers/user_controller_test.rb'
-    - 'test/integration/user_system_test.rb'
-
 # Offense count: 10
 # Cop supports --auto-correct.
 # Configuration parameters: Include.

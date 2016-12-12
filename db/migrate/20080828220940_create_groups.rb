@@ -15,8 +15,8 @@ class CreateGroups < ActiveRecord::Migration
 
       t.timestamps
     end
-    keiwaryu = MartialArt.find_by_name('Kei Wa Ryu')
-    aikikai = MartialArt.find_by_name('Aikikai')
+    keiwaryu = MartialArt.find_by(name: 'Kei Wa Ryu')
+    aikikai = MartialArt.find_by(name: 'Aikikai')
     if keiwaryu && aikikai
       Group.create! martial_art_id: keiwaryu.id, name: 'Aspiranter', from_age: 6, to_age: 9
       j = Group.create! martial_art_id: keiwaryu.id, name: 'Juniorer', from_age: 10, to_age: 14
@@ -41,7 +41,7 @@ class CreateGroups < ActiveRecord::Migration
   def self.down
     add_column :members, :senior, :boolean
     add_column :cms_members, :senior, :boolean
-    s = Group.find_by_name 'Seniorer'
+    s = Group.find_by name: 'Seniorer'
     Member.all.each do |m|
       senior = m.groups.include? s
       puts "Marking #{m.name} senior: #{senior}"

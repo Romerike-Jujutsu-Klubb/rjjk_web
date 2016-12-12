@@ -115,7 +115,7 @@ EOF
     g.title = "Oppmøte #{I18n.t(:date)[:month_names][month]} #{years[0]}-#{years[-1]}"
     result.group_by { |r| r['name'] }.each do |group, values|
       g.dataxy(group,
-          values.map { |v| [v['year'], v['count']] }, nil, Group.find_by_name(group).color)
+          values.map { |v| [v['year'], v['count']] }, nil, Group.find_by(name: group).color)
     end
     g.labels = Hash[*years.map { |y| [y, y.to_s] }.flatten]
     g.minimum_value = 0

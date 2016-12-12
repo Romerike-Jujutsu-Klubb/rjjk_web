@@ -243,7 +243,7 @@ blocking users: #{blocking_users.inspect}"
       Graduation.new(held_on: Date.current, group: groups.sort_by(&:from_age).last))
     age = self.age(graduation.held_on)
     ma = graduation.group.try(:martial_art) ||
-        MartialArt.includes(:ranks).find_by_name('Kei Wa Ryu')
+        MartialArt.includes(:ranks).find_by(name: 'Kei Wa Ryu')
     current_rank = current_rank(ma, graduation.held_on)
     ranks = ma.ranks.to_a
     if current_rank
@@ -411,7 +411,7 @@ blocking users: #{blocking_users.inspect}"
   end
 
   def cms_member
-    CmsMember.find_by_cms_contract_id(cms_contract_id)
+    CmsMember.find_by(cms_contract_id: cms_contract_id)
   end
 
   def invoice_email
@@ -442,7 +442,7 @@ blocking users: #{blocking_users.inspect}"
   end
 
   def title(date = Date.current)
-    current_rank = current_rank(MartialArt.find_by_name('Kei Wa Ryu'), date)
+    current_rank = current_rank(MartialArt.find_by(name: 'Kei Wa Ryu'), date)
     current_rank && current_rank.name =~ /dan/ ? 'Sensei' : 'Sempai'
   end
 

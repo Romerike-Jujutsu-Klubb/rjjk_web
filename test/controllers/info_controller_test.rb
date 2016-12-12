@@ -53,7 +53,7 @@ class InfoControllerTest < ActionController::TestCase
     assert_no_errors :information_page
 
     assert_response :redirect
-    assert_redirected_to action: :show, id: InformationPage.find_by_title('an article')
+    assert_redirected_to action: :show, id: InformationPage.find_by(title: 'an article')
 
     assert_equal num_information_pages + 1, InformationPage.count
   end

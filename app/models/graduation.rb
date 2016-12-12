@@ -89,7 +89,7 @@ class Graduation < ActiveRecord::Base
   end
 
   def martial_art
-    group.try(:martial_art) || MartialArt.find_by_name('Kei Wa Ryu')
+    group.try(:martial_art) || MartialArt.find_by(name: 'Kei Wa Ryu')
   end
 
   def description

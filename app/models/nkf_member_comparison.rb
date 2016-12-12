@@ -73,13 +73,13 @@ class NkfMemberComparison
       end
       member_groups = member.groups.map(&:name)
       (nkf_group_names - member_groups).each do |gn|
-        if (group = Group.find_by_name(gn))
+        if (group = Group.find_by(name: gn))
           member.groups << group
           @group_changes[member][0] << group
         end
       end
       (member_groups - nkf_group_names).each do |gn|
-        if (group = Group.find_by_name(gn))
+        if (group = Group.find_by(name: gn))
           member.groups.delete(group)
           @group_changes[member][1] << group
         end

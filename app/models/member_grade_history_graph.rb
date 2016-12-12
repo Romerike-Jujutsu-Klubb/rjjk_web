@@ -35,7 +35,7 @@ EOF
   def initialize
     @practices = {}
     @active_members = {}
-    @group = Group.includes(:group_schedules).find_by_name('Voksne')
+    @group = Group.includes(:group_schedules).find_by(name: 'Voksne')
   end
 
   def history_graph(options = {})
@@ -44,7 +44,7 @@ EOF
     step = (options[:step] || 3.months)
     percentage = options[:percentage]
 
-    ranks = MartialArt.find_by_name('Kei Wa Ryu').ranks.reverse
+    ranks = MartialArt.find_by(name: 'Kei Wa Ryu').ranks.reverse
     ranks = ranks.first(9)[1..-1]
 
     g = Gruff::Line.new(size)

@@ -71,7 +71,7 @@ class UserControllerTest < ActionController::TestCase
     assert_equal ['"newuser" <newemail@example.com>'], mail.to
     assert_match(/Brukernavn:\s+\w+\n/, mail.body)
     assert_match(/Passord\s*:\s+\w+\n/, mail.body)
-    user = User.find_by_email('newemail@example.com')
+    user = User.find_by(email: 'newemail@example.com')
     assert_match(/key=#{user.security_token}/, mail.body)
     assert !user.verified
   end
@@ -82,7 +82,7 @@ class UserControllerTest < ActionController::TestCase
         email: 'skunk@example.com',
         verified: '1',
         role: 'superadmin'
-    user = User.find_by_email('skunk@example.com')
+    user = User.find_by(email: 'skunk@example.com')
     assert !user.verified
     assert_nil user.role
   end

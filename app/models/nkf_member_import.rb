@@ -234,7 +234,7 @@ class NkfMemberImport
               .include? column
         attributes[column] = row[i] && row[i].strip
       end
-      record = NkfMember.find_by_medlemsnummer(row[0]) || NkfMember.new
+      record = NkfMember.find_by(medlemsnummer: row[0]) || NkfMember.new
       if record.member_id.nil?
         member = Member
             .where('UPPER(first_name) = ? AND UPPER(last_name) = ?',
@@ -273,7 +273,7 @@ class NkfMemberImport
     missing_trials = NkfMemberTrial
         .where('tid NOT IN (?)', member_trial_rows.map { |t| t[tid_col_idx] }).to_a
     missing_trials.each do |t|
-      m = Member.find_by_email(t.epost)
+      m = Member.find_by(email: t.epost)
       t.trial_attendances.each do |ta|
         if m
           attrs = ta.attributes
@@ -305,7 +305,7 @@ class NkfMemberImport
         end
         attributes[column] = row[i]
       end
-      record = NkfMemberTrial.find_by_tid(row[columns.index('tid')])
+      record = NkfMemberTrial.find_by(tid: row[columns.index('tid')])
       record ||= NkfMemberTrial.where(reg_dato: row[columns.index('reg_dato')],
           fornavn: row[columns.index('fornavn')],
           etternavn: row[columns.index('etternavn')]).first

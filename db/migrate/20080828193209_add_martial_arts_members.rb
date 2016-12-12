@@ -6,7 +6,7 @@ class AddMartialArtsMembers < ActiveRecord::Migration
       t.integer :member_id, null: false
     end
     Member.all.each do |m|
-      ma = MartialArt.find_by_family(m.department || 'Jujutsu')
+      ma = MartialArt.find_by(family: m.department || 'Jujutsu')
       raise m.department if ma.nil?
       puts "Adding member #{m.name} to #{ma.name}"
       m.martial_arts << ma
@@ -22,7 +22,7 @@ class AddMartialArtsMembers < ActiveRecord::Migration
     Member.all.each do |m|
       m.department = m.martial_arts[0].family
       m.save!
-      cmsm = CmsMember.find_by_cms_contract_id(m.cms_contract_id)
+      cmsm = CmsMember.find_by(cms_contract_id: m.cms_contract_id)
       cmsm.department = m.department
       cmsm.save!
     end
