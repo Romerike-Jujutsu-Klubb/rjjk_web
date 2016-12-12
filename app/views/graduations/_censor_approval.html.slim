@@ -1,16 +1,21 @@
 '
-- if censor.confirmed_at
-  - if censor.declined
-    i.fa.fa-thumbs-down title="Avslått"
-  - else
-    i.fa.fa-check title="Bekreftet"
+- if censor.declined
+  - icon = 'thumbs-down'
+  - title="Avslått"
+- elsif censor.approved_grades_at
+  - icon= 'thumbs-up'
+  - title="Godkjent"
+- elsif censor.approval_requested_at
+  - icon = :question
+  - title="Godkjenning forespurt #{censor.approval_requested_at.localtime.to_s(:db)}"
+- elsif censor.confirmed_at
+  - icon = :check
+  - title="Bekreftet"
+- elsif censor.requested_at
+  - icon = :question
+  - title="Invitert #{censor.requested_at.localtime.to_s(:db)}"
 - else
-  - if censor.approval_requested_at
-    - title = "Godkjenning forespurt #{censor.approval_requested_at.localtime.to_s(:db)}"
-  - if censor.requested_at
-    - title = "Invitert #{censor.requested_at.localtime.to_s(:db)}"
-  - else
-    - title = 'Ubekreftet'
-  i.fa.fa-question title=title
+  - icon = :question
+  - title='Ubekreftet'
 
-= ' (Godkjent)' if censor.approved_grades_at
+i.fa class="fa-#{icon}" title=title data-toggle="tooltip" data-placement="right"

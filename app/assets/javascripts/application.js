@@ -65,3 +65,7 @@ $(window).on('load', function () {
         }
     });
 });
+
+$().ready(function () {
+    $('[data-toggle=tooltip]').tooltip()
+});

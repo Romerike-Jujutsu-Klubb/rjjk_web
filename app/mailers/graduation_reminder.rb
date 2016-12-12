@@ -123,7 +123,7 @@ class GraduationReminder
         .where.not(declined: true)
         .where('graduations.held_on < ?', Date.current)
         .where(approved_grades_at: nil)
-        .where('approval_requested_at IS NULL OR approval_requested_at < ?', 1.day.ago)
+        .where('approval_requested_at IS NULL OR approval_requested_at <= ?', 1.day.ago)
         .order(:id)
         .each do |censor|
       GraduationMailer.missing_approval(censor).store(censor.member.user_id)
