@@ -4,9 +4,14 @@ class NkfReplicationMailer < ApplicationMailer
 
   def import_changes(nkf_member_import)
     @import = nkf_member_import
-    @title = (@import.exception ? 'Det oppsto en feil ved henting av' : "Hentet #{@import.size}") +
-        ' endringer fra NKF'
-    mail subject: @title
+    if @import.exception
+      @title = 'Det oppsto en feil ved henting av endringer fra NKF'
+      to = 'uwe@kubosch.no'
+    else
+      @title = "Hentet #{@import.size} endringer fra NKF"
+      to = %w(medlem@jujutsu.no uwe@kubosch.no)
+    end
+    mail subject: @title, to: to
   end
 
   def update_members(comparison)
