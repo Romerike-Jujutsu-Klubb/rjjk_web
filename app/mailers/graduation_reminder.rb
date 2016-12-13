@@ -133,7 +133,7 @@ class GraduationReminder
 
   def self.congratulate_graduates
     Graduation.approved(2.days.ago).includes(:group).references(:groups)
-        .where('groups.from_age >= 13')
+        .where('groups.from_age >= 13') # FIXME: (uwe) Send til alle!
         .where('held_on BETWEEN ? AND ?', 6.months.ago, 1.week.ago)
         .order(:held_on)
         .each do |graduation|

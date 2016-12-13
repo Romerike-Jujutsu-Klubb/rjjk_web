@@ -60,8 +60,8 @@ class Graduation < ActiveRecord::Base
         NOT EXISTS (
           SELECT approved_grades_at
           FROM censors WHERE graduation_id = graduations.id
-            AND (approved_grades_at IS NULL OR approved_grades_at <= ?)
-            AND declined = ?
+            AND (approved_grades_at IS NULL OR approved_grades_at > ?)
+            AND (declined IS NULL OR declined = ?)
         )
       SQL
   scope :upcoming, -> { where 'held_on >= ?', Date.current }

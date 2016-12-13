@@ -189,4 +189,34 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(%r{Neste grad for deg er sandan svart belte m/3 striper.}, mail.body)
     assert_match(/Frem til da kreves minst 84 treninger./, mail.body)
   end
+
+  def test_congratulate_graduates_no_censors
+    graduations(:voksne).update! held_on: 1.week.ago
+    Censor.delete_all
+    assert_mail_stored(2) { GraduationReminder.congratulate_graduates }
+  end
+
+  def test_congratulate_graduates_unconfirmed_censors
+    g = graduations(:voksne)
+    g.update! held_on: 1.week.ago
+    g.censors.create! member: members(:newbie), examiner: true
+    Censor.update_all confirmed_at: nil, approved_grades_at: nil
+    assert_mail_stored(0) { GraduationReminder.congratulate_graduates }
+  end
+
+  def test_congratulate_graduates_censors_not_approved
+    g = graduations(:voksne)
+    g.update! held_on: 1.week.ago
+    g.censors.create! member: members(:newbie), examiner: true
+    Censor.update_all confirmed_at: 3.weeks.ago, approved_grades_at: nil
+    assert_mail_stored(0) { GraduationReminder.congratulate_graduates }
+  end
+
+  def test_congratulate_graduates_censors_approved
+    g = graduations(:voksne)
+    g.update! held_on: 1.week.ago
+    g.censors.create! member: members(:newbie), examiner: true
+    Censor.update_all confirmed_at: 3.weeks.ago, approved_grades_at: 2.days.ago
+    assert_mail_stored(2) { GraduationReminder.congratulate_graduates }
+  end
 end
