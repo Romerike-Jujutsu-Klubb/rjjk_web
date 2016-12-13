@@ -123,8 +123,8 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(/Det er 2 treninger frem til graderingen./, mail.body)
   end
 
-  def test_notify_missing_aprovals
-    assert_mail_stored(3) { GraduationReminder.notify_missing_aprovals }
+  def test_notify_missing_approvals
+    assert_mail_stored(3) { GraduationReminder.notify_missing_approvals }
 
     mail = UserMessage.pending[0]
     assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
@@ -146,6 +146,11 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_equal 'Bekrefte gradering', mail.subject
     assert_match(/Hei Lars!/, mail.body)
     assert_match(%r{<a href="http://example.com/graduations/84385526/edit">Panda den 2007-10-08</a>}, mail.body)
+  end
+
+  def test_notify_missing_approvals_with_unconfirmed_censors
+    Censor.update_all confirmed_at: nil, declined: nil
+    assert_mail_stored(3) { GraduationReminder.notify_missing_approvals }
   end
 
   def test_send_shopping_list_not_locked

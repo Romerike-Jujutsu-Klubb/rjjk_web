@@ -118,9 +118,9 @@ class GraduationReminder
     end
   end
 
-  def self.notify_missing_aprovals
+  def self.notify_missing_approvals
     Censor.includes(:graduation, :member).references(:graduations)
-        .where.not(declined: true)
+        .where('declined IS NULL OR declined = ?', false)
         .where('graduations.held_on < ?', Date.current)
         .where(approved_grades_at: nil)
         .where('approval_requested_at IS NULL OR approval_requested_at <= ?', 1.day.ago)

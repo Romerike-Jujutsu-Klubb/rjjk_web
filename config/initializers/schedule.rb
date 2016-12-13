@@ -54,7 +54,7 @@ if %w(development beta production).include?(Rails.env) && !ENV['DISABLE_SCHEDULE
     GraduationReminder.notify_missing_locks
     GraduationReminder.notify_graduates
     GraduationReminder.send_shopping_list
-    GraduationReminder.notify_missing_aprovals
+    GraduationReminder.notify_missing_approvals
     GraduationReminder.congratulate_graduates
   end
 
