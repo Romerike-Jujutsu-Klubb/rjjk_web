@@ -118,7 +118,7 @@ class GraduationsControllerTest < ActionController::TestCase
     assert_redirected_to edit_graduation_path(@first_id)
     assert_equal [Time.current.to_f.ish(1), 0.0], graduations(:panda).censors(true)
         .order(:approved_grades_at).map(&:approved_grades_at).map(&:to_f)
-    assert_equal [Time.current.ish, nil], graduations(:panda).censors(true)
+    assert_equal [Time.current, nil], graduations(:panda).censors(true)
         .order(:approved_grades_at).map(&:approved_grades_at)
   end
 end

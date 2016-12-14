@@ -43,7 +43,7 @@ module ApplicationHelper
     html_with_bold_links = html_with_base
         .gsub(/(<a href="[^"]*")>/i,
             %(\\1 style="color: #CD071E;text-decoration:none;font-weight:bold;">))
-    html_with_bold_links.html_safe
+    html_with_bold_links.html_safe # rubocop: disable Rails/OutputSafety
   end
 
   def absolute_links(html)

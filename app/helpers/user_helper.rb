@@ -26,6 +26,6 @@ module UserHelper
       error = error_messages_for('user')
       s << error if error
     end
-    s.html_safe
+    s.html_safe # rubocop: disable Rails/OutputSafety
   end
 end
