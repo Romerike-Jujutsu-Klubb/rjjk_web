@@ -10,7 +10,7 @@ class UserMessage < ActiveRecord::Base
   scope :pending, -> { where(sent_at: nil, read_at: nil).order(:id) }
 
   before_validation do
-    self.key ||= BCrypt::Password.create(Time.now.to_i.to_s + rand.to_s).checksum
+    self.key ||= BCrypt::Password.create(Time.current.to_i.to_s + rand.to_s).checksum
   end
   validates :subject, length: { maximum: 160, allow_blank: false }
   validates :key, length: { maximum: 64, allow_blank: false }

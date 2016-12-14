@@ -23,7 +23,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
   end
 
   def self.send_attendance_summary
-    now = Time.now
+    now = Time.current
     group_schedules = GroupSchedule.includes(:group).references(:groups)
         .where('weekday = ? AND start_at >= ?', now.to_date.cwday, now.time_of_day)
         .where('groups.school_breaks IS NULL OR groups.school_breaks = ?', false)
@@ -53,7 +53,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         .where('year = ? AND week = ? AND group_schedules.weekday = ?',
             tomorrow.year, tomorrow.cweek, tomorrow.cwday)
         .where('(group_schedules.start_at <= ? OR group_schedules.start_at <= ?)',
-            Time.now.time_of_day, Time.now.time_of_day + 3600)
+            Time.current.time_of_day, Time.current.time_of_day + 3600)
         .where('(groups.school_breaks IS NULL OR groups.school_breaks = ?)',
             false)
         .to_a
@@ -62,12 +62,12 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         AttendanceMailer.message_reminder(pr, gi.member)
             .store(gi.member.user_id, tag: :instructor_message_reminder)
       end
-      pr.update_attributes message_nagged_at: Time.now
+      pr.update_attributes message_nagged_at: Time.current
     end
   end
 
   def self.send_attendance_changes
-    now = Time.now
+    now = Time.current
     upcoming_group_schedules = GroupSchedule.includes(:group).references(:groups)
         .where('weekday = ? AND end_at >= ? AND groups.closed_on IS NULL',
             now.to_date.cwday, now.time_of_day)
@@ -107,7 +107,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
   end
 
   def self.send_attendance_review
-    now = Time.now
+    now = Time.current
     completed_group_schedules = GroupSchedule.includes(:group).references(:groups)
         .where('weekday = ? AND end_at BETWEEN ? AND ?',
             now.to_date.cwday, (now - 1.hour).time_of_day, now.time_of_day)

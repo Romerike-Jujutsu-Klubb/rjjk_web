@@ -21,7 +21,7 @@
 
         .form-group.col-md-4
           = f.label :publish_at, 'Publiser fra'
-          = f.text_field :publish_at, value: @news_item.publish_at.try(:strftime, '%F %R'), class: 'datetime form-control', data: {'default-date': Time.now.strftime('%F %R') }
+          = f.text_field :publish_at, value: @news_item.publish_at.try(:strftime, '%F %R'), class: 'datetime form-control', data: {'default-date': Time.current.strftime('%F %R') }
 
         .form-group.col-md-4
           = f.label :expire_at, 'til'

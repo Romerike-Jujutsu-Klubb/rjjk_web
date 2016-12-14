@@ -31,7 +31,7 @@ class AnnualMeetingReminderTest < ActionMailer::TestCase
   end
 
   def test_notify_missing_invitation
-    Timecop.freeze(Time.parse('2014-01-21 13:37')) do
+    Timecop.freeze(Time.zone.parse('2014-01-21 13:37')) do
       AnnualMeetingReminder.notify_missing_invitation
       assert_equal 1, UserMessage.pending.size
 

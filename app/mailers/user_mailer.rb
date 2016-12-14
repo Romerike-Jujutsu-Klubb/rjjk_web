@@ -56,7 +56,7 @@ class UserMailer < ApplicationMailer
 
   def setup_email(user)
     @recipients = user.email
-    @sent_on = Time.now
+    @sent_on = Time.current
   end
 
   def send_email

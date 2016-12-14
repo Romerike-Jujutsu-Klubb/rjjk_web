@@ -4,7 +4,7 @@ class InformationPageMailer < ApplicationMailer
     @member = member
     @pages = pages
     @title = 'Oppdatering av informasjonssider'
-    @timestamp = Time.now
+    @timestamp = Time.current
     mail to: member.email, subject: @title
   end
 

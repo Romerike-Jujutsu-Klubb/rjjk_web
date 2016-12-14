@@ -50,7 +50,7 @@ class AttendancePlanTest < ActionDispatch::IntegrationTest
     next_button.click_link('Annet')
     assert_equal 'Annet', next_button.text
     wait_for_ajax
-    visit "/mitt/oppmote?a=#{Time.now.to_i}"
+    visit "/mitt/oppmote?a=#{Time.current.to_i}"
     next_button = find('#button_2013_42_545305079')
     assert_equal 'Annet', next_button.text
   end

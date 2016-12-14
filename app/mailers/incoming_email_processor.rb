@@ -96,11 +96,11 @@ class IncomingEmailProcessor
 
       if sent
         logger.info 'Mail processed OK!'
-        raw_email.update! processed_at: Time.now
+        raw_email.update! processed_at: Time.current
       end
       if postponed
         logger.info 'Mail postponed.'
-        raw_email.update! postponed_at: Time.now
+        raw_email.update! postponed_at: Time.current
       end
     end
   end

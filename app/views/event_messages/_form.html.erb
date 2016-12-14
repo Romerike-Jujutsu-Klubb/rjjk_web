@@ -39,7 +39,7 @@
   </div>
     <div class="field">
       <%= f.label :klar %>:
-      <%= f.check_box :ready_at, {}, Time.now, nil %>
+      <%= f.check_box :ready_at, {}, Time.current, nil %>
     </div>
   <div class="actions">
     <%= f.submit %>

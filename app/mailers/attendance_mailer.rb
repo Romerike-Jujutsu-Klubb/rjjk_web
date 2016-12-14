@@ -43,7 +43,7 @@ class AttendanceMailer < ApplicationMailer
     end
     change_msg << "#{new_absentees.size} avmelding" if new_absentees.any?
     @title = "Trening i #{@group_schedule.start_at.day_phase}: #{change_msg.join(', ')}"
-    @timestamp = Time.now
+    @timestamp = Time.current
     @email_url = { controller: :attendances, action: :plan }
     mail to: recipient.email, subject: @title
   end

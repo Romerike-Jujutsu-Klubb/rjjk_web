@@ -8,7 +8,7 @@ class Election < ActiveRecord::Base
 
   scope :current, -> {
     includes(:annual_meeting).references(:annual_meetings)
-        .where(<<~SQL, now: Time.now)
+        .where(<<~SQL, now: Time.current)
         annual_meetings.start_at <= :now
           AND (annual_meetings.start_at + interval '1 year' * years + interval '1 month') >= :now
           AND NOT EXISTS (

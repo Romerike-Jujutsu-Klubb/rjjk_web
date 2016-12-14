@@ -16,7 +16,7 @@ class Practice < ActiveRecord::Base
   end
 
   def passed?
-    Time.now > date.at(group_schedule.end_at)
+    Time.current > date.at(group_schedule.end_at)
   end
 
   def to_s

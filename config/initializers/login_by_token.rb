@@ -17,7 +17,7 @@ module LoginByToken
           session[:user_id] = um.user_id
           cookies.permanent.signed[:user_id] = um.user_id
           req.delete_param('key')
-          um.update!(read_at: Time.now)
+          um.update!(read_at: Time.current)
           logger.info "User #{um.user.name} (#{um.user_id}) logged in by key."
         end
       end

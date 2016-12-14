@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-SERVER_START_TIME = Time.now
+SERVER_START_TIME = Time.current
 
 def uptime
-  Time.now - SERVER_START_TIME
+  Time.current - SERVER_START_TIME
 end

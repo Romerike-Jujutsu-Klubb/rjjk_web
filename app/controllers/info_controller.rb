@@ -92,6 +92,6 @@ class InfoController < ApplicationController
 
   def set_revised_at_param
     return if params[:information_page].nil? || params[:information_page][:revised_at].blank?
-    params[:information_page][:revised_at] = Time.now
+    params[:information_page][:revised_at] = Time.current
   end
 end

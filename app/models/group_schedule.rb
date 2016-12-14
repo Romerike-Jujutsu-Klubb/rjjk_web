@@ -10,7 +10,7 @@ class GroupSchedule < ActiveRecord::Base
     I18n.t(:date)[:day_names][weekday]
   end
 
-  def next_practice(now = Time.now)
+  def next_practice(now = Time.current)
     date = now.to_date
     date += 1.week if weekday < date.cwday ||
           (weekday == date.cwday && end_at <= now.time_of_day)

@@ -50,7 +50,7 @@ class NewsController < ApplicationController
   def expire
     n = NewsItem.find(params[:id])
     n.publication_state = NewsItem::PublicationState::EXPIRED
-    n.expire_at ||= Time.now
+    n.expire_at ||= Time.current
     n.save!
     back_or_redirect_to action: :index
   end

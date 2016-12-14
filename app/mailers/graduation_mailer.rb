@@ -13,7 +13,7 @@ class GraduationMailer < ApplicationMailer
   def overdue_graduates(members)
     @members = members
     @title = 'Medlemmer klare for gradering'
-    @timestamp = Time.now
+    @timestamp = Time.current
     mail to: 'uwe@kubosch.no', subject: 'Disse medlemmene mangler gradering'
   end
 

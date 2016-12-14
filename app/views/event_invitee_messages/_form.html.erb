@@ -40,7 +40,7 @@
     </div>
     <div class="field">
       <%= f.label :ready_at, :Klar %>:
-      <%= f.check_box :ready_at, {}, Time.now, nil %>
+      <%= f.check_box :ready_at, {}, Time.current, nil %>
     </div>
     <% if @event_invitee_message.sent_at %>
         <div class="field">

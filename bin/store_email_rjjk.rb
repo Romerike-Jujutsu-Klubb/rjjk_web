@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
+# rubocop: disable Rails/TimeZone
 
 started_at = Time.now
 
@@ -119,3 +120,4 @@ finished_at = Time.now
 log "\n#{finished_at.strftime('%F %T')} Finished in #{finished_at - started_at}s\n\n"
 
 exit 0
+# rubocop: enable Rails/TimeZone

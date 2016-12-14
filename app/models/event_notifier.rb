@@ -2,7 +2,7 @@
 class EventNotifier
   def self.send_event_messages
     begin
-      now = Time.now
+      now = Time.current
 
       # FIXME(uwe): Consider using SQL to optimize the selection.
       EventMessage

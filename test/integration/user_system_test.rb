@@ -20,7 +20,7 @@ class UserSystemTest < ActionDispatch::IntegrationTest
     key = $1
 
     assert user = User.find_by(login: 'newuser')
-    Timecop.freeze(Time.now + User.token_lifetime + 1) do
+    Timecop.freeze(Time.current + User.token_lifetime + 1) do
       get url_for(controller: :user, action: :welcome), key: key
       assert_redirected_to_login
       user.reload

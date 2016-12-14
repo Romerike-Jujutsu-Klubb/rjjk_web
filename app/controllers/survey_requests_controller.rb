@@ -60,7 +60,7 @@ class SurveyRequestsController < ApplicationController
   def answer_form; end
 
   def save_answers
-    params[:survey_request][:completed_at] = Time.now
+    params[:survey_request][:completed_at] = Time.current
     # params.require(:survey_request).
     #     permit(:comment, :completed_at,
     #     survey_answers_attributes: [:answer, :id, :survey_question_id])

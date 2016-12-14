@@ -118,8 +118,8 @@ class GraduationsController < ApplicationController
   def lock
     @graduation = Graduation.find(params[:id])
     censor = @graduation.censors.find_by(member_id: current_user.member.id)
-    censor.confirmed_at ||= Time.now
-    censor.locked_at ||= Time.now
+    censor.confirmed_at ||= Time.current
+    censor.locked_at ||= Time.current
     censor.save!
     flash.notice = 'Gradering klar for innkalling!'
     redirect_to edit_graduation_path(@graduation)
@@ -128,9 +128,9 @@ class GraduationsController < ApplicationController
   def approve
     @graduation = Graduation.find(params[:id])
     censor = @graduation.censors.find_by(member_id: current_user.member.id)
-    censor.confirmed_at ||= Time.now
-    censor.locked_at ||= Time.now
-    censor.approved_grades_at ||= Time.now
+    censor.confirmed_at ||= Time.current
+    censor.locked_at ||= Time.current
+    censor.approved_grades_at ||= Time.current
     censor.save!
     flash.notice = 'Gradering godkjent!'
     redirect_to edit_graduation_path(@graduation)

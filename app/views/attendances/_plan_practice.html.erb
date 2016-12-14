@@ -4,7 +4,7 @@
      initial_class = 'default'
      initial_disabled = nil
      practice_end = Date.commercial(year, week, gs.weekday).at(gs.end_at)
-     practice_passed = Time.now > practice_end
+     practice_passed = Time.current > practice_end
      initial_text = practice_passed ? 'Trente du?' : 'Kommer du?'
      link_target = {controller: :attendances,
              action: practice_passed ? :review : :announce, year: year,

@@ -17,7 +17,7 @@ class UserTest < ActionMailer::TestCase
 
   def test_authenticate_by_token__fails_if_expired
     user = users(:unverified_user)
-    Timecop.freeze(Time.now + User.token_lifetime) do
+    Timecop.freeze(Time.current + User.token_lifetime) do
       assert_nil User.authenticate_by_token(user.security_token)
     end
   end
@@ -41,19 +41,19 @@ class UserTest < ActionMailer::TestCase
     assert_not_nil token
     user.reload
     assert_equal token, user.security_token
-    assert_equal((Time.now + User.token_lifetime).to_i, user.token_expiry.to_i)
+    assert_equal((Time.current + User.token_lifetime).to_i, user.token_expiry.to_i)
   end
 
   def test_generate_security_token__reuses_token_when_not_stale
     user = users(:unverified_user)
-    Timecop.freeze(Time.now + User.token_lifetime / 2 - 1.minute) do
+    Timecop.freeze(Time.current + User.token_lifetime / 2 - 1.minute) do
       assert_equal user.security_token, user.generate_security_token
     end
   end
 
   def test_generate_security_token_generates_new_token_when_getting_stale
     user = users(:unverified_user)
-    Timecop.freeze(Time.now + User.token_lifetime / 2 + 1) do
+    Timecop.freeze(Time.current + User.token_lifetime / 2 + 1) do
       assert_not_equal user.security_token, user.generate_security_token
     end
   end

@@ -119,7 +119,7 @@ class UserControllerTest < ActionController::TestCase
 
   def test_welcome__fails_if_expired_token
     user = users(:unverified_user)
-    Timecop.freeze(Time.now + User.token_lifetime) do # now past verification deadline
+    Timecop.freeze(Time.current + User.token_lifetime) do # now past verification deadline
       get :welcome, user: { id: user.id }, key: user.security_token
       user.reload
       assert !user.verified

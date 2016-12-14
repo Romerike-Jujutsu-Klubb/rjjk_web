@@ -140,7 +140,7 @@ class User < ActiveRecord::Base
   end
 
   def remaining_token_lifetime
-    token_expiry.to_i - Time.now.to_i
+    token_expiry.to_i - Time.current.to_i
   end
 
   def admin?
@@ -168,7 +168,7 @@ class User < ActiveRecord::Base
   end
 
   def new_security_token(duration)
-    self['security_token'] = self.class.hashed(salted_password + Time.now.to_i.to_s + rand.to_s)
+    self['security_token'] = self.class.hashed(salted_password + Time.current.to_i.to_s + rand.to_s)
     self['token_expiry'] = Time.zone.at(Time.current.to_i + User.token_lifetime(duration))
     save
     security_token

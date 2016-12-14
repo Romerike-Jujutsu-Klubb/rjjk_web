@@ -11,7 +11,7 @@ require 'rails/test_help'
 
 MiniTest::Reporters.use!
 
-TEST_TIME = Time.local(2013, 10, 17, 18, 46, 0) # Week 42, thursday
+TEST_TIME = Time.zone.local(2013, 10, 17, 18, 46, 0) # Week 42, thursday
 
 class ActiveSupport::TestCase
   fixtures :all
