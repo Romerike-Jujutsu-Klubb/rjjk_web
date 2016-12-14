@@ -33,17 +33,6 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 27
 
-# Offense count: 9
-# Configuration parameters: Include.
-# Include: app/**/*.rb, config/**/*.rb, db/**/*.rb, lib/**/*.rb
-Rails/Output:
-  Exclude:
-    - 'db/migrate/20080828193209_add_martial_arts_members.rb'
-    - 'db/migrate/20080828214833_fix_future_birthdates.rb'
-    - 'db/migrate/20080828220940_create_groups.rb'
-    - 'db/migrate/20120604144204_create_member_images.rb'
-    - 'db/migrate/20150617115412_add_decoration_to_ranks.rb'
-
 # Offense count: 4
 Rails/OutputSafety:
   Exclude:

@@ -8,7 +8,6 @@ class AddMartialArtsMembers < ActiveRecord::Migration
     Member.all.each do |m|
       ma = MartialArt.find_by(family: m.department || 'Jujutsu')
       raise m.department if ma.nil?
-      puts "Adding member #{m.name} to #{ma.name}"
       m.martial_arts << ma
       m.save!
     end

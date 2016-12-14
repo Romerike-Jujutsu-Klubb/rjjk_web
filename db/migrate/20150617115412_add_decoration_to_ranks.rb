@@ -7,7 +7,6 @@ class AddDecorationToRanks < ActiveRecord::Migration
       dir.up do
         Rank.order(:position).each do |rank|
           if rank.colour =~ %r{^(.*)\s+(m/.*)$}
-            puts "Change #{{ colour: $1, decoration: $2 }}"
             rank.update! colour: $1, decoration: $2
           end
         end
@@ -15,7 +14,6 @@ class AddDecorationToRanks < ActiveRecord::Migration
       dir.down do
         Rank.order(:position).each do |rank|
           if rank.decoration
-            puts "Change: #{{ colour: "#{rank.colour} #{rank.decoration}}" }}"
             rank.update! colour: "#{rank.colour} #{rank.decoration}}"
           end
         end

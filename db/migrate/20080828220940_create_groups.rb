@@ -29,7 +29,6 @@ class CreateGroups < ActiveRecord::Migration
                   else
                     m.senior ? s : j
                   end
-          puts "Adding #{m.name} to #{group.martial_art.name} #{group.name}"
           m.groups << group
         end
       end
@@ -44,7 +43,6 @@ class CreateGroups < ActiveRecord::Migration
     s = Group.find_by name: 'Seniorer'
     Member.all.each do |m|
       senior = m.groups.include? s
-      puts "Marking #{m.name} senior: #{senior}"
       m.update_attributes! senior: senior
     end
     drop_table :groups_members

@@ -27,10 +27,8 @@ class CreateMemberImages < ActiveRecord::Migration
         u.save!
         u.generate_security_token
         m.update_attributes! user_id: u.id
-        puts "Created user: #{u.inspect}"
         unless m.left_on || m.birthdate > 13.years.ago.to_date
           UserMailer.created_from_member(u, password).store(u.id, tag: :user_from_member)
-          puts 'Sent email'
         end
       end
 
@@ -39,7 +37,6 @@ class CreateMemberImages < ActiveRecord::Migration
           content_data: m.image, user_id: u.id, description: 'Profilbilde', public: false,
           approved: nil
       m.update_attributes! image_id: i.id
-      puts "Moved image for member: #{m.inspect}"
     end
 
     remove_column :users, :member_id
