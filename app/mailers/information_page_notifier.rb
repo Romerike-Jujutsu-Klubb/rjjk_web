@@ -31,15 +31,14 @@ class InformationPageNotifier
         .where('revised_at > ?', 6.months.ago)
         .where('mailed_at IS NULL OR mailed_at < ?', 6.months.ago)
         .order(:mailed_at).first
-    if page
-      Member.active(3.months.from_now).order(:first_name, :last_name).each do |m|
-        if m.user
-          InformationPageMailer.send_weekly_page(m, page).store(m.user_id, tag: :weekly_info)
-        else
-          logger.error "Member without user: #{m.inspect}"
-        end
+    return unless page
+    Member.active(3.months.from_now).order(:first_name, :last_name).each do |m|
+      if m.user
+        InformationPageMailer.send_weekly_page(m, page).store(m.user_id, tag: :weekly_info)
+      else
+        logger.error "Member without user: #{m.inspect}"
       end
-      page.update_attributes! mailed_at: Time.now
     end
+    page.update_attributes! mailed_at: Time.now
   end
 end

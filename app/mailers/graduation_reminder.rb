@@ -55,11 +55,10 @@ class GraduationReminder
       next if m.next_graduate
       true
     end
-    if overdue_graduates.any?
-      # TODO(uwe): Send to chief instructor for each group
-      GraduationMailer.overdue_graduates(overdue_graduates)
-          .store(Role[:'Hovedinstruktør'], tag: :overdue_graduates)
-    end
+    return if overdue_graduates.empty?
+    # TODO(uwe): Send to chief instructor for each group
+    GraduationMailer.overdue_graduates(overdue_graduates)
+        .store(Role[:'Hovedinstruktør'], tag: :overdue_graduates)
   end
 
   def self.notify_censors

@@ -6,10 +6,9 @@ class SemesterReminder
       SemesterMailer.missing_current_semester(recipient).store(recipient, tag: :missing_semester)
       return
     end
-    unless Semester.where('? BETWEEN start_on AND end_on', Date.current + 4.months).exists?
-      recipient = Role[:Leder] || Role[:Nestleder] || Role[:Kasserer]
-      SemesterMailer.missing_next_semester(recipient).store(recipient, tag: :missing_next_semester)
-    end
+    return if Semester.where('? BETWEEN start_on AND end_on', Date.current + 4.months).exists?
+    recipient = Role[:Leder] || Role[:Nestleder] || Role[:Kasserer]
+    SemesterMailer.missing_next_semester(recipient).store(recipient, tag: :missing_next_semester)
   end
 
   # Ensure first and last sessions are set

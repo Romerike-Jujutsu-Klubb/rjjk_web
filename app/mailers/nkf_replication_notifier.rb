@@ -8,9 +8,8 @@ class NkfReplicationNotifier
           (m.member.age >= 10 && m.member.age < 15 && m.kont_sats !~ /^Ungdom|Trenere/) ||
           (m.member.age >= 15 && m.kont_sats !~ /^(Voksne|Styre|Trenere|Æresmedlem)/)
     end
-    if wrong_contracts.any?
-      recipient = Role[:Kasserer] || Role[:Leder]
-      NkfReplicationMailer.wrong_contracts(wrong_contracts).store(recipient, tag: :wrong_contracts)
-    end
+    return if wrong_contracts.empty?
+    recipient = Role[:Kasserer] || Role[:Leder]
+    NkfReplicationMailer.wrong_contracts(wrong_contracts).store(recipient, tag: :wrong_contracts)
   end
 end

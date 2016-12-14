@@ -17,10 +17,9 @@ class InstructionReminder
         GroupInstructor.new(group_semester_id: gs.id, group_schedule: gsc)
       end
     end.flatten
-    if missing_chief_instructions.any? || missing_instructions.any?
-      InstructionMailer
-          .missing_instructors(missing_chief_instructions, missing_instructions)
-          .store(Role[:Hovedinstruktør], tag: :missing_instructors)
-    end
+    return if missing_chief_instructions.empty? && missing_instructions.empty?
+    InstructionMailer
+        .missing_instructors(missing_chief_instructions, missing_instructions)
+        .store(Role[:Hovedinstruktør], tag: :missing_instructors)
   end
 end

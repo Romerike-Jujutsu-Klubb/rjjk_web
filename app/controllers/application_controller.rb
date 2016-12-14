@@ -80,7 +80,7 @@ class ApplicationController < ActionController::Base
           .includes(:current_semester, :next_semester).to_a
     end
 
-    unless @layout_events
+    unless @layout_events # rubocop: disable Style/GuardClause
       @layout_events = Event.includes(:attending_invitees)
           .where('(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)',
               Date.current, Date.current)
