@@ -25,6 +25,8 @@ class Member < ActiveRecord::Base
   has_many :elections, dependent: :destroy
   has_many :graduates, dependent: :destroy
   has_many :group_instructors, dependent: :destroy
+  has_many :group_memberships, dependent: :destroy
+  has_many :groups, through: :group_memberships
 
   has_many :last_6_months_attendances, -> do
     includes(practice: :group_schedule).references(:group_schedules)
@@ -43,7 +45,6 @@ class Member < ActiveRecord::Base
 
   has_many :signatures, dependent: :destroy
   has_many :survey_requests, dependent: :destroy
-  has_and_belongs_to_many :groups
 
   scope :without_image, -> { select(column_names - ['image_id']) }
   scope :active, ->(from_date = nil, to_date = nil) do
@@ -114,11 +115,10 @@ class Member < ActiveRecord::Base
     potential_emails.compact.each do |potential_email|
       existing_user = User
           .where('login = :email OR email = :email', email: potential_email)
-          .where('NOT EXISTS (SELECT id FROM members WHERE user_id = users.id)')
-          .first
+          .find_by('NOT EXISTS (SELECT id FROM members WHERE user_id = users.id)')
       return existing_user if existing_user
 
-      if (user_with_email = User.where('login = ? OR email = ?', *([potential_email] * 2)).first)
+      if (user_with_email = User.find_by('login = ? OR email = ?', *([potential_email] * 2)))
         logger.info "A user with this email already exists: #{user_with_email}"
         blocking_users << user_with_email
         next
@@ -459,6 +459,6 @@ blocking users: #{blocking_users.inspect}"
   end
 
   def technical_committy?
-    current_rank && (current_rank >= Rank.kwr.where(name: '1. kyu').first) && active?
+    current_rank && (current_rank >= Rank.kwr.find_by(name: '1. kyu')) && active?
   end
 end

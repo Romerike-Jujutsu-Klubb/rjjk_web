@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161211081531) do
+ActiveRecord::Schema.define(version: 20161214191324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -324,6 +324,11 @@ ActiveRecord::Schema.define(version: 20161211081531) do
     t.datetime "updated_at",  :null=>false
   end
 
+  create_table "event_groups", force: :cascade do |t|
+    t.integer "event_id", :null=>false
+    t.integer "group_id", :null=>false
+  end
+
   create_table "event_invitee_messages", force: :cascade do |t|
     t.integer  "event_invitee_id"
     t.string   "message_type",     :limit=>255
@@ -372,11 +377,6 @@ ActiveRecord::Schema.define(version: 20161211081531) do
     t.text     "invitees"
   end
 
-  create_table "events_groups", force: :cascade do |t|
-    t.integer "event_id"
-    t.integer "group_id"
-  end
-
   create_table "graduates", force: :cascade do |t|
     t.integer  "member_id",          :null=>false, :foreign_key=>{:references=>"members", :name=>"graduates_member_id_fkey", :on_update=>:no_action, :on_delete=>:no_action}
     t.integer  "graduation_id",      :null=>false, :foreign_key=>{:references=>"graduations", :name=>"graduates_graduation_id_fkey", :on_update=>:no_action, :on_delete=>:no_action}
@@ -419,9 +419,9 @@ ActiveRecord::Schema.define(version: 20161211081531) do
     t.boolean  "assistant",         :default=>false, :null=>false
   end
 
-  create_table "groups_members", id: false, force: :cascade do |t|
-    t.integer "group_id",  :null=>false, :index=>{:name=>"index_groups_members_on_group_id_and_member_id", :with=>["member_id"], :unique=>true}, :foreign_key=>{:references=>"groups", :name=>"groups_members_group_id_fkey", :on_update=>:no_action, :on_delete=>:no_action}
-    t.integer "member_id", :null=>false, :foreign_key=>{:references=>"members", :name=>"groups_members_member_id_fkey", :on_update=>:no_action, :on_delete=>:no_action}
+  create_table "group_memberships", force: :cascade do |t|
+    t.integer "group_id",  :null=>false, :index=>{:name=>"index_group_memberships_on_group_id_and_member_id", :with=>["member_id"], :unique=>true}, :foreign_key=>{:references=>"groups", :name=>"group_memberships_group_id_fkey", :on_update=>:no_action, :on_delete=>:no_action}
+    t.integer "member_id", :null=>false, :foreign_key=>{:references=>"members", :name=>"group_memberships_member_id_fkey", :on_update=>:no_action, :on_delete=>:no_action}
   end
 
   create_table "images", force: :cascade do |t|

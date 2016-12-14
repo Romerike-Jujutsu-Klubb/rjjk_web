@@ -39,22 +39,11 @@ Metrics/PerceivedComplexity:
 # Include: app/models/**/*.rb
 Rails/FindBy:
   Exclude:
-    - 'app/models/member.rb'
     - 'app/models/news_publisher.rb'
     - 'app/models/nkf_appointments_scraper.rb'
     - 'app/models/nkf_member_import.rb'
     - 'app/models/role.rb'
     - 'app/models/semester.rb'
-    - 'app/models/user.rb'
-
-# Offense count: 3
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/HasAndBelongsToMany:
-  Exclude:
-    - 'app/models/event.rb'
-    - 'app/models/group.rb'
-    - 'app/models/member.rb'
 
 # Offense count: 9
 # Configuration parameters: Include.
@@ -99,7 +88,6 @@ Rails/TimeZone:
     - 'app/models/event_notifier.rb'
     - 'app/models/group_schedule.rb'
     - 'app/models/practice.rb'
-    - 'app/models/user.rb'
     - 'bin/store_email_rjjk.rb'
     - 'config/initializers/login_by_token.rb'
     - 'config/initializers/uptime.rb'

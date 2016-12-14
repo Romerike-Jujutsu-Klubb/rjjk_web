@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
   # (and not the regular authenticate call)
   def self.authenticate_by_token(token)
     logger.info "Attempting authentication with token: #{token.inspect}"
-    if (u = where('security_token = ?', token).first)
+    if (u = find_by(security_token: token))
       logger.info "Identified by token: #{u.inspect}"
     else
       logger.info 'Not authenticated'
@@ -75,7 +75,7 @@ class User < ActiveRecord::Base
       return nil
     end
     logger.info "Authenticated by token: #{u.inspect}.  Extending token lifetime."
-    u.update_attributes verified: true, token_expiry: Time.now + token_lifetime
+    u.update_attributes verified: true, token_expiry: Time.current + token_lifetime
     u
   end
 
@@ -118,7 +118,7 @@ class User < ActiveRecord::Base
   end
 
   def token_expired?
-    security_token && token_expiry && (Time.now >= token_expiry)
+    security_token && token_expiry && (Time.current >= token_expiry)
   end
 
   def generate_security_token(duration = :short)
@@ -163,13 +163,13 @@ class User < ActiveRecord::Base
 
   def crypt_password
     return unless @password_needs_confirmation
-    self['salt'] = self.class.hashed("salt-#{Time.now}")
+    self['salt'] = self.class.hashed("salt-#{Time.current}")
     self['salted_password'] = self.class.salted_password(salt, self.class.hashed(@password))
   end
 
   def new_security_token(duration)
     self['security_token'] = self.class.hashed(salted_password + Time.now.to_i.to_s + rand.to_s)
-    self['token_expiry'] = Time.at(Time.now.to_i + User.token_lifetime(duration))
+    self['token_expiry'] = Time.zone.at(Time.current.to_i + User.token_lifetime(duration))
     save
     security_token
   end
