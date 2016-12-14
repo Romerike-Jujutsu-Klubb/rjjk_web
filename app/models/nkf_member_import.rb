@@ -306,9 +306,9 @@ class NkfMemberImport
         attributes[column] = row[i]
       end
       record = NkfMemberTrial.find_by(tid: row[columns.index('tid')])
-      record ||= NkfMemberTrial.where(reg_dato: row[columns.index('reg_dato')],
+      record ||= NkfMemberTrial.find_by(reg_dato: row[columns.index('reg_dato')],
           fornavn: row[columns.index('fornavn')],
-          etternavn: row[columns.index('etternavn')]).first
+          etternavn: row[columns.index('etternavn')])
       record ||= NkfMemberTrial.new
       record.attributes = attributes
       next unless record.changed?

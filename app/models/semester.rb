@@ -21,7 +21,7 @@ class Semester < ActiveRecord::Base
   end
 
   def self.current
-    where('? BETWEEN start_on AND end_on', Date.current).first
+    find_by('? BETWEEN start_on AND end_on', Date.current)
   end
 
   def self.next

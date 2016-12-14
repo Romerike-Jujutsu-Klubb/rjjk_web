@@ -33,18 +33,6 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 27
 
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/FindBy:
-  Exclude:
-    - 'app/models/news_publisher.rb'
-    - 'app/models/nkf_appointments_scraper.rb'
-    - 'app/models/nkf_member_import.rb'
-    - 'app/models/role.rb'
-    - 'app/models/semester.rb'
-
 # Offense count: 9
 # Configuration parameters: Include.
 # Include: app/**/*.rb, config/**/*.rb, db/**/*.rb, lib/**/*.rb
