@@ -1,12 +1,13 @@
 <%
-   mbr = graduate.member
+  mbr = graduate.member
    fn = mbr.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
    ln = mbr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
-   if graduate.graduation.held_on
-     below_minimum_age = mbr.age(graduate.graduation.held_on) && mbr.age(graduate.graduation.held_on) < graduate.rank.minimum_age
-     not_in_rank_age = !(graduate.rank.group.from_age..graduate.rank.group.to_age).include?(mbr.age(graduate.graduation.held_on))
+  member_age = mbr.age(graduate.graduation.held_on)
+  if graduate.graduation.held_on
+     below_minimum_age = member_age && member_age < graduate.rank.minimum_age
+     not_in_rank_age = !(graduate.rank.group.from_age..graduate.rank.group.to_age).include?(member_age)
      if graduate.graduation.group
-       not_in_group_age = mbr.age(graduate.graduation.held_on - 1.month) > graduate.graduation.group.to_age || mbr.age(graduate.graduation.held_on) < graduate.graduation.group.from_age
+       not_in_group_age = member_age && (mbr.age(graduate.graduation.held_on - 1.month) > graduate.graduation.group.to_age || member_age < graduate.graduation.group.from_age)
      end
    end
 %>
@@ -14,7 +15,7 @@
   <td>
     <%= link_to "#{fn} #{ln}", :controller => :members, :action => :edit, :id => mbr.id %>
     <% if below_minimum_age || not_in_rank_age || not_in_group_age %>
-        (<span style="color: red; white-space: nowrap"><%= mbr.age(graduate.graduation.held_on) %>
+        (<span style="color: red; white-space: nowrap"><%= member_age %>
     år</span>)
     <% end %>
     <% if graduate.changed? %>

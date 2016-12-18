@@ -1,0 +1,37 @@
+- @content_width = 1024
+
+= link_to new_graduation_path, class: 'btn btn-primary pull-right' do
+  span.fa.fa-plus>
+  | Ny gradering
+
+h1 Graderinger
+
+- year = month = date = nil
+
+table.table
+  - @graduations.each do |held_on, graduations|
+    tr
+      th
+        - if held_on.cwyear != year
+          - year = held_on.cwyear
+          = held_on.cwyear
+      th
+        - if held_on.month != month
+          - month = held_on.month
+          = t(Date::MONTHNAMES[held_on.month])
+      th
+        - if held_on != date
+          - date = held_on
+          = held_on
+      - @groups.each do |group|
+        td
+          - if g = graduations.find { |gr| gr.group_id == group.id }
+            = link_to g.group.name, edit_graduation_path(g)
+            - if g.graduates.empty?
+              | (
+              = link_to 'Slett', graduation_path(g), :method => :delete
+              | )
+            - elsif g.approved?
+              span.fa.fa-thumbs-up< title='Godkjent'
+            - elsif g.passed?
+              span.fa.fa-question< title='Ikke godkjent'

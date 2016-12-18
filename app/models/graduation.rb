@@ -96,7 +96,12 @@ class Graduation < ActiveRecord::Base
     name
   end
 
+  def passed?
+    (held_on&.< Date.current)
+  end
+
   def approved?
-    (held_on&.< Date.current) && censors.any? && censors.reject(&:declined?).all?(&:approved?)
+    non_declined_censors = censors.reject(&:declined?)
+    passed? && non_declined_censors.any? && non_declined_censors.all?(&:approved?)
   end
 end
