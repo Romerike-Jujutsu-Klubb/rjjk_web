@@ -11,6 +11,7 @@ class Rank < ActiveRecord::Base
   has_many :graduates, dependent: :destroy
   has_many :katas, -> { where 'system = ?', 'Kata' },
       class_name: TechniqueApplication.name
+  has_many :members, through: :graduates
   has_many :technique_applications, dependent: :nullify
 
   scope :kwr, -> { where(martial_art_id: MartialArt.kwr.first.try(:id)) }

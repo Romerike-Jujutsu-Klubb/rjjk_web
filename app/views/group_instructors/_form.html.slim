@@ -1,0 +1,20 @@
+= bootstrap_form_for(@group_instructor) do |f|
+  .row
+    .col-md-6
+      = f.select :group_schedule_id, \
+              @group_schedules.sort_by { |gs| [gs.group.from_age, gs.weekday] }. \
+                      map { |gs| ["#{gs.group.name} #{gs.weekday_name}", gs.id] }, \
+              {prompt: 'Velg gruppe og dag'}, class: 'form-control'
+    .col-md-6
+      = f.select :member_id, @group_instructors.map { |g| [g&.name, g&.id] }, \
+              {prompt: 'Velg instruktør'}, class: 'form-control'
+    .col-md-6
+      = f.select :semester_id, @semesters.map { |s| [s.name, s.id] }, \
+                {prompt: 'Velg semester', selected: @group_instructor.group_semester.try(:semester).try(:id)}, \
+                class: 'form-control'
+    .col-md-6
+      br
+      = f.check_box :assistant, {}, class: 'form-control'
+  .btn-toolbar.pull-right
+    = back_or_link_to 'Tilbake', group_instructors_path, class: 'btn btn-default'
+    = f.primary 'Lagre'

@@ -71,14 +71,16 @@ class GroupInstructorsController < ApplicationController
   private
 
   def load_form_data
-    @group_schedules ||= GroupSchedule.includes(:group).references(:groups)
+    @group_schedules = GroupSchedule.includes(:group).references(:groups)
         .order('weekday, groups.from_age').to_a.select { |gs| gs.group.active? }
-    @group_instructors ||= Member.instructors
+    @group_instructors = (Member.instructors + [nil] +
+        Rank.kwr.find_by(name: '4. kyu').members.active.order('first_name, last_name')).uniq
     @semesters ||= Semester.order('start_on DESC').limit(10).to_a
   end
 
   def convert_semester_id
-    return unless (semester_id = params[:group_instructor].delete(:semester_id))
+    semester_id = params[:group_instructor].delete(:semester_id)
+    return unless semester_id.present? && params[:group_instructor][:group_schedule_id].present?
     group_schedule = GroupSchedule.find(params[:group_instructor][:group_schedule_id])
     group_semester = GroupSemester
         .where(group_id: group_schedule.group_id, semester_id: semester_id).first

@@ -34,6 +34,11 @@ nb:
       group:
         from_age: Nedre aldersgrense
         to_age: Øvre aldersgrense
+      group_instructor:
+        assistant: Hjelpeinstruktør
+        group_schedule_id: Gruppe
+        group_semester_id: Gruppesemester
+        member_id: Instruktør
       group_schedule:
         end_at: Slutt
         group_id: Gruppe
