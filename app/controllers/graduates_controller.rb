@@ -2,7 +2,7 @@
 class GraduatesController < ApplicationController
   include GraduationAccess
 
-  before_action :admin_required, except: [:confirm, :decline, :show]
+  before_action :admin_required, except: [:confirm, :create, :decline, :destroy, :show, :update]
 
   # FIXME(uwe):  Fixe cache sweeping!
   # cache_sweeper :grade_history_image_sweeper, :only => [:create, :update, :destroy]
@@ -51,6 +51,7 @@ class GraduatesController < ApplicationController
     @graduate.paid_graduation ||= true
     @graduate.paid_belt ||= true
     @graduate.passed = true if @graduate.passed.nil? && @graduate.graduation.group.school_breaks?
+    return unless admin_or_censor_required(@graduate.graduation)
     if @graduate.save
       flash[:notice] = 'Graduate was successfully created.'
       back_or_redirect_to action: :index
@@ -67,6 +68,7 @@ class GraduatesController < ApplicationController
 
   def update
     @graduate = Graduate.includes(:graduation, :member, :rank).find(params[:id])
+    return unless admin_or_censor_required(@graduate.graduation)
     respond_to do |format|
       if @graduate.update(params[:graduate])
         format.html do
@@ -111,6 +113,7 @@ class GraduatesController < ApplicationController
 
   def destroy
     @graduate = Graduate.find(params[:id])
+    return unless admin_or_censor_required(@graduate.graduation)
     @graduate.destroy
     respond_to do |format|
       format.html { redirect_to action: :index }
