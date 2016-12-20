@@ -5,6 +5,7 @@ AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
   Include:
+    - Capfile
     - Gemfile
     - '**/Rakefile'
     - '**/config.ru'
