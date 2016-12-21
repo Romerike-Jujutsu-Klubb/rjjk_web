@@ -1,4 +1,4 @@
-<%= form_for(@event_invitee_message) do |f| %>
+<%= bootstrap_form_for(@event_invitee_message) do |f| %>
   <% if @event_invitee_message.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@event_invitee_message.errors.count, "error") %> prohibited this event_invitee_message from being saved:</h2>
@@ -30,26 +30,17 @@
           <%= f.hidden_field :message_type %>
       <% end %>
     </div>
-    <div class="field">
-    <%= f.label :emne %><br />
     <%= f.text_field :subject, :size => 64 %>
-  </div>
-    <div class="field">
-      <%= f.label :melding %><br />
-      <%= f.text_area :body, :cols => 64 %>
-    </div>
-    <div class="field">
-      <%= f.label :ready_at, :Klar %>:
-      <%= f.check_box :ready_at, {}, Time.current, nil %>
-    </div>
+    <%= f.text_area :body, cols: 64, class: 'expanding' %>
+    <%= f.check_box :ready_at, {}, Time.current, nil %>
     <% if @event_invitee_message.sent_at %>
         <div class="field">
           <%= f.label :sendt %>:
           <%= @event_invitee_message.sent_at %>
         </div>
     <% end %>
-    <div class="actions">
-    <%= f.submit %>
+    <div class="btn-toolbar pull-right">
     <%=back_or_link_to 'Tilbake', event_invitee_messages_path %>
+    <%= f.primary %>
   </div>
 <% end %>

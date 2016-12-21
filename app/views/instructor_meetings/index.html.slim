@@ -1,0 +1,25 @@
+- @content_width = 1024
+= link_to 'Ny instruktørsamling', new_instructor_meeting_path, class: 'btn btn-primary pull-right'
+
+h1 Instruktørsamlinger
+
+table.table.table-striped
+  thead
+    tr
+      th Dato
+      th Tid
+      th Tema
+      th Agenda
+      th
+  tbody
+    - @instructor_meetings.each do |instructor_meeting|
+      tr
+        td nowrap=true = instructor_meeting.start_at.to_date
+        td
+          => instructor_meeting.start_at.strftime('%R')
+          = instructor_meeting.end_at.strftime('%R')
+        td = instructor_meeting.title
+        td = instructor_meeting.agenda
+        td
+          /= link_to 'Show', instructor_meeting, class: 'btn btn-link'
+          = link_to 'Edit', edit_instructor_meeting_path(instructor_meeting), class: 'btn btn-link'

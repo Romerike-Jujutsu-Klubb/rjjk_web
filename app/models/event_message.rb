@@ -10,6 +10,6 @@ class EventMessage < ActiveRecord::Base
   has_many :event_invitee_messages
 
   validates :body, :event_id, :message_type, :subject, presence: true
-  validates :event_id, uniqueness: { scope: :message_type,
+  validates :message_type, uniqueness: { scope: :event_id,
                           if: proc { |mt| mt.message_type == MessageType::INVITATION } }
 end

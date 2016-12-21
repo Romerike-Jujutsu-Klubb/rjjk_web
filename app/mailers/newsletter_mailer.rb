@@ -36,13 +36,6 @@ class NewsletterMailer < ApplicationMailer
     @email_end_at = @event_invitee.event.end_at
     @body = event_invitee_message.body
 
-    mail(to: @event_invitee.email, subject: @subject,
-        bcc: 'Uwe Kubosch <uwe@kubosch.no>') do |format|
-      format.html do
-        layout = event_invitee_message.event_invitee.user_id ? false : 'email'
-        render layout: layout
-      end
-      format.text { render }
-    end
+    mail to: @event_invitee.email, subject: @subject, bcc: 'Uwe Kubosch <uwe@kubosch.no>'
   end
 end

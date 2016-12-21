@@ -1,0 +1,25 @@
+= bootstrap_form_for(@instructor_meeting) do |f|
+  - if @instructor_meeting.errors.any?
+    #error_explanation
+      h2
+        = pluralize(@instructor_meeting.errors.count, "error")
+        | prohibited this instructor_meeting from being saved:
+
+      ul
+        - @instructor_meeting.errors.full_messages.each do |message|
+          li = message
+
+  .row
+    .col-md-6
+      = f.text_field :start_at, class: 'datetime'
+    .col-md-6
+      = f.text_field :end_at, class: 'time'
+  = f.text_area :title, class: 'expanding', maxlength: 254
+  = f.text_area :agenda, rows: 10, class: 'expanding'
+  .btn-toolbar.pull-right
+    = link_to 'Tilbake', instructor_meetings_path, class: 'btn btn-default'
+    = f.primary 'Lagre'
+
+- if @instructor_meeting.new_record?
+  javascript:
+      $('#instructor_meeting_start_at').focus();

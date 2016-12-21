@@ -22,6 +22,18 @@ nb:
       election:
         role_id: Rolle
         member_id: Medlem
+      event:
+        invitees: Inviter
+      event_invitee_message:
+        body: Melding
+        ready_at: Klar til utsending
+        subject: Emne
+      event_message:
+        body: Melding
+        event_id: Hendelse
+        message_type: Meldingstype
+        ready_at: Klar til utsending
+        subject: Emne
       graduate:
         member_id: Medlem
         paid_belt: Betalt belte
@@ -67,6 +79,7 @@ nb:
         header:
     models:
       annual_meeting: Årsmøte
+      event_message: melding
       group: Gruppe
       group_schedule: Trening
       group_instructor: Gruppeinstruktør

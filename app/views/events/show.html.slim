@@ -1,0 +1,17 @@
+- @title = @event.name
+
+h1 = h @event.name
+
+p
+  = h @event.start_at.strftime('%Y-%m-%d')
+  = h @event.start_at.strftime('%H:%M') if @event.start_at.hour != 0 || @event.start_at.min != 0
+  - if @event.end_at
+    | - <%= h @event.end_at.strftime('%Y-%m-%d') %>
+    = h @event.end_at.strftime('%H:%M') if @event.end_at.hour != 0 || @event.end_at.min != 0
+
+= @event.description.try(:html_safe)
+
+- if user? || admin?
+  .clearfix
+  ul.controls
+    li = link_to 'Rediger', {:action => :edit, :id => @event}, :class => :edit
