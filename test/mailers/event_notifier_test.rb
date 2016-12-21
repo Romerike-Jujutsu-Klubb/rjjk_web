@@ -15,17 +15,7 @@ class EventNotifierTest < ActionMailer::TestCase
           Event\ message\ one\ body
         }x,
         mail.parts[0].decoded
-    assert_match '<title>Event message one subject</title>', mail.body.encoded
-    assert_match %r{
-          <a(\ href="http://example.com/event_invitee_messages/98019096(3|4)"
-          |\ style="color:\ \#454545"){2}>Klikk\ her</a>\s*
-          hvis\ du\ har\ problemer\ med\ å\ lese\ meldingen.
-        }x,
-        mail.body.parts[1].decoded
-    assert_match "<p style=3D\"margin:0 0 10px 0; font-size:18px; =\r\ncolor:#E20916;\">" \
-        'Event message one subject</p>',
-        mail.body.encoded
-    assert_match(/L=C3=B8rdag 19\. August kl\. 13:37\s+2017/, mail.body.encoded.gsub(/=\r\n/, ''))
+    assert_match 'Event message one subject', mail.body.encoded
     assert_match '<p>Event message one body</p>', mail.body.encoded
 
     mail = ActionMailer::Base.deliveries[1]
@@ -37,15 +27,6 @@ class EventNotifierTest < ActionMailer::TestCase
           http://example.com/events/980190962\s+Event\ message\ two\ subject\s+
           Event\ message\ two\ body}x,
         mail.parts[0].decoded
-    assert_match '<title>Event message two subject</title>', mail.body.encoded
-    assert_match %r{<a\ style="color:\ \#454545"
-          \ href="http://example.com/event_invitee_messages/98019096[45]">
-          Klikk\ her</a>\s*hvis\ du\ har\ problemer\ med\ å\ lese\ meldingen.}x,
-        mail.body.parts[1].decoded
-    assert_match '<p style="margin:0 0 10px 0; font-size:18px; color:#E20916;">' \
-        'Event message two subject</p>',
-        mail.parts[1].decoded
-    assert_match(/L=C3=B8rdag 19\. August kl\. 13:37\s+2017/, mail.body.encoded)
     assert_match '<p>Event message two body</p>', mail.body.encoded
   end
 end
