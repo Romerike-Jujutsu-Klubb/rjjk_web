@@ -398,7 +398,7 @@ class NkfMemberImport
       return body
     rescue EOFError, SocketError, SystemCallError, Timeout::Error => e
       logger.error e.message
-      if backoff > 10.seconds # 15.minutes
+      if backoff > 15.minutes
         if e.respond_to?(:message=)
           e.message = "Backoff limit reached (#{backoff}): #{e.message}"
         end
