@@ -92,7 +92,7 @@ class ApplicationController < ActionController::Base
           @layout_events << Event.new(name: "Oppstart #{g.name}",
               start_at: first_session)
         end
-        if (last_date = g.current_semester.last_session)
+        if (last_date = g.current_semester&.last_session)
           @layout_events << Event.new(name: "Siste trening #{g.name}",
               start_at: last_date)
         end
