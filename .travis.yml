@@ -1,3 +1,4 @@
 language: ruby
 script:
-  - bundle exec rake db:create:all test
+  - bin/setup
+  - bundle exec rake test
