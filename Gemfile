@@ -87,7 +87,7 @@ group :development do
 end
 
 group :test do
-  gem 'capybara-screenshot-diff', github: 'donv/capybara-screenshot-diff'
+  gem 'capybara-screenshot-diff'
   gem 'chunky_png'
   gem 'database_cleaner'
   gem 'minitest-rails-capybara'

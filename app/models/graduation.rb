@@ -46,7 +46,7 @@ class Graduation < ActiveRecord::Base
             AND confirmed_at <= ?
         )
       SQL
-  scope :locked,
+  scope :ready,
       ->(date) { where(<<~SQL, date: date, true: true, false: false) }
         NOT EXISTS (
           SELECT locked_at

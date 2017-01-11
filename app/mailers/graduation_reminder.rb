@@ -91,7 +91,7 @@ class GraduationReminder
 
   def self.send_shopping_list
     Graduation.upcoming
-        .locked(2.days.ago)
+        .ready(2.days.ago)
         .where(shopping_list_sent_at: nil)
         .order('graduations.held_on')
         .each do |graduation|
