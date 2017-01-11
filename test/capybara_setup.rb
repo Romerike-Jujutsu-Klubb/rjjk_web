@@ -15,7 +15,7 @@ class ActionDispatch::IntegrationTest
   Capybara.default_driver = rand(10).zero? ? :selenium : :poltergeist
   Capybara::Screenshot.add_driver_path = true
   Capybara::Screenshot.window_size = [1024, 768]
-  Capybara::Screenshot.enabled = true
+  Capybara::Screenshot.enabled = ENV['TRAVIS'].blank?
   # Capybara::Screenshot::Diff.enabled = false
   Capybara::Screenshot.stability_time_limit = 0.5
   Capybara.default_max_wait_time = 30
