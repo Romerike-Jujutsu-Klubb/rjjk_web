@@ -93,6 +93,7 @@ group :test do
   gem 'minitest-rails-capybara'
   gem 'minitest-reporters'
   gem 'mocha', require: 'mocha/setup'
+  gem 'phantomjs', require: 'phantomjs/poltergeist'
   gem 'poltergeist'
   gem 'rubocop'
   # gem 'rubycritic', require: false

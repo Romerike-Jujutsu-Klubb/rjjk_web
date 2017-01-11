@@ -1,4 +1,6 @@
 /.bundle
+/.idea
 /archive.tar.gz
+/coverage
 /log/*.log
 /tmp
