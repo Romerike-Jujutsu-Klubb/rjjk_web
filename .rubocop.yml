@@ -12,6 +12,7 @@ AllCops:
     - '**/*.rake'
   Exclude:
     - 'db/schema.rb'
+    - 'vendor'
 
 Rails:
   Enabled: true
