@@ -12,7 +12,7 @@ require 'capybara/screenshot/diff'
 class ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  Capybara.default_driver = rand(10).zero? ? :selenium : :poltergeist
+  Capybara.default_driver = :poltergeist # :selenium or :poltergeist
   Capybara::Screenshot.add_driver_path = true
   Capybara::Screenshot.window_size = [1024, 768]
   Capybara::Screenshot.enabled = ENV['TRAVIS'].blank?

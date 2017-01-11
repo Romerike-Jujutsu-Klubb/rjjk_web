@@ -3,7 +3,7 @@
         select { |a| [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(a.status) } %>
     <% absences = practice.attendances.
         select { |a| Attendance::ABSENT_STATES.include?(a.status) } %>
-    <% others = attendances.select { |a| a.member_id != current_user.member.id } %>
+    <% others = attendances.select { |a| a.member_id != current_user.member.id }.sort_by{|a| a.member.current_rank || Rank::UNRANKED}.reverse %>
     <% attendance = practice.attendances.find { |a| a.member_id == current_user.member.id } %>
     <% if attendances.any? %>
         <% if attendances.size > 2 %>

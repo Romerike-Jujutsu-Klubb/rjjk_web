@@ -2,6 +2,8 @@
 class Rank < ActiveRecord::Base
   include Comparable
 
+  UNRANKED = new(position: -99, standard_months: 0, name: 'Ugradert', colour: 'Hvitt')
+
   belongs_to :martial_art
   belongs_to :group
   has_many :applications, -> { where('system <> ?', 'Kata') },
@@ -37,7 +39,7 @@ class Rank < ActiveRecord::Base
   delegate :kwr?, to: :martial_art
 
   def <=>(other)
-    return 1 if other.nil?
+    return 1 if other.nil? || other == UNRANKED
     return nil unless other.is_a? Rank
     return kwr? ? 1 : -1 if other.kwr? != kwr?
     position <=> other.position

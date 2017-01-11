@@ -222,7 +222,7 @@ blocking users: #{blocking_users.inspect}"
   end
 
   def current_rank(martial_art = nil, date = Date.current)
-    current_graduate(martial_art, date).try(:rank)
+    current_graduate(martial_art, date)&.rank
   end
 
   def current_rank_date(martial_art = nil, date = Date.current)
