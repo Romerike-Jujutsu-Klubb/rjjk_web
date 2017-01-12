@@ -35,8 +35,8 @@ class User < ActiveRecord::Base
   validates :password, confirmation: { if: :validate_password? }
   validates :password, length: { within: 5..40, if: :validate_password? }
 
-  def validate
-    return unless role_changed? && (user.nil? || user.role.nil?)
+  validate do
+    next unless role_changed? && (user.nil? || user.role.nil?)
     errors.add(:role, 'Bare administratorer kan gi administratorrettigheter.')
   end
 

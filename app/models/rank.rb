@@ -2,7 +2,8 @@
 class Rank < ActiveRecord::Base
   include Comparable
 
-  UNRANKED = new(position: -99, standard_months: 0, name: 'Ugradert', colour: 'Hvitt')
+  UNRANKED = new(position: -99, standard_months: 0, name: 'Ugradert', colour: 'Hvitt',
+                 martial_art_id: MartialArt::KWR.id)
 
   belongs_to :martial_art
   belongs_to :group
