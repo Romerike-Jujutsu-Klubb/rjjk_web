@@ -20,11 +20,11 @@ def learn(escaped_filename, type)
 end
 
 sorted.each.with_index do |f, i|
-  print "[#{files.size - i}] #{f}: "
 
   if f.valid_encoding?
     escaped_filename = Shellwords.escape(f)
     loop do
+      print "[#{files.size - i}] #{f}: "
       q = gets.chomp
       if q == 's'
         learn(escaped_filename, 'spam')
@@ -32,13 +32,17 @@ sorted.each.with_index do |f, i|
       elsif q == 'h'
         learn(escaped_filename, 'ham')
         break
+      elsif q == 'd'
+        puts
+        puts File.read(f)
+        puts
       elsif q == ''
         puts if i == sorted.size - 1
         break
       end
     end
   else
-    puts
+    puts "[#{files.size - i}] #{f} [BAD ENCODING]"
   end
 
   File.delete f
