@@ -26,18 +26,19 @@ end
 
 content = $stdin.read
 
-def safe_subject(mail, spam_score)
-  ss = mail&.subject&.gsub(/^Re:/, '')&.gsub(%r{[ :\[\]/\\\{\}`'"]}, '_')&.gsub(/_+/, '_').to_s[0..100]
+def safe_subject(subject, mail_is_spam, spam_score)
+  ss = subject.to_s.gsub(/^Re:/, '').gsub(%r{[ :/\\\{\}`'"!]}, '_').gsub(/_+/, '_')[0..100]
   @now_str ||= Time.now.strftime('%F_%T')
-  subject = "mail_#{@now_str}_#{ss}"
-  subject += "_[#{spam_score}]" if spam_score
+  subject = "mail_#{@now_str}_#{mail_is_spam ? '[SPAM]' : '______'}"
+  subject += "[#{spam_score}]" if spam_score
+  subject += "_#{ss}"
   subject
 end
 
 begin
   require 'bundler/setup'
   require 'mail'
-  mail = Mail.read_from_string(content)
+  orig_mail = Mail.read_from_string(content)
   if (encoding = mail.content_type_parameters['charset'])
     log "Convert to #{encoding.inspect}"
     content.force_encoding(encoding)
@@ -69,11 +70,15 @@ def check_spam(content, mail)
       log "Spamassassin: #{stderr.read}"
       exit_status = wait_thr.value # Process::Status object returned.
       log "Spamassassin reported: #{exit_status.inspect} #{mail['X-Spam-Status']&.value.inspect}"
-      if /^Yes, score=(?<spam_score>\d+\.\d+)/ =~ mail['X-Spam-Status'].value
-        mail_is_spam = true
-        log 'Mail is SPAM.'
-        File.write(safe_subject(mail, spam_score), content)
-        # exit 1
+      spam_status = mail['X-Spam-Status'].value
+      if /^(?<spam_status>Yes|No), score=(?<spam_score>-?\d+\.\d+)/ =~ spam_status
+        if (mail_is_spam = (spam_status == 'Yes'))
+          log 'Mail is SPAM.'
+          # File.write(safe_subject(mail.subject, spam_score), content)
+          # exit 1
+        end
+      else
+        log "Spam status mismatch: #{spam_status.inspect}"
       end
     end
   rescue Exception => e # rubocop: disable Lint/RescueException
@@ -84,12 +89,13 @@ def check_spam(content, mail)
 end
 
 if content.size <= 512_000
-  content, mail, mail_is_spam, spam_score = check_spam(content, mail)
+  content, mail, mail_is_spam, spam_score = check_spam(content, orig_mail)
 else
   log "Large message: #{content.size} bytes.  Skipping spam detection."
+  mail = orig_mail
 end
 
-File.write(safe_subject(mail, spam_score), content)
+File.write(safe_subject(orig_mail.subject, mail_is_spam, spam_score), content)
 
 prod_recipients = to.grep(/@jujutsu.no/)
 beta_recipients = to.grep(/@beta.jujutsu.no/)
