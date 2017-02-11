@@ -29,7 +29,7 @@ content = $stdin.read
 def safe_subject(subject, mail_is_spam, spam_score)
   ss = subject.to_s.gsub(/^Re:/, '').gsub(%r{[ :/\\\{\}`'"!]}, '_').gsub(/_+/, '_')[0..100]
   @now_str ||= Time.now.strftime('%F_%T')
-  subject = "mail_#{@now_str}_#{mail_is_spam ? '[SPAM]' : '______'}"
+  subject = "mail_#{@now_str}_#{mail_is_spam ? '[SPAM]' : '_____'}"
   subject += "[#{spam_score}]" if spam_score
   subject += "_#{ss}"
   subject

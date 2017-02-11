@@ -33,6 +33,7 @@ sorted.each.with_index do |f, i|
         learn(escaped_filename, 'ham')
         break
       elsif q == ''
+        puts if i == sorted.size - 1
         break
       end
     end
