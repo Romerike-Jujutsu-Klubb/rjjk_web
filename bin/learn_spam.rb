@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 
 require 'shellwords'
+require 'mail'
+require 'nokogiri'
 
 Dir.chdir File.expand_path '..', __dir__
 
@@ -19,12 +21,27 @@ def learn(escaped_filename, type)
   puts
 end
 
+def text_from_part(m)
+  body = m.body.decoded
+  if (encoding = m.content_type_parameters['charset'])
+    puts "Convert to #{encoding.inspect}"
+    body.force_encoding(encoding)
+  end
+  if m.content_type =~ %r{text/html}
+    doc = Nokogiri::HTML(body)
+    doc.css('script, link').each { |node| node.remove }
+    doc.css('body').text.gsub(/^\s+/, '').squeeze(" \n\t")
+  else
+    body
+  end
+end
+
 sorted.each.with_index do |f, i|
 
   if f.valid_encoding?
     escaped_filename = Shellwords.escape(f)
     loop do
-      print "[#{files.size - i}] #{f}: "
+      print "[#{files.size - i}] #{f.gsub(/^mail_/, '')}: "
       q = gets.chomp
       if q == 's'
         learn(escaped_filename, 'spam')
@@ -34,7 +51,22 @@ sorted.each.with_index do |f, i|
         break
       elsif q == 'd'
         puts
-        puts File.read(f)
+        m = Mail.read_from_string(File.read(f))
+        puts "From: #{m['from']}"
+        puts "To: #{m['to']}"
+        puts "Subject: #{m['subject']}"
+        puts
+        if m.multipart?
+          m.parts.each do |part|
+            puts part.content_type
+            next unless part.content_type =~ /text/
+            puts text_from_part(part)
+            puts
+          end
+        else
+          puts text_from_part(m)
+          puts
+        end
         puts
       elsif q == ''
         puts if i == sorted.size - 1

@@ -27,7 +27,7 @@ end
 content = $stdin.read
 
 def safe_subject(subject, mail_is_spam, spam_score)
-  ss = subject.to_s.gsub(/^Re:/, '').gsub(%r{[ :/\\\{\}`'"!]}, '_').gsub(/_+/, '_')[0..100]
+  ss = subject.to_s.gsub(/^Re:\s*/, '').gsub(%r{[ :/\\\{\}`'"!]}, '_').gsub(/_+/, '_')[0..100]
   @now_str ||= Time.now.strftime('%F_%T')
   subject = "mail_#{@now_str}_#{mail_is_spam ? '[SPAM]' : '_____'}"
   subject += "[#{spam_score}]" if spam_score
@@ -39,7 +39,7 @@ begin
   require 'bundler/setup'
   require 'mail'
   orig_mail = Mail.read_from_string(content)
-  if (encoding = mail.content_type_parameters['charset'])
+  if (encoding = orig_mail.content_type_parameters['charset'])
     log "Convert to #{encoding.inspect}"
     content.force_encoding(encoding)
   end
@@ -69,20 +69,24 @@ def check_spam(content, mail)
       log "Spamassassin: #{content}"
       log "Spamassassin: #{stderr.read}"
       exit_status = wait_thr.value # Process::Status object returned.
-      log "Spamassassin reported: #{exit_status.inspect} #{mail['X-Spam-Status']&.value.inspect}"
-      spam_status = mail['X-Spam-Status'].value
-      if /^(?<spam_status>Yes|No), score=(?<spam_score>-?\d+\.\d+)/ =~ spam_status
+      spam_status_header = mail['X-Spam-Status']&.value
+      log "Spamassassin reported: #{exit_status.inspect} #{spam_status_header.inspect}"
+      if /^(?<spam_status>Yes|No), score=(?<spam_score>-?\d+\.\d+)/ =~ spam_status_header
         if (mail_is_spam = (spam_status == 'Yes'))
-          log 'Mail is SPAM.'
-          # File.write(safe_subject(mail.subject, spam_score), content)
-          # exit 1
+          log "Mail is SPAM: #{spam_score}"
+          if spam_score.to_i >= 10
+            log 'Discarding the email.'
+            exit 0
+          end
         end
       else
-        log "Spam status mismatch: #{spam_status.inspect}"
+        log "Spam status mismatch: #{spam_status_header.inspect}"
       end
     end
+  rescue SystemExit
+    raise
   rescue Exception => e # rubocop: disable Lint/RescueException
-    log "Exception scanning for SPAM: #{e}"
+    log "Exception scanning for SPAM: #{e}\n#{e.backtrace.join("\n")}"
   end
   log "Spam check took: #{Time.now - spam_start}s"
   return content, mail, mail_is_spam, spam_score
