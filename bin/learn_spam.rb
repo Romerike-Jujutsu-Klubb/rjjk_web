@@ -22,17 +22,26 @@ def learn(escaped_filename, type)
 end
 
 def text_from_part(m)
-  body = m.body.decoded
-  if (encoding = m.content_type_parameters['charset'])
-    puts "Convert to #{encoding.inspect}"
-    body.force_encoding(encoding)
-  end
-  if m.content_type =~ %r{text/html}
-    doc = Nokogiri::HTML(body)
-    doc.css('script, link').each { |node| node.remove }
-    doc.css('body').text.gsub(/^\s+/, '').squeeze(" \n\t")
+  if m.multipart?
+    "#{m.content_type}\n" + m.parts.map do |part|
+      text_from_part(part)
+    end.join("\n")
   else
-    body
+    header = "#{m.content_type}\n"
+    body = m.body.decoded
+    if (encoding = m.content_type_parameters && m.content_type_parameters['charset'])
+      body.force_encoding(encoding)
+      header << "Convert to #{encoding.inspect}\n"
+    end
+    pretty_body =
+        if m.content_type =~ %r{text/html}
+          doc = Nokogiri::HTML(body)
+          doc.css('script, link').each { |node| node.remove }
+          doc.css('body').text.gsub(/^\s+/, '').squeeze(" \n\t")
+        elsif m.content_type =~ /text/
+          body
+        end
+    "#{header}#{pretty_body}".encode(Encoding::UTF_8, undef: :replace)
   end
 end
 
@@ -56,17 +65,8 @@ sorted.each.with_index do |f, i|
         puts "To: #{m['to']}"
         puts "Subject: #{m['subject']}"
         puts
-        if m.multipart?
-          m.parts.each do |part|
-            puts part.content_type
-            next unless part.content_type =~ /text/
-            puts text_from_part(part)
-            puts
-          end
-        else
-          puts text_from_part(m)
-          puts
-        end
+        puts text_from_part(m)
+        puts
         puts
       elsif q == ''
         puts if i == sorted.size - 1

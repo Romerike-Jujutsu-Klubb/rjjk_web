@@ -27,9 +27,9 @@ end
 content = $stdin.read
 
 def safe_subject(subject, mail_is_spam, spam_score)
-  ss = subject.to_s.gsub(/^Re:\s*/, '').gsub(%r{[ :/\\\{\}`'"!]}, '_').gsub(/_+/, '_')[0..100]
+  ss = subject.to_s.gsub(/^((Re|Sv):\s*)+/i, '').gsub(%r{[ :/\\\{\}`'"!]}, '_').gsub(/_+/, '_')[0..100]
   @now_str ||= Time.now.strftime('%F_%T')
-  subject = "mail_#{@now_str}_#{mail_is_spam ? '[SPAM]' : '_____'}"
+  subject = "mail_#{@now_str}_#{mail_is_spam ? '[SPAM]' : mail_is_spam == 'LARGE' ? '[LARGE]' : '_____'}"
   subject += "[#{spam_score}]" if spam_score
   subject += "_#{ss}"
   subject
@@ -74,7 +74,7 @@ def check_spam(content, mail)
       if /^(?<spam_status>Yes|No), score=(?<spam_score>-?\d+\.\d+)/ =~ spam_status_header
         if (mail_is_spam = (spam_status == 'Yes'))
           log "Mail is SPAM: #{spam_score}"
-          if spam_score.to_i >= 10
+          if spam_score.to_f >= 7.5
             log 'Discarding the email.'
             exit 0
           end
@@ -97,6 +97,8 @@ if content.size <= 512_000
 else
   log "Large message: #{content.size} bytes.  Skipping spam detection."
   mail = orig_mail
+  mail_is_spam = 'LARGE'
+  spam_score = nil
 end
 
 File.write(safe_subject(orig_mail.subject, mail_is_spam, spam_score), content)
@@ -132,7 +134,7 @@ create_record('beta', from, beta_recipients, content) if beta_recipients.any?
 if rest_recipients.any?
   log "Sending to rest: #{from} => #{rest_recipients}"
   begin
-    log content.lines.grep(/spam/i)
+    log content.lines.grep(/spam|^\s+\*/i)
   rescue Exception => e # rubocop: disable Lint/RescueException
     puts e
     log "Exception logging spam lines: #{e}"
