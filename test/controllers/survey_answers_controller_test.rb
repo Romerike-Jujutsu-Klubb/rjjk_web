@@ -20,38 +20,38 @@ class SurveyAnswersControllerTest < ActionController::TestCase
 
   test 'should create survey_answer' do
     assert_difference('SurveyAnswer.count') do
-      post :create, survey_answer: {
+      post :create, params:{survey_answer: {
           answer: @survey_answer.answer,
           survey_question_id: @survey_answer.survey_question_id,
           survey_request_id: @survey_answer.survey_request_id,
-      }
+      }}
     end
 
     assert_redirected_to survey_answer_path(assigns(:survey_answer))
   end
 
   test 'should show survey_answer' do
-    get :show, id: @survey_answer
+    get :show, params:{id: @survey_answer}
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @survey_answer
+    get :edit, params:{id: @survey_answer}
     assert_response :success
   end
 
   test 'should update survey_answer' do
-    patch :update, id: @survey_answer, survey_answer: {
+    patch :update, params:{id: @survey_answer, survey_answer: {
         answer: @survey_answer.answer,
         survey_question_id: @survey_answer.survey_question_id,
         survey_request_id: @survey_answer.survey_request_id,
-    }
+    }}
     assert_redirected_to survey_answer_path(assigns(:survey_answer))
   end
 
   test 'should destroy survey_answer' do
     assert_difference('SurveyAnswer.count', -1) do
-      delete :destroy, id: @survey_answer
+      delete :destroy, params:{id: @survey_answer}
     end
 
     assert_redirected_to survey_answers_path

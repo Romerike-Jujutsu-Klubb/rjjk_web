@@ -4,8 +4,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 class MartialArtTest < ActiveSupport::TestCase
   fixtures :martial_arts
 
-  # Replace this with your real tests.
-  def test_truth
-    assert true
+  def test_kwr?
+    martial_arts = MartialArt.order(:name).to_a
+    assert_equal [false, true], martial_arts.map(&:kwr?)
   end
 end

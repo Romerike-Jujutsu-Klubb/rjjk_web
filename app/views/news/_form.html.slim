@@ -21,11 +21,11 @@
 
         .form-group.col-md-4
           = f.label :publish_at, 'Publiser fra'
-          = f.text_field :publish_at, value: @news_item.publish_at.try(:strftime, '%F %R'), class: 'datetime form-control', data: {'default-date': Time.current.strftime('%F %R') }
+          = f.text_field :publish_at, value: @news_item.publish_at.try(:strftime, '%F %R'), class: 'datetime form-control', data: {:'default-date' => Time.current.strftime('%F %R') }
 
         .form-group.col-md-4
           = f.label :expire_at, 'til'
-          = f.text_field :expire_at, value: @news_item.expire_at.try(:strftime, '%F %R'), class: 'datetime form-control', data: {'default-date': 1.week.from_now.strftime('%F %R')}
+          = f.text_field :expire_at, value: @news_item.expire_at.try(:strftime, '%F %R'), class: 'datetime form-control', data: {:'default-date' => 1.week.from_now.strftime('%F %R')}
 
       p
         | Sammendrag
@@ -36,12 +36,12 @@
         / TODO(uwe): Switch to https://github.com/maclover7/trix
         = f.text_area :body, :class => :tinymce
 
-      .btn-toolbar.pull-right
-        = back_or_link_to 'Avbryt', news_items_path, class: 'btn btn-default'
+      .btn-toolbar.float-right
+        = back_or_link_to 'Avbryt', news_items_path, class: 'btn btn-secondary'
         = f.submit 'Lagre', id: :save, class: 'btn btn-primary'
 
   .col-md-3
-    .pull-right.lazy-container style="height: 680px; overflow:auto; border: 1px solid black"
+    .float-right.lazy-container style="height: 680px; overflow:auto; border: 1px solid black"
       = render '/images/list', images: @images
 
 javascript:

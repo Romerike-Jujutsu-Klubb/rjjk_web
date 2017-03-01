@@ -29,7 +29,7 @@ ul.nav.nav-tabs
 
     #invitation.tab-pane
       - if @event.id
-        .pull-right
+        .float-right
           table.table
             tr
               th Gruppe
@@ -45,9 +45,9 @@ ul.nav.nav-tabs
             = f.text_area :invitees, cols: 100, rows: 3, help: '(Kommaseparert liste: Navn 1 <e-post1>, e-post2, Navn 3 <e-post3>, etc.)'
             .btn-toolbar
               /= detour_to 'Rediger invitasjonen', :controller => :event_messages, :action => :edit, :id => @event.invitation
-              = f.button 'Send meg eksempel på innbydelse', type: :button, onclick: "$.get('#{url_for(action: :invite, id: @event.id, example: true)}')", class: 'btn btn-default'
-              = detour_to 'Legg til deltaker', {controller: :event_invitees, action: :new, event_invitee: {event_id: @event.id}}, class: 'btn btn-default'
-              = detour_to 'Lag melding', {:controller => :event_messages, :action => :new, :event_message => {:event_id => @event.id}}, class: 'btn btn-default'
+              = f.button 'Send meg eksempel på innbydelse', type: :button, onclick: "$.get('#{url_for(action: :invite, id: @event.id, example: true)}')", class: 'btn btn-secondary'
+              = detour_to 'Legg til deltaker', {controller: :event_invitees, action: :new, event_invitee: {event_id: @event.id}}, class: 'btn btn-secondary'
+              = detour_to 'Lag melding', {:controller => :event_messages, :action => :new, :event_message => {:event_id => @event.id}}, class: 'btn btn-secondary'
               /= f.button 'Send innbydelse til de inviterte', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :invited)}')"
         table.table
           - @event.event_messages.each do |em|
@@ -113,7 +113,7 @@ ul.nav.nav-tabs
               td
               td Ja: #{@event.event_invitees.select(&:will_attend).size}
 
-  .btn-toolbar.pull-right
+  .btn-toolbar.float-right
     = back_or_link_to 'Tilbake', events_path, class: 'btn btn-link'
     = link_to 'Oppmøteliste', {action: :attendance_form, id: (@event.id if @event.try(:event_invitees).try(:any?))}, class: 'btn btn-link'
     = f.primary 'Lagre'

@@ -1,7 +1,7 @@
 <div id="practice_<%= week %>_<%= gs.id %>">
   <%
      initial_icon = nil
-     initial_class = 'default'
+     initial_class = 'secondary'
      initial_disabled = nil
      practice_end = Date.commercial(year, week, gs.weekday).at(gs.end_at)
      practice_passed = Time.current > practice_end
@@ -9,7 +9,6 @@
      link_target = {controller: :attendances,
              action: practice_passed ? :review : :announce, year: year,
              week: week, group_schedule_id: gs.id, status: 'toggle'}
-     link_method = :post
      if attendance
        if Attendance::PRESENT_STATES.include?(attendance.status)
          initial_class = 'success'
@@ -32,29 +31,26 @@
      end
   %>
   <div id="button_<%= year %>_<%= week %>_<%= gs.id %>" class="btn-group">
-    <%= link_to(link_target, method: link_method, remote: !initial_disabled,
+    <%= link_to(link_target, method: :post, remote: !initial_disabled,
             id: "btn_#{year}_#{week}_#{gs.id}", class: "btn btn-#{initial_class}",
             style: 'width: 7.5em', onclick: initial_disabled ? 'return false' : nil,
             data: {replace: initial_disabled || "#practice_#{week}_#{gs.id}"}) do %>
-        <i class="glyphicon glyphicon-<%= initial_icon %>"></i>
+        <i class="fa fa-<%= initial_icon %>"></i>
         <span><%= initial_text %></span>
     <% end %>
-    <button type="button" class="<%= 'disabled' if initial_disabled %> btn btn-default dropdown-toggle" <%= 'data-toggle="dropdown"'.html_safe unless initial_disabled %>>
-      <span class="caret"></span>
+    <button type="button" class="<%= 'disabled' if initial_disabled %> btn btn-secondary dropdown-toggle dropdown-toggle-split" <%= 'data-toggle="dropdown"'.html_safe unless initial_disabled %>>
     </button>
-    <ul class="dropdown-menu" role="menu">
+    <div class="dropdown-menu">
       <% (practice_passed ? Attendance::PAST_STATES : Attendance::STATES).each do |state, link_text, link_icon, link_class| %>
-          <li>
-            <%= link_to({controller: :attendances, action: :announce, year: year, week: week, group_schedule_id: gs.id, status: state},
-                    method: :post, remote: true, id: "btn_#{year}_#{week}_#{gs.id}",
-                    onclick: "$('#btn_#{year}_#{week}_#{gs.id}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('btn-#{link_class}').html($(this).html()); $('[data-toggle=dropdown]').parent().removeClass('open'); return true",
-                    class: "text-#{link_class}") do %>
-                <i class="glyphicon glyphicon-<%= link_icon %>"></i>
-                <span><%= link_text %></span>
-            <% end %>
-          </li>
+          <%= link_to({ controller: :attendances, action: :announce, year: year, week: week, group_schedule_id: gs.id, status: state },
+              method: :post, remote: true, id: "btn_#{year}_#{week}_#{gs.id}",
+              onclick: "$('#btn_#{year}_#{week}_#{gs.id}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('btn-#{link_class}').html($(this).html()); $('[data-toggle=dropdown]').parent().removeClass('open'); return true",
+              class: "dropdown-item text-#{link_class}") do %>
+              <i class="fa fa-<%= link_icon %>"></i>
+              <span><%= link_text %></span>
+          <% end %>
       <% end %>
-    </ul>
+    </div>
   </div>
   <%= javascript_tag do %>
       $(function() {
@@ -62,7 +58,9 @@
           $('#button_<%= year %>_<%= week %>_<%= gs.id %>').popover('show');
       });
   <% end if @reviewed_attendance && @reviewed_attendance.group_schedule == gs && @reviewed_attendance.practice.year == year && @reviewed_attendance.practice.week == week %>
-  <br/>
+
+  <div class="clearfix"></div>
+
   <% practice = gs.practices.find { |p| p.year == year && p.week == week } %>
   <%= render 'details_link', practice: practice %>
 </div>

@@ -21,7 +21,7 @@
         = f.select :member_id, ['Velg instruktør'] + @instructors.map { |m| [m.name, m.id] }, \
                 {}, class: 'form-control', onchange: 'form.submit()'
         span.input-group-btn
-          = f.submit 'Legg til', class: 'btn btn-default'
+          = f.submit 'Legg til', class: 'btn btn-secondary'
 
   .col-md-8
     h4 Sensorer
@@ -44,4 +44,4 @@
         = f.select :member_id, ['Velg sensor'] + @instructors.map { |m| [m.name, m.id] }, \
                 {}, class: 'form-control', onchange: 'form.submit()'
         span.input-group-btn
-          = f.submit 'Legg til', class: 'btn btn-default'
+          = f.submit 'Legg til', class: 'btn btn-secondary'

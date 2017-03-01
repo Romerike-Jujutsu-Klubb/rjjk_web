@@ -20,7 +20,7 @@ class PageAliasesControllerTest < ActionController::TestCase
 
   test 'should create page_alias' do
     assert_difference('PageAlias.count') do
-      post :create, page_alias: { new_path: @page_alias.new_path, old_path: '/someother_path' }
+      post :create, params:{page_alias: { new_path: @page_alias.new_path, old_path: '/someother_path' }}
       assert_no_errors :page_alias
     end
 
@@ -28,25 +28,25 @@ class PageAliasesControllerTest < ActionController::TestCase
   end
 
   test 'should show page_alias' do
-    get :show, id: @page_alias
+    get :show, params:{id: @page_alias}
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @page_alias
+    get :edit, params:{id: @page_alias}
     assert_response :success
   end
 
   test 'should update page_alias' do
-    put :update, id: @page_alias, page_alias: {
+    put :update, params:{id: @page_alias, page_alias: {
         new_path: @page_alias.new_path, old_path: @page_alias.old_path
-    }
+    }}
     assert_redirected_to page_alias_path(assigns(:page_alias))
   end
 
   test 'should destroy page_alias' do
     assert_difference('PageAlias.count', -1) do
-      delete :destroy, id: @page_alias
+      delete :destroy, params:{id: @page_alias}
     end
 
     assert_redirected_to page_aliases_path

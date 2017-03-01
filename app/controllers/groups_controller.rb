@@ -16,7 +16,7 @@ class GroupsController < ApplicationController
     @groups = Group.active.to_a
     attrs = @groups.map(&:attributes)
     @groups.each { |g| attrs.find { |g2| g2['id'] == g.id }['members'] = g.members.map(&:id) }
-    render text: attrs.to_yaml, content_type: 'text/yaml', layout: false
+    render body: attrs.to_yaml, content_type: 'text/yaml', layout: false
   end
 
   def show

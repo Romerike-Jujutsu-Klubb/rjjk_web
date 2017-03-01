@@ -7,9 +7,9 @@ class NewsFeatureTest < ActionDispatch::IntegrationTest
     assert_current_path '/news'
     screenshot('news/index_public')
     all('.post img')[0].click
-    screenshot('news/index_public_image')
-    click_button 'Close'
-    assert has_no_css?('button', text: 'Close')
+    screenshot('news/index_public_image') || sleep(Capybara::Screenshot.stability_time_limit)
+    click_button 'Lukk'
+    assert has_no_css?('button', text: 'Lukk')
     all('.post img')[1].click
     screenshot('news/index_public_image_2')
   end

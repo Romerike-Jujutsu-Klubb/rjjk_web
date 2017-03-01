@@ -25,6 +25,6 @@
     </div>
 
     <%= f.submit 'Lagre', class: 'btn btn-primary' %>
-    <%= back_or_link_to 'Tilbake', semesters_path, class: 'btn btn-default glyphicon glyphicon-back' %>
-    <%= link_to('Show', @semester, class: 'btn btn-default') unless @semester.new_record? %>
+    <%= back_or_link_to 'Tilbake', semesters_path, class: 'btn btn-secondary fa fa-back' %>
+    <%= link_to('Show', @semester, class: 'btn btn-secondary') unless @semester.new_record? %>
 <% end %>

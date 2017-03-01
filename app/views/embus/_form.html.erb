@@ -26,33 +26,38 @@
           (<%= link_to 'Print', :action => :print %>)
       <% end %>
     </div>
-    <div style="float: right; width: 196px; height: 100%; overflow:auto; border: 1px solid black; padding-top: 0.5em; text-align: center">
-      <% @embu.embu_images.order('created_at DESC').each do |e| %>
-          <% i = e.image %>
-          <% if i.video? %>
-              <%= video_tag url_for(:controller => :images, :action => :show, :id => i.id, :format => i.format), :title => i.name || 'Film', :controls => true, :autobuffer => true, :style => 'width: 185px' %>
-              </video>
-          <% else %>
-              <%= image_tag url_for(:controller => :images, :action => :inline, :id => i.id, :format => i.format, :width => 185), :title => i.name || 'Bilde', :style => 'float: right; width: 19%' %>
-          <% end %>
-          <ul class="controls">
-            <li><%= detour_to 'Fjern', embu_image_path(e), :class => :delete, :method => :delete, :confirm => "Er du sikker på at du vil fjerne #{i.video? ? 'denne videoen' : 'dette bildet'} fra din embu?" %></li>
-          </ul>
-          <br clear="right"/>
-      <% end %>
-    </div>
 
-    <%= f.text_area :description, :class => :tinymce %>
+    <div class="row">
+      <div class="col-md-9">
+        <%= f.text_area :description, :class => :tinymce %>
+        <% unless @embu.new_record? %>
+            <div class="field">
+              <%= f.label :image, t(:image) %>
+              <%= f.file_field :image %>
+            </div>
+        <% end %>
 
-    <% unless @embu.new_record? %>
-        <div class="field">
-          <%= f.label :image, t(:image) %>
-          <%= f.file_field :image %>
+        <div class="actions">
+          <%= f.submit :class => 'btn btn-secondary' %>
+          <%= link_to 'Ny Embu', new_embu_path %>
         </div>
-    <% end %>
+      </div>
+      <div class="col-md-3" style="height: 90%; overflow:auto; border: 1px solid black; padding-top: 0.5em; text-align: center">
+        <% @embu.embu_images.order('created_at DESC').each do |e| %>
+            <% i = e.image %>
+            <% if i.video? %>
+                <%= video_tag url_for(:controller => :images, :action => :show, :id => i.id, :format => i.format), :title => i.name || 'Film', :controls => true, :autobuffer => true, :style => 'width: 185px' %>
+                </video>
+            <% else %>
+                <%= image_tag url_for(:controller => :images, :action => :inline, :id => i.id, :format => i.format, :width => 185), :title => i.name || 'Bilde', :style => 'float: right; width: 19%' %>
+            <% end %>
+            <ul class="controls">
+              <li><%= detour_to 'Fjern', embu_image_path(e), :class => :delete, :method => :delete, :confirm => "Er du sikker på at du vil fjerne #{i.video? ? 'denne videoen' : 'dette bildet'} fra din embu?" %></li>
+            </ul>
+            <br clear="right"/>
+        <% end %>
+      </div>
 
-    <div class="actions">
-      <%= f.submit :class => 'btn btn-default' %>
-      <%= link_to 'Ny Embu', new_embu_path %>
     </div>
+
 <% end %>

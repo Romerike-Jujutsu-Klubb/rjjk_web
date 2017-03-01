@@ -12,7 +12,7 @@ class NkfMemberTrial < ActiveRecord::Base
   end
 
   validates :alder, :epost, :etternavn, :fodtdato,
-      :fornavn, :medlems_type, :postnr, :reg_dato, :sted, :stilart, :tid, presence: true
+      :fornavn, :medlems_type, :postnr, :reg_dato, :stilart, :tid, presence: true
   validates :res_sms, inclusion: { in: [true, false] }
 
   def age

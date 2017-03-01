@@ -1,0 +1,16 @@
+| Romerike Jujutsu Klubb
+
+.clearfix
+
+- if flash[:notice]
+  .notice
+    .inner
+      p = flash[:notice].try(:html_safe)
+
+span style="font-size: 10pt; text-align: center"
+  = link_to 'Logg på NKF', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login', onclick: 'return !window.open(this.href)', style: 'margin-right: 50px'
+  - if user?
+    = link_to 'Gruppe', 'https://www.facebook.com/groups/romerikejjk', onclick: 'return !window.open(this.href)', \
+              style: "padding-left:2.7em;background-image: url(#{asset_path('facebook.png')}); background-repeat:no-repeat;background-origin:padding-box;background-position: 0.5em;background-size: 24px 24px"
+  = link_to 'Facebook', 'http://www.facebook.com/home.php#!/pages/Romerike-Jujutsu-Klubb/260684570923?ref=ts', onclick: 'return !window.open(this.href)'
+  = link_to 'Prøv oss!', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', onclick: 'return !window.open(this.href)'

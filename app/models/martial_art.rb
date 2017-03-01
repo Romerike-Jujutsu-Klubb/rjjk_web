@@ -13,6 +13,6 @@ class MartialArt < ActiveRecord::Base
   scope :kwr, -> { where(name: KWR_NAME) }
 
   def kwr?
-    name == KWR
+    name == KWR_NAME
   end
 end

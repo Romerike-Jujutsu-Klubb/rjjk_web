@@ -32,7 +32,7 @@
               <%= select_tag :group_id, options_for_select([['Velg gruppe', nil]] + @groups.map { |g| [g.name, g.id] }, @graduation.group_id),
                   class: 'form-control' %>
               <span class="input-group-btn">
-          <%= f.submit 'Legg til alle', class: 'btn btn-default' %>
+          <%= f.submit 'Legg til alle', class: 'btn btn-secondary' %>
       </span>
             </div>
         <% end %>
@@ -47,7 +47,7 @@
                   grouped_options_for_select(@excluded_members.map { |g, members| [g.name, members.map { |m| ["#{m.name} #{m.age(@graduation.held_on)} år", m.id] }] }),
                   {prompt: 'Velg deltaker'}, class: 'form-control', onchange: 'form.submit()' %>
               <span class="input-group-btn">
-      <%= f.submit 'Legg til', class: 'btn btn-default' %>
+      <%= f.submit 'Legg til', class: 'btn btn-secondary' %>
     </span>
             </div>
         <% end %>

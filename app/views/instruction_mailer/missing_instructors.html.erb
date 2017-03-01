@@ -47,8 +47,8 @@
           </tr>
           <% instructions.each do |gi| %>
               <tr>
-                <td><%= link_to gi.group_schedule.group.name, :only_path => false, :controller => :group_instructors,
-                        :action => :new, :group_instructor => gi.attributes.select{|k,v| v} %></td>
+                <td><%= link_to gi.group_schedule.group.name, only_path: false, controller: :group_instructors,
+                    action: :new, group_instructor: gi.attributes.except('id').select { |k, v| v } %></td>
                 <td><%= gi.group_schedule.weekday_name %></td>
               </tr>
           <% end %>

@@ -25,7 +25,7 @@ module ApplicationHelper
 
   def t(time)
     return super if time.is_a?(Symbol) || time.is_a?(String)
-    time && time.strftime('%H:%M')
+    time&.strftime('%H:%M')
   end
 
   def wday(wday_index)

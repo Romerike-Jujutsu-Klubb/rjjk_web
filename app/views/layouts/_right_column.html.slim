@@ -1,0 +1,30 @@
+.padded
+  .text-center
+    = link_to image_tag('rjjk_logo_&_txt_320.png', id: :logo_img), '/'
+
+  form action="/search" role="search"
+    .input-group
+      = search_field nil, nil, name: :q, value: @query, placeholder: 'Søk', \
+              class: 'search-query form-control', onmouseup: 'select()'
+      span.input-group-btn
+        button.btn.btn-secondary type="submit"
+          i.fa.fa-search
+
+  = render 'layouts/gallery_image'
+
+  - if false && user?
+    = render 'layouts/media_upload'
+
+  h3
+    | Hva skjer?
+    =< link_to image_tag('ical.png', :style => 'width: 24px;height: 24px'), \
+      {only_path: false, protocol: 'webcal', controller: :events, \
+          action: :calendar, format: :ics}, \
+      title: 'Abonnér på hendelseskalender!'
+  = render 'layouts/next_practice'
+  = render 'layouts/events', events: @layout_events
+
+  - if admin?
+    = render 'layouts/charts'
+
+  = render 'layouts/groups'

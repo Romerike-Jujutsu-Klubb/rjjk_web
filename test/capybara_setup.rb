@@ -15,12 +15,12 @@ class ActionDispatch::IntegrationTest
   Capybara.default_driver = :poltergeist # :selenium or :poltergeist
   Capybara::Screenshot.add_driver_path = true
   Capybara::Screenshot.window_size = [1024, 768]
-  Capybara::Screenshot.enabled = ENV['TRAVIS'].blank?
+  Capybara::Screenshot.enabled = RUBY_ENGINE == 'ruby' && ENV['TRAVIS'].blank?
   # Capybara::Screenshot::Diff.enabled = false
   Capybara::Screenshot.stability_time_limit = 0.5
   Capybara.default_max_wait_time = 30
 
-  self.use_transactional_fixtures = false
+  self.use_transactional_tests = false
 
   setup { Timecop.travel TEST_TIME }
 
@@ -31,12 +31,12 @@ class ActionDispatch::IntegrationTest
 
   def visit_with_login(path, redirected_path: path, user: :admin)
     visit path
-    fill_login_form(user) if current_path == '/user/login'
+    fill_login_form(user) if current_path == '/login'
     assert_current_path redirected_path
   end
 
   def login_and_visit(path, user = :admin)
-    visit '/user/login'
+    visit '/login'
     fill_login_form user
     assert_current_path '/'
     visit path

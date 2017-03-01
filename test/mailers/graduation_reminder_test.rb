@@ -115,8 +115,8 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(/Du er satt opp til gradering torsdag 24. oktober/, mail.body)
     assert_match(/Har du mulighet til delta\?  Klikk på en av linkene nedenfor for å gi beskjed om du kan eller ikke./,
         mail.body)
-    assert_match(%r{<a href="http://example.com/graduates/confirm/397971580">Jeg kommer :\)</a>}, mail.body)
-    assert_match(%r{<a href="http://example.com/graduates/decline/397971580">Beklager, jeg kommer ikke.</a>}, mail.body)
+    assert_match(%r{<a href="http://example.com/graduates/397971580/confirm">Jeg kommer :\)</a>}, mail.body)
+    assert_match(%r{<a href="http://example.com/graduates/397971580/decline">Beklager, jeg kommer ikke.</a>}, mail.body)
     assert_match(/Minstekrav til gradering er 11 treninger. Vi har registrert 1 treninger på deg siden du startet./,
         mail.body)
     assert_match(/Du trenger altså 10 treninger til for å oppfylle kravet til gradering./, mail.body)

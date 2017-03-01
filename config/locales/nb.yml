@@ -9,6 +9,7 @@ nb:
         to: Til
       attendance:
         member_id: Medlem
+        practice_id: Trening
       censor:
         approved_grades_at: Godkjent grader
         declined: Avslått

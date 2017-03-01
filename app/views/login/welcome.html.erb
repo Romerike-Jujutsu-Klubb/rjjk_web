@@ -1,0 +1,13 @@
+<h3>Velkommen</h3>
+<p>
+  Du er nå logget på systemet og kan se på
+  "<%= link_to 'Mitt oppmøte', :controller => :attendances, :action => :plan %>"
+  og laste opp og se på interne bilder og filmer i
+  "<%= link_to 'Galleriet', :controller => :images, :action => :gallery %>",
+  "<%= link_to 'Mine media', :controller => :images, :action => :mine %>"
+  eller "<%= link_to 'Min Embu', :controller => :embus %>"
+</p>
+<p>
+  Hvis du lurer på
+  noe, <%= link_to 'kontakt oss', :controller => :info, :action => :show, :id => :Kontakt %>.
+</p>

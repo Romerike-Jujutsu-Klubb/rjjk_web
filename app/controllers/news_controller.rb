@@ -25,7 +25,7 @@ class NewsController < ApplicationController
   def create
     @news_item = NewsItem.new(params[:news_item])
     if @news_item.save
-      flash[:notice] = 'NewsItem was successfully created.'
+      flash[:notice] = 'Nyheten ble opprettet.'
       redirect_to action: :list
     else
       new
@@ -40,7 +40,7 @@ class NewsController < ApplicationController
   def update
     @news_item = NewsItem.find(params[:id])
     if @news_item.update_attributes(params[:news_item])
-      flash[:notice] = 'NewsItem was successfully updated.'
+      flash[:notice] = 'Nyheten ble oppdatert.'
       back_or_redirect_to action: :show, id: @news_item
     else
       render action: :edit

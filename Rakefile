@@ -6,9 +6,11 @@ Rails.application.load_tasks
 if Rails.env.test?
   require 'rubocop/rake_task'
   RuboCop::RakeTask.new
-  Rake::Task[:test].enhance([:'rubocop:auto_correct'])
-
   # require 'rubycritic/rake_task'
   # RubyCritic::RakeTask.new
-  # task(:test) { Rake::Task[:rubycritic].invoke }
+
+  namespace :test do
+    task full: [:'rubocop:auto_correct', :test]
+    # task(:test) { Rake::Task[:rubycritic].invoke }
+  end
 end

@@ -1,0 +1,36 @@
+css:
+  .text-center > ul {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+  }
+
+  .text-center li {
+    text-align: left;
+  }
+
+h3 Grupper
+.text-center
+  ul style="width:auto;display:inline-block"
+    - @groups.each do |g|
+      li
+        => link_to g.name, g
+        span style="white-space:nowrap" (#{g.from_age}-#{g.to_age} år)
+        - if admin?
+          ul
+            - g.instructors.each do |m|
+              li = m.name
+                - roles = g.group_schedules.map { |gs| gs.group_instructors.active.select { |gi| gi.member_id == m.id }.map(&:role) }.flatten.uniq
+                - if roles != [GroupInstructor::Role::INSTRUCTOR]
+                  | (#{roles.join(', ')})
+                - unless g.group_schedules.all? { |gs2| gs2.group_instructors.active.map(&:member).include?(m) }
+                  - g.group_schedules.each do |gs|
+                    - if gs.group_instructors.active.map(&:member).include?(m)
+                      | (#{gs.weekday_name})
+
+            - g.group_schedules.each do |gs|
+              - if gs.group_instructors.active.empty? && g.current_semester
+                li
+                  = link_to "#{gs.weekday_name} mangler!", new_group_instructor_path( \
+                      group_instructor: {group_schedule_id: gs.id, \
+                      group_semester_id: g.current_semester.id})

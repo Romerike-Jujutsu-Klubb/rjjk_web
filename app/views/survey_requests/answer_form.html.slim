@@ -40,17 +40,17 @@ p = @survey_request.survey.header
                     value: other_value, class: 'form-control expanding', \
                     placeholder: 'Skriv beskrivelse her.', rows: 3
 
-    br
+    .clearfix style="margin-bottom: 2em"
 
   = f.submit 'Send inn svar', class: 'btn btn-primary'
 
 javascript:
-  function checkOtherOption(e, tf) {
-    other_selected = $(e).val() && $(e).val().indexOf('annet') > -1;
-    tf.prop('disabled', !other_selected);
-    if (other_selected) {
-      tf.show().focus()
-    } else {
-      tf.hide()
+    function checkOtherOption(e, tf) {
+        var other_selected = ($(e).val() && ($(e).val().indexOf('annet') > -1));
+        tf.prop('disabled', !other_selected);
+        if (other_selected) {
+            tf.show().focus()
+        } else {
+            tf.hide()
+        }
     }
-  }

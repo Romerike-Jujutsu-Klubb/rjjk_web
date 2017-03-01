@@ -1,26 +1,26 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class SearchControllerTest < ActionController::TestCase
+class SearchControllerTest < ActionDispatch::IntegrationTest
   test 'user query' do
-    get :index, q: 'Uwe'
+    get '/search', params:{q: 'Uwe'}
     assert_response :success
   end
 
   test 'empty user query' do
-    get :index
+    get '/search'
     assert_response :success
   end
 
   test 'admin query' do
     login :admin
-    get :index, q: 'Uwe'
+    get '/search', params:{q: 'Uwe'}
     assert_response :success
   end
 
   test 'empty admin query' do
     login :admin
-    get :index
+    get '/search'
     assert_response :success
   end
 end

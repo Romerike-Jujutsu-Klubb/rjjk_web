@@ -19,7 +19,7 @@
 
   = f.text_field :subject, size: 64
   = f.text_area :body, class: :tinymce
-  .btn-toolbar.pull-right
+  .btn-toolbar.float-right
     = back_or_link_to 'Tilbake', event_messages_path, class: 'btn btn-link'
     = link_to 'Vis', @event_message if @event_message.id
     = f.primary

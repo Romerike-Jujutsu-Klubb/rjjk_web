@@ -66,7 +66,7 @@ module UserSystem
     flash.alert = message
     flash.notice = message
     store_detour(params)
-    redirect_to controller: :user, action: :login, id: nil
+    redirect_to controller: :login, action: :login, id: nil
   end
 
   def login_from_cookie
@@ -128,7 +128,7 @@ module UserSystem
   end
 
   def current_user=(user)
-    session[:user_id] = (user && user.id) if defined?(session)
+    session[:user_id] = (user&.id) if defined?(session)
     Thread.current[:user] = user
   end
 end

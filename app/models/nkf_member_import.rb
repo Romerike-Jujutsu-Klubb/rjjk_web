@@ -22,10 +22,7 @@ class NkfMemberImport
         NkfMember.update_group_prices
       end
     rescue => e
-      logger.error 'Execption sending NKF import email.'
-      logger.error e.message
-      logger.error e.backtrace.join("\n")
-      ExceptionNotifier.notify_exception(e)
+      handle_exception('Execption sending NKF import email.', e)
     end
 
     begin
@@ -35,21 +32,23 @@ class NkfMemberImport
         logger.info 'Sent update_members mail.'
       end
     rescue => e
-      logger.error 'Execption sending update_members email.'
-      logger.error e.message
-      logger.error e.backtrace.join("\n")
-      ExceptionNotifier.notify_exception(e)
+      handle_exception('Execption sending update_members email.', e)
     end
 
     begin
       a = NkfAppointmentsScraper.import_appointments
       NkfReplicationMailer.update_appointments(a).deliver_now if a.any?
     rescue => e
-      logger.error 'Execption sending update_appointments email.'
-      logger.error e.message
-      logger.error e.backtrace.join("\n")
-      ExceptionNotifier.notify_exception(e)
+      handle_exception('Execption sending update_appointments email.', e)
     end
+  end
+
+  def self.handle_exception(cause, e)
+    logger.error cause
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    ExceptionNotifier.notify_exception(e)
+    raise if Rails.env.test?
   end
 
   def size
@@ -232,7 +231,7 @@ class NkfMemberImport
         next if %w(aktivitetsomrade_id aktivitetsomrade_navn alder avtalegiro
                  beltefarge dan_graderingsserifikat forbundskontingent)
               .include? column
-        attributes[column] = row[i] && row[i].strip
+        attributes[column] = row[i]&.strip
       end
       record = NkfMember.find_by(medlemsnummer: row[0]) || NkfMember.new
       if record.member_id.nil?

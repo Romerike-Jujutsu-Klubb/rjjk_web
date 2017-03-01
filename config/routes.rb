@@ -1,107 +1,178 @@
 # frozen_string_literal: true
 Rails.application.routes.draw do
-  resources :raw_incoming_emails # FIXME(uwe): Move down?
-
-  match 'attendances/:action/:year/:week/:group_schedule_id/:status(/:member_id)',
-      controller: :attendances, via: [:get, :post]
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
   get 'info/versjon'
   get 'members/search'
-  get 'members/:action/:id(/:percentage/:step/:interval).:format' => 'members'
   get 'mitt/oppmote' => 'attendances#plan', as: :attendance_plan
-  get 'attendances/plan' # mmust be after mitt/oppmote
+  get 'attendances/plan' # must be after "mitt/oppmote"
   post 'attendances/announce(/:year/:week/:group_schedule_id)/:status(/:member_id)' =>
-          'attendances#announce'
+      'attendances#announce'
+  get 'login/change_password'
+  post 'login/change_password'
+  get 'login/forgot_password'
+  post 'login/forgot_password'
+  match 'login' => 'login#login', as: :login, via: [:get, :post]
+  get 'login/logout'
+  post 'login/signup'
+  get 'login/welcome'
   get 'news/list'
   post 'news/expire' => 'news#expire'
   get 'pensum' => 'ranks#pensum'
   get 'pensum/pdf' => 'ranks#pdf'
-  get 'search/index'
+  get 'search' => 'search#index'
   get 'svar/:id', controller: :survey_requests, action: :answer_form
   patch 'svar/:id', controller: :survey_requests, action: :save_answers
   post 'svar/:id', controller: :survey_requests, action: :save_answers
   get 'takk/:id', controller: :survey_requests, action: :thanks
-  get 'user/change_password'
-  post 'user/change_password'
-  get 'user/forgot_password'
-  post 'user/forgot_password'
-  match 'user/login' => 'user#login', as: :login, via: [:get, :post]
-  get 'user/logout'
-  post 'user/signup'
-  get 'user/welcome'
 
-  get ':controller/active_contracts', action: :active_contracts
-  get ':controller/calendar', action: :calendar
-  post ':controller/create', action: :create
-  get ':controller/email_list', action: :email_list
-  get ':controller/excel_export', action: :excel_export
-  match ':controller/form', action: :form, via: [:get, :post]
-  match ':controller/form/:id', action: :form, via: [:get, :post]
-  match ':controller/form_index', action: :form_index, via: [:get, :post]
-  get ':controller/gallery(/:id)', action: :gallery
-  get ':controller/history_graph/:id.:format', action: :history_graph
-  get ':controller/list_active', action: :list_active
-  get ':controller/list_inactive', action: :list_active
-  get ':controller/mine(/:id)', action: :mine
-  get ':controller/month_per_year_chart/:month/:size.:format', action: :month_per_year_chart
-  get ':controller/report(/:year/:month)', action: :report
-  get ':controller/telephone_list', action: :telephone_list
-  get ':controller/yaml', action: :yaml
-
-  resources :application_steps
+  resources :application_steps do
+    member do
+      get :image
+    end
+  end
   resources :appointments
   resources :annual_meetings
-  resources :attendances
+  resources :attendances do
+    collection do
+      get :form
+      get :form_index
+      get :history_graph
+      get :month_chart
+      get :month_per_year_chart
+      get :report
+      match 'review/:year/:week/:group_schedule_id/:status', action: :review, via: [:get, :post]
+      get :since_graduation
+    end
+  end
   resources :basic_technique_links
   resources :basic_techniques
-  resources :birthday_celebrations
-  resources :board_meetings
+  resources :birthday_celebrations do
+    member { get :certificates }
+  end
+  resources :board_meetings do
+    member do
+      get :minutes
+    end
+  end
   resources :censors do
     get :confirm, on: :member
     get :decline, on: :member
   end
-  resources :cms_members
+  resources :cms_members do
+    collection do
+      get :active_contracts
+    end
+  end
   resources :correspondences
   resources :elections
-  resources :embus
+  resources :embus do
+    member do
+      get :print
+    end
+  end
   resources :embu_images
   resources :event_invitee_messages
   resources :event_invitees
   resources :event_messages
-  resources :events
-  # resources :events do
-  #  get :calendar, :on => :collection
-  # end
-  resources :graduates
+  resources :events do
+    collection do
+      get :attendance_form
+    end
+    get :calendar, on: :collection
+    get :calendar, on: :member
+    get :invite, on: :member
+  end
+  resources :graduates do
+    member do
+      post :confirm
+      get :decline
+    end
+  end
   resources :graduations do
-    patch :add_group, on: :member
-    post :approve, on: :member
-    post :lock, on: :member
+    member do
+      patch :add_group
+      post :approve
+      get :censor_form
+      get :censor_form_pdf
+      get :certificates
+      post :lock
+    end
   end
   resources :group_instructors
   resources :group_schedules
   resources :group_semesters
-  resources :groups
-  # FIXME(uwe):  Bad links!  Remove January 2015
-  get '/info/groups/:id', to: redirect { |path_params, _req| "/groups/#{path_params[:id]}" }
-  # EMXIF
+  resources :groups do
+    collection do
+      get :yaml
+    end
+  end
   resources :images do
-    post :upload, on: :collection
+    collection do
+      get :gallery
+      get :mine
+      post :upload
+      get 'inline/:id(/:width).:format', action: :inline
+      get 'show/:id(/:width).:format', action: :show
+    end
   end
   resources :information_pages, controller: :info, path: :info
   resources :instructor_meetings
   resources :martial_arts
-  resources :members
+  resources :members do
+    collection do
+      get :age_chart
+      get :cms_comparison
+      get :email_list
+      get :excel_export
+      get :grade_history_graph
+      get 'grade_history_graph/:id.:format', action: :grade_history_graph
+      get :grade_history_graph_percentage
+      get :history_graph
+      get :income
+      get :list_active
+      get :list_inactive
+      get :nkf_report
+      get :report
+      get :telephone_list
+      get :trial_missing_contract
+      get :yaml
+    end
+    member do
+      get :image
+      get :missing_contract
+      get :since_graduation
+      get :thumbnail
+    end
+  end
   resources :news_items, controller: :news, path: :news
-  resources :nkf_members
+  resources :nkf_members do
+    collection do
+      get :comparison
+      post :create_member
+      get :import
+      post :import
+    end
+    member do
+      post :update_member
+    end
+  end
   resources :nkf_member_trials
   resources :page_aliases
   resources :practices
   resources :public_records
-  resources :ranks
+  resources :ranks do
+    member do
+      get :card
+    end
+  end
+  resources :raw_incoming_emails
   resources :roles
   resources :semesters
-  resources :signatures
+  resources :signatures do
+    member do
+      get :image
+    end
+  end
   resources :survey_answer_translations
   resources :survey_answers
   resources :survey_questions
@@ -110,19 +181,14 @@ Rails.application.routes.draw do
   resources :technique_applications
   resources :trial_attendances
   resources :user_messages
-  resources :users, controller: :user, path: :user
+  resources :users do
+    member do
+      post :like
+    end
+  end
   resources :wazas
 
   root to: 'welcome#index'
-  get ':controller/service.wsdl', action: :wsdl
-  get 'documents/*path_info', controller: :documents, action: :webdav
 
-  get ':controller/:action/:year/:month/:size.:format'
-  get ':controller/:action/:id/:width.:format'
-  get ':controller/:action/:id/:width'
-  get ':controller/:action/:id.:format'
-  get ':controller/:action.:format'
-  get ':controller/:action/:id'
-  get ':controller/:action'
-  get ':controller', action: :index
+  get 'documents/*path_info', controller: :documents, action: :webdav
 end

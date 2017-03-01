@@ -78,6 +78,6 @@ class TechniqueApplicationsController < ApplicationController
   private
 
   def load_form_data
-    @ranks = Rank.all
+    @ranks = Rank.all.to_a
   end
 end

@@ -31,7 +31,7 @@ class MembersController < ApplicationController
           'active' => m.active?
       )
     end
-    render text: records.to_yaml, content_type: 'text/yaml', layout: false
+    render body: records.to_yaml, content_type: 'text/yaml', layout: false
   end
 
   def list_active

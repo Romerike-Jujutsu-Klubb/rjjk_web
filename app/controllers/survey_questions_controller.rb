@@ -15,7 +15,7 @@ class SurveyQuestionsController < ApplicationController
   end
 
   def load_form_data
-    @surveys = Survey.order(:position).all
+    @surveys = Survey.order(:position).to_a
   end
 
   def edit

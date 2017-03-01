@@ -1,4 +1,4 @@
-<%= form_for(@board_meeting, html: {class: 'form-inline col-xs-7 pull-right',
+<%= form_for(@board_meeting, html: {class: 'form-inline col-7 float-right',
         style: 'margin-top: 4px', role: :form}) do |f| %>
     <div class="input-group">
       <%= f.text_field :start_at, class: 'datetime form-control', placeholder: 'Velg tidspunkt' %>
@@ -38,7 +38,7 @@
               <% end %>
             </td>
             <td><%= link_to '', board_meeting, method: :delete,
-                    class: 'glyphicon glyphicon-trash',
+                    class: 'fa fa-trash',
                     data: {confirm: 'Are you sure?'} %></td>
           </tr>
       <% end %>

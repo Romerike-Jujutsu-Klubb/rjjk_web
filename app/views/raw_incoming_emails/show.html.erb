@@ -5,7 +5,7 @@
   <%= link_to 'Slett', raw_incoming_email_path(@raw_incoming_email),
           class: 'btn btn-danger', method: :delete,
           data: {confirm: 'Er du sikker på at du vil slette denne e-posten?'} %>
-  <%= link_to 'Liste', raw_incoming_emails_path, class: 'btn btn-default' %>
+  <%= link_to 'Liste', raw_incoming_emails_path, class: 'btn btn-secondary' %>
 </div>
 
 <%= render 'part', part: @raw_incoming_email.mail %>

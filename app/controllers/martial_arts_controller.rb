@@ -27,7 +27,7 @@ class MartialArtsController < ApplicationController
     @martial_art = MartialArt.new(params[:martial_art])
     if @martial_art.save
       flash[:notice] = 'MartialArt was successfully created.'
-      redirect_to action: 'list'
+      redirect_to action: :index
     else
       render action: 'new'
     end
@@ -49,6 +49,6 @@ class MartialArtsController < ApplicationController
 
   def destroy
     MartialArt.find(params[:id]).destroy
-    redirect_to action: 'list'
+    redirect_to action: :index
   end
 end

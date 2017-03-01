@@ -17,7 +17,7 @@
     .col-sm-4
       = f.select :paid_belt, [['Ja', true], ['Nei', false]], prompt: true
 
-  .btn-toolbar.pull-right
+  .btn-toolbar.float-right
     /= link_to 'Show', :action => 'show', :id => @graduate
     = link_to 'Tilbake', {action: :index}, class: 'btn btn-link'
     = f.primary 'Lagre'

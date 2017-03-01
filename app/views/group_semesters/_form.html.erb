@@ -54,7 +54,7 @@
 
     <div class="actions">
       <%= f.submit 'Lagre', class: 'btn btn-primary' %>
-      <%= link_to('Vis', @group_semester, class: 'btn btn-default') unless @group_semester.new_record? %>
-      <%= back_or_link_to 'Tilbake', group_semesters_path, class: 'btn btn-default' %>
+      <%= link_to('Vis', @group_semester, class: 'btn btn-secondary') unless @group_semester.new_record? %>
+      <%= back_or_link_to 'Tilbake', group_semesters_path, class: 'btn btn-secondary' %>
     </div>
 <% end %>

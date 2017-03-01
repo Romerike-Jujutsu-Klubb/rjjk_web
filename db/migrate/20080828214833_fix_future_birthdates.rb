@@ -7,8 +7,7 @@ class FixFutureBirthdates < ActiveRecord::Migration
     end
   end
 
-  def self.down
-  end
+  def self.down; end
 
   class Member < ActiveRecord::Base; end
 end

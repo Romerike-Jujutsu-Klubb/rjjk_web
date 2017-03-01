@@ -20,10 +20,10 @@ class SignaturesControllerTest < ActionController::TestCase
 
   test 'should create signature' do
     assert_difference('Signature.count') do
-      post :create, signature: {
+      post :create, params:{signature: {
           content_type: @signature.content_type, image: @signature.image,
           member_id: @signature.member_id, name: @signature.name
-      }
+      }}
       assert_no_errors :signature
     end
 
@@ -31,26 +31,26 @@ class SignaturesControllerTest < ActionController::TestCase
   end
 
   test 'should show signature' do
-    get :show, id: @signature
+    get :show, params:{id: @signature}
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @signature
+    get :edit, params:{id: @signature}
     assert_response :success
   end
 
   test 'should update signature' do
-    put :update, id: @signature, signature: {
+    put :update, params:{id: @signature, signature: {
         content_type: @signature.content_type, image: @signature.image,
         member_id: @signature.member_id, name: @signature.name
-    }
+    }}
     assert_redirected_to signature_path(assigns(:signature))
   end
 
   test 'should destroy signature' do
     assert_difference('Signature.count', -1) do
-      delete :destroy, id: @signature
+      delete :destroy, params:{id: @signature}
     end
 
     assert_redirected_to signatures_path

@@ -5,10 +5,10 @@
       .modal-header
         button.close type="button" data-dismiss="modal" aria-label="Close"
           span aria-hidden="true" &times;
-        h4.modal-title id="#{id}ModalLabel" &nbsp;
+        h5.modal-title id="#{id}ModalLabel" &nbsp;
       .modal-body = yield
       .modal-footer
-        button.btn.btn-primary type="button" data-dismiss="modal" Close
+        button.btn.btn-primary type="button" data-dismiss="modal" Lukk
 javascript:
     $('##{id}').on('show.bs.modal', function (event) {
         var link = $(event.relatedTarget); // Element that triggered the modal

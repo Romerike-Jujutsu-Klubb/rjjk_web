@@ -15,11 +15,16 @@ class Image < ActiveRecord::Base
       class_name: 'User', through: :user_images, source: :user
 
   before_create do
-    self.user_id ||= current_user.try(:id)
+    self.user_id ||= current_user&.id
   end
 
   validates :name, presence: true
-  validates :content_data, uniqueness: { on: :create }
+  validate do
+    if attribute_present?(:content_data) && content_data.present? &&
+          self.class.where(content_data: content_data).where.not(id: id).exists?
+      errors.add :content_data, 'An image with the given content already exists'
+    end
+  end
 
   after_create do |_|
     next unless @content_file
@@ -52,11 +57,10 @@ class Image < ActiveRecord::Base
         FROM images WHERE id = #{@image.id}
       SQL
       (1..image_length).step(CHUNK_SIZE) do |i|
-        data = Image.connection.execute(<<~SQL)[0]['chunk']
-          SELECT SUBSTRING(
+        data = Image.unscoped.select(<<~SQL).find(@image.id).chunk
+          SUBSTRING(
             content_data FROM #{i} FOR #{[image_length - i + 1, CHUNK_SIZE].min}
-          ) as chunk FROM images
-          WHERE id = #{@image.id}
+          ) as chunk
         SQL
         yield(data) if data
       end

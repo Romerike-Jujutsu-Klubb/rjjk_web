@@ -17,7 +17,7 @@ class CensorsControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, id: @first_id
+    get :show, params:{id: @first_id}
     assert_no_errors :censor
     assert_response :success
     assert_template 'show'
@@ -35,7 +35,7 @@ class CensorsControllerTest < ActionController::TestCase
   def test_create
     num_censors = Censor.count
 
-    post :create, censor: { graduation_id: graduations(:tiger).id, member_id: members(:uwe).id }
+    post :create, params:{censor: { graduation_id: graduations(:tiger).id, member_id: members(:uwe).id }}
     assert_no_errors :censor
     assert_response :redirect
     assert_redirected_to action: :index
@@ -44,14 +44,14 @@ class CensorsControllerTest < ActionController::TestCase
   end
 
   def test_edit
-    get :edit, id: @first_id
+    get :edit, params:{id: @first_id}
     assert_no_errors :censor
     assert_response :success
     assert_template 'edit'
   end
 
   def test_update
-    post :update, id: @first_id, censor: {}
+    post :update, params:{id: @first_id, censor: {member_id: members(:lars).id}}
     assert_no_errors :censor
     assert_response :redirect
     assert_redirected_to action: 'show', id: @first_id
@@ -62,7 +62,7 @@ class CensorsControllerTest < ActionController::TestCase
       Censor.find(@first_id)
     end
 
-    post :destroy, id: @first_id
+    post :destroy, params:{id: @first_id}
     assert_response :redirect
     assert_redirected_to action: 'index'
 

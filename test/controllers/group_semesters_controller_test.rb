@@ -21,10 +21,10 @@ class GroupSemestersControllerTest < ActionController::TestCase
 
   test 'should create group_semester' do
     assert_difference('GroupSemester.count') do
-      post :create, group_semester: {
+      post :create, params:{group_semester: {
           first_session: '2013-01-03', group_id: @group_semester.group_id,
           last_session: '2013-06-20', semester_id: semesters(:previous).id
-      }
+      }}
       assert_no_errors :group_semester
     end
 
@@ -32,24 +32,24 @@ class GroupSemestersControllerTest < ActionController::TestCase
   end
 
   test 'should show group_semester' do
-    get :show, id: @group_semester
+    get :show, params:{id: @group_semester}
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @group_semester
+    get :edit, params:{id: @group_semester}
     assert_response :success
     assert_select 'textarea[name="group_semester[summary]"]'
   end
 
   test 'should update group_semester' do
-    put :update, id: @group_semester, group_semester: {
+    put :update, params:{id: @group_semester, group_semester: {
         first_session: @group_semester.first_session,
             group_id: @group_semester.group_id,
             last_session: @group_semester.last_session,
             semester_id: @group_semester.semester_id,
             summary: 'Practice, practice!',
-    }
+    }}
     assert_no_errors :group_semester
     assert_redirected_to group_semester_path(assigns(:group_semester))
     @group_semester.reload
@@ -58,7 +58,7 @@ class GroupSemestersControllerTest < ActionController::TestCase
 
   test 'should destroy group_semester' do
     assert_difference('GroupSemester.count', -1) do
-      delete :destroy, id: @group_semester
+      delete :destroy, params:{id: @group_semester}
     end
 
     assert_redirected_to group_semesters_path

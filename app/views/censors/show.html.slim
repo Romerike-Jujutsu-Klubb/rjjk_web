@@ -21,15 +21,15 @@ p
     b< #{@censor.confirmed_at.to_date}.
 - elsif @censor.requested_at
   .row
-    .col-xs-3 Forespurt:
-    .col-xs-3 =< @censor.requested_at.to_date
+    .col-3 Forespurt:
+    .col-3 =< @censor.requested_at.to_date
     - if @censor.confirmed_at
-      .col-xs-3
+      .col-3
         = @censor.declined ? 'Avslått' : 'Brekreftet'
         | :
-      .col-xs-3 class=(@censor.declined ? 'text-danger' : 'text-success') =< @censor.confirmed_at.to_date
+      .col-3 class=(@censor.declined ? 'text-danger' : 'text-success') =< @censor.confirmed_at.to_date
     - else
-      .col-xs-6 Ikke bekreftet enda.
+      .col-6 Ikke bekreftet enda.
 
   - if @censor.lock_reminded_at
     p
@@ -47,6 +47,6 @@ p
   br
 
 
-.btn-toolbar.pull-right
-  = back_or_link_to 'Tilbake', nil, class: 'btn btn-default'
+.btn-toolbar.float-right
+  = back_or_link_to 'Tilbake', nil, class: 'btn btn-secondary'
   = link_to 'Endre', edit_graduation_path(@censor.graduation, anchor: :censors), class: 'btn btn-primary'

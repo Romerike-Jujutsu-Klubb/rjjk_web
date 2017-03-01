@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'shellwords'
 require 'mail'
@@ -16,7 +17,7 @@ end
 
 def learn(escaped_filename, type)
   check_if_spam(escaped_filename)
-  system(%{sa-learn -u capistrano --#{type} "#{escaped_filename}"}) || raise('learning spam failed')
+  system(%(sa-learn -u capistrano --#{type} "#{escaped_filename}")) || raise('learning spam failed')
   check_if_spam(escaped_filename)
   puts
 end
@@ -36,7 +37,7 @@ def text_from_part(m)
     pretty_body =
         if m.content_type =~ %r{text/html}
           doc = Nokogiri::HTML(body)
-          doc.css('script, link').each { |node| node.remove }
+          doc.css('script, link').each(&:remove)
           doc.css('body').text.gsub(/^\s+/, '').squeeze(" \n\t")
         elsif m.content_type =~ /text/
           body
@@ -46,7 +47,6 @@ def text_from_part(m)
 end
 
 sorted.each.with_index do |f, i|
-
   if f.valid_encoding?
     escaped_filename = Shellwords.escape(f)
     loop do
@@ -80,4 +80,4 @@ sorted.each.with_index do |f, i|
   File.delete f
 end
 
-system(%{sa-learn --sync}) || raise('syncing learned spam failed')
+system(%(sa-learn --sync)) || raise('syncing learned spam failed')

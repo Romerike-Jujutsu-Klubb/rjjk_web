@@ -46,6 +46,6 @@ p = @graduate.rank.description
       | #{extended ? 'Kandidaten' : 'Du'} har ikke bestått.
 
 - if current_user.admin?
-  .btn-toolbar.pull-right
+  .btn-toolbar.float-right
     = link_to 'Til graderingslisten', graduations_path, class: 'btn btn-link'
     = link_to 'Rediger', edit_graduation_path(@graduate.graduation), class: 'btn btn-primary'

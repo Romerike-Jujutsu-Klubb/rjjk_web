@@ -1,10 +1,10 @@
 p#notice = notice
 
-.pull-right
+.float-right
   = @user_message.sent_at
 .panel.panel-default
   .panel-heading
-    .pull-right
+    .float-right
       strong From:
       =< [*@user_message.from].join(', ')
     =< @user_message.subject

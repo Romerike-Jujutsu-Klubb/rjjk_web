@@ -32,7 +32,7 @@
 
 
 <%= link_to 'Rediger', edit_group_semester_path(@group_semester), class: 'btn btn-primary' %>
-<%= back_or_link_to 'Tilbake', group_semesters_path, class: 'btn btn-default' %>
+<%= back_or_link_to 'Tilbake', group_semesters_path, class: 'btn btn-secondary' %>
 
 <h2>Treninger</h2>
 
@@ -52,8 +52,8 @@
               <%= form_for practice do |f| %>
                   <%= f.text_area :message, rows: 5, style: 'width: 100%' %>
                   <br/>
-                  <%= f.submit class: 'btn btn-default' %>
-                  <%= link_to 'Vis', practice, class: 'btn btn-default' %>
+                  <%= f.submit class: 'btn btn-secondary' %>
+                  <%= link_to 'Vis', practice, class: 'btn btn-secondary' %>
               <% end %>
             </td>
             <td><%= practice.status %></td>
@@ -70,8 +70,8 @@
               <%= form_for practice do |f| %>
                   <%= f.text_area :message, rows: 5, style: 'width: 100%' %>
                   <br/>
-                  <%= f.submit class: 'btn btn-default' %>
-                  <%= link_to 'Vis', practice, class: 'btn btn-default' %>
+                  <%= f.submit class: 'btn btn-secondary' %>
+                  <%= link_to 'Vis', practice, class: 'btn btn-secondary' %>
               <% end %>
             </td>
             <td><%= practice.status %></td>

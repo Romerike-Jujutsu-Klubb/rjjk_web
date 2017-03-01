@@ -54,6 +54,6 @@
     </div>
 
     <%= submit_tag 'Lagre', class: 'btn btn-primary' %>
-    <%= link_to 'Vis', {action: 'show', id: @rank}, class: 'btn btn-default' %>
-    <%= back_or_link_to 'Tilbake', {action: 'index'}, class: 'btn btn-default' %>
+    <%= link_to('Vis', {action: 'show', id: @rank}, class: 'btn btn-secondary') unless @rank.new_record? %>
+    <%= back_or_link_to 'Tilbake', {action: 'index'}, class: 'btn btn-secondary' %>
 <% end %>

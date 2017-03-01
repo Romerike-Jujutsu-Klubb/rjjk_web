@@ -20,7 +20,7 @@ class SemesterReminder
           (g.next_semester && g.next_semester.first_session.nil?)
     end
     groups_with_missing_dates.each do |g|
-      recipient = g.current_semester.chief_instructor || Role[:Hovedinstruktør] || Role[:Leder]
+      recipient = g.current_semester.chief_instructor || Role[:'Hovedinstruktør'] || Role[:Leder]
       SemesterMailer.missing_session_dates(recipient, g)
           .store(recipient.user_id, tag: :missing_session_dates)
     end

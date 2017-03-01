@@ -6,7 +6,8 @@
 //= require gmaps4rails/gmaps4rails.base
 //= require gmaps4rails/gmaps4rails.googlemaps
 //= require expanding
-//= require bootstrap-sprockets
+//= require tether
+//= require bootstrap
 //= require moment
 //= require moment/nb
 //= require bootstrap-datetimepicker
@@ -27,6 +28,17 @@ $().ready(function () {
 // http://makandracards.com/makandra/1383-rails-3-make-link_to-remote-true-replace-html-elements-with-jquery
 // link_to 'Do something', path_returning_partial, :remote => true, :"data-replace" => '#some_id'
 $().ready(function () {
+    var iconSet = {
+        time: 'fa fa-clock-o',
+        date: 'fa fa-calendar',
+        up: 'fa fa-chevron-up',
+        down: 'fa fa-chevron-down',
+        previous: 'fa fa-chevron-left',
+        next: 'fa fa-chevron-right',
+        today: 'fa fa-screenshot',
+        clear: 'fa fa-trash',
+        close: 'fa fa-remove'
+    };
     $('[data-remote][data-replace]').data('type', 'html');
     $(document).on('ajax:success', '[data-remote][data-replace]', function (event, data) {
         var $this = $(this);
@@ -40,14 +52,14 @@ $().ready(function () {
         var value = $(this).val();
         if (value) {
             $(this).val('');
-            $(this).datetimepicker({format: format, defaultDate: value});
+            $(this).datetimepicker({format: format, defaultDate: value, icons: iconSet});
         } else {
             var defaultDate = $(this).data('default-date');
             if (defaultDate) {
-                $(this).datetimepicker({format: format, defaultDate: defaultDate});
+                $(this).datetimepicker({format: format, defaultDate: defaultDate, icons: iconSet});
                 $(this).val('');
             } else {
-                $(this).datetimepicker({format: format, useCurrent: false});
+                $(this).datetimepicker({format: format, useCurrent: false, icons: iconSet});
             }
         }
     });
@@ -55,18 +67,18 @@ $().ready(function () {
         var value = $(this).val();
         if (value) {
             $(this).val('');
-            $(this).datetimepicker({format: 'YYYY-MM-DD HH:mm', defaultDate: value});
+            $(this).datetimepicker({format: 'YYYY-MM-DD HH:mm', defaultDate: value, icons: iconSet});
         } else {
             var defaultDate = $(this).data('default-date');
             if (defaultDate) {
-                $(this).datetimepicker({format: 'YYYY-MM-DD HH:mm', defaultDate: defaultDate});
+                $(this).datetimepicker({format: 'YYYY-MM-DD HH:mm', defaultDate: defaultDate, icons: iconSet});
                 $(this).val('');
             } else {
-                $(this).datetimepicker({format: 'YYYY-MM-DD HH:mm', useCurrent: false});
+                $(this).datetimepicker({format: 'YYYY-MM-DD HH:mm', useCurrent: false, icons: iconSet});
             }
         }
     });
-    $('.time,[timeFormat]').datetimepicker({format: 'HH:mm'});
+    $('.time,[timeFormat]').datetimepicker({format: 'HH:mm', icons: iconSet});
 });
 
 // Lazy load marked images

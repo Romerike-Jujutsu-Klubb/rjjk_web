@@ -2,7 +2,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class UserTest < ActionMailer::TestCase
-  self.use_transactional_fixtures = false
+  self.use_transactional_tests = false
 
   def test_authenticate
     assert_equal users(:lars), User.authenticate(users(:lars).login, 'atest')

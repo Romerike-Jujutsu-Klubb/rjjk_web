@@ -2,12 +2,12 @@
     <p>Det var ugyldige tegn i søket.</p>
 <% end %>
 
-<div class="pull-left">
+<div class="float-left">
   <%= render :partial => 'search_form' %>
 </div>
 
 <% if @members and not @members.empty? %>
-    <div class="pull-left" style="margin-left: 1em">Fant <%= (@members.size) %> treff.</div>
+    <div class="float-left" style="margin-left: 1em">Fant <%= (@members.size) %> treff.</div>
 <% end %>
 
 <br clear="all">

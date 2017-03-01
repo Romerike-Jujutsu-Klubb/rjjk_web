@@ -10,11 +10,11 @@ table.table
       td
         = question.title
         .help-block = question.choices
-      td =link_to 'Endre', edit_survey_question_path(question), class: 'btn btn-default'
+      td =link_to 'Endre', edit_survey_question_path(question), class: 'btn btn-secondary'
 
 .btn-toolbar
-  = back_or_link_to 'Tilbake', surveys_path, class: 'btn btn-default'
-  = link_to 'Vis', @survey, class: 'btn btn-default'
+  = back_or_link_to 'Tilbake', surveys_path, class: 'btn btn-secondary'
+  = link_to 'Vis', @survey, class: 'btn btn-secondary'
   = link_to 'Legg til spørsmål', \
         new_survey_question_path(survey_question: {survey_id: @survey.id}), \
         class: 'btn btn-primary'

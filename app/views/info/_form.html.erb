@@ -32,8 +32,8 @@
           <%= f.text_area :body, :class => :tinymce %>
         </p>
 
-        <div class="pull-right">
-          <%= back_or_link_to 'Tilbake', :action => 'list' %>
+        <div class="float-right">
+          <%= back_or_link_to 'Tilbake', action: :index %>
           <%= link_to 'Vis', :action => 'show', :id => @information_page unless @information_page.new_record? %>
           <%= f.submit 'Lagre', id: :save, class: 'btn btn-primary' %>
         </div>

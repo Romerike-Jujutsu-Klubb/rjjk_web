@@ -24,7 +24,7 @@ class EmbusControllerTest < ActionController::TestCase
 
   test 'should create embu' do
     assert_difference('Embu.count') do
-      post :create, embu: @embu.attributes.update(id: nil)
+      post :create, params:{embu: @embu.attributes.except('id')}
       assert_no_errors :embu
       login :lars
     end
@@ -33,23 +33,23 @@ class EmbusControllerTest < ActionController::TestCase
   end
 
   test 'should show embu' do
-    get :show, id: @embu
+    get :show, params:{id: @embu}
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @embu
+    get :edit, params:{id: @embu}
     assert_response :success
   end
 
   test 'should update embu' do
-    put :update, id: @embu, embu: @embu.attributes
+    put :update, params:{id: @embu, embu: @embu.attributes}
     assert_redirected_to edit_embu_path(assigns(:embu), notice: 'Embu was successfully updated.')
   end
 
   test 'should destroy embu' do
     assert_difference('Embu.count', -1) do
-      delete :destroy, id: @embu
+      delete :destroy, params:{id: @embu}
       login :lars
     end
 

@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception unless Rails.env.beta?
 
   layout DEFAULT_LAYOUT
-  helper :user
 
   before_action :reject_baidu_bot
   before_action :store_current_user_in_thread
@@ -33,7 +32,7 @@ class ApplicationController < ActionController::Base
   private
 
   def load_layout_model
-    return if request.xhr? || _layout != DEFAULT_LAYOUT
+    return if request.xhr? || _layout([]) != DEFAULT_LAYOUT
     unless @information_pages
       @information_pages = InformationPage.roots
       unless admin?

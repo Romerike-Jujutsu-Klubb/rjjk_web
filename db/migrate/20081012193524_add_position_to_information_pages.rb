@@ -4,6 +4,5 @@ class AddPositionToInformationPages < ActiveRecord::Migration
     add_column :information_pages, :position, :integer
   end
 
-  def self.down
-  end
+  def self.down; end
 end

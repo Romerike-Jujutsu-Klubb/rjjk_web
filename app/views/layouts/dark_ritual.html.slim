@@ -26,20 +26,20 @@ html lang="nb"
       })();
 
   body
-    .container
+    .container-fluid
       .row
-        .main_left.col-xs-12 class="col-md-#{@content_width ? 12 : 9} #{'stretch' unless @content_width}"
+        .main_left.col-12 class="col-lg-#{@content_width ? 12 : 9} #{'stretch' unless @content_width}"
           .row
-            .header.col-xs-12 = render 'layouts/header'
+            .header.col-12 = render 'layouts/header'
           .row
-            .main.col-xs-12.stretch class="col-md-#{@content_width ? 10 : 9} col-md-push-#{@content_width ? 2 : 3}"
+            .main.col-12.stretch class="col-lg-#{@content_width ? 10 : 9} push-lg-#{@content_width ? 2 : 3}"
               .padded = yield
-            .subnav.col-xs-12.stretch class="col-md-#{@content_width ? 2 : 3} col-md-pull-#{@content_width ? 10 : 9}" = render 'layouts/navigation'
+            .subnav.col-12.stretch class="col-lg-#{@content_width ? 2 : 3} pull-lg-#{@content_width ? 10 : 9}" = render 'layouts/navigation'
 
         - unless @content_width
-          .main_right.col-md-3.col-xs-12.stretch = render 'layouts/right_column'
+          .main_right.col-lg-3.col-12.stretch = render 'layouts/right_column'
 
       .footer.row
-        .col-md-4.col-xs-12.left &copy; 2008-2017 <a href="http://jujutsu.no/">Romerike Jujutsu Klubb</a>.
-        .col-md-4.col-xs-12.center Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> &amp; <a href="http://validator.w3.org/check?uri=referer">HTML</a>
-        .col-md-4.col-xs-12.right Template design by <a href="http://templates.arcsin.se">Arcsin</a>
+        .col-lg-4.col-12.left &copy; 2008-2017 <a href="http://jujutsu.no/">Romerike Jujutsu Klubb</a>.
+        .col-lg-4.col-12.center Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> &amp; <a href="http://validator.w3.org/check?uri=referer">HTML</a>
+        .col-lg-4.col-12.right Template design by <a href="http://templates.arcsin.se">Arcsin</a>

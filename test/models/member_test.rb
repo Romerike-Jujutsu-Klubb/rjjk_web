@@ -18,7 +18,7 @@ class MemberTest < ActiveSupport::TestCase
 
   def test_update_image
     VCR.use_cassette 'GoogleMaps Lars' do
-      members(:lars).update_attributes image_file: Image.new
+      members(:lars).update! image_file: Image.new
     end
   end
 

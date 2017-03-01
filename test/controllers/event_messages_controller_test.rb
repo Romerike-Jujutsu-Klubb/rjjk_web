@@ -20,42 +20,42 @@ class EventMessagesControllerTest < ActionController::TestCase
 
   test 'should create event_message' do
     assert_difference('EventMessage.count') do
-      post :create, event_message: {
+      post :create, params:{event_message: {
           body: @event_message.body,
           event_id: @event_message.event_id,
           message_type: @event_message.message_type,
           ready_at: @event_message.ready_at,
           subject: @event_message.subject,
-      }
+      }}
     end
 
     assert_redirected_to event_message_path(assigns(:event_message))
   end
 
   test 'should show event_message' do
-    get :show, id: @event_message
+    get :show, params:{id: @event_message}
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @event_message
+    get :edit, params:{id: @event_message}
     assert_response :success
   end
 
   test 'should update event_message' do
-    put :update, id: @event_message, event_message: {
+    put :update, params:{id: @event_message, event_message: {
         body: @event_message.body,
         event_id: @event_message.event_id,
         message_type: @event_message.message_type,
         ready_at: @event_message.ready_at,
         subject: @event_message.subject,
-    }
+    }}
     assert_redirected_to event_message_path(assigns(:event_message))
   end
 
   test 'should destroy event_message' do
     assert_difference('EventMessage.count', -1) do
-      delete :destroy, id: @event_message
+      delete :destroy, params:{id: @event_message}
     end
 
     assert_redirected_to event_messages_path

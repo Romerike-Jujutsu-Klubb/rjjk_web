@@ -19,38 +19,38 @@ class PublicRecordsControllerTest < ActionController::TestCase
 
   test 'should create public_record' do
     assert_difference('PublicRecord.count') do
-      post :create, public_record: {
+      post :create, params:{public_record: {
           board_members: @public_record.board_members,
           chairman: @public_record.chairman, contact: @public_record.contact,
           deputies: @public_record.deputies
-      }
+      }}
     end
 
     assert_redirected_to public_record_path(assigns(:public_record))
   end
 
   test 'should show public_record' do
-    get :show, id: @public_record
+    get :show, params:{id: @public_record}
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @public_record
+    get :edit, params:{id: @public_record}
     assert_response :success
   end
 
   test 'should update public_record' do
-    put :update, id: @public_record, public_record: {
+    put :update, params:{id: @public_record, public_record: {
         board_members: @public_record.board_members,
         chairman: @public_record.chairman, contact: @public_record.contact,
         deputies: @public_record.deputies
-    }
+    }}
     assert_redirected_to public_record_path(assigns(:public_record))
   end
 
   test 'should destroy public_record' do
     assert_difference('PublicRecord.count', -1) do
-      delete :destroy, id: @public_record
+      delete :destroy, params:{id: @public_record}
     end
 
     assert_redirected_to public_records_path

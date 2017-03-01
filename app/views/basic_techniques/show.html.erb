@@ -19,4 +19,4 @@
 
 <br/>
 <%= link_to('Endre', edit_basic_technique_path(@basic_technique), class: 'btn btn-primary') if current_user.technical_committy? %>
-<%= back_or_link_to 'Tilbake', @basic_technique.rank, class: 'btn btn-default' %>
+<%= back_or_link_to 'Tilbake', @basic_technique.rank, class: 'btn btn-secondary' %>

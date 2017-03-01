@@ -13,14 +13,14 @@ class Attendance < ActiveRecord::Base
 
   STATES = [
       [Status::WILL_ATTEND, 'Kommer!', 'thumbs-up', 'success'],
-      [Status::HOLIDAY, 'Bortreist', 'hand-right', 'warning'],
+      [Status::HOLIDAY, 'Bortreist', 'hand-o-right', 'warning'],
       [Status::SICK, 'Syk', 'plus', 'danger'],
       [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
   ].freeze
 
   PAST_STATES = [
       [Status::ATTENDED, 'Trente!', 'thumbs-up', 'success'],
-      [Status::HOLIDAY, 'Bortreist', 'hand-right', 'warning'],
+      [Status::HOLIDAY, 'Bortreist', 'hand-o-right', 'warning'],
       [Status::SICK, 'Syk', 'plus', 'danger'],
       [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
   ].freeze

@@ -21,7 +21,7 @@ class ActiveSupport::TestCase
 
   def login(login = :admin)
     u = users(login)
-    request.session[:user_id] = u.id
+    request.session[:user_id] = u.id if defined?(request)
     Thread.current[:user] = u
   end
 
@@ -36,29 +36,30 @@ class ActiveSupport::TestCase
     assert_equal [], v.errors.full_messages
   end
 
-  # Added in Rails 5
+  # FIXME(uwe): Remove: Added in Rails 5
   def fixture_file_upload(path, mime_type = nil, binary = false)
     if self.class.respond_to?(:fixture_path) && self.class.fixture_path
       path = File.join(self.class.fixture_path, path)
     end
     Rack::Test::UploadedFile.new(path, mime_type, binary)
   end
+  # EMXIF
 end
 
-class Mail::TestMailer
+module MailDeliveryError
   cattr_accessor :inject_one_error
   self.inject_one_error = false
 
-  def deliver_with_error!(mail)
+  def deliver!(mail)
     if inject_one_error
       self.class.inject_one_error = false
       raise 'Failed to send email' if ActionMailer::Base.raise_delivery_errors
     end
-    deliver_without_error! mail
+    super mail
   end
-
-  alias_method_chain :deliver!, :error
 end
+
+Mail::TestMailer.prepend MailDeliveryError
 
 # FIMXME(uwe): Remove?
 require 'ish'

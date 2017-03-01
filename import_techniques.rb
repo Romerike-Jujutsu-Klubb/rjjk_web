@@ -71,7 +71,7 @@ ranks.each do |rank_name, rank_dir|
     split = joined.map { |l| l.split(':').map(&:strip) }
     basics = split.map { |n, t| [n.sub(/\s+waza\s*/, ''), t.split(/,\s*/).map(&:downcase)] }
     basics.each do |waza_name, tecs|
-      puts "#{waza_name && waza_name.strip}: #{tecs.inspect}"
+      puts "#{waza_name&.strip}: #{tecs.inspect}"
       waza = Waza.where(name: waza_name).first_or_create! unless DUMP
       tecs.each do |t|
         next if DUMP

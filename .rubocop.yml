@@ -7,30 +7,38 @@ AllCops:
   Include:
     - Capfile
     - Gemfile
-    - '**/Rakefile'
-    - '**/config.ru'
+    - Rakefile
+    - config.ru
+    - '*.gemspec'
     - '**/*.rake'
   Exclude:
     - 'db/schema.rb'
     - 'vendor/**/*'
 
-Rails:
-  Enabled: true
+Metrics/BlockLength:
+  Exclude:
+    - config/environments/development.rb
+    - config/environments/production.rb
+    - config/routes.rb
+    - db/schema.rb
 
 Metrics/LineLength:
   Max: 100
+  AllowHeredoc: true
+  AllowURI: true
+  IgnoreCopDirectives: true
+  Exclude:
+    - db/schema.rb
 
-Metrics/ParameterLists:
-  Max: 6
+Rails:
+  Enabled: true
 
-Rails/NotNullColumn:
+Rails/FilePath:
   Enabled: false
 
 Style/AlignArray:
   Enabled: false
 
-# Configuration parameters: EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle, SupportedLastArgumentHashStyles.
-# SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
 Style/AlignHash:
   Enabled: false
 
@@ -81,8 +89,18 @@ Style/MultilineOperationIndentation:
   EnforcedStyle: indented
   IndentationWidth: 4
 
+Style/NumericLiterals:
+  Exclude:
+    - db/schema.rb
+
+Style/NumericPredicate:
+  Enabled: false
+
 Style/PerlBackrefs:
   Enabled: false
+
+Style/SafeNavigation:
+  ConvertCodeThatCanStartToReturnNil: true
 
 Style/SingleLineBlockParams:
   Enabled: false

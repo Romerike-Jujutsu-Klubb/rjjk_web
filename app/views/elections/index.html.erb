@@ -1,4 +1,4 @@
-<%= link_to 'Registrer nytt valg', new_election_path, class: 'btn btn-primary pull-right' %>
+<%= link_to 'Registrer nytt valg', new_election_path, class: 'btn btn-primary float-right' %>
 
 <h1>Styreverv</h1>
 
@@ -28,7 +28,7 @@
             <% end %>
             <td><%= link_to '', election, method: :delete,
                     data: {confirm: 'Are you sure?'},
-                    class: 'glyphicon glyphicon-trash' %></td>
+                    class: 'fa fa-trash' %></td>
           </tr>
       <% end %>
     </table>

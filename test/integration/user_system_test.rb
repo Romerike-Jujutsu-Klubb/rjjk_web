@@ -3,10 +3,11 @@ require 'test_helper'
 
 class UserSystemTest < ActionDispatch::IntegrationTest
   def test_signup_and_verify
-    post url_for(controller: :user, action: :signup),
-        user: { login: 'newuser',
-            password: 'password', password_confirmation: 'password',
-            email: 'newemail@example.com' }
+    post url_for(controller: :login, action: :signup), params:{
+        user: {login: 'newuser',
+                password: 'password', password_confirmation: 'password',
+                email: 'newemail@example.com' },
+    }
 
     assert_not_logged_in
     assert_redirected_to_login
@@ -21,20 +22,20 @@ class UserSystemTest < ActionDispatch::IntegrationTest
 
     assert user = User.find_by(login: 'newuser')
     Timecop.freeze(Time.current + User.token_lifetime + 1) do
-      get url_for(controller: :user, action: :welcome), key: key
+      get url_for(controller: :login, action: :welcome), params:{key: key}
       assert_redirected_to_login
       user.reload
       assert !user.verified
       assert_not_logged_in
     end
 
-    get url_for(controller: :user, action: :welcome), key: 'boguskey'
+    get url_for(controller: :login, action: :welcome), params:{key: 'boguskey'}
     assert_redirected_to_login
     assert_not_logged_in
     user.reload
     assert !user.verified
 
-    get url_for(controller: :user, action: :welcome), key: key
+    get url_for(controller: :login, action: :welcome), params:{key: key}
     assert_response :success
     user.reload
     assert user.verified
@@ -44,7 +45,7 @@ class UserSystemTest < ActionDispatch::IntegrationTest
   def test_forgot_password_allows_change_password_after_mailing_key
     user = users(:lars)
 
-    post url_for(controller: :user, action: :forgot_password), user: { email: user.email }
+    post url_for(controller: :login, action: :forgot_password), params:{user: {email: user.email }}
 
     assert_equal 1, UserMessage.pending.size
     mail = UserMessage.pending[0]
@@ -53,10 +54,11 @@ class UserSystemTest < ActionDispatch::IntegrationTest
     assert mail.html_body
     key = mail.key
 
-    post url_for(controller: :user, action: :change_password),
-        user: { password: 'newpassword',
-            password_confirmation: 'newpassword' },
-        key: key
+    post url_for(controller: :login, action: :change_password), params:{
+        user: {password: 'newpassword',
+                password_confirmation: 'newpassword' },
+         key: key,
+    }
 
     user.reload
     assert_logged_in user
@@ -76,6 +78,6 @@ class UserSystemTest < ActionDispatch::IntegrationTest
 
   def assert_redirected_to_login
     assert_response :redirect
-    assert_equal controller.url_for(action: :login, id: nil), response.redirect_url
+    assert_redirected_to controller: :login, action: :login
   end
 end

@@ -45,10 +45,10 @@ class AttendancePlanTest < ActionDispatch::IntegrationTest
     screenshot_group :persistence
     next_button = find('#button_2013_42_545305079')
     assert_equal 'Kommer!', next_button.text
-    next_button.find('span.caret').click
+    next_button.find('button.dropdown-toggle').click
     screenshot('dropdown')
     next_button.click_link('Annet')
-    assert_equal 'Annet', next_button.text
+    assert_equal 'Annet Kommer! Bortreist Syk Annet', next_button.text
     wait_for_ajax
     visit "/mitt/oppmote?a=#{Time.current.to_i}"
     next_button = find('#button_2013_42_545305079')

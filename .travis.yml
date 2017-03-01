@@ -2,10 +2,17 @@ dist: trusty
 sudo: false
 language: ruby
 
-ruby:
-  - ruby-2.3.1
-  - jruby-9.1.7.0
-
 script:
-  - bin/setup
-  - bundle exec rake test
+  - bin/setup && bundle exec rake test
+
+after_failure:
+  - "pwd"
+  - "ls -l /home"
+  - "ls -l /home/travis"
+  - "ls -l /home/travis/builds"
+  - "ls -l /home/travis/build"
+  - "ls -l /home/travis/build/Romerike-Jujutsu-Klubb"
+  - "ls -l /home/travis/build/Romerike-Jujutsu-Klubb/rjjk_web"
+  - "ls -l /home/travis/build/Romerike-Jujutsu-Klubb/rjjk_web/log/*.log"
+  - "ls -l /home/travis/build/Romerike-Jujutsu-Klubb/rjjk_web/log/"
+  - "cat /home/travis/build/Romerike-Jujutsu-Klubb/rjjk_web/log/*.log"

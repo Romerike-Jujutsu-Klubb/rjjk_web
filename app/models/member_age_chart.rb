@@ -9,10 +9,11 @@ class MemberAgeChart
     g.hide_legend = true
     g.colors = %w(darkblue)
     g.labels = {}
-    (0..60).to_a.each { |a| g.labels[a] = (a % 5).zero? ? a.to_rfc2445_string : '' }
     members = Member.active(Date.current).to_a
-    g.data('Antall per årstrinn',
-        g.labels.keys.map { |age| members.select { |m| m.age == age }.size })
+    member_ages = members.map(&:age)
+    age_range = 0..((member_ages.max / 5.0).ceil * 5)
+    age_range.select { |a| a % 5 == 0 }.each { |a| g.labels[a] = a.to_s }
+    g.data('Antall per årstrinn', age_range.map { |age| members.select { |m| m.age == age }.size })
     g.minimum_value = 0
     g.maximum_value = 12
     g.marker_count = 6

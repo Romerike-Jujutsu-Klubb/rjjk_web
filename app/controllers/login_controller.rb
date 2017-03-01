@@ -1,14 +1,8 @@
 # frozen_string_literal: true
-class UserController < ApplicationController
+class LoginController < ApplicationController
   before_action :authenticate_user, except: [:login, :logout, :signup, :forgot_password]
   before_action :admin_required, except: [:welcome, :like, :login, :logout,
       :signup, :forgot_password, :change_password]
-
-  def index
-    @users = User.order(:last_name, :first_name).to_a
-  end
-
-  def show; end
 
   def login
     return if generate_blank_form
@@ -29,7 +23,7 @@ class UserController < ApplicationController
       back_or_redirect_to '/'
     else
       @login = params['user']['login']
-      flash.now['message'] = 'Innlogging feilet.'
+      flash.now.notice = 'Innlogging feilet.'
     end
   end
 
@@ -65,7 +59,7 @@ class UserController < ApplicationController
       end
     rescue => ex
       report_exception ex
-      flash['message'] = 'Error creating account: confirmation email not sent'
+      flash.notice = 'Error creating account: confirmation email not sent'
     end
   end
 
@@ -84,7 +78,7 @@ class UserController < ApplicationController
       @user.save!
     rescue => ex
       report_exception ex
-      flash.now['message'] = 'Your password could not be changed at this time. Please retry.'
+      flash.now.notice = 'Your password could not be changed at this time. Please retry.'
       return
     end
     begin
@@ -93,12 +87,12 @@ class UserController < ApplicationController
     rescue => ex
       report_exception ex
     end
-    redirect_to controller: :user, action: :welcome
+    redirect_to controller: :login, action: :welcome
   end
 
   def forgot_password
     if authenticated_user? && !admin?
-      flash['message'] = 'Du er nå logget på. Du kan nå endre passordet ditt.'
+      flash.notice = 'Du er nå logget på. Du kan nå endre passordet ditt.'
       redirect_to action: 'change_password'
       return
     end
@@ -109,9 +103,9 @@ class UserController < ApplicationController
     email = params[:user][:email]
     escaped_email = CGI.escapeHTML(email)
     if email.blank? || email !~ /.+@.+\..+/
-      flash.now['message'] = 'Skriv inn en gyldig e-postadresse.'
+      flash.now.notice = 'Skriv inn en gyldig e-postadresse.'
     elsif (users = (User.search(email) + Member.search(email).map(&:user)).uniq).empty?
-      flash.now['message'] =
+      flash.now.notice =
           "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{escaped_email}"
     else
       begin
@@ -120,7 +114,7 @@ class UserController < ApplicationController
             url = url_for(action: :change_password)
             UserMailer.forgot_password(user, url).store(user, tag: :forgot_password)
           end
-          flash['message'] =
+          flash.notice =
               "En e-post med veiledning for å sette nytt passord er sendt til #{escaped_email}."
           unless authenticated_user?
             redirect_to action: 'login'
@@ -130,14 +124,10 @@ class UserController < ApplicationController
         end
       rescue => ex
         report_exception ex
-        flash.now[:message] =
+        flash.now[:notice] =
             "Beklager!  Link for innlogging kunne ikke sendes til #{escaped_email}"
       end
     end
-  end
-
-  def edit
-    generate_filled_in
   end
 
   def update
@@ -170,17 +160,6 @@ class UserController < ApplicationController
       end
     end
     redirect_to action: :edit
-  end
-
-  def delete
-    @user = current_user || User.find_by(id: session[:user_id])
-    begin
-      @user.update_attribute(:deleted, true)
-      logout
-    rescue => ex
-      flash.now['message'] = "Error: #{ex}."
-      back_or_redirect_to '/'
-    end
   end
 
   def welcome; end

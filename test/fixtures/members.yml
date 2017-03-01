@@ -17,7 +17,7 @@ uwe:
   address: Møllesvingen 5
   birthdate: 1970-11-25
   first_name: Uwe
-  groups: voksne
+#  groups: voksne
   instructor: true
   joined_on: 1987-01-05
   last_name: Kubosch
@@ -31,7 +31,7 @@ sebastian:
   address: Møllesvingen 5
   birthdate: 2004-06-03
   first_name: Sebastian
-  groups: panda tiger
+  groups: panda
   instructor: false
   joined_on: 2010-08-25
   last_name: Kubosch

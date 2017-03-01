@@ -26,31 +26,31 @@
           </div>
 
     <div class="row">
-      <div class="form-group col-xs-6">
+      <div class="form-group col-6">
         <label for="member_postal_code">Postnummer</label>
         <%= text_field 'member', 'postal_code', class: 'postal_code form-control' %>
       </div>
 
-      <div class="form-group col-xs-6">
+      <div class="form-group col-6">
         <label for="member_phone_mobile">Telefon mobil</label>
         <%= text_field 'member', 'phone_mobile', class: 'form-control' %>
       </div>
     </div>
 
     <div class="row">
-      <div class="form-group col-xs-12">
+      <div class="form-group col-12">
         <label for="member_email">E-post</label>
         <%= text_field 'member', 'email', class: 'form-control' %>
       </div>
     </div>
 
     <div class="row">
-      <div class="form-group col-xs-6">
+      <div class="form-group col-6">
         <label for="member_phone_home">Telefon hjem</label>
         <%= text_field 'member', 'phone_home', class: 'form-control' %>
       </div>
 
-      <div class="form-group col-xs-6">
+      <div class="form-group col-6">
         <label for="member_phone_work">Telefon arbeid</label>
         <%= text_field 'member', 'phone_work', class: 'form-control' %>
       </div>
@@ -60,42 +60,42 @@
 
   <div class="col-md-4">
     <div class="row">
-      <div class="form-group col-xs-9">
+      <div class="form-group col-9">
         <label for="member_birthdate">Fødselsdato</label>
         <%= text_field :member, :birthdate, placeholder: 'år-måned-dag', class: 'date form-control' %>
       </div>
-      <div class="col-xs-3">
+      <div class="col-3">
         <label>Alder</label>
         <%= "#{((Date.current - @member.birthdate.to_date) / 365).to_i} år" if @member.birthdate %>
       </div>
     </div>
 
     <div class="row">
-      <div class="form-group col-xs-6">
+      <div class="form-group col-6">
         <label for="member_male">Kjønn</label>
         <%= select 'member', 'male', [['Mann', true], ['Kvinne', false]], {}, class: 'form-control' %>
       </div>
     </div>
 
     <div class="row">
-      <div class="form-group col-xs-6">
+      <div class="form-group col-6">
         <%= label :member, :joined_on, 'Innmeldingsdato' %>
         <%= text_field :member, :joined_on, class: 'date form-control' %>
       </div>
 
-      <div class="form-group col-xs-6">
+      <div class="form-group col-6">
         <%= label :member, :left_on, 'Utmeldingsdato' %>
         <%= text_field :member, :left_on, class: 'date form-control' %>
       </div>
     </div>
 
     <div class="row">
-      <div class="form-group col-xs-6">
+      <div class="form-group col-6">
         <label for="member_contract_id">Medlemsnummer</label>
-        <%= text_field 'member', 'contract_id', class: 'form-control col-xs-6' %>
+        <%= text_field 'member', 'contract_id', class: 'form-control col-6' %>
       </div>
 
-      <div class="form-group col-xs-6">
+      <div class="form-group col-6">
         <label for="member_nkf_member_id">NKF medlemsnummer</label>
         <span class="form-control"><%= @member.nkf_member.try(:medlemsnummer) %></span>
       </div>
@@ -108,25 +108,25 @@
 
     <div class="form-group">
       <label for="member_phone_parent">Foresattes telefon</label>
-      <%= text_field 'member', 'phone_parent', :class => 'form-control col-xs-6' %>
+      <%= text_field 'member', 'phone_parent', :class => 'form-control col-6' %>
     </div>
 
     <div class="form-group">
       <label for="member_parent_email">Foresattes e-post</label>
-      <%= text_field 'member', 'parent_email', :class => 'form-control col-xs-6' %>
+      <%= text_field 'member', 'parent_email', :class => 'form-control col-6' %>
     </div>
 
     <div class="row">
-      <div class="form-group col-xs-6">
+      <div class="form-group col-6">
         <label for="member_billing_type">Faktureringsmåte</label>
         <%= select 'member', 'billing_type', [['AutoGiro', 'AUTOGIRO'], ['Manuell Giro', 'MANUELL GIRO'], ['AvtaleGiro', 'AvtaleGiro'],
                         @member.billing_type && [@member.billing_type, @member.billing_type]].compact.uniq.sort,
                 {}, class: 'form-control' %>
       </div>
 
-      <div class="form-group col-xs-6">
+      <div class="form-group col-6">
         <label for="member_account_no">Kontonummer</label>
-        <%= text_field 'member', 'account_no', class: 'form-control col-xs-6' %>
+        <%= text_field 'member', 'account_no', class: 'form-control col-6' %>
       </div>
     </div>
 

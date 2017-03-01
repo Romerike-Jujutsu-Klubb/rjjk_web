@@ -28,7 +28,8 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
             'Lars Bråten',
             'Erik Hansen NKF_mt_two@example.com',
             'Hans Eriksen faktura@eriksen.org',
-            'Totalt 3'], all('tr td:first-child').map(&:text).reject(&:blank?)
+            'Totalt 3', 'Sebastian Kubosch', 'Totalt 1'],
+        all('tr td:first-child').map(&:text).reject(&:blank?)
   end
 
   def test_record_panda_october
@@ -38,7 +39,8 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
             'Lars Bråten',
             'Erik Hansen NKF_mt_two@example.com',
             'Hans Eriksen faktura@eriksen.org',
-            'Totalt 3'], all('tr td:first-child').map(&:text).reject(&:blank?)
+            'Totalt 3', 'Sebastian Kubosch', 'Totalt 1'],
+        all('tr td:first-child').map(&:text).reject(&:blank?)
 
     uwe_row = find('table:first-of-type tbody tr:first-of-type')
     assert uwe_row
@@ -64,7 +66,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
       new_instructor_row.find('td:nth-of-type(2)').click
       assert_current_path '/attendances/new', only_path: true
       select('Lars Bråten', from: 'attendance_member_id')
-      click_button('Create')
+      click_button('Lagre')
       assert_current_path "/attendances/form/2013/10/#{groups(:panda).id}"
 
       # Attendance 'X' present

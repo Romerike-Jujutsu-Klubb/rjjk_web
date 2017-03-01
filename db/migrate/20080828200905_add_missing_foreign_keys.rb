@@ -24,6 +24,5 @@ class AddMissingForeignKeys < ActiveRecord::Migration
     #     :name => "ranks_martial_art_id_fkey"
   end
 
-  def self.down
-  end
+  def self.down; end
 end

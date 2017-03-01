@@ -111,15 +111,15 @@
 	<div id="footer">
 			<div class="left">&copy; 2006 Romerike Jujutsu Klubb. All rights reserved.
     			<% if not user? %>
-        			<%= link_to 'Login', :controller => 'user', :action => :login %>
+        			<%= link_to 'Login', :controller => :login, :action => :login %>
 				<% else %>
 	    			<% if admin? %>
     	    			<%= link_to 'Ny nyhet', :controller => 'news', :action => 'new' %>
     	                <%= link_to 'Ny side', :controller => 'info', :action => 'new' %>
     	                <%= link_to 'Ny hendelse', :controller => 'events', :action => 'new' %>
-    	                <%= link_to 'Brukere', :controller => 'user', :action => :index %>
+    	                <%= link_to 'Brukere', :controller => 'users', :action => :index %>
     				<% end %>
-        			<%= link_to 'Logout', :controller => 'user', :action => :logout %>
+        			<%= link_to 'Logout', :controller => :login, :action => :logout %>
     			<% end %>
 			</div>
 			<div class="right">Design by <a href="http://www.nodethirtythree.com/">NodeThirtyThree Design</a></div>

@@ -27,9 +27,11 @@ end
 content = $stdin.read
 
 def safe_subject(subject, mail_is_spam, spam_score)
-  ss = subject.to_s.gsub(/^((Re|Sv):\s*)+/i, '').gsub(%r{[ :/\\\{\}`'"!]}, '_').gsub(/_+/, '_')[0..100]
+  ss = subject.to_s.gsub(/^((Fwd|Re|Sv):\s*)+/i, '').gsub(%r{[ :/\\\{\}`'"!]}, '_')
+      .gsub(/_+/, '_')[0..100]
   @now_str ||= Time.now.strftime('%F_%T')
-  subject = "mail_#{@now_str}_#{mail_is_spam ? '[SPAM]' : mail_is_spam == 'LARGE' ? '[LARGE]' : '_____'}"
+  spam_marker = mail_is_spam ? '[SPAM]' : mail_is_spam == 'LARGE' ? '[LARGE]' : '_____'
+  subject = "mail_#{@now_str}_#{spam_marker}"
   subject += "[#{spam_score}]" if spam_score
   subject += "_#{ss}"
   subject
@@ -89,7 +91,7 @@ def check_spam(content, mail)
     log "Exception scanning for SPAM: #{e}\n#{e.backtrace.join("\n")}"
   end
   log "Spam check took: #{Time.now - spam_start}s"
-  return content, mail, mail_is_spam, spam_score
+  [content, mail, mail_is_spam, spam_score]
 end
 
 if content.size <= 512_000

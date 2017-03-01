@@ -4,7 +4,8 @@ class RawIncomingEmailsController < ApplicationController
   before_action :set_raw_incoming_email, only: [:show, :edit, :update, :destroy]
 
   def index
-    @raw_emails = RawIncomingEmail.order(created_at: :desc).limit(300).decorate
+    raw_emails = RawIncomingEmail.order(created_at: :desc).limit(300)
+    @raw_emails = raw_emails.map { |re| RawIncomingEmailDecorator.new(re) }
   end
 
   def show; end
@@ -60,7 +61,7 @@ class RawIncomingEmailsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_raw_incoming_email
-    @raw_incoming_email = RawIncomingEmail.find(params[:id]).decorate
+    @raw_incoming_email = RawIncomingEmailDecorator.new(RawIncomingEmail.find(params[:id]))
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,0 +1,13 @@
+h3 align="center" Last opp media
+= form_for :image, url: {controller: :images, action: :upload} do |f|
+  = f.file_field :file, onchange: 'form.submit()', \
+      size: '10', style: 'width: 100%', \
+      class: 'hide ie_show', multiple: true
+  div.input-append.ie_hide
+    input#pretty-input style="width: 100%" type="text" onclick="$('input[id=image_file]').click()"
+    a.btn onclick="$('input[id=image_file]').click()" Velg fil
+
+javascript:
+    $('input[id=image_file]').change(function () {
+        $('#pretty-input').val($(this).val().replace("C:\\fakepath\\", ""));
+    });

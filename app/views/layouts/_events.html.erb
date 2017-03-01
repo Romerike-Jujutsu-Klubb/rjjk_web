@@ -4,12 +4,6 @@
     <% last_start_at = nil %>
     <% last_end_at = nil %>
     <div class="events">
-      <h3>Hva skjer?
-        <%= link_to image_tag('ical.png', :style => 'width: 24px;height: 24px'),
-            {only_path: false, protocol: 'webcal', controller: :events,
-                action: :calendar, format: :ics},
-            title: 'Abonnér på hendelseskalender!' %></h3>
-
       <% events.each do |event| %>
           <% ingress = nil # event.ingress     %>
           <% ingress = nil if ingress.blank? %>
@@ -20,12 +14,12 @@
           <% end %>
           <% if event.start_at.mon != last_mon %>
               <% last_mon = event.start_at.mon %>
-              <h4 style="color: #E20916"><%= t Date::MONTHNAMES[last_mon] %></h4>
+              <h5 style="color: #E20916"><%= t Date::MONTHNAMES[last_mon] %></h5>
           <% end %>
           <% if event.start_at != last_start_at || event.end_at != last_end_at %>
               <% last_start_at = event.start_at %>
               <% last_end_at = event.end_at %>
-              <h4 style="">
+              <h5>
                 <% if event.end_at.nil? || event.end_at == event.start_at %>
                     <%= event.start_at.mday %>.
                     <%= t(:date)[:day_names][event.start_at.wday] %>
@@ -49,22 +43,22 @@
                         <% end %>
                     <% end %>
                 <% end %>
-              </h4>
+              </h5>
           <% end %>
 
           <% if event.id %>
               <%= link_to image_tag('ical.png', style: 'width: 24px;height: 24px'),
                   {controller: :events, action: :calendar, id: event.id,
-                      format: :ics}, class: 'pull-right',
+                      format: :ics}, class: 'float-right',
                   title: "Sett '#{event.name}' på din kalender!" %>
           <% end %>
-          <h4 style="margin-bottom: 0;color: #FFB400">
+          <h5 style="margin-bottom: 0;color: #FFB400">
             <% if body %>
                 <%= link_to event.name, event, style: 'color: #FFB400' %>
             <% else %>
                 <%= event.name %>
             <% end %>
-          </h4>
+          </h5>
 
           <% if user? -%>
               <% if (crowd_size = event.size) > 0 -%>

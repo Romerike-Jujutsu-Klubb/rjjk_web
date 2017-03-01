@@ -14,7 +14,7 @@
           <li><%= link_to 'Min Embu', controller: :embus, action: :index %></li>
       <% end %>
       <li><%= link_to 'Mine media', controller: :images, action: :mine %></li>
-      <li><%= detour_to 'Logg ut', controller: :user, action: :logout %></li>
+      <li><%= detour_to 'Logg ut', controller: :login, action: :logout %></li>
     </ul>
 <% end %>
 
@@ -41,6 +41,6 @@
       </li>
   <% end %>
   <% unless user? %>
-      <li><%= detour_to 'Logg inn', controller: :user, action: :login %></li>
+      <li><%= detour_to 'Logg inn', controller: :login, action: :login %></li>
   <% end %>
 </ul>

@@ -20,7 +20,7 @@ class SurveysControllerTest < ActionController::TestCase
 
   test 'should create survey' do
     assert_difference('Survey.count') do
-      post :create, survey: {
+      post :create, params:{survey: {
           category: @survey.category,
           expires_at: @survey.expires_at,
           footer: @survey.footer,
@@ -28,7 +28,7 @@ class SurveysControllerTest < ActionController::TestCase
           header: @survey.header,
           position: @survey.position,
           title: @survey.title,
-      }
+      }}
       assert_no_errors :survey
     end
 
@@ -36,17 +36,17 @@ class SurveysControllerTest < ActionController::TestCase
   end
 
   test 'should show survey' do
-    get :show, id: @survey
+    get :show, params:{id: @survey}
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @survey
+    get :edit, params:{id: @survey}
     assert_response :success
   end
 
   test 'should update survey' do
-    patch :update, id: @survey, survey: {
+    patch :update, params:{id: @survey, survey: {
         category: @survey.category,
         expires_at: @survey.expires_at,
         footer: @survey.footer,
@@ -54,13 +54,13 @@ class SurveysControllerTest < ActionController::TestCase
         header: @survey.header,
         position: @survey.position,
         title: @survey.title,
-    }
+    }}
     assert_redirected_to survey_path(assigns(:survey))
   end
 
   test 'should destroy survey' do
     assert_difference('Survey.count', -1) do
-      delete :destroy, id: @survey
+      delete :destroy, params:{id: @survey}
     end
 
     assert_redirected_to surveys_path

@@ -20,12 +20,12 @@ class BasicTechniqueLinksControllerTest < ActionController::TestCase
 
   test 'should create basic_technique_link' do
     assert_difference('BasicTechniqueLink.count') do
-      post :create, basic_technique_link: {
+      post :create, params:{basic_technique_link: {
           basic_technique_id: @basic_technique_link.basic_technique_id,
           position: @basic_technique_link.position + 2,
           title: @basic_technique_link.title,
           url: 'a new url to somewhere',
-      }
+      }}
       assert_no_errors :basic_technique_link
     end
 
@@ -33,28 +33,28 @@ class BasicTechniqueLinksControllerTest < ActionController::TestCase
   end
 
   test 'should show basic_technique_link' do
-    get :show, id: @basic_technique_link
+    get :show, params:{id: @basic_technique_link}
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @basic_technique_link
+    get :edit, params:{id: @basic_technique_link}
     assert_response :success
   end
 
   test 'should update basic_technique_link' do
-    put :update, id: @basic_technique_link, basic_technique_link: {
+    put :update, params:{id: @basic_technique_link, basic_technique_link: {
         basic_technique_id: @basic_technique_link.basic_technique_id,
         position: @basic_technique_link.position,
         title: @basic_technique_link.title,
         url: @basic_technique_link.url,
-    }
+    }}
     assert_redirected_to basic_technique_link_path(assigns(:basic_technique_link))
   end
 
   test 'should destroy basic_technique_link' do
     assert_difference('BasicTechniqueLink.count', -1) do
-      delete :destroy, id: @basic_technique_link
+      delete :destroy, params:{id: @basic_technique_link}
       assert_no_errors :basic_technique_link
     end
 
