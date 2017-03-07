@@ -39,7 +39,7 @@ gem 'dynamic_form'
 gem 'exception_notification'
 # gem 'fb_graph'
 gem 'font-awesome-rails'
-gem 'gmaps4rails', '<2.0.0' # TODO(uwe): switch to https://rubygems.org/gems/geocoder ?
+gem 'gmaps4rails', '<2.0.0', '!=1.5.8' # TODO(uwe): switch to https://rubygems.org/gems/geocoder ?
 gem 'gruff'
 # gem 'jasny-bootstrap-rails'
 gem 'jbuilder'

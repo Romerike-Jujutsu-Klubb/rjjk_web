@@ -23,7 +23,7 @@ class NkfMemberComparison
       nkf_group_names =
           if nkfm.gren_stilart_avd_parti___gren_stilart_avd_parti
             nkfm.gren_stilart_avd_parti___gren_stilart_avd_parti
-                .split(/ - /).map { |n| n.split('/')[3] }
+                .split(/ - /).map { |n| n.split('/')[3] || "ERROR: #{n.inspect}" }
           else
             []
           end
