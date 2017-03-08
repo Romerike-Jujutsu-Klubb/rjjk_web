@@ -53,12 +53,12 @@ sorted.each.with_index do |f, i|
   if f.valid_encoding?
     escaped_filename = Shellwords.escape(f)
     loop do
-      print "[#{files.size - i}] #{f.gsub(/^mail_/, '')} "
+      print "[#{files.size - i}] #{f.gsub(/^mail_/, '')} ".ljust(96, ' ')
 
       /\[SPAM\]\[(?<old_spam_score>\d+\.\d+)\]/ =~ f
-      if old_spam_score && old_spam_score.to_f >= 5.0
+      if old_spam_score && old_spam_score.to_f >= 4.0
         new_spam_status = check_if_spam(escaped_filename)
-        if /X-Spam-Status: Yes, score=(?<spam_score>\d+\.\d+) / =~ new_spam_status
+        if /X-Spam-Status: (Yes|No), score=(?<spam_score>\d+\.\d+) / =~ new_spam_status
           print "[#{spam_score}] : "
           if spam_score.to_f >= 7.5
             puts 'LEARNING'
