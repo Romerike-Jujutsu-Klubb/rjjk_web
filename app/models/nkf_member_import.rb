@@ -338,8 +338,11 @@ class NkfMemberImport
 
     login_form_fields = login_content.scan(/<input .*?name="(.*?)".*?value ?="(.*?)".*?>/)
     login_form_fields.delete_if { |f| %w(site2pstoretoken ssousername password).include? f[0] }
-    login_form_fields += [['site2pstoretoken', token],
-        %w(ssousername 40001062), %w(password CokaBrus42)]
+    login_form_fields += [
+        ['site2pstoretoken', token],
+        %w(ssousername 40001062),
+        ['password', Rails.env.test? ? 'CokaBrus42' : ENV['NKF_PASSWORD']],
+    ]
     login_params = login_form_fields.map { |field| "#{field[0]}=#{ERB::Util.url_encode field[1]}" }
         .join('&')
     url = URI.parse('http://nkflogin.kampsport.no/')

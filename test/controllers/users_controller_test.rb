@@ -2,6 +2,10 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
+  def test_index
+    get :index
+  end
+
   def test_edit
     tesla = login(:admin)
     post :update, params:{id: tesla.id, user: { first_name: 'Bob', form: 'edit' }}

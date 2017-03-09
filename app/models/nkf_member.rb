@@ -113,4 +113,19 @@ class NkfMember < ActiveRecord::Base
       member
     end
   end
+
+  def group_names
+    groups = gren_stilart_avd_parti___gren_stilart_avd_parti.split(/\s*-\s+/)
+    names = groups.map { |n| n.split('/')[3] }
+
+    # FIXME(uwe): Workaround for NKF bug march 2017
+    all_groups = Group.all.to_a.select { |g| g.martial_art.kwr? }
+    age_names = all_groups.select(&:active?).select { |g| g.contains_age(member.age) }.map(&:name)
+    all_group_names = all_groups.map(&:name)
+    names = names.compact & all_group_names
+    names |= age_names if names.empty? && medlemsstatus == 'A'
+    # EMXIF
+
+    names
+  end
 end

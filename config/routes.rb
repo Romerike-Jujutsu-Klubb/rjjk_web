@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   post 'login/forgot_password'
   match 'login' => 'login#login', as: :login, via: [:get, :post]
   get 'login/logout'
-  post 'login/signup'
+  match 'login/signup', via: [:get, :post]
   get 'login/welcome'
   get 'news/list'
   post 'news/expire' => 'news#expire'

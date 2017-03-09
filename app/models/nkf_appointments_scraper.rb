@@ -49,7 +49,7 @@ class NkfAppointmentsScraper
     login_page = agent.get('http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login')
     login_form = login_page.form('st_login')
     login_form.ssousername = '40001062'
-    login_form.password = 'CokaBrus42'
+    login_form.password = Rails.env.test? ? 'CokaBrus42' : ENV['NKF_PASSWORD']
     login_form.site2pstoretoken = token
     agent.submit(login_form)
   end

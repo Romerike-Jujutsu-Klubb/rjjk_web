@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-if defined?(Rails::Console) || defined?(Rake)
-  Rails.logger.info("Disable scheduler since #{defined?(Rails::Console)} || #{defined?(Rake)}")
+if (reason = ((defined?(Rails::Console) && :Console)))
+  Rails.logger.info("Disable scheduler since #{reason} is defined.")
 elsif !%w(development beta production).include?(Rails.env)
   Rails.logger.info("Disable scheduler since env == #{Rails.env}")
 elsif ENV['DISABLE_SCHEDULER']

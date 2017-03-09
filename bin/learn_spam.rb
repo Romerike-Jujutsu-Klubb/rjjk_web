@@ -53,7 +53,7 @@ sorted.each.with_index do |f, i|
     loop do
       print "[#{files.size - i}] #{f.gsub(/^mail_/, '')} "
 
-      file_date = Time.parse(f[5..14] + 'T' + f[16..23])
+      file_date = Time.zone.parse(f[5..14] + 'T' + f[16..23])
       if file_date < 2.days.ago
         puts ': OLD'.rjust(102 - f.size, ' ')
         break
@@ -64,7 +64,7 @@ sorted.each.with_index do |f, i|
         new_spam_status = check_if_spam(escaped_filename)
         if /X-Spam-Status: (Yes|No), score=(?<spam_score>\d+\.\d+) / =~ new_spam_status
           print "[#{spam_score}] : ".rjust(102 - f.size, ' ')
-          if spam_score.to_f >= 7.5
+          if spam_score.to_f >= 7.5 # rubocop:disable Metrics/BlockNesting
             puts 'LEARNING'
             learn(escaped_filename, 'spam')
             break

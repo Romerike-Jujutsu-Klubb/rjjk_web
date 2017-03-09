@@ -27,7 +27,7 @@
     <% @members_after.group_by { |m| m.groups.sort_by(&:to_age).last }.each do |group, members| %>
         <% diff = members.size - before_by_group[group].size%>
         <tr>
-          <td><%= group.name %></td>
+          <td><%= group&.name || 'Uten gruppe' %></td>
           <td><%= members.size %>
           <%= diff != 0 ? "(#{diff > 0 ? '+' : nil}#{diff})" : nil %></td>
         </tr>
