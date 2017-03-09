@@ -6,13 +6,15 @@
       => t(:date)[:day_names][@next_practice.group_schedule.weekday]
       = @next_practice.date.day
       ' .
-      = t(:date)[:month_names][@next_practice.date.month].downcase
+      => t(:date)[:month_names][@next_practice.date.month].downcase
+      ' kl
+      = @next_practice.group_schedule.start_at.strftime('%R')
 
     - if @your_attendance_next_practice && \
         [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(@your_attendance_next_practice.status)
-      =render 'attendances/details_link', practice: @next_practice
+      = render 'attendances/details_link', practice: @next_practice
       - unless @other_absentees.empty?
-        = @other_absentees.size
+        => @other_absentees.size
         ' har meldt fravær.
       = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT), \
           class: 'btn btn-secondary btn-sm', title: 'Kan ikke allikevel...', method: :post)
