@@ -1,0 +1,46 @@
+- if @next_practice
+  #next_practice
+    h4 Neste trening
+
+    h5 style="color: #FFB400"
+      => t(:date)[:day_names][@next_practice.group_schedule.weekday]
+      = @next_practice.date.day
+      ' .
+      = t(:date)[:month_names][@next_practice.date.month].downcase
+
+    - if @your_attendance_next_practice && \
+        [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(@your_attendance_next_practice.status)
+      =render 'attendances/details_link', practice: @next_practice
+      - unless @other_absentees.empty?
+        = @other_absentees.size
+        ' har meldt fravær.
+      = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT), \
+          class: 'btn btn-secondary btn-sm', title: 'Kan ikke allikevel...', method: :post)
+        i.fa.fa-thumbs-down
+        Angre
+    - elsif @your_attendance_next_practice
+      ' Du kommer ikke.
+      = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::WILL_ATTEND), \
+          class: 'btn btn-secondary btn-sm', title: 'Kommer allikevel!', method: :post)
+        i.fa.fa-thumbs-up
+        ' Kommer allikevel
+      - unless @other_attendees.empty?
+        br
+        = @other_attendees.size
+        ' andre kommer.
+      - unless @other_absentees.empty?
+        br
+        = @other_absentees.size
+        ' har meldt fravær.
+    - else
+      .input-group.input-group-sm
+        span.input-group-addon Kommer du?
+        span.input-group-btn
+          = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::WILL_ATTEND), \
+              class: 'btn btn-secondary', title: 'Kommer!', method: :post)
+            i.fa fa-thumbs-up
+        span.input-group-btn
+          = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT), \
+              class: 'btn btn-secondary', title: 'Kan ikke...', method: :post)
+            i.fa.fa-thumbs-down
+      =render 'attendances/details_link', practice: @next_practice

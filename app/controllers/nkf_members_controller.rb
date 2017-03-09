@@ -87,7 +87,7 @@ class NkfMembersController < ApplicationController
     error_records = import.error_records
     records_size = error_records.size
     flash[:notice] = "#{import.changes.size} records imported, #{records_size} failed, " \
-        "#{import.import_rows.size - import.changes.size - records_size} skipped"
+        "#{import.import_rows&.size.to_i - import.changes&.size.to_i - records_size} skipped"
     if error_records.any?
       error_messages = error_records.map { |r| [r, r.errors.full_messages] }
       flash[:notice] += "<br>#{html_escape(error_messages.inspect)}"
