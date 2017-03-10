@@ -117,7 +117,7 @@ class NkfMemberImport
         begin
           loop { yield queue.pop(true) }
         rescue ThreadError => e
-          logger.error "ThreadError running parallel tasks: #{e}"
+          logger.debug "ThreadError running parallel tasks: #{e}"
         ensure
           ActiveRecord::Base.connection.close
         end
@@ -385,19 +385,9 @@ class NkfMemberImport
       url_string = "http://nkfwww.kampsport.no/portal/#{url_string}"
     end
     uri = URI.parse(url_string)
-    cache_file = "#{Rails.root}/tmp/cache/nkf/#{Digest::MD5.hexdigest uri.request_uri}"
-    if Rails.env.test? && File.exist?(cache_file) && File.ctime(cache_file) > 1.day.ago
-      logger.debug "Used cached response #{cache_file}"
-      return File.read(cache_file, encoding: Encoding::ASCII_8BIT)
-    end
     backoff = 1
     begin
-      body = http_get_response(uri, binary).body
-      FileUtils.mkpath File.dirname(cache_file)
-      if Rails.env.test?
-        File.write(cache_file, body, encoding: Encoding::ASCII_8BIT)
-      end
-      return body
+      return http_get_response(uri, binary).body
     rescue EOFError, SocketError, SystemCallError, Timeout::Error => e
       logger.error e.message
       if backoff > 15.minutes
