@@ -9,7 +9,7 @@
         - if attendance.present?
           ' Du
         - else
-          = others.shift.member.first_name
+          => others.shift.member.first_name
         ' og
         => others.size
         = others.size == 1 ? 'annen' : 'andre'
@@ -21,7 +21,7 @@
         ' og
         = others.first.member.first_name
     - elsif others.any?
-      = others.shift.member.first_name
+      => others.shift.member.first_name
       - if others.any?
         ' og
         = others.first.member.first_name
