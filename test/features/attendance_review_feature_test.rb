@@ -9,6 +9,7 @@ class AttendanceReviewFeatureTest < ActionDispatch::IntegrationTest
     visit_with_login "/attendances/review/2013/41/#{group_schedules(:voksne_thursday).id}/I",
         redirected_path: '/mitt/oppmote'
     screenshot('review_old')
+    assert has_css?('td', count: 13)
     assert_equal ['Forrige uke', 'Trente du? Lars og Newbie trente.',
         'Trente! Du og Lars trente.', 'Denne uken', 'Ubekreftet Du trente.',
         'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?',
