@@ -62,13 +62,15 @@ h1,h2,h3 {color: #994;}
 
 /* header */
 .header {
-	float: left;
-	width: 700px;
-	height: 100px;
-	background: asset_url('dark_ritual/header.png') no-repeat;
-	font: normal 2.4em Verdana,sans-serif;
-	text-align: center;	
-	padding-top: 50px;
+  float: left;
+  width: 700px;
+  height: 100px;
+  background: asset_url('dark_ritual/header.png') no-repeat;
+  font: normal 2.4em Verdana, sans-serif;
+  text-align: center;
+  @media (min-width: 992px) {
+    padding-top: 50px;
+  }
 }
 
 .header a {
