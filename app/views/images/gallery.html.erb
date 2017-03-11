@@ -3,8 +3,8 @@
         <%= video_tag url_for(:controller => :images, :action => :show, :id => @image.id, :format => @image.format), :title => @image.name || 'Film', :controls => true, :autobuffer => true, :style => 'width: 100%' %>
         </video>
     <% else %>
-        <%= image_tag url_for(:controller => :images, :action => :inline, :id => @image.id, :format => @image.format, :width => 592),
-                      :title => @image.name || 'Bilde', :class => 'img-thumbnail' %>
+        <%= image_tag url_for(controller: :images, action: :inline, id: @image.id, format: @image.format, width: 762),
+                      title: @image.name || 'Bilde', class: 'img-thumbnail col-12 p-1' %>
     <% end %>
 
     <div width="100%" align="center">

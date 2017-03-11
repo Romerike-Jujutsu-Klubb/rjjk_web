@@ -108,11 +108,13 @@ Rails.application.routes.draw do
   end
   resources :images do
     collection do
-      get :gallery
       get :mine
       post :upload
       get 'inline/:id(/:width).:format', action: :inline
       get 'show/:id(/:width).:format', action: :show
+    end
+    member do
+      get :gallery
     end
   end
   resources :information_pages, controller: :info, path: :info
