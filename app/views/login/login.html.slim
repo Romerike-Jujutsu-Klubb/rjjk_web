@@ -1,7 +1,7 @@
 h3 Venligst logg inn
 
 .form-padding
-  = bootstrap_form_for(:user, url: {action: "#{controller.action_name}"}) do |f|
+  = bootstrap_form_for(:user, url: { action: "#{controller.action_name}" }) do |f|
     = f.text_field :login, placeholder: 'e-post', label: 'Brukernavn'
     = f.password_field :password, label: 'Passord'
     label.form-check-label
