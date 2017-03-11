@@ -120,7 +120,6 @@ Rails.application.routes.draw do
   resources :martial_arts
   resources :members do
     collection do
-      get :age_chart
       get :cms_comparison
       get :email_list
       get :excel_export
@@ -138,6 +137,7 @@ Rails.application.routes.draw do
       get :yaml
     end
     member do
+      get :age_chart
       get :image
       get :missing_contract
       get :since_graduation

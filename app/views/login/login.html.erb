@@ -1,16 +1,16 @@
 <h3>Venligst logg inn</h3>
 
 <div class="form-padding">
-  <%= form_tag(url_for(:action => "#{controller.action_name}"), :class => 'form-inline') do %>
+  <%= form_tag(url_for(:action => "#{controller.action_name}")) do %>
       <table class="table">
         <tr>
           <td><label>Brukernavn</label></td>
-          <td><%= text_field 'user', 'login', :class => 'input-lg', :placeholder => 'e-post' %></td>
+          <td><%= text_field 'user', 'login', :class => 'form-control', :placeholder => 'e-post' %></td>
         </tr>
         <tr>
           <td><label>Passord</label></td>
           <td valign="top">
-            <%= password_field 'user', 'password', :class => 'input-lg' %>
+            <%= password_field 'user', 'password', :class => 'form-control' %>
           </td>
         </tr>
         <tr>
