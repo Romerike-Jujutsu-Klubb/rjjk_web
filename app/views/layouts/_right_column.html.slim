@@ -15,10 +15,10 @@ css:
 
 .row.col-12.justify-content-center.align-items-center.p-0.m-0
   div
-    .text-center
+    .text-center.hidden-md-down
       = link_to image_tag('rjjk_logo_&_txt_320.png', id: :logo_img), '/'
 
-    form action="/search" role="search"
+    form.mt-3 action="/search" role="search"
       .input-group
         = search_field nil, nil, name: :q, value: @query, placeholder: 'Søk', \
                 class: 'search-query form-control', onmouseup: 'select()'
