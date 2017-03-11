@@ -9,17 +9,17 @@
   <div class="carousel-inner">
     <div class="active item">
       <%= image_tag url_for(:controller => :attendances, :action => :month_chart, :year => @year, :month => @month, :size => '832x300', :format => :png),
-                    :title => 'Oppmøte graf', :class => 'img-rounded', :style => 'width: 832px; height: 300px',
+                    :title => 'Oppmøte graf', :class => 'rounded', :style => 'width: 832px; height: 300px',
                     :usemap => '#monthmap' %>
     </div>
     <div class="item">
       <%= image_tag url_for(:controller => :attendances, :action => :month_per_year_chart, :month => @month, :size => '832x300', :format => :png),
-                    :title => 'Oppmøte graf', :class => 'img-rounded', :style => 'width: 832px; height: 300px',
+                    :title => 'Oppmøte graf', :class => 'rounded', :style => 'width: 832px; height: 300px',
                     :usemap => '#monthmap' %>
     </div>
     <div class="item">
       <%= image_tag url_for(:controller => :attendances, :action => :history_graph, :id => '832x300', :format => :png),
-                    :title => 'Oppmøte graf', :class => 'img-rounded', :style => 'width: 832px; height: 300px',
+                    :title => 'Oppmøte graf', :class => 'rounded', :style => 'width: 832px; height: 300px',
                     :usemap => '#monthmap' %>
     </div>
   </div>

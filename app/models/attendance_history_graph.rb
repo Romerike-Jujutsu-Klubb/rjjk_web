@@ -9,7 +9,7 @@ class AttendanceHistoryGraph
     g.marker_font_size = 14
     g.hide_dots = true
     g.colors = %w(blue orange black green)
-    # g.x_axis_label = 'Måned'
+    # g.x_axis_label = ''
     g.y_axis_increment = 5
     first_date = Date.civil(2010, 8, 1)
     weeks = []

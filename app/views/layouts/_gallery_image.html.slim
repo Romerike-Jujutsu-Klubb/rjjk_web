@@ -5,13 +5,13 @@
         = video_tag url_for(controller: :images, action: :show, id: @image.id, format: @image.format), title: @image.name || 'Film', style: 'width: 100%; border: 0', controls: true, autobuffer: true
       - else
         - image_width_1200 = @image.width_max(column_width_1200)
-        - image_width_960 = @image.width_max(column_width_960)
+        - image_width_992 = @image.width_max(column_width_992)
         - image_height_1200 = @image.height_at(image_width_1200)
-        - image_height_960 = @image.height_at(image_width_960)
+        - image_height_992 = @image.height_at(image_width_992)
         css:
-            @media (min-width: 960px) {
+            @media (min-width: 992px) {
                 #gallery_img {
-                    height: #{image_height_960}px;
+                    height: #{image_height_992}px;
                 }
             }
 
@@ -22,9 +22,9 @@
             }
 
         = image_tag url_for(controller: :images, action: :inline, id: @image.id, \
-                        width: image_width_1200, format: @image.format), \
+                        width: column_width_sm, format: @image.format), \
                 id: :gallery_img, lazy: true, \
-                title: @image.name || 'Bilde', class: 'img-rounded'
+                title: @image.name || 'Bilde', class: 'rounded'
 
       .clearfix
 

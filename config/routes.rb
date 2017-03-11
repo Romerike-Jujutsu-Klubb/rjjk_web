@@ -108,6 +108,7 @@ Rails.application.routes.draw do
   end
   resources :images do
     collection do
+      get :gallery
       get :mine
       post :upload
       get 'inline/:id(/:width).:format', action: :inline
@@ -126,7 +127,6 @@ Rails.application.routes.draw do
       get :email_list
       get :excel_export
       get :grade_history_graph
-      get 'grade_history_graph/:id.:format', action: :grade_history_graph
       get :grade_history_graph_percentage
       get :history_graph
       get :income
@@ -140,6 +140,9 @@ Rails.application.routes.draw do
     end
     member do
       get :age_chart
+      get :grade_history_graph
+      get :grade_history_graph_percentage
+      get :history_graph
       get :image
       get :missing_contract
       get :since_graduation

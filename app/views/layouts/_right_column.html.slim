@@ -1,9 +1,10 @@
+- column_width_sm = 412
+- column_width_992 = 224
 - column_width_1200 = 268
-- column_width_960 = 208
 css:
-  @media (min-width: 960px) {
+  @media (min-width: 992px) {
     .main_right > .row > div {
-      width: #{column_width_960}px;
+      width: #{column_width_992}px;
     }
   }
 
@@ -26,7 +27,7 @@ css:
           button.btn.btn-secondary type="submit"
             i.fa.fa-search
 
-    = render 'layouts/gallery_image', column_width_1200: column_width_1200, column_width_960: column_width_960
+    = render 'layouts/gallery_image', column_width_sm: column_width_sm, column_width_1200: column_width_1200, column_width_992: column_width_992
 
     - if false && user?
       = render 'layouts/media_upload'
@@ -41,6 +42,6 @@ css:
     = render 'layouts/events', events: @layout_events
 
     - if admin?
-      = render 'layouts/charts'
+      = render 'layouts/charts', column_width_sm: column_width_sm
 
     = render 'layouts/groups'

@@ -1,0 +1,38 @@
+- @content_width = 1024
+
+h1 Graderingsoversikt
+
+table.table.table-sm
+  tr
+    th Medlem
+    th Dato
+    th Grad
+
+  ruby:
+    prv_name = 0
+    style = 'background: #c3c3c3'
+
+    @martial_art = MartialArt.all
+
+    def department_name(ma_id)
+      for ma in @martial_art
+        return ma.name if ma.id == ma_id
+      end
+    end
+
+  - for graduate in @graduates
+    - mbr = Member.find_by_id(graduate.member_id)
+    tr class=cycle('odd', 'even')
+      - if prv_name == mbr.id
+        td &nbsp;
+        - style = nil
+      - else
+        - prv_name = mbr.id
+        - style = 'background: #c3c3c3'
+        td style=style =h mbr.first_name << ' ' << mbr.last_name
+      td style=style ALIGN="CENTER" =graduate.graduation.held_on
+      td style=style ALIGN="CENTER" =h graduate.rank.name
+
+br
+
+= link_to 'Legg til medlemmer', action: :new

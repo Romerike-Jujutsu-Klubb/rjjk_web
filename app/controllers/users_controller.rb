@@ -5,7 +5,7 @@ class UsersController < ApplicationController
       :signup, :forgot_password, :change_password]
 
   def index
-    @users = User.order(:last_name, :first_name).to_a
+    @users = User.order(:last_name, :first_name, :id).to_a
   end
 
   def show

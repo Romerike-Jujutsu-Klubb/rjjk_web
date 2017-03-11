@@ -184,11 +184,11 @@ ul.controls li a.delete {
     margin-bottom: 0.5em;
 }
 
-@media (min-width: 960px) {
-    #logo_img {
-        width: 208px;
-        height: 208px;
-    }
+@media (min-width: 992px) {
+  #logo_img {
+    width: 224px;
+    height: 224px;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -199,13 +199,14 @@ ul.controls li a.delete {
 }
 
 .main_right img {
-    border: 0;
+  border: 0;
+  width: 100%;
 }
 
-@media (min-width: 960px) {
+@media (min-width: 992px) {
     .main_right img {
-        width: 208px;
-        height: 164px;
+        width: 224px;
+        height: 167px;
     }
 }
 
