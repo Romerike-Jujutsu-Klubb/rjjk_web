@@ -10,7 +10,7 @@ namespace :deploy do
   desc 'Restart the service'
   task :restart do
     on roles :all do
-      execute :sudo, "systemctl reload #{fetch :application}"
+      execute :sudo, "/u/apps/#{fetch :application}/current/etc/init.d/#{fetch :application} restart"
     end
   end
 
