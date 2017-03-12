@@ -36,7 +36,7 @@ html lang="nb"
           .row
             .main.col-12.stretch class="col-lg-#{@content_width ? 10 : 9} push-lg-#{@content_width ? 2 : 3}"
               .padded = yield
-            .subnav.col-12.stretch class="col-lg-#{@content_width ? 2 : 3} pull-lg-#{@content_width ? 10 : 9}" = render 'layouts/navigation'
+            .subnav.col-12.stretch.mt-3.mt-lg-0 class="col-lg-#{@content_width ? 2 : 3} pull-lg-#{@content_width ? 10 : 9}" = render 'layouts/navigation'
 
         - unless @content_width
           .main_right.col-lg-3.col-12.stretch = render 'layouts/right_column'
