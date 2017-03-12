@@ -68,9 +68,6 @@ h1,h2,h3 {color: #994;}
   background: asset_url('dark_ritual/header.png') no-repeat;
   font: normal 2.4em Verdana, sans-serif;
   text-align: center;
-  @media (min-width: 992px) {
-    padding-top: 50px;
-  }
 }
 
 .header a {
