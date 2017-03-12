@@ -4,6 +4,8 @@
 
 started_at = Time.now
 
+Dir.chdir File.expand_path('..', __dir__)
+
 def log(message = nil)
   open('log/email.log', 'a') do |f|
     f.puts message
@@ -14,8 +16,6 @@ end
 
 from = ARGV[0]
 to = ARGV[1..-1]
-
-Dir.chdir File.expand_path('..', __dir__)
 
 log "#{started_at.strftime('%F %T')} Got email From: #{from}, To: #{to}"
 
