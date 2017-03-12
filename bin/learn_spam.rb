@@ -10,11 +10,6 @@ require 'active_support/core_ext/time'
 require 'active_support/core_ext/date'
 require 'active_support/core_ext/date_time'
 
-Dir.chdir File.expand_path '..', __dir__
-
-files = Dir['mail_*']
-sorted = files.sort_by { |f| f[0..24] }
-
 def check_if_spam(escaped_filename)
   `spamc < #{escaped_filename} | grep 'X-Spam-Status'`
 end
@@ -46,6 +41,12 @@ def text_from_part(m)
     "#{header}#{pretty_body}".encode(Encoding::UTF_8, undef: :replace)
   end
 end
+
+Time.zone = 'Copenhagen'
+Dir.chdir File.expand_path '..', __dir__
+
+files = Dir['mail_*']
+sorted = files.sort_by { |f| f[0..24] }
 
 sorted.each.with_index do |f, i|
   if f.valid_encoding?
