@@ -143,7 +143,12 @@ function stop() {
 }
 
 function restart() {
-  bundle exec pumactl --pidfile $PID_FILE phased-restart
+  if [ -f "$PID_FILE" ] ; then
+    bundle exec pumactl --pidfile $PID_FILE phased-restart
+  else
+    stop
+    start
+  fi
 }
 
 function status() {
