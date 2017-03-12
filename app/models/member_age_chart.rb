@@ -11,11 +11,15 @@ class MemberAgeChart
     g.labels = {}
     members = Member.active(Date.current).to_a
     member_ages = members.map(&:age)
-    age_range = 0..((member_ages.max / 5.0).ceil * 5)
-    age_range.select { |a| a % 5 == 0 }.each { |a| g.labels[a] = a.to_s }
-    g.data('Antall per årstrinn', age_range.map { |age| members.select { |m| m.age == age }.size })
+    max_age = ((member_ages.max / 5.0).ceil * 5)
+
+    age_groups = [0..5, 6..9, 10..14, 15..19, 20..24, 25..29, 30..39, 40..49, 50..max_age ]
+
+    age_groups.each.with_index { |ag, i| g.labels[i] = ag.to_s }
+
+    g.data('Antall per årstrinn', age_groups.map { |age_range| members.select { |m| age_range.cover? m.age }.size })
     g.minimum_value = 0
-    g.maximum_value = 12
+    g.maximum_value = 30
     g.marker_count = 6
     g.to_blob
   end
