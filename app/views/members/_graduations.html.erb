@@ -24,7 +24,7 @@
           (<%= graduate.training_period.to_s.gsub('..', ' - ') %>)
         </td>
         <td style="text-align: center">
-          <%= link_to graduate.training_attendances, :controller => :attendances, :action => :since_graduation, :id => graduate.member_id, :date => graduate.graduation.held_on %>
+          <%= link_to graduate.training_attendances, controller: :attendances, action: :since_graduation, id: graduate.member_id, date: graduate.graduation.held_on %>
         </td>
       </tr>
   <% end %>
