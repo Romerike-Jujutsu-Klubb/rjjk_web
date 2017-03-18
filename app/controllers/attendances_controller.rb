@@ -205,33 +205,37 @@ class AttendancesController < ApplicationController
           [(today + 21).cwyear, (today + 21).cweek]]
     end
 
-    member = current_user.member
-    last_unconfirmed = member.attendances.includes(:practice).references(:practices)
+    @member = current_user.member
+    @group_schedules = @member.groups.reject(&:school_breaks).map(&:group_schedules).flatten
+    last_unconfirmed = @member.attendances.includes(practice: :group_schedule).references(:practices)
         .where("attendances.status = 'P'")
         .where('practices.year < ? OR (practices.year = ? AND practices.week < ?)',
             today.cwyear, today.cwyear, today.cweek)
         .order('practices.year, practices.week').last
     if last_unconfirmed
       @weeks.unshift [last_unconfirmed.date.cwyear, last_unconfirmed.date.cweek]
+      unless @group_schedules.include?(last_unconfirmed.group_schedule)
+        @group_schedules << last_unconfirmed.group_schedule
+      end
     end
+    @group_schedules = @group_schedules.sort_by(&:weekday)
     if flash[:attendance_id]
       @reviewed_attendance = Attendance.find(flash[:attendance_id])
       @weeks.unshift [@reviewed_attendance.date.cwyear, @reviewed_attendance.date.cweek]
       @weeks.sort!.uniq!
     end
-    @group_schedules = member.groups.reject(&:school_breaks).map(&:group_schedules).flatten
     @weeks.each do |year, week|
       @group_schedules.each { |gs| gs.practices.where(year: year, week: week).first_or_create! }
     end
     year_weeks = @weeks.map { |y, w| "(#{y}, #{w})" }.join(', ')
     @planned_attendances = Attendance.includes(:practice).references(:practices)
         .where("member_id = ? AND (practices.year, practices.week) IN (#{year_weeks})",
-            member.id)
+            @member.id)
         .to_a
     start_date = 6.months.ago.to_date.beginning_of_month
     attendances = Attendance.includes(practice: { group_schedule: :group }).references(:practices)
         .where('member_id = ? AND attendances.status IN (?)',
-            member, Attendance::PRESENT_STATES)
+            @member, Attendance::PRESENT_STATES)
         .where('(practices.year = ? AND practices.week >= ?) OR (practices.year = ?)',
             start_date.cwyear, start_date.cweek, today.cwyear)
         .to_a
@@ -245,8 +249,8 @@ class AttendancesController < ApplicationController
       per_group = per_month[ym].group_by { |a| a.group_schedule.group }
       [t(:date)[:month_names][ym[1]], *@attended_groups.map { |g| (per_group[g] || []).size }]
     end
-    return unless member.current_rank
-    attendances_since_graduation = member
+    return unless @member.current_rank
+    attendances_since_graduation = @member
         .attendances_since_graduation(includes: { group_schedule: :group })
         .to_a
     return if attendances_since_graduation.empty?

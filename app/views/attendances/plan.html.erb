@@ -19,6 +19,9 @@
               <%= t(:date)[:day_names][gs.weekday] %>
               <%= date.day %>.
               <%= t(:date)[:month_names][date.mon] %>
+              <% unless @member.groups.include?(gs.group) %>
+                <%=gs.group.full_name %>
+              <% end %>
             </th>
         <% end %>
       </tr>
