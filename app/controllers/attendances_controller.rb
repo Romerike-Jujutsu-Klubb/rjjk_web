@@ -207,7 +207,7 @@ class AttendancesController < ApplicationController
 
     @member = current_user.member
     @group_schedules = @member.groups.reject(&:school_breaks).map(&:group_schedules).flatten
-    last_unconfirmed = @member.attendances.includes(practice: :group_schedule).references(:practices)
+    last_unconfirmed = @member.attendances.includes(practice: :group_schedule)
         .where("attendances.status = 'P'")
         .where('practices.year < ? OR (practices.year = ? AND practices.week < ?)',
             today.cwyear, today.cwyear, today.cweek)
