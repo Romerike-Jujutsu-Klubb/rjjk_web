@@ -29,11 +29,11 @@
         ' Kommer allikevel
       - unless @other_attendees.empty?
         br
-        = @other_attendees.size
+        => @other_attendees.size
         ' andre kommer.
       - unless @other_absentees.empty?
         br
-        = @other_absentees.size
+        => @other_absentees.size
         ' har meldt fravær.
     - else
       .input-group.input-group-sm
