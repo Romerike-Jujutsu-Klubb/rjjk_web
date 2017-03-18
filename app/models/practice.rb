@@ -20,6 +20,6 @@ class Practice < ActiveRecord::Base
   end
 
   def to_s
-    "#{group_schedule.group.name} #{date} #{group_schedule.start_at}"
+    "#{group_schedule.group.full_name} #{date} #{group_schedule.start_at.to_s(false)}"
   end
 end

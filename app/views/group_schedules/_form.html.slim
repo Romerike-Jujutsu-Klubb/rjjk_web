@@ -1,11 +1,11 @@
 = bootstrap_form_for(@group_schedule) do |f|
   = f.error_messages
 
-  = f.select :group_id, @groups.map{|g| ["#{g.martial_art.name} #{g.name}", g.id]}.sort
+  = f.select :group_id, @groups.map{|g| ["#{g.martial_art.name} #{g.name}", g.id]}.sort, prompt: 'Velg gruppe'
 
   .row
     .col-4
-      = f.select :weekday, [['Mandag', 1], ['Tirsdag', 2], ['Onsdag', 3], ['Torsdag', 4], ['Fredag', 5], ['Lørdag', 6], ['Søndag', 7]]
+      = f.select :weekday, [['Mandag', 1], ['Tirsdag', 2], ['Onsdag', 3], ['Torsdag', 4], ['Fredag', 5], ['Lørdag', 6], ['Søndag', 7]], prompt: 'Velg ukedag'
     .col-4
       = f.text_field :start_at, class: 'time'
     .col-4

@@ -18,6 +18,6 @@ class GroupSchedule < ActiveRecord::Base
   end
 
   def to_s
-    "#{group.name} #{weekday_name}"
+    "#{group.full_name} #{weekday_name} #{start_at.to_s(false)}"
   end
 end

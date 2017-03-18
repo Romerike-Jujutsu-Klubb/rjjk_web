@@ -89,4 +89,8 @@ OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday > ?)',
   #  all.where('group_schedule_id IN ? AND year = ?',
   #      group.group_schedules.map{|gs| gs.id}, year, month)
   # end
+
+  def to_s
+    "#{member} #{practice} (#{status})"
+  end
 end

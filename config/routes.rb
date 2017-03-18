@@ -188,6 +188,8 @@ Rails.application.routes.draw do
   resources :user_messages
   resources :users do
     member do
+      post :change_password
+      post :forgot_password
       post :like
     end
   end

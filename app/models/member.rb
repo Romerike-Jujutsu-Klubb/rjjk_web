@@ -461,4 +461,8 @@ blocking users: #{blocking_users.inspect}"
   def technical_committy?
     current_rank && (current_rank >= Rank.kwr.find_by(name: '1. kyu')) && active?
   end
+
+  def to_s
+    name
+  end
 end
