@@ -45,13 +45,8 @@ if RUBY_ENGINE == 'ruby'
     begin
       Rails.logger.info "starting puma worker #{worker_index}"
       ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
-      Rails.logger.info "starting puma worker #{worker_index}: DB connection OK"
-      ENV['PUMA_WORKER_INDEX'] = worker_index.to_s
-      Rails.logger.info "starting puma worker #{worker_index}: ENV OK"
-      Rjjk.start_scheduling
-      Rails.logger.info "starting puma worker #{worker_index}: scheduler OK"
+      Rjjk.start_scheduling if worker_index == 0
     rescue => e
-      puts "Exception booting worker: #{e}"
       Rails.logger.info "Exception booting worker: #{e}"
     end
   end
