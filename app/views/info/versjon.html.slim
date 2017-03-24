@@ -8,12 +8,14 @@ p
 
 h3 Versjon
 
-p
-  - if File.exists? 'REVISION'
-    ' Revision: #{File.read('REVISION')}
-    ' Timestamp: #{File.mtime('REVISION')}
-  - else
-    ' Utvikling
+- if File.exists? 'REVISION'
+  dl
+    dt Revision
+    dd = File.read('REVISION')
+    dt Timestamp
+    dd = File.mtime('REVISION')
+- else
+  p Utvikling
 
 h3 Ruby
 
