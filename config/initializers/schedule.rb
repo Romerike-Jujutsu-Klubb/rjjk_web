@@ -59,7 +59,7 @@ else
     scheduler.cron('0 1 * * mon') { GraduationReminder.notify_overdue_graduates }
     scheduler.cron('0 1 * * *') { GraduationReminder.notify_missing_graduations }
     scheduler.cron('*/5 * * * *') do
-      Rails.logger.error 'Running hyper-scheduled jobs:'
+      Rails.logger.info 'Running hyper-scheduled jobs:'
       GraduationReminder.notify_groups
       GraduationReminder.notify_censors
       GraduationReminder.notify_missing_locks

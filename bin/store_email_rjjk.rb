@@ -120,10 +120,11 @@ X-Envelope-To: #{recipients.join(', ')}
 EOF
 
   RawIncomingEmail.configurations = YAML.load_file('config/database.yml')
-  RawIncomingEmail.establish_connection(env)
+  RawIncomingEmail.establish_connection(env.to_sym)
   RawIncomingEmail.create content: content_with_envelope
 rescue Exception => e # rubocop: disable Lint/RescueException
   log "Exception storing record: #{e}"
+  log "RawIncomingEmail.configurations: #{RawIncomingEmail.configurations.inspect}"
   exit EX_TEMPFAIL
 end
 
