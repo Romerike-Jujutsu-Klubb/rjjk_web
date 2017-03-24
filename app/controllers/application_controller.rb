@@ -15,9 +15,9 @@ class ApplicationController < ActionController::Base
   before_action :reject_baidu_bot
   before_action :store_current_user_in_thread
 
-  if Rails.env.beta?
-    before_action { Rack::MiniProfiler.authorize_request if current_user.try(:admin?) }
-  end
+  # if Rails.env.beta?
+  #   before_action { Rack::MiniProfiler.authorize_request if current_user.try(:admin?) }
+  # end
 
   # FIXME(uwe):  Set permitted params in each controller/action
   before_action { params.permit! }

@@ -10,7 +10,7 @@ threads threads_count, threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests, default is 3000.
 #
-port        ENV.fetch('PORT') { 3000 }
+port ENV.fetch('PORT') { 3000 }
 
 # Specifies the `environment` that Puma will run in.
 #
@@ -41,8 +41,19 @@ preload_app! if RUBY_ENGINE == 'ruby'
 # cannot share connections between processes.
 
 if RUBY_ENGINE == 'ruby'
-  on_worker_boot do
-    ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
+  on_worker_boot do |worker_index|
+    begin
+      Rails.logger.info "starting puma worker #{worker_index}"
+      ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
+      Rails.logger.info "starting puma worker #{worker_index}: DB connection OK"
+      ENV['PUMA_WORKER_INDEX'] = worker_index.to_s
+      Rails.logger.info "starting puma worker #{worker_index}: ENV OK"
+      Rjjk.start_scheduling
+      Rails.logger.info "starting puma worker #{worker_index}: scheduler OK"
+    rescue => e
+      puts "Exception booting worker: #{e}"
+      Rails.logger.info "Exception booting worker: #{e}"
+    end
   end
 end
 

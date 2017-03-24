@@ -9,9 +9,9 @@ class UserMessagesController < ApplicationController
   end
 
   def index
-    query = UserMessage.order(created_at: :desc)
+    query = UserMessage.includes(user: :member).order(created_at: :desc)
     query = query.where(user_id: current_user.id) unless admin?
-    @user_messages = query.all
+    @user_messages = query.limit(1000).to_a
   end
 
   def show
