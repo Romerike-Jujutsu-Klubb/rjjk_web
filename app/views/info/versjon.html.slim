@@ -1,0 +1,20 @@
+h3 Kjøretid
+
+p
+  ' #{uptime.to_i / (3600 *24)} dager
+  ' #{(uptime.to_i % (3600 *24)) / 3600} timer
+  ' #{(uptime.to_i % 3600) / 60} minutter
+  ' #{uptime.to_i % 60} sekunder
+
+h3 Versjon
+
+p
+  - if File.exists? 'REVISION'
+    ' Revision: #{File.read('REVISION')}
+    ' Timestamp: #{File.mtime('REVISION')}
+  - else
+    ' Utvikling
+
+h3 Ruby
+
+p = RUBY_DESCRIPTION
