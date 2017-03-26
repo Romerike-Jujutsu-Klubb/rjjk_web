@@ -64,21 +64,12 @@ gem 'ri_cal'
 gem 'rufus-scheduler'
 gem 'sass-rails'
 gem 'schema_auto_foreign_keys'
-
-# FIXME(uwe): https://github.com/sparklemotion/nokogiri/issues/1382
-# FIXME(uwe): https://github.com/sparklemotion/nokogiri/pull/1478
-# FIXME(uwe): Enable!
-# gem 'script_relocator', github: 'donv/script_relocator', platform: :ruby
-# EMXIF
-
+# gem 'script_relocator' # TODO(uwe): Messes up the design.  Why?!
 gem 'simple_drilldown'
 gem 'simple_workflow'
 gem 'slim-rails'
 gem 'tinymce-rails'
 gem 'tinymce-rails-langs'
-# FIXME(uwe): https://github.com/kossnocorp/jquery.turbolinks/pull/58
-# gem 'turbolinks', '<5'
-# EMXIF
 gem 'uglifier'
 gem 'unicode_utils'
 gem 'will_paginate'

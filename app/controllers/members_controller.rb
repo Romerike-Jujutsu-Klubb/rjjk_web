@@ -148,24 +148,7 @@ class MembersController < ApplicationController
   end
 
   def destroy
-    # FIXME(uwe): Remove when moved to Rails 4.2
-    # https://github.com/rails/rails/issues/12380
-    # https://github.com/rails/rails/pull/12450
-    Member.transaction do
-      member = Member.find(params[:id])
-      if (user = member.user)
-        member.user_id = nil
-        member.save(validate: false)
-        user.destroy
-      end
-      # EMXIF
-
-      Member.find(params[:id]).destroy
-
-      # FIXME(uwe): Remove when moved to Rails 4.2
-    end
-    # EMXIF
-
+    Member.find(params[:id]).destroy
     redirect_to action: 'index'
   end
 

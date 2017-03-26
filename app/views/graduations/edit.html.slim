@@ -11,17 +11,17 @@
       = link_to 'Send innkalling', lock_graduation_path(@graduation), class: 'btn btn-primary', method: :post
     - else
       .btn.btn-success Innkalling sendes #{@approval.graduation.held_on - GraduationReminder::GRADUATES_INVITATION_LIMIT}
-  = link_to 'Til listen', {action: :index}, class: 'btn btn-secondary'
+  = link_to 'Til listen', {action: :index}, class: 'btn btn-secondary ml-2'
 
 
 h2 Gradering #{@graduation.group.name} #{@graduation.held_on}
 
 ul.nav.nav-tabs
-  li.active = link_to 'Deltakere', '#graduates', data:{toggle: 'tab'}
-  li = link_to 'Eksaminatorer / Sensorer', '#censors', data:{toggle: 'tab'}
-  li = link_to 'Skjema', '#forms', data:{toggle: 'tab'}
-  li = link_to 'Handleliste belter', '#shopping-list', data:{toggle: 'tab'}
-  li = link_to 'Dato / Gruppe', '#form', data:{toggle: 'tab'}
+  li.nav-item = link_to 'Deltakere', '#graduates', data:{toggle: 'tab'}, class: 'nav-link active'
+  li.nav-item = link_to 'Eksaminatorer / Sensorer', '#censors', data:{toggle: 'tab'}, class: 'nav-link'
+  li.nav-item = link_to 'Skjema', '#forms', data:{toggle: 'tab'}, class: 'nav-link'
+  li.nav-item = link_to 'Handleliste belter', '#shopping-list', data:{toggle: 'tab'}, class: 'nav-link'
+  li.nav-item = link_to 'Dato / Gruppe', '#form', data:{toggle: 'tab'}, class: 'nav-link'
 
 .tab-content
   #graduates.tab-pane.active

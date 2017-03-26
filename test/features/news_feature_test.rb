@@ -17,7 +17,7 @@ class NewsFeatureTest < ActionDispatch::IntegrationTest
   def test_index_member
     login_and_visit '/news', :newbie
     assert_current_path '/news'
-    assert has_css? '#gallery_img[src="/images/inline/298486374/412.picture%20two"]'
+    assert_gallery_image_is_loaded
     screenshot('news/index_member')
   end
 

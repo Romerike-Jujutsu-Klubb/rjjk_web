@@ -141,7 +141,7 @@
                 var returnMoment;
 
                 if (d === undefined || d === null) {
-                    returnMoment = moment(); //TODO should this use format? and locale?
+                    returnMoment = moment();
                 } else if (hasTimeZone()) { // There is a string to parse and a default time zone
                     // parse with the tz function which takes a default time zone if it is not in the format string
                     returnMoment = moment.tz(d, parseFormats, options.useStrict, options.timeZone);
@@ -866,7 +866,6 @@
 
                 if (isValid(targetMoment)) {
                     date = targetMoment;
-                    //viewDate = date.clone(); // TODO this doesn't work right on first use
                     input.val(date.format(actualFormat));
                     element.data('date', date.format(actualFormat));
                     unset = false;

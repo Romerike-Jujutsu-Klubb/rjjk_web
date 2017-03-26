@@ -4,7 +4,7 @@ class GraduatesController < ApplicationController
 
   before_action :admin_required, except: [:confirm, :create, :decline, :destroy, :show, :update]
 
-  # FIXME(uwe):  Fixe cache sweeping!
+  # FIXME(uwe):  Fix cache sweeping!
   # cache_sweeper :grade_history_image_sweeper, :only => [:create, :update, :destroy]
 
   def index

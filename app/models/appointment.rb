@@ -32,4 +32,12 @@ class Appointment < ActiveRecord::Base
       member.first_name
     end
   end
+
+  def elected_contact
+    if guardian_index
+      member.guardians[guardian_index]
+    else
+      { name: member.name, email: member.email || member.emails.first }
+    end
+  end
 end

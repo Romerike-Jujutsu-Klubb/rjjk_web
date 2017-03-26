@@ -103,14 +103,8 @@ class NkfMember < ActiveRecord::Base
   def create_corresponding_member!
     transaction do
       u = Member.create_corresponding_user! converted_attributes
-      member = create_member!(converted_attributes.update(instructor: false,
-              nkf_fee: true, payment_problem: false, user: u))
-
-      # FIXME(uwe):  Is this line needed?  Is the value not set by create_member! ?
-      member.nkf_member = self
-      # EMXIF
-
-      member
+      create_member!(converted_attributes.update(instructor: false, nkf_fee: true,
+          payment_problem: false, user: u))
     end
   end
 

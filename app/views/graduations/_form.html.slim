@@ -27,7 +27,7 @@ br
   .row
     .col-md-12
       .btn-toolbar.float-right
-        = back_or_link_to 'Tilbake', {action: :index}, class: 'btn btn-secondary'
+        = back_or_link_to 'Tilbake', {action: :index}, class: 'btn btn-secondary ml-2'
         - unless @graduation.new_record?
-          = link_to 'Vis', {action: 'show', id: @graduation}, class: 'btn btn-secondary'
-        = f.submit 'Lagre', class: 'btn btn-primary'
+          = link_to 'Vis', {action: 'show', id: @graduation}, class: 'btn btn-secondary ml-2'
+        = f.submit 'Lagre', class: 'btn btn-primary ml-2'

@@ -57,4 +57,8 @@ class ActionDispatch::IntegrationTest
       end
     end
   end
+
+  def assert_gallery_image_is_loaded
+    assert has_css? '#gallery_img[src="/images/inline/298486374/412.picture%20two"]'
+  end
 end
