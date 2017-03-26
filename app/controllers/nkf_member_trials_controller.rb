@@ -7,7 +7,7 @@ class NkfMemberTrialsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xml  { render xml: @nkf_member_trials }
+      format.xml { render xml: @nkf_member_trials }
     end
   end
 
@@ -16,7 +16,7 @@ class NkfMemberTrialsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xml  { render xml: @nkf_member_trial }
+      format.xml { render xml: @nkf_member_trial }
     end
   end
 
@@ -25,7 +25,7 @@ class NkfMemberTrialsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xml  { render xml: @nkf_member_trial }
+      format.xml { render xml: @nkf_member_trial }
     end
   end
 

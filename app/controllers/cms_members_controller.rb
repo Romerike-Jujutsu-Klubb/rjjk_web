@@ -7,7 +7,7 @@ class CmsMembersController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xml  { render xml: @cms_members }
+      format.xml { render xml: @cms_members }
     end
   end
 
@@ -16,7 +16,7 @@ class CmsMembersController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xml  { render xml: @cms_member }
+      format.xml { render xml: @cms_member }
     end
   end
 
@@ -25,7 +25,7 @@ class CmsMembersController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xml  { render xml: @cms_member }
+      format.xml { render xml: @cms_member }
     end
   end
 
