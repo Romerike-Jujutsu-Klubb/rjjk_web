@@ -10,6 +10,11 @@ class AnnualMeeting < ActiveRecord::Base
     end
   end
 
+  def self.current_board
+    where('start_at <= ?', Time.current).order(:start_at).last.elections.on_the_board
+        .includes(:member)
+  end
+
   def next
     @_next_ ||= self.class.where('start_at > ?', start_at).order(:start_at).first
   end

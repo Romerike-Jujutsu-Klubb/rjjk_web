@@ -428,6 +428,8 @@ blocking users: #{blocking_users.inspect}"
       emails << (parent_2_name ? %("#{parent_2_name}" <#{parent_email}>) : parent_email)
     end
     emails.uniq
+    emails << user.email if emails.empty? && user&.email
+    emails
   end
 
   def phones

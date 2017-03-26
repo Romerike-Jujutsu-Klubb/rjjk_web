@@ -9,7 +9,7 @@ class GroupSchedulesController < ApplicationController
       [gs.weekday.zero? ? 7 : gs.weekday, gs.start_at, gs.end_at, gs.group.from_age]
     end
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.xml { render xml: @group_schedules }
     end
   end
@@ -24,7 +24,7 @@ class GroupSchedulesController < ApplicationController
     @group_schedule = GroupSchedule.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.xml { render xml: @group_schedule }
     end
   end

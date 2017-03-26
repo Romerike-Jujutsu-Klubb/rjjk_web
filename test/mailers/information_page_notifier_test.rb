@@ -19,7 +19,7 @@ class InformationPageNotifierTest < ActionMailer::TestCase
 
   def test_send_weekly_info_page
     assert InformationPageNotifier.send_weekly_info_page
-    assert_equal 3, UserMessage.pending.size
+    assert_equal 4, UserMessage.pending.size
 
     mail = UserMessage.pending[0]
     assert_equal 'Til info: My first article', mail.subject
@@ -35,6 +35,12 @@ class InformationPageNotifierTest < ActionMailer::TestCase
 
     email = UserMessage.pending[2]
     assert_equal 'Til info: My first article', email.subject
+    assert_equal ['"Sebastian Kubosch" <sebastian@example.com>'], email.to
+    assert_equal %w(test@jujutsu.no), email.from
+    assert_match 'A very interresting topic!', email.body
+
+    email = UserMessage.pending[3]
+    assert_equal 'Til info: My first article', email.subject
     assert_equal ['"Uwe Kubosch" <admin@test.com>'], email.to
     assert_equal %w(test@jujutsu.no), email.from
     assert_match 'A very interresting topic!', email.body
@@ -46,7 +52,7 @@ class InformationPageNotifierTest < ActionMailer::TestCase
     end
 
     assert InformationPageNotifier.send_weekly_info_page
-    assert_equal 2, UserMessage.pending.size
+    assert_equal 3, UserMessage.pending.size
 
     email = UserMessage.pending[0]
     assert_equal 'Til info: My first article', email.subject
@@ -57,6 +63,12 @@ class InformationPageNotifierTest < ActionMailer::TestCase
     email = UserMessage.pending[1]
     assert_equal 'Til info: My first article', email.subject
     assert_equal ['"Newbie Neuer" <newbie@example.com>'], email.to
+    assert_equal %w(test@jujutsu.no), email.from
+    assert_match 'A very interresting topic!', email.body
+
+    email = UserMessage.pending[2]
+    assert_equal 'Til info: My first article', email.subject
+    assert_equal ['"Sebastian Kubosch" <sebastian@example.com>'], email.to
     assert_equal %w(test@jujutsu.no), email.from
     assert_match 'A very interresting topic!', email.body
   end

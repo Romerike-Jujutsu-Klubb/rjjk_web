@@ -6,7 +6,7 @@ class GroupsController < ApplicationController
     @groups = Group.active(Date.current).order('to_age, from_age DESC').to_a
     @closed_groups = Group.inactive(Date.current).to_a
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.xml { render xml: @groups }
       format.yaml { render text: @groups.to_yaml, content_type: 'text/yaml' }
     end
@@ -24,7 +24,7 @@ class GroupsController < ApplicationController
     @instructors = @group.instructors
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.xml { render xml: @group }
     end
   end

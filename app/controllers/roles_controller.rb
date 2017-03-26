@@ -6,7 +6,7 @@ class RolesController < ApplicationController
     @roles = Role.order('years_on_the_board DESC NULLS LAST, name').to_a
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @roles }
     end
   end
@@ -15,7 +15,7 @@ class RolesController < ApplicationController
     @role = Role.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @role }
     end
   end
@@ -24,7 +24,7 @@ class RolesController < ApplicationController
     @role = Role.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @role }
     end
   end

@@ -1,0 +1,16 @@
+= bootstrap_form_for(@election) do |f|
+  = f.select :annual_meeting_id, options_from_collection_for_select(@annual_meetings, :id, :date, @election.annual_meeting_id), label: 'Årsmøte'
+  = f.select :role_id, options_from_collection_for_select(@roles, :id, :name, @election.role_id),
+            label: 'Stilling', prompt: 'Velg rolle'
+  = f.select :member_id, options_from_collection_for_select(@members, :id, :name, @election.member_id),
+            label: 'Medlem', prompt: 'Velg medlem'
+  - if @election.member&.guardians&.any?
+    = f.select :guardian_index,
+        [*@election.member.guardians.map { |i,g| ["#{g[:name]} (#{g[:email] || 'e-post mangler'})", i] }],
+        label: 'Foresatt', include_blank: @election.guardian_index ? 'Ingen foresatt' : 'Velg foresatt hvis passende'
+  - unless @election.new_record?
+    = f.text_field :resigned_on, label: 'Trukket seg'
+
+  .btn-toolbar.float-right
+    = link_to 'Til styreoversikt', elections_path, class: 'btn btn-link'
+    = f.primary 'Lagre'

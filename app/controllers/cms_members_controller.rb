@@ -6,7 +6,7 @@ class CmsMembersController < ApplicationController
     @cms_members = CmsMember.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.xml  { render xml: @cms_members }
     end
   end
@@ -15,7 +15,7 @@ class CmsMembersController < ApplicationController
     @cms_member = CmsMember.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.xml  { render xml: @cms_member }
     end
   end
@@ -24,7 +24,7 @@ class CmsMembersController < ApplicationController
     @cms_member = CmsMember.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.xml  { render xml: @cms_member }
     end
   end

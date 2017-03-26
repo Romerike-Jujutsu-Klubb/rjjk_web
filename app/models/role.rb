@@ -37,4 +37,8 @@ class Role < ActiveRecord::Base
   def on_the_board?
     !!years_on_the_board
   end
+
+  def to_s
+    "#{name}#{" (#{years_on_the_board} years on the board)" if years_on_the_board}"
+  end
 end

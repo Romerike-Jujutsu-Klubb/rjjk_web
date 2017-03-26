@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   validates :login, presence: { on: :create }
   validates :login, length: { within: 3..64, on: :create, allow_blank: true }
   validates :login, uniqueness: { on: :create }
-  validates :email, uniqueness: { on: :create }
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
 
   validates :password, presence: { if: :validate_password? }
   validates :password, confirmation: { if: :validate_password? }

@@ -2,46 +2,22 @@
 class TrialAttendancesController < ApplicationController
   before_action :admin_required
 
-  # GET /trial_attendances
-  # GET /trial_attendances.xml
   def index
     @trial_attendances = TrialAttendance.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml { render xml: @trial_attendances }
-    end
   end
 
-  # GET /trial_attendances/1
-  # GET /trial_attendances/1.xml
   def show
     @trial_attendance = TrialAttendance.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml { render xml: @trial_attendance }
-    end
   end
 
-  # GET /trial_attendances/new
-  # GET /trial_attendances/new.xml
   def new
     @trial_attendance = TrialAttendance.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml { render xml: @trial_attendance }
-    end
   end
 
-  # GET /trial_attendances/1/edit
   def edit
     @trial_attendance = TrialAttendance.find(params[:id])
   end
 
-  # POST /trial_attendances
-  # POST /trial_attendances.xml
   def create
     if params[:trial_attendance] && params[:trial_attendance][:practice_id]
       practice_id = params[:trial_attendance][:practice_id]
@@ -74,8 +50,6 @@ class TrialAttendancesController < ApplicationController
     end
   end
 
-  # PUT /trial_attendances/1
-  # PUT /trial_attendances/1.xml
   def update
     @trial_attendance = TrialAttendance.find(params[:id])
 

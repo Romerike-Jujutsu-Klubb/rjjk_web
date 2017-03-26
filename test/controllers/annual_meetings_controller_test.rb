@@ -3,7 +3,7 @@ require 'test_helper'
 
 class AnnualMeetingsControllerTest < ActionController::TestCase
   setup do
-    @annual_meeting = annual_meetings(:one)
+    @annual_meeting = annual_meetings(:last)
     login(:admin)
   end
 

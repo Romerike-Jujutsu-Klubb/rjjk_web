@@ -6,7 +6,7 @@ class BoardMeetingsController < ApplicationController
     @board_meetings = BoardMeeting.order(:start_at).reverse_order.all
     load_form_data
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @board_meetings }
     end
   end
@@ -14,7 +14,7 @@ class BoardMeetingsController < ApplicationController
   def show
     @board_meeting = BoardMeeting.find(params[:id])
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @board_meeting }
     end
   end
@@ -22,7 +22,7 @@ class BoardMeetingsController < ApplicationController
   def new
     load_form_data
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @board_meeting }
     end
   end

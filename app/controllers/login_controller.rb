@@ -104,23 +104,30 @@ class LoginController < ApplicationController
     escaped_email = CGI.escapeHTML(email)
     if email.blank? || email !~ /.+@.+\..+/
       flash.now.notice = 'Skriv inn en gyldig e-postadresse.'
-    elsif (users = (User.search(email) + Member.search(email).map(&:user)).uniq).empty?
+    elsif (users_by_email = (User.search(email) + Member.search(email).map(&:user)).uniq).empty?
       flash.now.notice =
           "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{escaped_email}"
     else
       begin
-        User.transaction do
-          users.each do |user|
-            url = url_for(action: :change_password)
-            UserMailer.forgot_password(user, url).store(user, tag: :forgot_password)
-          end
-          flash.notice =
-              "En e-post med veiledning for å sette nytt passord er sendt til #{escaped_email}."
-          unless authenticated_user?
-            redirect_to action: 'login'
-            return
+        users = users_by_email - [current_user]
+        if users.any?
+          User.transaction do
+            users.each do |user|
+              url = url_for(action: :change_password)
+              UserMailer.forgot_password(user, url).store(user, tag: :forgot_password)
+            end
+            flash.notice =
+                "En e-post med veiledning for å sette nytt passord er sendt til #{escaped_email}."
+            unless authenticated_user?
+              redirect_to action: 'login'
+              return
+            end
           end
           back_or_redirect_to '/'
+        else
+          flash.notice = 'Du er nå logget på. Du kan nå endre passordet ditt.'
+          redirect_to action: 'change_password'
+          return
         end
       rescue => ex
         report_exception ex
@@ -167,7 +174,7 @@ class LoginController < ApplicationController
   def like
     UserImage.where(user_id: current_user.id, image_id: params[:id], rel_type: 'LIKE')
         .first_or_create!
-    redirect_to controller: :news, action: :index
+    redirect_to news_items_path
   end
 
   protected

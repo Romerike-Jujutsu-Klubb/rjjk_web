@@ -3,7 +3,7 @@ require 'test_helper'
 
 class ElectionsControllerTest < ActionController::TestCase
   setup do
-    @election = elections(:uwe_chairman)
+    @election = elections(:chairman)
     login(:admin)
   end
 

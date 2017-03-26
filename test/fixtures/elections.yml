@@ -1,17 +1,23 @@
-uwe_chairman:
-  annual_meeting: one
-  role: chairman
-  member: uwe
-  years: 2
-
-lars:
-  annual_meeting: two
+chairman:
+  annual_meeting: last
   role: chairman
   member: lars
   years: 2
 
+treasurer:
+  annual_meeting: last
+  role: treasurer
+  member: sebastian
+  years: 1
+
 chief_instructor:
-  annual_meeting: one
+  annual_meeting: last
   role: chief_instructor
   member: uwe
+  years: 2
+
+lars:
+  annual_meeting: next
+  role: chairman
+  member: lars
   years: 2

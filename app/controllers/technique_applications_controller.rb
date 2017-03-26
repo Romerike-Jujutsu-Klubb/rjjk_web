@@ -7,7 +7,7 @@ class TechniqueApplicationsController < ApplicationController
   def index
     @technique_applications = TechniqueApplication.all
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @technique_applications }
     end
   end
@@ -15,7 +15,7 @@ class TechniqueApplicationsController < ApplicationController
   def show
     @technique_application = TechniqueApplication.find(params[:id])
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @technique_application }
     end
   end

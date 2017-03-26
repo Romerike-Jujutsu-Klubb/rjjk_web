@@ -2,20 +2,13 @@
 require 'mail'
 
 class IncomingEmailProcessor
-  # FIXME(uwe): Read "styret" from database
   TARGETS = {
       kasserer: { name: 'Kasia Krohn', email: 'kasiakrohn@gmail.com' },
       materialforvalter: { name: 'Tommy Musaus', email: 'tommy.musaus@hellvikhus.no' },
       medlem: { name: 'Svein Robert Rolijordet', email: 'srr@resvero.com' },
       post: { name: 'Svein Robert Rolijordet', email: 'srr@resvero.com' },
-      styret: [
-          { name: 'Svein Robert Rolijordet', email: 'srr@resvero.com' },
-          { name: 'Anita Bredesen', email: 'anita.abn1970@gmail.com' },
-          { name: 'Kasia Krohn', email: 'kasiakrohn@gmail.com' },
-          { name: 'Lars Bråten', email: 'lebraten@gmail.com' },
-          { name: 'Erin Bråten', email: 'erinbraten@gmail.com' },
-          { name: 'Uwe Kubosch', email: 'uwe@kubosch.no' },
-      ],
+      styret: [*AnnualMeeting.current_board, Role[:Hovedinstruktør, return_record: true]]
+          .map(&:elected_contact),
       test: { name: 'don Valentin', email: 'donv@kubosch.no' },
       web: { name: 'Uwe Kubosch', email: 'uwe@kubosch.no' },
   }.freeze

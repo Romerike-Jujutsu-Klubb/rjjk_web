@@ -6,7 +6,7 @@ class PageAliasesController < ApplicationController
     @page_aliases = PageAlias.order(:old_path, :new_path).to_a
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @page_aliases }
     end
   end
@@ -15,7 +15,7 @@ class PageAliasesController < ApplicationController
     @page_alias = PageAlias.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @page_alias }
     end
   end
@@ -24,7 +24,7 @@ class PageAliasesController < ApplicationController
     @page_alias = PageAlias.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @page_alias }
     end
   end

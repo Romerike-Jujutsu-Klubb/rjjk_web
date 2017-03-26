@@ -5,7 +5,7 @@ class BirthdayCelebrationsController < ApplicationController
   def index
     @birthday_celebrations = BirthdayCelebration.order('held_on DESC').to_a
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @birthday_celebrations }
     end
   end
@@ -13,7 +13,7 @@ class BirthdayCelebrationsController < ApplicationController
   def show
     @birthday_celebration = BirthdayCelebration.find(params[:id])
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @birthday_celebration }
     end
   end
@@ -38,7 +38,7 @@ class BirthdayCelebrationsController < ApplicationController
     @birthday_celebration = BirthdayCelebration.new
     @members = Member.order(:first_name).active(Date.current).to_a.select { |m| m.age >= 15 }
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @birthday_celebration }
     end
   end

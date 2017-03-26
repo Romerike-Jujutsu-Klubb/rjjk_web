@@ -20,6 +20,10 @@ class Election < ActiveRecord::Base
         SQL
   }
 
+  scope :on_the_board, -> {
+    includes(:role).where.not(roles: {years_on_the_board: nil})
+  }
+
   def from
     annual_meeting.start_at.to_date
   end
@@ -33,6 +37,14 @@ class Election < ActiveRecord::Base
       "#{member.guardians[guardian_index][:name]} (for #{member.name})"
     else
       member.name
+    end
+  end
+
+  def elected_contact
+    if guardian_index
+      member.guardians[guardian_index]
+    else
+      {name: member.name, email: member.email || member.emails.first}
     end
   end
 end

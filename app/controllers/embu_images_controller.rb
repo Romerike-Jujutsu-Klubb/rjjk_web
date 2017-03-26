@@ -6,7 +6,7 @@ class EmbuImagesController < ApplicationController
     @embu_images = EmbuImage.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @embu_images }
     end
   end
@@ -15,7 +15,7 @@ class EmbuImagesController < ApplicationController
     @embu_image = EmbuImage.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @embu_image }
     end
   end

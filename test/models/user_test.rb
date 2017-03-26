@@ -139,8 +139,9 @@ class UserTest < ActionMailer::TestCase
         ['"Deleted" <deleted_user@example.com>'],
         ['"Newbie Neuer" <newbie@example.com>'],
         ['"Unverified" <unverified_user@example.com>'],
-        ['"Lars Bråten" <lars@example.com>'],
         ['"long_user" <long_user@example.com>'],
+        ['"Sebastian Kubosch" <sebastian@example.com>'],
+        ['"Lars Bråten" <lars@example.com>'],
         ['"Uwe Kubosch" <admin@test.com>'],
     ], User.order(:first_name, :last_name).map(&:emails)
   end

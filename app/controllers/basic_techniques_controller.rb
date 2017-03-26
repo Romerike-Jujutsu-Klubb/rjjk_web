@@ -7,7 +7,7 @@ class BasicTechniquesController < ApplicationController
   def index
     @basic_techniques = BasicTechnique.includes(:rank).order(:name).to_a
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @basic_techniques }
     end
   end
@@ -15,7 +15,7 @@ class BasicTechniquesController < ApplicationController
   def show
     @basic_technique = BasicTechnique.find(params[:id])
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @basic_technique }
     end
   end

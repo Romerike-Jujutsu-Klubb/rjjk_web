@@ -2,6 +2,10 @@ chairman:
   name: Leder
   years_on_the_board: 2
 
+treasurer:
+  name: Kasserer
+  years_on_the_board: 2
+
 chief_instructor:
   name: Hovedinstruktør
 

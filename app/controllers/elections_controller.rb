@@ -7,7 +7,7 @@ class ElectionsController < ApplicationController
         .order('annual_meetings.start_at DESC, years, roles.name').to_a
         .group_by(&:annual_meeting)
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @elections }
     end
   end
@@ -15,7 +15,7 @@ class ElectionsController < ApplicationController
   def show
     @election = Election.find(params[:id])
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @election }
     end
   end

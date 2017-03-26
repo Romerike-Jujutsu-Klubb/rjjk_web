@@ -11,7 +11,7 @@ class ApplicationStepsController < ApplicationController
   def index
     @application_steps = ApplicationStep.all
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @application_steps }
     end
   end
@@ -19,7 +19,7 @@ class ApplicationStepsController < ApplicationController
   def show
     @application_step = ApplicationStep.find(params[:id])
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @application_step }
     end
   end
@@ -58,7 +58,7 @@ class ApplicationStepsController < ApplicationController
   def new
     @application_step = ApplicationStep.new
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @application_step }
     end
   end

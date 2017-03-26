@@ -33,8 +33,7 @@ class NkfAppointmentsScraper
                 years: role.years_on_the_board, member_id: m.id)
             .first_or_initialize
       else
-        Appointment.includes(:member, :role)
-            .where(role_id: role.id, member_id: m.id, from: date)
+        Appointment.includes(:member, :role).where(role_id: role.id, member_id: m.id, from: date)
             .first_or_initialize(to: r[6].blank? ? nil : Date.strptime(r[6], '%d.%m.%Y'))
       end
     end

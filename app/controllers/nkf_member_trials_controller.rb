@@ -6,7 +6,7 @@ class NkfMemberTrialsController < ApplicationController
     @nkf_member_trials = NkfMemberTrial.order(:fornavn, :etternavn).to_a
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.xml  { render xml: @nkf_member_trials }
     end
   end
@@ -15,7 +15,7 @@ class NkfMemberTrialsController < ApplicationController
     @nkf_member_trial = NkfMemberTrial.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.xml  { render xml: @nkf_member_trial }
     end
   end
@@ -24,7 +24,7 @@ class NkfMemberTrialsController < ApplicationController
     @nkf_member_trial = NkfMemberTrial.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.xml  { render xml: @nkf_member_trial }
     end
   end

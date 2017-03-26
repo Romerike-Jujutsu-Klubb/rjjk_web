@@ -28,6 +28,7 @@ uwe:
   user: admin
 
 sebastian:
+  email: sebastian@example.com
   address: Møllesvingen 5
   birthdate: 2004-06-03
   first_name: Sebastian
@@ -39,6 +40,7 @@ sebastian:
   nkf_fee: true
   payment_problem: false
   postal_code: 1479
+  user: sebastian
 
 newbie:
   address: Rookie Road 5

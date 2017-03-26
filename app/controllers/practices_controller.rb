@@ -8,7 +8,7 @@ class PracticesController < ApplicationController
         .reverse_order.to_a
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @practices }
     end
   end
@@ -17,7 +17,7 @@ class PracticesController < ApplicationController
     @practice = Practice.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @practice }
     end
   end
@@ -27,7 +27,7 @@ class PracticesController < ApplicationController
     load_form_data
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @practice }
     end
   end

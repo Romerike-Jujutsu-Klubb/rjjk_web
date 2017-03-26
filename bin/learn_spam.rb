@@ -83,7 +83,7 @@ sorted.each.with_index do |f, i|
         learn(escaped_filename, 'ham')
         break
       elsif q == 'd'
-        puts
+        print "\e[3J"
         m = Mail.read_from_string(File.read(f))
         puts "From: #{m['from']}"
         puts "To: #{m['to']}"

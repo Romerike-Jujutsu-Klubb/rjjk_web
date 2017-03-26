@@ -6,7 +6,7 @@ class EventInviteesController < ApplicationController
     @event_invitees = EventInvitee.order(:name).to_a
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @event_invitees }
     end
   end
@@ -15,7 +15,7 @@ class EventInviteesController < ApplicationController
     @event_invitee = EventInvitee.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @event_invitee }
     end
   end
@@ -25,7 +25,7 @@ class EventInviteesController < ApplicationController
     load_users
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @event_invitee }
     end
   end

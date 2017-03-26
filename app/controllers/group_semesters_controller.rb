@@ -7,7 +7,7 @@ class GroupSemestersController < ApplicationController
     @group_semesters = GroupSemester.includes(:semester).order('semesters.start_on DESC').to_a
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @group_semesters }
     end
   end
@@ -16,7 +16,7 @@ class GroupSemestersController < ApplicationController
     @group_semester = GroupSemester.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @group_semester }
     end
   end
