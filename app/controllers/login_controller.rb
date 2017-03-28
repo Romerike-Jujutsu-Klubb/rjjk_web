@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 class LoginController < ApplicationController
-  before_action :authenticate_user, except: [:login, :logout, :signup, :forgot_password]
-  before_action :admin_required, except: [:welcome, :like, :login, :logout,
-      :signup, :forgot_password, :change_password]
+  before_action :authenticate_user, except: [:forgot_password, :login_link_form,
+      :login_with_password, :logout, :send_login_link, :signup]
 
-  def login
+  def login_with_password
     return if generate_blank_form
     remember_me = params.delete(:remember_me)
     @user = User.new(params['user'])
@@ -27,12 +26,39 @@ class LoginController < ApplicationController
     end
   end
 
-  def send_login_email
-    user = User.find(params[:id])
-    key = user.generate_security_token
-    url = url_for(action: 'welcome')
-    url += "?user[id]=#{user.id}&key=#{key}"
-    UserMailer.signup(user, user.password, url).store(user.id, :login_link)
+  def login_link_form
+    @email = cookies[:email]
+  end
+
+  def send_login_link
+    email = params[:user][:email]
+    escaped_email = CGI.escapeHTML(email)
+    if email.blank? || email !~ /.+@.+\..+/
+      flash.notice = 'Skriv inn en gyldig e-postadresse.'
+      redirect_to :login
+    elsif (users_by_email = (User.search(email) + Member.search(email).map(&:user)).uniq).empty?
+      flash.notice =
+          "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{escaped_email}"
+      redirect_to :login
+    else
+      begin
+        users = users_by_email - [current_user]
+        if users.any?
+          User.transaction do
+            users.each { |user| UserMailer.login_link(user).store(user, tag: :login_link) }
+          end
+          flash.notice = "En e-post med innloggingslenke er sendt til #{escaped_email}."
+          back_or_redirect_to '/'
+        else
+          flash.notice = 'Du er allerede logget på.'
+          redirect_to :login
+        end
+      rescue => ex
+        report_exception ex
+        flash.now[:notice] =
+            "Beklager!  Link for innlogging kunne ikke sendes til #{escaped_email}"
+      end
+    end
   end
 
   def signup
@@ -54,7 +80,7 @@ class LoginController < ApplicationController
               .store(@user.id, tag: :signup)
           flash['notice'] = 'Signup successful! Please check your registered "\
 "email account to verify your account registration and continue with the login.'
-          redirect_to action: 'login'
+          redirect_to login_path
         end
       end
     rescue => ex
@@ -119,7 +145,7 @@ class LoginController < ApplicationController
             flash.notice =
                 "En e-post med veiledning for å sette nytt passord er sendt til #{escaped_email}."
             unless authenticated_user?
-              redirect_to action: 'login'
+              redirect_to login_path
               return
             end
           end
@@ -131,8 +157,7 @@ class LoginController < ApplicationController
         end
       rescue => ex
         report_exception ex
-        flash.now[:notice] =
-            "Beklager!  Link for innlogging kunne ikke sendes til #{escaped_email}"
+        flash.now[:notice] = "Beklager!  Link for innlogging kunne ikke sendes til #{escaped_email}"
       end
     end
   end

@@ -25,6 +25,16 @@ class UserMailer < ApplicationMailer
     send_email
   end
 
+  def login_link(user)
+    setup_email(user)
+
+    @user = user
+    @title = 'Innloggingslenke'
+    @subject = @title
+
+    send_email
+  end
+
   def forgot_password(user, url = nil)
     setup_email(user)
 

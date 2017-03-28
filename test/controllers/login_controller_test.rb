@@ -4,14 +4,14 @@ require 'test_helper'
 class LoginControllerTest < ActionController::TestCase
   def test_login__valid_login__redirects_as_specified
     add_stored_detour controller: :welcome, action: :index
-    post :login, params:{user: { login: 'lars', password: 'atest' }}
+    post :login_with_password, params:{user: { login: 'lars', password: 'atest' }}
     assert_logged_in users(:lars)
     assert_response :redirect
     assert_redirected_to controller: :welcome, action: :index
   end
 
   def test_login_with_remember_me
-    post :login, params:{user: { login: 'lars', password: 'atest' }, remember_me: '1'}
+    post :login_with_password, params:{user: { login: 'lars', password: 'atest' }, remember_me: '1'}
 
     assert_logged_in users(:lars)
     assert_response :redirect
@@ -31,7 +31,7 @@ class LoginControllerTest < ActionController::TestCase
   end
 
   def test_login__valid_login__shows_welcome_as_default
-    post :login, params:{user: { login: 'lars', password: 'atest' }}
+    post :login_with_password, params:{user: { login: 'lars', password: 'atest' }}
     assert_logged_in users(:lars)
     assert_response :redirect
     assert_equal @controller.url_for(controller: :welcome, action: :index, only_path: false),
@@ -39,23 +39,23 @@ class LoginControllerTest < ActionController::TestCase
   end
 
   def test_login__wrong_password
-    post :login, params:{user: { login: 'lars', password: 'wrong password' }}
+    post :login_with_password, params:{user: { login: 'lars', password: 'wrong password' }}
     assert_not_logged_in
-    assert_template 'login'
+    assert_template 'login_with_password'
     assert_contains 'Innlogging feilet.', flash.notice
   end
 
   def test_login__wrong_login
-    post :login, params:{user: { login: 'wrong login', password: 'atest' }}
+    post :login_with_password, params:{user: { login: 'wrong login', password: 'atest' }}
     assert_not_logged_in
-    assert_template 'login'
+    assert_template 'login_with_password'
     assert_contains 'Innlogging feilet.', flash.notice
   end
 
   def test_login__deleted_user_cant_login
-    post :login, params:{user: { login: 'deleted_tesla', password: 'atest' }}
+    post :login_with_password, params:{user: { login: 'deleted_tesla', password: 'atest' }}
     assert_not_logged_in
-    assert_template 'login'
+    assert_template 'login_with_password'
     assert_contains 'Innlogging feilet.', flash.notice
   end
 
@@ -184,10 +184,10 @@ class LoginControllerTest < ActionController::TestCase
   end
 
   def test_invalid_login
-    post :login, params: {user: { login: 'lars', password: 'not_correct' }}
+    post :login_with_password, params: {user: { login: 'lars', password: 'not_correct' }}
     assert_not_logged_in
     assert_response :success
-    assert_template 'login'
+    assert_template 'login_with_password'
   end
 
   def test_logout
@@ -208,7 +208,7 @@ class LoginControllerTest < ActionController::TestCase
   end
 
   def assert_redirected_to_login
-    assert_equal @controller.url_for(action: 'login'), @response.redirect_url
+    assert_equal login_url, @response.redirect_url
   end
 
   def post_signup(user_params)

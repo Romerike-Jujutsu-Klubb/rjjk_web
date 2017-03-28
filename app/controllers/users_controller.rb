@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 class UsersController < ApplicationController
-  before_action :authenticate_user, except: [:login, :logout, :signup, :forgot_password]
-  before_action :admin_required, except: [:welcome, :like, :login, :logout,
-      :signup, :forgot_password, :change_password]
+  before_action :admin_required
 
   def index
     @users = User.order(:last_name, :first_name, :id).to_a

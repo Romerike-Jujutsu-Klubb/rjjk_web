@@ -1,12 +1,15 @@
-= link_to root_path, class: 'hidden-lg-up float-left b-0 p-0 m-0 bg-transparent', style: "border:0;background: transparent"
-  = image_tag('rjjk_logo_&_txt_320.png', id: :logo_img_top, class: 'hidden-lg-up', style: 'width:150px;height:150px;position:relative;top:0;left: 0')
-
-div
-  .hidden-sm-down style="padding-top: 50px" Romerike Jujutsu Klubb
+.header style='position:relative'
   - if flash[:notice]
-    .notice
-      .inner
-        p = flash[:notice].try(:html_safe)
+    .fixed-bottom.mx-3.text-left style='position: absolute;font-size:1rem;line-height:1.5'
+      .alert.alert-warning.alert-dismissible.fade.show role="alert"
+        button.close type="button" data-dismiss="alert" aria-label="Close"
+          span aria-hidden="true" &times;
+        = flash[:notice]
+  - logo_hide_class = ('hidden-lg-up' unless @content_width)
+  = link_to root_path, class: "#{logo_hide_class} float-left b-0 p-0 m-0 bg-transparent", style: 'border:0;background: transparent'
+    = image_tag('rjjk_logo_&_txt_320.png', id: :logo_img_top, style: 'width:150px;height:150px;position:relative;top:0;left: 0')
+
+  .hidden-sm-down style="padding-top: 50px" Romerike Jujutsu Klubb
 
   div style="font-size:10pt;margin-right:46px"
     - if user?

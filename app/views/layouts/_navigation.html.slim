@@ -1,0 +1,18 @@
+ul
+  li = link_to 'Forsiden', root_path
+  li = link_to 'Nyheter', controller: :news
+
+- if user?
+  = render 'layouts/user_menu'
+- if instructor?
+  = render 'layouts/instructor_menu'
+- if admin?
+  = render 'layouts/admin_menu'
+
+h1 Oversikt
+ul
+  - @information_pages.each do |page|
+    li
+      = link_to page.title + (page.visible? ? '' : ' (skjult)'), controller: :info, action: :show, id: page.title
+  - unless user?
+    li = detour_to 'Logg inn', login_path

@@ -2,6 +2,12 @@
 # frozen_string_literal: true
 # rubocop: disable Rails/TimeZone
 
+SPAM_DELETE_LIMIT = 7.0
+
+# Exit codes from <sysexits.h>
+EX_TEMPFAIL = 75
+EX_UNAVAILABLE = 69
+
 started_at = Time.now
 
 Dir.chdir File.expand_path('..', __dir__)
@@ -49,10 +55,6 @@ rescue => e
   log "Exception setting encoding: #{e}"
 end
 
-# Exit codes from <sysexits.h>
-EX_TEMPFAIL = 75
-EX_UNAVAILABLE = 69
-
 def check_spam(content, mail)
   begin
     spam_start = Time.now
@@ -76,7 +78,7 @@ def check_spam(content, mail)
       if /^(?<spam_status>Yes|No), score=(?<spam_score>-?\d+\.\d+)/ =~ spam_status_header
         if (mail_is_spam = (spam_status == 'Yes'))
           log "Mail is SPAM: #{spam_score}"
-          if spam_score.to_f >= 7.5
+          if spam_score.to_f >= SPAM_DELETE_LIMIT
             log 'Discarding the email.'
             exit 0
           end

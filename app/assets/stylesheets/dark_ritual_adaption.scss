@@ -146,9 +146,10 @@ ul.controls li a.delete {
 }
 
 .header {
-    background: asset_url('dark_ritual/header_left.png') left no-repeat, asset_url('dark_ritual/header_right.png') right no-repeat, asset_url('dark_ritual/header_lines.png') left repeat;
-    background-color: #F4F4F4;
-    height: 150px;
+  background: asset_url('dark_ritual/header_left.png') left no-repeat, asset_url('dark_ritual/header_right.png') right no-repeat, asset_url('dark_ritual/header_lines.png') left repeat;
+  background-color: #F4F4F4;
+  height: 150px;
+  width: 100%;
 }
 
 .container {

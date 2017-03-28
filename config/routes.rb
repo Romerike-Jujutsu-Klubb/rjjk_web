@@ -11,8 +11,10 @@ Rails.application.routes.draw do
   post 'login/change_password'
   get 'login/forgot_password'
   post 'login/forgot_password'
-  match 'login' => 'login#login', as: :login, via: [:get, :post]
+  match 'login/password' => 'login#login_with_password', as: :login_password, via: [:get, :post]
   get 'login/logout'
+  get 'login' => 'login#login_link_form', as: :login
+  post 'login' => 'login#send_login_link', as: :send_login_link
   match 'login/signup', via: [:get, :post]
   get 'login/welcome'
   get 'news/list'

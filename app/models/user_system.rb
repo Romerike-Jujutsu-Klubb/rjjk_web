@@ -66,7 +66,7 @@ module UserSystem
     flash.alert = message
     flash.notice = message
     store_detour(params)
-    redirect_to controller: :login, action: :login, id: nil
+    redirect_to login_path
   end
 
   def login_from_cookie

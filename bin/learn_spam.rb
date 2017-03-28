@@ -10,6 +10,8 @@ require 'active_support/core_ext/time'
 require 'active_support/core_ext/date'
 require 'active_support/core_ext/date_time'
 
+SPAM_AUTOLEARN_LIMIT = 6.8
+
 def check_if_spam(escaped_filename)
   `spamc < #{escaped_filename} | grep 'X-Spam-Status'`
 end
@@ -65,7 +67,7 @@ sorted.each.with_index do |f, i|
         new_spam_status = check_if_spam(escaped_filename)
         if /X-Spam-Status: (Yes|No), score=(?<spam_score>\d+\.\d+) / =~ new_spam_status
           print "[#{spam_score}] : ".rjust(102 - f.size, ' ')
-          if spam_score.to_f >= 7.0 # rubocop:disable Metrics/BlockNesting
+          if spam_score.to_f >= SPAM_AUTOLEARN_LIMIT # rubocop:disable Metrics/BlockNesting
             puts 'LEARNING'
             learn(escaped_filename, 'spam')
             break

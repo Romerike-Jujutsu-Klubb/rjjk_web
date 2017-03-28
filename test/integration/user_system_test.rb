@@ -78,6 +78,6 @@ class UserSystemTest < ActionDispatch::IntegrationTest
 
   def assert_redirected_to_login
     assert_response :redirect
-    assert_redirected_to controller: :login, action: :login
+    assert_redirected_to login_path
   end
 end
