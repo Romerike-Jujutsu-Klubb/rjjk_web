@@ -10,7 +10,7 @@ require 'active_support/core_ext/time'
 require 'active_support/core_ext/date'
 require 'active_support/core_ext/date_time'
 
-SPAM_AUTOLEARN_LIMIT = 6.8
+SPAM_AUTOLEARN_LIMIT = 5.0
 
 def check_if_spam(escaped_filename)
   `spamc < #{escaped_filename} | grep 'X-Spam-Status'`
