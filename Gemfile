@@ -84,7 +84,6 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
   gem 'capistrano-scm-copy'
-  gem 'rack-mini-profiler'
 end
 
 group :test do
