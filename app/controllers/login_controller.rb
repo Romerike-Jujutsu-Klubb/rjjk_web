@@ -37,10 +37,10 @@ class LoginController < ApplicationController
       flash.notice = 'Skriv inn en gyldig e-postadresse.'
       redirect_to :login
     elsif (users_by_email = (User.search(email) + Member.search(email).map(&:user)).uniq).empty?
-      flash.notice =
-          "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{escaped_email}"
+      flash.notice = "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{escaped_email}"
       redirect_to :login
     else
+      cookies.permanent[:email] = escaped_email
       begin
         users = users_by_email - [current_user]
         if users.any?
@@ -55,8 +55,7 @@ class LoginController < ApplicationController
         end
       rescue => ex
         report_exception ex
-        flash.now[:notice] =
-            "Beklager!  Link for innlogging kunne ikke sendes til #{escaped_email}"
+        flash.now[:notice] = "Beklager!  Link for innlogging kunne ikke sendes til #{escaped_email}"
       end
     end
   end

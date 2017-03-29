@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class NkfAppointmentsScraper
   def self.import_appointments
+    tries ||= 1
     logger.info 'Import appointments'
     agent = Mechanize.new
     front_page = login(agent)
@@ -40,6 +41,15 @@ class NkfAppointmentsScraper
     appointments.select { |a| a.is_a?(String) } +
         appointments.select { |a| !a.is_a?(String) && a.changed? }
         .each(&:save!).sort_by(&:from)
+  rescue => e
+    logger.warn "Exception scraping appointments (#{tries}): #{e}"
+    if (tries += 1) <= 3
+      backoff = 2**tries
+      logger.debug "backoff: #{backoff}s"
+      sleep backoff
+      retry
+    end
+    raise
   end
 
   def self.login(agent)
