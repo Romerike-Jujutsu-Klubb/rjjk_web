@@ -36,7 +36,7 @@ def safe_subject(subject, mail_is_spam, spam_score)
   ss = subject.to_s.gsub(/^((Fwd|Re|Sv):\s*)+/i, '').gsub(%r{[ :/\\\{\}`'"!]}, '_')
       .gsub(/_+/, '_')[0..100]
   @now_str ||= Time.now.strftime('%F_%T')
-  spam_marker = mail_is_spam ? '[SPAM]' : mail_is_spam == 'LARGE' ? '[LARGE]' : '_____'
+  spam_marker = mail_is_spam ? (mail_is_spam == 'LARGE' ? '[LARGE]' : '[SPAM]') : '_____'
   subject = "mail_#{@now_str}_#{spam_marker}"
   subject += "[#{spam_score}]" if spam_score
   subject += "_#{ss}"
@@ -47,7 +47,7 @@ begin
   require 'bundler/setup'
   require 'mail'
   orig_mail = Mail.read_from_string(content)
-  if (encoding = orig_mail.content_type_parameters['charset'])
+  if (encoding = orig_mail.content_type_parameters&.[]('charset'))
     log "Convert to #{encoding.inspect}"
     content.force_encoding(encoding)
   end
@@ -67,7 +67,7 @@ def check_spam(content, mail)
       stdin.close
       content = stdout.read
       mail = Mail.read_from_string(content)
-      if (encoding = mail.content_type_parameters['charset'])
+      if (encoding = mail.content_type_parameters&.[]('charset'))
         content.force_encoding(encoding)
       end
       log "Spamassassin: #{content}"
@@ -105,7 +105,9 @@ else
   spam_score = nil
 end
 
-File.write(safe_subject(orig_mail.subject, mail_is_spam, spam_score), content)
+safe_subject = safe_subject(orig_mail.subject, mail_is_spam, spam_score)
+log "Store: #{safe_subject}"
+File.write(safe_subject, content)
 
 prod_recipients = to.grep(/@jujutsu.no/)
 beta_recipients = to.grep(/@beta.jujutsu.no/)
