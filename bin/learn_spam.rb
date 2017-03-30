@@ -11,6 +11,7 @@ require 'active_support/core_ext/date'
 require 'active_support/core_ext/date_time'
 
 SPAM_AUTOLEARN_LIMIT = 5.0
+PROMPT_COLUMN = 110
 
 def check_if_spam(escaped_filename)
   `spamc < #{escaped_filename} | grep 'X-Spam-Status'`
@@ -53,9 +54,9 @@ sorted = files.sort_by { |f| f[0..24] }
 def check_and_learn_if_spam(f, escaped_filename)
   skip = false
   new_spam_status = check_if_spam(escaped_filename)
-  if /X-Spam-Status: (Yes|No), score=(?<spam_score>\d+\.\d+) / =~ new_spam_status
-    print "[#{spam_score}] : ".rjust(102 - f.size, ' ')
-    if spam_score.to_f >= SPAM_AUTOLEARN_LIMIT # rubocop:disable Metrics/BlockNesting
+  if /X-Spam-Status: (Yes|No), score=(?<spam_score>-?\d+\.\d+) / =~ new_spam_status
+    print "[#{spam_score}] : ".rjust(PROMPT_COLUMN - f.size, ' ')
+    if spam_score.to_f >= SPAM_AUTOLEARN_LIMIT
       puts 'LEARNING'
       learn(escaped_filename, 'spam')
       skip = true
@@ -68,11 +69,11 @@ sorted.each.with_index do |f, i|
   if f.valid_encoding?
     escaped_filename = Shellwords.escape(f)
     loop do
-      print "[#{files.size - i}] #{f.gsub(/^mail_/, '')} "
+      print "[#{files.size - i}] #{f.gsub(/^mail_/, '')}"
 
       file_date = Time.zone.parse(f[5..14] + 'T' + f[16..23])
       if file_date < 2.days.ago
-        puts ': OLD'.rjust(102 - f.size, ' ')
+        puts ': OLD'.rjust(PROMPT_COLUMN - f.size, ' ')
         break
       end
 
@@ -80,12 +81,13 @@ sorted.each.with_index do |f, i|
       if old_spam_score
         break if check_and_learn_if_spam(f, escaped_filename)
       elsif /______\[(?<old_ham_score>-\d+\.\d+)\]/ =~ f
+        print ': '.rjust(PROMPT_COLUMN - f.size, ' ')
         if old_ham_score.to_f <= -2.0
           puts 'HAM'
           break
         end
       else
-        print ': '.rjust(102 - f.size, ' ')
+        print ': '.rjust(PROMPT_COLUMN - f.size, ' ')
       end
 
       q = gets.chomp

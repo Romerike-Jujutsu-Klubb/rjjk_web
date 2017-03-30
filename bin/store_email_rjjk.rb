@@ -106,7 +106,7 @@ else
 end
 
 safe_subject = safe_subject(orig_mail.subject, mail_is_spam, spam_score)
-log "Store: #{safe_subject}"
+log "Store: #{safe_subject.inspect}"
 File.write(safe_subject, content)
 
 prod_recipients = to.grep(/@jujutsu.no/)
