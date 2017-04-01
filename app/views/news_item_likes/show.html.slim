@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong News item:
+  = @news_item_like.news_item
+p
+  strong User:
+  = @news_item_like.user
+
+= link_to 'Edit', edit_news_item_like_path(@news_item_like)
+'  |
+= link_to 'Back', news_item_likes_path

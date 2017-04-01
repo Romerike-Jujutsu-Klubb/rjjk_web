@@ -60,6 +60,7 @@ gem 'rails-controller-testing' # Remove and convert to IntergratonTest instead
 gem 'rails-i18n'
 gem 'rails-observers', github: 'rails/rails-observers'
 gem 'rake'
+gem 'rinku'
 gem 'ri_cal'
 gem 'rufus-scheduler'
 gem 'sass-rails'

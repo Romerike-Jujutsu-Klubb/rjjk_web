@@ -1,0 +1,38 @@
+.post
+  - title = news_item.title
+  - if news_item.publication_state != NewsItem::PublicationState::PUBLISHED
+    - title += " (#{t news_item.publication_state.downcase})"
+
+  - if full || focus
+    h3 = title
+  - else
+    h4 = title
+
+  .contentarea
+    .details
+      = "Skrevet av #{news_item.creator.name}" if news_item.creator
+      =<> news_item.created_at.strftime '%Y-%m-%d'
+      - if news_item.expire_at && news_item.expire_at < Time.current
+        b> Utløpt
+        | #{news_item.expire_at.strftime('%F %R')}.
+    - texts = [news_item.summary, news_item.body].select { |text| !text.blank? }
+    = textalize(texts[0].strip) if texts[0]
+    - if texts[1]
+      - if full
+        = textalize(texts[1].strip)
+      - else
+        p.read_more
+          = detour_to('Les mer...', news_item)
+
+    - if user?
+      ul.controls
+        li.mr-2 id="like_#{news_item.id}" = link_to fa_icon(:'thumbs-o-up', text: 'Liker'), like_news_item_path(news_item), method: :post
+        li = detour_to 'Endre', edit_news_item_path(news_item), class: :edit
+        li = detour_to 'Utløpt', {controller: :news, action: :expire, id: news_item}, class: :edit, confirm: 'Er du sikker?', method: :post
+        li = detour_to 'Slett', {controller: :news, action: :destroy, id: news_item}, class: :edit, confirm: 'Er du sikker?', method: :delete
+        - if admin?
+          li = back_or_link_to 'Tilbake', nil, class: :edit
+
+      - if news_item.news_item_likes.any?
+        javascript:
+          $('#like_#{news_item.id}').tooltip({'title': '#{news_item.likes_message}'});

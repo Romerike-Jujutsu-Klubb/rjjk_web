@@ -31,6 +31,7 @@ class NewsFeatureTest < ActionDispatch::IntegrationTest
     screenshot_group 'news/new'
     login_and_visit '/'
     assert_current_path '/'
+    assert_gallery_image_is_loaded
     screenshot('front')
     click_link 'Ny nyhet'
     assert_current_path '/news/new'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161214191324) do
+ActiveRecord::Schema.define(version: 20170329185459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -490,6 +490,13 @@ ActiveRecord::Schema.define(version: 20161214191324) do
     t.datetime "expire_at"
     t.datetime "mailed_at"
     t.text     "summary"
+  end
+
+  create_table "news_item_likes", force: :cascade do |t|
+    t.integer  "news_item_id", :null=>false, :foreign_key=>{:references=>"news_items", :name=>"fk_news_item_likes_news_item_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__news_item_likes_news_item_id", :using=>:btree}
+    t.integer  "user_id",      :null=>false, :foreign_key=>{:references=>"users", :name=>"fk_news_item_likes_user_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__news_item_likes_user_id", :using=>:btree}
+    t.datetime "created_at",   :null=>false
+    t.datetime "updated_at",   :null=>false
   end
 
   create_table "nkf_member_trials", force: :cascade do |t|

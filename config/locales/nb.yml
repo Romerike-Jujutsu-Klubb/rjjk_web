@@ -62,7 +62,12 @@ nb:
         first_session: Første trening
         last_session: Siste trening
       news_item:
+        body: Mer informasjon (valgfritt)
+        expire_at: til
+        publish_at: Publiser fra
         publication_state: Publiseringsstatus
+        summary: Sammendrag
+        title: Tittel
       next_semester:
         first_session: Første trening neste semester
       practice:

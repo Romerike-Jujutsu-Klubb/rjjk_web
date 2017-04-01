@@ -307,6 +307,7 @@ GEM
     rake (12.0.0)
     ref (2.0.0)
     ri_cal (0.8.8)
+    rinku (2.0.2)
     rmagick (2.16.0)
     rmagick4j (0.4.0-java)
     robotex (1.0.0)
@@ -484,6 +485,7 @@ DEPENDENCIES
   rails-observers!
   rake
   ri_cal
+  rinku
   rubocop
   rufus-scheduler
   sass-rails

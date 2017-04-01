@@ -1,0 +1,8 @@
+- @content_width = 1024
+
+h1 Bursdag
+
+= render 'form'
+
+= link_to 'Vis', @birthday_celebration, class: 'btn btn-link'
+= link_to 'Diplomer', {action: :certificates, id: @birthday_celebration.id}, class: 'btn btn-danger'

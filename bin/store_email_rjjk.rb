@@ -91,6 +91,7 @@ def check_spam(content, mail)
     raise
   rescue Exception => e # rubocop: disable Lint/RescueException
     log "Exception scanning for SPAM: #{e}\n#{e.backtrace.join("\n")}"
+    mail_is_spam = 'ERROR'
   end
   log "Spam check took: #{Time.now - spam_start}s"
   [content, mail, mail_is_spam, spam_score]

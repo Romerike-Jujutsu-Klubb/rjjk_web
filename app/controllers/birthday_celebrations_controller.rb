@@ -47,6 +47,7 @@ class BirthdayCelebrationsController < ApplicationController
     @birthday_celebration = BirthdayCelebration.find(params[:id])
     @members = Member.order(:first_name).active(@birthday_celebration.held_on)
         .to_a.select { |m| m.age >= 15 }
+    @members = (@members + @birthday_celebration.sensors).uniq
   end
 
   def create

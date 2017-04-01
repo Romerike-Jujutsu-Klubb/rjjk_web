@@ -7,6 +7,7 @@ class NextPracticeAttendanceTest < ActionDispatch::IntegrationTest
   end
 
   def test_announce_attendance
+    assert_gallery_image_is_loaded
     screenshot('next_practice/initial')
     find('#next_practice i.fa-thumbs-down').click
     screenshot('next_practice/absence')

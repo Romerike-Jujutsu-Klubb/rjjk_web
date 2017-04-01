@@ -1,49 +1,30 @@
 - @content_width = 1024
 
 .row
-
   .col-md-9
-    = tinymce
-
-    = form_for @news_item, html: {role: 'form'} do |f|
-      = f.error_messages
-
+    = bootstrap_form_for @news_item, html: {role: 'form'} do |f|
+      = f.text_field :title
       .row
-        .form-group.col-md-12
-          = f.label :title, 'Tittel'
-          = f.text_field :title, class: 'form-control'
-
-      .row
-        .form-group.col-md-4
-          = f.label :publication_state, 'Publiseringsstatus'
-          = f.select :publication_state, NewsItem::PublicationState.constants.map { |s| [t(s.downcase), s] }, \
-                  {}, :class => 'form-control'
-
-        .form-group.col-md-4
-          = f.label :publish_at, 'Publiser fra'
-          = f.text_field :publish_at, value: @news_item.publish_at.try(:strftime, '%F %R'), class: 'datetime form-control', data: {:'default-date' => Time.current.strftime('%F %R') }
-
-        .form-group.col-md-4
-          = f.label :expire_at, 'til'
-          = f.text_field :expire_at, value: @news_item.expire_at.try(:strftime, '%F %R'), class: 'datetime form-control', data: {:'default-date' => 1.week.from_now.strftime('%F %R')}
-
-      p
-        | Sammendrag
+        .col-md-4
+          = f.select :publication_state, NewsItem::PublicationState.constants.map { |s| [t(s.downcase), s] }
+        .col-md-4
+          = f.text_field :publish_at, value: @news_item.publish_at.try(:strftime, '%F %R'), class: 'datetime', data: {:'default-date' => Time.current.strftime('%F %R') }
+        .col-md-4
+          = f.text_field :expire_at, value: @news_item.expire_at.try(:strftime, '%F %R'), class: 'datetime', data: {:'default-date' => 1.week.from_now.strftime('%F %R')}
+      - if false # Markdown
+        = f.text_area :summary, class: :expanding, rows: 5
+        = f.text_area :body, class: :expanding, label: 'Mer informasjon (valgfritt)', rows: 5
+      - else # HTML
+        = tinymce
         = f.text_area :summary, class: :tinymce, style: 'height: 120px'
-
-      p
-        | Mer informasjon (valgfritt)
-        / TODO(uwe): Switch to https://github.com/maclover7/trix
-        = f.text_area :body, :class => :tinymce
+        = f.text_area :body, class: :tinymce
 
       .btn-toolbar.float-right
         = back_or_link_to 'Avbryt', news_items_path, class: 'btn btn-secondary'
         = f.submit 'Lagre', id: :save, class: 'btn btn-primary ml-2'
-
   .col-md-3
     .float-right.lazy-container style="height: 680px; overflow:auto; border: 1px solid black"
       = render '/images/list', images: @images
-
 javascript:
   $(window).load(function () {
     tinyMCE.DOM.setStyle(tinyMCE.DOM.get('news_item_summary_ifr'), 'height', '120px');

@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_one :member
   has_many :embus, dependent: :destroy
   has_many :images, dependent: :destroy
+  has_many :news_item_likes, dependent: :destroy
 
   # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
   SEARCH_FIELDS = [:email, :first_name, :last_name, :login].freeze

@@ -47,6 +47,17 @@ class NewsController < ApplicationController
     end
   end
 
+  def like
+    news_item = NewsItem.find(params[:id])
+    like = news_item.news_item_likes.where(user_id: current_user.id).first_or_initialize
+    if like.persisted?
+      like.destroy!
+    else
+      like.save!
+    end
+    redirect_to :back
+  end
+
   def expire
     n = NewsItem.find(params[:id])
     n.publication_state = NewsItem::PublicationState::EXPIRED

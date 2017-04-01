@@ -34,20 +34,17 @@ module ApplicationHelper
 
   def textalize(s)
     return '' if s.nil?
-    with_emails = s.gsub(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i) do |m|
-      mail_to m, nil # , :encode => :javascript
-    end
-    html = Kramdown::Document.new(with_emails.strip).to_html
+    with_emails = Rinku.auto_link(s, :urls, 'target="_blank"')
+    with_links = Rinku.auto_link with_emails, :email_addresses
+    html = Kramdown::Document.new(with_links.strip).to_html
     html.force_encoding(Encoding::UTF_8)
     html_with_base = absolute_links(html)
     html_with_bold_links = html_with_base
-        .gsub(/(<a href="[^"]*")>/i,
-            %(\\1 style="color: #CD071E;text-decoration:none;font-weight:bold;">))
     html_with_bold_links.html_safe # rubocop: disable Rails/OutputSafety
   end
 
   def absolute_links(html)
-    base = url_for(controller: :welcome, action: :index, only_path: false)
+    base = root_url
 
     html.gsub(%r{\b(href|src)="(?:#{base}|/)([^?"]*)(\?[^"]*)?"}i) do |_m|
       with_base = %(#{$1}="#{base}#{$2}#{$3}")
@@ -67,8 +64,7 @@ module ApplicationHelper
   def textify(s)
     return '' if s.blank?
     h = Kramdown::Document.new(s.strip).to_kramdown.gsub(/\{: .*?\}\s*/, '')
-    h2 = absolute_links(h)
-    h2
+    absolute_links(h)
   end
 end
 

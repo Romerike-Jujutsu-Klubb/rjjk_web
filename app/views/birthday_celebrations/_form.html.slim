@@ -1,0 +1,12 @@
+= bootstrap_form_for(@birthday_celebration) do |f|
+  .row
+    .col-6
+      = f.text_area :participants, label: 'Deltakere', class: :expanding
+    .col-6
+      = f.text_field :held_on, label: 'Dato', class: :date
+      = f.select :sensor1_id, [[]] + @members.map{|m| [m.name, m.id]}, label: 'Sensor 1'
+      = f.select :sensor2_id, [[]] + @members.map{|m| [m.name, m.id]}, label: 'Sensor 2'
+      = f.select :sensor3_id, [[]] + @members.map{|m| [m.name, m.id]}, label: 'Sensor 3'
+  .btn-toolbar.float-right
+    = back_or_link_to 'Tilbake', birthday_celebrations_path, class: 'btn btn-link'
+    = f.primary 'Lagre'

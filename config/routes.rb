@@ -151,7 +151,13 @@ Rails.application.routes.draw do
       get :thumbnail
     end
   end
-  resources :news_items, controller: :news, path: :news
+
+  resources :news_item_likes
+
+  resources :news_items, controller: :news, path: :news do
+    member { post :like }
+  end
+
   resources :nkf_members do
     collection do
       get :comparison

@@ -72,7 +72,7 @@ div.main_right ul.controls {
 }
 
 div.main_right ul {
-    margin: 0;
+    margin: 0 0 1rem 0;
     padding-left: 26px;
 }
 
@@ -85,21 +85,13 @@ div.main_right ul {
     color: #046CB8;
 }
 
-.post p.read_more {
-    margin-top: -16px;
-}
-
-.post ul.controls {
-    margin-top: -16px;
-}
-
 h4 {
     color: #046CB8;
 }
 
 ul.controls {
     clear: both;
-    margin: 0;
+    margin-left: 0;
     padding-left: 0;
 }
 

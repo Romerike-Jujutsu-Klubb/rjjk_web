@@ -1,0 +1,22 @@
+h1 Bursdag #{@birthday_celebration.held_on}
+
+.card-deck
+  .card
+    h3.card-header Deltakere
+    .card-block
+      - if @birthday_celebration.participants.present?
+        pre.m-0 = @birthday_celebration.participants.strip
+      - else
+        p Ingen deltakere registrert.
+  .card
+    h3.card-header Sensorer
+    .card-block
+      ul
+        li = @birthday_celebration.sensor1
+        li = @birthday_celebration.sensor2
+        li = @birthday_celebration.sensor3
+
+.btn-toolbar.float-right.mt-3
+  = back_or_link_to 'Tilbake', birthday_celebrations_path, class: 'btn btn-link mr-2'
+  = link_to 'Rediger', edit_birthday_celebration_path(@birthday_celebration), class: 'btn btn-link mr-2'
+  = link_to 'Diplomer', {action: :certificates, id: @birthday_celebration.id}, class: 'btn btn-danger'
