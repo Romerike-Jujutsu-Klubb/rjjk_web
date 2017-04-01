@@ -14,6 +14,6 @@ table.table
   - @birthday_celebrations.each do |birthday_celebration|
     tr
       td nowrap="true" = link_to birthday_celebration.held_on, birthday_celebration
-      td = birthday_celebration.participants.gsub(/\s*\n\s*/, ', ')
       td
-        = link_to 'Diplomer', action: :certificates, id: birthday_celebration.id
+        = link_to 'Diplomer', { action: :certificates, id: birthday_celebration.id }, class: 'btn btn-danger btn-sm float-right'
+        = birthday_celebration.participants.gsub(/\s*\n\s*/, ', ')
