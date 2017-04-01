@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class UserMessageMailer < ApplicationMailer
   def send_message(um)
     @title = um.title || um.subject

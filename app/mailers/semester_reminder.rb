@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class SemesterReminder
   def self.notify_missing_semesters
     unless Semester.where('? BETWEEN start_on AND end_on', Date.current).exists?

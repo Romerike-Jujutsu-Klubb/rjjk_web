@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateEventInviteeMessages < ActiveRecord::Migration
   def change
     create_table :event_invitee_messages do |t|

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AllowEventWithoutStopDate < ActiveRecord::Migration
   def self.up
     change_column_null :events, :end_at, true

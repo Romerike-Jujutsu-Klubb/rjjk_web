@@ -1,25 +1,26 @@
 # frozen_string_literal: true
+
 class MemberGradeHistoryGraph
-  ACTIVE_CLAUSE = <<EOF
-EXISTS (
-  SELECT 1
-  FROM attendances a
-    INNER JOIN practices p ON p.id = a.practice_id
-  WHERE member_id = members.id
-    AND (p.year > :prev_date_year OR (p.year = :prev_date_year AND p.week >= :prev_date_week))
-    AND (p.year < :date_year OR (p.year = :date_year AND p.week <= :date_week))
-)
-AND (
-  :next_date > :current_date
-  OR EXISTS (
-    SELECT 1
-    FROM attendances a
-      INNER JOIN practices p ON p.id = a.practice_id
-    WHERE member_id = members.id
-      AND (p.year > :date_year OR (p.year = :date_year AND p.week >= :date_week))
-      AND (p.year < :next_year OR (p.year = :next_year AND p.week <= :next_week))))
-AND (joined_on IS NULL OR joined_on <= :date)
-AND (left_on IS NULL OR left_on > :date)
+  ACTIVE_CLAUSE = <<~EOF
+    EXISTS (
+      SELECT 1
+      FROM attendances a
+        INNER JOIN practices p ON p.id = a.practice_id
+      WHERE member_id = members.id
+        AND (p.year > :prev_date_year OR (p.year = :prev_date_year AND p.week >= :prev_date_week))
+        AND (p.year < :date_year OR (p.year = :date_year AND p.week <= :date_week))
+    )
+    AND (
+      :next_date > :current_date
+      OR EXISTS (
+        SELECT 1
+        FROM attendances a
+          INNER JOIN practices p ON p.id = a.practice_id
+        WHERE member_id = members.id
+          AND (p.year > :date_year OR (p.year = :date_year AND p.week >= :date_week))
+          AND (p.year < :next_year OR (p.year = :next_year AND p.week <= :next_week))))
+    AND (joined_on IS NULL OR joined_on <= :date)
+    AND (left_on IS NULL OR left_on > :date)
 EOF
 
   ATTENDANCE_CLAUSE = '(SELECT COUNT(*)

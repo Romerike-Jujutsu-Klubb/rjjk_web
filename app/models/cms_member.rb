@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CmsMember < ActiveRecord::Base
   ACTIVE_CONDITIONS = 'left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)'
 

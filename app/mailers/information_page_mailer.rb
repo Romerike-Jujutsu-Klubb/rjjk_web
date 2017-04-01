@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class InformationPageMailer < ApplicationMailer
   def notify_outdated_pages(member, pages)
     @member = member

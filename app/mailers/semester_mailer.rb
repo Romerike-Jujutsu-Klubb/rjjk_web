@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class SemesterMailer < ApplicationMailer
   default to: 'uwe@kubosch.no', bcc: 'uwe@kubosch.no'
 

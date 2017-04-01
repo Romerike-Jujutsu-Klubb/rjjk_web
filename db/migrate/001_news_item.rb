@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class NewsItem < ActiveRecord::Migration
   def self.up
     create_table 'news_items' do |t|

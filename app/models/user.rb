@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'digest/sha1'
 
 # this model expects a certain database layout and its based on the name/login pattern.
@@ -13,7 +14,7 @@ class User < ActiveRecord::Base
   has_many :news_item_likes, dependent: :destroy
 
   # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
-  SEARCH_FIELDS = [:email, :first_name, :last_name, :login].freeze
+  SEARCH_FIELDS = %i(email first_name last_name login).freeze
   scope :search, ->(query) {
     where(SEARCH_FIELDS.map { |c| "to_tsvector(UPPER(#{c})) @@ to_tsquery(:query)" }.join(' OR '),
         query: UnicodeUtils.upcase(query).split(/\s+/).join(' | '))

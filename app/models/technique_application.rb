@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class TechniqueApplication < ActiveRecord::Base
   belongs_to :rank
   has_many :application_steps, dependent: :destroy

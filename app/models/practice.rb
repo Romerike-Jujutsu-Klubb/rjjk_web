@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 class Practice < ActiveRecord::Base
   belongs_to :group_schedule
 
   has_many :attendances, dependent: :destroy
   has_many :trial_attendances, dependent: :destroy
 
-  validates :group_schedule_id, uniqueness: { scope: [:year, :week] }
+  validates :group_schedule_id, uniqueness: { scope: %i(year week) }
 
   def date
     Date.commercial(year, week, group_schedule.weekday)

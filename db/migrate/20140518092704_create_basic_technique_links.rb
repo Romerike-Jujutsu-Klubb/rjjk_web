@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateBasicTechniqueLinks < ActiveRecord::Migration
   def change
     create_table :basic_technique_links do |t|
@@ -8,8 +9,8 @@ class CreateBasicTechniqueLinks < ActiveRecord::Migration
       t.integer :position, null: false
 
       t.timestamps
-      t.index [:basic_technique_id, :position], unique: true
-      t.index [:basic_technique_id, :url], unique: true
+      t.index %i(basic_technique_id position), unique: true
+      t.index %i(basic_technique_id url), unique: true
     end
   end
 end

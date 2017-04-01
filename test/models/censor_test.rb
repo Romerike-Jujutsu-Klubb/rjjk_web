@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CensorTest < ActiveSupport::TestCase

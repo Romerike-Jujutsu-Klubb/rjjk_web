@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreatePageAliases < ActiveRecord::Migration
   def change
     create_table :page_aliases do |t|

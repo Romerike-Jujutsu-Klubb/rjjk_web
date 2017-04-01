@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class InstructionMailer < ApplicationMailer
   default to: Rails.env == 'production' ? %w(uwe@kubosch.no) : 'uwe@kubosch.no'
 

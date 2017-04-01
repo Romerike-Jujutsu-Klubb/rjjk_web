@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # * fetch surveys by survey.priority/position
 # * send to longest joined member first
 # * Send one per day, or so.

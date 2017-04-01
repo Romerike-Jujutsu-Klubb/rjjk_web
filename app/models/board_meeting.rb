@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BoardMeeting < ActiveRecord::Base
   validates :start_at, presence: true
 

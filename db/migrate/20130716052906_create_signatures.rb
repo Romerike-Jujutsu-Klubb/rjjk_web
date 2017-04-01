@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateSignatures < ActiveRecord::Migration
   def change
     create_table :signatures do |t|

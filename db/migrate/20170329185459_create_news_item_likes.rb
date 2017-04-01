@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateNewsItemLikes < ActiveRecord::Migration[5.0]
   def change
     create_table :news_item_likes do |t|

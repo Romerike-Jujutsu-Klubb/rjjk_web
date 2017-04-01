@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class LinkGroupInstructorToGroupSemester < ActiveRecord::Migration
   def up
     execute 'DELETE FROM group_instructors'

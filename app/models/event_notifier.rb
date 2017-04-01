@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EventNotifier
   def self.send_event_messages
     begin

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 env_prefix = ("#{Rails.env}." unless Rails.env.production?)
 Rails.application.config.middleware.use ExceptionNotification::Rack,
     ignore_exceptions: [],

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class RenameEventGroups < ActiveRecord::Migration
   def change
     rename_table :events_groups, :event_groups

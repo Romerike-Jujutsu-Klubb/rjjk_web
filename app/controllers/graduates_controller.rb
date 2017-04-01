@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 class GraduatesController < ApplicationController
   include GraduationAccess
 
-  before_action :admin_required, except: [:confirm, :create, :decline, :destroy, :show, :update]
+  before_action :admin_required, except: %i(confirm create decline destroy show update)
 
   # FIXME(uwe):  Fix cache sweeping!
   # cache_sweeper :grade_history_image_sweeper, :only => [:create, :update, :destroy]

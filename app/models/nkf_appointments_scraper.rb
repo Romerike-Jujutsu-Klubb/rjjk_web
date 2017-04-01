@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class NkfAppointmentsScraper
   def self.import_appointments
     tries ||= 1

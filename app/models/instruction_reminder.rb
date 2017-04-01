@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class InstructionReminder
   def self.notify_missing_instructors
     semesters = Semester

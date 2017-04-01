@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class NkfReplicationMailer < ApplicationMailer
   default to: 'uwe@kubosch.no'
 

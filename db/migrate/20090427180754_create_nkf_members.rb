@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateNkfMembers < ActiveRecord::Migration
   def self.up
     create_table :nkf_members do |t|

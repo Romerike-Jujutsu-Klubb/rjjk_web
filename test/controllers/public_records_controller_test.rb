@@ -1,9 +1,11 @@
 # frozen_string_literal: true
+
 require 'test_helper'
 
 class PublicRecordsControllerTest < ActionController::TestCase
   setup do
     @public_record = public_records(:one)
+    login(:admin)
   end
 
   test 'should get index' do

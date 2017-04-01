@@ -1,5 +1,8 @@
 # frozen_string_literal: true
+
 class WazasController < ApplicationController
+  before_action :admin_required
+
   def index
     @wazas = Waza.all
   end

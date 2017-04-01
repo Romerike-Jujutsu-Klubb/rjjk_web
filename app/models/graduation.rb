@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Graduation < ActiveRecord::Base
   belongs_to :group
   has_many :censors, dependent: :destroy
@@ -16,7 +17,7 @@ class Graduation < ActiveRecord::Base
         graduates: {
             graduation: {
                 group: {
-                    martial_art: { ranks: [{ group: [:martial_art, :ranks] }, :martial_art] },
+                    martial_art: { ranks: [{ group: %i(martial_art ranks) }, :martial_art] },
                 },
             },
             member: [
@@ -33,7 +34,7 @@ class Graduation < ActiveRecord::Base
                 },
                 :nkf_member,
             ],
-            rank: [{ group: [:group_schedules, :ranks] }, :martial_art],
+            rank: [{ group: %i(group_schedules ranks) }, :martial_art],
         },
         group: { members: :nkf_member }
     )

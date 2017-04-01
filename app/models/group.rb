@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # FIXME(uwe): Split into AgeGroup and TrainingGroup
 class Group < ActiveRecord::Base
   scope :active, ->(date = nil) do

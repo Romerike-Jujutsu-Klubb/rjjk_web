@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 desc 'Update the MRI bundle'
 
 def rvm_cmd(cmd1)

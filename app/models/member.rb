@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Member < ActiveRecord::Base
   JUNIOR_AGE_LIMIT = 15
   ASPIRANT_AGE_LIMIT = 10
@@ -52,22 +53,22 @@ class Member < ActiveRecord::Base
     to_date ||= from_date
     where('joined_on <= ? AND left_on IS NULL OR left_on >= ?', to_date, from_date)
   end
-  SEARCH_FIELDS = [
-      :billing_email, :email, :first_name, :last_name, :parent_email,
-      :parent_name, :phone_home, :phone_mobile, :phone_parent, :phone_work
-  ].freeze
+  SEARCH_FIELDS = %i(
+      billing_email email first_name last_name parent_email
+parent_name phone_home phone_mobile phone_parent phone_work
+  ).freeze
   scope :search, ->(query) {
     where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ :query" }.join(' OR '),
         query: UnicodeUtils.upcase(query).split(/\s+/).join('|'))
         .order(:first_name, :last_name)
   }
 
-  NILLABLE_FIELDS = [:parent_name, :phone_home, :phone_mobile, :phone_work].freeze
+  NILLABLE_FIELDS = %i(parent_name phone_home phone_mobile phone_work).freeze
   before_validation { NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? } }
 
   # validates_presence_of :address, :cms_contract_id
   validates :billing_postal_code, length: { is: 4,
-      if: proc { |m| m.billing_postal_code && !m.billing_postal_code.empty? } }
+      if: proc { |m| m.billing_postal_code.present? } }
   validates :birthdate, :joined_on, presence: true
   validates :cms_contract_id, uniqueness: { if: :cms_contract_id }
   validates :email, length: { maximum: 128 }
@@ -78,7 +79,7 @@ class Member < ActiveRecord::Base
   validates :payment_problem, inclusion: { in: [true, false] }
   # validates_presence_of :postal_code
   validates :postal_code, length: { is: 4, allow_blank: true }
-  validates :rfid, uniqueness: { if: proc { |r| r.rfid && !r.rfid.empty? } }
+  validates :rfid, uniqueness: { if: proc { |r| r.rfid.present? } }
   validates :user, :user_id, presence: { unless: :left_on }
 
   def self.paginate_active(page)

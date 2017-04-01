@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class SetOldCensorRequestTimestamps < ActiveRecord::Migration
   def change
     execute <<~SQL

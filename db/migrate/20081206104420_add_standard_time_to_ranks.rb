@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AddStandardTimeToRanks < ActiveRecord::Migration
   def self.up
     add_column :ranks, :standard_months, :integer, null: true

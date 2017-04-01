@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateInstructorMeetings < ActiveRecord::Migration
   def change
     create_table :instructor_meetings do |t|

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Array
   def without_consecutive_zeros
     each_with_index do |v, i|

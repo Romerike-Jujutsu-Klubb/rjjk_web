@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class NkfMember < ActiveRecord::Base
   FIELD_MAP = {
       adresse_1: nil,

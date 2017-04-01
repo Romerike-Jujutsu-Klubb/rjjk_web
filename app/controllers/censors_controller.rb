@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 class CensorsController < ApplicationController
   include GraduationAccess
 
-  CENSOR_ACTIONS = [:confirm, :decline, :show].freeze
+  CENSOR_ACTIONS = %i(confirm decline show).freeze
   before_action :admin_required, except: [:create, :destroy, *CENSOR_ACTIONS]
 
   def index

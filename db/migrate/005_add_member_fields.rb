@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AddMemberFields < ActiveRecord::Migration
   def self.up
     add_column :members, :social_sec_no, :string, limit: 6

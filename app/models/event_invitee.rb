@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EventInvitee < ActiveRecord::Base
   belongs_to :event
   belongs_to :user

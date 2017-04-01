@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class GraduationMailer < ApplicationMailer
   def missing_graduation(instructor, group, suggested_date)
     @instructor = instructor

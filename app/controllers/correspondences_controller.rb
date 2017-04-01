@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CorrespondencesController < ApplicationController
   def index
     @correspondences = Correspondence.all

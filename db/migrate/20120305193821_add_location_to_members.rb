@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AddLocationToMembers < ActiveRecord::Migration
   def change
     add_column :members, :latitude, :float # you can change the name, see wiki

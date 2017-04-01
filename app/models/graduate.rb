@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Graduate < ActiveRecord::Base
   belongs_to :graduation
   belongs_to :member
@@ -6,7 +7,7 @@ class Graduate < ActiveRecord::Base
 
   validates :graduation, :graduation_id, :member, :member_id, :rank, :rank_id, presence: true
   validates :member_id, uniqueness: { scope: :graduation_id }
-  validates :member_id, uniqueness: { scope: [:passed, :rank_id], if: :passed,
+  validates :member_id, uniqueness: { scope: %i(passed rank_id), if: :passed,
       message: 'har allerede bestått denne graden.' }
   validates :passed, inclusion: { in: [true, false], if: ->(g) { g.graduation.approved? } }
 

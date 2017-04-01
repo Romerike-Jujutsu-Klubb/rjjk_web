@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class InstructorMeetingsController < ApplicationController
-  before_action :set_instructor_meeting, only: [:show, :edit, :update, :destroy]
+  before_action :set_instructor_meeting, only: %i(show edit update destroy)
 
   def index
     @instructor_meetings = InstructorMeeting.all

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class GroupSemestersController < ApplicationController
   before_action :admin_required, except: :show
   before_action :authenticate_user, only: :show

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AddGroupScheduleToGroupInstructors < ActiveRecord::Migration
   def change
     execute 'DELETE FROM group_instructors'

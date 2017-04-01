@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 class GraduationsController < ApplicationController
   include GraduationAccess
 
-  CENSOR_ACTIONS = [:add_group, :approve, :create, :edit, :index, :new, :update].freeze
+  CENSOR_ACTIONS = %i(add_group approve create edit index new update).freeze
   before_action :admin_required, except: CENSOR_ACTIONS
   before_action :authenticate_user, only: CENSOR_ACTIONS
 
@@ -39,7 +40,7 @@ class GraduationsController < ApplicationController
         .select { |c| c.member == current_user.member }
         .sort_by { |c| c.approved_grades_at ? 0 : 1 }.last
     return unless admin_or_censor_required(@graduation, @approval)
-    @groups = Group.order(:from_age).includes(members: [:attendances, :nkf_member]).to_a
+    @groups = Group.order(:from_age).includes(members: %i(attendances nkf_member)).to_a
     @groups.unshift(@groups.delete(@graduation.group))
     @graduate = Graduate.new(graduation_id: @graduation.id)
     @censor = Censor.new graduation_id: @graduation.id
@@ -104,7 +105,7 @@ class GraduationsController < ApplicationController
   end
 
   def censor_form
-    @graduation = Graduation.includes(graduates: [:member, :rank]).find params[:id]
+    @graduation = Graduation.includes(graduates: %i(member rank)).find params[:id]
     render layout: 'print'
   end
 

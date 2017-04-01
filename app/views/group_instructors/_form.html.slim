@@ -12,7 +12,7 @@
     .col-md-6
       = f.select :semester_id, @semesters.map { |s| [s.name, s.id] }, \
                 {prompt: 'Velg semester', selected: @group_instructor.group_semester.try(:semester).try(:id)}
-    .col-md-6
+    .col-md-6.pt-2
       br
       = f.check_box :assistant
   .btn-toolbar.float-right

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AnnualMeetingMailer < ApplicationMailer
   def missing_date(member, year)
     @member = member

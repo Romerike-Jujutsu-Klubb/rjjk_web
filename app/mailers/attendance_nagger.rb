@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AttendanceNagger
   def self.send_attendance_plan
     today = Date.current
@@ -38,7 +39,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
           .map(&:member)
       attendees = attendances.map(&:member) - non_attendees
       recipients = gs.group.members.order(:joined_on, :id)
-          .select { |m| !m.passive? } - non_attendees
+          .reject(&:passive?) - non_attendees
       recipients.each do |recipient|
         AttendanceMailer.summary(practice, gs, recipient, attendees, non_attendees)
             .store(recipient.user_id, tag: :attendance_summary)
@@ -87,7 +88,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
       new_attendees = new_attendances & attendees
       new_absentees = new_attendances & absentees
       uwe = Member.find_by(first_name: 'Uwe', last_name: 'Kubosch')
-      recipients = gs.group.members.order(:joined_on).select { |m| !m.passive? } - absentees
+      recipients = gs.group.members.order(:joined_on).reject(&:passive?) - absentees
       recipients.each do |recipient|
         if recipient != uwe
           next if new_attendances.empty?

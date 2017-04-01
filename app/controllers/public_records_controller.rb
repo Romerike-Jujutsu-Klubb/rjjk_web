@@ -1,5 +1,8 @@
 # frozen_string_literal: true
+
 class PublicRecordsController < ApplicationController
+  before_action :admin_required
+
   def index
     @public_records = PublicRecord.order('created_at DESC').to_a
   end

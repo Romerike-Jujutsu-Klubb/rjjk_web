@@ -1,21 +1,14 @@
 # frozen_string_literal: true
+
 class BirthdayCelebrationsController < ApplicationController
   before_action :admin_required
 
   def index
     @birthday_celebrations = BirthdayCelebration.order('held_on DESC').to_a
-    respond_to do |format|
-      format.html
-      format.json { render json: @birthday_celebrations }
-    end
   end
 
   def show
-    @birthday_celebration = BirthdayCelebration.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.json { render json: @birthday_celebration }
-    end
+    edit
   end
 
   def certificates
@@ -35,61 +28,42 @@ class BirthdayCelebrationsController < ApplicationController
   end
 
   def new
-    @birthday_celebration = BirthdayCelebration.new
+    @birthday_celebration ||= BirthdayCelebration.new
     @members = Member.order(:first_name).active(Date.current).to_a.select { |m| m.age >= 15 }
-    respond_to do |format|
-      format.html
-      format.json { render json: @birthday_celebration }
-    end
+    render action: :new
   end
 
   def edit
-    @birthday_celebration = BirthdayCelebration.find(params[:id])
+    @birthday_celebration ||= BirthdayCelebration.find(params[:id])
     @members = Member.order(:first_name).active(@birthday_celebration.held_on)
         .to_a.select { |m| m.age >= 15 }
     @members = (@members + @birthday_celebration.sensors).uniq
+    render action: :edit
   end
 
   def create
     @birthday_celebration = BirthdayCelebration.new(params[:birthday_celebration])
-    respond_to do |format|
-      if @birthday_celebration.save
-        format.html do
-          redirect_to @birthday_celebration,
-              notice: 'Birthday celebration was successfully created.'
-        end
-        format.json do
-          render json: @birthday_celebration, status: :created, location: @birthday_celebration
-        end
-      else
-        format.html { render action: :new }
-        format.json { render json: @birthday_celebration.errors, status: :unprocessable_entity }
-      end
+    if @birthday_celebration.save
+      redirect_to @birthday_celebration,
+          notice: 'Birthday celebration was successfully created.'
+    else
+      new
     end
   end
 
   def update
     @birthday_celebration = BirthdayCelebration.find(params[:id])
-    respond_to do |format|
-      if @birthday_celebration.update_attributes(params[:birthday_celebration])
-        format.html do
-          redirect_to @birthday_celebration,
-              notice: 'Birthday celebration was successfully updated.'
-        end
-        format.json { head :no_content }
-      else
-        format.html { render action: :edit }
-        format.json { render json: @birthday_celebration.errors, status: :unprocessable_entity }
-      end
+    if @birthday_celebration.update_attributes(params[:birthday_celebration])
+      redirect_to @birthday_celebration,
+          notice: 'Birthday celebration was successfully updated.'
+    else
+      edit
     end
   end
 
   def destroy
     @birthday_celebration = BirthdayCelebration.find(params[:id])
     @birthday_celebration.destroy
-    respond_to do |format|
-      format.html { redirect_to birthday_celebrations_url }
-      format.json { head :no_content }
-    end
+    redirect_to birthday_celebrations_url
   end
 end

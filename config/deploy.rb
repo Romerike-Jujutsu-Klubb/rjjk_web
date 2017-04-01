@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 lock '~>3.4'
 
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'public/attendances',

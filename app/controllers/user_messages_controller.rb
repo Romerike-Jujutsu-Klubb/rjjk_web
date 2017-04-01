@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 class UserMessagesController < ApplicationController
   before_action :authenticate_user
-  before_action :set_user_message, only: [:show, :edit, :update, :destroy]
+  before_action :set_user_message, only: %i(show edit update destroy)
   before_action do |_request|
     if @user_message && !admin? && @user_message.user_id != current_user.id
       access_denied
@@ -27,38 +28,24 @@ class UserMessagesController < ApplicationController
 
   def create
     @user_message = UserMessage.new(user_message_params)
-
-    respond_to do |format|
-      if @user_message.save
-        format.html { redirect_to @user_message, notice: 'User message was successfully created.' }
-        format.json { render :show, status: :created, location: @user_message }
-      else
-        format.html { render :new }
-        format.json { render json: @user_message.errors, status: :unprocessable_entity }
-      end
+    if @user_message.save
+      redirect_to @user_message, notice: 'User message was successfully created.'
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @user_message.update(user_message_params)
-        format.html { redirect_to @user_message, notice: 'User message was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user_message }
-      else
-        format.html { render :edit }
-        format.json { render json: @user_message.errors, status: :unprocessable_entity }
-      end
+    if @user_message.update(user_message_params)
+      redirect_to @user_message, notice: 'User message was successfully updated.'
+    else
+      render :edit
     end
   end
 
   def destroy
     @user_message.destroy
-    respond_to do |format|
-      format.html do
-        redirect_to user_messages_url, notice: 'User message was successfully destroyed.'
-      end
-      format.json { head :no_content }
-    end
+    redirect_to user_messages_url, notice: 'User message was successfully destroyed.'
   end
 
   private

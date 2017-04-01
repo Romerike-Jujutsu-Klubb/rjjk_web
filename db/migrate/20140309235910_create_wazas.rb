@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateWazas < ActiveRecord::Migration
   def change
     create_table :wazas do |t|

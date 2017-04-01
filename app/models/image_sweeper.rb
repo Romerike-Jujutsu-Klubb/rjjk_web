@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ImageSweeper < ActionController::Caching::Sweeper
   observe Image
 

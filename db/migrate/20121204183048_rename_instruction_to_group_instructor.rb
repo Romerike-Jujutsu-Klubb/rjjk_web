@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class RenameInstructionToGroupInstructor < ActiveRecord::Migration
   def up
     rename_table :instructions, :group_instructors

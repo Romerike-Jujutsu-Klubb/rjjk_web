@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateGroupSchedules < ActiveRecord::Migration
   def self.up
     create_table :group_schedules do |t|

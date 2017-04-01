@@ -1,9 +1,11 @@
 # frozen_string_literal: true
+
 require 'test_helper'
 
 class WazasControllerTest < ActionController::TestCase
   setup do
     @waza = wazas(:tsuki)
+    login(:admin)
   end
 
   test 'should get index' do

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Attendance < ActiveRecord::Base
   module Status
     ABSENT = 'F'
@@ -57,9 +58,9 @@ OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday > ?)',
   scope :until_date, ->(date) {
     includes(practice: :group_schedule).references(:group_schedules)
         .where(<<~SQL,
-              practices.year < ? OR (practices.year = ? AND practices.week < ?)
-              OR (practices.year = ? AND practices.week = ?
-                AND group_schedules.weekday <= ?)
+          practices.year < ? OR (practices.year = ? AND practices.week < ?)
+          OR (practices.year = ? AND practices.week = ?
+            AND group_schedules.weekday <= ?)
             SQL
             date.year, date.year, date.cweek, date.year, date.cweek, date.cwday)
   }

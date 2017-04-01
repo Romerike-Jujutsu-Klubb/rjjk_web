@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AnnualMeeting < ActiveRecord::Base
   has_many :elections, dependent: :destroy
 

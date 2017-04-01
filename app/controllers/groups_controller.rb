@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class GroupsController < ApplicationController
   before_action :admin_required, except: :show
 
@@ -20,7 +21,7 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @group = Group.includes(members: [:recent_attendances, :nkf_member]).find(params[:id])
+    @group = Group.includes(members: %i(recent_attendances nkf_member)).find(params[:id])
     @instructors = @group.instructors
 
     respond_to do |format|

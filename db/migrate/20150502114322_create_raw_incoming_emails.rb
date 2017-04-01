@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateRawIncomingEmails < ActiveRecord::Migration
   def change
     create_table :raw_incoming_emails do |t|

@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
+
 # rubocop: disable Rails/TimeZone
 
 SPAM_DELETE_LIMIT = 7.0
@@ -119,9 +120,9 @@ def create_record(env, from, recipients, content)
   require_relative '../app/models/raw_incoming_email'
   log "Storing in #{env} to: #{from} => #{recipients}"
 
-  content_with_envelope = <<EOF + content
-X-Envelope-From: #{from}
-X-Envelope-To: #{recipients.join(', ')}
+  content_with_envelope = <<~EOF + content
+    X-Envelope-From: #{from}
+    X-Envelope-To: #{recipients.join(', ')}
 EOF
 
   RawIncomingEmail.configurations = YAML.load_file('config/database.yml')

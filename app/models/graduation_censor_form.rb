@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class GraduationCensorForm
   def initialize(graduation)
     @graduation = graduation

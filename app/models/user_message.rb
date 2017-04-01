@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class UserMessage < ActiveRecord::Base
   serialize :from
   serialize :email_url

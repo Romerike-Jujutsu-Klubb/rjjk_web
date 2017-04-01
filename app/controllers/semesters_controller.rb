@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class SemestersController < ApplicationController
-  before_action :admin_required, except: [:index, :show]
+  before_action :admin_required, except: %i(index show)
 
   # GET /semesters
   # GET /semesters.json

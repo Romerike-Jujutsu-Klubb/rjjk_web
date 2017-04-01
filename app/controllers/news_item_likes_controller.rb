@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class NewsItemLikesController < ApplicationController
-  before_action :set_news_item_like, only: [:show, :edit, :update, :destroy]
+  before_action :set_news_item_like, only: %i(show edit update destroy)
 
   def index
     @news_item_likes = NewsItemLike.all

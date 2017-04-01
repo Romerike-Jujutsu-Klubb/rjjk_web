@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 set :application, 'rjjk_web'
 set :scm, :git
 set :repo_url, "https://github.com/Romerike-Jujutsu-Klubb/#{fetch :application}.git"

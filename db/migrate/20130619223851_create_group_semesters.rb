@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateGroupSemesters < ActiveRecord::Migration
   def change
     create_table :group_semesters do |t|

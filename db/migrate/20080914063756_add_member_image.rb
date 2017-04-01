@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AddMemberImage < ActiveRecord::Migration
   def self.up
     add_column :members, :image, :binary

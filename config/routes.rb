@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Rails.application.routes.draw do
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
   get 'info/versjon'
@@ -11,11 +12,11 @@ Rails.application.routes.draw do
   post 'login/change_password'
   get 'login/forgot_password'
   post 'login/forgot_password'
-  match 'login/password' => 'login#login_with_password', as: :login_password, via: [:get, :post]
+  match 'login/password' => 'login#login_with_password', as: :login_password, via: %i(get post)
   get 'login/logout'
   get 'login' => 'login#login_link_form', as: :login
   post 'login' => 'login#send_login_link', as: :send_login_link
-  match 'login/signup', via: [:get, :post]
+  match 'login/signup', via: %i(get post)
   get 'login/welcome'
   get 'news/list'
   post 'news/expire' => 'news#expire'
@@ -42,7 +43,7 @@ Rails.application.routes.draw do
       get :month_chart
       get :month_per_year_chart
       get :report
-      match 'review/:year/:week/:group_schedule_id/:status', action: :review, via: [:get, :post]
+      match 'review/:year/:week/:group_schedule_id/:status', action: :review, via: %i(get post)
       get :since_graduation
     end
   end

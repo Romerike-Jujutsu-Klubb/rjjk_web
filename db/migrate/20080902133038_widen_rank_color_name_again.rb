@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class WidenRankColorNameAgain < ActiveRecord::Migration
   def self.up
     change_column :ranks, :colour, :string, limit: 48, null: false

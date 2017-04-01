@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class MakeChiefInstructorUniquePerGroupSemester < ActiveRecord::Migration
   def up
     groups = execute 'SELECT id FROM groups WHERE closed_on IS NULL ORDER BY id'
@@ -11,8 +12,8 @@ class MakeChiefInstructorUniquePerGroupSemester < ActiveRecord::Migration
             SQL
         next unless existing_semesters.empty?
         execute <<~SQL
-            INSERT INTO group_semesters(group_id, semester_id, created_at, updated_at)
-            VALUES (#{g['id']}, #{s['id']}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+          INSERT INTO group_semesters(group_id, semester_id, created_at, updated_at)
+          VALUES (#{g['id']}, #{s['id']}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
         SQL
       end
     end

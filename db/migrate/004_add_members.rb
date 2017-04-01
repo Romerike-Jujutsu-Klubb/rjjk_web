@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AddMembers < ActiveRecord::Migration
   def self.up
     create_table 'members', force: true do |t|

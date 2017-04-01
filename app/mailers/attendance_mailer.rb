@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AttendanceMailer < ApplicationMailer
   def plan(member)
     @member = member

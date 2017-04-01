@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class MemberSweeper < ActionController::Caching::Sweeper
   observe :member
 

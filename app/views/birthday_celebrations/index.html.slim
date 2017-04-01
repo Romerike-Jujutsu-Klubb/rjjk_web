@@ -1,0 +1,19 @@
+- @content_width = 1024
+
+= link_to new_birthday_celebration_path, class: 'btn btn-primary float-right'
+  = fa_icon :plus, text: 'Registrer ny bursdag'
+
+h1 Bursdagsfeiringer
+
+table.table
+  tr
+    th Dato
+    th Deltakere
+    th
+
+  - @birthday_celebrations.each do |birthday_celebration|
+    tr
+      td nowrap="true" = link_to birthday_celebration.held_on, birthday_celebration
+      td = birthday_celebration.participants.gsub(/\s*\n\s*/, ', ')
+      td
+        = link_to 'Diplomer', action: :certificates, id: birthday_celebration.id

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreatePublicRecords < ActiveRecord::Migration
   def change
     create_table :public_records do |t|

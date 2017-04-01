@@ -1,7 +1,7 @@
 = bootstrap_form_for(@birthday_celebration) do |f|
   .row
     .col-6
-      = f.text_area :participants, label: 'Deltakere', class: :expanding
+      = f.text_area :participants, label: 'Deltakere (ett navn per linje)', class: :expanding, rows: 14
     .col-6
       = f.text_field :held_on, label: 'Dato', class: :date
       = f.select :sensor1_id, [[]] + @members.map{|m| [m.name, m.id]}, label: 'Sensor 1'

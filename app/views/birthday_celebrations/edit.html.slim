@@ -1,8 +1,11 @@
 - @content_width = 1024
 
+= link_to @birthday_celebration, method: :delete, class: 'btn btn-danger float-right', \
+    data: { confirm: 'Er du sikker på at du vil slette bursdagen?' }
+    = fa_icon :trash, text: 'Slett'
+
 h1 Bursdag
 
 = render 'form'
 
-= link_to 'Vis', @birthday_celebration, class: 'btn btn-link'
 = link_to 'Diplomer', {action: :certificates, id: @birthday_celebration.id}, class: 'btn btn-danger'

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require File.expand_path('../config/application', __FILE__)
 
 Rails.application.load_tasks
@@ -10,7 +11,7 @@ if Rails.env.test?
   # RubyCritic::RakeTask.new
 
   namespace :test do
-    task full: [:'rubocop:auto_correct', :test]
+    task full: %i(rubocop:auto_correct test)
     # task(:test) { Rake::Task[:rubycritic].invoke }
   end
 end

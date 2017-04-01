@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class MartialArt < ActiveRecord::Base
   KWR_NAME = 'Kei Wa Ryu'
   KWR = find_by(name: KWR_NAME)

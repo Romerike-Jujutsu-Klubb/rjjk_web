@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class NewsItem < ActiveRecord::Base
   module PublicationState
     DRAFT = 'DRAFT'

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 source 'https://rubygems.org/'
 
 git_source(:github) do |repo_name|
@@ -27,7 +28,7 @@ gem 'bcrypt'
 gem 'bootstrap'
 gem 'bootstrap-chosen-rails', github: 'donv/bootstrap-chosen-rails'
 gem 'bootstrap3-datetimepicker-rails'
-gem 'bootstrap_form'
+gem 'bootstrap_form', github: 'bootstrap-ruby/rails-bootstrap-forms', branch: 'bootstrap-v4'
 # https://mdbootstrap.com/javascript/sidenav/
 # https://github.com/flatlogic/awesome-bootstrap-checkbox
 # gem "bootstrap-select-rails"

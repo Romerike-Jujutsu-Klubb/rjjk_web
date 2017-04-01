@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EmbusController < ApplicationController
   before_action :authenticate_user
 
@@ -27,11 +28,6 @@ class EmbusController < ApplicationController
     end
     @embu = Embu.new rank: current_user.member.next_rank
     load_data
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @embu }
-    end
   end
 
   def edit
@@ -41,15 +37,10 @@ class EmbusController < ApplicationController
 
   def create
     @embu = Embu.new(params[:embu].merge(user_id: current_user.id))
-
-    respond_to do |format|
-      if @embu.save
-        format.html { redirect_to @embu, notice: 'Embu was successfully created.' }
-        format.json { render json: @embu, status: :created, location: @embu }
-      else
-        format.html { render action: :new }
-        format.json { render json: @embu.errors, status: :unprocessable_entity }
-      end
+    if @embu.save
+      redirect_to @embu, notice: 'Embu was successfully created.'
+    else
+      render action: :new
     end
   end
 
@@ -62,16 +53,10 @@ class EmbusController < ApplicationController
     end
   end
 
-  # DELETE /embus/1
-  # DELETE /embus/1.json
   def destroy
     @embu = Embu.mine.find(params[:id])
     @embu.destroy
-
-    respond_to do |format|
-      format.html { redirect_to embus_url }
-      format.json { head :no_content }
-    end
+    redirect_to embus_url
   end
 
   private

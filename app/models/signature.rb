@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Signature < ActiveRecord::Base
   belongs_to :member
 

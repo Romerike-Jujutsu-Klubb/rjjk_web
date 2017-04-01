@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Event < ActiveRecord::Base
   scope :chronological, -> { order :start_at }
 
@@ -27,7 +28,7 @@ class Event < ActiveRecord::Base
   validates :start_at, presence: true
 
   before_update do |r|
-    unless r.invitees.blank?
+    if r.invitees.present?
       r.invitees = r.invitees.gsub(/^\s+/, '')
       r.invitees = r.invitees.gsub(/\s+$/, '')
       r.invitees = r.invitees.gsub(/\s+/, ' ')

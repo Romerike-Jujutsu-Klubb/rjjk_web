@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 require 'test_helper'
 
 class NkfMemberImportTest < ActionMailer::TestCase
   def test_import_members
     AnnualMeeting.create! start_at: '2015-02-12 17:45'
-    VCR.use_cassette('NKF Import Changes', match_requests_on: [:method, :host, :path, :query],
+    VCR.use_cassette('NKF Import Changes', match_requests_on: %i(method host path query),
         allow_playback_repeats: true) do
       assert_mail_deliveries(3) { NkfMemberImport.import_nkf_changes }
     end

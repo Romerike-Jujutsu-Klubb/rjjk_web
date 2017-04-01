@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateEmbus < ActiveRecord::Migration
   def change
     create_table :embus do |t|

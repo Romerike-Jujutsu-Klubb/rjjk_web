@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BasicTechniqueLink < ActiveRecord::Base
   acts_as_list scope: :basic_technique_id
 

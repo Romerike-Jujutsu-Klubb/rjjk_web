@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class MartialArtsController < ApplicationController
   before_action :admin_required
 

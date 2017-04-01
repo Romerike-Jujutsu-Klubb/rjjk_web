@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 class NkfMembersController < ApplicationController
   before_action :admin_required
 
   # FIXME(uwe):  Verify caching
-  cache_sweeper :member_sweeper, only: [:create_member, :update_member]
+  cache_sweeper :member_sweeper, only: %i(create_member update_member)
 
   def index
     @nkf_members = NkfMember.order(:fornavn, :etternavn).to_a

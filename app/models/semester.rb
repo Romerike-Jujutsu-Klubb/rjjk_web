@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Semester < ActiveRecord::Base
   has_many :group_semesters, dependent: :destroy
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 namespace :rvm do
   desc 'Install the desired Ruby version'
   task :install do

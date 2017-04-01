@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class NewsPublisher
   def self.send_news
     now = Time.current

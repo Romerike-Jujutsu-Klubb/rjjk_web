@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateBoardMeetings < ActiveRecord::Migration
   def change
     create_table :board_meetings do |t|

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class NkfMemberTrialMailer < ApplicationMailer
   default to: %w(medlem@jujutsu.no uwe@kubosch.no)
 

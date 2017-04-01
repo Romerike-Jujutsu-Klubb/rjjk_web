@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Avoid NULL values for easier queries
 class MakeExaminerMandatoryForCensors < ActiveRecord::Migration
   def change
