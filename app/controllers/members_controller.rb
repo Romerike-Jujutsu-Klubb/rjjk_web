@@ -3,11 +3,9 @@
 class MembersController < ApplicationController
   before_action :admin_required
 
-  # FIXME(uwe):  Verify caching
   caches_page :age_chart, :image, :thumbnail, :history_graph, :grade_history_graph,
       :grade_history_graph_percentage
   cache_sweeper :member_sweeper, only: %i(add_group create update destroy)
-  # FIXME(uwe):  Verify caching
 
   def search
     @title = 'Søk i medlemsregisteret'

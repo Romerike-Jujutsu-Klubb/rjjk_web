@@ -6,10 +6,8 @@ class ImagesController < ApplicationController
   before_action :admin_required, except: PUBLIC_ACTIONS + PERSONAL_ACTIONS
   before_action :authenticate_user, only: PERSONAL_ACTIONS
 
-  # FIXME(uwe):  Check caching
   caches_page :show, :inline
   cache_sweeper :image_sweeper, only: %i(update destroy)
-  # EMXIF
 
   def index
     @images = Image.paginate page: params[:page] || 1, per_page: 4

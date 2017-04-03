@@ -5,9 +5,7 @@ class ApplicationStepsController < ApplicationController
   before_action :technical_committy_required, except: USER_ACTIONS
   before_action :authenticate_user, only: USER_ACTIONS
 
-  # FIXME(uwe):  Check caching
   caches_page :image
-  # EMXIF
 
   def index
     @application_steps = ApplicationStep.all

@@ -1,9 +1,0 @@
-h1 Hei #{@recipient.name}!
-
-p
-  ' Du trenger å starte å planlegge neste semester!  Gå til denne linken for å
-  ' opprette semesteret:
-
-= link_to url_for(only_path: false, controller: :semesters, action: :new), new_semester_url
-
-h3 Dette blir bra!

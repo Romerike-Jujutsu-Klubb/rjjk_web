@@ -3,7 +3,6 @@
 class NkfMembersController < ApplicationController
   before_action :admin_required
 
-  # FIXME(uwe):  Verify caching
   cache_sweeper :member_sweeper, only: %i(create_member update_member)
 
   def index

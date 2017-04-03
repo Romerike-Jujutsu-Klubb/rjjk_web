@@ -3,10 +3,6 @@
 class ApplicationController < ActionController::Base
   include UserSystem
 
-  # FIXME(uwe): Start using the new caching system
-  include ActionController::Caching::Sweeping if defined?(JRUBY_VERSION)
-  # EMXIF
-
   DEFAULT_LAYOUT = 'dark_ritual'
 
   protect_from_forgery with: :exception unless Rails.env.beta?

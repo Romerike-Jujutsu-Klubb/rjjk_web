@@ -62,9 +62,6 @@ end
 
 Mail::TestMailer.prepend MailDeliveryError
 
-# FIMXME(uwe): Remove?
-require 'ish'
-
 VCR.configure do |config|
   config.cassette_library_dir = "#{Rails.root}/test/vcr_cassettes"
   config.hook_into :webmock

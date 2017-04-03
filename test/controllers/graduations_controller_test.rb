@@ -117,7 +117,7 @@ class GraduationsControllerTest < ActionController::TestCase
     post :approve, params:{id: @first_id}
     assert_response :redirect
     assert_redirected_to edit_graduation_path(@first_id)
-    assert_equal [Time.current.to_f.ish(1), 0.0], graduations(:panda).censors.reload
+    assert_equal [Time.current.to_f, 0.0], graduations(:panda).censors.reload
         .order(:approved_grades_at).map(&:approved_grades_at).map(&:to_f)
     assert_equal [Time.current, nil], graduations(:panda).censors.reload
         .order(:approved_grades_at).map(&:approved_grades_at)

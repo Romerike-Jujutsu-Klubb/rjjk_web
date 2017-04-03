@@ -5,7 +5,6 @@ class AttendancesController < ApplicationController
   before_action :authenticate_user, only: USER_ACTIONS
   before_action :instructor_required, except: USER_ACTIONS
 
-  # FIXME(uwe):  check caching
   caches_page :history_graph, :month_chart, :month_per_year_chart
   update_actions = %i(announce create destroy review update)
   cache_sweeper :attendance_image_sweeper, only: update_actions

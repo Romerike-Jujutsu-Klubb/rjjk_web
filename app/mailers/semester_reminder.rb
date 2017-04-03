@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 
 class SemesterReminder
-  def self.notify_missing_semesters
-    unless Semester.where('? BETWEEN start_on AND end_on', Date.current).exists?
-      recipient = Role[:Leder] || Role[:Nestleder] || Role[:Hovedinstruktør]
-      SemesterMailer.missing_current_semester(recipient).store(recipient, tag: :missing_semester)
-      return
-    end
-    return if Semester.where('? BETWEEN start_on AND end_on', Date.current + 4.months).exists?
-    recipient = Role[:Leder] || Role[:Nestleder] || Role[:Kasserer]
-    SemesterMailer.missing_next_semester(recipient).store(recipient, tag: :missing_next_semester)
+  def self.create_missing_semesters
+    return if Semester.where('? BETWEEN start_on AND end_on', Date.current + 3.months).exists?
+    logger.warn 'The next semester is missing.  Creating it.'
+    last_end_date = Semester.order(:end_on).last&.end_on || Date.current.beginning_of_year - 1.day
+    start_date = last_end_date + 1.day
+    end_date = last_end_date + 6.months
+    Semester.create! start_on: start_date, end_on: end_date
   end
 
   # Ensure first and last sessions are set

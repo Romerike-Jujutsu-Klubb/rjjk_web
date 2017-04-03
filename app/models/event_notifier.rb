@@ -5,7 +5,6 @@ class EventNotifier
     begin
       now = Time.current
 
-      # FIXME(uwe): Consider using SQL to optimize the selection.
       EventMessage
           .where('message_type <> ? AND ready_at IS NOT NULL',
               EventMessage::MessageType::INVITATION)

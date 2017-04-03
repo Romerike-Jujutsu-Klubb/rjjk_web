@@ -46,9 +46,7 @@ module Rjjk
     # Admin Daily
     scheduler.cron('0 0 * * *') { NkfReplicationNotifier.notify_wrong_contracts }
 
-    # FIXME(uwe): Change to create the missing semester automatically
-    scheduler.cron('0 3 * * *') { SemesterReminder.notify_missing_semesters }
-    # EMXIF
+    scheduler.cron('0 3 * * *') { SemesterReminder.create_missing_semesters }
 
     scheduler.cron('0 4 * * *') { GroupSemester.create_missing_group_semesters }
 
