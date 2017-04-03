@@ -22,13 +22,13 @@ class SignaturesControllerTest < ActionController::TestCase
   test 'should create signature' do
     assert_difference('Signature.count') do
       post :create, params:{signature: {
-          content_type: @signature.content_type, image: @signature.image,
+          content_type: @signature.content_type, image: 'Some image data',
           member_id: @signature.member_id, name: @signature.name
       }}
       assert_no_errors :signature
     end
 
-    assert_redirected_to signature_path(assigns(:signature))
+    assert_redirected_to member_path(assigns(:signature).member, anchor: :tab_signatures)
   end
 
   test 'should show signature' do
@@ -43,7 +43,7 @@ class SignaturesControllerTest < ActionController::TestCase
 
   test 'should update signature' do
     put :update, params:{id: @signature, signature: {
-        content_type: @signature.content_type, image: @signature.image,
+        content_type: @signature.content_type, image: 'Other image data.',
         member_id: @signature.member_id, name: @signature.name
     }}
     assert_redirected_to signature_path(assigns(:signature))
