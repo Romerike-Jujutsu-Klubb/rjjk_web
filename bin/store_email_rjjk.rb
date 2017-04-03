@@ -34,7 +34,7 @@ end
 content = $stdin.read
 
 def safe_subject(subject, mail_is_spam, spam_score)
-  ss = subject.to_s.gsub(/^((Fwd|Re|Sv):\s*)+/i, '').gsub(%r{[ :/\\\{\}`'"!]}, '_')
+  ss = subject.to_s.gsub(/^((Fwd|Re|Sv):\s*)+/i, '').gsub(%r{[ \t:/\\\{\}`'"!]}, '_')
       .gsub(/_+/, '_')[0..100]
   @now_str ||= Time.now.strftime('%F_%T')
   spam_marker = mail_is_spam ? (mail_is_spam == 'LARGE' ? '[LARGE]' : '[SPAM]') : '_____'
