@@ -34,7 +34,8 @@ class SignaturesController < ApplicationController
   def create
     @signature = Signature.new(params[:signature])
     if @signature.save
-      redirect_to member_path(@signature.member, anchor: :tab_signatures), notice: 'Signatur lagret.'
+      redirect_to member_path(@signature.member, anchor: :tab_signatures),
+          notice: 'Signatur lagret.'
     else
       new
     end
@@ -43,7 +44,7 @@ class SignaturesController < ApplicationController
   def update
     @signature = Signature.find(params[:id])
     if @signature.update_attributes(params[:signature])
-      redirect_to @signature, notice: 'Signature was successfully updated.'
+      redirect_to @signature, notice: 'Signaturen ble oppdatert.'
     else
       edit
     end
