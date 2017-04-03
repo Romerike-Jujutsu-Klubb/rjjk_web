@@ -53,7 +53,8 @@ gem 'momentjs-rails'
 gem 'nokogiri'
 gem 'nprogress-rails'
 # gem 'paper_trail' # http://railscasts.com/episodes/255-undo-with-paper-trail?view=similar
-gem 'prawn', '<2.0.0' # TODO(uwe): Upgrade?
+gem 'prawn'
+gem 'prawn-gmagick'
 gem 'prawn-table'
 gem 'puma'
 gem 'rails-assets-tether'
