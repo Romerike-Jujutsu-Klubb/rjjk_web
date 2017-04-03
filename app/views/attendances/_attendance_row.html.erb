@@ -40,7 +40,6 @@
       <% if @group %>
           <% group_schedule = group_schedules.find { |gs| gs.weekday == d.cwday } %>
           <% attendance = attendances.find { |a| a.practice.group_schedule_id == group_schedule.id && a.date == d } %>
-<!-- FIXME(uwe): pull birthdate check into Member -->
           <td id="attendance_<%= member.id %>_<%= d.day %>" align="center" <%=raw 'style="background-color: #FFFF88"' if d.month == member.birthdate.month && d.day == member.birthdate.day%>>
             <% if attendance %>
                 <% unless Attendance::ABSENT_STATES.include?(attendance.status) %>
