@@ -1,0 +1,20 @@
+= bootstrap_form_for(@signature, html: {multipart:true}) do |f|
+  = f.select :member_id, @members.map{|m| [m.name, m.id]}, prompt: true
+  = f.file_field :file, accept: 'image/*'
+
+  javascript:
+      $('#signature_file').fileinput({
+          browseIcon: '<i class="fa fa-folder-open"></i>',
+          browseLabel: '',
+          browseOnZoneClick: true,
+          showCancel: false,
+          showPreview: false,
+          showUpload: false,
+          showRemove: false,
+          uploadAsync: true
+      });
+      $('.kv-upload-progress').hide();
+
+  .btn-toolbar.float-right
+    = back_or_link_to 'Tilbake', signatures_path, class: 'btn btn-link'
+    = f.primary 'Lagre'

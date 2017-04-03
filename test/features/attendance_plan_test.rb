@@ -10,6 +10,7 @@ class AttendancePlanTest < ActionDispatch::IntegrationTest
 
   def test_plan
     screenshot_group :plan
+    assert_gallery_image_is_loaded
     screenshot('index')
     assert_equal ['Denne uken', 'Ubekreftet Du trente.', 'Kommer! Du kommer.',
         'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1',

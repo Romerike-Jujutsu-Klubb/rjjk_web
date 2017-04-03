@@ -20,21 +20,23 @@ class SignaturesController < ApplicationController
   end
 
   def new
-    @signature = Signature.new
-    @members = Member.active(Date.current).order(:birthdate, :first_name, :last_name).to_a
+    @signature ||= Signature.new(member: current_user.member)
+    load_form_data
+    render action: :new
   end
 
   def edit
-    @signature = Signature.find(params[:id])
-    @members = Member.active(Date.current).order(:birthdate, :first_name, :last_name).to_a
+    @signature ||= Signature.find(params[:id])
+    load_form_data
+    render action: :edit
   end
 
   def create
     @signature = Signature.new(params[:signature])
     if @signature.save
-      redirect_to @signature, notice: 'Signature was successfully created.'
+      redirect_to member_path(@signature.member, anchor: :tab_signatures), notice: 'Signatur lagret.'
     else
-      render action: :new
+      new
     end
   end
 
@@ -43,7 +45,7 @@ class SignaturesController < ApplicationController
     if @signature.update_attributes(params[:signature])
       redirect_to @signature, notice: 'Signature was successfully updated.'
     else
-      render action: :edit
+      edit
     end
   end
 
@@ -52,4 +54,11 @@ class SignaturesController < ApplicationController
     @signature.destroy
     redirect_to signatures_url
   end
+
+  private
+
+  def load_form_data
+    @members = Member.active(Date.current).order(:birthdate, :first_name, :last_name).to_a
+  end
+
 end

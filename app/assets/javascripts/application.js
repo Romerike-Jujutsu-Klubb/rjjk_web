@@ -17,6 +17,7 @@
 //= require remember_tab
 //= require stretch-columns
 //= require jquery.lazyload
+//= require fileinput
 
 // Switch to Bootstrap modal
 NProgress.configure({showSpinner: false,  ease: 'ease',  speed: 500});

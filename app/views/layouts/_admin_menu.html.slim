@@ -1,0 +1,34 @@
+h1 Web
+
+#admin_menu
+  ul
+    li = link_to 'Ny nyhet', controller: :news, action: :new
+    li = link_to 'Ny side', controller: :info, action: :new
+    li = link_to 'Ny hendelse', controller: :events, action: :new
+    li = link_to 'Brukere', controller: :users, action: :index
+
+h1 Medlemsreg.
+
+#members_menu
+  ul
+    li = menu_item 'Medlemsliste', controller: :members, action: :list_active
+    li = menu_item 'Instruksjon', controller: :group_instructors
+    li = menu_item 'Instruktørsamling', controller: :instructor_meetings
+    li = menu_item 'Styremøter', controller: :board_meetings
+    li = menu_item 'Bursdager', controller: :birthday_celebrations
+    li = menu_item 'Treningstider', controller: :group_schedules
+    li = menu_item 'Grupper', controller: :groups
+    li = menu_item 'Spørre&shy;undersøkelser'.html_safe, controller: :surveys
+    li = menu_item 'Grader', controller: :ranks, anchor: :KeiWaRyu_Voksne
+    li = menu_item 'Roller', controller: :roles
+    li = menu_item 'Styret', controller: :elections
+    li = menu_item 'Verv', controller: :appointments
+    /
+          <li><%= menu_item 'Stiler', controller: :martial_arts %></li>
+          <li><%= menu_item 'Inntekt', controller: :members, action: :income %></li>
+          <li><%= menu_item 'NKF Rapport', controller: :members, action: :nkf_report %></li>
+          <li><%= menu_item 'CMS-Kontrakter', controller: :cms_members, action: :active_contracts %></li>
+          <li><%= menu_item 'CMS Avstemming', controller: :members, action: :cms_comparison %></li>
+          <li><%= menu_item 'NKF Medlemsliste', controller: :nkf_members, action: :index %></li>
+          <li><%= menu_item 'NKF Avstemming', controller: :nkf_members, action: :comparison %></li>
+    li = menu_item 'Versjon', controller: :info, action: :versjon

@@ -1,0 +1,21 @@
+= link_to new_signature_path, class: 'btn btn-primary float-right'
+  = fa_icon :plus, text: 'Registrer signatur'
+
+h1 Signaturer
+
+table.table
+  tr
+    th Medlem
+    th Bilde
+    th
+    th
+    th
+
+  - @signatures.each do |signature|
+    tr
+      td = signature.member.name
+      td: image src=url_for(:action => :image, :id => signature.id)
+      td = link_to 'Vis', signature
+      td = link_to 'Endre', edit_signature_path(signature)
+      td = link_to 'Slett', signature, method: :delete, data: { confirm: 'Are you sure?' }
+

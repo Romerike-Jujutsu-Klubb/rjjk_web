@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
-class Certificates
+class Certificates < Prawn::Document
+  SENSOR_Y = 139
+  CENSOR_TITLE_X = 275
+  CENSOR_NAME_X = 350
+  SIGNATURE_DIMENSIONS = [640, 34].freeze
+
   def self.pdf(date, content, layout = 3)
-    Prawn::Document.new page_size: 'A4', page_layout: :landscape, margin: 0 do
+    new page_size: 'A4', page_layout: :landscape, margin: 0 do
       page_width = PDF::Core::PageGeometry::SIZES['A4'][1]
       page_height = PDF::Core::PageGeometry::SIZES['A4'][0]
       org_name_width = 100
@@ -12,9 +17,6 @@ class Certificates
       graduate_name_y = 250
       rank_y = 213
       date_y = 176
-      sensor_y = 139
-      censor_title_x = 275
-      censor_name_x = 350
 
       create_stamp('border') do
         case layout
@@ -38,9 +40,9 @@ class Certificates
           # Mask old labels
           fill_color 'ffffff'
           fill_rectangle [95, 255], 55, 140
-          fill_rectangle [censor_title_x - 10, graduate_name_y],
-              page_width - censor_title_x * 2 + 25,
-              graduate_name_y - sensor_y + 60
+          fill_rectangle [CENSOR_TITLE_X - 10, graduate_name_y],
+              page_width - CENSOR_TITLE_X * 2 + 25,
+              graduate_name_y - SENSOR_Y + 60
           fill_color '000000'
         when 2
           scale = -0.05
@@ -129,28 +131,28 @@ class Certificates
           text 'Navn', size: 18, align: :center, style: :italic
         end
         stroke do
-          line [censor_title_x, graduate_name_y - 18],
-              [page_width - censor_title_x, graduate_name_y - 18]
+          line [CENSOR_TITLE_X, graduate_name_y - 18],
+              [page_width - CENSOR_TITLE_X, graduate_name_y - 18]
         end
 
         bounding_box [labels_x, rank_y], width: 80, height: 20 do
           text 'Grad', size: 18, align: :center, style: :italic
         end
-        stroke { line [censor_title_x, rank_y - 18], [page_width - censor_title_x, rank_y - 18] }
+        stroke { line [CENSOR_TITLE_X, rank_y - 18], [page_width - CENSOR_TITLE_X, rank_y - 18] }
 
         bounding_box [labels_x, date_y], width: 80, height: 20 do
           text 'Dato', size: 18, align: :center, style: :italic
         end
-        stroke { line [censor_title_x, date_y - 18], [page_width - censor_title_x, date_y - 18] }
+        stroke { line [CENSOR_TITLE_X, date_y - 18], [page_width - CENSOR_TITLE_X, date_y - 18] }
 
-        bounding_box [labels_x, sensor_y], width: 80, height: 20 do
+        bounding_box [labels_x, SENSOR_Y], width: 80, height: 20 do
           text 'Sensor', size: 18, align: :center, style: :italic
         end
         stroke do
-          line [censor_title_x, sensor_y - 18], [page_width - censor_title_x, sensor_y - 18]
+          line [CENSOR_TITLE_X, SENSOR_Y - 18], [page_width - CENSOR_TITLE_X, SENSOR_Y - 18]
         end
         stroke do
-          line [censor_title_x, sensor_y - 53], [page_width - censor_title_x, sensor_y - 53]
+          line [CENSOR_TITLE_X, SENSOR_Y - 53], [page_width - CENSOR_TITLE_X, SENSOR_Y - 53]
         end
       end
       stamp 'border'
@@ -166,23 +168,9 @@ class Certificates
           text "#{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}",
               size: 18, align: :center
         end
-        if c[:censor1]
-          text_box c[:censor1][:title], at: [censor_title_x, sensor_y], size: 18, align: :left
-          if c[:censor1][:signature]
-            image StringIO.new(c[:censor1][:signature]),
-                at: [censor_name_x, sensor_y + 18], fit: [640, 34]
-          else
-            text_box c[:censor1][:name], at: [censor_name_x, sensor_y], size: 18, align: :left
-          end
-        end
-        if c[:censor2]
-          text_box c[:censor2][:title], at: [censor_title_x, sensor_y - 35], size: 18, align: :left
-          text_box c[:censor2][:name], at: [censor_name_x, sensor_y - 35], size: 18, align: :left
-        end
-        if c[:censor3]
-          text_box c[:censor3][:title], at: [censor_title_x, sensor_y - 65], size: 18, align: :left
-          text_box c[:censor3][:name], at: [censor_name_x, sensor_y - 65], size: 18, align: :left
-        end
+        write_censor(c[:censor1], 0)
+        write_censor(c[:censor2], 35)
+        write_censor(c[:censor3], 65, 8)
         unless c[:group] == 'Grizzly'
           draw_text c[:group], at: [120 + 36, 300 + 36], size: 18
         end
@@ -190,5 +178,18 @@ class Certificates
         stamp 'border'
       end
     end.render
+  end
+
+  private
+
+  def write_censor(sensor, offset, signature_offset = 0)
+    return unless sensor
+    text_box sensor[:title], at: [CENSOR_TITLE_X, SENSOR_Y - offset], size: 18, align: :left
+    if sensor[:signature]
+      image StringIO.new(sensor[:signature]), fit: SIGNATURE_DIMENSIONS,
+          at: [CENSOR_NAME_X, SENSOR_Y + 18 - offset - signature_offset]
+    else
+      text_box sensor[:name], at: [CENSOR_NAME_X, SENSOR_Y - offset], size: 18, align: :left
+    end
   end
 end
