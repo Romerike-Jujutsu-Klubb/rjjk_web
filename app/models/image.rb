@@ -5,7 +5,7 @@ class Image < ActiveRecord::Base
 
   include UserSystem
 
-  default_scope { select((column_names - %w(content_data)).map { |c| "images.#{c}" }) }
+  scope :without_image, -> { select((column_names - %w(content_data)).map { |c| "images.#{c}" }) }
   scope :with_image, -> { select('*') }
   scope :published, -> { where(public: true, approved: true) }
   scope :images, -> { where("content_type LIKE 'image/%'") }
@@ -29,6 +29,7 @@ class Image < ActiveRecord::Base
 
   after_create do |_|
     next unless @content_file
+    raise "Unexpected @content_file: #{@content_file}" unless RUBY_ENGINE == 'jruby'
     conn = self.class.connection.raw_connection.connection
     is = java.io.FileInputStream.new(java.io.File.new(@content_file))
     st = conn.prepareStatement('UPDATE images SET content_data = ? WHERE id = ?')
@@ -42,9 +43,14 @@ class Image < ActiveRecord::Base
   def file=(file)
     return if file == ''
     self.name = file.original_filename if name.blank?
-    self.content_data = 'Temporary'
-    @content_file = file.path
-    self.content_type = file.content_type
+    if RUBY_ENGINE == 'jruby'
+      # Allow huge file uploads
+      self.content_data = 'Temporary'
+      @content_file = file.path
+    else
+      self.content_data = file.read
+    end
+    self.content_type = file.content_type if file.content_type.present?
   end
 
   class Streamer
