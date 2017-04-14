@@ -61,6 +61,11 @@ nb:
         group_id: Gruppe
         first_session: Første trening
         last_session: Siste trening
+      image:
+        approved: Godkjent
+        name: Navn
+        file: Bilde
+        public: Publiser
       news_item:
         body: Mer informasjon (valgfritt)
         expire_at: til

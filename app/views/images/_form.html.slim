@@ -1,0 +1,29 @@
+= bootstrap_form_for @image do |f|
+  - unless @image.new_record?
+    div style="float: right; width: 45%; text-align: center"
+      = image_tag(url_for(action: :show, id: @image.id, format: @image.format), style: 'width: 100%') if @image.name
+      | (#{@image.content_data.size / 1024}KB)
+  = error_messages_for 'image'
+
+  .row
+    .col-6
+      = f.text_field :name
+    .col-3.pt-5
+      = f.check_box :public
+    .col-3.pt-5
+      = f.check_box :approved
+
+  = f.file_field :file, class: :fileinput
+  .btn-toolbar.float-right
+    = back_or_link_to 'Tilbake', images_path, class: 'btn btn-link'
+    = f.primary 'Lagre'
+
+javascript:
+    $('#image_file').fileinput({
+        browseLabel: '',
+        showCancel: false,
+        showUpload: false,
+        showRemove: false,
+        theme: 'fa'
+    });
+    $('.kv-upload-progress').hide();

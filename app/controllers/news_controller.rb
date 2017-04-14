@@ -18,7 +18,7 @@ class NewsController < ApplicationController
   end
 
   def new
-    @news_item ||= NewsItem.new
+    @news_item ||= NewsItem.new(params[:image])
     load_images
     render action: :new
   end

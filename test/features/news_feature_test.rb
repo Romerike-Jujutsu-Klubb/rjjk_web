@@ -25,6 +25,7 @@ class NewsFeatureTest < ActionDispatch::IntegrationTest
   def test_index_admin
     login_and_visit '/news'
     assert_current_path '/news'
+    assert_gallery_image_is_loaded
     screenshot('news/index_admin')
   end
 

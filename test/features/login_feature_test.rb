@@ -43,6 +43,7 @@ class LoginFeatureTest < ActionDispatch::IntegrationTest
         email.body.decoded
     visit root_path(key: $2)
     assert has_css?('h1', text: 'Uwe Kubosch'), all('h1').to_a.map(&:text).inspect
+    assert_gallery_image_is_loaded
     screenshot :welcome
   end
 end

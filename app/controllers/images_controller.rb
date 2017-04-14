@@ -62,7 +62,7 @@ class ImagesController < ApplicationController
   end
 
   def new
-    @image = Image.new
+    @image ||= Image.new(params[:image])
   end
 
   def create
@@ -82,7 +82,7 @@ class ImagesController < ApplicationController
   end
 
   def edit
-    @image = Image.with_image.find(params[:id])
+    @image ||= Image.find(params[:id])
     begin
       @image.update_dimensions! unless @image.video?
     rescue
@@ -94,10 +94,10 @@ class ImagesController < ApplicationController
   def update
     @image = Image.find(params[:id])
     if @image.update_attributes(params[:image])
-      flash[:notice] = 'Image was successfully updated.'
+      flash.notice = 'Bildet ble oppdatert.'
       back_or_redirect_to action: :edit, id: @image
     else
-      flash[:notice] = 'Image not updated.'
+      flash.now.warning = 'Bildet kunne ikke oppdateres.'
       render action: 'edit'
     end
   end
@@ -121,8 +121,7 @@ class ImagesController < ApplicationController
   end
 
   def gallery
-    fields = 'approved, content_type, description, id, name, public, user_id'
-    image_select = Image.select(fields)
+    image_select = Image.select(%i'approved content_type description id name public user_id')
         .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
         .order('created_at DESC')
     image_select = image_select.includes(:user)
@@ -133,8 +132,7 @@ class ImagesController < ApplicationController
   end
 
   def mine
-    fields = 'approved, content_type, description, id, name, public, user_id'
-    image_select = Image.select(fields)
+    image_select = Image.select(%i'approved content_type description id name public user_id')
         .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
         .order('created_at DESC')
     image_select = image_select.where('user_id = ?', current_user.id)

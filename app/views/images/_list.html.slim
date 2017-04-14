@@ -1,5 +1,5 @@
 .text-center
-  = detour_to 'Legg til bilde', controller: :images, action: :new
+  = detour_to 'Legg til bilde', new_image_path(image: {public: true, approved: true})
 
 table.table
   - for image in images
@@ -10,10 +10,8 @@ table.table
         br
         small = truncate(image.name.chomp('.jpg').gsub('_', ' '), length: 29)
         br
-        = detour_to 'Rediger', controller: :images, action: :edit, id: image.id
-        = detour_to 'Slett', {controller: :images, action: :destroy, id: image.id}, data: {confirm: 'Are you sure?'}, method: :delete
-
-br
+        = detour_to 'Rediger', {controller: :images, action: :edit, id: image.id}, class: 'btn btn-secondary btn-sm'
+        = detour_to 'Slett', {controller: :images, action: :destroy, id: image.id}, class: 'btn btn-danger btn-sm ml-2', data: {confirm: 'Er du sikker på at du vil slette dette bildet?'}, method: :delete
 
 .text-center
   = detour_to 'Legg til bilde', controller: :images, action: :new

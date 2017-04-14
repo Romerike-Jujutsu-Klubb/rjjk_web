@@ -15,15 +15,20 @@ class Image < ActiveRecord::Base
   has_many :likers, -> { where("user_images.rel_type = 'LIKE'") },
       class_name: 'User', through: :user_images, source: :user
 
-  before_create do
-    self.user_id ||= current_user&.id
-  end
+  before_create { self.user_id ||= current_user&.id }
 
   validates :name, presence: true
   validate do
     if attribute_present?(:content_data) && content_data.present? &&
           self.class.where(content_data: content_data).where.not(id: id).exists?
-      errors.add :content_data, 'An image with the given content already exists'
+      errors.add :content_data, 'Dette bildet er allerede lastet opp.'
+    end
+
+    if public_changed? && !admin?
+      errors.add :public, 'kan bare endres av en administrator'
+    end
+    if approved_changed? && !admin?
+      errors.add :approved, 'kan bare endres av en administrator'
     end
   end
 
