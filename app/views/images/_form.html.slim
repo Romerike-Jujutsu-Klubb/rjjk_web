@@ -3,7 +3,6 @@
     div style="float: right; width: 45%; text-align: center"
       = image_tag(url_for(action: :show, id: @image.id, format: @image.format), style: 'width: 100%') if @image.name
       | (#{@image.content_data.size / 1024}KB)
-  = error_messages_for 'image'
 
   .row
     .col-6

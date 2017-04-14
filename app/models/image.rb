@@ -19,9 +19,11 @@ class Image < ActiveRecord::Base
 
   validates :name, presence: true
   validate do
+    errors.add :file, 'må velges.' if content_type.blank?
+
     if attribute_present?(:content_data) && content_data.present? &&
           self.class.where(content_data: content_data).where.not(id: id).exists?
-      errors.add :content_data, 'Dette bildet er allerede lastet opp.'
+      errors.add :file, 'Dette bildet er allerede lastet opp.'
     end
 
     if public_changed? && !admin?
