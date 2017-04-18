@@ -7,6 +7,7 @@ class InstructionTest < ActionDispatch::IntegrationTest
     login_and_visit '/'
     find('a', text: 'Instruksjon').click
     assert_current_path '/group_instructors'
+    assert_gallery_image_is_loaded
     screenshot('instruction/index')
   end
 

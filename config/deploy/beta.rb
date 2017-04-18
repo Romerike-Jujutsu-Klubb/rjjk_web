@@ -22,6 +22,11 @@ namespace :deploy do
       execute :sudo, "systemctl stop #{fetch :application}"
       execute "#{fetch :rvm_path}/bin/rvm #{fetch :rvm_ruby_version} do " \
           "#{current_path}/bin/copy_production_to_beta.sh"
+
+      # FIXME(uwe): Remove after https://github.com/MiniProfiler/rack-mini-profiler/issues/230
+      execute :rm, "-fr #{current_path}/tmp/miniprofiler"
+      # EMXIF
+
       execute :sudo, "systemctl start #{fetch :application}"
     end
   end

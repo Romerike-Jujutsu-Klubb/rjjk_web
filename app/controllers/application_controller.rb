@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   layout DEFAULT_LAYOUT
 
-  before_action :reject_baidu_bot
+  before_action :reject_bots
   before_action :store_current_user_in_thread
 
   if Rails.env.beta?
@@ -102,9 +102,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def reject_baidu_bot
-    if request.headers['HTTP_REFERER'] =~ /baidu/i
-      BaiduMailer.reject(request.headers['HTTP_REFERER']).deliver_now
+  def reject_bots
+    if request.headers['HTTP_REFERER'] =~ /baidu|BLEXBot/i
+      BotMailer.reject(request.headers['HTTP_REFERER']).deliver_now
       redirect_to request.headers['HTTP_REFERER']
       false
     else

@@ -8,9 +8,18 @@ module Rjjk
     Rails.logger.info('Starting scheduler')
 
     def scheduler.on_error(job, e)
-      raise e if Rails.env.test?
       Rails.logger.error "Exception during scheduled job(#{job.tags}): #{e}"
       Rails.logger.error e.backtrace.join("\n")
+      if e.is_a?(ActiveRecord::StatementInvalid)
+        ActiveRecord::Base.verify!
+        begin
+          job.call
+          return
+        rescue => e2
+          Rails.logger.error "Exception re-running scheduled job(#{job.tags}): #{e2}"
+        end
+      end
+      raise e if Rails.env.test?
       ExceptionNotifier.notify_exception(e)
     end
 
