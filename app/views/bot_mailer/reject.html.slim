@@ -1,3 +1,5 @@
 h1 Rejected BOT request
 
-= @url
+p = @headers['HTTP_REFERER']
+
+pre = @headers.pretty_inspect
