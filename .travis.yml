@@ -3,7 +3,7 @@ sudo: false
 language: ruby
 
 before_install:
-  - sudo apt-get install graphicsmagick
+  - apt-get install graphicsmagick
 
 script:
   - bin/setup && bundle exec rake test
