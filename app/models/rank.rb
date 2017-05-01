@@ -5,6 +5,7 @@ class Rank < ActiveRecord::Base
 
   UNRANKED = new(position: -99, standard_months: 0, name: 'Ugradert', colour: 'Hvitt',
                  martial_art_id: MartialArt::KWR&.id)
+  SHODAN_POSITION = 15
 
   belongs_to :martial_art
   belongs_to :group

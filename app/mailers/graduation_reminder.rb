@@ -33,6 +33,7 @@ class GraduationReminder
         .order(:id)
         .each do |graduation|
       graduation.group.members.active(graduation.held_on).order(:id).each do |member|
+        next if member.next_rank(graduation).position >= Rank::SHODAN_POSITION
         GraduationMailer.group_date_info(graduation, member)
             .store(member.user_id, tag: :graduation_date_info)
       end
