@@ -103,10 +103,14 @@ class ApplicationController < ActionController::Base
   end
 
   def reject_bots
-    if request.headers['HTTP_USER_AGENT'] =~ /BLEXBot/i ||
-          request.headers['HTTP_REFERER'] =~ /baidu/i
+    referrer = request.headers['HTTP_REFERER']
+    if request.headers['HTTP_USER_AGENT'] =~ /BLEXBot/i || referrer =~ /baidu/i
       BotMailer.reject(request.headers).deliver_now
-      redirect_to request.headers['HTTP_REFERER']
+      if referrer.present?
+        redirect_to referrer
+      else
+        render status: 429
+      end
       false
     else
       true

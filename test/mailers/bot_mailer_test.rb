@@ -8,7 +8,8 @@ class BotMailerTest < ActionMailer::TestCase
     assert_equal '[RJJK] test Rejected BAIDU request', mail.subject
     assert_equal %w[uwe@kubosch.no], mail.to
     assert_equal %w[test@jujutsu.no], mail.from
-    assert_match "<h1>Rejected BOT request</h1><p>http://not.example.com/</p><pre>{&quot;HTTP_REFERER&quot;=&gt;&quot;http://not.example.com/&quot;, &quot;HTTP_USER_AGENT&quot;=&gt;&quot;BLEXBot&quot;}\n</pre>",
-        mail.body.decoded
+    assert_match <<~EXPECTED.chomp, mail.body.decoded
+      <h1>Rejected BOT request</h1><p>http://not.example.com/</p><pre>{&quot;HTTP_REFERER&quot;=&gt;&quot;http://not.example.com/&quot;, &quot;HTTP_USER_AGENT&quot;=&gt;&quot;BLEXBot&quot;}\n</pre>
+    EXPECTED
   end
 end
