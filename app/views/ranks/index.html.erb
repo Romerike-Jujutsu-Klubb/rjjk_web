@@ -4,27 +4,27 @@
 
 <ul class="nav nav-tabs">
   <% @martial_arts.each.with_index do |(ma, ranks), i| %>
-      <li <%= 'class="active"'.html_safe if i == 0 %>>
-        <a href="#<%= ma.name %>" data-toggle="tab"><%= ma.name %></a></li>
+      <li class="nav-item">
+        <a href="#<%= ma.name.gsub(/\s+/, '') %>" data-toggle="tab" class="nav-link<%=' active' if i == 0 %>"><%= ma.name %></a></li>
   <% end %>
 </ul>
 
 <!-- Tab panes -->
 <div class="tab-content">
   <% @martial_arts.each.with_index do |(ma, ranks), i| %>
-      <div class="tab-pane <%= 'active' if i == 0 %>" id="<%= ma.name %>">
+      <div class="tab-pane <%= 'active' if i == 0 %>" id="<%= ma.name.gsub(/\s+/, '') %>">
 
         <ul class="nav nav-tabs">
           <% ma.groups.each.with_index do |group, i| %>
-              <li <%= 'class="active"'.html_safe if i == 0 %>>
-                <a href="#<%= ma.name.gsub(/\s+/, '') %>_<%= group.name %>" data-toggle="tab"><%= group.name %></a>
+              <li class="nav-item">
+                <a href="#<%= ma.name.gsub(/\s+/, '') %>_<%= group.name.gsub(/\s+/, '') %>" data-toggle="tab" class="nav-link<%= ' active' if i == 0 %>"><%= group.name %></a>
               </li>
           <% end %>
         </ul>
 
         <div class="tab-content">
           <% ma.groups.each.with_index do |group, i| %>
-              <div class="tab-pane <%= 'active' if i == 0 %>" id="<%= ma.name.gsub(/\s+/, '') %>_<%= group.name %>">
+              <div class="tab-pane <%= 'active' if i == 0 %>" id="<%= ma.name.gsub(/\s+/, '') %>_<%= group.name.gsub(/\s+/, '') %>">
 
                 <table class="table table-condensed">
                   <tr>

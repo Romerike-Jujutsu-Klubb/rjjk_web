@@ -145,8 +145,10 @@ class GraduationsController < ApplicationController
       success_count = 0
       failures = []
       members.each do |member|
+        next_rank = member.next_rank(graduation)
+        next if graduation.group_notification && next_rank.position >= 15
         g = Graduate.new graduation_id: graduation.id, member_id: member.id,
-            rank_id: member.next_rank(graduation).id,
+            rank_id: next_rank.id,
             passed: graduation.group.school_breaks? || nil,
             paid_graduation: true, paid_belt: true
         if g.save
