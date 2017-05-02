@@ -37,10 +37,6 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(/Gradering for Voksne er satt opp til 2013-10-24./, mail.body)
     assert_match(/Din nåværende registrerte grad hos oss er: 1. kyu brunt belte./, mail.body)
     assert_match(/Din neste grad er shodan svart belte./, mail.body)
-    assert_match(
-        /Minstekrav for denne graden er 84 treninger siden forrige gradering og at du har fylt 18 år./,
-        mail.body
-    )
 
     mail = UserMessage.pending[1]
     assert_equal ['"Newbie Neuer" <newbie@example.com>'], mail.to
@@ -51,10 +47,6 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(/Vi har ikke registrert noen grad for deg fra før./,
         mail.body)
     assert_match(/Din neste grad er 5. kyu gult belte./, mail.body)
-    assert_match(
-        /Minstekrav for denne graden er 11 treninger siden du startet og at du har fylt 14 år./,
-        mail.body
-    )
 
     mail = UserMessage.pending[2]
     assert_equal ['"Uwe Kubosch" <admin@test.com>'], mail.to
@@ -65,10 +57,6 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(%r{Din nåværende registrerte grad hos oss er: nidan svart belte m/2 striper.},
         mail.body)
     assert_match(%r{Din neste grad er sandan svart belte m/3 striper.}, mail.body)
-    assert_match(
-        /Minstekrav for denne graden er 84 treninger siden forrige gradering og at du har fylt 22 år./,
-        mail.body
-    )
   end
 
   def test_notify_censors

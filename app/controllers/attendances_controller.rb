@@ -315,7 +315,7 @@ class AttendancesController < ApplicationController
       if params[:group_id] == 'others'
         @instructors = []
         @members = Member.includes(attendances: { group_schedule: :group })
-            .where('id NOT in (SELECT DISTINCT member_id FROM groups_members)')
+            .where('id NOT in (SELECT DISTINCT member_id FROM group_memberships)')
             .where('left_on IS NULL OR left_on > ?', @date)
             .to_a
         @trials = []
