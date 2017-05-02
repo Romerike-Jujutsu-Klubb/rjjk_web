@@ -48,6 +48,7 @@ class NewsFeatureTest < ActionDispatch::IntegrationTest
     tinymce_fill_in 'news_item_body', with: 'A long time ago in a galaxy far, far away.'
     screenshot('form_filled_in')
     click_button('Lagre')
+    assert_gallery_image_is_loaded
     screenshot('saved')
   end
 
