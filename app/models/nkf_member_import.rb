@@ -8,8 +8,9 @@ require 'erb'
 require 'pp'
 
 class NkfMemberImport
-  CONCURRENT_REQUESTS = 7
+  include ParallelRunner
   include MonitorMixin
+
   attr_reader :changes, :error_records, :exception, :import_rows, :new_records, :trial_changes
 
   def self.import_nkf_changes
@@ -107,23 +108,6 @@ class NkfMemberImport
     import_rows[0] << 'ventekid'
     in_parallel(detail_codes) { |dc| add_waiting_kid(import_rows, dc) }
     import_rows
-  end
-
-  def in_parallel(values)
-    queue = Queue.new
-    values.each { |value| queue << value }
-    threads = Array.new(CONCURRENT_REQUESTS) do
-      Thread.start do
-        begin
-          loop { yield queue.pop(true) }
-        rescue ThreadError => e
-          logger.debug "ThreadError running parallel tasks: #{e}"
-        ensure
-          ActiveRecord::Base.connection.close
-        end
-      end
-    end
-    threads.each(&:join)
   end
 
   def add_waiting_kid(import_rows, dc)

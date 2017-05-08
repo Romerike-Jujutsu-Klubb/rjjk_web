@@ -48,7 +48,7 @@ class ImagesController < ApplicationController
       imgs.from_blob Image.with_image.find(params[:id]).content_data
     rescue java.lang.NullPointerException, java.lang.OutOfMemoryError,
         javax.imageio.IIOException, Java::JavaLang::ArrayIndexOutOfBoundsException => e
-      logger.error "Exception loading image: #{e}"
+      logger.error "Exception loading image: #{e.class} #{e}"
       icon_name = @image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
       redirect_to ActionController::Base.helpers.asset_path icon_name
       return

@@ -35,8 +35,7 @@ module ApplicationHelper
 
   def textalize(s)
     return '' if s.nil?
-    with_emails = Rinku.auto_link(s, :urls, 'target="_blank"')
-    with_links = Rinku.auto_link with_emails, :email_addresses
+    with_links = auto_link(s, link: :all, target: '_blank', sanitize: false)
     html = Kramdown::Document.new(with_links.strip).to_html
     html.force_encoding(Encoding::UTF_8)
     html_with_base = absolute_links(html)
