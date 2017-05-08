@@ -61,11 +61,6 @@ Rails.application.routes.draw do
     get :confirm, on: :member
     get :decline, on: :member
   end
-  resources :cms_members do
-    collection do
-      get :active_contracts
-    end
-  end
   resources :correspondences
   resources :elections
   resources :embus do
@@ -126,13 +121,11 @@ Rails.application.routes.draw do
   resources :martial_arts
   resources :members do
     collection do
-      get :cms_comparison
       get :email_list
       get :excel_export
       get :grade_history_graph
       get :grade_history_graph_percentage
       get :history_graph
-      get :income
       get :list_active
       get :list_inactive
       get :nkf_report

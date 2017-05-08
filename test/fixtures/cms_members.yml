@@ -1,9 +1,0 @@
-one:
-  first_name: Ola
-  last_name: Normann
-  address: Veien 7
-  postal_code: 1779
-  male: true
-  payment_problem: false
-  instructor: false
-  nkf_fee: true

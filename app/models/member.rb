@@ -66,11 +66,9 @@ parent_name phone_home phone_mobile phone_parent phone_work
   NILLABLE_FIELDS = %i(parent_name phone_home phone_mobile phone_work).freeze
   before_validation { NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? } }
 
-  # validates_presence_of :address, :cms_contract_id
   validates :billing_postal_code, length: { is: 4,
       if: proc { |m| m.billing_postal_code.present? } }
   validates :birthdate, :joined_on, presence: true
-  validates :cms_contract_id, uniqueness: { if: :cms_contract_id }
   validates :email, length: { maximum: 128 }
   validates :first_name, :last_name, presence: true
   validates :instructor, inclusion: { in: [true, false] }
@@ -409,10 +407,6 @@ blocking users: #{blocking_users.inspect}"
     return unless image?
     magick_image = Magick::Image.from_blob(Image.with_image.find(image_id).content_data).first
     magick_image.crop_resized(x, y).to_blob
-  end
-
-  def cms_member
-    CmsMember.find_by(cms_contract_id: cms_contract_id)
   end
 
   def invoice_email

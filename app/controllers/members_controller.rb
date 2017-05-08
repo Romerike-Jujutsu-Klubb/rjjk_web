@@ -107,21 +107,6 @@ class MembersController < ApplicationController
     end
   end
 
-  def create_from_cms_member
-    cms_member = CmsMember.find(params[:cms_member_id])
-    attributes = cms_member.attributes
-    attributes.delete('created_at')
-    attributes.delete('updated_at')
-    @member = Member.new(attributes)
-    if @member.save
-      flash[:notice] = 'Medlem opprettet.'
-      redirect_to action: :edit, id: @member.id
-    else
-      new
-      render action: 'new'
-    end
-  end
-
   def show
     edit
     render action: :edit
@@ -193,10 +178,6 @@ class MembersController < ApplicationController
         filename: 'Epostliste.csv')
   end
 
-  def income
-    @members = CmsMember.find_active
-  end
-
   def image
     @member = Member.find(params[:id])
     if @member.image?
@@ -218,23 +199,6 @@ class MembersController < ApplicationController
           filename: @member.image.name)
     else
       render text: 'Bilde mangler'
-    end
-  end
-
-  def cms_comparison
-    @cms_members = CmsMember.find_active
-    @members = Member.active.to_a
-    @inactive_cms_members = CmsMember.find_inactive
-
-    @new_cms_members = @cms_members
-        .select { |cmsm| @members.find { |m| m.cms_contract_id == cmsm.cms_contract_id }.nil? }
-    @new_inactive_members = @members.select do |m|
-      (cmsm = @inactive_cms_members.find do |cmsm2|
-        cmsm2.cms_contract_id == m.cms_contract_id
-      end) && m.left_on == cmsm.left_on
-    end
-    @members_not_in_cms = @members.select do |m|
-      @cms_members.find { |cmsm| cmsm.cms_contract_id == m.cms_contract_id }.nil?
     end
   end
 

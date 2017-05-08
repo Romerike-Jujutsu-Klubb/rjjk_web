@@ -22,9 +22,6 @@ class AddMartialArtsMembers < ActiveRecord::Migration
     Member.all.each do |m|
       m.department = m.martial_arts[0].family
       m.save!
-      cmsm = CmsMember.find_by(cms_contract_id: m.cms_contract_id)
-      cmsm.department = m.department
-      cmsm.save!
     end
     drop_table :martial_arts_members
   end

@@ -33,7 +33,7 @@
    <Font x:Family="Swiss" ss:Size="14" ss:Bold="1"/>
   </Style>
  </Styles>
- <Worksheet ss:Name="CMS Kontrakter">
+ <Worksheet ss:Name="Medlemmer">
   <Table ss:ExpandedColumnCount="256" x:FullColumns="1"
    x:FullRows="1">
    <Column ss:AutoFitWidth="1" ss:Width="100"/>
@@ -71,7 +71,7 @@
     <Cell><Data ss:Type="String"><%=h member.groups[0] && member.groups[0].martial_art.name%></Data></Cell>
     <Cell><Data ss:Type="String"><%=h member.groups[0] && member.groups[0].martial_art.family%></Data></Cell>
     <Cell><Data ss:Type="Number"><%=member.groups[0] && member.groups[0].id%></Data></Cell>
-    <Cell><Data ss:Type="String"><%=member.cms_member && member.cms_member.kid%></Data></Cell>
+    <Cell><Data ss:Type="String"><%=member.kid%></Data></Cell>
    </Row>
 <% end -%>
 
