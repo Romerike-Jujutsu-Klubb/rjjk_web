@@ -52,6 +52,8 @@ class ApplicationStepsController < ApplicationController
     imgs.each { |img| img.crop_resized!(width, img.rows * ratio) }
     send_data(imgs.to_blob, disposition: 'inline',
         type: step.image_content_type, filename: step.image_filename)
+  ensure
+    imgs&.each(&:destroy!)
   end
 
   def new

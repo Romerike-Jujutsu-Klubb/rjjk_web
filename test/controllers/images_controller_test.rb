@@ -30,6 +30,11 @@ class ImagesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_inline
+    get :inline, params:{id: @first_id, format: 'png'}
+    assert_response :success
+  end
+
   def test_new
     get :new
 

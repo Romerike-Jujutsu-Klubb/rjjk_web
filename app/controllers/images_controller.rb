@@ -59,6 +59,8 @@ class ImagesController < ApplicationController
     ratio = width.to_f / img_width
     imgs.each { |img| img.crop_resized!(width, img.rows * ratio) }
     send_data(imgs.to_blob, disposition: 'inline', type: @image.content_type, filename: @image.name)
+  ensure
+    imgs&.each(&:destroy!)
   end
 
   def new

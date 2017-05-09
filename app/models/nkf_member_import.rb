@@ -114,7 +114,7 @@ class NkfMemberImport
     details_body = http_get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}")
     unless details_body =~
           /class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
-      raise "Could not find member id:\n#{details_body}"
+      raise "Could not find member id:\n#{details_body.inspect}"
     end
     member_id = $1
     active =
