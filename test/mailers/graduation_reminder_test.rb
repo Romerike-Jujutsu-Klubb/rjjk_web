@@ -11,6 +11,10 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_equal 'Disse gruppene mangler gradering', mail.subject
     assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_match(/Hei Uwe.*Panda mangler gradering for dette semesteret/m, mail.body)
+    url = <<~URL
+      http://example.com/graduations/new?graduation%5Bgroup_id%5D=84385526&amp;graduation%5Bgroup_notification%5D=true&amp;graduation%5Bheld_on%5D=2013-12-12
+    URL
+    assert_match(%{<a href="#{url}">Opprett gradering for Panda</a>}, mail.body)
   end
 
   def test_notify_overdue_graduates

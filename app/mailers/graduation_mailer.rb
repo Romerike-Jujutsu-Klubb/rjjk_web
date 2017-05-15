@@ -6,8 +6,9 @@ class GraduationMailer < ApplicationMailer
     @group = group
     @title = 'Disse gruppene mangler gradering'
 
-    @email_url = { controller: :graduations, action: :new,
-        graduation: { group_id: @group.id, held_on: suggested_date } }
+    @email_url = { controller: :graduations, action: :new, graduation: {
+        group_id: @group.id, held_on: suggested_date, group_notification: true
+    } }
     mail subject: @title, to: @instructor.email
   end
 
