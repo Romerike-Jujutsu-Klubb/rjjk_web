@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EventInvitee < ActiveRecord::Base
+class EventInvitee < ApplicationRecord
   belongs_to :event
   belongs_to :user
   has_one :invitation, -> { where("message_type = '#{EventMessage::MessageType::INVITATION}'") },

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Role < ActiveRecord::Base
+class Role < ApplicationRecord
   has_many :appointments
   has_many :elections
 

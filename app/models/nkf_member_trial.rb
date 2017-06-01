@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class NkfMemberTrial < ActiveRecord::Base
+class NkfMemberTrial < ApplicationRecord
   SEARCH_FIELDS = %i(fornavn etternavn epost).freeze
 
   has_many :trial_attendances, dependent: :destroy

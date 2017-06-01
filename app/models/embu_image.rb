@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EmbuImage < ActiveRecord::Base
+class EmbuImage < ApplicationRecord
   belongs_to :embu
   belongs_to :image
 

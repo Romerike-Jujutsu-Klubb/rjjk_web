@@ -40,5 +40,5 @@ class CreateRanks < ActiveRecord::Migration
     drop_table :martial_arts
   end
 
-  class MartialArt < ActiveRecord::Base; end
+  class MartialArt < ApplicationRecord; end
 end

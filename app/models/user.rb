@@ -3,7 +3,7 @@
 require 'digest/sha1'
 
 # this model expects a certain database layout and its based on the name/login pattern.
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   include UserSystem
 
   attr_accessor :password, :password_confirmation

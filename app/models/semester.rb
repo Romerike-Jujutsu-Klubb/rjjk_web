@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Semester < ActiveRecord::Base
+class Semester < ApplicationRecord
   has_many :group_semesters, dependent: :destroy
 
   validates :end_on, :start_on, presence: true

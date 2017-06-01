@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserImage < ActiveRecord::Base
+class UserImage < ApplicationRecord
   belongs_to :user
   belongs_to :image
 

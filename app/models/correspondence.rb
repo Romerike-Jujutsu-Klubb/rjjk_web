@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class Correspondence < ActiveRecord::Base
+class Correspondence < ApplicationRecord
   belongs_to :member
 end

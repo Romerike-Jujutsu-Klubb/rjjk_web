@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Survey < ActiveRecord::Base
+class Survey < ApplicationRecord
   acts_as_list
 
   has_many :survey_questions, dependent: :destroy

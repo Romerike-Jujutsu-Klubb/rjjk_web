@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Practice < ActiveRecord::Base
+class Practice < ApplicationRecord
   belongs_to :group_schedule
 
   has_many :attendances, dependent: :destroy

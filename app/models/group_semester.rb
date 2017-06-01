@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class GroupSemester < ActiveRecord::Base
+class GroupSemester < ApplicationRecord
   belongs_to :chief_instructor, class_name: :Member
   belongs_to :group
   belongs_to :semester

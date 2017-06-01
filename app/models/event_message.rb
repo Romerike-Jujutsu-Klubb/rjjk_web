@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EventMessage < ActiveRecord::Base
+class EventMessage < ApplicationRecord
   module MessageType
     INFORMATION = 'INFORMATION'
     INVITATION = 'INVITATION'

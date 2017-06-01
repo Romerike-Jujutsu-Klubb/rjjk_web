@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BasicTechnique < ActiveRecord::Base
+class BasicTechnique < ApplicationRecord
   belongs_to :rank
   belongs_to :waza
   has_many :basic_technique_links, dependent: :destroy

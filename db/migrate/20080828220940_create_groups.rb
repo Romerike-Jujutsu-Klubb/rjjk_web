@@ -50,7 +50,7 @@ class CreateGroups < ActiveRecord::Migration
     drop_table :groups
   end
 
-  class Group < ActiveRecord::Base; end
-  class MartialArt < ActiveRecord::Base; end
-  class Member < ActiveRecord::Base; end
+  class Group < ApplicationRecord; end
+  class MartialArt < ApplicationRecord; end
+  class Member < ApplicationRecord; end
 end

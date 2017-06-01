@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Member < ActiveRecord::Base
+class Member < ApplicationRecord
   JUNIOR_AGE_LIMIT = 15
   ASPIRANT_AGE_LIMIT = 10
   MEMBERS_PER_PAGE = 30

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Rank < ActiveRecord::Base
+class Rank < ApplicationRecord
   include Comparable
 
   UNRANKED = new(position: -99, standard_months: 0, name: 'Ugradert', colour: 'Hvitt',

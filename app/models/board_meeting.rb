@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BoardMeeting < ActiveRecord::Base
+class BoardMeeting < ApplicationRecord
   validates :start_at, presence: true
 
   def minutes=(file)

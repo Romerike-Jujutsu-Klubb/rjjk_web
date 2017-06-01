@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Graduation < ActiveRecord::Base
+class Graduation < ApplicationRecord
   belongs_to :group
   has_many :censors, dependent: :destroy
   has_many :graduates, dependent: :destroy

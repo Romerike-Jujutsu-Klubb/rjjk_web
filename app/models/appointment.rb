@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Appointment < ActiveRecord::Base
+class Appointment < ApplicationRecord
   belongs_to :member
   belongs_to :role
 

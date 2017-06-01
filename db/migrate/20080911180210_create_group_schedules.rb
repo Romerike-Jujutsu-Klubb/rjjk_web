@@ -24,7 +24,7 @@ class CreateGroupSchedules < ActiveRecord::Migration
     drop_table :group_schedules
   end
 
-  class GroupSchedule < ActiveRecord::Base
+  class GroupSchedule < ApplicationRecord
     belongs_to :group
   end
 end

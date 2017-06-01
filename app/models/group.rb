@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # FIXME(uwe): Split into AgeGroup and TrainingGroup
-class Group < ActiveRecord::Base
+class Group < ApplicationRecord
   scope :active, ->(date = nil) do
     date ? where('closed_on IS NULL OR closed_on >= ?', date) : where('closed_on IS NULL')
   end

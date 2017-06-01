@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Event < ActiveRecord::Base
+class Event < ApplicationRecord
   scope :chronological, -> { order :start_at }
 
   has_one :invitation, class_name: 'EventMessage'

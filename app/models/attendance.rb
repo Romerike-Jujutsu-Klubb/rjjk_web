@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Attendance < ActiveRecord::Base
+class Attendance < ApplicationRecord
   module Status
     ABSENT = 'F'
     ASSISTANT = 'H'

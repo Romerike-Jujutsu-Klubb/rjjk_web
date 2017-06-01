@@ -17,18 +17,18 @@ class AddGroupToGraduations < ActiveRecord::Migration
     remove_column :graduations, :martial_art_id
   end
 
-  class Graduation < ActiveRecord::Base
+  class Graduation < ApplicationRecord
     has_many :graduates
   end
 
-  class Graduate < ActiveRecord::Base
+  class Graduate < ApplicationRecord
     belongs_to :rank
   end
 
-  class Rank < ActiveRecord::Base
+  class Rank < ApplicationRecord
     belongs_to :group
   end
 
-  class Group < ActiveRecord::Base
+  class Group < ApplicationRecord
   end
 end

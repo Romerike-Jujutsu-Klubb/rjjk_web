@@ -11,5 +11,5 @@ class AddStandardTimeToRanks < ActiveRecord::Migration
     remove_column :ranks, :standard_months
   end
 
-  class Rank < ActiveRecord::Base; end
+  class Rank < ApplicationRecord; end
 end

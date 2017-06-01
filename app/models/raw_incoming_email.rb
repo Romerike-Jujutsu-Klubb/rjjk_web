@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-class RawIncomingEmail < ActiveRecord::Base
+class RawIncomingEmail < ApplicationRecord
 end

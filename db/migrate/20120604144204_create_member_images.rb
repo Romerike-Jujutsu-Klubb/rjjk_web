@@ -46,6 +46,6 @@ class CreateMemberImages < ActiveRecord::Migration
     remove_column :members, :image
   end
 
-  class Image < ActiveRecord::Base; end
-  class Member < ActiveRecord::Base; end
+  class Image < ApplicationRecord; end
+  class Member < ApplicationRecord; end
 end

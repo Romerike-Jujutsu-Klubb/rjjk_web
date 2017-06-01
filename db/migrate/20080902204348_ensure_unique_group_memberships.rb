@@ -30,7 +30,7 @@ class EnsureUniqueGroupMemberships < ActiveRecord::Migration
     remove_index :groups_members, %i(group_id member_id)
   end
 
-  class Member < ActiveRecord::Base
+  class Member < ApplicationRecord
     has_and_belongs_to_many :martial_arts
     has_and_belongs_to_many :groups
   end

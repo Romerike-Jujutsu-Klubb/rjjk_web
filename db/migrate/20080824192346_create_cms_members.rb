@@ -45,6 +45,6 @@ class CreateCmsMembers < ActiveRecord::Migration
     drop_table :cms_members
   end
 
-  class CmsMember < ActiveRecord::Base; end
-  class Member < ActiveRecord::Base; end
+  class CmsMember < ApplicationRecord; end
+  class Member < ApplicationRecord; end
 end

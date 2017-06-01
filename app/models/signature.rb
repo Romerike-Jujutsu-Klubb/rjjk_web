@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Signature < ActiveRecord::Base
+class Signature < ApplicationRecord
   belongs_to :member
 
   validates :content_type, presence: true

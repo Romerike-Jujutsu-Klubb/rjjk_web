@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Embu < ActiveRecord::Base
+class Embu < ApplicationRecord
   extend UserSystem
 
   belongs_to :user

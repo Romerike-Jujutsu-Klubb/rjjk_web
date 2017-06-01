@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AnnualMeeting < ActiveRecord::Base
+class AnnualMeeting < ApplicationRecord
   has_many :elections, dependent: :destroy
 
   validate do

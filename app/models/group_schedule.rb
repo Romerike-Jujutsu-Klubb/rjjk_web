@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class GroupSchedule < ActiveRecord::Base
+class GroupSchedule < ApplicationRecord
   belongs_to :group
   has_many :group_instructors, dependent: :destroy
   has_many :practices, dependent: :destroy

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BasicTechniqueLink < ActiveRecord::Base
+class BasicTechniqueLink < ApplicationRecord
   acts_as_list scope: :basic_technique_id
 
   belongs_to :basic_technique

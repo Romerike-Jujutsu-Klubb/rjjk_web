@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SurveyAnswer < ActiveRecord::Base
+class SurveyAnswer < ApplicationRecord
   belongs_to :survey_request
   belongs_to :survey_question
 

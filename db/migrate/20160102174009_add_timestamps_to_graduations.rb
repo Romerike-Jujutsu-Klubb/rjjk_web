@@ -18,11 +18,11 @@ class AddTimestampsToGraduations < ActiveRecord::Migration
         .update_all(invitation_sent_at: now, confirmed_at: now)
   end
 
-  class Censor < ActiveRecord::Base
+  class Censor < ApplicationRecord
     belongs_to :graduation
   end
-  Graduation = Class.new ActiveRecord::Base
-  class Graduate < ActiveRecord::Base
+  Graduation = Class.new ApplicationRecord
+  class Graduate < ApplicationRecord
     belongs_to :graduation
   end
 end

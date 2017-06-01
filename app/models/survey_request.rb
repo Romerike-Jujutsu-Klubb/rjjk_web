@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SurveyRequest < ActiveRecord::Base
+class SurveyRequest < ApplicationRecord
   belongs_to :member
   belongs_to :survey
   has_many :survey_answers, dependent: :destroy

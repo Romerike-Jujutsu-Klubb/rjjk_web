@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class NkfMember < ActiveRecord::Base
+class NkfMember < ApplicationRecord
   FIELD_MAP = {
       adresse_1: nil,
       adresse_2: :address,

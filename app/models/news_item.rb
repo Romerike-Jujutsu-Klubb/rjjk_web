@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class NewsItem < ActiveRecord::Base
+class NewsItem < ApplicationRecord
   module PublicationState
     DRAFT = 'DRAFT'
     PUBLISHED = 'PUBLISHED'

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SurveyQuestion < ActiveRecord::Base
+class SurveyQuestion < ApplicationRecord
   acts_as_list
 
   belongs_to :survey

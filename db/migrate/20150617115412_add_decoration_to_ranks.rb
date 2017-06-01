@@ -22,5 +22,5 @@ class AddDecorationToRanks < ActiveRecord::Migration
     end
   end
 
-  Rank = Class.new(ActiveRecord::Base)
+  Rank = Class.new(ApplicationRecord)
 end

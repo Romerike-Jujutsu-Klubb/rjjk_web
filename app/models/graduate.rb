@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Graduate < ActiveRecord::Base
+class Graduate < ApplicationRecord
   belongs_to :graduation
   belongs_to :member
   belongs_to :rank

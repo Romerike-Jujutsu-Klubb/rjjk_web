@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class PageAlias < ActiveRecord::Base
+class PageAlias < ApplicationRecord
   validates :old_path, uniqueness: true
 end

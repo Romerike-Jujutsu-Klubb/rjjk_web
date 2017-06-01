@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Censor < ActiveRecord::Base
+class Censor < ApplicationRecord
   belongs_to :graduation
   belongs_to :member
 

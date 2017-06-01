@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class InformationPage < ActiveRecord::Base
+class InformationPage < ApplicationRecord
   acts_as_tree order: :title
   acts_as_list scope: :parent_id
 

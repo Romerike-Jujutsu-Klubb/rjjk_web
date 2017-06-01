@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Election < ActiveRecord::Base
+class Election < ApplicationRecord
   belongs_to :annual_meeting
   belongs_to :member
   belongs_to :role

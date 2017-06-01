@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class GroupInstructor < ActiveRecord::Base
+class GroupInstructor < ApplicationRecord
   module Role
     CHIEF = 'Hovedinstruktør'
     INSTRUCTOR = 'Instruktør'

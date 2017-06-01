@@ -12,10 +12,10 @@ class RemoveGeneratedEventsForGraduations < ActiveRecord::Migration
     remove_column :graduations, :event_id, null: false
   end
 
-  class Graduation < ActiveRecord::Base
+  class Graduation < ApplicationRecord
     belongs_to :event
   end
 
-  class Event < ActiveRecord::Base
+  class Event < ApplicationRecord
   end
 end

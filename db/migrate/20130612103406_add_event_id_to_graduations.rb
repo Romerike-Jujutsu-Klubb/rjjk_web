@@ -12,7 +12,7 @@ class AddEventIdToGraduations < ActiveRecord::Migration
     change_column_null :graduations, :event_id, false
   end
 
-  class Graduation < ActiveRecord::Base
+  class Graduation < ApplicationRecord
     belongs_to :event
     belongs_to :group
 
@@ -33,13 +33,13 @@ class AddEventIdToGraduations < ActiveRecord::Migration
     end
   end
 
-  class Event < ActiveRecord::Base
+  class Event < ApplicationRecord
   end
 
-  class Group < ActiveRecord::Base
+  class Group < ApplicationRecord
     has_many :group_schedules
   end
 
-  class GroupSchedule < ActiveRecord::Base
+  class GroupSchedule < ApplicationRecord
   end
 end

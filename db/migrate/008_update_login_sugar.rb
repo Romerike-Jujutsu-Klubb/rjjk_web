@@ -33,5 +33,5 @@ class UpdateLoginSugar < ActiveRecord::Migration
     rename_column :users, :deleted_tmp, :deleted
   end
 
-  class User < ActiveRecord::Base; end
+  class User < ApplicationRecord; end
 end
