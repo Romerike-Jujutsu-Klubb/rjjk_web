@@ -6,6 +6,7 @@ Opprettet følgende nye medlemmer:
 <% end -%>
 
 <% end -%>
+
 <% if @member_changes.any? -%>
 Oppdaterte følgende eksisterende medlemmer:
 
@@ -13,6 +14,17 @@ Oppdaterte følgende eksisterende medlemmer:
     <%= m.first_name %> <%= m.last_name %>
     <% c.each do |k, v| -%>
         <%= k %>: <%= v[0].inspect %> => <%= v[1].inspect %>
+    <% end -%>
+<% end -%>
+<% end -%>
+
+<% if @outgoing_changes.any? -%>
+Oppdaterte følgende medlemmer hos NKF:
+
+<% @outgoing_changes.each do |m, c| -%>
+    <%= m.first_name %> <%= m.last_name %>
+    <% c.each do |k, v| -%>
+        <%= k %>: <%= v.inspect %>
     <% end -%>
 <% end -%>
 <% end -%>

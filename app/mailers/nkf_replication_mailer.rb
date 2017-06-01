@@ -16,6 +16,7 @@ class NkfReplicationMailer < ApplicationMailer
   def update_members(comparison)
     @new_members = comparison.new_members
     @member_changes = comparison.member_changes
+    @outgoing_changes = comparison.outgoing_changes
     @group_changes = comparison.group_changes
     @errors = comparison.errors
     stats = [
