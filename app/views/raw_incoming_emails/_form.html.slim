@@ -1,0 +1,18 @@
+= bootstrap_form_for(@raw_incoming_email) do |f|
+  - if @raw_incoming_email.errors.any?
+    #error_explanation
+      h2 #{pluralize(@raw_incoming_email.errors.count, "error")} prohibited this
+        raw_incoming_email from being saved:
+      ul
+        - @raw_incoming_email.errors.full_messages.each do |message|
+          li = message
+
+  = f.text_area :content, value: @raw_incoming_email.content&.encode, class: 'expanding'
+  .row
+    .col-md-6
+      = f.text_field :processed_at, class: 'datetime'
+    .col-md-6
+      = f.text_field :postponed_at, class: 'datetime'
+
+  .actions
+    = f.primary

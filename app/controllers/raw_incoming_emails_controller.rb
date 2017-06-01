@@ -67,6 +67,6 @@ class RawIncomingEmailsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def raw_incoming_email_params
-    params.require(:raw_incoming_email).permit(:content)
+    params.require(:raw_incoming_email).permit(:content, :postponed_at, :processed_at)
   end
 end

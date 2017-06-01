@@ -64,6 +64,7 @@ class ActionDispatch::IntegrationTest
   end
 
   def assert_gallery_image_is_loaded
+    return unless Capybara::Screenshot.enabled
     assert has_css? '#gallery_img[src="/images/inline/298486374/412.picture%20two"]'
   end
 end

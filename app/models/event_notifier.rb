@@ -35,7 +35,7 @@ class EventNotifier
         else
           event_invitee_message.deliver_now
         end
-        eim.update_attributes! sent_at: now
+        eim.update! sent_at: now
       rescue => e
         logger.error "Exception sending event message for #{eim.inspect}\n#{e}"
         logger.error e.backtrace.join("\n")

@@ -44,7 +44,7 @@ class CreateGroups < ActiveRecord::Migration
     s = Group.find_by name: 'Seniorer'
     Member.all.each do |m|
       senior = m.groups.include? s
-      m.update_attributes! senior: senior
+      m.update! senior: senior
     end
     drop_table :groups_members
     drop_table :groups

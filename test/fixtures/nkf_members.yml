@@ -1,12 +1,25 @@
 erik:
   fornavn: Erik
+  etternavn: Øyan
+  adresse_2: Bøkeveien 11
+  postnr: 1470
   kjonn: Mann
+  fodselsdato: 01.04.1974
+  innmeldtdato: 01.05.1996
   gren_stilart_avd_parti___gren_stilart_avd_parti: Kei Wa Ryu
+  epost: erik@example.net
 uwe:
   fornavn: Uwe
+  etternavn: Kubosch
+  adresse_2: Møllesvingen 5
+  fodselsdato: 25.11.1970
   kjonn: Mann
   member: uwe
+  innmeldtdato: 05.01.1987
   gren_stilart_avd_parti___gren_stilart_avd_parti: Kei Wa Ryu
+  medlemsnummer: 40001062
+  epost: uwe@example.net
+  postnr: 1479
 lars:
   adresse_2: Torsvei 8b
   etternavn: Bråten
@@ -17,3 +30,5 @@ lars:
   kjonn: Mann
   member: lars
   postnr: 1472
+  medlemsnummer: 40000993
+  epost: lars@example.net

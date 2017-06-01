@@ -74,7 +74,7 @@ class NkfMember < ActiveRecord::Base
           .group_by { |_k, v| v.size }.sort.last.last.map(&:first).first
       Group.where(contract: contract_name).to_a.each do |group|
         logger.info "Update contract #{group} #{contract_name} #{monthly_price} #{yearly_price}"
-        group.update_attributes! monthly_price: monthly_price, yearly_price: yearly_price
+        group.update! monthly_price: monthly_price, yearly_price: yearly_price
       end
     end
   end

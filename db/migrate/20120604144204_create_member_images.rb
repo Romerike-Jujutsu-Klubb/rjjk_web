@@ -27,7 +27,7 @@ class CreateMemberImages < ActiveRecord::Migration
         u.password_needs_confirmation = true
         u.save!
         u.generate_security_token
-        m.update_attributes! user_id: u.id
+        m.update! user_id: u.id
         unless m.left_on || m.birthdate > 13.years.ago.to_date
           UserMailer.created_from_member(u, password).store(u.id, tag: :user_from_member)
         end
@@ -37,7 +37,7 @@ class CreateMemberImages < ActiveRecord::Migration
       i = Image.create! name: m.image_name, content_type: m.image_content_type,
           content_data: m.image, user_id: u.id, description: 'Profilbilde', public: false,
           approved: nil
-      m.update_attributes! image_id: i.id
+      m.update! image_id: i.id
     end
 
     remove_column :users, :member_id

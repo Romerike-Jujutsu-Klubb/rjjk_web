@@ -82,7 +82,7 @@ Rails.application.routes.draw do
   end
   resources :graduates do
     member do
-      post :confirm
+      get :confirm
       get :decline
     end
   end
@@ -141,6 +141,7 @@ Rails.application.routes.draw do
       get :history_graph
       get :image
       get :missing_contract
+      post :remove_group
       get :since_graduation
       get :thumbnail
     end

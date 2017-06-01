@@ -41,7 +41,7 @@ class IncomingEmailProcessorTest < ActionMailer::TestCase
     mail = ActionMailer::Base.deliveries[4]
     assert_equal %w(test@jujutsu.no), mail.from
     assert_equal 'styret@jujutsu.no', mail.header['To'].to_s
-    assert_equal %w(lars@example.com sebastian@example.com admin@test.com), mail.smtp_envelope_to
+    assert_equal %w(lars@example.com sebastian@example.com uwe@example.com), mail.smtp_envelope_to
     assert_equal %w(styret@jujutsu.no), mail.reply_to
     assert_equal '[TEST][RJJK][Styret] Melding til styret', mail.subject
     assert_match 'Meldingstekst styret', mail.body.encoded
@@ -51,7 +51,7 @@ class IncomingEmailProcessorTest < ActionMailer::TestCase
     mail = ActionMailer::Base.deliveries[5]
     assert_equal %w(test@jujutsu.no), mail.from
     assert_equal 'styret@jujutsu.no', mail.header['To'].to_s
-    assert_equal %w(lars@example.com sebastian@example.com admin@test.com), mail.smtp_envelope_to
+    assert_equal %w(lars@example.com sebastian@example.com uwe@example.com), mail.smtp_envelope_to
     assert_equal %w(styret@jujutsu.no), mail.reply_to
     assert_equal '[TEST][RJJK][Styret] Re: Melding til styret', mail.subject
     assert_match 'Meldingstekst svar til styret', mail.body.encoded

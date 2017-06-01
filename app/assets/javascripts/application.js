@@ -3,8 +3,6 @@
 //= require jquery_ujs
 // require turbolinks
 //= require tinymce-jquery
-//= require gmaps4rails/gmaps4rails.base
-//= require gmaps4rails/gmaps4rails.googlemaps
 //= require expanding
 //= require tether
 //= require bootstrap

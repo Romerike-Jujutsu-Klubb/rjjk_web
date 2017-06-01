@@ -27,10 +27,13 @@ class NkfMemberImport
     end
 
     begin
-      a = NkfMemberComparison.new
-      if a.any?
-        NkfReplicationMailer.update_members(a).deliver_now
-        logger.info 'Sent update_members mail.'
+      ActiveRecord::Base.transaction do
+        a = NkfMemberComparison.new
+        a.sync
+        if a.any?
+          NkfReplicationMailer.update_members(a).deliver_now
+          logger.info 'Sent update_members mail.'
+        end
       end
     rescue => e
       handle_exception('Execption sending update_members email.', e)
@@ -325,7 +328,7 @@ class NkfMemberImport
     login_form_fields += [
         ['site2pstoretoken', token],
         %w(ssousername 40001062),
-        ['password', Rails.env.test? ? 'CokaBrus42' : ENV['NKF_PASSWORD']],
+        ['password', ENV['NKF_PASSWORD']],
     ]
     login_params = login_form_fields.map { |field| "#{field[0]}=#{ERB::Util.url_encode field[1]}" }
         .join('&')

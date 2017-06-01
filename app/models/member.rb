@@ -6,11 +6,11 @@ class Member < ActiveRecord::Base
   MEMBERS_PER_PAGE = 30
   ACTIVE_CONDITIONS = 'left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)'
 
-  acts_as_gmappable check_process: :prevent_geocoding, validation: false
-
-  def prevent_geocoding
-    address.blank? || (latitude.present? && longitude.present?)
-  end
+  geocoded_by :full_address
+  after_validation :geocode, if: ->(m) {
+    (m.address.present? || m.postal_code.present?) &&
+        ((latitude.blank? || longitude.blank? || m.address_changed? || m.postal_code_changed?))
+  }
 
   belongs_to :image, dependent: :destroy
   belongs_to :user, dependent: :destroy
@@ -64,12 +64,18 @@ parent_name phone_home phone_mobile phone_parent phone_work
   }
 
   NILLABLE_FIELDS = %i(parent_name phone_home phone_mobile phone_work).freeze
-  before_validation { NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? } }
+  before_validation do
+    %i[billing_email].each do |e|
+      attributes[e] = attributes[e].downcase if attributes[e] && changes[e]
+    end
+    NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? }
+  end
 
+  validates :address, presence: true, allow_blank: true # Allow members to omit their home address
   validates :billing_postal_code, length: { is: 4,
       if: proc { |m| m.billing_postal_code.present? } }
   validates :birthdate, :joined_on, presence: true
-  validates :email, length: { maximum: 128 }
+  validates :email, presence: true, length: { maximum: 128 }
   validates :first_name, :last_name, presence: true
   validates :instructor, inclusion: { in: [true, false] }
   validates :male, inclusion: { in: [true, false] }
@@ -94,7 +100,7 @@ parent_name phone_home phone_mobile phone_parent phone_work
 
   def self.create_corresponding_user!(attrs)
     attrs.symbolize_keys!
-    email = attrs[:email]
+    email = attrs[:email].downcase
     first_name = attrs[:first_name]
     last_name = attrs[:last_name]
     passwd = (0..4).map { [*((0..9).to_a + ('a'..'z').to_a)][rand(36)] }.join
@@ -117,8 +123,9 @@ parent_name phone_home phone_mobile phone_parent phone_work
           .find_by('NOT EXISTS (SELECT id FROM members WHERE user_id = users.id)')
       return existing_user if existing_user
 
-      if (user_with_email = User.find_by('login = ? OR email = ?', *([potential_email] * 2)))
-        logger.info "A user with this email already exists: #{user_with_email}"
+      if (user_with_email = User.find_by('login ILIKE ? OR email ILIKE ?',
+          *([potential_email] * 2)))
+        logger.info "A user with this email already exists: #{user_with_email.inspect}"
         blocking_users << user_with_email
         next
       end
@@ -170,8 +177,8 @@ blocking users: #{blocking_users.inspect}"
 
   # describe how to retrieve the address from your model, if you use directly a
   # db column, you can dry your code, see wiki
-  def gmaps4rails_address
-    "#{address}, #{postal_code}, Norway"
+  def full_address
+    [address, postal_code, 'Norway'].select(&:present?).join(', ')
   end
 
   def gmaps4rails_infowindow

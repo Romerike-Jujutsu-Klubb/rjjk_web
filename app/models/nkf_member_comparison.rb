@@ -1,17 +1,18 @@
 # frozen_string_literal: true
 
 class NkfMemberComparison
-  attr_reader :errors, :group_changes, :members, :member_changes, :new_members,
-      :orphan_members, :orphan_nkf_members
+  attr_reader :errors, :group_changes, :member_changes, :members, :new_members, :orphan_members,
+      :orphan_nkf_members, :outgoing_changes
 
   def initialize
-    ActiveRecord::Base.transaction do
-      fetch
-      sync
-    end
+    fetch
   end
 
-  def fetch
+  def any?
+    @new_members.any? || @member_changes.any? || @group_changes.any? || @errors.any?
+  end
+
+  private def fetch
     @orphan_nkf_members = NkfMember.where(member_id: nil).order(:fornavn, :etternavn).to_a
     @orphan_members = NkfMember.find_free_members
     @members = []
@@ -45,11 +46,52 @@ class NkfMemberComparison
       end
     end.compact
 
+    @outgoing_changes = []
+    agent = NkfAgent.new
+    front_page = agent.login
+
     @member_changes = @members.map do |m|
       begin
+        search_result = front_page.form('ks_reg_medladm') do |search|
+          search.p_ks_reg_medladm_action = 'SEARCH'
+          search.add_field!('frm_27_v29',  0)
+          search.add_field!('frm_27_v40', m.nkf_member.medlemsnummer)
+        end.submit
+        edit_link = search_result.css('tr.trList td.tdListData1')[9]
+        token = edit_link.attr('onclick')[14..-3]
+        member_page = agent.get(<<~URL)
+          http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_medlprofil?p_cr_par=#{token}
+        URL
+
+        outgoing_changes_for_member = {}
+        member_form = member_page.form('ks_medlprofil') do |form|
+          m.changes.each do |attr, (old_value, new_value)|
+            case attr
+              # when 'address'
+              # when 'birthdate'
+            when 'email'
+              form['frm_48_v10'] = old_value
+              outgoing_changes_for_member[attr] = { new_value => old_value }
+              # when 'joined_on'
+              # when 'last_name'
+              # when 'postal_code'
+            else
+              @errors << ['Unhandled change', m, attr]
+            end
+          end
+          @outgoing_changes << [m, outgoing_changes_for_member] if outgoing_changes_for_member.any?
+        end
+
+        if Rails.env.production?
+          m.restore_attributes(outgoing_changes_for_member.keys)
+          member_form.submit
+        end
+
         changes = m.changes
-        m.save!
-        [m, changes] unless changes.empty?
+        unless changes.empty?
+          m.save!
+          [m, changes]
+        end
       rescue => e
         Rails.logger.error "Exception saving member changes for #{m.attributes.inspect}"
         Rails.logger.error e.message
@@ -60,11 +102,6 @@ class NkfMemberComparison
     end.compact
 
     sync_groups
-  end
-
-  def any?
-    @new_members.any? || @member_changes.any? || @group_changes.any? ||
-        @errors.any?
   end
 
   private

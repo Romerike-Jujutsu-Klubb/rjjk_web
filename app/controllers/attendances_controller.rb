@@ -183,7 +183,7 @@ class AttendancesController < ApplicationController
             end
       end
     end
-    @attendance.update_attributes!(status: new_status) if new_status
+    @attendance.update!(status: new_status) if new_status
     if request.xhr?
       if params[:status] == 'toggle'
         render partial: 'plan_practice', locals: { gs: practice.group_schedule,
@@ -285,7 +285,7 @@ class AttendancesController < ApplicationController
             Attendance::Status::ATTENDED
           end
     end
-    @attendance.update_attributes! status: new_status
+    @attendance.update! status: new_status
 
     if request.xhr?
       render partial: 'plan_practice', locals: { gs: practice.group_schedule,

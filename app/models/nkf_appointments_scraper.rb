@@ -4,8 +4,8 @@ class NkfAppointmentsScraper
   def self.import_appointments
     tries ||= 1
     logger.info 'Import appointments'
-    agent = Mechanize.new
-    front_page = login(agent)
+    agent = NkfAgent.new
+    front_page = agent.login
 
     admin_form = front_page.form('ks_reg_medladm')
     admin_form.field_with(name: 'frm_27_v13').options[3].select
@@ -51,16 +51,5 @@ class NkfAppointmentsScraper
       retry
     end
     raise
-  end
-
-  def self.login(agent)
-    token_page = agent.get('http://nkfwww.kampsport.no/portal/pls/portal/portal.wwptl_login.show_site2pstoretoken?p_url=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpls%2Fportal%2Fmyports.st_login_proc.set_language%3Fref_path%3D7513_ST_LOGIN_463458038&p_cancel=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpage%2Fportal%2Fks_utv%2Fst_login')
-    token = token_page.form('freshTokenForm').field_with(name: 'site2pstoretoken').value
-    login_page = agent.get('http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login')
-    login_form = login_page.form('st_login')
-    login_form.ssousername = '40001062'
-    login_form.password = Rails.env.test? ? 'CokaBrus42' : ENV['NKF_PASSWORD']
-    login_form.site2pstoretoken = token
-    agent.submit(login_form)
   end
 end

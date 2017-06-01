@@ -9,7 +9,7 @@ class InformationPageNotifierTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[0]
     assert_equal 'Oppdatering av informasjonssider', mail.subject
-    assert_equal ['"Uwe Kubosch" <admin@test.com>'], mail.to
+    assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
     assert_equal %w(noreply@test.jujutsu.no), mail.from
     assert_match 'Føgende sider trengs å sees over:', mail.body
     assert_match 'My second article', mail.body
@@ -42,14 +42,14 @@ class InformationPageNotifierTest < ActionMailer::TestCase
 
     email = UserMessage.pending[3]
     assert_equal 'Til info: My first article', email.subject
-    assert_equal ['"Uwe Kubosch" <admin@test.com>'], email.to
+    assert_equal ['"Uwe Kubosch" <uwe@example.com>'], email.to
     assert_equal %w(test@jujutsu.no), email.from
     assert_match 'A very interresting topic!', email.body
   end
 
   def test_weekly_info_page_is_not_sent_to_leaving_members
     VCR.use_cassette 'GoogleMaps Uwe' do
-      members(:uwe).update_attributes! left_on: 1.month.from_now
+      members(:uwe).update! left_on: 1.month.from_now
     end
 
     assert InformationPageNotifier.send_weekly_info_page

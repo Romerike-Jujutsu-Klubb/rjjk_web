@@ -143,7 +143,7 @@ class UserTest < ActionMailer::TestCase
         ['"long_user" <long_user@example.com>'],
         ['"Sebastian Kubosch" <sebastian@example.com>'],
         ['"Lars Bråten" <lars@example.com>'],
-        ['"Uwe Kubosch" <admin@test.com>'],
+        ['"Uwe Kubosch" <uwe@example.com>'],
     ], User.order(:first_name, :last_name).map(&:emails)
   end
 end

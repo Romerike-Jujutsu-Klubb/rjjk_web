@@ -26,6 +26,7 @@ uwe:
   payment_problem: false
   postal_code: 1479
   user: admin
+  email: uwe@example.com
 
 sebastian:
   email: sebastian@example.com
@@ -55,3 +56,4 @@ newbie:
   payment_problem: false
   postal_code: 1472
   user: newbie
+  email: newbie@example.com

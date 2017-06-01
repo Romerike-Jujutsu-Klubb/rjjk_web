@@ -79,6 +79,7 @@ class MembersControllerTest < ActionController::TestCase
               joined_on: '2007-06-21',
               birthdate: '1967-06-21',
               user_id: users(:unverified_user).id,
+          email: 'lars@example.net',
       }}
     end
 

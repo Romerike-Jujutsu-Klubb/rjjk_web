@@ -49,8 +49,8 @@ class MemberTest < ActiveSupport::TestCase
 
   test 'emails' do
     assert_equal [
-        ['"Lars Bråten" <lars@example.com>'], ['newbie@example.com'],
-        ['"Sebastian Kubosch" <sebastian@example.com>'], ['admin@test.com']
+        ['"Lars Bråten" <lars@example.com>'], ['"Newbie Neuer" <newbie@example.com>'],
+        ['"Sebastian Kubosch" <sebastian@example.com>'], ['"Uwe Kubosch" <uwe@example.com>']
     ], Member.order(:first_name, :last_name).map(&:emails)
   end
 end

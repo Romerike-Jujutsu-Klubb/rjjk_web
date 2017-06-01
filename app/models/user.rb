@@ -24,7 +24,10 @@ class User < ActiveRecord::Base
   CHANGEABLE_FIELDS = %w(first_name last_name email).freeze
   attr_accessor :password_needs_confirmation
 
-  before_validation { self.login = email if login.blank? }
+  before_validation do
+    self.login = email if login.blank?
+    self.email = email.downcase if email && email_changed?
+  end
   after_save { @password_needs_confirmation = false }
   after_validation :crypt_password
 

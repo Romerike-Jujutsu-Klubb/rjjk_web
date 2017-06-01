@@ -40,6 +40,6 @@ class InformationPageNotifier
         logger.error "Member without user: #{m.inspect}"
       end
     end
-    page.update_attributes! mailed_at: Time.current
+    page.update! mailed_at: Time.current
   end
 end

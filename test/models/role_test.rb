@@ -8,12 +8,12 @@ class RoleTest < ActiveSupport::TestCase
     assert_equal 0, r.appointments.size
     assert_equal 2, r.elections.size
 
-    r.update_attributes! years_on_the_board: nil
+    r.update! years_on_the_board: nil
 
     assert_equal 1, r.appointments.reload.size
     assert_equal 1, r.elections.reload.size
 
-    r.update_attributes! years_on_the_board: 42
+    r.update! years_on_the_board: 42
 
     assert_equal 0, r.appointments.reload.size
     assert_equal 2, r.elections.reload.size
