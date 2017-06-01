@@ -7,6 +7,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
     login_and_visit '/'
     click_link 'Oppmøtelister'
     assert_current_path '/attendances/form_index'
+    assert_gallery_image_is_loaded
     screenshot('attendance/form/index')
     find('#group_name_Panda').click
     sleep 0.5

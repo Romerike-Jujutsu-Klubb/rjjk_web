@@ -15,6 +15,38 @@ AllCops:
     - 'db/schema.rb'
     - 'vendor/**/*'
 
+Layout/AlignArray:
+  Enabled: false
+
+Layout/AlignHash:
+  Enabled: false
+
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+  IndentationWidth: 4
+
+Layout/FirstParameterIndentation:
+  IndentationWidth: 4
+
+Layout/IndentArray:
+  IndentationWidth: 4
+
+# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
+# SupportedStyles: special_inside_parentheses, consistent, align_braces
+Layout/IndentHash:
+  IndentationWidth: 4
+
+Layout/IndentAssignment:
+  IndentationWidth: 4
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+  IndentationWidth: 4
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+  IndentationWidth: 4
+
 Metrics/BlockLength:
   Exclude:
     - config/environments/development.rb
@@ -36,16 +68,6 @@ Rails:
 Rails/FilePath:
   Enabled: false
 
-Style/AlignArray:
-  Enabled: false
-
-Style/AlignHash:
-  Enabled: false
-
-Style/AlignParameters:
-  EnforcedStyle: with_fixed_indentation
-  IndentationWidth: 4
-
 Style/ClassAndModuleChildren:
   Enabled: false
 
@@ -58,36 +80,14 @@ Style/DoubleNegation:
 Style/Encoding:
   Enabled: true
 
-Style/FirstParameterIndentation:
-  IndentationWidth: 4
-
 Style/FormatString:
   EnforcedStyle: percent
-
-Style/IndentArray:
-  IndentationWidth: 4
-
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: special_inside_parentheses, consistent, align_braces
-Style/IndentHash:
-  IndentationWidth: 4
-
-Style/IndentAssignment:
-  IndentationWidth: 4
 
 Style/Lambda:
   EnforcedStyle: literal
 
 Style/MultilineBlockChain:
   Enabled: false
-
-Style/MultilineMethodCallIndentation:
-  EnforcedStyle: indented
-  IndentationWidth: 4
-
-Style/MultilineOperationIndentation:
-  EnforcedStyle: indented
-  IndentationWidth: 4
 
 Style/NumericLiterals:
   Exclude:

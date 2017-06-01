@@ -46,7 +46,7 @@ class ApplicationStepsControllerTest < ActionController::TestCase
   end
 
   test 'should update application_step' do
-    put :update, params:{id: @application_step, application_step: {
+    put :update, params:{id: @application_step.id, application_step: {
         technique_application_id: @application_step.technique_application_id,
         description: @application_step.description,
         image_content_data: @application_step.image_content_data,

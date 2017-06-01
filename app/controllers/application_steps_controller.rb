@@ -86,7 +86,7 @@ class ApplicationStepsController < ApplicationController
   def update
     @application_step = ApplicationStep.find(params[:id])
     respond_to do |format|
-      if @application_step.update_attributes(params[:application_step])
+      if @application_step.update(params[:application_step])
         format.html do
           redirect_to @application_step, notice: 'Application step was successfully updated.'
         end
