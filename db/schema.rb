@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170508134919) do
+ActiveRecord::Schema.define(version: 20170517200803) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20170508134919) do
   create_table 'members', force: :cascade do |t|
     t.string   'first_name',           limit: 100, default: '', null: false
     t.string   'last_name',            limit: 100, default: '', null: false
-    t.string   'email',                limit: 128
+    t.string   'email',                limit: 128, null: false
     t.string   'phone_mobile',         limit: 32
     t.string   'phone_home',           limit: 32
     t.string   'phone_work',           limit: 32
