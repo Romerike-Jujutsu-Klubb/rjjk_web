@@ -32,21 +32,18 @@ p
       .col-6 Ikke bekreftet enda.
 
   - if @censor.lock_reminded_at
-    p
+    .row
       - if @censor.locked_at
-        | Bekreftet deltakerlisten
-        = @censor.locked_at
+        .col-3 Bekreftet deltakerliste
+        .col-3 = @censor.locked_at.strftime('%F %R')
       - else
-        | Påmindelse om å se over deltakerlisten:
-        = @censor.lock_reminded_at
+        .col-3 Påmindelse om å se over deltakerlisten:
+        .col-3 = @censor.lock_reminded_at
 
-  - if @censor.approved_grades_at
-    p
-      Bekreftet grader:
-      = @censor.approved_grades_at.to_date
-  br
+      - if @censor.approved_grades_at
+        .col-3 Bekreftet grader:
+        .col-3 = @censor.approved_grades_at.to_date
 
-
-.btn-toolbar.float-right
+.float-right.mt-3
   = back_or_link_to 'Tilbake', nil, class: 'btn btn-secondary'
-  = link_to 'Endre', edit_graduation_path(@censor.graduation, anchor: :censors), class: 'btn btn-primary'
+  = link_to 'Endre', edit_graduation_path(@censor.graduation, anchor: :censors), class: 'btn btn-primary ml-2'
