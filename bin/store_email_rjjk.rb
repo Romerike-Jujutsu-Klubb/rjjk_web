@@ -117,6 +117,7 @@ rest_recipients = to - prod_recipients - beta_recipients
 
 def create_record(env, from, recipients, content)
   require 'active_record'
+  require_relative '../app/models/application_record'
   require_relative '../app/models/raw_incoming_email'
   log "Storing in #{env} to: #{from} => #{recipients}"
 
