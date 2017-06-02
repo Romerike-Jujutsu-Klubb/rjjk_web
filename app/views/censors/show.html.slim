@@ -38,7 +38,7 @@ p
         .col-3 = @censor.locked_at.strftime('%F %R')
       - else
         .col-3 Påmindelse om å se over deltakerlisten:
-        .col-3 = @censor.lock_reminded_at
+        .col-3 = @censor.lock_reminded_at.strftime('%F %R')
 
       - if @censor.approved_grades_at
         .col-3 Bekreftet grader:
