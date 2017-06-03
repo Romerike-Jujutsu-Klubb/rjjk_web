@@ -74,7 +74,7 @@ class NkfMemberComparison
               outgoing_changes_for_member[attr] = { new_value => old_value }
               # when 'joined_on'
               # when 'last_name'
-            when 'left_on'
+            when 'left_on' # rubocop:disable Lint/EmptyWhen
               # when 'postal_code'
             else
               @errors << ['Unhandled change', m, attr]
