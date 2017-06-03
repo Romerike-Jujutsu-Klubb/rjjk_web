@@ -56,4 +56,12 @@ class IncomingEmailProcessorTest < ActionMailer::TestCase
     assert_equal '[TEST][RJJK][Styret] Re: Melding til styret', mail.subject
     assert_match 'Meldingstekst svar til styret', mail.body.encoded
   end
+
+  test 'prefix_subject' do
+    assert_equal '[RJJK] Test 1', IncomingEmailProcessor.prefix_subject('Test 1', [:RJJK])
+  end
+
+  test 'prefix_subject with no tags' do
+    assert_equal 'Test 6', IncomingEmailProcessor.prefix_subject('Test 6', [])
+  end
 end

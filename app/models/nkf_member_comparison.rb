@@ -75,6 +75,7 @@ class NkfMemberComparison
               # when 'joined_on'
               # when 'last_name'
             when 'left_on' # rubocop:disable Lint/EmptyWhen
+            when 'parent_email' # rubocop:disable Lint/EmptyWhen
               # when 'postal_code'
             else
               @errors << ['Unhandled change', m, attr]

@@ -100,9 +100,10 @@ class IncomingEmailProcessor
   end
 
   def self.prefix_subject(subject, tags)
-    subject = subject.to_s
+    subject = subject.to_s.dup
     subject.gsub!(/\[[^\]]*\]\s*/, '')
     subject.gsub!(/#{PREFIX_PATTERN * 2}+/, '\1')
     subject.prepend("#{tags.uniq.map { |t| "[#{t}]" }.join} ") if tags.any?
+    subject
   end
 end
