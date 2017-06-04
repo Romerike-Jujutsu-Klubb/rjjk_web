@@ -3,4 +3,4 @@ sudo: false
 language: ruby
 
 script:
-  - bin/setup && bundle exec rake test
+  - bin/setup && rake test
