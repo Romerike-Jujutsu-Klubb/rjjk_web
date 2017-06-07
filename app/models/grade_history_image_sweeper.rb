@@ -19,7 +19,7 @@ class GradeHistoryImageSweeper < ActionController::Caching::Sweeper
 
   def expire_image(_attendance)
     cache_dir = ActionController::Base.page_cache_directory
-    cached_files = Dir.glob(cache_dir + '/members/grade_history_graph*/**/*')
+    cached_files = Dir.glob(cache_dir + '/members/**/grade_history_graph*/**/*')
     Rails.logger.info("Expire cached files: #{cached_files}")
     begin
       FileUtils.rm_f(cached_files)

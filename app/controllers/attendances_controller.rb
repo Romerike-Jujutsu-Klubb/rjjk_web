@@ -6,9 +6,9 @@ class AttendancesController < ApplicationController
   before_action :instructor_required, except: USER_ACTIONS
 
   caches_page :history_graph, :month_chart, :month_per_year_chart
-  update_actions = %i[announce create destroy review update]
-  cache_sweeper :attendance_image_sweeper, only: update_actions
-  cache_sweeper :grade_history_image_sweeper, only: update_actions
+  UPDATE_ACTIONS = %i[announce create destroy review update].freeze
+  cache_sweeper :attendance_image_sweeper, only: UPDATE_ACTIONS
+  cache_sweeper :grade_history_image_sweeper, only: UPDATE_ACTIONS
 
   def index
     @attendances = Attendance.all
