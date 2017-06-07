@@ -21,7 +21,7 @@ class SemestersControllerTest < ActionController::TestCase
 
   test 'should create semester' do
     assert_difference('Semester.count') do
-      post :create, params:{ semester: { end_on: @semester.end_on, start_on: @semester.start_on } }
+      post :create, params: { semester: { end_on: @semester.end_on, start_on: @semester.start_on } }
       assert_no_errors :semester
     end
 
@@ -29,24 +29,24 @@ class SemestersControllerTest < ActionController::TestCase
   end
 
   test 'should show semester' do
-    get :show, params:{ id: @semester }
+    get :show, params: { id: @semester }
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, params:{ id: @semester }
+    get :edit, params: { id: @semester }
     assert_response :success
   end
 
   test 'should update semester' do
-    put :update, params:{ id: @semester, semester: { end_on: @semester.end_on, start_on: @semester.start_on } }
+    put :update, params: { id: @semester, semester: { end_on: @semester.end_on, start_on: @semester.start_on } }
     assert_no_errors :semester
     assert_redirected_to semester_path(assigns(:semester))
   end
 
   test 'should destroy semester' do
     assert_difference('Semester.count', -1) do
-      delete :destroy, params:{ id: @semester }
+      delete :destroy, params: { id: @semester }
     end
 
     assert_redirected_to semesters_path

@@ -15,13 +15,13 @@ class EventInviteesControllerTest < ActionController::TestCase
   end
 
   test 'should get new' do
-    get :new, params:{ event_invitee: { event_id: events(:one).id } }
+    get :new, params: { event_invitee: { event_id: events(:one).id } }
     assert_response :success
   end
 
   test 'should create event_invitee' do
     assert_difference('EventInvitee.count') do
-      post :create, params:{ event_invitee: {
+      post :create, params: { event_invitee: {
           address: @event_invitee.address,
           email: @event_invitee.email,
           event_id: @event_invitee.event_id,
@@ -36,17 +36,17 @@ class EventInviteesControllerTest < ActionController::TestCase
   end
 
   test 'should show event_invitee' do
-    get :show, params:{ id: @event_invitee }
+    get :show, params: { id: @event_invitee }
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, params:{ id: @event_invitee }
+    get :edit, params: { id: @event_invitee }
     assert_response :success
   end
 
   test 'should update event_invitee' do
-    put :update, params:{ id: @event_invitee, event_invitee: {
+    put :update, params: { id: @event_invitee, event_invitee: {
         address: @event_invitee.address,
         email: @event_invitee.email,
         event_id: @event_invitee.event_id,
@@ -60,7 +60,7 @@ class EventInviteesControllerTest < ActionController::TestCase
 
   test 'should destroy event_invitee' do
     assert_difference('EventInvitee.count', -1) do
-      delete :destroy, params:{ id: @event_invitee }
+      delete :destroy, params: { id: @event_invitee }
     end
 
     assert_redirected_to event_invitees_path

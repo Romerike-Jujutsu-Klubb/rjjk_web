@@ -22,7 +22,7 @@ class TrialAttendancesControllerTest < ActionController::TestCase
 
   test 'should create trial_attendance' do
     assert_difference('TrialAttendance.count') do
-      post :create, params:{ trial_attendance: {
+      post :create, params: { trial_attendance: {
           practice_id: practices(:panda_2013_42).id,
           nkf_member_trial_id: nkf_member_trials(:two).id,
       } }
@@ -33,12 +33,12 @@ class TrialAttendancesControllerTest < ActionController::TestCase
   end
 
   test 'should show trial_attendance' do
-    get :show, params:{ id: trial_attendances(:one).to_param }
+    get :show, params: { id: trial_attendances(:one).to_param }
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, params:{ id: trial_attendances(:one).to_param }
+    get :edit, params: { id: trial_attendances(:one).to_param }
     assert_response :success
   end
 
@@ -51,7 +51,7 @@ class TrialAttendancesControllerTest < ActionController::TestCase
 
   test 'should destroy trial_attendance' do
     assert_difference('TrialAttendance.count', -1) do
-      delete :destroy, params:{ id: trial_attendances(:one).to_param }
+      delete :destroy, params: { id: trial_attendances(:one).to_param }
     end
 
     assert_redirected_to trial_attendances_path

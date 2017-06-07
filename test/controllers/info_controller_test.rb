@@ -21,7 +21,7 @@ class InfoControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, params:{ id: information_pages(:first).id }
+    get :show, params: { id: information_pages(:first).id }
 
     assert_response :success
     assert_template 'show'
@@ -32,7 +32,7 @@ class InfoControllerTest < ActionController::TestCase
 
   test 'show with unknown utf8 title' do
     assert_raises ActiveRecord::RecordNotFound do
-      get :show, params:{ id: 'Nøkjelpersoner' }
+      get :show, params: { id: 'Nøkjelpersoner' }
     end
   end
 
@@ -50,7 +50,7 @@ class InfoControllerTest < ActionController::TestCase
     num_information_pages = InformationPage.count
 
     login(:admin)
-    post :create, params:{ information_page: { title: 'an article' } }
+    post :create, params: { information_page: { title: 'an article' } }
     assert_no_errors :information_page
 
     assert_response :redirect
@@ -61,7 +61,7 @@ class InfoControllerTest < ActionController::TestCase
 
   def test_edit
     login(:admin)
-    get :edit, params:{ id: information_pages(:first).id }
+    get :edit, params: { id: information_pages(:first).id }
 
     assert_response :success
     assert_template 'edit'
@@ -72,7 +72,7 @@ class InfoControllerTest < ActionController::TestCase
 
   def test_update
     login(:admin)
-    post :update, params:{ id: information_pages(:first).id, information_page: { title: 'an article' } }
+    post :update, params: { id: information_pages(:first).id, information_page: { title: 'an article' } }
     assert_response :redirect
     assert_redirected_to action: 'show', id: information_pages(:first).id
   end
@@ -82,7 +82,7 @@ class InfoControllerTest < ActionController::TestCase
     assert_not_nil information_page
 
     login(:admin)
-    post :destroy, params:{ id: information_page.id }
+    post :destroy, params: { id: information_page.id }
     assert_response :redirect
     assert_redirected_to controller: :news, action: :index
 

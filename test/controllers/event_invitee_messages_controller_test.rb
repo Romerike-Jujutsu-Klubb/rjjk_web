@@ -15,13 +15,13 @@ class EventInviteeMessagesControllerTest < ActionController::TestCase
   end
 
   test 'should get new' do
-    get :new, params:{ event_invitee_message: { event_invitee_id: event_invitees(:one).id } }
+    get :new, params: { event_invitee_message: { event_invitee_id: event_invitees(:one).id } }
     assert_response :success
   end
 
   test 'should create event_invitee_message' do
     assert_difference('EventInviteeMessage.count') do
-      post :create, params:{ event_invitee_message: {
+      post :create, params: { event_invitee_message: {
           message_type: EventMessage::MessageType::INVITATION,
           body: @event_invitee_message.body,
           event_invitee_id: @event_invitee_message.event_invitee_id,
@@ -34,17 +34,17 @@ class EventInviteeMessagesControllerTest < ActionController::TestCase
   end
 
   test 'should show event_invitee_message' do
-    get :show, params:{ id: @event_invitee_message }
+    get :show, params: { id: @event_invitee_message }
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, params:{ id: @event_invitee_message }
+    get :edit, params: { id: @event_invitee_message }
     assert_response :success
   end
 
   test 'should update event_invitee_message' do
-    put :update, params:{ id: @event_invitee_message, event_invitee_message: {
+    put :update, params: { id: @event_invitee_message, event_invitee_message: {
         message_type: EventMessage::MessageType::INVITATION,
         body: @event_invitee_message.body,
         event_invitee_id: @event_invitee_message.event_invitee_id,
@@ -57,7 +57,7 @@ class EventInviteeMessagesControllerTest < ActionController::TestCase
 
   test 'should destroy event_invitee_message' do
     assert_difference('EventInviteeMessage.count', -1) do
-      delete :destroy, params:{ id: @event_invitee_message }
+      delete :destroy, params: { id: @event_invitee_message }
       assert_no_errors :event_invitee_message
     end
 

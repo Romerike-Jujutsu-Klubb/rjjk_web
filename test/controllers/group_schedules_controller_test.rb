@@ -30,12 +30,12 @@ class GroupSchedulesControllerTest < ActionController::TestCase
   end
 
   def test_should_show_group_schedule
-    get :show, params:{ id: group_schedules(:panda).id }
+    get :show, params: { id: group_schedules(:panda).id }
     assert_response :success
   end
 
   def test_should_get_edit
-    get :edit, params:{ id: group_schedules(:panda).id }
+    get :edit, params: { id: group_schedules(:panda).id }
     assert_response :success
   end
 
@@ -48,7 +48,7 @@ class GroupSchedulesControllerTest < ActionController::TestCase
 
   def test_should_destroy_group_schedule
     assert_difference('GroupSchedule.count', -1) do
-      delete :destroy, params:{ id: group_schedules(:panda).id }
+      delete :destroy, params: { id: group_schedules(:panda).id }
     end
 
     assert_redirected_to group_schedules_path

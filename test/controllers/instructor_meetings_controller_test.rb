@@ -32,17 +32,17 @@ class InstructorMeetingsControllerTest < ActionController::TestCase
   end
 
   test 'should show instructor_meeting' do
-    get :show, params:{ id: @instructor_meeting }
+    get :show, params: { id: @instructor_meeting }
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, params:{ id: @instructor_meeting }
+    get :edit, params: { id: @instructor_meeting }
     assert_response :success
   end
 
   test 'should update instructor_meeting' do
-    patch :update, params:{ id: @instructor_meeting, instructor_meeting: {
+    patch :update, params: { id: @instructor_meeting, instructor_meeting: {
         agenda: @instructor_meeting.agenda,
         end_at: @instructor_meeting.end_at,
         start_at: @instructor_meeting.start_at,
@@ -53,7 +53,7 @@ class InstructorMeetingsControllerTest < ActionController::TestCase
 
   test 'should destroy instructor_meeting' do
     assert_difference('InstructorMeeting.count', -1) do
-      delete :destroy, params:{ id: @instructor_meeting }
+      delete :destroy, params: { id: @instructor_meeting }
     end
 
     assert_redirected_to instructor_meetings_path

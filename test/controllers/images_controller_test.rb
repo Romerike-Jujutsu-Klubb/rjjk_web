@@ -26,12 +26,12 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, params:{ id: @first_id, format: 'png' }
+    get :show, params: { id: @first_id, format: 'png' }
     assert_response :success
   end
 
   def test_inline
-    get :inline, params:{ id: @first_id, format: 'png' }
+    get :inline, params: { id: @first_id, format: 'png' }
     assert_response :success
   end
 
@@ -104,7 +104,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_edit
-    get :edit, params:{ id: @first_id }
+    get :edit, params: { id: @first_id }
 
     assert_response :success
     assert_template 'edit'
@@ -114,7 +114,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_update
-    post :update, params:{ id: @first_id, image: { approved: true } }
+    post :update, params: { id: @first_id, image: { approved: true } }
     assert_response :redirect
     assert_redirected_to action: :edit, id: @first_id
   end
@@ -124,7 +124,7 @@ class ImagesControllerTest < ActionController::TestCase
       Image.find(@first_id)
     end
 
-    post :destroy, params:{ id: @first_id }
+    post :destroy, params: { id: @first_id }
     assert_response :redirect
     assert_redirected_to action: :index
 
@@ -134,7 +134,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_gallery
-    get :gallery, params:{ id: @first_id }
+    get :gallery, params: { id: @first_id }
 
     assert_response :success
     assert_template 'gallery'

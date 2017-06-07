@@ -18,7 +18,7 @@ class GraduatesControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, params:{ id: @first_id }
+    get :show, params: { id: @first_id }
 
     assert_response :success
     assert_template 'show'
@@ -37,7 +37,7 @@ class GraduatesControllerTest < ActionController::TestCase
   def test_create
     num_graduates = Graduate.count
 
-    post :create, params:{ graduate: { member_id: members(:lars).id,
+    post :create, params: { graduate: { member_id: members(:lars).id,
                                 graduation_id: graduations(:tiger).id,
                                 passed: true, rank_id: ranks(:kyu_4).id,
                                 paid_graduation: true, paid_belt: true } }
@@ -49,7 +49,7 @@ class GraduatesControllerTest < ActionController::TestCase
   end
 
   def test_edit
-    get :edit, params:{ id: @first_id }
+    get :edit, params: { id: @first_id }
 
     assert_response :success
     assert_template 'edit'
@@ -68,7 +68,7 @@ class GraduatesControllerTest < ActionController::TestCase
       Graduate.find(@first_id)
     end
 
-    post :destroy, params:{ id: @first_id }
+    post :destroy, params: { id: @first_id }
     assert_response :redirect
     assert_redirected_to action: :index
 

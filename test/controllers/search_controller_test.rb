@@ -4,7 +4,7 @@ require 'test_helper'
 
 class SearchControllerTest < ActionDispatch::IntegrationTest
   test 'user query' do
-    get '/search', params:{ q: 'Uwe' }
+    get '/search', params: { q: 'Uwe' }
     assert_response :success
   end
 
@@ -15,7 +15,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
 
   test 'admin query' do
     login :admin
-    get '/search', params:{ q: 'Uwe' }
+    get '/search', params: { q: 'Uwe' }
     assert_response :success
   end
 

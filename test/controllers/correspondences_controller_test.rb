@@ -20,7 +20,7 @@ class CorrespondencesControllerTest < ActionController::TestCase
 
   test('should create correspondence') do
     assert_difference('Correspondence.count') do
-      post :create, params:{ correspondence: {
+      post :create, params: { correspondence: {
           member_id: @correspondence.member_id, related_model_id: @correspondence.related_model_id,
           sent_at: @correspondence.sent_at
       } }
@@ -30,17 +30,17 @@ class CorrespondencesControllerTest < ActionController::TestCase
   end
 
   test 'should show correspondence' do
-    get :show, params:{ id: @correspondence }
+    get :show, params: { id: @correspondence }
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, params:{ id: @correspondence }
+    get :edit, params: { id: @correspondence }
     assert_response :success
   end
 
   test 'should update correspondence' do
-    put :update, params:{ id: @correspondence, correspondence: {
+    put :update, params: { id: @correspondence, correspondence: {
         member_id: @correspondence.member_id,
         related_model_id: @correspondence.related_model_id,
         sent_at: @correspondence.sent_at,
@@ -50,7 +50,7 @@ class CorrespondencesControllerTest < ActionController::TestCase
 
   test 'should destroy correspondence' do
     assert_difference('Correspondence.count', -1) do
-      delete :destroy, params:{ id: @correspondence }
+      delete :destroy, params: { id: @correspondence }
     end
 
     assert_redirected_to correspondences_path

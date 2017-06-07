@@ -20,7 +20,7 @@ class GroupsControllerTest < ActionController::TestCase
 
   def test_should_create_group
     assert_difference('Group.count') do
-      post :create, params:{ group: {
+      post :create, params: { group: {
           from_age: 8, martial_art_id: martial_arts(:keiwaryu).id, name: 'New group', to_age: 10
       } }
       assert_no_errors :group
@@ -30,23 +30,23 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   def test_should_show_group
-    get :show, params:{ id: groups(:panda).id }
+    get :show, params: { id: groups(:panda).id }
     assert_response :success
   end
 
   def test_should_get_edit
-    get :edit, params:{ id: groups(:panda).id }
+    get :edit, params: { id: groups(:panda).id }
     assert_response :success
   end
 
   def test_should_update_group
-    put :update, params:{ id: groups(:panda).id, group: { from_age: 8 } }
+    put :update, params: { id: groups(:panda).id, group: { from_age: 8 } }
     assert_redirected_to group_path(assigns(:group))
   end
 
   def test_should_destroy_group
     assert_difference('Group.count', -1) do
-      delete :destroy, params:{ id: groups(:panda).id }
+      delete :destroy, params: { id: groups(:panda).id }
     end
 
     assert_redirected_to groups_path

@@ -5,14 +5,14 @@ require 'test_helper'
 class LoginControllerTest < ActionController::TestCase
   def test_login__valid_login__redirects_as_specified
     add_stored_detour controller: :welcome, action: :index
-    post :login_with_password, params:{ user: { login: 'lars', password: 'atest' } }
+    post :login_with_password, params: { user: { login: 'lars', password: 'atest' } }
     assert_logged_in users(:lars)
     assert_response :redirect
     assert_redirected_to controller: :welcome, action: :index
   end
 
   def test_login_with_remember_me
-    post :login_with_password, params:{ user: { login: 'lars', password: 'atest' }, remember_me: '1' }
+    post :login_with_password, params: { user: { login: 'lars', password: 'atest' }, remember_me: '1' }
 
     assert_logged_in users(:lars)
     assert_response :redirect
@@ -32,7 +32,7 @@ class LoginControllerTest < ActionController::TestCase
   end
 
   def test_login__valid_login__shows_welcome_as_default
-    post :login_with_password, params:{ user: { login: 'lars', password: 'atest' } }
+    post :login_with_password, params: { user: { login: 'lars', password: 'atest' } }
     assert_logged_in users(:lars)
     assert_response :redirect
     assert_equal @controller.url_for(controller: :welcome, action: :index, only_path: false),
@@ -40,21 +40,21 @@ class LoginControllerTest < ActionController::TestCase
   end
 
   def test_login__wrong_password
-    post :login_with_password, params:{ user: { login: 'lars', password: 'wrong password' } }
+    post :login_with_password, params: { user: { login: 'lars', password: 'wrong password' } }
     assert_not_logged_in
     assert_template 'login_with_password'
     assert_contains 'Innlogging feilet.', flash.notice
   end
 
   def test_login__wrong_login
-    post :login_with_password, params:{ user: { login: 'wrong login', password: 'atest' } }
+    post :login_with_password, params: { user: { login: 'wrong login', password: 'atest' } }
     assert_not_logged_in
     assert_template 'login_with_password'
     assert_contains 'Innlogging feilet.', flash.notice
   end
 
   def test_login__deleted_user_cant_login
-    post :login_with_password, params:{ user: { login: 'deleted_tesla', password: 'atest' } }
+    post :login_with_password, params: { user: { login: 'deleted_tesla', password: 'atest' } }
     assert_not_logged_in
     assert_template 'login_with_password'
     assert_contains 'Innlogging feilet.', flash.notice
@@ -95,7 +95,7 @@ class LoginControllerTest < ActionController::TestCase
   end
 
   def test_signup__mismatched_passwords
-    post :signup, params:{ user: {
+    post :signup, params: { user: {
         login: 'newtesla', email: 'newtesla', password: 'newpassword', password_confirmation: 'wrong'
     } }
     user = assigns(:user)
@@ -112,7 +112,7 @@ class LoginControllerTest < ActionController::TestCase
 
   def test_welcome
     user = users(:unverified_user)
-    get :welcome, params:{ user: { id: user.id }, key: user.security_token }
+    get :welcome, params: { user: { id: user.id }, key: user.security_token }
     user.reload
     assert user.verified
     assert_logged_in(user)
@@ -121,7 +121,7 @@ class LoginControllerTest < ActionController::TestCase
   def test_welcome__fails_if_expired_token
     user = users(:unverified_user)
     Timecop.freeze(Time.current + User.token_lifetime) do # now past verification deadline
-      get :welcome, params:{ user: { id: user.id }, key: user.security_token }
+      get :welcome, params: { user: { id: user.id }, key: user.security_token }
       user.reload
       assert !user.verified
       assert_not_logged_in
@@ -130,7 +130,7 @@ class LoginControllerTest < ActionController::TestCase
 
   def test_welcome__fails_if_bad_token
     user = users(:unverified_user)
-    get :welcome, params:{ user: { id: user.id }, key: 'boguskey' }
+    get :welcome, params: { user: { id: user.id }, key: 'boguskey' }
     user.reload
     assert !user.verified
     assert_not_logged_in
@@ -145,7 +145,7 @@ class LoginControllerTest < ActionController::TestCase
 
   def test_change_password
     user = login(:lars)
-    post :change_password, params:{ user: {
+    post :change_password, params: { user: {
         password: 'changed_password', password_onfirmation: 'changed_password'
     } }
     assert_no_errors :user
@@ -157,7 +157,7 @@ class LoginControllerTest < ActionController::TestCase
 
   def test_change_password__confirms_password
     login(:lars)
-    post :change_password, params:{ user: { password: 'bad', password_confirmation: 'bad' } }
+    post :change_password, params: { user: { password: 'bad', password_confirmation: 'bad' } }
     user = assigns(:user)
     assert_equal 1, user.errors.size
     assert_not_nil user.errors['password']
@@ -167,7 +167,7 @@ class LoginControllerTest < ActionController::TestCase
 
   def test_forgot_password__when_logged_in_redirects_to_change_password
     user = login(:lars)
-    post :forgot_password, params:{ user: { email: user.email } }
+    post :forgot_password, params: { user: { email: user.email } }
     assert_equal 0, UserMessage.pending.size
     assert_response :redirect
     assert_equal @controller.url_for(action: 'change_password'), @response.redirect_url
@@ -180,7 +180,7 @@ class LoginControllerTest < ActionController::TestCase
   end
 
   def test_forgot_password__ignores_unknown_email_address
-    post :forgot_password, params:{ user: { email: 'unknown_email@example.com' } }
+    post :forgot_password, params: { user: { email: 'unknown_email@example.com' } }
     assert_equal 0, UserMessage.pending.size
   end
 
@@ -213,7 +213,7 @@ class LoginControllerTest < ActionController::TestCase
   end
 
   def post_signup(user_params)
-    post :signup, params:{ 'user' => user_params }
+    post :signup, params: { 'user' => user_params }
   end
 
   def assert_password_validation_fails

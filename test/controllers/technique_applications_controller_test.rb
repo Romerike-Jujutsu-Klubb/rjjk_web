@@ -21,7 +21,7 @@ class TechniqueApplicationsControllerTest < ActionController::TestCase
 
   test 'should create application' do
     assert_difference('TechniqueApplication.count') do
-      post :create, params:{ technique_application: {
+      post :create, params: { technique_application: {
           name: @technique_application.name + '_2',
           rank_id: @technique_application.rank_id, system: 'Goho'
       } }
@@ -32,17 +32,17 @@ class TechniqueApplicationsControllerTest < ActionController::TestCase
   end
 
   test 'should show application' do
-    get :show, params:{ id: @technique_application }
+    get :show, params: { id: @technique_application }
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, params:{ id: @technique_application }
+    get :edit, params: { id: @technique_application }
     assert_response :success
   end
 
   test 'should update application' do
-    put :update, params:{ id: @technique_application, technique_application: {
+    put :update, params: { id: @technique_application, technique_application: {
         name: @technique_application.name,
         rank_id: @technique_application.rank_id,
     } }
@@ -51,7 +51,7 @@ class TechniqueApplicationsControllerTest < ActionController::TestCase
 
   test 'should destroy application' do
     assert_difference('TechniqueApplication.count', -1) do
-      delete :destroy, params:{ id: @technique_application }
+      delete :destroy, params: { id: @technique_application }
     end
 
     assert_redirected_to technique_applications_path
