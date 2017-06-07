@@ -140,6 +140,11 @@ class GraduationsController < ApplicationController
   def add_group
     Graduation.transaction do
       graduation = Graduation.includes(:graduates).find(params[:id])
+      if params[:group_id].blank?
+        flash.notice = 'Velg en gruppe'
+        back_or_redirect_to edit_graduation_path(graduation)
+        return
+      end
       group = Group.includes(:members).find(params[:group_id])
       members = group.members.active(graduation.held_on) - graduation.graduates.map(&:member)
       success_count = 0
