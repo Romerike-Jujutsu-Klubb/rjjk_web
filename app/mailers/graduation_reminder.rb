@@ -99,6 +99,7 @@ class GraduationReminder
         .where(shopping_list_sent_at: nil)
         .order('graduations.held_on')
         .each do |graduation|
+      next if graduation.graduates.empty?
       eq_manager = Role['Materialforvalter', return_record: true]
       GraduationMailer.send_shopping_list(graduation, eq_manager)
           .store(eq_manager.member, tag: :graduation_shopping_list)

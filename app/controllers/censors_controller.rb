@@ -33,6 +33,11 @@ class CensorsController < ApplicationController
   end
 
   def create
+    if params[:censor][:member_id].blank?
+      flash.notice = 'Velg en instruktør'
+      back_or_redirect_to graduation_path(params[:censor][:graduation_id])
+      return
+    end
     @censor = Censor.where('graduation_id = ? AND member_id = ?',
         params[:censor][:graduation_id], params[:censor][:member_id]).first ||
         Censor.new(examiner: false)
