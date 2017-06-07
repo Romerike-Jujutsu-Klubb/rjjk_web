@@ -21,30 +21,30 @@ class BoardMeetingsControllerTest < ActionController::TestCase
 
   test 'should create board_meeting' do
     assert_difference('BoardMeeting.count') do
-      post :create, params:{board_meeting: { start_at: @board_meeting.start_at }}
+      post :create, params:{ board_meeting: { start_at: @board_meeting.start_at } }
       assert_no_errors :board_meeting
     end
     assert_redirected_to board_meetings_path
   end
 
   test 'should show board_meeting' do
-    get :show, params:{id: @board_meeting}
+    get :show, params:{ id: @board_meeting }
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, params: {id: @board_meeting}
+    get :edit, params: { id: @board_meeting }
     assert_response :success
   end
 
   test 'should update board_meeting' do
-    put :update, params:{id: @board_meeting, board_meeting: { start_at: @board_meeting.start_at }}
+    put :update, params:{ id: @board_meeting, board_meeting: { start_at: @board_meeting.start_at } }
     assert_redirected_to board_meetings_path
   end
 
   test 'should destroy board_meeting' do
     assert_difference('BoardMeeting.count', -1) do
-      delete :destroy, params:{id: @board_meeting}
+      delete :destroy, params:{ id: @board_meeting }
     end
 
     assert_redirected_to board_meetings_path

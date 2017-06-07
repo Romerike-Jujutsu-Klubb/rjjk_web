@@ -18,7 +18,7 @@ class GraduationsControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, params:{id: @first_id}
+    get :show, params:{ id: @first_id }
 
     assert_response :success
     assert_template 'show'
@@ -48,8 +48,8 @@ class GraduationsControllerTest < ActionController::TestCase
 
   def test_create
     assert_difference 'Graduation.count' do
-      post :create, params:{graduation: { held_on: '2007-10-07', group_id: groups(:panda).id,
-          group_notification: true }}
+      post :create, params:{ graduation: { held_on: '2007-10-07', group_id: groups(:panda).id,
+          group_notification: true } }
     end
     assert_no_errors :graduation
     assert_response :redirect
@@ -59,8 +59,8 @@ class GraduationsControllerTest < ActionController::TestCase
   def test_create_for_instructor
     login(:lars)
     assert_difference 'Graduation.count' do
-      post :create, params:{graduation: { held_on: '2007-10-07', group_id: groups(:panda).id,
-          group_notification: true }}
+      post :create, params:{ graduation: { held_on: '2007-10-07', group_id: groups(:panda).id,
+          group_notification: true } }
     end
     assert_no_errors :graduation
     assert_response :redirect
@@ -68,7 +68,7 @@ class GraduationsControllerTest < ActionController::TestCase
   end
 
   def test_edit
-    get :edit, params:{id: @first_id}
+    get :edit, params:{ id: @first_id }
 
     assert_response :success
     assert_template 'edit'
@@ -78,7 +78,7 @@ class GraduationsControllerTest < ActionController::TestCase
   end
 
   def test_update
-    post :update, params:{id: @first_id, graduation: {held_on: '2007-10-07'}}
+    post :update, params:{ id: @first_id, graduation: { held_on: '2007-10-07' } }
     assert_response :redirect
     assert_redirected_to action: :edit, id: @first_id, anchor: :form
   end
@@ -88,7 +88,7 @@ class GraduationsControllerTest < ActionController::TestCase
       Graduation.find(@first_id)
     end
 
-    post :destroy, params:{id: @first_id}
+    post :destroy, params:{ id: @first_id }
     assert_response :redirect
     assert_redirected_to action: :index, id: nil
 
@@ -98,23 +98,23 @@ class GraduationsControllerTest < ActionController::TestCase
   end
 
   def test_certificates
-    get :certificates, params:{id: @first_id}
+    get :certificates, params:{ id: @first_id }
     assert_response :success
   end
 
   def test_censor_form
-    get :censor_form, params:{id: @first_id}
+    get :censor_form, params:{ id: @first_id }
     assert_response :success
   end
 
   def test_censor_form_pdf
-    get :censor_form_pdf, params:{id: @first_id}
+    get :censor_form_pdf, params:{ id: @first_id }
     assert_response :success
   end
 
   def test_approve
     assert_equal [nil, nil], graduations(:panda).censors.map(&:approved_grades_at)
-    post :approve, params:{id: @first_id}
+    post :approve, params:{ id: @first_id }
     assert_response :redirect
     assert_redirected_to edit_graduation_path(@first_id)
     assert_equal [Time.current.to_f, 0.0], graduations(:panda).censors.reload

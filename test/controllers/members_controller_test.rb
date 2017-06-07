@@ -15,7 +15,7 @@ class MembersControllerTest < ActionController::TestCase
   end
 
   def test_search
-    get :search, params:{q: 'Lars'}
+    get :search, params:{ q: 'Lars' }
     assert_response :success
     assert_template :search
   end
@@ -67,7 +67,7 @@ class MembersControllerTest < ActionController::TestCase
     num_members = Member.count
 
     VCR.use_cassette 'GoogleMaps Lars' do
-      post :create, params:{member: {
+      post :create, params:{ member: {
           male: true,
               first_name: 'Lars',
               last_name: 'Bråten',
@@ -80,7 +80,7 @@ class MembersControllerTest < ActionController::TestCase
               birthdate: '1967-06-21',
               user_id: users(:unverified_user).id,
           email: 'lars@example.net',
-      }}
+      } }
     end
 
     assert_no_errors :member
@@ -91,7 +91,7 @@ class MembersControllerTest < ActionController::TestCase
   end
 
   def test_edit
-    get :edit, params:{id: @first_id}
+    get :edit, params:{ id: @first_id }
 
     assert_response :success
     assert_template 'edit'
@@ -101,7 +101,7 @@ class MembersControllerTest < ActionController::TestCase
 
   def test_update
     VCR.use_cassette 'GoogleMaps Lars' do
-      post :update, params:{id: @first_id, member: {male: true}}
+      post :update, params:{ id: @first_id, member: { male: true } }
     end
     assert_no_errors :member
     assert_response :redirect
@@ -110,7 +110,7 @@ class MembersControllerTest < ActionController::TestCase
 
   def test_destroy
     Member.find(@first_id)
-    delete :destroy, params:{id: @first_id}
+    delete :destroy, params:{ id: @first_id }
     assert_response :redirect
     assert_redirected_to action: :index
 
@@ -125,7 +125,7 @@ class MembersControllerTest < ActionController::TestCase
   end
 
   def test_grade_history_graph_800
-    get :grade_history_graph, params:{id: 800, format: 'png'}
+    get :grade_history_graph, params:{ id: 800, format: 'png' }
     assert_response :success
   end
 
@@ -135,8 +135,8 @@ class MembersControllerTest < ActionController::TestCase
   end
 
   def test_grade_history_graph_percentage_800
-    get :grade_history_graph_percentage, params:{id: 800, format: 'png',
-        interval: 365, percentage: 67, step: 30}
+    get :grade_history_graph_percentage, params:{ id: 800, format: 'png',
+        interval: 365, percentage: 67, step: 30 }
     assert_response :success
   end
 

@@ -21,8 +21,8 @@ class WazasControllerTest < ActionController::TestCase
 
   test 'should create waza' do
     assert_difference('Waza.count') do
-      post :create, params:{waza: { description: @waza.description, name: 'Super-punch',
-          translation: @waza.translation }}
+      post :create, params:{ waza: { description: @waza.description, name: 'Super-punch',
+          translation: @waza.translation } }
       assert_no_errors :waza
     end
 
@@ -30,24 +30,24 @@ class WazasControllerTest < ActionController::TestCase
   end
 
   test 'should show waza' do
-    get :show, params:{id: @waza}
+    get :show, params:{ id: @waza }
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, params:{id: @waza}
+    get :edit, params:{ id: @waza }
     assert_response :success
   end
 
   test 'should update waza' do
-    put :update, params:{id: @waza, waza: { description: @waza.description,
-        name: @waza.name, translation: @waza.translation }}
+    put :update, params:{ id: @waza, waza: { description: @waza.description,
+        name: @waza.name, translation: @waza.translation } }
     assert_redirected_to waza_path(assigns(:waza))
   end
 
   test 'should destroy waza' do
     assert_difference('Waza.count', -1) do
-      delete :destroy, params:{id: @waza}
+      delete :destroy, params:{ id: @waza }
     end
 
     assert_redirected_to wazas_path

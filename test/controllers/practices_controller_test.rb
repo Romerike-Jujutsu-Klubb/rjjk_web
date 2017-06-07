@@ -21,38 +21,38 @@ class PracticesControllerTest < ActionController::TestCase
 
   test 'should create practice' do
     assert_difference('Practice.count') do
-      post :create, params:{practice: {
+      post :create, params:{ practice: {
           status: @practice.status,
           group_schedule_id: @practice.group_schedule_id,
           week: @practice.week + 1, year: @practice.year
-      }}
+      } }
     end
 
     assert_redirected_to practice_path(assigns(:practice))
   end
 
   test 'should show practice' do
-    get :show, params:{id: @practice}
+    get :show, params:{ id: @practice }
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, params:{id: @practice}
+    get :edit, params:{ id: @practice }
     assert_response :success
   end
 
   test 'should update practice' do
-    put :update, params:{id: @practice, practice: {
+    put :update, params:{ id: @practice, practice: {
         status: @practice.status,
         group_schedule_id: @practice.group_schedule_id,
         week: @practice.week, year: @practice.year
-    }}
+    } }
     assert_redirected_to practice_path(assigns(:practice))
   end
 
   test 'should destroy practice' do
     assert_difference('Practice.count', -1) do
-      delete :destroy, params:{id: @practice}
+      delete :destroy, params:{ id: @practice }
     end
 
     assert_redirected_to practices_path

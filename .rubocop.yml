@@ -12,7 +12,6 @@ AllCops:
     - '*.gemspec'
     - '**/*.rake'
   Exclude:
-    - 'db/schema.rb'
     - 'vendor/**/*'
 
 Layout/AlignArray:

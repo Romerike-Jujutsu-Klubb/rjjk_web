@@ -21,41 +21,41 @@ class BasicTechniquesControllerTest < ActionController::TestCase
 
   test 'should create basic_technique' do
     assert_difference('BasicTechnique.count') do
-      post :create, params:{basic_technique: {
+      post :create, params:{ basic_technique: {
           description: @basic_technique.description,
           name: @basic_technique.name + ' 2', rank_id: @basic_technique.rank_id,
           translation: @basic_technique.translation,
           waza_id: @basic_technique.waza_id
-      }}
+      } }
     end
 
     assert_redirected_to basic_technique_path(assigns(:basic_technique))
   end
 
   test 'should show basic_technique' do
-    get :show, params:{id: @basic_technique}
+    get :show, params:{ id: @basic_technique }
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, params:{id: @basic_technique}
+    get :edit, params:{ id: @basic_technique }
     assert_response :success
   end
 
   test 'should update basic_technique' do
-    put :update, params:{id: @basic_technique, basic_technique: {
+    put :update, params:{ id: @basic_technique, basic_technique: {
         description: @basic_technique.description,
         name: @basic_technique.name,
         rank_id: @basic_technique.rank_id,
         translation: @basic_technique.translation,
         waza_id: @basic_technique.waza_id,
-    }}
+    } }
     assert_redirected_to basic_technique_path(assigns(:basic_technique))
   end
 
   test 'should destroy basic_technique' do
     assert_difference('BasicTechnique.count', -1) do
-      delete :destroy, params:{id: @basic_technique}
+      delete :destroy, params:{ id: @basic_technique }
     end
 
     assert_redirected_to basic_techniques_path

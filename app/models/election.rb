@@ -22,7 +22,7 @@ class Election < ApplicationRecord
   }
 
   scope :on_the_board, -> {
-    includes(:role).where.not(roles: {years_on_the_board: nil})
+    includes(:role).where.not(roles: { years_on_the_board: nil })
   }
 
   def from
@@ -45,7 +45,7 @@ class Election < ApplicationRecord
     if guardian_index
       member.guardians[guardian_index]
     else
-      {name: member.name, email: member.email || member.emails.first}
+      { name: member.name, email: member.email || member.emails.first }
     end
   end
 end

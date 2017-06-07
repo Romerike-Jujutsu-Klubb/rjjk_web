@@ -21,7 +21,7 @@ class UserMessagesControllerTest < ActionController::TestCase
 
   test 'should create user_message' do
     assert_difference('UserMessage.count') do
-      post :create, params:{user_message: {
+      post :create, params:{ user_message: {
           html_body: @user_message.body,
           from: @user_message.from,
           key: @user_message.key,
@@ -30,24 +30,24 @@ class UserMessagesControllerTest < ActionController::TestCase
           subject: @user_message.subject,
           tag: @user_message.tag,
           user_id: @user_message.user_id,
-      }}
+      } }
     end
 
     assert_redirected_to user_message_path(assigns(:user_message))
   end
 
   test 'should show user_message' do
-    get :show, params:{id: @user_message}
+    get :show, params:{ id: @user_message }
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, params:{id: @user_message}
+    get :edit, params:{ id: @user_message }
     assert_response :success
   end
 
   test 'should update user_message' do
-    patch :update, params:{id: @user_message, user_message: {
+    patch :update, params:{ id: @user_message, user_message: {
         html_body: @user_message.body,
         from: @user_message.from,
         key: @user_message.key,
@@ -56,13 +56,13 @@ class UserMessagesControllerTest < ActionController::TestCase
         subject: @user_message.subject,
         tag: @user_message.tag,
         user_id: @user_message.user_id,
-    }}
+    } }
     assert_redirected_to user_message_path(assigns(:user_message))
   end
 
   test 'should destroy user_message' do
     assert_difference('UserMessage.count', -1) do
-      delete :destroy, params:{id: @user_message}
+      delete :destroy, params:{ id: @user_message }
     end
 
     assert_redirected_to user_messages_path

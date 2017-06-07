@@ -21,32 +21,32 @@ class RawIncomingEmailsControllerTest < ActionController::TestCase
 
   test 'should create raw_incoming_email' do
     assert_difference('RawIncomingEmail.count') do
-      post :create, params:{raw_incoming_email: { content: @raw_incoming_email.content }}
+      post :create, params:{ raw_incoming_email: { content: @raw_incoming_email.content } }
     end
 
     assert_redirected_to raw_incoming_email_path(assigns(:raw_incoming_email))
   end
 
   test 'should show raw_incoming_email' do
-    get :show, params:{id: @raw_incoming_email}
+    get :show, params:{ id: @raw_incoming_email }
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, params:{id: @raw_incoming_email}
+    get :edit, params:{ id: @raw_incoming_email }
     assert_response :success
   end
 
   test 'should update raw_incoming_email' do
-    patch :update, params:{id: @raw_incoming_email, raw_incoming_email: {
+    patch :update, params:{ id: @raw_incoming_email, raw_incoming_email: {
         content: @raw_incoming_email.content,
-    }}
+    } }
     assert_redirected_to raw_incoming_email_path(assigns(:raw_incoming_email))
   end
 
   test 'should destroy raw_incoming_email' do
     assert_difference('RawIncomingEmail.count', -1) do
-      delete :destroy, params:{id: @raw_incoming_email}
+      delete :destroy, params:{ id: @raw_incoming_email }
     end
 
     assert_redirected_to raw_incoming_emails_path

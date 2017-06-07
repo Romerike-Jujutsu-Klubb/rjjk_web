@@ -9,14 +9,14 @@ class UsersControllerTest < ActionController::TestCase
 
   def test_edit
     tesla = login(:admin)
-    post :update, params:{id: tesla.id, user: { first_name: 'Bob', form: 'edit' }}
+    post :update, params:{ id: tesla.id, user: { first_name: 'Bob', form: 'edit' } }
     tesla.reload
     assert_equal 'Bob', tesla.first_name
   end
 
   def test_delete
     user = login(:admin)
-    post :update, params: { id: user.id, user: {form: 'delete' }}
+    post :update, params: { id: user.id, user: { form: 'delete' } }
     user.reload
     assert user.deleted
     assert_not_logged_in

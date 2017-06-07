@@ -26,7 +26,7 @@ class MartialArtsControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, params:{id: @first_id}
+    get :show, params:{ id: @first_id }
 
     assert_response :success
     assert_template 'show'
@@ -47,7 +47,7 @@ class MartialArtsControllerTest < ActionController::TestCase
   def test_create
     num_martial_arts = MartialArt.count
 
-    post :create, params:{martial_art: { family: 'Karate', name: 'Wado Ryu' }}
+    post :create, params:{ martial_art: { family: 'Karate', name: 'Wado Ryu' } }
     assert_no_errors :martial_art
     assert_response :redirect
     assert_redirected_to action: :index
@@ -56,7 +56,7 @@ class MartialArtsControllerTest < ActionController::TestCase
   end
 
   def test_edit
-    get :edit, params:{id: @first_id}
+    get :edit, params:{ id: @first_id }
 
     assert_response :success
     assert_template 'edit'
@@ -66,7 +66,7 @@ class MartialArtsControllerTest < ActionController::TestCase
   end
 
   def test_update
-    post :update, params:{id: @first_id, martial_art: {name: 'Hapkido'}}
+    post :update, params:{ id: @first_id, martial_art: { name: 'Hapkido' } }
     assert_response :redirect
     assert_redirected_to action: 'show', id: @first_id
   end
@@ -76,7 +76,7 @@ class MartialArtsControllerTest < ActionController::TestCase
       MartialArt.find(@first_id)
     end
 
-    post :destroy, params:{id: @first_id}
+    post :destroy, params:{ id: @first_id }
     assert_response :redirect
     assert_redirected_to action: :index
 

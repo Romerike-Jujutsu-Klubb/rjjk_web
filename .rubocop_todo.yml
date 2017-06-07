@@ -11,14 +11,6 @@
 Layout/SpaceAfterColon:
   Enabled: false
 
-# Offense count: 611
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SupportedStylesForEmptyBraces.
-# SupportedStyles: space, no_space, compact
-# SupportedStylesForEmptyBraces: space, no_space
-Layout/SpaceInsideHashLiteralBraces:
-  Enabled: false
-
 # Offense count: 2
 Lint/AmbiguousBlockAssociation:
   Exclude:

@@ -17,6 +17,7 @@ class LoginFeatureTest < ActionDispatch::IntegrationTest
     screenshot :filled_in
     click_button 'Logg inn'
     assert_current_path '/'
+    assert_gallery_image_is_loaded
     screenshot :welcome
   end
 
