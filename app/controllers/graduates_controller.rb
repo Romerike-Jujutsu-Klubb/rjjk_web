@@ -47,6 +47,11 @@ class GraduatesController < ApplicationController
 
   def create
     @graduate = Graduate.new(params[:graduate])
+    if @graduate.member_id.blank?
+      flash.notice = 'Velg en deltaker'
+      back_or_redirect_to @graduate.graduation
+      return
+    end
     @graduate.rank_id ||= @graduate.member.next_rank(@graduate.graduation).id
     @graduate.paid_graduation ||= true
     @graduate.paid_belt ||= true
