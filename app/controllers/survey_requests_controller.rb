@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class SurveyRequestsController < ApplicationController
-  USER_ACTIONS = %i(answer_form save_answers thanks).freeze
-  before_action :set_survey_request, only: %i(show edit update destroy) + USER_ACTIONS
+  USER_ACTIONS = %i[answer_form save_answers thanks].freeze
+  before_action :set_survey_request, only: %i[show edit update destroy] + USER_ACTIONS
   before_action :authenticate_user, only: USER_ACTIONS
   before_action :admin_required, except: USER_ACTIONS
 

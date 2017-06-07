@@ -2,7 +2,7 @@
 
 class UserMessagesController < ApplicationController
   before_action :authenticate_user
-  before_action :set_user_message, only: %i(show edit update destroy)
+  before_action :set_user_message, only: %i[show edit update destroy]
   before_action do |_request|
     if @user_message && !admin? && @user_message.user_id != current_user.id
       access_denied

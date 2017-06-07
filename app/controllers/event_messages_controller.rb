@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EventMessagesController < ApplicationController
-  before_action :admin_required, except: %i(index show)
+  before_action :admin_required, except: %i[index show]
 
   def index
     @event_messages = EventMessage.all

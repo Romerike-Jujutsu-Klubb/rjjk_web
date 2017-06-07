@@ -5,7 +5,7 @@ class MembersController < ApplicationController
 
   caches_page :age_chart, :image, :thumbnail, :history_graph, :grade_history_graph,
       :grade_history_graph_percentage
-  cache_sweeper :member_sweeper, only: %i(add_group create update destroy)
+  cache_sweeper :member_sweeper, only: %i[add_group create update destroy]
 
   def search
     @title = 'Søk i medlemsregisteret'

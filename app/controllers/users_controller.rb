@@ -67,7 +67,7 @@ class UsersController < ApplicationController
   protected
 
   def protect?(action)
-    !%w(login signup forgot_password).include?(action)
+    !%w[login signup forgot_password].include?(action)
   end
 
   # Generate a template user for certain actions on get

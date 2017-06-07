@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class NewsController < ApplicationController
-  before_action :admin_required, except: %i(index list show)
+  before_action :admin_required, except: %i[index list show]
 
   def index
     @news_items = NewsItem.front_page_items

@@ -53,17 +53,17 @@ class Member < ApplicationRecord
     to_date ||= from_date
     where('joined_on <= ? AND left_on IS NULL OR left_on >= ?', to_date, from_date)
   end
-  SEARCH_FIELDS = %i(
+  SEARCH_FIELDS = %i[
       billing_email email first_name last_name parent_email
 parent_name phone_home phone_mobile phone_parent phone_work
-  ).freeze
+  ].freeze
   scope :search, ->(query) {
     where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ :query" }.join(' OR '),
         query: UnicodeUtils.upcase(query).split(/\s+/).join('|'))
         .order(:first_name, :last_name)
   }
 
-  NILLABLE_FIELDS = %i(parent_name phone_home phone_mobile phone_work).freeze
+  NILLABLE_FIELDS = %i[parent_name phone_home phone_mobile phone_work].freeze
   before_validation do
     %i[billing_email].each do |e|
       attributes[e] = attributes[e].downcase if attributes[e] && changes[e]

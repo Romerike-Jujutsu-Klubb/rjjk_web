@@ -5,7 +5,7 @@ class Image < ApplicationRecord
 
   include UserSystem
 
-  scope :without_image, -> { select((column_names - %w(content_data)).map { |c| "images.#{c}" }) }
+  scope :without_image, -> { select((column_names - %w[content_data]).map { |c| "images.#{c}" }) }
   scope :with_image, -> { select('*') }
   scope :published, -> { where(public: true, approved: true) }
   scope :images, -> { where("content_type LIKE 'image/%'") }

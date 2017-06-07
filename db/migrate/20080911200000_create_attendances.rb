@@ -9,7 +9,7 @@ class CreateAttendances < ActiveRecord::Migration
       t.integer :week, null: false
       t.timestamps
     end
-    add_index :attendances, %i(member_id group_schedule_id year week),
+    add_index :attendances, %i[member_id group_schedule_id year week],
         unique: true,
         name: 'ix_attendances_on_member_id_et_group_schedule_id_et_year_et_wee'
   end

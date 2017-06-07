@@ -8,7 +8,7 @@ class CreateTechniqueApplications < ActiveRecord::Migration
       t.integer :rank_id
 
       t.timestamps
-      t.index %i(rank_id name), unique: true
+      t.index %i[rank_id name], unique: true
     end
   end
 end

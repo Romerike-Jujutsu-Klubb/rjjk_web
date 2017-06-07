@@ -215,8 +215,8 @@ class NkfMemberImport
     import_rows.each do |row|
       attributes = {}
       columns.each_with_index do |column, i|
-        next if %w(aktivitetsomrade_id aktivitetsomrade_navn alder avtalegiro
-                 beltefarge dan_graderingsserifikat forbundskontingent)
+        next if %w[aktivitetsomrade_id aktivitetsomrade_navn alder avtalegiro
+                 beltefarge dan_graderingsserifikat forbundskontingent]
               .include? column
         attributes[column] = row[i]&.strip
       end
@@ -263,7 +263,7 @@ class NkfMemberImport
       t.trial_attendances.each do |ta|
         if m
           attrs = ta.attributes
-          attrs.delete_if { |k, _| %w(id created_at updated_at).include? k }
+          attrs.delete_if { |k, _| %w[id created_at updated_at].include? k }
           attrs['member_id'] = m.id
           attrs.delete('nkf_member_trial_id')
           m.attendances << Attendance.new(attrs)
@@ -324,10 +324,10 @@ class NkfMemberImport
     http_get('pls/portal/myports.st_login_proc.create_user?CreUser=40001062')
 
     login_form_fields = login_content.scan(/<input .*?name="(.*?)".*?value ?="(.*?)".*?>/)
-    login_form_fields.delete_if { |f| %w(site2pstoretoken ssousername password).include? f[0] }
+    login_form_fields.delete_if { |f| %w[site2pstoretoken ssousername password].include? f[0] }
     login_form_fields += [
         ['site2pstoretoken', token],
-        %w(ssousername 40001062),
+        %w[ssousername 40001062],
         ['password', ENV['NKF_PASSWORD']],
     ]
     login_params = login_form_fields.map { |field| "#{field[0]}=#{ERB::Util.url_encode field[1]}" }

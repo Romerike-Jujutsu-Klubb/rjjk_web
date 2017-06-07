@@ -12,7 +12,7 @@ class CreateApplicationSteps < ActiveRecord::Migration
 
       t.timestamps
 
-      t.index %i(technique_application_id position),
+      t.index %i[technique_application_id position],
           name: 'index_application_steps_on_technique_application_id_and_positio'
     end
   end

@@ -8,7 +8,7 @@ class AddPropertiesToImages < ActiveRecord::Migration
       t.string :rel_type, null: false, limit: 16
       t.timestamps
     end
-    add_index :user_images, %i(user_id image_id rel_type), unique: true
+    add_index :user_images, %i[user_id image_id rel_type], unique: true
 
     add_column :images, :user_id, :integer
     add_column :images, :description, :string, limit: 16

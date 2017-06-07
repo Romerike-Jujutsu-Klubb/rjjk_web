@@ -6,8 +6,8 @@ set :repo_url, "https://github.com/Romerike-Jujutsu-Klubb/#{fetch :application}.
 set :deploy_to, -> { "/u/apps/#{fetch :application}" }
 set :keep_releases, 30
 
-role :app, %w(capistrano@kubosch.no)
-role :web, %w(capistrano@kubosch.no)
-role :db,  %w(capistrano@kubosch.no)
+role :app, %w[capistrano@kubosch.no]
+role :web, %w[capistrano@kubosch.no]
+role :db,  %w[capistrano@kubosch.no]
 
-server 'kubosch.no', user: 'capistrano', roles: %w(web app)
+server 'kubosch.no', user: 'capistrano', roles: %w[web app]

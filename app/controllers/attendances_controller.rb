@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class AttendancesController < ApplicationController
-  USER_ACTIONS = %i(announce plan review).freeze
+  USER_ACTIONS = %i[announce plan review].freeze
   before_action :authenticate_user, only: USER_ACTIONS
   before_action :instructor_required, except: USER_ACTIONS
 
   caches_page :history_graph, :month_chart, :month_per_year_chart
-  update_actions = %i(announce create destroy review update)
+  update_actions = %i[announce create destroy review update]
   cache_sweeper :attendance_image_sweeper, only: update_actions
   cache_sweeper :grade_history_image_sweeper, only: update_actions
 
@@ -330,7 +330,7 @@ class AttendancesController < ApplicationController
 
         @instructors = Member.active(@date)
             .includes({ attendances: { practice: :group_schedule },
-                graduates: %i(graduation rank) }, :groups, :nkf_member)
+                graduates: %i[graduation rank] }, :groups, :nkf_member)
             .where(instructor: true)
             .select { |m| m.groups.any? { |g| g.martial_art_id == @group.martial_art_id } }
         @instructors.delete_if do |m|
@@ -348,10 +348,10 @@ class AttendancesController < ApplicationController
 
         current_members = @group.members.active(first_date, last_date)
             .includes({ attendances: { practice: :group_schedule },
-                graduates: %i(graduation rank), groups: :group_schedules },
+                graduates: %i[graduation rank], groups: :group_schedules },
                 :nkf_member)
         attended_members = Member.references(:practices)
-            .includes(attendances: { practice: :group_schedule }, graduates: %i(graduation rank))
+            .includes(attendances: { practice: :group_schedule }, graduates: %i[graduation rank])
             .where('members.id NOT IN (?)', @instructors.map(&:id))
             .where('practices.group_schedule_id IN (?)', @group.group_schedules.map(&:id))
             .where('year > ? OR ( year = ? AND week >= ?)',

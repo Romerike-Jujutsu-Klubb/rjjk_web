@@ -9,7 +9,7 @@ class CreatePractices < ActiveRecord::Migration
       t.string :status, null: false, default: 'X'
 
       t.timestamps
-      t.index %i(group_schedule_id year week), unique: true
+      t.index %i[group_schedule_id year week], unique: true
     end
 
     execute 'INSERT INTO practices(group_schedule_id, year, week, created_at, updated_at)

@@ -3,7 +3,7 @@
 class NkfMembersController < ApplicationController
   before_action :admin_required
 
-  cache_sweeper :member_sweeper, only: %i(create_member update_member)
+  cache_sweeper :member_sweeper, only: %i[create_member update_member]
 
   def index
     @nkf_members = NkfMember.order(:fornavn, :etternavn).to_a

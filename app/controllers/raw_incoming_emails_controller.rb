@@ -2,7 +2,7 @@
 
 class RawIncomingEmailsController < ApplicationController
   before_action :admin_required
-  before_action :set_raw_incoming_email, only: %i(show edit update destroy)
+  before_action :set_raw_incoming_email, only: %i[show edit update destroy]
 
   def index
     raw_emails = RawIncomingEmail.order(created_at: :desc).limit(300)

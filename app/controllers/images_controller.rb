@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class ImagesController < ApplicationController
-  PUBLIC_ACTIONS = %i(gallery inline show).freeze
-  PERSONAL_ACTIONS = %i(create mine new upload).freeze
+  PUBLIC_ACTIONS = %i[gallery inline show].freeze
+  PERSONAL_ACTIONS = %i[create mine new upload].freeze
   before_action :admin_required, except: PUBLIC_ACTIONS + PERSONAL_ACTIONS
   before_action :authenticate_user, only: PERSONAL_ACTIONS
 
   caches_page :show, :inline
-  cache_sweeper :image_sweeper, only: %i(update destroy)
+  cache_sweeper :image_sweeper, only: %i[update destroy]
 
   def index
     @images = Image.paginate page: params[:page] || 1, per_page: 4
@@ -113,7 +113,7 @@ class ImagesController < ApplicationController
   end
 
   def media_list
-    media_extensions = %w(mp4 mov flv)
+    media_extensions = %w[mp4 mov flv]
     @media = Image
         .where(media_extensions.map { |e| "UPPER(name) LIKE '%.#{e.upcase}'" }.join(' OR '))
         .order('UPPER(name)').to_a
@@ -121,7 +121,7 @@ class ImagesController < ApplicationController
   end
 
   def gallery
-    image_select = Image.select(%i'approved content_type description id name public user_id')
+    image_select = Image.select(%i[approved content_type description id name public user_id])
         .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
         .order('created_at DESC')
     image_select = image_select.includes(:user)
@@ -132,7 +132,7 @@ class ImagesController < ApplicationController
   end
 
   def mine
-    image_select = Image.select(%i'approved content_type description id name public user_id')
+    image_select = Image.select(%i[approved content_type description id name public user_id])
         .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
         .order('created_at DESC')
     image_select = image_select.where('user_id = ?', current_user.id)

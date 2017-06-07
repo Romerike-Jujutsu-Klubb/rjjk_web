@@ -3,7 +3,7 @@
 class GraduatesController < ApplicationController
   include GraduationAccess
 
-  before_action :admin_required, except: %i(confirm create decline destroy show update)
+  before_action :admin_required, except: %i[confirm create decline destroy show update]
 
   cache_sweeper :grade_history_image_sweeper, only: %i[create update destroy]
 

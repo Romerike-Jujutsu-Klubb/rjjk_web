@@ -85,12 +85,6 @@ Style/NestedTernaryOperator:
   Exclude:
     - 'bin/store_email_rjjk.rb'
 
-# Offense count: 187
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Enabled: false
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: ConvertCodeThatCanStartToReturnNil.

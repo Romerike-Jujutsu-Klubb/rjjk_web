@@ -14,14 +14,14 @@ class User < ApplicationRecord
   has_many :news_item_likes, dependent: :destroy
 
   # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
-  SEARCH_FIELDS = %i(email first_name last_name login).freeze
+  SEARCH_FIELDS = %i[email first_name last_name login].freeze
   scope :search, ->(query) {
     where(SEARCH_FIELDS.map { |c| "to_tsvector(UPPER(#{c})) @@ to_tsquery(:query)" }.join(' OR '),
         query: UnicodeUtils.upcase(query).split(/\s+/).join(' | '))
         .order(:first_name, :last_name)
   }
 
-  CHANGEABLE_FIELDS = %w(first_name last_name email).freeze
+  CHANGEABLE_FIELDS = %w[first_name last_name email].freeze
   attr_accessor :password_needs_confirmation
 
   before_validation do

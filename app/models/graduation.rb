@@ -17,7 +17,7 @@ class Graduation < ApplicationRecord
         graduates: {
             graduation: {
                 group: {
-                    martial_art: { ranks: [{ group: %i(martial_art ranks) }, :martial_art] },
+                    martial_art: { ranks: [{ group: %i[martial_art ranks] }, :martial_art] },
                 },
             },
             member: [
@@ -34,7 +34,7 @@ class Graduation < ApplicationRecord
                 },
                 :nkf_member,
             ],
-            rank: [{ group: %i(group_schedules ranks) }, :martial_art],
+            rank: [{ group: %i[group_schedules ranks] }, :martial_art],
         },
         group: { members: :nkf_member }
     )

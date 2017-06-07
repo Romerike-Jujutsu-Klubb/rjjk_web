@@ -2,7 +2,7 @@
 
 class MakeTrialAttendancesReferencePractices < ActiveRecord::Migration
   def up
-    add_index :attendances, %i(member_id practice_id), unique: true
+    add_index :attendances, %i[member_id practice_id], unique: true
 
     add_column :trial_attendances, :practice_id, :integer
 
@@ -13,7 +13,7 @@ class MakeTrialAttendancesReferencePractices < ActiveRecord::Migration
          AND s.week = a.week
       )'
     change_column :trial_attendances, :practice_id, :integer, null: false
-    add_index :trial_attendances, %i(nkf_member_trial_id practice_id), unique: true
+    add_index :trial_attendances, %i[nkf_member_trial_id practice_id], unique: true
 
     remove_column :trial_attendances, :group_schedule_id
     remove_column :trial_attendances, :year

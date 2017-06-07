@@ -8,7 +8,7 @@ class EnsureUniqueGroupMemberships < ActiveRecord::Migration
           WHERE gm2.member_id = gm1.member_id AND gm2.group_id = gm1.group_id
             AND gm2.created_at < gm1.created_at
         )'
-    add_index :groups_members, %i(group_id member_id), unique: true
+    add_index :groups_members, %i[group_id member_id], unique: true
     remove_column :groups_members, :created_at
     remove_column :groups_members, :updated_at
 
@@ -27,7 +27,7 @@ class EnsureUniqueGroupMemberships < ActiveRecord::Migration
 
     add_column :groups_members, :updated_at, :datetime
     add_column :groups_members, :created_at, :datetime
-    remove_index :groups_members, %i(group_id member_id)
+    remove_index :groups_members, %i[group_id member_id]
   end
 
   class Member < ApplicationRecord

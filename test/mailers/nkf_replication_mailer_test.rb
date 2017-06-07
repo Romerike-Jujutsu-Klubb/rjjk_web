@@ -16,7 +16,7 @@ class NkfReplicationMailerTest < ActionMailer::TestCase
     mail = NkfReplicationMailer.import_changes(import)
     assert_equal 'Hentet 1 endringer fra NKF', mail.subject
     assert_equal ['uwe@kubosch.no'], mail.to
-    assert_equal %w(noreply@test.jujutsu.no), mail.from
+    assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_match(/NKF Import\s+Endringer fra NKF-portalen.\s+/, mail.body.encoded)
   end
 
@@ -36,7 +36,7 @@ class NkfReplicationMailerTest < ActionMailer::TestCase
     mail = NkfReplicationMailer.update_members(comparison)
     assert_equal 'Oppdateringer fra NKF: 1 nye, 1 endrede, 1 gruppeendringer', mail.subject
     assert_equal ['uwe@kubosch.no'], mail.to
-    assert_equal %w(noreply@test.jujutsu.no), mail.from
+    assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_match(/Opprettet følgende nye medlemmer:\s+Erik Hansen\s+Oppdaterte følgende eksisterende medlemmer:\s+Erik Hansen\s+first_name: "H" => "a"\s+Oppdaterte følgende medlemmer hos NKF:\s+Hans Eriksen\s+email: {\"H@ans\"=>\"Ha@ns\"}\s+Gruppemedlemskap:\s+hhh dfgfg\s+Lagt til: hhgf\s+Fjernet : abc/, # rubocop: disable Metrics/LineLength
         mail.body.encoded)
   end

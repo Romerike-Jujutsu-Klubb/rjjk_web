@@ -2,7 +2,7 @@
 
 class SurveysController < ApplicationController
   before_action :admin_required
-  before_action :set_survey, only: %i(show edit update destroy)
+  before_action :set_survey, only: %i[show edit update destroy]
 
   def index
     @surveys = Survey.all

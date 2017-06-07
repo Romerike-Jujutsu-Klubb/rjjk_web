@@ -36,8 +36,8 @@ class CreateCmsMembers < ActiveRecord::Migration
 
       t.timestamps
     end
-    columns = (Member.column_names - %w(id created_at updated_at)).sort.join(', ')
-    cms_columns = (CmsMember.column_names - %w(id created_at updated_at)).sort.join(', ')
+    columns = (Member.column_names - %w[id created_at updated_at]).sort.join(', ')
+    cms_columns = (CmsMember.column_names - %w[id created_at updated_at]).sort.join(', ')
     execute "INSERT INTO cms_members(#{cms_columns}) (SELECT #{columns} FROM members)"
   end
 

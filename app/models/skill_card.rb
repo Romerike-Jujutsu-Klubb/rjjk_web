@@ -34,7 +34,7 @@ class SkillCard
             end
           end
           bt_table = make_table(rows, width: bounds.width, header: true,
-              cell_style: { size: FONT_SIZE }, row_colors: %w(F8F8F8 FFFFFF),
+              cell_style: { size: FONT_SIZE }, row_colors: %w[F8F8F8 FFFFFF],
               column_widths: { 0 => 20, 2..-1 => 20 }) do
             row(0).font_style = :bold
             columns(2..-1).align = :center
@@ -58,7 +58,7 @@ class SkillCard
         end
 
         app_table = make_table(rows, width: bounds.width, header: true,
-            cell_style: { size: FONT_SIZE }, row_colors: %w(F8F8F8 FFFFFF),
+            cell_style: { size: FONT_SIZE }, row_colors: %w[F8F8F8 FFFFFF],
             column_widths: { 0 => 20, 2..-1 => 20 }) do
           row(0).font_style = :bold
           columns(2..-1).align = :center

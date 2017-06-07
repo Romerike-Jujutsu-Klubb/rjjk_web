@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EventsController < ApplicationController
-  before_action :admin_required, except: %i(calendar index show)
+  before_action :admin_required, except: %i[calendar index show]
 
   def index
     @events = Event.order('start_at DESC').to_a

@@ -2,7 +2,7 @@
 
 class SurveyAnswerTranslationsController < ApplicationController
   before_action :admin_required
-  before_action :set_survey_answer_translation, only: %i(show edit update destroy)
+  before_action :set_survey_answer_translation, only: %i[show edit update destroy]
 
   def index
     @survey_answer_translations = SurveyAnswerTranslation.all

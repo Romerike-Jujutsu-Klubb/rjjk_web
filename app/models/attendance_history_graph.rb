@@ -9,7 +9,7 @@ class AttendanceHistoryGraph
     g.legend_font_size = 14
     g.marker_font_size = 14
     g.hide_dots = true
-    g.colors = %w(blue orange black green)
+    g.colors = %w[blue orange black green]
     # g.x_axis_label = ''
     g.y_axis_increment = 5
     first_date = Date.civil(2010, 8, 1)
@@ -66,7 +66,7 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
     g.title_font_size = 18
     g.legend_font_size = 14
     g.marker_font_size = 14
-    g.colors = %w(blue orange black green)
+    g.colors = %w[blue orange black green]
     g.x_axis_label = 'Dag'
     first_date = Date.civil(year, month, 1)
     last_date = Date.civil(year, month, -1)
@@ -98,7 +98,7 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
     g.title_font_size = 18
     g.legend_font_size = 14
     g.marker_font_size = 14
-    g.colors = %w(blue orange black green)
+    g.colors = %w[blue orange black green]
     g.y_axis_label = 'Oppmøte'
     g.x_axis_label = 'År'
     result = Attendance.connection.execute <<~EOF

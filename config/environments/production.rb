@@ -37,6 +37,6 @@ Rails.application.configure do
   end
 end
 
-%w(render_template render_partial render_collection).each do |event|
+%w[render_template render_partial render_collection].each do |event|
   ActiveSupport::Notifications.unsubscribe "#{event}.action_view"
 end

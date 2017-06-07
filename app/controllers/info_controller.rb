@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class InfoController < ApplicationController
-  before_action :admin_required, except: %i(index show show_content)
+  before_action :admin_required, except: %i[index show show_content]
 
   def index
     @information_pages = InformationPage.paginate page: params[:page], per_page: 10

@@ -6,7 +6,7 @@ class Practice < ApplicationRecord
   has_many :attendances, dependent: :destroy
   has_many :trial_attendances, dependent: :destroy
 
-  validates :group_schedule_id, uniqueness: { scope: %i(year week) }
+  validates :group_schedule_id, uniqueness: { scope: %i[year week] }
 
   def date
     Date.commercial(year, week, group_schedule.weekday)

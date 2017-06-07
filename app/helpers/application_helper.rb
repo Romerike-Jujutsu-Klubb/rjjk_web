@@ -30,7 +30,7 @@ module ApplicationHelper
   end
 
   def wday(wday_index)
-    %w(Søndag Mandag Tirsdag Onsdag Torsdag Fredag Lørdag Søndag)[wday_index]
+    %w[Søndag Mandag Tirsdag Onsdag Torsdag Fredag Lørdag Søndag][wday_index]
   end
 
   def textalize(s)

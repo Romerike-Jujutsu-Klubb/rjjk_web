@@ -22,7 +22,7 @@ class GroupInstructor < ApplicationRecord
   validates :group_schedule, presence: { if: :group_schedule_id }
   validates :group_semester, presence: { if: :group_semester_id }
   validates :member, presence: { if: :member_id }
-  validates :member_id, uniqueness: { scope: %i(group_schedule_id group_semester_id) }
+  validates :member_id, uniqueness: { scope: %i[group_schedule_id group_semester_id] }
 
   validate do
     if group_semester && group_schedule && group_semester.group_id != group_schedule.group_id

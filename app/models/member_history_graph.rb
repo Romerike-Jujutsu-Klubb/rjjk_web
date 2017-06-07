@@ -44,7 +44,7 @@ class MemberHistoryGraph
     g.legend_font_size = 14
     g.marker_font_size = 14
     g.hide_dots = true
-    g.colors = %w(gray blue brown orange black red yellow lightblue green)
+    g.colors = %w[gray blue brown orange black red yellow lightblue green]
 
     first_date = Date.civil(2011, 1, 1)
     dates = []

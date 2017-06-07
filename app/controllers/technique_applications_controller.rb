@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TechniqueApplicationsController < ApplicationController
-  USER_ACTIONS = %i(index show).freeze
+  USER_ACTIONS = %i[index show].freeze
   before_action :authenticate_user, only: USER_ACTIONS
   before_action :technical_committy_required, except: USER_ACTIONS
 

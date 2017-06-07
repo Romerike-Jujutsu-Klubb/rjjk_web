@@ -8,7 +8,7 @@ class MemberAgeChart
     g.title = 'Antall aktive medlemmer'
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     g.hide_legend = true
-    g.colors = %w(darkblue)
+    g.colors = %w[darkblue]
     g.labels = {}
     members = Member.active(Date.current).to_a
     member_ages = members.map(&:age)

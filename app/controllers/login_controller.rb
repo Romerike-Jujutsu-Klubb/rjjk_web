@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class LoginController < ApplicationController
-  before_action :authenticate_user, except: %i(forgot_password login_link_form login_with_password
-      logout send_login_link signup)
+  before_action :authenticate_user, except: %i[forgot_password login_link_form login_with_password
+      logout send_login_link signup]
 
   def login_with_password
     return if generate_blank_form
@@ -205,7 +205,7 @@ class LoginController < ApplicationController
   protected
 
   def protect?(action)
-    !%w(login signup forgot_password).include?(action)
+    !%w[login signup forgot_password].include?(action)
   end
 
   # Generate a template user for certain actions on get

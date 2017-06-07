@@ -5,14 +5,14 @@ set :scm, :copy
 set :repo_url, '.'
 set :deploy_to, -> { "/u/apps/#{fetch :application}" }
 set :keep_releases, 1
-set :exclude_dir, %w(coverage doc log test tmp)
+set :exclude_dir, %w[coverage doc log test tmp]
 set :include_dir, '{.ruby-version*,*}'
 
-role :app, %w(capistrano@kubosch.no)
-role :web, %w(capistrano@kubosch.no)
-role :db, %w(capistrano@kubosch.no)
+role :app, %w[capistrano@kubosch.no]
+role :web, %w[capistrano@kubosch.no]
+role :db, %w[capistrano@kubosch.no]
 
-server 'kubosch.no', user: 'capistrano', roles: %w(web app)
+server 'kubosch.no', user: 'capistrano', roles: %w[web app]
 
 namespace :deploy do
   Rake::Task[:restart].clear_actions

@@ -11,7 +11,7 @@ class CreateSurveyRequests < ActiveRecord::Migration
       t.datetime :completed_at
 
       t.timestamps
-      t.index %i(survey_id member_id), unique: true
+      t.index %i[survey_id member_id], unique: true
     end
   end
 end

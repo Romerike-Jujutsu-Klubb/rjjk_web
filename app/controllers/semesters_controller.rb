@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SemestersController < ApplicationController
-  before_action :admin_required, except: %i(index show)
+  before_action :admin_required, except: %i[index show]
 
   def index
     @semesters = Semester.order('start_on DESC').to_a

@@ -9,8 +9,8 @@ class CreateBasicTechniqueLinks < ActiveRecord::Migration
       t.integer :position, null: false
 
       t.timestamps
-      t.index %i(basic_technique_id position), unique: true
-      t.index %i(basic_technique_id url), unique: true
+      t.index %i[basic_technique_id position], unique: true
+      t.index %i[basic_technique_id url], unique: true
     end
   end
 end
