@@ -11,33 +11,6 @@ class CensorsController < ApplicationController
         .paginate(page: params[:page], per_page: 10)
   end
 
-  def list_instructors
-    @graduation = Graduation.find(params[:id])
-    @instructors = Member.where('left_on IS NULL AND instructor = true')
-        .order(:first_name, :last_name).to_a
-    @instructors -= @graduation.censors.map(&:member)
-    rstr = <<~EOH.dup
-      <div style="height:512px; width:284px; overflow: auto; overflow-x: hidden;">
-      <table STYLE="height: 128px;" CELLPADDING="0" CELLSPACING="0" width="100%">
-        <tr>
-          <td STYLE="border-top: 1px solid #000000;background: #e3e3e3;border-bottom: 1px solid #000000;"><B>Instrukt&oslash;rer</B></td>
-          <td ALIGN="right" STYLE="border-top: 1px solid #000000;background: #e3e3e3;border-bottom: 1px solid #000000;"><A HREF="#" onClick="hide_glist();">X</A></td>
-          <td width=20>&nbsp;</td>
-        </tr>
-    EOH
-    @instructors.each do |instr|
-      fn = instr.first_name.split(/\s+/).each(&:capitalize!).join(' ')
-      ln = instr.last_name.split(/\s+/).each(&:capitalize!).join(' ')
-      nm = fn << ' ' << ln
-      rstr << "<tr id='censor_#{instr.id}'>" \
-          "<td><a href='#' onClick='add_censor(" + instr.id.to_s + ',"' + nm + "\");'>" <<
-          nm << '</a></td>'
-      '</tr>'
-    end
-    rstr << "</table>\n</div>\n"
-    render text: rstr
-  end
-
   def show
     @censor = Censor.find(params[:id])
     return unless admin_or_censor_required(@censor.graduation)
