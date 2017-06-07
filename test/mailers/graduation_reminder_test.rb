@@ -39,8 +39,8 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_equal 'Gradering for Voksne 2013-10-24', mail.subject
     assert_match(/Hei Lars!/, mail.body)
     assert_match(/Felles gradering for Voksne er satt opp til 2013-10-24./, mail.body)
-    assert_match(/Din nåværende registrerte grad hos oss er: 1. kyu brunt belte./, mail.body)
-    assert_match(/Din neste grad er shodan svart belte./, mail.body)
+    assert_match(%r{Din nåværende registrerte grad hos oss er <b>1. kyu brunt belte</b>.}, mail.body)
+    assert_match(%r{Din neste grad er <b>shodan svart belte</b>.}, mail.body)
 
     mail = UserMessage.pending[1]
     assert_equal ['"Newbie Neuer" <newbie@example.com>'], mail.to
@@ -50,7 +50,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(/Felles gradering for Voksne er satt opp til 2013-10-24./, mail.body)
     assert_match(/Vi har ikke registrert noen grad for deg fra før./,
         mail.body)
-    assert_match(/Din neste grad er 5. kyu gult belte./, mail.body)
+    assert_match(%r{Din neste grad er <b>5. kyu gult belte</b>.}, mail.body)
 
     mail = UserMessage.pending[2]
     assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
@@ -58,9 +58,9 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_equal 'Gradering for Voksne 2013-10-24', mail.subject
     assert_match(/Hei Uwe!/, mail.body)
     assert_match(/Felles gradering for Voksne er satt opp til 2013-10-24./, mail.body)
-    assert_match(%r{Din nåværende registrerte grad hos oss er: nidan svart belte m/2 striper.},
+    assert_match(%r{Din nåværende registrerte grad hos oss er <b>nidan svart belte m/2 striper</b>.},
         mail.body)
-    assert_match(%r{Din neste grad er sandan svart belte m/3 striper.}, mail.body)
+    assert_match(%r{Din neste grad er <b>sandan svart belte m/3 striper</b>.}, mail.body)
   end
 
   def test_notify_censors

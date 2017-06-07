@@ -5,21 +5,25 @@ p
 
 p
   - if @member.current_rank
-    ' Din nåværende registrerte grad hos oss er: #{@member.current_rank.label}.
+    ' Din nåværende registrerte grad hos oss er
+    b = @member.current_rank.label
   - else
-    ' Vi har ikke registrert noen grad for deg fra før.
-  ' Meld ifra så fort du kan hvis dette er feil.
+    | Vi har ikke registrert noen grad for deg fra før
+  | .  Meld ifra så fort du kan hvis dette er feil.
 
 p
-  ' Din neste grad er #{@member.next_rank.label}.
-  ' Krav for denne graden er
-  ' #{@member.next_rank.minimum_attendances}-#{@member.next_rank.minimum_attendances * 2} treninger
+  ' Din neste grad er
+  b = @member.next_rank.label
+  ' .  Krav for denne graden er
+  b> #{@member.next_rank.minimum_attendances}-#{@member.next_rank.minimum_attendances * 2}
+  | treninger
   - if @member.age(@graduation.held_on) < @member.next_rank.minimum_age
-    |  og at du har fylt #{@member.next_rank.minimum_age} år
-  ' .  Vi har registrert #{@member.attendances_since_graduation.count} treninger for deg siden
+    '  og at du har fylt
+    b #{@member.next_rank.minimum_age} år
+  ' .  Vi har registrert
+  b> = @member.attendances_since_graduation.count
+  ' treninger for deg siden
   = @member.current_rank ? 'forrige gradering' : 'du startet'
-  ' .  Du finner pensum for #{@member.next_rank.label} på
-  = link_to pensum_url, pensum_url
-  | .
+  ' .  Du finner pensum for neste grad på #{link_to pensum_url, pensum_url}.
 p
   | Ny invitasjon til gradering vil sendes nærmere gradering dersom kravene for gradering er oppfylt.

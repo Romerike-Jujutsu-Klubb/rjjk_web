@@ -45,7 +45,7 @@ class Group < ApplicationRecord
 
   def trainings_in_period(period)
     weeks = 0.8 * (period.last - period.first) / 7
-    (weeks * group_schedules.size).round
+    (weeks * [group_schedules.size, 2].min).round
   end
 
   def registered_trainings_in_period(period)
