@@ -10,9 +10,9 @@ p
 p
   | Neste grad for deg er
   =< @graduate.member.next_rank.label
-  | .  Frem til da kreves minst
+  ' .  Frem til da kreves
   - attendance_minimum = @graduate.member.next_rank.minimum_attendances
-  =<> attendance_minimum
+  ' #{attendance_minimum}-#{attendance_minimum * 2}
   | treninger
   - if @graduate.member.age.nil? || @graduate.member.age < @graduate.member.next_rank.minimum_age
     = ' og at du har fylt'
@@ -20,5 +20,7 @@ p
     | år
   ' .
   - attendance_count = @graduate.member.attendances_since_graduation.count
-  - if attendance_count > attendance_minimum / 2
-    ' Vi har registrert #{attendance_count} treninger på deg siden graderingen.
+  - if attendance_count >= attendance_minimum / 2
+    ' Vi har registrert #{attendance_count} treninger på deg siden
+    = @member.current_rank ? 'forrige gradering' : 'du startet'
+    | .

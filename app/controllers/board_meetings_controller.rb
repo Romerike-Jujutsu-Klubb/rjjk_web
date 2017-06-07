@@ -82,6 +82,5 @@ class BoardMeetingsController < ApplicationController
 
   def load_form_data
     @board_meeting ||= BoardMeeting.new params[:board_meeting]
-    @annual_meetings = AnnualMeeting.order('start_at DESC').to_a
   end
 end

@@ -31,8 +31,7 @@ class Rank < ApplicationRecord
   end
 
   def minimum_attendances
-    (group.trainings_in_period(standard_months.months.ago.to_date..Date.current) *
-        0.5).round
+    group.trainings_in_period(standard_months.months.ago.to_date..Date.current).floor(-1) / 2
   end
 
   def label

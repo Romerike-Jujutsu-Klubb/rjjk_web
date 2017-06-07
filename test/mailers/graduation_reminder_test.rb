@@ -110,9 +110,9 @@ class GraduationReminderTest < ActionMailer::TestCase
         mail.body)
     assert_match(%r{<a href="http://example.com/graduates/397971580/confirm">Jeg kommer :\)</a>}, mail.body)
     assert_match(%r{<a href="http://example.com/graduates/397971580/decline">Beklager, jeg kommer ikke.</a>}, mail.body)
-    assert_match(/Minstekrav til gradering er 11 treninger. Vi har registrert 1 treninger på deg siden du startet./,
+    assert_match(/Minstekrav til gradering er 10 treninger. Vi har registrert 1 trening på deg siden du startet./,
         mail.body)
-    assert_match(/Du trenger altså 10 treninger til for å oppfylle kravet til gradering./, mail.body)
+    assert_match(/Du trenger altså 9 treninger til for å oppfylle kravet til gradering./, mail.body)
     assert_match(/Det er 2 treninger frem til graderingen./, mail.body)
   end
 
@@ -151,7 +151,7 @@ class GraduationReminderTest < ActionMailer::TestCase
   end
 
   def test_send_shopping_list_locked
-    censors(:uwe_voksne_upcoming).update! locked_at: Time.current
+    censors(:uwe_voksne_upcoming).update! locked_at: 2.days.ago
 
     assert_mail_stored(1) { GraduationReminder.send_shopping_list }
 
@@ -175,7 +175,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_equal 'Gratulerer med bestått gradering!', mail.subject
     assert_match(/Vi har registrert din gradering 2013-10-10 til 1. kyu brunt belte./, mail.body)
     assert_match(
-        /Neste grad for deg er shodan svart belte.  Frem til da kreves minst 84 treninger./,
+        /Neste grad for deg er shodan svart belte.  Frem til da kreves 80-160 treninger./,
         mail.body
     )
 
@@ -185,7 +185,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_equal 'Gratulerer med bestått gradering!', mail.subject
     assert_match(%r{Vi har registrert din gradering 2013-10-10 til nidan svart belte m/2 striper.}, mail.body)
     assert_match(%r{Neste grad for deg er sandan svart belte m/3 striper.}, mail.body)
-    assert_match(/Frem til da kreves minst 84 treninger./, mail.body)
+    assert_match(/Frem til da kreves 80-160 treninger./, mail.body)
   end
 
   def test_congratulate_graduates_no_censors

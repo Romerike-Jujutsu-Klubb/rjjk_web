@@ -1,7 +1,11 @@
 - @content_width = 1024
 
 .btn-toolbar.float-right
-  - if @approval&.graduation&.held_on
+  - if @graduation.graduates.empty?
+    = link_to @graduation, method: :delete, class: 'btn btn-danger'
+      span.fa.fa-trash> data-toggle="tooltip" title='Slett'
+      | Slett
+  - elsif @approval&.graduation&.held_on
     - if @approval.graduation.held_on <= Date.current
       - if @approval.approved_grades_at.nil?
         = link_to 'Godkjenn', approve_graduation_path(@graduation), class: 'btn btn-primary', method: :post

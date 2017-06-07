@@ -18,7 +18,7 @@ ul
 
 p
   ' Minstekrav til gradering er #{limit} treninger.
-  ' Vi har registrert #{attended} treninger på deg siden
+  ' Vi har registrert #{attended} trening#{'er' if attended != 1} på deg siden
   - if current_graduate
     ' gradering #{current_graduate.graduation.held_on}.
   - else

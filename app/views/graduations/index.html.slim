@@ -26,12 +26,11 @@ table.table
       - @groups.each do |group|
         td
           - if g = graduations.find { |gr| gr.group_id == group.id }
-            = link_to g.group.name, edit_graduation_path(g)
+            => link_to g.group.name, edit_graduation_path(g)
             - if g.graduates.empty?
-              | (
-              = link_to 'Slett', graduation_path(g), :method => :delete
-              | )
+              = link_to g, method: :delete
+                span.fa.fa-trash.text-danger data-toggle="tooltip" title='Slett'
             - elsif g.approved?
-              span.fa.fa-thumbs-up< title='Godkjent'
+              span.fa.fa-thumbs-up data-toggle="tooltip" title='Godkjent'
             - elsif g.passed?
-              span.fa.fa-question< title='Ikke godkjent'
+              span.fa.fa-question data-toggle="tooltip" title='Ikke godkjent'

@@ -47,12 +47,20 @@ class Graduation < ApplicationRecord
             AND confirmed_at <= ?
         )
       SQL
+  scope :has_examiners,
+      -> { where(<<~SQL, true: true, false: false) }
+        EXISTS (
+          SELECT id
+          FROM censors WHERE graduation_id = graduations.id
+            AND examiner = :true AND declined = :false
+        )
+      SQL
   scope :ready,
-      ->(date) { where(<<~SQL, date: date, true: true, false: false) }
+      ->(date) { has_examiners.where(<<~SQL, date: date, true: true, false: false) }
         NOT EXISTS (
           SELECT locked_at
           FROM censors WHERE graduation_id = graduations.id
-            AND (locked_at IS NULL OR locked_at <= :date)
+            AND (locked_at IS NULL OR locked_at > :date)
             AND examiner = :true AND declined = :false
         )
       SQL

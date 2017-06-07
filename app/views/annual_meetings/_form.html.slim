@@ -1,0 +1,15 @@
+= form_for(@annual_meeting) do |f|
+  - if @annual_meeting.errors.any?
+    #error_explanation
+      h2 #{pluralize(@annual_meeting.errors.count, 'error')} prohibited this annual_meeting from being saved:
+      ul
+        - @annual_meeting.errors.full_messages.each do |msg|
+          li = msg
+
+  .form-group
+    = f.label :start_at, 'Dato og tid'
+    = f.text_field :start_at, class: 'datetime form-control'
+
+  .actions
+    = f.submit :class => 'btn btn-secondary'
+    = back_or_link_to 'Tilbake', nil, :class => 'btn btn-secondary'
