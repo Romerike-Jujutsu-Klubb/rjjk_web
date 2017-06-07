@@ -4,3 +4,6 @@ language: ruby
 
 script:
   - bin/setup && rake test
+
+env:
+  secure: KhzvCYgAuP5G/6gnHrYLVa/XJ3oFPAXUtsM/HqpY9U+TKXmp/mw3ktAgYBu5ydQCkjQd6mNOB2z42RC6jfJh8LKoT84IB4Iz5v0nmPuSal5QMYd8culUFH+B/9olrekYFb2xVuyCzv2Vvi0dS33nE1yrLCtayVt/G7HtQ2LvNhg=
