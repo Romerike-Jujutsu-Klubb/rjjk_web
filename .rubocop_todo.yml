@@ -84,10 +84,3 @@ Security/YAMLLoad:
 Style/NestedTernaryOperator:
   Exclude:
     - 'bin/store_email_rjjk.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil.
-Style/SafeNavigation:
-  Exclude:
-    - 'app/controllers/attendances_controller.rb'
