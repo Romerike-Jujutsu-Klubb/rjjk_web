@@ -15,6 +15,6 @@ class InformationPageMailer < ApplicationMailer
     @email_url = { controller: :info, action: :show, id: page.id }
     @title = "Til info: #{page.title}"
     mail from: Rails.env == 'production' ? 'post@jujutsu.no' : "#{Rails.env}@jujutsu.no",
-        to: member.email, subject: @title
+         to: member.email, subject: @title
   end
 end

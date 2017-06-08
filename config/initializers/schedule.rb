@@ -3,7 +3,7 @@
 module Rjjk
   def self.start_scheduling
     scheduler = Rufus::Scheduler.new lockfile: "#{Rails.root}/tmp/rufus-scheduler.lock",
-        max_work_threads: 1
+                                     max_work_threads: 1
     Rails.logger.info "ENV: #{ENV.inspect}"
     Rails.logger.info('Starting scheduler')
 

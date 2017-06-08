@@ -21,8 +21,8 @@ class UserMessageSenderTest < ActionMailer::TestCase
     HTML
 
     um = UserMessage.create! user_id: users(:admin).id, from: sender, key: '42',
-        subject: subject, title: title, message_timestamp: TEST_TIME.to_date,
-        html_body: html_message, plain_body: plain_message
+                             subject: subject, title: title, message_timestamp: TEST_TIME.to_date,
+                             html_body: html_message, plain_body: plain_message
 
     UserMessageSender.send
 

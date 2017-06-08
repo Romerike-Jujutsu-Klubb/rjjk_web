@@ -8,7 +8,7 @@ class CertificatesTest < ActiveSupport::TestCase
         {
             name: 'Jusse Nyleny', rank: 'Supreme Being',
             censor1: { title: 'Santa', name: 'Claus',
-                signature: images(:one).content_data },
+                       signature: images(:one).content_data },
             censor2: { title: 'Easter', name: 'Bunny' },
             censor3: { title: 'Tooth', name: 'Fairy' }
         },

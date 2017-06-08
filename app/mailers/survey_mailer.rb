@@ -2,7 +2,7 @@
 
 class SurveyMailer < ApplicationMailer
   default bcc: 'uwe@kubosch.no',
-      from: "medlem@#{"#{Rails.env}." unless Rails.env.production?}jujutsu.no"
+          from: "medlem@#{"#{Rails.env}." unless Rails.env.production?}jujutsu.no"
 
   def survey(survey_request)
     @survey_request = survey_request

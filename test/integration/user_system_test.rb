@@ -58,7 +58,7 @@ class UserSystemTest < ActionDispatch::IntegrationTest
     post url_for(controller: :login, action: :change_password), params: {
         user: { password: 'newpassword',
                 password_confirmation: 'newpassword' },
-         key: key,
+        key: key,
     }
 
     user.reload

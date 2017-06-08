@@ -18,12 +18,12 @@ def load(model_plural)
   records.each do |r|
     attendance = Attendance
         .find_by(member_id: r.member_id,
-            year: r.year, week: r.week, group_schedule_id: r.group_schedule_id)
+                 year: r.year, week: r.week, group_schedule_id: r.group_schedule_id)
     next unless attendance.nil?
     puts "Adding attendance for #{r.member.name} year #{r.year}, "\
         "week: #{r.week}, group: #{r.group_schedule.group.name}"
     Attendance.create! member_id: r.member_id, year: r.year, week: r.week,
-        group_schedule_id: r.group_schedule_id
+                       group_schedule_id: r.group_schedule_id
   end
 end
 

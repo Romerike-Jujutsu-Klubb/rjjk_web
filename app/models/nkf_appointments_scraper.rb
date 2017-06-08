@@ -32,7 +32,7 @@ class NkfAppointmentsScraper
         next "Ukjent årsmøtedato: #{r[5]} (#{r[0]} #{role_name})" if annual_meeting.nil?
         Election.includes(:member, :role)
             .where(annual_meeting_id: annual_meeting.id, role_id: role.id,
-                years: role.years_on_the_board, member_id: m.id)
+                   years: role.years_on_the_board, member_id: m.id)
             .first_or_initialize
       else
         Appointment.includes(:member, :role).where(role_id: role.id, member_id: m.id, from: date)

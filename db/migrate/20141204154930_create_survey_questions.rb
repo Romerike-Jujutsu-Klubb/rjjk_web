@@ -16,17 +16,17 @@ class CreateSurveyQuestions < ActiveRecord::Migration
       dir.up do
         survey_id = Survey.first.id
         SurveyQuestion.create! survey_id: survey_id,
-            title: 'Hvordan fikk du først vite om RJJK?',
-            choices: "Avisannonse\nSøkemotor\nBekjent\nFamilie\nHusker ikke",
-            free_text: true
+                               title: 'Hvordan fikk du først vite om RJJK?',
+                               choices: "Avisannonse\nSøkemotor\nBekjent\nFamilie\nHusker ikke",
+                               free_text: true
         SurveyQuestion.create! survey_id: survey_id,
-            title: 'På hvilke andre måter har du fått informasjon om klubben?',
-            choices: "Avisannonse\nSøkemotor\nBekjent\nFamilie",
-            free_text: true, select_multiple: true
+                               title: 'På hvilke andre måter har du fått informasjon om klubben?',
+                               choices: "Avisannonse\nSøkemotor\nBekjent\nFamilie",
+                               free_text: true, select_multiple: true
         SurveyQuestion.create! survey_id: survey_id,
-            title: 'Hva syns du om denne spørreundersøkelsen?  ' \
+                               title: 'Hva syns du om denne spørreundersøkelsen?  ' \
                 'Dine tips er viktige for å forbedre klubbdriften.',
-            free_text: true
+                               free_text: true
       end
     end
   end

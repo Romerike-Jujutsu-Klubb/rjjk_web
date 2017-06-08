@@ -82,26 +82,26 @@ class GraduationsController < ApplicationController
       censor_1 =
           if censors[0]
             { title: censors[0].member.title, name: censors[0].member.name,
-                signature: censors[0].member.signatures.sample.try(:image) }
+              signature: censors[0].member.signatures.sample.try(:image) }
           end
       censor_2 =
           if censors[1]
             { title: censors[1].member.title,
-                name: censors[1].member.name,
-                signature: censors[1].member.signatures.sample.try(:image) }
+              name: censors[1].member.name,
+              signature: censors[1].member.signatures.sample.try(:image) }
           end
       censor_3 =
           if censors[2]
             { title: censors[2].member.title,
-                name: censors[2].member.name,
-                signature: censors[2].member.signatures.sample.try(:image) }
+              name: censors[2].member.name,
+              signature: censors[2].member.signatures.sample.try(:image) }
           end
       { name: g.member.name, rank: g.rank.label, group: g.rank.group.name,
-          censor1: censor_1, censor2: censor_2, censor3: censor_3 }
+        censor1: censor_1, censor2: censor_2, censor3: censor_3 }
     end
     filename = "Certificates_#{graduation.group.martial_art.name}_#{graduation.held_on}.pdf"
     send_data Certificates.pdf(date, content), type: 'text/pdf',
-        filename: filename, disposition: 'attachment'
+                                               filename: filename, disposition: 'attachment'
   end
 
   def censor_form
@@ -153,9 +153,9 @@ class GraduationsController < ApplicationController
         next_rank = member.next_rank(graduation)
         next if graduation.group_notification && next_rank.position >= Rank::SHODAN_POSITION
         g = Graduate.new graduation_id: graduation.id, member_id: member.id,
-            rank_id: next_rank.id,
-            passed: graduation.group.school_breaks? || nil,
-            paid_graduation: true, paid_belt: true
+                         rank_id: next_rank.id,
+                         passed: graduation.group.school_breaks? || nil,
+                         paid_graduation: true, paid_belt: true
         if g.save
           success_count += 1
         else

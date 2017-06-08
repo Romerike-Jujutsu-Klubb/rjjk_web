@@ -69,16 +69,16 @@ class MembersControllerTest < ActionController::TestCase
     VCR.use_cassette 'GoogleMaps Lars' do
       post :create, params: { member: {
           male: true,
-              first_name: 'Lars',
-              last_name: 'Bråten',
-              address: 'Torsvei 8b',
-              postal_code: 1472,
-              payment_problem: false,
-              instructor: false,
-              nkf_fee: true,
-              joined_on: '2007-06-21',
-              birthdate: '1967-06-21',
-              user_id: users(:unverified_user).id,
+          first_name: 'Lars',
+          last_name: 'Bråten',
+          address: 'Torsvei 8b',
+          postal_code: 1472,
+          payment_problem: false,
+          instructor: false,
+          nkf_fee: true,
+          joined_on: '2007-06-21',
+          birthdate: '1967-06-21',
+          user_id: users(:unverified_user).id,
           email: 'lars@example.net',
       } }
     end
@@ -136,7 +136,7 @@ class MembersControllerTest < ActionController::TestCase
 
   def test_grade_history_graph_percentage_800
     get :grade_history_graph_percentage, params: { id: 800, format: 'png',
-        interval: 365, percentage: 67, step: 30 }
+                                                   interval: 365, percentage: 67, step: 30 }
     assert_response :success
   end
 

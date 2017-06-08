@@ -2,7 +2,7 @@
 
 class LoginController < ApplicationController
   before_action :authenticate_user, except: %i[forgot_password login_link_form login_with_password
-      logout send_login_link signup]
+                                               logout send_login_link signup]
 
   def login_with_password
     return if generate_blank_form
@@ -131,8 +131,7 @@ class LoginController < ApplicationController
     if email.blank? || email !~ /.+@.+\..+/
       flash.now.notice = 'Skriv inn en gyldig e-postadresse.'
     elsif (users_by_email = (User.search(email) + Member.search(email).map(&:user)).uniq).empty?
-      flash.now.notice =
-          "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{escaped_email}"
+      flash.now.notice = "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{escaped_email}"
     else
       begin
         users = users_by_email - [current_user]

@@ -30,7 +30,7 @@ require 'waza'
 require 'basic_technique'
 
 ranks = [['5. kyu', 'gult'], ['4. kyu', 'oransje'], ['3. kyu', 'groent'],
-    ['2. kyu', 'blaatt'], ['1. kyu', 'brunt'], ['1. dan', 'shodan']]
+         ['2. kyu', 'blaatt'], ['1. kyu', 'brunt'], ['1. dan', 'shodan']]
 kwr = MartialArt.where(name: 'Kei Wa Ryu').first! unless DUMP
 ranks.each do |rank_name, rank_dir|
   rank = Rank.where(name: rank_name, martial_art_id: kwr.id).first_or_create! unless DUMP
@@ -110,10 +110,10 @@ ranks.each do |rank_name, rank_dir|
           puts "  #{i + 1}: #{desc} #{"[#{filename}]" if image}"
           unless DUMP
             as = ApplicationStep.create!(technique_application_id: ta.id,
-                position: i + 1, description: desc)
+                                         position: i + 1, description: desc)
             if image
               as.update! image_content_data: File.read(filename),
-                  image_content_type: 'image/jpeg', image_filename: filename
+                         image_content_type: 'image/jpeg', image_filename: filename
             end
           end
         end

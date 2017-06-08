@@ -7,7 +7,7 @@ module ApplicationHelper
     options[:controller] ||= 'info'
     link_to name,
         { controller: options[:controller], action: options[:action],
-            id: options[:id], anchor: options[:anchor] },
+          id: options[:id], anchor: options[:anchor] },
         class: (controller.controller_name.to_s == options[:controller].to_s ? 'active' : nil)
   end
 

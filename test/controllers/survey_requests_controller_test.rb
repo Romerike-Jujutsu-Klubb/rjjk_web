@@ -22,8 +22,8 @@ class SurveyRequestsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('SurveyRequest.count') do
       post survey_requests_url, params: { survey_request: {
           completed_at: @survey_request.completed_at,
-              member_id: members(:sebastian).id,
-              survey_id: @survey_request.survey_id,
+          member_id: members(:sebastian).id,
+          survey_id: @survey_request.survey_id,
       } }
     end
 

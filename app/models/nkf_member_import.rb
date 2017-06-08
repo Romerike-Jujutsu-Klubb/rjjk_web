@@ -216,7 +216,7 @@ class NkfMemberImport
       attributes = {}
       columns.each_with_index do |column, i|
         next if %w[aktivitetsomrade_id aktivitetsomrade_navn alder avtalegiro
-                 beltefarge dan_graderingsserifikat forbundskontingent]
+                   beltefarge dan_graderingsserifikat forbundskontingent]
               .include? column
         attributes[column] = row[i]&.strip
       end
@@ -293,8 +293,8 @@ class NkfMemberImport
       end
       record = NkfMemberTrial.find_by(tid: row[columns.index('tid')])
       record ||= NkfMemberTrial.find_by(reg_dato: row[columns.index('reg_dato')],
-          fornavn: row[columns.index('fornavn')],
-          etternavn: row[columns.index('etternavn')])
+                                        fornavn: row[columns.index('fornavn')],
+                                        etternavn: row[columns.index('etternavn')])
       record ||= NkfMemberTrial.new
       record.attributes = attributes
       next unless record.changed?

@@ -12,5 +12,5 @@ class EventMessage < ApplicationRecord
 
   validates :body, :event_id, :message_type, :subject, presence: true
   validates :message_type, uniqueness: { scope: :event_id,
-                          if: proc { |mt| mt.message_type == MessageType::INVITATION } }
+                                         if: ->(mt) { mt.message_type == MessageType::INVITATION } }
 end

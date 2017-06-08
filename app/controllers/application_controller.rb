@@ -85,16 +85,13 @@ class ApplicationController < ActionController::Base
           .where('held_on >= ?', Date.current).to_a
       @groups.select(&:school_breaks).each do |g|
         if (first_session = g.current_semester&.first_session) && first_session >= Date.current
-          @layout_events << Event.new(name: "Oppstart #{g.name}",
-              start_at: first_session)
+          @layout_events << Event.new(name: "Oppstart #{g.name}", start_at: first_session)
         end
         if (last_date = g.current_semester&.last_session)
-          @layout_events << Event.new(name: "Siste trening #{g.name}",
-              start_at: last_date)
+          @layout_events << Event.new(name: "Siste trening #{g.name}", start_at: last_date)
         end
         if (first_date = g.next_semester&.first_session)
-          @layout_events << Event.new(name: "Oppstart #{g.name}",
-              start_at: first_date)
+          @layout_events << Event.new(name: "Oppstart #{g.name}", start_at: first_date)
         end
       end
 

@@ -30,7 +30,7 @@ class AttendancesController < ApplicationController
     if @attendance.practice && @attendance.practice.try(:new_record?)
       practice = Practice
           .where(group_schedule_id: @attendance.practice.group_schedule_id,
-              year: @attendance.practice.year, week: @attendance.practice.week)
+                 year: @attendance.practice.year, week: @attendance.practice.week)
           .first
       @attendance.practice = practice if practice
     end
@@ -83,8 +83,8 @@ class AttendancesController < ApplicationController
       flash.clear
       render partial: '/attendances/attendance_create_link', locals: {
           member_id: @attendance.member_id,
-              group_schedule_id: @attendance.practice.group_schedule_id,
-              date: @attendance.date, status: Attendance::Status::ATTENDED
+          group_schedule_id: @attendance.practice.group_schedule_id,
+          date: @attendance.date, status: Attendance::Status::ATTENDED
       }
     else
       redirect_to(attendances_url)
@@ -158,8 +158,7 @@ class AttendancesController < ApplicationController
     week = params[:week].to_i
     gs_id = params[:group_schedule_id]
     practice = if year.positive? && week.positive? && gs_id
-                 Practice.where(group_schedule_id: gs_id,
-                     year: year, week: week).first_or_create!
+                 Practice.where(group_schedule_id: gs_id, year: year, week: week).first_or_create!
                else
                  m.groups.where(name: 'Voksne').first.next_practice
                end
@@ -187,7 +186,7 @@ class AttendancesController < ApplicationController
     if request.xhr?
       if params[:status] == 'toggle'
         render partial: 'plan_practice', locals: { gs: practice.group_schedule,
-                year: year, week: week, attendance: @attendance }
+                                                   year: year, week: week, attendance: @attendance }
       else
         render partial: 'attendance_delete_link', locals: { attendance: @attendance }
       end
@@ -202,7 +201,7 @@ class AttendancesController < ApplicationController
     @weeks = [[today.cwyear, today.cweek], [(today + 7).cwyear, (today + 7).cweek]]
     if today.month >= 6 && today.month <= 7
       @weeks += [[(today + 14).cwyear, (today + 14).cweek],
-          [(today + 21).cwyear, (today + 21).cweek]]
+                 [(today + 21).cwyear, (today + 21).cweek]]
     end
 
     @member = current_user.member
@@ -267,7 +266,7 @@ class AttendancesController < ApplicationController
       return
     end
     practice = Practice.where(group_schedule_id: group_schedule_id,
-        year: year, week: week).first_or_create!
+                              year: year, week: week).first_or_create!
     @attendance = Attendance
         .where(member_id: current_user.member.id, practice_id: practice.id)
         .first_or_create
@@ -289,7 +288,7 @@ class AttendancesController < ApplicationController
 
     if request.xhr?
       render partial: 'plan_practice', locals: { gs: practice.group_schedule,
-              year: year, week: week, attendance: @attendance }
+                                                 year: year, week: week, attendance: @attendance }
     else
       flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  " \
           "#{t(:attendances)[@attendance.status.to_sym]}"
@@ -330,7 +329,7 @@ class AttendancesController < ApplicationController
 
         @instructors = Member.active(@date)
             .includes({ attendances: { practice: :group_schedule },
-                graduates: %i[graduation rank] }, :groups, :nkf_member)
+                        graduates: %i[graduation rank] }, :groups, :nkf_member)
             .where(instructor: true)
             .select { |m| m.groups.any? { |g| g.martial_art_id == @group.martial_art_id } }
         @instructors.delete_if do |m|
@@ -341,14 +340,14 @@ class AttendancesController < ApplicationController
         end
         @instructors += GroupInstructor
             .includes(:group_schedule, member: [{ attendances: { practice: :group_schedule } },
-                :nkf_member])
+                                                :nkf_member])
             .where('group_instructors.member_id NOT IN (?)', @instructors.map(&:id))
             .where(group_schedules: { group_id: @group.id }).to_a
             .select { |gi| @dates.any? { |d| gi.active?(d) } }.map(&:member).uniq
 
         current_members = @group.members.active(first_date, last_date)
             .includes({ attendances: { practice: :group_schedule },
-                graduates: %i[graduation rank], groups: :group_schedules },
+                        graduates: %i[graduation rank], groups: :group_schedules },
                 :nkf_member)
         attended_members = Member.references(:practices)
             .includes(attendances: { practice: :group_schedule }, graduates: %i[graduation rank])

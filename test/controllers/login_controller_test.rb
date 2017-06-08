@@ -79,10 +79,10 @@ class LoginControllerTest < ActionController::TestCase
 
   def test_signup__cannot_set_arbitrary_attributes
     post_signup login: 'newuser',
-        password: 'password', password_confirmation: 'password',
-        email: 'skunk@example.com',
-        verified: '1',
-        role: 'superadmin'
+                password: 'password', password_confirmation: 'password',
+                email: 'skunk@example.com',
+                verified: '1',
+                role: 'superadmin'
     user = User.find_by(email: 'skunk@example.com')
     assert !user.verified
     assert_nil user.role
@@ -90,7 +90,7 @@ class LoginControllerTest < ActionController::TestCase
 
   def test_signup__validates_password_min_length
     post_signup login: 'tesla_rhea', password: 'bad', password_confirmation: 'bad',
-        email: 'someone@example.com'
+                email: 'someone@example.com'
     assert_password_validation_fails
   end
 

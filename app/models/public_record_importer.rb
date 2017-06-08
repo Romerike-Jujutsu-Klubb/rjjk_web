@@ -10,11 +10,12 @@ class PublicRecordImporter
 
   def self.import_public_record
     doc = Nokogiri::HTML(open(URL))
-    record = PublicRecord.where(contact: find_field(doc, 'Kontaktperson'),
+    record = PublicRecord.where(
+        contact: find_field(doc, 'Kontaktperson'),
         chairman: find_field(doc, 'Styrets leder'),
         board_members: find_field(doc, 'Nestleder') + find_field(doc, 'Styremedlem'),
-        deputies: find_field(doc, 'Varamedlem'))
-        .first_or_initialize
+        deputies: find_field(doc, 'Varamedlem')
+    ).first_or_initialize
     return unless record.new_record?
     record.save!
     PublicRecordMailer.new_record(record).store(Role[:Leder], tag: :new_public_record)

@@ -6,7 +6,7 @@ class UserMessageMailer < ApplicationMailer
     @user_email = um.user_email || um.user.email
     @email_url = { only_path: false, email: @user_email && Base64.encode64(@user_email) }
         .merge(um.email_url || { controller: :user_messages, action: :show,
-            id: um.id, key: um.key })
+                                 id: um.id, key: um.key })
     @timestamp = um.message_timestamp
 
     url_key = ERB::Util.url_encode(um.key)

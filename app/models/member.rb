@@ -55,7 +55,7 @@ class Member < ApplicationRecord
   end
   SEARCH_FIELDS = %i[
       billing_email email first_name last_name parent_email
-parent_name phone_home phone_mobile phone_parent phone_work
+      parent_name phone_home phone_mobile phone_parent phone_work
   ].freeze
   scope :search, ->(query) {
     where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ :query" }.join(' OR '),
@@ -73,7 +73,7 @@ parent_name phone_home phone_mobile phone_parent phone_work
 
   validates :address, presence: true, allow_blank: true # Allow members to omit their home address
   validates :billing_postal_code, length: { is: 4,
-      if: proc { |m| m.billing_postal_code.present? } }
+                                            if: proc { |m| m.billing_postal_code.present? } }
   validates :birthdate, :joined_on, presence: true
   validates :email, presence: true, length: { maximum: 128 }
   validates :first_name, :last_name, presence: true
@@ -115,7 +115,7 @@ parent_name phone_home phone_mobile phone_parent phone_work
         make_usable_full_email(email, first_name, last_name, attrs[:joined_on].to_s[0..3])
 
     potential_emails = [email, full_email, full_email_with_birthyear,
-        full_email_with_birthdate, full_email_with_join_year]
+                        full_email_with_birthdate, full_email_with_join_year]
     blocking_users = []
     potential_emails.compact.each do |potential_email|
       existing_user = User
@@ -403,7 +403,7 @@ blocking users: #{blocking_users.inspect}"
   def image_file=(file)
     return if file.blank?
     create_image! user_id: user_id, name: file.original_filename,
-        content_type: file.content_type, content_data: file.read
+                  content_type: file.content_type, content_data: file.read
   end
 
   def image?

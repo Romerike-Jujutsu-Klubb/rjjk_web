@@ -25,20 +25,19 @@ class TrialAttendancesController < ApplicationController
       trial_id = params[:trial_attendance][:nkf_member_trial_id]
     else
       practice_id = Practice
-          .where(group_schedule_id: params[:group_schedule_id],
-              year: params[:year], week: params[:week])
+          .where(group_schedule_id: params[:group_schedule_id], year: params[:year],
+                 week: params[:week])
           .first_or_create!.id
       trial_id = params[:nkf_member_trial_id]
     end
-    @trial_attendance = TrialAttendance.new(practice_id: practice_id,
-        nkf_member_trial_id: trial_id)
+    @trial_attendance = TrialAttendance.new(practice_id: practice_id, nkf_member_trial_id: trial_id)
 
     respond_to do |format|
       if @trial_attendance.save
         format.html do
           if request.xhr?
             render partial: 'attendances/trial_attendance_delete_link',
-                locals: { trial_attendance: @trial_attendance }
+                   locals: { trial_attendance: @trial_attendance }
           else
             redirect_to(@trial_attendance, notice: 'TrialAttendance was successfully created.')
           end
@@ -75,11 +74,11 @@ class TrialAttendancesController < ApplicationController
       format.html do
         if request.xhr?
           render partial: '/attendances/trial_attendance_create_link',
-              locals: {
-                  nkf_member_trial_id: @trial_attendance.nkf_member_trial_id,
-                  group_schedule_id: @trial_attendance.practice.group_schedule_id,
-                  date: @trial_attendance.date,
-              }
+                 locals: {
+                     nkf_member_trial_id: @trial_attendance.nkf_member_trial_id,
+                     group_schedule_id: @trial_attendance.practice.group_schedule_id,
+                     date: @trial_attendance.date,
+                 }
         else
           redirect_to(trial_attendances_url)
         end

@@ -22,8 +22,8 @@ class AppointmentsControllerTest < ActionController::TestCase
   test 'should create appointment' do
     assert_difference('Appointment.count') do
       post :create, params: { appointment: { from: @appointment.from,
-          member_id: @appointment.member_id,
-          role_id: @appointment.role_id, to: @appointment.to } }
+                                             member_id: @appointment.member_id,
+                                             role_id: @appointment.role_id, to: @appointment.to } }
       assert_no_errors :appointment
     end
 
@@ -41,9 +41,10 @@ class AppointmentsControllerTest < ActionController::TestCase
   end
 
   test 'should update appointment' do
-    put :update, params: { id: @appointment, appointment: { from: @appointment.from,
-        member_id: @appointment.member_id, role_id: @appointment.role_id,
-        to: @appointment.to } }
+    put :update, params: { id: @appointment, appointment: {
+        from: @appointment.from, member_id: @appointment.member_id, role_id: @appointment.role_id,
+        to: @appointment.to
+    } }
     assert_redirected_to appointments_path
   end
 

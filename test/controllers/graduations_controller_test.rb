@@ -49,7 +49,7 @@ class GraduationsControllerTest < ActionController::TestCase
   def test_create
     assert_difference 'Graduation.count' do
       post :create, params: { graduation: { held_on: '2007-10-07', group_id: groups(:panda).id,
-          group_notification: true } }
+                                            group_notification: true } }
     end
     assert_no_errors :graduation
     assert_response :redirect
@@ -60,7 +60,7 @@ class GraduationsControllerTest < ActionController::TestCase
     login(:lars)
     assert_difference 'Graduation.count' do
       post :create, params: { graduation: { held_on: '2007-10-07', group_id: groups(:panda).id,
-          group_notification: true } }
+                                            group_notification: true } }
     end
     assert_no_errors :graduation
     assert_response :redirect

@@ -50,8 +50,8 @@ class ApplicationStepsController < ApplicationController
     img_width = imgs.first.columns
     ratio = width.to_f / img_width
     imgs.each { |img| img.crop_resized!(width, img.rows * ratio) }
-    send_data(imgs.to_blob, disposition: 'inline',
-        type: step.image_content_type, filename: step.image_filename)
+    send_data(imgs.to_blob,
+        disposition: 'inline', type: step.image_content_type, filename: step.image_filename)
   end
 
   def new

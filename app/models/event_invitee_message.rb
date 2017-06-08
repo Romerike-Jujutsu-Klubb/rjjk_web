@@ -9,8 +9,10 @@ class EventInviteeMessage < ApplicationRecord
   belongs_to :event_invitee
 
   validates :body, :event_invitee, :event_invitee_id, :message_type, :subject, presence: true
-  validates :message_type, uniqueness: { scope: :event_invitee_id,
-      if: proc { |eim| eim.message_type == EventMessage::MessageType::INVITATION } }
+  validates :message_type, uniqueness: {
+      scope: :event_invitee_id,
+      if: proc { |eim| eim.message_type == EventMessage::MessageType::INVITATION },
+  }
   validates :event_invitee_id, uniqueness: { scope: :event_message_id, if: :event_message_id }
 
   def initialize(*args)

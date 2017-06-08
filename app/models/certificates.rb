@@ -92,7 +92,7 @@ class Certificates < Prawn::Document
           stroke_color '000000'
           font 'Times-Roman'
           text 'Romerike Jujutsu Klubb', align: :center, size: 40, mode: :fill_stroke,
-              character_spacing: 1
+                                         character_spacing: 1
         end
 
         fill_color 'ffffff'
@@ -158,7 +158,7 @@ class Certificates < Prawn::Document
       stamp 'border'
       content.each do |c|
         bounding_box [(page_width - name_width) / 2, graduate_name_y], width: name_width,
-            height: 20 do
+                                                                       height: 20 do
           text c[:name], size: 18, align: :center, valign: :bottom
         end
         bounding_box [(page_width - name_width) / 2, rank_y], width: name_width, height: 20 do
@@ -186,8 +186,8 @@ class Certificates < Prawn::Document
     return unless sensor
     text_box sensor[:title], at: [CENSOR_TITLE_X, SENSOR_Y - offset], size: 18, align: :left
     if sensor[:signature]
-      image StringIO.new(sensor[:signature]), fit: SIGNATURE_DIMENSIONS,
-          at: [CENSOR_NAME_X, SENSOR_Y + 18 - offset - signature_offset]
+      image StringIO.new(sensor[:signature]),
+          fit: SIGNATURE_DIMENSIONS, at: [CENSOR_NAME_X, SENSOR_Y + 18 - offset - signature_offset]
     else
       text_box sensor[:name], at: [CENSOR_NAME_X, SENSOR_Y - offset], size: 18, align: :left
     end

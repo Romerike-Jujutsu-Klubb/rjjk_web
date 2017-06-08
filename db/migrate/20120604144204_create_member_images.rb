@@ -22,8 +22,8 @@ class CreateMemberImages < ActiveRecord::Migration
       if u.nil? && m.email.present?
         password = (1..5).map { PASSWORD_CHARS[rand(PASSWORD_CHARS.size)] }.join('')
         u = User.new login: m.email, email: m.email, first_name: m.first_name,
-            last_name: m.last_name, password: password, password_confirmation: password,
-            role: m.instructor ? 'ADMIN' : nil, member_id: m.id
+                     last_name: m.last_name, password: password, password_confirmation: password,
+                     role: m.instructor ? 'ADMIN' : nil, member_id: m.id
         u.password_needs_confirmation = true
         u.save!
         u.generate_security_token
@@ -35,8 +35,8 @@ class CreateMemberImages < ActiveRecord::Migration
 
       next unless m.image
       i = Image.create! name: m.image_name, content_type: m.image_content_type,
-          content_data: m.image, user_id: u.id, description: 'Profilbilde', public: false,
-          approved: nil
+                        content_data: m.image, user_id: u.id, description: 'Profilbilde',
+                        public: false, approved: nil
       m.update! image_id: i.id
     end
 

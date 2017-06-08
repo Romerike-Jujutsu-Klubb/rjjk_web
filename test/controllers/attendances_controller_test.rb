@@ -22,8 +22,8 @@ class AttendancesControllerTest < ActionController::TestCase
   def test_should_create_attendance
     assert_difference('Attendance.count') do
       post :create, params: { attendance: { member_id: members(:uwe).id,
-          practice_id: practices(:panda_2010_42).id,
-          status: 'X' } }
+                                            practice_id: practices(:panda_2010_42).id,
+                                            status: 'X' } }
       assert_no_errors(:attendance)
     end
 
@@ -33,8 +33,8 @@ class AttendancesControllerTest < ActionController::TestCase
   def test_create_with_group_schedule_id_and_year_and_week
     assert_difference('Attendance.count') do
       post :create, params: { attendance: { member_id: members(:uwe).id,
-          group_schedule_id: group_schedules(:panda).id, year: 2010, week: 42,
-          status: 'X' } }
+                                            group_schedule_id: group_schedules(:panda).id, year: 2010, week: 42,
+                                            status: 'X' } }
       assert_no_errors(:attendance)
     end
     assert_redirected_to attendance_path(assigns(:attendance))
@@ -82,7 +82,7 @@ class AttendancesControllerTest < ActionController::TestCase
     practice = practices(:voksne_2013_42_thursday)
     assert_equal 1, practice.attendances.count
     post :announce, params: { group_schedule_id: practice.group_schedule_id,
-        year: practice.year, week: practice.week, status: 'toggle' }, xhr: true
+                              year: practice.year, week: practice.week, status: 'toggle' }, xhr: true
     assert_response :success
     assert_equal 0, practice.attendances.count
   end
@@ -92,7 +92,7 @@ class AttendancesControllerTest < ActionController::TestCase
     practice = practices(:voksne_2013_42_thursday)
     assert_equal 1, practice.attendances.count
     post :announce, params: { group_schedule_id: practice.group_schedule_id,
-        year: practice.year, week: practice.week, status: 'toggle' }, xhr: true
+                              year: practice.year, week: practice.week, status: 'toggle' }, xhr: true
     assert_response :success
     assert_equal 2, practice.attendances.count
   end

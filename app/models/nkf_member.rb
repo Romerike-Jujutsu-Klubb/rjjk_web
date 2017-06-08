@@ -105,7 +105,7 @@ class NkfMember < ApplicationRecord
     transaction do
       u = Member.create_corresponding_user! converted_attributes
       create_member!(converted_attributes.update(instructor: false, nkf_fee: true,
-          payment_problem: false, user: u))
+                                                 payment_problem: false, user: u))
     end
   end
 

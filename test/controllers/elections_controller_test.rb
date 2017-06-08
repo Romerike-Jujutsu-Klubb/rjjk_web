@@ -21,8 +21,8 @@ class ElectionsControllerTest < ActionController::TestCase
   test 'should create election' do
     assert_difference('Election.count') do
       post :create, params: { election: { annual_meeting_id: @election.annual_meeting_id,
-          member_id: @election.member_id, resigned_on: @election.resigned_on,
-          role_id: @election.role_id, years: 2 } }
+                                          member_id: @election.member_id, resigned_on: @election.resigned_on,
+                                          role_id: @election.role_id, years: 2 } }
     end
 
     assert_redirected_to elections_path

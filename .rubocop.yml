@@ -14,25 +14,22 @@ AllCops:
   Exclude:
     - 'vendor/**/*'
 
-Layout/AlignArray:
-  Enabled: false
-
-Layout/AlignHash:
-  Enabled: false
-
 Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
   IndentationWidth: 4
 
 Layout/FirstParameterIndentation:
+  EnforcedStyle: consistent
   IndentationWidth: 4
 
 Layout/IndentArray:
+  EnforcedStyle: consistent
   IndentationWidth: 4
 
 # Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
 # SupportedStyles: special_inside_parentheses, consistent, align_braces
 Layout/IndentHash:
+  EnforcedStyle: consistent
   IndentationWidth: 4
 
 Layout/IndentAssignment:

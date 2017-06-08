@@ -7,7 +7,7 @@ class NkfMemberImportTest < ActionMailer::TestCase
     AnnualMeeting.create! start_at: '2015-02-12 17:45'
     assert_mail_deliveries(3) do
       VCR.use_cassette('NKF Import Changes', match_requests_on: %i[method host path query body],
-          allow_playback_repeats: true) do
+                                             allow_playback_repeats: true) do
         NkfMemberImport.import_nkf_changes
       end
     end

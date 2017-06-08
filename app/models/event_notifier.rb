@@ -9,15 +9,15 @@ class EventNotifier
           .where('message_type <> ? AND ready_at IS NOT NULL',
               EventMessage::MessageType::INVITATION)
           .order(:ready_at).includes(event: { event_invitees: :invitation },
-                                    event_invitee_messages: :event_invitee).to_a.each do |em|
+                                     event_invitee_messages: :event_invitee).to_a.each do |em|
         recipients = em.event.event_invitees
         recipients = recipients.select { |r| r.will_attend || r.invitation.try(:sent_at) }
         already_received = em.event_invitee_messages.map(&:event_invitee)
         recipients -= already_received
         recipients.each do |ei|
           EventInviteeMessage.create! event_message_id: em.id,
-              event_invitee_id: ei.id, message_type: em.message_type,
-              subject: em.subject, body: em.body, ready_at: now
+                                      event_invitee_id: ei.id, message_type: em.message_type,
+                                      subject: em.subject, body: em.body, ready_at: now
         end
       end
     rescue => e

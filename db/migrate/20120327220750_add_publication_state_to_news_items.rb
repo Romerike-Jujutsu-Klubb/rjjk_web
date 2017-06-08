@@ -3,7 +3,7 @@
 class AddPublicationStateToNewsItems < ActiveRecord::Migration
   def change
     add_column :news_items, :publication_state, :string, limit: 16, null: false,
-        default: 'PUBLISHED'
+                                                         default: 'PUBLISHED'
     change_column :news_items, :publication_state, :string, default: nil
   end
 end
