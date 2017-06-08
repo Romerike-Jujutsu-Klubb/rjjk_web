@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class NkfMemberComparison
-  attr_reader :errors, :group_changes, :member_changes, :members, :new_members, :orphan_members,
+  attr_reader :errors, :member_changes, :members, :new_members, :orphan_members,
       :orphan_nkf_members, :outgoing_changes
 
   def initialize
@@ -9,7 +9,7 @@ class NkfMemberComparison
   end
 
   def any?
-    @new_members.any? || @member_changes.any? || @group_changes.any? || @errors.any?
+    @new_members.any? || @member_changes.any? || @errors.any?
   end
 
   private def fetch
@@ -20,15 +20,7 @@ class NkfMemberComparison
     nkf_members.each do |nkfm|
       member = nkfm.member
       member.attributes = nkfm.converted_attributes
-      nkf_group_names =
-          if nkfm.gren_stilart_avd_parti___gren_stilart_avd_parti
-            nkfm.group_names
-          else
-            []
-          end
-      if member.changed? || (nkf_group_names.sort != member.groups.map(&:name).sort)
-        @members << nkfm.member
-      end
+      @members << nkfm.member if member.changed?
     end
   end
 
@@ -102,34 +94,5 @@ class NkfMemberComparison
         nil
       end
     end.compact
-
-    sync_groups
-  end
-
-  private
-
-  def sync_groups
-    @group_changes = Hash.new { |h, k| h[k] = [[], []] }
-    (@new_members + @members).each do |member|
-      if member.nkf_member.gren_stilart_avd_parti___gren_stilart_avd_parti
-        nkf_group_names = member.nkf_member.group_names
-      else
-        logger.error "No groups: #{member.nkf_member.inspect}"
-        nkf_group_names = []
-      end
-      member_groups = member.groups.map(&:name)
-      (nkf_group_names - member_groups).each do |gn|
-        if (group = Group.find_by(name: gn))
-          member.groups << group
-          @group_changes[member][0] << group
-        end
-      end
-      (member_groups - nkf_group_names).each do |gn|
-        if (group = Group.find_by(name: gn))
-          member.groups.delete(group)
-          @group_changes[member][1] << group
-        end
-      end
-    end
   end
 end

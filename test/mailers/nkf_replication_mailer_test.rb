@@ -28,16 +28,12 @@ class NkfReplicationMailerTest < ActionMailer::TestCase
         first_name: 'Erik', last_name: 'Hansen'), { 'first_name' => 'Hans' }]])
     comparison.stubs(:outgoing_changes).returns([[mock('outgoing_changes',
         first_name: 'Hans', last_name: 'Eriksen'), { 'email' => { 'H@ans' => 'Ha@ns' } }]])
-    comparison.stubs(:group_changes).returns(
-        mock(first_name: 'hhh', last_name: 'dfgfg') =>
-            [[mock('added_group', name: 'hhgf')], [mock('removed_group', name: 'abc')]]
-    )
     comparison.stubs(:errors).returns([])
     mail = NkfReplicationMailer.update_members(comparison)
-    assert_equal 'Oppdateringer fra NKF: 1 nye, 1 endrede, 1 gruppeendringer', mail.subject
+    assert_equal 'Oppdateringer fra NKF: 1 nye, 1 endrede', mail.subject
     assert_equal ['uwe@kubosch.no'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
-    assert_match(/Opprettet følgende nye medlemmer:\s+Erik Hansen\s+Oppdaterte følgende eksisterende medlemmer:\s+Erik Hansen\s+first_name: "H" => "a"\s+Oppdaterte følgende medlemmer hos NKF:\s+Hans Eriksen\s+email: {\"H@ans\"=>\"Ha@ns\"}\s+Gruppemedlemskap:\s+hhh dfgfg\s+Lagt til: hhgf\s+Fjernet : abc/, # rubocop: disable Metrics/LineLength
+    assert_match(/Opprettet følgende nye medlemmer:\s+Erik Hansen\s+Oppdaterte følgende eksisterende medlemmer:\s+Erik Hansen\s+first_name: "H" => "a"\s+Oppdaterte følgende medlemmer hos NKF:\s+Hans Eriksen\s+email: {"H@ans"=>\"Ha@ns\"}/, # rubocop: disable Metrics/LineLength
         mail.body.encoded)
   end
 end

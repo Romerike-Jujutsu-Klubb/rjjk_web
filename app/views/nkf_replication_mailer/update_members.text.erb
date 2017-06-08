@@ -29,20 +29,6 @@ Oppdaterte følgende medlemmer hos NKF:
 <% end -%>
 <% end -%>
 
-<% if @group_changes.any? -%>
-Gruppemedlemskap:
-
-<% @group_changes.each do |m, (groups_added, groups_removed)| -%>
-    <%= m.first_name %> <%= m.last_name %>
-    <% if groups_added.any? -%>
-        Lagt til: <%= groups_added.map { |g| g.name }.join(', ') %>
-    <% end -%>
-    <% if groups_removed.any? -%>
-        Fjernet : <%= groups_removed.map { |g| g.name }.join(', ') %>
-    <% end -%>
-<% end -%>
-<% end -%>
-
 <% if @errors.any? -%>
 Feil:
 <% @errors.each do |operation, record, exception| -%>

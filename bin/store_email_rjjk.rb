@@ -37,7 +37,11 @@ def safe_subject(subject, mail_is_spam, spam_score)
   ss = subject.to_s.gsub(/^((Fwd|Re|Sv):\s*)+/i, '').gsub(%r{[ \t:/\\\{\}`'"!]}, '_')
       .gsub(/_+/, '_')[0..100]
   @now_str ||= Time.now.strftime('%F_%T')
-  spam_marker = mail_is_spam ? (mail_is_spam == 'LARGE' ? '[LARGE]' : '[SPAM]') : '_____'
+  spam_marker = if mail_is_spam
+                  mail_is_spam == 'LARGE' ? '[LARGE]' : '[SPAM]'
+                else
+                  '_____'
+                end
   subject = "mail_#{@now_str}_#{spam_marker}"
   subject += "[#{spam_score}]" if spam_score
   subject += "_#{ss}"

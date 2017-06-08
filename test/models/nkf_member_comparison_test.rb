@@ -14,10 +14,6 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
                        ['Unhandled change', members(:lars), 'birthdate'],
           ['Unhandled change', members(:lars), 'joined_on'],
                    ], c.errors)
-      assert_equal({
-                       members(:lars) => [[], [groups(:voksne)]],
-          members(:uwe) => [[], [groups(:voksne)]],
-                   }, c.group_changes)
       assert_equal([
                        members(:lars),
           members(:uwe),
