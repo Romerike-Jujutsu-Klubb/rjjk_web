@@ -14,7 +14,7 @@ class AddGroupToGraduations < ActiveRecord::Migration
       graduation.update! group_id: main_group_id
     end
     change_column_null :graduations, :group_id, false
-    remove_column :graduations, :martial_art_id
+    remove_column :graduations, :martial_art_id, :integer
   end
 
   class Graduation < ApplicationRecord

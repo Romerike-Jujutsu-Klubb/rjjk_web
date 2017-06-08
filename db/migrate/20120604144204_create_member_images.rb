@@ -13,7 +13,11 @@ class CreateMemberImages < ActiveRecord::Migration
     add_index :members, :image_id, unique: true
     add_index :members, :user_id, unique: true
 
-    execute 'UPDATE members SET user_id = (SELECT id FROM users WHERE member_id = members.id)'
+    reversible do |dir|
+      dir.up do
+        execute 'UPDATE members SET user_id = (SELECT id FROM users WHERE member_id = members.id)'
+      end
+    end
 
     Member.all.each do |m|
       u = User.find_by(member_id: m.id)
@@ -40,10 +44,10 @@ class CreateMemberImages < ActiveRecord::Migration
       m.update! image_id: i.id
     end
 
-    remove_column :users, :member_id
-    remove_column :members, :image_name
-    remove_column :members, :image_content_type
-    remove_column :members, :image
+    remove_column :users, :member_id, :integer
+    remove_column :members, :image_name, :string
+    remove_column :members, :image_content_type, :string
+    remove_column :members, :image, :binary
   end
 
   class Image < ApplicationRecord; end

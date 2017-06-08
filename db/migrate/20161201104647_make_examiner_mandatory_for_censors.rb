@@ -3,7 +3,7 @@
 # Avoid NULL values for easier queries
 class MakeExaminerMandatoryForCensors < ActiveRecord::Migration
   def change
-    execute 'UPDATE censors SET examiner = false WHERE examiner IS NULL'
+    reversible { |d| d.up { execute 'UPDATE censors SET examiner = false WHERE examiner IS NULL' } }
     change_column_null :censors, :examiner, false
 
     change_column :nkf_members, :foresatte_epost, :string, limit: 64
