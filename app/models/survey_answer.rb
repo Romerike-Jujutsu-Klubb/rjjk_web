@@ -7,7 +7,7 @@ class SurveyAnswer < ApplicationRecord
   before_validation { self.answer -= ['', 'annet'] if answer.is_a?(Array) }
 
   def answers
-    [*YAML.load(answer)].reject(&:blank?)
+    [*YAML.safe_load(answer)].reject(&:blank?)
   rescue
     [answer]
   end

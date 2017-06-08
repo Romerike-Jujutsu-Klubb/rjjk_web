@@ -38,15 +38,6 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 27
 
-# Offense count: 4
-# Configuration parameters: Include.
-# Include: db/migrate/*.rb
-Rails/NotNullColumn:
-  Exclude:
-    - 'db/migrate/20101021184730_add_invoice_email_to_nkf_member_trials.rb'
-    - 'db/migrate/20130528161719_add_group_schedule_to_group_instructors.rb'
-    - 'db/migrate/20130701065100_link_group_instructor_to_group_semester.rb'
-
 # Offense count: 24
 # Configuration parameters: Include.
 # Include: db/migrate/*.rb
