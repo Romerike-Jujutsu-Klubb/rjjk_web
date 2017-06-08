@@ -11,11 +11,10 @@ class AddTimestampsToGraduations < ActiveRecord::Migration
     add_column :graduates, :declined, :boolean
     now = Time.zone.now
     Censor.joins(:graduation).where('graduations.held_on < ?', now)
-        .update_all(requested_at: now, confirmed_at: now, lock_reminded_at: now,
-            locked_at: now)
-    Graduation.update_all(shopping_list_sent_at: now)
+        .update_all(requested_at: now, confirmed_at: now, lock_reminded_at: now, locked_at: now) # rubocop:disable Rails/SkipsModelValidations
+    Graduation.update_all(shopping_list_sent_at: now) # rubocop:disable Rails/SkipsModelValidations
     Graduate.joins(:graduation).where('graduations.held_on < ?', now)
-        .update_all(invitation_sent_at: now, confirmed_at: now)
+        .update_all(invitation_sent_at: now, confirmed_at: now) # rubocop:disable Rails/SkipsModelValidations
   end
 
   class Censor < ApplicationRecord

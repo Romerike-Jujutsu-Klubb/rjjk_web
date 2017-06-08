@@ -3,7 +3,7 @@
 class AddStandardTimeToRanks < ActiveRecord::Migration
   def self.up
     add_column :ranks, :standard_months, :integer, null: true
-    Rank.update_all standard_months: 6
+    Rank.update_all standard_months: 6 # rubocop:disable Rails/SkipsModelValidations
     change_column :ranks, :standard_months, :integer, null: false
   end
 

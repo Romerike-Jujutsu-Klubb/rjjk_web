@@ -142,7 +142,7 @@ class GraduationReminderTest < ActionMailer::TestCase
   end
 
   def test_notify_missing_approvals_with_unconfirmed_censors
-    Censor.update_all confirmed_at: nil, declined: nil
+    Censor.update_all confirmed_at: nil, declined: nil # rubocop:disable Rails/SkipsModelValidations
     assert_mail_stored(3) { GraduationReminder.notify_missing_approvals }
   end
 
@@ -198,7 +198,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     g = graduations(:voksne)
     g.update! held_on: 1.week.ago
     g.censors.create! member: members(:newbie), examiner: true
-    Censor.update_all confirmed_at: nil, approved_grades_at: nil
+    Censor.update_all confirmed_at: nil, approved_grades_at: nil # rubocop:disable Rails/SkipsModelValidations
     assert_mail_stored(0) { GraduationReminder.congratulate_graduates }
   end
 
@@ -206,7 +206,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     g = graduations(:voksne)
     g.update! held_on: 1.week.ago
     g.censors.create! member: members(:newbie), examiner: true
-    Censor.update_all confirmed_at: 3.weeks.ago, approved_grades_at: nil
+    Censor.update_all confirmed_at: 3.weeks.ago, approved_grades_at: nil # rubocop:disable Rails/SkipsModelValidations
     assert_mail_stored(0) { GraduationReminder.congratulate_graduates }
   end
 
@@ -214,7 +214,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     g = graduations(:voksne)
     g.update! held_on: 1.week.ago
     g.censors.create! member: members(:newbie), examiner: true
-    Censor.update_all confirmed_at: 3.weeks.ago, approved_grades_at: 2.days.ago
+    Censor.update_all confirmed_at: 3.weeks.ago, approved_grades_at: 2.days.ago # rubocop:disable Rails/SkipsModelValidations
     assert_mail_stored(2) { GraduationReminder.congratulate_graduates }
   end
 end
