@@ -13,12 +13,22 @@ require 'capybara/screenshot/diff'
 class ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  Capybara.default_driver = :poltergeist # :selenium or :poltergeist
+  WINDOW_SIZE = [1024, 768].freeze
+
   Capybara::Screenshot.add_driver_path = true
-  Capybara::Screenshot.window_size = [1024, 768]
+  Capybara::Screenshot.window_size = WINDOW_SIZE
   Capybara::Screenshot.enabled = RUBY_ENGINE == 'ruby' && ENV['TRAVIS'].blank?
   # Capybara::Screenshot::Diff.enabled = false
   Capybara::Screenshot.stability_time_limit = 0.5
+  Capybara.register_driver :chrome do |app|
+    caps = Selenium::WebDriver::Remote::Capabilities.chrome(
+        'chromeOptions' => {
+            'args' => %W[headless no-sandbox disable-gpu window-size=#{WINDOW_SIZE.join('x')}],
+        }
+    )
+    Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: caps)
+  end
+  Capybara.default_driver = :poltergeist # :selenium, :chrome, or :poltergeist
   Capybara.default_max_wait_time = 30
 
   self.use_transactional_tests = false
