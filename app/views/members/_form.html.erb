@@ -65,8 +65,9 @@
         <%= text_field :member, :birthdate, placeholder: 'år-måned-dag', class: 'date form-control' %>
       </div>
       <div class="col-3">
-        <label>Alder</label>
-        <%= "#{((Date.current - @member.birthdate.to_date) / 365).to_i} år" if @member.birthdate %>
+        <br/>
+        <label class="mt-3">Alder</label>
+        <%= "#{@member.age} år" if @member.birthdate %>
       </div>
     </div>
 
