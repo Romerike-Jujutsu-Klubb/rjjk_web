@@ -61,7 +61,8 @@ class NkfMemberComparison
             attr_sym = attr.to_sym
             _nkf_column, nkf_mapping = NkfMember::FIELD_MAP.find { |_k, v| v[:map_to] == attr_sym }
             if (nkf_field = nkf_mapping&.fetch(:form_field, nil))
-              form[nkf_field.to_s] = old_value
+              form_value = old_value.is_a?(Date) ? old_value.strftime('%d.%m.%Y') : old_value
+              form[nkf_field.to_s] = form_value
               outgoing_changes_for_member[attr] = { new_value => old_value }
             else
               @errors << ['Unhandled change', m, attr]

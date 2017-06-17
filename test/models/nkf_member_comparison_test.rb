@@ -10,10 +10,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
         c = NkfMemberComparison.new
         c.sync
       end
-      assert_equal([
-          ['Unhandled change', members(:lars), 'birthdate'],
-          ['Unhandled change', members(:lars), 'joined_on'],
-      ], c.errors)
+      assert_equal([], c.errors)
       assert_equal([
           members(:lars),
           members(:uwe),
@@ -29,16 +26,16 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
           }],
       ], c.member_changes)
       assert_equal([
-          [members(:lars), { 'email' => { 'lars@example.net' => 'lars@example.com' } }],
+          [members(:lars), {
+              'birthdate' => { Date.new(1967, 3, 1) => Date.new(1967, 6, 21) },
+              'email' => { 'lars@example.net' => 'lars@example.com' },
+              'joined_on' => { Date.new(2001, 4, 1) => Date.new(2007, 6, 21) },
+          }],
           [members(:uwe), { 'email' => { 'uwe@example.net' => 'uwe@example.com' } }],
       ], c.outgoing_changes)
       assert_equal([Member.last], c.new_members)
       assert_equal([members(:newbie), members(:sebastian)], c.orphan_members)
       assert_equal([nkf_members(:erik)], c.orphan_nkf_members)
-      assert_equal([
-          [members(:lars), { 'email' => { 'lars@example.net' => 'lars@example.com' } }],
-          [members(:uwe), { 'email' => { 'uwe@example.net' => 'uwe@example.com' } }],
-      ], c.outgoing_changes)
     end
   end
 end
