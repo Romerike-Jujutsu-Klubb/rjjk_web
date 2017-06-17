@@ -379,7 +379,7 @@ ActiveRecord::Schema.define(version: 20170617195941) do
     t.text     'summary'
   end
 
-  create_table 'group_instructors', id: :integer, default: 0, force: :cascade do |t|
+  create_table 'group_instructors', id: :integer, default: "nextval('instructions_id_seq'::regclass)", force: :cascade do |t|
     t.integer  'member_id'
     t.datetime 'created_at',        null: false
     t.datetime 'updated_at',        null: false
