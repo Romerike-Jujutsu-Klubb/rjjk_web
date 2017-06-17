@@ -2,54 +2,54 @@
 
 class NkfMember < ApplicationRecord
   FIELD_MAP = {
-      adresse_1: nil,
-      adresse_2: :address,
-      adresse_3: nil,
-      antall_etiketter_1: nil,
-      betalt_t_o_m__dato: nil,
-      created_at: nil,
-      epost: :email,
-      epost_faktura: :billing_email,
-      etternavn: :last_name,
-      fodselsdato: :birthdate,
-      foresatte: :parent_name,
-      foresatte_epost: :parent_email,
-      foresatte_mobil: :billing_phone_mobile,
-      foresatte_nr_2: :parent_2_name,
-      foresatte_nr_2_mobil: :parent_2_mobile,
-      fornavn: :first_name,
-      gren_stilart_avd_parti___gren_stilart_avd_parti: nil,
-      hovedmedlem_id: nil,
-      hovedmedlem_navn: nil,
-      id: nil,
-      innmeldtarsak: nil,
-      innmeldtdato: :joined_on,
-      kjonn: :male,
-      klubb: nil,
-      klubb_id: nil,
-      konkurranseomrade_id: nil,
-      konkurranseomrade_navn: nil,
-      kont_belop: nil,
-      kont_sats: nil,
-      kontraktsbelop: nil,
-      kontraktstype: nil,
-      medlemskategori: nil,
-      medlemskategori_navn: nil,
-      medlemsnummer: nil,
-      medlemsstatus: nil,
-      member_id: nil,
-      mobil: :phone_mobile,
-      postnr: :postal_code,
-      rabatt: nil,
-      sist_betalt_dato: nil,
-      sted: nil,
-      telefon: :phone_home,
-      telefon_arbeid: :phone_work,
-      updated_at: nil,
-      utmeldtarsak: nil,
-      utmeldtdato: :left_on,
-      ventekid: nil,
-      yrke: nil,
+      adresse_1: { map_to: nil },
+      adresse_2: { map_to: :address },
+      adresse_3: { map_to: nil },
+      antall_etiketter_1: { map_to: nil },
+      betalt_t_o_m__dato: { map_to: nil },
+      created_at: { map_to: nil },
+      epost: { map_to: :email, form_field: :frm_48_v10 },
+      epost_faktura: { map_to: :billing_email },
+      etternavn: { map_to: :last_name },
+      fodselsdato: { map_to: :birthdate },
+      foresatte: { map_to: :parent_name },
+      foresatte_epost: { map_to: :parent_email },
+      foresatte_mobil: { map_to: :billing_phone_mobile },
+      foresatte_nr_2: { map_to: :parent_2_name },
+      foresatte_nr_2_mobil: { map_to: :parent_2_mobile },
+      fornavn: { map_to: :first_name },
+      gren_stilart_avd_parti___gren_stilart_avd_parti: { map_to: nil },
+      hovedmedlem_id: { map_to: nil },
+      hovedmedlem_navn: { map_to: nil },
+      id: { map_to: nil },
+      innmeldtarsak: { map_to: nil },
+      innmeldtdato: { map_to: :joined_on },
+      kjonn: { map_to: :male },
+      klubb: { map_to: nil },
+      klubb_id: { map_to: nil },
+      konkurranseomrade_id: { map_to: nil },
+      konkurranseomrade_navn: { map_to: nil },
+      kont_belop: { map_to: nil },
+      kont_sats: { map_to: nil },
+      kontraktsbelop: { map_to: nil },
+      kontraktstype: { map_to: nil },
+      medlemskategori: { map_to: nil },
+      medlemskategori_navn: { map_to: nil },
+      medlemsnummer: { map_to: nil },
+      medlemsstatus: { map_to: nil },
+      member_id: { map_to: nil },
+      mobil: { map_to: :phone_mobile },
+      postnr: { map_to: :postal_code },
+      rabatt: { map_to: nil },
+      sist_betalt_dato: { map_to: nil },
+      sted: { map_to: nil },
+      telefon: { map_to: :phone_home },
+      telefon_arbeid: { map_to: :phone_work },
+      updated_at: { map_to: nil },
+      utmeldtarsak: { map_to: nil },
+      utmeldtdato: { map_to: :left_on },
+      ventekid: { map_to: nil },
+      yrke: { map_to: nil },
   }.freeze
 
   belongs_to :member
@@ -82,21 +82,17 @@ class NkfMember < ApplicationRecord
   def converted_attributes
     new_attributes = {}
     attributes.each do |k, v|
-      if FIELD_MAP.keys.include?(k.to_sym)
-        mapped_attribute = FIELD_MAP[k.to_sym]
-        if mapped_attribute
-          if v =~ /^\s*(\d{2}).(\d{2}).(\d{4})\s*$/
-            v = "#{$3}-#{$2}-#{$1}"
-          elsif v =~ /Mann|Kvinne/
-            v = v == 'Mann'
-          elsif v.blank? && mapped_attribute =~ /parent|email|mobile|phone/
-            v = nil
-          end
-          new_attributes[mapped_attribute] = v
-        end
-      else
-        logger.error "Unknown attribute: #{k}"
+      raise "Unknown attribute: #{k}" unless FIELD_MAP.keys.include?(k.to_sym)
+      mapped_attribute = FIELD_MAP[k.to_sym][:map_to]
+      next unless mapped_attribute
+      if v =~ /^\s*(\d{2}).(\d{2}).(\d{4})\s*$/
+        v = "#{$3}-#{$2}-#{$1}"
+      elsif v =~ /Mann|Kvinne/
+        v = v == 'Mann'
+      elsif v.blank? && mapped_attribute =~ /parent|email|mobile|phone/
+        v = nil
       end
+      new_attributes[mapped_attribute] = v
     end
     new_attributes
   end

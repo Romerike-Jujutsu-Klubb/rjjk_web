@@ -58,17 +58,11 @@ class NkfMemberComparison
         outgoing_changes_for_member = {}
         member_form = member_page.form('ks_medlprofil') do |form|
           m.changes.each do |attr, (old_value, new_value)|
-            case attr
-              # when 'address'
-              # when 'birthdate'
-            when 'email'
-              form['frm_48_v10'] = old_value
+            attr_sym = attr.to_sym
+            _nkf_column, nkf_mapping = NkfMember::FIELD_MAP.find { |_k, v| v[:map_to] == attr_sym }
+            if (nkf_field = nkf_mapping&.fetch(:form_field, nil))
+              form[nkf_field.to_s] = old_value
               outgoing_changes_for_member[attr] = { new_value => old_value }
-              # when 'joined_on'
-              # when 'last_name'
-            when 'left_on' # rubocop:disable Lint/EmptyWhen
-            when 'parent_email' # rubocop:disable Lint/EmptyWhen
-              # when 'postal_code'
             else
               @errors << ['Unhandled change', m, attr]
             end
