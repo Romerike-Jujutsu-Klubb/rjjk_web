@@ -2,7 +2,7 @@
 
 class MartialArt < ApplicationRecord
   KWR_NAME = 'Kei Wa Ryu'
-  KWR = find_by(name: KWR_NAME)
+  KWR = where(name: KWR_NAME).first_or_create!
 
   has_many :graduations, -> { order(:held_on) }, through: :groups
   has_many :groups, dependent: :destroy
