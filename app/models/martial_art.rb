@@ -2,7 +2,8 @@
 
 class MartialArt < ApplicationRecord
   KWR_NAME = 'Kei Wa Ryu'
-  KWR = where(name: KWR_NAME).first_or_create!(family: 'Jujutsu')
+  KWR = where(name: KWR_NAME)
+      .first_or_create!(id: ActiveRecord::FixtureSet.identify(:keiwaryu), family: 'Jujutsu')
 
   has_many :graduations, -> { order(:held_on) }, through: :groups
   has_many :groups, dependent: :destroy
