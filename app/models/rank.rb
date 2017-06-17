@@ -4,7 +4,7 @@ class Rank < ApplicationRecord
   include Comparable
 
   UNRANKED = new(position: -99, standard_months: 0, name: 'Ugradert', colour: 'Hvitt',
-                 martial_art_id: MartialArt::KWR.id)
+                 martial_art_id: MartialArt::KWR_ID)
   SHODAN_POSITION = 15
 
   belongs_to :martial_art
