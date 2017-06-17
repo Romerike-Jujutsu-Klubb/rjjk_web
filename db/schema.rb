@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170517200803) do
+ActiveRecord::Schema.define(version: 20170617195941) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -116,8 +116,8 @@ ActiveRecord::Schema.define(version: 20170517200803) do
     t.string   'billing_phone_mobile', limit: 32
     t.string   'rfid',                 limit: 25
     t.string   'kid',                  limit: 64
-    t.float    'latitude'
-    t.float    'longitude'
+    t.decimal  'latitude',             precision: 8, scale: 6
+    t.decimal  'longitude',            precision: 9, scale: 6
     t.boolean  'gmaps'
     t.integer  'image_id',             index: { name: 'index_members_on_image_id', unique: true, using: :btree }
     t.integer  'user_id',              index: { name: 'index_members_on_user_id', unique: true, using: :btree }
@@ -379,7 +379,7 @@ ActiveRecord::Schema.define(version: 20170517200803) do
     t.text     'summary'
   end
 
-  create_table 'group_instructors', id: :integer, default: "nextval('instructions_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'group_instructors', id: :integer, default: 0, force: :cascade do |t|
     t.integer  'member_id'
     t.datetime 'created_at',        null: false
     t.datetime 'updated_at',        null: false
