@@ -27,7 +27,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
               'phone_mobile' => [nil, '92929292'],
               'email' => ['sebastian@example.com', 'sebastian@example.net'],
               'billing_email' => [nil, 'lise@example.net'],
-              'joined_on' => [Date.parse('2010-08-25'), Date.parse('2010-09-21')],
+              'joined_on' => [Date.parse('2007-08-25'), Date.parse('2007-09-21')],
               'parent_name' => [nil, 'Lise Kubosch'],
           }],
           [members(:uwe), {
@@ -45,7 +45,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
               'phone_mobile' => { '92929292' => nil },
               'email' => { 'sebastian@example.net' => 'sebastian@example.com' },
               'billing_email' => { 'lise@example.net' => nil },
-              'joined_on' => { Date.parse('2010-09-21') => Date.parse('2010-08-25') },
+              'joined_on' => { Date.parse('2007-09-21') => Date.parse('2007-08-25') },
               'parent_name' => { 'Lise Kubosch' => nil },
           }],
           [members(:uwe), { 'email' => { 'uwe@example.net' => 'uwe@example.com' } }],

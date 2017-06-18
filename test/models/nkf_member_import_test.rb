@@ -44,7 +44,7 @@ class NkfMemberImportTest < ActionMailer::TestCase
               phone_mobile: nil => "\\d{8}"
               email: "sebastian@example.com" => ".+"
               billing_email: nil => ".+"
-              joined_on: Wed, 25 Aug 2010 => Tue, 21 Sep 2010
+              joined_on: Sat, 25 Aug 2007 => Tue, 21 Sep 2010
               parent_name: nil => ".+"
           Uwe Kubosch
               phone_mobile: nil => "\\d{8}"
