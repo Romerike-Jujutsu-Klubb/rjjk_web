@@ -32,14 +32,12 @@ class GroupsController < ApplicationController
 
   def new
     @group ||= Group.new
-    @martial_arts ||= MartialArt.all
-    @contracts = NkfMember.all.group_by(&:kontraktstype).keys.sort
+    load_form_data
   end
 
   def edit
     @group ||= Group.find(params[:id])
-    @martial_arts = MartialArt.all
-    @contracts = NkfMember.all.group_by(&:kontraktstype).keys.sort
+    load_form_data
   end
 
   def create
@@ -93,5 +91,12 @@ class GroupsController < ApplicationController
       format.html { redirect_to(groups_url) }
       format.xml { head :ok }
     end
+  end
+
+  private
+
+  def load_form_data
+    @martial_arts = MartialArt.all
+    @contracts = NkfMember.distinct.pluck(:kontraktstype).compact.sort
   end
 end

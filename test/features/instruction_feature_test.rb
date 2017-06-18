@@ -2,7 +2,7 @@
 
 require 'capybara_setup'
 
-class InstructionTest < ActionDispatch::IntegrationTest
+class InstructionFeatureTest < ActionDispatch::IntegrationTest
   def test_index
     login_and_visit '/'
     find('a', text: 'Instruksjon').click

@@ -30,7 +30,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
                   'Lars Bråten',
                   'Erik Hansen NKF_mt_two@example.com',
                   'Hans Eriksen faktura@eriksen.org',
-                  'Totalt 3', 'Sebastian Kubosch', 'Totalt 1'],
+                  'Totalt 3', 'Sebastian Kubosch (Permisjon)', 'Totalt 1'],
         all('tr td:first-child').map(&:text).reject(&:blank?)
   end
 
@@ -41,7 +41,7 @@ class AttendanceFormTest < ActionDispatch::IntegrationTest
                   'Lars Bråten',
                   'Erik Hansen NKF_mt_two@example.com',
                   'Hans Eriksen faktura@eriksen.org',
-                  'Totalt 3', 'Sebastian Kubosch', 'Totalt 1'],
+                  'Totalt 3', 'Sebastian Kubosch (Permisjon)', 'Totalt 1'],
         all('tr td:first-child').map(&:text).reject(&:blank?)
 
     uwe_row = find('table:first-of-type tbody tr:first-of-type')

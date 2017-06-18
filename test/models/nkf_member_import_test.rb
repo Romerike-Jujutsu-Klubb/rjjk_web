@@ -17,7 +17,7 @@ class NkfMemberImportTest < ActionMailer::TestCase
     assert_equal 'uwe@kubosch.no', mail.header[:to].value
     assert_equal 'noreply@test.jujutsu.no', mail.header[:from].value
     assert_match "NKF Import\n\nEndringer fra NKF-portalen.\n", mail.body.decoded
-    assert_match(/\b\d{3} medlemmer opprettet\n2 medlemmer oppdatert\n/, mail.body.decoded)
+    assert_match(/\b\d{3} medlemmer opprettet\n3 medlemmer oppdatert\n/, mail.body.decoded)
     assert_match "Endringer prøvetid:\n", mail.body.decoded
     assert_match "Nye medlemmer:\n    Sebastian Aagren:\n", mail.body.decoded
 
