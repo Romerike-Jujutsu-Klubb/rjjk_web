@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get 'pensum' => 'ranks#pensum'
   get 'pensum/pdf' => 'ranks#pdf'
   get 'search' => 'search#index'
+  get 'status' => 'status#index'
   get 'svar/:id', controller: :survey_requests, action: :answer_form
   patch 'svar/:id', controller: :survey_requests, action: :save_answers
   post 'svar/:id', controller: :survey_requests, action: :save_answers
