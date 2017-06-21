@@ -1,0 +1,24 @@
+h1 Hvor bor våre medlemmer?
+
+/iframe width="100%" style="height: 67vh" src="//www.google.com/maps/embed/v1/place?q=Strømmen Storsenter,%20Norway&zoom=17&key=AIzaSyAObUDWOkBeM4cyaP_YQB-h9TJx2X71X3o"
+
+css:
+  #map {
+    width: 100%;
+    height: 67vh;
+    background-color: grey;
+  }
+
+#map
+
+javascript:
+    function initMap() {
+        var storsenteret = {lat: 59.947753, lng: 11.007052};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 10,
+            center: storsenteret
+        });
+        #{Member.active.where.not(latitude: nil).pluck(:latitude, :longitude).map{|lat,lng| "new google.maps.Marker({position: {lat: #{lat}, lng: #{lng}}, map: map});\n"}.join}
+    }
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAObUDWOkBeM4cyaP_YQB-h9TJx2X71X3o&callback=initMap"></script>

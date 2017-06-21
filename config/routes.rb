@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   post 'login' => 'login#send_login_link', as: :send_login_link
   match 'login/signup', via: %i[get post]
   get 'login/welcome'
+  get 'map' => 'map#index'
   get 'news/list'
   post 'news/expire' => 'news#expire'
   get 'pensum' => 'ranks#pensum'

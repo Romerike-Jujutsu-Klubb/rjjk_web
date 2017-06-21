@@ -54,7 +54,7 @@ class Member < ApplicationRecord
     where('joined_on <= ? AND left_on IS NULL OR left_on >= ?', to_date, from_date)
   end
   SEARCH_FIELDS = %i[
-      billing_email email first_name last_name parent_email
+      address billing_email email first_name last_name parent_email
       parent_name phone_home phone_mobile phone_parent phone_work
   ].freeze
   scope :search, ->(query) {
@@ -65,8 +65,8 @@ class Member < ApplicationRecord
 
   NILLABLE_FIELDS = %i[parent_name phone_home phone_mobile phone_work].freeze
   before_validation do
-    %i[billing_email].each do |e|
-      attributes[e] = attributes[e].downcase if attributes[e] && changes[e]
+    %i[billing_email email parent_email].each do |e|
+      self[e] = self[e].strip.downcase if self[e] && changes[e]
     end
     NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? }
   end

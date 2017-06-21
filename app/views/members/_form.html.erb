@@ -145,12 +145,14 @@
         </label><br/>
     <% end %>
 
-    <div class="form-group">
-      <label>Instruktør:</label>
-      <%= link_to @member.group_instructor? ? 'Ja' : 'Nei', controller: :group_instructors %>
-      <%= check_box :member, :instructor, title: 'Permanent instruktør' %>
-      <%= label :member, :instructor, 'fast', title: 'Permanent instruktør' %>
-    </div>
+    <% if @member.group_instructor? || @member.instructor? || @member.groups.map(&:from_age).max >= 13 %>
+        <div class="form-group">
+          <label>Instruktør:</label>
+          <%= link_to @member.group_instructor? ? 'Ja' : 'Nei', controller: :group_instructors %>
+          <%= check_box :member, :instructor, title: 'Permanent instruktør' %>
+          <%= label :member, :instructor, 'fast', title: 'Permanent instruktør' %>
+        </div>
+    <% end %>
 
     <div class="form-group">
       <label for="member_nkf_fee">NKF Hovedklubb</label>
