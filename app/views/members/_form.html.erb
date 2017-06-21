@@ -145,7 +145,7 @@
         </label><br/>
     <% end %>
 
-    <% if @member.group_instructor? || @member.instructor? || @member.groups.map(&:from_age).max >= 13 %>
+    <% if @member.group_instructor? || @member.instructor? || @member.groups.any?{|g| g.from_age >= 13} %>
         <div class="form-group">
           <label>Instruktør:</label>
           <%= link_to @member.group_instructor? ? 'Ja' : 'Nei', controller: :group_instructors %>
