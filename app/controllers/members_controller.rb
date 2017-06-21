@@ -178,13 +178,28 @@ class MembersController < ApplicationController
         filename: 'Epostliste.csv')
   end
 
+  def photo
+    @member = Member.find(params[:id])
+  end
+
+  def save_image
+    @member = Member.find(params[:id])
+    params.require(:imgBase64) =~ /^data:([^;]+);base64,(.*)$/
+    content = Base64.decode64($2)
+    content_type = $1
+    @member.create_image! user_id: @member.user_id, name: "Foto #{Date.current}",
+                  content_type: content_type, content_data: content
+    @member.save!
+    render plain: content.hash
+  end
+
   def image
     @member = Member.find(params[:id])
     if @member.image?
-      send_data(@member.image.data,
+      send_data(@member.image.content_data,
           disposition: 'inline',
           type: @member.image.content_type,
-          filename: @member.image.filename)
+          filename: @member.image.name)
     else
       render text: 'Bilde mangler'
     end

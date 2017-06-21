@@ -2,15 +2,15 @@
 
 <div class="row">
   <div class="col-md-4">
-          <% if @member.image? %>
-              <%= image_tag url_for(:action => :thumbnail, :id => @member.id, :format => @member.image.format), :title => @member.image.name, :style => 'float: left' %>
-          <% else %>
-              Last opp bilde:
-          <% end %>
-          <br/>
-          <%= file_field :member, :image_file, :style => 'width: 206px' %>
+    <div>
+      <% if @member.image? %>
+          <%= image_tag url_for(action: :thumbnail, id: @member.id, format: @member.image.format), title: @member.image.name %>
+      <% else %>
+      <% end %>
+      <%= link_to 'Ta bilde', photo_member_path(@member), class: 'btn btn-primary' %>
+    </div>
 
-          <div class="form-group">
+    <div class="form-group">
             <label for="member_first_name">Fornavn</label>
             <%= text_field 'member', 'first_name', :class => 'form-control' %>
           </div>
