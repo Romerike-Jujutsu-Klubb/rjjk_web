@@ -28,7 +28,7 @@ class ActionDispatch::IntegrationTest
     )
     Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: caps)
   end
-  Capybara.default_driver = :poltergeist # :selenium, :chrome, or :poltergeist
+  Capybara.default_driver = :chrome # :selenium, :chrome, or :poltergeist
   Capybara.default_max_wait_time = 30
 
   self.use_transactional_tests = false

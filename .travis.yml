@@ -2,6 +2,9 @@ dist: trusty
 sudo: false
 language: ruby
 
+addons:
+  chrome: stable
+
 script:
   - bin/rails db:setup test
 

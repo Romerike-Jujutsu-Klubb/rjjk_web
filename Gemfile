@@ -92,6 +92,7 @@ end
 
 group :test do
   gem 'capybara-screenshot-diff'
+  # gem 'capybara-screenshot-diff', path: '~/work/open-source/capybara-screenshot-diff'
   gem 'chunky_png'
   gem 'database_cleaner'
   gem 'minitest-rails-capybara'
