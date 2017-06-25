@@ -114,7 +114,12 @@ class NkfMemberImport
   end
 
   def add_waiting_kid(import_rows, dc)
-    details_body = http_get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}")
+    details_body = nil
+    3.times do
+      details_body = http_get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}")
+      break if details_body.present?
+      logger.warn 'Empty response when getting waiting KID'
+    end
     unless details_body =~
           /class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
       raise "Could not find member id:\n#{details_body.inspect}"
