@@ -30,7 +30,7 @@ class Election < ApplicationRecord
   end
 
   def to
-    annual_meeting.next.start_at.to_date
+    annual_meeting.next&.start_at&.to_date
   end
 
   def elected_name

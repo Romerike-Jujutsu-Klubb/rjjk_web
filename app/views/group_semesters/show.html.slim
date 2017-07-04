@@ -1,0 +1,49 @@
+- @content_width = 1024
+
+.float-right
+  = back_or_link_to 'Tilbake', group_semesters_path, class: 'btn btn-secondary mr-2'
+  = link_to 'Rediger', edit_group_semester_path(@group_semester), class: 'btn btn-primary'
+
+h1
+  = @group_semester.group.name
+  = @group_semester.semester.name
+
+.row
+  .col-md-12
+    b> Hovedinstruktør:
+    = @group_semester.chief_instructor.try(:name)
+  .col-md-6
+    b> Første trening:
+    = @group_semester.first_session
+  .col-md-6
+    b> Siste trening:
+    = @group_semester.last_session
+br
+
+.row
+  .col-md-12
+    b Oversikt:
+    br
+    = textalize @group_semester.summary
+
+h2.mt-3 Treninger
+
+ul.nav.nav-tabs role="tablist"
+  li.nav-item: a.nav-link.active href="#plan" role="tab" data-toggle="tab" Plan
+  li.nav-item: a.nav-link href="#history" role="tab" data-toggle="tab" Historie
+
+.tab-content
+  #plan.tab-pane.active
+    table.table.table-sm
+      - @group_semester.practices.select { |p| p.date >= Date.current }.sort_by(&:date).each do |practice|
+        tr
+          td = practice.date
+          td: .badge.badge-info = practice.status
+          td = practice.message
+  #history.tab-pane
+    table.table
+      - @group_semester.practices.select { |p| p.date < Date.current }.sort_by(&:date).reverse.each do |practice|
+        tr
+          td = practice.date
+          td: .badge.badge-info = practice.status
+          td = practice.message

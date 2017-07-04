@@ -1,0 +1,35 @@
+- @content_width = 1024
+
+h1 Semester for #{@group_semester.group.name}
+
+= render 'form'
+
+h2.mt-3 Treninger
+
+ul.nav.nav-tabs role="tablist"
+  li.nav-item: a.nav-link.active href="#plan" role="tab" data-toggle="tab" Plan
+  li.nav-item: a.nav-link href="#history" role="tab" data-toggle="tab" Historie
+
+.tab-content
+  #plan.tab-pane.active
+    table.table
+      - @group_semester.practices.select{|p| p.date >= Date.current}.sort_by(&:date).each do |practice|
+        tr
+          td nowrap=true
+            = practice.date
+            .badge.badge-info.float-right = practice.status
+          td
+            = form_for practice do |f|
+              = f.text_area :message, class: 'form-control expanding', onkeyup: "$.post( '#{practice_path(practice, format: :json)}', { _method: 'patch', 'practice[message]': $(this).val() })"
+  #history.tab-pane
+    table.table
+      - @group_semester.practices.select{|p| p.date < Date.current}.sort_by(&:date).reverse.each do |practice|
+        tr
+          td = practice.date
+          td
+            = form_for practice do |f|
+              = f.text_area :message, rows: 5, style: 'width: 100%'
+              br
+              = f.submit class: 'btn btn-secondary'
+              = link_to 'Vis', practice, class: 'btn btn-secondary'
+          td = practice.status

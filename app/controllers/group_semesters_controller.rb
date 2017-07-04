@@ -61,7 +61,7 @@ class GroupSemestersController < ApplicationController
       if @group_semester.update_attributes(params[:group_semester])
         create_practices
         format.html do
-          redirect_to @group_semester, notice: 'Group semester was successfully updated.'
+          redirect_to @group_semester, notice: 'Semesterplan er lagret'
         end
         format.json { head :no_content }
       else
