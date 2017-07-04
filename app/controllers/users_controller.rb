@@ -29,8 +29,13 @@ class UsersController < ApplicationController
               else
                 unclean_params.delete_if { |k, *| !User::CHANGEABLE_FIELDS.include?(k) }
               end
-          @user.attributes = user_params
-          flash.now['notice'] = 'User has been updated.' if @user.save
+          if @user.update user_params
+            flash.now['notice'] = 'User has been updated.'
+          else
+            edit
+            render action: :edit
+            return
+          end
         when 'change_password'
           change_password
         when 'delete'
@@ -84,7 +89,7 @@ class UsersController < ApplicationController
 
   # Generate a template user for certain actions on get
   def generate_filled_in
-    @user = (params[:id] && User.find_by(id: params[:id])) || current_user ||
+    @user ||= (params[:id] && User.find_by(id: params[:id])) || current_user ||
         User.find_by(id: session[:user_id])
     @members = Member.select('id, first_name, last_name').where(email: @user.email).to_a
     case request.method
