@@ -13,6 +13,8 @@ class MemberFeatureTest < ActionDispatch::IntegrationTest
     screenshot :graduations
     click_on 'Web-bruker'
     screenshot :user
+    find('a.nav-link', text: 'Verv').click
+    screenshot :duties
     click_on 'Signaturer'
     screenshot :signatures
   end

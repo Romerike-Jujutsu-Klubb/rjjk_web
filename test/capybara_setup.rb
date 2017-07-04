@@ -22,13 +22,15 @@ class ActionDispatch::IntegrationTest
   Capybara::Screenshot.stability_time_limit = 0.5
   Capybara.register_driver :chrome do |app|
     caps = Selenium::WebDriver::Remote::Capabilities.chrome(
-        'chromeOptions' => {
-            'args' => %W[headless no-sandbox disable-gpu window-size=#{WINDOW_SIZE.join('x')}],
-        }
+        'chromeOptions' => { 'args' => %W[headless window-size=#{WINDOW_SIZE.join('x')}] }
     )
     Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: caps)
   end
   Capybara.default_driver = :chrome # :selenium, :chrome, or :poltergeist
+  if Capybara.default_driver == :chrome
+    # Capybara::Screenshot.stability_time_limit = 1.2
+    Capybara::Screenshot::Diff.color_distance_limit = 56
+  end
   Capybara.default_max_wait_time = 30
 
   self.use_transactional_tests = false
