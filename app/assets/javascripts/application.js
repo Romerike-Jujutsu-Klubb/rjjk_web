@@ -14,7 +14,6 @@
 //= require nprogress-turbolinks
 //= require chosen-jquery
 //= require remember_tab
-//= require stretch-columns
 //= require jquery.lazyload
 //= require fileinput
 //= require fileinput-fa-theme
