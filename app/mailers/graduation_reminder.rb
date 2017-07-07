@@ -27,7 +27,7 @@ class GraduationReminder
 
   def self.notify_groups
     Graduation.upcoming.includes(:group).references(:groups)
-        .where('held_on < ?', 6.months.from_now)
+        .where('held_on < ?', 4.months.from_now)
         .where('groups.from_age >= 13')
         .where('group_notification = ?', true)
         .where('date_info_sent_at IS NULL')
