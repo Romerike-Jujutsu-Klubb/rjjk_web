@@ -148,19 +148,6 @@ ul.controls li a.delete {
     background: #222222;
 }
 
-.main_left {
-    /* http://css-tricks.com/examples/CSS3Gradient/ */
-    /* http://stackoverflow.com/questions/2504071/is-it-possible-to-combine-a-background-image-and-css3-gradients */
-    /* Safari 5.1+, Chrome 10+ */
-    background: asset_url('dark_ritual/bg_shadow_left.png') 27% 0% repeat-y, asset_url('dark_ritual/bg_shadow_right.png') top right repeat-y, -webkit-linear-gradient(left, #222222, #222222 25%, #F7F7F7, #F7F7F7 25%, #F7F7F7);
-    /* Safari 4-5, Chrome 1-9 */
-    background: asset_url('dark_ritual/bg_shadow_left.png') 27% 0% repeat-y, asset_url('dark_ritual/bg_shadow_right.png') top right repeat-y, -webkit-gradient(linear, left top, right top, color-stop(0%, #222222), color-stop(25%, #222222), color-stop(25%, #F7F7F7));
-    /* Firefox 3.6+ */
-    background: asset_url('dark_ritual/bg_shadow_left.png') 27% 0% repeat-y, asset_url('dark_ritual/bg_shadow_right.png') top right repeat-y, -moz-linear-gradient(left, #222222, #222222 25%, #F7F7F7, #F7F7F7 25%, #F7F7F7);
-    background-origin: padding-box, padding-box;
-    background-color: #F7F7F7;
-}
-
 .main_right {
     padding: 0;
     background-color: #222222;

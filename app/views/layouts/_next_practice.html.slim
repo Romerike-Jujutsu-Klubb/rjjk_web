@@ -10,6 +10,8 @@
       span.text-nowrap
         ' kl
         = @next_practice.group_schedule.start_at.strftime('%R')
+    - if @next_practice.message.present?
+      p = @next_practice.message
 
     - if @your_attendance_next_practice && \
         [Attendance::Status::ATTENDED, Attendance::Status::WILL_ATTEND].include?(@your_attendance_next_practice.status)

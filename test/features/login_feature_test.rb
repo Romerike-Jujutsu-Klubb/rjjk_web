@@ -5,7 +5,7 @@ require 'capybara_setup'
 class LoginFeatureTest < ActionDispatch::IntegrationTest
   setup { screenshot_section :session }
   def test_login_with_password
-    screenshot_group :login_with_assword
+    screenshot_group :login_with_password
     visit '/'
     click_on 'Logg inn'
     assert_current_path '/login?detour%5Baction%5D=index&detour%5Bcontroller%5D=welcome'

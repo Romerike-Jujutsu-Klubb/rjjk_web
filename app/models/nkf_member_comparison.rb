@@ -38,6 +38,12 @@ class NkfMemberComparison
       end
     end.compact
 
+    sync_members
+  end
+
+  private
+
+  def sync_members
     @outgoing_changes = []
     agent = NkfAgent.new
     front_page = agent.login
@@ -46,7 +52,7 @@ class NkfMemberComparison
       begin
         search_result = front_page.form('ks_reg_medladm') do |search|
           search.p_ks_reg_medladm_action = 'SEARCH'
-          search.add_field!('frm_27_v29',  0)
+          search.add_field!('frm_27_v29', 0)
           search.add_field!('frm_27_v40', m.nkf_member.medlemsnummer)
         end.submit
         edit_link = search_result.css('tr.trList td.tdListData1')[9]
