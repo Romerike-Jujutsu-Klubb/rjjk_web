@@ -1,8 +1,8 @@
-function restore_tab() {
+function show_tab() {
     if (window.location.hash) {
         $('a[href="' + window.location.hash + '"]').tab('show');
     } else {
-        default_tab = $('li.active > a[data-toggle="tab"]');
+        default_tab = $('a.nav-link.active[data-toggle="tab"]');
         if (default_tab[0]) {
             window.history.replaceState({}, window.title, window.location + default_tab.attr("href"));
         }
@@ -20,6 +20,6 @@ $().ready(function () {
         }
         return true;
     });
-    $(window).on('popstate', restore_tab);
-    restore_tab();
+    $(window).on('popstate', show_tab);
+    show_tab();
 });
