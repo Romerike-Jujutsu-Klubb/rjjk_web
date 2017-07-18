@@ -25,6 +25,13 @@ environment ENV.fetch('RAILS_ENV') { 'development' }
 #
 workers ENV.fetch('WEB_CONCURRENCY') { 2 } if RUBY_ENGINE == 'ruby'
 
+# Allow workers to reload bundler context when master process is issued
+# a USR1 signal. This allows proper reloading of gems while the master
+# is preserved across a phased-restart. (incompatible with preload_app)
+# (off by default)
+
+prune_bundler
+
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code
 # before forking the application. This takes advantage of Copy On Write
@@ -32,7 +39,7 @@ workers ENV.fetch('WEB_CONCURRENCY') { 2 } if RUBY_ENGINE == 'ruby'
 # you need to make sure to reconnect any threads in the `on_worker_boot`
 # block.
 #
-preload_app! if RUBY_ENGINE == 'ruby'
+# preload_app!
 
 # The code in the `on_worker_boot` will be called if you are using
 # clustered mode by specifying a number of `workers`. After each worker
@@ -40,12 +47,13 @@ preload_app! if RUBY_ENGINE == 'ruby'
 # option you will want to use this block to reconnect to any threads
 # or connections that may have been created at application boot, Ruby
 # cannot share connections between processes.
+#
+# ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
 
 if RUBY_ENGINE == 'ruby'
   on_worker_boot do |worker_index|
     begin
       Rails.logger.info "starting puma worker #{worker_index}"
-      ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
       Rjjk.start_scheduling if worker_index == 0
     rescue => e
       Rails.logger.info "Exception booting worker: #{e}"
