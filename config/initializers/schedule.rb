@@ -85,7 +85,7 @@ end
 
 if (reason = ((defined?(Rails::Console) && :Console)))
   Rails.logger.info("Disable scheduler since #{reason} is defined.")
-elsif !%w[development].include?(Rails.env)
+elsif !%w[development beta production].include?(Rails.env)
   Rails.logger.info("Disable scheduler since env == #{Rails.env}")
 elsif ENV['DISABLE_SCHEDULER']
   Rails.logger.info("Disable scheduler since ENV['DISABLE_SCHEDULER'] is set")
