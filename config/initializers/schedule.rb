@@ -87,9 +87,9 @@ if (reason = ((defined?(Rails::Console) && :Console)))
   Rails.logger.info("Disable scheduler since #{reason} is defined.")
 elsif !%w[development beta production].include?(Rails.env)
   Rails.logger.info("Disable scheduler since env == #{Rails.env}")
-elsif ENV['DISABLE_SCHEDULER']
+elsif ENV['DISABLE_SCHEDULER'].present?
   Rails.logger.info("Disable scheduler since ENV['DISABLE_SCHEDULER'] is set")
 else
-  Rails.logger.info "initializer: ENV: #{ENV.inspect}"
+  Rails.logger.info "Starting scheduler: ENV: #{ENV.inspect}"
   Rjjk.start_scheduling
 end
