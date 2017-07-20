@@ -2,9 +2,12 @@
 
 module Rjjk
   def self.start_scheduling
-    scheduler = Rufus::Scheduler.new lockfile: "#{Rails.root}/tmp/rufus-scheduler.lock",
-                                     max_work_threads: 1
-    Rails.logger.info "ENV: #{ENV.inspect}"
+    scheduler =
+        Rufus::Scheduler.new lockfile: "#{Rails.root}/tmp/rufus-scheduler.lock", max_work_threads: 1
+    if scheduler.down?
+      Rails.logger.info 'Scheduler is down.  Stopping.'
+      return
+    end
     Rails.logger.info('Starting scheduler')
 
     def scheduler.on_error(job, e)
@@ -24,7 +27,7 @@ module Rjjk
     end
 
     # email
-    scheduler.every(10.seconds) { IncomingEmailProcessor.forward_emails }
+    scheduler.every('10s') { IncomingEmailProcessor.forward_emails }
 
     # Users
     scheduler.cron('0 7    * * mon') { AttendanceNagger.send_attendance_plan }
@@ -34,7 +37,7 @@ module Rjjk
     scheduler.cron('5 8-23 * * *') { AttendanceNagger.send_attendance_changes }
     scheduler.cron('8/15 * * * *') { AttendanceNagger.send_attendance_review }
     scheduler.cron('9 9-23 * * *') { EventNotifier.send_event_messages }
-    scheduler.every(10.seconds) { UserMessageSender.send }
+    scheduler.every('10s') { UserMessageSender.send }
 
     # TODO(uwe): Limit messages to once per week: news, survey, info
     # TODO(uwe): Email board meeting minutes
@@ -78,6 +81,8 @@ module Rjjk
     scheduler.cron('0 4 * * mon') { NkfMemberTrialReminder.notify_overdue_trials }
     scheduler.cron('0 6 * * mon') { SemesterReminder.notify_missing_session_dates }
     scheduler.cron('0 7 * * mon') { PublicRecordImporter.import_public_record }
+
+    Rails.logger.info('Scheduler started')
   rescue => e
     Rails.logger.info("Scheduler not started: #{e}")
   end
@@ -90,6 +95,5 @@ elsif !%w[development beta production].include?(Rails.env)
 elsif ENV['DISABLE_SCHEDULER'].present?
   Rails.logger.info("Disable scheduler since ENV['DISABLE_SCHEDULER'] is set")
 else
-  Rails.logger.info "Starting scheduler: ENV: #{ENV.inspect}"
   Rjjk.start_scheduling
 end
