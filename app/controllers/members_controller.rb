@@ -82,7 +82,7 @@ class MembersController < ApplicationController
     @members = Member.where('left_on IS NOT NULL').order('last_name')
         .paginate(page: params[:page], per_page: Member::MEMBERS_PER_PAGE)
     @member_count = Member.where('left_on IS NOT NULL').count
-    render action: :index
+    render :index
   end
 
   def excel_export
@@ -93,6 +93,7 @@ class MembersController < ApplicationController
   def new
     @member ||= Member.new
     @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').to_a
+    render :new
   end
 
   def create
@@ -103,13 +104,11 @@ class MembersController < ApplicationController
       redirect_to action: :edit, id: @member.id
     else
       new
-      render action: 'new'
     end
   end
 
   def show
     edit
-    render action: :edit
   end
 
   def edit
@@ -117,6 +116,7 @@ class MembersController < ApplicationController
     @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name')
         .where(closed_on: nil).to_a
     @groups |= @member.groups
+    render :edit
   end
 
   def update
@@ -126,14 +126,13 @@ class MembersController < ApplicationController
       flash[:notice] = 'Medlemmet oppdatert.'
       redirect_to action: :edit, id: @member
     else
-      @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').to_a
-      render action: 'edit'
+      edit
     end
   end
 
   def destroy
     Member.find(params[:id]).destroy
-    redirect_to action: 'index'
+    redirect_to action: :index
   end
 
   def nkf_report
