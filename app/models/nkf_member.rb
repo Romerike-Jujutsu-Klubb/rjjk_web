@@ -82,19 +82,27 @@ class NkfMember < ApplicationRecord
   def converted_attributes
     new_attributes = {}
     attributes.each do |k, v|
-      raise "Unknown attribute: #{k}" unless FIELD_MAP.keys.include?(k.to_sym)
-      mapped_attribute = FIELD_MAP[k.to_sym][:map_to]
-      next unless mapped_attribute
-      if v =~ /^\s*(\d{2}).(\d{2}).(\d{4})\s*$/
-        v = "#{$3}-#{$2}-#{$1}"
-      elsif v =~ /Mann|Kvinne/
-        v = v == 'Mann'
-      elsif v.blank? && mapped_attribute =~ /parent|email|mobile|phone/
-        v = nil
-      end
-      new_attributes[mapped_attribute] = v
+      mapped_attribute, mapped_value = self.class.rjjk_attribute(k, v)
+      new_attributes[mapped_attribute] = mapped_value if mapped_attribute
     end
     new_attributes
+  end
+
+  def self.rjjk_attribute(k, v)
+    raise "Unknown attribute: #{k}" unless FIELD_MAP.keys.include?(k.to_sym)
+    mapped_attribute = FIELD_MAP[k.to_sym][:map_to]
+    if mapped_attribute
+      mapped_value = if v =~ /^\s*(\d{2}).(\d{2}).(\d{4})\s*$/
+                       "#{$3}-#{$2}-#{$1}"
+                     elsif v =~ /Mann|Kvinne/
+                       v == 'Mann'
+                     elsif v.blank? && mapped_attribute =~ /parent|email|mobile|phone/
+                       nil
+                     else
+                       v
+                     end
+    end
+    [mapped_attribute, mapped_value]
   end
 
   def create_corresponding_member!

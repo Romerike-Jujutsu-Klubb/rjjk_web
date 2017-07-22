@@ -141,7 +141,11 @@
         <% attendances_since_graduation = @member.attendances_since_graduation(Date.current, g).size -%>
         <label for="member_group_ids_<%= g.id %>" <%= 'style="font-weight: bold"'.html_safe if g.contains_age(@member.age) %> >
           <%= check_box_tag "member_group_ids[#{g.id}]", g.id, @member.groups.include?(g) %>
-          <%= "#{g.martial_art.name} #{g.name} #{link_to("(#{attendances_since_graduation} treninger)", :controller => :attendances, :action => :since_graduation, :id => @member.id) if attendances_since_graduation > 0}".html_safe %>
+          <%= g.martial_art.name %>
+          <%= g.name %>
+          <% if attendances_since_graduation > 0 %>
+              <%= link_to("(#{attendances_since_graduation} treninger)", controller: :attendances, action: :since_graduation, id: @member.id) %>
+          <% end %>
         </label><br/>
     <% end %>
 
@@ -156,8 +160,7 @@
 
     <div class="form-group">
       <label for="member_nkf_fee">NKF Hovedklubb</label>
-      <%= select :member, :nkf_fee, [['Ja', true], ['Nei', false]], {},
-              class: 'form-control' %>
+      <%= select :member, :nkf_fee, [['Ja', true], ['Nei', false]], {}, class: 'form-control' %>
     </div>
 
     <div class="form-group">

@@ -7,6 +7,7 @@
     li.nav-item: a.nav-link href="#tab_user" data-toggle="tab" Web-bruker
     li.nav-item: a.nav-link href="#tab_duties" data-toggle="tab" Verv
     li.nav-item: a.nav-link href="#tab_signatures" data-toggle="tab" Signaturer
+    li.nav-item: a.nav-link href="#tab_nkf" data-toggle="tab" NKF
 
   .tab-content
     #tab_details.tab-pane.fade.show.active = render 'form'
@@ -17,23 +18,7 @@
           = link_to 'Bruker', edit_user_path(@member.user)
         - else
           | Ingen bruker!
-    #tab_duties.tab-pane.fade
-      - if @member.appointments.empty? && @member.elections.empty?
-        .alert.alert-info.mt-3 Ingen verv.
-      - @member.elections.each do |election|
-        = link_to election.elected_name, election
-        ul
-          li = election.elected_name
-          li = election.role
-          li = election.from
-          li = election.to
-      - @member.appointments.each do |appointment|
-        = link_to appointment.label, appointment
-        ul
-          li = appointment.label
-          li = appointment.role
-          li = appointment.from
-          li = appointment.to
+    #tab_duties.tab-pane.fade = render 'duties'
     #tab_signatures.tab-pane.fade
       = link_to new_signature_path, class: 'btn btn-primary float-right my-3'
         = fa_icon :plus, text: 'Registrer signatur'
@@ -41,7 +26,7 @@
       .row
         - @member.signatures.each do |signature|
           .col-3 = image_tag image_signature_path(signature), width: '100%'
-
+    #tab_nkf.tab-pane.fade = render 'nkf_fields'
   br
 
   .btn-toolbar.float-right

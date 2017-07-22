@@ -1,0 +1,17 @@
+table.table.table-striped
+  thead
+    tr
+      th NKF Attribute
+      th NKF value
+      th RJJK attribute
+      th Mapped value
+      th RJJK value
+  tbody
+    - @member.nkf_member.attributes.sort.each do |k,v|
+      - mapped_key, mapped_value = NkfMember.rjjk_attribute(k,v)
+      tr
+        th = k
+        td = v
+        td = mapped_key
+        td = mapped_value
+        td = @member[mapped_key]

@@ -17,5 +17,7 @@ class MemberFeatureTest < ActionDispatch::IntegrationTest
     screenshot :duties
     click_on 'Signaturer'
     screenshot :signatures
+    click_on 'NKF'
+    screenshot :nkf_tab
   end
 end
