@@ -93,7 +93,7 @@ class NkfMember < ApplicationRecord
     mapped_attribute = FIELD_MAP[k.to_sym][:map_to]
     if mapped_attribute
       mapped_value = if v =~ /^\s*(\d{2}).(\d{2}).(\d{4})\s*$/
-                       "#{$3}-#{$2}-#{$1}"
+                       Date.new($3.to_i, $2.to_i, $1.to_i)
                      elsif v =~ /Mann|Kvinne/
                        v == 'Mann'
                      elsif v.blank? && mapped_attribute =~ /parent|email|mobile|phone/

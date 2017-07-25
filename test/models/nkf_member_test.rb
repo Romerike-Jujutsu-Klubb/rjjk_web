@@ -8,10 +8,10 @@ class NkfMemberTest < ActiveSupport::TestCase
         address: 'Bøkeveien 11',
         billing_email: nil,
         billing_phone_mobile: nil,
-        birthdate: '1974-04-01',
+        birthdate: Date.parse('1974-04-01'),
         email: 'erik@example.net',
         first_name: 'Erik',
-        joined_on: '1996-05-01',
+        joined_on: Date.parse('1996-05-01'),
         last_name: 'Øyan',
         left_on: nil,
         male: true,
@@ -24,6 +24,6 @@ class NkfMemberTest < ActiveSupport::TestCase
         phone_work: nil,
         postal_code: '1470',
     }
-    assert_equal(expected, nkf_members(:erik).converted_attributes)
+    assert_equal expected, Hash[nkf_members(:erik).converted_attributes.sort]
   end
 end
