@@ -3,6 +3,7 @@
 require 'test_helper'
 
 class MembersControllerTest < ActionController::TestCase
+  include ActiveJob::TestHelper
   def setup
     @first_id = members(:lars).id
     login(:admin)
@@ -100,9 +101,12 @@ class MembersControllerTest < ActionController::TestCase
   end
 
   def test_update
-    VCR.use_cassette 'GoogleMaps Lars' do
-      post :update, params: { id: @first_id, member: { male: true } }
+    assert_enqueued_with(job: NkfMemberSyncJob) do
+      VCR.use_cassette 'GoogleMaps Lars' do
+        post :update, params: { id: @first_id, member: { male: true } }
+      end
     end
+    assert_equal 1, ActiveJob::Base.queue_adapter.enqueued_jobs.count
     assert_no_errors :member
     assert_response :redirect
     assert_redirected_to action: :edit, id: @first_id

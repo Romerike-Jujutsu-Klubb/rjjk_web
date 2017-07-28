@@ -122,8 +122,9 @@ class MembersController < ApplicationController
   def update
     @member = Member.find(params[:id])
     update_memberships
-    if @member.update_attributes(params[:member])
+    if @member.update(params[:member])
       flash[:notice] = 'Medlemmet oppdatert.'
+      NkfMemberSyncJob.perform_later @member
       redirect_to action: :edit, id: @member
     else
       edit

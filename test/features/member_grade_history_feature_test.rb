@@ -5,6 +5,6 @@ require 'capybara_setup'
 class MemberGradeHistoryFeatureTest < ActionDispatch::IntegrationTest
   def test_grade_history
     login_and_visit '/members/800/grade_history_graph.png'
-    screenshot('members/grade_history_graph')
+    screenshot('members/grade_history_graph', color_distance_limit: 79.1)
   end
 end
