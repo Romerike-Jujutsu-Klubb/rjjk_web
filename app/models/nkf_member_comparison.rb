@@ -29,6 +29,7 @@ class NkfMemberComparison
 
     @new_members = @orphan_nkf_members.map do |nkf_member|
       begin
+        logger.info "Create member from NKF: #{nkf_member.inspect}"
         nkf_member.create_corresponding_member!
       rescue => e
         logger.error e
@@ -49,6 +50,7 @@ class NkfMemberComparison
     front_page = agent.login
 
     @member_changes = @members.map do |m|
+      logger.info "Synching member: #{m.inspect}"
       begin
         search_result = front_page.form('ks_reg_medladm') do |search|
           search.p_ks_reg_medladm_action = 'SEARCH'
@@ -68,6 +70,7 @@ class NkfMemberComparison
             _nkf_column, nkf_mapping = NkfMember::FIELD_MAP.find { |_k, v| v[:map_to] == attr_sym }
             if (nkf_field = nkf_mapping&.fetch(:form_field, nil))
               form_value = old_value.is_a?(Date) ? old_value.strftime('%d.%m.%Y') : old_value
+              logger.info "set form value #{nkf_field.inspect} = #{form_value.inspect}"
               form[nkf_field.to_s] = form_value
               outgoing_changes_for_member[attr] = { new_value => old_value }
             else
@@ -76,6 +79,8 @@ class NkfMemberComparison
           end
           @outgoing_changes << [m, outgoing_changes_for_member] if outgoing_changes_for_member.any?
         end
+
+        logger.info "outgoing_changes: #{outgoing_changes_for_member}"
 
         if Rails.env.production?
           m.restore_attributes(outgoing_changes_for_member.keys)
@@ -88,9 +93,9 @@ class NkfMemberComparison
           [m, changes]
         end
       rescue => e
-        Rails.logger.error "Exception saving member changes for #{m.attributes.inspect}"
-        Rails.logger.error e.message
-        Rails.logger.error e.backtrace.join("\n")
+        logger.error "Exception saving member changes for #{m.attributes.inspect}"
+        logger.error e.message
+        logger.error e.backtrace.join("\n")
         @errors << ['Changes', m, e]
         nil
       end

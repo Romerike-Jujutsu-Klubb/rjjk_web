@@ -28,6 +28,8 @@ class TimeOfDay
   end
 end
 
+Prawn::Font::AFM.hide_m17n_warning = true
+
 # FIXME(uwe): Remove or report
 module Prawn
   class Table

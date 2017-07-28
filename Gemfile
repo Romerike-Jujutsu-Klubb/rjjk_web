@@ -22,7 +22,7 @@ end
 
 gem 'actionpack-page_caching', github: 'rails/actionpack-page_caching'
 gem 'activerecord-time'
-gem 'acts_as_list'
+gem 'acts_as_list' # https://github.com/swanandp/acts_as_list/pull/283
 gem 'acts_as_tree'
 gem 'bcrypt'
 gem 'bootstrap'
