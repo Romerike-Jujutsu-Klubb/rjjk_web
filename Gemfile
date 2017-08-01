@@ -83,7 +83,7 @@ group :beta, :email, :production do
 end
 
 group :development do
-  gem 'capistrano'
+  gem 'capistrano', '<3.9'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'capistrano-rvm'

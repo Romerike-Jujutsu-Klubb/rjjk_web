@@ -1,0 +1,14 @@
+h1 Oppmøtelister
+
+- start_date = Date.parse('2009-08-01')
+- months = (Date.current.year - start_date.year) * 12 + Date.current.mon - start_date.mon + 1
+
+form
+  table.table
+    - for group in @groups
+      - options = (0..months).map { |i| ["#{t Date::MONTHNAMES[1 + (7 + i) % 12]} #{2009 + (8 + i) / 12}", url_for(action: :form, year: (start_date + i.months).year, month: (start_date + i.months).month, group_id: group.id)] }.reverse
+      tr
+        td: label = group.name
+        td = select :group_name, group.name, options, {prompt: 'Velg måned'}, onchange: 'document.location = options[selectedIndex].value', class: 'form-control'
+
+= link_to 'Andre', {action: :form, group_id: 'others'}, class: 'btn btn-secondary'
