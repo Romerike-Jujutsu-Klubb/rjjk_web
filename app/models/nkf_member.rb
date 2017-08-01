@@ -92,7 +92,7 @@ class NkfMember < ApplicationRecord
     raise "Unknown attribute: #{k}" unless FIELD_MAP.keys.include?(k.to_sym)
     mapped_attribute = FIELD_MAP[k.to_sym][:map_to]
     if mapped_attribute
-      mapped_value = if v =~ /^\s*(\d{2}).(\d{2}).(\d{4})\s*$/
+      mapped_value = if v =~ /^\s*(\d{2})\.(\d{2})\.(\d{4})\s*$/
                        Date.new($3.to_i, $2.to_i, $1.to_i)
                      elsif v =~ /Mann|Kvinne/
                        v == 'Mann'
