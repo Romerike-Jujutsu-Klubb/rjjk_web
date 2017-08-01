@@ -83,6 +83,7 @@ class NkfMemberImport
     more_pages = html_search_body
         .scan(%r{<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)</a>})
         .map { |r| r[0] }
+    logger.debug("more_pages: #{more_pages.inspect}")
     in_parallel(more_pages) do |page_number|
       more_search_body = http_get(search_url + page_number, true)
       synchronize do
@@ -392,6 +393,10 @@ class NkfMemberImport
       logger.info "Retrying #{backoff}"
       backoff *= 2
       retry
+    rescue => e
+      logger.error "Exception getting URL #{url_string.inspect}"
+      logger.error e
+      raise
     end
   end
 
