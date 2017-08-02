@@ -11,10 +11,11 @@ class GraduationReminder
     planned_groups = Graduation.where('held_on >= ?', today).to_a.map(&:group)
     missing_groups = groups - planned_groups
     month_start = Date.civil(today.year, today.mon >= 7 ? 12 : 6)
+    return if month_start > 4.months.from_now
     second_week = month_start + (7 - month_start.wday)
     missing_groups.each do |g|
-      instructor = Semester.current.group_semesters
-          .find { |gs| gs.group_id == g.id }.try(:chief_instructor)
+      instructor = Semester.current.group_semesters.find { |gs| gs.group_id == g.id }
+          &.chief_instructor
       next unless instructor
 
       suggested_date = second_week + g.group_schedules.first.weekday
@@ -27,7 +28,7 @@ class GraduationReminder
 
   def self.notify_groups
     Graduation.upcoming.includes(:group).references(:groups)
-        .where('held_on < ?', 4.months.from_now)
+        .where('held_on < ?', 3.months.from_now)
         .where('groups.from_age >= 13')
         .where('group_notification = ?', true)
         .where('date_info_sent_at IS NULL')
