@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class NkfAgent
+  BACKOFF_LIMIT = 15.minutes
+
   def initialize
     @agent = Mechanize.new
   end
@@ -17,7 +19,7 @@ class NkfAgent
     login_form.site2pstoretoken = token
     @agent.submit(login_form)
   rescue Mechanize::ResponseCodeError => e
-    raise e if backoff > 30
+    raise e if backoff > BACKOFF_LIMIT
     sleep backoff
     backoff *= 2
     retry
