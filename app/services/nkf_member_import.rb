@@ -381,7 +381,7 @@ class NkfMemberImport
     backoff = 1
     begin
       return http_get_response(uri, binary).body
-    rescue EOFError, SocketError, SystemCallError, Timeout::Error => e
+    rescue EOFError, SocketError, SystemCallError, Timeout::Error, Net::HTTPServerException => e
       logger.error e.message
       if backoff > 15.minutes
         if e.respond_to?(:message=)
@@ -435,7 +435,7 @@ class NkfMemberImport
       logger.debug "Following redirect to #{redirect_url}"
       return http_get_response(URI.parse(redirect_url), binary)
     elsif response.code != '200'
-      raise "Got response code #{response.code}"
+      raise Net::HTTPServerException.new("Response #{response.code}", response)
     end
     response
   end

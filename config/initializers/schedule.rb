@@ -28,6 +28,7 @@ module Rjjk
 
     # email
     scheduler.every('10s') { IncomingEmailProcessor.forward_emails }
+    scheduler.every('10s') { UserMessageSender.send }
 
     # Users
     scheduler.cron('0 7    * * mon') { AttendanceNagger.send_attendance_plan }
@@ -37,7 +38,6 @@ module Rjjk
     scheduler.cron('5 8-23 * * *') { AttendanceNagger.send_attendance_changes }
     scheduler.cron('8/15 * * * *') { AttendanceNagger.send_attendance_review }
     scheduler.cron('9 9-23 * * *') { EventNotifier.send_event_messages }
-    scheduler.every('10s') { UserMessageSender.send }
 
     # TODO(uwe): Limit messages to once per week: news, survey, info
     # TODO(uwe): Email board meeting minutes
