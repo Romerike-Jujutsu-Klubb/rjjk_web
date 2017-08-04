@@ -17,7 +17,7 @@ class AttendanceMailerTest < ActionMailer::TestCase
     assert_equal 'Hvordan var treningen?', mail.subject
     assert_equal %w[lars@example.com], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
-    assert_match 'http://example.com/attendances/review/2013/41/84385526/X?key=random_token_string',
+    assert_match 'https://example.com/attendances/review/2013/41/84385526/X?key=random_token_string',
         mail.body.encoded
   end
 end

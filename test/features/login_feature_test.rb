@@ -35,12 +35,12 @@ class LoginFeatureTest < ActionDispatch::IntegrationTest
     assert_equal 1, UserMessage.pending.size
     msg = UserMessage.pending[0]
     assert_match %r{<h1>Hei Uwe Kubosch!</h1>}, msg.body
-    assert_match %r{<a href="http://example.com/">Klikk meg for å logge på Romerike Jujutsu Klubb!</a>},
+    assert_match %r{<a href="https://example.com/">Klikk meg for å logge på Romerike Jujutsu Klubb!</a>},
         msg.body
     UserMessageSender.send
     assert_equal 1, Mail::TestMailer.deliveries.size
     email = Mail::TestMailer.deliveries[0]
-    assert %r{<a href="(http://example.com/\?key=([^"]+))">Klikk meg for å logge på Romerike Jujutsu Klubb!</a>} =~
+    assert %r{<a href="(https://example.com/\?key=([^"]+))">Klikk meg for å logge på Romerike Jujutsu Klubb!</a>} =~
         email.body.decoded
     visit root_path(key: $2)
     assert has_css?('h1', text: 'Uwe Kubosch'), all('h1').to_a.map(&:text).inspect

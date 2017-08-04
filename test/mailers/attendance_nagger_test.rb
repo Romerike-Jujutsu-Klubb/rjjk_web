@@ -11,14 +11,14 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_equal ['"Lars Bråten" <lars@example.com>'],
         mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
-    assert_match %r{Følg linken til\s+<a href="http://example.com/mitt/oppmote">Mitt oppmøte</a>},
+    assert_match %r{Følg linken til\s+<a href="https://example.com/mitt/oppmote">Mitt oppmøte</a>},
         mail.body
 
     mail = UserMessage.pending[1]
     assert_equal 'Kommer du?', mail.subject
     assert_equal ['"Newbie Neuer" <newbie@example.com>'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
-    assert_match %r{Følg linken til\s*<a href="http://example.com/mitt/oppmote">Mitt oppmøte</a>},
+    assert_match %r{Følg linken til\s*<a href="https://example.com/mitt/oppmote">Mitt oppmøte</a>},
         mail.body
   end
 
@@ -92,7 +92,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_match %r{17:45-18:45\s+Panda.*
-            \[<a\ href="http://example.com/attendances/review/2013/42/84385526/X
+            \[<a\ href="https://example.com/attendances/review/2013/42/84385526/X
             \?key=.{40}">Trente!</a>\]
         }mx,
         mail.body

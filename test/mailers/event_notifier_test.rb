@@ -12,7 +12,7 @@ class EventNotifierTest < ActionMailer::TestCase
     assert_equal %w[test@jujutsu.no], mail.from
     assert_match %r{
           Har\ du\ problemer\ med\ å\ lese\ denne\ e-posten,\ klikk\ her:\s+
-          http://example.com/events/980190962\s+Event\ message\ one\ subject\s+
+          https://example.com/events/980190962\s+Event\ message\ one\ subject\s+
           Event\ message\ one\ body
         }x,
         mail.parts[0].decoded
@@ -25,7 +25,7 @@ class EventNotifierTest < ActionMailer::TestCase
     assert_equal %w[test@jujutsu.no], mail.from
     assert_match %r{
           Har\ du\ problemer\ med\ å\ lese\ denne\ e-posten,\ klikk\ her:\s+
-          http://example.com/events/980190962\s+Event\ message\ two\ subject\s+
+          https://example.com/events/980190962\s+Event\ message\ two\ subject\s+
           Event\ message\ two\ body}x,
         mail.parts[0].decoded
     assert_match '<p>Event message two body</p>', mail.body.encoded

@@ -7,8 +7,8 @@ Rails.application.configure do
   # config.action_cable.mount_path = nil
   # config.action_cable.url = 'wss://example.com/cable'
   config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
-  config.action_mailer.asset_host = 'http://jujutsu.no'
-  config.action_mailer.default_url_options = { host: 'jujutsu.no' }
+  config.action_mailer.asset_host = 'https://jujutsu.no'
+  config.action_mailer.default_url_options = { protocol: 'https', host: 'jujutsu.no' }
   config.action_mailer.perform_caching = false
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "rjjk_web_#{Rails.env}"

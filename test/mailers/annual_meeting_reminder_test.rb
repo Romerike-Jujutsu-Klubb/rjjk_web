@@ -21,7 +21,7 @@ class AnnualMeetingReminderTest < ActionMailer::TestCase
     assert_match 'Det er på tide å sette opp dato for årsmøtet 2014. ' \
         "For å registrere datoen\n  kan du gå inn på linken under.",
         mail.body
-    assert_match %r{<a href="http://example.com/annual_meetings/new">Årsmøte 2014</a>},
+    assert_match %r{<a href="https://example.com/annual_meetings/new">Årsmøte 2014</a>},
         mail.body
     assert_match 'Årsmøtet skal holdes i februar.', mail.body
 
@@ -33,7 +33,7 @@ class AnnualMeetingReminderTest < ActionMailer::TestCase
     assert_match 'Det er på tide å sette opp dato for årsmøtet 2014. ' \
         "For å registrere datoen\n  kan du gå inn på linken under.",
         mail.body
-    assert_match %r{<a href="http://example.com/annual_meetings/new">Årsmøte 2014</a>},
+    assert_match %r{<a href="https://example.com/annual_meetings/new">Årsmøte 2014</a>},
         mail.body
     assert_match 'Årsmøtet skal holdes i februar.', mail.body
   end
