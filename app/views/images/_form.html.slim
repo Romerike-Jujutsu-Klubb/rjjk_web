@@ -1,19 +1,21 @@
+- @content_width = 1024
 = bootstrap_form_for @image do |f|
-  - unless @image.new_record?
-    div style="float: right; width: 45%; text-align: center"
-      = image_tag(url_for(action: :show, id: @image.id, format: @image.format), style: 'width: 100%') if @image.name
-      | (#{@image.content_data.size / 1024}KB)
-
   .row
     .col-6
       = f.text_field :name
-    .col-3.pt-5
       = f.check_box :public
-    .col-3.pt-5
       = f.check_box :approved
 
-  = f.file_field :file, class: :fileinput
-  .btn-toolbar.float-right
+    - unless @image.new_record?
+      .col-6
+        = image_tag(url_for(action: :show, id: @image.id, format: @image.format), style: 'width: 100%') if @image.name
+        | (#{@image.content_data.size / 1024}KB)
+
+  - if @image.new_record?
+    = f.file_field :file, class: :fileinput
+  - if @image.persisted? && current_user.admin?
+    = link_to 'Slett', @image, class: 'btn btn-danger', method: :delete, data: { confirm: 'Er du sikker?  Bildet kan ikke gjenskapes etter sletting.' }
+  .float-right
     = back_or_link_to 'Tilbake', images_path, class: 'btn btn-link'
     = f.primary 'Lagre'
 
