@@ -5,6 +5,13 @@ language: ruby
 addons:
   chrome: stable
 
+before_install:
+  - wget "http://chromedriver.storage.googleapis.com/2.31/chromedriver_linux64.zip"
+  - unzip chromedriver_linux64.zip
+  - rm chromedriver_linux64.zip
+  - mkdir /home/travis/bin
+  - mv chromedriver /home/travis/bin
+
 script:
   - bin/rails db:setup test
 
