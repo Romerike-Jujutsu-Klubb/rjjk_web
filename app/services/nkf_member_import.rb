@@ -47,9 +47,9 @@ class NkfMemberImport
     end
   end
 
-  def self.handle_exception(cause, e)
-    logger.error cause
-    logger.error e.message
+  def self.handle_exception(context, e)
+    logger.error context
+    logger.error "#{e.class} #{e.message}"
     logger.error e.backtrace.join("\n")
     ExceptionNotifier.notify_exception(e)
     raise if Rails.env.test?
@@ -322,6 +322,7 @@ class NkfMemberImport
   end
 
   def login
+    backoff ||= 1
     login_content = http_get('page/portal/ks_utv/st_login')
 
     token_body = http_get('pls/portal/portal.wwptl_login.show_site2pstoretoken?p_url=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpls%2Fportal%2Fmyports.st_login_proc.set_language%3Fref_path%3D7513_ST_LOGIN_463458038&p_cancel=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpage%2Fportal%2Fks_utv%2Fst_login') # rubocop: disable Metrics/LineLength
@@ -344,12 +345,20 @@ class NkfMemberImport
           .post('/pls/orasso/orasso.wwsso_app_admin.ls_login', login_params, cookie_header)
       unless login_response.code == '302'
         logger.error "Wrong URL: #{login_response.code}"
+        sleep backoff
         redo
       end
       process_response(login_response, false)
       raise 'Missing session cookie' if @cookies.empty?
       return login_response['location']
     end
+  rescue => e
+    logger.error e
+    raise e if backoff > NkfAgent::BACKOFF_LIMIT
+    logger.info "Retrying login #{backoff}"
+    sleep backoff
+    backoff *= 2
+    retry
   end
 
   def store_cookie(response)
@@ -389,8 +398,8 @@ class NkfMemberImport
         end
         raise
       end
+      logger.info "Retrying #{backoff} get #{url_string}"
       sleep backoff
-      logger.info "Retrying #{backoff}"
       backoff *= 2
       retry
     rescue => e

@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
-module Rjjk
-  def self.start_scheduling
+if defined?(Rails::Console)
+  Rails.logger.info("Disable scheduler since Console is defined.")
+elsif !%w[development beta production].include?(Rails.env)
+  Rails.logger.info("Disable scheduler since env == #{Rails.env}")
+elsif ENV['DISABLE_SCHEDULER'].present?
+  Rails.logger.info("Disable scheduler since ENV['DISABLE_SCHEDULER'] is set")
+else
+  begin
     scheduler =
         Rufus::Scheduler.new lockfile: "#{Rails.root}/tmp/rufus-scheduler.lock", max_work_threads: 1
     if scheduler.down?
@@ -86,14 +92,4 @@ module Rjjk
   rescue => e
     Rails.logger.info("Scheduler not started: #{e}")
   end
-end
-
-if (reason = ((defined?(Rails::Console) && :Console)))
-  Rails.logger.info("Disable scheduler since #{reason} is defined.")
-elsif !%w[development beta production].include?(Rails.env)
-  Rails.logger.info("Disable scheduler since env == #{Rails.env}")
-elsif ENV['DISABLE_SCHEDULER'].present?
-  Rails.logger.info("Disable scheduler since ENV['DISABLE_SCHEDULER'] is set")
-else
-  Rjjk.start_scheduling
 end

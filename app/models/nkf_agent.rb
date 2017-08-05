@@ -18,8 +18,9 @@ class NkfAgent
     login_form.password = ENV['NKF_PASSWORD']
     login_form.site2pstoretoken = token
     @agent.submit(login_form)
-  rescue Mechanize::ResponseCodeError => e
+  rescue Mechanize::ResponseCodeError, SocketError => e
     raise e if backoff > BACKOFF_LIMIT
+    logger.info "Retrying agent login #{backoff}"
     sleep backoff
     backoff *= 2
     retry

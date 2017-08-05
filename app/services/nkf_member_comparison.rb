@@ -20,7 +20,7 @@ class NkfMemberComparison
     nkf_members.each do |nkfm|
       member = nkfm.member
       member.attributes = nkfm.converted_attributes
-      @members << nkfm.member if member.changed?
+      @members << member if member.changed?
     end
   end
 
@@ -67,13 +67,15 @@ class NkfMemberComparison
   end
 
   private def sync_member_with_agent(agent, front_page, m)
-    logger.info "Synching member: #{m.inspect}"
+    logger.info "Synching member: #{m.nkf_member.medlemsnummer} #{m.inspect}"
+    logger.info "m.changes: #{m.changes.pretty_inspect}"
     begin
-      search_result = front_page.form('ks_reg_medladm') do |search|
+      search_form = front_page.form('ks_reg_medladm') do |search|
         search.p_ks_reg_medladm_action = 'SEARCH'
-        search.add_field!('frm_27_v29', 0)
-        search.add_field!('frm_27_v40', m.nkf_member.medlemsnummer)
-      end.submit
+        search["frm_27_v29"] = 0
+        search["frm_27_v40"] = m.nkf_member.medlemsnummer
+      end
+      search_result = search_form.submit
       edit_link = search_result.css('tr.trList td.tdListData1')[9]
       token = edit_link.attr('onclick')[14..-3]
       member_page = agent.get(<<~URL)
@@ -99,8 +101,11 @@ class NkfMemberComparison
 
       logger.info "outgoing_changes: #{outgoing_changes_for_member}"
 
-      if Rails.env.production?
+      if Rails.env.production? && outgoing_changes_for_member.any?
         m.restore_attributes(outgoing_changes_for_member.keys)
+        logger.info 'Submitting form to NKF'
+        logger.info member_form.pretty_inspect
+        member_form['p_ks_medlprofil_action'] = 'OK'
         member_form.submit
       end
 
