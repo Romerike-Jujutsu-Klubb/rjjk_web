@@ -1,6 +1,7 @@
 dist: trusty
 sudo: false
 language: ruby
+cache: bundler
 
 addons:
   chrome: stable
