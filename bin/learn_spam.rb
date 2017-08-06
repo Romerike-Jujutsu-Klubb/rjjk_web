@@ -10,7 +10,7 @@ require 'active_support/core_ext/time'
 require 'active_support/core_ext/date'
 require 'active_support/core_ext/date_time'
 
-SPAM_AUTOLEARN_LIMIT = 5.0
+SPAM_AUTOLEARN_LIMIT = 4.8
 PROMPT_COLUMN = 110
 
 def check_if_spam(escaped_filename)
@@ -92,14 +92,15 @@ def learn(interactive)
           break false
         end
 
-        q = gets.chomp
-        if q == 's'
+        $stdin.read_nonblock(80) # Flush commands typed before the prompt is presented
+        case gets.chomp
+        when 's'
           learn_file(escaped_filename, 'spam')
           break true
-        elsif q == 'h'
+        when 'h'
           learn_file(escaped_filename, 'ham')
           break true
-        elsif q == 'd'
+        when 'd'
           print "\e[3J"
           m = Mail.read(f)
           puts "From: #{m['from']}"
@@ -109,9 +110,9 @@ def learn(interactive)
           puts text_from_part(m)
           puts
           puts
-        elsif q == 'c'
+        when 'c'
           break true if check_and_learn_if_spam(f, escaped_filename)
-        elsif q == ''
+        when ''
           puts if i == sorted.size - 1
           break true
         end
