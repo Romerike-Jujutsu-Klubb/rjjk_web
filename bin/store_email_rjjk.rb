@@ -3,7 +3,7 @@
 
 # rubocop: disable Rails/TimeZone
 
-SPAM_DELETE_LIMIT = 7.0
+SPAM_DELETE_LIMIT = 6.0
 
 # Exit codes from <sysexits.h>
 EX_TEMPFAIL = 75
