@@ -20,7 +20,7 @@ class IncomingEmailProcessor
   def self.forward_emails
     RawIncomingEmail.where(processed_at: nil, postponed_at: nil)
         .order(:created_at).limit(5).each do |raw_email|
-      logger.debug "Forward email (#{raw_email.id}):"
+      logger.info "Forward email (#{raw_email.id}):"
       logger.debug raw_email.content
       email = Mail.read_from_string(raw_email.content)
       logger.debug "email.header['X-Envelope-From']: #{email.header['X-Envelope-From'].inspect}"
@@ -34,8 +34,7 @@ class IncomingEmailProcessor
 
       sender = email.header['X-Envelope-From'].try(:to_s) || email.from[0]
       logger.debug "sender: #{sender.inspect}"
-      original_recipients =
-          email.header['X-Envelope-To'].try(:to_s).try(:split, ', ') || email.to
+      original_recipients = email.header['X-Envelope-To'].try(:to_s).try(:split, ', ') || email.to
       logger.debug "original_recipients: #{original_recipients.inspect}"
       tags = []
       if ENV_STR
@@ -70,7 +69,7 @@ class IncomingEmailProcessor
           nil
         end
       end.flatten.compact.uniq
-      logger.debug "new_recipients: #{new_recipients.inspect}"
+      logger.info "new_recipients: #{new_recipients.inspect}"
 
       if new_recipients.any?
         email.subject = prefix_subject(email.subject, tags)
