@@ -17,7 +17,7 @@ uwe:
   member: uwe
   innmeldtdato: 05.01.1987
   gren_stilart_avd_parti___gren_stilart_avd_parti: Kei Wa Ryu
-  medlemsnummer: 40001062
+  medlemsnummer: <%=NkfAgent::NKF_USERNAME%>
   epost: uwe@example.net
   postnr: 1479
 lars:

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if defined?(Rails::Console)
-  Rails.logger.info("Disable scheduler since Console is defined.")
+  Rails.logger.info('Disable scheduler since Console is defined.')
 elsif !%w[development beta production].include?(Rails.env)
   Rails.logger.info("Disable scheduler since env == #{Rails.env}")
 elsif ENV['DISABLE_SCHEDULER'].present?

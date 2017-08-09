@@ -72,8 +72,8 @@ class NkfMemberComparison
     begin
       search_form = front_page.form('ks_reg_medladm') do |search|
         search.p_ks_reg_medladm_action = 'SEARCH'
-        search["frm_27_v29"] = 0
-        search["frm_27_v40"] = m.nkf_member.medlemsnummer
+        search['frm_27_v29'] = 0
+        search['frm_27_v40'] = m.nkf_member.medlemsnummer
       end
       search_result = search_form.submit
       edit_link = search_result.css('tr.trList td.tdListData1')[9]
