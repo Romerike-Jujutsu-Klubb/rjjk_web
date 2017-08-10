@@ -28,7 +28,7 @@ class ActionDispatch::IntegrationTest
   end
   Capybara.default_driver = :chrome # :selenium, :chrome, or :poltergeist
   if Capybara.default_driver == :chrome
-    Capybara::Screenshot::Diff.color_distance_limit = 65
+    Capybara::Screenshot::Diff.color_distance_limit = 5.2
     Capybara::Screenshot.blur_active_element = true
   end
   Capybara.default_max_wait_time = 30
