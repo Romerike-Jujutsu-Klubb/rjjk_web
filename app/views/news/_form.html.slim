@@ -17,11 +17,16 @@
       - else # HTML
         = tinymce
         = f.text_area :summary, class: :tinymce
-        = f.text_area :body, class: :tinymce
 
       .btn-toolbar.float-right
         = back_or_link_to 'Avbryt', news_items_path, class: 'btn btn-secondary'
         = f.submit 'Lagre', id: :save, class: 'btn btn-primary ml-2'
+
+      a.btn.btn-primary data-toggle="collapse" href="#moreInfoCollapse" aria-expanded="false" aria-controls="collapseExample"
+        .fa.fa-chevron-circle-down>
+        = t('activerecord.attributes.news_item.body')
+      .collapse#moreInfoCollapse.mt-3 class=(:show if @news_item.body.present?)
+        = f.text_area :body, hide_label: true, class: :tinymce
   .col-md-3
     .float-right.lazy-container style="height: 680px; overflow:auto; border: 1px solid black"
       = render '/images/list', images: @images

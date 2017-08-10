@@ -10,7 +10,7 @@ require 'active_support/core_ext/time'
 require 'active_support/core_ext/date'
 require 'active_support/core_ext/date_time'
 
-SPAM_AUTOLEARN_LIMIT = 4.8
+SPAM_AUTOLEARN_LIMIT = 4.0
 PROMPT_COLUMN = 110
 
 def check_if_spam(escaped_filename)
@@ -92,7 +92,11 @@ def learn(interactive)
           break false
         end
 
-        $stdin.read_nonblock(80) # Flush commands typed before the prompt is presented
+        begin
+          $stdin.read_nonblock(80)
+        rescue
+          nil
+        end # Flush commands typed before the prompt is presented
         case gets.chomp
         when 's'
           learn_file(escaped_filename, 'spam')

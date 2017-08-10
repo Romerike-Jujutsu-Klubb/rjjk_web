@@ -27,7 +27,7 @@ class NewsItem < ApplicationRecord
   end
 
   validates :publication_state, presence: true
-  validates :title, length: { maximum: 64 }
+  validates :title, length: { maximum: 64, allow_blank: false }
   validates :publication_state, inclusion: { in: PublicationState.constants.map(&:to_s) }
 
   def self.front_page_items

@@ -1,5 +1,9 @@
 - @content_width = 1024
 
+.float-right = link_to login_signup_path, class: 'btn btn-primary'
+  i.fa.fa-plus>
+  | Legg til ny bruker
+
 h1 Brukere
 
 table.table.table-sm
@@ -15,8 +19,3 @@ table.table.table-sm
       td align="center" =('*' if user.admin?)
       td align="center" =('*' if user.verified?)
       td =link_to(l(:user_edit_head), action: :edit, id: user)
-
-br
-
-p
-  =link_to 'Legg til ny bruker', login_signup_path

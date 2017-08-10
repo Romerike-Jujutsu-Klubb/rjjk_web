@@ -1,23 +1,13 @@
+autoresize_bottom_margin: 0
+autoresize_max_height: 480
+autoresize_min_height: 220
+content_style: "body{margin:0 7px}"
 convert_urls: true
 # document_base_url: "http://www.site.com/path1/"
-formats:
-  avrundet:
-    selector: img
-    classes : img-rounded
-  forecolor:
-    selector: p,span
-    classes: forecolor
-    styles:
-      color: 'red'
-height: 400px
-#image_list:
-#  - title: 'Dog'
-#    value: 'mydog.jpg'
-#  - title: 'Cat'
-#    value: 'mycat.gif'
 language: nb_NO
 plugins:
   - anchor
+  - autoresize
   - charmap
   - code
   - emoticons
@@ -29,33 +19,3 @@ plugins:
   - textcolor
 relative_urls: false
 remove_script_host: true
-style_formats:
-  - title: 'Bold text'
-    inline: 'b'
-  - title: 'Red text'
-    inline: 'span'
-    styles:
-      color: '#ff0000'
-  - title: 'Red header'
-    block: 'h1'
-    styles:
-      color: '#ff0000'
-  - title: 'Venstre'
-    selector: 'img'
-    classes: 'pull-left col-md-6'
-  - title: 'Høyre'
-    selector: 'img'
-    classes: 'pull-right col-md-6'
-  - title: 'Table Standard'
-    selector: 'table'
-    classes: 'table'
-  - title: 'Table linjert'
-    selector: 'table'
-    classes: 'table table-bordered'
-  - title: 'Table Kompakt'
-    selector: 'table'
-    classes: 'table table-condensed'
-  - title: 'Table Pysjamas'
-    selector: 'table'
-    classes: 'table table-striped'
-# table_styles: "Standard=table;Kompakt=table table-condensed;Pysjamas=table table-striped;Linjert=table table-bordered"

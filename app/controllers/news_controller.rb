@@ -34,8 +34,9 @@ class NewsController < ApplicationController
   end
 
   def edit
-    @news_item = NewsItem.find(params[:id])
+    @news_item ||= NewsItem.find(params[:id])
     load_images
+    render :edit
   end
 
   def update
@@ -44,7 +45,7 @@ class NewsController < ApplicationController
       flash[:notice] = 'Nyheten ble oppdatert.'
       back_or_redirect_to action: :show, id: @news_item
     else
-      render action: :edit
+      edit
     end
   end
 
