@@ -4,7 +4,7 @@
 // require turbolinks
 //= require tinymce-jquery
 //= require expanding
-//= require tether
+//= require popper
 //= require bootstrap
 //= require moment
 //= require moment/nb

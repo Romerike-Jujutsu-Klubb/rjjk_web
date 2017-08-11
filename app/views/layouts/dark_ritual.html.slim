@@ -34,9 +34,9 @@ html lang="nb"
           .row
             .col-12.p-0 = render 'layouts/header'
           .row style="flex-grow: 1"
-            .main.col-12 class="col-lg-#{@content_width ? 10 : 9} push-lg-#{@content_width ? 2 : 3}"
+            .main.col-12.order-lg-4 class="col-lg-#{@content_width ? 10 : 9}"
               .padded = yield
-            .subnav.col-12.mt-3.mt-lg-0 class="col-lg-#{@content_width ? 2 : 3} pull-lg-#{@content_width ? 10 : 9}" = render 'layouts/navigation'
+            .subnav.col-12.mt-3.mt-lg-0 class="col-lg-#{@content_width ? 2 : 3}" = render 'layouts/navigation'
 
         - unless @content_width
           .main_right.col-lg-3.col-12 = render 'layouts/right_column'

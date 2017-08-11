@@ -5,7 +5,7 @@
         button.close type="button" data-dismiss="alert" aria-label="Close"
           span aria-hidden="true" &times;
         = textalize flash[:notice]
-  - logo_hide_class = ('hidden-lg-up' unless @content_width)
+  - logo_hide_class = ('d-lg-none' unless @content_width)
   = link_to root_path, class: "#{logo_hide_class} float-left b-0 p-0 m-0 bg-transparent", style: 'border:0;background: transparent'
     = image_tag('rjjk_logo_&_txt_320.png', id: :logo_img_top, style: 'width:150px;height:150px;position:relative;top:0;left: 0')
 

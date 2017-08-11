@@ -32,13 +32,13 @@
   %>
   <div id="button_<%= year %>_<%= week %>_<%= gs.id %>" class="btn-group">
     <%= link_to(link_target, method: :post, remote: !initial_disabled,
-            id: "btn_#{year}_#{week}_#{gs.id}", class: "btn btn-#{initial_class}",
+            id: "btn_#{year}_#{week}_#{gs.id}", class: "btn btn-outline-#{initial_class}",
             style: 'width: 7.5em', onclick: initial_disabled ? 'return false' : nil,
             data: {replace: initial_disabled || "#practice_#{week}_#{gs.id}"}) do %>
         <i class="fa fa-<%= initial_icon %>"></i>
         <span><%= initial_text %></span>
     <% end %>
-    <button type="button" class="<%= 'disabled' if initial_disabled %> btn btn-secondary dropdown-toggle dropdown-toggle-split" <%= 'data-toggle="dropdown"'.html_safe unless initial_disabled %>>
+    <button type="button" class="<%= 'disabled' if initial_disabled %> btn btn-outline-dark dropdown-toggle dropdown-toggle-split" <%= 'data-toggle="dropdown"'.html_safe unless initial_disabled %>>
     </button>
     <div class="dropdown-menu">
       <% (practice_passed ? Attendance::PAST_STATES : Attendance::STATES).each do |state, link_text, link_icon, link_class| %>
