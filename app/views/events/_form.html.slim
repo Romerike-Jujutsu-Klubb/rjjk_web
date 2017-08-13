@@ -3,9 +3,9 @@
 = tinymce
 
 ul.nav.nav-tabs
-  li.nav-item: a.nav-link.active href="#description" data-toggle="tab" Beskrivelse
-  li.nav-item: a.nav-link href="#invitation" data-toggle="tab" Invitasjon
-  li.nav-item: a.nav-link href="#invitees" data-toggle="tab" Deltagere
+  li.nav-item: a.nav-link.active data-target="#description" data-toggle="tab" Beskrivelse
+  li.nav-item: a.nav-link data-target="#invitation" data-toggle="tab" Invitasjon
+  li.nav-item: a.nav-link data-target="#invitees" data-toggle="tab" Deltagere
 
 = bootstrap_form_for(@event) do |f|
   = f.error_messages
@@ -17,9 +17,9 @@ ul.nav.nav-tabs
         .col-sm-6
           = f.text_field :name, size: 52, class: 'input-xlarge', label: 'Hendelse'
         .col-sm-3
-          = f.text_field :start_at, value: @event.start_at.try(:strftime, '%F %R'), class: 'datetime input-medium', label: 'Fra'
+          = f.text_field :start_at, value: @event.start_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Fra'
         .col-sm-3
-          = f.text_field :end_at, class: 'datetime input-medium', label: 'Til (valgfritt)'
+          = f.text_field :end_at, value: @event.end_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Til (valgfritt)'
       .row
         .col-sm-12
           = f.text_area :description, :class => :tinymce, label: 'Beskrivelse'
@@ -56,17 +56,19 @@ ul.nav.nav-tabs
       - if @event.event_invitees.any?
         div style="float: left"
           table.table
-            tr
-              th Navn
-              th Organisasjon
-              th E-post
-              th Telefon
-              th Vil delta
-              th Medhjelper
-              th Betalt
-              th Kommentar
-              th
-            - for inv in @event.event_invitees
+            thead
+              tr
+                th Navn
+                th Organisasjon
+                th E-post
+                th Telefon
+                th Vil delta
+                th Medhjelper
+                th Betalt
+                th Kommentar
+                th
+            tbody
+              - for inv in @event.event_invitees
                 tr
                   td = detour_to inv.name, edit_event_invitee_path(inv)
                   td = inv.organization
@@ -103,12 +105,12 @@ ul.nav.nav-tabs
                   td align="right" = inv.payed if inv.payed.to_i > 0
                   td = inv.comment
                   td = detour_to 'Slett', url_for(inv), :data => {:confirm => 'Er du sikker?'}, :method => :delete
-            tr
-              td
-              td
-              td
-              td
-              td Ja: #{@event.event_invitees.select(&:will_attend).size}
+              tr
+                td
+                td
+                td
+                td
+                td Ja: #{@event.event_invitees.select(&:will_attend).size}
 
   .btn-toolbar.float-right
     = back_or_link_to 'Tilbake', events_path, class: 'btn btn-link'

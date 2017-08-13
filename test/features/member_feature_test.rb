@@ -11,13 +11,13 @@ class MemberFeatureTest < ActionDispatch::IntegrationTest
     screenshot :details
     find('a.nav-link', text: 'Graderinger').click
     screenshot :graduations
-    click_on 'Web-bruker'
+    find('a.nav-link', text: 'Web-bruker').click
     screenshot :user
     find('a.nav-link', text: 'Verv').click
     screenshot :duties
-    click_on 'Signaturer'
+    find('a.nav-link', text: 'Signaturer').click
     screenshot :signatures
-    click_on 'NKF'
+    find('a.nav-link', text: 'NKF').click
     screenshot :nkf_tab
   end
 end

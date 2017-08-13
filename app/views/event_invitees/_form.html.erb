@@ -21,7 +21,7 @@
     <fieldset title="Kontaktinformasjon">
       <legend>Bruker</legend>
     <div class="field">
-      <%= f.select :user_id, [['', nil]] + @users.map { |u| [u.name, u.id] } %>
+      <%= f.select :user_id, [['', nil]] + @users.map { |u| [u.name, u.id] }, {}, class: 'chosen-select' %>
       <%=link_to('(bruker)', :controller => :users, :action => :edit, :id => @event_invitee.user_id) if @event_invitee.user_id %>
     </div>
       </fieldset>
