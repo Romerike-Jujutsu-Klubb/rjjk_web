@@ -3,12 +3,9 @@
 = tinymce
 
 ul.nav.nav-tabs
-  li.active
-    a href="#description" data-toggle="tab" Beskrivelse
-  li
-    a href="#invitation" data-toggle="tab" Invitasjon
-  li
-    a href="#invitees" data-toggle="tab" Deltagere
+  li.nav-item: a.nav-link.active href="#description" data-toggle="tab" Beskrivelse
+  li.nav-item: a.nav-link href="#invitation" data-toggle="tab" Invitasjon
+  li.nav-item: a.nav-link href="#invitees" data-toggle="tab" Deltagere
 
 = bootstrap_form_for(@event) do |f|
   = f.error_messages
@@ -115,5 +112,6 @@ ul.nav.nav-tabs
 
   .btn-toolbar.float-right
     = back_or_link_to 'Tilbake', events_path, class: 'btn btn-link'
-    = link_to 'Oppmøteliste', {action: :attendance_form, id: (@event.id if @event.try(:event_invitees).try(:any?))}, class: 'btn btn-link'
+    - if @event.persisted?
+      = link_to 'Oppmøteliste', {action: :attendance_form, id: (@event.id if @event.try(:event_invitees).try(:any?))}, class: 'btn btn-link'
     = f.primary 'Lagre'
