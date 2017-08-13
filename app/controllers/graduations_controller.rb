@@ -11,7 +11,7 @@ class GraduationsController < ApplicationController
     @graduations = Graduation.includes(:group).references(:groups)
         .order('held_on DESC, group_id DESC').where('groups.martial_art_id = ?', MartialArt::KWR_ID)
         .to_a.group_by(&:held_on)
-    @groups = Group.order('from_age DESC').to_a
+    @groups = @graduations.values.flatten.map(&:group).uniq.sort_by(&:from_age).reverse
   end
 
   def show
