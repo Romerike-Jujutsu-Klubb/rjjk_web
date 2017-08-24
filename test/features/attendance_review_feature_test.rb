@@ -13,15 +13,15 @@ class AttendanceReviewFeatureTest < ActionDispatch::IntegrationTest
     screenshot('review_old')
     assert has_css?('td', count: 13)
     assert_equal ['Forrige uke', 'Trente du? Lars og Newbie trente.',
-                  'Trente! Du og Lars trente.', 'Denne uken', 'Ubekreftet Du trente.',
+                  'Instruerte! Du og Lars trente.', 'Denne uken', 'Ubekreftet Du trente.',
                   'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?',
                   'Oktober', '1', 'Siden gradering', '3'],
         all('td').map(&:text).reject(&:blank?)
 
     first('a.btn').click
-    assert has_css?('a.btn', text: 'Trente!', count: 2)
+    assert has_css?('a.btn', text: 'Trente!', count: 1)
     assert_equal ['Forrige uke', 'Trente! Du og 2 andre trente.',
-                  'Trente! Du og Lars trente.', 'Denne uken', 'Ubekreftet Du trente.',
+                  'Instruerte! Du og Lars trente.', 'Denne uken', 'Ubekreftet Du trente.',
                   'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?',
                   'Oktober', '1', 'Siden gradering', '3'],
         all('td').map(&:text).reject(&:blank?)

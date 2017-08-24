@@ -10,7 +10,11 @@
              action: practice_passed ? :review : :announce, year: year,
              week: week, group_schedule_id: gs.id, status: 'toggle'}
      if attendance
-       if Attendance::PRESENT_STATES.include?(attendance.status)
+       if attendance.status == Attendance::Status::INSTRUCTOR
+         initial_class = 'success'
+         initial_text = 'Instruerte!'
+         initial_icon = 'thumbs-up'
+       elsif Attendance::PRESENT_STATES.include?(attendance.status)
          initial_class = 'success'
          initial_text = 'Trente!'
          initial_icon = 'thumbs-up'

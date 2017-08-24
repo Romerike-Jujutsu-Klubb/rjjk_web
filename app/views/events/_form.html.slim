@@ -15,7 +15,7 @@ ul.nav.nav-tabs
       br
       .row
         .col-sm-6
-          = f.text_field :name, size: 52, class: 'input-xlarge', label: 'Hendelse'
+          = f.text_field :name, size: 52, label: 'Hendelse'
         .col-sm-3
           = f.text_field :start_at, value: @event.start_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Fra'
         .col-sm-3

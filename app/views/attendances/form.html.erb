@@ -118,7 +118,9 @@ Gradering er ..." %>
               <td>&nbsp;</td>
           <% end %>
       <% end %>
-      <td align="center"><%= trial.trial_attendances.size if trial.trial_attendances.size > 0 %></td>
+      <!--<td align="center">-->
+        <%#= trial.trial_attendances.size if trial.trial_attendances.size > 0 %>
+      <!--</td>-->
     </tr>
 <% end %>
 
@@ -131,7 +133,7 @@ Gradering er ..." %>
       <% @dates.each do |d| %>
           <td>&nbsp;</td>
       <% end %>
-      <td>&nbsp;</td>
+      <!--<td>&nbsp;</td>-->
     </tr>
 <% end %>
 

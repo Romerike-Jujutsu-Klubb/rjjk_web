@@ -6,5 +6,7 @@
 <% @dates.each do |d| %>
     <td align="center"><%=@date_totals[d]%></td>
 <% end %>
-    <td align="center"><%=@date_totals.values.inject{|total,value| total + value}%></td>
+    <!--<td align="center">-->
+      <%#=@date_totals.values.inject{|total,value| total + value}%>
+    <!--</td>-->
   </tr>

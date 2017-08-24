@@ -81,10 +81,10 @@ class AttendancesController < ApplicationController
     @attendance.destroy
     if request.xhr?
       flash.clear
-      render partial: '/attendances/attendance_create_link', locals: {
+      render partial: 'attendances/attendance_create_link', locals: {
           member_id: @attendance.member_id,
-          group_schedule_id: @attendance.practice.group_schedule_id,
-          date: @attendance.date, status: Attendance::Status::ATTENDED
+          group_schedule: @attendance.practice.group_schedule,
+          date: @attendance.date,
       }
     else
       redirect_to(attendances_url)

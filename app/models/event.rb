@@ -25,7 +25,7 @@ class Event < ApplicationRecord
     end
   end
 
-  validates :start_at, presence: true
+  validates :name, :start_at, presence: true
 
   before_update do |r|
     if r.invitees.present?

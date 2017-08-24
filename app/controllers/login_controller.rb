@@ -91,8 +91,9 @@ class LoginController < ApplicationController
 
   def logout
     self.current_user = nil
-    cookies[:token] = { value: '', expires: 0.days.from_now }
-    flash['notice'] = 'Velkommen tilbake!'
+    cookies.delete(:token)
+    reset_session
+    flash.notice = 'Velkommen tilbake!'
     back_or_redirect_to '/'
   end
 

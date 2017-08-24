@@ -49,7 +49,7 @@
                 <% end %>
                 <%= render 'attendance_delete_link', attendance: attendance %>
             <% else %>
-                <%= render 'attendance_create_link', member_id: member.id, group_schedule_id: group_schedule.id, date: d %>
+                <%= render 'attendance_create_link', member_id: member.id, group_schedule: group_schedule, date: d %>
             <% end %>
             <%= javascript_tag do %>
                 $("#attendance_<%= member.id %>_<%= d.day %>").bind("ajax:complete", function(et, e){
@@ -61,10 +61,10 @@
           <td>&nbsp;</td>
       <% end %>
   <% end %>
-  <% half_year_total = member.last_6_months_attendances.by_group_id(@group.id).size %>
-  <td align="center">
-    <%= half_year_total %>
-    /
-    <%= @dates.map { |d| member.attendances_since_graduation(d, @group).size }.max %>
-  </td>
+  <%# half_year_total = member.last_6_months_attendances.by_group_id(@group.id).size %>
+  <!--<td align="center">-->
+    <%#= half_year_total %>
+    <!--/-->
+    <%#= @dates.map { |d| member.attendances_since_graduation(d, @group).size }.max %>
+  <!--</td>-->
 </tr>
