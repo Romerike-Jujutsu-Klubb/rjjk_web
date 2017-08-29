@@ -26,7 +26,7 @@ class SurveySender
           else
             survey.survey_requests.pending
                 .select { |sr| sr.reminded_at.nil? || sr.reminded_at < 1.week.ago }
-                .sort_by { |sr| [sr.reminded_at.nil? ? 0 : 1, sr.reminded_at || sr.sent_at]}
+                .sort_by { |sr| [sr.reminded_at.nil? ? 0 : 1, sr.reminded_at || sr.sent_at] }
                 .first
           end
       break if request
