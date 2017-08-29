@@ -8,3 +8,6 @@ table.table
       tr
         th =colour
         td =graduates.size
+
+- if @graduation.shopping_list_sent_at
+  h4 Handleliste ble sendt #{@graduation.shopping_list_sent_at.to_date}.
