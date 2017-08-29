@@ -2,7 +2,7 @@ h1 Endre spørreundersøkelse
 
 = render 'form'
 
-h3 Spørsmål
+h3.mt-3 Spørsmål
 
 table.table
   - @survey.survey_questions.sort_by(&:position).each do |question|
@@ -12,9 +12,9 @@ table.table
         .help-block = question.choices
       td =link_to 'Endre', edit_survey_question_path(question), class: 'btn btn-secondary'
 
-.btn-toolbar
-  = back_or_link_to 'Tilbake', surveys_path, class: 'btn btn-secondary'
-  = link_to 'Vis', @survey, class: 'btn btn-secondary'
+.float-right
+  = back_or_link_to 'Tilbake', surveys_path, class: 'btn btn-secondary mr-2'
+  = link_to 'Vis', @survey, class: 'btn btn-secondary mr-2'
   = link_to 'Legg til spørsmål', \
         new_survey_question_path(survey_question: {survey_id: @survey.id}), \
         class: 'btn btn-primary'
