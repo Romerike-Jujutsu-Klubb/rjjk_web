@@ -3,7 +3,7 @@
       <thead>
       <tr>
         <th>Deltakere (<%= @graduation.graduates.size %>)</th>
-        <% unless @graduation.approved? %>
+        <% if @graduation.locked? && !@graduation.approved? %>
             <th></th>
         <% end %>
         <% if (@graduation.held_on &.<= Date.current) && !@graduation.group.school_breaks? %>

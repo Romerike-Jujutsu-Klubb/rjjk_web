@@ -22,7 +22,7 @@
         &nbsp;<span class="text-danger">* IKKE LAGRET! *</span>
     <% end %>
   </td>
-  <% unless graduate.graduation.approved? %>
+  <% if graduate.graduation.locked? && !graduate.graduation.approved? %>
       <td>
         <%- if graduate.confirmed_at %>
             <span class="fa fa-thumbs-up" data-toggle="tooltip" title='Bekreftet <%= graduate.confirmed_at.strftime('%F %R') %>'></span>

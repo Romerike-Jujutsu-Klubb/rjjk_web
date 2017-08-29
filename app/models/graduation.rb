@@ -109,6 +109,11 @@ class Graduation < ApplicationRecord
     (held_on&.< Date.current)
   end
 
+  def locked?
+    non_declined_examiners = censors.select(&:examiner).reject(&:declined?)
+    non_declined_examiners.any? && non_declined_examiners.all?(&:locked_at?)
+  end
+
   def approved?
     non_declined_censors = censors.reject(&:declined?)
     passed? && non_declined_censors.any? && non_declined_censors.all?(&:approved?)

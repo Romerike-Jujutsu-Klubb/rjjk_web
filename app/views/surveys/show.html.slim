@@ -61,5 +61,5 @@ table.table.table-sm.mt-3
         td = survey_request&.reminded_at&.to_date
         td = survey_request&.completed_at&.to_date
         td
-          - if survey_request&.survey_answers.size > 0
+          - if survey_request&.survey_answers&.size&.positive?
             = link_to survey_request.survey_answers.size, survey_request
