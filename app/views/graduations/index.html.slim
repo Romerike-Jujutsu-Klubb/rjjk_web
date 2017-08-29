@@ -25,7 +25,7 @@ table.table
           = held_on
       - @groups.each do |group|
         td
-          - if g = graduations.find { |gr| gr.group_id == group.id }
+          - if (g = graduations.find { |gr| gr.group_id == group.id })
             => link_to g.group.name, edit_graduation_path(g)
             - if g.graduates.empty?
               = link_to g, method: :delete

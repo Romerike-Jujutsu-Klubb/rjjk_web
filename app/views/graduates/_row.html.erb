@@ -22,6 +22,15 @@
         &nbsp;<span class="text-danger">* IKKE LAGRET! *</span>
     <% end %>
   </td>
+  <% unless graduate.graduation.approved? %>
+      <td>
+        <%- if graduate.confirmed_at %>
+            <span class="fa fa-thumbs-up" data-toggle="tooltip" title='Bekreftet <%= graduate.confirmed_at.strftime('%F %R') %>'></span>
+        <%- elsif graduate.invitation_sent_at %>
+            <span class="fa fa-question" data-toggle="tooltip" title='Invitert <%= graduate.invitation_sent_at.strftime('%F %R') %>'></span>
+        <% end %>
+      </td>
+  <% end %>
   <% if (graduate.graduation.held_on &.<= Date.current) && (!graduate.passed?|| !graduate.graduation.group.school_breaks?) %>
       <td>
         <% if graduate.graduation.approved? %>
