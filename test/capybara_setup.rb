@@ -20,7 +20,7 @@ class ActionDispatch::IntegrationTest
   Capybara::Screenshot.window_size = WINDOW_SIZE
   # TODO(uwe):  https://bugs.chromium.org/p/chromium/issues/detail?id=755095
   Capybara::Screenshot.enabled = RUBY_ENGINE == 'ruby' && ENV['TRAVIS'].blank? &&
-      (macos? && `system_profiler SPDisplaysDataType | grep "DELL P2415Q"`.blank?)
+      (ON_MAC && `system_profiler SPDisplaysDataType | grep "DELL P2415Q"`.blank?)
   # Capybara::Screenshot::Diff.enabled = false
   Capybara::Screenshot.stability_time_limit = 0.5
   Capybara.register_driver :chrome do |app|
@@ -31,7 +31,7 @@ class ActionDispatch::IntegrationTest
   end
   Capybara.default_driver = :chrome # :selenium, :chrome, or :poltergeist
   if Capybara.default_driver == :chrome
-    Capybara::Screenshot::Diff.color_distance_limit = 5.2
+    Capybara::Screenshot::Diff.color_distance_limit = 8.7
     Capybara::Screenshot.blur_active_element = true
   end
   Capybara.default_max_wait_time = 30

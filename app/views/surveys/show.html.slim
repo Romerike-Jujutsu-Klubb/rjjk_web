@@ -1,31 +1,26 @@
 p#notice = notice
 
 .row
-  .col-md-8
-    strong Title:
-    br
-    = @survey.title
-  .col-md-2
+  .col-md-3
     strong Category:
     = @survey.category
-  .col-md-2
+  .col-md-3
     strong Group:
     = @survey.group_id
-
-.row
-  .col-md-2
+  .col-md-3
     strong Position:
     = @survey.position
-  .col-md-2
+  .col-md-3
     strong Expires at:
     = @survey.expires_at
-.row
-  .col-md-12
-    strong Header:
-    br
-    = @survey.header
 
-h3 Spørsmål
+h3.mt-3 Overskrift:
+h4 = @survey.title
+
+h3.mt-3 Innledning:
+= @survey.header
+
+h3.mt-3 Spørsmål
 
 - @survey.survey_questions.order(:position).each do |sq|
   p
@@ -33,20 +28,36 @@ h3 Spørsmål
     - answer_hash = Hash.new(0)
     - sq.survey_answers.map(&:answers).each do |answers|
       - answers.each{|k,v| answer_hash[k] += 1}
-    - answer_hash.each do |answer, count|
-      span.label.label-info = "#{answer}: #{count}"
-      '
-br
-br
+    - answer_hash.sort_by(&:second).reverse.each do |answer, count|
+      span.badge.badge-info> = "#{answer}: #{count}"
 
 .row
   .col-md-12
-    strong Footer:
-    br
+    h3 Avslutning:
     = @survey.footer
 
-br
-
-.btn-toolbar
+.mt-3
   = link_to 'Back', surveys_path, class: 'btn btn-link'
   = link_to 'Edit', edit_survey_path(@survey), class: 'btn btn-primary'
+
+table.table.table-sm
+  thead
+    tr
+      th Navn
+      th Innmeldt
+      th Aktiv
+      th Spurt
+      th Minnet på
+      th Fullført
+      th Svar
+  tbody
+    - (@survey.included_members.select(&:active?) + @survey.survey_requests.map(&:member)).uniq.sort_by(&:joined_on).each do |m|
+      - survey_request = @survey.survey_requests.find { |sr| sr.member_id == m.id }
+      tr
+        td = m.name
+        td = m.joined_on
+        td = m.active?
+        td = survey_request&.sent_at&.to_date
+        td = survey_request&.reminded_at&.to_date
+        td = survey_request&.completed_at&.to_date
+        td = survey_request&.survey_answers.size

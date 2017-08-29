@@ -22,11 +22,11 @@ class SurveySender
       unrequested_member = survey.ready_members.select(&:active?).first
       request =
           if unrequested_member
-            survey.survey_requests
-                .where(member_id: unrequested_member.id).first_or_create!
+            survey.survey_requests.where(member_id: unrequested_member.id).first_or_create!
           else
             survey.survey_requests.pending
                 .select { |sr| sr.reminded_at.nil? || sr.reminded_at < 1.week.ago }
+                .sort_by { |sr| [sr.reminded_at.nil? ? 0 : 1, sr.reminded_at || sr.sent_at]}
                 .first
           end
       break if request

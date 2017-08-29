@@ -4,7 +4,7 @@
 
 h1 Listing surveys
 
-table.table
+table.table.table-hover
   thead
     tr
       th #
@@ -17,7 +17,7 @@ table.table
       th
   tbody
     - @surveys.each do |survey|
-      tr
+      tr record-id=survey.id style="cursor: pointer"
         td = survey.position
         td = survey.title
         td = survey.header
@@ -29,3 +29,9 @@ table.table
           = link_to 'Show', survey, class: 'btn btn-secondary'
           = link_to 'Edit', edit_survey_path(survey), class: 'btn btn-secondary'
           = link_to 'Destroy', survey, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+
+javascript:
+  $('tr[record-id]').on('click', function(){
+      record_id = $(this).attr('record-id');
+      window.location = '#{surveys_path}/' + record_id;
+  });
