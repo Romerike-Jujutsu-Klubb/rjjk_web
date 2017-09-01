@@ -319,7 +319,7 @@ blocking users: #{blocking_users.inspect}"
   end
 
   def passive?(date = Date.current, group = nil)
-    return true if nkf_member.try(:medlemsstatus) == 'P'
+    return true if passive_on
     return false if joined_on >= date - 2.months
     start_date = date - 92
     end_date = date + 31

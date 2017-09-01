@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170617195941) do
+ActiveRecord::Schema.define(version: 20170901071718) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(version: 20170617195941) do
     t.string   'billing_email',        limit: 64
     t.datetime 'created_at',           null: false
     t.datetime 'updated_at',           null: false
+    t.date     'passive_on'
   end
 
   create_table 'roles', force: :cascade do |t|
