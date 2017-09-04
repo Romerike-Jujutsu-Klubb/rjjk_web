@@ -17,4 +17,4 @@
       .col-sm-6
         = f.select :role, [['Medlem', nil], ['Administrator', UserSystem::ADMIN_ROLE]]
   - if submit
-    = f.primary user.new_record? ? 'Meld inn' : 'Lagre'
+    .float-right = f.primary user.new_record? ? 'Meld inn' : 'Lagre'
