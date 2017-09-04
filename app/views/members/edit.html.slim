@@ -1,41 +1,31 @@
 - @content_width = 1024
 
-= form_tag({ action: :update, id: @member }, { multipart: true, method: :put }) do
-  ul.nav.nav-tabs role="tablist"
-    li.nav-item: a.nav-link.active data-target="#tab_details" data-toggle="tab" Detaljer
-    li.nav-item: a.nav-link data-target="#tab_graduations" data-toggle="tab" Graderinger
-    li.nav-item: a.nav-link data-target="#tab_user" data-toggle="tab" Web-bruker
-    li.nav-item: a.nav-link data-target="#tab_duties" data-toggle="tab" Verv
-    li.nav-item: a.nav-link data-target="#tab_signatures" data-toggle="tab" Signaturer
-    - if @member.nkf_member
-      li.nav-item: a.nav-link data-target="#tab_nkf" data-toggle="tab" NKF
+ul.nav.nav-tabs role="tablist"
+  li.nav-item: a.nav-link.active data-target="#tab_details" data-toggle="tab" Detaljer
+  li.nav-item: a.nav-link data-target="#tab_graduations" data-toggle="tab" Graderinger
+  li.nav-item: a.nav-link data-target="#tab_user" data-toggle="tab" Web-bruker
+  li.nav-item: a.nav-link data-target="#tab_duties" data-toggle="tab" Verv
+  li.nav-item: a.nav-link data-target="#tab_signatures" data-toggle="tab" Signaturer
+  - if @member.nkf_member
+    li.nav-item: a.nav-link data-target="#tab_nkf" data-toggle="tab" NKF
+  li.nav-item.ml-auto = back_or_link_to 'Tilbake', { action: :index }, class: 'btn btn-link'
+  li.nav-item = link_to 'Til NKF avstemming', { controller: :nkf_members, action: :comparison, id: 0 }, class: 'btn btn-link'
 
-  .tab-content
-    #tab_details.tab-pane.fade.show.active = render 'form'
-    #tab_graduations.tab-pane.fade = render 'graduations'
-    #tab_user.tab-pane.fade
-      p
-        - if @member.user
-          = link_to 'Bruker', edit_user_path(@member.user)
-        - else
-          | Ingen bruker!
-    #tab_duties.tab-pane.fade = render 'duties'
-    #tab_signatures.tab-pane.fade
-      = link_to new_signature_path, class: 'btn btn-primary float-right my-3'
-        = fa_icon :plus, text: 'Registrer signatur'
-      .clearfix
-      .row
-        - @member.signatures.each do |signature|
-          .col-3 = image_tag image_signature_path(signature), width: '100%'
-    - if @member.nkf_member
-      #tab_nkf.tab-pane.fade = render 'nkf_fields'
-  br
-
-  .btn-toolbar.float-right
-    = back_or_link_to 'Tilbake', { action: :index }, class: 'btn btn-link'
-    = link_to 'Til NKF avstemming', { controller: :nkf_members, action: :comparison, id: 0 }, class: 'btn btn-link'
-    = submit_tag 'Lagre', id: 'save', class: 'btn btn-primary'
-
-javascript:
-    document.getElementById('member_first_name').focus();
-    document.getElementById('member_first_name').select();
+.tab-content
+  #tab_details.tab-pane.fade.show.active = render 'form'
+  #tab_graduations.tab-pane.fade = render 'graduations'
+  #tab_user.tab-pane.fade
+    - if @member.user
+      = render 'form', user: @member.user, submit: true
+    - else
+      .alert.alert-info.mt-3 Ingen tilknyttet bruker!
+  #tab_duties.tab-pane.fade = render 'duties'
+  #tab_signatures.tab-pane.fade
+    = link_to new_signature_path, class: 'btn btn-primary float-right my-3'
+      = fa_icon :plus, text: 'Registrer signatur'
+    .clearfix
+    .row
+      - @member.signatures.each do |signature|
+        .col-3 = image_tag image_signature_path(signature), width: '100%'
+  - if @member.nkf_member
+    #tab_nkf.tab-pane.fade = render 'nkf_fields'
