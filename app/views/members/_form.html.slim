@@ -67,15 +67,15 @@
           =< g.martial_art.name
           =< g.name
           - if attendances_since_graduation > 0
-            = link_to("(#{attendances_since_graduation} treninger)", controller: :attendances, action: :since_graduation, id: @member.id)
+            =< link_to("(#{attendances_since_graduation} treninger)", controller: :attendances, action: :since_graduation, id: @member.id)
         br
 
       - if @member.group_instructor? || @member.instructor? || @member.groups.any? { |g| g.from_age >= 13 }
         .form-group
           label Instruktør:
           = link_to @member.group_instructor? ? 'Ja' : 'Nei', controller: :group_instructors
-          = check_box :member, :instructor, title: 'Permanent instruktør'
-          = label :member, :instructor, 'fast', title: 'Permanent instruktør'
+          =< check_box :member, :instructor, title: 'Permanent instruktør'
+          =< label :member, :instructor, 'fast', title: 'Permanent instruktør'
       .row
         .col = f.select :nkf_fee, [['Ja', true], ['Nei', false]]
         .col = f.select :payment_problem, [['Nei', false], ['Ja', true]]
