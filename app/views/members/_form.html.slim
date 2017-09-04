@@ -1,107 +1,71 @@
-= error_messages_for 'member'
-
 = bootstrap_form_for @member do |f|
   .row
     .col-md-4
-      div
+      .text-center
         - if @member.image?
           = image_tag url_for(action: :thumbnail, id: @member.id, format: @member.image.format), title: @member.image.name
         - elsif @member.persisted?
-          = link_to 'Ta bilde', photo_member_path(@member), class: 'btn btn-primary m-5'
+          = link_to 'Ta bilde', photo_member_path(@member), class: 'btn btn-primary my-3'
 
-      .form-group
-        label for="member_first_name" Fornavn
-        = text_field 'member', 'first_name', :class => 'form-control'
-
-      .form-group
-        label for="member_last_name" Etternavn
-        = text_field 'member', 'last_name', :class => 'form-control'
-
-      .form-group
-        label for="member_address" Adresse
-        = text_field 'member', 'address', :class => 'form-control'
+      = f.text_field :first_name
+      = f.text_field :last_name
+      = f.text_field :address
 
       .row
-        .form-group.col-6.pr-1
-          label for="member_postal_code" Postnummer
-          = text_field 'member', 'postal_code', class: 'postal_code form-control'
-
-        .form-group.col-6.pl-1
-          label for="member_phone_mobile" Telefon mobil
-          = text_field 'member', 'phone_mobile', class: 'form-control'
-
+        .col-6.pr-1
+          = f.text_field :postal_code
+        .col-6.pl-1
+          = f.text_field :phone_mobile
       .row
-        .form-group.col-12
-          label for="member_email" E-post
-          = text_field 'member', 'email', class: 'form-control'
-
+        .col-12
+          = f.text_field :email
       .row
-        .form-group.col-6.pr-1
-          label for="member_phone_home" Telefon hjem
-          = text_field 'member', 'phone_home', class: 'form-control'
-
-        .form-group.col-6.pl-1
-          label for="member_phone_work" Telefon arbeid
-          = text_field 'member', 'phone_work', class: 'form-control'
+        .col-6.pr-1
+          = f.text_field :phone_home
+        .col-6.pl-1
+          = f.text_field :phone_work
 
     .col-md-4
       .row
-        .form-group.col-6.pr-1
-          label for="member_birthdate" Fødselsdato
-          = text_field :member, :birthdate, placeholder: 'år-måned-dag', class: 'date form-control'
+        .col-6.pr-1
+          = f.text_field :birthdate, placeholder: 'år-måned-dag', class: 'date'
         .col-2.pl-1
           br
-          label class="mt-3" Alder
-          = "#{@member.age} år" if @member.birthdate
-        .form-group.col-4
-          label for="member_male" Kjønn
-          = select 'member', 'male', [['Mann', true], ['Kvinne', false]], {}, class: 'form-control'
+          label.mt-3 Alder
+          =< "#{@member.age} år" if @member.birthdate
+        .col-4
+          = f.select :male, [['Mann', true], ['Kvinne', false]]
       .row
-        .form-group.col-6.pr-1
-          = label :member, :passive_on, 'Passiv fra'
-          = text_field :member, :passive_on, class: 'date form-control', placeholder: 'dato'
-      .row
-        .form-group.col-6.pr-1
-          = label :member, :joined_on, 'Innmeldingsdato'
-          = text_field :member, :joined_on, class: 'date form-control'
-        .form-group.col-6.pl-1
-          = label :member, :left_on, 'Utmeldingsdato'
-          = text_field :member, :left_on, class: 'date form-control'
-      .row
-        .form-group.col-6.pr-1
-          label for="member_contract_id" Medlemsnr
-          = text_field 'member', 'contract_id', class: 'form-control'
+        .col-6.pr-1
+          = f.text_field :joined_on, class: 'date'
         .form-group.col-6.pl-1
           label for="member_nkf_member_id" NKF medlemsnr
-          span class="form-control" =(@member.nkf_member.try(:medlemsnummer) || 'Ikke i NKF-registeret.')
-      .form-group
-        label for="member_parent_name" Foresattes navn
-        = text_field 'member', 'parent_name', class: 'form-control'
+          span class="form-control" = (@member.nkf_member.try(:medlemsnummer) || 'Ikke i NKF-registeret.')
       .row
-        .form-group.col-6.pr-1
-          label for="member_phone_parent" Foresattes telefon
-          = text_field 'member', 'phone_parent', :class => 'form-control'
-        .form-group.col-6.pl-1
-          label for="member_parent_email" Foresattes e-post
-          = text_field 'member', 'parent_email', :class => 'form-control'
+        .col-6.pr-1
+          = f.text_field :passive_on, class: 'date', placeholder: 'dato'
+        .col-6.pl-1
+          = f.text_field :left_on, class: 'date'
+      = f.text_field :parent_name
       .row
-        .form-group.col-6.pr-1
-          label for="member_billing_type" Fakturerings&shy;måte
-          = select 'member', 'billing_type', [['AutoGiro', 'AUTOGIRO'], ['Manuell Giro', 'MANUELL GIRO'], ['AvtaleGiro', 'AvtaleGiro'], \
-              @member.billing_type && [@member.billing_type, @member.billing_type]].compact.uniq.sort, \
-              {}, class: 'form-control'
-
-        .form-group.col-6.pl-1
-          label for="member_account_no" Kontonummer
-          = text_field 'member', 'account_no', class: 'form-control'
+        .col-6.pr-1
+          = f.text_field :phone_parent
+        .col-6.pl-1
+          = f.text_field :parent_email
+      .row
+        .col-6.pr-1
+          = f.select :billing_type, [%w(AutoGiro AUTOGIRO), ['Manuell Giro', 'MANUELL GIRO'], %w(AvtaleGiro AvtaleGiro), \
+              @member.billing_type && [@member.billing_type, @member.billing_type]].compact.uniq.sort
+        .col-6.pl-1
+          = f.text_field :account_no
     .col-md-4
       - @groups.each do |g|
         - next unless g.active? || @member.groups.include?(g)
         - attendances_since_graduation = @member.attendances_since_graduation(Date.current, g).size
-        label for="member_group_ids_#{g.id}" style=("font-weight: bold" if g.contains_age(@member.age))
-          => check_box_tag "member_group_ids[#{g.id}]", g.id, @member.groups.include?(g)
-          = g.martial_art.name
-          = g.name
+        label for="member_group_ids_#{g.id}" style=('font-weight: bold' if g.contains_age(@member.age))
+          = check_box_tag "member_group_ids[#{g.id}]", g.id, @member.groups.include?(g)
+          =< g.martial_art.name
+          =< g.name
           - if attendances_since_graduation > 0
             = link_to("(#{attendances_since_graduation} treninger)", controller: :attendances, action: :since_graduation, id: @member.id)
         br
@@ -112,29 +76,14 @@
           = link_to @member.group_instructor? ? 'Ja' : 'Nei', controller: :group_instructors
           = check_box :member, :instructor, title: 'Permanent instruktør'
           = label :member, :instructor, 'fast', title: 'Permanent instruktør'
+      .row
+        .col = f.select :nkf_fee, [['Ja', true], ['Nei', false]]
+        .col = f.select :payment_problem, [['Nei', false], ['Ja', true]]
+      = f.text_field :billing_name
+      = f.text_field :billing_address
+      = f.text_field :billing_postal_code
 
-      .form-group
-        label for="member_nkf_fee" NKF Hovedklubb
-        = select :member, :nkf_fee, [['Ja', true], ['Nei', false]], {}, class: 'form-control'
-      .form-group
-        label for="member_payment_problem" Betalingsproblem
-        = select :member, :payment_problem, [['Nei', false], ['Ja', true]], {}, class: "form-control"
-      .form-group
-        label for="member_rfid" RFID
-        = text_field 'member', 'rfid', class: 'form-control'
-      .form-group
-        label for="member_billing_name" Fakturanavn (hvis annet enn medlem)
-        = text_field 'member', 'billing_name', class: 'form-control'
-      .form-group
-        label for="member_billing_address" Fakturaadresse
-        = text_field 'member', 'billing_address', class: 'form-control'
-      .form-group
-        label for="member_billing_postal_code" Fakturapostnummer
-        = text_field 'member', 'billing_postal_code', class: 'form-control postal_code'
-  .row
-    .col-md-12
-      label for="member_Kommentar" Kommentar
-      = text_area 'member', 'comment', class: 'form-control expanding'
+  = f.text_area :comment, class: ' expanding'
 
   = submit_tag 'Lagre', id: 'save', class: 'btn btn-primary float-right my-3'
 

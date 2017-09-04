@@ -83,7 +83,6 @@ class Member < ApplicationRecord
   validates :payment_problem, inclusion: { in: [true, false] }
   # validates_presence_of :postal_code
   validates :postal_code, length: { is: 4, allow_blank: true }
-  validates :rfid, uniqueness: { if: proc { |r| r.rfid.present? } }
   validates :user, :user_id, presence: { unless: :left_on }
 
   def self.paginate_active(page)

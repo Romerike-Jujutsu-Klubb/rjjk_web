@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170901071718) do
+ActiveRecord::Schema.define(version: 20170904131323) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -97,7 +97,6 @@ ActiveRecord::Schema.define(version: 20170901071718) do
     t.date     'birthdate'
     t.boolean  'male',                 null: false
     t.date     'joined_on',            null: false
-    t.integer  'contract_id'
     t.date     'left_on'
     t.string   'parent_name',          limit: 100
     t.string   'address',              limit: 100, default: '', null: false
@@ -114,7 +113,6 @@ ActiveRecord::Schema.define(version: 20170901071718) do
     t.string   'account_no',           limit: 16
     t.string   'billing_phone_home',   limit: 32
     t.string   'billing_phone_mobile', limit: 32
-    t.string   'rfid',                 limit: 25
     t.string   'kid',                  limit: 64
     t.decimal  'latitude',             precision: 8, scale: 6
     t.decimal  'longitude',            precision: 9, scale: 6
