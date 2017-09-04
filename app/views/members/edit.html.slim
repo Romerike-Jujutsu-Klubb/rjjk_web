@@ -7,7 +7,8 @@
     li.nav-item: a.nav-link data-target="#tab_user" data-toggle="tab" Web-bruker
     li.nav-item: a.nav-link data-target="#tab_duties" data-toggle="tab" Verv
     li.nav-item: a.nav-link data-target="#tab_signatures" data-toggle="tab" Signaturer
-    li.nav-item: a.nav-link data-target="#tab_nkf" data-toggle="tab" NKF
+    - if @member.nkf_member
+      li.nav-item: a.nav-link data-target="#tab_nkf" data-toggle="tab" NKF
 
   .tab-content
     #tab_details.tab-pane.fade.show.active = render 'form'
@@ -26,7 +27,8 @@
       .row
         - @member.signatures.each do |signature|
           .col-3 = image_tag image_signature_path(signature), width: '100%'
-    #tab_nkf.tab-pane.fade = render 'nkf_fields'
+    - if @member.nkf_member
+      #tab_nkf.tab-pane.fade = render 'nkf_fields'
   br
 
   .btn-toolbar.float-right
