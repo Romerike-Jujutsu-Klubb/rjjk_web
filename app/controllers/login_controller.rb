@@ -12,7 +12,8 @@ class LoginController < ApplicationController
       self.current_user = user
       flash['notice'] = 'Velkommen!'
       if remember_me && remember_me == '1'
-        cookies.permanent[:token] = user.generate_security_token(:login)
+        cookies.permanent[:token] = { value: user.generate_security_token(:login), domain: :all,
+                                      tld_length: 2 }
       end
       unless member?
         if (member = Member.find_by(email: user.email))

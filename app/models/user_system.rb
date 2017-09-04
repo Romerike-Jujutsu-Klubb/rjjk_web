@@ -81,7 +81,8 @@ module UserSystem
   def login_from_params
     if (token = params[:key]) && (self.current_user = User.authenticate_by_token(token))
       params.delete 'key'
-      cookies.permanent[:token] = user.generate_security_token(:login)
+      cookies.permanent[:token] = { value: user.generate_security_token(:login), domain: :all,
+                                    tld_length: 2 }
     end
     current_user
   end
