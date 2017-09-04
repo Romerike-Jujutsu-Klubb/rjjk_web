@@ -81,7 +81,7 @@ class User < ApplicationRecord
       return nil
     end
     logger.info "Authenticated by token: #{u.inspect}.  Extending token lifetime."
-    u.update_attributes verified: true, token_expiry: Time.current + token_lifetime
+    u.update! verified: true, token_expiry: Time.current + token_lifetime
     u
   end
 
