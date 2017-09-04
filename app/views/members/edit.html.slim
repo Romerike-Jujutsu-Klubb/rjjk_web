@@ -16,7 +16,7 @@ ul.nav.nav-tabs role="tablist"
   #tab_graduations.tab-pane.fade = render 'graduations'
   #tab_user.tab-pane.fade
     - if @member.user
-      = render 'form', user: @member.user, submit: true
+      = render 'users/form', user: @member.user, submit: true
     - else
       .alert.alert-info.mt-3 Ingen tilknyttet bruker!
   #tab_duties.tab-pane.fade = render 'duties'

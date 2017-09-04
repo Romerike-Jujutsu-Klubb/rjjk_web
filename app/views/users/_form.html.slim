@@ -1,19 +1,19 @@
-= bootstrap_form_for(@user) do |f|
+= bootstrap_form_for(user) do |f|
   = f.hidden_field :form, value: :edit
-  = @user.new_record? ? f.text_field(:login) : f.static_control(:login)
-  = link_to('(medlem)', controller: :members, action: :edit, id: @user.member.id) if @user.member
+  = user.new_record? ? f.text_field(:login) : f.static_control(:login)
+  = link_to('(medlem)', controller: :members, action: :edit, id: user.member.id) if user.member
   .row
     .col-sm-6
       = f.text_field :first_name
     .col-sm-6
       = f.text_field :last_name
   = f.text_field :email
-  small = (@user.emails - [@user.full_email]).join(' ')
+  small = (user.emails - [user.full_email]).join(' ')
   - if admin?
     .row
       .col-sm-6
         = f.select :verified, [['Nei', false], ['Ja', true]], \
-          help: link_to('Send e-post med login link', {action: :forgot_password, user: {email: @user.email}}, method: :post)
+          help: link_to('Send e-post med login link', {controller: :users, action: :forgot_password, user: {email: user.email}}, method: :post)
       .col-sm-6
         = f.select :role, [['Medlem', nil], ['Administrator', UserSystem::ADMIN_ROLE]]
   - if submit
