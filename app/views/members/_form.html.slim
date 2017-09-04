@@ -73,7 +73,7 @@
       - if @member.group_instructor? || @member.instructor? || @member.groups.any? { |g| g.from_age >= 13 }
         .form-group
           label Instruktør:
-          = link_to @member.group_instructor? ? 'Ja' : 'Nei', controller: :group_instructors
+          =< link_to @member.group_instructor? ? 'Ja' : 'Nei', controller: :group_instructors
           =< check_box :member, :instructor, title: 'Permanent instruktør'
           =< label :member, :instructor, 'fast', title: 'Permanent instruktør'
       .row
