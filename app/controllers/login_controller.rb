@@ -91,6 +91,7 @@ class LoginController < ApplicationController
 
   def logout
     self.current_user = nil
+    cookies.delete(:user_id)
     cookies.delete(:user_id, domain: :all, tld_length: 2)
     reset_session
     flash.notice = 'Velkommen tilbake!'
