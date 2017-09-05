@@ -93,12 +93,13 @@ class LoginController < ApplicationController
     self.current_user = nil
 
     # FIXME(uwe): Delete 2018-01-01
-    cookies.delete(:token)
+    # cookies.delete(:token)
     cookies.delete(:token, COOKIE_SCOPE)
     # EMXIF
 
-    cookies.delete(:user_id)
+    # cookies.delete(:user_id)
     cookies.delete(:user_id, COOKIE_SCOPE)
+
     reset_session
     flash.notice = 'Velkommen tilbake!'
     back_or_redirect_to '/'
