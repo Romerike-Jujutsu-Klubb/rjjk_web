@@ -44,7 +44,7 @@ class CensorsController < ApplicationController
     @censor.attributes = params[:censor]
     return unless admin_or_censor_required(@censor.graduation)
     if @censor.save
-      flash[:notice] = 'Censor was successfully created.'
+      flash[:notice] = "La til **#{@censor.member.name}** som #{@censor.examiner ? 'eksaminator' : 'sensor'} på graderingen."
       back_or_redirect_to action: :index
     else
       render action: :new

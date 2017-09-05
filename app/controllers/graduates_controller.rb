@@ -122,7 +122,7 @@ class GraduatesController < ApplicationController
     @graduate.destroy
     respond_to do |format|
       format.html { redirect_to action: :index }
-      format.js { render js: %{$("#graduate_#{@graduate.id}").remove()} }
+      format.js { render js: %{$('#graduate_#{@graduate.id}').remove();$('#graduate_member_id optgroup[label="#{@graduate.graduation.group.name}"').prepend($('<option/>', {value: '#{@graduate.member_id}',text : '#{@graduate.member.name} #{@graduate.member.age(@graduate.graduation.held_on)} år'}))} }
     end
   end
 

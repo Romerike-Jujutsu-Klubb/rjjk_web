@@ -17,6 +17,6 @@ table.table
     th Påmeldte
     td =@graduation.graduates.count
 
-.btn-toolbar.float-right
-  = back_or_link_to 'Tilbake', graduations_path, class: 'btn btn-secondary'
+.float-right
+  = back_or_link_to 'Tilbake', graduations_path, class: 'btn btn-secondary mr-2'
   = link_to 'Endre', edit_graduation_path(@graduation), class: 'btn btn-primary'

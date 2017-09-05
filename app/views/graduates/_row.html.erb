@@ -1,15 +1,15 @@
 <%
   mbr = graduate.member
-   fn = mbr.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
-   ln = mbr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
+  fn = mbr.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
+  ln = mbr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
   member_age = mbr.age(graduate.graduation.held_on)
   if graduate.graduation.held_on
-     below_minimum_age = member_age && member_age < graduate.rank.minimum_age
-     not_in_rank_age = !(graduate.rank.group.from_age..graduate.rank.group.to_age).include?(member_age)
-     if graduate.graduation.group
-       not_in_group_age = member_age && (mbr.age(graduate.graduation.held_on - 1.month) > graduate.graduation.group.to_age || member_age < graduate.graduation.group.from_age)
-     end
-   end
+    below_minimum_age = member_age && member_age < graduate.rank.minimum_age
+    not_in_rank_age = !(graduate.rank.group.from_age..graduate.rank.group.to_age).include?(member_age)
+    if graduate.graduation.group
+      not_in_group_age = member_age && (mbr.age(graduate.graduation.held_on - 1.month) > graduate.graduation.group.to_age || member_age < graduate.graduation.group.from_age)
+    end
+  end
 %>
 <tr id="graduate_<%= graduate.id %>">
   <td>
@@ -31,17 +31,18 @@
         <% end %>
       </td>
   <% end %>
-  <% if (graduate.graduation.held_on &.<= Date.current) && (!graduate.passed?|| !graduate.graduation.group.school_breaks?) %>
+  <% if (graduate.graduation.held_on&.<= Date.current) && (!graduate.passed?|| !graduate.graduation.group.school_breaks?) %>
       <td>
         <% if graduate.graduation.approved? %>
             <%= graduate.passed ? 'Ja' : 'Nei' %>
         <% else %>
-            <%= form_for graduate, html: {remote: true} do |f| %>
+            <%= form_for graduate, html: { remote: true } do |f| %>
                 <%= f.radio_button :passed, true, onchange: "$('#passed_btn_#{graduate.id}').click()" %>
-                Ja<br/>
-                <%= f.radio_button :passed, false, onchange: "$('#passed_btn_#{graduate.id}').click()" %>
+                Ja
+                <span class="d-xl-none"><br/></span>
+                <%= f.radio_button :passed, false, onchange: "$('#passed_btn_#{graduate.id}').click()", class: 'ml-xl-2' %>
                 Nei
-                <%= f.submit id: "passed_btn_#{graduate.id}", class: 'hidden' %>
+                <%= f.submit id: "passed_btn_#{graduate.id}", class: 'sr-only' %>
             <% end %>
         <% end %>
       </td>
@@ -50,10 +51,10 @@
     <% if graduate.graduation.approved? %>
         <%= graduate.rank.label %>
     <% else %>
-        <%= form_for graduate, html: {remote: true, style: 'display: inline'} do |f| %>
+        <%= form_for graduate, html: { remote: true, style: 'display: inline' } do |f| %>
             <%= f.select :rank_id, @ranks.map { |r| [r.label, r.id] },
                 {}, onchange: "$('#rank_btn_#{graduate.id}').click()" %>
-            <%= f.submit id: "rank_btn_#{graduate.id}", class: 'hidden' %>
+            <%= f.submit id: "rank_btn_#{graduate.id}", class: 'sr-only' %>
         <% end %>
 
         <% graduated = graduate.member.graduates.find { |gr2| gr2 != graduate && gr2.passed && gr2.rank_id == graduate.rank_id } %>
@@ -100,7 +101,7 @@
     (<%= graduate.training_start_date %>).</span>
             <% elsif training_attendances < minimum_attendances %>
                 <br/>Har bare vært på
-                <%= link_to "#{training_attendances} trening#{'er' if training_attendances > 1}", {:controller => :attendances, :action => :since_graduation, :id => mbr.id, :date => graduate.graduation.held_on}, :style => "color: red" %>
+                <%= link_to "#{training_attendances} trening#{'er' if training_attendances > 1}", { :controller => :attendances, :action => :since_graduation, :id => mbr.id, :date => graduate.graduation.held_on }, :style => "color: red" %>
                 siden <%= current_graduate ? 'forrige gradering' : 'innmelding' %>
                 (<%= graduate.training_start_date %>).
                 <br/>Minimum er <%= minimum_attendances %>
@@ -119,8 +120,8 @@
   </td>
   <% unless graduate.graduation.approved? %>
       <td>
-        <%= link_to({controller: :graduates, action: :destroy, id: graduate.id}, method: :delete, remote: true) do %>
-            <IMG SRC="<%= asset_path 'button-delete-16x16.png' %>" STYLE="border: 0;" title="Slett" ALT="Slett"></A>
+        <%= link_to({ controller: :graduates, action: :destroy, id: graduate.id }, method: :delete, remote: true, data: {confirm: 'Er du sikker på at du vil fjerne denne kandidaten fra graderingen?'}) do %>
+            <i class="fa fa-trash text-danger" title="Slett"></i>
         <% end %>
       </td>
   <% end %>
@@ -128,6 +129,12 @@
 
 <%= javascript_tag do %>
     $('#graduate_<%= graduate.id %>').find("form").on('ajax:beforeSend', function(event, xhr, settings) {
-      $('#graduate_<%= graduate.id %>').replaceWith('<tr id="graduate_<%= graduate.id %>"><td><%= graduate.member.name %></td><td></td><td>Oppdaterer...</td><td></td></tr>')
+    $('#graduate_<%= graduate.id %>').replaceWith('
+    <tr id="graduate_<%= graduate.id %>">
+      <td><%= graduate.member.name %></td>
+      <td></td>
+      <td>Oppdaterer...</td>
+      <td></td>
+    </tr>')
     });
 <% end %>

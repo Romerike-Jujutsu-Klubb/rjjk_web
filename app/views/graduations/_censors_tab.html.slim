@@ -13,7 +13,7 @@
 
     br
 
-    = form_for @censor, url: with_detour(censors_path, anchor: :censors), html: {method: :post} do |f|
+    = form_for @censor, url: with_detour(censors_path, anchor: :censors_tab), html: {method: :post} do |f|
       = f.hidden_field :graduation_id
       = f.hidden_field :examiner, value: 1
 
@@ -37,7 +37,7 @@
           = render 'censor_approval', censor: cen
     br
 
-    = form_for @censor, url: with_detour(censors_path, anchor: :censors), html: {method: :post} do |f|
+    = form_for @censor, url: with_detour(censors_path, anchor: :censors_tab), html: {method: :post} do |f|
       = f.hidden_field :graduation_id
 
       .input-group

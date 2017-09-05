@@ -34,7 +34,7 @@ class SignaturesController < ApplicationController
   def create
     @signature = Signature.new(params[:signature])
     if @signature.save
-      redirect_to member_path(@signature.member, anchor: :tab_signatures),
+      redirect_to member_path(@signature.member, anchor: :tab_signatures_tab),
           notice: 'Signatur lagret.'
     else
       new

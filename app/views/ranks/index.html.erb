@@ -1,11 +1,15 @@
 <% @content_width = 1024 %>
 
+<!-- FIXME(uwe): Broken! -->
+<!-- https://stackoverflow.com/questions/19459912/nested-tabs-in-bootstrap -->
+
 <h1>Grader</h1>
 
 <ul class="nav nav-tabs">
   <% @martial_arts.each.with_index do |(ma, ranks), i| %>
       <li class="nav-item">
-        <a href="#<%= ma.name.gsub(/\s+/, '') %>" data-toggle="tab" class="nav-link<%=' active' if i == 0 %>"><%= ma.name %></a></li>
+        <a class="nav-link<%= ' active' if i == 0 %>" data-target='#<%= ma.name.gsub(/\s+/, '') %>' data-toggle='tab'><%= ma.name %></a>
+      </li>
   <% end %>
 </ul>
 
@@ -15,15 +19,16 @@
       <div class="tab-pane <%= 'active' if i == 0 %>" id="<%= ma.name.gsub(/\s+/, '') %>">
 
         <ul class="nav nav-tabs">
-          <% ma.groups.each.with_index do |group, i| %>
+          <% sorted_groups = ma.groups.sort_by { |g| [g.active? ? 0 : 1, -g.from_age] } %>
+          <% sorted_groups.each.with_index do |group, i| %>
               <li class="nav-item">
-                <a href="#<%= ma.name.gsub(/\s+/, '') %>_<%= group.name.gsub(/\s+/, '') %>" data-toggle="tab" class="nav-link<%= ' active' if i == 0 %>"><%= group.name %></a>
+                <a data-target="#<%= ma.name.gsub(/\s+/, '') %>_<%= group.name.gsub(/\s+/, '') %>" data-toggle="tab" class="nav-link<%= ' active' if i == 0 %>"><%= group.name %></a>
               </li>
           <% end %>
         </ul>
 
         <div class="tab-content">
-          <% ma.groups.each.with_index do |group, i| %>
+          <% sorted_groups.each.with_index do |group, i| %>
               <div class="tab-pane <%= 'active' if i == 0 %>" id="<%= ma.name.gsub(/\s+/, '') %>_<%= group.name.gsub(/\s+/, '') %>">
 
                 <table class="table table-condensed">
@@ -36,18 +41,18 @@
                     <th/>
                   </tr>
 
-                  <% for rank in group.ranks.sort_by { |r| r.position} %>
+                  <% for rank in group.ranks.sort_by { |r| r.position } %>
                       <tr>
                         <td align="center"><%= h rank.position %></td>
                         <td><%= link_to "#{rank.label}", rank %></td>
-                        <td><%= link_to 'Kort', {action: :card, id: rank.id}, class: 'btn btn-sm btn-secondary' %></td>
+                        <td><%= link_to 'Kort', { action: :card, id: rank.id }, class: 'btn btn-sm btn-secondary' %></td>
                         <td align="center"><%= h rank.minimum_age %> år</td>
                         <td align="center"><%= h rank.standard_months %></td>
                         <td>
-                          <%= detour_to 'Rediger', {action: 'edit', id: rank}, class: 'btn btn-primary btn-sm' %>
+                          <%= detour_to 'Rediger', { action: 'edit', id: rank }, class: 'btn btn-primary btn-sm' %>
                         </td>
                         <!--
-    <td><%= link_to 'Slett', {:action => 'destroy', :id => rank}, data: {:confirm => 'Are you sure?'}, :method => :post %></td>
+    <td><%= link_to 'Slett', { :action => 'destroy', :id => rank }, data: { :confirm => 'Are you sure?' }, :method => :post %></td>
 -->
                       </tr>
                   <% end %>
@@ -63,4 +68,4 @@
 
 <br/>
 
-<%= link_to 'Legg til grad', {action: 'new'}, class: 'btn btn-primary' %>
+<%= link_to 'Legg til grad', { action: 'new' }, class: 'btn btn-primary' %>
