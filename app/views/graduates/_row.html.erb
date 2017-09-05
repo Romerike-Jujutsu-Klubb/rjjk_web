@@ -38,10 +38,10 @@
         <% else %>
             <%= form_for graduate, html: { remote: true } do |f| %>
                 <%= f.radio_button :passed, true, onchange: "$('#passed_btn_#{graduate.id}').click()" %>
-                Ja
+                <label for="graduate_passed_true">Ja</label>
                 <span class="d-xl-none"><br/></span>
                 <%= f.radio_button :passed, false, onchange: "$('#passed_btn_#{graduate.id}').click()", class: 'ml-xl-2' %>
-                Nei
+                <label for="graduate_passed_false">Nei</label>
                 <%= f.submit id: "passed_btn_#{graduate.id}", class: 'sr-only' %>
             <% end %>
         <% end %>
@@ -129,12 +129,5 @@
 
 <%= javascript_tag do %>
     $('#graduate_<%= graduate.id %>').find("form").on('ajax:beforeSend', function(event, xhr, settings) {
-    $('#graduate_<%= graduate.id %>').replaceWith('
-    <tr id="graduate_<%= graduate.id %>">
-      <td><%= graduate.member.name %></td>
-      <td></td>
-      <td>Oppdaterer...</td>
-      <td></td>
-    </tr>')
-    });
+    $('#graduate_<%= graduate.id %>').replaceWith('<tr id="graduate_<%= graduate.id %>"><td><%= graduate.member.name %></td><td></td><td>Oppdaterer...</td><td></td></tr>')});
 <% end %>
