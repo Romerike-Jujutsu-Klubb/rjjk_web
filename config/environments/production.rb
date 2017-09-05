@@ -35,6 +35,7 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
+  config.middleware.use Rack::Attack
 end
 
 %w[render_template render_partial render_collection].each do |event|

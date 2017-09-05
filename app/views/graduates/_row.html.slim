@@ -1,0 +1,110 @@
+ruby:
+  mbr = graduate.member
+  fn = mbr.first_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
+  ln = mbr.last_name.split(/\s+/).each { |x| x.capitalize! }.join(' ')
+  member_age = mbr.age(graduate.graduation.held_on)
+  if graduate.graduation.held_on
+    below_minimum_age = member_age && member_age < graduate.rank.minimum_age
+    not_in_rank_age = !(graduate.rank.group.from_age..graduate.rank.group.to_age).include?(member_age)
+    if graduate.graduation.group
+      not_in_group_age = member_age && (mbr.age(graduate.graduation.held_on - 1.month) > graduate.graduation.group.to_age || member_age < graduate.graduation.group.from_age)
+    end
+  end
+
+tr id="graduate_#{graduate.id}"
+  td
+    = link_to "#{fn} #{ln}", :controller => :members, :action => :edit, :id => mbr.id
+    - if below_minimum_age || not_in_rank_age || not_in_group_age
+      | (<span style="color: red; white-space: nowrap">#{member_age} år</span>)
+    - if graduate.changed?
+      | &nbsp;<span class="text-danger">* IKKE LAGRET! *</span>
+  - if graduate.graduation.locked? && !graduate.graduation.approved?
+    td
+      - if false && graduate.confirmed_at
+        span.fa.fa-thumbs-up data-toggle="tooltip" title="#{graduate.member.first_name} bekreftet #{graduate.confirmed_at.strftime('%F %R')}"
+      - elsif graduate.invitation_sent_at
+        span.fa.fa-question data-toggle="tooltip" title="Invitert #{graduate.invitation_sent_at.strftime('%F %R')}"
+  - if (graduate.graduation.held_on&.<= Date.current) && (!graduate.passed?|| !graduate.graduation.group.school_breaks?)
+    td
+      - if graduate.graduation.approved?
+        = graduate.passed ? 'Ja' : 'Nei'
+      - else
+        = form_for graduate, html: { remote: true } do |f|
+          => f.radio_button :passed, true, onchange: "$('#passed_btn_#{graduate.id}').click()"
+          label for="graduate_passed_true" Ja
+          span.d-xl-none: br
+          => f.radio_button :passed, false, onchange: "$('#passed_btn_#{graduate.id}').click()", class: 'ml-xl-2'
+          label for="graduate_passed_false" Nei
+          = f.submit id: "passed_btn_#{graduate.id}", class: 'sr-only'
+  td
+    - if graduate.graduation.approved?
+      = graduate.rank.label
+    - else
+      = form_for graduate, html: { remote: true, style: 'display: inline' } do |f|
+        = f.select :rank_id, @ranks.map { |r| [r.label, r.id] }, {}, onchange: "$('#rank_btn_#{graduate.id}').click()"
+        = f.submit id: "rank_btn_#{graduate.id}", class: 'sr-only'
+
+      - graduated = graduate.member.graduates.find { |gr2| gr2 != graduate && gr2.passed && gr2.rank_id == graduate.rank_id }
+      - if graduated
+        br
+        span style="color: red" Har allerede bestått denne graden (#{link_to graduated.graduation.held_on, action: :index, id: graduated.graduation_id}).
+      - else
+        - next_rank = mbr.next_rank(graduate.graduation)
+        - current_graduate = mbr.current_graduate(graduate.graduation.group.martial_art, graduate.graduation.held_on)
+        - if next_rank && graduate.rank != next_rank
+          - if current_graduate
+            br
+            | Har #{current_graduate.rank.name} fra
+            = link_to %Q{<font color="red">#{current_graduate.graduation.held_on}</font>}.html_safe, :controller => :graduations, :action => :index, :id => current_graduate.graduation.id
+          - else
+            br
+            | Har ingen grad fra før.
+          br
+          span style="color: red" Anbefalt neste grad er #{next_rank.label}.
+
+        - if not_in_group_age
+          br
+          span style="color: red" Feil gruppe!  #{graduate.graduation.group.name} er #{graduate.graduation.group.from_age}-#{graduate.graduation.group.to_age} år.
+
+        - if below_minimum_age
+          br
+          span style="color: red" Aldersgrense for #{graduate.rank.name} er #{graduate.rank.minimum_age} år.
+        - elsif not_in_rank_age
+          br
+          span style="color: red" Aldersgruppe for #{graduate.rank.name} er #{graduate.rank.group.from_age}-#{graduate.rank.group.to_age} år.
+        - future_graduates = mbr.future_graduates(graduate.graduation.held_on, graduate.graduation.martial_art)
+        - future_graduates.select { |fg| fg.rank.position < graduate.rank.position }.each do |fg|
+          br
+          | (konflikt: #{link_to %Q{<font color="red">#{fg.rank.name} #{fg.graduation.held_on}</font>}.html_safe, controller: :graduations, action: :index, id: fg.graduation.id})
+
+        - training_attendances = graduate.training_attendances
+        - minimum_attendances = graduate.minimum_attendances
+        - if training_attendances == 0
+          br
+          span style="color: red" Har ikke vært på trening siden #{current_graduate ? 'forrige gradering' : 'innmelding'} (#{graduate.training_start_date}).
+        - elsif training_attendances < minimum_attendances
+          br
+          ' Har bare vært på
+          => link_to "#{training_attendances} trening#{'er' if training_attendances > 1}", { :controller => :attendances, :action => :since_graduation, :id => mbr.id, :date => graduate.graduation.held_on }, :style => "color: red"
+          ' siden
+          => current_graduate ? 'forrige gradering' : 'innmelding'
+          | (#{graduate.training_start_date}).
+          br
+          ' Minimum er #{minimum_attendances}
+          - if minimum_attendances <= graduate.registered_trainings
+            ' av #{graduate.registered_trainings}
+          | registrerte treninger.
+
+        - if graduate.member.left_on && graduate.member.left_on < graduate.graduation.held_on
+          br
+          span style="color: red" Deltakeren er utmeldt siden #{graduate.member.left_on}.
+
+  - unless graduate.graduation.approved?
+    td
+      = link_to({ controller: :graduates, action: :destroy, id: graduate.id }, method: :delete, remote: true, data: {confirm: 'Er du sikker på at du vil fjerne denne kandidaten fra graderingen?'}) do
+        i.fa.fa-trash.text-danger title="Slett"
+
+javascript:
+    $('#graduate_#{graduate.id}').find("form").on('ajax:beforeSend', function (event, xhr, settings) {
+        $('#graduate_#{graduate.id}').replaceWith('<tr id="graduate_#{graduate.id}"><td>#{graduate.member.name}</td><td></td><td>Oppdaterer...</td><td></td></tr>')
+    });
