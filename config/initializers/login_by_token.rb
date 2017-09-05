@@ -16,7 +16,7 @@ module LoginByToken
       if (k = params['key'])
         if (um = UserMessage.includes(:user).where(key: CGI.unescape(k)).first) && um.user
           session[:user_id] = um.user_id
-          cookies.permanent.signed[:user_id] = um.user_id
+          cookies.permanent.signed[:user_id] = { value: um.user_id }.merge(COOKIE_SCOPE)
           req.delete_param('key')
           um.update!(read_at: Time.current)
           logger.info "User #{um.user.name} (#{um.user_id}) logged in by key."

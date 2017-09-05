@@ -12,7 +12,7 @@ class LoginController < ApplicationController
       self.current_user = user
       flash['notice'] = 'Velkommen!'
       if remember_me && remember_me == '1'
-        cookies.permanent.signed[:user_id] = { value: user.id, domain: :all, tld_length: 2 }
+        cookies.permanent.signed[:user_id] = { value: user.id }.merge(COOKIE_SCOPE)
       end
       unless member?
         if (member = Member.find_by(email: user.email))
@@ -41,7 +41,7 @@ class LoginController < ApplicationController
       flash.notice = "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{escaped_email}"
       redirect_to :login
     else
-      cookies.permanent.signed[:email] = { value: escaped_email, domain: :all, tld_length: 2 }
+      cookies.permanent.signed[:email] = { value: escaped_email }.merge(COOKIE_SCOPE)
       begin
         users = users_by_email - [current_user]
         if users.any?
@@ -91,8 +91,14 @@ class LoginController < ApplicationController
 
   def logout
     self.current_user = nil
+
+    # FIXME(uwe): Delete 2018-01-01
+    cookies.delete(:token)
+    cookies.delete(:token, COOKIE_SCOPE)
+    # EMXIF
+
     cookies.delete(:user_id)
-    cookies.delete(:user_id, domain: :all, tld_length: 2)
+    cookies.delete(:user_id, COOKIE_SCOPE)
     reset_session
     flash.notice = 'Velkommen tilbake!'
     back_or_redirect_to '/'

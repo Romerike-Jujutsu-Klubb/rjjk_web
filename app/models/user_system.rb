@@ -81,7 +81,7 @@ module UserSystem
   def login_from_params
     if (token = params[:key]) && (self.current_user = User.authenticate_by_token(token))
       params.delete 'key'
-      cookies.permanent.signed[:user_id] = { value: current_user.id, domain: :all, tld_length: 2 }
+      cookies.permanent.signed[:user_id] = { value: current_user.id }.merge(COOKIE_SCOPE)
     end
     current_user
   end
