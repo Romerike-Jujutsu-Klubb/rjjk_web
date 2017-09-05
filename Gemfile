@@ -58,6 +58,7 @@ gem 'prawn'
 # gem 'prawn-gmagick'
 gem 'prawn-table'
 gem 'puma'
+gem 'rack-attack'
 gem 'rails-assets-tether'
 gem 'rails-controller-testing' # Remove and convert to IntergratonTest instead
 gem 'rails-i18n'

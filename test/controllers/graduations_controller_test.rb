@@ -80,7 +80,7 @@ class GraduationsControllerTest < ActionController::TestCase
   def test_update
     post :update, params: { id: @first_id, graduation: { held_on: '2007-10-07' } }
     assert_response :redirect
-    assert_redirected_to action: :edit, id: @first_id, anchor: :form
+    assert_redirected_to action: :edit, id: @first_id, anchor: :form_tab
   end
 
   def test_destroy

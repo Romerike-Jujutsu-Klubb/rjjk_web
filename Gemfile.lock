@@ -283,6 +283,8 @@ GEM
     puma (3.10.0)
     puma (3.10.0-java)
     rack (2.0.3)
+    rack-attack (5.0.1)
+      rack
     rack-mini-profiler (0.10.5)
       rack (>= 1.2.0)
     rack-test (0.6.3)
@@ -502,6 +504,7 @@ DEPENDENCIES
   prawn
   prawn-table
   puma
+  rack-attack
   rack-mini-profiler
   rails (~> 5.0.1)
   rails-assets-tether

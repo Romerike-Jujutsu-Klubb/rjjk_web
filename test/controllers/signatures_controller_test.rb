@@ -28,7 +28,7 @@ class SignaturesControllerTest < ActionController::TestCase
       assert_no_errors :signature
     end
 
-    assert_redirected_to member_path(assigns(:signature).member, anchor: :tab_signatures)
+    assert_redirected_to member_path(assigns(:signature).member, anchor: :tab_signatures_tab)
   end
 
   test 'should show signature' do
