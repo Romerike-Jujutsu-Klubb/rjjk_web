@@ -16,16 +16,15 @@ class LoginControllerTest < ActionController::TestCase
 
     assert_logged_in users(:lars)
     assert_response :redirect
-    assert_equal @controller.url_for(controller: :welcome, action: :index, only_path: false),
-        @response.redirect_url
-    assert cookies[:token]
-    assert_not_equal 'random_token_string', cookies[:token]
+    assert_redirected_to controller: :welcome, action: :index
+    assert cookies[:user_id]
+    assert_equal ActiveRecord::FixtureSet.identify(:lars), cookies.signed[:user_id]
     assert_equal false, users(:lars).token_expired?
-    assert_not_equal 'random_token_string', users(:lars).security_token
+    assert_equal 'random_token_string', users(:lars).security_token
   end
 
   def test_autologin_with_token
-    @request.cookies['token'] = 'random_token_string'
+    cookies.signed['user_id'] = ActiveRecord::FixtureSet.identify(:lars)
     get :welcome
     assert_response :ok
     assert_logged_in users(:lars)

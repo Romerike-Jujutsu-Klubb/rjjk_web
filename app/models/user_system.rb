@@ -71,9 +71,9 @@ module UserSystem
   end
 
   def login_from_cookie
-    if (token = cookies[:token])
-      logger.info "Found login cookie: #{token}"
-      self.current_user = User.authenticate_by_token(token)
+    if (user_id = cookies.signed[:user_id])
+      logger.info "Found login cookie: #{user_id}"
+      self.current_user = User.find_by(id: user_id)
     end
     current_user
   end
@@ -81,7 +81,7 @@ module UserSystem
   def login_from_params
     if (token = params[:key]) && (self.current_user = User.authenticate_by_token(token))
       params.delete 'key'
-      cookies.permanent[:token] = { value: token, domain: :all, tld_length: 2 }
+      cookies.permanent.signed[:user_id] = { value: current_user.id, domain: :all, tld_length: 2 }
     end
     current_user
   end
