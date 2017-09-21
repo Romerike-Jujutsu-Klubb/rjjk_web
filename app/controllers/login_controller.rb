@@ -11,9 +11,7 @@ class LoginController < ApplicationController
     if (user = User.authenticate(params['user']['login'], params['user']['password']))
       self.current_user = user
       flash['notice'] = 'Velkommen!'
-      if remember_me && remember_me == '1'
-        cookies.permanent.signed[:user_id] = { value: user.id }.merge(COOKIE_SCOPE)
-      end
+      store_cookie if remember_me && remember_me == '1'
       unless member?
         if (member = Member.find_by(email: user.email))
           user.update! member_id: member.id
@@ -91,15 +89,7 @@ class LoginController < ApplicationController
 
   def logout
     self.current_user = nil
-
-    # FIXME(uwe): Delete 2018-01-01
-    # cookies.delete(:token)
-    cookies.delete(:token, COOKIE_SCOPE)
-    # EMXIF
-
-    # cookies.delete(:user_id)
-    cookies.delete(:user_id, COOKIE_SCOPE)
-
+    clear_cookie
     reset_session
     flash.notice = 'Velkommen tilbake!'
     back_or_redirect_to '/'

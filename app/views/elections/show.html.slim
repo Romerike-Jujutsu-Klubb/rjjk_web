@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  b Opprettet:
+  = @election.created_at
+p
+  b Annual meeting:
+  = @election.annual_meeting_id
+p
+  b Role:
+  = @election.role_id
+p
+  b Member:
+  = @election.member_id
+p
+  b Resigned on:
+  = @election.resigned_on
+
+=> link_to 'Edit', edit_election_path(@election)
+' |
+= link_to 'Back', elections_path

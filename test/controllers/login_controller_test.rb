@@ -17,14 +17,14 @@ class LoginControllerTest < ActionController::TestCase
     assert_logged_in users(:lars)
     assert_response :redirect
     assert_redirected_to controller: :welcome, action: :index
-    assert cookies[:user_id]
-    assert_equal ActiveRecord::FixtureSet.identify(:lars), cookies.signed[:user_id]
+    assert cookies[COOKIE_NAME]
+    assert_equal ActiveRecord::FixtureSet.identify(:lars), cookies.signed[COOKIE_NAME]
     assert_equal false, users(:lars).token_expired?
     assert_equal 'random_token_string', users(:lars).security_token
   end
 
   def test_autologin_with_token
-    cookies.signed['user_id'] = ActiveRecord::FixtureSet.identify(:lars)
+    cookies.signed[COOKIE_NAME] = ActiveRecord::FixtureSet.identify(:lars)
     get :welcome
     assert_response :ok
     assert_logged_in users(:lars)
@@ -192,8 +192,10 @@ class LoginControllerTest < ActionController::TestCase
 
   def test_logout
     login(:lars)
+    assert_equal({ 'user_id_test' => 'MjI4ODU1MTA5--a507666baf2289175c01209854e9cd4ff7504df2' }, cookies.to_h)
     get :logout
     assert_not_logged_in
+    assert_equal({ 'user_id_test' => nil }, cookies.to_h)
   end
 
   private

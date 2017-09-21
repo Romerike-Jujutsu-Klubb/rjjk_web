@@ -10,8 +10,7 @@ class Group < ApplicationRecord
   belongs_to :martial_art
   has_one :current_semester,
       -> {
-        references(:semesters).includes(:semester)
-            .where('? BETWEEN semesters.start_on AND semesters.end_on', Date.current)
+        joins(:semester).where('? BETWEEN semesters.start_on AND semesters.end_on', Date.current)
       },
       class_name: :GroupSemester
   has_one :next_graduation,
@@ -79,9 +78,8 @@ class Group < ApplicationRecord
   delegate :next_practice, to: :next_schedule
 
   def instructors
-    group_schedules.map { |gs| gs.group_instructors.active.includes(:member) }.flatten
-        .map(&:member).uniq
-        .sort_by { |m| -(m.current_rank.try(:position) || -99) }
+    group_schedules.map { |gs| gs.group_instructors.active.includes(:member) }.flatten.map(&:member)
+        .uniq.sort_by { |m| -(m.current_rank.try(:position) || -99) }
   end
 
   def trials

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module UserSystem
+  SESSION_KEY = :user_id
+  COOKIE_NAME = :"user_id_#{Rails.env}"
   ADMIN_ROLE = 'ADMIN'
 
   CONFIG = {
@@ -70,18 +72,34 @@ module UserSystem
     redirect_to login_path
   end
 
+  def store_cookie
+    cookies.signed[COOKIE_NAME] = { value: current_user.id, expires: 30.days.from_now }
+        .merge(COOKIE_SCOPE)
+  end
+
   def login_from_cookie
-    if (user_id = cookies.signed[:user_id])
+    if (user_id = cookies.signed[COOKIE_NAME])
       logger.info "Found login cookie: #{user_id}"
       self.current_user = User.find_by(id: user_id)
     end
     current_user
   end
 
+  def clear_cookie
+    cookies.delete(COOKIE_NAME, COOKIE_SCOPE)
+  end
+
   def login_from_params
-    if (token = params[:key]) && (self.current_user = User.authenticate_by_token(token))
-      params.delete 'key'
-      cookies.permanent.signed[:user_id] = { value: current_user.id }.merge(COOKIE_SCOPE)
+    if (token = params[:key])
+      if (self.current_user = User.authenticate_by_token(token)) ||
+            (um = UserMessage.includes(:user).find_by(key: CGI.unescape(token))) &&
+                  (self.current_user = um.user)
+        params.delete(:key)
+        store_cookie
+        um&.update!(read_at: Time.current) if um && !um.read_at
+        logger.info "User #{current_user.name} (#{current_user.id}) logged in by key."
+      end
+
     end
     current_user
   end
@@ -104,7 +122,7 @@ module UserSystem
 
   def store_current_user_in_thread
     return true if login_from_params
-    self.current_user = User.find_by(id: session[:user_id]) if session[:user_id]
+    self.current_user = User.find_by(id: session[SESSION_KEY]) if session[SESSION_KEY]
     login_from_cookie unless current_user
     true
   end
@@ -130,7 +148,7 @@ module UserSystem
   end
 
   def current_user=(user)
-    session[:user_id] = (user&.id) if defined?(session)
+    session[SESSION_KEY] = (user&.id) if defined?(session)
     Thread.current[:user] = user
   end
 end

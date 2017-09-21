@@ -15,20 +15,29 @@ MiniTest::Reporters.use!
 TEST_TIME = Time.zone.local(2013, 10, 17, 18, 46, 0) # Week 42, thursday
 
 class ActiveSupport::TestCase
+  include UserSystem
+
   fixtures :all
 
   setup { Timecop.freeze(TEST_TIME) }
   teardown { Timecop.return }
 
+  if Bullet.enable?
+    Rails.backtrace_cleaner.remove_silencers!
+    setup { Bullet.start_request }
+    teardown { Bullet.end_request }
+  end
+
   def login(login = :admin)
-    u = users(login)
-    request.session[:user_id] = u.id if defined?(request)
-    Thread.current[:user] = u
+    user = users(login)
+    self.current_user = user
+    store_cookie if respond_to? :cookies
+    user
   end
 
   def logout
-    request.session.delete(:user_id)
-    Thread.current[:user] = nil
+    self.current_user = nil
+    clear_cookie
   end
 
   def assert_no_errors(symbol)
@@ -97,5 +106,11 @@ class ActionMailer::TestCase
     end
     assert_equal initial + count, UserMessage.pending.count,
         -> { UserMessage.all.map(&:inspect).to_s }
+  end
+end
+
+class Rack::Test::CookieJar
+  def signed
+    self
   end
 end

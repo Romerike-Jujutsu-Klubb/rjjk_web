@@ -196,7 +196,7 @@ blocking users: #{blocking_users.inspect}"
   end
 
   def current_graduate(martial_art, date = Date.current)
-    graduates.sort_by { |g| -g.rank.position }
+    graduates.includes(:graduation, :rank).sort_by { |g| -g.rank.position }
         .find do |g|
       g.passed? && g.graduation.held_on < date &&
           (martial_art.nil? || g.rank.martial_art_id == martial_art.id)

@@ -73,16 +73,15 @@ class ApplicationController < ActionController::Base
 
     unless @groups
       @groups = Group.active(Date.current).order('to_age, from_age DESC')
-          .includes(:current_semester, :next_semester).to_a
+          .includes(:current_semester, :group_schedules).to_a
     end
 
     unless @layout_events # rubocop: disable Style/GuardClause
-      @layout_events = Event.includes(:attending_invitees)
+      @layout_events = Event
           .where('(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)',
               Date.current, Date.current)
           .order('start_at, end_at').limit(5).to_a
-      @layout_events += Graduation.includes(:graduates)
-          .where('held_on >= ?', Date.current).to_a
+      @layout_events += Graduation.where('held_on >= ?', Date.current).to_a
       @groups.select(&:school_breaks).each do |g|
         if (first_session = g.current_semester&.first_session) && first_session >= Date.current
           @layout_events << Event.new(name: "Oppstart #{g.name}", start_at: first_session)
