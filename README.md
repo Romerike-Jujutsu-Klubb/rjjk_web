@@ -1,6 +1,8 @@
 RJJK Web
 ========
 
+[![Build Status](https://travis-ci.org/Romerike-Jujutsu-Klubb/rjjk_web.svg?branch=master)](https://travis-ci.org/Romerike-Jujutsu-Klubb/rjjk_web)
+
 ## Huskeliste
 
 * FIXME(uwe):  Feil i import fra Brønnøysund!
