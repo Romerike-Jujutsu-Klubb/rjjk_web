@@ -1,4 +1,4 @@
-.post
+.post.mb-4
   - title = news_item.title
   - if news_item.publication_state != NewsItem::PublicationState::PUBLISHED
     - title += " (#{t news_item.publication_state.downcase})"
@@ -25,14 +25,16 @@
           = detour_to('Les mer...', news_item)
 
     - if user?
-      ul.controls
+      ul.controls.mb-0
         li.mr-2 id="like_#{news_item.id}" = link_to fa_icon(:'thumbs-o-up', text: 'Liker'), like_news_item_path(news_item), method: :post
         li = detour_to 'Endre', edit_news_item_path(news_item), class: :edit
-        li = detour_to 'Utløpt', {controller: :news, action: :expire, id: news_item}, class: :edit, confirm: 'Er du sikker?', method: :post
-        li = detour_to 'Slett', {controller: :news, action: :destroy, id: news_item}, class: :edit, confirm: 'Er du sikker?', method: :delete
+        - unless news_item.expired?
+          li = detour_to 'Utløpt', {controller: :news, action: :expire, id: news_item}, class: :edit, data: {confirm: 'Er du sikker?'}, method: :post
+        - unless full || focus
+          li = detour_to 'Flytt til toppen', {controller: :news, action: :move_to_top, id: news_item}, class: :edit, method: :post
+        li = detour_to 'Slett', {controller: :news, action: :destroy, id: news_item}, class: :edit, data: {confirm: 'Er du sikker?'}, method: :delete
         - if admin?
           li = back_or_link_to 'Tilbake', nil, class: :edit
 
       - if news_item.news_item_likes.any?
-        javascript:
-          $('#like_#{news_item.id}').tooltip({'title': '#{news_item.likes_message}'});
+        div = news_item.likes_message

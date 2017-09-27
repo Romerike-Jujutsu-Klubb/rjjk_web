@@ -68,6 +68,17 @@ class NewsController < ApplicationController
     back_or_redirect_to action: :index
   end
 
+  def move_to_top
+    n = NewsItem.find(params[:id])
+    n.publish_at = Time.current
+    n.expire_at = nil if n.expire_at&.< Time.current
+    if n.publication_state == NewsItem::PublicationState::EXPIRED
+      n.publication_state = NewsItem::PublicationState::PUBLISHED
+    end
+    n.save!
+    back_or_redirect_to action: :index
+  end
+
   def destroy
     NewsItem.find(params[:id]).destroy
     back_or_redirect_to action: :index

@@ -19,8 +19,6 @@ Rails.application.routes.draw do
   match 'login/signup', via: %i[get post]
   get 'login/welcome'
   get 'map' => 'map#index'
-  get 'news/list'
-  post 'news/expire' => 'news#expire'
   get 'pensum' => 'ranks#pensum'
   get 'pensum/pdf' => 'ranks#pdf'
   get 'search' => 'search#index'
@@ -154,7 +152,12 @@ Rails.application.routes.draw do
   resources :news_item_likes
 
   resources :news_items, controller: :news, path: :news do
-    member { post :like }
+    collection { get :list }
+    member do
+      post :expire
+      post :like
+      post :move_to_top
+    end
   end
 
   resources :nkf_members do

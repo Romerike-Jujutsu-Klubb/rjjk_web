@@ -31,7 +31,8 @@ class NewsItem < ApplicationRecord
   validates :publication_state, inclusion: { in: PublicationState.constants.map(&:to_s) }
 
   def self.front_page_items
-    (admin? ? self : current).order('created_at DESC').limit(10).includes(creator: :member).to_a
+    (admin? ? self : current).order('COALESCE(publish_at, created_at) DESC').limit(10)
+        .includes(creator: :member).to_a
   end
 
   def initialize(*args)
@@ -43,6 +44,10 @@ class NewsItem < ApplicationRecord
     users = news_item_likes.map(&:user).sort_by { |u| u == current_user ? 0 : 1 }
     names = users.map { |u| u == current_user ? 'Du' : u.first_name }
     "#{names[0..-2].join(', ')} #{'og' if names.size > 1} #{names[-1]} liker dette."
+  end
+
+  def expired?
+    (publication_state == PublicationState::EXPIRED) || (expire_at&.< Time.current)
   end
 
   private
