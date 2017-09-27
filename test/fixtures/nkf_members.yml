@@ -8,6 +8,7 @@ erik:
   innmeldtdato: 01.05.1996
   gren_stilart_avd_parti___gren_stilart_avd_parti: Kei Wa Ryu
   epost: erik@example.net
+  medlemsstatus: A
 uwe:
   fornavn: Uwe
   etternavn: Kubosch
@@ -19,6 +20,7 @@ uwe:
   gren_stilart_avd_parti___gren_stilart_avd_parti: Kei Wa Ryu
   medlemsnummer: <%=NkfAgent::NKF_USERNAME%>
   epost: uwe@example.net
+  medlemsstatus: A
   postnr: 1479
 lars:
   adresse_2: Torsvei 8b
@@ -32,6 +34,7 @@ lars:
   postnr: 1472
   medlemsnummer: 40000993
   epost: lars@example.net
+  medlemsstatus: A
 sebastian:
   member: sebastian
   medlemsnummer: 1012618

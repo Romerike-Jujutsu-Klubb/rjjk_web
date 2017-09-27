@@ -4,10 +4,22 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   def test_index
+    login(:admin)
     get :index
+    assert_response :success
+  end
+
+  def test_show
+    get :show, params: { id: login(:admin).id }
+    assert_response :success
   end
 
   def test_edit
+    get :edit, params: { id: login(:admin).id }
+    assert_response :success
+  end
+
+  def test_update
     tesla = login(:admin)
     post :update, params: { id: tesla.id, user: { first_name: 'Bob', form: 'edit' } }
     tesla.reload
