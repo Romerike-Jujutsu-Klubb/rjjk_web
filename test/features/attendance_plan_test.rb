@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'capybara_setup'
+require 'feature_test'
 
-class AttendancePlanTest < ActionDispatch::IntegrationTest
+class AttendancePlanTest < FeatureTest
   setup do
     screenshot_section :attendance
     visit_with_login '/mitt/oppmote'

@@ -41,4 +41,13 @@ class SurveySender
       request.update! reminded_at: Time.current
     end
   end
+
+  def self.notify_new_ansers
+    new_answers = SurveyAnswer.where('created_at >= ?', 1.week.ago).to_a
+    last_year = SurveyAnswer.where('created_at >= ?', 1.year.ago).to_a
+    total = SurveyAnswer.all.to_a
+    [Role[:Hovedinstruktør], Role[:Medlemsansvarlig]].compact.map(&:user).each do |user|
+      SurveyMailer.new_answers(user, new_answers, last_year, total).store(user)
+    end
+  end
 end

@@ -1,4 +1,4 @@
-.header style='position:relative'
+.header.pt-lg-5 style='position:relative'
   - if flash[:notice]
     .fixed-bottom.mx-3.text-left style='position: absolute;font-size:1rem;line-height:1.5'
       .alert.alert-warning.alert-dismissible.fade.show role="alert"
@@ -9,7 +9,7 @@
   = link_to root_path, class: "#{logo_hide_class} float-left b-0 p-0 m-0 bg-transparent", style: 'border:0;background: transparent'
     = image_tag('rjjk_logo_&_txt_320.png', id: :logo_img_top, style: 'width:150px;height:150px;position:relative;top:0;left: 0')
 
-  .hidden-sm-down style="padding-top: 50px" Romerike Jujutsu Klubb
+  .d-none.d-md-inline Romerike Jujutsu Klubb
 
   .buttons
     - if user?

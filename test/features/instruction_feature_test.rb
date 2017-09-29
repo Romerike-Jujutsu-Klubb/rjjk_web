@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'capybara_setup'
+require 'feature_test'
 
-class InstructionFeatureTest < ActionDispatch::IntegrationTest
+class InstructionFeatureTest < FeatureTest
   def test_index
     login_and_visit '/'
     find('a', text: 'Instruksjon').click

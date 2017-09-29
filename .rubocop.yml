@@ -44,6 +44,9 @@ Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
   IndentationWidth: 4
 
+#Lint/RescueWithoutErrorClass:
+#  Enabled: false
+
 Metrics/BlockLength:
   Exclude:
     - config/environments/development.rb

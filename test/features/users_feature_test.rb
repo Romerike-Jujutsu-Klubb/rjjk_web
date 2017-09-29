@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'capybara_setup'
+require 'feature_test'
 
-class UsersFeatureTest < ActionDispatch::IntegrationTest
+class UsersFeatureTest < FeatureTest
   def setup
     screenshot_section :users
   end

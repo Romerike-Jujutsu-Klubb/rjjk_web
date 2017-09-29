@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'capybara_setup'
+require 'feature_test'
 
-class EmbuIntegrationTest < ActionDispatch::IntegrationTest
+class EmbuIntegrationTest < FeatureTest
   setup { screenshot_section :embus }
 
   def test_display_my_embu

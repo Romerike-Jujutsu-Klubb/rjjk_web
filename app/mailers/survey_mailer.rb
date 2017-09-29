@@ -21,4 +21,12 @@ class SurveyMailer < ApplicationMailer
     @email_url = { controller: :survey_requests, action: :answer_form, id: survey_request.id }
     mail to: survey_request.member.email, subject: @title
   end
+
+  def new_answers(user, new_answers, last_year, total)
+    @user = user
+    @new_answers = new_answers
+    @last_year = last_year
+    @total = total
+    mail to: user.emails, subject: 'Nye svar på spørreundersøkelser'
+  end
 end

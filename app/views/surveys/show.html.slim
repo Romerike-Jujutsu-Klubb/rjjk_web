@@ -28,8 +28,10 @@ h3.mt-3 Spørsmål
     - answer_hash = Hash.new(0)
     - sq.survey_answers.map(&:answers).each do |answers|
       - answers.each{|k,v| answer_hash[k] += 1}
-    - answer_hash.sort_by(&:second).reverse.each do |answer, count|
+    - answer_hash = answer_hash.sort_by(&:second).reverse
+    - answer_hash.each do |answer, count|
       span.badge.badge-info> = "#{answer}: #{count}"
+    = pie_chart answer_hash
 
 .row
   .col-md-12

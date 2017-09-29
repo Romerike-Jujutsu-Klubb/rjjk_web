@@ -1,0 +1,9 @@
+h2 = @title
+p = @survey_request.survey.header
+
+- @survey_request.survey.survey_questions.order(:position).each do |question|
+  p = question.title
+
+p
+  ' For å svare på spørsmålene, kan du følge denne linken:
+  = link_to url_for(@email_url.except(:key, :email)), @email_url

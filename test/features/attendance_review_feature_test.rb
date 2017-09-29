@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'capybara_setup'
+require 'feature_test'
 
-class AttendanceReviewFeatureTest < ActionDispatch::IntegrationTest
+class AttendanceReviewFeatureTest < FeatureTest
   setup { screenshot_section :attendance }
 
   def test_review_displays_old_attendance

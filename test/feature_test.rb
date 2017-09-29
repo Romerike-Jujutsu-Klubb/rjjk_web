@@ -10,9 +10,8 @@ require 'capybara/screenshot/diff'
 # from. We hence use DatabaseCleaner to truncate our test database.
 # DatabaseCleaner.strategy = :truncation
 
-class ActionDispatch::IntegrationTest
-  include Capybara::DSL
-  extend Capybara::Screenshot::Os
+class FeatureTest < ActionDispatch::IntegrationTest
+  include Capybara::Screenshot::Diff
 
   WINDOW_SIZE = [1024, 768].freeze
 

@@ -35,6 +35,7 @@ gem 'bootstrap_form', github: 'bootstrap-ruby/rails-bootstrap-forms', branch: 'b
 # gem "bootstrap-switch-rails"
 # gem "bootstrap-wysihtml5-rails"
 gem 'capistrano3-puma'
+gem 'chartkick'
 gem 'chosen-rails'
 gem 'coffee-rails'
 gem 'dynamic_form'

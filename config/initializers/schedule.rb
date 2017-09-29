@@ -87,6 +87,7 @@ else
     scheduler.cron('0 4 * * mon') { NkfMemberTrialReminder.notify_overdue_trials }
     scheduler.cron('0 6 * * mon') { SemesterReminder.notify_missing_session_dates }
     scheduler.cron('0 7 * * mon') { PublicRecordImporter.import_public_record }
+    scheduler.cron('0 8 * * mon') { SurveySender.notify_new_ansers }
 
     Rails.logger.info('Scheduler started')
   rescue => e

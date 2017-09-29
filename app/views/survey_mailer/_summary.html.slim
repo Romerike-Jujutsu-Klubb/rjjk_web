@@ -1,0 +1,14 @@
+ul
+  - answers.group_by(&:survey_question).group_by{|question, answers| question.survey}.each do |survey, questions|
+    li
+      h3 = survey.title
+      ul
+        - questions.each do |question, answers|
+          li
+            h4 = question.title
+            ul
+              - answers.group_by(&:answer).each do |answer, instances|
+                - answer_text = YAML.load(answer)
+                - if answer_text.is_a? Array
+                  - answer_text = (answer_text.reject(&:blank?) - ['annet']).join(', ')
+                li #{instances.size} : #{answer_text}

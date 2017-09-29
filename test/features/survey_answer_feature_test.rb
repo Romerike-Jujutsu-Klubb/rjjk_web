@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'capybara_setup'
+require 'feature_test'
 
-class SurveyAnswerFeatureTest < ActionDispatch::IntegrationTest
+class SurveyAnswerFeatureTest < FeatureTest
   def test_show_form
     id = survey_requests(:sent).id
     visit_with_login "/svar/#{id}", user: :lars

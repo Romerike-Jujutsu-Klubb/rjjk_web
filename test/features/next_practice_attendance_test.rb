@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'capybara_setup'
+require 'feature_test'
 
-class NextPracticeAttendanceTest < ActionDispatch::IntegrationTest
+class NextPracticeAttendanceTest < FeatureTest
   def setup
     login_and_visit '/'
   end

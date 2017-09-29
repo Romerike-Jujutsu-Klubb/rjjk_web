@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'capybara_setup'
+require 'feature_test'
 
 class CanAccessHomeTest < Capybara::Rails::TestCase
   test 'sanity' do

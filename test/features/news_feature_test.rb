@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'capybara_setup'
+require 'feature_test'
 
-class NewsFeatureTest < ActionDispatch::IntegrationTest
+class NewsFeatureTest < FeatureTest
   def test_index_public
     visit '/news'
     assert_current_path '/news'

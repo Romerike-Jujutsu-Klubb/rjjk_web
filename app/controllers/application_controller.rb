@@ -71,10 +71,8 @@ class ApplicationController < ActionController::Base
       @other_absentees = attendances_next_practice - @other_attendees
     end
 
-    unless @groups
-      @groups = Group.active(Date.current).order('to_age, from_age DESC')
-          .includes(:current_semester, :group_schedules).to_a
-    end
+    @groups ||= Group.active(Date.current).order('to_age, from_age DESC')
+        .includes(:current_semester, :group_schedules).to_a
 
     unless @layout_events # rubocop: disable Style/GuardClause
       @layout_events = Event

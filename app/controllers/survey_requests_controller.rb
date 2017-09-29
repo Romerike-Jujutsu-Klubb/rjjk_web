@@ -66,7 +66,7 @@ class SurveyRequestsController < ApplicationController
     #     permit(:comment, :completed_at,
     #     survey_answers_attributes: [:answer, :id, :survey_question_id])
 
-    params[:survey_request][:survey_answers_attributes].each do |_i, values|
+    params[:survey_request][:survey_answers_attributes].each_value do |values|
       logger.error "values: #{values.inspect}"
       free_text_answer = values.delete(:answer_free)
       logger.error "free_text_answer: #{free_text_answer.inspect}"

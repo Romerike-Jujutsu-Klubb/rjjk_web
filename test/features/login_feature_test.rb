@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'capybara_setup'
+require 'feature_test'
 
-class LoginFeatureTest < ActionDispatch::IntegrationTest
+class LoginFeatureTest < FeatureTest
   setup { screenshot_section :session }
   def test_login_with_password
     screenshot_group :login_with_password

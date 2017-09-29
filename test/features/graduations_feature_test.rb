@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'capybara_setup'
+require 'feature_test'
 
-class GraduationsFeatureTest < ActionDispatch::IntegrationTest
+class GraduationsFeatureTest < FeatureTest
   setup { screenshot_section :graduations }
 
   def test_show

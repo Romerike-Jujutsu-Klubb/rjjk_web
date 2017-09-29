@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'capybara_setup'
+require 'feature_test'
 
-class AttendanceFormTest < ActionDispatch::IntegrationTest
+class AttendanceFormTest < FeatureTest
   def test_index
     login_and_visit '/'
     click_link 'Oppmøtelister'

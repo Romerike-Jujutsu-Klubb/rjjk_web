@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 # frozen_string_literal: true
 
-PROJECT_DIR = File.expand_path(File.dirname(__FILE__))
+PROJECT_DIR = __dir__
 # EXPORT_DIR = '/media/Lexar'
 EXPORT_DIR = '/media/USBBOOT'
 # EXPORT_DIR = '/tmp'
