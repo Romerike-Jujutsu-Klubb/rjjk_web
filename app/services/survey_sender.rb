@@ -44,6 +44,7 @@ class SurveySender
 
   def self.notify_new_ansers
     new_answers = SurveyAnswer.where('created_at >= ?', 1.week.ago).to_a
+    return if new_answers.empty?
     last_year = SurveyAnswer.where('created_at >= ?', 1.year.ago).to_a
     total = SurveyAnswer.all.to_a
     [Role[:Hovedinstruktør], Role[:Medlemsansvarlig]].compact.map(&:user).each do |user|

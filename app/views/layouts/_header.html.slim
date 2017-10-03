@@ -1,4 +1,4 @@
-.header.pt-lg-5 style='position:relative'
+.header style='position:relative'
   - if flash[:notice]
     .fixed-bottom.mx-3.text-left style='position: absolute;font-size:1rem;line-height:1.5'
       .alert.alert-warning.alert-dismissible.fade.show role="alert"
@@ -6,12 +6,12 @@
           span aria-hidden="true" &times;
         = textalize flash[:notice]
   - logo_hide_class = ('d-lg-none' unless @content_width)
-  = link_to root_path, class: "#{logo_hide_class} float-left b-0 p-0 m-0 bg-transparent", style: 'border:0;background: transparent'
+  = link_to root_path, class: "#{logo_hide_class} float-left b-0 p-0 m-0 bg-transparent"
     = image_tag('rjjk_logo_&_txt_320.png', id: :logo_img_top, style: 'width:150px;height:150px;position:relative;top:0;left: 0')
 
-  .d-none.d-md-inline Romerike Jujutsu Klubb
+  .d-none.d-md-block.mt-md-5.mr-md-5.mb-1 Romerike Jujutsu Klubb
 
-  .buttons
+  .buttons.mt-2.mt-sm-5.mt-md-0
     - if user?
       = link_to 'Logg på NKF', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login', onclick: 'return !window.open(this.href)'
       = link_to 'Gruppe', 'https://www.facebook.com/groups/romerikejjk', onclick: 'return !window.open(this.href)', \
