@@ -32,6 +32,7 @@ class Group < ApplicationRecord
   before_validation { |r| r.color = nil if r.color.blank? }
 
   validates :from_age, :martial_art, :name, :to_age, presence: true
+  validates :contract, length: { maximum: 32 }
 
   def full_name
     "#{"#{martial_art.name} " if martial_art.name != 'Kei Wa Ryu'}#{name}"

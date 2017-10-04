@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170904131323) do
+ActiveRecord::Schema.define(version: 20171004163705) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20170904131323) do
     t.date     'closed_on'
     t.integer  'monthly_price'
     t.integer  'yearly_price'
-    t.string   'contract',       limit: 16
+    t.string   'contract',       limit: 32
     t.string   'summary',        limit: 255
     t.text     'description'
     t.boolean  'school_breaks'
