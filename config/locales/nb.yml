@@ -46,6 +46,7 @@ nb:
         group_notification: Gruppevarsel
       group:
         from_age: Nedre aldersgrense
+        name: Navn
         to_age: Øvre aldersgrense
       group_instructor:
         assistant: Hjelpeinstruktør
