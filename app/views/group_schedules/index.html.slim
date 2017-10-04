@@ -1,0 +1,21 @@
+= link_to new_group_schedule_path, class: 'float-right btn btn-primary'
+  i.fa.fa-plus>
+  | Ny treningstid
+
+h1 Treningstider
+
+table.table
+  tr
+    th align="left" Gruppe
+    th Ukedag
+    th Start
+    th Slutt
+
+  - for group_schedule in @group_schedules
+    tr
+      td = group_schedule.group.full_name
+      td align="center" = wday group_schedule.weekday
+      td = t group_schedule.start_at
+      td = t group_schedule.end_at
+      td = link_to 'Endre', edit_group_schedule_path(group_schedule)
+      td = link_to 'Slett', group_schedule, data: {confirm: 'Sikker?'}, method: :delete

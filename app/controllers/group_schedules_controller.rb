@@ -32,7 +32,7 @@ class GroupSchedulesController < ApplicationController
 
   def new
     @group_schedule ||= GroupSchedule.new
-    @groups = Group.all
+    @groups = Group.active.to_a
 
     respond_to do |format|
       format.html { render action: :new }

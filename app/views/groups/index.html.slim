@@ -1,0 +1,35 @@
+= detour_to new_group_path, class: 'float-right btn btn-primary'
+  i.fa.fa-plus>
+  | Ny gruppe
+
+h1 Grupper
+
+table.table
+  tr
+    th Navn
+    th Fra alder
+    th Til alder
+
+  - for group in @groups
+    tr
+      td = link_to group.name, edit_group_path(group)
+      td = group.from_age
+      td = group.to_age
+
+h3 Inaktive grupper
+
+table.table
+  tr
+    th Navn
+    th Gren
+    th Fra alder
+    th Til alder
+    th Avsluttet
+
+  - for group in @closed_groups
+    tr
+      td = link_to group.name, edit_group_path(group)
+      td = link_to group.martial_art.name, edit_martial_art_path(group.martial_art)
+      td = group.from_age
+      td = group.to_age
+      td = group.closed_on

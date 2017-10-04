@@ -42,6 +42,7 @@ class GroupsController < ApplicationController
 
   def create
     @group = Group.new(params[:group])
+    @group.martial_art_id ||= MartialArt::KWR_ID
     @group.update_prices
     if @group.save
       flash[:notice] = 'Group was successfully created.'
