@@ -20,4 +20,19 @@ class GraduationsFeatureTest < FeatureTest
     find('a.nav-link', text: 'Dato / Gruppe').click
     screenshot :form
   end
+
+  def test_new
+    screenshot_group :new
+    visit_with_login graduations_path
+    find("a[href='#{new_graduation_path}']").click
+    screenshot :form
+    click_link_or_button 'Lagre'
+    screenshot :form_errors
+  end
+
+  def test_new_with_params
+    screenshot_group :new_with_params
+    visit_with_login new_graduation_path(graduation: {group_id: groups(:panda).id, group_notification: true, held_on: '2013-10-21'})
+    screenshot :form
+  end
 end
