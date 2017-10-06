@@ -15,12 +15,14 @@ tr id="graduate_#{graduate.id}"
   td
     = link_to "#{fn} #{ln}", :controller => :members, :action => :edit, :id => mbr.id
     - if below_minimum_age || not_in_rank_age || not_in_group_age
+      '
       | (<span style="color: red; white-space: nowrap">#{member_age} år</span>)
     - if graduate.changed?
+      '
       | &nbsp;<span class="text-danger">* IKKE LAGRET! *</span>
   - if graduate.graduation.locked? && !graduate.graduation.approved?
     td
-      - if false && graduate.confirmed_at
+      - if graduate.confirmed_at
         span.fa.fa-thumbs-up data-toggle="tooltip" title="#{graduate.member.first_name} bekreftet #{graduate.confirmed_at.strftime('%F %R')}"
       - elsif graduate.invitation_sent_at
         span.fa.fa-question data-toggle="tooltip" title="Invitert #{graduate.invitation_sent_at.strftime('%F %R')}"
