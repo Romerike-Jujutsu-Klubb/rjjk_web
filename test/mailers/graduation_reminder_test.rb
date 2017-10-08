@@ -166,6 +166,7 @@ class GraduationReminderTest < ActionMailer::TestCase
 
   def test_congratulate_graduates
     graduations(:voksne).update! held_on: 1.week.ago
+    ranks(:shodan).update! standard_months: 0
 
     assert_mail_stored(2) { GraduationReminder.congratulate_graduates }
 
@@ -173,11 +174,11 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_equal 'Gratulerer med bestått gradering!', mail.subject
-    assert_match(/Vi har registrert din gradering 2013-10-10 til 1. kyu brunt belte./, mail.body)
+    assert_match('Vi har registrert din gradering 2013-10-10 til 1. kyu brunt belte.', mail.body)
     assert_match(
-        /Neste grad for deg er shodan svart belte.  Frem til da kreves 80-160 treninger./,
-        mail.body
+        'Neste grad for deg er shodan svart belte.  Frem til da kreves 0-0 treninger.', mail.body
     )
+    assert_match('Vi har registrert 0 treninger på deg siden forrige gradering.', mail.body)
 
     mail = UserMessage.pending[1]
     assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to

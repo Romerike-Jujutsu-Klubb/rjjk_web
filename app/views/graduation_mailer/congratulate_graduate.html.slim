@@ -22,5 +22,5 @@ p
   - attendance_count = @graduate.member.attendances_since_graduation.count
   - if attendance_count >= attendance_minimum / 2
     ' Vi har registrert #{attendance_count} treninger på deg siden
-    = @member.current_rank ? 'forrige gradering' : 'du startet'
+    = @graduate.member.current_rank ? 'forrige gradering' : 'du startet'
     | .
