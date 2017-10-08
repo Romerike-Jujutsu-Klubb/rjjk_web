@@ -34,7 +34,7 @@ class Event < ApplicationRecord
       r.invitees = r.invitees.gsub(/\s+/, ' ')
       r.invitees = r.invitees.split(/\s*,\s*/).sort_by(&:upcase).join(",\n") + "\n"
       r.invitees.split(/\s*,\s*/).each do |inv|
-        if inv =~ /^(.*) <(.*@.*)>$/
+        if inv =~ /^(.*)\s*<(.*@.*)>$/
           name = $1
           email = $2
         elsif inv =~ /^(.*@.*)$/

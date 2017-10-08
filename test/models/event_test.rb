@@ -3,8 +3,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class EventTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  def test_truth
-    assert true
+  def test_update_with_invities
+    events(:one).update! invitees: 'user@example.com,User <user@@example.com>,Uwe'
   end
 end
