@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.dirname(__FILE__) + '/../test_helper'
+require 'controller_test'
 
 class TrialAttendancesControllerTest < ActionController::TestCase
   fixtures :group_schedules, :nkf_member_trials

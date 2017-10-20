@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GroupSemester < ApplicationRecord
-  belongs_to :chief_instructor, class_name: :Member
+  belongs_to :chief_instructor, class_name: :Member, required: false
   belongs_to :group
   belongs_to :semester
   has_many :group_instructors, dependent: :destroy

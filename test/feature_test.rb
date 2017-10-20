@@ -41,7 +41,14 @@ class FeatureTest < ActionDispatch::IntegrationTest
 
   teardown do
     DatabaseCleaner.clean # Truncate the database
-    Capybara.reset_sessions! # Forget the (simulated) browser state
+    # Capybara.reset_sessions! # Forget the (simulated) browser state
+    visit logout_path
+    # clear_cookie
+  end
+
+  def clear_cookie
+    cookies.delete(COOKIE_NAME)
+    cookies.delete(:email)
   end
 
   def visit_with_login(path, redirected_path: path, user: :admin)

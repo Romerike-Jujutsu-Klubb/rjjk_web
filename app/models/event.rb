@@ -6,7 +6,7 @@ class Event < ApplicationRecord
   has_one :invitation, class_name: 'EventMessage'
   has_one :graduation # optional
 
-  has_many :attending_invitees, -> { where(will_attend: true) }, class_name: EventInvitee
+  has_many :attending_invitees, -> { where(will_attend: true) }, class_name: :EventInvitee
   has_many :event_groups
   has_many :event_invitees, dependent: :destroy
   has_many :event_messages, dependent: :destroy

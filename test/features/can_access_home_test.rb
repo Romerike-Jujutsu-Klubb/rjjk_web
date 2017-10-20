@@ -2,10 +2,9 @@
 
 require 'feature_test'
 
-class CanAccessHomeTest < Capybara::Rails::TestCase
+class CanAccessHomeTest < FeatureTest
   test 'sanity' do
     visit root_path
-    assert_content page, 'Velkommen'
-    refute_content page, 'Goobye All!'
+    assert_selector 'h1', text: 'Velkommen'
   end
 end

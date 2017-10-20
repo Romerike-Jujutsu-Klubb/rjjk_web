@@ -24,11 +24,7 @@ class EventInviteesController < ApplicationController
   def new
     @event_invitee = EventInvitee.new params[:event_invitee]
     load_users
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @event_invitee }
-    end
+    render action: 'new'
   end
 
   def edit
@@ -38,18 +34,10 @@ class EventInviteesController < ApplicationController
 
   def create
     @event_invitee = EventInvitee.new(params[:event_invitee])
-
-    respond_to do |format|
-      if @event_invitee.save
-        format.html do
-          back_or_redirect_to(@event_invitee, notice: 'Event invitee was successfully created.')
-        end
-        format.json { render json: @event_invitee, status: :created, location: @event_invitee }
-      else
-        load_users
-        format.html { render action: 'new' }
-        format.json { render json: @event_invitee.errors, status: :unprocessable_entity }
-      end
+    if @event_invitee.save
+      back_or_redirect_to(@event_invitee, notice: 'Event invitee was successfully created.')
+    else
+      new
     end
   end
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require 'integration_test'
 
 class NewsItemLikesControllerTest < ActionDispatch::IntegrationTest
   setup do

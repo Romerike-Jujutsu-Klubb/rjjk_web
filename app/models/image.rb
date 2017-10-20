@@ -11,11 +11,12 @@ class Image < ApplicationRecord
   scope :images, -> { where("content_type LIKE 'image/%'") }
 
   belongs_to :user
+  has_one :member_image, dependent: :destroy
   has_many :user_images, dependent: :destroy
   has_many :likers, -> { where("user_images.rel_type = 'LIKE'") },
       class_name: 'User', through: :user_images, source: :user
 
-  before_create { self.user_id ||= current_user&.id }
+  before_validation { self.user_id ||= current_user&.id }
 
   validates :name, presence: true
   validate do

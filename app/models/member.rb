@@ -12,8 +12,9 @@ class Member < ApplicationRecord
         ((latitude.blank? || longitude.blank? || m.address_changed? || m.postal_code_changed?))
   }
 
-  belongs_to :image, dependent: :destroy
   belongs_to :user, dependent: :destroy
+  has_one :last_member_image, -> { order :created_at }, class_name: :MemberImage
+  has_one :image, through: :last_member_image
   has_one :next_graduate, -> do
     includes(:graduation).where('graduations.held_on >= ?', Date.current)
         .order('graduations.held_on')
@@ -33,21 +34,20 @@ class Member < ApplicationRecord
     includes(practice: :group_schedule).references(:group_schedules)
         .merge(Attendance.after(count.months.ago.to_date).before(Time.zone.today))
   end,
-      class_name: Attendance
-  # EMXIF
+      class_name: :Attendance
 
+  has_many :member_images, dependent: :destroy
   has_many :passed_graduates, -> { where graduates: { passed: true } },
       class_name: 'Graduate'
   has_many :ranks, through: :passed_graduates
 
   has_many :recent_attendances,
       -> { merge(Attendance.after(92.days.ago).before(31.days.from_now)) },
-      class_name: Attendance
+      class_name: :Attendance
 
   has_many :signatures, dependent: :destroy
   has_many :survey_requests, dependent: :destroy
 
-  scope :without_image, -> { select(column_names - ['image_id']) }
   scope :active, ->(from_date = nil, to_date = nil) do
     from_date ||= Date.current
     to_date ||= from_date
@@ -401,17 +401,20 @@ blocking users: #{blocking_users.inspect}"
 
   def image_file=(file)
     return if file.blank?
-    create_image! user_id: user_id, name: file.original_filename,
-                  content_type: file.content_type, content_data: file.read
+    transaction do
+      image = Image.create! user_id: user_id, name: file.original_filename,
+          content_type: file.content_type, content_data: file.read
+      member_images << MemberImage.new(image_id: image.id)
+    end
   end
 
   def image?
-    !!image_id
+    image.present?
   end
 
   def thumbnail(x = 120, y = 160)
     return unless image?
-    magick_image = Magick::Image.from_blob(Image.with_image.find(image_id).content_data).first
+    magick_image = Magick::Image.from_blob(image.content_data).first
     magick_image.crop_resized(x, y).to_blob
   end
 

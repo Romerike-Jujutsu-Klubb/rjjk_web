@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require 'controller_test'
 
 class EventInviteeMessagesControllerTest < ActionController::TestCase
   setup do

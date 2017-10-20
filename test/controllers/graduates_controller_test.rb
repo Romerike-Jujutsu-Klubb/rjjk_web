@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require 'controller_test'
 
 class GraduatesControllerTest < ActionController::TestCase
   fixtures :users, :members, :graduations, :ranks, :graduates

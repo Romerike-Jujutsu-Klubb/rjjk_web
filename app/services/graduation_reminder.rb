@@ -141,12 +141,14 @@ class GraduationReminder
         .where('held_on BETWEEN ? AND ?', 6.months.ago, 1.week.ago)
         .order(:held_on)
         .each do |graduation|
-      graduation.graduates
-          .where(gratz_sent_at: nil, passed: true)
-          .each do |graduate|
-        GraduationMailer.congratulate_graduate(graduate)
-            .store(graduate.member.user_id, tag: :graduate_gratz)
-        graduate.update! gratz_sent_at: Time.current
+      graduation.graduates.where(gratz_sent_at: nil, passed: true).each do |graduate|
+        begin
+          GraduationMailer.congratulate_graduate(graduate)
+              .store(graduate.member.user_id, tag: :graduate_gratz)
+          graduate.update! gratz_sent_at: Time.current
+        rescue
+          raise "Exception congratulating graduate: #{graduate.id}"
+        end
       end
     end
   end

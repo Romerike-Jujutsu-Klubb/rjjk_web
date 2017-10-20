@@ -21,6 +21,7 @@ class ActiveSupport::TestCase
 
   setup { Timecop.freeze(TEST_TIME) }
   teardown { Timecop.return }
+  teardown { clear_user }
 
   if Bullet.enable?
     Rails.backtrace_cleaner.remove_silencers!
@@ -29,21 +30,15 @@ class ActiveSupport::TestCase
   end
 
   def login(login = :admin)
-    user = users(login)
-    self.current_user = user
-    store_cookie if respond_to? :cookies
-    user
+    Thread.current[:user] = users(login)
   end
 
   def logout
-    self.current_user = nil
-    clear_cookie
+    clear_user
   end
 
-  def assert_no_errors(symbol)
-    v = assigns(symbol)
-    assert v, "Assignment #{symbol} not found in the controller."
-    assert_equal [], v.errors.full_messages
+  def id(symbol)
+    ActiveRecord::FixtureSet.identify(symbol)
   end
 
   # FIXME(uwe): Remove: Added in Rails 5
@@ -106,11 +101,5 @@ class ActionMailer::TestCase
     end
     assert_equal initial + count, UserMessage.pending.count,
         -> { UserMessage.all.map(&:inspect).to_s }
-  end
-end
-
-class Rack::Test::CookieJar
-  def signed
-    self
   end
 end

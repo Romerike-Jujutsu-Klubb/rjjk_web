@@ -7,22 +7,6 @@ require_relative 'application'
 Rails.application.initialize!
 
 class TimeOfDay
-  def min
-    minute
-  end
-
-  def day
-    nil
-  end
-
-  def month
-    nil
-  end
-
-  def year
-    nil
-  end
-
   def day_phase
     self < self.class.new(17, 0) ? 'dag' : 'kveld'
   end

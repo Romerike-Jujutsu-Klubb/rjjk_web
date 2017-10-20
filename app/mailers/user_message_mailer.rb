@@ -23,7 +23,7 @@ class UserMessageMailer < ApplicationMailer
           render html: html_body.html_safe, layout: 'email' # rubocop: disable Rails/OutputSafety
         end
       end
-      format.text { render text: plain_body, layout: 'email' } if plain_body
+      format.text { render plain: plain_body, layout: 'email' } if plain_body
     end
   end
 

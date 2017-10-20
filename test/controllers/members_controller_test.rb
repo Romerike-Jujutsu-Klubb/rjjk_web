@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require 'controller_test'
 
 class MembersControllerTest < ActionController::TestCase
   include ActiveJob::TestHelper
@@ -121,6 +121,11 @@ class MembersControllerTest < ActionController::TestCase
     assert_raise(ActiveRecord::RecordNotFound) do
       Member.find(@first_id)
     end
+  end
+
+  def test_thumbnail
+    get :thumbnail, params: { id: id(:lars) }
+    assert_response :success
   end
 
   def test_grade_history_graph

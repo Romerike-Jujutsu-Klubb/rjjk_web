@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require 'integration_test'
 
 class UserSystemTest < ActionDispatch::IntegrationTest
   def test_signup_and_verify
@@ -61,7 +61,7 @@ class UserSystemTest < ActionDispatch::IntegrationTest
         key: key,
     }
 
-    user.reload
+    follow_redirect!
     assert_logged_in user
     assert_equal user, User.authenticate(user.login, 'newpassword')
   end
@@ -69,12 +69,11 @@ class UserSystemTest < ActionDispatch::IntegrationTest
   private
 
   def assert_logged_in(user)
-    assert_equal user.id, request.session[:user_id]
+    assert_select 'h1', { text: user.name }, "This page must contain a login header: #{response.body}"
   end
 
   def assert_not_logged_in
-    assert_nil request.session[:user_id]
-    assert_nil assigns(:current_user)
+    assert_select 'h1', false, 'This page must contain no login header'
   end
 
   def assert_redirected_to_login

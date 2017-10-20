@@ -36,6 +36,7 @@ class EmbuImagesController < ApplicationController
     @embu_image = EmbuImage.find(params[:id])
     @embus = Embu.all
     @images = Image.order(:name).to_a
+    render action: 'edit'
   end
 
   def create
@@ -56,11 +57,11 @@ class EmbuImagesController < ApplicationController
     @embu_image = EmbuImage.find(params[:id])
 
     respond_to do |format|
-      if @embu_image.update_attributes(params[:embu_image])
+      if @embu_image.update(params[:embu_image])
         format.html { redirect_to @embu_image, notice: 'Embu image was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        format.html { edit }
         format.json { render json: @embu_image.errors, status: :unprocessable_entity }
       end
     end

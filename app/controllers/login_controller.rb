@@ -11,7 +11,7 @@ class LoginController < ApplicationController
     if (user = User.authenticate(params['user']['login'], params['user']['password']))
       self.current_user = user
       flash['notice'] = 'Velkommen!'
-      store_cookie if remember_me && remember_me == '1'
+      store_cookie(current_user) if remember_me && remember_me == '1'
       unless member?
         if (member = Member.find_by(email: user.email))
           user.update! member_id: member.id
@@ -26,7 +26,7 @@ class LoginController < ApplicationController
   end
 
   def login_link_form
-    @email = cookies.signed[:email]
+    @email = cookies.encrypted[:email]
   end
 
   def send_login_link
@@ -39,7 +39,7 @@ class LoginController < ApplicationController
       flash.notice = "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{escaped_email}"
       redirect_to :login
     else
-      cookies.permanent.signed[:email] = { value: escaped_email }.merge(COOKIE_SCOPE)
+      cookies.permanent.encrypted[:email] = { value: escaped_email }.merge(COOKIE_SCOPE)
       begin
         users = users_by_email - [current_user]
         if users.any?

@@ -2,7 +2,7 @@
   .row
     .col-md-4
       .text-center
-        - if @member.image?
+        - if @member.image
           = image_tag url_for(action: :thumbnail, id: @member.id, format: @member.image.format), title: @member.image.name
         - elsif @member.persisted?
           = link_to 'Ta bilde', photo_member_path(@member), class: 'btn btn-primary my-3'

@@ -72,13 +72,13 @@ module UserSystem
     redirect_to login_path
   end
 
-  def store_cookie
-    cookies.signed[COOKIE_NAME] = { value: current_user.id, expires: 30.days.from_now }
+  def store_cookie(user = current_user)
+    cookies.encrypted[COOKIE_NAME] = { value: user.id, expires: 30.days.from_now }
         .merge(COOKIE_SCOPE)
   end
 
   def login_from_cookie
-    if (user_id = cookies.signed[COOKIE_NAME])
+    if (user_id = cookies.encrypted[COOKIE_NAME])
       logger.info "Found login cookie: #{user_id}"
       self.current_user = User.find_by(id: user_id)
     end
@@ -95,7 +95,7 @@ module UserSystem
             (um = UserMessage.includes(:user).find_by(key: CGI.unescape(token))) &&
                   (self.current_user = um.user)
         params.delete(:key)
-        store_cookie
+        store_cookie(current_user)
         um&.update!(read_at: Time.current) if um && !um.read_at
         logger.info "User #{current_user.name} (#{current_user.id}) logged in by key."
       end
@@ -150,5 +150,9 @@ module UserSystem
   def current_user=(user)
     session[SESSION_KEY] = (user&.id) if defined?(session)
     Thread.current[:user] = user
+  end
+
+  def clear_session
+    session.delete(SESSION_KEY)
   end
 end

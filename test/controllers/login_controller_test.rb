@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require 'controller_test'
 
 class LoginControllerTest < ActionController::TestCase
   def test_login__valid_login__redirects_as_specified
@@ -18,13 +18,13 @@ class LoginControllerTest < ActionController::TestCase
     assert_response :redirect
     assert_redirected_to controller: :welcome, action: :index
     assert cookies[COOKIE_NAME]
-    assert_equal ActiveRecord::FixtureSet.identify(:lars), cookies.signed[COOKIE_NAME]
+    assert_equal ActiveRecord::FixtureSet.identify(:lars), cookies.encrypted[COOKIE_NAME]
     assert_equal false, users(:lars).token_expired?
     assert_equal 'random_token_string', users(:lars).security_token
   end
 
   def test_autologin_with_token
-    cookies.signed[COOKIE_NAME] = ActiveRecord::FixtureSet.identify(:lars)
+    cookies.encrypted[COOKIE_NAME] = id(:lars)
     get :welcome
     assert_response :ok
     assert_logged_in users(:lars)
@@ -192,29 +192,30 @@ class LoginControllerTest < ActionController::TestCase
 
   def test_logout
     login(:lars)
-    assert_equal({ 'user_id_test' => 'MjI4ODU1MTA5--a507666baf2289175c01209854e9cd4ff7504df2' }, cookies.to_h)
+    cookies[:user_id_test] = '1'
+    assert_equal(['user_id_test'], cookies.to_h.keys)
     get :logout
     assert_not_logged_in
-    assert_equal({ 'user_id_test' => nil }, cookies.to_h)
+    assert_nil cookies['user_id_test']
   end
 
   private
 
   def assert_logged_in(user)
-    assert_equal user.id, @request.session[:user_id]
+    assert_equal user.id, session[:user_id]
   end
 
   def assert_not_logged_in
-    assert_nil @request.session[:user_id]
+    assert_nil session[:user_id]
     assert_nil assigns(:current_user)
   end
 
   def assert_redirected_to_login
-    assert_equal login_url, @response.redirect_url
+    assert_redirected_to login_url
   end
 
   def post_signup(user_params)
-    post :signup, params: { 'user' => user_params }
+    post :signup, params: { user: user_params }
   end
 
   def assert_password_validation_fails

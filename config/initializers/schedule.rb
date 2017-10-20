@@ -18,15 +18,21 @@ else
 
     def scheduler.on_error(job, e)
       Rails.logger.error "Exception during scheduled job(#{job.tags}): #{e}"
-      Rails.logger.error e.backtrace.join("\n")
-      if e.is_a?(ActiveRecord::StatementInvalid)
-        ActiveRecord::Base.verify!
-        begin
-          job.call
-          return
-        rescue => e2
-          Rails.logger.error "Exception re-running scheduled job(#{job.tags}): #{e2}"
+      loop do
+        Rails.logger.error "#{e.class}: #{e.message}"
+        Rails.logger.error e
+        Rails.logger.error e.backtrace.join("\n")
+        if e.is_a?(ActiveRecord::StatementInvalid)
+          ActiveRecord::Base.verify!
+          begin
+            job.call
+            return
+          rescue => e2
+            Rails.logger.error "Exception re-running scheduled job(#{job.tags}): #{e2}"
+          end
         end
+        break unless e.cause
+        e = e.cause
       end
       raise e if Rails.env.test?
       ExceptionNotifier.notify_exception(e)

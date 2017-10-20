@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require 'controller_test'
 
 class EmbusControllerTest < ActionController::TestCase
   setup do

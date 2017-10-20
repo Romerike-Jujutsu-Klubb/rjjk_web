@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_one :member
   has_many :embus, dependent: :destroy
   has_many :images, dependent: :destroy
+  has_many :news_items, dependent: :destroy, inverse_of: :creator, foreign_key: :created_by
   has_many :news_item_likes, dependent: :destroy
 
   # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING

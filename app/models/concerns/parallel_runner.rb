@@ -12,12 +12,12 @@ module ParallelRunner
     values.each { |value| queue << value }
     threads = Array.new(CONCURRENT_REQUESTS) do
       Thread.start do
-        begin
-          loop { yield queue.pop(true) }
-        rescue ThreadError => e
-          logger.debug "ThreadError running parallel tasks: #{e}"
-        ensure
-          ActiveRecord::Base.connection.close
+        ActiveRecord::Base.connection_pool.with_connection do
+          begin
+            loop { yield queue.pop(true) }
+          rescue ThreadError => e
+            logger.debug "ThreadError running parallel tasks: #{e}"
+          end
         end
       end
     end

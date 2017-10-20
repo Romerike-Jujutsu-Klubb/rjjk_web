@@ -1,4 +1,16 @@
 GIT
+  remote: https://github.com/SchemaPlus/schema_plus_foreign_keys.git
+  revision: 5945ef760b37997b94bbdaa803deb176d2efb68f
+  branch: AR51-support
+  specs:
+    schema_plus_foreign_keys (0.1.7)
+      activerecord (>= 5.0, < 5.2)
+      its-it (~> 1.2)
+      schema_plus_compatibility (~> 0.2)
+      schema_plus_core
+      valuable
+
+GIT
   remote: https://github.com/bootstrap-ruby/rails-bootstrap-forms.git
   revision: 16d82d6d8c32b5f6dcbe14ab3a3189e6b012839c
   branch: bootstrap-v4
@@ -21,6 +33,12 @@ GIT
       robotex (>= 1.0.0)
 
 GIT
+  remote: https://github.com/jruby/activerecord-jdbc-adapter.git
+  revision: 8830791248d7595c8336ef71e95de3eae6284a70
+  branch: rails-5
+  specs:
+
+GIT
   remote: https://github.com/rails/actionpack-page_caching.git
   revision: cfcb9521168a82741f6af9e07ebc6dac153224fc
   specs:
@@ -37,46 +55,41 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    actioncable (5.0.6)
-      actionpack (= 5.0.6)
-      nio4r (>= 1.2, < 3.0)
+    actioncable (5.1.4)
+      actionpack (= 5.1.4)
+      nio4r (~> 2.0)
       websocket-driver (~> 0.6.1)
-    actionmailer (5.0.6)
-      actionpack (= 5.0.6)
-      actionview (= 5.0.6)
-      activejob (= 5.0.6)
+    actionmailer (5.1.4)
+      actionpack (= 5.1.4)
+      actionview (= 5.1.4)
+      activejob (= 5.1.4)
       mail (~> 2.5, >= 2.5.4)
       rails-dom-testing (~> 2.0)
-    actionpack (5.0.6)
-      actionview (= 5.0.6)
-      activesupport (= 5.0.6)
+    actionpack (5.1.4)
+      actionview (= 5.1.4)
+      activesupport (= 5.1.4)
       rack (~> 2.0)
-      rack-test (~> 0.6.3)
+      rack-test (>= 0.6.3)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    actionview (5.0.6)
-      activesupport (= 5.0.6)
+    actionview (5.1.4)
+      activesupport (= 5.1.4)
       builder (~> 3.1)
-      erubis (~> 2.7.0)
+      erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
-    activejob (5.0.6)
-      activesupport (= 5.0.6)
+    activejob (5.1.4)
+      activesupport (= 5.1.4)
       globalid (>= 0.3.6)
-    activemodel (5.0.6)
-      activesupport (= 5.0.6)
-    activerecord (5.0.6)
-      activemodel (= 5.0.6)
-      activesupport (= 5.0.6)
-      arel (~> 7.0)
-    activerecord-jdbc-adapter (5.0.pre1)
-      activerecord (>= 2.2)
-    activerecord-jdbcpostgresql-adapter (5.0.pre1)
-      activerecord-jdbc-adapter (~> 5.0.pre1)
-      jdbc-postgres (>= 9.1)
+    activemodel (5.1.4)
+      activesupport (= 5.1.4)
+    activerecord (5.1.4)
+      activemodel (= 5.1.4)
+      activesupport (= 5.1.4)
+      arel (~> 8.0)
     activerecord-time (0.9.1)
       activerecord (>= 3.2.21, < 5.2)
-    activesupport (5.0.6)
+    activesupport (5.1.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
       minitest (~> 5.1)
@@ -90,12 +103,11 @@ GEM
     airbrussh (1.3.0)
       sshkit (>= 1.6.1, != 1.7.0)
     ansi (1.5.0)
-    arel (7.1.4)
+    arel (8.0.0)
     ast (2.3.0)
     autoprefixer-rails (7.1.5)
       execjs
     bcrypt (3.1.11)
-    bcrypt (3.1.11-java)
     bootstrap (4.0.0.beta)
       autoprefixer-rails (>= 6.0.3)
       popper_js (~> 1.11.1)
@@ -154,7 +166,6 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
-    concurrent-ruby (1.0.5-java)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.2)
@@ -163,7 +174,7 @@ GEM
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
     dynamic_form (1.1.4)
-    erubis (2.7.0)
+    erubi (1.7.0)
     et-orbi (1.0.7)
       tzinfo
     exception_notification (4.2.2)
@@ -171,7 +182,6 @@ GEM
       activesupport (>= 4.0, < 6)
     execjs (2.7.0)
     ffi (1.9.18)
-    ffi (1.9.18-java)
     font-awesome-rails (4.7.0.2)
       railties (>= 3.2, < 5.2)
     geocoder (1.4.4)
@@ -179,9 +189,7 @@ GEM
       activesupport (>= 4.2.0)
     gruff (0.7.0)
       rmagick (~> 2.13, >= 2.13.4)
-    gruff (0.7.0-java)
-      rmagick4j (~> 0.3, >= 0.3.9)
-    hashdiff (0.3.6)
+    hashdiff (0.3.7)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.8.6)
@@ -189,18 +197,20 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
-    jdbc-postgres (9.4.1206)
     jquery-rails (4.3.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (2.1.0)
-    json (2.1.0-java)
     key_struct (0.4.2)
     kramdown (1.15.0)
     lazyload-rails (0.3.1)
       nokogiri (~> 1.5)
     libv8 (3.16.14.19)
+    listen (3.1.5)
+      rb-fsevent (~> 0.9, >= 0.9.4)
+      rb-inotify (~> 0.9, >= 0.9.7)
+      ruby_dep (~> 1.2)
     lograge (0.7.1)
       actionpack (>= 4, < 5.2)
       activesupport (>= 4, < 5.2)
@@ -260,10 +270,8 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (4.2.0)
     nio4r (2.1.0)
-    nio4r (2.1.0-java)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
-    nokogiri (1.8.1-java)
     nprogress-rails (0.2.0.2)
     ntlm-http (0.1.1)
     oily_png (1.2.1)
@@ -287,25 +295,24 @@ GEM
       prawn (>= 1.3.0, < 3.0.0)
     public_suffix (3.0.0)
     puma (3.10.0)
-    puma (3.10.0-java)
     rack (2.0.3)
     rack-attack (5.0.1)
       rack
     rack-mini-profiler (0.10.5)
       rack (>= 1.2.0)
-    rack-test (0.6.3)
-      rack (>= 1.0)
-    rails (5.0.6)
-      actioncable (= 5.0.6)
-      actionmailer (= 5.0.6)
-      actionpack (= 5.0.6)
-      actionview (= 5.0.6)
-      activejob (= 5.0.6)
-      activemodel (= 5.0.6)
-      activerecord (= 5.0.6)
-      activesupport (= 5.0.6)
+    rack-test (0.7.0)
+      rack (>= 1.0, < 3)
+    rails (5.1.4)
+      actioncable (= 5.1.4)
+      actionmailer (= 5.1.4)
+      actionpack (= 5.1.4)
+      actionview (= 5.1.4)
+      activejob (= 5.1.4)
+      activemodel (= 5.1.4)
+      activerecord (= 5.1.4)
+      activesupport (= 5.1.4)
       bundler (>= 1.3.0)
-      railties (= 5.0.6)
+      railties (= 5.1.4)
       sprockets-rails (>= 2.0.0)
     rails-assets-tether (1.1.1)
     rails-controller-testing (1.0.2)
@@ -322,9 +329,9 @@ GEM
       railties (~> 5.0)
     rails_autolink (1.1.6)
       rails (> 3.1)
-    railties (5.0.6)
-      actionpack (= 5.0.6)
-      activesupport (= 5.0.6)
+    railties (5.1.4)
+      actionpack (= 5.1.4)
+      activesupport (= 5.1.4)
       method_source
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
@@ -338,7 +345,6 @@ GEM
     request_store (1.3.2)
     ri_cal (0.8.8)
     rmagick (2.16.0)
-    rmagick4j (0.4.0-java)
     robotex (1.0.0)
     rubocop (0.49.1)
       parallel (~> 1.10)
@@ -348,6 +354,7 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.9.0)
+    ruby_dep (1.5.0)
     rubyzip (1.2.1)
     rufus-scheduler (3.4.2)
       et-orbi (~> 1.0)
@@ -377,12 +384,6 @@ GEM
       activerecord (~> 5.0)
       its-it (~> 1.2)
       schema_monkey (~> 2.1)
-    schema_plus_foreign_keys (0.1.7)
-      activerecord (>= 4.2, < 5.1)
-      its-it (~> 1.2)
-      schema_plus_compatibility (~> 0.2)
-      schema_plus_core
-      valuable
     schema_plus_indexes (0.3.0)
       activerecord (>= 4.2, < 5.2)
       its-it (~> 1.2)
@@ -420,12 +421,8 @@ GEM
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
       ref
-    therubyrhino (2.0.4)
-      therubyrhino_jar (>= 1.7.3)
-    therubyrhino_jar (1.7.6)
     thor (0.20.0)
     thread_safe (0.3.6)
-    thread_safe (0.3.6-java)
     tilt (2.0.8)
     timecop (0.9.1)
     tinymce-rails (4.6.7)
@@ -439,7 +436,6 @@ GEM
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
-    unf (0.1.4-java)
     unf_ext (0.0.7.4)
     unicode-display_width (1.3.0)
     unicode_utils (1.4.0)
@@ -453,20 +449,17 @@ GEM
     webrobots (0.1.2)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
-    websocket-driver (0.6.5-java)
-      websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     will_paginate (3.1.6)
     xpath (2.1.0)
       nokogiri (~> 1.3)
 
 PLATFORMS
-  java
   ruby
 
 DEPENDENCIES
   actionpack-page_caching!
-  activerecord-jdbcpostgresql-adapter (~> 5.0.pre1)
+  activerecord-jdbcpostgresql-adapter!
   activerecord-time
   acts_as_list
   acts_as_tree
@@ -497,6 +490,7 @@ DEPENDENCIES
   jquery-rails
   kramdown
   lazyload-rails
+  listen
   lograge
   mechanize
   medusa!
@@ -515,7 +509,7 @@ DEPENDENCIES
   puma
   rack-attack
   rack-mini-profiler
-  rails (~> 5.0.1)
+  rails (~> 5.1.4)
   rails-assets-tether
   rails-controller-testing
   rails-i18n
@@ -523,10 +517,11 @@ DEPENDENCIES
   rails_autolink
   rake
   ri_cal
-  rubocop
+  rubocop (!= 0.50.0)
   rufus-scheduler
   sass-rails
   schema_auto_foreign_keys
+  schema_plus_foreign_keys!
   selenium-webdriver
   simple_drilldown
   simple_workflow

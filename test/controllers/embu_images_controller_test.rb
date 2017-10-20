@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require 'controller_test'
 
 class EmbuImagesControllerTest < ActionController::TestCase
   setup do
@@ -38,7 +38,7 @@ class EmbuImagesControllerTest < ActionController::TestCase
   end
 
   test 'should update embu_image' do
-    put :update, params: { id: @embu_image, embu_image: { embu_id: embus(:one).id } }
+    put :update, params: { id: @embu_image, embu_image: { embu_id: id(:one), image_id: id(:one) } }
     assert_no_errors :embu_image
     assert_redirected_to embu_image_path(assigns(:embu_image))
   end

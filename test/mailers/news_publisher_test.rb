@@ -36,12 +36,8 @@ class NewsPublisherTest < ActionMailer::TestCase
   end
 
   def test_news_is_not_sent_to_leaving_members
-    VCR.use_cassette 'GoogleMaps Uwe' do
-      members(:uwe).update! left_on: 1.month.from_now
-    end
-    VCR.use_cassette 'GoogleMaps Uwe' do
-      assert NewsPublisher.send_news
-    end
+    VCR.use_cassette('GoogleMaps Uwe') { members(:uwe).update! left_on: 1.month.from_now }
+    VCR.use_cassette('GoogleMaps Uwe') { assert NewsPublisher.send_news }
     assert_equal 3, UserMessage.pending.size
   end
 end

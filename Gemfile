@@ -7,10 +7,11 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~>5.0.1'
+gem 'rails', '~>5.1.4'
 
 platform :jruby do
-  gem 'activerecord-jdbcpostgresql-adapter', '~>5.0.pre1'
+  gem 'activerecord-jdbcpostgresql-adapter', github: 'jruby/activerecord-jdbc-adapter',
+      branch: 'rails-5'
   gem 'therubyrhino'
 end
 
@@ -70,6 +71,12 @@ gem 'ri_cal'
 gem 'rufus-scheduler'
 gem 'sass-rails'
 gem 'schema_auto_foreign_keys'
+
+# FIXME(uwe): Remove this line when there is a stable release supporting AR 5.1
+gem 'schema_plus_foreign_keys', github: 'SchemaPlus/schema_plus_foreign_keys',
+    branch: 'AR51-support'
+# EMXIF
+
 # gem 'script_relocator' # TODO(uwe): Messes up the design.  Why?!
 gem 'simple_drilldown'
 gem 'simple_workflow'
@@ -90,6 +97,7 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
   gem 'capistrano-scm-copy'
+  gem 'listen'
 end
 
 group :test do
@@ -103,7 +111,7 @@ group :test do
   gem 'mocha', require: 'mocha/setup'
   gem 'phantomjs', require: 'phantomjs/poltergeist'
   gem 'poltergeist'
-  gem 'rubocop'
+  gem 'rubocop', '!=0.50.0'
   # gem 'rubycritic', require: false
   gem 'selenium-webdriver'
   gem 'simplecov', require: false

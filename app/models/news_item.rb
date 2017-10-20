@@ -17,7 +17,10 @@ class NewsItem < ApplicationRecord
         .where('expire_at IS NULL OR expire_at >= CURRENT_TIMESTAMP')
   }
 
-  belongs_to :creator, class_name: 'User', foreign_key: :created_by
+  # TODO(uwe): Rename to "author"?
+  belongs_to :creator, class_name: 'User', foreign_key: :created_by, inverse_of: :news_items
+  # ODOT
+
   has_many :news_item_likes, dependent: :destroy
 
   before_validation do |news_item|

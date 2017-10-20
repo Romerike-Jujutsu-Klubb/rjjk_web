@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require 'integration_test'
 
 class SearchControllerTest < ActionDispatch::IntegrationTest
   test 'user query' do

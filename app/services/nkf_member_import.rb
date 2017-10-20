@@ -142,8 +142,6 @@ class NkfMemberImport
       raise "Neither active status nor waiting kid were found:\n#{details_body}"
     end
     import_rows.find { |ir| ir[0] == member_id } << waiting_kid
-  ensure
-    ActiveRecord::Base.connection.close
   end
 
   def get_member_trial_rows(session_id, extra_function_code)

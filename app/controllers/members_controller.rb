@@ -22,7 +22,7 @@ class MembersController < ApplicationController
   end
 
   def yaml
-    @members = Member.active.without_image.to_a
+    @members = Member.active.to_a
     records = @members.map do |m|
       m.attributes.update(
           'rank_pos' => m.current_rank.try(:position),

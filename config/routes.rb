@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get 'login/forgot_password'
   post 'login/forgot_password'
   match 'login/password' => 'login#login_with_password', as: :login_password, via: %i[get post]
-  get 'login/logout'
+  get 'logout' => 'login#logout', as: :logout
   get 'login' => 'login#login_link_form', as: :login
   post 'login' => 'login#send_login_link', as: :send_login_link
   match 'login/signup', via: %i[get post]
