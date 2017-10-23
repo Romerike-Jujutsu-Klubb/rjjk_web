@@ -232,7 +232,7 @@ blocking users: #{blocking_users.inspect}"
 
   def current_rank_date(martial_art = nil, date = Date.current)
     graduate = current_graduate(martial_art, date)
-    graduate && graduate.graduation.held_on || joined_on
+    graduate&.graduation&.held_on || joined_on
   end
 
   def current_rank_age(martial_art, to_date)
@@ -449,7 +449,7 @@ blocking users: #{blocking_users.inspect}"
 
   def title(date = Date.current)
     current_rank = current_rank(MartialArt.find_by(name: 'Kei Wa Ryu'), date)
-    current_rank && current_rank.name =~ /dan/ ? 'Sensei' : 'Sempai'
+    current_rank&.name =~ /dan/ ? 'Sensei' : 'Sempai'
   end
 
   def admin?

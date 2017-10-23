@@ -111,15 +111,6 @@ Style/MixinUsage:
   Exclude:
     - 'app/helpers/application_helper.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil.
-Style/SafeNavigation:
-  Exclude:
-    - 'app/controllers/attendances_controller.rb'
-    - 'app/models/member.rb'
-    - 'app/services/semester_reminder.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/StderrPuts:
