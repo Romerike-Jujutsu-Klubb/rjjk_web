@@ -80,11 +80,6 @@ Performance/HashEachMethods:
   Exclude:
     - 'app/controllers/survey_requests_controller.rb'
 
-# Offense count: 1
-Performance/UnfreezeString:
-  Exclude:
-    - 'app/models/member.rb'
-
 # Offense count: 9
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb

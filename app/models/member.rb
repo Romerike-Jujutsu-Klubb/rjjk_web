@@ -181,7 +181,7 @@ blocking users: #{blocking_users.inspect}"
   end
 
   def gmaps4rails_infowindow
-    html = ''.dup
+    html = +''
     if image?
       html << "<img src='/members/thumbnail/#{id}.#{image.format}' width='128' " \
           "style='float: left; margin-right: 1em'>"
