@@ -110,9 +110,3 @@ Style/CommentedKeyword:
 Style/MixinUsage:
   Exclude:
     - 'app/helpers/application_helper.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/StderrPuts:
-  Exclude:
-    - 'bin/yarn'
