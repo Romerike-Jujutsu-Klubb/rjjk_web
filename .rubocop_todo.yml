@@ -25,13 +25,6 @@ Lint/RescueWithoutErrorClass:
     - 'config/initializers/schedule.rb'
     - 'import_techniques.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods.
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'bin/store_email_rjjk.rb'
-
 # Offense count: 226
 Metrics/AbcSize:
   Max: 201

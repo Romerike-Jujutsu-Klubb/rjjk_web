@@ -60,7 +60,7 @@ rescue => e
   log "Exception setting encoding: #{e}"
 end
 
-def check_spam(content, mail)
+def check_spam(content, _mail)
   begin
     spam_start = Time.now
     mail_is_spam = nil
