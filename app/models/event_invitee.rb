@@ -2,7 +2,7 @@
 
 class EventInvitee < ApplicationRecord
   belongs_to :event
-  belongs_to :user
+  belongs_to :user, required: false
   has_one :invitation, -> { where("message_type = '#{EventMessage::MessageType::INVITATION}'") },
       class_name: 'EventInviteeMessage', dependent: :destroy
   has_one :signup_confirmation,

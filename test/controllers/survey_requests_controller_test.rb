@@ -62,4 +62,19 @@ class SurveyRequestsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_match(/val\(\) && /, response.body)
   end
+
+  def test_save_answers
+    post "/svar/#{id(:sent)}", params: {
+        survey_request: {
+            survey_answers_attributes: {
+                '0': { survey_question_id: id(:first_question), answer: "Familie\r\n" },
+                '1': { survey_question_id: id(:second_question), answer: ['', "Bekjent\r\n", 'www.jujutsu.no'] },
+                '2': { survey_question_id: id(:summary_question), answer_free: '' },
+            },
+        },
+    }
+    assert_redirected_to action: :thanks
+    follow_redirect!
+    assert_select 'h2', 'Tusen takk!'
+  end
 end
