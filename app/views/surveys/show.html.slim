@@ -53,7 +53,7 @@ table.table.table-sm.mt-3
       th Fullført
       th Svar
   tbody
-    - (@survey.included_members.select(&:active?) + @survey.survey_requests.map(&:member)).uniq.sort_by(&:joined_on).each do |m|
+    - (@survey.included_members.select(&:active?) + @survey.survey_requests.map(&:member)).uniq.sort_by(&:joined_on).reverse.each do |m|
       - survey_request = @survey.survey_requests.find { |sr| sr.member_id == m.id }
       tr
         td = m.name
