@@ -48,20 +48,20 @@ class Graduation < ApplicationRecord
         )
       SQL
   scope :has_examiners,
-      -> { where(<<~SQL, true: true, false: false) }
+      -> { where <<~SQL }
         EXISTS (
           SELECT id
           FROM censors WHERE graduation_id = graduations.id
-            AND examiner = :true AND declined = :false
+            AND examiner = TRUE AND declined = FALSE
         )
       SQL
   scope :ready,
-      ->(date) { has_examiners.where(<<~SQL, date: date, true: true, false: false) }
+      ->(date) { has_examiners.where(<<~SQL, date: date) }
         NOT EXISTS (
           SELECT locked_at
           FROM censors WHERE graduation_id = graduations.id
             AND (locked_at IS NULL OR locked_at > :date)
-            AND examiner = :true AND declined = :false
+            AND examiner = TRUE AND declined = FALSE
         )
       SQL
   scope :approved,
