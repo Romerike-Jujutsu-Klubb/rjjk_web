@@ -39,8 +39,8 @@ h3.mt-3 Spørsmål
     = @survey.footer
 
 .mt-3
-  = link_to 'Back', surveys_path, class: 'btn btn-link'
-  = link_to 'Edit', edit_survey_path(@survey), class: 'btn btn-primary'
+  = link_to :Tilbake, surveys_path, class: 'btn btn-link'
+  = link_to :Rediger, edit_survey_path(@survey), class: 'btn btn-primary'
 
 table.table.table-sm.mt-3
   thead
@@ -58,7 +58,7 @@ table.table.table-sm.mt-3
       tr
         td = m.name
         td = m.joined_on
-        td = m.active?
+        td = m.active? ? :Ja : :Nei
         td = survey_request&.sent_at&.to_date
         td = survey_request&.reminded_at&.to_date
         td = survey_request&.completed_at&.to_date
