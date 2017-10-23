@@ -2,7 +2,6 @@
 
 require 'test_helper'
 require 'minitest/rails/capybara'
-require 'capybara/poltergeist'
 require 'capybara/screenshot/diff'
 
 # Transactional fixtures do not work with Selenium tests, because Capybara
@@ -28,7 +27,7 @@ class FeatureTest < ActionDispatch::IntegrationTest
     )
     Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: caps)
   end
-  Capybara.default_driver = :chrome # :selenium, :chrome, or :poltergeist
+  Capybara.default_driver = :chrome # :selenium, :chrome
   if Capybara.default_driver == :chrome
     Capybara::Screenshot::Diff.color_distance_limit = 8.7
     Capybara::Screenshot.blur_active_element = true

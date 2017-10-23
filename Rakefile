@@ -15,3 +15,7 @@ if Rails.env.test?
     # task(:test) { Rake::Task[:rubycritic].invoke }
   end
 end
+
+task 'db:schema:dump' do
+  sh 'rubocop --auto-correct db/schema.rb > /dev/null'
+end
