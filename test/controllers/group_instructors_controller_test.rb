@@ -22,10 +22,10 @@ class GroupInstructorsControllerTest < ActionController::TestCase
   test 'should create group_instructor' do
     assert_difference('GroupInstructor.count') do
       post :create, params: { group_instructor: {
-          group_schedule_id: @group_instructor.group_schedule_id,
-          member_id: @group_instructor.member_id,
-          group_semester_id: group_semesters(:current_panda).id,
-          assistant: false,
+        group_schedule_id: @group_instructor.group_schedule_id,
+        member_id: @group_instructor.member_id,
+        group_semester_id: group_semesters(:current_panda).id,
+        assistant: false,
       } }
       assert_no_errors :group_instructor
     end
@@ -44,9 +44,9 @@ class GroupInstructorsControllerTest < ActionController::TestCase
 
   test 'should update group_instructor' do
     put :update, params: { id: @group_instructor, group_instructor: {
-        group_schedule_id: @group_instructor.group_schedule_id,
-        member_id: @group_instructor.member_id,
-        semester_id: @group_instructor.group_semester.semester_id,
+      group_schedule_id: @group_instructor.group_schedule_id,
+      member_id: @group_instructor.member_id,
+      semester_id: @group_instructor.group_semester.semester_id,
     } }
     assert_no_errors :group_instructor
     assert_redirected_to group_instructors_path

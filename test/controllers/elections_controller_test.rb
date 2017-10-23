@@ -40,10 +40,10 @@ class ElectionsControllerTest < ActionController::TestCase
 
   test 'should update election' do
     put :update, params: { id: @election, election: {
-        annual_meeting_id: @election.annual_meeting_id,
-        member_id: @election.member_id,
-        resigned_on: @election.resigned_on,
-        role_id: @election.role_id,
+      annual_meeting_id: @election.annual_meeting_id,
+      member_id: @election.member_id,
+      resigned_on: @election.resigned_on,
+      role_id: @election.role_id,
     } }
     assert_redirected_to elections_path
   end

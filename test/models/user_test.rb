@@ -136,14 +136,14 @@ class UserTest < ActionMailer::TestCase
 
   test 'emails' do
     assert_equal [
-        ['"Deletable" <deletable_user@example.com>'],
-        ['"Deleted" <deleted_user@example.com>'],
-        ['"Lars Bråten" <lars@example.com>'],
-        ['"Newbie Neuer" <newbie@example.com>'],
-        ['"Sebastian Kubosch" <sebastian@example.com>'],
-        ['"Unverified" <unverified_user@example.com>'],
-        ['"Uwe Kubosch" <uwe@example.com>'],
-        ['"long_user" <long_user@example.com>'],
+      ['"Deletable" <deletable_user@example.com>'],
+      ['"Deleted" <deleted_user@example.com>'],
+      ['"Lars Bråten" <lars@example.com>'],
+      ['"Newbie Neuer" <newbie@example.com>'],
+      ['"Sebastian Kubosch" <sebastian@example.com>'],
+      ['"Unverified" <unverified_user@example.com>'],
+      ['"Uwe Kubosch" <uwe@example.com>'],
+      ['"long_user" <long_user@example.com>'],
     ], User.all.map(&:emails).sort
   end
 end

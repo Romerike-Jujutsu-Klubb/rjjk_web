@@ -22,9 +22,9 @@ class PracticesControllerTest < ActionController::TestCase
   test 'should create practice' do
     assert_difference('Practice.count') do
       post :create, params: { practice: {
-          status: @practice.status,
-          group_schedule_id: @practice.group_schedule_id,
-          week: @practice.week + 1, year: @practice.year
+        status: @practice.status,
+        group_schedule_id: @practice.group_schedule_id,
+        week: @practice.week + 1, year: @practice.year
       } }
     end
 
@@ -43,9 +43,9 @@ class PracticesControllerTest < ActionController::TestCase
 
   test 'should update practice' do
     put :update, params: { id: @practice, practice: {
-        status: @practice.status,
-        group_schedule_id: @practice.group_schedule_id,
-        week: @practice.week, year: @practice.year
+      status: @practice.status,
+      group_schedule_id: @practice.group_schedule_id,
+      week: @practice.week, year: @practice.year
     } }
     assert_redirected_to practice_path(assigns(:practice))
   end

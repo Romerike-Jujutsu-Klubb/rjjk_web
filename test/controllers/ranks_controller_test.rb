@@ -48,8 +48,8 @@ class RanksControllerTest < ActionController::TestCase
     num_ranks = Rank.count
 
     post :create, params: { rank: {
-        group_id: groups(:panda).id, martial_art_id: martial_arts(:keiwaryu).id,
-        name: '3.kyu', colour: 'grønt', position: -3, standard_months: 12
+      group_id: groups(:panda).id, martial_art_id: martial_arts(:keiwaryu).id,
+      name: '3.kyu', colour: 'grønt', position: -3, standard_months: 12
     } }
     assert_no_errors :rank
     assert_response :redirect

@@ -21,9 +21,9 @@ class SurveyRequestsControllerTest < ActionDispatch::IntegrationTest
   test 'should create survey_request' do
     assert_difference('SurveyRequest.count') do
       post survey_requests_url, params: { survey_request: {
-          completed_at: @survey_request.completed_at,
-          member_id: members(:sebastian).id,
-          survey_id: @survey_request.survey_id,
+        completed_at: @survey_request.completed_at,
+        member_id: members(:sebastian).id,
+        survey_id: @survey_request.survey_id,
       } }
     end
 
@@ -42,9 +42,9 @@ class SurveyRequestsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update survey_request' do
     patch survey_request_url(@survey_request), params: { survey_request: {
-        completed_at: @survey_request.completed_at,
-        member_id: @survey_request.member_id,
-        survey_id: @survey_request.survey_id,
+      completed_at: @survey_request.completed_at,
+      member_id: @survey_request.member_id,
+      survey_id: @survey_request.survey_id,
     } }
     assert_redirected_to survey_request_url(@survey_request)
   end
@@ -65,13 +65,13 @@ class SurveyRequestsControllerTest < ActionDispatch::IntegrationTest
 
   def test_save_answers
     post "/svar/#{id(:sent)}", params: {
-        survey_request: {
-            survey_answers_attributes: {
-                '0': { survey_question_id: id(:first_question), answer: "Familie\r\n" },
-                '1': { survey_question_id: id(:second_question), answer: ['', "Bekjent\r\n", 'www.jujutsu.no'] },
-                '2': { survey_question_id: id(:summary_question), answer_free: '' },
-            },
+      survey_request: {
+        survey_answers_attributes: {
+          '0': { survey_question_id: id(:first_question), answer: "Familie\r\n" },
+          '1': { survey_question_id: id(:second_question), answer: ['', "Bekjent\r\n", 'www.jujutsu.no'] },
+          '2': { survey_question_id: id(:summary_question), answer_free: '' },
         },
+      },
     }
     assert_redirected_to action: :thanks
     follow_redirect!

@@ -22,11 +22,11 @@ class EventMessagesControllerTest < ActionController::TestCase
   test 'should create event_message' do
     assert_difference('EventMessage.count') do
       post :create, params: { event_message: {
-          body: @event_message.body,
-          event_id: @event_message.event_id,
-          message_type: @event_message.message_type,
-          ready_at: @event_message.ready_at,
-          subject: @event_message.subject,
+        body: @event_message.body,
+        event_id: @event_message.event_id,
+        message_type: @event_message.message_type,
+        ready_at: @event_message.ready_at,
+        subject: @event_message.subject,
       } }
     end
 
@@ -45,11 +45,11 @@ class EventMessagesControllerTest < ActionController::TestCase
 
   test 'should update event_message' do
     put :update, params: { id: @event_message, event_message: {
-        body: @event_message.body,
-        event_id: @event_message.event_id,
-        message_type: @event_message.message_type,
-        ready_at: @event_message.ready_at,
-        subject: @event_message.subject,
+      body: @event_message.body,
+      event_id: @event_message.event_id,
+      message_type: @event_message.message_type,
+      ready_at: @event_message.ready_at,
+      subject: @event_message.subject,
     } }
     assert_redirected_to event_message_path(assigns(:event_message))
   end

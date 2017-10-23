@@ -22,14 +22,14 @@ class UserMessagesControllerTest < ActionController::TestCase
   test 'should create user_message' do
     assert_difference('UserMessage.count') do
       post :create, params: { user_message: {
-          html_body: @user_message.body,
-          from: @user_message.from,
-          key: @user_message.key,
-          read_at: @user_message.read_at,
-          sent_at: @user_message.sent_at,
-          subject: @user_message.subject,
-          tag: @user_message.tag,
-          user_id: @user_message.user_id,
+        html_body: @user_message.body,
+        from: @user_message.from,
+        key: @user_message.key,
+        read_at: @user_message.read_at,
+        sent_at: @user_message.sent_at,
+        subject: @user_message.subject,
+        tag: @user_message.tag,
+        user_id: @user_message.user_id,
       } }
     end
 
@@ -48,14 +48,14 @@ class UserMessagesControllerTest < ActionController::TestCase
 
   test 'should update user_message' do
     patch :update, params: { id: @user_message, user_message: {
-        html_body: @user_message.body,
-        from: @user_message.from,
-        key: @user_message.key,
-        read_at: @user_message.read_at,
-        sent_at: @user_message.sent_at,
-        subject: @user_message.subject,
-        tag: @user_message.tag,
-        user_id: @user_message.user_id,
+      html_body: @user_message.body,
+      from: @user_message.from,
+      key: @user_message.key,
+      read_at: @user_message.read_at,
+      sent_at: @user_message.sent_at,
+      subject: @user_message.subject,
+      tag: @user_message.tag,
+      user_id: @user_message.user_id,
     } }
     assert_redirected_to user_message_path(assigns(:user_message))
   end

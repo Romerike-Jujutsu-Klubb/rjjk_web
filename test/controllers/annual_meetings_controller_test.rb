@@ -22,9 +22,9 @@ class AnnualMeetingsControllerTest < ActionController::TestCase
   test 'should create annual_meeting' do
     assert_difference('AnnualMeeting.count') do
       post :create, params: { annual_meeting: {
-          invitation_sent_at: @annual_meeting.invitation_sent_at,
-          public_record_updated_at: @annual_meeting.public_record_updated_at,
-          start_at: @annual_meeting.start_at,
+        invitation_sent_at: @annual_meeting.invitation_sent_at,
+        public_record_updated_at: @annual_meeting.public_record_updated_at,
+        start_at: @annual_meeting.start_at,
       } }
     end
 
@@ -43,9 +43,9 @@ class AnnualMeetingsControllerTest < ActionController::TestCase
 
   test 'should update annual_meeting' do
     put :update, params: { id: @annual_meeting, annual_meeting: {
-        invitation_sent_at: @annual_meeting.invitation_sent_at,
-        public_record_updated_at: @annual_meeting.public_record_updated_at,
-        start_at: @annual_meeting.start_at,
+      invitation_sent_at: @annual_meeting.invitation_sent_at,
+      public_record_updated_at: @annual_meeting.public_record_updated_at,
+      start_at: @annual_meeting.start_at,
     } }
     assert_no_errors :annual_meeting
     assert_redirected_to annual_meeting_path(assigns(:annual_meeting))

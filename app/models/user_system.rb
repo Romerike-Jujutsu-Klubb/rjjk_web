@@ -6,24 +6,24 @@ module UserSystem
   ADMIN_ROLE = 'ADMIN'
 
   CONFIG = {
-      # Source address for user emails
-      email_from: 'webmaster@jujutsu.no',
+    # Source address for user emails
+    email_from: 'webmaster@jujutsu.no',
 
-      # Destination email for system errors
-      admin_email: 'webmaster@jujutsu.no',
+    # Destination email for system errors
+    admin_email: 'webmaster@jujutsu.no',
 
-      # Sent in emails to users
-      app_url: 'https://jujutsu.no/',
+    # Sent in emails to users
+    app_url: 'https://jujutsu.no/',
 
-      # Sent in emails to users
-      app_name: 'RJJK',
+    # Sent in emails to users
+    app_name: 'RJJK',
 
-      # Email charset
-      mail_charset: 'utf-8',
+    # Email charset
+    mail_charset: 'utf-8',
 
-      # Security token lifetime in hours
-      security_token_life_hours: 24 * 7,
-      autologin_token_life_hours: 24 * 365,
+    # Security token lifetime in hours
+    security_token_life_hours: 24 * 7,
+    autologin_token_life_hours: 24 * 365,
   }.freeze
 
   def self.with_login(user = current_user, options)

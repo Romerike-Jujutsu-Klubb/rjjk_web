@@ -75,9 +75,9 @@ class TrialAttendancesController < ApplicationController
         if request.xhr?
           render partial: '/attendances/trial_attendance_create_link',
                  locals: {
-                     nkf_member_trial_id: @trial_attendance.nkf_member_trial_id,
-                     group_schedule_id: @trial_attendance.practice.group_schedule_id,
-                     date: @trial_attendance.date,
+                   nkf_member_trial_id: @trial_attendance.nkf_member_trial_id,
+                   group_schedule_id: @trial_attendance.practice.group_schedule_id,
+                   date: @trial_attendance.date,
                  }
         else
           redirect_to(trial_attendances_url)

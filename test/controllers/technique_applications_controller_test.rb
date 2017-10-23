@@ -22,8 +22,8 @@ class TechniqueApplicationsControllerTest < ActionController::TestCase
   test 'should create application' do
     assert_difference('TechniqueApplication.count') do
       post :create, params: { technique_application: {
-          name: @technique_application.name + '_2',
-          rank_id: @technique_application.rank_id, system: 'Goho'
+        name: @technique_application.name + '_2',
+        rank_id: @technique_application.rank_id, system: 'Goho'
       } }
       assert_no_errors :technique_application
     end
@@ -43,8 +43,8 @@ class TechniqueApplicationsControllerTest < ActionController::TestCase
 
   test 'should update application' do
     put :update, params: { id: @technique_application, technique_application: {
-        name: @technique_application.name,
-        rank_id: @technique_application.rank_id,
+      name: @technique_application.name,
+      rank_id: @technique_application.rank_id,
     } }
     assert_redirected_to technique_application_path(assigns(:technique_application))
   end

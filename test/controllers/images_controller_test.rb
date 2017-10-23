@@ -65,7 +65,7 @@ class ImagesControllerTest < ActionController::TestCase
 
     assert_difference('Image.count') do
       post :create, params: { image: {
-          name: 'new file', content_type: 'image/png', file: fixture_file_upload('files/tiny.png')
+        name: 'new file', content_type: 'image/png', file: fixture_file_upload('files/tiny.png')
       } }
     end
 

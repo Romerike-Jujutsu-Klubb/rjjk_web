@@ -21,8 +21,8 @@ class CorrespondencesControllerTest < ActionController::TestCase
   test('should create correspondence') do
     assert_difference('Correspondence.count') do
       post :create, params: { correspondence: {
-          member_id: @correspondence.member_id, related_model_id: @correspondence.related_model_id,
-          sent_at: @correspondence.sent_at
+        member_id: @correspondence.member_id, related_model_id: @correspondence.related_model_id,
+        sent_at: @correspondence.sent_at
       } }
     end
 
@@ -41,9 +41,9 @@ class CorrespondencesControllerTest < ActionController::TestCase
 
   test 'should update correspondence' do
     put :update, params: { id: @correspondence, correspondence: {
-        member_id: @correspondence.member_id,
-        related_model_id: @correspondence.related_model_id,
-        sent_at: @correspondence.sent_at,
+      member_id: @correspondence.member_id,
+      related_model_id: @correspondence.related_model_id,
+      sent_at: @correspondence.sent_at,
     } }
     assert_redirected_to correspondence_path(assigns(:correspondence))
   end

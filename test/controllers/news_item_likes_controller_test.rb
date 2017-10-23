@@ -20,7 +20,7 @@ class NewsItemLikesControllerTest < ActionDispatch::IntegrationTest
   test 'should create news_item_like' do
     assert_difference('NewsItemLike.count') do
       post news_item_likes_url, params: { news_item_like: {
-          news_item_id: @news_item_like.news_item_id, user_id: @news_item_like.user_id
+        news_item_id: @news_item_like.news_item_id, user_id: @news_item_like.user_id
       } }
     end
 
@@ -39,7 +39,7 @@ class NewsItemLikesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update news_item_like' do
     patch news_item_like_url(@news_item_like), params: { news_item_like: {
-        news_item_id: @news_item_like.news_item_id, user_id: @news_item_like.user_id
+      news_item_id: @news_item_like.news_item_id, user_id: @news_item_like.user_id
     } }
     assert_redirected_to news_item_like_url(@news_item_like)
   end

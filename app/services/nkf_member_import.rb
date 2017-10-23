@@ -332,9 +332,9 @@ class NkfMemberImport
     login_form_fields = login_content.scan(/<input .*?name="(.*?)".*?value ?="(.*?)".*?>/)
     login_form_fields.delete_if { |f| %w[site2pstoretoken ssousername password].include? f[0] }
     login_form_fields += [
-        ['site2pstoretoken', token],
-        ['ssousername', NkfAgent::NKF_USERNAME],
-        ['password', ENV['NKF_PASSWORD']],
+      ['site2pstoretoken', token],
+      ['ssousername', NkfAgent::NKF_USERNAME],
+      ['password', ENV['NKF_PASSWORD']],
     ]
     login_params = login_form_fields.map { |field| "#{field[0]}=#{ERB::Util.url_encode field[1]}" }
         .join('&')

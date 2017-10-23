@@ -17,13 +17,13 @@ class BirthdayCelebrationsController < ApplicationController
     participants = bc.participants.split(/\s*\n+\s*/)
     general = -> do
       {
-          rank: 'Innføring i Jujutsu', group: '',
-          censor1: bc.sensor1 && { title: bc.sensor1.title, name: bc.sensor1.name,
-                                   signature: bc.sensor1.signatures.sample.try(:image) },
-          censor2: bc.sensor1 && { title: bc.sensor2.title, name: bc.sensor2.name,
-                                   signature: bc.sensor2.signatures.sample.try(:image) },
-          censor3: bc.sensor1 && { title: bc.sensor3.title, name: bc.sensor3.name,
-                                   signature: bc.sensor3.signatures.sample.try(:image) }
+        rank: 'Innføring i Jujutsu', group: '',
+        censor1: bc.sensor1 && { title: bc.sensor1.title, name: bc.sensor1.name,
+                                 signature: bc.sensor1.signatures.sample.try(:image) },
+        censor2: bc.sensor1 && { title: bc.sensor2.title, name: bc.sensor2.name,
+                                 signature: bc.sensor2.signatures.sample.try(:image) },
+        censor3: bc.sensor1 && { title: bc.sensor3.title, name: bc.sensor3.name,
+                                 signature: bc.sensor3.signatures.sample.try(:image) }
       }
     end
     content = participants.map { |n| general.call.update(name: n) }

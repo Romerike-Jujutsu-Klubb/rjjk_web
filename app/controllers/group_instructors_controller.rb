@@ -10,16 +10,16 @@ class GroupInstructorsController < ApplicationController
         .to_a
     group_instructors.sort_by! do |gi|
       [
-          gi.group_semester.semester.current? ? 0 : 1,
-          gi.group_semester.semester.future? ? 0 : 1,
-          if gi.group_semester.semester.future?
-            gi.group_semester.semester.start_on
-          else
-            Date.current - gi.group_semester.semester.end_on
-          end,
-          gi.group_schedule.group.from_age,
-          gi.group_schedule.weekday,
-          -(gi.member.current_rank.try(:position) || -999),
+        gi.group_semester.semester.current? ? 0 : 1,
+        gi.group_semester.semester.future? ? 0 : 1,
+        if gi.group_semester.semester.future?
+          gi.group_semester.semester.start_on
+        else
+          Date.current - gi.group_semester.semester.end_on
+        end,
+        gi.group_schedule.group.from_age,
+        gi.group_schedule.weekday,
+        -(gi.member.current_rank.try(:position) || -999),
       ]
     end
     @semesters = group_instructors.group_by { |gi| gi.group_semester.semester }

@@ -21,7 +21,7 @@ class GroupsControllerTest < ActionController::TestCase
   def test_should_create_group
     assert_difference('Group.count') do
       post :create, params: { group: {
-          from_age: 8, martial_art_id: martial_arts(:keiwaryu).id, name: 'New group', to_age: 10
+        from_age: 8, martial_art_id: martial_arts(:keiwaryu).id, name: 'New group', to_age: 10
       } }
       assert_no_errors :group
     end

@@ -15,26 +15,26 @@ class Graduation < ApplicationRecord
     includes(
         censors: { member: { graduates: { rank: :martial_art } } },
         graduates: {
-            graduation: {
-                group: {
-                    martial_art: { ranks: [{ group: %i[martial_art ranks] }, :martial_art] },
-                },
+          graduation: {
+            group: {
+              martial_art: { ranks: [{ group: %i[martial_art ranks] }, :martial_art] },
             },
-            member: [
+          },
+          member: [
+            {
+              attendances: {
+                practice: :group_schedule,
+              },
+              graduates: [
                 {
-                    attendances: {
-                        practice: :group_schedule,
-                    },
-                    graduates: [
-                        {
-                            graduation: :group,
-                        },
-                        :rank,
-                    ],
+                  graduation: :group,
                 },
-                :nkf_member,
-            ],
-            rank: [{ group: %i[group_schedules ranks] }, :martial_art],
+                :rank,
+              ],
+            },
+            :nkf_member,
+          ],
+          rank: [{ group: %i[group_schedules ranks] }, :martial_art],
         },
         group: { members: :nkf_member }
     )

@@ -22,12 +22,12 @@ class ApplicationStepsControllerTest < ActionController::TestCase
   test 'should create application_step' do
     assert_difference('ApplicationStep.count(:all)') do
       post :create, params: { application_step: {
-          technique_application_id: @application_step.technique_application_id,
-          description: @application_step.description,
-          image_content_data: @application_step.image_content_data,
-          image_content_type: @application_step.image_content_type,
-          image_filename: @application_step.image_filename,
-          position: 3,
+        technique_application_id: @application_step.technique_application_id,
+        description: @application_step.description,
+        image_content_data: @application_step.image_content_data,
+        image_content_type: @application_step.image_content_type,
+        image_filename: @application_step.image_filename,
+        position: 3,
       } }
       assert_no_errors :application_step
     end
@@ -47,12 +47,12 @@ class ApplicationStepsControllerTest < ActionController::TestCase
 
   test 'should update application_step' do
     put :update, params: { id: @application_step.id, application_step: {
-        technique_application_id: @application_step.technique_application_id,
-        description: @application_step.description,
-        image_content_data: @application_step.image_content_data,
-        image_content_type: @application_step.image_content_type,
-        image_filename: @application_step.image_filename,
-        position: @application_step.position,
+      technique_application_id: @application_step.technique_application_id,
+      description: @application_step.description,
+      image_content_data: @application_step.image_content_data,
+      image_content_type: @application_step.image_content_type,
+      image_filename: @application_step.image_filename,
+      position: @application_step.position,
     } }
     assert_no_errors :application_step
     assert_redirected_to application_step_path(assigns(:application_step))

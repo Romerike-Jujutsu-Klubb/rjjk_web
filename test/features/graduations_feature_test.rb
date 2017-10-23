@@ -33,7 +33,7 @@ class GraduationsFeatureTest < FeatureTest
   def test_new_with_params
     screenshot_group :new_with_params
     visit_with_login new_graduation_path(graduation: {
-        group_id: groups(:panda).id, group_notification: true, held_on: '2013-10-21'
+      group_id: groups(:panda).id, group_notification: true, held_on: '2013-10-21'
     })
     screenshot :form
   end

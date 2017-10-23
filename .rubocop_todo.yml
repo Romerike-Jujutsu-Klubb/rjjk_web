@@ -6,35 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 19
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: special_inside_parentheses, consistent, align_brackets
-Layout/IndentArray:
-  Exclude:
-    - 'app/controllers/group_instructors_controller.rb'
-    - 'app/mailers/nkf_replication_mailer.rb'
-    - 'app/models/attendance.rb'
-    - 'app/models/graduation.rb'
-    - 'app/models/graduation_censor_form.rb'
-    - 'app/models/member.rb'
-    - 'app/models/skill_card.rb'
-    - 'app/services/nkf_member_import.rb'
-    - 'config/environment.rb'
-    - 'config/spring.rb'
-    - 'test/models/certificates_test.rb'
-    - 'test/models/member_test.rb'
-    - 'test/models/rank_test.rb'
-    - 'test/models/user_test.rb'
-    - 'test/services/nkf_member_comparison_test.rb'
-
-# Offense count: 97
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: special_inside_parentheses, consistent, align_braces
-Layout/IndentHash:
-  Enabled: false
-
 # Offense count: 226
 Metrics/AbcSize:
   Max: 201

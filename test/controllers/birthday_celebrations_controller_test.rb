@@ -22,8 +22,8 @@ class BirthdayCelebrationsControllerTest < ActionController::TestCase
   test 'should create birthday_celebration' do
     assert_difference('BirthdayCelebration.count') do
       post :create, params: { birthday_celebration: {
-          held_on: @birthday_celebration.held_on,
-          participants: @birthday_celebration.participants,
+        held_on: @birthday_celebration.held_on,
+        participants: @birthday_celebration.participants,
       } }
       assert_no_errors :birthday_celebration
     end
@@ -43,8 +43,8 @@ class BirthdayCelebrationsControllerTest < ActionController::TestCase
 
   test 'should update birthday_celebration' do
     put :update, params: { id: @birthday_celebration, birthday_celebration: {
-        held_on: @birthday_celebration.held_on,
-        participants: @birthday_celebration.participants,
+      held_on: @birthday_celebration.held_on,
+      participants: @birthday_celebration.participants,
     } }
     assert_redirected_to birthday_celebration_path(assigns(:birthday_celebration))
   end

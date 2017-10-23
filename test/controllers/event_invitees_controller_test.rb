@@ -22,13 +22,13 @@ class EventInviteesControllerTest < ActionController::TestCase
   test 'should create event_invitee' do
     assert_difference('EventInvitee.count') do
       post :create, params: { event_invitee: {
-          address: @event_invitee.address,
-          email: @event_invitee.email,
-          event_id: @event_invitee.event_id,
-          name: @event_invitee.name,
-          organization: @event_invitee.organization,
-          payed: @event_invitee.payed,
-          will_attend: @event_invitee.will_attend,
+        address: @event_invitee.address,
+        email: @event_invitee.email,
+        event_id: @event_invitee.event_id,
+        name: @event_invitee.name,
+        organization: @event_invitee.organization,
+        payed: @event_invitee.payed,
+        will_attend: @event_invitee.will_attend,
       } }
     end
 
@@ -47,13 +47,13 @@ class EventInviteesControllerTest < ActionController::TestCase
 
   test 'should update event_invitee' do
     put :update, params: { id: @event_invitee, event_invitee: {
-        address: @event_invitee.address,
-        email: @event_invitee.email,
-        event_id: @event_invitee.event_id,
-        name: @event_invitee.name,
-        organization: @event_invitee.organization,
-        payed: @event_invitee.payed,
-        will_attend: @event_invitee.will_attend,
+      address: @event_invitee.address,
+      email: @event_invitee.email,
+      event_id: @event_invitee.event_id,
+      name: @event_invitee.name,
+      organization: @event_invitee.organization,
+      payed: @event_invitee.payed,
+      will_attend: @event_invitee.will_attend,
     } }
     assert_redirected_to event_invitee_path(assigns(:event_invitee))
   end

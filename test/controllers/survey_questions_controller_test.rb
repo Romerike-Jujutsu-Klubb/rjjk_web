@@ -22,10 +22,10 @@ class SurveyQuestionsControllerTest < ActionController::TestCase
   test 'should create survey_question' do
     assert_difference('SurveyQuestion.count') do
       post :create, params: { survey_question: {
-          choices: @survey_question.choices,
-          free_text: @survey_question.free_text,
-          survey_id: @survey_question.survey_id,
-          title: @survey_question.title,
+        choices: @survey_question.choices,
+        free_text: @survey_question.free_text,
+        survey_id: @survey_question.survey_id,
+        title: @survey_question.title,
       } }
     end
 
@@ -44,10 +44,10 @@ class SurveyQuestionsControllerTest < ActionController::TestCase
 
   test 'should update survey_question' do
     patch :update, params: { id: @survey_question, survey_question: {
-        choices: @survey_question.choices,
-        free_text: @survey_question.free_text,
-        survey_id: @survey_question.survey_id,
-        title: @survey_question.title,
+      choices: @survey_question.choices,
+      free_text: @survey_question.free_text,
+      survey_id: @survey_question.survey_id,
+      title: @survey_question.title,
     } }
     assert_redirected_to survey_question_path(assigns(:survey_question))
   end

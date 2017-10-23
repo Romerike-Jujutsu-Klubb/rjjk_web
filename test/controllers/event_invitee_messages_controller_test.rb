@@ -22,11 +22,11 @@ class EventInviteeMessagesControllerTest < ActionController::TestCase
   test 'should create event_invitee_message' do
     assert_difference('EventInviteeMessage.count') do
       post :create, params: { event_invitee_message: {
-          message_type: EventMessage::MessageType::INVITATION,
-          body: @event_invitee_message.body,
-          event_invitee_id: @event_invitee_message.event_invitee_id,
-          sent_at: @event_invitee_message.sent_at,
-          subject: @event_invitee_message.subject,
+        message_type: EventMessage::MessageType::INVITATION,
+        body: @event_invitee_message.body,
+        event_invitee_id: @event_invitee_message.event_invitee_id,
+        sent_at: @event_invitee_message.sent_at,
+        subject: @event_invitee_message.subject,
       } }
       assert_no_errors :event_invitee_message
     end
@@ -45,11 +45,11 @@ class EventInviteeMessagesControllerTest < ActionController::TestCase
 
   test 'should update event_invitee_message' do
     put :update, params: { id: @event_invitee_message, event_invitee_message: {
-        message_type: EventMessage::MessageType::INVITATION,
-        body: @event_invitee_message.body,
-        event_invitee_id: @event_invitee_message.event_invitee_id,
-        sent_at: @event_invitee_message.sent_at,
-        subject: @event_invitee_message.subject,
+      message_type: EventMessage::MessageType::INVITATION,
+      body: @event_invitee_message.body,
+      event_invitee_id: @event_invitee_message.event_invitee_id,
+      sent_at: @event_invitee_message.sent_at,
+      subject: @event_invitee_message.subject,
     } }
     assert_no_errors :event_invitee_message
     assert_redirected_to event_invitee_message_path(assigns(:event_invitee_message))

@@ -95,7 +95,7 @@ class LoginControllerTest < ActionController::TestCase
 
   def test_signup__mismatched_passwords
     post :signup, params: { user: {
-        login: 'newtesla', email: 'newtesla', password: 'newpassword', password_confirmation: 'wrong'
+      login: 'newtesla', email: 'newtesla', password: 'newpassword', password_confirmation: 'wrong'
     } }
     user = assigns(:user)
     assert_equal 1, user.errors.size, -> { user.errors }
@@ -145,7 +145,7 @@ class LoginControllerTest < ActionController::TestCase
   def test_change_password
     user = login(:lars)
     post :change_password, params: { user: {
-        password: 'changed_password', password_onfirmation: 'changed_password'
+      password: 'changed_password', password_onfirmation: 'changed_password'
     } }
     assert_no_errors :user
     assert_equal 1, UserMessage.pending.size

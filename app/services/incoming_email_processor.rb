@@ -4,14 +4,14 @@ require 'mail'
 
 class IncomingEmailProcessor
   TARGETS = {
-      kasserer: { name: 'Kasia Krohn', email: 'kasiakrohn@gmail.com' },
-      materialforvalter: { name: 'Tommy Musaus', email: 'tommy.musaus@hellvikhus.no' },
-      medlem: { name: 'Svein Robert Rolijordet', email: 'srr@resvero.com' },
-      post: { name: 'Svein Robert Rolijordet', email: 'srr@resvero.com' },
-      styret: [*AnnualMeeting.current_board, Role[:Hovedinstruktør, return_record: true]]
-          .map(&:elected_contact),
-      test: { name: 'don Valentin', email: 'donv@kubosch.no' },
-      web: { name: 'Uwe Kubosch', email: 'uwe@kubosch.no' },
+    kasserer: { name: 'Kasia Krohn', email: 'kasiakrohn@gmail.com' },
+    materialforvalter: { name: 'Tommy Musaus', email: 'tommy.musaus@hellvikhus.no' },
+    medlem: { name: 'Svein Robert Rolijordet', email: 'srr@resvero.com' },
+    post: { name: 'Svein Robert Rolijordet', email: 'srr@resvero.com' },
+    styret: [*AnnualMeeting.current_board, Role[:Hovedinstruktør, return_record: true]]
+        .map(&:elected_contact),
+    test: { name: 'don Valentin', email: 'donv@kubosch.no' },
+    web: { name: 'Uwe Kubosch', email: 'uwe@kubosch.no' },
   }.freeze
   ENV_STR = Rails.env.production? ? nil : Rails.env.upcase
   DOMAIN = "#{"#{Rails.env}." unless Rails.env.production? || Rails.env.test?}jujutsu.no"

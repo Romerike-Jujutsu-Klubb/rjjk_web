@@ -48,8 +48,8 @@ class SkillCard
         rank.technique_applications.group_by(&:system).each do |system_name, apps|
           apps.each_slice(14) do |app_slice|
             rows << [
-                { content: UnicodeUtils.upcase(system_name), rowspan: app_slice.size, rotate: 90 },
-                UnicodeUtils.upcase(app_slice[0].name), nil, nil, nil, nil
+              { content: UnicodeUtils.upcase(system_name), rowspan: app_slice.size, rotate: 90 },
+              UnicodeUtils.upcase(app_slice[0].name), nil, nil, nil, nil
             ]
             rows += app_slice[1..-1].sort_by(&:name).map do |ta|
               [UnicodeUtils.upcase(ta.name), nil, nil, nil, nil]

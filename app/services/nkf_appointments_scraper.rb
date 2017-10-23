@@ -19,7 +19,7 @@ class NkfAppointmentsScraper
 
     appointments = rows.map do |r|
       role_name = {
-          'Barne og ungdomsrepresentant' => 'Foreldrerepresentant',
+        'Barne og ungdomsrepresentant' => 'Foreldrerepresentant',
       }[r[1]] || r[1]
       role = Role.where(name: role_name).first_or_create!
       member_name = r[0]

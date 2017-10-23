@@ -22,8 +22,8 @@ class SurveyAnswerTranslationsControllerTest < ActionController::TestCase
   test 'should create survey_answer_translation' do
     assert_difference('SurveyAnswerTranslation.count') do
       post :create, params: { survey_answer_translation: {
-          answer: @survey_answer_translation.answer,
-          normalized_answer: @survey_answer_translation.normalized_answer,
+        answer: @survey_answer_translation.answer,
+        normalized_answer: @survey_answer_translation.normalized_answer,
       } }
       assert_no_errors :survey_answer_translation
     end
@@ -43,8 +43,8 @@ class SurveyAnswerTranslationsControllerTest < ActionController::TestCase
 
   test 'should update survey_answer_translation' do
     patch :update, params: { id: @survey_answer_translation, survey_answer_translation: {
-        answer: @survey_answer_translation.answer,
-        normalized_answer: @survey_answer_translation.normalized_answer,
+      answer: @survey_answer_translation.answer,
+      normalized_answer: @survey_answer_translation.normalized_answer,
     } }
     assert_redirected_to survey_answer_translation_path(assigns(:survey_answer_translation))
   end

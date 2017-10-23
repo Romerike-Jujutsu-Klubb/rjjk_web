@@ -61,12 +61,12 @@ module Prawn
                   width: rotated ? spanned_content_height : spanned_content_width + FPTolerance,
                   height: rotated ? spanned_content_width : spanned_content_height + FPTolerance,
                   at: [
-                      2,
-                      if rotated
-                        (spanned_content_height + FPTolerance - natural_content_height) / 2
-                      else
-                        @pdf.cursor
-                      end,
+                    2,
+                    if rotated
+                      (spanned_content_height + FPTolerance - natural_content_height) / 2
+                    else
+                      @pdf.cursor
+                    end,
                   ]
               ).render
             end

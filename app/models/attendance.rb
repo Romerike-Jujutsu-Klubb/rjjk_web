@@ -13,17 +13,17 @@ class Attendance < ApplicationRecord
   end
 
   STATES = [
-      [Status::WILL_ATTEND, 'Kommer!', 'thumbs-up', 'success'],
-      [Status::HOLIDAY, 'Bortreist', 'hand-o-right', 'warning'],
-      [Status::SICK, 'Syk', 'plus', 'danger'],
-      [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
+    [Status::WILL_ATTEND, 'Kommer!', 'thumbs-up', 'success'],
+    [Status::HOLIDAY, 'Bortreist', 'hand-o-right', 'warning'],
+    [Status::SICK, 'Syk', 'plus', 'danger'],
+    [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
   ].freeze
 
   PAST_STATES = [
-      [Status::ATTENDED, 'Trente!', 'thumbs-up', 'success'],
-      [Status::HOLIDAY, 'Bortreist', 'hand-o-right', 'warning'],
-      [Status::SICK, 'Syk', 'plus', 'danger'],
-      [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
+    [Status::ATTENDED, 'Trente!', 'thumbs-up', 'success'],
+    [Status::HOLIDAY, 'Bortreist', 'hand-o-right', 'warning'],
+    [Status::SICK, 'Syk', 'plus', 'danger'],
+    [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
   ].freeze
 
   PRESENT_STATES = [Status::ASSISTANT, Status::ATTENDED, Status::INSTRUCTOR, Status::PRESENT].freeze

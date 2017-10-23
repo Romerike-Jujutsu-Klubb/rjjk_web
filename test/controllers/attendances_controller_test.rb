@@ -71,8 +71,8 @@ class AttendancesControllerTest < ActionController::TestCase
   def test_should_get_review
     practice = practices(:voksne_2013_42_thursday)
     get :review, params: {
-        group_schedule_id: practice.group_schedule_id,
-        year: practice.year, week: practice.week, status: :X
+      group_schedule_id: practice.group_schedule_id,
+      year: practice.year, week: practice.week, status: :X
     }
     assert_response :redirect
     assert_redirected_to 'http://test.host/mitt/oppmote'

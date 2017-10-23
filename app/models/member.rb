@@ -54,8 +54,8 @@ class Member < ApplicationRecord
     where('joined_on <= ? AND left_on IS NULL OR left_on >= ?', to_date, from_date)
   end
   SEARCH_FIELDS = %i[
-      address billing_email email first_name last_name parent_email
-      parent_name phone_home phone_mobile phone_parent phone_work
+    address billing_email email first_name last_name parent_email
+    parent_name phone_home phone_mobile phone_parent phone_work
   ].freeze
   scope :search, ->(query) {
     where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ :query" }.join(' OR '),
@@ -384,16 +384,16 @@ blocking users: #{blocking_users.inspect}"
     guardians = {}
     if parent_name
       guardians[1] = {
-          name: parent_name,
-          email: parent_email,
-          phone: phone_parent,
+        name: parent_name,
+        email: parent_email,
+        phone: phone_parent,
       }
     end
     if parent_2_name
       guardians[2] = {
-          name: parent_2_name,
-          email: billing_email,
-          phone: parent_2_mobile,
+        name: parent_2_name,
+        email: billing_email,
+        phone: parent_2_mobile,
       }
     end
     guardians

@@ -62,13 +62,13 @@ module BootstrapForm
       control_col = options.delete(:control_col)
       layout = get_group_layout(options.delete(:layout))
       form_group_options = {
-          id: options[:id],
-          help: help,
-          icon: icon,
-          label_col: label_col,
-          control_col: control_col,
-          layout: layout,
-          class: wrapper_class,
+        id: options[:id],
+        help: help,
+        icon: icon,
+        label_col: label_col,
+        control_col: control_col,
+        layout: layout,
+        class: wrapper_class,
       }
 
       form_group_options.merge!(wrapper_options) if wrapper_options.is_a?(Hash)
@@ -85,9 +85,9 @@ module BootstrapForm
         label_text ||= options.delete(:label) if options[:label].is_a?(String)
 
         form_group_options[:label] = {
-            text: label_text,
-            class: label_class,
-            skip_required: options.delete(:skip_required),
+          text: label_text,
+          class: label_class,
+          skip_required: options.delete(:skip_required),
         }
       end
 

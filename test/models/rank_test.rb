@@ -19,10 +19,10 @@ class RankTest < ActiveSupport::TestCase
 
   test 'label' do
     assert_equal [
-        '12. mon blå stripe', '11. mon blå stripe m/svart bånd',
-        '10. mon gule kanter', '5. kyu gult belte', '4. kyu oransje belte',
-        '1. kyu brunt belte', 'shodan svart belte', 'nidan svart belte m/2 striper',
-        'sandan svart belte m/3 striper'
+      '12. mon blå stripe', '11. mon blå stripe m/svart bånd',
+      '10. mon gule kanter', '5. kyu gult belte', '4. kyu oransje belte',
+      '1. kyu brunt belte', 'shodan svart belte', 'nidan svart belte m/2 striper',
+      'sandan svart belte m/3 striper'
     ],
         Rank.order(:position).all.map(&:label)
   end

@@ -5,9 +5,9 @@ require 'integration_test'
 class UserSystemTest < ActionDispatch::IntegrationTest
   def test_signup_and_verify
     post url_for(controller: :login, action: :signup), params: {
-        user: { login: 'newuser',
-                password: 'password', password_confirmation: 'password',
-                email: 'newemail@example.com' },
+      user: { login: 'newuser',
+              password: 'password', password_confirmation: 'password',
+              email: 'newemail@example.com' },
     }
 
     assert_not_logged_in
@@ -56,9 +56,9 @@ class UserSystemTest < ActionDispatch::IntegrationTest
     key = mail.key
 
     post url_for(controller: :login, action: :change_password), params: {
-        user: { password: 'newpassword',
-                password_confirmation: 'newpassword' },
-        key: key,
+      user: { password: 'newpassword',
+              password_confirmation: 'newpassword' },
+      key: key,
     }
 
     follow_redirect!

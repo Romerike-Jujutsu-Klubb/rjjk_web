@@ -42,8 +42,8 @@ class AppointmentsControllerTest < ActionController::TestCase
 
   test 'should update appointment' do
     put :update, params: { id: @appointment, appointment: {
-        from: @appointment.from, member_id: @appointment.member_id, role_id: @appointment.role_id,
-        to: @appointment.to
+      from: @appointment.from, member_id: @appointment.member_id, role_id: @appointment.role_id,
+      to: @appointment.to
     } }
     assert_redirected_to appointments_path
   end
