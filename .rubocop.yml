@@ -62,6 +62,9 @@ Metrics/LineLength:
   Exclude:
     - db/schema.rb
 
+Naming/VariableNumber:
+  Enabled: false
+
 Rails:
   Enabled: true
 
@@ -107,6 +110,3 @@ Style/SingleLineBlockParams:
 
 Style/TrailingCommaInLiteral:
   EnforcedStyleForMultiline: comma
-
-Style/VariableNumber:
-  Enabled: false
