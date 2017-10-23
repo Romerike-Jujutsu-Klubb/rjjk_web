@@ -92,11 +92,6 @@ Style/MixinUsage:
   Exclude:
     - 'app/helpers/application_helper.rb'
 
-# Offense count: 1
-Style/MultilineBlockChain:
-  Exclude:
-    - 'app/models/member_grade_history_graph.rb'
-
 # Offense count: 35
 # Cop supports --auto-correct.
 Style/PerlBackrefs:
@@ -112,10 +107,3 @@ Style/PerlBackrefs:
     - 'db/migrate/20150617115412_add_decoration_to_ranks.rb'
     - 'test/features/login_feature_test.rb'
     - 'test/integration/user_system_test.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil.
-Style/SafeNavigation:
-  Exclude:
-    - 'app/controllers/attendances_controller.rb'

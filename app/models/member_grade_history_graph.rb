@@ -116,9 +116,8 @@ EOF
           )
           .includes(graduates: [{ graduation: { group: :martial_art } }, :rank]).to_a
       ranks = @active_members[date].select do |m|
-        m.graduates.select do |g|
-          g.graduation.martial_art.kwr? && g.graduation.held_on <= date
-        end.sort_by { |g| g.graduation.held_on }.last.try(:rank) == rank
+        m.graduates.select { |g| g.graduation.martial_art.kwr? && g.graduation.held_on <= date }
+            .sort_by { |g| g.graduation.held_on }.last.try(:rank) == rank
       end.size
       logger.debug <<~EOF
         "#{prev_date} #{date} #{next_date} Active members: #{@active_members[date].size}, ranks: #{ranks}"
