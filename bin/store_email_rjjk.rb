@@ -60,13 +60,14 @@ rescue => e
   log "Exception setting encoding: #{e}"
 end
 
-def check_spam(content, _mail)
+def check_spam(content, orig_mail)
   begin
     spam_start = Time.now
     mail_is_spam = nil
     spam_score = nil
     require 'open3'
     log 'Checking Spamassassin'
+    mail = nil
     Open3.popen3('spamc') do |stdin, stdout, stderr, wait_thr|
       stdin << content
       stdin.close
@@ -97,6 +98,7 @@ def check_spam(content, _mail)
   rescue Exception => e # rubocop: disable Lint/RescueException
     log "Exception scanning for SPAM: #{e}\n#{e.backtrace.join("\n")}"
     mail_is_spam = 'ERROR'
+    mail ||= orig_mail
   end
   log "Spam check took: #{Time.now - spam_start}s"
   [content, mail, mail_is_spam, spam_score]
