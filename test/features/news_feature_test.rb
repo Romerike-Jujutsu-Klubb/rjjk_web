@@ -9,8 +9,8 @@ class NewsFeatureTest < FeatureTest
     screenshot('news/index_public')
     all('.post img')[0].click
     screenshot('news/index_public_image') || sleep(Capybara::Screenshot.stability_time_limit)
-    click_button 'Lukk'
-    assert has_no_css?('button', text: 'Lukk')
+    find('.close').click
+    assert has_no_css?('.close')
     all('.post img')[1].click
     screenshot('news/index_public_image_2')
   end
