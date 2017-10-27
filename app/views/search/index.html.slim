@@ -1,0 +1,46 @@
+h1 Søkeresultat for "#{@query}"
+
+- if @query
+  - if [@members, @former_members, @trials, @users, @pages].any?(&:present?)
+    .row
+      - if @members.present?
+        .col-md
+          h3 Medlemmer
+          ul
+            - @members.each do |m|
+              li
+                => link_to m.name, m
+                | (#{m.age} år)
+      - if @former_members.present?
+        .col-md
+          h3 Tidligere Medlemmer
+          ul
+            - @members.each do |m|
+              li
+                => link_to m.name, m
+                | (#{m.age} år)
+    - if @trials.present?
+      h3 Søkere i prøvetid
+      ul
+        - @trials.each do |tr|
+          li = link_to tr.name, tr
+    - if @users.present?
+      h3 Brukere
+      ul
+        - @users.each do |u|
+          li = link_to u.name, u
+    - if @pages.present?
+      h3 Informasjonssider
+      ul
+        - @pages.each do |p|
+          li = link_to p.title, p
+
+    h2 Savner du noe?
+    p
+      ' Hvis du vil ha flere søkeresultater, si ifra til
+      = link_to 'nettansvarlig', 'mailto:web@jujutsu.no?subject=[RJJK] Bedre søk på web'
+      | .
+  - else
+    | Fant ingenting om "#{@query}".
+- else
+  | Fyll inn søkeboksen oppe til høyre for å søke.
