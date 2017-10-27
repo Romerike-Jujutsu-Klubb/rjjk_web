@@ -177,7 +177,7 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.integer  'practice_id',          null: false, foreign_key: { references: 'practices', name: 'fk_attendances_practice_id', on_update: :no_action, on_delete: :no_action }, index: { name: 'fk__attendances_practice_id' }
   end
 
-  create_table 'wazas', id: :serial, default: "nextval('wazas_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'wazas', force: :cascade do |t|
     t.string   'name',        limit: 255, null: false, index: { name: 'index_wazas_on_name', unique: true }
     t.string   'translation', limit: 255
     t.text     'description'
@@ -386,12 +386,12 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.boolean  'assistant',         default: false, null: false
   end
 
-  create_table 'group_memberships', id: :serial, default: "nextval('group_memberships_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'group_memberships', force: :cascade do |t|
     t.integer 'group_id',  null: false, foreign_key: { references: 'groups', name: 'group_memberships_group_id_fkey', on_update: :no_action, on_delete: :no_action }, index: { name: 'index_group_memberships_on_group_id_and_member_id', with: ['member_id'], unique: true }
     t.integer 'member_id', null: false, foreign_key: { references: 'members', name: 'group_memberships_member_id_fkey', on_update: :no_action, on_delete: :no_action }
   end
 
-  create_table 'images', id: :serial, default: "nextval('images_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'images', force: :cascade do |t|
     t.string   'name',         limit: 64, null: false
     t.string   'content_type', limit: 255, null: false
     t.binary   'content_data', null: false
@@ -406,7 +406,7 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.integer  'height'
   end
 
-  create_table 'information_pages', id: :serial, default: "nextval('information_pages_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'information_pages', force: :cascade do |t|
     t.integer  'parent_id',  foreign_key: { references: 'information_pages', name: 'information_pages_parent_id_fkey', on_update: :no_action, on_delete: :no_action }
     t.string   'title',      limit: 32, null: false
     t.text     'body'
@@ -418,7 +418,7 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.datetime 'mailed_at'
   end
 
-  create_table 'instructor_meetings', id: :serial, default: "nextval('instructor_meetings_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'instructor_meetings', force: :cascade do |t|
     t.datetime 'start_at',   null: false
     t.time     'end_at',     null: false
     t.string   'title',      limit: 254
@@ -436,7 +436,7 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.index %w[member_id image_id], name: 'index_member_images_on_member_id_and_image_id', unique: true
   end
 
-  create_table 'users', id: :serial, default: "nextval('users_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'users', force: :cascade do |t|
     t.string   'login',           limit: 80, null: false
     t.string   'salted_password', limit: 40, null: false
     t.string   'email',           limit: 64, null: false
@@ -452,7 +452,7 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.datetime 'updated_at',      null: false
   end
 
-  create_table 'news_items', id: :serial, default: "nextval('news_items_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'news_items', force: :cascade do |t|
     t.string   'title', limit: 64, null: false
     t.text     'body'
     t.datetime 'created_at'
@@ -465,14 +465,14 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.text     'summary'
   end
 
-  create_table 'news_item_likes', id: :serial, default: "nextval('news_item_likes_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'news_item_likes', force: :cascade do |t|
     t.integer  'news_item_id', null: false, foreign_key: { references: 'news_items', name: 'fk_news_item_likes_news_item_id', on_update: :no_action, on_delete: :no_action }, index: { name: 'fk__news_item_likes_news_item_id' }
     t.integer  'user_id',      null: false, foreign_key: { references: 'users', name: 'fk_news_item_likes_user_id', on_update: :no_action, on_delete: :no_action }, index: { name: 'fk__news_item_likes_user_id' }
     t.datetime 'created_at',   null: false
     t.datetime 'updated_at',   null: false
   end
 
-  create_table 'nkf_member_trials', id: :serial, default: "nextval('nkf_member_trials_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'nkf_member_trials', force: :cascade do |t|
     t.string   'medlems_type',  limit: 16, null: false
     t.string   'etternavn',     limit: 32, null: false
     t.string   'fornavn',       limit: 32, null: false
@@ -492,7 +492,7 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.string   'stilart',       limit: 64, null: false
   end
 
-  create_table 'nkf_members', id: :serial, default: "nextval('nkf_members_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'nkf_members', force: :cascade do |t|
     t.integer  'member_id', foreign_key: { references: 'members', name: 'nkf_members_member_id_fkey', on_update: :no_action, on_delete: :no_action }
     t.integer  'medlemsnummer'
     t.string   'etternavn',                                       limit: 255
@@ -542,14 +542,14 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.string   'foresatte_nr_2_mobil',                            limit: 16
   end
 
-  create_table 'page_aliases', id: :serial, default: "nextval('page_aliases_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'page_aliases', force: :cascade do |t|
     t.string   'old_path',   limit: 255, index: { name: 'index_page_aliases_on_old_path', unique: true }
     t.string   'new_path',   limit: 255
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end
 
-  create_table 'public_records', id: :serial, default: "nextval('public_records_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'public_records', force: :cascade do |t|
     t.string   'contact',       limit: 255, null: false
     t.string   'chairman',      limit: 255, null: false
     t.string   'board_members', limit: 255, null: false
@@ -558,7 +558,7 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.datetime 'updated_at',    null: false
   end
 
-  create_table 'raw_incoming_emails', id: :serial, default: "nextval('raw_incoming_emails_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'raw_incoming_emails', force: :cascade do |t|
     t.binary   'content', null: false
     t.datetime 'created_at'
     t.datetime 'updated_at'
@@ -566,7 +566,7 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.datetime 'postponed_at'
   end
 
-  create_table 'signatures', id: :serial, default: "nextval('signatures_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'signatures', force: :cascade do |t|
     t.integer  'member_id',    null: false, foreign_key: { references: 'members', name: 'fk_signatures_member_id', on_update: :no_action, on_delete: :no_action }, index: { name: 'fk__signatures_member_id' }
     t.string   'name',         limit: 255, null: false
     t.string   'content_type', limit: 255, null: false
@@ -575,14 +575,14 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.datetime 'updated_at',   null: false
   end
 
-  create_table 'survey_answer_translations', id: :serial, default: "nextval('survey_answer_translations_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'survey_answer_translations', force: :cascade do |t|
     t.string   'answer',            limit: 254, null: false
     t.string   'normalized_answer', limit: 254, null: false
     t.datetime 'created_at'
     t.datetime 'updated_at'
   end
 
-  create_table 'surveys', id: :serial, default: "nextval('surveys_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'surveys', force: :cascade do |t|
     t.string   'category', limit: 8
     t.integer  'days_active'
     t.integer  'days_passive'
@@ -598,7 +598,7 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.datetime 'updated_at'
   end
 
-  create_table 'survey_questions', id: :serial, default: "nextval('survey_questions_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'survey_questions', force: :cascade do |t|
     t.integer  'survey_id',       null: false, foreign_key: { references: 'surveys', name: 'fk_survey_questions_survey_id', on_update: :no_action, on_delete: :no_action }, index: { name: 'fk__survey_questions_survey_id' }
     t.integer  'position',        null: false
     t.string   'title',           limit: 254, null: false
@@ -609,7 +609,7 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.datetime 'updated_at'
   end
 
-  create_table 'survey_requests', id: :serial, default: "nextval('survey_requests_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'survey_requests', force: :cascade do |t|
     t.integer  'survey_id',    null: false, foreign_key: { references: 'surveys', name: 'fk_survey_requests_survey_id', on_update: :no_action, on_delete: :no_action }, index: { name: 'fk__survey_requests_survey_id' }
     t.integer  'member_id',    null: false, foreign_key: { references: 'members', name: 'fk_survey_requests_member_id', on_update: :no_action, on_delete: :no_action }, index: { name: 'fk__survey_requests_member_id' }
     t.text     'comment'
@@ -622,7 +622,7 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.index %w[survey_id member_id], name: 'index_survey_requests_on_survey_id_and_member_id', unique: true
   end
 
-  create_table 'survey_answers', id: :serial, default: "nextval('survey_answers_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'survey_answers', force: :cascade do |t|
     t.integer  'survey_request_id',  null: false, foreign_key: { references: 'survey_requests', name: 'fk_survey_answers_survey_request_id', on_update: :no_action, on_delete: :no_action }, index: { name: 'fk__survey_answers_survey_request_id' }
     t.integer  'survey_question_id', null: false, foreign_key: { references: 'survey_questions', name: 'fk_survey_answers_survey_question_id', on_update: :no_action, on_delete: :no_action }, index: { name: 'fk__survey_answers_survey_question_id' }
     t.string   'answer',             limit: 254, null: false
@@ -630,14 +630,14 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.datetime 'updated_at'
   end
 
-  create_table 'trial_attendances', id: :serial, default: "nextval('trial_attendances_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'trial_attendances', force: :cascade do |t|
     t.integer  'nkf_member_trial_id', null: false, foreign_key: { references: 'nkf_member_trials', name: 'trial_attendances_nkf_member_trial_id_fkey', on_update: :no_action, on_delete: :no_action }, index: { name: 'index_trial_attendances_on_nkf_member_trial_id_and_practice_id', with: ['practice_id'], unique: true }
     t.datetime 'created_at'
     t.datetime 'updated_at'
     t.integer  'practice_id', null: false, foreign_key: { references: 'practices', name: 'fk_trial_attendances_practice_id', on_update: :no_action, on_delete: :no_action }, index: { name: 'fk__trial_attendances_practice_id' }
   end
 
-  create_table 'user_images', id: :serial, default: "nextval('user_images_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'user_images', force: :cascade do |t|
     t.integer  'user_id',    null: false, index: { name: 'index_user_images_on_user_id_and_image_id_and_rel_type', with: %w[image_id rel_type], unique: true }
     t.integer  'image_id',   null: false
     t.string   'rel_type',   limit: 16, null: false
@@ -645,7 +645,7 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.datetime 'updated_at', null: false
   end
 
-  create_table 'user_messages', id: :serial, default: "nextval('user_messages_id_seq'::regclass)", force: :cascade do |t|
+  create_table 'user_messages', force: :cascade do |t|
     t.integer  'user_id',           null: false, foreign_key: { references: 'users', name: 'fk_user_messages_user_id', on_update: :no_action, on_delete: :no_action }, index: { name: 'fk__user_messages_user_id' }
     t.string   'tag',               limit: 64
     t.string   'key',               limit: 64, null: false
