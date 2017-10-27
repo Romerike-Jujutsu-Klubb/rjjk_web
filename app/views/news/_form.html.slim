@@ -12,8 +12,8 @@
         .col-md-4
           = f.text_field :expire_at, value: @news_item.expire_at.try(:strftime, '%F %R'), class: 'datetime', data: {:'default-date' => 1.week.from_now.strftime('%F %R')}
       - if false # Markdown
-        = f.text_area :summary, class: :expanding, rows: 5
-        = f.text_area :body, class: :expanding, label: 'Mer informasjon (valgfritt)', rows: 5
+        = f.text_area :summary
+        = f.text_area :body, label: 'Mer informasjon (valgfritt)'
       - else # HTML
         = tinymce
         = f.text_area :summary, class: :tinymce
@@ -31,9 +31,5 @@
     .float-right.lazy-container style="height: 680px; overflow:auto; border: 1px solid black"
       = render '/images/list', images: @images
 javascript:
-  $(window).load(function () {
-    tinyMCE.DOM.setStyle(tinyMCE.DOM.get('news_item_summary_ifr'), 'height', '120px');
-  });
-
   $('#news_item_title').focus();
   $('#news_item_title').select();
