@@ -3,12 +3,10 @@
   .modal-dialog class=('modal-lg' if id == :imageModal)
     .modal-content
       .modal-header
+        h5.modal-title id="#{id}ModalLabel" &nbsp;
         button.close type="button" data-dismiss="modal" aria-label="Close"
           span aria-hidden="true" &times;
-        h5.modal-title id="#{id}ModalLabel" &nbsp;
       .modal-body = yield
-      .modal-footer
-        button.btn.btn-primary type="button" data-dismiss="modal" Lukk
 javascript:
     $('##{id}').on('show.bs.modal', function (event) {
         var link = $(event.relatedTarget); // Element that triggered the modal
