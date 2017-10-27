@@ -2,7 +2,7 @@
 
 <%= tinymce %>
 
-<%= form_for @embu do |f| %>
+<%= bootstrap_form_for @embu do |f| %>
     <% if @embu.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@embu.errors.count, "error") %> prohibited this embu from being saved:</h2>
@@ -17,9 +17,7 @@
 
     <div class="field">
       <% if @embu.new_record? %>
-          <%= f.label :rank_id, t(:rank) %>:
-          <br/>
-          <%= f.select :rank_id, @ranks.map { |r| [r.name, r.id] } %>
+          <%= f.select :rank_id, @ranks.map { |r| [r.name, r.id] }, label: t(:rank) %>
       <% else %>
           <%= t(:rank) %>:
           <%= @embu.rank.name %>
@@ -29,7 +27,7 @@
 
     <div class="row">
       <div class="col-md-9">
-        <%= f.text_area :description, :class => :tinymce %>
+        <%= f.text_area :description, hide_label: true, :class => :tinymce %>
         <% unless @embu.new_record? %>
             <div class="field">
               <%= f.label :image, t(:image) %>
@@ -37,7 +35,7 @@
             </div>
         <% end %>
 
-        <div class="actions">
+        <div class="mt-3">
           <%= f.submit :class => 'btn btn-secondary' %>
           <%= link_to 'Ny Embu', new_embu_path %>
         </div>
