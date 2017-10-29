@@ -2,7 +2,7 @@
 
 require 'feature_test'
 
-class EmbuIntegrationTest < FeatureTest
+class EmbuSystemTest < FeatureTest
   setup { screenshot_section :embus }
 
   def test_display_my_embu

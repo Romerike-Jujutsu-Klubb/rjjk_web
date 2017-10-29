@@ -1,9 +1,44 @@
 # frozen_string_literal: true
 
+require 'controller_test'
+require 'integration_test'
 require 'feature_test'
+
+# This file contains differents ways to log in during tests to test wether they interfere with each other.
+
+# Sequence that fails:
+#
+#
+# Sequences that succeed:
+#
+
+class LoginControllerTest < ActionController::TestCase
+  test 'controller test login' do
+    login(:admin)
+  end
+
+  test 'controller action login' do
+    post :login_with_password, params: LoginIntegrationTest::LOGIN_PARAMS
+    assert_logged_in(:admin)
+  end
+end
+
+class LoginIntegrationTest < ActionDispatch::IntegrationTest
+  LOGIN_PARAMS = { user: { login: 'admin', password: 'atest' } }.freeze
+  test 'integration test login' do
+    login(:admin)
+    assert_logged_in
+  end
+
+  test 'integration action login' do
+    post '/login/password', params: LOGIN_PARAMS
+    assert_logged_in
+  end
+end
 
 class LoginFeatureTest < FeatureTest
   setup { screenshot_section :session }
+
   def test_login_with_password
     screenshot_group :login_with_password
     visit '/'

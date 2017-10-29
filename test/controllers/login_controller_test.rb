@@ -201,15 +201,6 @@ class LoginControllerTest < ActionController::TestCase
 
   private
 
-  def assert_logged_in(user)
-    assert_equal user.id, session[:user_id]
-  end
-
-  def assert_not_logged_in
-    assert_nil session[:user_id]
-    assert_nil assigns(:current_user)
-  end
-
   def assert_redirected_to_login
     assert_redirected_to login_url
   end

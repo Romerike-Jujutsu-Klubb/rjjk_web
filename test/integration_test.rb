@@ -5,7 +5,9 @@ require 'test_helper'
 class ActionDispatch::IntegrationTest
   teardown do
     clear_user
-    clear_cookie
+    get '/logout'
+    # clear_session_cookie
+    # clear_cookie
   end
 
   def login(login = :admin)
@@ -15,6 +17,12 @@ class ActionDispatch::IntegrationTest
 
   def store_login_cookie(login)
     cookies[COOKIE_NAME] = encrypted_cookie_value(login)
+  end
+
+  def clear_session_cookie
+    cookies.delete('_rjjk_web_session')
+    cookies['_rjjk_web_session'] = nil
+    ActionDispatch::Request.new(Rails.application.env_config).cookie_jar.delete('_rjjk_web_session')
   end
 
   def clear_cookie
@@ -31,5 +39,9 @@ class ActionDispatch::IntegrationTest
     encrypted_cookies = ActionDispatch::Request.new(Rails.application.env_config).cookie_jar
     encrypted_cookies.encrypted[COOKIE_NAME] = ActiveRecord::FixtureSet.identify(login)
     encrypted_cookies[COOKIE_NAME]
+  end
+
+  def assert_logged_in
+    cookies[COOKIE_NAME]
   end
 end
