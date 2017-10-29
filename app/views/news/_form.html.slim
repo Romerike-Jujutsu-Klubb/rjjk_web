@@ -10,7 +10,7 @@
         .col-md-4
           = f.text_field :publish_at, value: @news_item.publish_at.try(:strftime, '%F %R'), class: 'datetime', data: {:'default-date' => Time.current.strftime('%F %R') }
         .col-md-4
-          = f.text_field :expire_at, value: @news_item.expire_at.try(:strftime, '%F %R'), class: 'datetime', data: {:'default-date' => 1.week.from_now.strftime('%F %R')}
+          = f.text_field :expire_at, value: @news_item.expire_at&.strftime('%F %R'), class: 'datetime', data: {'default-date': 1.week.from_now.strftime('%F %R')}
       - if false # Markdown
         = f.text_area :summary
         = f.text_area :body, label: 'Mer informasjon (valgfritt)'
