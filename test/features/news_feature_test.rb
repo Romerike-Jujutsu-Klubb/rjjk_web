@@ -3,34 +3,41 @@
 require 'feature_test'
 
 class NewsFeatureTest < FeatureTest
+  setup { screenshot_section :news }
+
   def test_index_public
+    screenshot_group :index_public
     visit '/news'
     assert_current_path '/news'
-    screenshot('news/index_public')
+    screenshot('index')
+    assert has_no_css?('.close'), all('.close').inspect
     all('.post img')[0].click
-    screenshot('news/index_public_image') || sleep(Capybara::Screenshot.stability_time_limit)
+    screenshot('image') || sleep(Capybara::Screenshot.stability_time_limit)
+    p all('.close')
     find('.close').click
     assert has_no_css?('.close')
     all('.post img')[1].click
-    screenshot('news/index_public_image_2')
+    screenshot('image_2')
   end
 
   def test_index_member
+    screenshot_group :index_member
     login_and_visit '/news', :newbie
     assert_current_path '/news'
     assert_gallery_image_is_loaded
-    screenshot('news/index_member')
+    screenshot('index')
   end
 
   def test_index_admin
+    screenshot_group :index_admin
     login_and_visit '/news'
     assert_current_path '/news'
     assert_gallery_image_is_loaded
-    screenshot('news/index_admin')
+    screenshot('index')
   end
 
   def test_new_news_item
-    screenshot_group 'news/new'
+    screenshot_group :new
     login_and_visit '/'
     assert_current_path '/'
     assert_gallery_image_is_loaded
@@ -68,7 +75,9 @@ class NewsFeatureTest < FeatureTest
     assert has_field?(date_field_id, with: /^2013-10-#{day}/),
         "Unable to find field #{date_field_id} with value '2013-10-#{day}'.  " \
         "Found: #{find("##{date_field_id}").value}"
-    screenshot("form_#{date_field_id}_selected_date_#{day}")
+    # FIXME(uwe): Bootstrap 4 beta2 leaves a stray line after blur animation
+    screenshot("form_#{date_field_id}_selected_date_#{day}", area_size_limit: 33)
+    # EMXIF
     find('#news_item_title').click
   end
 end

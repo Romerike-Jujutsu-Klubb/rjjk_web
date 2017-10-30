@@ -4,8 +4,8 @@ require 'test_helper'
 
 class ActionDispatch::IntegrationTest
   teardown do
-    clear_user
     get '/logout'
+    # clear_user
     # clear_session_cookie
     # clear_cookie
   end
