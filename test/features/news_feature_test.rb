@@ -10,10 +10,12 @@ class NewsFeatureTest < FeatureTest
     visit '/news'
     assert_current_path '/news'
     screenshot('index')
-    assert has_no_css?('.close'), all('.close').inspect
+    assert has_no_css?('.close'), -> { all('.close').inspect }
     all('.post img')[0].click
     screenshot('image') || sleep(Capybara::Screenshot.stability_time_limit)
+    # FIXME(uwe):  We sometimes get multiple close buttons
     p all('.close')
+    # EMXIF
     find('.close').click
     assert has_no_css?('.close')
     all('.post img')[1].click
