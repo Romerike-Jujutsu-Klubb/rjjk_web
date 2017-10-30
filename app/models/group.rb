@@ -97,4 +97,11 @@ class Group < ApplicationRecord
     active_trial_count = (target_size - active_size)
     trial_list[active_trial_count..-1] || []
   end
+
+  def suggested_graduation_date(date = Date.current)
+    month_start = Date.civil(date.year, date.mon >= 7 ? 12 : 6)
+    second_week = month_start + (7 - month_start.wday)
+    second_week + group_schedules.first.weekday
+  end
+
 end

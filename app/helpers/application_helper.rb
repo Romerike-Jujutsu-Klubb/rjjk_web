@@ -66,6 +66,11 @@ module ApplicationHelper
     h = Kramdown::Document.new(s.strip).to_kramdown.gsub(/\{: .*?\}\s*/, '')
     absolute_links(h)
   end
+
+  def holiday_label(date)
+    return unless date
+    date.month < 8 ? 'sommer' : 'jule'
+  end
 end
 
 class Array

@@ -82,7 +82,7 @@
             <% end %>
             <% if @group.current_semester.last_session %>
                 Siste trening
-                før <%= @group.current_semester.last_session.month < 8 ? 'sommer' : 'jule' %>ferien er
+                før <%= holiday_label(@group.current_semester.last_session) %>ferien er
                 <strong><%= t(:date)[:day_names][@group.current_semester.last_session.cwday].downcase %>
                   <%= @group.current_semester.last_session.day %>.
                   <%= t(:date)[:month_names][@group.current_semester.last_session.month].downcase %></strong>.

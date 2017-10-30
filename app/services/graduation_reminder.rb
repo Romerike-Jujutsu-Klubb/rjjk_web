@@ -12,13 +12,12 @@ class GraduationReminder
     missing_groups = groups - planned_groups
     month_start = Date.civil(today.year, today.mon >= 7 ? 12 : 6)
     return if month_start > 4.months.from_now
-    second_week = month_start + (7 - month_start.wday)
     missing_groups.each do |g|
       instructor = Semester.current.group_semesters.find { |gs| gs.group_id == g.id }
           &.chief_instructor
       next unless instructor
 
-      suggested_date = second_week + g.group_schedules.first.weekday
+      suggested_date = g.suggested_graduation_date(g, today)
       next if suggested_date <= today || suggested_date > 6.months.from_now
 
       GraduationMailer.missing_graduation(instructor, g, suggested_date)
