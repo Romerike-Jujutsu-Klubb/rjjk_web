@@ -17,7 +17,7 @@ class GraduationReminder
           &.chief_instructor
       next unless instructor
 
-      suggested_date = g.suggested_graduation_date(g, today)
+      suggested_date = g.suggested_graduation_date(today)
       next if suggested_date <= today || suggested_date > 6.months.from_now
 
       GraduationMailer.missing_graduation(instructor, g, suggested_date)

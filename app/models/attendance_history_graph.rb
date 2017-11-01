@@ -101,7 +101,7 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
     g.colors = %w[blue orange black green]
     g.y_axis_label = 'Oppmøte'
     g.x_axis_label = 'År'
-    result = Attendance.connection.execute <<~EOF
+    result = Attendance.connection.execute <<~SQL
       SELECT g.name, p.year as year, count(*) as count
       FROM attendances a
         LEFT JOIN practices p ON p.id = a.practice_id
@@ -111,7 +111,7 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
         AND DATE_PART('month', date_trunc('week', (p.year || '-1-4')::date)::date + 7 * (p.week - 1) + gs.weekday) = #{month}
       GROUP BY g.name, p.year
       ORDER BY g.name, p.year
-EOF
+    SQL
     years = result.map { |r| r['year'] }.sort.uniq
     g.title = "Oppmøte #{I18n.t(:date)[:month_names][month]} #{years[0]}-#{years[-1]}"
     result.group_by { |r| r['name'] }.each do |group, values|

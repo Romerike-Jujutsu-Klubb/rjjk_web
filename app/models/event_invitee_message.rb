@@ -24,7 +24,7 @@ class EventInviteeMessage < ApplicationRecord
           .html_safe # rubocop: disable Rails/OutputSafety
     elsif message_type == MessageType::SIGNUP_CONFIRMATION
       self.subject ||= "Bekreftelse av påmelding #{event_invitee.event.name}"
-      self.body ||= <<~EOF
+      self.body ||= <<~TEXT
         Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
         og kan bekrefte at du har fått plass.
 
@@ -37,10 +37,10 @@ class EventInviteeMessage < ApplicationRecord
         Med vennlig hilsen,
         Uwe Kubosch
         Romerike Jujutsu Klubb
-      EOF
+      TEXT
     elsif message_type == MessageType::SIGNUP_REJECTION
       self.subject ||= "Påmelding til #{event_invitee.event.name}"
-      self.body ||= <<~EOF
+      self.body ||= <<~TEXT
         Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
         men må dessverre meddele at du ikke har fått plass pga. plassmangel.
 
@@ -52,7 +52,7 @@ class EventInviteeMessage < ApplicationRecord
         Med vennlig hilsen,
         Uwe Kubosch
         Romerike Jujutsu Klubb
-      EOF
+      TEXT
     end
   end
 end

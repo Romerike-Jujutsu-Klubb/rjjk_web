@@ -127,10 +127,10 @@ def create_record(env, from, recipients, content)
   require_relative '../app/models/raw_incoming_email'
   log "Storing in #{env} to: #{from} => #{recipients}"
 
-  content_with_envelope = <<~EOF + content
+  content_with_envelope = <<~HEADERS + content
     X-Envelope-From: #{from}
     X-Envelope-To: #{recipients.join(', ')}
-EOF
+  HEADERS
 
   RawIncomingEmail.configurations = YAML.load_file('config/database.yml')
   RawIncomingEmail.establish_connection(env.to_sym)

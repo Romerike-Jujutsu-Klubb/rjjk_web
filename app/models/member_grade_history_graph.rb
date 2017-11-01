@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MemberGradeHistoryGraph
-  ACTIVE_CLAUSE = <<~EOF
+  ACTIVE_CLAUSE = <<~SQL
     EXISTS (
       SELECT 1
       FROM attendances a
@@ -21,7 +21,7 @@ class MemberGradeHistoryGraph
           AND (p.year < :next_year OR (p.year = :next_year AND p.week <= :next_week))))
     AND (joined_on IS NULL OR joined_on <= :date)
     AND (left_on IS NULL OR left_on > :date)
-EOF
+  SQL
 
   ATTENDANCE_CLAUSE = '(SELECT COUNT(*)
                         FROM attendances a
@@ -119,9 +119,9 @@ EOF
         m.graduates.select { |g| g.graduation.martial_art.kwr? && g.graduation.held_on <= date }
             .sort_by { |g| g.graduation.held_on }.last.try(:rank) == rank
       end.size
-      logger.debug <<~EOF
+      logger.debug <<~MSG
         "#{prev_date} #{date} #{next_date} Active members: #{@active_members[date].size}, ranks: #{ranks}"
-      EOF
+      MSG
       ranks
     end
   end

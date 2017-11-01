@@ -43,17 +43,6 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 27
 
-# Offense count: 7
-# Configuration parameters: Blacklist.
-# Blacklist: END, (?-mix:EO[A-Z]{1})
-Naming/HeredocDelimiterNaming:
-  Exclude:
-    - 'app/models/attendance_history_graph.rb'
-    - 'app/models/event_invitee_message.rb'
-    - 'app/models/member_grade_history_graph.rb'
-    - 'bin/store_email_rjjk.rb'
-    - 'test/services/nkf_member_import_test.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: AutoCorrect.

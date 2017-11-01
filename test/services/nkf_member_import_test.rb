@@ -27,7 +27,7 @@ class NkfMemberImportTest < ActionMailer::TestCase
     assert_equal 'noreply@test.jujutsu.no', mail.header[:from].value
     assert_match "Opprettet følgende nye medlemmer:\n\n    Abdorahman Lutf Muhammad\n",
         mail.body.decoded
-    changes = <<~EOF
+    changes = <<~TEXT
       Oppdaterte følgende eksisterende medlemmer:
 
           Lars Erling Bråten
@@ -52,7 +52,7 @@ class NkfMemberImportTest < ActionMailer::TestCase
               billing_email: nil => ".+"
               joined_on: Mon, 05 Jan 1987 => Fri, 15 Dec 2000
               parent_name: nil => ".+"
-    EOF
+    TEXT
     assert_match(/#{changes}/, mail.body.decoded)
     mail = ActionMailer::Base.deliveries[2]
     assert_equal 'Verv fra NKF: 7', mail.subject
