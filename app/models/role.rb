@@ -5,7 +5,7 @@ class Role < ApplicationRecord
   has_many :elections, dependent: :restrict_with_exception
 
   after_update do
-    if years_on_the_board_changed?
+    if saved_change_to_years_on_the_board?
       if years_on_the_board.nil?
         elections.current.each do |a|
           am = a.annual_meeting

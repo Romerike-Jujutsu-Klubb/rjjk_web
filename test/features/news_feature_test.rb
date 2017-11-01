@@ -13,9 +13,6 @@ class NewsFeatureTest < FeatureTest
     find('.close').click
     all('.post img')[0].click
     screenshot('image') || sleep(Capybara::Screenshot.stability_time_limit)
-    # FIXME(uwe):  We sometimes get multiple close buttons
-    p all('.close')
-    # EMXIF
     find('.close').click
     assert has_no_css?('.close')
     all('.post img')[1].click
