@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Role < ApplicationRecord
-  has_many :appointments
-  has_many :elections
+  has_many :appointments, dependent: :restrict_with_exception
+  has_many :elections, dependent: :restrict_with_exception
 
   after_update do
     if years_on_the_board_changed?

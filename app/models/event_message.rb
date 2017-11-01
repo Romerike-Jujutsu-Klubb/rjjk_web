@@ -8,7 +8,7 @@ class EventMessage < ApplicationRecord
   end
 
   belongs_to :event
-  has_many :event_invitee_messages
+  has_many :event_invitee_messages, dependent: :restrict_with_exception
 
   validates :body, :event_id, :message_type, :subject, presence: true
   validates :message_type, uniqueness: { scope: :event_id,

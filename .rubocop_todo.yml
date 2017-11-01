@@ -42,15 +42,3 @@ Metrics/ParameterLists:
 # Offense count: 37
 Metrics/PerceivedComplexity:
   Max: 27
-
-# Offense count: 9
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/HasManyOrHasOneDependent:
-  Exclude:
-    - 'app/models/embu.rb'
-    - 'app/models/event.rb'
-    - 'app/models/event_message.rb'
-    - 'app/models/role.rb'
-    - 'app/models/user.rb'
-    - 'app/models/waza.rb'
