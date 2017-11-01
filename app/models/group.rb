@@ -103,5 +103,4 @@ class Group < ApplicationRecord
     second_week = month_start + (7 - month_start.wday)
     second_week + group_schedules.first.weekday
   end
-
 end
