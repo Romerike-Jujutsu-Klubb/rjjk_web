@@ -62,11 +62,7 @@ class SurveyRequestsController < ApplicationController
 
   def save_answers
     params[:survey_request][:completed_at] = Time.current
-    # params.require(:survey_request).
-    #     permit(:comment, :completed_at,
-    #     survey_answers_attributes: [:answer, :id, :survey_question_id])
-
-    params[:survey_request][:survey_answers_attributes].each do |_k, values|
+    params[:survey_request][:survey_answers_attributes].each do |_k, values| # rubocop: disable Performance/HashEachMethods
       logger.error "values: #{values.inspect}"
       free_text_answer = values.delete(:answer_free)
       logger.error "free_text_answer: #{free_text_answer.inspect}"

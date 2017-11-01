@@ -43,13 +43,6 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 27
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect.
-Performance/HashEachMethods:
-  Exclude:
-    - 'app/controllers/survey_requests_controller.rb'
-
 # Offense count: 9
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
