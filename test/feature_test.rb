@@ -23,7 +23,9 @@ class FeatureTest < ActionDispatch::IntegrationTest
   Capybara::Screenshot.stability_time_limit = 0.5
   Capybara.register_driver :chrome do |app|
     caps = Selenium::WebDriver::Remote::Capabilities.chrome(
-        'chromeOptions' => { 'args' => %W[headless window-size=#{WINDOW_SIZE.join('x')}] }
+        'chromeOptions' => {
+          'args' => %W[headless window-size=#{WINDOW_SIZE.join('x')} force-device-scale-factor=1],
+        }
     )
     Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: caps)
   end
