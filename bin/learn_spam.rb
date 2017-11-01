@@ -92,11 +92,13 @@ def learn(interactive)
           break false
         end
 
+        # Flush commands typed before the prompt is presented
         begin
           $stdin.read_nonblock(80)
         rescue
           nil
-        end # Flush commands typed before the prompt is presented
+        end
+
         case gets.chomp
         when 's'
           learn_file(escaped_filename, 'spam')
