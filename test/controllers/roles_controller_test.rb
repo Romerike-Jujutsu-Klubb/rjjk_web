@@ -44,7 +44,7 @@ class RolesControllerTest < ActionController::TestCase
 
   test 'should not destroy role if election exists' do
     assert_no_difference('Role.count') do
-      assert_raise ActiveRecord::InvalidForeignKey do
+      assert_raise ActiveRecord::DeleteRestrictionError do
         delete :destroy, params: { id: @role }
       end
     end

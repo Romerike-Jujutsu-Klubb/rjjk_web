@@ -10,7 +10,7 @@ class NewsFeatureTest < FeatureTest
     visit '/news'
     assert_current_path '/news'
     screenshot('index')
-    assert has_no_css?('.close', visible: true), -> { all('.close', visible: true).map(&:text).inspect }
+    find('.close').click
     all('.post img')[0].click
     screenshot('image') || sleep(Capybara::Screenshot.stability_time_limit)
     # FIXME(uwe):  We sometimes get multiple close buttons

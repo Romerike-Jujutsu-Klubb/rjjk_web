@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   attr_accessor :password, :password_confirmation
 
-  has_one :member, dependent: :restrict_with_exception
+  has_one :member, dependent: :nullify
   has_many :embus, dependent: :destroy
   has_many :images, dependent: :destroy
   has_many :news_items, dependent: :destroy, inverse_of: :creator, foreign_key: :created_by
