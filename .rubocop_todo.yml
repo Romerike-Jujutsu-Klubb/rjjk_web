@@ -55,11 +55,6 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/user.rb'
     - 'app/models/waza.rb'
 
-# Offense count: 1
-Style/MixinUsage:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-
 # Offense count: 35
 # Cop supports --auto-correct.
 Style/PerlBackrefs:

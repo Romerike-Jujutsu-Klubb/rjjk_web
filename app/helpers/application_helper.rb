@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  include UserSystem
+  include UserSystem # rubocop: disable Style/MixinUsage
 
   def menu_item(name, options = {})
     options[:controller] ||= 'info'
