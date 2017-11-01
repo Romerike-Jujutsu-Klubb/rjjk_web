@@ -185,8 +185,8 @@ class MembersController < ApplicationController
   def save_image
     @member = Member.find(params[:id])
     params.require(:imgBase64) =~ /^data:([^;]+);base64,(.*)$/
-    content = Base64.decode64($2)
-    content_type = $1
+    content = Base64.decode64(Regexp.last_match(2))
+    content_type = Regexp.last_match(1)
     @member.create_image! user_id: @member.user_id, name: "Foto #{Date.current}",
                   content_type: content_type, content_data: content
     @member.save!

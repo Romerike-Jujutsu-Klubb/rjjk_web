@@ -47,14 +47,14 @@ module ApplicationHelper
     base = root_url
 
     html.gsub(%r{\b(href|src)="(?:#{base}|/)([^?"]*)(\?[^"]*)?"}i) do |_m|
-      with_base = %(#{$1}="#{base}#{$2}#{$3}")
+      with_base = %(#{Regexp.last_match(1)}="#{base}#{Regexp.last_match(2)}#{Regexp.last_match(3)}")
 
       params = []
       params << "email=#{Base64.encode64(@email)}" if @email
       params << "newsletter_id=#{@newsletter.id}" if @newsletter
 
       if params.any?
-        %(#{with_base}#{$3 ? '&' : '?'}#{params.join('&')})
+        %(#{with_base}#{Regexp.last_match(3) ? '&' : '?'}#{params.join('&')})
       else
         with_base
       end

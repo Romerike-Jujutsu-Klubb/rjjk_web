@@ -112,7 +112,7 @@ class User < ApplicationRecord
     result = [full_email]
     result += member.emails if member
     result.sort_by! { |e| -e.size }
-    result.uniq { |e| e =~ /<(.*@.*)>/ ? $1 : e }
+    result.uniq { |e| e =~ /<(.*@.*)>/ ? Regexp.last_match(1) : e }
   end
 
   def name

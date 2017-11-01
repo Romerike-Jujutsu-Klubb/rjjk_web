@@ -43,8 +43,8 @@ class UserMessageMailer < ApplicationMailer
 
   def add_security_key(body, url_key)
     body.gsub!(%r{href="([^/]*)://([^/]*)([^"?]*)(?:\?([^"]+))?"}) do
-      params = "#{"#{$4}&" if $4}key=#{url_key}"
-      %(href="#{$1}://#{$2}#{$3}?#{params}")
+      params = "#{"#{Regexp.last_match(4)}&" if Regexp.last_match(4)}key=#{url_key}"
+      %(href="#{Regexp.last_match(1)}://#{Regexp.last_match(2)}#{Regexp.last_match(3)}?#{params}")
     end
   end
 end

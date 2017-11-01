@@ -8,7 +8,7 @@ class AddDecorationToRanks < ActiveRecord::Migration
       dir.up do
         Rank.order(:position).each do |rank|
           if rank.colour =~ %r{^(.*)\s+(m/.*)$}
-            rank.update! colour: $1, decoration: $2
+            rank.update! colour: Regexp.last_match(1), decoration: Regexp.last_match(2)
           end
         end
       end

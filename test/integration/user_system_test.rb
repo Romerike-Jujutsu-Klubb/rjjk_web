@@ -19,7 +19,7 @@ class UserSystemTest < ActionDispatch::IntegrationTest
     assert_match(/Brukernavn:\s+\w+\n/, mail.body)
     assert_match(/Passord\s*:\s+\w+\n/, mail.body)
     assert(mail.body =~ /key=(.*?)"/)
-    key = $1
+    key = Regexp.last_match(1)
 
     assert user = User.find_by(login: 'newuser')
     Timecop.freeze(Time.current + User.token_lifetime + 1) do

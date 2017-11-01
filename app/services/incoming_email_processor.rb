@@ -45,7 +45,7 @@ class IncomingEmailProcessor
       # FIXME(uwe): Separate sending to each list with subject and reply_to
       new_recipients = original_recipients.map do |r|
         if r =~ /^(.*)@#{DOMAIN}$/
-          target = $1.downcase.to_sym
+          target = Regexp.last_match(1).downcase.to_sym
           if (recipient = TARGETS[target])
             if recipient.is_a?(Array)
               logger.debug "Found list: #{target}"

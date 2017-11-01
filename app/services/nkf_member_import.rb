@@ -126,7 +126,7 @@ class NkfMemberImport
           /class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
       raise "Could not find member id:\n#{details_body.inspect}"
     end
-    member_id = $1
+    member_id = Regexp.last_match(1)
     active =
         if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
           true
@@ -135,7 +135,7 @@ class NkfMemberImport
         end
     waiting_kid =
         if details_body =~ %r{<span class="kid_1">(\d+)</span><span class="kid_2">(\d+)</span>}
-          "#{$1}#{$2}"
+          "#{Regexp.last_match(1)}#{Regexp.last_match(2)}"
         end
     raise 'Both Active status and waiting kid were found' if active && waiting_kid
     if !active && !waiting_kid
@@ -172,20 +172,20 @@ class NkfMemberImport
       unless trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
         raise 'Could not find invoice email'
       end
-      first_name = $1
+      first_name = Regexp.last_match(1)
       unless trial_details_body =~ /name="frm_28_v09" value="(.*?)"/
         logger.error trial_details_body
         raise 'Could not find last name'
       end
-      last_name = $1
+      last_name = Regexp.last_match(1)
       unless trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
         raise 'Could not find first name'
       end
-      invoice_email = $1
+      invoice_email = Regexp.last_match(1)
       unless trial_details_body =~ %r{<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren/stilart -</option>.*?<option selected value="\d+">([^<]*)</option>.*</select>} # rubocop: disable Metrics/LineLength
         raise 'Could not find martial art'
       end
-      martial_art = $1
+      martial_art = Regexp.last_match(1)
       trial_row = member_trial_rows.find do |ir|
         ir.size < member_trial_rows[0].size && ir[1] == last_name && ir[2] == first_name
       end
@@ -282,7 +282,7 @@ class NkfMemberImport
       columns.each_with_index do |column, i|
         column = 'medlems_type' if column == 'type'
         if row[i] =~ /^(\d\d)\.(\d\d)\.(\d{4})$/
-          row[i] = "#{$3}-#{$2}-#{$1}"
+          row[i] = "#{Regexp.last_match(3)}-#{Regexp.last_match(2)}-#{Regexp.last_match(1)}"
         elsif column == 'res_sms'
           row[i] =
               case row[i]
@@ -367,7 +367,7 @@ class NkfMemberImport
     header.split(',').each do |cookie|
       cookie_value = cookie.strip.slice(/^.*?;/).chomp(';')
       if cookie_value =~ /^(.*?)=(.*)$/
-        name = $1
+        name = Regexp.last_match(1)
         @cookies.delete_if { |c| c =~ /^#{name}=/ }
       end
       @cookies << cookie_value unless cookie_value =~ /^.*?=$/
