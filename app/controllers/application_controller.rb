@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   before_action :reject_bots
   before_action :store_current_user_in_thread
 
-  if Rails.env.beta?
+  if Rails.env.beta? && defined?(Rack::MiniProfiler)
     before_action { Rack::MiniProfiler.authorize_request if current_user.try(:admin?) }
   end
 
