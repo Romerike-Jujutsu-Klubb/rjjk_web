@@ -1,3 +1,6 @@
+body {
+  padding-top: 4rem;
+}
 .notice {
     position: relative;
     width: 30%;
@@ -138,19 +141,29 @@ ul.controls li a.delete {
 }
 
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
   background: asset_url('dark_ritual/header_left.png') left no-repeat, asset_url('dark_ritual/header_right.png') right no-repeat, asset_url('dark_ritual/header_lines.png') left repeat;
   background-color: #F4F4F4;
-  height: 150px;
+  height: 4rem;
   width: 100%;
+  padding-right: 4rem;
+  border-bottom: 1px solid black;
+  z-index: 1;
+
+  .buttons {
+    margin-right: 0;
+  }
 }
 
 .container {
-    background: #222222;
+  background: #222222;
 }
 
 .main_right {
-    padding: 0;
-    background-color: #222222;
+  padding: 0;
+  background-color: #222222;
 }
 
 .main_right > div.padded {
@@ -160,22 +173,15 @@ ul.controls li a.delete {
 }
 
 #logo_img {
-    border: 0;
-    margin-bottom: 0.5em;
-}
-
-@media (min-width: 992px) {
-  #logo_img {
-    width: 224px;
-    height: 224px;
-  }
-}
-
-@media (min-width: 1200px) {
-    #logo_img {
-        width: 268px;
-        height: 268px;
-    }
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 4rem;
+  height: 4rem;
+  border: 0;
+  margin-bottom: 0.5em;
+  transition: 0.5s;
+  z-index: 2;
 }
 
 .main_right img {
@@ -183,14 +189,55 @@ ul.controls li a.delete {
   width: 100%;
 }
 
-@media (min-width: 992px) {
-    .main_right img {
-        width: 224px;
-        height: 167px;
+@media (min-width: 768px) { // md
+  body {
+    padding-top: 149px;
+  }
+
+  .header {
+    height: 150px;
+    padding-right: 0;
+    .buttons {
+      margin-right: 150px;
     }
+  }
+
+  #logo_img {
+    width: 150px;
+    height: 150px;
+  }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 992px) { // lg
+  body {
+    padding-top: 0;
+  }
+  .header {
+    position: relative;
+    padding-right: 0;
+    .buttons {
+      margin-right: 46px;
+    }
+  }
+
+  #logo_img {
+    position: static;
+    width: 224px;
+    height: 224px;
+  }
+
+  .main_right img {
+    width: 224px;
+    height: 167px;
+  }
+}
+
+@media (min-width: 1200px) { // xl
+    #logo_img {
+        width: 268px;
+        height: 268px;
+    }
+
     .main_right img {
         width: 268px;
         height: 201px;

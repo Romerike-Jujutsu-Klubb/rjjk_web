@@ -1,0 +1,10 @@
+h1 = current_user.name
+ul
+  - if member?
+    - if current_user.member.groups.reject(&:school_breaks).any?
+      li = detour_to 'Mitt oppmøte', controller: :attendances, action: :plan
+    li = menu_item 'Pensum', controller: :ranks, action: :pensum
+    li = link_to 'Min Embu', controller: :embus, action: :index
+  li = link_to 'Mine media', controller: :images, action: :mine
+  li = link_to 'Logg på NKF', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login', onclick: 'return !window.open(this.href)'
+  li = detour_to 'Logg ut', controller: :login, action: :logout
