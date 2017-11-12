@@ -1,0 +1,7 @@
+.float-right
+  =  link_to new_technique_application_path(technique_application: {rank_id: @rank.id}), class: 'btn btn-info'
+    i.fa.fa-plus>
+    | Ny teknikk
+h1 Rediger Grad
+
+= render 'form'
