@@ -89,6 +89,15 @@ class FeatureTest < ActionDispatch::IntegrationTest
     return unless Capybara::Screenshot.enabled
     assert has_css? '#gallery_img[src="/images/inline/298486374/412.picture%20two"]'
   end
+
+  def open_menu
+    find('#navBtn').click
+  end
+
+  def click_menu(menu_item)
+    open_menu
+    click_link menu_item
+  end
 end
 
 if Capybara.default_driver == :chrome

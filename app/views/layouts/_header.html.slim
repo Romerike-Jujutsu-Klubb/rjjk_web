@@ -6,8 +6,9 @@
           span aria-hidden="true" &times;
         = textalize flash[:notice]
   - logo_hide_class = ('d-lg-none' unless @content_width)
-  = link_to root_path, class: "#{logo_hide_class} float-left b-0 p-0 m-0 bg-transparent"
+  = link_to root_path, class: "#{logo_hide_class} float-left b-0 p-0 m-0 bg-transparent mr-5"
     = image_tag('rjjk_logo_&_txt_320.png', id: :logo_img_top, style: 'width:150px;height:150px;position:relative;top:0;left: 0')
+  i#navBtn.fa.fa-navicon.ml-2.mt-1 style="position:absolute;left:160px;top:0"
 
   .d-none.d-md-block.mt-md-5.mr-md-5.mb-1 Romerike Jujutsu Klubb
 
@@ -19,3 +20,18 @@
     = link_to 'Facebook', 'http://www.facebook.com/home.php#!/pages/Romerike-Jujutsu-Klubb/260684570923?ref=ts', onclick: 'return !window.open(this.href)'
     - unless current_user&.member
       = link_to 'Prøv oss!', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', onclick: 'return !window.open(this.href)'
+
+javascript:
+    $('#navBtn').on('click', function () {
+        console.log('clicked');
+        $('.subnav').css('left', '0px');
+        $('#shades').css('transition', 'visibility 0s, opacity 0.5s');
+        $('#shades').css('visibility', 'visible').css('opacity', '0.5');
+    });
+    $('#shades').on('click', function () {
+        console.log('shades clicked');
+        $('.subnav').css('left', '-160px');
+        $('#shades').css('opacity', '0');
+        $('#shades').css('transition', 'visibility 0.5s, opacity 0.5s');
+        $('#shades').css('visibility', 'hidden');
+    });

@@ -28,15 +28,17 @@ html lang="nb"
       })();
 
   body
+    .subnav.h-100 style="position: fixed; left:-160px;top:0; z-index:1000;transition: 0.5s"
+      div.h-100 style="overflow-y: scroll" = render 'layouts/navigation'
+    #shades.w-100.h-100 style="position: fixed; left:0;top:0; z-index:999;opacity: 0;visibility:hidden;background-color:black" SHADES
     .container-fluid
       .row
         .main_left.col-12.d-flex.flex-column class="col-lg-#{@content_width ? 12 : 9}"
           .row
             .col-12.p-0 = render 'layouts/header'
           .row style="flex-grow: 1"
-            .main.col-12.order-lg-4 class="col-lg-#{@content_width ? 10 : 9}"
+            .main.col-12
               .padded = yield
-            .subnav.col-12.mt-3.mt-lg-0 class="col-lg-#{@content_width ? 2 : 3}" = render 'layouts/navigation'
 
         - unless @content_width
           .main_right.col-lg-3.col-12 = render 'layouts/right_column'

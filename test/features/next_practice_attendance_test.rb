@@ -3,9 +3,7 @@
 require 'feature_test'
 
 class NextPracticeAttendanceTest < FeatureTest
-  def setup
-    login_and_visit '/'
-  end
+  setup { login_and_visit '/' }
 
   def test_announce_attendance
     assert_gallery_image_is_loaded

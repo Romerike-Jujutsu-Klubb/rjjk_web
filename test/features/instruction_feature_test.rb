@@ -5,7 +5,7 @@ require 'feature_test'
 class InstructionFeatureTest < FeatureTest
   def test_index
     login_and_visit '/'
-    find('a', text: 'Instruksjon').click
+    click_menu 'Instruksjon'
     assert_current_path '/group_instructors'
     assert_gallery_image_is_loaded
     screenshot('instruction/index')

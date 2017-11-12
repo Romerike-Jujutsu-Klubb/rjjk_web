@@ -5,7 +5,7 @@ require 'feature_test'
 class AttendanceFormTest < FeatureTest
   def test_index
     login_and_visit '/'
-    click_link 'Oppmøtelister'
+    click_menu('Oppmøtelister')
     assert_current_path '/attendances/form_index'
     assert_gallery_image_is_loaded
     screenshot('attendance/form/index')

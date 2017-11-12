@@ -41,7 +41,7 @@ class NewsFeatureTest < FeatureTest
     assert_current_path '/'
     assert_gallery_image_is_loaded
     screenshot('front')
-    click_link 'Ny nyhet'
+    click_menu 'Ny nyhet'
     assert_current_path '/news/new'
     screenshot('form')
     fill_in 'news_item[title]', with: 'A new hope'

@@ -42,7 +42,7 @@ class LoginFeatureTest < FeatureTest
   def test_login_with_password
     screenshot_group :login_with_password
     visit '/'
-    click_on 'Logg inn'
+    click_menu 'Logg inn'
     assert_current_path '/login?detour%5Baction%5D=index&detour%5Bcontroller%5D=welcome'
     click_on 'logge på med passord'
     assert_current_path '/login/password'
@@ -59,7 +59,7 @@ class LoginFeatureTest < FeatureTest
   def test_send_email_link
     screenshot_group :email_link
     visit '/'
-    click_on 'Logg inn'
+    click_menu 'Logg inn'
     assert_current_path '/login?detour%5Baction%5D=index&detour%5Bcontroller%5D=welcome'
     screenshot :email_form
     fill_in 'user_email', with: users(:admin).email
@@ -78,6 +78,7 @@ class LoginFeatureTest < FeatureTest
     assert %r{<a href="(https://example.com/\?key=([^"]+))">Klikk meg for å logge på Romerike Jujutsu Klubb!</a>} =~
         email.body.decoded
     visit root_path(key: Regexp.last_match(2))
+    open_menu
     assert has_css?('h1', text: 'Uwe Kubosch'), all('h1').to_a.map(&:text).inspect
     assert_gallery_image_is_loaded
     screenshot :welcome
