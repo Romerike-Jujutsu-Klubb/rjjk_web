@@ -120,5 +120,5 @@ end
 
 group :development, :beta do
   gem 'medusa', github: 'donv/medusa', branch: 'patch-1'
-  gem 'rack-mini-profiler'
+  # gem 'rack-mini-profiler'
 end
