@@ -98,6 +98,7 @@ group :development do
   gem 'capistrano-rvm'
   gem 'capistrano-scm-copy'
   gem 'listen'
+  gem 'rack-mini-profiler'
 end
 
 group :test do
@@ -118,7 +119,6 @@ group :test do
   gem 'webmock'
 end
 
-group :development do
+group :development, :beta do
   gem 'medusa', github: 'donv/medusa', branch: 'patch-1'
-  gem 'rack-mini-profiler'
 end
