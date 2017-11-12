@@ -118,7 +118,7 @@ group :test do
   gem 'webmock'
 end
 
-group :development, :beta do
+group :development do
   gem 'medusa', github: 'donv/medusa', branch: 'patch-1'
-  # gem 'rack-mini-profiler'
+  gem 'rack-mini-profiler'
 end
