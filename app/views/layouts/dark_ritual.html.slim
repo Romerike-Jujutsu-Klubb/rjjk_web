@@ -28,7 +28,7 @@ html lang="nb"
       })();
 
   body
-    .subnav.h-100 style="position: fixed; left:-160px;top:0; z-index:1000;transition: 0.5s"
+    .subnav.h-100 style="position: fixed; transform: translate(-160px, 0);top:0; z-index:1000;transition: 0.5s"
       div.h-100 style="overflow-y: scroll" = render 'layouts/navigation'
     #shades.w-100.h-100 style="position: fixed; left:0;top:0; z-index:999;opacity: 0;visibility:hidden;background-color:black" SHADES
     .container-fluid

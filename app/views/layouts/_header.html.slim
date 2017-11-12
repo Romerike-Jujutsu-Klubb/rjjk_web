@@ -20,13 +20,13 @@
 javascript:
     $('#navBtn').on('click', function () {
         console.log('clicked');
-        $('.subnav').css('left', '0px');
+        $('.subnav').css('transform', 'translate(0px, 0)');
         $('#shades').css('transition', 'visibility 0s, opacity 0.5s');
         $('#shades').css('visibility', 'visible').css('opacity', '0.5');
     });
     $('#shades').on('click', function () {
         console.log('shades clicked');
-        $('.subnav').css('left', '-160px');
+        $('.subnav').css('transform', 'translate(-160px, 0)');
         $('#shades').css('opacity', '0');
         $('#shades').css('transition', 'visibility 0.5s, opacity 0.5s');
         $('#shades').css('visibility', 'hidden');
