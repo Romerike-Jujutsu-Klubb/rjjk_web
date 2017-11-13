@@ -31,17 +31,16 @@ html lang="nb"
     .subnav.h-100 style="position: fixed; transform: translate(-160px, 0);top:0; z-index:1000;transition: 0.5s"
       div.h-100 style="overflow-y: scroll" = render 'layouts/navigation'
     #shades.w-100.h-100 style="position: fixed; left:0;top:0; z-index:999;opacity: 0;visibility:hidden;background-color:black" SHADES
+    = link_to image_tag('rjjk_logo_&_txt_320.png', id: :logo_img), '/'
     .container-fluid
       .row
-        .main_left.col-12.d-flex.flex-column class="col-lg-#{@content_width ? 12 : 9}"
+        .main_left.col
           .row
             .col-12.p-0 = render 'layouts/header'
-          .row style="flex-grow: 1"
+          .row
             .main.col-12
               .padded = yield
-
-        - unless @content_width
-          .main_right.col-lg-3.col-12 = render 'layouts/right_column'
+        .main_right = render 'layouts/right_column'
 
       .footer.row
         .col-lg-4.col-12.left &copy; 2008-2017 <a href="https://jujutsu.no/">Romerike Jujutsu Klubb</a>.

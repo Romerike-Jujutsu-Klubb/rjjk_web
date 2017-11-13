@@ -5,9 +5,10 @@
         button.close type="button" data-dismiss="alert" aria-label="Close"
           span aria-hidden="true" &times;
         = textalize flash[:notice]
-  i#navBtn.fa.fa-navicon.btn.btn-secondary.m-1.float-left
+  i#navBtn.fa.fa-navicon.btn.btn-secondary.m-2.float-left
+  i#calendarBtn.fa.fa-calendar.btn.btn-secondary.m-2.float-left class=('d-lg-none' unless @content_width)
 
-  .d-none.d-md-block.mt-md-5.mr-md-5.mb-1 Romerike Jujutsu Klubb
+  .d-none.d-md-block.mt-md-5.mb-1 Romerike Jujutsu Klubb
 
   .buttons.mt-2.mt-md-0
     - if user?
@@ -19,7 +20,7 @@
 
 javascript:
     $('#navBtn').on('click', function () {
-        console.log('clicked');
+        console.log('menu clicked');
         $('.subnav').css('transform', 'translate(0px, 0)');
         $('#shades').css('transition', 'visibility 0s, opacity 0.5s');
         $('#shades').css('visibility', 'visible').css('opacity', '0.5');
@@ -27,6 +28,21 @@ javascript:
     $('#shades').on('click', function () {
         console.log('shades clicked');
         $('.subnav').css('transform', 'translate(-160px, 0)');
+        $('#shades').css('opacity', '0');
+        $('#shades').css('transition', 'visibility 0.5s, opacity 0.5s');
+        $('#shades').css('visibility', 'hidden');
+    });
+
+javascript:
+    $('#calendarBtn').on('click', function () {
+        console.log('calendar clicked');
+        $('.main_right').css('transform', 'translate(0px, 0)');
+        $('#shades').css('transition', 'visibility 0s, opacity 0.5s');
+        $('#shades').css('visibility', 'visible').css('opacity', '0.5');
+    });
+    $('#shades').on('click', function () {
+        console.log('shades clicked');
+        $('.main_right').css('transform', 'translate(268px, 0)');
         $('#shades').css('opacity', '0');
         $('#shades').css('transition', 'visibility 0.5s, opacity 0.5s');
         $('#shades').css('visibility', 'hidden');

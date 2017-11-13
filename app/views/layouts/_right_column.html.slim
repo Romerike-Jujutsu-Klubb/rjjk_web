@@ -16,9 +16,6 @@ css:
 
 .row.col-12.justify-content-center.align-items-center.p-0.m-0
   div
-    .text-center
-      = link_to image_tag('rjjk_logo_&_txt_320.png', id: :logo_img), '/'
-
     form.mt-3 action="/search" role="search"
       .input-group
         = search_field nil, nil, name: :q, value: @query, placeholder: 'Søk', \
@@ -27,7 +24,7 @@ css:
           button.btn.btn-secondary type="submit"
             i.fa.fa-search
 
-    = render 'layouts/gallery_image', column_width_sm: column_width_sm, column_width_1200: column_width_1200, column_width_992: column_width_992
+    /= render 'layouts/gallery_image', column_width_sm: column_width_sm, column_width_1200: column_width_1200, column_width_992: column_width_992
 
     - if false && user?
       = render 'layouts/media_upload'

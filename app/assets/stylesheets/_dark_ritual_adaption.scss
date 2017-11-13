@@ -64,6 +64,10 @@ div.main_right > div.padded > div {
     margin-bottom: 1em;
 }
 
+div.main_right > .row > div {
+  max-height: 100vh;
+}
+
 div.main_right div.events p {
     padding: 0;
 }
@@ -164,12 +168,24 @@ ul.controls li a.delete {
 .main_right {
   padding: 0;
   background-color: #222222;
+  width: 268px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  transition: 0.5s;
+  transform: translate(268px, 0);
+  z-index: 1000;
+  overflow-y: scroll;
 }
 
 .main_right > div.padded {
   padding-top: 0;
   padding-right: 16px;
   background-color: #222222;
+}
+
+.main_right > .row > div {
+  width: 224px;
 }
 
 #logo_img {
@@ -196,15 +212,16 @@ ul.controls li a.delete {
 
   .header {
     height: 150px;
-    padding-right: 0;
-    .buttons {
-      margin-right: 150px;
-    }
+    padding-right: 150px;
   }
 
   #logo_img {
     width: 150px;
     height: 150px;
+  }
+
+  .main_right {
+    transition: z-index 0.5s;
   }
 }
 
@@ -221,9 +238,19 @@ ul.controls li a.delete {
   }
 
   #logo_img {
-    position: static;
+    position: absolute;
     width: 224px;
     height: 224px;
+    margin-right: 0.67rem;
+  }
+
+  .main_right {
+    padding-top: 224px;
+    position: static;
+    width: 246px;
+    transform: translate(0px, 0) !important;
+    z-index: 0;
+    transition: z-index 0s;
   }
 
   .main_right img {
@@ -233,15 +260,20 @@ ul.controls li a.delete {
 }
 
 @media (min-width: 1200px) { // xl
-    #logo_img {
-        width: 268px;
-        height: 268px;
-    }
+  #logo_img {
+    width: 268px;
+    height: 268px;
+  }
 
-    .main_right img {
-        width: 268px;
-        height: 201px;
-    }
+  .main_right {
+    padding-top: 268px;
+    width: 290px;
+  }
+
+  .main_right img {
+    width: 268px;
+    height: 201px;
+  }
 }
 
 .nav-tabs li {
