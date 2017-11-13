@@ -57,7 +57,7 @@ class NewsController < ApplicationController
     else
       like.save!
     end
-    redirect_back
+    redirect_back fallback_location: news_item
   end
 
   def expire
