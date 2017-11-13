@@ -30,7 +30,7 @@ html lang="nb"
   body
     .subnav.h-100 style="position: fixed; transform: translate(-160px, 0);top:0; z-index:1000;transition: 0.5s"
       div.h-100 style="overflow-y: scroll" = render 'layouts/navigation'
-    #shades.w-100.h-100 style="position: fixed; left:0;top:0; z-index:999;opacity: 0;visibility:hidden;background-color:black" SHADES
+    #shades.w-100.h-100 style="position: fixed; left:0;top:0; z-index:5;opacity: 0;visibility:hidden;background-color:black" SHADES
     = link_to image_tag('rjjk_logo_&_txt_320.png', id: :logo_img), '/'
     .container-fluid
       .row
@@ -46,3 +46,4 @@ html lang="nb"
         .col-lg-4.col-12.left &copy; 2008-2017 <a href="https://jujutsu.no/">Romerike Jujutsu Klubb</a>.
         .col-lg-4.col-12.center Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> &amp; <a href="http://validator.w3.org/check?uri=referer">HTML</a>
         .col-lg-4.col-12.right Template design by <a href="http://templates.arcsin.se">Arcsin</a>
+    = yield :modals

@@ -13,7 +13,7 @@
         ' og
         => others.size
         = others.size == 1 ? 'annen' : 'andre'
-      = render layout: 'layouts/modal', locals: {id: "attendance_details_#{practice.id}"}
+      = render 'layouts/modal', id: "attendance_details_#{practice.id}"
         = render 'attendances/practice_details', your_attendance: attendance, other_attendees: attendances, other_absentees: absences
     - elsif attendance.present?
       ' Du
