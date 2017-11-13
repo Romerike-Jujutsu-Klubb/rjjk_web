@@ -219,10 +219,11 @@ ul.controls li a.delete {
   #logo_img {
     width: 150px;
     height: 150px;
+    transition: 0.5s;
   }
 
   .main_right {
-    transition: z-index 0.5s;
+    transition: z-index 0s ease 0.5s, transform 0.5s;
   }
 }
 
@@ -251,7 +252,7 @@ ul.controls li a.delete {
     width: 246px;
     transform: translate(0px, 0) !important;
     z-index: 0;
-    transition: z-index 0s;
+    transition: z-index 0s, transform 0.5s;
   }
 
   .main_right img {
@@ -304,6 +305,10 @@ ul.nav.nav-tabs {
 
 .subnav li a {
   width: inherit
+}
+
+.main_left {
+  transition: 0.5s;
 }
 
 .main {
