@@ -57,7 +57,7 @@ class NewsController < ApplicationController
     else
       like.save!
     end
-    redirect_to :back
+    redirect_back
   end
 
   def expire
