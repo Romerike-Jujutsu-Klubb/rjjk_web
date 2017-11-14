@@ -276,7 +276,7 @@ ul.controls li a.delete {
     padding-top: 224px;
     position: static;
     width: 246px;
-    transform: translate(0px, 0) !important;
+    transform: translate(0, 0) !important;
     z-index: 0;
     transition: z-index 0s, transform 0.5s;
   }
@@ -295,7 +295,7 @@ ul.controls li a.delete {
 
   .subnav {
     position: static;
-    transform: translate(0, 0);
+    transform: translate(0, 0) !important;
   }
 
   .main_right {
