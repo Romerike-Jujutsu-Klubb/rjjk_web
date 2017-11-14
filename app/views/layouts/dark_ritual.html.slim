@@ -28,17 +28,18 @@ html lang="nb"
       })();
 
   body
-    .subnav.h-100 style="position: fixed; transform: translate(-160px, 0);top:0; z-index:1000;transition: 0.5s"
-      div.h-100 style="overflow-y: scroll" = render 'layouts/navigation'
     #shades.w-100.h-100 style="position: fixed; left:0;top:0; z-index:5;opacity: 0;visibility:hidden;background-color:black" SHADES
-    = link_to image_tag('rjjk_logo_&_txt_320.png', id: :logo_img), '/'
     .container-fluid
+      .position-relative style="margin-right:-4px"
+        = link_to image_tag('rjjk_logo_&_txt_320.png', id: :logo_img), '/'
       .row
         .main_left.col
           .row
             .col-12.p-0 = render 'layouts/header'
           .row
-            .main.col-12
+            .subnav.h-100
+              div.h-100 style="overflow-y: scroll" = render 'layouts/navigation'
+            .main.col
               .padded = yield
         .main_right = render 'layouts/right_column'
 

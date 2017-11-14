@@ -166,6 +166,33 @@ ul.controls li a.delete {
   background: #222222;
 }
 
+.subnav {
+  padding: 0;
+  padding-right: 1px;
+  margin: 0;
+  border: 0;
+  background-color: #222222;
+  position: fixed;
+  transform: translate(-268px, 0);
+  top: 0;
+  z-index: 1000;
+  transition: 0.5s;
+  width: 268px;
+}
+
+.subnav h1 {
+  margin-top: 10px
+}
+
+.subnav a {
+  line-height: 1.2
+}
+
+.subnav li a {
+  width: inherit
+}
+
+
 .main_right {
   padding: 0;
   background-color: #222222;
@@ -243,7 +270,6 @@ ul.controls li a.delete {
     position: absolute;
     width: 224px;
     height: 224px;
-    margin-right: 0.67rem;
   }
 
   .main_right {
@@ -267,6 +293,11 @@ ul.controls li a.delete {
     height: 268px;
   }
 
+  .subnav {
+    position: static;
+    transform: translate(0, 0);
+  }
+
   .main_right {
     padding-top: 268px;
     width: 290px;
@@ -285,26 +316,6 @@ ul.controls li a.delete {
 ul.nav.nav-tabs {
   padding-bottom: 0;
   margin-left: 0;
-}
-
-.subnav {
-  padding: 0;
-  padding-right: 1px;
-  margin: 0;
-  border: 0;
-  background-color: #222222
-}
-
-.subnav h1 {
-  margin-top: 10px
-}
-
-.subnav a {
-  line-height: 1.2
-}
-
-.subnav li a {
-  width: inherit
 }
 
 .main_left {
