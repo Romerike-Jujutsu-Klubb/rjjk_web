@@ -264,6 +264,9 @@ ul.controls li a.delete {
   .header {
     position: relative;
     padding-right: 0;
+    .fb-buttons {
+      margin-right: 46px;
+    }
   }
 
   #logo_img {
