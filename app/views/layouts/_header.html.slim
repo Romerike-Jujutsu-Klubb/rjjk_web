@@ -7,15 +7,17 @@
         = textalize flash[:notice]
   i#navBtn.fa.fa-navicon.btn.btn-secondary.m-2.float-left.d-xl-none
   i#calendarBtn.fa.fa-calendar.btn.btn-secondary.m-2.float-left class=('d-lg-none' unless @content_width)
-  = link_to 'http://www.facebook.com/home.php#!/pages/Romerike-Jujutsu-Klubb/260684570923?ref=ts', target: 'facebook'
-    i.fa.fa-facebook.btn.btn-secondary.m-2.float-left
-  - if user?
-    = link_to 'https://www.facebook.com/groups/romerikejjk', target: 'facebook'
-      i.fa.fa-facebook-square.btn.btn-secondary.m-2.float-left>
-  - unless current_user&.member
-    = link_to 'Prøv oss!', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', onclick: 'return !window.open(this.href)'
 
   .d-none.d-md-block.mt-md-5.mb-1 Romerike Jujutsu Klubb
+
+  .fb-buttons
+    = link_to 'http://www.facebook.com/home.php#!/pages/Romerike-Jujutsu-Klubb/260684570923?ref=ts', target: 'facebook'
+      i.fa.fa-facebook.btn.btn-secondary.my-2.my-md-0.mx-2
+    - if user?
+      = link_to 'https://www.facebook.com/groups/romerikejjk', target: 'facebook'
+        i.fa.fa-facebook-square.btn.btn-secondary.my-md-0.mx-2>
+    - unless current_user&.member
+      = link_to 'Prøv oss!', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', onclick: 'return !window.open(this.href)'
 
 javascript:
     $('#navBtn').on('click', function () {

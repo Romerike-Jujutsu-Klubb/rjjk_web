@@ -37,9 +37,9 @@ body {
   margin-right: 0.5em;
   vertical-align: middle;
   border-top: solid 1px #000000;
-  border-right: 0px;
+  border-right: 0;
   border-bottom: solid 1px #777777;
-  border-left: 0px;
+  border-left: 0;
   padding: 0.15em;
   width: 10.0em;
 }
@@ -116,32 +116,32 @@ ul.controls li a {
 }
 
 ul.controls li a.printerfriendly {
-  padding: 0em 1.0em 0em 20px;
+  padding: 0 1.0em 0 20px;
   background-image: asset_url('icon-printerfriendly.gif');
 }
 
 ul.controls li a.comments {
-  padding: 0em 1.0em 0em 20px;
+  padding: 0 1.0em 0 20px;
   background-image: asset_url('icon-comments.gif');
 }
 
 ul.controls li a.more {
-  padding: 0em 1.0em 0em 20px;
+  padding: 0 1.0em 0 20px;
   background-image: asset_url('icon-more.gif');
 }
 
 ul.controls li a.edit {
-  padding: 0em 1.0em 0em 20px;
+  padding: 0 1.0em 0 20px;
   background-image: asset_url('icon-more.gif');
 }
 
 ul.controls li a.back {
-  padding: 0em 1.0em 0em 20px;
+  padding: 0 1.0em 0 20px;
   background-image: asset_url('icon-back.png');
 }
 
 ul.controls li a.delete {
-  padding: 0em 1.0em 0em 20px;
+  padding: 0 1.0em 0 20px;
   background-image: asset_url('button-delete-16x16.png');
 }
 
@@ -157,8 +157,8 @@ ul.controls li a.delete {
   border-bottom: 1px solid black;
   z-index: 1;
 
-  .buttons {
-    margin-right: 0;
+  .fb-buttons {
+    float: right;
   }
 }
 
@@ -241,6 +241,9 @@ ul.controls li a.delete {
   .header {
     height: 150px;
     padding-right: 150px;
+    .fb-buttons {
+      font-size: 1.8rem;
+    }
   }
 
   #logo_img {
@@ -261,9 +264,6 @@ ul.controls li a.delete {
   .header {
     position: relative;
     padding-right: 0;
-    .buttons {
-      margin-right: 46px;
-    }
   }
 
   #logo_img {
