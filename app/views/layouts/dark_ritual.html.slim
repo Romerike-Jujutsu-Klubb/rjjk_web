@@ -41,7 +41,7 @@ html lang="nb"
               div.h-100 style="overflow-y: scroll" = render 'layouts/navigation'
             .main.col
               .padded = yield
-        .main_right = render 'layouts/right_column'
+        .main_right.lazy-container = render 'layouts/right_column'
 
       .footer.row
         .col-lg-4.col-12.left &copy; 2008-2017 <a href="https://jujutsu.no/">Romerike Jujutsu Klubb</a>.
