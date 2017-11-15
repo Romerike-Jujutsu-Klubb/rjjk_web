@@ -33,10 +33,10 @@ html lang="nb"
       .position-relative style="margin-right:-4px"
         = link_to image_tag('rjjk_logo_&_txt_320.png', id: :logo_img), '/'
       .row
-        .main_left.col
+        .main_left.col.d-flex.flex-column
           .row
             .col-12.p-0 = render 'layouts/header'
-          .row
+          .row style="flex-grow: 1"
             .subnav.h-100
               div.h-100 style="overflow-y: scroll" = render 'layouts/navigation'
             .main.col
