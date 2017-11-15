@@ -23,7 +23,6 @@ class NewsFeatureTest < FeatureTest
     screenshot_group :index_member
     login_and_visit '/news', :newbie
     assert_current_path '/news'
-    assert_gallery_image_is_loaded
     screenshot('index')
   end
 
@@ -31,7 +30,6 @@ class NewsFeatureTest < FeatureTest
     screenshot_group :index_admin
     login_and_visit '/news'
     assert_current_path '/news'
-    assert_gallery_image_is_loaded
     screenshot('index')
   end
 
@@ -39,7 +37,6 @@ class NewsFeatureTest < FeatureTest
     screenshot_group :new
     login_and_visit '/'
     assert_current_path '/'
-    assert_gallery_image_is_loaded
     screenshot('front')
     click_menu 'Ny nyhet'
     assert_current_path '/news/new'
@@ -54,7 +51,6 @@ class NewsFeatureTest < FeatureTest
     tinymce_fill_in 'news_item_body', with: 'A long time ago in a galaxy far, far away.'
     screenshot('form_filled_in')
     click_button('Lagre')
-    assert_gallery_image_is_loaded
     screenshot('saved')
   end
 

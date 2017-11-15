@@ -1,3 +1,6 @@
+$sidebar_width: 268px;
+$right_sidebar_width: 290px;
+
 body {
   padding-top: 4rem;
 }
@@ -166,6 +169,10 @@ ul.controls li a.delete {
   background: #222222;
 }
 
+.container-fluid {
+  max-width: 1440px;
+}
+
 .subnav {
   padding: 0;
   padding-right: 1px;
@@ -173,11 +180,11 @@ ul.controls li a.delete {
   border: 0;
   background-color: #222222;
   position: fixed;
-  transform: translate(-268px, 0);
+  transform: translate(-$sidebar_width, 0);
   top: 0;
   z-index: 1000;
   transition: 0.5s;
-  width: 268px;
+  width: $sidebar_width;
 }
 
 .subnav h1 {
@@ -194,15 +201,16 @@ ul.controls li a.delete {
 
 
 .main_right {
-  padding: 0;
+  padding: 1rem;
   background-color: #222222;
-  width: 268px;
+  width: $sidebar_width;
   position: fixed;
   top: 0;
   right: 0;
   transition: 0.5s;
-  transform: translate(268px, 0);
+  transform: translate($sidebar_width, 0);
   z-index: 1000;
+  max-height: 100vh;
   overflow-y: scroll;
 }
 
@@ -210,10 +218,6 @@ ul.controls li a.delete {
   padding-top: 0;
   padding-right: 16px;
   background-color: #222222;
-}
-
-.main_right > .row > div {
-  width: 224px;
 }
 
 #logo_img {
@@ -271,17 +275,18 @@ ul.controls li a.delete {
 
   #logo_img {
     position: absolute;
-    width: 224px;
-    height: 224px;
+    width: $sidebar_width;
+    height: $sidebar_width;
   }
 
   .main_right {
-    padding-top: 224px;
+    padding-top: $sidebar_width;
     position: static;
-    width: 246px;
+    width: $right_sidebar_width;
     transform: translate(0, 0) !important;
     z-index: 0;
     transition: z-index 0s, transform 0.5s;
+    max-height: none;
   }
 
   .main_right img {
@@ -292,8 +297,8 @@ ul.controls li a.delete {
 
 @media (min-width: 1200px) { // xl
   #logo_img {
-    width: 268px;
-    height: 268px;
+    width: $sidebar_width;
+    height: $sidebar_width;
   }
 
   .subnav {
@@ -302,12 +307,12 @@ ul.controls li a.delete {
   }
 
   .main_right {
-    padding-top: 268px;
+    padding-top: $sidebar_width;
     width: 290px;
   }
 
   .main_right img {
-    width: 268px;
+    width: $sidebar_width;
     height: 201px;
   }
 }

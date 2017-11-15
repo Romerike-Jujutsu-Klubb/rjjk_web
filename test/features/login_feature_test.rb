@@ -52,7 +52,6 @@ class LoginFeatureTest < FeatureTest
     screenshot :filled_in
     click_button 'Logg inn'
     assert_current_path '/'
-    assert_gallery_image_is_loaded
     screenshot :welcome
   end
 
@@ -80,7 +79,6 @@ class LoginFeatureTest < FeatureTest
     visit root_path(key: Regexp.last_match(2))
     open_menu
     assert has_css?('h1', text: 'Uwe Kubosch'), all('h1').to_a.map(&:text).inspect
-    assert_gallery_image_is_loaded
     screenshot :welcome
   end
 end

@@ -3,9 +3,9 @@
 - column_width_1200 = 268
 css:
   @media (min-width: 992px) {
-    .main_right > .row > div {
-      width: #{column_width_992}px;
-    }
+    /*.main_right > .row > div {*/
+      /*width: #{column_width_992}px;*/
+    /*}*/
   }
 
   @media (min-width: 1200px) {
@@ -14,31 +14,30 @@ css:
     }
   }
 
-.row.col-12.justify-content-center.align-items-center.p-0.m-0
-  div
-    form.mt-3 action="/search" role="search"
-      .input-group
-        = search_field nil, nil, name: :q, value: @query, placeholder: 'Søk', \
-                class: 'search-query form-control', onmouseup: 'select()'
-        span.input-group-btn
-          button.btn.btn-secondary type="submit"
-            i.fa.fa-search
+.w-100.align-items-justify.p-0.m-0
+  form.mt-3 action="/search" role="search"
+    .input-group
+      = search_field nil, nil, name: :q, value: @query, placeholder: 'Søk', \
+              class: 'search-query form-control', onmouseup: 'select()'
+      span.input-group-btn
+        button.btn.btn-secondary type="submit"
+          i.fa.fa-search
 
-    /= render 'layouts/gallery_image', column_width_sm: column_width_sm, column_width_1200: column_width_1200, column_width_992: column_width_992
+  /= render 'layouts/gallery_image', column_width_sm: column_width_sm, column_width_1200: column_width_1200, column_width_992: column_width_992
 
-    - if false && user?
-      = render 'layouts/media_upload'
+  - if false && user?
+    = render 'layouts/media_upload'
 
-    h3
-      | Hva skjer?
-      =< link_to image_tag('ical.png', :style => 'width: 24px;height: 24px'), \
-        {only_path: false, protocol: 'webcal', controller: :events, \
-            action: :calendar, format: :ics}, \
-        title: 'Abonnér på hendelseskalender!'
-    = render 'layouts/next_practice'
-    = render 'layouts/events', events: @layout_events
+  h3
+    | Hva skjer?
+    =< link_to image_tag('ical.png', :style => 'width: 24px;height: 24px'), \
+      {only_path: false, protocol: 'webcal', controller: :events, \
+          action: :calendar, format: :ics}, \
+      title: 'Abonnér på hendelseskalender!'
+  = render 'layouts/next_practice'
+  = render 'layouts/events', events: @layout_events
 
-    - if admin?
-      = render 'layouts/charts', column_width_sm: column_width_sm
+  - if admin?
+    = render 'layouts/charts', column_width_sm: column_width_sm
 
-    = render 'layouts/groups'
+  = render 'layouts/groups'

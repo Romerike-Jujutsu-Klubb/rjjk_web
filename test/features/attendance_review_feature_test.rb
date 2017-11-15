@@ -9,7 +9,6 @@ class AttendanceReviewFeatureTest < FeatureTest
     screenshot_group :review
     visit_with_login "/attendances/review/2013/41/#{group_schedules(:voksne_thursday).id}/I",
         redirected_path: '/mitt/oppmote'
-    assert_gallery_image_is_loaded
     screenshot('review_old')
     assert has_css?('td', count: 13)
     assert_equal ['Forrige uke', 'Trente du? Lars og Newbie trente.',

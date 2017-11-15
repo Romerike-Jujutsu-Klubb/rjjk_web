@@ -7,7 +7,6 @@ class AttendanceFormTest < FeatureTest
     login_and_visit '/'
     click_menu('Oppmøtelister')
     assert_current_path '/attendances/form_index'
-    assert_gallery_image_is_loaded
     screenshot('attendance/form/index')
     find('#group_name_Panda').click
     sleep 0.5

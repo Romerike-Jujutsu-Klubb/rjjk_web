@@ -7,7 +7,6 @@ class InstructionFeatureTest < FeatureTest
     login_and_visit '/'
     click_menu 'Instruksjon'
     assert_current_path '/group_instructors'
-    assert_gallery_image_is_loaded
     screenshot('instruction/index')
   end
 
@@ -15,7 +14,6 @@ class InstructionFeatureTest < FeatureTest
     visit_with_login '/group_instructors'
     find('a', text: 'Registrer gruppeinstruktør').click
     assert_current_path '/group_instructors/new'
-    assert_gallery_image_is_loaded
     screenshot('instruction/new')
     select 'Panda Torsdag', from: 'group_instructor_group_schedule_id'
     screenshot('instruction/new_with_group_schedule_selected')
