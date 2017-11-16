@@ -23,29 +23,24 @@ javascript:
     $('#navBtn').on('click', function () {
         console.log('menu clicked');
         $('.subnav').css('transform', 'translate(0px, 0)');
-        $('#shades').css('transition', 'visibility 0s, opacity 0.5s');
-        $('#shades').css('visibility', 'visible').css('opacity', '0.5');
+        $('#menuShadow').css('transition', 'visibility 0s, opacity 0.5s');
+        $('#menuShadow').css('visibility', 'visible').css('opacity', '0.5');
         $("body").addClass("modal-open");
     });
     $('#calendarBtn').on('click', function () {
         console.log('calendar clicked');
         $('.main_right').css('transform', 'translate(0px, 0)');
-        $('#shades').css('transition', 'visibility 0s, opacity 0.5s');
-        $('#shades').css('visibility', 'visible').css('opacity', '0.5');
+        $('#sidebarShadow').css('transition', 'visibility 0s, opacity 0.5s');
+        $('#sidebarShadow').css('visibility', 'visible').css('opacity', '0.5');
         $("body").addClass("modal-open");
     });
 
-    $('#shades').on('click', function () {
-        console.log('shades clicked');
+    $('.shadow').on('click', function () {
+        console.log('shadow clicked');
         $('.subnav').css('transform', 'translate(-268px, 0)');
-        $('#shades').css('opacity', '0');
-        $('#shades').css('transition', 'visibility 0.5s, opacity 0.5s');
-        $('#shades').css('visibility', 'hidden');
-
         $('.main_right').css('transform', 'translate(268px, 0)');
-        $('#shades').css('opacity', '0');
-        $('#shades').css('transition', 'visibility 0.5s, opacity 0.5s');
-        $('#shades').css('visibility', 'hidden');
-
+        $('.shadow').css('opacity', '0');
+        $('.shadow').css('transition', 'visibility 0.5s, opacity 0.5s');
+        $('.shadow').css('visibility', 'hidden');
         $("body").removeClass("modal-open")
     });
