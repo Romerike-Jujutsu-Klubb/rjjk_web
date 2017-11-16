@@ -1,5 +1,7 @@
 - @content_width = 1024
-= link_to 'Ny instruktørsamling', new_instructor_meeting_path, class: 'btn btn-primary float-right'
+= link_to new_instructor_meeting_path, class: 'btn btn-primary float-right'
+  i.fa.fa-plus>
+  | Ny instruktørsamling
 
 h1 Instruktørsamlinger
 
@@ -22,4 +24,4 @@ table.table.table-striped
         td = instructor_meeting.agenda
         td
           /= link_to 'Show', instructor_meeting, class: 'btn btn-link'
-          = link_to 'Edit', edit_instructor_meeting_path(instructor_meeting), class: 'btn btn-link'
+          = link_to 'Endre', edit_instructor_meeting_path(instructor_meeting), class: 'btn btn-link'

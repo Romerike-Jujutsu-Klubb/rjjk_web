@@ -16,8 +16,8 @@
       = f.text_field :end_at, class: 'time'
   = f.text_area :title, class: 'expanding', maxlength: 254
   = f.text_area :agenda, rows: 10, class: 'expanding'
-  .btn-toolbar.float-right
-    = link_to 'Tilbake', instructor_meetings_path, class: 'btn btn-secondary'
+  .float-right
+    = link_to 'Tilbake', instructor_meetings_path, class: 'btn btn-secondary mr-2'
     = f.primary 'Lagre'
 
 - if @instructor_meeting.new_record?

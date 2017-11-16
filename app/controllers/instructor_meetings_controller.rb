@@ -4,7 +4,7 @@ class InstructorMeetingsController < ApplicationController
   before_action :set_instructor_meeting, only: %i[show edit update destroy]
 
   def index
-    @instructor_meetings = InstructorMeeting.all
+    @instructor_meetings = InstructorMeeting.order(start_at: :desc, end_at: :desc).to_a
   end
 
   def show; end
@@ -17,43 +17,24 @@ class InstructorMeetingsController < ApplicationController
 
   def create
     @instructor_meeting = InstructorMeeting.new(instructor_meeting_params)
-
-    respond_to do |format|
-      if @instructor_meeting.save
-        format.html do
-          redirect_to @instructor_meeting, notice: 'Instructor meeting was successfully created.'
-        end
-        format.json { render :show, status: :created, location: @instructor_meeting }
-      else
-        format.html { render :new }
-        format.json { render json: @instructor_meeting.errors, status: :unprocessable_entity }
-      end
+    if @instructor_meeting.save
+      redirect_to instructor_meetings_path, notice: 'Ny instruktørsamling ble opprettet.'
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @instructor_meeting.update(instructor_meeting_params)
-        format.html do
-          redirect_to @instructor_meeting, notice: 'Instructor meeting was successfully updated.'
-        end
-        format.json { render :show, status: :ok, location: @instructor_meeting }
-      else
-        format.html { render :edit }
-        format.json { render json: @instructor_meeting.errors, status: :unprocessable_entity }
-      end
+    if @instructor_meeting.update(instructor_meeting_params)
+      redirect_to instructor_meetings_path, notice: 'Instruktørsamlingen ble oppdatert.'
+    else
+      render :edit
     end
   end
 
   def destroy
     @instructor_meeting.destroy
-    respond_to do |format|
-      format.html do
-        redirect_to instructor_meetings_url,
-            notice: 'Instructor meeting was successfully destroyed.'
-      end
-      format.json { head :no_content }
-    end
+    redirect_to instructor_meetings_url, notice: 'Instruktørsamlingen ble slettet.'
   end
 
   private

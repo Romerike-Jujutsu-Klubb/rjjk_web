@@ -67,6 +67,10 @@ nb:
         name: Navn
         file: Bilde
         public: Publiser
+      instructor_meeting:
+        end_at: Slutt
+        start_at: Start
+        title: Tema
       member:
         account_no: Kontonummer
         address: Adresse
