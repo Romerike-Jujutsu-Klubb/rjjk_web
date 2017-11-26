@@ -28,7 +28,7 @@ class InstructorMeetingsControllerTest < ActionController::TestCase
       } }
     end
 
-    assert_redirected_to instructor_meeting_path(assigns(:instructor_meeting))
+    assert_redirected_to instructor_meetings_path
   end
 
   test 'should show instructor_meeting' do
@@ -48,7 +48,7 @@ class InstructorMeetingsControllerTest < ActionController::TestCase
       start_at: @instructor_meeting.start_at,
       title: @instructor_meeting.title,
     } }
-    assert_redirected_to instructor_meeting_path(assigns(:instructor_meeting))
+    assert_redirected_to instructor_meetings_path
   end
 
   test 'should destroy instructor_meeting' do
