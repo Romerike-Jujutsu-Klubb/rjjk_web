@@ -29,3 +29,6 @@
       ' Ingen
     =< practice.passed? ? 'trente' : 'kommer'
     ' .
+    / TODO(uwe): Avoid duplicate modals!  Maybe lazy load the content?
+    - if request.xhr?
+      = yield :modals
