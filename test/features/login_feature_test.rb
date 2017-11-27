@@ -23,7 +23,7 @@ class LoginControllerTest < ActionController::TestCase
   end
 end
 
-class LoginIntegrationTest < ActionDispatch::IntegrationTest
+class LoginIntegrationTest < IntegrationTest
   LOGIN_PARAMS = { user: { login: 'admin', password: 'atest' } }.freeze
   test 'integration test login' do
     login(:admin)

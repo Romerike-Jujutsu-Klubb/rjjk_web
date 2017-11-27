@@ -3,22 +3,10 @@
 require 'test_helper'
 
 class ActionController::TestCase
-  teardown do
-    clear_user
-    clear_session
-    clear_cookie
-  end
+  teardown { clear_user }
 
   def login(login = :admin)
-    Thread.current[:user] = users(login)
-  end
-
-  def clear_cookie
-    cookies.delete(COOKIE_NAME)
-    cookies.delete(:email)
-    ActionDispatch::Request.new(Rails.application.env_config).cookie_jar
-        .delete(COOKIE_NAME, COOKIE_SCOPE)
-    ActionDispatch::Request.new(Rails.application.env_config).cookie_jar.delete(:email)
+    self.current_user = users(login)
   end
 
   def assert_logged_in(user = :admin)

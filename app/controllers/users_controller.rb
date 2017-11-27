@@ -56,7 +56,7 @@ class UsersController < ApplicationController
     @user = current_user || User.find_by(id: session[:user_id])
     begin
       @user.update(deleted: true)
-      self.current_user = nil
+      self.session_user = nil
     rescue => ex
       flash.now['message'] = "Error: #{ex}."
       back_or_redirect_to '/'

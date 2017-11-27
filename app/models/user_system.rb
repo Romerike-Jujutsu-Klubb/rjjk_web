@@ -80,7 +80,7 @@ module UserSystem
   def login_from_cookie
     if (user_id = cookies.encrypted[COOKIE_NAME])
       logger.info "Found login cookie: #{user_id}"
-      self.current_user = User.find_by(id: user_id)
+      self.session_user = User.find_by(id: user_id)
     end
     current_user
   end
@@ -91,9 +91,8 @@ module UserSystem
 
   def login_from_params
     if (token = params[:key])
-      if (self.current_user = User.authenticate_by_token(token)) ||
-            (um = UserMessage.includes(:user).find_by(key: CGI.unescape(token))) &&
-                  (self.current_user = um.user)
+      if (self.session_user = User.authenticate_by_token(token) ||
+            (um = UserMessage.includes(:user).find_by(key: CGI.unescape(token)))&.user)
         params.delete(:key)
         store_cookie(current_user)
         um&.update!(read_at: Time.current) if um && !um.read_at
@@ -122,7 +121,7 @@ module UserSystem
 
   def store_current_user_in_thread
     return true if login_from_params
-    self.current_user = User.find_by(id: session[SESSION_KEY]) if session[SESSION_KEY]
+    self.current_user = session_user if session_user?
     login_from_cookie unless current_user
     true
   end
@@ -148,8 +147,20 @@ module UserSystem
   end
 
   def current_user=(user)
-    session[SESSION_KEY] = (user&.id) if defined?(session)
     Thread.current[:user] = user
+  end
+
+  def session_user?
+    session[SESSION_KEY]
+  end
+
+  def session_user
+    User.find_by(id: session[SESSION_KEY])
+  end
+
+  def session_user=(user)
+    session[SESSION_KEY] = (user&.id)
+    self.current_user = user
   end
 
   def clear_session

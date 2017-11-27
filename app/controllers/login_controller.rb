@@ -9,7 +9,7 @@ class LoginController < ApplicationController
     remember_me = params.delete(:remember_me)
     @user = User.new(params['user'])
     if (user = User.authenticate(params['user']['login'], params['user']['password']))
-      self.current_user = user
+      self.session_user = user
       flash['notice'] = 'Velkommen!'
       store_cookie(current_user) if remember_me && remember_me == '1'
       unless member?
@@ -88,7 +88,7 @@ class LoginController < ApplicationController
   end
 
   def logout
-    self.current_user = nil
+    self.session_user = nil
     clear_cookie
     reset_session
     flash.notice = 'Velkommen tilbake!'

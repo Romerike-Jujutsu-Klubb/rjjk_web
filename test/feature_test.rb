@@ -44,12 +44,6 @@ class FeatureTest < ActionDispatch::IntegrationTest
     DatabaseCleaner.clean # Truncate the database
     # Capybara.reset_sessions! # Forget the (simulated) browser state
     visit logout_path
-    # clear_cookie
-  end
-
-  def clear_cookie
-    cookies.delete(COOKIE_NAME)
-    cookies.delete(:email)
   end
 
   def visit_with_login(path, redirected_path: path, user: :admin)
@@ -62,11 +56,16 @@ class FeatureTest < ActionDispatch::IntegrationTest
     assert_current_path redirected_path
   end
 
-  def login_and_visit(path, user = :admin)
-    visit '/login/password'
-    fill_login_form user
+  def login_and_visit(path, user = :admin, redirected_path: path)
+    login(user)
     assert_current_path '/'
     visit path
+    assert_current_path redirected_path
+  end
+
+  def login(user = :admin)
+    visit '/login/password'
+    fill_login_form user
   end
 
   def fill_login_form(user)
@@ -95,13 +94,13 @@ class FeatureTest < ActionDispatch::IntegrationTest
   end
 end
 
-if Capybara.default_driver == :chrome
-  module ClickScroller
-    def click
-      script = "document.evaluate('#{path}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.scrollIntoViewIfNeeded()" # rubocop: disable Metrics/LineLength
-      driver.execute_script script
-      super
-    end
-  end
-  Capybara::Selenium::Node.prepend ClickScroller
-end
+# if Capybara.default_driver == :chrome
+#   module ClickScroller
+#     def click
+#       script = "document.evaluate('#{path}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.scrollIntoViewIfNeeded()" # rubocop: disable Metrics/LineLength
+#       driver.execute_script script
+#       super
+#     end
+#   end
+#   Capybara::Selenium::Node.prepend ClickScroller
+# end

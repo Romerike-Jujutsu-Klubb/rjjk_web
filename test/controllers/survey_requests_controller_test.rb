@@ -2,7 +2,7 @@
 
 require 'integration_test'
 
-class SurveyRequestsControllerTest < ActionDispatch::IntegrationTest
+class SurveyRequestsControllerTest < IntegrationTest
   setup do
     @survey_request = survey_requests(:sent)
     login(:admin)

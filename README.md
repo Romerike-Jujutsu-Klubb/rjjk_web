@@ -35,3 +35,11 @@ Resultatene lagres i
 
 
 https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Fjujutsu.no%2F&tab=desktop
+
+## Telefontesting
+
+* https://appetize.io/demo
+
+## Google Drive API
+
+https://developers.google.com/apis-explorer/?hl=en_US#p/drive/v3/

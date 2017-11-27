@@ -10,9 +10,8 @@ class NewsFeatureTest < FeatureTest
     visit '/news'
     assert_current_path '/news'
     screenshot('index')
-    find('.close').click
     all('.post img')[0].click
-    screenshot('image') || sleep(Capybara::Screenshot.stability_time_limit)
+    screenshot('image') || sleep(Capybara::Screenshot.stability_time_limit || 0.5)
     find('.close').click
     assert has_no_css?('.close')
     all('.post img')[1].click

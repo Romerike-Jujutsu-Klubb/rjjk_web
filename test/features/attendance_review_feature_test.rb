@@ -27,7 +27,7 @@ class AttendanceReviewFeatureTest < FeatureTest
     screenshot('with_presence')
 
     all('a.btn')[1].click
-    wait_for_ajax
+    # wait_for_ajax
     assert has_css?('a.btn', text: 'Annet')
     assert_equal ['Forrige uke', 'Trente! Du og 2 andre trente.',
                   'Annet Lars trente.', 'Denne uken', 'Ubekreftet Du trente.',
@@ -37,6 +37,7 @@ class AttendanceReviewFeatureTest < FeatureTest
     screenshot('with_absence')
 
     first('a', text: 'Du og 2 andre').click
+    assert has_css? '.modal'
     screenshot('popup')
   end
 end
