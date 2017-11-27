@@ -94,13 +94,13 @@ class FeatureTest < ActionDispatch::IntegrationTest
   end
 end
 
-# if Capybara.default_driver == :chrome
-#   module ClickScroller
-#     def click
-#       script = "document.evaluate('#{path}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.scrollIntoViewIfNeeded()" # rubocop: disable Metrics/LineLength
-#       driver.execute_script script
-#       super
-#     end
-#   end
-#   Capybara::Selenium::Node.prepend ClickScroller
-# end
+if Capybara.default_driver == :chrome
+  module ClickScroller
+    def click
+      script = "document.evaluate('#{path}', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.scrollIntoViewIfNeeded()" # rubocop: disable Metrics/LineLength
+      driver.execute_script script
+      super
+    end
+  end
+  Capybara::Selenium::Node.prepend ClickScroller
+end
