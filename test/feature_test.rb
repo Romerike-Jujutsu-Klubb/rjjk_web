@@ -41,9 +41,15 @@ class FeatureTest < ActionDispatch::IntegrationTest
   setup { Timecop.travel TEST_TIME }
 
   teardown do
+
+    #FIXME(uwe): remove debug
     unless passed?
+      system 'type ps'
+      system 'which ps'
       system 'ps -ef'
     end
+    #EMXIF
+
     DatabaseCleaner.clean # Truncate the database
     # Capybara.reset_sessions! # Forget the (simulated) browser state
     visit logout_path
