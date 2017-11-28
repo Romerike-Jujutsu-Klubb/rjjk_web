@@ -41,6 +41,9 @@ class FeatureTest < ActionDispatch::IntegrationTest
   setup { Timecop.travel TEST_TIME }
 
   teardown do
+    unless passed?
+      system 'ps -ef'
+    end
     DatabaseCleaner.clean # Truncate the database
     # Capybara.reset_sessions! # Forget the (simulated) browser state
     visit logout_path
