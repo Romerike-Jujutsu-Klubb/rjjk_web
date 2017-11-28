@@ -125,15 +125,16 @@ class AttendancesController < ApplicationController
   end
 
   def history_graph
-    g = if params[:id] && params[:id].to_i <= 1280
-          if params[:id] =~ /^\d+x\d+$/
-            AttendanceHistoryGraph.new.history_graph params[:id]
-          else
-            AttendanceHistoryGraph.new.history_graph params[:id].to_i
-          end
-        else
-          AttendanceHistoryGraph.new.history_graph
-        end
+    args = if params[:id] && params[:id].to_i <= 1280
+             if params[:id] =~ /^\d+x\d+$/
+               [params[:id]]
+             else
+               [params[:id].to_i]
+             end
+           else
+             []
+           end
+    g = AttendanceHistoryGraph.new.history_graph(*args)
     send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Oppmøtehistorikk.png')
   end
 
