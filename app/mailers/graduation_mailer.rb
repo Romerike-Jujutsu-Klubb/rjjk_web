@@ -29,7 +29,7 @@ class GraduationMailer < ApplicationMailer
     @graduation = graduation
     @instructor = instructor
     @title = 'Denne graderingen mangler eksaminator'
-    @email_url = edit_graduation_url(@graduation.id, anchor: :censors)
+    @email_url = edit_graduation_url(@graduation.id, anchor: :censors_tab)
 
     mail subject: @title, to: @instructor.email
   end
