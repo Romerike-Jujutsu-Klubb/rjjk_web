@@ -29,7 +29,7 @@ class GraduationMailer < ApplicationMailer
     @graduation = graduation
     @instructor = instructor
     @title = 'Denne graderingen mangler eksaminator'
-    @email_url = { controller: :graduations, action: :show, id: @graduation.id }
+    @email_url = edit_graduation_url(@graduation.id, anchor: :censors)
 
     mail subject: @title, to: @instructor.email
   end
@@ -56,8 +56,8 @@ class GraduationMailer < ApplicationMailer
     @title = 'Invitasjon til gradering'
     @timestamp = graduate.graduation.held_on
     # @email_url = { controller: :censors, action: :show, id: @censor.id }
-    @confirm_url = { controller: :graduates, action: :confirm, id: @graduate.id }
-    @decline_url = { controller: :graduates, action: :decline, id: @graduate.id }
+    @confirm_url = confirm_graduate_url(@graduate)
+    @decline_url = decline_graduate_url(@graduate)
     mail to: graduate.member.email, subject: @title
   end
 
