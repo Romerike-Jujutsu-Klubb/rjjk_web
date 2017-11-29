@@ -31,7 +31,15 @@ class GraduationReminderTest < ActionMailer::TestCase
   end
 
   def test_notify_missing_censors
-    assert_mail_stored(0) { GraduationReminder.notify_missing_censors }
+    assert_mail_stored(1) { GraduationReminder.notify_missing_censors }
+
+    mail = UserMessage.pending[0]
+    assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
+    assert_equal %w[noreply@test.jujutsu.no], mail.from
+    assert_equal 'Denne graderingen mangler eksaminator', mail.subject
+    assert_match(/Hei Uwe!/, mail.body)
+    assert_match(/Kan du gå inn på RJJK webben og legge til eksaminator på graderingen for/, mail.body)
+    assert_match('Voksne den 2013-10-24', mail.body)
   end
 
   def test_notify_groups

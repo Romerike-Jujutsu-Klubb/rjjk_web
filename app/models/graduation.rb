@@ -9,8 +9,6 @@ class Graduation < ApplicationRecord
   validates :group_notification, inclusion: { in: [true, false], message: 'må velges' }
   validates :held_on, uniqueness: { scope: :group_id }
 
-  scope :not, ->(scope) { where(scope.where_values.reduce(:and).not) }
-
   scope :for_edit, -> do
     includes(
         censors: { member: { graduates: { rank: :martial_art } } },

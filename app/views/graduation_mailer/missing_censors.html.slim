@@ -1,0 +1,6 @@
+h1 Hei #{@instructor.first_name}!
+
+p Kan du gå inn på RJJK webben og legge til eksaminator på graderingen for
+p
+  = link_to "#{@graduation.group.name} den #{@graduation.held_on}", @email_url
+  | ?

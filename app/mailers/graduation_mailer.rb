@@ -25,11 +25,11 @@ class GraduationMailer < ApplicationMailer
     mail subject: "Gradering for #{@graduation.group.name} #{@graduation.held_on}"
   end
 
-  def self.missing_censors(graduation, instructor)
+  def missing_censors(graduation, instructor)
     @graduation = graduation
     @instructor = instructor
     @title = 'Denne graderingen mangler eksaminator'
-    @email_url = graduation_url(@graduation)
+    @email_url = { controller: :graduations, action: :show, id: @graduation.id }
 
     mail subject: @title, to: @instructor.email
   end

@@ -66,12 +66,12 @@ class GraduationReminder
 
   def self.notify_missing_censors
     Graduation.upcoming.includes(:group).references(:groups)
-        .merge.not(Graduation.has_examiners)
+        .where.not(Graduation.has_examiners.where_values_hash)
         .where('held_on < ?', 6.weeks.from_now)
         .where('notified_missing_censors_at IS NULL OR notified_missing_censors_at < ?', 1.week.ago)
         .order(:id)
         .each do |graduation|
-      instructor = graduation.group.current_semester.chief_instructor
+      instructor = graduation.group.current_semester&.chief_instructor || Role[:Hovedinstruktør]
       GraduationMailer.missing_censors(graduation, instructor)
           .store(instructor.user_id, tag: :graduation_missing_censors)
       graduation.update! notified_missing_censors_at: Time.current

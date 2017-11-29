@@ -1,7 +1,6 @@
 h1 Hei #{@member.first_name}!
 
-p
-  | Felles gradering for #{@graduation.group.name} er satt opp til #{@graduation.held_on}.
+p Felles gradering for #{@graduation.group.name} er satt opp til <b>#{@graduation.held_on}</b>.
 
 p
   - if @member.current_rank
@@ -24,6 +23,7 @@ p
   b> = @member.attendances_since_graduation.count
   ' treninger for deg siden
   = @member.current_rank ? 'forrige gradering' : 'du startet'
-  ' .  Du finner pensum for neste grad på #{link_to pensum_url, pensum_url}.
+  - if @member.age >= 13
+    ' .  Du finner pensum for neste grad på #{link_to pensum_url, pensum_url}.
 p
   | Ny invitasjon til gradering vil sendes nærmere gradering dersom kravene for gradering er oppfylt.

@@ -1,0 +1,8 @@
+h1 Hei #{@censor.member.first_name}!
+
+p Kan du gå inn på RJJK webben og bekrefte graderingen for
+p
+  = link_to "#{@censor.graduation.group.name} den #{@censor.graduation.held_on}", @email_url
+  | ?
+p Se over at alle står oppført med riktig grad og endre hvis noe er galt eller mangler.
+p Når alt er klart, trykk på "Godkjenn" knappen.
