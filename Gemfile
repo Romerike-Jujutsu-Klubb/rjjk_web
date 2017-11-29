@@ -109,7 +109,7 @@ group :test do
   gem 'chunky_png'
   gem 'database_cleaner'
   gem 'minitest-rails-capybara'
-  gem 'minitest-reporters'
+  gem 'minitest-reporters', '!=1.1.19'
   gem 'mocha', require: 'mocha/setup'
   gem 'rubocop'
   # gem 'rubycritic', require: false

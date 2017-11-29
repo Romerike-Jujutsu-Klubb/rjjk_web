@@ -3,7 +3,7 @@
 require 'feature_test'
 
 class CanAccessHomeTest < FeatureTest
-  setup {screenshot_section :home}
+  setup { screenshot_section :home }
 
   test 'front' do
     screenshot_group :front

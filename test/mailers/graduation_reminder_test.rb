@@ -97,7 +97,13 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(/kandidatene, eksaminator og sensorer, og klikk så på "Klar til utsending"./, mail.body)
   end
 
+  def test_notify_graduates_skip_unless_examiner_approved_graduates
+    assert_mail_stored(0) { GraduationReminder.notify_graduates }
+  end
+
   def test_notify_graduates
+    censors(:uwe_voksne_upcoming).update! locked_at: Time.current
+
     assert_mail_stored(1) { GraduationReminder.notify_graduates }
 
     mail = UserMessage.pending[0]

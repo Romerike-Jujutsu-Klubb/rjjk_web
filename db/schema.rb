@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171120190748) do
+ActiveRecord::Schema.define(version: 20171129124023) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -227,13 +227,14 @@ ActiveRecord::Schema.define(version: 20171120190748) do
   end
 
   create_table 'graduations', force: :cascade do |t|
-    t.date     'held_on',               null: false
-    t.integer  'group_id',              null: false
+    t.date     'held_on',                     null: false
+    t.integer  'group_id',                    null: false
     t.datetime 'shopping_list_sent_at'
-    t.boolean  'group_notification',    null: false
-    t.datetime 'created_at',            null: false
-    t.datetime 'updated_at',            null: false
+    t.boolean  'group_notification',          null: false
+    t.datetime 'created_at',                  null: false
+    t.datetime 'updated_at',                  null: false
     t.datetime 'date_info_sent_at'
+    t.datetime 'notified_missing_censors_at'
   end
 
   create_table 'censors', force: :cascade do |t|
@@ -454,7 +455,7 @@ ActiveRecord::Schema.define(version: 20171120190748) do
   end
 
   create_table 'news_items', force: :cascade do |t|
-    t.string   'title', limit: 64, null: false
+    t.string   'title',             limit: 64, null: false
     t.text     'body'
     t.datetime 'created_at'
     t.datetime 'updated_at'

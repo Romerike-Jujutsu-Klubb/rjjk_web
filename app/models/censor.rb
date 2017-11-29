@@ -11,6 +11,10 @@ class Censor < ApplicationRecord
     end
   end
 
+  def approved_graduates?
+    !!locked_at
+  end
+
   def approved?
     !!approved_grades_at
   end

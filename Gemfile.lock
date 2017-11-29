@@ -34,7 +34,7 @@ GIT
 
 GIT
   remote: https://github.com/jruby/activerecord-jdbc-adapter.git
-  revision: 11341f443c8129aa681cfd2151a46ed79caeefb3
+  revision: 64525956a3f28ca76e19e56c984b7020d1261dd5
   branch: rails-5
   specs:
 
@@ -224,7 +224,7 @@ GEM
     json (2.1.0)
     jwt (2.1.0)
     key_struct (0.4.2)
-    kramdown (1.16.0)
+    kramdown (1.16.1)
     lazyload-rails (0.3.1)
       nokogiri (~> 1.5)
     libv8 (3.16.14.19)
@@ -278,7 +278,7 @@ GEM
       minitest-capybara (~> 0.8)
       minitest-metadata (~> 0.6)
       minitest-rails (~> 3.0)
-    minitest-reporters (1.1.19)
+    minitest-reporters (1.1.18)
       ansi
       builder
       minitest (>= 5.0)
@@ -530,7 +530,7 @@ DEPENDENCIES
   mechanize
   medusa!
   minitest-rails-capybara
-  minitest-reporters
+  minitest-reporters (!= 1.1.19)
   mocha
   momentjs-rails
   nokogiri

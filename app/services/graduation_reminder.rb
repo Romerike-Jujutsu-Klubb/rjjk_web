@@ -28,7 +28,6 @@ class GraduationReminder
   def self.notify_groups
     Graduation.upcoming.includes(:group).references(:groups)
         .where('held_on < ?', 3.months.from_now)
-        .where('groups.from_age >= 13')
         .where('group_notification = ?', true)
         .where('date_info_sent_at IS NULL')
         .order(:id)
@@ -63,6 +62,20 @@ class GraduationReminder
     # TODO(uwe): Send to chief instructor for each group
     GraduationMailer.overdue_graduates(overdue_graduates)
         .store(Role[:'Hovedinstruktør'], tag: :overdue_graduates)
+  end
+
+  def self.notify_missing_censors
+    Graduation.upcoming.includes(:group).references(:groups)
+        .where('held_on < ?', 6.weeks.from_now)
+        .where('notified_missing_censors_at IS NULL OR notified_missing_censors_at < ?', 1.week.ago)
+        .order(:id)
+        .each do |graduation|
+      next if graduation.censors.any?
+      instructor = graduation.group.current_semester.chief_instructor
+      GraduationMailer.missing_censors(graduation, instructor)
+          .store(instructor.user_id, tag: :graduation_missing_censors)
+      graduation.update! notified_missing_censors_at: Time.current
+    end
   end
 
   def self.notify_censors
@@ -109,13 +122,14 @@ class GraduationReminder
 
   def self.notify_graduates
     Graduate.includes(graduation: :group).references(:groups)
-        .where('groups.from_age >= 13')
+        .merge(Graduation.has_examiners)
         .where('graduations.held_on BETWEEN ? AND ?',
             Date.current, GRADUATES_INVITATION_LIMIT.from_now)
         .where('confirmed_at IS NULL AND (invitation_sent_at IS NULL OR invitation_sent_at < ?)',
             1.week.ago)
         .order('graduations.held_on')
         .each do |graduate|
+      next unless graduate.graduation.censors.select(&:examiner?).all?(&:approved_graduates?) # TODO(uwe): Solve in SQL
       GraduationMailer.invite_graduate(graduate)
           .store(graduate.member.user_id, tag: :graduate_invite)
       graduate.update! invitation_sent_at: Time.current
