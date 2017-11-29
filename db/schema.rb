@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171008223759) do
+ActiveRecord::Schema.define(version: 20171120190748) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -392,11 +392,11 @@ ActiveRecord::Schema.define(version: 20171008223759) do
   end
 
   create_table 'images', force: :cascade do |t|
-    t.string   'name',         limit: 64, null: false
-    t.string   'content_type', limit: 255, null: false
-    t.binary   'content_data', null: false
-    t.integer  'user_id',      null: false
-    t.string   'description',  limit: 16
+    t.string   'name',                   limit: 64, null: false
+    t.string   'content_type',           limit: 255, null: false
+    t.binary   'content_data',           null: false
+    t.integer  'user_id',                null: false
+    t.string   'description',            limit: 16
     t.text     'story'
     t.boolean  'public'
     t.boolean  'approved'
@@ -404,6 +404,7 @@ ActiveRecord::Schema.define(version: 20171008223759) do
     t.datetime 'updated_at'
     t.integer  'width'
     t.integer  'height'
+    t.string   'google_drive_reference', limit: 33
   end
 
   create_table 'information_pages', force: :cascade do |t|
