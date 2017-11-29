@@ -30,6 +30,10 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(/Voksne.*Newbie Neuer.*5. kyu.*0.*1/m, mail.body)
   end
 
+  def test_notify_missing_censors
+    assert_mail_stored(0) { GraduationReminder.notify_missing_censors }
+  end
+
   def test_notify_groups
     assert_mail_stored(3) { GraduationReminder.notify_groups }
 

@@ -25,6 +25,15 @@ class GraduationMailer < ApplicationMailer
     mail subject: "Gradering for #{@graduation.group.name} #{@graduation.held_on}"
   end
 
+  def self.missing_censors(graduation, instructor)
+    @graduation = graduation
+    @instructor = instructor
+    @title = 'Denne graderingen mangler eksaminator'
+    @email_url = graduation_url(@graduation)
+
+    mail subject: @title, to: @instructor.email
+  end
+
   def invite_censor(censor)
     @censor = censor
     @title = "Invitasjon til å være #{@censor.role_name}"

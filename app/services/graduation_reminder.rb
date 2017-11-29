@@ -66,11 +66,11 @@ class GraduationReminder
 
   def self.notify_missing_censors
     Graduation.upcoming.includes(:group).references(:groups)
+        .merge.not(Graduation.has_examiners)
         .where('held_on < ?', 6.weeks.from_now)
         .where('notified_missing_censors_at IS NULL OR notified_missing_censors_at < ?', 1.week.ago)
         .order(:id)
         .each do |graduation|
-      next if graduation.censors.any?
       instructor = graduation.group.current_semester.chief_instructor
       GraduationMailer.missing_censors(graduation, instructor)
           .store(instructor.user_id, tag: :graduation_missing_censors)
@@ -129,7 +129,11 @@ class GraduationReminder
             1.week.ago)
         .order('graduations.held_on')
         .each do |graduate|
-      next unless graduate.graduation.censors.select(&:examiner?).all?(&:approved_graduates?) # TODO(uwe): Solve in SQL
+
+      # TODO(uwe): Solve in SQL
+      next unless graduate.graduation.censors.select(&:examiner?).all?(&:approved_graduates?)
+      # ODOT
+
       GraduationMailer.invite_graduate(graduate)
           .store(graduate.member.user_id, tag: :graduate_invite)
       graduate.update! invitation_sent_at: Time.current

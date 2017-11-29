@@ -34,7 +34,7 @@ class LoginControllerTest < ActionController::TestCase
     post :login_with_password, params: { user: { login: 'lars', password: 'atest' } }
     assert_logged_in users(:lars)
     assert_response :redirect
-    assert_equal @controller.url_for(controller: :welcome, action: :index, only_path: false),
+    assert_equal @controller.url_for(controller: :welcome, action: :index, ignore_query: false),
         @response.redirect_url
   end
 

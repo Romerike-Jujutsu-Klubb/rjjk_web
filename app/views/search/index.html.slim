@@ -15,7 +15,7 @@ h1 Søkeresultat for "#{@query}"
         .col-md
           h3 Tidligere Medlemmer
           ul
-            - @members.each do |m|
+            - @former_members.each do |m|
               li
                 => link_to m.name, m
                 | (#{m.age} år)

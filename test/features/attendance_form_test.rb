@@ -65,7 +65,7 @@ class AttendanceFormTest < FeatureTest
         new_instructor_row.all('td').map(&:text)
     assert_difference 'Attendance.count' do
       new_instructor_row.find('td:nth-of-type(2)').click
-      assert_current_path '/attendances/new', only_path: true
+      assert_current_path '/attendances/new', ignore_query: true
       select('Lars Bråten', from: 'attendance_member_id')
       click_button('Lagre')
       assert_current_path "/attendances/form/2013/10/#{groups(:panda).id}"
