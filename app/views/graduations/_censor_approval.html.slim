@@ -18,11 +18,11 @@
   - icon = :question
   - title='Ubekreftet'
 
-i.fa class="fa-#{icon}" title=title data-toggle="tooltip" data-placement="bottom"
+i.fa class="fa-#{icon}" title=title data-toggle="tooltip"
 
 - if icon == :question && censor.member == current_user.member
   .btn-group<
-    = link_to confirm_censor_path(censor),class: 'btn btn-secondary btn-sm', title: 'Jeg vil delta'
+    = link_to confirm_censor_path(censor),class: 'btn btn-secondary btn-sm', title: 'Jeg kommer!', data: {toggle: :tooltip}
       i.fa.fa-thumbs-up
-    = link_to decline_censor_path(censor),class: 'btn btn-secondary btn-sm', title: :Avslå
+    = link_to decline_censor_path(censor),class: 'btn btn-secondary btn-sm', title: :Avslå, data: {toggle: :tooltip}
       i.fa.fa-thumbs-down
