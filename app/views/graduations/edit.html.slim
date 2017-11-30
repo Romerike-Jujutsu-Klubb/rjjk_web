@@ -27,7 +27,7 @@ h2 Gradering #{@graduation.group.name} #{@graduation.held_on}
 - elsif @approval && Date.current > invite_date - 1.week
   - if @graduation.graduates.empty?
     .alert.alert-warning Det er på tide å <a href="#graduates_tab">registrere kandidater</a>.
-  - elsif !@graduation.locked?
+  - elsif @graduation.held_on >= Date.current && !@graduation.locked?
     .alert.alert-warning Det er på tide å sende ut invitasjoner til kandidatene.
 
 ul.nav.nav-tabs
