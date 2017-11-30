@@ -30,8 +30,12 @@ class Rank < ApplicationRecord
         .inject(0.0) { |s, r| s + r.standard_months.to_f } / 12.0).to_i
   end
 
+  def expected_attendances
+    standard_months * 20 / 3
+  end
+
   def minimum_attendances
-    group.trainings_in_period(standard_months.months.ago.to_date..Date.current).floor(-1) / 2
+    expected_attendances / 2
   end
 
   def label

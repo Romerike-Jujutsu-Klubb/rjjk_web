@@ -50,7 +50,7 @@ class Graduate < ApplicationRecord
   end
 
   def minimum_attendances
-    ats = [rank.minimum_attendances * registration_percentage]
+    ats = [rank.minimum_attendances]
     ats << (registered_trainings * 0.5) if rank.minimum_age <= 12
     ats.min.round
   end

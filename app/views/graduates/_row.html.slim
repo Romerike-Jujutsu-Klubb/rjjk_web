@@ -92,9 +92,9 @@ tr id="graduate_#{graduate.id}"
           => current_graduate ? 'forrige gradering' : 'innmelding'
           | (#{graduate.training_start_date}).
           br
-          ' Minimum er #{minimum_attendances}
-          - if minimum_attendances <= graduate.registered_trainings
-            ' av #{graduate.registered_trainings}
+          ' Forventet er #{minimum_attendances}-#{next_rank.expected_attendances}
+          /- if minimum_attendances <= graduate.registered_trainings
+          /  ' av #{graduate.registered_trainings}
           | registrerte treninger.
 
         - if graduate.member.left_on && graduate.member.left_on < graduate.graduation.held_on
