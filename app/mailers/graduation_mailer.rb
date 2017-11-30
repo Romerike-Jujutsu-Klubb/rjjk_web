@@ -22,8 +22,12 @@ class GraduationMailer < ApplicationMailer
   def group_date_info(graduation, member)
     @graduation = graduation
     @member = member
+    sender = graduate.graduation.examiner_emails
+    if sender.empty?
+      sender = graduation.group.current_semester.chief_instructor&.member&.emails || Role[:Hovedinstruktør]&.emails || noreply_address
+    end
     mail subject: "Gradering for #{@graduation.group.name} #{@graduation.held_on}",
-        from: graduate.graduation.examiner_emails
+        from: sender
   end
 
   def missing_censors(graduation, instructor)
