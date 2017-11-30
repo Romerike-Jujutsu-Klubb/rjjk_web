@@ -16,7 +16,7 @@
   - title="Bekreftet"
 - elsif censor.requested_at
   - icon = :question
-  - title="Invitert #{censor.requested_at.localtime.to_s(:db)}"
+  - title="Invitert #{censor.requested_at.to_date}"
 - else
   - icon = :question
   - title='Ubekreftet'
