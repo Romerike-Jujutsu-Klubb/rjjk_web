@@ -1,5 +1,5 @@
 - @content_width = 1024
-- invite_date = @approval.graduation.held_on - GraduationReminder::GRADUATES_INVITATION_LIMIT
+- invite_date = [@graduation.held_on - GraduationReminder::GRADUATES_INVITATION_LIMIT, *@graduation.censors.map(&:locked_at).compact.map(&:to_date)].max
 
 .btn-toolbar.float-right
   - if @graduation.graduates.empty?
@@ -22,8 +22,13 @@
 
 h2 Gradering #{@graduation.group.name} #{@graduation.held_on}
 
-- if Date.current > invite_date - 1.week && !@graduation.locked?
-  .alert.alert-warning Det er på tide å sende ut invitasjoner til kandidatene.
+- if Date.current > @graduation.held_on - GraduationReminder::EXAMINER_REGISTRATION_LIMIT && @graduation.censors.examiners.empty?
+  .alert.alert-warning Det er på tide å registrere <a href="#censors_tab">eksaminator og sensorer</a>.
+- elsif @approval && Date.current > invite_date - 1.week
+  - if @graduation.graduates.empty?
+    .alert.alert-warning Det er på tide å <a href="#graduates_tab">registrere kandidater</a>.
+  - elsif !@graduation.locked?
+    .alert.alert-warning Det er på tide å sende ut invitasjoner til kandidatene.
 
 ul.nav.nav-tabs
   li.nav-item: a.nav-link.active data-target='#graduates' data-toggle='tab' Deltakere

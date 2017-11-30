@@ -3,6 +3,7 @@
 require 'graduation_mailer'
 
 class GraduationReminder
+  EXAMINER_REGISTRATION_LIMIT = 6.weeks
   GRADUATES_INVITATION_LIMIT = 3.weeks
 
   def self.notify_missing_graduations
@@ -67,7 +68,7 @@ class GraduationReminder
   def self.notify_missing_censors
     Graduation.upcoming.includes(:group).references(:groups)
         .where.not(Graduation.has_examiners.where_values_hash)
-        .where('held_on < ?', 6.weeks.from_now)
+        .where('held_on < ?', EXAMINER_REGISTRATION_LIMIT.from_now)
         .where('notified_missing_censors_at IS NULL OR notified_missing_censors_at < ?', 1.week.ago)
         .order(:id)
         .each do |graduation|
