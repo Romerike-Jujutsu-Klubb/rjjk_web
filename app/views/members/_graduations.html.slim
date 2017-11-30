@@ -15,7 +15,7 @@ table.table.table-striped.table-sm
         td align="center"
           => graduate.training_duration
           - if graduate.training_duration != graduate.rank.standard_months
-            ' (<span title="Normert tid i måneder"><%= graduate.rank.standard_months %></span>)
+            ' (<span title="Normert tid i måneder">#{graduate.rank.standard_months}</span>)
           ' mnd
           | (#{graduate.training_period.to_s.gsub('..', ' - ')})
         td.text-center
