@@ -56,8 +56,9 @@ tr id="graduate_#{graduate.id}"
         - if next_rank && graduate.rank != next_rank
           - if current_graduate
             br
-            | Har #{current_graduate.rank.name} fra
+            ' Har #{current_graduate.rank.name} fra
             = link_to %Q{<font color="red">#{current_graduate.graduation.held_on}</font>}.html_safe, :controller => :graduations, :action => :index, :id => current_graduate.graduation.id
+            | .
           - else
             br
             | Har ingen grad fra før.
