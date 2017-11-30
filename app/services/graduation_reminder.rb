@@ -81,7 +81,7 @@ class GraduationReminder
 
   def self.notify_censors
     Censor.includes(:graduation, :member).references(:graduations)
-        .where('censors.created_at <= ?', 1.day.ago)
+        .where('censors.created_at <= ?', 1.hour.ago)
         .where('graduations.held_on >= ?', Date.current)
         .where(confirmed_at: nil)
         .where('requested_at IS NULL OR requested_at < ?', 1.week.ago)
