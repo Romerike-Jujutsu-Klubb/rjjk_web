@@ -12,18 +12,19 @@ ul
   li = link_to 'Beklager, jeg kommer ikke.', @decline_url
 
 - attended = @graduate.member.attendances_since_graduation.count
-- limit = @graduate.member.next_rank.minimum_attendances
+- limit = @graduate.minimum_attendances
 - needed = limit - attended
 - current_graduate = @graduate.member.current_graduate(@graduate.graduation.martial_art, @graduate.graduation.held_on)
+- remaining = @graduate.graduation.group.trainings_in_period(Date.current..@graduate.graduation.held_on)
 
 p
-  ' Minstekrav til gradering er #{limit} treninger.
+  ' Krav til gradering er #{limit}-#{@graduate.expected_attendances} treninger.
   ' Vi har registrert #{attended} trening#{'er' if attended != 1} på deg siden
   - if current_graduate
     ' gradering #{current_graduate.graduation.held_on}.
   - else
     ' du startet.
-  - if needed > 0
+  - if needed > 0 && remaining >= needed
     ' Du trenger altså #{needed} treninger til for å oppfylle kravet til gradering.
-    ' Det er #{@graduate.graduation.group.trainings_in_period(Date.current..@graduate.graduation.held_on)}
+    ' Det er #{remaining}
     ' treninger frem til graderingen.  Stå på!
