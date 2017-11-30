@@ -30,7 +30,7 @@ $().ready(function () {
         if (!tab.html()) {
             var target = tab.attr('data-target');
             if (target) {
-                tab.html('<div class="text-center" style="padding: 3em"><i class="fa fa-spinner fa-spin fa-5x mb-3"/><br/>Et øyeblikk...</div>');
+                tab.html('<div class="text-center" style="padding: 3em"><i class="fa fa-circle-o-notch fa-spin fa-5x mb-3"/><br/>Et øyeblikk...</div>');
                 tab.load(target, function (responseText, textStatus, req) {
                     if (textStatus == "error") {
                         tab.html('<div class="text-center text-danger" style="padding: 3em">Hoppsann!  Der gikk det galt.</div>');
