@@ -40,20 +40,28 @@ class GraduationsController < ApplicationController
         .select { |c| c.member == current_user.member }
         .sort_by { |c| c.approved_grades_at ? 0 : 1 }.last
     return unless admin_or_censor_required(@graduation, @approval)
-    @groups = Group.order(:from_age).includes(members: %i[attendances nkf_member]).to_a
-    @groups.unshift(@groups.delete(@graduation.group))
-    @graduate = Graduate.new(graduation_id: @graduation.id)
     @censor = Censor.new graduation_id: @graduation.id
     @ranks = Rank.where(martial_art_id: @graduation.group.martial_art_id)
         .order(:position).to_a
 
+    @instructors = Member.instructors(@graduation.held_on).to_a.sort_by(&:current_rank).reverse -
+        @graduation.censors.map(&:member)
+  end
+
+  def graduates_tab
+    @graduation = Graduation.for_edit.find(params[:id])
+    load_groups
     included_members = @graduation.graduates.map(&:member)
     @excluded_members = @groups
         .map { |g| [g, g.members.active(@graduation.held_on).sort_by(&:name) - included_members] }
         .select { |_g, members| members.any? }
+    @graduate = Graduate.new(graduation_id: @graduation.id)
+    render partial: 'graduates_tab'
+  end
 
-    @instructors = Member.instructors(@graduation.held_on).to_a.sort_by(&:current_rank).reverse -
-        @graduation.censors.map(&:member)
+  private def load_groups
+    @groups = Group.order(:from_age).includes(members: %i[attendances nkf_member]).to_a
+    @groups.unshift(@groups.delete(@graduation.group))
   end
 
   def update

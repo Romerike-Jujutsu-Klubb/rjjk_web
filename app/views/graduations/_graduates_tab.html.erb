@@ -22,12 +22,12 @@
       </tbody>
     </table>
 <% else %>
-    <p>Det er ikke lagt til noen deltakere på denne graderingen enda.
+    <p class="mt-3">Det er ikke lagt til noen deltakere på denne graderingen enda.
       Det er vanlig å legge til deltakerne 4-5 uker før gradering.</p>
 <% end %>
 
 <% unless @graduation.approved? %>
-    <div class="row">
+    <div class="row mt-3">
       <div class="col-md-6">
         <%= form_for @graduation,
             url: with_detour(controller: :graduations, action: :add_group, id: @graduation.id) do |f| %>
@@ -43,15 +43,15 @@
 
       <div class="col-md-6">
         <%= form_for @graduate, url: with_detour(graduates_path),
-            html: {method: :post} do |f| %>
+            html: { method: :post } do |f| %>
             <%= f.hidden_field :graduation_id %>
             <div class="input-group">
               <%= f.select :member_id,
                   grouped_options_for_select(@excluded_members.map { |g, members| [g.name, members.map { |m| ["#{m.name} #{m.age(@graduation.held_on)} år", m.id] }] }),
-                  {prompt: 'Velg deltaker'}, class: 'form-control', onchange: 'form.submit()' %>
+                  { prompt: 'Velg deltaker' }, class: 'form-control', onchange: 'form.submit()' %>
               <span class="input-group-btn">
-      <%= f.submit 'Legg til', class: 'btn btn-secondary' %>
-    </span>
+                <%= f.submit 'Legg til', class: 'btn btn-secondary' %>
+              </span>
             </div>
         <% end %>
       </div>

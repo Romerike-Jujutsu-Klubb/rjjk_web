@@ -1,6 +1,5 @@
-br
 = bootstrap_form_for @graduation do |f|
-  .row
+  .row.mt-3
     .col-md-4
       = f.text_field :held_on, size: 18, class: 'date form-control'
     - if @graduation.held_on

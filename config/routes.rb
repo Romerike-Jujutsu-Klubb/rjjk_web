@@ -93,6 +93,7 @@ Rails.application.routes.draw do
       get :censor_form
       get :censor_form_pdf
       get :certificates
+      get :graduates_tab
       post :lock
     end
   end

@@ -71,7 +71,7 @@ class CensorsController < ApplicationController
     return unless admin_or_censor_required(@censor.graduation)
     if @censor.update(confirmed_at: Time.zone.now, declined: false)
       flash[:notice] = 'Din deltakelse på gradering er bekreftet.'
-      redirect_to action: :show, id: @censor
+      redirect_to edit_graduation_path(@censor.graduation, anchor: :censors_tab)
     else
       render action: :edit
     end

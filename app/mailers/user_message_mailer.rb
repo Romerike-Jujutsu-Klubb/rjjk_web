@@ -4,9 +4,14 @@ class UserMessageMailer < ApplicationMailer
   def send_message(um)
     @title = um.title || um.subject
     @user_email = um.user_email || um.user.email
-    @email_url = { only_path: false, email: @user_email && Base64.encode64(@user_email) }
-        .merge(um.email_url || { controller: :user_messages, action: :show,
-                                 id: um.id, key: um.key })
+    @email_url =
+        if um.email_url.is_a?(String)
+          um.email_url
+        else
+          { only_path: false, email: @user_email && Base64.encode64(@user_email) }
+              .merge(um.email_url || { controller: :user_messages, action: :show,
+                                       id: um.id, key: um.key })
+        end
     @timestamp = um.message_timestamp
 
     url_key = ERB::Util.url_encode(um.key)
@@ -42,9 +47,10 @@ class UserMessageMailer < ApplicationMailer
   end
 
   def add_security_key(body, url_key)
-    body.gsub!(%r{href="([^/]*)://([^/]*)([^"?]*)(?:\?([^"]+))?"}) do
+    body.gsub!(%r{href="([^/]*)://([^/]*)([^"?#]*)(?:\?([^"#]+))?(\#[^"]+)?"}) do
       params = "#{"#{Regexp.last_match(4)}&" if Regexp.last_match(4)}key=#{url_key}"
-      %(href="#{Regexp.last_match(1)}://#{Regexp.last_match(2)}#{Regexp.last_match(3)}?#{params}")
+      %(href="#{Regexp.last_match(1)}://#{Regexp.last_match(2)}#{Regexp.last_match(3)}?#{params}) +
+          %(#{Regexp.last_match(5)}")
     end
   end
 end

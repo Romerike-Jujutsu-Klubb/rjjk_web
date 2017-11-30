@@ -1,10 +1,16 @@
 function show_tab() {
     if (window.location.hash) {
-        $('a[data-target="' + window.location.hash.slice(0, -4) + '"]').tab('show');
+        var selected_tab = $('a[data-target="' + window.location.hash.slice(0, -4) + '"]');
+        if (selected_tab.hasClass('active')) {
+            selected_tab.trigger('show.bs.tab');
+        } else {
+            selected_tab.tab('show');
+        }
     } else {
         default_tab = $('a.nav-link.active[data-toggle="tab"]');
         if (default_tab[0]) {
             window.history.replaceState({}, window.title, window.location + default_tab.attr("data-target") + '_tab');
+            default_tab.trigger('show.bs.tab');
         }
     }
 };
@@ -24,7 +30,7 @@ $().ready(function () {
         if (!tab.html()) {
             var target = tab.attr('data-target');
             if (target) {
-                tab.html('<div class="text-center" style="padding: 3em">Loading...</div>');
+                tab.html('<div class="text-center" style="padding: 3em"><i class="fa fa-spinner fa-spin fa-5x mb-3"/><br/>Et øyeblikk...</div>');
                 tab.load(target);
             }
         }

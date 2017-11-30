@@ -30,10 +30,9 @@ ul.nav.nav-tabs
   li.nav-item: a.nav-link data-target='#form' data-toggle='tab' Dato / Gruppe
 
 .tab-content
-  #graduates.tab-pane.active
-    =render 'graduates_tab' if @graduation.held_on
+  #graduates.tab-pane.active data-target=graduates_tab_graduation_path(@graduation)
   #censors.tab-pane
-    = render 'censors_tab' if @graduation.held_on
+    = render 'censors_tab'
   #shopping-list.tab-pane
     = render 'shopping_list'
   #forms.tab-pane

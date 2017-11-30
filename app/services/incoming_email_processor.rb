@@ -34,7 +34,8 @@ class IncomingEmailProcessor
 
       sender = email.header['X-Envelope-From'].try(:to_s) || email.from[0]
       logger.debug "sender: #{sender.inspect}"
-      original_recipients = email.header['X-Envelope-To'].try(:to_s).try(:split, ', ') || email.to
+      original_recipients = email.header['X-Envelope-To'].try(:to_s).try(:split, ', ') ||
+          email.to || []
       logger.debug "original_recipients: #{original_recipients.inspect}"
       tags = []
       if ENV_STR
