@@ -1,4 +1,5 @@
 - @content_width = 1024
+- invite_date = @approval.graduation.held_on - GraduationReminder::GRADUATES_INVITATION_LIMIT
 
 .btn-toolbar.float-right
   - if @graduation.graduates.empty?
@@ -16,12 +17,13 @@
     - elsif @approval.locked_at.nil?
       = link_to 'Send innkalling', lock_graduation_path(@graduation), class: 'btn btn-primary', method: :post
     - else
-      - invite_date = @approval.graduation.held_on - GraduationReminder::GRADUATES_INVITATION_LIMIT
       .btn.btn-success Innkalling #{invite_date > Time.current ? :sendes : :sendt} #{invite_date}
   = link_to 'Til listen', {action: :index}, class: 'btn btn-secondary ml-2'
 
-
 h2 Gradering #{@graduation.group.name} #{@graduation.held_on}
+
+- if Date.current > invite_date - 1.week && !@graduation.locked?
+  .alert.alert-warning Det er på tide å sende ut invitasjoner.
 
 ul.nav.nav-tabs
   li.nav-item: a.nav-link.active data-target='#graduates' data-toggle='tab' Deltakere
