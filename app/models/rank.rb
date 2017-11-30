@@ -31,7 +31,7 @@ class Rank < ApplicationRecord
   end
 
   def expected_attendances
-    standard_months * 20 / 3
+    standard_months * (group.from_age < 10 ? 20 : 40) / 6
   end
 
   def minimum_attendances
