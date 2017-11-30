@@ -87,7 +87,7 @@ class IncomingEmailProcessor
           postponed = true
         end
       else
-        logger.error "No recipients found."
+        logger.error 'No recipients found.'
         postponed = true
       end
 

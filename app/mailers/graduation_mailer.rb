@@ -22,7 +22,8 @@ class GraduationMailer < ApplicationMailer
   def group_date_info(graduation, member)
     @graduation = graduation
     @member = member
-    mail subject: "Gradering for #{@graduation.group.name} #{@graduation.held_on}"
+    mail subject: "Gradering for #{@graduation.group.name} #{@graduation.held_on}",
+        from: graduate.graduation.examiner_emails
   end
 
   def missing_censors(graduation, instructor)
@@ -58,7 +59,7 @@ class GraduationMailer < ApplicationMailer
     # @email_url = { controller: :censors, action: :show, id: @censor.id }
     @confirm_url = confirm_graduate_url(@graduate)
     @decline_url = decline_graduate_url(@graduate)
-    mail to: graduate.member.email, subject: @title
+    mail to: graduate.member.email, subject: @title, from: graduate.graduation.examiner_emails
   end
 
   def send_shopping_list(graduation, appointment)

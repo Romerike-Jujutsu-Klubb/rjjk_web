@@ -14,14 +14,15 @@
         .btn.btn-success Godkjent
       - else
         .btn.btn-success Du har godkjent
-    - elsif @approval.locked_at.nil?
-      = link_to 'Send innkalling', lock_graduation_path(@graduation), class: 'btn btn-primary', method: :post
-    - elsif !@graduation.locked?
-      .btn.btn-warning
-        ' Utsending av innkalling venter på
-        b = @graduation.censors.reject(&:locked_at).select(&:examiner?).map(&:member).map(&:name).join(', ')
-    - else
-      .btn.btn-success Innkalling #{invite_date > Time.current ? :sendes : :sendt} #{invite_date}
+    - elsif @approval.examiner?
+      - if @approval.locked_at.nil?
+        = link_to 'Send innkalling', lock_graduation_path(@graduation), class: 'btn btn-primary', method: :post
+      - elsif !@graduation.locked?
+        .btn.btn-warning
+          ' Utsending av innkalling venter på
+          b = @graduation.censors.reject(&:locked_at).select(&:examiner?).map(&:member).map(&:name).join(', ')
+      - else
+        .btn.btn-success Innkalling #{invite_date > Time.current ? :sendes : :sendt} #{invite_date}
   = link_to 'Til listen', {action: :index}, class: 'btn btn-secondary ml-2'
 
 h2 Gradering #{@graduation.group.name} #{@graduation.held_on}

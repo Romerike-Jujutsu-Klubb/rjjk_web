@@ -116,4 +116,8 @@ class Graduation < ApplicationRecord
     non_declined_censors = censors.reject(&:declined?)
     passed? && non_declined_censors.any? && non_declined_censors.all?(&:approved?)
   end
+
+  def examiner_emails
+    censors.select(&:examiner?).map(&:member).map(&:emails).flatten.uniq
+  end
 end
