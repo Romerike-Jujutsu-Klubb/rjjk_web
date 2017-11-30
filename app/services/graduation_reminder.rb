@@ -122,16 +122,16 @@ class GraduationReminder
   end
 
   def self.notify_graduates
-    Graduate.includes(graduation: :group).references(:groups)
-        .merge(Graduation.has_examiners)
+    Graduate.includes(graduation: [:censors,:group]).references(:groups)
         .where('graduations.held_on BETWEEN ? AND ?',
             Date.current, GRADUATES_INVITATION_LIMIT.from_now)
-        .where('confirmed_at IS NULL AND (invitation_sent_at IS NULL OR invitation_sent_at < ?)',
+        .where('graduates.confirmed_at IS NULL AND (graduates.invitation_sent_at IS NULL OR graduates.invitation_sent_at < ?)',
             1.week.ago)
         .order('graduations.held_on')
         .each do |graduate|
 
       # TODO(uwe): Solve in SQL
+      next unless graduate.graduation.censors.select(&:examiner?).any?
       next unless graduate.graduation.censors.select(&:examiner?).all?(&:approved_graduates?)
       # ODOT
 
