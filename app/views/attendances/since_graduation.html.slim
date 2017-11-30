@@ -1,0 +1,17 @@
+h2 Oppmøte for #{@member.name}
+h3
+  ' Fra #{@graduate ? "gradering (#{@graduate.graduation.held_on})" : "innmelding (#{@member.joined_on})"}
+  | til #{@date ? @date : 'i dag'}
+
+table.table.table-sm
+  tr
+    th Dato
+    th Gruppe
+
+  - for attendance in @attendances
+    tr
+      td =attendance.date
+      td =attendance.group_schedule.group.name
+  tr
+    th Totalt:
+    th = @attendances.size

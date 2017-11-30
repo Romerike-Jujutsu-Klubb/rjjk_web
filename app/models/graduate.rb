@@ -49,11 +49,15 @@ class Graduate < ApplicationRecord
     registered_attendances / registration_percentage
   end
 
-  def minimum_attendances
-    ats = [rank.minimum_attendances]
-    ats << ((registered_trainings * 0.5) * ((graduation.held_on - training_start_date) / (Date.current - training_start_date))) if rank.minimum_age <= 12
+  def expected_attendances
+    ats = [rank.expected_attendances]
+    ats << ((registered_trainings) * ((graduation.held_on - training_start_date).to_f / (Date.current - training_start_date))) if rank.minimum_age <= 12
     ats.min.round
   end
+
+  def minimum_attendances
+    (expected_attendances / 2.0).ceil
+    end
 
   def current_rank_age
     member.current_rank_age(graduation.group.martial_art, graduation.held_on)

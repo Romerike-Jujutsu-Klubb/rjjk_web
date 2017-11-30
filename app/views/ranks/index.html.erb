@@ -31,7 +31,7 @@
           <% sorted_groups.each.with_index do |group, i| %>
               <div class="tab-pane <%= 'active' if i == 0 %>" id="<%= ma.name.gsub(/\s+/, '') %>_<%= group.name.gsub(/\s+/, '') %>">
 
-                <table class="table table-condensed">
+                <table class="table table-sm">
                   <tr>
                     <th>Posisjon</th>
                     <th align="left">Navn</th>

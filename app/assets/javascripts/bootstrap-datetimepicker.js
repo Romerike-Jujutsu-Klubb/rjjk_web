@@ -205,22 +205,22 @@
 
                 return [
                     $('<div>').addClass('datepicker-days')
-                        .append($('<table>').addClass('table-condensed')
+                        .append($('<table>').addClass('table-sm')
                             .append(headTemplate)
                             .append($('<tbody>'))
                             ),
                     $('<div>').addClass('datepicker-months')
-                        .append($('<table>').addClass('table-condensed')
+                        .append($('<table>').addClass('table-sm')
                             .append(headTemplate.clone())
                             .append(contTemplate.clone())
                             ),
                     $('<div>').addClass('datepicker-years')
-                        .append($('<table>').addClass('table-condensed')
+                        .append($('<table>').addClass('table-sm')
                             .append(headTemplate.clone())
                             .append(contTemplate.clone())
                             ),
                     $('<div>').addClass('datepicker-decades')
-                        .append($('<table>').addClass('table-condensed')
+                        .append($('<table>').addClass('table-sm')
                             .append(headTemplate.clone())
                             .append(contTemplate.clone())
                             )
@@ -279,17 +279,17 @@
                 }
 
                 return $('<div>').addClass('timepicker-picker')
-                    .append($('<table>').addClass('table-condensed')
+                    .append($('<table>').addClass('table-sm')
                         .append([topRow, middleRow, bottomRow]));
             },
 
             getTimePickerTemplate = function () {
                 var hoursView = $('<div>').addClass('timepicker-hours')
-                        .append($('<table>').addClass('table-condensed')),
+                        .append($('<table>').addClass('table-sm')),
                     minutesView = $('<div>').addClass('timepicker-minutes')
-                        .append($('<table>').addClass('table-condensed')),
+                        .append($('<table>').addClass('table-sm')),
                     secondsView = $('<div>').addClass('timepicker-seconds')
-                        .append($('<table>').addClass('table-condensed')),
+                        .append($('<table>').addClass('table-sm')),
                     ret = [getTimePickerMainTemplate()];
 
                 if (isEnabled('h')) {
@@ -319,7 +319,7 @@
                 if (options.showClose) {
                     row.push($('<td>').append($('<a>').attr({ 'data-action': 'close', 'title': options.tooltips.close }).append($('<span>').addClass(options.icons.close))));
                 }
-                return $('<table>').addClass('table-condensed').append($('<tbody>').append($('<tr>').append(row)));
+                return $('<table>').addClass('table-sm').append($('<tbody>').append($('<tr>').append(row)));
             },
 
             getTemplate = function () {
