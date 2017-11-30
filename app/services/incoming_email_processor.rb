@@ -86,6 +86,9 @@ class IncomingEmailProcessor
           logger.error e.backtrace.join("\n")
           postponed = true
         end
+      else
+        logger.error "No recipients found."
+        postponed = true
       end
 
       if sent
