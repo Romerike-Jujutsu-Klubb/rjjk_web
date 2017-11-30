@@ -4,10 +4,10 @@ table.table
       th Belte
       th Antall
   tbody
-    - @graduation.graduates.sort_by(&:rank).group_by{|gr| gr.rank.colour}.each do |colour, graduates|
+    - @graduation.graduates.select { |g| g.member.current_rank&.colour != g.rank.colour }.sort_by(&:rank).group_by { |gr| gr.rank.colour }.each do |colour, graduates|
       tr
-        th =colour
-        td =graduates.size
+        th = colour
+        td = graduates.size
 
 - if @graduation.shopping_list_sent_at
   h4 Handleliste ble sendt #{@graduation.shopping_list_sent_at.to_date}.
