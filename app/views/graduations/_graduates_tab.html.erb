@@ -57,3 +57,9 @@
       </div>
     </div>
 <% end %>
+
+<% if request.xhr? %>
+  <%= javascript_tag do %>
+        $('[data-toggle="tooltip"]').tooltip();
+  <% end %>
+<% end %>

@@ -8,6 +8,9 @@
 - elsif censor.approval_requested_at
   - icon = :question
   - title="Godkjenning forespurt #{censor.approval_requested_at.localtime.to_s(:db)}"
+- elsif censor.locked_at
+  - icon = :check
+  - title="Bekreftet kandidater"
 - elsif censor.confirmed_at
   - icon = :check
   - title="Bekreftet"
