@@ -122,7 +122,7 @@ class GraduationReminder
   end
 
   def self.notify_graduates
-    Graduate.includes(graduation: [:censors,:group]).references(:groups)
+    Graduate.includes(graduation: %i[censors group]).references(:groups)
         .where('graduations.held_on BETWEEN ? AND ?',
             Date.current, GRADUATES_INVITATION_LIMIT.from_now)
         .where('graduates.confirmed_at IS NULL AND (graduates.invitation_sent_at IS NULL OR graduates.invitation_sent_at < ?)',
