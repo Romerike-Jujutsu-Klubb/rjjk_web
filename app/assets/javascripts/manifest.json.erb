@@ -1,7 +1,8 @@
 <% icon_sizes = Rails.configuration.serviceworker.icon_sizes %>
+<% suffix = (" #{Rails.env.upcase}" unless Rails.env.production?) %>
 {
-  "name": "Romerike Jujutsu Klubb",
-  "short_name": "RJJK",
+  "name": "Romerike Jujutsu Klubb<%=suffix%>",
+  "short_name": "RJJK<%=suffix%>",
   "start_url": "/",
   "icons": [
   <% icon_sizes.each.with_index do |dim, i| %>
@@ -13,7 +14,7 @@
   <% end %>
   ],
   "theme_color": "#000000",
-  "background_color": "#FFFFFF",
-  "display": "fullscreen",
-  "orientation": "portrait"
+  "background_color": "#F7F7F7"
+//  "display": "fullscreen",
+//  "orientation": "portrait"
 }
