@@ -1,0 +1,29 @@
+= link_to new_election_path, class: 'btn btn-primary float-right'
+  i.fa.fa-plus>
+  | Registrer nytt valg
+
+h1 Styreverv
+h6 = AnnualMeeting.board_emails.join(', ')
+
+ul#myTab.nav.nav-tabs role="tablist"
+  - @meetings.each.with_index do |(meeting, elections), i|
+    li.nav-item: a.nav-link id="am_#{meeting.id}_tb" class=(:active if i == 0) data-toggle="tab" data-target="#am_#{meeting.id}" role="tab" aria-controls="am_#{meeting.start_at.year}_tb" aria-selected="true" = meeting.start_at.year
+#myTabContent.tab-content
+  - @meetings.each.with_index do |(meeting, elections), i|
+    .tab-pane.fade.show id="am_#{meeting.id}" class=(:active if i == 0) role="tabpanel" aria-labelledby="am_#{meeting.id}_tb"
+      - withdrawn = elections.any?(&:resigned_on)
+
+      table.table
+        tr
+          th Rolle
+          th Medlem/Foresatt
+          - if withdrawn
+            th Trukket
+          th
+        - elections.each do |election|
+          tr
+            td = election.role.name
+            td = detour_to election.elected_name, edit_election_path(election)
+            - if withdrawn
+              td = election.resigned_on
+            td = link_to '', election, method: :delete, data: { confirm: 'Are you sure?' }, class: 'fa fa-trash'
