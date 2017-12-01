@@ -28,4 +28,12 @@ class AnnualMeeting < ApplicationRecord
     elections.includes(:role).references(:roles)
         .where('roles.years_on_the_board IS NOT NULL').to_a.map(&:member)
   end
+
+  def self.board_emails
+    board_contacts.map { |c| c[:email] }
+  end
+
+  def self.board_contacts
+    [*current_board, Role[:Hovedinstruktør, return_record: true]].map(&:elected_contact)
+  end
 end

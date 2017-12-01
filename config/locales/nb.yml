@@ -1,6 +1,8 @@
 nb:
   activerecord:
     attributes:
+      annual_meeting:
+        start_at: Dato og tid
       appointment:
         from: Fra
         guardian_index: Foresatt

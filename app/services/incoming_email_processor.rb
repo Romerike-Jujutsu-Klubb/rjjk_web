@@ -8,8 +8,7 @@ class IncomingEmailProcessor
     materialforvalter: { name: 'Tommy Musaus', email: 'tommy.musaus@hellvikhus.no' },
     medlem: { name: 'Svein Robert Rolijordet', email: 'srr@resvero.com' },
     post: { name: 'Svein Robert Rolijordet', email: 'srr@resvero.com' },
-    styret: [*AnnualMeeting.current_board, Role[:Hovedinstruktør, return_record: true]]
-        .map(&:elected_contact),
+    styret: AnnualMeeting.board_contacts,
     test: { name: 'don Valentin', email: 'donv@kubosch.no' },
     web: { name: 'Uwe Kubosch', email: 'uwe@kubosch.no' },
   }.freeze

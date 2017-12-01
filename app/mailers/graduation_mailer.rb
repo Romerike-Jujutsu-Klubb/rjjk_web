@@ -22,7 +22,7 @@ class GraduationMailer < ApplicationMailer
   def group_date_info(graduation, member)
     @graduation = graduation
     @member = member
-    sender = graduate.graduation.examiner_emails
+    sender = graduation.examiner_emails
     if sender.empty?
       sender = graduation.group.current_semester.chief_instructor&.member&.emails ||
           Role[:Hovedinstruktør]&.emails || noreply_address

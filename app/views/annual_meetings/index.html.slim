@@ -1,0 +1,22 @@
+.float-right = link_to new_annual_meeting_path, class: 'btn btn-primary'
+  i.fa.fa-plus>
+  | Registrer nytt årsmøte
+
+h1 Listing annual_meetings
+
+table.table
+  tr
+    th Start at
+    th Invitation
+    th Public record
+    th
+    th
+    th
+
+  - @annual_meetings.each do |annual_meeting|
+    tr
+      td = annual_meeting.start_at.strftime('%F %R')
+      td = annual_meeting.invitation_sent_at
+      td = annual_meeting.public_record_updated_at
+      td = link_to 'Show', annual_meeting
+      td = link_to 'Destroy', annual_meeting, method: :delete, data: { confirm: 'Are you sure?' }

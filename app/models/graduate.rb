@@ -61,7 +61,7 @@ class Graduate < ApplicationRecord
 
   def minimum_attendances
     (expected_attendances / 2.0).ceil
-    end
+  end
 
   def current_rank_age
     member.current_rank_age(graduation.group.martial_art, graduation.held_on)

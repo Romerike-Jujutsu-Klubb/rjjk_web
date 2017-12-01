@@ -1,7 +1,7 @@
 <%= link_to 'Registrer nytt valg', new_election_path, class: 'btn btn-primary float-right' %>
 
 <h1>Styreverv</h1>
-
+<h4><%=AnnualMeeting.board_emails.join(', ')%></h4>
 <% @meetings.each do |meeting, elections| %>
 
     <h2><%= detour_to meeting.start_at.year, meeting %></h2>
