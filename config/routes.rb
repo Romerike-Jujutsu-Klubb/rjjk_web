@@ -105,6 +105,9 @@ Rails.application.routes.draw do
       get :yaml
     end
   end
+
+  get 'icon/:width' => 'icons#inline'
+
   resources :images do
     collection do
       get :gallery

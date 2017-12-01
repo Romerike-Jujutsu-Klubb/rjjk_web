@@ -19,6 +19,7 @@
 //= require fileinput-fa-theme
 //= require highcharts
 //= require chartkick
+//= require serviceworker-companion
 
 // Switch to Bootstrap modal
 NProgress.configure({showSpinner: false,  ease: 'ease',  speed: 500});

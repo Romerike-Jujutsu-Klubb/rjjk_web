@@ -79,6 +79,7 @@ gem 'schema_plus_foreign_keys', github: 'SchemaPlus/schema_plus_foreign_keys',
 # EMXIF
 
 # gem 'script_relocator' # TODO(uwe): Messes up the design.  Why?!
+gem 'serviceworker-rails'
 gem 'simple_drilldown'
 gem 'simple_workflow'
 gem 'slim-rails'

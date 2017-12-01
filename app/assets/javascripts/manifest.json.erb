@@ -1,0 +1,19 @@
+<% icon_sizes = Rails.configuration.serviceworker.icon_sizes %>
+{
+  "name": "Romerike Jujutsu Klubb",
+  "short_name": "RJJK",
+  "start_url": "/",
+  "icons": [
+  <% icon_sizes.each.with_index do |dim, i| %>
+    {
+      "src": "<%= "/icon/#{dim}.png" %>",
+      "sizes": "<%= dim %>x<%= dim %>",
+      "type": "image/png"
+    }<%= i == (icon_sizes.length - 1) ? '' : ',' %>
+  <% end %>
+  ],
+  "theme_color": "#000000",
+  "background_color": "#FFFFFF",
+  "display": "fullscreen",
+  "orientation": "portrait"
+}
