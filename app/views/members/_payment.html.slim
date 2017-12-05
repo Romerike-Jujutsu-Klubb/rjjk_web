@@ -1,0 +1,28 @@
+= bootstrap_form_for @member do |f|
+  .row.mt-3
+    .col-6
+      = f.text_field :joined_on, class: 'date'
+    .form-group.col-6
+      label for="member_nkf_member_id" NKF medlemsnr
+      span class="form-control" = (@member.nkf_member.try(:medlemsnummer) || 'Ikke i NKF-registeret.')
+  .row
+    .col-6
+      = f.text_field :passive_on, class: 'date', placeholder: 'dato'
+    .col-6
+      = f.text_field :left_on, class: 'date'
+  .row
+    .col-6
+      = f.select :billing_type, [%w(AutoGiro AUTOGIRO), ['Manuell Giro', 'MANUELL GIRO'], %w(AvtaleGiro AvtaleGiro), \
+          @member.billing_type && [@member.billing_type, @member.billing_type]].compact.uniq.sort
+    .col-6
+      = f.text_field :account_no
+
+  .row
+    .col = f.select :nkf_fee, [['Ja', true], ['Nei', false]]
+    .col = f.select :payment_problem, [['Nei', false], ['Ja', true]]
+
+  = f.text_field :billing_name
+  = f.text_field :billing_address
+  = f.text_field :billing_postal_code
+
+  = submit_tag 'Lagre', id: 'save', class: 'btn btn-primary float-right my-3'
