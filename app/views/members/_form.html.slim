@@ -79,6 +79,10 @@
       .row
         .col = f.select :nkf_fee, [['Ja', true], ['Nei', false]]
         .col = f.select :payment_problem, [['Nei', false], ['Ja', true]]
+      = f.text_field :parent_2_name
+      = f.text_field :billing_email
+      = f.text_field :parent_2_mobile
+
       = f.text_field :billing_name
       = f.text_field :billing_address
       = f.text_field :billing_postal_code
