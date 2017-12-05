@@ -77,6 +77,7 @@ nb:
         account_no: Kontonummer
         address: Adresse
         billing_address: Fakturaadresse
+        billing_email: Foresatte 2's e-post
         billing_name: Fakturanavn (hvis annet enn medlem)
         billing_postal_code: Fakturapostnummer
         billing_type: "Fakturerings\u00ADmåte"
@@ -89,6 +90,8 @@ nb:
         left_on: Utmeldingsdato
         male: Kjønn
         nkf_fee: NKF Hovedklubb
+        parent_2_name: Foresatte 2's navn
+        parent_2_mobile: Foresatte 2's telefon
         parent_email: Foresattes e-post
         parent_name: Foresattes navn
         passive_on: Passiv fra
