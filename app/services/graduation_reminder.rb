@@ -109,7 +109,7 @@ class GraduationReminder
 
   def self.send_shopping_list
     Graduation.upcoming
-        .ready(1.days.ago)
+        .ready(1.day.ago)
         .where('graduations.held_on < ?', 10.days.from_now)
         .where(shopping_list_sent_at: nil)
         .order('graduations.held_on')
