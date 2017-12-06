@@ -47,7 +47,7 @@ class GraduationReminderTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[0]
     assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
-    assert_equal %w[noreply@test.jujutsu.no], mail.from
+    assert_equal %w[uwe@example.com], mail.from
     assert_equal 'Gradering for Voksne 2013-10-24', mail.subject
     assert_match(/Hei Lars!/, mail.body)
     assert_match('Felles gradering for Voksne er satt opp til <b>2013-10-24</b>.', mail.body)
@@ -56,7 +56,7 @@ class GraduationReminderTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[1]
     assert_equal ['"Newbie Neuer" <newbie@example.com>'], mail.to
-    assert_equal %w[noreply@test.jujutsu.no], mail.from
+    assert_equal %w[uwe@example.com], mail.from
     assert_equal 'Gradering for Voksne 2013-10-24', mail.subject
     assert_match(/Hei Newbie!/, mail.body)
     assert_match('Felles gradering for Voksne er satt opp til <b>2013-10-24</b>.', mail.body)
@@ -66,7 +66,7 @@ class GraduationReminderTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[2]
     assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
-    assert_equal %w[noreply@test.jujutsu.no], mail.from
+    assert_equal %w[uwe@example.com], mail.from
     assert_equal 'Gradering for Voksne 2013-10-24', mail.subject
     assert_match(/Hei Uwe!/, mail.body)
     assert_match('Felles gradering for Voksne er satt opp til <b>2013-10-24</b>.', mail.body)
@@ -120,7 +120,7 @@ class GraduationReminderTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[0]
     assert_equal ['"Newbie Neuer" <newbie@example.com>'], mail.to
-    assert_equal %w[noreply@test.jujutsu.no], mail.from
+    assert_equal %w[uwe@example.com], mail.from
     assert_equal 'Invitasjon til gradering', mail.subject
     assert_match(/Hei Newbie Neuer!/, mail.body)
     assert_match(/Du er satt opp til gradering torsdag 24. oktober/, mail.body)
@@ -128,10 +128,8 @@ class GraduationReminderTest < ActionMailer::TestCase
         mail.body)
     assert_match(%r{<a href="https://example.com/graduates/397971580/confirm">Jeg kommer :\)</a>}, mail.body)
     assert_match(%r{<a href="https://example.com/graduates/397971580/decline">Beklager, jeg kommer ikke.</a>}, mail.body)
-    assert_match(/Minstekrav til gradering er 10 treninger. Vi har registrert 1 trening på deg siden du startet./,
+    assert_match(/Krav til gradering er 10-20 treninger. Vi har registrert 1 trening på deg siden du startet./,
         mail.body)
-    assert_match(/Du trenger altså 9 treninger til for å oppfylle kravet til gradering./, mail.body)
-    assert_match(/Det er 2 treninger frem til graderingen./, mail.body)
   end
 
   def test_notify_missing_approvals
