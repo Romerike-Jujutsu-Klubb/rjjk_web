@@ -39,8 +39,8 @@ tr id="graduate_#{graduate.id}"
     - if graduate.graduation.approved?
       = graduate.rank.label
     - else
-      = form_for graduate, html: { remote: true, style: 'display: inline' } do |f|
-        = f.select :rank_id, @ranks.map { |r| [r.label, r.id] }, {}, onchange: "$('#rank_btn_#{graduate.id}').click()"
+      = bootstrap_form_for graduate, html: { remote: true } do |f|
+        = f.select :rank_id, @ranks.map { |r| [r.label, r.id] }, {hide_label: true}, onchange: "$('#rank_btn_#{graduate.id}').click()"
         = f.submit id: "rank_btn_#{graduate.id}", class: 'sr-only'
 
       - graduated = graduate.member.graduates.find { |gr2| gr2 != graduate && gr2.passed && gr2.rank_id == graduate.rank_id }
