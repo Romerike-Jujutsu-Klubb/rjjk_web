@@ -31,12 +31,9 @@ tr id="graduate_#{graduate.id}"
       - if graduate.graduation.approved?
         = graduate.passed ? 'Ja' : 'Nei'
       - else
-        = form_for graduate, html: { remote: true } do |f|
-          => f.radio_button :passed, true, onchange: "$('#passed_btn_#{graduate.id}').click()"
-          label for="graduate_passed_true" Ja
-          span.d-xl-none: br
-          => f.radio_button :passed, false, onchange: "$('#passed_btn_#{graduate.id}').click()", class: 'ml-xl-2'
-          label for="graduate_passed_false" Nei
+        = bootstrap_form_for graduate, html: { remote: true, class: 'form-inline' } do |f|
+          = f.radio_button :passed, true, label: :Ja, class: 'mr-1', label_class: 'mr-2', onchange: "$('#passed_btn_#{graduate.id}').click()"
+          = f.radio_button :passed, false, label: :Nei, class: 'mr-1', onchange: "$('#passed_btn_#{graduate.id}').click()"
           = f.submit id: "passed_btn_#{graduate.id}", class: 'sr-only'
   td
     - if graduate.graduation.approved?
