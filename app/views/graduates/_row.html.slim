@@ -87,8 +87,10 @@ tr id="graduate_#{graduate.id}"
             ' Har bare vært på
             => link_to "#{training_attendances} trening#{'er' if training_attendances > 1}", { controller: :attendances, action: :since_graduation, id: mbr.id, date: graduate.graduation.held_on }, class: "text-danger"
             ' siden
-            => current_graduate ? 'forrige gradering' : 'innmelding'
-            | (#{graduate.training_start_date}).
+            - if current_graduate
+              ' forrige gradering (#{current_graduate.graduation.held_on}).
+            - else
+              ' innmelding (#{graduate.training_start_date}).
           div
             ' Forventet er #{minimum_attendances}-#{graduate.expected_attendances}
             /- if minimum_attendances <= graduate.registered_trainings
