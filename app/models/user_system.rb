@@ -120,10 +120,9 @@ module UserSystem
   end
 
   def store_current_user_in_thread
-    return true if login_from_params
-    self.current_user = session_user if session_user?
-    login_from_cookie unless current_user
-    true
+    return if login_from_params
+    return if session_user? && (self.current_user = session_user)
+    login_from_cookie
   end
 
   def authenticated_user?
