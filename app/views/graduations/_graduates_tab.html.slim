@@ -26,7 +26,7 @@
         .input-group
           = select_tag :group_id, options_for_select([['Velg gruppe', nil]] + @groups.map { |g| [g.name, g.id] }, @graduation.group_id), class: 'form-control'
           span.input-group-btn
-        = f.submit 'Legg til alle', class: 'btn btn-secondary'
+            = f.submit 'Legg til alle', class: 'btn btn-secondary'
     .col-md-6
       = form_for @graduate, url: with_detour(graduates_path, edit_graduation_path(@graduation, anchor: :graduates_tab)), html: { method: :post } do |f|
         = f.hidden_field :graduation_id
