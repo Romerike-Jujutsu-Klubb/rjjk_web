@@ -108,6 +108,7 @@ group :test do
   gem 'capybara-screenshot-diff'
   # gem 'capybara-screenshot-diff', path: '~/work/open-source/capybara-screenshot-diff'
   gem 'chunky_png'
+  # gem 'coveralls', require: false
   gem 'database_cleaner'
   gem 'minitest-rails-capybara'
   gem 'minitest-reporters', '!=1.1.19'

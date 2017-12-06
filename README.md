@@ -43,3 +43,7 @@ https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Fjujutsu
 ## Google Drive API
 
 https://developers.google.com/apis-explorer/?hl=en_US#p/drive/v3/
+
+## testmysite
+
+https://testmysite.withgoogle.com/intl/no-no/?utm_source=google_search&utm_medium=dcallout&utm_campaign=v2f_no
