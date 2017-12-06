@@ -16,7 +16,7 @@ tr id="graduate_#{graduate.id}"
     = link_to "#{fn} #{ln}", :controller => :members, :action => :edit, :id => mbr.id
     - if below_minimum_age || not_in_rank_age || not_in_group_age
       '
-      | (<span style="color: red; white-space: nowrap">#{member_age} år</span>)
+      | (<span class="text-danger text-nowrap">#{member_age} år</span>)
     - if graduate.changed?
       '
       | &nbsp;<span class="text-danger">* IKKE LAGRET! *</span>
@@ -60,7 +60,7 @@ tr id="graduate_#{graduate.id}"
           - if current_graduate
             div
               ' Har #{current_graduate.rank.name} fra
-              = link_to %Q{<font color="red">#{current_graduate.graduation.held_on}</font>}.html_safe, :controller => :graduations, :action => :index, :id => current_graduate.graduation.id
+              = link_to current_graduate.graduation.held_on, {controller: :graduations, action: :index, id: current_graduate.graduation.id}, class: 'text-danger'
               | .
           - else
             div Har ingen grad fra før.
@@ -76,7 +76,7 @@ tr id="graduate_#{graduate.id}"
         - future_graduates = mbr.future_graduates(graduate.graduation.held_on, graduate.graduation.martial_art)
         - future_graduates.select { |fg| fg.rank.position < graduate.rank.position }.each do |fg|
           div
-            | (konflikt: #{link_to %Q{<font color="red">#{fg.rank.name} #{fg.graduation.held_on}</font>}.html_safe, controller: :graduations, action: :index, id: fg.graduation.id})
+            | (konflikt: #{link_to "#{fg.rank.name} #{fg.graduation.held_on}", {controller: :graduations, action: :index, id: fg.graduation.id},class: 'text-danger'})
 
         - training_attendances = graduate.training_attendances
         - minimum_attendances = graduate.minimum_attendances
@@ -85,7 +85,7 @@ tr id="graduate_#{graduate.id}"
         - elsif training_attendances < minimum_attendances
           div
             ' Har bare vært på
-            => link_to "#{training_attendances} trening#{'er' if training_attendances > 1}", { :controller => :attendances, :action => :since_graduation, :id => mbr.id, :date => graduate.graduation.held_on }, :style => "color: red"
+            => link_to "#{training_attendances} trening#{'er' if training_attendances > 1}", { controller: :attendances, action: :since_graduation, id: mbr.id, date: graduate.graduation.held_on }, class: "text-danger"
             ' siden
             => current_graduate ? 'forrige gradering' : 'innmelding'
             | (#{graduate.training_start_date}).
