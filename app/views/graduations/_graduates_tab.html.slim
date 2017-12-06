@@ -1,0 +1,42 @@
+- if @graduation.graduates.any?
+  table.table.table-sm
+    thead
+      tr
+        th Deltakere (#{@graduation.graduates.size})
+        - if @graduation.locked? && !@graduation.approved?
+          th
+        - if (@graduation.held_on &.<= Date.current) && !@graduation.group.school_breaks?
+          th Bestått
+        th Grad
+        - unless @graduation.approved?
+          th Fjern
+    tbody
+      - @graduation.graduates.sort_by { |gr| -gr.rank.position }.each do |gr|
+        = render 'graduates/row', graduate: gr
+- else
+  p.mt-3
+    ' Det er ikke lagt til noen deltakere på denne graderingen enda.
+    | Det er vanlig å legge til deltakerne 4-5 uker før gradering.
+
+- unless @graduation.approved?
+  .row.mt-3
+    .col-md-6
+      = form_for @graduation, \
+          url: with_detour(add_group_graduation_path(@graduation), edit_graduation_path(@graduation,anchor: :graduates_tab)) do |f|
+        .input-group
+          = select_tag :group_id, options_for_select([['Velg gruppe', nil]] + @groups.map { |g| [g.name, g.id] }, @graduation.group_id), class: 'form-control'
+          span.input-group-btn
+        = f.submit 'Legg til alle', class: 'btn btn-secondary'
+    .col-md-6
+      = form_for @graduate, url: with_detour(graduates_path, edit_graduation_path(@graduation, anchor: :graduates_tab)), html: { method: :post } do |f|
+        = f.hidden_field :graduation_id
+        .input-group
+          = f.select :member_id, \
+              grouped_options_for_select(@excluded_members.map { |g, members| [g.name, members.map { |m| ["#{m.name} #{m.age(@graduation.held_on)} år", m.id] }] }), \
+              { prompt: 'Velg deltaker' }, class: 'form-control', onchange: 'form.submit()'
+          span.input-group-btn
+            = f.submit 'Legg til', class: 'btn btn-secondary'
+
+- if request.xhr?
+  javascript:
+      $('[data-toggle="tooltip"]').tooltip();
