@@ -34,7 +34,7 @@ class Election < ApplicationRecord
   end
 
   def elected_name
-    if guardian_index
+    if guardian_index && member.guardians[guardian_index]
       "#{member.guardians[guardian_index][:name]} (for #{member.name})"
     else
       member.name
