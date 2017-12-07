@@ -51,9 +51,10 @@ class Graduate < ApplicationRecord
 
   def expected_attendances
     ats = [rank.expected_attendances]
-    if rank.minimum_age <= 12 && (trainings = registered_trainings) > 0
+    if rank.minimum_age <= 12 && (trainings = registered_trainings) > 0 &&
+        (training_days = Date.current - training_start_date) > 0
       semester_days = graduation.held_on - training_start_date
-      time_factor = semester_days.to_f / (Date.current - training_start_date)
+      time_factor = semester_days.to_f / (training_days)
       ats << (trainings * time_factor)
     end
     ats.min.round
