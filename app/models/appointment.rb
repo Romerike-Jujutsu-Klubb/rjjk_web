@@ -35,10 +35,7 @@ class Appointment < ApplicationRecord
   end
 
   def elected_contact
-    if guardian_index
-      member.guardians[guardian_index]
-    else
-      { name: member.name, email: member.email || member.emails.first }
-    end
+    (guardian_index && member.guardians[guardian_index]) ||
+        { name: member.name, email: member.email || member.emails.first }
   end
 end
