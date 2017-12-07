@@ -96,6 +96,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def send_data(*)
+    request.env['rack.session.options'][:skip] = true
+    super
+  end
+
   def reject_bots
     http_headers = request.headers.to_h.select { |k, _v| /^[A-Z0-9_]+$/ =~ k }
     referrer = http_headers['HTTP_REFERER']
