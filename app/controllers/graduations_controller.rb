@@ -130,14 +130,22 @@ class GraduationsController < ApplicationController
   end
 
   def approve
-    @graduation = Graduation.find(params[:id])
-    censor = @graduation.censors.find_by(member_id: current_user.member.id)
+    graduation = Graduation.find(params[:id])
+    censor = graduation.censors.find_by(member_id: current_user.member.id)
     censor.confirmed_at ||= Time.current
     censor.locked_at ||= Time.current
     censor.approved_grades_at ||= Time.current
     censor.save!
     flash.notice = 'Gradering godkjent!'
-    redirect_to edit_graduation_path(@graduation)
+    redirect_to edit_graduation_path(graduation)
+  end
+
+  def disapprove
+    graduation = Graduation.find(params[:id])
+    censor = graduation.censors.find_by(member_id: current_user.member.id)
+    censor.update! approved_grades_at: nil
+    flash.notice = 'Gradering ikke godkjent!'
+    redirect_to edit_graduation_path(graduation)
   end
 
   def add_group
