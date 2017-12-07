@@ -34,18 +34,15 @@ class Election < ApplicationRecord
   end
 
   def elected_name
-    if guardian_index && member.guardians[guardian_index]
-      "#{member.guardians[guardian_index][:name]} (for #{member.name})"
+    if guardian_index && (elected_contact = member.guardians[guardian_index])
+      "#{elected_contact[:name]} (for #{member.name})"
     else
       member.name
     end
   end
 
   def elected_contact
-    if guardian_index
-      member.guardians[guardian_index]
-    else
-      { name: member.name, email: member.email || member.emails.first }
-    end
+    (guardian_index && member.guardians[guardian_index]) ||
+        { name: member.name, email: member.email || member.emails.first }
   end
 end
