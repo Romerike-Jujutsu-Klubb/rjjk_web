@@ -3,7 +3,8 @@
 class GraduationsController < ApplicationController
   include GraduationAccess
 
-  CENSOR_ACTIONS = %i[add_group approve create edit index new update].freeze
+  CENSOR_ACTIONS = %i[add_group approve create disapprove edit graduates_tab index new update]
+      .freeze
   before_action :admin_required, except: CENSOR_ACTIONS
   before_action :authenticate_user, only: CENSOR_ACTIONS
 
@@ -26,7 +27,7 @@ class GraduationsController < ApplicationController
   def create
     @graduation = Graduation.new(params[:graduation])
     if @graduation.save
-      flash[:notice] = 'Graduation was successfully created.'
+      flash[:notice] = 'Gradering er opprettet.'
       redirect_to edit_graduation_path(@graduation)
     else
       new
@@ -36,9 +37,7 @@ class GraduationsController < ApplicationController
 
   def edit
     @graduation = Graduation.for_edit.find(params[:id])
-    @approval = @graduation.censors
-        .select { |c| c.member == current_user.member }
-        .sort_by { |c| c.approved_grades_at ? 0 : 1 }.last
+    @approval = load_current_user_approval
     return unless admin_or_censor_required(@graduation, @approval)
     @censor = Censor.new graduation_id: @graduation.id
     @instructors = Member.instructors(@graduation.held_on).to_a.sort_by(&:current_rank).reverse -
@@ -47,6 +46,8 @@ class GraduationsController < ApplicationController
 
   def graduates_tab
     @graduation = Graduation.for_edit.find(params[:id])
+    approval = load_current_user_approval
+    return unless admin_or_censor_required(@graduation, approval)
     @groups = Group.order(:from_age).includes(members: %i[attendances nkf_member]).to_a
     @groups.unshift(@groups.delete(@graduation.group))
     @ranks = Rank.where(martial_art_id: @graduation.group.martial_art_id)
@@ -62,7 +63,7 @@ class GraduationsController < ApplicationController
   def update
     @graduation = Graduation.for_edit.find(params[:id])
     if @graduation.update(params[:graduation])
-      flash[:notice] = 'Graduation was successfully updated.'
+      flash[:notice] = 'Gradering er oppdatert.'
       redirect_to action: :edit, id: @graduation, anchor: :form_tab
     else
       new
@@ -191,6 +192,11 @@ class GraduationsController < ApplicationController
   end
 
   private
+
+  def load_current_user_approval
+    @graduation.censors.select { |c| c.member == current_user.member }
+        .sort_by { |c| c.approved_grades_at ? 0 : 1 }.last
+  end
 
   def load_graduates
     @graduation = Graduation.includes(group: { martial_art: { ranks: :group } }).find(params[:id])
