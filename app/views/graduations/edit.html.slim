@@ -16,7 +16,7 @@
         .btn.btn-warning
           ' Utsending av innkalling venter på
           b = @graduation.censors.reject(&:locked_at).select(&:examiner?).map(&:member).map(&:name).join(', ')
-      - else
+      - elsif !@graduation.passed?
         .btn.btn-success Innkalling #{invite_date > Time.current ? :sendes : :sendt} #{invite_date}
     - if @approval.graduation.held_on <= Date.current
       - if @approval.approved_grades_at.nil?
