@@ -18,9 +18,11 @@ Rails.application.configure do
     'Cache-Control' => "public, max-age=#{1.hour.seconds.to_i}",
   }
 
-  config.after_initialize do
-    # Bullet.enable = true
-    Bullet.bullet_logger = true
-    Bullet.raise = true # raise an error if an n+1 query occurs
+  if defined? Bullet
+    config.after_initialize do
+      # Bullet.enable = true
+      Bullet.bullet_logger = true
+      Bullet.raise = true # raise an error if an n+1 query occurs
+    end
   end
 end
