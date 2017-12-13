@@ -334,7 +334,7 @@ class NkfMemberImport
     login_form_fields += [
       ['site2pstoretoken', token],
       ['ssousername', NkfAgent::NKF_USERNAME],
-      ['password', ENV['NKF_PASSWORD']],
+      ['password', ENV[NkfAgent::NKF_PASSWORD_KEY]],
     ]
     login_params = login_form_fields.map { |field| "#{field[0]}=#{ERB::Util.url_encode field[1]}" }
         .join('&')

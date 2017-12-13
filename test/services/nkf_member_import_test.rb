@@ -4,6 +4,7 @@ require 'test_helper'
 
 class NkfMemberImportTest < ActionMailer::TestCase
   def test_import_members
+    raise 'Env required!' if ENV[NkfAgent::NKF_PASSWORD_KEY].blank?
     AnnualMeeting.create! start_at: '2015-02-12 17:45'
     assert_mail_deliveries(3) do
       VCR.use_cassette('NKF Import Changes', match_requests_on: %i[method host path query body],

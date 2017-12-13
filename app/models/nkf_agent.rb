@@ -2,6 +2,7 @@
 
 class NkfAgent
   NKF_USERNAME = '40001062'
+  NKF_PASSWORD_KEY = 'NKF_PASSWORD'
   BACKOFF_LIMIT = 15.minutes
 
   def initialize
@@ -16,7 +17,7 @@ class NkfAgent
     login_page = @agent.get('http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login')
     login_form = login_page.form('st_login')
     login_form.ssousername = NKF_USERNAME
-    login_form.password = ENV['NKF_PASSWORD']
+    login_form.password = ENV[NKF_PASSWORD_KEY]
     login_form.site2pstoretoken = token
     @agent.submit(login_form)
   rescue Mechanize::ResponseCodeError, SocketError => e
