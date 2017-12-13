@@ -3,9 +3,7 @@
 require 'feature_test'
 
 class UsersFeatureTest < FeatureTest
-  def setup
-    screenshot_section :users
-  end
+  setup { screenshot_section :users }
 
   def test_index
     screenshot_group :index

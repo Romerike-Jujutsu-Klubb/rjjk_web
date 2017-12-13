@@ -37,9 +37,23 @@ class LoginIntegrationTest < IntegrationTest
 end
 
 class LoginFeatureTest < FeatureTest
+  # FIXME(uwe): Is this necessary?
+  def clear_cookies
+    browser = Capybara.current_session.driver.browser
+    if browser.respond_to?(:clear_cookies)
+      # Rack::MockSession
+      browser.clear_cookies
+    elsif browser.respond_to?(:manage) && browser.manage.respond_to?(:delete_all_cookies)
+      # Selenium::WebDriver
+      browser.manage.delete_all_cookies
+    else
+      raise "Don't know how to clear cookies. Weird driver?"
+    end
+  end
+
   setup { screenshot_section :session }
 
-  teardown { cookies.delete(:email) }
+  teardown { clear_cookies }
 
   def test_login_with_password
     screenshot_group :login_with_password
