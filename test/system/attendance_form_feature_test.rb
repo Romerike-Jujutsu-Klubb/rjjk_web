@@ -2,7 +2,7 @@
 
 require 'feature_test'
 
-class AttendanceFormTest < FeatureTest
+class AttendanceFormFeatureTest < FeatureTest
   def test_index
     login_and_visit '/'
     click_menu('Oppmøtelister')

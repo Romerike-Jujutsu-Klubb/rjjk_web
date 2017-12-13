@@ -2,7 +2,7 @@
 
 require 'feature_test'
 
-class NextPracticeAttendanceTest < FeatureTest
+class NextPracticeAttendanceFeatureTest < FeatureTest
   setup { login_and_visit '/' }
 
   def test_announce_attendance

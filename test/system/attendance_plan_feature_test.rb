@@ -2,7 +2,7 @@
 
 require 'feature_test'
 
-class AttendancePlanTest < FeatureTest
+class AttendancePlanFeatureTest < FeatureTest
   setup do
     screenshot_section :attendance
     visit_with_login '/mitt/oppmote'

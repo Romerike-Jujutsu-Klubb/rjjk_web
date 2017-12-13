@@ -39,6 +39,8 @@ end
 class LoginFeatureTest < FeatureTest
   setup { screenshot_section :session }
 
+  teardown { cookies.delete(:email) }
+
   def test_login_with_password
     screenshot_group :login_with_password
     visit '/'
@@ -80,5 +82,8 @@ class LoginFeatureTest < FeatureTest
     open_menu
     assert has_css?('h1', text: 'Uwe Kubosch'), all('h1').to_a.map(&:text).inspect
     screenshot :welcome
+    click_link 'Logg ut'
+    click_menu 'Logg inn'
+    assert has_field?('user[email]', with: users(:admin).email)
   end
 end
