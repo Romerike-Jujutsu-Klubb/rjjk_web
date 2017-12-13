@@ -16,10 +16,7 @@ class FeatureTest < ActionDispatch::IntegrationTest
 
   Capybara::Screenshot.add_driver_path = true
   Capybara::Screenshot.window_size = WINDOW_SIZE
-  # TODO(uwe):  https://bugs.chromium.org/p/chromium/issues/detail?id=755095
-  Capybara::Screenshot.enabled = RUBY_ENGINE == 'ruby' && ENV['TRAVIS'].blank? &&
-      (ON_MAC && `system_profiler SPDisplaysDataType | grep -E "BenQ PJ|DELL P2415Q"`.blank?)
-  # Capybara::Screenshot::Diff.enabled = false
+  Capybara::Screenshot.enabled = RUBY_ENGINE == 'ruby' && ENV['TRAVIS'].blank?
   Capybara::Screenshot.stability_time_limit = 0.5
   Capybara.register_driver :chrome do |app|
     caps = Selenium::WebDriver::Remote::Capabilities.chrome(
