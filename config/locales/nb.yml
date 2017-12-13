@@ -96,10 +96,10 @@ nb:
         parent_name: Foresattes navn
         passive_on: Passiv fra
         payment_problem: Betalingsproblem
-        phone_home: Telefon hjem
-        phone_mobile: Telefon mobil
+        phone_home: Fasttelefon
+        phone_mobile: Mobiltelefon
         phone_parent: Foresattes telefon
-        phone_work: Telefon arbeid
+        phone_work: Arbeidstelefon
         postal_code: Postnummer
       news_item:
         body: Mer informasjon (valgfritt)
