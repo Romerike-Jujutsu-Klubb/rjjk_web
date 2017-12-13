@@ -20,13 +20,16 @@ TEST_TIME = Time.zone.local(2013, 10, 17, 18, 46, 0) # Week 42, thursday
 class ActiveSupport::TestCase
   include UserSystem
 
+  self.use_transactional_tests = true
+  self.use_instantiated_fixtures = false
+
   fixtures :all
 
   setup { Timecop.freeze(TEST_TIME) }
   teardown { Timecop.return }
   teardown { clear_user }
 
-  if Bullet.enable?
+  if defined?(Bullet) && Bullet.enable?
     Rails.backtrace_cleaner.remove_silencers!
     setup { Bullet.start_request }
     teardown { Bullet.end_request }
@@ -76,8 +79,6 @@ VCR.configure do |config|
 end
 
 class ActionMailer::TestCase
-  fixtures :all
-
   # FIXME(uwe): Check out assert_emails core method
   def assert_mail_deliveries(count, initial = 0, &block)
     if block
