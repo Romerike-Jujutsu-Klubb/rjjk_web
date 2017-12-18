@@ -59,6 +59,38 @@ function onFetch(event) {
   );
 }
 
+function onPush(event) {
+    var title = (event.data && event.data.text()) || "Yay a message";
+
+    event.waitUntil(
+        self.registration.showNotification(title, {
+            body: "We have received a push message",
+            icon: "/icon/192.png",
+            tag: "push-simple-demo-notification-tag",
+            actions: [
+                {
+                    action: 'explore', title: 'Explore this new world'
+                },
+                {
+                    action: 'close', title: 'Close'
+                }
+            ]
+        })
+    )
+}
+
+function onNotificationClick(event) {
+  console.log('[Service Worker] Notification click Received.');
+
+  event.notification.close();
+
+  event.waitUntil(
+    clients.openWindow('https://jujutsu.no/')
+  );
+}
+
 self.addEventListener('install', onInstall);
 self.addEventListener('activate', onActivate);
 self.addEventListener('fetch', onFetch);
+self.addEventListener("push", onPush);
+self.addEventListener('notificationclick', onNotificationClick)
