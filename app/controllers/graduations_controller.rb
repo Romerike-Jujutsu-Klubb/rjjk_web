@@ -63,6 +63,11 @@ class GraduationsController < ApplicationController
   def update
     @graduation = Graduation.for_edit.find(params[:id])
     if @graduation.update(params[:graduation])
+      # FIXME(uwe): If the date har changed:
+      # * Clear sensor confirmations
+      # * Request sensors again
+      # * Clear graduate confirmations
+      # * Send date change message to graduates
       flash[:notice] = 'Gradering er oppdatert.'
       redirect_to action: :edit, id: @graduation, anchor: :form_tab
     else
