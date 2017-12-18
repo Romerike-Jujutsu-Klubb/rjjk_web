@@ -170,7 +170,9 @@ ul.controls li a.delete {
   background: #222222;
 }
 
-.container-fluid {
+// FIXME(uwer): Hide right sidebar for wide pages
+
+body:not(.wide) .container-fluid {
   max-width: 1440px;
 }
 

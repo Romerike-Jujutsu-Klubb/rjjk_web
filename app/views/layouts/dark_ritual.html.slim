@@ -29,7 +29,7 @@ html lang="nb"
           s.parentNode.insertBefore(ga, s);
       })();
 
-  body
+  body class=(:wide if @content_width)
     #menuShadow.shadow.w-100.h-100.d-xl-none style="position: fixed; left:0;top:0; z-index:5;opacity: 0;visibility:hidden;background-color:black"
     #sidebarShadow.shadow.w-100.h-100.d-lg-none style="position: fixed; left:0;top:0; z-index:5;opacity: 0;visibility:hidden;background-color:black"
     .container-fluid
