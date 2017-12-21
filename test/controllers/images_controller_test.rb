@@ -138,8 +138,14 @@ class ImagesControllerTest < ActionController::TestCase
 
     assert_response :success
     assert_template 'gallery'
+    assert_not_nil assigns(:images)
+  end
 
-    # assert_not_nil assigns(:image)
+  def test_mine
+    get :mine
+
+    assert_response :success
+    assert_template 'gallery'
     assert_not_nil assigns(:images)
   end
 end
