@@ -6,7 +6,7 @@ class PublicRecordImporterTest < ActionMailer::TestCase
   def test_import_public_record
     assert_difference('PublicRecord.count') do
       VCR.use_cassette 'BRREG' do
-        assert_mail_stored 1 do
+        assert_mail_stored do
           PublicRecordImporter.import_public_record
         end
       end

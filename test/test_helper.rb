@@ -94,8 +94,8 @@ class ActionMailer::TestCase
         -> { Mail::TestMailer.deliveries.to_s }
   end
 
-  def assert_mail_stored(count, initial = 0, &block)
-    if block
+  def assert_mail_stored(count = 1, initial: 0)
+    if block_given?
       assert_equal initial, UserMessage.pending.count,
           -> do
             "Unexpected user messages before block:\n#{UserMessage.pending}\n" \

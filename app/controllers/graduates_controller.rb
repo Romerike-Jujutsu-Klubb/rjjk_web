@@ -16,25 +16,6 @@ class GraduatesController < ApplicationController
         end
   end
 
-  def show_last_grade
-    @members = Member.all
-    @all_grades = @members.map(&:current_grade)
-    @grade_counts = {}
-    @all_grades.each do |g|
-      @grade_counts[g] ||= 0
-      @grade_counts[g] += 1
-    end
-  end
-
-  def annual_summary
-    @year = params[:id]
-    @graduates = Graduate.includes(:graduation)
-        .where("DATE_PART('YEAR', graduations.held_on) = ?", @year)
-        .order('rank_id').to_a
-    @by_group = @graduates.group_by { |gr| gr.rank.group }
-    @by_rank = @graduates.group_by(&:rank)
-  end
-
   def show
     @graduate = Graduate.find(params[:id])
     return unless admin_or_graduate_required(@graduate)

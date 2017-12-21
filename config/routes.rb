@@ -133,7 +133,6 @@ Rails.application.routes.draw do
       get :history_graph
       get :list_active
       get :list_inactive
-      get :nkf_report
       get :report
       get :telephone_list
       get :trial_missing_contract

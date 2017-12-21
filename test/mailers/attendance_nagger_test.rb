@@ -29,7 +29,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
 
   def test_send_message_reminder_day_before
     Timecop.freeze(Time.zone.local(2013, 10, 16, 18, 46, 0)) do
-      assert_mail_stored(1) { AttendanceNagger.send_message_reminder }
+      assert_mail_stored { AttendanceNagger.send_message_reminder }
 
       mail = UserMessage.pending[0]
       assert_equal 'Tema for morgendagens trening for Panda',

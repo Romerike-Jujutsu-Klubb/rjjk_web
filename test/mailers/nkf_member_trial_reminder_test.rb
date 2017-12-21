@@ -4,7 +4,7 @@ require 'test_helper'
 
 class NkfMemberTrialReminderTest < ActionMailer::TestCase
   def test_notify_overdue_trials
-    assert_mail_stored(1) { NkfMemberTrialReminder.notify_overdue_trials }
+    assert_mail_stored { NkfMemberTrialReminder.notify_overdue_trials }
 
     mail = UserMessage.pending[0]
     assert_equal 'Utløpt prøvetid', mail.subject

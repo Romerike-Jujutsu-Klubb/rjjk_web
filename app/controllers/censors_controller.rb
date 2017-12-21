@@ -20,18 +20,6 @@ class CensorsController < ApplicationController
     @censor = Censor.new
   end
 
-  def add_new_censor
-    gid = params[:graduation_id].to_i
-    mid = params[:member_id].to_i
-    name = params[:name]
-    if Censor.first(conditions: "member_id = #{mid} AND graduation_id = #{gid}")
-      render text: 'Censor already exists'
-    else
-      Censor.create!(graduation_id: gid, member_id: mid)
-      render text: "Added #{name} as new sensor to graduation"
-    end
-  end
-
   def create
     if params[:censor][:member_id].blank?
       flash.notice = 'Velg en instruktør'

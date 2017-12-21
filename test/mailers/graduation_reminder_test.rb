@@ -4,7 +4,7 @@ require 'test_helper'
 
 class GraduationReminderTest < ActionMailer::TestCase
   def test_notify_missing_graduations
-    assert_mail_stored(1) { GraduationReminder.notify_missing_graduations }
+    assert_mail_stored { GraduationReminder.notify_missing_graduations }
 
     mail = UserMessage.pending[0]
     assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
@@ -21,7 +21,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     graduations(:voksne_upcoming).destroy!
     ranks(:kyu_5).update! standard_months: 0
 
-    assert_mail_stored(1) { GraduationReminder.notify_overdue_graduates }
+    assert_mail_stored { GraduationReminder.notify_overdue_graduates }
 
     mail = UserMessage.pending[0]
     assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
@@ -31,7 +31,7 @@ class GraduationReminderTest < ActionMailer::TestCase
   end
 
   def test_notify_missing_censors
-    assert_mail_stored(1) { GraduationReminder.notify_missing_censors }
+    assert_mail_stored { GraduationReminder.notify_missing_censors }
 
     mail = UserMessage.pending[0]
     assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
@@ -76,7 +76,7 @@ class GraduationReminderTest < ActionMailer::TestCase
   end
 
   def test_notify_censors
-    assert_mail_stored(1) { GraduationReminder.notify_censors }
+    assert_mail_stored { GraduationReminder.notify_censors }
 
     mail = UserMessage.pending[0]
     assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
@@ -96,7 +96,7 @@ class GraduationReminderTest < ActionMailer::TestCase
   def test_notify_missing_locks
     censors(:uwe_voksne_upcoming).update! confirmed_at: 1.week.ago
 
-    assert_mail_stored(1) { GraduationReminder.notify_missing_locks }
+    assert_mail_stored { GraduationReminder.notify_missing_locks }
 
     mail = UserMessage.pending[0]
     assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
@@ -116,7 +116,7 @@ class GraduationReminderTest < ActionMailer::TestCase
   def test_notify_graduates
     censors(:uwe_voksne_upcoming).update! locked_at: Time.current
 
-    assert_mail_stored(1) { GraduationReminder.notify_graduates }
+    assert_mail_stored { GraduationReminder.notify_graduates }
 
     mail = UserMessage.pending[0]
     assert_equal ['"Newbie Neuer" <newbie@example.com>'], mail.to
@@ -133,7 +133,7 @@ class GraduationReminderTest < ActionMailer::TestCase
   end
 
   def test_notify_missing_approvals
-    assert_mail_stored(3) { GraduationReminder.notify_missing_approvals }
+    assert_mail_stored(2) { GraduationReminder.notify_missing_approvals }
 
     mail = UserMessage.pending[0]
     assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
@@ -149,6 +149,10 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(/Hei Uwe!/, mail.body)
     assert_match(%r{<a href="https://example.com/graduations/84385526/edit">Panda den 2007-10-08</a>}, mail.body)
 
+    censors(:lars_tiger).update! approved_grades_at: Time.current
+    censors(:uwe_panda).update! approved_grades_at: Time.current
+    assert_mail_stored(initial: 2) { GraduationReminder.notify_missing_approvals }
+
     mail = UserMessage.pending[2]
     assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
@@ -159,7 +163,13 @@ class GraduationReminderTest < ActionMailer::TestCase
 
   def test_notify_missing_approvals_with_unconfirmed_censors
     Censor.update_all confirmed_at: nil, declined: nil # rubocop:disable Rails/SkipsModelValidations
-    assert_mail_stored(3) { GraduationReminder.notify_missing_approvals }
+    assert_mail_stored(2) { GraduationReminder.notify_missing_approvals }
+    assert_equal 'lars@example.com', UserMessage.pending[0].user.email
+    assert_equal 'admin@test.com', UserMessage.pending[1].user.email
+    censors(:lars_tiger).update! approved_grades_at: Time.current
+    censors(:uwe_panda).update! approved_grades_at: Time.current
+    assert_mail_stored(initial: 2) { GraduationReminder.notify_missing_approvals }
+    assert_equal 'lars@example.com', UserMessage.pending[0].user.email
   end
 
   def test_send_shopping_list_not_locked
@@ -169,7 +179,7 @@ class GraduationReminderTest < ActionMailer::TestCase
   def test_send_shopping_list_locked
     censors(:uwe_voksne_upcoming).update! locked_at: 2.days.ago
 
-    assert_mail_stored(1) { GraduationReminder.send_shopping_list }
+    assert_mail_stored { GraduationReminder.send_shopping_list }
 
     mail = UserMessage.pending[0]
     assert_equal ['"Newbie Neuer" <newbie@example.com>'], mail.to

@@ -137,18 +137,6 @@ class MembersController < ApplicationController
     redirect_to action: :index
   end
 
-  def nkf_report
-    @male_six_twelve = member_count(true, 6, 12)
-    @female_six_twelve = member_count(false, 6, 12)
-    @male_thirteen_nineteen = member_count(true, 13, 19)
-    @female_thirteen_nineteen = member_count(false, 13, 19)
-    @male_twenty_twentyfive = member_count(true, 20, 25)
-    @female_twenty_twentyfive = member_count(false, 20, 25)
-    @male_twentysix_and_over = member_count(true, 26, 100)
-    @female_twentysix_and_over = member_count(false, 26, 100)
-    @incomplete_members = Member.active.to_a.select { |m| m.birthdate.nil? }
-  end
-
   def telephone_list
     @groups = Group.active(Date.current).includes(:members).to_a
   end
@@ -159,24 +147,6 @@ class MembersController < ApplicationController
     @administrators = User.find_administrators
     @administrator_emails = @administrators.map(&:email).compact.uniq
     @missing_administrator_emails = @administrators.size - @administrator_emails.size
-  end
-
-  def export_emails
-    content_type =
-        if request.user_agent =~ /windows/i
-          'application/vnd.ms-excel'
-        else
-          'text/csv'
-        end
-
-    CSV::Writer.generate(output = '') do |csv|
-      @Params.all.each do |param|
-        csv << [param]
-      end
-    end
-    send_data(output,
-        type: content_type,
-        filename: 'Epostliste.csv')
   end
 
   def photo

@@ -151,6 +151,8 @@ class GraduationReminder
         .where('approval_requested_at IS NULL OR approval_requested_at <= ?', 1.day.ago)
         .order(:id)
         .each do |censor|
+      next unless censor.examiner? ||
+            censor.graduation.censors.select(&:examiner?).all?(&:approved?)
       GraduationMailer.missing_approval(censor).store(censor.member.user_id)
       censor.update! approval_requested_at: Time.current
     end

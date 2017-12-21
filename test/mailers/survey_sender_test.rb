@@ -4,7 +4,7 @@ require 'test_helper'
 
 class SurveySenderTest < ActionMailer::TestCase
   def test_send_surveys
-    assert_mail_stored 1 do
+    assert_mail_stored do
       assert_no_difference 'SurveyRequest.count' do
         SurveySender.send_surveys
       end
@@ -30,7 +30,7 @@ class SurveySenderTest < ActionMailer::TestCase
         mail.body
     assert survey_requests(:unsent).sent_at
 
-    assert_mail_stored 1, 1 do
+    assert_mail_stored initial: 1 do
       assert_difference 'SurveyRequest.count' do
         SurveySender.send_surveys
       end
@@ -50,7 +50,7 @@ class SurveySenderTest < ActionMailer::TestCase
         }x,
         mail.body
 
-    assert_mail_stored 1, 2 do
+    assert_mail_stored initial: 2 do
       assert_no_difference 'SurveyRequest.count' do
         SurveySender.send_surveys
       end
