@@ -4,8 +4,6 @@
 # https://github.com/bootstrap-ruby/rails-bootstrap-forms/issues/339
 # https://github.com/bootstrap-ruby/rails-bootstrap-forms/pull/340
 
-# rubocop: disable Metrics/LineLength
-
 module BootstrapForm
   class FormBuilder < ActionView::Helpers::FormBuilder
     def error_class
@@ -21,8 +19,12 @@ module BootstrapForm
       options[:class] << " #{error_class}" if has_error?(name)
       options[:class] << " #{feedback_class}" if options[:icon]
 
-      content_tag(:div, options.except(:id, :label, :help, :icon, :label_col, :control_col, :layout)) do
-        label = generate_label(options[:id], name, options[:label], options[:label_col], options[:layout]) if options[:label]
+      content_tag(:div,
+          options.except(:id, :label, :help, :icon, :label_col, :control_col, :layout)) do
+        if options[:label]
+          label = generate_label(options[:id], name, options[:label], options[:label_col],
+              options[:layout])
+        end
         control = capture(&block).to_s
         control.concat(generate_help(name, options[:help]).to_s)
         control.concat(generate_icon(options[:icon])) if options[:icon]
