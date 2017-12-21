@@ -98,7 +98,7 @@ module BootstrapForm
       end
     end
 
-    def generate_help(name, help_text)
+    def generate_help(name, help_text) # rubocop: disable Lint/ShadowedArgument,Style/CommentedKeyword
       if has_error?(name) && inline_errors
         help_text = get_error_messages(name)
         help_klass = 'invalid-feedback'

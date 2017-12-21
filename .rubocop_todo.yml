@@ -15,12 +15,6 @@ Layout/EmptyLinesAroundArguments:
     - 'app/models/user_system.rb'
 
 # Offense count: 1
-# Configuration parameters: IgnoreImplicitReferences.
-Lint/ShadowedArgument:
-  Exclude:
-    - 'config/initializers/bootstrap_form_builder.rb'
-
-# Offense count: 1
 # Cop supports --auto-correct.
 Lint/UnneededDisable:
   Exclude:
