@@ -13,6 +13,7 @@ AllCops:
     - '**/*.rake'
   Exclude:
     - 'tmp/**/*'
+    - 'vendor/**/*'
 
 Layout/AlignHash:
   EnforcedLastArgumentHashStyle: ignore_implicit
