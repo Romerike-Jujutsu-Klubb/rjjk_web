@@ -89,12 +89,6 @@ Rails/InverseOf:
     - 'app/models/rank.rb'
     - 'app/models/survey.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Rails/Presence:
-  Exclude:
-    - 'app/services/nkf_member_import.rb'
-
 # Offense count: 12
 # Configuration parameters: .
 # SupportedStyles: annotated, template, unannotated

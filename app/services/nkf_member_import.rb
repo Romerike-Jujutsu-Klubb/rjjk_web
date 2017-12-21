@@ -191,7 +191,7 @@ class NkfMemberImport
       end
       if trial_row
         trial_row << tid
-        trial_row << (invoice_email.blank? ? nil : invoice_email)
+        trial_row << invoice_email.presence
         trial_row << martial_art
       else
         logger.error '*' * 80
