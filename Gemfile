@@ -10,8 +10,7 @@ end
 gem 'rails', '~>5.1.4'
 
 platform :jruby do
-  gem 'activerecord-jdbcpostgresql-adapter', github: 'jruby/activerecord-jdbc-adapter',
-      branch: 'rails-5'
+  gem 'activerecord-jdbcpostgresql-adapter'
   gem 'therubyrhino'
 end
 
@@ -85,7 +84,7 @@ gem 'simple_workflow'
 gem 'slim-rails'
 gem 'tinymce-rails'
 gem 'tinymce-rails-langs'
-gem 'uglifier'
+gem 'uglifier', '<4'
 gem 'unicode_utils'
 gem 'will_paginate'
 
