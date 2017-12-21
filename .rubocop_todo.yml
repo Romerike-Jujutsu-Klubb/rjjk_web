@@ -14,12 +14,6 @@ Layout/EmptyLinesAroundArguments:
     - 'app/models/skill_card.rb'
     - 'app/models/user_system.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Lint/UnneededDisable:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-
 # Offense count: 233
 Metrics/AbcSize:
   Max: 201
