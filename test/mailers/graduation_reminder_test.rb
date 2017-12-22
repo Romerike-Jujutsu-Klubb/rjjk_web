@@ -31,6 +31,7 @@ class GraduationReminderTest < ActionMailer::TestCase
   end
 
   def test_notify_missing_censors
+    censors(:uwe_voksne_upcoming).update! examiner: false
     assert_mail_stored { GraduationReminder.notify_missing_censors }
 
     mail = UserMessage.pending[0]
