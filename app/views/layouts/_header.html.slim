@@ -58,8 +58,11 @@ javascript:
             slideWidth: $menu.width(),
             dir: posx / Math.abs(posx),
             touchstartx: undefined,
+            touchstarty: undefined,
             touchmovex: undefined,
+            touchmovey: undefined,
             movex: undefined,
+            movey: undefined,
             longTouch: undefined,
 
             start: function (event) {
@@ -71,6 +74,7 @@ javascript:
 
                 // Get the original touch position.
                 this.touchstartx = event.originalEvent.touches[0].pageX;
+                this.touchstarty = event.originalEvent.touches[0].pageY;
 
                 // The movement gets all janky if there's a transition on the elements.
                 this.menu.addClass('moving');
@@ -79,9 +83,11 @@ javascript:
             move: function (event) {
                 // Continuously return touch position.
                 this.touchmovex = event.originalEvent.touches[0].pageX;
+                this.touchmovey = event.originalEvent.touches[0].pageY;
                 // Calculate distance to translate holder.
                 this.movex = this.touchmovex - this.touchstartx;
-                if (this.movex * this.dir < 0) {
+                this.movey = this.touchmovey - this.touchstarty;
+                if (this.movex * this.dir < 0 || Math.abs(this.movey) > Math.abs(this.movex) ) {
                     // Makes the holder stop moving when there is no more content.
                     this.movex = 0;
                 }
@@ -94,7 +100,7 @@ javascript:
 
                 // Calculate the distance swiped.
                 var absMove = Math.abs(this.movex);
-                if (absMove > this.slideWidth / 2 || (absMove > 0 && this.longTouch === false)) {
+                if ((Math.abs(this.movey) <= Math.abs(this.movex)) && (absMove > this.slideWidth / 2 || (absMove > 0 && this.longTouch === false))) {
                     $('.shadow').trigger('click');
                 } else {
                     this.menu.css('transform', 'translate(0px, 0)');
