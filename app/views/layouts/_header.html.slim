@@ -19,6 +19,11 @@
     - unless current_user&.member
       = link_to 'Prøv oss', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', class: 'btn btn-secondary my-2 mx-1 mx-sm-2', target: 'NKF'
 
+css:
+  .moving {
+    transition: transform 0ms !important;
+  }
+
 javascript:
     $('#navBtn').on('click', function () {
         console.log('menu clicked');
@@ -45,55 +50,17 @@ javascript:
         $("body").removeClass("modal-open")
     });
 
-    $(function(){
-    if (navigator.msMaxTouchPoints) {
-
-        $('.subnav').addClass('ms-touch');
-
-        $('.subnav').on('scroll', function () {
-            console.log("scroll");
-            $('.slide-image').css('transform', 'translate3d(-' + (100 - $(this).scrollLeft() / 6) + 'px,0,0)');
-        });
-
-    } else {
-
+    function menu_slider($menu) {
+        var currTrans = $menu.css('-webkit-transform').split(/[()]/)[1];
+        var posx = currTrans.split(',')[4];
         var slider = {
-
-            el: {
-                slider: $(".subnav"),
-                holder: $(".holder"),
-                imgSlide: $(".slide-image")
-            },
-
-            slideWidth: $('.subnav').width(),
+            menu: $menu,
+            slideWidth: $menu.width(),
+            dir: posx / Math.abs(posx),
             touchstartx: undefined,
             touchmovex: undefined,
             movex: undefined,
-            index: 0,
             longTouch: undefined,
-
-            init: function () {
-                this.bindUIEvents();
-            },
-
-            bindUIEvents: function () {
-                console.log('bindUIEvents');
-                $('.subnav').on("touchstart", function (event) {
-                    console.log("touchstart");
-                    slider.start(event);
-                });
-
-                $('.subnav').on("touchmove", function (event) {
-                    console.log("touchmove: " + event);
-                    slider.move(event);
-                });
-
-                $('.subnav').on("touchend", function (event) {
-                    console.log("touchend");
-                    slider.end(event);
-                });
-
-            },
 
             start: function (event) {
                 // Test for flick.
@@ -106,58 +73,49 @@ javascript:
                 this.touchstartx = event.originalEvent.touches[0].pageX;
 
                 // The movement gets all janky if there's a transition on the elements.
-                $('.animate').removeClass('animate');
+                this.menu.addClass('moving');
             },
 
             move: function (event) {
                 // Continuously return touch position.
                 this.touchmovex = event.originalEvent.touches[0].pageX;
                 // Calculate distance to translate holder.
-                this.movex = this.index * this.slideWidth + (this.touchstartx - this.touchmovex);
-                console.log('movex: ' + this.movex);
-                // Defines the speed the images should move at.
-                var panx = 100 - this.movex / 6;
-                if (this.movex < 600) { // Makes the holder stop moving when there is no more content.
-                    $('.subnav').css('transform', 'translate3d(-' + this.movex + 'px,0,0)');
+                this.movex = this.touchmovex - this.touchstartx;
+                if (this.movex * this.dir < 0) {
+                    // Makes the holder stop moving when there is no more content.
+                    this.movex = 0;
                 }
-                if (panx < 100) { // Corrects an edge-case problem where the background image moves without the container moving.
-                    this.el.imgSlide.css('transform', 'translate3d(-' + panx + 'px,0,0)');
-                }
+                this.menu.css('transform', 'translate3d(' + this.movex + 'px,0,0)');
             },
 
             end: function (event) {
-                // Calculate the distance swiped.
-                var absMove = Math.abs(this.index * this.slideWidth - this.movex);
-                // Calculate the index. All other calculations are based on the index.
-                if (absMove > this.slideWidth / 2 || this.longTouch === false) {
-                    if (this.movex > this.index * this.slideWidth && this.index < 2) {
-                        this.index++;
-                    } else if (this.movex < this.index * this.slideWidth && this.index > 0) {
-                        this.index--;
-                    }
-                }
                 // Move and animate the elements.
-                this.el.holder.addClass('animate').css('transform', 'translate3d(-' + this.index * this.slideWidth + 'px,0,0)');
-                this.el.imgSlide.addClass('animate').css('transform', 'translate3d(-' + 100 - this.index * 50 + 'px,0,0)');
+                this.menu.removeClass('moving');
 
+                // Calculate the distance swiped.
+                var absMove = Math.abs(this.movex);
+                if (absMove > this.slideWidth / 2 || this.longTouch === false) {
+                    $('.shadow').trigger('click');
+                } else {
+                    this.menu.css('transform', 'translate(0px, 0)');
+                }
             }
-
         };
+        $menu.on("touchstart", function (event) {
+            slider.start(event);
+        });
 
-        console.log("init");
-        slider.init();
+        $menu.on("touchmove", function (event) {
+            slider.move(event);
+        });
+
+        $menu.on("touchend", function (event) {
+            slider.end(event);
+        });
+        return slider;
     }
 
-    // $('.subnav').on("touchstart", function (event) {
-    //     console.log("touchstart");
-    // });
-    //
-    // $('.subnav').on("click", function (event) {
-    //     console.log("click");
-    // });
-    //
-    // $('body').on("touchstart", function (event) {
-    //     console.log("touchstart");
-    // });
-
+    $(function () {
+        menu_slider($(".subnav"));
+        menu_slider($(".main_right"));
     });
