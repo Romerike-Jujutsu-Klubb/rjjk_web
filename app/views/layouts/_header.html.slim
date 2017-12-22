@@ -94,7 +94,7 @@ javascript:
 
                 // Calculate the distance swiped.
                 var absMove = Math.abs(this.movex);
-                if (absMove > this.slideWidth / 2 || this.longTouch === false) {
+                if (absMove > this.slideWidth / 2 || (absMove > 0 && this.longTouch === false)) {
                     $('.shadow').trigger('click');
                 } else {
                     this.menu.css('transform', 'translate(0px, 0)');
