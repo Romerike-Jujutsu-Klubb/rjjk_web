@@ -63,19 +63,15 @@ javascript:
             touchmovey: undefined,
             movex: undefined,
             movey: undefined,
-            longTouch: undefined,
+            scrolling: undefined,
+            startTime: undefined,
 
             start: function (event) {
                 // Test for flick.
-                this.longTouch = false;
-                setTimeout(function () {
-                    slider.longTouch = true;
-                }, 250);
-
+                this.startTime = new Date();
                 // Get the original touch position.
                 this.touchstartx = event.originalEvent.touches[0].pageX;
                 this.touchstarty = event.originalEvent.touches[0].pageY;
-
                 // The movement gets all janky if there's a transition on the elements.
                 this.menu.addClass('moving');
             },
@@ -87,28 +83,44 @@ javascript:
                 // Calculate distance to translate holder.
                 this.movex = this.touchmovex - this.touchstartx;
                 this.movey = this.touchmovey - this.touchstarty;
-                if (this.movex * this.dir < 0 || Math.abs(this.movey) > Math.abs(this.movex) ) {
+                if (this.scrolling || this.movex * this.dir < 0) {
                     // Makes the holder stop moving when there is no more content.
                     this.movex = 0;
                 }
                 this.menu.css('transform', 'translate3d(' + this.movex + 'px,0,0)');
             },
 
-            end: function (event) {
-                // Move and animate the elements.
-                this.menu.removeClass('moving');
+            scroll: function (event) {
+                this.scrolling = true;
+                this.movex = 0;
+                this.menu.css('transform', 'translate(0px, 0)');
+            },
 
+            end: function (event) {
+                this.menu.removeClass('moving');
                 // Calculate the distance swiped.
                 var absMove = Math.abs(this.movex);
-                if ((Math.abs(this.movey) <= Math.abs(this.movex)) && (absMove > this.slideWidth / 2 || (absMove > 0 && this.longTouch === false))) {
+                var duration = (new Date() - this.startTime);
+                if (!this.scrolling && ((absMove > this.slideWidth / 2) || (absMove > 0 && (duration < 250)))) {
                     $('.shadow').trigger('click');
                 } else {
                     this.menu.css('transform', 'translate(0px, 0)');
                 }
+                this.scrolling = false;
+            },
+
+            cancel: function (event) {
+                this.menu.removeClass('moving');
+                this.menu.css('transform', 'translate(0px, 0)');
+                this.scrolling = false;
             }
         };
         $menu.on("touchstart", function (event) {
             slider.start(event);
+        });
+
+        $menu.scroll(function (event) {
+            slider.scroll(event);
         });
 
         $menu.on("touchmove", function (event) {
@@ -117,6 +129,10 @@ javascript:
 
         $menu.on("touchend", function (event) {
             slider.end(event);
+        });
+
+        $menu.on("touchcancel", function (event) {
+            slider.cancel(event);
         });
         return slider;
     }
