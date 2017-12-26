@@ -7,6 +7,7 @@ class NkfAgent
 
   def initialize
     @agent = Mechanize.new
+    @agent.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
   end
 
   # Returns the front page
