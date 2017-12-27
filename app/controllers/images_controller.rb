@@ -33,6 +33,14 @@ class ImagesController < ApplicationController
     end
   end
 
+  JAVA_IMAGE_EXCPTIONS =
+      if RUBY_ENGINE == 'jruby'
+        [java.lang.NullPointerException, java.lang.OutOfMemoryError, javax.imageio.IIOException,
+         Java::JavaLang::ArrayIndexOutOfBoundsException]
+      else
+        []
+      end
+
   def inline
     @image = Image.find(params[:id])
     if params[:format].nil?
@@ -43,11 +51,18 @@ class ImagesController < ApplicationController
       redirect_to ActionController::Base.helpers.asset_path 'video-icon-tran.png'
       return
     end
+    if @image.content_type == 'application/msword'
+      redirect_to ActionController::Base.helpers.asset_path 'msword-icon.png'
+      return
+    end
+    if @image.content_type == 'application/pdf'
+      redirect_to ActionController::Base.helpers.asset_path 'pdficon_large.png'
+      return
+    end
     begin
       imgs = Magick::ImageList.new
       imgs.from_blob Image.with_image.find(params[:id]).content_data
-    rescue java.lang.NullPointerException, java.lang.OutOfMemoryError,
-           javax.imageio.IIOException, Java::JavaLang::ArrayIndexOutOfBoundsException => e
+    rescue *JAVA_IMAGE_EXCPTIONS => e
       logger.error "Exception loading image: #{e.class} #{e}"
       icon_name = @image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
       redirect_to ActionController::Base.helpers.asset_path icon_name
