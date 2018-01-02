@@ -1,0 +1,40 @@
+- if @new_members.any?
+  h2 Opprettet følgende nye medlemmer (#{@new_members.size})
+  ul
+    - @new_members.each do |m|
+      li = m.name
+
+- if @member_changes.any?
+  h2 Oppdaterte følgende eksisterende medlemmer (#{@member_changes.size})
+
+  ul
+    - @member_changes.each do |m, c|
+      li
+        = m.name
+        ul
+          - c.each do |k, v|
+            li #{k}: #{v[0].inspect} => #{v[1].inspect}
+
+- if @outgoing_changes.any?
+  - if Rails.env.production?
+    h2 Oppdaterte følgende medlemmer hos NKF (#{@outgoing_changes.size})
+  - else
+    h2 Ville ha oppdatert følgende medlemmer hos NKF (#{@outgoing_changes.size})
+
+  ul
+    - @outgoing_changes.each do |m, c|
+      li
+        = m.name
+        ul
+          - c.each do |k, v|
+            li #{k}: #{v.first[0].inspect} => #{v.first[1].inspect}
+
+- if @errors.any?
+  h2 Feil (#{@errors.size})
+  - @errors.each do |operation, record, exception|
+    h3 Operation:
+    =< operation
+    h3 Record:
+    =< record.inspect.html_safe
+    h3 Exception:
+    =< exception

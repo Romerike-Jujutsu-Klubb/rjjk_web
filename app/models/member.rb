@@ -12,7 +12,7 @@ class Member < ApplicationRecord
         ((latitude.blank? || longitude.blank? || m.address_changed? || m.postal_code_changed?))
   }
 
-  belongs_to :user, dependent: :destroy
+  belongs_to :user, dependent: :destroy, required: false
   has_one :last_member_image, -> { order :created_at }, class_name: :MemberImage
   has_one :image, through: :last_member_image
   has_one :next_graduate, -> do
@@ -63,7 +63,8 @@ class Member < ApplicationRecord
         .order(:first_name, :last_name)
   }
 
-  NILLABLE_FIELDS = %i[parent_name phone_home phone_mobile phone_work].freeze
+  NILLABLE_FIELDS =
+      %i[parent_email parent_name phone_home phone_mobile phone_parent phone_work].freeze
   before_validation do
     %i[billing_email email parent_email].each do |e|
       self[e] = self[e].strip.downcase if self[e] && changes[e]

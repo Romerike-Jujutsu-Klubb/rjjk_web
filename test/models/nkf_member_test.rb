@@ -7,7 +7,6 @@ class NkfMemberTest < ActiveSupport::TestCase
     expected = {
       address: 'Bøkeveien 11',
       billing_email: nil,
-      billing_phone_mobile: nil,
       birthdate: Date.parse('1974-04-01'),
       email: 'erik@example.net',
       first_name: 'Erik',
@@ -21,6 +20,7 @@ class NkfMemberTest < ActiveSupport::TestCase
       parent_name: nil,
       phone_home: nil,
       phone_mobile: nil,
+      phone_parent: nil,
       phone_work: nil,
       postal_code: '1470',
     }

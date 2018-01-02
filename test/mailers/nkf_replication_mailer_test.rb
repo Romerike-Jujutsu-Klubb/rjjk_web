@@ -23,17 +23,17 @@ class NkfReplicationMailerTest < ActionMailer::TestCase
   test 'update_members' do
     comparison = mock('comparison')
     comparison.stubs(:new_members)
-        .returns([mock('new_member', first_name: 'Erik', last_name: 'Hansen')])
-    comparison.stubs(:member_changes).returns([[mock('member_changes',
-        first_name: 'Erik', last_name: 'Hansen'), { 'first_name' => 'Hans' }]])
+        .returns([mock('new_member', name: 'Erik Hansen')])
+    comparison.stubs(:member_changes)
+        .returns([[mock('member_changes', name: 'Erik Hansen'), { 'first_name' => 'Hans' }]])
     comparison.stubs(:outgoing_changes).returns([[mock('outgoing_changes',
-        first_name: 'Hans', last_name: 'Eriksen'), { 'email' => { 'H@ans' => 'Ha@ns' } }]])
+        name: 'Hans Eriksen'), { 'email' => { 'H@ans' => 'Ha@ns' } }]])
     comparison.stubs(:errors).returns([])
     mail = NkfReplicationMailer.update_members(comparison)
     assert_equal 'Oppdateringer fra NKF: 1 nye, 1 endrede', mail.subject
     assert_equal ['uwe@kubosch.no'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
-    assert_match(/Opprettet følgende nye medlemmer:\s+Erik Hansen\s+Oppdaterte følgende eksisterende medlemmer:\s+Erik Hansen\s+first_name: "H" => "a"\s+Oppdaterte følgende medlemmer hos NKF:\s+Hans Eriksen\s+email: {"H@ans"=>\"Ha@ns\"}/, # rubocop: disable Metrics/LineLength
-        mail.body.encoded)
+    assert_match(/Opprettet følgende nye medlemmer.*Erik Hansen.*Oppdaterte følgende eksisterende medlemmer.*Erik Hansen.*first_name.*"H" => "a".*Ville ha oppdatert følgende medlemmer hos NKF.*Hans Eriksen.*email.*"H@ans" => \"Ha@ns\"/, # rubocop: disable Metrics/LineLength
+        mail.body.decoded.gsub('&quot;', '"').gsub('&gt;', '>'))
   end
 end

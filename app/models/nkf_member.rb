@@ -14,7 +14,8 @@ class NkfMember < ApplicationRecord
     fodselsdato: { map_to: :birthdate, form_field: :frm_48_v08 },
     foresatte: { map_to: :parent_name, form_field: :frm_48_v23 },
     foresatte_epost: { map_to: :parent_email, form_field: :frm_48_v73 },
-    foresatte_mobil: { map_to: :billing_phone_mobile, form_field: :frm_48_v74 },
+      # FIXME(uwe): Remove import
+    foresatte_mobil: { map_to: :phone_parent, form_field: :frm_48_v74, import: true },
     foresatte_nr_2: { map_to: :parent_2_name, form_field: :frm_48_v72 },
     foresatte_nr_2_mobil: { map_to: :parent_2_mobile, form_field: :frm_48_v75 },
     fornavn: { map_to: :first_name, form_field: :frm_48_v03 },

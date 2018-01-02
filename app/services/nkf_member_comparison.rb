@@ -31,6 +31,12 @@ class NkfMemberComparison
     sync_members(agent, front_page)
   end
 
+  private def sync_members(agent, front_page)
+    @member_changes = @members.map do |m|
+      sync_member_with_agent(agent, front_page, m)
+    end.compact
+  end
+
   def sync_member(member)
     agent, front_page = setup_sync
     sync_member_with_agent(agent, front_page, member)
@@ -49,12 +55,6 @@ class NkfMemberComparison
         @errors << ['New member', nkf_member, e]
         nil
       end
-    end.compact
-  end
-
-  private def sync_members(agent, front_page)
-    @member_changes = @members.map do |m|
-      sync_member_with_agent(agent, front_page, m)
     end.compact
   end
 
@@ -87,6 +87,7 @@ class NkfMemberComparison
         m.changes.each do |attr, (old_value, new_value)|
           attr_sym = attr.to_sym
           _nkf_column, nkf_mapping = NkfMember::FIELD_MAP.find { |_k, v| v[:map_to] == attr_sym }
+          next if nkf_mapping[:import]
           if (nkf_field = nkf_mapping&.fetch(:form_field, nil))
             form_value = old_value.is_a?(Date) ? old_value.strftime('%d.%m.%Y') : old_value
             logger.info "set form value #{nkf_field.inspect} = #{form_value.inspect}"

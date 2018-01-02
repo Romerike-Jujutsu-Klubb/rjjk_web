@@ -1,12 +1,5 @@
 # frozen_string_literal: true
 
-# Separate slow tests and run in CI
-# TODO(uwe):  Maybe use https://github.com/httprb/http.rb ?
-require 'net/http'
-require 'uri'
-require 'erb'
-require 'pp'
-
 class NkfMemberImport
   include ParallelRunner
   include MonitorMixin
@@ -71,31 +64,22 @@ class NkfMemberImport
     @error_records = []
     @cookies = []
 
-    login
+    nkf_agent = NkfAgent.new
+    nkf_agent.login # returns front_page
 
-    search_url = "page/portal/ks_utv/ks_reg_medladm?f_informasjon=skjul&f_utvalg=vis&frm_27_v04=#{NkfAgent::NKF_USERNAME}&frm_27_v05=1&frm_27_v06=1&frm_27_v07=1034&frm_27_v10=162&frm_27_v12=O&frm_27_v15=Romerike%20Jujutsu%20Klubb&frm_27_v16=Stasjonsvn.%2017&frm_27_v17=P.b.%20157&frm_27_v18=2011&frm_27_v20=47326154&frm_27_v22=post%40jujutsu.no&frm_27_v23=70350537706&frm_27_v25=http%3A%2F%2Fjujutsu.no%2F&frm_27_v27=N&frm_27_v29=0&frm_27_v34=%3D&frm_27_v37=-1&frm_27_v44=%3D&frm_27_v45=%3D&frm_27_v46=11&frm_27_v47=11&frm_27_v49=N&frm_27_v50=134002.PNG&frm_27_v53=-1&p_ks_reg_medladm_action=SEARCH&p_page_search=" # rubocop: disable Metrics/LineLength
-    html_search_body = http_get(search_url, true)
-    extra_function_codes = html_search_body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
-    raise html_search_body if extra_function_codes.empty?
-    extra_function_code = extra_function_codes[0][0]
-    session_id = html_search_body.scan(/Download27\('(.*?)'\)/)[0][0]
-    detail_codes = html_search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
-    # TODO: (uwe): Pick up more pages
-    more_pages = html_search_body
-        .scan(%r{<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)</a>})
-        .map { |r| r[0] }
-    logger.debug("more_pages: #{more_pages.inspect}")
-    in_parallel(more_pages) do |page_number|
-      more_search_body = http_get(search_url + page_number, true)
-      synchronize do
-        detail_codes += more_search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
-      end
-    end
+    # TODO(uwe): Change to use Mechanize primitives like `click` and scan using nokogiri (css/xpath)
+    search_body = nkf_agent.search_members
 
+    session_id = search_body.scan(/Download27\('(.*?)'\)/)[0][0]
     raise 'Could not find session id' unless session_id
 
-    @import_rows = get_member_rows(session_id, detail_codes)
-    member_trial_rows = get_member_trial_rows(session_id, extra_function_code)
+    detail_codes = search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
+    @import_rows = get_member_rows(nkf_agent, session_id, detail_codes)
+
+    extra_function_codes = search_body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
+    raise search_body if extra_function_codes.empty?
+    extra_function_code = extra_function_codes[0][0]
+    member_trial_rows = get_member_trial_rows(nkf_agent, session_id, extra_function_code)
 
     import_member_rows(@import_rows)
     import_member_trials(member_trial_rows)
@@ -105,22 +89,23 @@ class NkfMemberImport
 
   private
 
-  def get_member_rows(session_id, detail_codes)
-    members_body = http_get('pls/portal/myports.ks_reg_medladm_proc.download'\
-        "?p_cr_par=#{session_id}")
+  def get_member_rows(nkf_agent, session_id, detail_codes)
+    members_body = nkf_agent
+        .get("pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{session_id}")
+        .body
         .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
     import_rows = members_body.split("\n").map { |line| line.chomp.split(';', -1)[0..-2] }
     import_rows[0] << 'ventekid'
-    in_parallel(detail_codes) { |dc| add_waiting_kid(import_rows, dc) }
+    in_parallel(detail_codes) { |dc| add_waiting_kid(nkf_agent, import_rows, dc) }
     import_rows
   end
 
-  def add_waiting_kid(import_rows, dc)
+  def add_waiting_kid(nkf_agent, import_rows, dc)
     details_body = nil
     3.times do
-      details_body = http_get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}")
+      details_body = nkf_agent.get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}").body
       break if details_body.present?
-      logger.warn 'Empty response when getting waiting KID'
+      logger.error 'Empty response when getting waiting KID'
     end
     unless details_body =~
           /class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
@@ -144,9 +129,9 @@ class NkfMemberImport
     import_rows.find { |ir| ir[0] == member_id } << waiting_kid
   end
 
-  def get_member_trial_rows(session_id, extra_function_code)
+  def get_member_trial_rows(nkf_agent, session_id, extra_function_code)
     trial_csv_url = 'pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + session_id
-    member_trials_csv_body = http_get(trial_csv_url)
+    member_trials_csv_body = nkf_agent.get(trial_csv_url).body
         .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
     member_trial_rows = member_trials_csv_body.split("\n").map { |line| line.chomp.split(';') }
 
@@ -154,7 +139,7 @@ class NkfMemberImport
     (member_trial_rows.size.to_f / 20).ceil.times do |page|
       trial_url = 'page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?' \
           "p_page_search=#{page + 1}&p_cr_par=#{extra_function_code}"
-      member_trials_body = http_get(trial_url)
+      member_trials_body = nkf_agent.get(trial_url).body
       new_trial_ids = member_trials_body.scan(/edit_click28\('(.*?)'\)/).map { |tid| tid[0] }
       trial_ids += new_trial_ids
     end
@@ -167,7 +152,7 @@ class NkfMemberImport
       trial_details_url = 'page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem' \
           "?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=" +
           extra_function_code
-      trial_details_body = http_get(trial_details_url)
+      trial_details_body = nkf_agent.get(trial_details_url).body
           .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
       unless trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
         raise 'Could not find invoice email'
@@ -352,7 +337,7 @@ class NkfMemberImport
       return login_response['location']
     end
   rescue => e
-    logger.error e
+    logger.error "Exception during login: #{e}"
     raise e if backoff > NkfAgent::BACKOFF_LIMIT
     logger.info "Retrying login #{backoff}"
     sleep backoff
@@ -390,7 +375,7 @@ class NkfMemberImport
     begin
       return http_get_response(uri, binary).body
     rescue EOFError, SocketError, SystemCallError, Timeout::Error, Net::HTTPServerException => e
-      logger.error e.message
+      logger.error "Exception getting url: #{url_string}. #{e.message}"
       if backoff > 15.minutes
         if e.respond_to?(:message=)
           e.message = "Backoff limit reached (#{backoff}): #{e.message}"
