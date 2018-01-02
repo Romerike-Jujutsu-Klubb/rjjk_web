@@ -77,9 +77,10 @@ nb:
         account_no: Kontonummer
         address: Adresse
         billing_address: Fakturaadresse
-        billing_email: Foresatte 2's e-post
+        billing_email: Fakturae-post
         billing_name: Fakturanavn (hvis annet enn medlem)
         billing_postal_code: Fakturapostnummer
+        billing_phone_mobile: Fakturatelefon
         billing_type: "Fakturerings\u00ADmåte"
         birthdate: Fødselsdato
         comment: Kommentar
