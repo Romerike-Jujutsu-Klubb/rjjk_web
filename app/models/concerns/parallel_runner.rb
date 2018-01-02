@@ -7,6 +7,7 @@ module ParallelRunner
 
   private
 
+  # TODO(uwe): Use concurrent-ruby instead?
   def in_parallel(values)
     queue = Queue.new
     values.each { |value| queue << value }
