@@ -85,6 +85,7 @@ class NkfMemberComparison
       outgoing_changes_for_member = {}
       member_form = member_page.form('ks_medlprofil') do |form|
         m.changes.each do |attr, (old_value, new_value)|
+          next if old_value.blank? && new_value.blank?
           attr_sym = attr.to_sym
           _nkf_column, nkf_mapping = NkfMember::FIELD_MAP.find { |_k, v| v[:map_to] == attr_sym }
           next if nkf_mapping[:import]
