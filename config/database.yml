@@ -6,6 +6,7 @@ default: &default
   pool: 50
   encoding: utf8
   collation: C
+  temnplate: template0
 
 development:
   <<: *default
