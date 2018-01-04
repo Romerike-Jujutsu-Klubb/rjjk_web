@@ -62,7 +62,7 @@ class NkfMember < ApplicationRecord
     Member
         .where("(left_on IS NULL OR left_on >= '2009-01-01')")
         .where('id NOT IN (SELECT member_id FROM nkf_members WHERE member_id IS NOT NULL)')
-        .order('first_name, last_name').to_a
+        .order('first_name, last_name, id').to_a
   end
 
   def self.update_group_prices
