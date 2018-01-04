@@ -4,6 +4,8 @@ default: &default
   username: postgres
   password:
   pool: 50
+  encoding: utf8
+  collation: C
 
 development:
   <<: *default
