@@ -157,7 +157,6 @@ ul.controls li a.delete {
   background-color: #F4F4F4;
   height: 4rem;
   width: 100%;
-  padding-right: 4rem;
   border-bottom: 1px solid black;
   z-index: 1;
 
@@ -227,13 +226,18 @@ body:not(.wide) .container-fluid {
 #logo_img {
   position: fixed;
   top: 0;
-  right: 0;
+  right: 50%;
   width: 4rem;
   height: 4rem;
   border: 0;
   margin-bottom: 0.5em;
   transition: 0.5s;
   z-index: 2;
+  margin-right: 1.7rem;
+
+  @media (min-width: 448px) {
+    margin-right: -2rem;
+  }
 }
 
 .main_right img {
@@ -255,9 +259,12 @@ body:not(.wide) .container-fluid {
   }
 
   #logo_img {
+    top: 0;
+    right: 0;
     width: 150px;
     height: 150px;
     transition: 0.5s;
+    margin-right: 0;
   }
 
   .main_right {
