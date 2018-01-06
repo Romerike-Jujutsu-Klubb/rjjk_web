@@ -81,7 +81,6 @@ class NkfMemberComparison
       member_page = agent.get(<<~URL)
         http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_medlprofil?p_cr_par=#{token}
       URL
-
       outgoing_changes_for_member = {}
       member_form = member_page.form('ks_medlprofil') do |form|
         m.changes.each do |attr, (old_value, new_value)|
@@ -100,9 +99,7 @@ class NkfMemberComparison
         end
         @outgoing_changes << [m, outgoing_changes_for_member] if outgoing_changes_for_member.any?
       end
-
       logger.info "outgoing_changes: #{outgoing_changes_for_member}"
-
       if Rails.env.production? && outgoing_changes_for_member.any?
         m.restore_attributes(outgoing_changes_for_member.keys)
         logger.info 'Submitting form to NKF'
@@ -110,7 +107,6 @@ class NkfMemberComparison
         member_form['p_ks_medlprofil_action'] = 'OK'
         member_form.submit
       end
-
       changes = m.changes
       unless changes.empty?
         m.save!
