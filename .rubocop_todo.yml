@@ -57,13 +57,6 @@ Rails/CreateTableWithTimestamps:
     - 'db/migrate/20101027061727_create_trial_attendances.rb'
     - 'db/migrate/20120918170431_create_event_groups.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Rails/EnvironmentComparison:
-  Exclude:
-    - 'app/mailers/information_page_mailer.rb'
-    - 'app/mailers/instruction_mailer.rb'
-
 # Offense count: 24
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
