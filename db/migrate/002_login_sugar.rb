@@ -15,6 +15,7 @@ class LoginSugar < ActiveRecord::Migration
       t.column :token_expiry, :datetime, default: nil
       t.column :deleted, :integer, default: 0
       t.column :delete_after, :datetime, default: nil
+      t.timestamps
     end
   end
 

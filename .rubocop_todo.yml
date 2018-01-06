@@ -43,20 +43,6 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 27
 
-# Offense count: 13
-# Configuration parameters: Include.
-# Include: db/migrate/*.rb
-Rails/CreateTableWithTimestamps:
-  Exclude:
-    - 'db/migrate/001_news_item.rb'
-    - 'db/migrate/002_login_sugar.rb'
-    - 'db/migrate/006_create_ranks.rb'
-    - 'db/migrate/007_create_images.rb'
-    - 'db/migrate/20080828193209_add_martial_arts_members.rb'
-    - 'db/migrate/20080902204348_ensure_unique_group_memberships.rb'
-    - 'db/migrate/20101027061727_create_trial_attendances.rb'
-    - 'db/migrate/20120918170431_create_event_groups.rb'
-
 # Offense count: 24
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb

@@ -5,6 +5,7 @@ class AddMartialArtsMembers < ActiveRecord::Migration
     create_table :martial_arts_members, id: false do |t|
       t.integer :martial_art_id, null: false
       t.integer :member_id, null: false
+      t.timestamps
     end
     Member.all.each do |m|
       ma = MartialArt.find_by(family: m.department || 'Jujutsu')

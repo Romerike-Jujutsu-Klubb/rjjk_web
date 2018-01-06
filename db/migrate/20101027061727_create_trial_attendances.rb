@@ -7,8 +7,7 @@ class CreateTrialAttendances < ActiveRecord::Migration
       t.integer 'group_schedule_id', null: false
       t.integer 'year', null: false
       t.integer 'week', null: false
-      t.datetime 'created_at'
-      t.datetime 'updated_at'
+      t.timestamps
     end
 
     add_index 'trial_attendances', %w[nkf_member_trial_id group_schedule_id year week],

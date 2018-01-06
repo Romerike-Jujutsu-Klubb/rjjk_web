@@ -5,15 +5,13 @@ class NewsItem < ActiveRecord::Migration
     create_table 'news_items' do |t|
       t.column 'title', :string, limit: 32, null: false
       t.column 'body', :text
-      t.column 'created_at', :datetime
-      t.column 'updated_at', :datetime
+      t.timestamps
     end
     create_table 'information_pages' do |t|
       t.column 'parent_id', :integer
       t.column 'title', :string, limit: 32, null: false
       t.column 'body', :text
-      t.column 'created_at', :datetime
-      t.column 'updated_at', :datetime
+      t.timestamps
     end
   end
 

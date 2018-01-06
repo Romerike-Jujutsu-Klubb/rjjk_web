@@ -19,6 +19,7 @@ class EnsureUniqueGroupMemberships < ActiveRecord::Migration
     create_table :martial_arts_members, id: false do |t|
       t.integer :martial_art_id, null: false
       t.integer :member_id, null: false
+      t.timestamps
     end
     Member.all.each do |m|
       m.martial_arts = m.groups.map(&:martial_art)

@@ -4,20 +4,24 @@ class CreateRanks < ActiveRecord::Migration
   def self.up
     create_table :martial_arts, force: true do |t|
       t.column :name, :string, limit: 16, null: false
+      t.timestamps
     end
     create_table :ranks, force: true  do |t|
       t.column :name, :string, limit: 16, null: false
       t.column :colour, :string, limit: 16, null: false
       t.column :position, :integer, null: false
       t.column :martial_art_id, :integer, null: false
+      t.timestamps
     end
     create_table :graduations, force: true do |t|
       t.column :held_on, :date, null: false
       t.column :martial_art_id, :integer, null: false
+      t.timestamps
     end
     create_table :censors, force: true do |t|
       t.column :graduation_id, :integer, null: false
       t.column :member_id, :integer, null: false
+      t.timestamps
     end
     create_table :graduates, force: true do |t|
       t.column :member_id, :integer, null: false
@@ -26,6 +30,7 @@ class CreateRanks < ActiveRecord::Migration
       t.column :rank_id, :integer, null: false
       t.column :paid_graduation, :boolean, null: false
       t.column :paid_belt, :boolean, null: false
+      t.timestamps
     end
 
     MartialArt.create! name: 'Kei Wa Ryu'
