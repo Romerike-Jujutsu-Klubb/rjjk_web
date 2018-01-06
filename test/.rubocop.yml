@@ -1,4 +1,4 @@
 inherit_from: ../.rubocop.yml
 
 Metrics/LineLength:
-  Max: 123
+  Max: 118

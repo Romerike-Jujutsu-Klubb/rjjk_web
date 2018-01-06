@@ -85,13 +85,14 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_equal 'Invitasjon til å være eksaminator', mail.subject
     assert_match(/Hei Uwe!/, mail.body)
     assert_match(
-        /Jujutsu Klubb vil med dette invitere deg til å være\s+eksaminator\s+på\s+gradering for Voksne\s+den 2013-10-24./,
+        /Jujutsu Klubb vil med dette invitere deg til å være\s+eksaminator\s+på\s+gradering for Voksne\s+den 2013-10-24./, # rubocop: disable Metrics/LineLength
         mail.body
     )
-    assert_match(/Har du mulighet til delta\?  Klikk på en av linkene nedenfor for å gi beskjed\n  om du kan eller ikke./,
+    assert_match(/Har du mulighet til delta\?  Klikk på en av linkene nedenfor for å gi beskjed\n  om du kan eller ikke./, # rubocop: disable Metrics/LineLength
         mail.body)
     assert_match(%r{<a href="https://example.com/censors/306982868/confirm">Jeg kommer :\)</a>}, mail.body)
-    assert_match(%r{<a href="https://example.com/censors/306982868/decline">Beklager, jeg kommer ikke.</a>}, mail.body)
+    assert_match(%r{<a href="https://example.com/censors/306982868/decline">Beklager, jeg kommer ikke.</a>},
+        mail.body)
   end
 
   def test_notify_missing_locks
@@ -106,7 +107,8 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(%r{<h1>Hei Uwe Kubosch!</h1>}, mail.body)
     assert_match(/Det er på tide å legge inn kandidater på graderingen for Voksne 2013-10-24 og låse /, mail.body)
     assert_match(/oppsettet slik at kandidatene kan få innkalling til gradering./, mail.body)
-    assert_match(%r{Gå til <a href="https://example.com/graduations/812466982/edit">graderingen</a>, legg inn }, mail.body)
+    assert_match(%r{Gå til <a href="https://example.com/graduations/812466982/edit">graderingen</a>, legg inn },
+        mail.body)
     assert_match(/kandidatene, eksaminator og sensorer, og klikk så på "Send innkalling"./, mail.body)
   end
 
@@ -125,10 +127,13 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_equal 'Invitasjon til gradering', mail.subject
     assert_match(/Hei Newbie Neuer!/, mail.body)
     assert_match(/Du er satt opp til gradering torsdag 24. oktober/, mail.body)
-    assert_match(/Har du mulighet til delta\?  Klikk på en av linkene nedenfor for å gi beskjed om du kan eller ikke./,
-        mail.body)
+    assert_match(
+        /Har du mulighet til delta\?  Klikk på en av linkene nedenfor for å gi beskjed om du kan eller ikke./,
+        mail.body
+    )
     assert_match(%r{<a href="https://example.com/graduates/397971580/confirm">Jeg kommer :\)</a>}, mail.body)
-    assert_match(%r{<a href="https://example.com/graduates/397971580/decline">Beklager, jeg kommer ikke.</a>}, mail.body)
+    assert_match(%r{<a href="https://example.com/graduates/397971580/decline">Beklager, jeg kommer ikke.</a>},
+        mail.body)
     assert_match(/Krav til gradering er 10-20 treninger. Vi har registrert 1 trening på deg siden du startet./,
         mail.body)
   end
