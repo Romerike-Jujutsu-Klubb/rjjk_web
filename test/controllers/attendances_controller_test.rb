@@ -75,7 +75,7 @@ class AttendancesControllerTest < ActionController::TestCase
       year: practice.year, week: practice.week, status: :X
     }
     assert_response :redirect
-    assert_redirected_to 'http://test.host/mitt/oppmote'
+    assert_redirected_to 'http://test.host/mitt/oppmote/911313225'
   end
 
   def test_should_announce_toggle_off

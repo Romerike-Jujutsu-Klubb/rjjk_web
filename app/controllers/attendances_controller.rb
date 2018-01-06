@@ -219,8 +219,8 @@ class AttendancesController < ApplicationController
       end
     end
     @group_schedules = @group_schedules.sort_by(&:weekday)
-    if flash[:attendance_id]
-      @reviewed_attendance = Attendance.find(flash[:attendance_id])
+    if (reviewed_attendance_id = params[:reviewed_attendance_id])
+      @reviewed_attendance = Attendance.find(reviewed_attendance_id)
       @weeks.unshift [@reviewed_attendance.date.cwyear, @reviewed_attendance.date.cweek]
       @weeks.sort!.uniq!
     end
@@ -293,8 +293,7 @@ class AttendancesController < ApplicationController
     else
       flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  " \
           "#{t(:attendances)[@attendance.status.to_sym]}"
-      flash[:attendance_id] = @attendance.id
-      redirect_to attendance_plan_path
+      redirect_to attendance_plan_path(reviewed_attendance_id: @attendance.id)
     end
   end
 

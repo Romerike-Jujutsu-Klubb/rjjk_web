@@ -56,15 +56,17 @@
       <% end %>
     </div>
   </div>
-  <%= javascript_tag do %>
-      $(function() {
-          $('#button_<%= year %>_<%= week %>_<%= gs.id %>').popover({content: 'Oppmøte registrert', placement: 'top', container: 'body'});
-          $('#button_<%= year %>_<%= week %>_<%= gs.id %>').popover('show');
-          $('body').one('click', function(){
-              $('#button_<%= year %>_<%= week %>_<%= gs.id %>').popover('hide')
-      });
-      });
-  <% end if @reviewed_attendance && @reviewed_attendance.group_schedule == gs && @reviewed_attendance.practice.year == year && @reviewed_attendance.practice.week == week %>
+  <% if @reviewed_attendance && @reviewed_attendance.group_schedule == gs && @reviewed_attendance.practice.year == year && @reviewed_attendance.practice.week == week %>
+    <%= javascript_tag do %>
+        $(function() {
+            $('#button_<%= year %>_<%= week %>_<%= gs.id %>').popover({content: 'Oppmøte registrert', placement: 'top', container: 'body'});
+            $('#button_<%= year %>_<%= week %>_<%= gs.id %>').popover('show');
+            $('body').one('click', function(){
+                $('#button_<%= year %>_<%= week %>_<%= gs.id %>').popover('hide')
+        });
+        });
+    <% end %>
+  <% end %>
 
   <div class="clearfix"></div>
 
