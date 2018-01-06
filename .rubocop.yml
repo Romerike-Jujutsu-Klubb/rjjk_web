@@ -95,6 +95,9 @@ Style/NumericLiterals:
 Style/NumericPredicate:
   Enabled: false
 
+Style/RescueStandardError:
+  EnforcedStyle: implicit
+
 Style/SafeNavigation:
   ConvertCodeThatCanStartToReturnNil: true
 
