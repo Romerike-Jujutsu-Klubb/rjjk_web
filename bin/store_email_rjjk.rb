@@ -141,9 +141,7 @@ rescue Exception => e # rubocop: disable Lint/RescueException
   exit EX_TEMPFAIL
 end
 
-if prod_recipients.any?
-  create_record('production', from, prod_recipients, content)
-end
+create_record('production', from, prod_recipients, content) if prod_recipients.any?
 
 create_record('beta', from, beta_recipients, content) if beta_recipients.any?
 

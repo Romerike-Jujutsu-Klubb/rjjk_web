@@ -302,9 +302,7 @@ class AttendancesController < ApplicationController
   end
 
   def form
-    if params[:year] && params[:month]
-      @date = Date.parse("#{params[:year]}-#{params[:month]}-01")
-    end
+    @date = Date.parse("#{params[:year]}-#{params[:month]}-01") if params[:year] && params[:month]
     @date ||= Date.current
 
     first_date = Date.new(@date.year, @date.month, 1)

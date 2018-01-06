@@ -27,12 +27,8 @@ class Image < ApplicationRecord
       errors.add :file, 'Dette bildet er allerede lastet opp.'
     end
 
-    if public_changed? && !admin?
-      errors.add :public, 'kan bare endres av en administrator'
-    end
-    if approved_changed? && !admin?
-      errors.add :approved, 'kan bare endres av en administrator'
-    end
+    errors.add :public, 'kan bare endres av en administrator' if public_changed? && !admin?
+    errors.add :approved, 'kan bare endres av en administrator' if approved_changed? && !admin?
   end
 
   after_create do |_|

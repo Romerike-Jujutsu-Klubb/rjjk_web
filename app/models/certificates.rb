@@ -171,9 +171,7 @@ class Certificates < Prawn::Document
         write_censor(c[:censor1], 0)
         write_censor(c[:censor2], 35)
         write_censor(c[:censor3], 65, 8)
-        unless c[:group] == 'Grizzly'
-          draw_text c[:group], at: [120 + 36, 300 + 36], size: 18
-        end
+        draw_text c[:group], at: [120 + 36, 300 + 36], size: 18 unless c[:group] == 'Grizzly'
         start_new_page
         stamp 'border'
       end

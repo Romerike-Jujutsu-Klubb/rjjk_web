@@ -14,9 +14,7 @@ class AddDecorationToRanks < ActiveRecord::Migration
       end
       dir.down do
         Rank.order(:position).each do |rank|
-          if rank.decoration
-            rank.update! colour: "#{rank.colour} #{rank.decoration}}"
-          end
+          rank.update! colour: "#{rank.colour} #{rank.decoration}}" if rank.decoration
         end
       end
     end

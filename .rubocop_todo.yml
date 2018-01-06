@@ -72,18 +72,6 @@ Rails/InverseOf:
     - 'app/models/member.rb'
     - 'app/models/rank.rb'
 
-# Offense count: 8
-# Cop supports --auto-correct.
-Style/IfUnlessModifier:
-  Exclude:
-    - 'app/controllers/attendances_controller.rb'
-    - 'app/controllers/user_messages_controller.rb'
-    - 'app/models/certificates.rb'
-    - 'app/models/image.rb'
-    - 'bin/store_email_rjjk.rb'
-    - 'db/migrate/20150617115412_add_decoration_to_ranks.rb'
-    - 'test/test_helper.rb'
-
 # Offense count: 29
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
