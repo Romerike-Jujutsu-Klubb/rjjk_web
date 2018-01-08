@@ -36,19 +36,19 @@
   %>
   <div id="button_<%= year %>_<%= week %>_<%= gs.id %>" class="btn-group">
     <%= link_to(link_target, method: :post, remote: !initial_disabled,
-            id: "btn_#{year}_#{week}_#{gs.id}", class: "btn btn-outline-#{initial_class}",
+            id: "btn_#{year}_#{week}_#{gs.id}", class: "btn btn-#{initial_class}",
             style: 'width: 7.5em', onclick: initial_disabled ? 'return false' : nil,
             data: {replace: initial_disabled || "#practice_#{week}_#{gs.id}"}) do %>
         <i class="fa fa-<%= initial_icon %>"></i>
         <span><%= initial_text %></span>
     <% end %>
-    <button type="button" class="<%= 'disabled' if initial_disabled %> btn btn-outline-dark dropdown-toggle dropdown-toggle-split" <%= 'data-toggle="dropdown"'.html_safe unless initial_disabled %>>
+    <button id="btn_<%="#{year}_#{week}_#{gs.id}"%>_tgl" type="button" class="<%= 'disabled' if initial_disabled %> btn btn-<%=initial_class%> dropdown-toggle dropdown-toggle-split" <%= 'data-toggle="dropdown"'.html_safe unless initial_disabled %>>
     </button>
-    <div class="dropdown-menu">
+    <div class="dropdown-menu dropdown-menu-right">
       <% (practice_passed ? Attendance::PAST_STATES : Attendance::STATES).each do |state, link_text, link_icon, link_class| %>
           <%= link_to({ controller: :attendances, action: :announce, year: year, week: week, group_schedule_id: gs.id, status: state },
-              method: :post, remote: true, id: "btn_#{year}_#{week}_#{gs.id}",
-              onclick: "$('#btn_#{year}_#{week}_#{gs.id}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('btn-#{link_class}').html($(this).html()); $('[data-toggle=dropdown]').parent().removeClass('open'); return true",
+              method: :post, remote: true,
+              onclick: "$('#btn_#{year}_#{week}_#{gs.id}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('btn-#{link_class}').html($(this).html()); $(this).closest('.btn-group.show').find('[data-toggle=dropdown]').dropdown('toggle'); $(this).closest('.btn-group').find('[data-toggle=dropdown]').removeClass('btn-info btn-success btn-warning btn-danger').addClass('btn-#{link_class}'); return true",
               class: "dropdown-item text-#{link_class}") do %>
               <i class="fa fa-<%= link_icon %>"></i>
               <span><%= link_text %></span>
@@ -56,6 +56,7 @@
       <% end %>
     </div>
   </div>
+
   <% if @reviewed_attendance && @reviewed_attendance.group_schedule == gs && @reviewed_attendance.practice.year == year && @reviewed_attendance.practice.week == week %>
     <%= javascript_tag do %>
         $(function() {
