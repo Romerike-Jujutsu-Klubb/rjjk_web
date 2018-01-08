@@ -22,4 +22,9 @@ end
 
 task 'db:schema:dump' do
   sh 'rubocop --auto-correct db/schema.rb > /dev/null'
+  filename = 'db/schema.rb'
+  schema = File.read(filename)
+      .gsub(', id: :serial', '')
+      .gsub(/, id: :integer, default: -> { "nextval\('instructions_id_seq'::regclass\)" }/, '')
+  File.write(filename, schema)
 end

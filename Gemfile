@@ -70,13 +70,6 @@ gem 'rake'
 gem 'ri_cal'
 gem 'rufus-scheduler'
 gem 'sass-rails'
-gem 'schema_auto_foreign_keys'
-
-# FIXME(uwe): Remove this line when there is a stable release supporting AR 5.1
-gem 'schema_plus_foreign_keys', github: 'SchemaPlus/schema_plus_foreign_keys',
-    branch: 'AR51-support'
-# EMXIF
-
 # gem 'script_relocator' # TODO(uwe): Messes up the design.  Why?!
 gem 'serviceworker-rails'
 gem 'simple_drilldown'
