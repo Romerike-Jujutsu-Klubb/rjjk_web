@@ -24,15 +24,21 @@ class IncomingEmailProcessor
       email = Mail.read_from_string(raw_email.content)
       logger.debug "email.header['X-Envelope-From']: #{email.header['X-Envelope-From'].inspect}"
       logger.debug "email.header['X-Envelope-To']: #{email.header['X-Envelope-To'].inspect}"
-      logger.debug "to: #{email.to}"
+      logger.debug "to: #{email.to.inspect}"
       logger.debug "smtp_envelope_to: #{email.smtp_envelope_to.inspect}"
       logger.debug "cc: #{email.cc}"
       logger.debug "bcc: #{email.bcc}"
       sent = false
       postponed = false
 
-      sender = email.header['X-Envelope-From'].try(:to_s) || email.from[0]
+      sender = (begin
+                  email.header['X-Envelope-From']&.to_s
+                rescue
+                  nil
+                end) || email.from&.first
       logger.debug "sender: #{sender.inspect}"
+      next postpone_email(raw_email) unless sender
+
       original_recipients = email.header['X-Envelope-To'].try(:to_s).try(:split, ', ') ||
           email.to || []
       logger.debug "original_recipients: #{original_recipients.inspect}"
@@ -94,10 +100,7 @@ class IncomingEmailProcessor
         logger.info 'Mail processed OK!'
         raw_email.update! processed_at: Time.current
       end
-      if postponed
-        logger.info 'Mail postponed.'
-        raw_email.update! postponed_at: Time.current
-      end
+      postpone_email(raw_email) if postponed
     end
   end
 
@@ -107,5 +110,10 @@ class IncomingEmailProcessor
     subject.gsub!(/#{PREFIX_PATTERN * 2}+/, '\1')
     subject.prepend("#{tags.uniq.map { |t| "[#{t}]" }.join} ") if tags.any?
     subject
+  end
+
+  def self.postpone_email(raw_email)
+    logger.info 'Mail postponed.'
+    raw_email.update! postponed_at: Time.current
   end
 end
