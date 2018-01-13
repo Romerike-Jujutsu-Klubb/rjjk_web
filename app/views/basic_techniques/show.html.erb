@@ -18,5 +18,17 @@
 <% end %>
 
 <br/>
+
+<h3>Links</h3>
+
+<ul>
+  <% @basic_technique.basic_technique_links.each do |link| %>
+    <li><%=link_to link.title.presence || link.url, link.url%></li>
+  <% end %>
+
+</ul>
+
+<%= detour_to 'Add link', new_basic_technique_link_path(basic_technique_link: {basic_technique_id: @basic_technique.id}) %>
+
 <%= link_to('Endre', edit_basic_technique_path(@basic_technique), class: 'btn btn-primary') if current_user.technical_committy? %>
 <%= back_or_link_to 'Tilbake', @basic_technique.rank, class: 'btn btn-secondary' %>

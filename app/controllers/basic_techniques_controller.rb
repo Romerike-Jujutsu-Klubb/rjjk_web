@@ -7,27 +7,16 @@ class BasicTechniquesController < ApplicationController
 
   def index
     @basic_techniques = BasicTechnique.includes(:rank).order(:name).to_a
-    respond_to do |format|
-      format.html
-      format.json { render json: @basic_techniques }
-    end
   end
 
   def show
     @basic_technique = BasicTechnique.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.json { render json: @basic_technique }
-    end
   end
 
   def new
     @basic_technique = BasicTechnique.new
     load_form_data
-    respond_to do |format|
-      format.html { render :new }
-      format.json { render json: @basic_technique }
-    end
+    render :new
   end
 
   def edit
@@ -38,41 +27,26 @@ class BasicTechniquesController < ApplicationController
 
   def create
     @basic_technique = BasicTechnique.new(params[:basic_technique])
-    respond_to do |format|
-      if @basic_technique.save
-        format.html do
-          redirect_to @basic_technique, notice: 'Basic technique was successfully created.'
-        end
-        format.json { render json: @basic_technique, status: :created, location: @basic_technique }
-      else
-        format.html { new }
-        format.json { render json: @basic_technique.errors, status: :unprocessable_entity }
-      end
+    if @basic_technique.save
+      redirect_to @basic_technique, notice: 'Basic technique was successfully created.'
+    else
+      new
     end
   end
 
   def update
     @basic_technique = BasicTechnique.find(params[:id])
-    respond_to do |format|
-      if @basic_technique.update_attributes(params[:basic_technique])
-        format.html do
-          redirect_to @basic_technique, notice: 'Basic technique was successfully updated.'
-        end
-        format.json { head :no_content }
-      else
-        format.html { edit }
-        format.json { render json: @basic_technique.errors, status: :unprocessable_entity }
-      end
+    if @basic_technique.update_attributes(params[:basic_technique])
+      redirect_to @basic_technique, notice: 'Basic technique was successfully updated.'
+    else
+      edit
     end
   end
 
   def destroy
     @basic_technique = BasicTechnique.find(params[:id])
     @basic_technique.destroy
-    respond_to do |format|
-      format.html { redirect_to basic_techniques_url }
-      format.json { head :no_content }
-    end
+    redirect_to basic_techniques_url
   end
 
   private

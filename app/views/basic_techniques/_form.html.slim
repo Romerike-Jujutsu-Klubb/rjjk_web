@@ -1,0 +1,8 @@
+= bootstrap_form_for @basic_technique do |f|
+  = f.text_field :name
+  = f.text_field :translation
+  = f.select :waza_id, @wazas.to_options, prompt:'Velg waza'
+  = f.text_area :description
+  = f.select :rank_id, @ranks.to_options, {}, prompt: 'Velg grad'
+  .float-right
+    = f.primary
