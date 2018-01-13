@@ -39,12 +39,13 @@
         ' har meldt fravær.
     - else
       .input-group.input-group-sm
-        span.input-group-addon Kommer du?
-        span.input-group-btn
+        .input-group-prepend
+          span.input-group-text Kommer du?
+        .input-group-append
           = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::WILL_ATTEND), \
               class: 'btn btn-secondary', title: 'Kommer!', method: :post)
             i.fa.fa-thumbs-up
-        span.input-group-btn
+        .input-group-append
           = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT), \
               class: 'btn btn-secondary', title: 'Kan ikke...', method: :post)
             i.fa.fa-thumbs-down

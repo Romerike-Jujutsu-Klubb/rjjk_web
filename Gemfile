@@ -28,7 +28,7 @@ gem 'bcrypt'
 gem 'bootstrap'
 gem 'bootstrap-chosen-rails', github: 'donv/bootstrap-chosen-rails'
 gem 'bootstrap3-datetimepicker-rails'
-gem 'bootstrap_form', github: 'bootstrap-ruby/rails-bootstrap-forms', branch: 'bootstrap-v4'
+gem 'bootstrap_form', github: 'bootstrap-ruby/rails-bootstrap-forms'
 # https://mdbootstrap.com/javascript/sidenav/
 # https://github.com/flatlogic/awesome-bootstrap-checkbox
 # gem "bootstrap-select-rails"
