@@ -9,6 +9,7 @@ Rails.application.configure do
   config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
   config.action_mailer.asset_host = 'https://jujutsu.no'
   config.action_mailer.default_url_options = { protocol: 'https', host: 'jujutsu.no' }
+  config.action_mailer.delivery_method = :sendmail
   config.action_mailer.perform_caching = false
   # config.action_mailer.raise_delivery_errors = false
   # config.active_job.queue_adapter     = :resque
