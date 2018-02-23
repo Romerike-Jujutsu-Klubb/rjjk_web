@@ -13,7 +13,7 @@
     .row
       .col-sm-6
         = f.select :verified, [['Nei', false], ['Ja', true]], \
-          help: link_to('Send e-post med login link', {controller: :login, action: :forgot_password, user: {email: user.email}}, method: :post)
+          help: link_to('Send e-post med login link', send_login_link_path(user: {email: user.email}), method: :post)
       .col-sm-6
         = f.select :role, [['Medlem', nil], ['Administrator', UserSystem::ADMIN_ROLE]]
   - if submit
