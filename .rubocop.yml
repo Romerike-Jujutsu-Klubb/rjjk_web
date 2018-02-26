@@ -51,7 +51,7 @@ Metrics/BlockLength:
     - db/schema.rb
 
 Metrics/LineLength:
-  Max: 100
+  Max: 107
   AllowHeredoc: true
   AllowURI: true
   IgnoreCopDirectives: true
