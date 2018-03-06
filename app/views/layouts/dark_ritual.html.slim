@@ -46,7 +46,7 @@ html lang="nb"
         ga('send', 'pageview');
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = csrf_meta_tags
-
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   body class=(:wide if @content_width)
     #menuShadow.shadow.w-100.h-100.d-xl-none style="position: fixed; left:0;top:0; z-index:5;opacity: 0;visibility:hidden;background-color:black"
@@ -69,4 +69,3 @@ html lang="nb"
         .col-lg-4.col-12.center Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> &amp; <a href="http://validator.w3.org/check?uri=referer">HTML</a>
         .col-lg-4.col-12.right Template design by <a href="http://templates.arcsin.se">Arcsin</a>
     = yield :modals
-    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
