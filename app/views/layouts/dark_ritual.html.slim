@@ -9,6 +9,26 @@ html lang="nb"
     meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"
     meta http-equiv="x-ua-compatible" content="ie=edge"
     link rel="manifest" href='/manifest.json'
+
+    / Google optimize
+    css: .async-hide { opacity: 0 !important}
+    javascript:
+        (function (a, s, y, n, c, h, i, d, e) {
+            s.className += ' ' + y;
+            h.start = 1 * new Date;
+            h.end = i = function () {
+                s.className = s.className.replace(RegExp(' ?' + y), '')
+            };
+            (a[n] = a[n] || []).hide = h;
+            setTimeout(function () {
+                i();
+                h.end = null
+            }, c);
+            h.timeout = c;
+        })(window, document.documentElement, 'async-hide', 'dataLayer', 4000,
+            {'GTM-PPCBF53': true});
+
+    / Google analytics
     javascript:
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
