@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180106220051) do
+ActiveRecord::Schema.define(version: 20171129124023) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -356,16 +356,6 @@ ActiveRecord::Schema.define(version: 20180106220051) do
     t.index ['member_id'], name: 'fk__member_images_member_id'
   end
 
-  create_table 'member_users', force: :cascade do |t|
-    t.bigint 'member_id', null: false
-    t.bigint 'user_id', null: false
-    t.string 'relationship', limit: 16, null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['member_id'], name: 'index_member_users_on_member_id'
-    t.index ['user_id'], name: 'index_member_users_on_user_id'
-  end
-
   create_table 'members', force: :cascade do |t|
     t.string 'first_name', limit: 100, default: '', null: false
     t.string 'last_name', limit: 100, default: '', null: false
@@ -655,14 +645,6 @@ ActiveRecord::Schema.define(version: 20180106220051) do
     t.index ['practice_id'], name: 'fk__trial_attendances_practice_id'
   end
 
-  create_table 'user_emails', force: :cascade do |t|
-    t.bigint 'user_id', null: false
-    t.string 'email', limit: 64, null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['user_id'], name: 'index_user_emails_on_user_id'
-  end
-
   create_table 'user_images', force: :cascade do |t|
     t.integer 'user_id', null: false
     t.integer 'image_id', null: false
@@ -743,8 +725,6 @@ ActiveRecord::Schema.define(version: 20180106220051) do
   add_foreign_key 'information_pages', 'information_pages', column: 'parent_id', name: 'information_pages_parent_id_fkey'
   add_foreign_key 'member_images', 'images', name: 'fk_member_images_image_id'
   add_foreign_key 'member_images', 'members', name: 'fk_member_images_member_id'
-  add_foreign_key 'member_users', 'members'
-  add_foreign_key 'member_users', 'users'
   add_foreign_key 'news_item_likes', 'news_items', name: 'fk_news_item_likes_news_item_id'
   add_foreign_key 'news_item_likes', 'users', name: 'fk_news_item_likes_user_id'
   add_foreign_key 'news_items', 'users', column: 'created_by', name: 'news_items_created_by_fkey'
@@ -762,6 +742,5 @@ ActiveRecord::Schema.define(version: 20180106220051) do
   add_foreign_key 'technique_applications', 'ranks', name: 'fk_technique_applications_rank_id'
   add_foreign_key 'trial_attendances', 'nkf_member_trials', name: 'trial_attendances_nkf_member_trial_id_fkey'
   add_foreign_key 'trial_attendances', 'practices', name: 'fk_trial_attendances_practice_id'
-  add_foreign_key 'user_emails', 'users'
   add_foreign_key 'user_messages', 'users', name: 'fk_user_messages_user_id'
 end
