@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171129124023) do
+ActiveRecord::Schema.define(version: 20180308161751) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -486,9 +486,9 @@ ActiveRecord::Schema.define(version: 20171129124023) do
     t.string 'kjonn', limit: 6, null: false
     t.string 'foresatte', limit: 64
     t.string 'foresatte_epost', limit: 64
-    t.string 'foresatte_mobil', limit: 16
+    t.string 'foresatte_mobil', limit: 255
     t.string 'foresatte_nr_2', limit: 64
-    t.string 'foresatte_nr_2_mobil', limit: 16
+    t.string 'foresatte_nr_2_mobil', limit: 255
   end
 
   create_table 'page_aliases', force: :cascade do |t|
