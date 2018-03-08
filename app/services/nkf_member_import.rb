@@ -94,7 +94,8 @@ class NkfMemberImport
         .get("pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{session_id}")
         .body
         .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
-    import_rows = members_body.split("\n").map { |line| line.chomp.split(';', -1)[0..-2] }
+    import_rows = members_body.split("\n")
+        .map { |line| CGI.unescapeHTML(line.chomp).gsub(/[^[:print:]]/, '').split(';', -1)[0..-2] }
     import_rows[0] << 'ventekid'
     in_parallel(detail_codes) { |dc| add_waiting_kid(nkf_agent, import_rows, dc) }
     import_rows
