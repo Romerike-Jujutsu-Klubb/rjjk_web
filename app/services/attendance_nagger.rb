@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AttendanceNagger
+  AGE_LIMIT = 13
+
   def self.send_attendance_plan
     today = Date.current
     Member.active(today)
@@ -9,8 +11,7 @@ SELECT a.id FROM attendances a INNER JOIN practices p ON a.practice_id = p.id
 WHERE member_id = members.id AND year = ? AND week = ?)',
             today.cwyear, today.cweek)
         .order(:joined_on)
-        .select { |m| m.age >= 14 }
-        .select { |m| m.groups.any? { |g| g.name == 'Voksne' } }
+        .select { |m| m.groups.any? { |g| g.from_age >= AGE_LIMIT } }
         .select(&:active?)
         .each do |member|
       if member.user.nil?
@@ -19,7 +20,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         ExceptionNotifier.notify_exception(ActiveRecord::RecordNotFound.new(msg))
         next
       end
-      AttendanceMailer.plan(member).store(member.user_id, tag: :attendance_plan)
+      AttendanceMailer.plan(member).store(member, tag: :attendance_plan)
     end
   end
 
@@ -27,7 +28,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
     now = Time.current
     group_schedules = GroupSchedule.includes(:group).references(:groups)
         .where('weekday = ? AND start_at >= ?', now.to_date.cwday, now.time_of_day)
-        .where('groups.school_breaks IS NULL OR groups.school_breaks = ?', false)
+        .where('groups.from_age >= ?', AGE_LIMIT)
         .order('groups.from_age', 'groups.to_age')
     group_schedules.each do |gs|
       attendances = Attendance.includes(:member, practice: :group_schedule)
@@ -42,7 +43,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
           .reject(&:passive?) - non_attendees
       recipients.each do |recipient|
         AttendanceMailer.summary(practice, gs, recipient, attendees, non_attendees)
-            .store(recipient.user_id, tag: :attendance_summary)
+            .store(recipient, tag: :attendance_summary)
       end
     end
   end
@@ -55,13 +56,12 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
             tomorrow.year, tomorrow.cweek, tomorrow.cwday)
         .where('(group_schedules.start_at <= ? OR group_schedules.start_at <= ?)',
             Time.current.time_of_day, Time.current.time_of_day + 3600)
-        .where('(groups.school_breaks IS NULL OR groups.school_breaks = ?)',
-            false)
+        .where('(groups.from_age >= ?)', AGE_LIMIT)
         .to_a
     practices.each do |pr|
       pr.group_schedule.group_instructors.active.each do |gi|
         AttendanceMailer.message_reminder(pr, gi.member)
-            .store(gi.member.user_id, tag: :instructor_message_reminder)
+            .store(gi.member, tag: :instructor_message_reminder)
       end
       pr.update_attributes message_nagged_at: Time.current
     end
@@ -72,7 +72,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
     upcoming_group_schedules = GroupSchedule.includes(:group).references(:groups)
         .where('weekday = ? AND end_at >= ? AND groups.closed_on IS NULL',
             now.to_date.cwday, now.time_of_day)
-        .where('groups.school_breaks IS NULL OR groups.school_breaks = ?', false)
+        .where('groups.from_age >= ?', AGE_LIMIT)
         .to_a
     upcoming_group_schedules.each do |gs|
       attendances = Attendance.includes(:member, practice: :group_schedule)
@@ -87,7 +87,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
       attendees = attendances.map(&:member) - absentees
       new_attendees = new_attendances & attendees
       new_absentees = new_attendances & absentees
-      uwe = Member.find_by(first_name: 'Uwe', last_name: 'Kubosch')
+      uwe = User.find_by(first_name: 'Uwe', last_name: 'Kubosch').member
       recipients = gs.group.members.order(:joined_on).reject(&:passive?) - absentees
       recipients.each do |recipient|
         if recipient != uwe
@@ -113,8 +113,8 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         .where('weekday = ? AND end_at BETWEEN ? AND ?',
             now.to_date.cwday, (now - 1.hour).time_of_day, now.time_of_day)
         .where('groups.closed_on IS NULL')
-        .where('groups.school_breaks IS NULL OR groups.school_breaks = ?',
-            false).to_a
+        .where('groups.from_age >= ?', AGE_LIMIT)
+        .to_a
     planned_attendances = Attendance
         .includes(:member, practice: :group_schedule).references(:groups)
         .where('practices.group_schedule_id IN (?)', completed_group_schedules.map(&:id))
@@ -129,7 +129,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
               .order('practices.year, practices.week, group_schedules.weekday').to_a
               .select { |a| a.date <= Date.current && a.date >= 1.year.ago }.reverse
       AttendanceMailer.review(member, completed_attendances, older_attendances)
-          .store(member.user_id, tag: :attendance_review)
+          .store(member, tag: :attendance_review)
       completed_attendances.each { |a| a.update_attributes sent_review_email_at: now }
     end
   end
