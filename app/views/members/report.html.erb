@@ -25,7 +25,7 @@
 
     <% before_by_group = @members_before.group_by { |m| m.groups.sort_by(&:to_age).last } %>
     <% @members_after.group_by { |m| m.groups.sort_by(&:to_age).last }.each do |group, members| %>
-        <% diff = members.size - before_by_group[group].size%>
+        <% diff = members.size - before_by_group[group]&.size.to_i %>
         <tr>
           <td><%= group&.name || 'Uten gruppe' %></td>
           <td><%= members.size %>
