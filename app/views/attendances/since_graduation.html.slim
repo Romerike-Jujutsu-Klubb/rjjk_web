@@ -2,16 +2,21 @@ h2 Oppmøte for #{@member.name}
 h3
   ' Fra #{@graduate ? "gradering (#{@graduate.graduation.held_on})" : "innmelding (#{@member.joined_on})"}
   | til #{@date ? @date : 'i dag'}
+- present_count = @attendances.select{|a| Attendance::PRESENT_STATES.include? a.status}.size
+h4.float-right Registrert fravær: #{@attendances.size - present_count}
+h4 Treninger: #{present_count}
 
 table.table.table-sm
   tr
     th Dato
     th Gruppe
+    th Status
 
   - for attendance in @attendances
     tr
       td =attendance.date
       td =attendance.group_schedule.group.name
+      td = attendance.status_label
   tr
     th Totalt:
     th = @attendances.size
