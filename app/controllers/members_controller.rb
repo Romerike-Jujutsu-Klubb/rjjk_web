@@ -257,10 +257,9 @@ class MembersController < ApplicationController
 
   def update_memberships
     @member.martial_arts = MartialArt.find(params[:martial_art_ids]) if params[:martial_art_ids]
-    @member.groups = if params[:member_group_ids]
-                       Group.find(params[:member_group_ids].keys)
-                     else
-                       []
-                     end
+    # FIXME(uwe): Allow removing for all groups
+    if params[:member_group_ids]
+      @member.groups = Group.find(params[:member_group_ids].keys)
+    end
   end
 end
