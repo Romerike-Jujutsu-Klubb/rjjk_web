@@ -37,11 +37,17 @@ def safe_subject(subject, mail_is_spam, spam_score)
   ss = subject.to_s.gsub(/^((Fwd|Re|Sv):\s*)+/i, '').gsub(%r{[ \t:/\\\{\}`'"!]}, '_')
       .gsub(/_+/, '_')[0..100]
   @now_str ||= Time.now.strftime('%F_%T')
-  spam_marker = if mail_is_spam
-                  mail_is_spam == 'LARGE' ? '[LARGE]' : '[SPAM]'
-                else
-                  '_____'
-                end
+  spam_marker =
+      case mail_is_spam
+      when true
+        '[SPAM]'
+      when false
+        '_____'
+      when nil
+        '?????'
+      else
+        "[#{mail_is_spam}]"
+      end
   subject = "mail_#{@now_str}_#{spam_marker}"
   subject += "[#{spam_score}]" if spam_score
   subject += "_#{ss}"
@@ -60,46 +66,55 @@ rescue => e
   log "Exception setting encoding: #{e}"
 end
 
-def check_spam(content, orig_mail)
+def check_spam(orig_content, orig_mail)
   begin
     spam_start = Time.now
     mail_is_spam = nil
     spam_score = nil
-    require 'open3'
-    log 'Checking Spamassassin'
+    content = nil
     mail = nil
-    Open3.popen3('spamc') do |stdin, stdout, stderr, wait_thr|
-      stdin << content
-      stdin.close
-      content = stdout.read
-      mail = Mail.read_from_string(content)
-      if (encoding = mail.content_type_parameters&.[]('charset'))
-        content.force_encoding(encoding)
-      end
-      log "Spamassassin: #{content}"
-      log "Spamassassin: #{stderr.read}"
-      exit_status = wait_thr.value # Process::Status object returned.
-      spam_status_header = mail['X-Spam-Status']&.value
-      log "Spamassassin reported: #{exit_status.inspect} #{spam_status_header.inspect}"
-      if /^(?<spam_status>Yes|No), score=(?<spam_score>-?\d+\.\d+)/ =~ spam_status_header
-        if (mail_is_spam = (spam_status == 'Yes'))
-          log "Mail is SPAM: #{spam_score}"
-          if spam_score.to_f >= SPAM_DELETE_LIMIT
-            log 'Discarding the email.'
-            exit 0
-          end
+    require 'active_support/core_ext/object/blank'
+    if orig_mail['from'].present? || orig_mail['to'].present? || orig_mail['subject'].present? ||
+          orig_mail.body.decoded.present?
+      require 'open3'
+      log 'Checking Spamassassin'
+      Open3.popen3('spamc') do |stdin, stdout, stderr, wait_thr|
+        stdin << orig_content
+        stdin.close
+        content = stdout.read
+        mail = Mail.read_from_string(content)
+        if (encoding = mail.content_type_parameters&.[]('charset'))
+          content.force_encoding(encoding)
         end
-      else
-        log "Spam status mismatch: #{spam_status_header.inspect}"
+        log "Spamassassin: #{content}"
+        log "Spamassassin: #{stderr.read}"
+        exit_status = wait_thr.value # Process::Status object returned.
+        spam_status_header = mail['X-Spam-Status']&.value
+        log "Spamassassin reported: #{exit_status.inspect} #{spam_status_header.inspect}"
+        if /^(?<spam_status>Yes|No), score=(?<spam_score>-?\d+\.\d+)/ =~ spam_status_header
+          if (mail_is_spam = (spam_status == 'Yes'))
+            log "Mail is SPAM: #{spam_score}"
+            if spam_score.to_f >= SPAM_DELETE_LIMIT
+              log 'Discarding the email.'
+              exit 0
+            end
+          end
+        else
+          log "Spam status mismatch: #{spam_status_header.inspect}"
+        end
       end
+    else
+      puts 'Empty message: mark as spam.'
+      mail_is_spam = :EMPTY
     end
   rescue SystemExit
     raise
   rescue Exception => e # rubocop: disable Lint/RescueException
     log "Exception scanning for SPAM: #{e}\n#{e.backtrace.join("\n")}"
     mail_is_spam = 'ERROR'
-    mail ||= orig_mail
   end
+  content ||= orig_content
+  mail ||= orig_mail
   log "Spam check took: #{Time.now - spam_start}s"
   [content, mail, mail_is_spam, spam_score]
 end

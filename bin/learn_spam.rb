@@ -31,7 +31,7 @@ def text_from_part(m)
     body = m.body.decoded
     if (encoding = m.content_type_parameters && m.content_type_parameters['charset'])
       body.force_encoding(encoding)
-      header << "Convert to #{encoding.inspect}\n"
+      header = "#{header}Convert to #{encoding.inspect}\n"
     end
     pretty_body =
         if m.content_type =~ %r{text/html}
@@ -70,7 +70,7 @@ def learn(interactive)
 
         file_date = Time.zone.parse(f[5..14] + 'T' + f[16..23])
         if file_date < 2.days.ago
-          puts ': OLD'.rjust(PROMPT_COLUMN - f.size, ' ')
+          puts ': OLD'.rjust(PROMPT_COLUMN - f.size + 3, ' ')
           break true
         end
 
@@ -114,6 +114,11 @@ def learn(interactive)
           puts "Subject: #{m['subject']}"
           puts
           puts text_from_part(m)
+          puts
+          puts
+        when 'r'
+          print "\e[3J"
+          puts Mail.read(f)
           puts
           puts
         when 'c'
