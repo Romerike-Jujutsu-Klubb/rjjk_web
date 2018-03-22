@@ -32,9 +32,7 @@ class ApplicationController < ActionController::Base
     return if request.xhr? || _layout([]) != DEFAULT_LAYOUT
     unless @information_pages
       @information_pages = InformationPage.roots
-      unless admin?
-        @information_pages = @information_pages.where('hidden IS NULL OR hidden = ?', false)
-      end
+      @information_pages = @information_pages.where('hidden IS NULL OR hidden = ?', false) unless admin?
       @information_pages = @information_pages.where('title <> ?', 'Velkommen') unless user?
     end
     unless @image
@@ -115,5 +113,11 @@ class ApplicationController < ActionController::Base
     else
       true
     end
+  end
+
+  def report_exception(ex)
+    logger.warn ex
+    logger.warn ex.backtrace.join($INPUT_RECORD_SEPARATOR)
+    ExceptionNotifier.notify_exception(ex)
   end
 end
