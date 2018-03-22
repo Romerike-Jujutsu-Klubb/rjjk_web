@@ -164,17 +164,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :nkf_members do
-    collection do
-      get :comparison
-      post :create_member
-      get :import
-      post :import
-    end
-    member do
-      post :update_member
-    end
-  end
+  resources :nkf_members
   resources :nkf_member_trials
   resources :page_aliases
   resources :practices
