@@ -1,0 +1,25 @@
+.float-right = link_to 'Registrer oppmøte', new_attendance_path
+h1 Oppmøte
+
+table.table.table-sm
+  thead
+    tr
+      th Dato
+      th Gruppe
+      th Medlem
+      th Registrert
+      th Endret
+  tbody
+    - @attendances.each do |attendance|
+      tr
+        td =attendance.date
+        td =attendance.group_schedule.group.name
+        td =attendance.member
+        td =attendance.created_at
+        td =attendance.updated_at
+        td = link_to 'Vis', attendance
+        td = link_to 'Endre', edit_attendance_path(attendance)
+        td = link_to 'Slett', attendance, data: {confirm: 'Er du sikker på at du vil slette dette oppmøtet?'}, method: :delete
+    tr
+      th Totalt:
+      th = @attendances.size
