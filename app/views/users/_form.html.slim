@@ -1,6 +1,6 @@
 = bootstrap_form_for(user) do |f|
   = f.hidden_field :form, value: :edit
-  = user.new_record? ? f.text_field(:login) : f.static_control(:login)
+  = f.text_field :login, autocomplete: :off
   = link_to('(medlem)', controller: :members, action: :edit, id: user.member.id) if user.member
   .row
     .col-sm-6
