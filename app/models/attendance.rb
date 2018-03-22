@@ -86,12 +86,11 @@ OR (practices.year = ? AND practices.week = ? AND group_schedules.weekday > ?)',
     PRESENCE_STATES.include?(status)
   end
 
-  # def self.find_member_count_for_month(group, year, month)
-  #  all.where('group_schedule_id IN ? AND year = ?',
-  #      group.group_schedules.map{|gs| gs.id}, year, month)
-  # end
-
   def to_s
     "#{member} #{practice} (#{status})"
+  end
+
+  def status_label
+    (Time.current < practice.start_at ? STATES : PAST_STATES).find { |s| s[0] == status }&.at(1) || status
   end
 end
