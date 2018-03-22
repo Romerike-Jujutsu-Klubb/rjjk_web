@@ -27,20 +27,20 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
   def self.send_attendance_summary
     now = Time.current
     group_schedules = GroupSchedule.includes(:group).references(:groups)
+        .merge(Group.active(now))
         .where('weekday = ? AND start_at >= ?', now.to_date.cwday, now.time_of_day)
         .where('groups.from_age >= ?', AGE_LIMIT)
         .order('groups.from_age', 'groups.to_age')
+        .to_a
     group_schedules.each do |gs|
       attendances = Attendance.includes(:member, practice: :group_schedule)
           .where(practices: { group_schedule_id: gs.id, year: now.year, week: now.to_date.cweek })
           .to_a
       next if attendances.empty?
       practice = attendances[0].practice
-      non_attendees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }
-          .map(&:member)
+      non_attendees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:member)
       attendees = attendances.map(&:member) - non_attendees
-      recipients = gs.group.members.order(:joined_on, :id)
-          .reject(&:passive?) - non_attendees
+      recipients = gs.group.members.order(:joined_on, :id).reject(&:passive?) - non_attendees
       recipients.each do |recipient|
         AttendanceMailer.summary(practice, gs, recipient, attendees, non_attendees)
             .store(recipient, tag: :attendance_summary)
