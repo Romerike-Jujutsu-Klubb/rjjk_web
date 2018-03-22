@@ -13,7 +13,7 @@ h1 Søkeresultat for "#{@query}"
                 | (#{m.age} år)
       - if @former_members.present?
         .col-md
-          h3 Tidligere Medlemmer
+          h3 Tidligere Medlemmer (#{@former_members.size})
           ul
             - @former_members.each do |m|
               li
@@ -34,13 +34,12 @@ h1 Søkeresultat for "#{@query}"
       ul
         - @pages.each do |p|
           li = link_to p.title, p
-
-    h2 Savner du noe?
-    p
-      ' Hvis du vil ha flere søkeresultater, si ifra til
-      = link_to 'nettansvarlig', 'mailto:web@jujutsu.no?subject=[RJJK] Bedre søk på web'
-      | .
   - else
     | Fant ingenting om "#{@query}".
+  h2 Savner du noe?
+  p
+    ' Hvis du vil ha flere søkeresultater, si ifra til
+    = link_to 'nettansvarlig', 'mailto:web@jujutsu.no?subject=[RJJK] Bedre søk på web'
+    | .
 - else
   | Fyll inn søkeboksen oppe til høyre for å søke.
