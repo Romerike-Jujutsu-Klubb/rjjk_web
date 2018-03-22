@@ -3,6 +3,7 @@
 require 'mail'
 
 class IncomingEmailProcessor
+  # FIXME(uwe): Targets need to be reloaded to pick up changes.
   TARGETS = {
     kasserer: { name: 'Kasia Krohn', email: 'kasiakrohn@gmail.com' },
     materialforvalter: { name: 'Tommy Musaus', email: 'tommy.musaus@hellvikhus.no' },
