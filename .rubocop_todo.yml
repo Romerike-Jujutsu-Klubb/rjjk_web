@@ -8,7 +8,7 @@
 
 # Offense count: 229
 Metrics/AbcSize:
-  Max: 201
+  Max: 232
 
 # Offense count: 27
 # Configuration parameters: CountComments, ExcludedMethods.
@@ -27,7 +27,7 @@ Metrics/ClassLength:
 
 # Offense count: 36
 Metrics/CyclomaticComplexity:
-  Max: 31
+  Max: 47
 
 # Offense count: 1
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
@@ -52,7 +52,7 @@ Metrics/ParameterLists:
 
 # Offense count: 37
 Metrics/PerceivedComplexity:
-  Max: 33
+  Max: 52
 
 # Offense count: 24
 # Configuration parameters: Include.
