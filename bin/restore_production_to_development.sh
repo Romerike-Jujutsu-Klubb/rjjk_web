@@ -16,4 +16,4 @@ echo "Transferring database"
 time cat `ls tmp/prod* | tail -1` | gunzip | sed -e s/capistrano/uwe/ | psql $DB_NAME
 
 export JRUBY_OPTS=--dev
-RAILS_ENV=development rake db:migrate
+RAILS_ENV=development bundle exec rake db:migrate
