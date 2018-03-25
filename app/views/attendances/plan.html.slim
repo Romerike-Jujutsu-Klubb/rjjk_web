@@ -16,8 +16,8 @@ table width="100%" cellpadding="5"
           => t(:date)[:day_names][gs.weekday]
           ' #{date.day}.
           = t(:date)[:month_names][date.mon]
-          - unless @member.groups.include?(gs.group)
-            = gs.group.full_name
+          - if @group_schedules.size > 1
+            =< gs.group.full_name
     tr
       - @group_schedules.each do |gs|
         td valign="top"
