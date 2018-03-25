@@ -101,6 +101,11 @@
         Gruppen har trening hele året dersom annet ikke er annonsert.
     <% end %>
   </p>
+  <% if @group.planning? %>
+    <p>
+      Gruppen har egenmelding av oppmøte.
+    </p>
+  <% end %>
 </div>
 
 <% unless @group.summary.blank? && @group.description.blank? %>

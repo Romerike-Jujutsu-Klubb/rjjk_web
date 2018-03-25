@@ -75,7 +75,7 @@ def check_spam(orig_content, orig_mail)
     mail = nil
     require 'active_support/core_ext/object/blank'
     if orig_mail['from'].present? &&
-        (orig_mail['to'].present? || orig_mail['subject'].present? || orig_mail.body.decoded.present?)
+          (orig_mail['to'].present? || orig_mail['subject'].present? || orig_mail.body.decoded.present?)
       require 'open3'
       log 'Checking Spamassassin'
       Open3.popen3('spamc') do |stdin, stdout, stderr, wait_thr|

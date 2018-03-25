@@ -1,7 +1,7 @@
 h1 = current_user.name
 ul
   - if member?
-    - if current_user.member.groups.reject(&:school_breaks).any?
+    - if current_user.member.groups.select(&:planning).any?
       li = detour_to 'Mitt oppmøte', controller: :attendances, action: :plan
     li = menu_item 'Pensum', controller: :ranks, action: :pensum
     li = link_to 'Min Embu', controller: :embus, action: :index

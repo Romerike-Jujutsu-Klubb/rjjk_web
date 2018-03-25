@@ -18,6 +18,7 @@ voksne:
   from_age: 14
   to_age: 99
   target_size: 30
+  planning: true
 
 closed:
   name: Closed

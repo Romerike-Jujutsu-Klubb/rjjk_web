@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180308161751) do
+ActiveRecord::Schema.define(version: 20180325174635) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -300,6 +300,7 @@ ActiveRecord::Schema.define(version: 20180308161751) do
     t.boolean 'school_breaks'
     t.string 'color', limit: 16
     t.integer 'target_size'
+    t.boolean 'planning'
   end
 
   create_table 'images', force: :cascade do |t|

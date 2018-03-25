@@ -11,7 +11,7 @@ SELECT a.id FROM attendances a INNER JOIN practices p ON a.practice_id = p.id
 WHERE member_id = members.id AND year = ? AND week = ?)',
             today.cwyear, today.cweek)
         .order(:joined_on)
-        .select { |m| m.groups.any? { |g| g.from_age >= AGE_LIMIT } }
+        .select { |m| m.groups.any?(&:planning) }
         .select(&:active?)
         .each do |member|
       if member.user.nil?
@@ -29,7 +29,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
     group_schedules = GroupSchedule.includes(:group).references(:groups)
         .merge(Group.active(now))
         .where('weekday = ? AND start_at >= ?', now.to_date.cwday, now.time_of_day)
-        .where('groups.from_age >= ?', AGE_LIMIT)
+        .where('groups.planning = ?', true)
         .order('groups.from_age', 'groups.to_age')
         .to_a
     group_schedules.each do |gs|
@@ -56,7 +56,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
             tomorrow.year, tomorrow.cweek, tomorrow.cwday)
         .where('(group_schedules.start_at <= ? OR group_schedules.start_at <= ?)',
             Time.current.time_of_day, Time.current.time_of_day + 3600)
-        .where('(groups.from_age >= ?)', AGE_LIMIT)
+        .where('groups.planning = ?', true) # TODO(uwe): Make a scope :with_planning
         .to_a
     practices.each do |pr|
       pr.group_schedule.group_instructors.active.each do |gi|
@@ -72,7 +72,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
     upcoming_group_schedules = GroupSchedule.includes(:group).references(:groups)
         .where('weekday = ? AND end_at >= ? AND groups.closed_on IS NULL',
             now.to_date.cwday, now.time_of_day)
-        .where('groups.from_age >= ?', AGE_LIMIT)
+        .where('groups.planning = ?', true)
         .to_a
     upcoming_group_schedules.each do |gs|
       attendances = Attendance.includes(:member, practice: :group_schedule)
@@ -113,7 +113,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         .where('weekday = ? AND end_at BETWEEN ? AND ?',
             now.to_date.cwday, (now - 1.hour).time_of_day, now.time_of_day)
         .where('groups.closed_on IS NULL')
-        .where('groups.from_age >= ?', AGE_LIMIT)
+        .where('groups.planning = ?', true)
         .to_a
     planned_attendances = Attendance
         .includes(:member, practice: :group_schedule).references(:groups)
