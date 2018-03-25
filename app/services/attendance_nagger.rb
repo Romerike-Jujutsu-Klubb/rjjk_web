@@ -87,7 +87,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
       attendees = attendances.map(&:member) - absentees
       new_attendees = new_attendances & attendees
       new_absentees = new_attendances & absentees
-      uwe = User.find_by(first_name: 'Uwe', last_name: 'Kubosch').member
+      uwe = User.find_by(first_name: 'Uwe', last_name: 'Kubosch')&.member
       recipients = gs.group.members.order(:joined_on).reject(&:passive?) - absentees
       recipients.each do |recipient|
         if recipient != uwe

@@ -28,6 +28,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
   end
 
   def test_send_message_reminder_day_before
+    groups(:panda).update! planning: true # Cleanup test fixtures
     Timecop.freeze(Time.zone.local(2013, 10, 16, 18, 46, 0)) do
       assert_mail_stored { AttendanceNagger.send_message_reminder }
 
@@ -85,6 +86,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
   end
 
   def test_send_attendance_review
+    groups(:panda).update! planning: true # Cleanup test fixtures
     AttendanceNagger.send_attendance_review
     assert_equal 1, UserMessage.pending.size
     mail = UserMessage.pending[0]
