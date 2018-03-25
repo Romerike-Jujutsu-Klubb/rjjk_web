@@ -26,15 +26,6 @@ else
         Rails.logger.error "#{e.class}: #{e.message}"
         Rails.logger.error e
         Rails.logger.error e.backtrace.join("\n")
-        if e.is_a?(ActiveRecord::StatementInvalid)
-          ActiveRecord::Base.verify!
-          begin
-            job.call
-            return
-          rescue => e2
-            Rails.logger.error "Exception re-running scheduled job(#{job.tags}): #{e2}"
-          end
-        end
         break unless e.cause
         e = e.cause
       end
@@ -43,17 +34,17 @@ else
     end
 
     # email
-    scheduler.every('10s') { IncomingEmailProcessor.forward_emails }
-    scheduler.every('10s') { UserMessageSender.send }
+    scheduler.every('10s') { Rails.application.executor.wrap { IncomingEmailProcessor.forward_emails } }
+    scheduler.every('10s') { Rails.application.executor.wrap { UserMessageSender.send } }
 
     # Users
-    scheduler.cron('0 7    * * mon') { AttendanceNagger.send_attendance_plan }
-    scheduler.cron('0 8    * * thu') { InformationPageNotifier.send_weekly_info_page }
-    scheduler.cron('0 7-23 * * *') { NewsPublisher.send_news }
-    scheduler.cron('5 7    * * *') { AttendanceNagger.send_attendance_summary }
-    scheduler.cron('5 8-23 * * *') { AttendanceNagger.send_attendance_changes }
-    scheduler.cron('8/15 * * * *') { AttendanceNagger.send_attendance_review }
-    scheduler.cron('9 9-23 * * *') { EventNotifier.send_event_messages }
+    scheduler.cron('0 7    * * mon') { Rails.application.executor.wrap { AttendanceNagger.send_attendance_plan } }
+    scheduler.cron('0 8    * * thu') { Rails.application.executor.wrap { InformationPageNotifier.send_weekly_info_page } }
+    scheduler.cron('0 7-23 * * *') { Rails.application.executor.wrap { NewsPublisher.send_news } }
+    scheduler.cron('5 7    * * *') { Rails.application.executor.wrap { AttendanceNagger.send_attendance_summary } }
+    scheduler.cron('5 8-23 * * *') { Rails.application.executor.wrap { AttendanceNagger.send_attendance_changes } }
+    scheduler.cron('8/15 * * * *') { Rails.application.executor.wrap { AttendanceNagger.send_attendance_review } }
+    scheduler.cron('9 9-23 * * *') { Rails.application.executor.wrap { EventNotifier.send_event_messages } }
 
     # TODO(uwe): Limit messages to once per week: news, survey, info
     # TODO(uwe): Email board meeting minutes
@@ -62,43 +53,45 @@ else
     # TODO(uwe): Register jacket sizes for members?
     # TODO(uwe): Lage info side om jakkene.
 
-    scheduler.cron('10 10 * * mon') { SurveySender.send_surveys }
+    scheduler.cron('10 10 * * mon') { Rails.application.executor.wrap { SurveySender.send_surveys } }
 
     # Board weekly
-    scheduler.cron('0 11 * * mon') { AnnualMeetingReminder.notify_missing_date }
+    scheduler.cron('0 11 * * mon') { Rails.application.executor.wrap { AnnualMeetingReminder.notify_missing_date } }
 
     # Admin Hourly
-    scheduler.cron('15 9-23 * * *') { NkfMemberImport.import_nkf_changes }
-    scheduler.cron('10 * * * *') { AttendanceNagger.send_message_reminder }
+    scheduler.cron('15 9-23 * * *') { Rails.application.executor.wrap { NkfMemberImport.import_nkf_changes } }
+    scheduler.cron('10 * * * *') { Rails.application.executor.wrap { AttendanceNagger.send_message_reminder } }
 
     # Admin Daily
-    scheduler.cron('0 0 * * *') { NkfReplicationNotifier.notify_wrong_contracts }
+    scheduler.cron('0 0 * * *') { Rails.application.executor.wrap { NkfReplicationNotifier.notify_wrong_contracts } }
 
-    scheduler.cron('0 3 * * *') { SemesterReminder.create_missing_semesters }
+    scheduler.cron('0 3 * * *') { Rails.application.executor.wrap { SemesterReminder.create_missing_semesters } }
 
-    scheduler.cron('0 4 * * *') { GroupSemester.create_missing_group_semesters }
+    scheduler.cron('0 4 * * *') { Rails.application.executor.wrap { GroupSemester.create_missing_group_semesters } }
 
-    scheduler.cron('0 1 * * mon') { GraduationReminder.notify_overdue_graduates }
-    scheduler.cron('0 1 * * *') { GraduationReminder.notify_missing_graduations }
+    scheduler.cron('0 1 * * mon') { Rails.application.executor.wrap { GraduationReminder.notify_overdue_graduates } }
+    scheduler.cron('0 1 * * *') { Rails.application.executor.wrap { GraduationReminder.notify_missing_graduations } }
     scheduler.cron('*/5 * * * *') do
       Rails.logger.info 'Running hyper-scheduled jobs:'
-      GraduationReminder.notify_groups
-      GraduationReminder.notify_missing_censors
-      GraduationReminder.notify_censors
-      GraduationReminder.notify_missing_locks
-      GraduationReminder.notify_graduates
-      GraduationReminder.send_shopping_list
-      GraduationReminder.notify_missing_approvals
-      GraduationReminder.congratulate_graduates
+      Rails.application.executor.wrap do
+        GraduationReminder.notify_groups
+        GraduationReminder.notify_missing_censors
+        GraduationReminder.notify_censors
+        GraduationReminder.notify_missing_locks
+        GraduationReminder.notify_graduates
+        GraduationReminder.send_shopping_list
+        GraduationReminder.notify_missing_approvals
+        GraduationReminder.congratulate_graduates
+      end
     end
 
     # Admin Weekly
-    scheduler.cron('0 2 * * mon') { InformationPageNotifier.notify_outdated_pages }
-    scheduler.cron('0 3 * * mon') { InstructionReminder.notify_missing_instructors }
-    scheduler.cron('0 4 * * mon') { NkfMemberTrialReminder.notify_overdue_trials }
-    scheduler.cron('0 6 * * mon') { SemesterReminder.notify_missing_session_dates }
-    scheduler.cron('0 7 * * mon') { PublicRecordImporter.import_public_record }
-    scheduler.cron('0 8 * * mon') { SurveySender.notify_new_ansers }
+    scheduler.cron('0 2 * * mon') { Rails.application.executor.wrap { InformationPageNotifier.notify_outdated_pages } }
+    scheduler.cron('0 3 * * mon') { Rails.application.executor.wrap { InstructionReminder.notify_missing_instructors } }
+    scheduler.cron('0 4 * * mon') { Rails.application.executor.wrap { NkfMemberTrialReminder.notify_overdue_trials } }
+    scheduler.cron('0 6 * * mon') { Rails.application.executor.wrap { SemesterReminder.notify_missing_session_dates } }
+    scheduler.cron('0 7 * * mon') { Rails.application.executor.wrap { PublicRecordImporter.import_public_record } }
+    scheduler.cron('0 8 * * mon') { Rails.application.executor.wrap { SurveySender.notify_new_ansers } }
 
     Rails.logger.info('Scheduler started')
   rescue => e
