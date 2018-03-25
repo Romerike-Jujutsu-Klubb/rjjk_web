@@ -58,6 +58,11 @@
             <%= f.check_box :school_breaks, class: 'form-control input-sm' %>
           </div>
 
+          <div class="form-group" style="float: left ; margin-right: 1em">
+            <%= f.label :planning, 'Påmelding' %>
+            <%= f.check_box :planning, class: 'form-control input-sm' %>
+          </div>
+
           <div class="form-group float-left">
             <%= f.label :closed_on, 'Avsluttet' %>
             <%= f.text_field :closed_on, class: 'date form-control input-sm' %>
