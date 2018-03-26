@@ -16,7 +16,7 @@ table width="100%" cellpadding="5"
           => t(:date)[:day_names][gs.weekday]
           ' #{date.day}.
           = t(:date)[:month_names][date.mon]
-          - if @group_schedules.size > 1
+          - if @group_schedules.map(&:group).uniq.size > 1
             =< gs.group.full_name
     tr
       - @group_schedules.each do |gs|

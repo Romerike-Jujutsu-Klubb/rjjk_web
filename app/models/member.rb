@@ -76,7 +76,7 @@ class Member < ApplicationRecord
   validates :billing_postal_code, length: { is: 4,
                                             if: proc { |m| m.billing_postal_code.present? } }
   validates :birthdate, presence: true, unless: :left_on
-  validates :email, presence: true, length: { maximum: 128 }
+  validates :email, presence: { unless: :left_on }, length: { maximum: 128 }
   validates :first_name, :last_name, presence: true
   validates :instructor, inclusion: { in: [true, false] }
   validates :joined_on, presence: true
