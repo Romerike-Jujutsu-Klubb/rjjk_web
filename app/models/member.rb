@@ -75,10 +75,11 @@ class Member < ApplicationRecord
   validates :address, presence: true, allow_blank: true # Allow members to omit their home address
   validates :billing_postal_code, length: { is: 4,
                                             if: proc { |m| m.billing_postal_code.present? } }
-  validates :birthdate, :joined_on, presence: true
+  validates :birthdate, presence: true, unless: :left_on
   validates :email, presence: true, length: { maximum: 128 }
   validates :first_name, :last_name, presence: true
   validates :instructor, inclusion: { in: [true, false] }
+  validates :joined_on, presence: true
   validates :male, inclusion: { in: [true, false] }
   validates :nkf_fee, inclusion: { in: [true, false] }
   validates :payment_problem, inclusion: { in: [true, false] }
