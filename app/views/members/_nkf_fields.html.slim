@@ -3,9 +3,9 @@ table.table.table-striped
     tr
       th NKF Attribute
       th NKF value
-      th RJJK attribute
       th Mapped value
       th RJJK value
+      th RJJK attribute
   tbody
     - @member.nkf_member.attributes.sort.each do |k,v|
       - mapped_key, mapped_value = NkfMember.rjjk_attribute(k,v)
@@ -14,6 +14,6 @@ table.table.table-striped
       tr
         th = k
         td = v
-        td = mapped_key
         td class=diff_class = mapped_value
         td class=diff_class = @member[mapped_key]
+        td = mapped_key
