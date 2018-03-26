@@ -20,10 +20,11 @@ ssh ${USER}@${HOST} "set -e
   gem query -i -n '^bundler$' -v "${REQUIRED_BUNDLER_VERSION}" > /dev/null || gem install --no-doc -v "${REQUIRED_BUNDLER_VERSION}" bundler
   bundle check || bundle install --without development test --deployment
 
+  sudo systemctl stop ${APP}
   bin/copy_production_to_beta.sh
 
   bundle exec rake db:migrate assets:precompile
 
   echo Restart the app
-  sudo systemctl restart ${APP}
+  sudo systemctl start ${APP}
 "
