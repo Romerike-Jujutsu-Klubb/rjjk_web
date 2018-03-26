@@ -26,15 +26,13 @@ class User < ApplicationRecord
   attr_accessor :password_needs_confirmation
 
   before_validation do
-    self.login = nil if login.blank?
+    self.login = '' if login.blank?
     self.email = email.presence&.downcase
   end
   after_save { @password_needs_confirmation = false }
   after_validation :crypt_password
 
-  validates :login, presence: { on: :create }
-  validates :login, length: { within: 3..64, on: :create, allow_blank: true }
-  validates :login, uniqueness: { on: :create }
+  validates :login, length: { within: 3..64, allow_blank: true }, uniqueness: true
   validates :email, presence: true, uniqueness: { case_sensitive: false }
 
   validates :password, presence: { if: :validate_password? }

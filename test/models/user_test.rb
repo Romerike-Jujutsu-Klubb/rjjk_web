@@ -92,7 +92,7 @@ class UserTest < ActionMailer::TestCase
     assert !u.save
     assert u.errors[:login].any?
 
-    u.login = '' # login is set to email automatically
+    u.login = ''
     assert u.save
     assert u.errors[:login].empty?
 
