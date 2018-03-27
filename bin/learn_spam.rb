@@ -41,8 +41,8 @@ def text_from_part(m)
         elsif m.content_type =~ /text/
           body
         end
-    pretty_body = text_body.gsub(/^\s+/, '').squeeze(" \n\t")
-    "#{header}#{pretty_body}".encode(Encoding::UTF_8, undef: :replace)
+    pretty_body = text_body.gsub(/^[[:space:]]+|[[:space:]]+$/, '').gsub("\r", "").squeeze(" \t").gsub(/\n{3,}/, "\n\n")
+    "#{header}\n#{pretty_body}".encode(Encoding::UTF_8, undef: :replace)
   end
 end
 
@@ -75,7 +75,7 @@ def learn(interactive)
           break true
         end
 
-        if escaped_filename =~ /^[EMPTY]]/
+        if f =~ /_\[EMPTY\]_/
           puts ': EMPTY'.rjust(PROMPT_COLUMN - f.size + 3, ' ')
           break true
         end
@@ -113,7 +113,7 @@ def learn(interactive)
           learn_file(escaped_filename, 'ham')
           break true
         when 'd'
-          print "\e[3J"
+          puts "\e[H\e[2J"
           m = Mail.read(f)
           puts "From: #{m['from']}"
           puts "To: #{m['to']}"
