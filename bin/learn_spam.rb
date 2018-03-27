@@ -33,14 +33,15 @@ def text_from_part(m)
       body.force_encoding(encoding)
       header = "#{header}Convert to #{encoding.inspect}\n"
     end
-    pretty_body =
+    text_body =
         if m.content_type =~ %r{text/html}
           doc = Nokogiri::HTML(body)
           doc.css('script, link').each(&:remove)
-          doc.css('body').text.gsub(/^\s+/, '').squeeze(" \n\t")
+          doc.css('body').text
         elsif m.content_type =~ /text/
           body
         end
+    pretty_body = text_body.gsub(/^\s+/, '').squeeze(" \n\t")
     "#{header}#{pretty_body}".encode(Encoding::UTF_8, undef: :replace)
   end
 end
@@ -71,6 +72,11 @@ def learn(interactive)
         file_date = Time.zone.parse(f[5..14] + 'T' + f[16..23])
         if file_date < 2.days.ago
           puts ': OLD'.rjust(PROMPT_COLUMN - f.size + 3, ' ')
+          break true
+        end
+
+        if escaped_filename =~ /^[EMPTY]]/
+          puts ': EMPTY'.rjust(PROMPT_COLUMN - f.size + 3, ' ')
           break true
         end
 
