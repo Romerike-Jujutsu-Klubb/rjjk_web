@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find_by(id: params[:id]) || current_user
+    @user = User.find(params[:id])
     if params['user']['form']
       form = params['user'].delete('form')
       begin
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
                 unclean_params.delete_if { |k, *| !User::CHANGEABLE_FIELDS.include?(k) }
               end
           if @user.update user_params
-            flash.now['notice'] = 'User has been updated.'
+            flash.notice = 'User has been updated.'
           else
             edit
             render action: :edit
@@ -45,22 +45,16 @@ class UsersController < ApplicationController
           raise 'unknown edit action'
         end
       rescue => ex
-        logger.warn ex
-        logger.warn ex.backtrace
+        report_exception(ex)
       end
     end
     redirect_to action: :edit
   end
 
-  def delete
-    @user = current_user || User.find_by(id: session[:user_id])
-    begin
-      @user.update(deleted: true)
-      self.session_user = nil
-    rescue => ex
-      flash.now['message'] = "Error: #{ex}."
-      back_or_redirect_to '/'
-    end
+  def destroy
+    @user = User.find(params[:id])
+    @user.update!(deleted: true)
+    back_or_redirect_to users_path
   end
 
   def like
@@ -89,9 +83,7 @@ class UsersController < ApplicationController
 
   # Generate a template user for certain actions on get
   def generate_filled_in
-    @user ||= (params[:id] && User.find_by(id: params[:id])) || current_user ||
-        User.find_by(id: session[:user_id])
-    @members = Member.select('id, first_name, last_name').where(email: @user.email).to_a
+    @user ||= User.find(params[:id])
     case request.method
     when 'GET'
       render action: :edit
@@ -99,10 +91,5 @@ class UsersController < ApplicationController
     else
       false
     end
-  end
-
-  def report_exception(ex)
-    logger.warn ex
-    logger.warn ex.backtrace.join("\n")
   end
 end
