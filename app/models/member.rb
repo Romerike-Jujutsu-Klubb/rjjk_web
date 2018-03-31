@@ -54,7 +54,7 @@ class Member < ApplicationRecord
     where('joined_on <= ? AND left_on IS NULL OR left_on >= ?', to_date, from_date)
   end
   SEARCH_FIELDS = %i[
-    address billing_email email first_name last_name parent_email
+    address billing_email billing_phone_mobile email first_name last_name parent_email
     parent_name phone_home phone_mobile phone_parent phone_work
   ].freeze
   scope :search, ->(query) {
