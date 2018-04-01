@@ -41,7 +41,8 @@ def text_from_part(m)
         elsif m.content_type =~ /text/
           body
         end
-    pretty_body = text_body.gsub(/^[[:space:]]+|[[:space:]]+$/, '').gsub("\r", "").squeeze(" \t").gsub(/\n{3,}/, "\n\n")
+    pretty_body = text_body.gsub(/^[[:space:]]+|[[:space:]]+$/, '').delete("\r").squeeze(" \t")
+        .gsub(/\n{3,}/, "\n\n")
     "#{header}\n#{pretty_body}".encode(Encoding::UTF_8, undef: :replace)
   end
 end

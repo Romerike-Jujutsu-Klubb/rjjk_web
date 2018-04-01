@@ -39,6 +39,7 @@ class NkfMemberComparison
 
   def sync_member(member)
     agent, front_page = setup_sync
+    member.attributes = member.nkf_member.converted_attributes
     sync_member_with_agent(agent, front_page, member)
   end
 

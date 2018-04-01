@@ -39,7 +39,7 @@ class UsersController < ApplicationController
         when 'change_password'
           change_password
         when 'delete'
-          delete
+          destroy
           return
         else
           raise 'unknown edit action'

@@ -60,7 +60,7 @@ class NkfMemberImport
   end
 
   def initialize(nkf_member_id = nil)
-    super
+    super()
     @new_records = []
     @changes = []
     @trial_changes = []
