@@ -2,9 +2,9 @@
 
 if defined?(Rails::Console)
   Rails.logger.info('Disable scheduler since Console is defined.')
-elsif !(defined?('Rails::Server') || defined?('Puma::Server'))
-  Rails.logger.info('Disable scheduler since Rails/Puma::Server is not defined.')
-elsif $PROGRAM_NAME =~ /rake$/
+elsif caller.none?{|l| l =~ %r{/config.ru/}}
+  Rails.logger.info('Disable scheduler since we are not running as a rack application')
+elsif caller.any?{|l| l =~ %r{/lib/rake/task.rb:\d+:in `execute'}}
   Rails.logger.info('Disable scheduler since we are running Rake')
 elsif !%w[development beta production].include?(Rails.env)
   Rails.logger.info("Disable scheduler since env == #{Rails.env}")
