@@ -5,5 +5,6 @@ class NkfMemberSyncJob < ApplicationJob
 
   def perform(member)
     NkfMemberComparison.new.sync_member(member)
+    NkfMemberImport.new(member.nkf_member.medlemsnummer)
   end
 end

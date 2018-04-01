@@ -6,8 +6,10 @@ class NkfMemberImport
 
   attr_reader :changes, :error_records, :exception, :import_rows, :new_records, :trial_changes
 
+  # TODO(uwe): Move these methods to a separate Job class
   def self.import_nkf_changes
     begin
+      logger.info 'Import memberships from NKF'
       i = NkfMemberImport.new
       if i.any?
         NkfReplicationMailer.import_changes(i).deliver_now
@@ -21,10 +23,10 @@ class NkfMemberImport
 
     begin
       ActiveRecord::Base.transaction do
-        a = NkfMemberComparison.new
-        a.sync
-        if a.any?
-          NkfReplicationMailer.update_members(a).deliver_now
+        c = NkfMemberComparison.new
+        c.sync
+        if c.any?
+          NkfReplicationMailer.update_members(c).deliver_now
           logger.info 'Sent update_members mail.'
         end
       end
@@ -47,6 +49,7 @@ class NkfMemberImport
     ExceptionNotifier.notify_exception(e)
     raise if Rails.env.test?
   end
+  # ODOT
 
   def size
     new_records.try(:size).to_i + changes.try(:size).to_i + error_records.try(:size).to_i
@@ -56,7 +59,7 @@ class NkfMemberImport
     @exception || size.positive?
   end
 
-  def initialize
+  def initialize(nkf_member_id = nil)
     super
     @new_records = []
     @changes = []
@@ -68,7 +71,7 @@ class NkfMemberImport
     nkf_agent.login # returns front_page
 
     # TODO(uwe): Change to use Mechanize primitives like `click` and scan using nokogiri (css/xpath)
-    search_body = nkf_agent.search_members
+    search_body = nkf_agent.search_members(nkf_member_id)
 
     session_id = search_body.scan(/Download27\('(.*?)'\)/)[0][0]
     raise 'Could not find session id' unless session_id
@@ -96,18 +99,27 @@ class NkfMemberImport
         .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
     import_rows = members_body.split("\n")
         .map { |line| CGI.unescapeHTML(line.chomp).gsub(/[^[:print:]]/, '').split(';', -1)[0..-2] }
-    import_rows[0] << 'ventekid'
-    in_parallel(detail_codes) { |dc| add_waiting_kid(nkf_agent, import_rows, dc) }
+    add_waiting_kids(nkf_agent, import_rows, detail_codes)
     import_rows
   end
 
+  def add_waiting_kids(nkf_agent, import_rows, detail_codes)
+    import_rows[0] << 'ventekid'
+    logger.debug 'add member ventekid'
+    awk_start = Time.current
+    in_parallel(detail_codes) { |dc| add_waiting_kid(nkf_agent, import_rows, dc) }
+    logger.debug "add member ventekid...ok...#{Time.current - awk_start}s"
+  end
+
   def add_waiting_kid(nkf_agent, import_rows, dc)
+    logger.debug 'add_waiting_kid'
     details_body = nil
     3.times do
       details_body = nkf_agent.get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}").body
       break if details_body.present?
       logger.error 'Empty response when getting waiting KID'
     end
+    logger.debug 'add_waiting_kid: got details body'
     unless details_body =~
           /class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
       raise "Could not find member id:\n#{details_body.inspect}"
@@ -124,13 +136,12 @@ class NkfMemberImport
           "#{Regexp.last_match(1)}#{Regexp.last_match(2)}"
         end
     raise 'Both Active status and waiting kid were found' if active && waiting_kid
-    if !active && !waiting_kid
-      raise "Neither active status nor waiting kid were found:\n#{details_body}"
-    end
+    raise "Neither active status nor waiting kid were found:\n#{details_body}" if !active && !waiting_kid
     import_rows.find { |ir| ir[0] == member_id } << waiting_kid
   end
 
   def get_member_trial_rows(nkf_agent, session_id, extra_function_code)
+    logger.debug 'get_member_trial_rows'
     trial_csv_url = 'pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + session_id
     member_trials_csv_body = nkf_agent.get(trial_csv_url).body
         .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
@@ -155,18 +166,14 @@ class NkfMemberImport
           extra_function_code
       trial_details_body = nkf_agent.get(trial_details_url).body
           .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
-      unless trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
-        raise 'Could not find invoice email'
-      end
+      raise 'Could not find invoice email' unless trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
       first_name = Regexp.last_match(1)
       unless trial_details_body =~ /name="frm_28_v09" value="(.*?)"/
         logger.error trial_details_body
         raise 'Could not find last name'
       end
       last_name = Regexp.last_match(1)
-      unless trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
-        raise 'Could not find first name'
-      end
+      raise 'Could not find first name' unless trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
       invoice_email = Regexp.last_match(1)
       unless trial_details_body =~ %r{<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren/stilart -</option>.*?<option selected value="\d+">([^<]*)</option>.*</select>} # rubocop: disable Metrics/LineLength
         raise 'Could not find martial art'
@@ -204,6 +211,7 @@ class NkfMemberImport
     columns = header_fields.map { |f| field2column(f) }
     logger.debug "Found #{import_rows.size} active members"
     import_rows.each do |row|
+      logger.debug row
       attributes = {}
       columns.each_with_index do |column, i|
         next if %w[aktivitetsomrade_id aktivitetsomrade_navn alder avtalegiro
@@ -213,11 +221,11 @@ class NkfMemberImport
       end
       record = NkfMember.find_by(medlemsnummer: row[0]) || NkfMember.new
       if record.member_id.nil?
-        member = Member
+        member = User
             .where('UPPER(first_name) = ? AND UPPER(last_name) = ?',
                 UnicodeUtils.upcase(attributes['fornavn']),
                 UnicodeUtils.upcase(attributes['etternavn']))
-            .to_a.find { |m| m.nkf_member.nil? }
+            .to_a.map(&:member).find { |m| m.nkf_member.nil? }
         attributes['member_id'] = member.id if member
       end
       begin
@@ -250,7 +258,7 @@ class NkfMemberImport
     missing_trials = NkfMemberTrial
         .where('tid NOT IN (?)', member_trial_rows.map { |t| t[tid_col_idx] }).to_a
     missing_trials.each do |t|
-      m = Member.find_by(email: t.epost)
+      m = User.find_by(email: t.epost)&.member
       t.trial_attendances.each do |ta|
         if m
           attrs = ta.attributes
