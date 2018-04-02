@@ -106,6 +106,8 @@ def check_spam(orig_content, orig_mail)
     else
       puts 'Empty message: mark as spam.'
       mail_is_spam = :EMPTY
+      log 'Discarding the empty email.'
+      exit 0
     end
   rescue SystemExit
     raise
