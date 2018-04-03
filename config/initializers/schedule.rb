@@ -2,7 +2,7 @@
 
 if defined?(Rails::Console)
   Rails.logger.info('Disable scheduler since Console is defined.')
-elsif caller.none?{|l| l =~ %r{/config.ru/}}
+elsif caller.none?{|l| l =~ /config.ru/}
   Rails.logger.info('Disable scheduler since we are not running as a rack application')
 elsif caller.any?{|l| l =~ %r{/lib/rake/task.rb:\d+:in `execute'}}
   Rails.logger.info('Disable scheduler since we are running Rake')
