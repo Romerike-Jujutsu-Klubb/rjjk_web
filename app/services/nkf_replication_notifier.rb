@@ -7,7 +7,7 @@ class NkfReplicationNotifier
       m.member && (
           (m.member.age < 10 && m.kont_sats !~ /^Barn/) ||
           (m.member.age >= 10 && m.member.age <= 25 && m.kont_sats !~ /^Ungdom|Trenere/) ||
-          (m.member.age > 25 && m.kont_sats !~ /^(Voksne|Styre|Trenere|Æresmedlem)/)
+          (m.member.age > 25 && m.kont_sats !~ /^(Voksne|Styre|Trenere|Æresmedlem|Støttemdlem)/)
       )
     end
     return if wrong_contracts.empty?
