@@ -40,6 +40,9 @@ def text_from_part(m)
           doc.css('body').text
         elsif m.content_type =~ /text/
           body
+        else
+          puts "Unknown content type: #{m.content_type}"
+          ''
         end
     pretty_body = text_body.gsub(/^[[:space:]]+|[[:space:]]+$/, '').delete("\r").squeeze(" \t")
         .gsub(/\n{3,}/, "\n\n")
