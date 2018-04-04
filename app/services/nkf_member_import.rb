@@ -112,14 +112,12 @@ class NkfMemberImport
   end
 
   def add_waiting_kid(nkf_agent, import_rows, dc)
-    logger.debug 'add_waiting_kid'
     details_body = nil
     3.times do
       details_body = nkf_agent.get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}").body
       break if details_body.present?
       logger.error 'Empty response when getting waiting KID'
     end
-    logger.debug 'add_waiting_kid: got details body'
     unless details_body =~
           /class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
       raise "Could not find member id:\n#{details_body.inspect}"
