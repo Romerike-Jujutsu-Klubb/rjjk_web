@@ -28,7 +28,7 @@ class FeatureTest < ActionDispatch::IntegrationTest
   end
   Capybara.default_driver = :chrome # :selenium, :chrome
   if Capybara.default_driver == :chrome
-    Capybara::Screenshot::Diff.color_distance_limit = 8.7
+    Capybara::Screenshot::Diff.color_distance_limit = 14.5
     Capybara::Screenshot::Diff.area_size_limit = 18
   end
   Capybara.default_max_wait_time = 30

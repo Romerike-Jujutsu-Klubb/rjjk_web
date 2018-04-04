@@ -420,6 +420,16 @@ blocking users: #{blocking_users.inspect}"
     magick_image.crop_resized(x, y).to_blob
   end
 
+  def parent_1_or_billing_name
+    parent_name || billing_name
+  end
+
+  # FIXME()uwe): Remove!
+  def parent_1_or_billing_name=(value)
+    self.parent_name = value
+  end
+  # EMXIF
+
   def invoice_email
     billing_email || email
   end
