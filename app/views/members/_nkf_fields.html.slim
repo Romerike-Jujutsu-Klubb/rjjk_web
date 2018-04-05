@@ -9,11 +9,12 @@ table.table.table-striped
   tbody
     - @member.nkf_member.attributes.sort.each do |k,v|
       - mapped_key, mapped_value = NkfMember.rjjk_attribute(k,v)
-      - diff_class = ('text-danger' if mapped_value != @member[mapped_key])
+      - rjjk_value = @member.send(mapped_key)
+      - diff_class = ('text-danger' if mapped_value != rjjk_value)
       - v = v.strftime('%F %R') if v.is_a?(Time)
       tr
         th = k
         td = v
         td class=diff_class = mapped_value
-        td class=diff_class = @member[mapped_key]
+        td class=diff_class = rjjk_value
         td = mapped_key
