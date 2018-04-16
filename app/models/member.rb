@@ -427,6 +427,10 @@ blocking users: #{blocking_users.inspect}"
     email || user&.email || billing_email || parent_1_email || parent_2_email || 'post@jujutsu.no'
   end
 
+  def contact_email=(value)
+    self.email value
+  end
+
   def parent_1_or_billing_name
     parent_name || billing_name
   end
