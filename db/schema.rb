@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180325174635) do
+ActiveRecord::Schema.define(version: 20180409133742) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -396,6 +396,7 @@ ActiveRecord::Schema.define(version: 20180325174635) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.date 'passive_on'
+    t.string 'parent_2_email', limit: 64
     t.index ['user_id'], name: 'index_members_on_user_id', unique: true
   end
 
