@@ -60,7 +60,7 @@ class Member < ApplicationRecord
     where('joined_on <= ? AND left_on IS NULL OR left_on >= ?', to_date, from_date)
   end
   scope :search, ->(query) do
-    includes(:nkf_member)
+    includes(:nkf_member).references(:nkf_members)
     .where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ :query" }.join(' OR '),
         query: UnicodeUtils.upcase(query).split(/\s+/).join('|'))
         .order(:first_name, :last_name)
