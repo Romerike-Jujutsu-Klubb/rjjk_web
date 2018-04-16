@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# TODO(uwe): Rename to Membership
 class Member < ApplicationRecord
   JUNIOR_AGE_LIMIT = 15
   ASPIRANT_AGE_LIMIT = 10
@@ -63,7 +64,7 @@ class Member < ApplicationRecord
     .where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ :query" }.join(' OR '),
         query: UnicodeUtils.upcase(query).split(/\s+/).join('|'))
         .order(:first_name, :last_name)
-  }
+  end
 
   NILLABLE_FIELDS =
       %i[parent_email parent_name phone_home phone_mobile phone_parent phone_work].freeze
