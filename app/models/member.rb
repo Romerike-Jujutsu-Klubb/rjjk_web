@@ -61,8 +61,8 @@ class Member < ApplicationRecord
   end
   scope :search, ->(query) do
     includes(:nkf_member).references(:nkf_members)
-    .where(SEARCH_FIELDS.map { |c| "UPPER(#{c}::text) ~ :query" }.join(' OR '),
-        query: UnicodeUtils.upcase(query).split(/\s+/).join('|'))
+        .where(SEARCH_FIELDS.map { |c| "UPPER(#{c}::text) ~ :query" }.join(' OR '),
+            query: UnicodeUtils.upcase(query).split(/\s+/).join('|'))
         .order(:first_name, :last_name)
   end
 
