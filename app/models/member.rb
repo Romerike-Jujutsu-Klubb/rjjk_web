@@ -423,6 +423,10 @@ blocking users: #{blocking_users.inspect}"
     magick_image.crop_resized(x, y).to_blob
   end
 
+  def contact_email
+    email || user&.email || billing_email || parent_1_email || parent_2_email || 'post@jujutsu.no'
+  end
+
   def parent_1_or_billing_name
     parent_name || billing_name
   end
