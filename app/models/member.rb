@@ -428,7 +428,7 @@ blocking users: #{blocking_users.inspect}"
   end
 
   def contact_email=(value)
-    self.email value
+    self.email = value
   end
 
   def parent_1_or_billing_name
