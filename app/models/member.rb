@@ -5,6 +5,10 @@ class Member < ApplicationRecord
   ASPIRANT_AGE_LIMIT = 10
   MEMBERS_PER_PAGE = 30
   ACTIVE_CONDITIONS = 'left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)'
+  SEARCH_FIELDS = %i[
+    address billing_email billing_phone_mobile email first_name last_name medlemsnummer parent_email
+    parent_name phone_home phone_mobile phone_parent phone_work
+  ].freeze
 
   geocoded_by :full_address
   after_validation :geocode, if: ->(m) {
@@ -20,6 +24,7 @@ class Member < ApplicationRecord
         .order('graduations.held_on')
   end, class_name: :Graduate
   has_one :nkf_member, dependent: :nullify
+
   has_many :appointments, dependent: :destroy
   has_many :attendances, dependent: :destroy
   has_many :censors, dependent: :destroy
@@ -53,12 +58,9 @@ class Member < ApplicationRecord
     to_date ||= from_date
     where('joined_on <= ? AND left_on IS NULL OR left_on >= ?', to_date, from_date)
   end
-  SEARCH_FIELDS = %i[
-    address billing_email billing_phone_mobile email first_name last_name parent_email
-    parent_name phone_home phone_mobile phone_parent phone_work
-  ].freeze
-  scope :search, ->(query) {
-    where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ :query" }.join(' OR '),
+  scope :search, ->(query) do
+    includes(:nkf_member)
+    .where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) ~ :query" }.join(' OR '),
         query: UnicodeUtils.upcase(query).split(/\s+/).join('|'))
         .order(:first_name, :last_name)
   }
