@@ -104,7 +104,7 @@ class Member < ApplicationRecord
 
   def self.create_corresponding_user!(attrs)
     attrs.symbolize_keys!
-    email = attrs[:email].downcase
+    email = attrs[:contact_email].downcase
     first_name = attrs[:first_name]
     last_name = attrs[:last_name]
     passwd = (0..4).map { [*((0..9).to_a + ('a'..'z').to_a)][rand(36)] }.join

@@ -8,7 +8,7 @@ class NkfMemberTest < ActiveSupport::TestCase
       address: 'Bøkeveien 11',
       billing_email: nil,
       birthdate: Date.parse('1974-04-01'),
-      email: 'erik@example.net',
+      contact_email: 'erik@example.net',
       first_name: 'Erik',
       joined_on: Date.parse('1996-05-01'),
       last_name: 'Øyan',
