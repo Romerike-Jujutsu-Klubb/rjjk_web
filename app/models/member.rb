@@ -424,7 +424,7 @@ blocking users: #{blocking_users.inspect}"
   end
 
   def contact_email
-    email || user&.email || billing_email || parent_1_email || parent_2_email || 'post@jujutsu.no'
+    email || user&.email || billing_email || parent_email || parent_2_email || 'post@jujutsu.no'
   end
 
   def contact_email=(value)
