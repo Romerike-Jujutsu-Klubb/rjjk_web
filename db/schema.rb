@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180409133742) do
+ActiveRecord::Schema.define(version: 20180425133742) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -301,6 +301,17 @@ ActiveRecord::Schema.define(version: 20180409133742) do
     t.string 'color', limit: 16
     t.integer 'target_size'
     t.boolean 'planning'
+  end
+
+  create_table 'guardianships', force: :cascade do |t|
+    t.bigint 'ward_user_id', null: false
+    t.bigint 'guardian_user_id', null: false
+    t.integer 'index', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['guardian_user_id'], name: 'index_guardianships_on_guardian_user_id'
+    t.index %w[ward_user_id index], name: 'index_guardianships_on_ward_user_id_and_index', unique: true
+    t.index ['ward_user_id'], name: 'index_guardianships_on_ward_user_id'
   end
 
   create_table 'images', force: :cascade do |t|
@@ -724,6 +735,8 @@ ActiveRecord::Schema.define(version: 20180409133742) do
   add_foreign_key 'group_semesters', 'members', column: 'chief_instructor_id', name: 'fk_group_semesters_chief_instructor_id'
   add_foreign_key 'group_semesters', 'semesters', name: 'fk_group_semesters_semester_id'
   add_foreign_key 'groups', 'martial_arts', name: 'groups_martial_art_id_fkey'
+  add_foreign_key 'guardianships', 'users', column: 'guardian_user_id'
+  add_foreign_key 'guardianships', 'users', column: 'ward_user_id'
   add_foreign_key 'information_pages', 'information_pages', column: 'parent_id', name: 'information_pages_parent_id_fkey'
   add_foreign_key 'member_images', 'images', name: 'fk_member_images_image_id'
   add_foreign_key 'member_images', 'members', name: 'fk_member_images_member_id'
