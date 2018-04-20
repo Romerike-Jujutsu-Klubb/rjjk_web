@@ -182,7 +182,10 @@ class AttendancesController < ApplicationController
               Attendance::Status::WILL_ATTEND
             end
       end
+    elsif new_status == Attendance::Status::WILL_ATTEND && practice.passed?
+      new_status = Attendance::Status::ATTENDED
     end
+
     @attendance.update!(status: new_status) if new_status
     if request.xhr?
       if params[:status] == 'toggle'
