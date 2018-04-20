@@ -2,7 +2,10 @@
 
 ul.nav.nav-tabs role="tablist"
   li.nav-item: a.nav-link.active data-target="#tab_details" data-toggle="tab" Detaljer
-  li.nav-item: a.nav-link data-target="#tab_payment" data-toggle="tab" Betaling
+  li.nav-item: a.nav-link data-target="#tab_payment" data-toggle="tab"
+    | Betaling
+    - if @member.left_on
+      .badge.badge-danger.ml-1 title='Utmeldt' data-toggle='tooltip' U
   li.nav-item: a.nav-link data-target="#tab_graduations" data-toggle="tab" Graderinger
   li.nav-item: a.nav-link data-target="#tab_user" data-toggle="tab" Web-bruker
   li.nav-item: a.nav-link data-target="#tab_duties" data-toggle="tab" Verv
