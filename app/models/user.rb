@@ -32,7 +32,7 @@ class User < ApplicationRecord
   after_save { @password_needs_confirmation = false }
   after_validation :crypt_password
 
-  validates :login, length: { within: 3..64 }, uniqueness: { case_sensitive: false }, allow_nil: true
+  validates :login, length: { within: 3..64 }, uniqueness: { case_sensitive: false }, allow_blank: true
   validates :email, presence: true, uniqueness: { case_sensitive: false }
 
   validates :password, presence: { if: :validate_password? }
