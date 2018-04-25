@@ -11,7 +11,7 @@ class NkfMemberImportTest < ActionMailer::TestCase
       i = NkfMemberImport.new
     end
 
-    assert_equal 0, i.changes.size
+    assert_equal 3, i.changes.size
     assert_equal [], i.error_records
     assert_nil i.exception
     assert_equal 415, i.import_rows.size
