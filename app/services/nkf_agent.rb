@@ -49,13 +49,12 @@ class NkfAgent
         '&frm_27_v45=%3D&frm_27_v46=11&frm_27_v47=11&frm_27_v49=N&frm_27_v50=134002.PNG&frm_27_v53=-1' \
         '&p_ks_reg_medladm_action=SEARCH&p_page_search='
     search_result_page = @agent.get(search_url)
-    # TODO: (uwe): Pick up more pages
     search_result_body = search_result_page.body
-    more_pages = search_result_body
+    more_pages = ['1'] + search_result_body
         .scan(%r{<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)</a>})
-        .map { |r| r[0] } # TODO(uwe): Use &:first ?
+        .map(&:first)
     logger.debug("more_pages: #{more_pages.inspect}")
-    in_parallel(more_pages) do |page_number, queue|
+    in_parallel(more_pages - ['1']) do |page_number, queue|
       logger.debug page_number
       page_body = @agent.get(search_url + page_number).body
       even_more_pages = page_body
