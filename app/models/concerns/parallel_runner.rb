@@ -2,7 +2,7 @@
 
 module ParallelRunner
   # TODO(uwe): Test with multiple threads when https://github.com/vcr/vcr/issues/200 is fixed
-  CONCURRENT_REQUESTS = Rails.env.test? ? 1 : 7
+  CONCURRENT_REQUESTS = Rails.env.development? || Rails.env.test? ? 1 : 7
   # ODOT
 
   private
@@ -13,9 +13,9 @@ module ParallelRunner
     values.each { |value| queue << value }
     threads = Array.new(CONCURRENT_REQUESTS) do
       Thread.start do
-        ActiveRecord::Base.connection_pool.with_connection do
+        Rails.application.executor.wrap do
           begin
-            loop { yield queue.pop(true) }
+            loop { yield queue.pop(true), queue }
           rescue ThreadError => e
             logger.debug "ThreadError running parallel tasks: #{e}"
           end

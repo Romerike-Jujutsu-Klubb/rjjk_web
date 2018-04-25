@@ -55,10 +55,22 @@ class NkfAgent
         .scan(%r{<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)</a>})
         .map { |r| r[0] } # TODO(uwe): Use &:first ?
     logger.debug("more_pages: #{more_pages.inspect}")
-    in_parallel(more_pages) do |page_number|
+    in_parallel(more_pages) do |page_number, queue|
       logger.debug page_number
-      synchronize { search_result_body << @agent.get(search_url + page_number).body }
+      page_body = @agent.get(search_url + page_number).body
+      even_more_pages = page_body
+        .scan(%r{<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)</a>})
+        .map(&:first)
+      synchronize do
+        (even_more_pages - more_pages).each do |page_no|
+         logger.debug "Add page: #{page_no}"
+          more_pages << page_no
+          queue << page_no
+        end
+        search_result_body << page_body
+      end
     end
+    logger.debug("more_pages: #{more_pages.inspect}")
     search_result_body
   end
 
