@@ -67,7 +67,7 @@ class Member < ApplicationRecord
   end
 
   NILLABLE_FIELDS = %i[billing_email parent_email parent_name parent_2_email phone_home phone_mobile
-      phone_parent phone_work].freeze
+                       phone_parent phone_work].freeze
   before_validation do
     %i[billing_email email parent_email].each do |e|
       self[e] = self[e].strip.downcase if self[e] && changes[e]

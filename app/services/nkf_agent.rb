@@ -58,11 +58,11 @@ class NkfAgent
       logger.debug page_number
       page_body = @agent.get(search_url + page_number).body
       even_more_pages = page_body
-        .scan(%r{<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)</a>})
-        .map(&:first)
+          .scan(%r{<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)</a>})
+          .map(&:first)
       synchronize do
         (even_more_pages - more_pages).each do |page_no|
-         logger.debug "Add page: #{page_no}"
+          logger.debug "Add page: #{page_no}"
           more_pages << page_no
           queue << page_no
         end
