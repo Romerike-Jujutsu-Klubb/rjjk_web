@@ -10,9 +10,12 @@ class User < ApplicationRecord
 
   has_one :member, dependent: :nullify
   has_many :embus, dependent: :destroy
+  has_many :guardianships, dependent: :destroy, inverse_of: :ward_user, foreign_key: :ward_user_id
   has_many :images, dependent: :destroy
   has_many :news_items, dependent: :destroy, inverse_of: :creator, foreign_key: :created_by
   has_many :news_item_likes, dependent: :destroy
+  has_many :wardships, class_name: :Guardianship, dependent: :destroy, inverse_of: :guardian_user,
+      foreign_key: :guardian_user_id
 
   # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
   SEARCH_FIELDS = %i[email first_name last_name login].freeze

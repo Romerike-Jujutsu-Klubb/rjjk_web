@@ -44,6 +44,10 @@ class CensorsControllerTest < ActionController::TestCase
     assert_equal num_censors + 1, Censor.count
   end
 
+  def test_create_without_member_id
+    post :create, params: { censor: { graduation_id: graduations(:tiger).id } }
+  end
+
   def test_edit
     get :edit, params: { id: @first_id }
     assert_no_errors :censor
@@ -56,6 +60,18 @@ class CensorsControllerTest < ActionController::TestCase
     assert_no_errors :censor
     assert_response :redirect
     assert_redirected_to action: 'show', id: @first_id
+  end
+
+  def test_confirm
+    post :confirm, params: { id: @first_id }
+    assert_no_errors :censor
+    assert_response :redirect
+  end
+
+  def test_decline
+    post :decline, params: { id: @first_id }
+    assert_no_errors :censor
+    assert_response :redirect
   end
 
   def test_destroy
