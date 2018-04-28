@@ -13,7 +13,7 @@ class NkfMember < ApplicationRecord
     etternavn: { map_to: :last_name, form_field: :frm_48_v04 },
     fodselsdato: { map_to: :birthdate, form_field: :frm_48_v08 },
     foresatte: { map_to: :parent_1_or_billing_name, map_from: %i[billing_name parent_name],
-        form_field: :frm_48_v23 },
+                 form_field: :frm_48_v23 },
     foresatte_epost: { map_to: :parent_email, form_field: :frm_48_v73 },
     foresatte_mobil: { map_to: :phone_parent, form_field: :frm_48_v74 },
     foresatte_nr_2: { map_to: :parent_2_name, form_field: :frm_48_v72 },
