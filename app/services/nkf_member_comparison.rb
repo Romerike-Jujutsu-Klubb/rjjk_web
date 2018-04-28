@@ -95,7 +95,7 @@ class NkfMemberComparison
           next if old_value.blank? && new_value.blank?
           attr_sym = attr.to_sym
           _nkf_column, nkf_mapping = NkfMember::FIELD_MAP.find do |_k, v|
-            v[:map_from] == attr_sym || v[:map_to] == attr_sym
+            [*v[:map_from]].include?(attr_sym) || v[:map_to] == attr_sym
           end
           next if nkf_mapping && nkf_mapping[:import]
           if (nkf_field = nkf_mapping&.fetch(:form_field, nil))
