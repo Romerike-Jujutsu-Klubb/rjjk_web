@@ -437,7 +437,11 @@ blocking users: #{blocking_users.inspect}"
 
   # FIXME()uwe): Remove!
   def parent_1_or_billing_name=(value)
-    self.parent_name = value
+    if parent_name
+      self.parent_name = value
+    else
+      self.billing_name = value
+    end
   end
   # EMXIF
 
