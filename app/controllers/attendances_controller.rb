@@ -182,7 +182,7 @@ class AttendancesController < ApplicationController
               Attendance::Status::WILL_ATTEND
             end
       end
-    elsif new_status == Attendance::Status::WILL_ATTEND && practice.passed?
+    elsif new_status == Attendance::Status::WILL_ATTEND && practice.imminent?
       new_status = Attendance::Status::ATTENDED
     end
 
