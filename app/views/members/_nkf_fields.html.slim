@@ -13,8 +13,8 @@ table.table.table-striped.table-sm.table-responsive
       - diff_class = ('text-danger' if mapped_value != rjjk_value)
       - v = v.strftime('%F %R') if v.is_a?(Time)
       tr
-        th = k
+        th style="word-break:break-word" = k
         td = v
         td class=diff_class = mapped_value
         td class=diff_class = rjjk_value
-        td = mapped_key
+        td style="word-break:break-word" = mapped_key
