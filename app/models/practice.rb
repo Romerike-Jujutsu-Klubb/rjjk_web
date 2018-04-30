@@ -16,6 +16,10 @@ class Practice < ApplicationRecord
     date.at(group_schedule.start_at)
   end
 
+  def imminent?
+    Time.current > (start_at - 15.minutes)
+  end
+
   def passed?
     Time.current > date.at(group_schedule.end_at)
   end
