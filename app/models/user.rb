@@ -43,7 +43,7 @@ class User < ApplicationRecord
   validates :password, length: { within: 5..40, if: :validate_password? }
 
   validate do
-    if role_changed? && role.present? && !current_user.admin?
+    if will_save_change_to_role? && role.present? && !current_user&.admin?
       errors.add(:role, 'Bare administratorer kan gi administratorrettigheter.')
     end
   end
