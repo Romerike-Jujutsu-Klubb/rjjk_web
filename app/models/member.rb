@@ -8,7 +8,7 @@ class Member < ApplicationRecord
   ACTIVE_CONDITIONS = 'left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)'
   SEARCH_FIELDS = %i[
     address billing_email billing_name billing_phone_mobile email first_name last_name medlemsnummer
-    parent_email parent_name parent_2_mobile phone_home phone_mobile phone_parent phone_work
+    parent_email parent_name parent_2_mobile parent_2_name phone_home phone_mobile phone_parent phone_work
   ].freeze
 
   geocoded_by :full_address
