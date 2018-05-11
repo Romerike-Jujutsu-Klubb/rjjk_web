@@ -8,8 +8,8 @@ table.table.table-striped.table-sm.table-responsive
       th RJJK attribute
   tbody
     - @member.nkf_member.attributes.sort.each do |k,v|
-      - mapped_key, mapped_value = NkfMember.rjjk_attribute(k,v)
-      - rjjk_value = @member.send(mapped_key) if mapped_key
+      - target, mapped_key, mapped_value = NkfMember.rjjk_attribute(k,v)
+      - rjjk_value = @member.send(target)&.send(mapped_key) if mapped_key
       - diff_class = ('text-danger' if mapped_value != rjjk_value)
       - v = v.strftime('%F %R') if v.is_a?(Time)
       tr

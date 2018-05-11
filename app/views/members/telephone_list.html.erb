@@ -15,7 +15,7 @@
   <tr>
     <td><%=h member.last_name %></td>
     <td><%=h member.first_name %></td>
-    <td><%=h member.phone_mobile %></td>
+    <td><%=h member.user.phone %></td>
     <td><%=h member.phone_home %></td>
     <td><%=h member.phone_work %></td>
     <td><%= link_to 'Rediger', :action => 'edit', :id => member.id %></td>

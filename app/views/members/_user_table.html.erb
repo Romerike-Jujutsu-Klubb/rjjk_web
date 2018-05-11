@@ -19,7 +19,7 @@
             <td><%= member.current_rank && member.current_rank.name %></td>
             <td><%= member.left_on ? 'Utmeldt' : (member.instructor ? 'Instruktør' : 'Aktiv') %></td>
             <td><a href="mailto:<%= h member.email %>"><%= h member.email %></a></td>
-            <td><%= member.phone_mobile %></td>
+            <td><%= member.user.phone %></td>
           </tr>
       <% end %>
     </table>
