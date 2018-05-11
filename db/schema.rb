@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180425133742) do
+ActiveRecord::Schema.define(version: 20180527133769) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -317,7 +317,7 @@ ActiveRecord::Schema.define(version: 20180425133742) do
   create_table 'images', force: :cascade do |t|
     t.string 'name', limit: 64, null: false
     t.string 'content_type', limit: 255, null: false
-    t.binary 'content_data', null: false
+    t.binary 'content_data'
     t.integer 'user_id', null: false
     t.string 'description', limit: 16
     t.text 'story'
@@ -369,22 +369,15 @@ ActiveRecord::Schema.define(version: 20180425133742) do
   end
 
   create_table 'members', force: :cascade do |t|
-    t.string 'first_name', limit: 100, default: '', null: false
-    t.string 'last_name', limit: 100, default: '', null: false
-    t.string 'email', limit: 128, null: false
-    t.string 'phone_mobile', limit: 32
     t.string 'phone_home', limit: 32
     t.string 'phone_work', limit: 32
-    t.string 'phone_parent', limit: 32
     t.date 'birthdate'
     t.boolean 'male', null: false
     t.date 'joined_on', null: false
     t.date 'left_on'
-    t.string 'parent_name', limit: 100
     t.string 'address', limit: 100, default: '', null: false
     t.string 'postal_code', limit: 4, null: false
     t.string 'billing_type', limit: 100
-    t.string 'billing_name', limit: 100
     t.string 'billing_address', limit: 100
     t.string 'billing_postal_code', limit: 4
     t.boolean 'payment_problem', null: false
@@ -394,21 +387,18 @@ ActiveRecord::Schema.define(version: 20180425133742) do
     t.string 'social_sec_no', limit: 11
     t.string 'account_no', limit: 16
     t.string 'billing_phone_home', limit: 32
-    t.string 'billing_phone_mobile', limit: 32
     t.string 'kid', limit: 64
     t.decimal 'latitude', precision: 8, scale: 6
     t.decimal 'longitude', precision: 9, scale: 6
     t.boolean 'gmaps'
-    t.integer 'user_id'
-    t.string 'parent_email', limit: 64
-    t.string 'parent_2_name', limit: 64
-    t.string 'parent_2_mobile', limit: 16
-    t.string 'billing_email', limit: 64
+    t.integer 'user_id', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.date 'passive_on'
-    t.string 'parent_2_email', limit: 64
-    t.index ['user_id'], name: 'index_members_on_user_id', unique: true
+    t.bigint 'billing_user_id'
+    t.bigint 'contact_user_id'
+    t.index ['billing_user_id'], name: 'index_members_on_billing_user_id'
+    t.index ['contact_user_id'], name: 'index_members_on_contact_user_id'
   end
 
   create_table 'news_item_likes', force: :cascade do |t|
@@ -687,12 +677,12 @@ ActiveRecord::Schema.define(version: 20180425133742) do
   end
 
   create_table 'users', force: :cascade do |t|
-    t.string 'login', limit: 80, null: false
-    t.string 'salted_password', limit: 40, null: false
-    t.string 'email', limit: 64, null: false
+    t.string 'login', limit: 80
+    t.string 'salted_password', limit: 40
+    t.string 'email', limit: 64
     t.string 'first_name', limit: 40
     t.string 'last_name', limit: 40
-    t.string 'salt', limit: 40, null: false
+    t.string 'salt', limit: 40
     t.string 'role', limit: 40
     t.string 'security_token', limit: 40
     t.datetime 'token_expiry'
@@ -700,6 +690,7 @@ ActiveRecord::Schema.define(version: 20180425133742) do
     t.boolean 'deleted', default: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.string 'phone', limit: 32
   end
 
   create_table 'wazas', force: :cascade do |t|
@@ -740,6 +731,9 @@ ActiveRecord::Schema.define(version: 20180425133742) do
   add_foreign_key 'information_pages', 'information_pages', column: 'parent_id', name: 'information_pages_parent_id_fkey'
   add_foreign_key 'member_images', 'images', name: 'fk_member_images_image_id'
   add_foreign_key 'member_images', 'members', name: 'fk_member_images_member_id'
+  add_foreign_key 'members', 'users'
+  add_foreign_key 'members', 'users', column: 'billing_user_id'
+  add_foreign_key 'members', 'users', column: 'contact_user_id'
   add_foreign_key 'news_item_likes', 'news_items', name: 'fk_news_item_likes_news_item_id'
   add_foreign_key 'news_item_likes', 'users', name: 'fk_news_item_likes_user_id'
   add_foreign_key 'news_items', 'users', column: 'created_by', name: 'news_items_created_by_fkey'
