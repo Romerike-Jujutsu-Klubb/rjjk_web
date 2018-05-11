@@ -1,12 +1,12 @@
 lars:
   address: Torsvei 8b
   birthdate: 1967-06-21
-  email: lars@example.com
-  first_name: Lars
+#  email: lars@example.com
+#  first_name: Lars
   groups: voksne
   instructor: false
   joined_on: 2007-06-21
-  last_name: Bråten
+#  last_name: Bråten
   male: true
   nkf_fee: true
   payment_problem: false
@@ -16,27 +16,27 @@ lars:
 uwe:
   address: Møllesvingen 5
   birthdate: 1970-11-25
-  first_name: Uwe
+#  first_name: Uwe
 #  groups: voksne
   instructor: true
   joined_on: 1987-01-05
-  last_name: Kubosch
+#  last_name: Kubosch
   male: true
   nkf_fee: true
   payment_problem: false
   postal_code: 1479
   user: admin
-  email: uwe@example.com
+#  email: uwe@example.com
 
 sebastian:
-  email: sebastian@example.com
+#  email: sebastian@example.com
   address: Møllesvingen 5
   birthdate: 2004-06-03
-  first_name: Sebastian
+#  first_name: Sebastian
   groups: panda
   instructor: false
   joined_on: 2007-08-25
-  last_name: Kubosch
+#  last_name: Kubosch
   male: true
   nkf_fee: true
   payment_problem: false
@@ -46,14 +46,14 @@ sebastian:
 newbie:
   address: Rookie Road 5
   birthdate: 1990-05-17
-  first_name: Newbie
+#  first_name: Newbie
   groups: voksne
   instructor: false
   joined_on: 2013-08-25
-  last_name: Neuer
+#  last_name: Neuer
   male: true
   nkf_fee: true
   payment_problem: false
   postal_code: 1472
   user: newbie
-  email: newbie@example.com
+#  email: newbie@example.com

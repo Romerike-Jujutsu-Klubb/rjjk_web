@@ -13,32 +13,32 @@ class AttendancePlanFeatureTest < FeatureTest
     screenshot('index')
     assert_equal ['Denne uken', 'Ubekreftet Du trente.', 'Kommer! Du kommer.',
                   'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1',
-                  'Siden gradering', '3'],
+                  'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?)
 
     first('a.btn').click
     assert has_css?('a.btn', text: 'Trente!')
     assert_equal ['Denne uken', 'Trente! Du trente.', 'Kommer! Du kommer.',
                   'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1',
-                  'Siden gradering', '3'],
+                  'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?)
 
     first('a.btn').click
     assert has_css?('a.btn', text: 'Annet')
     assert_equal ['Denne uken', 'Annet', 'Kommer! Du kommer.', 'Neste uke',
-                  'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '3'],
+                  'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?)
 
     all('a.btn')[1].click
     assert has_css?('a.btn', text: 'Kommer du?', count: 3), all('a.btn').map(&:text)
     assert_equal ['Denne uken', 'Annet', 'Kommer du?', 'Neste uke', 'Kommer du?',
-                  'Kommer du?', 'Oktober', '1', 'Siden gradering', '3'],
+                  'Kommer du?', 'Oktober', '1', 'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?)
 
     all('a.btn')[1].click
     assert has_css?('a.btn', text: 'Kommer du?', count: 2)
     assert_equal ['Denne uken', 'Annet', 'Kommer! Du kommer.', 'Neste uke',
-                  'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '3'],
+                  'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?)
   end
 

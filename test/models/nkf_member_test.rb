@@ -5,25 +5,44 @@ require 'test_helper'
 class NkfMemberTest < ActiveSupport::TestCase
   test 'converted_attributes' do
     expected = {
-      address: 'Bøkeveien 11',
-      billing_email: nil,
-      birthdate: Date.parse('1974-04-01'),
-      contact_email: 'erik@example.net',
-      first_name: 'Erik',
-      joined_on: Date.parse('1996-05-01'),
-      last_name: 'Øyan',
-      left_on: nil,
-      male: true,
-      parent_1_or_billing_name: nil,
-      parent_2_mobile: nil,
-      parent_2_name: nil,
-      parent_email: nil,
-      phone_home: nil,
-      phone_mobile: nil,
-      phone_parent: nil,
-      phone_work: nil,
-      postal_code: '1470',
+      billing: {
+        email: nil,
+      },
+      member: {
+        first_name: 'Erik',
+        last_name: 'Øyan',
+        phone: nil,
+      },
+      membership: {
+        address: 'Bøkeveien 11',
+        contact_email: 'erik@example.net',
+        postal_code: '1470',
+        birthdate: Date.parse('1974-04-01'),
+        joined_on: Date.parse('1996-05-01'),
+        left_on: nil,
+        male: true,
+        parent_1_or_billing_name: nil,
+        phone_home: nil,
+        phone_work: nil,
+      },
+      parent_1: {
+        email: nil,
+        phone: nil,
+      },
+      parent_2: {
+        phone: nil,
+        name: nil,
+      },
     }
-    assert_equal expected, Hash[nkf_members(:erik).converted_attributes.sort]
+    assert_equal expected, Hash[nkf_members(:erik).converted_attributes.sort_by_key]
+  end
+end
+
+class Hash
+  def sort_by_key(&block)
+    keys.sort(&block).each_with_object({}) do |key, seed|
+      seed[key] = self[key]
+      seed[key] = seed[key].sort_by_key(&block) if seed[key].is_a?(Hash)
+    end
   end
 end

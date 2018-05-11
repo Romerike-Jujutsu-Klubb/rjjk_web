@@ -14,7 +14,7 @@ class NkfMemberTrialMailerTest < ActionMailer::TestCase
   test 'notify_overdue_trials' do
     mail = NkfMemberTrialMailer.notify_overdue_trials(users(:admin), [])
     assert_equal 'Utløpt prøvetid', mail.subject
-    assert_equal %w[admin@test.com], mail.to
+    assert_equal %w[uwe@example.com], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_match 'Følgende prøvemedlemmer har utløpt prøvetid', mail.body.decoded
   end

@@ -14,7 +14,7 @@ class AttendanceReviewFeatureTest < FeatureTest
     assert_equal ['Forrige uke', 'Trente du? Lars og Newbie trente.',
                   'Instruerte! Du og Lars trente.', 'Denne uken', 'Ubekreftet Du trente.',
                   'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?',
-                  'Oktober', '1', 'Siden gradering', '3'],
+                  'Oktober', '1', 'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?)
 
     first('a.btn').click
@@ -22,7 +22,7 @@ class AttendanceReviewFeatureTest < FeatureTest
     assert_equal ['Forrige uke', 'Trente! Du og 2 andre trente.',
                   'Instruerte! Du og Lars trente.', 'Denne uken', 'Ubekreftet Du trente.',
                   'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?',
-                  'Oktober', '1', 'Siden gradering', '3'],
+                  'Oktober', '1', 'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?)
     screenshot('with_presence')
 
@@ -32,7 +32,7 @@ class AttendanceReviewFeatureTest < FeatureTest
     assert_equal ['Forrige uke', 'Trente! Du og 2 andre trente.',
                   'Annet Lars trente.', 'Denne uken', 'Ubekreftet Du trente.',
                   'Kommer! Du kommer.', 'Neste uke', 'Kommer du?', 'Kommer du?',
-                  'Oktober', '1', 'Siden gradering', '3'],
+                  'Oktober', '1', 'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?)
     screenshot('with_absence')
 

@@ -34,7 +34,8 @@ class UserTest < ActionMailer::TestCase
   end
 
   def test_generate_security_token
-    user = User.new login: 'user', email: 'user@example.com', salt: 'salt', salted_password: 'tlas'
+    user = User.new login: 'user', email: 'user@example.com',
+        salt: 'salt', salted_password: 'tlas'
     user.save
     token = user.generate_security_token
     assert_not_nil token
@@ -134,14 +135,14 @@ class UserTest < ActionMailer::TestCase
 
   test 'emails' do
     assert_equal [
-      ['"Deletable" <deletable_user@example.com>'],
-      ['"Deleted" <deleted_user@example.com>'],
-      ['"Lars Bråten" <lars@example.com>'],
-      ['"Newbie Neuer" <newbie@example.com>'],
-      ['"Sebastian Kubosch" <sebastian@example.com>'],
-      ['"Unverified" <unverified_user@example.com>'],
-      ['"Uwe Kubosch" <uwe@example.com>'],
-      ['"long_user" <long_user@example.com>'],
+      ['deletable_user@example.com'],
+      ['deleted_user@example.com'],
+      ['lars@example.com'],
+      ['long_user@example.com'],
+      ['newbie@example.com'],
+      ['sebastian@example.com', 'uwe@example.com'],
+      ['unverified_user@example.com'],
+      ['uwe@example.com'],
     ], User.all.map(&:emails).sort
   end
 end

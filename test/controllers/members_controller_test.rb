@@ -64,14 +64,12 @@ class MembersControllerTest < ActionController::TestCase
     assert_not_nil assigns(:member)
   end
 
-  def test_create
+  def test_create_with_user_and_guardians
     num_members = Member.count
 
     VCR.use_cassette 'GoogleMaps Lars' do
       post :create, params: { member: {
         male: true,
-        first_name: 'Lars',
-        last_name: 'Bråten',
         address: 'Torsvei 8b',
         postal_code: 1472,
         payment_problem: false,
@@ -79,15 +77,21 @@ class MembersControllerTest < ActionController::TestCase
         nkf_fee: true,
         joined_on: '2007-06-21',
         birthdate: '1967-06-21',
-        user_id: users(:unverified_user).id,
-        email: 'lars@example.net',
+        user_id: id(:unverified_user),
+        user_attributes: {
+          first_name: 'Lars',
+          last_name: 'Bråten',
+          email: 'lars@example.net',
+          guardians_attributes: [
+            {},
+          ],
+        },
       } }
     end
 
-    assert_no_errors :member
     assert_response :redirect
     assert_redirected_to action: :edit, id: assigns(:member).id
-
+    assert_equal 'Medlem opprettet.', flash[:notice]
     assert_equal num_members + 1, Member.count
   end
 

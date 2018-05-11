@@ -15,7 +15,7 @@ class AnnualMeetingReminderTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[0]
     assert_equal 'På tide å sette dato for årsmøte 2014', mail.subject
-    assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
+    assert_equal ['lars@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_match '<h1>Hei Lars!</h1>', mail.body
     assert_match 'Det er på tide å sette opp dato for årsmøtet 2014. ' \
@@ -27,7 +27,7 @@ class AnnualMeetingReminderTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[1]
     assert_equal 'På tide å sette dato for årsmøte 2014', mail.subject
-    assert_equal ['"Sebastian Kubosch" <sebastian@example.com>'], mail.to
+    assert_equal ['sebastian@example.com', 'uwe@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_match '<h1>Hei Sebastian!</h1>', mail.body
     assert_match 'Det er på tide å sette opp dato for årsmøtet 2014. ' \
@@ -50,7 +50,7 @@ class AnnualMeetingReminderTest < ActionMailer::TestCase
 
       mail = UserMessage.pending[0]
       assert_equal 'På tide å sende ut innkalling til årsmøte 2014', mail.subject
-      assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
+      assert_equal ['lars@example.com'], mail.to
       assert_equal %w[noreply@test.jujutsu.no], mail.from
       assert_match '', mail.body
       assert_match '', mail.body

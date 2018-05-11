@@ -1,14 +1,19 @@
+# TODO(uwe): Rename label to "uwe"
 admin:
+  first_name: Uwe
+  last_name: Kubosch
   login: admin
   salted_password: de6db7cdf638e5ba522b9e5728d551315bf750f4 # atest
   salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
-  email: admin@test.com
+  email: uwe@example.com
   verified: true
   role: ADMIN
   security_token: 0123456789abcdef0123456789abcdef01234567
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
 
 lars:
+  first_name: Lars
+  last_name: Bråten
   login: lars
   salted_password: de6db7cdf638e5ba522b9e5728d551315bf750f4 # atest
   salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
@@ -19,6 +24,8 @@ lars:
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
 
 sebastian:
+  first_name: Sebastian
+  last_name: Kubosch
   login: sebastian
   salted_password: de6db7cdf638e5ba522b9e5728d551315bf750f4 # atest
   salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
@@ -37,8 +44,8 @@ long_user:
   deleted: false
 
 deletable_user:
-  login: deletable_user
   first_name: Deletable
+  login: deletable_user
   salted_password: c841391e1d29100a4920de7a8fbb4b0fd180c6c0 # alongtest
   salt: c068e3671780f16898c0a8295ae8d82cc59713e2
   email: deletable_user@example.com
@@ -46,8 +53,8 @@ deletable_user:
   deleted: false
   
 deleted_user:
-  login: deleted_user
   first_name: Deleted
+  login: deleted_user
   salted_password: ef94c16f6c124a4e84cc215c164767bfa25f6e92 # atest
   salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
   email: deleted_user@example.com
@@ -55,8 +62,8 @@ deleted_user:
   deleted: true
 
 unverified_user:
-  login: unverified_user
   first_name: Unverified
+  login: unverified_user
   salted_password: ef94c16f6c124a4e84cc215c164767bfa25f6e92 # atest
   salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
   email: unverified_user@example.com
@@ -66,8 +73,9 @@ unverified_user:
   deleted: false
 
 newbie:
-  login: newbie
   first_name: Newbie
+  last_name: Neuer
+  login: newbie
   salted_password: de6db7cdf638e5ba522b9e5728d551315bf750f4 # atest
   salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
   email: newbie@example.com

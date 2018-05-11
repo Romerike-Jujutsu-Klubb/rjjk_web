@@ -12,7 +12,7 @@ class SurveySenderTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[0]
     assert_equal 'First survey', mail.subject
-    assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
+    assert_equal ['uwe@example.com'], mail.to
     assert_equal ['medlem@test.jujutsu.no'], mail.from
     assert_equal(
         { 'controller' => 'survey_requests', 'action' => 'answer_form', 'id' => 397_345_097 },
@@ -38,7 +38,7 @@ class SurveySenderTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[1]
     assert_equal 'First survey', mail.subject
-    assert_equal ['"Newbie Neuer" <newbie@example.com>'], mail.to
+    assert_equal ['newbie@example.com'], mail.to
     assert_equal ['medlem@test.jujutsu.no'], mail.from
     assert_match 'First header text', mail.body
     assert_match 'First question', mail.body
@@ -58,7 +58,7 @@ class SurveySenderTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[2]
     assert_equal 'First survey', mail.subject
-    assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
+    assert_equal ['lars@example.com'], mail.to
     assert_equal ['medlem@test.jujutsu.no'], mail.from
     assert_match 'First header text', mail.body
     assert_match 'First question', mail.body

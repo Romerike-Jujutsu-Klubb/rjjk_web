@@ -7,7 +7,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_mail_stored { GraduationReminder.notify_missing_graduations }
 
     mail = UserMessage.pending[0]
-    assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
+    assert_equal ['uwe@example.com'], mail.to
     assert_equal 'Disse gruppene mangler gradering', mail.subject
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_match(/Hei Uwe.*Panda mangler gradering for dette semesteret/m, mail.body)
@@ -24,7 +24,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_mail_stored { GraduationReminder.notify_overdue_graduates }
 
     mail = UserMessage.pending[0]
-    assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
+    assert_equal ['uwe@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_equal 'Disse medlemmene mangler gradering', mail.subject
     assert_match(/Voksne.*Newbie Neuer.*5. kyu.*0.*1/m, mail.body)
@@ -35,7 +35,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_mail_stored { GraduationReminder.notify_missing_censors }
 
     mail = UserMessage.pending[0]
-    assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
+    assert_equal ['uwe@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_equal 'Denne graderingen mangler eksaminator', mail.subject
     assert_match(/Hei Uwe!/, mail.body)
@@ -47,7 +47,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_mail_stored(3) { GraduationReminder.notify_groups }
 
     mail = UserMessage.pending[0]
-    assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
+    assert_equal ['lars@example.com'], mail.to
     assert_equal %w[uwe@example.com], mail.from
     assert_equal 'Gradering for Voksne 2013-10-24', mail.subject
     assert_match(/Hei Lars!/, mail.body)
@@ -56,7 +56,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(%r{Din neste grad er <b>shodan svart belte</b>.}, mail.body)
 
     mail = UserMessage.pending[1]
-    assert_equal ['"Newbie Neuer" <newbie@example.com>'], mail.to
+    assert_equal ['newbie@example.com'], mail.to
     assert_equal %w[uwe@example.com], mail.from
     assert_equal 'Gradering for Voksne 2013-10-24', mail.subject
     assert_match(/Hei Newbie!/, mail.body)
@@ -66,7 +66,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(%r{Din neste grad er <b>5. kyu gult belte</b>.}, mail.body)
 
     mail = UserMessage.pending[2]
-    assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
+    assert_equal ['uwe@example.com'], mail.to
     assert_equal %w[uwe@example.com], mail.from
     assert_equal 'Gradering for Voksne 2013-10-24', mail.subject
     assert_match(/Hei Uwe!/, mail.body)
@@ -80,7 +80,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_mail_stored { GraduationReminder.notify_censors }
 
     mail = UserMessage.pending[0]
-    assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
+    assert_equal ['uwe@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_equal 'Invitasjon til å være eksaminator', mail.subject
     assert_match(/Hei Uwe!/, mail.body)
@@ -101,7 +101,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_mail_stored { GraduationReminder.notify_missing_locks }
 
     mail = UserMessage.pending[0]
-    assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
+    assert_equal ['uwe@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_equal 'Bekrefte graderingsoppsett', mail.subject
     assert_match(%r{<h1>Hei Uwe Kubosch!</h1>}, mail.body)
@@ -122,7 +122,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_mail_stored { GraduationReminder.notify_graduates }
 
     mail = UserMessage.pending[0]
-    assert_equal ['"Newbie Neuer" <newbie@example.com>'], mail.to
+    assert_equal ['newbie@example.com'], mail.to
     assert_equal %w[uwe@example.com], mail.from
     assert_equal 'Invitasjon til gradering', mail.subject
     assert_match(/Hei Newbie Neuer!/, mail.body)
@@ -142,14 +142,14 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_mail_stored(2) { GraduationReminder.notify_missing_approvals }
 
     mail = UserMessage.pending[0]
-    assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
+    assert_equal ['lars@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_equal 'Bekrefte gradering', mail.subject
     assert_match(/Hei Lars!/, mail.body)
     assert_match(%r{<a href="https://example.com/graduations/658987981/edit">Tiger den 2007-10-09</a>}, mail.body)
 
     mail = UserMessage.pending[1]
-    assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
+    assert_equal ['uwe@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_equal 'Bekrefte gradering', mail.subject
     assert_match(/Hei Uwe!/, mail.body)
@@ -160,7 +160,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_mail_stored(initial: 2) { GraduationReminder.notify_missing_approvals }
 
     mail = UserMessage.pending[2]
-    assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
+    assert_equal ['lars@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_equal 'Bekrefte gradering', mail.subject
     assert_match(/Hei Lars!/, mail.body)
@@ -171,7 +171,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     Censor.update_all confirmed_at: nil, declined: nil # rubocop:disable Rails/SkipsModelValidations
     assert_mail_stored(2) { GraduationReminder.notify_missing_approvals }
     assert_equal 'lars@example.com', UserMessage.pending[0].user.email
-    assert_equal 'admin@test.com', UserMessage.pending[1].user.email
+    assert_equal 'uwe@example.com', UserMessage.pending[1].user.email
     censors(:lars_tiger).update! approved_grades_at: Time.current
     censors(:uwe_panda).update! approved_grades_at: Time.current
     assert_mail_stored(initial: 2) { GraduationReminder.notify_missing_approvals }
@@ -188,7 +188,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_mail_stored { GraduationReminder.send_shopping_list }
 
     mail = UserMessage.pending[0]
-    assert_equal ['"Newbie Neuer" <newbie@example.com>'], mail.to
+    assert_equal ['newbie@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_equal 'Liste over belter for gradering for Voksne 2013-10-24', mail.subject
     assert_match(/Hei Newbie!/, mail.body)
@@ -203,7 +203,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_mail_stored(2) { GraduationReminder.congratulate_graduates }
 
     mail = UserMessage.pending[0]
-    assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
+    assert_equal ['lars@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_equal 'Gratulerer med bestått gradering!', mail.subject
     assert_match('Vi har registrert din gradering 2013-10-10 til 1. kyu brunt belte.', mail.body)
@@ -213,7 +213,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match('Vi har registrert 0 treninger på deg siden forrige gradering.', mail.body)
 
     mail = UserMessage.pending[1]
-    assert_equal ['"Uwe Kubosch" <uwe@example.com>'], mail.to
+    assert_equal ['uwe@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_equal 'Gratulerer med bestått gradering!', mail.subject
     assert_match(%r{Vi har registrert din gradering 2013-10-10 til nidan svart belte m/2 striper.}, mail.body)

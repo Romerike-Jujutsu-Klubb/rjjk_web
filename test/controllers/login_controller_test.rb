@@ -68,7 +68,7 @@ class LoginControllerTest < ActionController::TestCase
     assert_equal 1, UserMessage.pending.size
 
     mail = UserMessage.pending[0]
-    assert_equal ['"newuser" <newemail@example.com>'], mail.to
+    assert_equal ['newemail@example.com'], mail.to
     assert_match(/Brukernavn:\s+\w+\n/, mail.body)
     assert_match(/Passord\s*:\s+\w+\n/, mail.body)
     user = User.find_by(email: 'newemail@example.com')
@@ -95,17 +95,17 @@ class LoginControllerTest < ActionController::TestCase
 
   def test_signup__mismatched_passwords
     post :signup, params: { user: {
-      login: 'newtesla', email: 'newtesla', password: 'newpassword', password_confirmation: 'wrong'
+      login: 'newtesla', email: 'newtesla@example.com', password: 'newpassword', password_confirmation: 'wrong'
     } }
     user = assigns(:user)
-    assert_equal 1, user.errors.size, -> { user.errors }
+    assert_equal 1, user.errors.size, -> { user.errors.full_messages.to_s }
     assert_not_nil user.errors['password']
   end
 
   def test_signup__bad_login
-    post_signup login: 'yo', email: 'yo', password: 'newpassword', password_confirmation: 'newpassword'
+    post_signup login: 'yo', email: 'yo@example.com', password: 'newpassword', password_confirmation: 'newpassword'
     user = assigns(:user)
-    assert_equal 1, user.errors.size
+    assert_equal 1, user.errors.size, -> { user.errors.full_messages.to_s }
     assert_not_nil user.errors['login']
   end
 
@@ -150,7 +150,7 @@ class LoginControllerTest < ActionController::TestCase
     assert_no_errors :user
     assert_equal 1, UserMessage.pending.size
     mail = UserMessage.pending[0]
-    assert_equal ['"Lars Bråten" <lars@example.com>'], mail.to
+    assert_equal ['lars@example.com'], mail.to
     assert_equal user, User.authenticate(user.login, 'changed_password')
   end
 
@@ -158,8 +158,7 @@ class LoginControllerTest < ActionController::TestCase
     login(:lars)
     post :change_password, params: { user: { password: 'bad', password_confirmation: 'bad' } }
     user = assigns(:user)
-    assert_equal 1, user.errors.size
-    assert_not_nil user.errors['password']
+    assert_equal [:password], user.errors.keys
     assert_response :success
     assert_equal 0, UserMessage.pending.size
   end
