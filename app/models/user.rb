@@ -2,20 +2,29 @@
 
 require 'digest/sha1'
 
-# this model expects a certain database layout and its based on the name/login pattern.
 class User < ApplicationRecord
   include UserSystem
 
   attr_accessor :password, :password_confirmation
 
-  has_one :member, dependent: :nullify
+  # has_one :guardianship_1, -> { where index: 1 }, class_name: :Guardianship, foreign_key: :ward_user_id
+  # has_one :guardianship_2, -> { where index: 2 }, class_name: :Guardianship, foreign_key: :ward_user_id
+  has_one :member, dependent: :restrict_with_exception
+
   has_many :embus, dependent: :destroy
   has_many :guardianships, dependent: :destroy, inverse_of: :ward_user, foreign_key: :ward_user_id
   has_many :images, dependent: :destroy
-  has_many :news_items, dependent: :destroy, inverse_of: :creator, foreign_key: :created_by
   has_many :news_item_likes, dependent: :destroy
+  has_many :news_items, dependent: :destroy, inverse_of: :creator, foreign_key: :created_by
   has_many :wardships, class_name: :Guardianship, dependent: :destroy, inverse_of: :guardian_user,
       foreign_key: :guardian_user_id
+  has_many :user_messages, dependent: :destroy
+
+  # has_one :guardian_1, through: :guardianship_1, source: :guardian_user
+  # has_one :guardian_2, through: :guardianship_2, source: :guardian_user
+
+  has_many :wards, through: :wardships # , source: :ward_user
+  has_many :guardians, through: :guardianships, source: :guardian_user
 
   # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
   SEARCH_FIELDS = %i[email first_name last_name login].freeze
@@ -28,25 +37,30 @@ class User < ApplicationRecord
   CHANGEABLE_FIELDS = %w[first_name last_name email].freeze
   attr_accessor :password_needs_confirmation
 
+  NILLABLE_FIELDS = %i[first_name login].freeze
   before_validation do
-    self.login = '' if login.blank?
-    self.email = email.presence&.downcase
+    NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? }
+    self.email = email.blank? ? nil : email.strip.downcase
+    self.phone = Regexp.last_match(1) if phone =~ /^\+47\s*(.*)$/
   end
   after_save { @password_needs_confirmation = false }
   after_validation :crypt_password
 
-  validates :login, length: { within: 3..64 }, uniqueness: { case_sensitive: false }, allow_blank: true
-  validates :email, presence: true, uniqueness: { case_sensitive: false }
-
-  validates :password, presence: { if: :validate_password? }
-  validates :password, confirmation: { if: :validate_password? }
-  validates :password, length: { within: 5..40, if: :validate_password? }
+  validates :email, uniqueness: { case_sensitive: false, scope: :deleted, unless: :deleted },
+      format: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_nil: true
+  validates :login, length: { within: 3..64 }, uniqueness: { case_sensitive: false }, allow_nil: true
+  validates :password, presence: { if: :validate_password? },
+      confirmation: { if: :validate_password? },
+      length: { within: 5..40, if: :validate_password? }
+  validates :phone, uniqueness: true, allow_nil: true, length: { minimum: 4, allow_nil: true }
 
   validate do
     if will_save_change_to_role? && role.present? && !current_user&.admin?
       errors.add(:role, 'Bare administratorer kan gi administratorrettigheter.')
     end
   end
+
+  # validates_associated :member, on: :update
 
   def initialize(*args)
     super
@@ -57,12 +71,10 @@ class User < ApplicationRecord
     where('role = ?', UserSystem::ADMIN_ROLE).all
   end
 
-  def self.authenticate(login, pass)
-    users = includes(:member).references(:members)
-        .where('login = ? OR users.email = ? OR (members.email IS NOT NULL AND members.email = ?)',
-            login, login, login)
-        .where('verified = ? AND (deleted IS NULL OR deleted = ?)',
-            true, false).to_a
+  def self.authenticate(email, pass)
+    users = includes(:member)
+        .where('login = :email OR email = :email', email: email)
+        .where('verified = ? AND (deleted IS NULL OR deleted = ?)', true, false).to_a
     users
         .select { |u| u.salted_password == salted_password(u.salt, hashed(pass)) }
         .first
@@ -110,19 +122,27 @@ class User < ApplicationRecord
   end
 
   def emails
-    result = [full_email]
-    result += member.emails if member
+    result = ([email] + guardians.map(&:email)).compact
     result.sort_by! { |e| -e.size }
     result.uniq { |e| e =~ /<(.*@.*)>/ ? Regexp.last_match(1) : e }
   end
 
+  def phones
+    ([phone] + guardians.map(&:phone)).select(&:present?).uniq.sort
+  end
+
   def name
-    member.try(:name) || (
-    if first_name.present? || last_name.present?
-      [first_name, last_name].select(&:present?).join(' ')
-    else
-      login
-    end)
+    [first_name, last_name].select(&:present?).join(' ').presence
+  end
+
+  def name_was
+    [first_name_was, last_name_was].select(&:present?).join(' ')
+  end
+
+  def name=(new_name)
+    names = new_name.to_s.split(/\s+/)
+    self[:first_name] = names[0..-2].join(' ')
+    self[:last_name] = names[-1]
   end
 
   def token_expired?
@@ -161,6 +181,14 @@ class User < ApplicationRecord
 
   def instructor?
     member.try(:instructor?)
+  end
+
+  def guardian_1
+    guardianships.find { |g| g.index == 1 }&.guardian_user
+  end
+
+  def guardian_2
+    guardianships.find { |g| g.index == 2 }&.guardian_user
   end
 
   protected

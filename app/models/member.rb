@@ -6,18 +6,19 @@ class Member < ApplicationRecord
   ASPIRANT_AGE_LIMIT = 10
   MEMBERS_PER_PAGE = 30
   ACTIVE_CONDITIONS = 'left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)'
-  SEARCH_FIELDS = %i[
-    address billing_email billing_name billing_phone_mobile email first_name last_name medlemsnummer
-    parent_email parent_name parent_2_mobile parent_2_name phone_home phone_mobile phone_parent phone_work
-  ].freeze
+  SEARCH_FIELDS =
+      %i[address billing_address comment nkf_members.medlemsnummer phone_home phone_work].freeze
 
-  geocoded_by :full_address
-  after_validation :geocode, if: ->(m) {
-    (m.address.present? || m.postal_code.present?) &&
-        ((latitude.blank? || longitude.blank? || m.address_changed? || m.postal_code_changed?))
-  }
+  # geocoded_by :full_address
+  # after_validation :geocode, if: ->(m) {
+  #   (m.address.present? || m.postal_code.present?) &&
+  #       ((latitude.blank? || longitude.blank? || m.address_changed? || m.postal_code_changed?))
+  # }
 
-  belongs_to :user, dependent: :destroy, required: false
+  belongs_to :billing_user, required: false, class_name: :User
+  belongs_to :contact_user, class_name: :User, optional: true
+  belongs_to :user, inverse_of: :member
+
   has_one :last_member_image, -> { order :created_at }, class_name: :MemberImage
   has_one :image, through: :last_member_image
   has_one :next_graduate, -> do
@@ -34,8 +35,6 @@ class Member < ApplicationRecord
   has_many :graduates, dependent: :destroy
   has_many :group_instructors, dependent: :destroy
   has_many :group_memberships, dependent: :destroy
-  has_many :groups, through: :group_memberships
-
   has_many :last_6_months_attendances, -> do
     includes(practice: :group_schedule).references(:group_schedules)
         .merge(Attendance.after(count.months.ago.to_date).before(Time.zone.today))
@@ -45,14 +44,18 @@ class Member < ApplicationRecord
   has_many :member_images, dependent: :destroy
   has_many :passed_graduates, -> { where graduates: { passed: true } },
       class_name: 'Graduate'
-  has_many :ranks, through: :passed_graduates
-
   has_many :recent_attendances,
       -> { merge(Attendance.after(92.days.ago).before(31.days.from_now)) },
       class_name: :Attendance
 
   has_many :signatures, dependent: :destroy
   has_many :survey_requests, dependent: :destroy
+
+  has_many :groups, through: :group_memberships
+  has_many :ranks, through: :passed_graduates
+
+  accepts_nested_attributes_for :user
+  accepts_nested_attributes_for :billing_user
 
   scope :active, ->(from_date = nil, to_date = nil) do
     from_date ||= Date.current
@@ -63,15 +66,12 @@ class Member < ApplicationRecord
     includes(:nkf_member).references(:nkf_members)
         .where(SEARCH_FIELDS.map { |c| "UPPER(#{c}::text) ~ :query" }.join(' OR '),
             query: UnicodeUtils.upcase(query).split(/\s+/).join('|'))
-        .order(:first_name, :last_name)
+    # .order(:first_name, :last_name)
   end
+  scope :with_user, -> { includes(:user) }
 
-  NILLABLE_FIELDS = %i[billing_email parent_email parent_name parent_2_email phone_home phone_mobile
-                       phone_parent phone_work].freeze
+  NILLABLE_FIELDS = %i[phone_home phone_work].freeze
   before_validation do
-    %i[billing_email email parent_email].each do |e|
-      self[e] = self[e].strip.downcase if self[e] && changes[e]
-    end
     NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? }
   end
 
@@ -79,105 +79,43 @@ class Member < ApplicationRecord
   validates :billing_postal_code, length: { is: 4,
                                             if: proc { |m| m.billing_postal_code.present? } }
   validates :birthdate, presence: true, unless: :left_on
-  validates :email, presence: { unless: :left_on }, length: { maximum: 128 }
-  validates :first_name, :last_name, presence: true
   validates :instructor, inclusion: { in: [true, false] }
   validates :joined_on, presence: true
   validates :male, inclusion: { in: [true, false] }
   validates :nkf_fee, inclusion: { in: [true, false] }
   validates :payment_problem, inclusion: { in: [true, false] }
-  # validates_presence_of :postal_code
   validates :postal_code, length: { is: 4, allow_blank: true }
-  validates :user, :user_id, presence: { unless: :left_on }
+  validates :user, presence: true
+
+  validate do
+    if !left_on && !billing_user&.email && user.emails.empty?
+      errors.add :base, 'The member is missing a contact email'
+    end
+    if user.first_name.blank?
+      errors.add :base, 'The member is missing a first name'
+      user.errors.add :first_name, I18n.t('activerecord.errors.messages.blank')
+    end
+    if user.last_name.blank?
+      errors.add :base, 'The member is missing a last name'
+      user.errors.add :last_name, I18n.t('activerecord.errors.messages.blank')
+    end
+    if billing_user && billing_user&.email.blank?
+      errors.add :billing_user_id, 'requires email'
+      billing_user.errors.add :email, I18n.t('activerecord.errors.messages.blank')
+    end
+  end
 
   def self.paginate_active(page)
-    active.order(:first_name, :last_name).paginate(page: page, per_page: MEMBERS_PER_PAGE)
+    active.order(:id).paginate(page: page, per_page: MEMBERS_PER_PAGE)
   end
 
   def self.instructors(date = Date.current)
-    active(date)
-        .where(<<~SQL)
-          instructor = true OR id IN (SELECT member_id FROM group_instructors GROUP BY member_id)
+    active(date).where(<<~SQL).order(:id).to_a
+      instructor = true OR id IN (SELECT member_id FROM group_instructors GROUP BY member_id)
         SQL
-        .order('first_name, last_name').to_a
   end
 
-  def self.create_corresponding_user!(attrs)
-    attrs.symbolize_keys!
-    email = attrs[:contact_email].downcase
-    first_name = attrs[:first_name]
-    last_name = attrs[:last_name]
-    passwd = (0..4).map { [*((0..9).to_a + ('a'..'z').to_a)][rand(36)] }.join
-
-    # Full name and email
-    full_email = make_usable_full_email(email, first_name, last_name)
-    full_email_with_birthyear =
-        make_usable_full_email(email, first_name, last_name, attrs[:birthdate].to_s[0..3])
-    full_email_with_birthdate =
-        make_usable_full_email(email, first_name, last_name, attrs[:birthdate].to_s)
-    full_email_with_join_year =
-        make_usable_full_email(email, first_name, last_name, attrs[:joined_on].to_s[0..3])
-
-    potential_emails = [email, full_email, full_email_with_birthyear,
-                        full_email_with_birthdate, full_email_with_join_year]
-    blocking_users = []
-    potential_emails.compact.each do |potential_email|
-      existing_user = User
-          .where('login = :email OR email = :email', email: potential_email)
-          .find_by('NOT EXISTS (SELECT id FROM members WHERE user_id = users.id)')
-      return existing_user if existing_user
-
-      if (user_with_email = User.find_by('login ILIKE ? OR email ILIKE ?',
-          *([potential_email] * 2)))
-        logger.info "A user with this email already exists: #{user_with_email.inspect}"
-        blocking_users << user_with_email
-        next
-      end
-
-      new_user = User.new(
-          login: potential_email, first_name: first_name, last_name: last_name,
-          email: potential_email, password: passwd, password_confirmation: passwd
-      )
-      new_user.password_needs_confirmation = true
-      new_user.save!
-
-      return new_user
-    end
-    raise "Unable to create user for member #{attrs}
-potential phones: #{potential_emails}\nattributes: #{attrs}
-blocking users: #{blocking_users.inspect}"
-  end
-
-  def self.make_usable_full_email(email, first_name, last_name, birthdate = nil)
-    birth_suffix = (" (#{birthdate})" if birthdate)
-    full_name = "#{first_name} #{last_name}#{birth_suffix}"
-    long_email = %("#{full_name}" <#{email}>)
-    full_email = long_email
-    max_length = 64
-
-    # First and last names only
-    if full_email.size > max_length
-      logger.debug "Full email too long: #{full_email}"
-      single_first_name = first_name.split(/\s+/).first
-      single_last_name = last_name.split(/\s+/).last
-      full_email = %("#{single_first_name} #{single_last_name}#{birth_suffix}" <#{email}>)
-    end
-
-    # Squeezed name and full email
-    if full_email.size > max_length
-      logger.debug "Full email too long: #{full_email}"
-      max_name_size = max_length - email.size - 5
-      cut_name = full_name[0..(max_name_size / 2)] + '...' + full_name[-max_name_size / 2 - 2..-1]
-      full_email = %("#{cut_name}" <#{email}>)
-    end
-
-    # Fallback to non-valid email...
-    if full_email.size > max_length
-      logger.debug "Full email too long: #{full_email}"
-      full_email = long_email[0..(max_length / 2)] + long_email[-max_length / 2..-1]
-    end
-    full_email
-  end
+  delegate :email, :first_name, :last_name, :name, to: :user, allow_nil: true
 
   # describe how to retrieve the address from your model, if you use directly a
   # db column, you can dry your code, see wiki
@@ -195,11 +133,6 @@ blocking users: #{blocking_users.inspect}"
     html
   end
 
-  def create_corresponding_user!
-    new_user = self.class.create_corresponding_user!(attributes)
-    update! user_id: new_user.id
-  end
-
   def current_graduate(martial_art, date = Date.current)
     graduates.includes(:graduation, :rank).sort_by { |g| -g.rank.position }
         .find do |g|
@@ -208,10 +141,12 @@ blocking users: #{blocking_users.inspect}"
     end
   end
 
-  def attendances_since_graduation(before_date = Date.current, group = nil, includes: nil)
+  def attendances_since_graduation(before_date = Date.current, group = nil, includes: nil,
+      include_absences: false)
     groups = group ? [group] : Group.includes(:martial_art).to_a
     queries = groups.map do |g|
       ats = attendances
+      ats = ats.where(status: Attendance::PRESENT_STATES) unless include_absences
       ats = ats.by_group_id(g.id)
       if (c = current_graduate(g.martial_art, before_date))
         ats = ats.after_date(c.graduation.held_on)
@@ -381,33 +316,36 @@ blocking users: #{blocking_users.inspect}"
     end
   end
 
-  def name
-    "#{first_name} #{last_name}"
+  # FIXME(uwe): Design better!
+  def membership
+    self
   end
 
+  def member
+    user
+  end
+
+  def parent_1
+    user.guardian_1
+  end
+
+  def parent_2
+    user.guardian_2
+  end
+
+  def billing
+    billing_user
+  end
+  # EMXIF
+
   def guardians
-    guardians = {}
-    if parent_name
-      guardians[1] = {
-        name: parent_name,
-        email: parent_email,
-        phone: phone_parent,
-      }
-    end
-    if parent_2_name
-      guardians[2] = {
-        name: parent_2_name,
-        email: billing_email,
-        phone: parent_2_mobile,
-      }
-    end
-    guardians
+    user.guardians.order('guardianships.index')
   end
 
   def image_file=(file)
     return if file.blank?
     transaction do
-      image = Image.create! user_id: user_id, name: file.original_filename,
+      image = Image.create! user_id: user.id, name: file.original_filename,
           content_type: file.content_type, content_data: file.read
       member_images << MemberImage.new(image_id: image.id)
     end
@@ -424,53 +362,83 @@ blocking users: #{blocking_users.inspect}"
   end
 
   def contact_email
-    email.presence || user&.email || billing_email || parent_email || parent_2_email || 'post@jujutsu.no'
+    contact_user&.email || user&.email || user&.emails&.first || billing_user&.email || 'post@jujutsu.no'
   end
 
   def contact_email=(value)
-    self.email = value
+    logger.info "member(#{id}).contact_email=(#{value.inspect})"
+    previous_contact_email = contact_email
+    logger.info "previous_contact_email: #{previous_contact_email.inspect}"
+    return if value == previous_contact_email
+    new_contact_user = User.find_by(email: value) if value.present?
+    logger.info "new_contact_user: #{new_contact_user.inspect}"
+    if new_contact_user&.== user
+      logger.info 'clear contact user id'
+      self.contact_user_id = nil
+    elsif new_contact_user
+      logger.info 'set new contact user'
+      self.contact_user = new_contact_user
+    elsif billing_user&.== contact_user
+      logger.info 'Update billing user email'
+      billing_user.email = value
+    elsif user&.guardian_1&.== contact_user
+      logger.info 'Update guardian 1 user email'
+      user.guardian_1.email = value
+    elsif user&.guardian_2&.== contact_user
+      logger.info 'Update guardian 2 user email'
+      user.guardian_2.email = value
+    elsif user
+      logger.info 'Update user email'
+      user.email = value
+    else
+      logger.info 'Create a new user'
+      build_user email: value
+    end
   end
 
   def parent_1_or_billing_name
-    parent_name || billing_name
+    user.guardian_1&.name || billing_user&.name
   end
 
-  # FIXME()uwe): Remove!
   def parent_1_or_billing_name=(value)
-    if parent_name
-      self.parent_name = value
-    else
-      self.billing_name = value
+    u = user.guardian_1 || billing_user
+    if u.nil? && value.present?
+      u = user.guardianships.build(index: 1, guardian_user: User.new)&.guardian_user
     end
+    u.name = value if u
   end
-  # EMXIF
 
   def invoice_email
     billing_email || email
   end
 
+  def billing_email
+    billing_user&.email
+  end
+
+  def related_users
+    users = { member: user }
+    user.guardianships.each { |gs| users[gs.relationship] = gs.guardian_user }
+    users[:billing] = billing_user if billing_user
+    users
+  end
+
   def emails
     emails = []
-    emails << %("#{name}" <#{email}>) if email
-    if billing_email
-      emails << (parent_name ? %("#{parent_name}" <#{billing_email}>) : billing_email)
-    end
-    if parent_email
-      emails << (parent_2_name ? %("#{parent_2_name}" <#{parent_email}>) : parent_email)
-    end
-    emails.uniq
-    emails << user.email if emails.empty? && user&.email
-    emails
+    emails += user&.emails
+    emails << billing_user&.email
+    emails.compact.uniq
   end
 
   def phones
     phones = []
     phones << phone_home
-    phones << phone_mobile
-    phones << phone_parent
+    # phones << phone_mobile
+    # phones << phone_parent
     phones << phone_work
+    phones += user.phones
     phones << billing_phone_home
-    phones << billing_phone_mobile
+    phones << billing_user&.phone
     phones.reject(&:blank?).uniq
   end
 

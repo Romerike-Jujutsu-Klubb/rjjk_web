@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Image < ApplicationRecord
-  CHUNK_SIZE = 10 * 1024 * 1024
-
   include UserSystem
 
   scope :without_image, -> { select((column_names - %w[content_data]).map { |c| "images.#{c}" }) }
@@ -57,29 +55,10 @@ class Image < ApplicationRecord
     self.content_type = file.content_type if file.content_type.present?
   end
 
-  class Streamer
-    def initialize(image)
-      @image = image
-    end
-
-    def each
-      image_length = Image.connection.execute(<<~SQL)[0]['length']
-        SELECT LENGTH(content_data) as length
-        FROM images WHERE id = #{@image.id}
-      SQL
-      (1..image_length).step(CHUNK_SIZE) do |i|
-        data = Image.unscoped.select(<<~SQL).find(@image.id).chunk
-          SUBSTRING(
-            content_data FROM #{i} FOR #{[image_length - i + 1, CHUNK_SIZE].min}
-          ) as chunk
-        SQL
-        yield(data) if data
-      end
-    end
-  end
-
   def content_data_io
-    Streamer.new(self)
+    logger.info "get google drive io: #{id} #{google_drive_reference}"
+    move_to_google_drive! unless google_drive_reference
+    GoogleDriveService.new.get_file_io(google_drive_reference)
   end
 
   def format
@@ -111,5 +90,27 @@ class Image < ApplicationRecord
     self.width = magick_image.columns
     self.height = magick_image.rows
     save!
+  end
+
+  def load_content
+    if google_drive_reference
+      image_content = GoogleDriveService.new.get_file(google_drive_reference)
+      logger.info "Image found in Google Drive: #{id}, #{name}, #{google_drive_reference}"
+    elsif Rails.env.test? # TODO(uwe): How can we test this?  WebMock?
+      image_content = self.class.where(id: id).pluck(:content_data).first
+    else
+      image_content = move_to_google_drive!
+    end
+    image_content
+  end
+
+  private
+
+  def move_to_google_drive!
+    logger.info "Store image in Google Drive: #{id}, #{name}"
+    image_content = self.class.where(id: id).pluck(:content_data).first
+    google_id = GoogleDriveService.new.store_file(:images, id, image_content, content_type)
+    update! google_drive_reference: google_id, content_data: nil
+    image_content
   end
 end

@@ -9,7 +9,7 @@ class AnnualMeetingReminder
     board_members = am.board_members
     board_members.each do |m|
       AnnualMeetingMailer.missing_date(m, am.start_at.year + 1)
-          .store(m.user_id, tag: :annual_meeting_missing_date)
+          .store(m, tag: :annual_meeting_missing_date)
     end
   end
 
@@ -22,7 +22,7 @@ class AnnualMeetingReminder
     am = AnnualMeeting.order(:start_at).last
     am.board_members.each do |m|
       AnnualMeetingMailer.missing_invitation(next_meeting, m)
-          .store(m.user_id, tag: :annual_meeting_missing_invitation)
+          .store(m, tag: :annual_meeting_missing_invitation)
     end
   end
 end
