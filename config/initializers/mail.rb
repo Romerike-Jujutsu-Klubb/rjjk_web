@@ -3,15 +3,15 @@
 require 'mail'
 
 class Mail::Message
-  def store(user, tag: nil)
-    if user.is_a?(Member)
-      user.create_corresponding_user! if user.user_id.nil?
-      user_id = user.user_id
-    elsif user.is_a?(User)
-      user_id = user.id
-    else
-      user_id = user
-    end
+  def store(recipient, tag: nil)
+    user_id =
+        if recipient.is_a?(Member)
+          recipient.user.id
+        elsif recipient.is_a?(User)
+          recipient.id
+        else
+          recipient
+        end
     parts =
         if body.parts.any?
           body.parts

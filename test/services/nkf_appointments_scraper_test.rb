@@ -7,7 +7,7 @@ class NkfAppointmentsScraperTest < ActiveSupport::TestCase
     VCR.use_cassette('NKF Import Appointments') do
       a = NkfAppointmentsScraper.import_appointments
       assert a
-      assert_equal 7, a.size
+      assert_equal 9, a.size
       assert_equal 1, a.select { |app| app.class == Appointment }.size
     end
   end

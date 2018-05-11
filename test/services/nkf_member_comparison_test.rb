@@ -19,36 +19,42 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
       assert_equal([
         [members(:lars), {
           'birthdate' => [Date.parse('Wed, 21 Jun 1967'), Date.parse('Wed, 01 Mar 1967')],
-          'email' => ['lars@example.com', 'lars@example.net'],
           'joined_on' => [Date.parse('Thu, 21 Jun 2007'), Date.parse('Sun, 01 Apr 2001')],
+          'member' => { 'email' => ['lars@example.com', 'lars@example.net'] },
         }],
         [members(:sebastian), {
           'birthdate' => [Date.parse('2004-06-03'), Date.parse('2004-06-04')],
-          'phone_mobile' => [nil, '92929292'],
-          'email' => ['sebastian@example.com', 'sebastian@example.net'],
-          'billing_email' => [nil, 'lise@example.net'],
           'joined_on' => [Date.parse('2007-08-25'), Date.parse('2007-09-21')],
-          'parent_name' => [nil, 'Lise Kubosch'],
+          'member' => {
+            'phone' => [nil, '92929292'],
+            'email' => ['sebastian@example.com', 'sebastian@example.net'],
+          },
+          'parent_1' => {
+            'first_name' => %w[Uwe Lise],
+            'email' => ['uwe@example.com', nil],
+          },
+          'billing' => { 'email' => [nil, 'lise@example.net'] },
         }],
         [members(:uwe), {
-          'email' => ['uwe@example.com', 'uwe@example.net'],
+          'member' => { 'email' => ['uwe@example.com', 'uwe@example.net'] },
         }],
       ], c.member_changes)
       assert_equal([
         [members(:lars), {
-          'birthdate' => { Date.new(1967, 3, 1) => Date.new(1967, 6, 21) },
-          'email' => { 'lars@example.net' => 'lars@example.com' },
-          'joined_on' => { Date.new(2001, 4, 1) => Date.new(2007, 6, 21) },
+          { membership: :birthdate } => { Date.new(1967, 3, 1) => Date.new(1967, 6, 21) },
+          { membership: :joined_on } => { Date.new(2001, 4, 1) => Date.new(2007, 6, 21) },
+          { member: :email } => { 'lars@example.net' => 'lars@example.com' },
         }],
         [members(:sebastian), {
-          'birthdate' => { Date.parse('2004-06-04') => Date.parse('2004-06-03') },
-          'phone_mobile' => { '92929292' => nil },
-          'email' => { 'sebastian@example.net' => 'sebastian@example.com' },
-          'billing_email' => { 'lise@example.net' => nil },
-          'joined_on' => { Date.parse('2007-09-21') => Date.parse('2007-08-25') },
-          'parent_name' => { 'Lise Kubosch' => nil },
+          { membership: :birthdate } => { Date.parse('2004-06-04') => Date.parse('2004-06-03') },
+          { membership: :joined_on } => { Date.parse('2007-09-21') => Date.parse('2007-08-25') },
+          { member: :phone } => { '92929292' => nil },
+          { member: :email } => { 'sebastian@example.net' => 'sebastian@example.com' },
+          { parent_1: :first_name } => { 'Lise' => 'Uwe' },
+          { parent_1: :email } => { nil => 'uwe@example.com' },
+          { billing: :email } => { 'lise@example.net' => nil },
         }],
-        [members(:uwe), { 'email' => { 'uwe@example.net' => 'uwe@example.com' } }],
+        [members(:uwe), { { member: :email } => { 'uwe@example.net' => 'uwe@example.com' } }],
       ], c.outgoing_changes)
       assert_equal([Member.last], c.new_members)
       assert_equal([members(:newbie)], c.orphan_members)

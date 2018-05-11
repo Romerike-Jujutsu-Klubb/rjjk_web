@@ -74,7 +74,7 @@ else
 
     # Admin Hourly
     scheduler.cron('15 9-23 * * *') do
-      Rails.application.executor.wrap { NkfMemberImport.import_nkf_changes }
+      Rails.application.executor.wrap { NkfSynchronizationJob.perform_now }
     end
     scheduler.cron('10 * * * *') do
       Rails.application.executor.wrap { AttendanceNagger.send_message_reminder }
