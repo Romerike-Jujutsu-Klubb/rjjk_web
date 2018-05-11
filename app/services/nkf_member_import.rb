@@ -6,51 +6,6 @@ class NkfMemberImport
 
   attr_reader :changes, :error_records, :exception, :import_rows, :new_records, :trial_changes
 
-  # TODO(uwe): Move these methods to a separate Job class
-  def self.import_nkf_changes
-    begin
-      logger.info 'Import memberships from NKF'
-      i = NkfMemberImport.new
-      if i.any?
-        NkfReplicationMailer.import_changes(i).deliver_now
-        logger.info 'Sent NKF member import mail.'
-        logger.info 'Oppdaterer kontrakter'
-        NkfMember.update_group_prices
-      end
-    rescue => e
-      handle_exception('Execption sending NKF import email.', e)
-    end
-
-    begin
-      ActiveRecord::Base.transaction do
-        c = NkfMemberComparison.new
-        c.sync
-        if c.any?
-          NkfReplicationMailer.update_members(c).deliver_now
-          logger.info 'Sent update_members mail.'
-        end
-      end
-    rescue => e
-      handle_exception('Execption sending update_members email.', e)
-    end
-
-    begin
-      a = NkfAppointmentsScraper.import_appointments
-      NkfReplicationMailer.update_appointments(a).deliver_now if a.any?
-    rescue => e
-      handle_exception('Execption sending update_appointments email.', e)
-    end
-  end
-
-  def self.handle_exception(context, e)
-    logger.error context
-    logger.error "#{e.class} #{e.message}"
-    logger.error e.backtrace.join("\n")
-    ExceptionNotifier.notify_exception(e)
-    raise if Rails.env.test?
-  end
-  # ODOT
-
   def size
     new_records.try(:size).to_i + changes.try(:size).to_i + error_records.try(:size).to_i
   end
@@ -105,9 +60,11 @@ class NkfMemberImport
 
   def add_waiting_kids(nkf_agent, import_rows, detail_codes)
     import_rows[0] << 'ventekid'
-    logger.debug 'add member ventekid'
     awk_start = Time.current
-    in_parallel(detail_codes) { |dc| add_waiting_kid(nkf_agent, import_rows, dc) }
+    in_parallel(detail_codes) do |dc, queue|
+      logger.debug "add member ventekid: #{queue.size}" if queue.size % 50 == 0
+      add_waiting_kid(nkf_agent, import_rows, dc)
+    end
     logger.debug "add member ventekid...ok...#{Time.current - awk_start}s"
   end
 

@@ -16,7 +16,7 @@ class InformationPageNotifier
     return if pages.empty?
     recipients.each do |recipient|
       InformationPageMailer.notify_outdated_pages(recipient, pages)
-          .store(recipient.user_id, tag: :outdated_info)
+          .store(recipient, tag: :outdated_info)
     end
   end
 
@@ -33,9 +33,9 @@ class InformationPageNotifier
         .where('mailed_at IS NULL OR mailed_at < ?', 6.months.ago)
         .order(:mailed_at).first
     return unless page
-    Member.active(3.months.from_now).order(:first_name, :last_name).each do |m|
+    Member.active(3.months.from_now).sort_by(&:name).each do |m|
       if m.user
-        InformationPageMailer.send_weekly_page(m, page).store(m.user_id, tag: :weekly_info)
+        InformationPageMailer.send_weekly_page(m, page).store(m, tag: :weekly_info)
       else
         logger.error "Member without user: #{m.inspect}"
       end

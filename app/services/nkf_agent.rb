@@ -4,7 +4,7 @@ class NkfAgent
   include ParallelRunner
   include MonitorMixin
 
-  APP_PATH = 'http://nkfwww.kampsport.no/portal'
+  APP_PATH = 'https://nkfwww.kampsport.no/portal'
   NKF_USERNAME = '40001062'
   NKF_PASSWORD_KEY = 'NKF_PASSWORD'
   NKF_PASSWORD = ENV[NKF_PASSWORD_KEY]
@@ -32,7 +32,7 @@ class NkfAgent
     @agent.submit(login_form)
   rescue Mechanize::ResponseCodeError, SocketError => e
     raise e if backoff > BACKOFF_LIMIT
-    logger.info "Retrying agent login #{backoff}"
+    logger.info "Retrying agent login #{backoff} #{e}"
     sleep backoff
     backoff *= 2
     retry
@@ -74,8 +74,15 @@ class NkfAgent
   end
 
   def get(url)
-    url = "http://nkfwww.kampsport.no/portal/#{url}" unless url =~ %r{^http://}
+    backoff ||= 1
+    url = "#{APP_PATH}/#{url}" unless url.start_with?(APP_PATH)
     @agent.get(url)
+  rescue Errno::ECONNREFUSED => e
+    raise e if backoff > BACKOFF_LIMIT
+    logger.info "Retrying agent GET #{backoff} #{e}"
+    sleep backoff
+    backoff *= 2
+    retry
   end
 
   def submit(form)

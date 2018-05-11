@@ -18,12 +18,12 @@ class NkfAppointmentsScraper
     # FIXME(uwe):  Download CSV instead of scraping.
 
     appointments = rows.map do |r|
-      role_name = {
-        'Barne og ungdomsrepresentant' => 'Foreldrerepresentant',
-      }[r[1]] || r[1]
+      role_name = { 'Barne og ungdomsrepresentant' => 'Foreldrerepresentant' }[r[1]] || r[1]
       role = Role.where(name: role_name).first_or_create!
       member_name = r[0]
-      m = Member.find_by("(members.last_name || ' ' || members.first_name) = ?", member_name)
+      u = User.find_by("(last_name || ' ' || first_name) = ?", member_name)
+      next "Ukjent bruker: #{member_name}" if u.nil?
+      m = u.member
       next "Ukjent medlem: #{member_name}" if m.nil?
       date = Date.strptime(r[5], '%d.%m.%Y')
       if role.on_the_board?

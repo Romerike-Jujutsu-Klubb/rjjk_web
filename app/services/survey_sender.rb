@@ -34,10 +34,10 @@ class SurveySender
     return unless request
 
     if request.sent_at.nil?
-      SurveyMailer.survey(request).store(request.member.user_id, tag: :suvey_request)
+      SurveyMailer.survey(request).store(request.member, tag: :suvey_request)
       request.update! sent_at: Time.current
     else
-      SurveyMailer.reminder(request).store(request.member.user_id, tag: :survey_reminder)
+      SurveyMailer.reminder(request).store(request.member, tag: :survey_reminder)
       request.update! reminded_at: Time.current
     end
   end

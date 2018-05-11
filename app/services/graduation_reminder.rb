@@ -37,7 +37,7 @@ class GraduationReminder
         next if member.next_rank(graduation).position >= Rank::SHODAN_POSITION
         next if member.passive?
         GraduationMailer.group_date_info(graduation, member)
-            .store(member.user_id, tag: :graduation_date_info)
+            .store(member, tag: :graduation_date_info)
       end
       graduation.update! date_info_sent_at: Time.current
     end
@@ -74,7 +74,7 @@ class GraduationReminder
       next if graduation.censors.select(&:examiner?).any?
       instructor = graduation.group.current_semester&.chief_instructor || Role[:Hovedinstruktør]
       GraduationMailer.missing_censors(graduation, instructor)
-          .store(instructor.user_id, tag: :graduation_missing_censors)
+          .store(instructor, tag: :graduation_missing_censors)
       graduation.update! notified_missing_censors_at: Time.current
     end
   end
@@ -87,7 +87,7 @@ class GraduationReminder
         .where('requested_at IS NULL OR requested_at < ?', 1.week.ago)
         .order('graduations.held_on, censors.id')
         .each do |censor|
-      GraduationMailer.invite_censor(censor).store(censor.member.user_id, tag: :censor_invite)
+      GraduationMailer.invite_censor(censor).store(censor.member, tag: :censor_invite)
       censor.update! requested_at: Time.zone.now
     end
   end
@@ -102,7 +102,7 @@ class GraduationReminder
         .where('graduations.held_on < ?', 5.weeks.from_now)
         .order('graduations.held_on')
         .each do |censor|
-      GraduationMailer.lock_reminder(censor).store(censor.member.user_id, tag: :censor_invite)
+      GraduationMailer.lock_reminder(censor).store(censor.member, tag: :censor_invite)
       censor.update! lock_reminded_at: Time.zone.now
     end
   end
@@ -138,7 +138,7 @@ class GraduationReminder
       # ODOT
 
       GraduationMailer.invite_graduate(graduate)
-          .store(graduate.member.user_id, tag: :graduate_invite)
+          .store(graduate.member, tag: :graduate_invite)
       graduate.update! invitation_sent_at: Time.current
     end
   end
@@ -153,7 +153,7 @@ class GraduationReminder
         .each do |censor|
       next unless censor.examiner? ||
             censor.graduation.censors.select(&:examiner?).all?(&:approved?)
-      GraduationMailer.missing_approval(censor).store(censor.member.user_id)
+      GraduationMailer.missing_approval(censor).store(censor.member)
       censor.update! approval_requested_at: Time.current
     end
   end
@@ -166,7 +166,7 @@ class GraduationReminder
       graduation.graduates.where(gratz_sent_at: nil, passed: true).each do |graduate|
         begin
           GraduationMailer.congratulate_graduate(graduate)
-              .store(graduate.member.user_id, tag: :graduate_gratz)
+              .store(graduate.member, tag: :graduate_gratz)
           graduate.update! gratz_sent_at: Time.current
         rescue
           raise "Exception congratulating graduate: #{graduate.id}"
