@@ -16,7 +16,7 @@ class GoogleDriveService
   attr_reader :session
 
   def initialize
-    @session = GoogleDrive::Session.from_config("#{Rails.root}/config/google_client_secret.json")
+    @session = GoogleDrive::Session.from_access_token(Rails.application.secrets.google_drive_refresh_token)
   end
 
   def get_file(id)

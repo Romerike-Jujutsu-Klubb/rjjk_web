@@ -17,6 +17,7 @@ Rails.application.configure do
   config.public_file_server.headers = {
     'Cache-Control' => "public, max-age=#{1.hour.seconds.to_i}",
   }
+  config.read_encrypted_secrets = true
 
   if defined? Bullet
     config.after_initialize do

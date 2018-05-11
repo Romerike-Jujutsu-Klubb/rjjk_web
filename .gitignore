@@ -5,3 +5,6 @@
 /coverage
 /log/*.log
 /tmp
+
+# Ignore encrypted secrets key file.
+config/secrets.yml.key
