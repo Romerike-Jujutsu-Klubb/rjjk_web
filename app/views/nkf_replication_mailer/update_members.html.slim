@@ -13,7 +13,14 @@
         = m.name
         ul
           - c.each do |k, v|
-            li #{k}: #{v[0].inspect} => #{v[1].inspect}
+            li
+              ' #{k}:
+              - if v.is_a? Hash
+                ul
+                  - v.each do |k,v|
+                    li #{k}: #{v[0].inspect} => #{v[1].inspect}
+              - else
+                | #{v[0].inspect} => #{v[1].inspect}
 
 - if @outgoing_changes.any?
   - if Rails.env.production?
@@ -37,4 +44,4 @@
     h3 Record:
     =< record.inspect.html_safe
     h3 Exception:
-    =< exception
+    =< exception.to_s
