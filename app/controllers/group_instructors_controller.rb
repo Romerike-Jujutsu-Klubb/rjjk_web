@@ -75,7 +75,7 @@ class GroupInstructorsController < ApplicationController
     @group_schedules = GroupSchedule.includes(:group).references(:groups)
         .order('weekday, groups.from_age').to_a.select { |gs| gs.group.active? }
     @group_instructors = (Member.instructors + [nil] +
-        Rank.kwr.find_by(name: '4. kyu').members.active.order('first_name, last_name')).uniq
+        Rank.kwr.find_by(name: '4. kyu').members.active.sort_by(&:name)).uniq
     @semesters ||= Semester.order('start_on DESC').limit(10).to_a
   end
 

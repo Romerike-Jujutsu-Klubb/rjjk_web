@@ -14,7 +14,7 @@ class ImagesController < ApplicationController
   end
 
   def show
-    image = Image.select('id, content_type, name').find(params[:id])
+    image = Image.select('id, content_type, name, user_id, google_drive_reference').find(params[:id])
     if params[:format].nil?
       redirect_to width: params[:width], format: image.format
       return
@@ -25,11 +25,8 @@ class ImagesController < ApplicationController
       headers['Content-disposition'] = "inline; filename=\"#{image.name}\""
       self.response_body = streamer
     else
-      image_content = Image.select('id, content_data').find(params[:id])
-      send_data(image_content.content_data,
-          disposition: 'inline',
-          type: image.content_type,
-          filename: image.name)
+      image_content = image.load_content
+      send_data(image_content, disposition: 'inline', type: image.content_type, filename: image.name)
     end
   end
 
@@ -42,7 +39,7 @@ class ImagesController < ApplicationController
       end
 
   def inline
-    @image = Image.find(params[:id])
+    @image = Image.select('id,name,content_type,user_id,google_drive_reference').find(params[:id])
     if params[:format].nil?
       redirect_to width: params[:width], format: @image.format
       return
@@ -61,7 +58,7 @@ class ImagesController < ApplicationController
     end
     begin
       imgs = Magick::ImageList.new
-      imgs.from_blob Image.with_image.find(params[:id]).content_data
+      imgs.from_blob @image.load_content
     rescue *JAVA_IMAGE_EXCPTIONS => e
       logger.error "Exception loading image: #{e.class} #{e}"
       icon_name = @image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'

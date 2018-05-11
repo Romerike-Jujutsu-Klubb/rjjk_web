@@ -34,14 +34,14 @@ class BirthdayCelebrationsController < ApplicationController
 
   def new
     @birthday_celebration ||= BirthdayCelebration.new
-    @members = Member.order(:first_name).active(Date.current).to_a.select { |m| m.age >= 15 }
+    @members = Member.active(Date.current).to_a.sort_by(&:name).select { |m| m.age >= 15 }
     render action: :new
   end
 
   def edit
     @birthday_celebration ||= BirthdayCelebration.find(params[:id])
-    @members = Member.order(:first_name).active(@birthday_celebration.held_on)
-        .to_a.select { |m| m.age >= 15 }
+    @members = Member.active(@birthday_celebration.held_on)
+        .to_a.select { |m| m.age >= 15 }.sort_by(&:name)
     @members = (@members + @birthday_celebration.sensors).uniq
     render action: :edit
   end

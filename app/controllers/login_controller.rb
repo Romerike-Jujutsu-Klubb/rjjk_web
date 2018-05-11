@@ -7,20 +7,14 @@ class LoginController < ApplicationController
   def login_with_password
     return if generate_blank_form
     remember_me = params.delete(:remember_me)
-    @user = User.new(params['user'])
     if (user = User.authenticate(params['user']['login'], params['user']['password']))
       self.session_user = user
       flash['notice'] = 'Velkommen!'
       store_cookie(current_user) if remember_me && remember_me == '1'
-      unless member?
-        if (member = Member.find_by(email: user.email))
-          user.update! member_id: member.id
-          flash['notice'] << "Du er nå registrert som medlem #{member.name}."
-        end
-      end
       back_or_redirect_to '/'
     else
-      @login = params['user']['login']
+      # @login = params['user']['login']
+      @user = User.new(params['user'])
       flash.now.notice = 'Innlogging feilet.'
     end
   end
@@ -35,7 +29,7 @@ class LoginController < ApplicationController
     if email.blank? || email !~ /.+@.+\..+/
       flash.notice = 'Skriv inn en gyldig e-postadresse.'
       redirect_to :login
-    elsif (users_by_email = (User.search(email) + Member.search(email).map(&:user)).uniq).empty?
+    elsif (users_by_email = User.search(email).uniq).empty?
       flash.notice = "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{escaped_email}"
       redirect_to :login
     else
@@ -129,7 +123,7 @@ class LoginController < ApplicationController
     escaped_email = CGI.escapeHTML(email)
     if email.blank? || email !~ /.+@.+\..+/
       flash.now.notice = 'Skriv inn en gyldig e-postadresse.'
-    elsif (users_by_email = (User.search(email) + Member.search(email).map(&:user)).uniq).empty?
+    elsif (users_by_email = User.search(email).uniq).empty?
       flash.now.notice = "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{escaped_email}"
     else
       begin
@@ -222,7 +216,6 @@ class LoginController < ApplicationController
   def generate_filled_in
     @user = (params[:id] && User.find_by(id: params[:id])) || current_user ||
         User.find_by(id: session[:user_id])
-    @members = Member.select('id, first_name, last_name').where(email: @user.email).to_a
     case request.method
     when 'GET'
       render
@@ -230,10 +223,5 @@ class LoginController < ApplicationController
     else
       false
     end
-  end
-
-  def report_exception(ex)
-    logger.warn ex
-    logger.warn ex.backtrace.join("\n")
   end
 end

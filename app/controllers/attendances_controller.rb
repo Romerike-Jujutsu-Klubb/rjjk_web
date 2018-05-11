@@ -11,14 +11,15 @@ class AttendancesController < ApplicationController
   cache_sweeper :grade_history_image_sweeper, only: UPDATE_ACTIONS
 
   def index
-    @attendances = Attendance.all
+    @attendances = Attendance.includes(:practice)
+        .order('practices.year DESC, practices.week DESC, attendances.created_at DESC').limit(100).to_a
   end
 
   def since_graduation
     @member = Member.find(params[:id])
     @date = params[:date].try(:to_date) || Date.current
     @graduate = @member.current_graduate(nil, @date)
-    @attendances = @member.attendances_since_graduation(@date)
+    @attendances = @member.attendances_since_graduation(@date, include_absences: true)
   end
 
   def show
@@ -36,7 +37,7 @@ class AttendancesController < ApplicationController
     end
     @attendance.status ||= Attendance::Status::ATTENDED
     group_id = params[:group]
-    @members = Member.order(:first_name, :last_name).to_a
+    @members = Member.to_a.sort_by(&:name)
     @group_schedules = GroupSchedule.where(group_id ? { group_id: group_id } : {}).to_a
     render action: 'new'
   end

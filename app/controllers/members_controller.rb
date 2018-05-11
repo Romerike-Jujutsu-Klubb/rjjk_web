@@ -16,8 +16,7 @@ class MembersController < ApplicationController
   end
 
   def index
-    @members = Member.order('first_name, last_name')
-        .paginate(page: params[:page], per_page: Member::MEMBERS_PER_PAGE)
+    @members = Member.paginate(page: params[:page], per_page: Member::MEMBERS_PER_PAGE)
     @member_count = Member.count
   end
 
