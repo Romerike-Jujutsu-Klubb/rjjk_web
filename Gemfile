@@ -9,11 +9,6 @@ end
 
 gem 'rails', '~>5.1.4'
 
-platform :jruby do
-  gem 'activerecord-jdbcpostgresql-adapter'
-  gem 'therubyrhino'
-end
-
 platform :ruby do
   gem 'oily_png'
   gem 'pg'
@@ -43,7 +38,7 @@ gem 'exception_notification'
 # gem 'fb_graph'
 gem 'font-awesome-rails'
 gem 'geocoder'
-gem 'google-api-client'
+gem 'google_drive'
 gem 'gruff'
 # gem 'jasny-bootstrap-rails'
 gem 'jbuilder'
@@ -55,6 +50,7 @@ gem 'mechanize'
 gem 'momentjs-rails'
 gem 'nokogiri'
 gem 'nprogress-rails'
+gem 'oauth2'
 # gem 'paper_trail' # http://railscasts.com/episodes/255-undo-with-paper-trail?view=similar
 gem 'prawn'
 # gem 'prawn-gmagick'

@@ -161,7 +161,7 @@ GEM
       actionmailer (>= 4.0, < 6)
       activesupport (>= 4.0, < 6)
     execjs (2.7.0)
-    faraday (0.13.1)
+    faraday (0.15.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
     font-awesome-rails (4.7.0.2)
@@ -169,13 +169,17 @@ GEM
     geocoder (1.4.5)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    google-api-client (0.19.1)
+    google-api-client (0.19.8)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (>= 0.5, < 0.7.0)
       httpclient (>= 2.8.1, < 3.0)
       mime-types (~> 3.0)
       representable (~> 3.0)
       retriable (>= 2.0, < 4.0)
+    google_drive (2.1.10)
+      google-api-client (>= 0.11.0, < 0.20.0)
+      googleauth (>= 0.5.0, < 1.0.0)
+      nokogiri (>= 1.5.3, < 2.0.0)
     googleauth (0.6.2)
       faraday (~> 0.12)
       jwt (>= 1.4, < 3.0)
@@ -189,6 +193,7 @@ GEM
     hashdiff (0.3.7)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
+    httpauth (0.2.1)
     httpclient (2.8.3)
     i18n (0.9.1)
       concurrent-ruby (~> 1.0)
@@ -276,10 +281,16 @@ GEM
       mini_portile2 (~> 2.3.0)
     nprogress-rails (0.2.0.2)
     ntlm-http (0.1.1)
+    oauth2 (0.6.1)
+      faraday (~> 0.7)
+      httpauth (~> 0.1)
+      multi_json (~> 1.3)
     oily_png (1.2.1)
       chunky_png (~> 1.3.7)
     os (0.9.6)
     parallel (1.12.1)
+    paranoia (2.4.1)
+      activerecord (>= 4.0, < 5.3)
     parser (2.4.0.2)
       ast (~> 2.3)
     pdf-core (0.7.0)
@@ -450,7 +461,6 @@ PLATFORMS
 
 DEPENDENCIES
   actionpack-page_caching!
-  activerecord-jdbcpostgresql-adapter
   activerecord-time
   acts_as_list
   acts_as_tree
@@ -475,7 +485,7 @@ DEPENDENCIES
   exception_notification
   font-awesome-rails
   geocoder
-  google-api-client
+  google_drive
   gruff
   jbuilder
   jquery-rails
@@ -491,7 +501,9 @@ DEPENDENCIES
   momentjs-rails
   nokogiri
   nprogress-rails
+  oauth2
   oily_png
+  paranoia
   pg
   prawn
   prawn-table
@@ -516,7 +528,6 @@ DEPENDENCIES
   simplecov
   slim-rails
   therubyracer
-  therubyrhino
   timecop
   tinymce-rails
   tinymce-rails-langs
