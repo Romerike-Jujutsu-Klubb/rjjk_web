@@ -37,7 +37,7 @@ class AttendancesController < ApplicationController
     end
     @attendance.status ||= Attendance::Status::ATTENDED
     group_id = params[:group]
-    @members = Member.to_a.sort_by(&:name)
+    @members = Member.all.sort_by(&:name)
     @group_schedules = GroupSchedule.where(group_id ? { group_id: group_id } : {}).to_a
     render action: 'new'
   end
