@@ -1,0 +1,23 @@
+- if @members and not @members.empty?
+  table.table.table-sm
+    thead
+      tr
+        th Fornavn
+        th Etternavn
+        th Gruppe
+        th Grad
+        th Status
+        th E-post
+        th Mobil
+    tbody
+      - @members.each do |member|
+        tr class=cycle('odd', 'even')
+          td = link_to member.first_name, member
+          td = link_to member.last_name, member
+          td = member.groups.map { |g| "#{g.name}#{" (#{g.martial_art.family})" if g.martial_art.family != 'Jujutsu'}" } * ', '
+          td = member.current_rank && member.current_rank.name
+          td = member.left_on ? 'Utmeldt' : (member.instructor ? 'Instruktør' : 'Aktiv')
+          td: a href="mailto:#{h member.email}" = h member.email
+          td = member.user.phone
+- else
+  p Ingen treff på dette søket.

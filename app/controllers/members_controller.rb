@@ -7,17 +7,8 @@ class MembersController < ApplicationController
       :grade_history_graph_percentage
   cache_sweeper :member_sweeper, only: %i[add_group create update destroy]
 
-  def search
-    @title = 'Søk i medlemsregisteret'
-    return unless params[:q]
-    query = params[:q]
-    @members = Member.search(query)
-    @members = @members.sort_by(&:last_name)
-  end
-
   def index
-    @members = Member.paginate(page: params[:page], per_page: Member::MEMBERS_PER_PAGE)
-    @member_count = Member.count
+    @members = Member.all.sort_by(&:name)
   end
 
   def yaml
@@ -33,8 +24,7 @@ class MembersController < ApplicationController
   end
 
   def list_active
-    @members = Member.paginate_active(params[:page])
-    @member_count = Member.active.count
+    @members = Member.active.sort_by(&:name)
     render :index
   end
 
@@ -80,8 +70,6 @@ class MembersController < ApplicationController
 
   def list_inactive
     @members = Member.where('left_on IS NOT NULL').order('last_name')
-        .paginate(page: params[:page], per_page: Member::MEMBERS_PER_PAGE)
-    @member_count = Member.where('left_on IS NOT NULL').count
     render :index
   end
 

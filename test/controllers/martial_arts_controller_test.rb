@@ -13,15 +13,7 @@ class MartialArtsControllerTest < ActionController::TestCase
   def test_index
     get :index
     assert_response :success
-    assert_template 'list'
-  end
-
-  def test_list
-    get :index
-
-    assert_response :success
-    assert_template 'list'
-
+    assert_template :index
     assert_not_nil assigns(:martial_arts)
   end
 

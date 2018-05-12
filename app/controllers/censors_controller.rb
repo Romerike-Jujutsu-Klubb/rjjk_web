@@ -8,7 +8,6 @@ class CensorsController < ApplicationController
 
   def index
     @censors = Censor.includes(:graduation).order('graduations.held_on DESC')
-        .paginate(page: params[:page], per_page: 10)
   end
 
   def show

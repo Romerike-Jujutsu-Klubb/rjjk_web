@@ -99,7 +99,6 @@ nb:
         passive_on: Passiv fra
         payment_problem: Betalingsproblem
         phone_home: Fasttelefon
-        phone_mobile: Mobiltelefon
         phone_parent: Foresattes telefon
         phone_work: Arbeidstelefon
         postal_code: Postnummer
@@ -127,6 +126,7 @@ nb:
         login: Brukernavn
         password: Passord
         password_confirmation: Bekreft passord
+        phone: Telefon
         role: Rolle
         verified: Bekreftet
     errors:

@@ -4,7 +4,7 @@ class InfoController < ApplicationController
   before_action :admin_required, except: %i[index show show_content]
 
   def index
-    @information_pages = InformationPage.paginate page: params[:page], per_page: 10
+    @information_pages = InformationPage.all
   end
 
   def show

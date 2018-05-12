@@ -1,20 +1,19 @@
 = bootstrap_form_for(user) do |f|
   = f.hidden_field :form, value: :edit
-  = f.text_field :login, autocomplete: :off
-  = link_to('(medlem)', controller: :members, action: :edit, id: user.member.id) if user.member
   .row
     .col-sm-6
       = f.text_field :first_name
-    .col-sm-6
       = f.text_field :last_name
-  = f.text_field :email
-  small = (user.emails - [user.full_email]).join(' ')
-  - if admin?
-    .row
+      = f.text_field :email, autocomplete: :off
+      small = (user.emails - [user.full_email]).join(' ')
+      = f.text_field :phone
+      = f.text_field :login, autocomplete: :off
+      - unless @member
+        = link_to('(medlem)', controller: :members, action: :edit, id: user.member.id) if user.member
+    - if admin?
       .col-sm-6
         = f.select :verified, [['Nei', false], ['Ja', true]], \
           help: link_to('Send e-post med login link', send_login_link_path(user: {email: user.email}), method: :post)
-      .col-sm-6
         = f.select :role, [['Medlem', nil], ['Administrator', UserSystem::ADMIN_ROLE]]
   - if submit
     .float-right = f.primary user.new_record? ? 'Meld inn' : 'Lagre'

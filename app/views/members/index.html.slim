@@ -1,0 +1,12 @@
+- @content_width = 1024
+
+.float-right
+  ul
+    li = link_to 'Telefonliste', action: :telephone_list
+    li = link_to 'E-postlister', action: :email_list
+    li = link_to 'Gamle medlemmer', action: :list_inactive
+
+h1 Medlemsliste (#{@members.count}) (#{link_to 'Excel', action: :excel_export})
+
+= render 'user_table'
+/ = link_to 'Nytt medlem', action: :new

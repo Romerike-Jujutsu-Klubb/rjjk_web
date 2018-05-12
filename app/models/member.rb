@@ -105,10 +105,6 @@ class Member < ApplicationRecord
     end
   end
 
-  def self.paginate_active(page)
-    active.order(:id).paginate(page: page, per_page: MEMBERS_PER_PAGE)
-  end
-
   def self.instructors(date = Date.current)
     active(date).where(<<~SQL).order(:id).to_a
       instructor = true OR id IN (SELECT member_id FROM group_instructors GROUP BY member_id)

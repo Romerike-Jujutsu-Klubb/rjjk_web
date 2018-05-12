@@ -3,7 +3,6 @@
 Rails.application.routes.draw do
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
   get 'info/versjon'
-  get 'members/search'
   get 'mitt/oppmote(/:reviewed_attendance_id)' => 'attendances#plan', as: :attendance_plan
   get 'attendances/plan' # must be after "mitt/oppmote"
   post 'attendances/announce(/:year/:week/:group_schedule_id)/:status(/:member_id)' =>

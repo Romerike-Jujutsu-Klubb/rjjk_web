@@ -9,14 +9,6 @@ class InfoControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     assert_template :index
-  end
-
-  def test_list
-    get :index
-
-    assert_response :success
-    assert_template :index
-
     assert_not_nil assigns(:information_pages)
   end
 

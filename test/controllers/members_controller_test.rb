@@ -15,12 +15,6 @@ class MembersControllerTest < ActionController::TestCase
     assert_template :index
   end
 
-  def test_search
-    get :search, params: { q: 'Lars' }
-    assert_response :success
-    assert_template :search
-  end
-
   def test_list_active
     get :list_active
     assert_response :success

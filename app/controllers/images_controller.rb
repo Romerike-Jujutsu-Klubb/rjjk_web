@@ -10,7 +10,7 @@ class ImagesController < ApplicationController
   cache_sweeper :image_sweeper, only: %i[update destroy]
 
   def index
-    @images = Image.paginate page: params[:page] || 1, per_page: 4
+    @images = Image.all
   end
 
   def show

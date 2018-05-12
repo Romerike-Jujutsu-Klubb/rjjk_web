@@ -75,7 +75,6 @@ gem 'tinymce-rails'
 gem 'tinymce-rails-langs'
 gem 'uglifier', '<4'
 gem 'unicode_utils'
-gem 'will_paginate'
 
 group :beta, :email, :production do
   gem 'lograge'
