@@ -3,8 +3,8 @@
     .col-6
       = f.text_field :joined_on, class: 'date'
     .form-group.col-6
-      label for="member_nkf_member_id" NKF medlemsnr
-      span class="form-control" = (@member.nkf_member.try(:medlemsnummer) || 'Ikke i NKF-registeret.')
+      label NKF medlemsnr
+      span.form-control = (@member.nkf_member.try(:medlemsnummer) || 'Ikke i NKF-registeret.')
   .row
     .col-6
       = f.text_field :passive_on, class: 'date', placeholder: 'dato'
