@@ -20,13 +20,13 @@ ul.nav.nav-tabs role="tablist"
 
 .tab-content
   / FIXME(uwe): Save all form tabs when pressing "Save"
-  #tab_user.tab-pane.fade.show.active = render 'users/form', user: @member.user, submit: true
+  #tab_user.tab-pane.fade.show.active.pt-3 = render 'users/form', user: @member.user, submit: true
   #tab_details.tab-pane.fade.show = render 'form'
   #tab_membership.tab-pane.fade = render 'membership'
   - @member.user.guardianships.each do |guardianship|
     .tab-pane.fade id="tab_parent_#{guardianship.index}" = render 'users/form', user: guardianship.guardian_user, submit: true
   - if @member.billing_user
-    #tab_billing_user.tab-pane.fade = render 'users/form', user: @member.billing_user, submit: true
+    #tab_billing_user.tab-pane.fade.pt-3 = render 'users/form', user: @member.billing_user, submit: true
   #tab_graduations.tab-pane.fade = render 'graduations'
   #tab_duties.tab-pane.fade = render 'duties'
   #tab_signatures.tab-pane.fade
