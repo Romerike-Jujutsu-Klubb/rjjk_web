@@ -21,10 +21,7 @@
     .col = f.select :nkf_fee, [['Ja', true], ['Nei', false]]
     .col = f.select :payment_problem, [['Nei', false], ['Ja', true]]
 
-  / = f.text_field :billing_name
-  = f.text_field :billing_email
   = f.text_field :billing_address
   .row
     .col = f.text_field :billing_postal_code
-    / .col = f.text_field :billing_phone_mobile
   = submit_tag 'Lagre', id: 'save', class: 'btn btn-primary float-right my-3'
