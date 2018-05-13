@@ -11,6 +11,8 @@
         = f.text_field :login, autocomplete: :off
       - unless @member
         = link_to('(medlem)', controller: :members, action: :edit, id: user.member.id) if user.member
+      = f.text_field :address
+      = f.text_field :postal_code
     - if admin?
       .col-sm-6
         = f.select :verified, [['Nei', false], ['Ja', true]], \

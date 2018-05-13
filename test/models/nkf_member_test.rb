@@ -9,14 +9,14 @@ class NkfMemberTest < ActiveSupport::TestCase
         email: nil,
       },
       member: {
+        address: 'Bøkeveien 11',
         first_name: 'Erik',
         last_name: 'Øyan',
         phone: nil,
+        postal_code: '1470',
       },
       membership: {
-        address: 'Bøkeveien 11',
         contact_email: 'erik@example.net',
-        postal_code: '1470',
         birthdate: Date.parse('1974-04-01'),
         joined_on: Date.parse('1996-05-01'),
         left_on: nil,

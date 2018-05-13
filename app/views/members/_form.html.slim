@@ -7,12 +7,6 @@
         - elsif @member.persisted?
           = link_to 'Ta bilde', photo_member_path(@member), class: 'btn btn-primary my-3'
 
-      = f.text_field :address
-
-      .row
-        .col-6.pr-1
-          = f.text_field :postal_code
-
     .col-md-4
       .row.mt-3
         .col-6.pr-1
@@ -27,9 +21,6 @@
           label.mt-3 Alder
           =< "#{@member.age} år" if @member.birthdate
       = f.select :male, [['Mann', true], ['Kvinne', false]]
-      / = f.text_field :parent_name
-      / = f.text_field :parent_email
-      / = f.text_field :phone_parent
     .col-md-4.mt-3
       - @groups.each do |g|
         - next unless g.active? || @member.groups.include?(g)
@@ -48,9 +39,6 @@
           =< link_to @member.group_instructor? ? 'Ja' : 'Nei', controller: :group_instructors
           =< check_box :member, :instructor, title: 'Permanent instruktør'
           =< label :member, :instructor, 'fast', title: 'Permanent instruktør'
-      .mt-3
-        / = f.text_field :parent_2_name
-        / = f.text_field :parent_2_mobile
 
   = f.text_area :comment, class: ' expanding'
 

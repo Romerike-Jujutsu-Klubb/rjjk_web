@@ -11,6 +11,8 @@ css:
 
 #map
 
+- coordinates = Member.active.to_a.map(&:user).select(&:latitude).map{|u|[u.latitude, u.longitude]}
+
 javascript:
     function initMap() {
         var storsenteret = {lat: 59.947753, lng: 11.007052};
@@ -18,7 +20,7 @@ javascript:
             zoom: 10,
             center: storsenteret
         });
-        #{Member.active.where.not(latitude: nil).pluck(:latitude, :longitude).map{|lat,lng| "new google.maps.Marker({position: {lat: #{lat}, lng: #{lng}}, map: map});\n"}.join}
+        #{coordinates.map{|lat,lng| "new google.maps.Marker({position: {lat: #{lat}, lng: #{lng}}, map: map})"}.join("\n")}
     }
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAObUDWOkBeM4cyaP_YQB-h9TJx2X71X3o&callback=initMap"></script>

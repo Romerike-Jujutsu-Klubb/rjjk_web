@@ -7,8 +7,12 @@ class User < ApplicationRecord
 
   attr_accessor :password, :password_confirmation
 
-  # has_one :guardianship_1, -> { where index: 1 }, class_name: :Guardianship, foreign_key: :ward_user_id
-  # has_one :guardianship_2, -> { where index: 2 }, class_name: :Guardianship, foreign_key: :ward_user_id
+  # geocoded_by :full_address
+  # after_validation :geocode, if: ->(u) {
+  #   (u.address.present? || u.postal_code.present?) &&
+  #       ((latitude.blank? || longitude.blank? || u.address_changed? || u.postal_code_changed?))
+  # }
+
   has_one :member, dependent: :restrict_with_exception
 
   has_many :embus, dependent: :destroy
@@ -27,7 +31,7 @@ class User < ApplicationRecord
   has_many :guardians, through: :guardianships, source: :guardian_user
 
   # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
-  SEARCH_FIELDS = %i[email first_name last_name login].freeze
+  SEARCH_FIELDS = %i[address email first_name last_name login postal_code].freeze
   scope :search, ->(query) {
     where(SEARCH_FIELDS.map { |c| "to_tsvector(UPPER(#{c})) @@ to_tsquery(:query)" }.join(' OR '),
         query: UnicodeUtils.upcase(query).split(/\s+/).join(' | '))
@@ -53,6 +57,7 @@ class User < ApplicationRecord
       confirmation: { if: :validate_password? },
       length: { within: 5..40, if: :validate_password? }
   validates :phone, uniqueness: true, allow_nil: true, length: { minimum: 4, allow_nil: true }
+  validates :postal_code, length: { is: 4, allow_blank: true }
 
   validate do
     if will_save_change_to_role? && role.present? && !current_user&.admin?
@@ -189,6 +194,12 @@ class User < ApplicationRecord
 
   def guardian_2
     guardianships.find { |g| g.index == 2 }&.guardian_user
+  end
+
+  # describe how to retrieve the address from your model, if you use directly a
+  # db column, you can dry your code, see wiki
+  def full_address
+    [address, postal_code, 'Norway'].select(&:present?).join(', ')
   end
 
   protected

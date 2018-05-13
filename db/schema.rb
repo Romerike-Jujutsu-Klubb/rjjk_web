@@ -375,11 +375,7 @@ ActiveRecord::Schema.define(version: 20180527133769) do
     t.boolean 'male', null: false
     t.date 'joined_on', null: false
     t.date 'left_on'
-    t.string 'address', limit: 100, default: '', null: false
-    t.string 'postal_code', limit: 4, null: false
     t.string 'billing_type', limit: 100
-    t.string 'billing_address', limit: 100
-    t.string 'billing_postal_code', limit: 4
     t.boolean 'payment_problem', null: false
     t.string 'comment', limit: 255
     t.boolean 'instructor', null: false
@@ -388,9 +384,6 @@ ActiveRecord::Schema.define(version: 20180527133769) do
     t.string 'account_no', limit: 16
     t.string 'billing_phone_home', limit: 32
     t.string 'kid', limit: 64
-    t.decimal 'latitude', precision: 8, scale: 6
-    t.decimal 'longitude', precision: 9, scale: 6
-    t.boolean 'gmaps'
     t.integer 'user_id', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
@@ -691,6 +684,11 @@ ActiveRecord::Schema.define(version: 20180527133769) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.string 'phone', limit: 32
+    t.string 'address', limit: 100
+    t.string 'postal_code', limit: 4
+    t.decimal 'latitude', precision: 8, scale: 6
+    t.decimal 'longitude', precision: 9, scale: 6
+    t.boolean 'gmaps'
   end
 
   create_table 'wazas', force: :cascade do |t|

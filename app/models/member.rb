@@ -7,13 +7,7 @@ class Member < ApplicationRecord
   MEMBERS_PER_PAGE = 30
   ACTIVE_CONDITIONS = 'left_on IS NULL or left_on > DATE(CURRENT_TIMESTAMP)'
   SEARCH_FIELDS =
-      %i[address billing_address comment nkf_members.medlemsnummer phone_home phone_work].freeze
-
-  # geocoded_by :full_address
-  # after_validation :geocode, if: ->(m) {
-  #   (m.address.present? || m.postal_code.present?) &&
-  #       ((latitude.blank? || longitude.blank? || m.address_changed? || m.postal_code_changed?))
-  # }
+      %i[comment nkf_members.medlemsnummer phone_home phone_work].freeze
 
   belongs_to :billing_user, required: false, class_name: :User
   belongs_to :contact_user, class_name: :User, optional: true
@@ -75,16 +69,12 @@ class Member < ApplicationRecord
     NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? }
   end
 
-  validates :address, presence: true, allow_blank: true # Allow members to omit their home address
-  validates :billing_postal_code, length: { is: 4,
-                                            if: proc { |m| m.billing_postal_code.present? } }
   validates :birthdate, presence: true, unless: :left_on
   validates :instructor, inclusion: { in: [true, false] }
   validates :joined_on, presence: true
   validates :male, inclusion: { in: [true, false] }
   validates :nkf_fee, inclusion: { in: [true, false] }
   validates :payment_problem, inclusion: { in: [true, false] }
-  validates :postal_code, length: { is: 4, allow_blank: true }
   validates :user, presence: true
 
   validate do
@@ -112,12 +102,6 @@ class Member < ApplicationRecord
   end
 
   delegate :email, :first_name, :last_name, :name, to: :user, allow_nil: true
-
-  # describe how to retrieve the address from your model, if you use directly a
-  # db column, you can dry your code, see wiki
-  def full_address
-    [address, postal_code, 'Norway'].select(&:present?).join(', ')
-  end
 
   def gmaps4rails_infowindow
     html = +''

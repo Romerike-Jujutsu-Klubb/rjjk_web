@@ -64,8 +64,6 @@ class MembersControllerTest < ActionController::TestCase
     VCR.use_cassette 'GoogleMaps Lars' do
       post :create, params: { member: {
         male: true,
-        address: 'Torsvei 8b',
-        postal_code: 1472,
         payment_problem: false,
         instructor: false,
         nkf_fee: true,

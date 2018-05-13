@@ -3,7 +3,7 @@
 class NkfMember < ApplicationRecord
   FIELD_MAP = {
     adresse_1: {},
-    adresse_2: { map_to: { membership: :address }, form_field: :frm_48_v05 },
+    adresse_2: { map_to: { member: :address }, form_field: :frm_48_v05 },
     adresse_3: {},
     antall_etiketter_1: {},
     betalt_t_o_m__dato: {},
@@ -46,7 +46,7 @@ class NkfMember < ApplicationRecord
     medlemsstatus: {},
     member_id: {},
     mobil: { map_to: { member: :phone }, form_field: :frm_48_v20 },
-    postnr: { map_to: { membership: :postal_code }, form_field: :frm_48_v07 },
+    postnr: { map_to: { member: :postal_code }, form_field: :frm_48_v07 },
     rabatt: {},
     sist_betalt_dato: {},
     sted: {},

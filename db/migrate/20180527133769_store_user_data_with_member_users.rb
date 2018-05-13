@@ -4,6 +4,11 @@
 class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
   def change
     add_column :users, :phone, :string, limit: 32, index: { unique: true }
+    add_column :users, :address, :string, limit: 100
+    add_column :users, :postal_code, :string, limit: 4
+    add_column :users, :latitude, :decimal, precision: 8, scale: 6
+    add_column :users, :longitude, :decimal, precision: 9, scale: 6
+    add_column :users, :gmaps, :boolean
     change_column_null :users, :email, true
     change_column_null :users, :login, true
     change_column_null :users, :salt, true
@@ -13,13 +18,6 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
     change_column_null :members, :email, true
     remove_index :members, :user_id
     add_foreign_key :members, :users
-
-    # 2018-04-18 21:30
-    # Member.find( 327).tap{|m|m.billing_email = nil ; m.billing_phone_mobile = nil}.save!(validate: false)
-    # Member.find(1215).tap{|m|m.billing_email = nil; m.billing_phone_mobile = nil}.save!(validate: false)
-    # Member.find( 434).tap{|m|m.billing_email = nil ; m.billing_phone_mobile = nil}.save!(validate: false)
-    # Member.find(1251).tap{|m|m.billing_email = nil; m.billing_phone_mobile = nil}.save!(validate: false)
-    # Member.find( 186).tap{|m|m.billing_email = nil; m.billing_phone_mobile = nil}.save!(validate: false)
 
     Member.order(:id).each do |m|
       puts "Member (#{'%4d' % m.id}) #{m.name} email: #{m.email.inspect}, parent email: #{m.parent_email}, billing email: #{m.billing_email}, phone_mobile: #{m.phone_mobile}, billing_phone_mobile: #{m.billing_phone_mobile}"
@@ -90,13 +88,8 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
       end
 
       if main_user.email&.== m.billing_email
-        # if conflicting_user_exists?(main_user.email, main_user.id, m.id)
-          puts "User (#{'%4d' % main_user.id}) #{main_user.name} email: #{main_user.email.inspect}: Reset user email since it equals billing email"
-          main_user.attributes = { login: nil, email: nil }
-        # else
-        #   puts "User (#{'%4d' % main_user.id}) #{main_user.name} email: #{main_user.email.inspect}: Reset billing email since it duplicates email"
-        #   m.update! billing_email: nil
-        # end
+        puts "User (#{'%4d' % main_user.id}) #{main_user.name} email: #{main_user.email.inspect}: Reset user email since it equals billing email"
+        main_user.attributes = { login: nil, email: nil }
       end
 
       if main_user.email && main_user.email == m.parent_email
@@ -108,6 +101,8 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
         puts "User (#{'%4d' % main_user.id}) #{main_user.name} email: #{main_user.email.inspect}: Reset email since it equals parent 2 email"
         main_user.attributes = { login: nil, email: nil }
       end
+
+      main_user.attributes = {address: m.address, postal_code: m.postal_code, latitude: m.latitude, longitude: m.longitude, gmaps: m.gmaps}
 
       if main_user.changed?
         puts "User (#{'%4d' % main_user.id}) #{main_user.name} email: #{main_user.email.inspect}: Update: #{main_user.changes.inspect}"
@@ -222,6 +217,10 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
             puts "User (#{'%4d' % main_user.id}) #{main_user.name} email: #{main_user.email.inspect}: Discard billing phone: #{m.billing_phone_mobile.inspect} for #{billing_user.phone.inspect}"
           end
         end
+
+        billing_user.address = m.billing_address if m.billing_address.present?
+        billing_user.postal_code = m.billing_postal_code if m.billing_postal_code.present?
+
         if billing_user.changed?
           puts "Member (#{'%4d' % m.id}) #{m.name} email: #{m.user.email.inspect}: Update billing user (#{billing_user.id.inspect}) #{billing_user.email}: #{billing_user.changes.inspect}"
           billing_user.save!
@@ -249,6 +248,11 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
     remove_column :members, :first_name
     remove_column :members, :last_name
     remove_column :members, :phone_mobile
+    remove_column :members, :address
+    remove_column :members, :postal_code
+    remove_column :members, :latitude
+    remove_column :members, :longitude
+    remove_column :members, :gmaps
 
     remove_column :members, :parent_name
     remove_column :members, :parent_email
@@ -261,6 +265,8 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
     remove_column :members, :billing_name
     remove_column :members, :billing_email
     remove_column :members, :billing_phone_mobile
+    remove_column :members, :billing_address
+    remove_column :members, :billing_postal_code
 
     Member.reset_column_information
     ::Member.reset_column_information
