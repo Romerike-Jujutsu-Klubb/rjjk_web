@@ -9,8 +9,6 @@ class MemberFeatureTest < FeatureTest
     screenshot_group :show
     visit_with_login member_path(members(:sebastian))
     screenshot :person
-    find('a.nav-link', text: 'Detaljer').click
-    screenshot :details
     find('a.nav-link', text: 'Medlemskap').click
     screenshot :membership
     find('a.nav-link', text: 'Foresatt 1').click

@@ -8,11 +8,6 @@
           = link_to 'Ta bilde', photo_member_path(@member), class: 'btn btn-primary my-3'
 
     .col-md-4
-      .row.mt-3
-        .col-6.pr-1
-          = f.text_field :phone_home
-        .col-6.pl-1
-          = f.text_field :phone_work
       .row
         .col-7.pr-1
           = f.text_field :birthdate, placeholder: 'år-måned-dag', class: 'date'
@@ -40,10 +35,37 @@
           =< check_box :member, :instructor, title: 'Permanent instruktør'
           =< label :member, :instructor, 'fast', title: 'Permanent instruktør'
 
+  .row
+    .col-6
+      = f.text_field :joined_on, class: 'date'
+    .form-group.col-6
+      label NKF medlemsnr
+      span.form-control = (@member.nkf_member.try(:medlemsnummer) || 'Ikke i NKF-registeret.')
+  .row
+    .col-6
+      = f.text_field :passive_on, class: 'date', placeholder: 'dato'
+    .col-6
+      = f.text_field :left_on, class: 'date'
+  .row
+    .col-6
+      = f.select :billing_type, [%w(AutoGiro AUTOGIRO), ['Manuell Giro', 'MANUELL GIRO'], %w(AvtaleGiro AvtaleGiro), \
+          @member.billing_type && [@member.billing_type, @member.billing_type]].compact.uniq.sort
+    .col-6
+      = f.text_field :account_no
+
+  .row
+    .col = f.select :nkf_fee, [['Ja', true], ['Nei', false]]
+    .col = f.select :payment_problem, [['Nei', false], ['Ja', true]]
+
+  .row.mt-3
+    - if @member.phone_home.present?
+      .col-6.pr-1
+        = f.text_field :phone_home
+    - if @member.phone_work.present?
+      .col-6.pl-1
+        = f.text_field :phone_work
+
+
   = f.text_area :comment, class: ' expanding'
 
   = submit_tag 'Lagre', id: 'save', class: 'btn btn-primary float-right my-3'
-
-javascript:
-    document.getElementById('member_first_name').focus();
-    document.getElementById('member_first_name').select();

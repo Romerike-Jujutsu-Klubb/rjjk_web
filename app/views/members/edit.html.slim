@@ -2,7 +2,6 @@
 
 ul.nav.nav-tabs role="tablist"
   li.nav-item: a.nav-link.active data-target="#tab_user" data-toggle="tab" Personalia
-  li.nav-item: a.nav-link data-target="#tab_details" data-toggle="tab" Detaljer
   li.nav-item: a.nav-link data-target="#tab_membership" data-toggle="tab"
     | Medlemskap
     - if @member.left_on
@@ -21,8 +20,7 @@ ul.nav.nav-tabs role="tablist"
 .tab-content
   / FIXME(uwe): Save all form tabs when pressing "Save"
   #tab_user.tab-pane.fade.show.active.pt-3 = render 'users/form', user: @member.user, submit: true
-  #tab_details.tab-pane.fade.show = render 'form'
-  #tab_membership.tab-pane.fade = render 'membership'
+  #tab_membership.tab-pane.fade.show = render 'form'
   - @member.user.guardianships.each do |guardianship|
     .tab-pane.fade id="tab_parent_#{guardianship.index}" = render 'users/form', user: guardianship.guardian_user, submit: true
   - if @member.billing_user

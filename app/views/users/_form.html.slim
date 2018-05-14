@@ -20,3 +20,8 @@
         = f.select :role, [['Medlem', nil], ['Administrator', UserSystem::ADMIN_ROLE]]
   - if submit
     .float-right = f.primary user.new_record? ? 'Meld inn' : 'Lagre'
+
+- if user.new_record?
+  javascript:
+      document.getElementById('user_first_name').focus();
+      document.getElementById('user_first_name').select();
