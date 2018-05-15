@@ -124,6 +124,11 @@ class MembersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_save_image
+    post :save_image, params: { id: id(:lars), imgBase64: 'data:content/type;base64,some data' }
+    assert_response :success
+  end
+
   def test_grade_history_graph
     get :grade_history_graph
     assert_response :success

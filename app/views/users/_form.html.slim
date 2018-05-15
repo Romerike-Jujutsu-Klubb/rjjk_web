@@ -5,7 +5,7 @@
       = f.text_field :first_name
       = f.text_field :last_name
       = f.text_field :email, autocomplete: :off
-      small = (user.emails - [user.full_email]).join(' ')
+      small = (user.emails - [user.email]).join(' ')
       = f.text_field :phone
       - if user.login.present?
         = f.text_field :login, autocomplete: :off

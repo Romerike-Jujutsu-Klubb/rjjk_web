@@ -145,9 +145,11 @@ class MembersController < ApplicationController
     params.require(:imgBase64) =~ /^data:([^;]+);base64,(.*)$/
     content = Base64.decode64(Regexp.last_match(2))
     content_type = Regexp.last_match(1)
-    @member.create_image! user_id: @member.user_id, name: "Foto #{Date.current}",
-                  content_type: content_type, content_data: content
-    @member.save!
+    MemberImage.transaction do
+      image = Image.create! user_id: @member.user_id, name: "Foto #{Date.current}",
+          content_type: content_type, content_data: content
+      @member.member_images.create! image: image
+    end
     render plain: content.hash
   end
 
