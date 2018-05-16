@@ -12,9 +12,12 @@ class Graduate < ApplicationRecord
   validates :passed, inclusion: { in: [true, false], if: ->(g) { g.graduation.approved? } }
 
   def training_start_date
-    member.current_graduate(graduation.group.martial_art, graduation.held_on - 1)
-        .try(:graduation).try(:held_on).try(:+, 1) ||
-        [member.joined_on, member.attendances.map(&:date).sort.first].compact.min
+    member.current_graduate(graduation.group.martial_art, graduation.held_on - 1).try(:graduation)
+        .try(:held_on).try(:+, 1) ||
+        [member.joined_on, member.attendances.includes(:practice)
+            .where('practices.year < :year OR (practices.year = :year AND practices.week <= :week)',
+                year: member.joined_on.cwyear, week: member.joined_on.cweek)
+            .order('practices.year, practices.week').first&.date].compact.min
   end
 
   def training_duration
@@ -30,7 +33,12 @@ class Graduate < ApplicationRecord
   end
 
   def training_attendances
-    member.attendances.select { |a| training_period.include? a.date }.size
+    ats = if member.attendances.loaded?
+            member.attendances.select { |a| training_period.include? a.date }
+          else
+            member.attendances.includes(:practice).after(training_start_date).before(graduation.held_on)
+          end
+    ats.size
   end
 
   def registered_trainings

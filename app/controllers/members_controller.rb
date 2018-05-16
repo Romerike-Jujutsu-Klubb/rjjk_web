@@ -100,7 +100,7 @@ class MembersController < ApplicationController
   end
 
   def edit
-    @member ||= Member.find(params[:id])
+    @member ||= Member.includes(graduates: [:graduation, rank: :martial_art]).find(params[:id])
     @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name')
         .where(closed_on: nil).to_a
     @groups |= @member.groups

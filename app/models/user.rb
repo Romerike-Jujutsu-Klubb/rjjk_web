@@ -42,10 +42,10 @@ class User < ApplicationRecord
   CHANGEABLE_FIELDS = %w[first_name last_name email].freeze
   attr_accessor :password_needs_confirmation
 
-  NILLABLE_FIELDS = %i[first_name login].freeze
+  NILLABLE_FIELDS = %i[address email first_name login phone postal_code].freeze
   before_validation do
     NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? }
-    self.email = email.blank? ? nil : email.strip.downcase
+    self.email = email.strip.downcase if email.present?
     self.phone = Regexp.last_match(1) if phone =~ /^\+47\s*(.*)$/
   end
   after_save { @password_needs_confirmation = false }
@@ -53,13 +53,16 @@ class User < ApplicationRecord
 
   validates :birthdate, presence: true, if: -> {member && member.left_on.nil?}
   validates :male, inclusion: { in: [true, false] }, if: -> {member && member.left_on.nil?}
-  validates :email, uniqueness: { case_sensitive: false, scope: :deleted, unless: :deleted },
-      format: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_nil: true
+  validates :email,
+      # presence: { unless: ->{phone || member} }, # TODO(uwe): Activate this?  Ensure contact method!
+      format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_nil: true },
+      uniqueness: { case_sensitive: false, scope: :deleted, unless: :deleted, allow_nil: true }
   validates :login, length: { within: 3..64 }, uniqueness: { case_sensitive: false }, allow_nil: true
   validates :password, presence: { if: :validate_password? },
       confirmation: { if: :validate_password? },
       length: { within: 5..40, if: :validate_password? }
-  validates :phone, uniqueness: true, allow_nil: true, length: { minimum: 4, allow_nil: true }
+  validates :phone, uniqueness: { allow_nil: true }, length: { minimum: 4, allow_nil: true }
+  # presence: { unless: ->{email || member} } # TODO(uwe): Activate this?  Ensure contact method!
   validates :postal_code, length: { is: 4, allow_blank: true }
 
   validate do
@@ -68,7 +71,7 @@ class User < ApplicationRecord
     end
   end
 
-  # validates_associated :member, on: :update
+  # validates_associated :member, on: :update # TODO(uwe): Activate this?
 
   def initialize(*args)
     super

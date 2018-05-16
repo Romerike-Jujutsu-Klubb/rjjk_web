@@ -11,8 +11,7 @@
         - else
           => others.shift.member.first_name
         ' og
-        => others.size
-        = others.size == 1 ? 'annen' : 'andre'
+        = others.size == 1 ? others.first.member.first_name : "#{others.size} andre"
       = render 'layouts/modal', id: "attendance_details_#{practice.id}"
         = render 'attendances/practice_details', your_attendance: attendance, other_attendees: attendances, other_absentees: absences
     - elsif attendance.present?

@@ -126,21 +126,21 @@ class Member < ApplicationRecord
       ats = ats.where(status: Attendance::PRESENT_STATES) unless include_absences
       ats = ats.by_group_id(g.id)
       if (c = current_graduate(g.martial_art, before_date))
-        ats = ats.after_date(c.graduation.held_on)
+        ats = ats.after(c.graduation.held_on)
       end
       ats = ats.until_date(before_date)
       ats = ats.includes(includes) if includes
       ats
     end
-    case queries.size
-    when 0
-      Attendance.none
-    when 1
-      queries.first.order(:year, :week).reverse_order
-    else
-      # query = queries.inject(:or) # Rails 5
-      queries.map(&:to_a).flatten.sort_by(&:date).reverse
-    end
+    query = case queries.size
+            when 0
+              Attendance.none
+            when 1
+              queries.first
+            else
+              queries.inject(:or)
+            end
+    query.order('practices.year, practices.week').reverse_order
   end
 
   def current_rank(martial_art = nil, date = Date.current)
@@ -251,7 +251,7 @@ class Member < ApplicationRecord
     else
       query = attendances.where('attendances.status IN (?)', Attendance::PRESENCE_STATES)
       query = query.by_group_id(group.id) if group
-      query = query.after_date(start_date)
+      query = query.after(start_date)
       query = query.until_date(end_date)
       query.empty?
     end
