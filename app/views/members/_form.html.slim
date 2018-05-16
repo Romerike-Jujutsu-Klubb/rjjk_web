@@ -1,4 +1,4 @@
-= bootstrap_form_for @member do |f|
+= bootstrap_form_for @member, url: with_detour(@member, anchor: :tab_membership_tab) do |f|
   .row
     .col-md-4
       .text-center
@@ -30,7 +30,7 @@
   .row
     .col-6
       = f.text_field :joined_on, class: 'date'
-    .form-group.col-6
+    .col-6.form-group
       label NKF medlemsnr
       span.form-control = (@member.nkf_member.try(:medlemsnummer) || 'Ikke i NKF-registeret.')
   .row

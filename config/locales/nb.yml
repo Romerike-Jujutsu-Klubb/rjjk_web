@@ -75,33 +75,15 @@ nb:
         title: Tema
       member:
         account_no: Kontonummer
-        address: Adresse
-        billing_address: Fakturaadresse
-        billing_email: Fakturae-post
-        billing_name: Fakturanavn (hvis annet enn medlem)
-        billing_postal_code: Fakturapostnummer
-        billing_phone_mobile: Fakturatelefon
         billing_type: "Fakturerings\u00ADmåte"
-        birthdate: Fødselsdato
         comment: Kommentar
-        email: E-post
-        first_name: Fornavn
         joined_on: Innmeldingsdato
-        last_name: Etternavn
         left_on: Utmeldingsdato
-        male: Kjønn
         nkf_fee: NKF Hovedklubb
-        parent_2_email: Foresatte 2's e-post
-        parent_2_name: Foresatte 2's navn
-        parent_2_mobile: Foresatte 2's telefon
-        parent_email: Foresattes e-post
-        parent_name: Foresattes navn
         passive_on: Passiv fra
         payment_problem: Betalingsproblem
         phone_home: Fasttelefon
-        phone_parent: Foresattes telefon
         phone_work: Arbeidstelefon
-        postal_code: Postnummer
       news_item:
         body: Mer informasjon (valgfritt)
         expire_at: til
@@ -120,13 +102,17 @@ nb:
         member_id: Medlem
         file: Bilde
       user:
+        address: Adresse
+        birthdate: Fødselsdato
         email: E-post
         first_name: Fornavn
         last_name: Etternavn
         login: Brukernavn
+        male: Kjønn
         password: Passord
         password_confirmation: Bekreft passord
         phone: Telefon
+        postal_code: Postnummer
         role: Rolle
         verified: Bekreftet
     errors:

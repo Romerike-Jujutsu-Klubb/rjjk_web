@@ -113,7 +113,7 @@ class MembersController < ApplicationController
     if @member.update(params[:member])
       flash[:notice] = 'Medlemmet oppdatert.'
       NkfMemberSyncJob.perform_later @member
-      redirect_to action: :edit, id: @member
+      back_or_redirect_to action: :edit, id: @member
     else
       edit
     end
