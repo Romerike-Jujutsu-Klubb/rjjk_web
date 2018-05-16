@@ -12,6 +12,8 @@ admin:
   role: ADMIN
   security_token: 0123456789abcdef0123456789abcdef01234567
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
+  birthdate: 1970-11-25
+  male: true
 
 lars:
   first_name: Lars
@@ -26,6 +28,8 @@ lars:
   deleted: false
   security_token: random_token_string
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
+  birthdate: 1967-06-21
+  male: true
 
 sebastian:
   first_name: Sebastian
@@ -40,6 +44,8 @@ sebastian:
   deleted: false
   security_token: random_token_string
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
+  birthdate: 2004-06-03
+  male: true
 
 long_user:
   login: long_user
@@ -88,3 +94,5 @@ newbie:
   salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
   email: newbie@example.com
   verified: true
+  birthdate: 1990-05-17
+  male: true

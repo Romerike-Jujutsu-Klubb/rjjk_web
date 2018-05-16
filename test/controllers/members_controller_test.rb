@@ -5,7 +5,7 @@ require 'controller_test'
 class MembersControllerTest < ActionController::TestCase
   include ActiveJob::TestHelper
   def setup
-    @first_id = members(:lars).id
+    @lars = members(:lars)
     login(:admin)
   end
 
@@ -63,17 +63,17 @@ class MembersControllerTest < ActionController::TestCase
 
     VCR.use_cassette 'GoogleMaps Lars' do
       post :create, params: { member: {
-        male: true,
         payment_problem: false,
         instructor: false,
         nkf_fee: true,
         joined_on: '2007-06-21',
-        birthdate: '1967-06-21',
         user_id: id(:unverified_user),
         user_attributes: {
+          birthdate: '1967-06-21',
+          email: 'lars@example.net',
           first_name: 'Lars',
           last_name: 'Bråten',
-          email: 'lars@example.net',
+          male: true,
           guardians_attributes: [
             {},
           ],
@@ -88,7 +88,7 @@ class MembersControllerTest < ActionController::TestCase
   end
 
   def test_edit
-    get :edit, params: { id: @first_id }
+    get :edit, params: { id: @lars.id }
 
     assert_response :success
     assert_template 'edit'
@@ -99,23 +99,23 @@ class MembersControllerTest < ActionController::TestCase
   def test_update
     assert_enqueued_with(job: NkfMemberSyncJob) do
       VCR.use_cassette 'GoogleMaps Lars' do
-        post :update, params: { id: @first_id, member: { male: true } }
+        post :update, params: { id: @lars.id, member: { user_attributes: { id: @lars.user_id, male: true } } }
       end
     end
     assert_equal 1, ActiveJob::Base.queue_adapter.enqueued_jobs.count
     assert_no_errors :member
     assert_response :redirect
-    assert_redirected_to action: :edit, id: @first_id
+    assert_redirected_to action: :edit, id: @lars.id
   end
 
   def test_destroy
-    Member.find(@first_id)
-    delete :destroy, params: { id: @first_id }
+    Member.find(@lars.id)
+    delete :destroy, params: { id: @lars.id }
     assert_response :redirect
     assert_redirected_to action: :index
 
     assert_raise(ActiveRecord::RecordNotFound) do
-      Member.find(@first_id)
+      Member.find(@lars.id)
     end
   end
 

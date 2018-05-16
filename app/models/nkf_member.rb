@@ -12,7 +12,7 @@ class NkfMember < ApplicationRecord
              form_field: :frm_48_v10 },
     epost_faktura: { map_to: { billing: :email }, form_field: :frm_48_v22 },
     etternavn: { map_to: { member: :last_name }, form_field: :frm_48_v04 },
-    fodselsdato: { map_to: { membership: :birthdate }, form_field: :frm_48_v08 },
+    fodselsdato: { map_to: { member: :birthdate }, form_field: :frm_48_v08 },
     foresatte: { map_to: { membership: :parent_1_or_billing_name }, form_field: :frm_48_v23, map_from: [
       { parent_1: :first_name }, { parent_1: :last_name }, { billing: :first_name },
       { billing: :last_name }
@@ -31,7 +31,7 @@ class NkfMember < ApplicationRecord
     innmeldtarsak: {},
     innmeldtdato: { map_to: { membership: :joined_on }, form_field: :frm_48_v45 },
     # form_field: :frm_48_v112 values: true: 'M' or false: 'K'
-    kjonn: { map_to: { membership: :male } },
+    kjonn: { map_to: { member: :male } },
     klubb: {},
     klubb_id: {},
     konkurranseomrade_id: {},
@@ -186,7 +186,7 @@ class NkfMember < ApplicationRecord
         if user_attributes[:phone]
           if (existing_phone_member = Member.find_by(user_id: existing_phone_user.id))
             logger.info "Existing phone user already mapped to membership: #{user_attributes.inspect}: #{existing_phone_member.inspect}" # rubocop: disable Metrics/LineLength
-            if membership_attributes[:birthdate] < existing_phone_member.birthdate
+            if user_attributes[:birthdate] < existing_phone_member.birthdate
               logger.info 'Keeping phone for new membership due to higher age'
               existing_phone_member.user.update! phone: nil
             else

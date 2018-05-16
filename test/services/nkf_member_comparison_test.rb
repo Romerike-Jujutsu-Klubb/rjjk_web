@@ -18,14 +18,16 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
       ], c.members)
       assert_equal([
         [members(:lars), {
-          'birthdate' => [Date.parse('Wed, 21 Jun 1967'), Date.parse('Wed, 01 Mar 1967')],
           'joined_on' => [Date.parse('Thu, 21 Jun 2007'), Date.parse('Sun, 01 Apr 2001')],
-          'member' => { 'email' => ['lars@example.com', 'lars@example.net'] },
+          'member' => {
+            'birthdate' => [Date.parse('Wed, 21 Jun 1967'), Date.parse('Wed, 01 Mar 1967')],
+            'email' => ['lars@example.com', 'lars@example.net'],
+          },
         }],
         [members(:sebastian), {
-          'birthdate' => [Date.parse('2004-06-03'), Date.parse('2004-06-04')],
           'joined_on' => [Date.parse('2007-08-25'), Date.parse('2007-09-21')],
           'member' => {
+            'birthdate' => [Date.parse('2004-06-03'), Date.parse('2004-06-04')],
             'phone' => [nil, '92929292'],
             'email' => ['sebastian@example.com', 'sebastian@example.net'],
           },
@@ -41,13 +43,13 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
       ], c.member_changes)
       assert_equal([
         [members(:lars), {
-          { membership: :birthdate } => { Date.new(1967, 3, 1) => Date.new(1967, 6, 21) },
           { membership: :joined_on } => { Date.new(2001, 4, 1) => Date.new(2007, 6, 21) },
+          { member: :birthdate } => { Date.new(1967, 3, 1) => Date.new(1967, 6, 21) },
           { member: :email } => { 'lars@example.net' => 'lars@example.com' },
         }],
         [members(:sebastian), {
-          { membership: :birthdate } => { Date.parse('2004-06-04') => Date.parse('2004-06-03') },
           { membership: :joined_on } => { Date.parse('2007-09-21') => Date.parse('2007-08-25') },
+          { member: :birthdate } => { Date.parse('2004-06-04') => Date.parse('2004-06-03') },
           { member: :phone } => { '92929292' => nil },
           { member: :email } => { 'sebastian@example.net' => 'sebastian@example.com' },
           { parent_1: :first_name } => { 'Lise' => 'Uwe' },

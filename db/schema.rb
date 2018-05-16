@@ -371,8 +371,6 @@ ActiveRecord::Schema.define(version: 20180527133769) do
   create_table 'members', force: :cascade do |t|
     t.string 'phone_home', limit: 32
     t.string 'phone_work', limit: 32
-    t.date 'birthdate'
-    t.boolean 'male', null: false
     t.date 'joined_on', null: false
     t.date 'left_on'
     t.string 'billing_type', limit: 100
@@ -683,12 +681,14 @@ ActiveRecord::Schema.define(version: 20180527133769) do
     t.boolean 'deleted', default: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.string 'phone', limit: 32
     t.string 'address', limit: 100
-    t.string 'postal_code', limit: 4
+    t.date 'birthdate'
+    t.boolean 'gmaps'
     t.decimal 'latitude', precision: 8, scale: 6
     t.decimal 'longitude', precision: 9, scale: 6
-    t.boolean 'gmaps'
+    t.boolean 'male'
+    t.string 'phone', limit: 32
+    t.string 'postal_code', limit: 4
   end
 
   create_table 'wazas', force: :cascade do |t|

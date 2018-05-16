@@ -237,13 +237,6 @@ class MembersController < ApplicationController
     Date.parse((Date.current.year - offset).to_s + '-01-01').strftime('%Y-%m-%d')
   end
 
-  def member_count(male, from_age, to_age)
-    Member
-        .where('left_on IS NULL AND male = ? AND birthdate <= ? AND birthdate >= ?',
-            male, year_end(from_age), year_start(to_age))
-        .count
-  end
-
   def update_memberships
     @member.martial_arts = MartialArt.find(params[:martial_art_ids]) if params[:martial_art_ids]
     # FIXME(uwe): Allow removing for all groups

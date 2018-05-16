@@ -117,9 +117,9 @@ class MemberHistoryGraph
     dates.map do |date|
       Member
           .where("(#{ACTIVE_CLAUSE.call(date)})")
-          .where('birthdate IS NOT NULL AND birthdate < ?', senior_birthdate(date))
+          .where('birthdate IS NOT NULL AND users.birthdate < ?', senior_birthdate(date))
           .where("(martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')")
-          .references(:martial_arts).includes(groups: :martial_art).count
+          .references(:martial_arts, :users).includes(:user, groups: :martial_art).count
     end
   end
 
@@ -127,10 +127,10 @@ class MemberHistoryGraph
     dates.map do |date|
       Member
           .where(ACTIVE_CLAUSE.call(date))
-          .where('birthdate IS NOT NULL AND birthdate BETWEEN ? AND ?',
+          .where('users.birthdate IS NOT NULL AND users.birthdate BETWEEN ? AND ?',
               senior_birthdate(date), junior_birthdate(date))
           .where("(martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')")
-          .references(:martial_arts).includes(groups: :martial_art).count
+          .references(:martial_arts, :users).includes(:user, groups: :martial_art).count
     end
   end
 
@@ -158,14 +158,10 @@ class MemberHistoryGraph
 
   def self.aspirants(dates)
     dates.map do |date|
-      Member.where(ACTIVE_CLAUSE.call(date))
-          .where('birthdate IS NOT NULL AND birthdate >= ?', junior_birthdate(date))
+      Member.includes(:user).references(:users).where(ACTIVE_CLAUSE.call(date))
+          .where('users.birthdate IS NOT NULL AND birthdate >= ?', junior_birthdate(date))
           .count
     end
-  end
-
-  def self.was_senior?(date)
-    birthdate.nil? || ((date - birthdate) / 365) > JUNIOR_AGE_LIMIT
   end
 
   def self.senior_birthdate(date)

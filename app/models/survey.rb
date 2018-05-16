@@ -8,8 +8,8 @@ class Survey < ApplicationRecord
   has_many :members, through: :survey_requests
 
   def included_members
-    Member.active.where('birthdate IS NOT NULL AND birthdate <= ?',
-        Member::JUNIOR_AGE_LIMIT.years.ago)
+    Member.active.includes(:user).references(:users)
+        .where('users.birthdate IS NOT NULL AND birthdate <= ?', Member::JUNIOR_AGE_LIMIT.years.ago)
   end
 
   def pending_members

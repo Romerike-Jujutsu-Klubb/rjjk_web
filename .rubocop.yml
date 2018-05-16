@@ -1,16 +1,8 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.3
   DisplayCopNames: true
   DisplayStyleGuide: true
-  Include:
-    - Capfile
-    - Gemfile
-    - Rakefile
-    - config.ru
-    - '*.gemspec'
-    - '**/*.rake'
   Exclude:
     - 'tmp/**/*'
     - 'vendor/**/*'
@@ -101,5 +93,8 @@ Style/RescueStandardError:
 Style/SafeNavigation:
   ConvertCodeThatCanStartToReturnNil: true
 
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma

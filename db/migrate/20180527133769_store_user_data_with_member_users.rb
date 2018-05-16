@@ -3,12 +3,14 @@
 # rubocop: disable all
 class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
   def change
-    add_column :users, :phone, :string, limit: 32, index: { unique: true }
     add_column :users, :address, :string, limit: 100
-    add_column :users, :postal_code, :string, limit: 4
+    add_column :users, :birthdate, :date
+    add_column :users, :gmaps, :boolean
     add_column :users, :latitude, :decimal, precision: 8, scale: 6
     add_column :users, :longitude, :decimal, precision: 9, scale: 6
-    add_column :users, :gmaps, :boolean
+    add_column :users, :male, :boolean
+    add_column :users, :phone, :string, limit: 32, index: { unique: true }
+    add_column :users, :postal_code, :string, limit: 4
     change_column_null :users, :email, true
     change_column_null :users, :login, true
     change_column_null :users, :salt, true
@@ -102,7 +104,8 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
         main_user.attributes = { login: nil, email: nil }
       end
 
-      main_user.attributes = {address: m.address, postal_code: m.postal_code, latitude: m.latitude, longitude: m.longitude, gmaps: m.gmaps}
+      main_user.attributes = {address: m.address, birthdate: m.birthdate, gmaps: m.gmaps, latitude: m.latitude, longitude: m.longitude,
+          male: m.male, postal_code: m.postal_code}
 
       if main_user.changed?
         puts "User (#{'%4d' % main_user.id}) #{main_user.name} email: #{main_user.email.inspect}: Update: #{main_user.changes.inspect}"
@@ -244,28 +247,30 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
     puts 'done'
 
     change_column_null :members, :user_id, false
+    remove_column :members, :address
+    remove_column :members, :birthdate
     remove_column :members, :email
     remove_column :members, :first_name
+    remove_column :members, :gmaps
     remove_column :members, :last_name
-    remove_column :members, :phone_mobile
-    remove_column :members, :address
-    remove_column :members, :postal_code
     remove_column :members, :latitude
     remove_column :members, :longitude
-    remove_column :members, :gmaps
+    remove_column :members, :male
+    remove_column :members, :phone_mobile
+    remove_column :members, :postal_code
 
-    remove_column :members, :parent_name
     remove_column :members, :parent_email
+    remove_column :members, :parent_name
     remove_column :members, :phone_parent
 
-    remove_column :members, :parent_2_name
     remove_column :members, :parent_2_email
     remove_column :members, :parent_2_mobile
+    remove_column :members, :parent_2_name
 
-    remove_column :members, :billing_name
-    remove_column :members, :billing_email
-    remove_column :members, :billing_phone_mobile
     remove_column :members, :billing_address
+    remove_column :members, :billing_email
+    remove_column :members, :billing_name
+    remove_column :members, :billing_phone_mobile
     remove_column :members, :billing_postal_code
 
     Member.reset_column_information

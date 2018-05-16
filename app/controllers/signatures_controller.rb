@@ -59,6 +59,6 @@ class SignaturesController < ApplicationController
   private
 
   def load_form_data
-    @members = Member.active(Date.current).with_user.order(:birthdate).to_a
+    @members = Member.active(Date.current).with_user.order('users.birthdate').to_a
   end
 end

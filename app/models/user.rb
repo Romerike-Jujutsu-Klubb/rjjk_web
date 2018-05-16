@@ -20,9 +20,10 @@ class User < ApplicationRecord
   has_many :images, dependent: :destroy
   has_many :news_item_likes, dependent: :destroy
   has_many :news_items, dependent: :destroy, inverse_of: :creator, foreign_key: :created_by
+  has_many :payees, dependent: :nullify, foreign_key: :billing_user_id, inverse_of: :billing_user
+  has_many :user_messages, dependent: :destroy
   has_many :wardships, class_name: :Guardianship, dependent: :destroy, inverse_of: :guardian_user,
       foreign_key: :guardian_user_id
-  has_many :user_messages, dependent: :destroy
 
   # has_one :guardian_1, through: :guardianship_1, source: :guardian_user
   # has_one :guardian_2, through: :guardianship_2, source: :guardian_user
@@ -50,6 +51,8 @@ class User < ApplicationRecord
   after_save { @password_needs_confirmation = false }
   after_validation :crypt_password
 
+  validates :birthdate, presence: true, if: ->{member && member.left_on.nil?}
+  validates :male, inclusion: { in: [true, false] }, if: ->{member && member.left_on.nil?}
   validates :email, uniqueness: { case_sensitive: false, scope: :deleted, unless: :deleted },
       format: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_nil: true
   validates :login, length: { within: 3..64 }, uniqueness: { case_sensitive: false }, allow_nil: true
@@ -117,6 +120,13 @@ class User < ApplicationRecord
     UserSystem::CONFIG[duration_key].hours
   end
 
+  def age(date = Date.current)
+    return nil unless birthdate
+    age = date.year - birthdate.year
+    age -= 1 if date < birthdate + age.years
+    age
+  end
+
   def full_email
     current_email = member&.email || email
     if current_email =~ /<(.*)>/
@@ -148,6 +158,10 @@ class User < ApplicationRecord
     names = new_name.to_s.split(/\s+/)
     self[:first_name] = names[0..-2].join(' ')
     self[:last_name] = names[-1]
+  end
+
+  def to_s
+    name || email
   end
 
   def token_expired?

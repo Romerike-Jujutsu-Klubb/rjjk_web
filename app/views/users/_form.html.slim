@@ -12,8 +12,16 @@
         = link_to('(medlem)', controller: :members, action: :edit, id: user.member.id) if user.member
       = f.text_field :address
       = f.text_field :postal_code
-    - if admin?
-      .col-sm-6
+    .col-sm-6
+      .row
+        .col-7.pr-1
+          = f.text_field :birthdate, placeholder: 'år-måned-dag', class: 'date'
+        .col-5.pl-1
+          br
+          label.mt-3 Alder
+          =< "#{user.age} år" if user.birthdate
+      = f.select :male, [['Mann', true], ['Kvinne', false]]
+      - if admin?
         = f.select :verified, [['Nei', false], ['Ja', true]], \
           help: link_to('Send e-post med login link', send_login_link_path(user: {email: user.email}), method: :post)
         = f.select :role, [['Medlem', nil], ['Administrator', UserSystem::ADMIN_ROLE]]

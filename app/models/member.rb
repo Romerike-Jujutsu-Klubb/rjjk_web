@@ -9,7 +9,7 @@ class Member < ApplicationRecord
   SEARCH_FIELDS =
       %i[comment nkf_members.medlemsnummer phone_home phone_work].freeze
 
-  belongs_to :billing_user, required: false, class_name: :User
+  belongs_to :billing_user, required: false, class_name: :User, inverse_of: :payees
   belongs_to :contact_user, class_name: :User, optional: true
   belongs_to :user, inverse_of: :member
 
@@ -48,8 +48,7 @@ class Member < ApplicationRecord
   has_many :groups, through: :group_memberships
   has_many :ranks, through: :passed_graduates
 
-  accepts_nested_attributes_for :user
-  accepts_nested_attributes_for :billing_user
+  accepts_nested_attributes_for :billing_user, :user
 
   scope :active, ->(from_date = nil, to_date = nil) do
     from_date ||= Date.current
@@ -62,17 +61,15 @@ class Member < ApplicationRecord
             query: UnicodeUtils.upcase(query).split(/\s+/).join('|'))
     # .order(:first_name, :last_name)
   end
-  scope :with_user, -> { includes(:user) }
+  scope :with_user, -> { includes(:user).references(:users) }
 
   NILLABLE_FIELDS = %i[phone_home phone_work].freeze
   before_validation do
     NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? }
   end
 
-  validates :birthdate, presence: true, unless: :left_on
   validates :instructor, inclusion: { in: [true, false] }
   validates :joined_on, presence: true
-  validates :male, inclusion: { in: [true, false] }
   validates :nkf_fee, inclusion: { in: [true, false] }
   validates :payment_problem, inclusion: { in: [true, false] }
   validates :user, presence: true
@@ -101,7 +98,7 @@ class Member < ApplicationRecord
         SQL
   end
 
-  delegate :email, :first_name, :last_name, :name, to: :user, allow_nil: true
+  delegate :age, :birthdate, :email, :first_name, :last_name, :male, :name, to: :user, allow_nil: true
 
   def gmaps4rails_infowindow
     html = +''
@@ -270,13 +267,6 @@ class Member < ApplicationRecord
     else
       (nkf_fee? ? (155.0 / 12).ceil : 0)
     end
-  end
-
-  def age(date = Date.current)
-    return nil unless birthdate
-    age = date.year - birthdate.year
-    age -= 1 if date < birthdate + age.years
-    age
   end
 
   def age_group

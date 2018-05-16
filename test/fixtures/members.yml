@@ -1,38 +1,30 @@
 lars:
-  birthdate: 1967-06-21
   groups: voksne
   instructor: false
   joined_on: 2007-06-21
-  male: true
   nkf_fee: true
   payment_problem: false
   user: lars
 
 uwe:
-  birthdate: 1970-11-25
   instructor: true
   joined_on: 1987-01-05
-  male: true
   nkf_fee: true
   payment_problem: false
   user: admin
 
 sebastian:
-  birthdate: 2004-06-03
   groups: panda
   instructor: false
   joined_on: 2007-08-25
-  male: true
   nkf_fee: true
   payment_problem: false
   user: sebastian
 
 newbie:
-  birthdate: 1990-05-17
   groups: voksne
   instructor: false
   joined_on: 2013-08-25
-  male: true
   nkf_fee: true
   payment_problem: false
   user: newbie

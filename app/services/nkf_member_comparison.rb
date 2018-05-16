@@ -59,6 +59,7 @@ class NkfMemberComparison
             elsif nkf_values.any? { |_k, v| v.present? }
               if nkf_values[:email] && (existing_email_user = User.find_by(email: nkf_values[:email]))
                 logger.info "Use existing billing user: #{existing_email_user}"
+                member.billing_user = existing_email_user
                 existing_email_user
               else
                 logger.info "Create new billing user: #{nkf_values}"
@@ -81,7 +82,6 @@ class NkfMemberComparison
               "#{rjjk_value.inspect} => #{nkf_value.inspect}"
         relation.send(:"#{attribute}=", nkf_value)
       end
-      # relation.attributes = values
       relations |= [relation]
     end
     relations

@@ -8,14 +8,6 @@
           = link_to 'Ta bilde', photo_member_path(@member), class: 'btn btn-primary my-3'
 
     .col-md-4
-      .row
-        .col-7.pr-1
-          = f.text_field :birthdate, placeholder: 'år-måned-dag', class: 'date'
-        .col-5.pl-1
-          br
-          label.mt-3 Alder
-          =< "#{@member.age} år" if @member.birthdate
-      = f.select :male, [['Mann', true], ['Kvinne', false]]
     .col-md-4.mt-3
       - @groups.each do |g|
         - next unless g.active? || @member.groups.include?(g)
@@ -57,7 +49,7 @@
     .col = f.select :nkf_fee, [['Ja', true], ['Nei', false]]
     .col = f.select :payment_problem, [['Nei', false], ['Ja', true]]
 
-  .row.mt-3
+  .row
     - if @member.phone_home.present?
       .col-6.pr-1
         = f.text_field :phone_home
