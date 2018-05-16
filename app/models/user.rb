@@ -32,7 +32,7 @@ class User < ApplicationRecord
   has_many :guardians, through: :guardianships, source: :guardian_user
 
   # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
-  SEARCH_FIELDS = %i[address email first_name last_name login postal_code].freeze
+  SEARCH_FIELDS = %i[address email first_name last_name login phone postal_code].freeze
   scope :search, ->(query) {
     where(SEARCH_FIELDS.map { |c| "to_tsvector(UPPER(#{c})) @@ to_tsquery(:query)" }.join(' OR '),
         query: UnicodeUtils.upcase(query).split(/\s+/).join(' | '))
