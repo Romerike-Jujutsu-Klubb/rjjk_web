@@ -20,7 +20,7 @@
           br
           label.mt-3 Alder
           =< "#{user.age} år" if user.birthdate
-      = f.select :male, [['Mann', true], ['Kvinne', false]]
+      = f.select :male, [['Mann', true], ['Kvinne', false]], prompt: true
       - if admin?
         = f.select :verified, [['Nei', false], ['Ja', true]], \
           help: link_to('Send e-post med login link', send_login_link_path(user: {email: user.email}), method: :post)
