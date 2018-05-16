@@ -51,8 +51,8 @@ class User < ApplicationRecord
   after_save { @password_needs_confirmation = false }
   after_validation :crypt_password
 
-  validates :birthdate, presence: true, if: ->{member && member.left_on.nil?}
-  validates :male, inclusion: { in: [true, false] }, if: ->{member && member.left_on.nil?}
+  validates :birthdate, presence: true, if: -> {member && member.left_on.nil?}
+  validates :male, inclusion: { in: [true, false] }, if: -> {member && member.left_on.nil?}
   validates :email, uniqueness: { case_sensitive: false, scope: :deleted, unless: :deleted },
       format: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_nil: true
   validates :login, length: { within: 3..64 }, uniqueness: { case_sensitive: false }, allow_nil: true
