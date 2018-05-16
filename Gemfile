@@ -80,6 +80,10 @@ group :beta, :email, :production do
   gem 'lograge'
 end
 
+group :development, :beta do
+  gem 'rack-mini-profiler'
+end
+
 group :development do
   gem 'capistrano', '<3.9'
   gem 'capistrano-bundler'
@@ -87,7 +91,6 @@ group :development do
   gem 'capistrano-rvm'
   gem 'capistrano-scm-copy'
   gem 'listen'
-  gem 'rack-mini-profiler'
 end
 
 group :test do
