@@ -15,21 +15,22 @@ class User < ApplicationRecord
 
   has_one :member, dependent: :restrict_with_exception
 
+  has_many :downstream_user_relationships, class_name: :UserRelationship, dependent: :destroy,
+      inverse_of: :upstream_user, foreign_key: :upstream_user_id
   has_many :embus, dependent: :destroy
-  has_many :guardianships, dependent: :destroy, inverse_of: :ward_user, foreign_key: :ward_user_id
   has_many :images, dependent: :destroy
   has_many :news_item_likes, dependent: :destroy
   has_many :news_items, dependent: :destroy, inverse_of: :creator, foreign_key: :created_by
   has_many :payees, dependent: :nullify, foreign_key: :billing_user_id, inverse_of: :billing_user
   has_many :user_messages, dependent: :destroy
-  has_many :wardships, class_name: :Guardianship, dependent: :destroy, inverse_of: :guardian_user,
-      foreign_key: :guardian_user_id
+  has_many :user_relationships, dependent: :destroy, inverse_of: :downstream_user,
+      foreign_key: :downstream_user_id
 
   # has_one :guardian_1, through: :guardianship_1, source: :guardian_user
   # has_one :guardian_2, through: :guardianship_2, source: :guardian_user
 
   has_many :wards, through: :wardships # , source: :ward_user
-  has_many :guardians, through: :guardianships, source: :guardian_user
+  has_many :guardians, through: :user_relationships, source: :upstream_user
 
   # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
   SEARCH_FIELDS = %i[address email first_name last_name login phone postal_code].freeze
@@ -206,11 +207,11 @@ class User < ApplicationRecord
   end
 
   def guardian_1
-    guardianships.find { |g| g.index == 1 }&.guardian_user
+    user_relationships.find { |g| g.kind == UserRelationship::Kind::PARENT_1 }&.upstream_user
   end
 
   def guardian_2
-    guardianships.find { |g| g.index == 2 }&.guardian_user
+    user_relationships.find { |g| g.kind == UserRelationship::Kind::PARENT_2 }&.upstream_user
   end
 
   # describe how to retrieve the address from your model, if you use directly a

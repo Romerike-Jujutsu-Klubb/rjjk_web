@@ -233,7 +233,7 @@ class NkfMember < ApplicationRecord
           parent_1 = (parent_1_attributes[:email] && User.find_by(email: parent_1_attributes[:email])) ||
               (parent_1_attributes[:phone] && User.find_by(phone: parent_1_attributes[:phone])) ||
               User.create!(parent_1_attributes)
-          user.guardianships.create!(index: 1, guardian_user: parent_1)
+          user.user_relationships.create!(kind: UserRelationship::Kind::PARENT_1, upstream_user: parent_1)
         end
       end
       if parent_2_attributes.present?
@@ -244,7 +244,7 @@ class NkfMember < ApplicationRecord
           parent_2 = (parent_2_attributes[:email] && User.find_by(email: parent_2_attributes[:email])) ||
               (parent_2_attributes[:phone] && User.find_by(phone: parent_2_attributes[:phone])) ||
               User.create!(parent_2_attributes)
-          user.guardianships.create!(index: 2, guardian_user: parent_2)
+          user.user_relationships.create!(kind: UserRelationship::Kind::PARENT_2, upstream_user: parent_2)
         end
       end
 

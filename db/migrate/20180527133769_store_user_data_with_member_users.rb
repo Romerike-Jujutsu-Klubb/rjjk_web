@@ -150,7 +150,7 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
         end
         unless main_user.guardianship_1
           puts "User (#{'%4d' % main_user.id}) #{main_user.name} email: #{main_user.email.inspect}: Link guardian 1 (#{parent_1_user.id.inspect}): #{parent_1_user.email.inspect}"
-          main_user.create_guardianship_1! ward_user: main_user, guardian_user: parent_1_user
+          main_user.create_guardianship_1! downstream_user: main_user, upstream_user: parent_1_user
         end
       elsif m.parent_email || m.parent_name || m.phone_parent
         puts "Member (#{'%4d' % m.id}) #{m.name} email: #{main_user.email.inspect}: Discard parent 1: parent_name: #{m.parent_name.inspect}, parent_email: #{m.parent_email.inspect}, parent_phone: #{m.phone_parent.inspect}"
@@ -188,7 +188,7 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
         end
         unless main_user.guardianship_2
           puts "link parent 2"
-          main_user.create_guardianship_2! ward_user: main_user, guardian_user: parent_2_user
+          main_user.create_guardianship_2! downstream_user: main_user, upstream_user: parent_2_user
         end
       end
 
@@ -353,28 +353,34 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
   class User < ApplicationRecord
     has_one :member
 
-    has_one :guardianship_1, -> { where index: 1 }, class_name: :Guardianship, foreign_key: :guardian_user_id
-    has_one :guardianship_2, -> { where index: 2 }, class_name: :Guardianship, foreign_key: :guardian_user_id
+    has_one :guardianship_1, -> { where kind: UserRelationship::Kind::PARENT_1 }, class_name: :UserRelationship, foreign_key: :upstream_user_id
+    has_one :guardianship_2, -> { where kind: UserRelationship::Kind::PARENT_2 }, class_name: :UserRelationship, foreign_key: :upstream_user_id
 
-    has_many :guardianships, dependent: :destroy, inverse_of: :ward_user, foreign_key: :ward_user_id
+    has_many :downstream_user_relationships, class_name: :UserRelationship, dependent: :destroy,
+        inverse_of: :upstream_user, foreign_key: :upstream_user_id
+    has_many :user_relationships, dependent: :destroy, inverse_of: :downstream_user, foreign_key: :downstream_user_id
     has_many :user_emails
 
-    has_one :guardian_1, through: :guardianship_1, source: :guardian_user
-    has_one :guardian_2, through: :guardianship_2, source: :guardian_user
+    has_one :guardian_1, through: :guardianship_1, source: :upstream_user
+    has_one :guardian_2, through: :guardianship_2, source: :upstream_user
 
-    has_many :wards, through: :guardianships, source: :ward_user
-    has_many :guardians, through: :guardianships, source: :guardian_user
+    has_many :guardians, through: :user_relationships, source: :upstream_user
 
     def name
       [first_name, last_name].select(&:present?).map(&:strip).join(' ')
     end
   end
 
-  class Guardianship < ApplicationRecord
-    belongs_to :guardian_user, class_name: :User, inverse_of: :wards
-    belongs_to :ward_user, class_name: :User, inverse_of: :guardians
+  class UserRelationship < ApplicationRecord
+    module Kind
+      PARENT_1 = 'PARENT_1'
+      PARENT_2 = 'PARENT_2'
+    end
 
-    validates :index, presence: true, uniqueness: { scope: :ward_user_id }
+    belongs_to :upstream_user, class_name: :User, inverse_of: :downstream_user_relationships
+    belongs_to :downstream_user, class_name: :User, inverse_of: :user_relationships
+
+    validates :kind, presence: true, uniqueness: { scope: :downstream_user_id }
   end
 
   private

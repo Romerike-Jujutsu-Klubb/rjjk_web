@@ -4,6 +4,6 @@ require 'test_helper'
 
 class GuardianshipTest < ActiveSupport::TestCase
   test 'must be valid' do
-    assert guardianships(:uwe_sebastian).valid?
+    assert user_relationships(:uwe_sebastian).valid?
   end
 end

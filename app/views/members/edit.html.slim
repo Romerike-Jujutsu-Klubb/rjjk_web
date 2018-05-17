@@ -6,8 +6,8 @@ ul.nav.nav-tabs role="tablist"
     | Medlemskap
     - if @member.left_on
       .badge.badge-danger.ml-1 title='Utmeldt' data-toggle='tooltip' U
-  - @member.user.guardianships.each do |guardianship|
-    li.nav-item: a.nav-link data-target="#tab_parent_#{guardianship.index}" data-toggle="tab" Foresatt #{guardianship.index}
+  - @member.user.user_relationships.each do |guardianship|
+    li.nav-item: a.nav-link data-target="#tab_parent_#{guardianship.kind[-1]}" data-toggle="tab" Foresatt #{guardianship.kind[-1]}
   - if @member.billing_user
     li.nav-item: a.nav-link data-target="#tab_billing_user" data-toggle="tab" Betaler
   - if @member.contact_user
@@ -23,8 +23,8 @@ ul.nav.nav-tabs role="tablist"
   / FIXME(uwe): Save all form tabs when pressing "Save"
   #tab_user.tab-pane.fade.show.active.pt-3 = render 'users/form', user: @member.user, submit: true
   #tab_membership.tab-pane.fade = render 'form'
-  - @member.user.guardianships.each do |guardianship|
-    .tab-pane.fade.pt-3 id="tab_parent_#{guardianship.index}" = render 'users/form', user: guardianship.guardian_user, submit: true
+  - @member.user.user_relationships.each do |guardianship|
+    .tab-pane.fade.pt-3 id="tab_parent_#{guardianship.kind[-1]}" = render 'users/form', user: guardianship.upstream_user, submit: true
   - if @member.billing_user
     #tab_billing_user.tab-pane.fade.pt-3 = render 'users/form', user: @member.billing_user, submit: true
   - if @member.contact_user

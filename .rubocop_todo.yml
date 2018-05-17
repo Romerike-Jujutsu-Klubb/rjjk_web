@@ -58,7 +58,7 @@ Metrics/BlockNesting:
 # Offense count: 25
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
-  Max: 376
+  Max: 377
 
 # Offense count: 38
 Metrics/CyclomaticComplexity:

@@ -67,11 +67,11 @@ class NkfMemberComparison
               end
             end
           else
-            parent_idx = target.to_s[/\d+$/].to_i
-            (member.user.guardianships.find { |g| g.index == parent_idx } ||
+            (member.user.user_relationships.find { |g| g.kind == target.to_s.upcase } ||
                 ((nkf_values.any? { |_k, v| v.present? } || nil) &&
-                    member.user.guardianships.build(index: parent_idx, guardian_user: User.new))
-            )&.guardian_user
+                    member.user.user_relationships
+                        .build(kind: target.to_s.upcase, upstream_user: User.new))
+            )&.upstream_user
           end
       next unless relation
       nkf_values.each do |attribute, nkf_value|
@@ -136,7 +136,8 @@ class NkfMemberComparison
     logger.info "m.changes: #{m.changes.pretty_inspect}"
     if m.user.invalid?
       if m.user.errors[:phone]
-        if m.user.phone.present? && (conflicting_phone_user = User.find_by(phone: m.user.phone))
+        if m.user.phone.present? &&
+              (conflicting_phone_user = User.where.not(id: m.user_id).find_by(phone: m.user.phone))
           if conflicting_phone_user.member.nil? || conflicting_phone_user.member.left_on
             logger.info "Move phone #{m.user.phone} from user #{conflicting_phone_user.id} "\
                 "#{conflicting_phone_user.name} to #{m.user.inspect}"

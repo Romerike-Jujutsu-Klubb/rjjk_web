@@ -303,17 +303,6 @@ ActiveRecord::Schema.define(version: 20180527133769) do
     t.boolean 'planning'
   end
 
-  create_table 'guardianships', force: :cascade do |t|
-    t.bigint 'ward_user_id', null: false
-    t.bigint 'guardian_user_id', null: false
-    t.integer 'index', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['guardian_user_id'], name: 'index_guardianships_on_guardian_user_id'
-    t.index %w[ward_user_id index], name: 'index_guardianships_on_ward_user_id_and_index', unique: true
-    t.index ['ward_user_id'], name: 'index_guardianships_on_ward_user_id'
-  end
-
   create_table 'images', force: :cascade do |t|
     t.string 'name', limit: 64, null: false
     t.string 'content_type', limit: 255, null: false
@@ -667,6 +656,17 @@ ActiveRecord::Schema.define(version: 20180527133769) do
     t.index ['user_id'], name: 'fk__user_messages_user_id'
   end
 
+  create_table 'user_relationships', force: :cascade do |t|
+    t.bigint 'downstream_user_id', null: false
+    t.bigint 'upstream_user_id', null: false
+    t.string 'kind', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index %w[downstream_user_id kind], name: 'index_user_relationships_on_downstream_user_id_and_kind', unique: true
+    t.index ['downstream_user_id'], name: 'index_user_relationships_on_downstream_user_id'
+    t.index ['upstream_user_id'], name: 'index_user_relationships_on_upstream_user_id'
+  end
+
   create_table 'users', force: :cascade do |t|
     t.string 'login', limit: 80
     t.string 'salted_password', limit: 40
@@ -724,8 +724,6 @@ ActiveRecord::Schema.define(version: 20180527133769) do
   add_foreign_key 'group_semesters', 'members', column: 'chief_instructor_id', name: 'fk_group_semesters_chief_instructor_id'
   add_foreign_key 'group_semesters', 'semesters', name: 'fk_group_semesters_semester_id'
   add_foreign_key 'groups', 'martial_arts', name: 'groups_martial_art_id_fkey'
-  add_foreign_key 'guardianships', 'users', column: 'guardian_user_id'
-  add_foreign_key 'guardianships', 'users', column: 'ward_user_id'
   add_foreign_key 'information_pages', 'information_pages', column: 'parent_id', name: 'information_pages_parent_id_fkey'
   add_foreign_key 'member_images', 'images', name: 'fk_member_images_image_id'
   add_foreign_key 'member_images', 'members', name: 'fk_member_images_member_id'
@@ -750,4 +748,6 @@ ActiveRecord::Schema.define(version: 20180527133769) do
   add_foreign_key 'trial_attendances', 'nkf_member_trials', name: 'trial_attendances_nkf_member_trial_id_fkey'
   add_foreign_key 'trial_attendances', 'practices', name: 'fk_trial_attendances_practice_id'
   add_foreign_key 'user_messages', 'users', name: 'fk_user_messages_user_id'
+  add_foreign_key 'user_relationships', 'users', column: 'downstream_user_id'
+  add_foreign_key 'user_relationships', 'users', column: 'upstream_user_id'
 end

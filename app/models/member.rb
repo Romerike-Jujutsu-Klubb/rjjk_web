@@ -309,7 +309,7 @@ class Member < ApplicationRecord
   # EMXIF
 
   def guardians
-    user.guardians.order('guardianships.index')
+    user.guardians.order('user_relationships.kind')
   end
 
   def image_file=(file)
@@ -373,7 +373,8 @@ class Member < ApplicationRecord
   def parent_1_or_billing_name=(value)
     u = user.guardian_1 || billing_user
     if u.nil? && value.present?
-      u = user.guardianships.build(index: 1, guardian_user: User.new)&.guardian_user
+      u = user.user_relationships.build(kind: UserRelationship::Kind::PARENT_1, upstream_user: User.new)
+          &.upstream_user
     end
     u.name = value if u
   end
@@ -388,7 +389,7 @@ class Member < ApplicationRecord
 
   def related_users
     users = { member: user }
-    user.guardianships.each { |gs| users[gs.relationship] = gs.guardian_user }
+    user.user_relationships.each { |ur| users[ur.kind.downcase.to_sym] = ur.upstream_user }
     users[:billing] = billing_user if billing_user
     users
   end
