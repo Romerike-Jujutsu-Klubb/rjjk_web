@@ -46,6 +46,7 @@ sebastian:
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
   birthdate: 2004-06-03
   male: true
+  guardian_1: admin
 
 long_user:
   login: long_user

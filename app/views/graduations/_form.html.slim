@@ -21,7 +21,7 @@
     .col-md-6
       = f.select :group_notification, [['Ja', true], ['Nei, bare utvalgte kandidater', false]],
               {prompt: @graduation.group_notification.nil?}
-
+  / FIXME(uwe): Add group_schedule_id and start_at, both optional
   .row
     .col-md-12
       .btn-toolbar.float-right

@@ -36,36 +36,36 @@ lars:
   epost: lars@example.net
   medlemsstatus: A
 sebastian:
-  member: sebastian
-  medlemsnummer: 1012618
-  etternavn: Kubosch
-  fornavn: Sebastian
   adresse_2: Møllesvingen 5
-  postnr: 1479
-  sted: KURLAND
+  betalt_t_o_m__dato: 31.03.2018
+  etternavn: Kubosch
   fodselsdato: 04.06.2004
-  mobil: 92929292
+  fornavn: Sebastian
   epost: sebastian@example.net
   epost_faktura: lise@example.net
-  medlemsstatus: P
-  medlemskategori: 789
-  medlemskategori_navn: Passiv
-  kont_sats: Passiv sats
-  kont_belop: 0
-  kontraktstype: Passiv - Ungdom
-  kontraktsbelop: 0
+  foresatte: Lise Kubosch
   gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu/Jujutsu (Ingen stilartstilknytning)/Strømmen Storsenter/Tiger
-  sist_betalt_dato: 20.04.2017
-  betalt_t_o_m__dato: 31.03.2018
-  konkurranseomrade_id: 1
-  konkurranseomrade_navn: Øst
-  klubb_id: 1034
-  klubb: Romerike Jujutsu Klubb
   hovedmedlem_id: 1012618
   hovedmedlem_navn: Kubosch Sebastian
-  innmeldtdato: 21.09.2007
   innmeldtarsak: PO
+  innmeldtdato: 21.09.2007
+  kjonn: Mann
+  klubb: Romerike Jujutsu Klubb
+  klubb_id: 1034
+  konkurranseomrade_id: 1
+  konkurranseomrade_navn: Øst
+  kont_belop: 0
+  kont_sats: Passiv sats
+  kontraktsbelop: 0
+  kontraktstype: Passiv - Ungdom
+  medlemskategori: 789
+  medlemskategori_navn: Passiv
+  medlemsnummer: 1012618
+  medlemsstatus: P
+  member: sebastian
+  mobil: 92929292
+  postnr: 1479
+  sist_betalt_dato: 20.04.2017
+  sted: KURLAND
   created_at: 2010-09-21 19:35:26.464000
   updated_at: 2017-05-31 09:17:00.336523
-  kjonn: Mann
-  foresatte: Lise Kubosch

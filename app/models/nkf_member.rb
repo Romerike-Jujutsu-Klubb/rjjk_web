@@ -3,27 +3,28 @@
 class NkfMember < ApplicationRecord
   FIELD_MAP = {
     adresse_1: {},
-    adresse_2: { map_to: { member: :address }, form_field: :frm_48_v05 },
+    adresse_2: { map_to: { user: :address }, form_field: :frm_48_v05 },
     adresse_3: {},
     antall_etiketter_1: {},
     betalt_t_o_m__dato: {},
     created_at: {},
-    epost: { map_to: { membership: :contact_email }, map_from: [{ member: :email }],
+    epost: { map_to: { user: :contact_email }, map_from: [{ user: :email }],
              form_field: :frm_48_v10 },
     epost_faktura: { map_to: { billing: :email }, form_field: :frm_48_v22 },
-    etternavn: { map_to: { member: :last_name }, form_field: :frm_48_v04 },
-    fodselsdato: { map_to: { member: :birthdate }, form_field: :frm_48_v08 },
-    foresatte: { map_to: { membership: :parent_1_or_billing_name }, form_field: :frm_48_v23, map_from: [
-      { parent_1: :first_name }, { parent_1: :last_name }, { billing: :first_name },
-      { billing: :last_name }
-    ] },
-    foresatte_epost: { map_to: { parent_1: :email }, form_field: :frm_48_v73 },
-    foresatte_mobil: { map_to: { parent_1: :phone }, form_field: :frm_48_v74 },
-    foresatte_nr_2: { map_to: { parent_2: :name }, map_from: [
-      { parent_2: :first_name }, { parent_2: :last_name }
+    etternavn: { map_to: { user: :last_name }, form_field: :frm_48_v04 },
+    fodselsdato: { map_to: { user: :birthdate }, form_field: :frm_48_v08 },
+    foresatte: { map_to: { user: :guardian_1_or_billing_name }, form_field: :frm_48_v23,
+                 map_from: [
+                   { guardian_1: :first_name }, { guardian_1: :last_name }, { billing: :first_name },
+                   { billing: :last_name }
+                 ] },
+    foresatte_epost: { map_to: { guardian_1: :email }, form_field: :frm_48_v73 },
+    foresatte_mobil: { map_to: { guardian_1: :phone }, form_field: :frm_48_v74 },
+    foresatte_nr_2: { map_to: { guardian_2: :name }, map_from: [
+      { guardian_2: :first_name }, { guardian_2: :last_name }
     ], form_field: :frm_48_v72 },
-    foresatte_nr_2_mobil: { map_to: { parent_2: :phone }, form_field: :frm_48_v75 },
-    fornavn: { map_to: { member: :first_name }, form_field: :frm_48_v03 },
+    foresatte_nr_2_mobil: { map_to: { guardian_2: :phone }, form_field: :frm_48_v75 },
+    fornavn: { map_to: { user: :first_name }, form_field: :frm_48_v03 },
     gren_stilart_avd_parti___gren_stilart_avd_parti: {},
     hovedmedlem_id: {},
     hovedmedlem_navn: {},
@@ -31,7 +32,7 @@ class NkfMember < ApplicationRecord
     innmeldtarsak: {},
     innmeldtdato: { map_to: { membership: :joined_on }, form_field: :frm_48_v45 },
     # form_field: :frm_48_v112 values: true: 'M' or false: 'K'
-    kjonn: { map_to: { member: :male } },
+    kjonn: { map_to: { user: :male } },
     klubb: {},
     klubb_id: {},
     konkurranseomrade_id: {},
@@ -45,8 +46,8 @@ class NkfMember < ApplicationRecord
     medlemsnummer: {},
     medlemsstatus: {},
     member_id: {},
-    mobil: { map_to: { member: :phone }, form_field: :frm_48_v20 },
-    postnr: { map_to: { member: :postal_code }, form_field: :frm_48_v07 },
+    mobil: { map_to: { user: :phone }, form_field: :frm_48_v20 },
+    postnr: { map_to: { user: :postal_code }, form_field: :frm_48_v07 },
     rabatt: {},
     sist_betalt_dato: {},
     sted: {},
@@ -94,13 +95,13 @@ class NkfMember < ApplicationRecord
             (include_blank || mapped_value.present? || mapped_value == false)
       new_attributes[target][target_attribute] = mapped_value
     end
-    if new_attributes[:member][:phone]&.==(new_attributes[:parent_1][:phone]) ||
-          new_attributes[:member][:phone]&.==(new_attributes[:billing][:phone])
+    if new_attributes[:user][:phone]&.==(new_attributes[:guardian_1][:phone]) ||
+          new_attributes[:user][:phone]&.==(new_attributes[:billing][:phone])
       if include_blank
-        new_attributes[:member][:phone] = nil
+        new_attributes[:user][:phone] = nil
       else
-        new_attributes[:member].delete(:phone)
-        new_attributes.delete(:member) if new_attributes[:member].empty?
+        new_attributes[:user].delete(:phone)
+        new_attributes.delete(:user) if new_attributes[:user].empty?
       end
     end
     new_attributes
@@ -116,8 +117,8 @@ class NkfMember < ApplicationRecord
             Date.new(year.to_i, month.to_i, day.to_i)
           elsif v =~ /Mann|Kvinne/
             v == 'Mann'
-          elsif v.blank? && (target =~ /^parent_/ ||
-              target_attribute =~ /^parent_|email|mobile|phone|_on$/)
+          elsif v.blank? && (target =~ /^(billing|guardian_)/ ||
+              target_attribute =~ /^guardian_|email|mobile|phone|_on$/)
             nil
           # elsif v == 'post@jujutsu.no'
           #   'ulla'
@@ -136,127 +137,149 @@ class NkfMember < ApplicationRecord
     transaction do
       attributes = converted_attributes(include_blank: false)
       membership_attributes = attributes[:membership]
-      user_attributes = attributes[:member]
+      user_attributes = attributes[:user]
       billing_attributes = attributes[:billing]
-      parent_1_attributes = attributes[:parent_1]
-      parent_2_attributes = attributes[:parent_2]
+      guardian_1_attributes = attributes[:guardian_1]
+      guardian_2_attributes = attributes[:guardian_2]
 
-      # if attributes.dig(:billing, :email)&.== attributes.dig(:parent_1, :email)
+      # if attributes.dig(:billing, :email)&.== attributes.dig(:guardian_1, :email)
       #   logger.info 'converted_attributes: resetting billing email since it equals parent email'
       #   attributes[:billing].delete(:email)
       # end
 
-      secondary_phones = [attributes.dig(:billing, :phone), attributes.dig(:parent_1, :phone),
-                          attributes.dig(:parent_2, :phone)].compact
-      if secondary_phones.include?(attributes.dig(:member, :phone))
+      secondary_phones = [attributes.dig(:billing, :phone), attributes.dig(:guardian_1, :phone),
+                          attributes.dig(:guardian_2, :phone)].compact
+      if secondary_phones.include?(attributes.dig(:user, :phone))
         logger.error 'reset user phone since it equals a secondary phone: ' \
-            "#{attributes[:member][:phone].inspect}"
+            "#{attributes[:user][:phone].inspect}"
         if include_blank
-          attributes[:member][:phone] = nil
+          attributes[:user][:phone] = nil
         else
-          attributes[:member].delete(:phone)
+          attributes[:user].delete(:phone)
         end
       end
 
       logger.error "membership_attributes: #{membership_attributes.inspect}"
       logger.error "user_attributes: #{user_attributes.inspect}"
 
-      contact_email = membership_attributes[:contact_email]
-      if (existing_email_user = (contact_email && User.find_by(email: contact_email)))
-        logger.info "Found existing email user: #{user_attributes.inspect}: #{existing_email_user.inspect}"
-        user = existing_email_user
-        if user_attributes[:phone].present?
-          User.where(phone: user_attributes[:phone]).find_each do |u|
-            logger.info "Reset phone for conflicting phone user: #{u.inspect}"
-            u.update! phone: nil
-          end
-        end
-        user.update! user_attributes
-      elsif (existing_phone_user =
-                 (user_attributes[:phone] && User.find_by(phone: user_attributes[:phone])))
-        logger.info "Found existing phone user: #{user_attributes.inspect}: #{existing_phone_user.inspect}"
-        existing_phone_user.guardians.each do |gu|
-          next if gu.phone
-          phone = user_attributes.delete(:phone)
-          logger.info "promoting phone #{phone} from #{user_attributes} to #{gu.name}"
-          existing_phone_user.update! phone: nil
-          gu.update! phone: phone
-          break
-        end
-        if user_attributes[:phone]
-          if (existing_phone_member = Member.find_by(user_id: existing_phone_user.id))
-            logger.info "Existing phone user already mapped to membership: #{user_attributes.inspect}: #{existing_phone_member.inspect}" # rubocop: disable Metrics/LineLength
-            if user_attributes[:birthdate] < existing_phone_member.birthdate
-              logger.info 'Keeping phone for new membership due to higher age'
-              existing_phone_member.user.update! phone: nil
-            else
-              logger.info 'Keeping phone for existing membership due to higher age'
-              user_attributes.delete(:phone)
+      contact_email = user_attributes.delete(:contact_email)
+      guardian_1_or_billing_name = user_attributes.delete(:guardian_1_or_billing_name)
+      unless [guardian_1_attributes[:email], guardian_2_attributes[:email], billing_attributes[:email]]
+            .include?(contact_email)
+        user_attributes[:email] = contact_email
+        if (existing_email_user = (contact_email && User.find_by(email: contact_email)))
+          logger.info "Found existing email user: #{existing_email_user.inspect}"
+          user = existing_email_user
+          if user_attributes[:phone].present?
+            User.where(phone: user_attributes[:phone]).find_each do |u|
+              logger.info "Reset phone for conflicting phone user: #{u.inspect}"
+              u.update! phone: nil
             end
-          else
-            logger.info "Using existing phone user: #{user_attributes.inspect}: #{existing_phone_user.inspect}" # rubocop: disable Metrics/LineLength
-            user = existing_phone_user
-            user.update! user_attributes
+          end
+          user.update! user_attributes
+        elsif (existing_phone_user =
+                   (user_attributes[:phone] && User.find_by(phone: user_attributes[:phone])))
+          logger.info "Found existing phone user: #{existing_phone_user.inspect}"
+          existing_phone_user.guardians.each do |gu|
+            next if gu.phone
+            phone = user_attributes.delete(:phone)
+            logger.info "promoting phone #{phone} from #{user_attributes} to #{gu.name}"
+            existing_phone_user.update! phone: nil
+            gu.update! phone: phone
+            break
+          end
+          if user_attributes[:phone]
+            if (existing_phone_member = Member.find_by(user_id: existing_phone_user.id))
+              logger.info "Existing phone user already mapped to membership: #{user_attributes.inspect}: #{existing_phone_member.inspect}" # rubocop: disable Metrics/LineLength
+              if user_attributes[:birthdate] < existing_phone_member.birthdate
+                logger.info 'Keeping phone for new membership due to higher age'
+                existing_phone_member.user.update! phone: nil
+              else
+                logger.info 'Keeping phone for existing membership due to higher age'
+                user_attributes.delete(:phone)
+              end
+            else
+              logger.info "Using existing phone user: #{user_attributes.inspect}: #{existing_phone_user.inspect}" # rubocop: disable Metrics/LineLength
+              user = existing_phone_user
+              user.update! user_attributes
+            end
           end
         end
       end
 
       unless user
-        unless [parent_1_attributes[:email], parent_2_attributes[:email], billing_attributes[:email]]
-              .include?(contact_email)
-          user_attributes[:email] = contact_email
-        end
         logger.info "Creating new user: #{user_attributes.inspect}"
-        user = User.create! user_attributes
+        user = User.new user_attributes
         logger.info "New user: #{user.inspect}"
       end
 
-      logger.info "billing_attributes: #{billing_attributes.inspect}"
       if billing_attributes.present?
-        billing_user = (billing_attributes[:email] && User.find_by(email: billing_attributes[:email])) ||
-            (billing_attributes[:phone] && User.find_by(phone: billing_attributes[:phone])) ||
-            (billing_attributes[:first_name] && billing_attributes[:last_name] &&
-                User.find_by(first_name: billing_attributes[:first_name],
-                    last_name: billing_attributes[:last_name]))
-        unless billing_user
-          logger.info 'create new billing user'
-          billing_user = User.create!(billing_attributes)
+        logger.info "billing_attributes: #{billing_attributes.inspect}"
+        if user.billing_user
+          user.billing_user.update! billing_attributes
+        else
+          billing_user = (billing_attributes[:email] && User.find_by(email: billing_attributes[:email])) ||
+              (billing_attributes[:phone] && User.find_by(phone: billing_attributes[:phone])) ||
+              (billing_attributes[:first_name] && billing_attributes[:last_name] &&
+                  User.find_by(first_name: billing_attributes[:first_name],
+                      last_name: billing_attributes[:last_name])) ||
+              User.new
+          logger.info 'Create new billing user' if billing_user.new_record?
+          logger.info "billing_user: #{billing_user.inspect}"
+          billing_user.attributes = billing_attributes
+          logger.info "billing_user updated: #{billing_user.changes.inspect}" if billing_user.changed?
+          billing_user.save!
+          user.billing_user = billing_user
         end
-        logger.info "billing_user: #{billing_user.inspect}"
       end
 
-      if parent_1_attributes.present?
-        logger.info "parent_1_attributes: #{parent_1_attributes.inspect}"
+      if guardian_1_attributes.present?
+        logger.info "guardian_1_attributes: #{guardian_1_attributes.inspect}"
         if user.guardian_1
-          user.guardian_1.update! user_attributes
+          user.guardian_1.update! guardian_1_attributes
         else
-          parent_1 = (parent_1_attributes[:email] && User.find_by(email: parent_1_attributes[:email])) ||
-              (parent_1_attributes[:phone] && User.find_by(phone: parent_1_attributes[:phone])) ||
-              User.create!(parent_1_attributes)
-          user.user_relationships.create!(kind: UserRelationship::Kind::PARENT_1, upstream_user: parent_1)
+          guardian_1 =
+              (guardian_1_attributes[:email] && User.find_by(email: guardian_1_attributes[:email])) ||
+              (guardian_1_attributes[:phone] && User.find_by(phone: guardian_1_attributes[:phone])) ||
+              User.new
+          logger.info 'create new guardian_1 user' if guardian_1.new_record?
+          guardian_1.update!(guardian_1_attributes)
+          user.guardian_1 = guardian_1
         end
       end
-      if parent_2_attributes.present?
-        logger.info "parent_2_attributes: #{parent_2_attributes.inspect}"
+
+      if guardian_2_attributes.present?
+        logger.info "guardian_2_attributes: #{guardian_2_attributes.inspect}"
         if user.guardian_2
-          user.guardian_2.update! user_attributes
+          user.guardian_2.update! guardian_2_attributes
         else
-          parent_2 = (parent_2_attributes[:email] && User.find_by(email: parent_2_attributes[:email])) ||
-              (parent_2_attributes[:phone] && User.find_by(phone: parent_2_attributes[:phone])) ||
-              User.create!(parent_2_attributes)
-          user.user_relationships.create!(kind: UserRelationship::Kind::PARENT_2, upstream_user: parent_2)
+          guardian_2 =
+              (guardian_2_attributes[:email] && User.find_by(email: guardian_2_attributes[:email])) ||
+              (guardian_2_attributes[:phone] && User.find_by(phone: guardian_2_attributes[:phone])) ||
+              User.new
+          guardian_2.attributes = guardian_2_attributes
+          if guardian_2.contact_info?
+            logger.info 'Create new guardian_2 user' if guardian_2.new_record?
+            guardian_2.save!(guardian_2_attributes)
+            user.guardian_2 = guardian_2
+          else
+            logger.info 'Ignoring guardian_2 user without contact information.'
+          end
         end
       end
+
+      user.guardian_1_or_billing_name = guardian_1_or_billing_name
+
+      user.save!
 
       member_attributes_with_defaults = membership_attributes.update(MEMBER_DEFAULT_ATTRIBUTES)
 
-      membership_users = { user: user, billing_user: billing_user }
-      logger.error "membership users: #{membership_users}"
-      member = build_member(membership_users)
+      logger.error "membership users: #{{ user: user }}"
+      member = build_member(user: user)
 
       logger.error "member_attributes_with_defaults: #{member_attributes_with_defaults}"
       member.update! member_attributes_with_defaults
-      member.update! membership_users # FIXME(uwe):  Why is this needed?  Remove!
+      member.update! user: user # FIXME(uwe):  Why is this needed?  Remove!
 
       member.groups = Group.where(name: group_names).to_a
       member.save!

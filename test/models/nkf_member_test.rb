@@ -8,30 +8,30 @@ class NkfMemberTest < ActiveSupport::TestCase
       billing: {
         email: nil,
       },
-      member: {
+      guardian_1: {
+        email: nil,
+        phone: nil,
+      },
+      guardian_2: {
+        name: nil,
+        phone: nil,
+      },
+      membership: {
+        joined_on: Date.parse('1996-05-01'),
+        left_on: nil,
+        phone_home: nil,
+        phone_work: nil,
+      },
+      user: {
         address: 'Bøkeveien 11',
         birthdate: Date.parse('1974-04-01'),
+        contact_email: 'erik@example.net',
         first_name: 'Erik',
+        guardian_1_or_billing_name: nil,
         last_name: 'Øyan',
         male: true,
         phone: nil,
         postal_code: '1470',
-      },
-      membership: {
-        contact_email: 'erik@example.net',
-        joined_on: Date.parse('1996-05-01'),
-        left_on: nil,
-        parent_1_or_billing_name: nil,
-        phone_home: nil,
-        phone_work: nil,
-      },
-      parent_1: {
-        email: nil,
-        phone: nil,
-      },
-      parent_2: {
-        phone: nil,
-        name: nil,
       },
     }
     assert_equal expected, Hash[nkf_members(:erik).converted_attributes.sort_by_key]

@@ -13,24 +13,26 @@ class User < ApplicationRecord
   #       ((latitude.blank? || longitude.blank? || u.address_changed? || u.postal_code_changed?))
   # }
 
+  belongs_to :billing_user, class_name: :User, optional: true
+  belongs_to :contact_user, class_name: :User, optional: true
+  belongs_to :guardian_1, class_name: :User, optional: true
+  belongs_to :guardian_2, class_name: :User, optional: true
+
   has_one :member, dependent: :restrict_with_exception
 
-  has_many :downstream_user_relationships, class_name: :UserRelationship, dependent: :destroy,
-      inverse_of: :upstream_user, foreign_key: :upstream_user_id
+  has_many :contactees, dependent: :nullify, class_name: :User, foreign_key: :contact_user_id,
+      inverse_of: :contact_user
   has_many :embus, dependent: :destroy
   has_many :images, dependent: :destroy
   has_many :news_item_likes, dependent: :destroy
   has_many :news_items, dependent: :destroy, inverse_of: :creator, foreign_key: :created_by
-  has_many :payees, dependent: :nullify, foreign_key: :billing_user_id, inverse_of: :billing_user
+  has_many :payees, dependent: :nullify, class_name: :User, foreign_key: :billing_user_id,
+      inverse_of: :billing_user
+  has_many :primary_wards, dependent: :nullify, class_name: :User, foreign_key: :guardian_1_id,
+      inverse_of: :guardian_1
+  has_many :secondary_wards, dependent: :nullify, class_name: :User, foreign_key: :guardian_2_id,
+      inverse_of: :guardian_2
   has_many :user_messages, dependent: :destroy
-  has_many :user_relationships, dependent: :destroy, inverse_of: :downstream_user,
-      foreign_key: :downstream_user_id
-
-  # has_one :guardian_1, through: :guardianship_1, source: :guardian_user
-  # has_one :guardian_2, through: :guardianship_2, source: :guardian_user
-
-  has_many :wards, through: :wardships # , source: :ward_user
-  has_many :guardians, through: :user_relationships, source: :upstream_user
 
   # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
   SEARCH_FIELDS = %i[address email first_name last_name login phone postal_code].freeze
@@ -69,6 +71,14 @@ class User < ApplicationRecord
   validate do
     if will_save_change_to_role? && role.present? && !current_user&.admin?
       errors.add(:role, 'Bare administratorer kan gi administratorrettigheter.')
+    end
+    errors.add(:base, 'trenger kontaktinfo.') unless contact_info?
+    # if !left_on && !billing_user&.email && user.emails.empty?
+    #   errors.add :base, 'The member is missing a contact email'
+    # end
+    if billing_user && billing_user&.email.blank?
+      errors.add :billing_user_id, 'requires email'
+      billing_user.errors.add :email, I18n.t('activerecord.errors.messages.blank')
     end
   end
 
@@ -140,14 +150,18 @@ class User < ApplicationRecord
     end
   end
 
+  def guardians
+    [guardian_1, guardian_2].compact
+  end
+
   def emails
-    result = ([email] + guardians.map(&:email)).compact
-    result.sort_by! { |e| -e.size }
-    result.uniq { |e| e =~ /<(.*@.*)>/ ? Regexp.last_match(1) : e }
+    [self, guardian_1, guardian_2, billing_user, contact_user].map {|u| u&.email}.compact.uniq.sort
+    # result.sort_by! { |e| -e.size }
+    # result.uniq { |e| e =~ /<(.*@.*)>/ ? Regexp.last_match(1) : e }
   end
 
   def phones
-    ([phone] + guardians.map(&:phone)).select(&:present?).uniq.sort
+    [self, guardian_1, guardian_2, billing_user, contact_user].map {|u| u&.phone}.compact.uniq.sort
   end
 
   def name
@@ -206,18 +220,56 @@ class User < ApplicationRecord
     member.try(:instructor?)
   end
 
-  def guardian_1
-    user_relationships.find { |g| g.kind == UserRelationship::Kind::PARENT_1 }&.upstream_user
-  end
-
-  def guardian_2
-    user_relationships.find { |g| g.kind == UserRelationship::Kind::PARENT_2 }&.upstream_user
-  end
-
   # describe how to retrieve the address from your model, if you use directly a
   # db column, you can dry your code, see wiki
   def full_address
     [address, postal_code, 'Norway'].select(&:present?).join(', ')
+  end
+
+  def contact_info?
+    emails.present? || phones.present?
+  end
+
+  def contact_email
+    contact_user&.email || email || emails&.first || billing_user&.email || 'post@jujutsu.no'
+  end
+
+  def contact_email=(value)
+    logger.info "user(#{id}).contact_email=(#{value.inspect})"
+    previous_contact_email = contact_email
+    logger.info "previous_contact_email: #{previous_contact_email.inspect}"
+    return if value == previous_contact_email
+    new_contact_user = User.find_by(email: value) if value.present?
+    logger.info "new_contact_user: #{new_contact_user.inspect}"
+    if new_contact_user&.== self
+      logger.info 'clear contact user id'
+      self.contact_user_id = nil
+    elsif new_contact_user
+      logger.info 'set new contact user'
+      self.contact_user = new_contact_user
+    elsif billing_user&.== contact_user
+      logger.info 'Update billing user email'
+      billing_user.email = value
+    elsif guardian_1&.== contact_user
+      logger.info 'Update guardian 1 user email'
+      guardian_1.email = value
+    elsif guardian_2&.== contact_user
+      logger.info 'Update guardian 2 user email'
+      guardian_2.email = value
+    else
+      logger.info 'Update user email'
+      self.email = value
+    end
+  end
+
+  def guardian_1_or_billing_name
+    guardian_1&.name || billing_user&.name
+  end
+
+  def guardian_1_or_billing_name=(value)
+    u = guardian_1 || billing_user
+    u = self.guardian_1 = User.new if u.nil? && value.present?
+    u.name = value if u
   end
 
   protected

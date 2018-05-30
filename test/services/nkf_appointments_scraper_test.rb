@@ -8,7 +8,9 @@ class NkfAppointmentsScraperTest < ActiveSupport::TestCase
       a = NkfAppointmentsScraper.import_appointments
       assert a
       assert_equal 9, a.size
-      assert_equal 1, a.select { |app| app.class == Appointment }.size
+      appointments = a.select { |app| app.class == Appointment }
+      assert_equal 1, appointments.size
+      assert_equal 'Uwe Kubosch', appointments[0].member.user.name
     end
   end
 end

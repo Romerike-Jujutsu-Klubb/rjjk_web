@@ -9,8 +9,6 @@ class Member < ApplicationRecord
   SEARCH_FIELDS =
       %i[comment nkf_members.medlemsnummer phone_home phone_work].freeze
 
-  belongs_to :billing_user, required: false, class_name: :User, inverse_of: :payees
-  belongs_to :contact_user, class_name: :User, optional: true
   belongs_to :user, inverse_of: :member
 
   has_one :last_member_image, -> { order :created_at }, class_name: :MemberImage
@@ -48,7 +46,7 @@ class Member < ApplicationRecord
   has_many :groups, through: :group_memberships
   has_many :ranks, through: :passed_graduates
 
-  accepts_nested_attributes_for :billing_user, :user
+  accepts_nested_attributes_for :user
 
   scope :active, ->(from_date = nil, to_date = nil) do
     from_date ||= Date.current
@@ -75,9 +73,6 @@ class Member < ApplicationRecord
   validates :user, presence: true
 
   validate do
-    if !left_on && !billing_user&.email && user.emails.empty?
-      errors.add :base, 'The member is missing a contact email'
-    end
     if user.first_name.blank?
       errors.add :base, 'The member is missing a first name'
       user.errors.add :first_name, I18n.t('activerecord.errors.messages.blank')
@@ -85,10 +80,6 @@ class Member < ApplicationRecord
     if user.last_name.blank?
       errors.add :base, 'The member is missing a last name'
       user.errors.add :last_name, I18n.t('activerecord.errors.messages.blank')
-    end
-    if billing_user && billing_user&.email.blank?
-      errors.add :billing_user_id, 'requires email'
-      billing_user.errors.add :email, I18n.t('activerecord.errors.messages.blank')
     end
   end
 
@@ -291,26 +282,12 @@ class Member < ApplicationRecord
     self
   end
 
-  def member
-    user
-  end
-
-  def parent_1
-    user.guardian_1
-  end
-
-  def parent_2
-    user.guardian_2
-  end
+  delegate :guardian_1, :guardian_2, :guardians, to: :user
 
   def billing
-    billing_user
+    user.billing_user
   end
   # EMXIF
-
-  def guardians
-    user.guardians.order('user_relationships.kind')
-  end
 
   def image_file=(file)
     return if file.blank?
@@ -331,54 +308,6 @@ class Member < ApplicationRecord
     magick_image.crop_resized(x, y).to_blob
   end
 
-  def contact_email
-    contact_user&.email || user&.email || user&.emails&.first || billing_user&.email || 'post@jujutsu.no'
-  end
-
-  def contact_email=(value)
-    logger.info "member(#{id}).contact_email=(#{value.inspect})"
-    previous_contact_email = contact_email
-    logger.info "previous_contact_email: #{previous_contact_email.inspect}"
-    return if value == previous_contact_email
-    new_contact_user = User.find_by(email: value) if value.present?
-    logger.info "new_contact_user: #{new_contact_user.inspect}"
-    if new_contact_user&.== user
-      logger.info 'clear contact user id'
-      self.contact_user_id = nil
-    elsif new_contact_user
-      logger.info 'set new contact user'
-      self.contact_user = new_contact_user
-    elsif billing_user&.== contact_user
-      logger.info 'Update billing user email'
-      billing_user.email = value
-    elsif user&.guardian_1&.== contact_user
-      logger.info 'Update guardian 1 user email'
-      user.guardian_1.email = value
-    elsif user&.guardian_2&.== contact_user
-      logger.info 'Update guardian 2 user email'
-      user.guardian_2.email = value
-    elsif user
-      logger.info 'Update user email'
-      user.email = value
-    else
-      logger.info 'Create a new user'
-      build_user email: value
-    end
-  end
-
-  def parent_1_or_billing_name
-    user.guardian_1&.name || billing_user&.name
-  end
-
-  def parent_1_or_billing_name=(value)
-    u = user.guardian_1 || billing_user
-    if u.nil? && value.present?
-      u = user.user_relationships.build(kind: UserRelationship::Kind::PARENT_1, upstream_user: User.new)
-          &.upstream_user
-    end
-    u.name = value if u
-  end
-
   def invoice_email
     billing_email || email
   end
@@ -388,28 +317,21 @@ class Member < ApplicationRecord
   end
 
   def related_users
-    users = { member: user }
-    user.user_relationships.each { |ur| users[ur.kind.downcase.to_sym] = ur.upstream_user }
-    users[:billing] = billing_user if billing_user
+    users = { user: user }
+    users[:guardian_1] = user.guardian_1 if user.guardian_1
+    users[:guardian_2] = user.guardian_2 if user.guardian_2
+    users[:billing] = user.billing_user if user.billing_user
     users
   end
 
-  def emails
-    emails = []
-    emails += user&.emails
-    emails << billing_user&.email
-    emails.compact.uniq
-  end
+  delegate :emails, to: :user
 
   def phones
     phones = []
     phones << phone_home
-    # phones << phone_mobile
-    # phones << phone_parent
     phones << phone_work
     phones += user.phones
     phones << billing_phone_home
-    phones << billing_user&.phone
     phones.reject(&:blank?).uniq
   end
 

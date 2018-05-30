@@ -3,6 +3,10 @@
 # rubocop: disable all
 class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
   def change
+    add_reference :users, :billing_user, foreign_key: { to_table: :users }
+    add_reference :users, :contact_user, foreign_key: { to_table: :users }
+    add_reference :users, :guardian_1, foreign_key: { to_table: :users }
+    add_reference :users, :guardian_2, foreign_key: { to_table: :users }
     add_column :users, :address, :string, limit: 100
     add_column :users, :birthdate, :date
     add_column :users, :gmaps, :boolean
@@ -15,8 +19,6 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
     change_column_null :users, :login, true
     change_column_null :users, :salt, true
     change_column_null :users, :salted_password, true
-    add_reference :members, :billing_user, foreign_key: { to_table: :users }
-    add_reference :members, :contact_user, foreign_key: { to_table: :users }
     change_column_null :members, :email, true
     remove_index :members, :user_id
     add_foreign_key :members, :users
@@ -148,9 +150,9 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
           puts "User (#{'%4d' % main_user.id}) #{main_user.name} email: #{main_user.email.inspect}: Update parent 1 (#{parent_1_user.id.inspect}): #{parent_1_user.changes.inspect}"
           parent_1_user.save!
         end
-        unless main_user.guardianship_1
+        unless main_user.guardian_1
           puts "User (#{'%4d' % main_user.id}) #{main_user.name} email: #{main_user.email.inspect}: Link guardian 1 (#{parent_1_user.id.inspect}): #{parent_1_user.email.inspect}"
-          main_user.create_guardianship_1! downstream_user: main_user, upstream_user: parent_1_user
+          main_user.update! guardian_1: parent_1_user
         end
       elsif m.parent_email || m.parent_name || m.phone_parent
         puts "Member (#{'%4d' % m.id}) #{m.name} email: #{main_user.email.inspect}: Discard parent 1: parent_name: #{m.parent_name.inspect}, parent_email: #{m.parent_email.inspect}, parent_phone: #{m.phone_parent.inspect}"
@@ -186,9 +188,9 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
           puts "User (#{'%4d' % main_user.id}) #{main_user.name} email: #{main_user.email.inspect}: Update parent 2 (#{parent_2_user.id.inspect}): #{parent_2_user.changes.inspect}"
           parent_2_user.save!
         end
-        unless main_user.guardianship_2
+        unless main_user.guardian_2
           puts "link parent 2"
-          main_user.create_guardianship_2! downstream_user: main_user, upstream_user: parent_2_user
+          main_user.update! guardian_2: parent_2_user
         end
       end
 
@@ -228,9 +230,9 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
           puts "Member (#{'%4d' % m.id}) #{m.name} email: #{m.user.email.inspect}: Update billing user (#{billing_user.id.inspect}) #{billing_user.email}: #{billing_user.changes.inspect}"
           billing_user.save!
         end
-        if m.billing_user_id != billing_user.id
+        if main_user.billing_user_id != billing_user.id
           puts "Member (#{'%4d' % m.id}) #{m.name} email: #{m.user.email.inspect}: Link billing user (#{billing_user.id.inspect}) #{billing_user.email}: #{billing_user.changes.inspect}"
-          m.update! billing_user: billing_user
+          main_user.update! billing_user: billing_user
         end
       elsif m.billing_email.present? || m.billing_name.present? || m.billing_phone_mobile.present?
         puts "Member (#{'%4d' % m.id}) #{m.name} email: #{m.user.email.inspect}: Discard billing user: billing_user email: #{m.billing_email.inspect}, name: #{m.billing_name.inspect}, phone: #{m.billing_phone_mobile.inspect}"
@@ -238,9 +240,9 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
 
       if m.email&.!= m.user.email
         puts "Member (#{'%4d' % m.id}) #{m.name} email: #{m.user.email.inspect}: Contact email is not user email: #{m.email.inspect}) != #{m.user.email.inspect}"
-        contact_user = (m.user.guardians + [billing_user]).compact.find{|u| u.email == m.email}
+        contact_user = [billing_user, parent_1_user, parent_2_user].compact.find{|u| u.email == m.email}
         puts "Member (#{'%4d' % m.id}) #{m.name} email: #{m.user.email.inspect}: Set contact user (#{contact_user.id.inspect}): #{contact_user.email.inspect}"
-        m.update! contact_user_id: contact_user.id
+        main_user.update! contact_user_id: contact_user.id
       end
     end
 
@@ -322,9 +324,9 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
       3.times{puts '*' * 80}
       raise "Comparison should have no errors (#{c.errors.size}): #{c.errors.pretty_inspect}"
     end
-    raise "Comparison should have no new members: #{c.new_members}" if c.new_members.any?
-    raise "Comparison should have no changes (#{c.member_changes.size}): #{c.member_changes}" if c.member_changes.any?
-    raise "Comparison should have no outgoing changes (#{c.outgoing_changes.size}): #{c.outgoing_changes}" if c.outgoing_changes.any?
+    raise "Comparison should have no new members:\n#{c.new_members.pretty_inspect}" if c.new_members.any?
+    raise "Comparison should have no changes (#{c.member_changes.size}):\n#{c.member_changes.pretty_inspect}" if c.member_changes.any?
+    raise "Comparison should have no outgoing changes (#{c.outgoing_changes.size}):\n#{c.outgoing_changes.pretty_inspect}" if c.outgoing_changes.any?
     puts 'Synch OK'
 
     # raise 'huh?!'
@@ -351,36 +353,21 @@ class StoreUserDataWithMemberUsers < ActiveRecord::Migration[5.1]
   end
 
   class User < ApplicationRecord
-    has_one :member
+    belongs_to :billing_user, class_name: :User, optional: true
+    belongs_to :contact_user, class_name: :User, optional: true
+    belongs_to :guardian_1, class_name: :User, optional: true
+    belongs_to :guardian_2, class_name: :User, optional: true
 
-    has_one :guardianship_1, -> { where kind: UserRelationship::Kind::PARENT_1 }, class_name: :UserRelationship, foreign_key: :upstream_user_id
-    has_one :guardianship_2, -> { where kind: UserRelationship::Kind::PARENT_2 }, class_name: :UserRelationship, foreign_key: :upstream_user_id
+    has_one :member
 
     has_many :downstream_user_relationships, class_name: :UserRelationship, dependent: :destroy,
         inverse_of: :upstream_user, foreign_key: :upstream_user_id
     has_many :user_relationships, dependent: :destroy, inverse_of: :downstream_user, foreign_key: :downstream_user_id
     has_many :user_emails
 
-    has_one :guardian_1, through: :guardianship_1, source: :upstream_user
-    has_one :guardian_2, through: :guardianship_2, source: :upstream_user
-
-    has_many :guardians, through: :user_relationships, source: :upstream_user
-
     def name
       [first_name, last_name].select(&:present?).map(&:strip).join(' ')
     end
-  end
-
-  class UserRelationship < ApplicationRecord
-    module Kind
-      PARENT_1 = 'PARENT_1'
-      PARENT_2 = 'PARENT_2'
-    end
-
-    belongs_to :upstream_user, class_name: :User, inverse_of: :downstream_user_relationships
-    belongs_to :downstream_user, class_name: :User, inverse_of: :user_relationships
-
-    validates :kind, presence: true, uniqueness: { scope: :downstream_user_id }
   end
 
   private

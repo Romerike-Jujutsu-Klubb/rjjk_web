@@ -6,11 +6,13 @@ ul.nav.nav-tabs role="tablist"
     | Medlemskap
     - if @member.left_on
       .badge.badge-danger.ml-1 title='Utmeldt' data-toggle='tooltip' U
-  - @member.user.user_relationships.each do |guardianship|
-    li.nav-item: a.nav-link data-target="#tab_parent_#{guardianship.kind[-1]}" data-toggle="tab" Foresatt #{guardianship.kind[-1]}
-  - if @member.billing_user
+  - if @member.user.guardian_1
+    li.nav-item: a.nav-link data-target="#tab_guardian_1" data-toggle="tab" Foresatt 1
+  - if @member.user.guardian_2
+    li.nav-item: a.nav-link data-target="#tab_guardian_2" data-toggle="tab" Foresatt 2
+  - if @member.user.billing_user
     li.nav-item: a.nav-link data-target="#tab_billing_user" data-toggle="tab" Betaler
-  - if @member.contact_user
+  - if @member.user.contact_user
     li.nav-item: a.nav-link data-target="#tab_contact_user" data-toggle="tab" Kontakt
   li.nav-item: a.nav-link data-target="#tab_graduations" data-toggle="tab" Graderinger
   li.nav-item: a.nav-link data-target="#tab_duties" data-toggle="tab" Verv
@@ -23,12 +25,14 @@ ul.nav.nav-tabs role="tablist"
   / FIXME(uwe): Save all form tabs when pressing "Save"
   #tab_user.tab-pane.fade.show.active.pt-3 = render 'users/form', user: @member.user, submit: true
   #tab_membership.tab-pane.fade = render 'form'
-  - @member.user.user_relationships.each do |guardianship|
-    .tab-pane.fade.pt-3 id="tab_parent_#{guardianship.kind[-1]}" = render 'users/form', user: guardianship.upstream_user, submit: true
-  - if @member.billing_user
-    #tab_billing_user.tab-pane.fade.pt-3 = render 'users/form', user: @member.billing_user, submit: true
-  - if @member.contact_user
-    #tab_contact_user.tab-pane.fade.pt-3 = render 'users/form', user: @member.contact_user, submit: true
+  - if @member.user.guardian_1
+    #tab_guardian_1.tab-pane.fade.pt-3 = render 'users/form', user: @member.user.guardian_1, submit: true
+  - if @member.user.guardian_2
+    #tab_guardian_2.tab-pane.fade.pt-3 = render 'users/form', user: @member.user.guardian_2, submit: true
+  - if @member.user.billing_user
+    #tab_billing_user.tab-pane.fade.pt-3 = render 'users/form', user: @member.user.billing_user, submit: true
+  - if @member.user.contact_user
+    #tab_contact_user.tab-pane.fade.pt-3 = render 'users/form', user: @member.user.contact_user, submit: true
   #tab_graduations.tab-pane.fade = render 'graduations'
   #tab_duties.tab-pane.fade = render 'duties'
   #tab_signatures.tab-pane.fade

@@ -51,27 +51,27 @@ class NkfMemberComparison
       relation =
           if target == :membership
             member
-          elsif target == :member
+          elsif target == :user
             member.user
           elsif target == :billing
-            if member.billing_user
-              member.billing_user
+            if member.user.billing_user
+              member.user.billing_user
             elsif nkf_values.any? { |_k, v| v.present? }
               if nkf_values[:email] && (existing_email_user = User.find_by(email: nkf_values[:email]))
                 logger.info "Use existing billing user: #{existing_email_user}"
-                member.billing_user = existing_email_user
+                member.user.billing_user = existing_email_user
                 existing_email_user
               else
                 logger.info "Create new billing user: #{nkf_values}"
-                member.build_billing_user
+                member.user.build_billing_user
               end
             end
-          else
-            (member.user.user_relationships.find { |g| g.kind == target.to_s.upcase } ||
-                ((nkf_values.any? { |_k, v| v.present? } || nil) &&
-                    member.user.user_relationships
-                        .build(kind: target.to_s.upcase, upstream_user: User.new))
-            )&.upstream_user
+          elsif target == :guardian_1
+            member.user.guardian_1 ||
+                ((nkf_values.any? { |_k, v| v.present? } || nil) && member.user.build_guardian_1)
+          elsif target == :guardian_2
+            member.user.guardian_2 ||
+                ((nkf_values.any? { |_k, v| v.present? } || nil) && member.user.build_guardian_2)
           end
       next unless relation
       nkf_values.each do |attribute, nkf_value|
@@ -112,7 +112,7 @@ class NkfMemberComparison
       logger.info "set form value #{nkf_field.inspect} = #{form_value.inspect}"
       form[nkf_field.to_s] = form_value
       outgoing_changes[attr_sym] = { new_value => old_value }
-    elsif attr_sym == { membership: :billing_user_id }
+    elsif attr_sym == { user: :billing_user_id }
       record.billing_user.attributes.each do |billing_attr, new_billing_value|
         next if new_billing_value.nil?
         billing_attr_sym = { billing: billing_attr.to_sym }
@@ -132,7 +132,7 @@ class NkfMemberComparison
   end
 
   private def sync_member_with_agent(agent, front_page, m)
-    logger.info "Synching member: #{m.nkf_member.medlemsnummer} #{m.inspect}"
+    logger.info "Synching member: #{m.user.name} #{m.nkf_member.medlemsnummer} #{m.inspect}"
     logger.info "m.changes: #{m.changes.pretty_inspect}"
     if m.user.invalid?
       if m.user.errors[:phone]
@@ -141,7 +141,18 @@ class NkfMemberComparison
           if conflicting_phone_user.member.nil? || conflicting_phone_user.member.left_on
             logger.info "Move phone #{m.user.phone} from user #{conflicting_phone_user.id} "\
                 "#{conflicting_phone_user.name} to #{m.user.inspect}"
-            conflicting_phone_user.update! phone: nil
+            conflicting_phone_user.phone = nil
+            if conflicting_phone_user.contact_info?
+              conflicting_phone_user.save!
+            else
+              logger.info "Delete user #{conflicting_phone_user.name} #{conflicting_phone_user.id} " \
+                  'since it has no contact information.'
+              conflicting_phone_user.contactees.each { |u| u.update! contact_user_id: m.user.id }
+              conflicting_phone_user.payees.each { |u| u.update! billing_user_id: m.user.id }
+              conflicting_phone_user.primary_wards.each { |u| u.update! guardian_1_id: m.user.id }
+              conflicting_phone_user.secondary_wards.each { |u| u.update! guardian_2_id: m.user.id }
+              conflicting_phone_user.destroy!
+            end
           else
             logger.info "Reset user phone #{m.user.phone} since it is used by "\
                 "#{conflicting_phone_user.inspect}"
@@ -150,11 +161,12 @@ class NkfMemberComparison
         end
       end
     end
-    if m.billing_user
-      logger.info "m.billing_user: #{m.billing_user.changes.pretty_inspect}"
-      if !m.billing_user.persisted? && (related_user_email = m.billing_user.email)
+    if m.user.billing_user
+      logger.info "m.user.billing_user: #{m.user.billing_user.changes.pretty_inspect}"
+      if !m.user.billing_user.persisted? && (related_user_email = m.user.billing_user.email)
         if (existing_billing_user = User.find_by(email: related_user_email))
-          m.billing_user = existing_billing_user
+          # FIXME(uwe): Should this ever happen?
+          m.user.billing_user = existing_billing_user
         end
       end
     end

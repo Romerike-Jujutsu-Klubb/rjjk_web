@@ -375,10 +375,6 @@ ActiveRecord::Schema.define(version: 20180527133769) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.date 'passive_on'
-    t.bigint 'billing_user_id'
-    t.bigint 'contact_user_id'
-    t.index ['billing_user_id'], name: 'index_members_on_billing_user_id'
-    t.index ['contact_user_id'], name: 'index_members_on_contact_user_id'
   end
 
   create_table 'news_item_likes', force: :cascade do |t|
@@ -656,17 +652,6 @@ ActiveRecord::Schema.define(version: 20180527133769) do
     t.index ['user_id'], name: 'fk__user_messages_user_id'
   end
 
-  create_table 'user_relationships', force: :cascade do |t|
-    t.bigint 'downstream_user_id', null: false
-    t.bigint 'upstream_user_id', null: false
-    t.string 'kind', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index %w[downstream_user_id kind], name: 'index_user_relationships_on_downstream_user_id_and_kind', unique: true
-    t.index ['downstream_user_id'], name: 'index_user_relationships_on_downstream_user_id'
-    t.index ['upstream_user_id'], name: 'index_user_relationships_on_upstream_user_id'
-  end
-
   create_table 'users', force: :cascade do |t|
     t.string 'login', limit: 80
     t.string 'salted_password', limit: 40
@@ -681,6 +666,10 @@ ActiveRecord::Schema.define(version: 20180527133769) do
     t.boolean 'deleted', default: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.bigint 'billing_user_id'
+    t.bigint 'contact_user_id'
+    t.bigint 'guardian_1_id'
+    t.bigint 'guardian_2_id'
     t.string 'address', limit: 100
     t.date 'birthdate'
     t.boolean 'gmaps'
@@ -689,6 +678,10 @@ ActiveRecord::Schema.define(version: 20180527133769) do
     t.boolean 'male'
     t.string 'phone', limit: 32
     t.string 'postal_code', limit: 4
+    t.index ['billing_user_id'], name: 'index_users_on_billing_user_id'
+    t.index ['contact_user_id'], name: 'index_users_on_contact_user_id'
+    t.index ['guardian_1_id'], name: 'index_users_on_guardian_1_id'
+    t.index ['guardian_2_id'], name: 'index_users_on_guardian_2_id'
   end
 
   create_table 'wazas', force: :cascade do |t|
@@ -728,8 +721,6 @@ ActiveRecord::Schema.define(version: 20180527133769) do
   add_foreign_key 'member_images', 'images', name: 'fk_member_images_image_id'
   add_foreign_key 'member_images', 'members', name: 'fk_member_images_member_id'
   add_foreign_key 'members', 'users'
-  add_foreign_key 'members', 'users', column: 'billing_user_id'
-  add_foreign_key 'members', 'users', column: 'contact_user_id'
   add_foreign_key 'news_item_likes', 'news_items', name: 'fk_news_item_likes_news_item_id'
   add_foreign_key 'news_item_likes', 'users', name: 'fk_news_item_likes_user_id'
   add_foreign_key 'news_items', 'users', column: 'created_by', name: 'news_items_created_by_fkey'
@@ -748,6 +739,8 @@ ActiveRecord::Schema.define(version: 20180527133769) do
   add_foreign_key 'trial_attendances', 'nkf_member_trials', name: 'trial_attendances_nkf_member_trial_id_fkey'
   add_foreign_key 'trial_attendances', 'practices', name: 'fk_trial_attendances_practice_id'
   add_foreign_key 'user_messages', 'users', name: 'fk_user_messages_user_id'
-  add_foreign_key 'user_relationships', 'users', column: 'downstream_user_id'
-  add_foreign_key 'user_relationships', 'users', column: 'upstream_user_id'
+  add_foreign_key 'users', 'users', column: 'billing_user_id'
+  add_foreign_key 'users', 'users', column: 'contact_user_id'
+  add_foreign_key 'users', 'users', column: 'guardian_1_id'
+  add_foreign_key 'users', 'users', column: 'guardian_2_id'
 end
