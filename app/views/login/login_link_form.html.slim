@@ -11,7 +11,7 @@ h3 Venligst logg inn
   = bootstrap_form_for :user, url: send_login_link_path, remote: false do |f|
     = f.text_field :email, placeholder: 'e-post', value: @email, label: 'E-post'
 
-    .btn-toolbar.float-right
+    .float-right.mb-3
       = f.primary 'Send e-post'
       = back_or_link_to 'Avbryt', root_path, class: 'btn btn-secondary ml-2'
 

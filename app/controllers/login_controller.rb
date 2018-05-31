@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class LoginController < ApplicationController
+  EMAIL_COOKIE_NAME = :"#{"rjjk_" if Rails.env.development?}email#{"_beta" if Rails.env.beta?}"
+
   before_action :authenticate_user, except: %i[forgot_password login_link_form login_with_password
                                                logout send_login_link signup]
 
@@ -20,7 +22,7 @@ class LoginController < ApplicationController
   end
 
   def login_link_form
-    @email = cookies.encrypted[:email]
+    @email = cookies.encrypted[EMAIL_COOKIE_NAME]
   end
 
   def send_login_link
@@ -33,7 +35,7 @@ class LoginController < ApplicationController
       flash.notice = "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{escaped_email}"
       redirect_to :login
     else
-      cookies.permanent.encrypted[:email] = { value: escaped_email }.merge(COOKIE_SCOPE)
+      cookies.permanent.encrypted[EMAIL_COOKIE_NAME] = { value: escaped_email }.merge(COOKIE_SCOPE)
       begin
         users = users_by_email - [current_user]
         if users.any?
