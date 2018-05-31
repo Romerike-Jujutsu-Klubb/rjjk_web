@@ -11,4 +11,4 @@ COOKIE_SCOPE = if Rails.env.production?
                end
 
 Rails.application.config.session_store :cookie_store,
-    { key: '_rjjk_web_session' }.merge(COOKIE_SCOPE)
+    { key: "_rjjk_web#{'_beta' if Rails.env.beta?}_session" }.merge(COOKIE_SCOPE)
