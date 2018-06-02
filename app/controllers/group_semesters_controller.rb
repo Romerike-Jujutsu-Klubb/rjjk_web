@@ -93,6 +93,7 @@ class GroupSemestersController < ApplicationController
     @instructors = Member
         .instructors(@group_semester.first_session || @group_semester.semester.try(:start_on))
         .to_a
+        .sort_by(&:current_rank).reverse
   end
 
   def create_practices
