@@ -4,7 +4,12 @@ class GroupSemester < ApplicationRecord
   belongs_to :chief_instructor, class_name: :Member, required: false
   belongs_to :group
   belongs_to :semester
+
   has_many :group_instructors, dependent: :destroy
+
+  scope :for_date, ->(date = Date.current) do
+    joins(:semester).where('? BETWEEN semesters.start_on AND semesters.end_on', date)
+  end
 
   validates :group, :group_id, :semester, :semester_id, presence: true
 

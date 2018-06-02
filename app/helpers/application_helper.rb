@@ -2,6 +2,7 @@
 
 module ApplicationHelper
   include UserSystem
+  include GraduationAccess
 
   def menu_item(name, options = {})
     options[:controller] ||= 'info'

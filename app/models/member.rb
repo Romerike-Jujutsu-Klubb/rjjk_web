@@ -84,7 +84,7 @@ class Member < ApplicationRecord
   end
 
   def self.instructors(date = Date.current)
-    active(date).where(<<~SQL).order(:id).to_a
+    active(date).where(<<~SQL).order(:id)
       instructor = true OR id IN (SELECT member_id FROM group_instructors GROUP BY member_id)
         SQL
   end

@@ -5,10 +5,6 @@ class Graduation < ApplicationRecord
   has_many :censors, dependent: :destroy
   has_many :graduates, dependent: :destroy
 
-  validates :group, :group_id, :held_on, presence: true
-  validates :group_notification, inclusion: { in: [true, false], message: 'må velges' }
-  validates :held_on, uniqueness: { scope: :group_id }
-
   scope :for_edit, -> do
     includes(
         censors: { member: { graduates: { rank: :martial_art } } },
@@ -73,6 +69,16 @@ class Graduation < ApplicationRecord
       SQL
   scope :upcoming, -> { where 'held_on >= ?', Date.current }
 
+  validates :group, :group_id, :held_on, presence: true
+  validates :group_notification, inclusion: { in: [true, false], message: 'må velges' }
+  validates :held_on, uniqueness: { scope: :group_id }
+
+  validate do
+    if attribute_changed?(:held_on) && locked?
+      errors.add :held_on, 'kan ikke endres etter at graderingsoppsettet er låst'
+    end
+  end
+
   def start_at
     held_on.try(:at, group_schedule.try(:start_at) || TimeOfDay.new(17, 45))
   end
@@ -109,6 +115,11 @@ class Graduation < ApplicationRecord
 
   def locked?
     non_declined_examiners = censors.select(&:examiner).reject(&:declined?)
+    if 1.week.ago > (held_on - GraduationReminder::GRADUATES_INVITATION_LIMIT) &&
+          censors.reject(&:declined?).select(&:locked_at).map(&:member)
+                .include?(group.group_semesters.for_date(held_on).first&.chief_instructor)
+      return true
+    end
     non_declined_examiners.any? && non_declined_examiners.all?(&:locked_at?)
   end
 
