@@ -55,7 +55,7 @@ h3 = @group.name
   .float-left.w-50
     h4 Instruktører
     - @instructors.each do |m|
-      - if m == @group.current_semester.chief_instructor
+      - if @instructors.size > 1 && m == @group.current_semester.chief_instructor
         strong> = m.name
         | (Hovedinstruktør)
       - else
