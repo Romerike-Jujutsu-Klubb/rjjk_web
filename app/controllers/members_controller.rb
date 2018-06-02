@@ -104,6 +104,7 @@ class MembersController < ApplicationController
     @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name')
         .where(closed_on: nil).to_a
     @groups |= @member.groups
+    @users = User.order(:first_name, :last_name).to_a
     render :edit
   end
 

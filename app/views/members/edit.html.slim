@@ -30,7 +30,10 @@ ul.nav.nav-tabs role="tablist"
   - if @member.user.guardian_2
     #tab_guardian_2.tab-pane.fade.pt-3 = render 'users/form', user: @member.user.guardian_2, submit: true
   - if @member.user.billing_user
-    #tab_billing_user.tab-pane.fade.pt-3 = render 'users/form', user: @member.user.billing_user, submit: true
+    #tab_billing_user.tab-pane.fade.pt-3
+      = bootstrap_form_for @member.user do |f|
+        = f.select :billing_user_id, @users.map{|u| [u.name, u.id]}, prompt: true
+        = f.primary
   - if @member.user.contact_user
     #tab_contact_user.tab-pane.fade.pt-3 = render 'users/form', user: @member.user.contact_user, submit: true
   #tab_graduations.tab-pane.fade = render 'graduations'

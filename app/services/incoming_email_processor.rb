@@ -120,7 +120,7 @@ class IncomingEmailProcessor
   end
 
   def self.delete_old
-    RawIncomingEmail.where('processed_at < ? OR postponed_at < ?', 1.year.ago, 6.months.ago)
+    RawIncomingEmail.where('processed_at < ? OR postponed_at < ?', 10.years.ago, 6.months.ago)
         .order(:created_at).limit(5).each(&:destroy!)
   end
 end
