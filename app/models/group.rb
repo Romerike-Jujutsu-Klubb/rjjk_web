@@ -2,12 +2,8 @@
 
 # FIXME(uwe): Split into AgeGroup and TrainingGroup
 class Group < ApplicationRecord
-  scope :active, ->(date = nil) do
-    date ? where('closed_on IS NULL OR closed_on >= ?', date) : where('closed_on IS NULL')
-  end
-  scope :inactive, ->(date) { where('closed_on IS NOT NULL AND closed_on < ?', date) }
-
   belongs_to :martial_art
+
   has_one :current_semester,
       -> {
         joins(:semester).where('? BETWEEN semesters.start_on AND semesters.end_on', Date.current)
@@ -19,6 +15,7 @@ class Group < ApplicationRecord
   has_one :next_semester, -> do
     includes(:semester).where('semesters.start_on > ?', Date.current).order('semesters.start_on')
   end, class_name: :GroupSemester
+
   has_many :graduations, -> { order(:held_on) }, dependent: :destroy
   has_many :group_memberships, dependent: :destroy
   has_many :group_schedules, dependent: :destroy
@@ -28,6 +25,11 @@ class Group < ApplicationRecord
 
   accepts_nested_attributes_for :current_semester
   accepts_nested_attributes_for :next_semester
+
+  scope :active, ->(date = nil) do
+    date ? where('closed_on IS NULL OR closed_on >= ?', date) : where('closed_on IS NULL')
+  end
+  scope :inactive, ->(date) { where('closed_on IS NOT NULL AND closed_on < ?', date) }
 
   before_validation { |r| r.color = nil if r.color.blank? }
 
