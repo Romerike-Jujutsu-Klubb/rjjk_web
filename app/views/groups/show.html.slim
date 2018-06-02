@@ -1,0 +1,123 @@
+h3 = @group.name
+
+.float-left.w-50
+  h4 Alder
+
+  p
+    strong Fra #{@group.from_age} til #{@group.to_age} år
+    | .
+
+  p
+    - current_size = @group.members.select(&:active?).size
+    - if @group.target_size
+      - actual_free_spots = @group.target_size - current_size
+      - free_spots = user? ? actual_free_spots : [actual_free_spots, 5].max
+      - if free_spots > 0
+        => free_spots
+        | ledige plasser.
+        br
+        = link_to 'Meld deg på!', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)'
+      - else
+        | Gruppen er full.  Sett deg på
+        br
+        = link_to 'venteliste', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162', :onclick => 'return !window.open(this.href)'
+        | .
+    - else
+      => current_size
+      | aktive.
+
+.float-left.w-50
+  - unless @group.monthly_price.blank?
+    h4 Pris
+
+    p style="line-height: 1.5"
+      - unless @group.yearly_price.blank?
+        | Årskontingent
+        strong< kr #{@group.yearly_price},-
+        br
+      | Treningsavgift
+      strong< kr #{@group.monthly_price},-
+      | (månedlig)
+      br
+      | Treningsavgiften inkluderer gradering og belte og betales hele året.
+
+.float-left.w-50
+  h4 Treningstider
+
+  p: strong
+    - @group.group_schedules.each do |gs|
+      => gs.weekday_name
+      = gs.start_at.strftime '%H:%M'
+      | - #{gs.end_at.strftime '%H:%M'}
+      br
+
+- if @instructors.any?
+  .float-left.w-50
+    h4 Instruktører
+    - @instructors.each do |m|
+      - if m == @group.current_semester.chief_instructor
+        strong> = m.name
+        | (Hovedinstruktør)
+      - else
+        => m.name
+      br
+    br
+
+br clear="all"
+
+div
+  p
+    - if @group.school_breaks?
+      | Gruppen følger skoleåret og har ikke trening i skoleferiene.
+      br
+      - if @group.current_semester
+        - if @group.current_semester.try(:first_session).try(:>=, Date.current)
+          ' Første trening etter
+          = @group.current_semester.first_session.month > 6 ? 'sommer' : 'jule'
+          ' ferien er
+          strong
+            => t(:date)[:day_names][@group.current_semester.first_session.cwday].downcase
+            = @group.current_semester.first_session.day
+            ' .
+            = t(:date)[:month_names][@group.current_semester.first_session.month].downcase
+          | .
+          br
+        - if @group.current_semester.last_session
+          ' Siste trening før
+          = holiday_label(@group.current_semester.last_session)
+          ' ferien er
+          strong
+            => t(:date)[:day_names][@group.current_semester.last_session.cwday].downcase
+            = @group.current_semester.last_session.day
+            | .
+            = t(:date)[:month_names][@group.current_semester.last_session.month].downcase
+          | .
+          br
+        - if @group.next_semester.try(:first_session)
+          ' Første trening etter
+          = @group.next_semester.first_session.month > 6 ? 'sommer' : 'jule'
+          ' ferien er
+          strong
+            = t(:date)[:day_names][@group.next_semester.first_session.cwday].downcase
+            = @group.next_semester.first_session.day
+            | .
+            = t(:date)[:month_names][@group.next_semester.first_session.month].downcase
+          | .
+          br
+    - else
+      | Gruppen har trening hele året dersom annet ikke er annonsert.
+  - if @group.planning?
+    p Gruppen har egenmelding av oppmøte.
+
+- unless @group.summary.blank? && @group.description.blank?
+  h4 Innhold
+
+  - unless @group.summary.blank?
+    = textalize @group.summary.strip
+  - unless @group.description.blank?
+    = textalize @group.description
+
+- if admin?
+  ul.controls
+    li = detour_to 'Rediger', edit_group_path(@group), class: :edit
+    li = back_or_link_to 'Tilbake', groups_path, class: :back
