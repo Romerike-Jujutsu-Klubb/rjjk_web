@@ -25,4 +25,12 @@ class Censor < ApplicationRecord
   def role_name
     examiner ? 'eksaminator' : 'sensor'
   end
+
+  def should_lock?
+    locked_at.nil? &&
+        ((examiner? && graduation.held_on < GraduationReminder::CHIEF_INSTRUCTOR_LOCK_LIMIT.from_now) ||
+            (graduation.held_on < GraduationReminder::CHIEF_INSTRUCTOR_LOCK_LIMIT.from_now &&
+                member_id == graduation.group.group_semesters.for_date(graduation.held_on).first
+                    .chief_instructor_id))
+  end
 end

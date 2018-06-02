@@ -7,17 +7,17 @@
       span.fa.fa-trash> data-toggle="tooltip" title='Slett'
       | Slett
   - elsif @approval&.graduation&.held_on
-    - if (@approval.examiner? || graduation_admin?(@graduation, @approval)) && !@graduation.passed?
-      - if @approval.locked_at.nil?
+    - if graduation_admin?(@graduation, @approval) && !@graduation.passed?
+      - if @approval.should_lock?
         = link_to lock_graduation_path(@graduation), class: 'btn btn-primary ml-2', method: :post
           i.fa.fa-envelope>
           | Send innkalling
       - elsif !@graduation.locked?
-        .btn.btn-warning
+        .btn.btn-warning.disabled
           ' Utsending av innkalling venter på
           b = @graduation.censors.reject(&:locked_at).select(&:examiner?).map(&:member).map(&:name).join(', ')
       - else
-        .btn.btn-success Innkalling #{invite_date > Time.current ? :sendes : :sendt} #{invite_date}
+        .btn.btn-success.disabled Innkalling #{invite_date > Time.current ? :sendes : :sendt} #{invite_date}
     - if @approval.graduation.held_on <= Date.current
       - if @approval.approved_grades_at.nil?
         = link_to approve_graduation_path(@graduation), class: 'btn btn-primary ml-2', method: :post

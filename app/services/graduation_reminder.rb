@@ -4,6 +4,8 @@ require 'graduation_mailer'
 
 class GraduationReminder
   EXAMINER_REGISTRATION_LIMIT = 6.weeks
+  EXAMINER_LOCK_LIMIT = 5.weeks
+  CHIEF_INSTRUCTOR_LOCK_LIMIT = 4.weeks
   GRADUATES_INVITATION_LIMIT = 3.weeks
 
   def self.notify_missing_graduations
@@ -94,13 +96,13 @@ class GraduationReminder
 
   def self.notify_missing_locks
     Censor.includes(:graduation, :member).references(:graduations)
-        .where(examiner: true)
         .where.not(confirmed_at: nil)
         .where.not(declined: true)
         .where(locked_at: nil)
         .where('lock_reminded_at IS NULL OR lock_reminded_at < ?', 1.week.ago)
-        .where('graduations.held_on < ?', 5.weeks.from_now)
+        .where('graduations.held_on < ?', EXAMINER_LOCK_LIMIT.from_now)
         .order('graduations.held_on')
+        .select(&:should_lock?)
         .each do |censor|
       GraduationMailer.lock_reminder(censor).store(censor.member, tag: :censor_invite)
       censor.update! lock_reminded_at: Time.zone.now

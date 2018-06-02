@@ -74,8 +74,13 @@ class Graduation < ApplicationRecord
   validates :held_on, uniqueness: { scope: :group_id }
 
   validate do
-    if attribute_changed?(:held_on) && locked?
-      errors.add :held_on, 'kan ikke endres etter at graderingsoppsettet er låst'
+    if was_locked?
+      if attribute_changed?(:group_id)
+        errors.add :group_id, 'kan ikke endres etter at graderingsoppsettet er låst'
+      end
+      if attribute_changed?(:held_on)
+        errors.add :held_on, 'kan ikke endres etter at graderingsoppsettet er låst'
+      end
     end
   end
 
@@ -114,12 +119,24 @@ class Graduation < ApplicationRecord
   end
 
   def locked?
-    non_declined_examiners = censors.select(&:examiner).reject(&:declined?)
-    if 1.week.ago > (held_on - GraduationReminder::GRADUATES_INVITATION_LIMIT) &&
+    if held_on < GraduationReminder::CHIEF_INSTRUCTOR_LOCK_LIMIT.from_now &&
           censors.reject(&:declined?).select(&:locked_at).map(&:member)
                 .include?(group.group_semesters.for_date(held_on).first&.chief_instructor)
       return true
     end
+    non_declined_examiners = censors.select(&:examiner).reject(&:declined?)
+    non_declined_examiners.any? && non_declined_examiners.all?(&:locked_at?)
+  end
+
+  def was_locked?
+    if group_id_was
+      chief_instructor = Group.find(group_id_was).group_semesters.for_date(held_on).first&.chief_instructor
+      if held_on_was < GraduationReminder::CHIEF_INSTRUCTOR_LOCK_LIMIT.from_now &&
+            censors.reject(&:declined?).select(&:locked_at).map(&:member).include?(chief_instructor)
+        return true
+      end
+    end
+    non_declined_examiners = censors.select(&:examiner).reject(&:declined?)
     non_declined_examiners.any? && non_declined_examiners.all?(&:locked_at?)
   end
 
