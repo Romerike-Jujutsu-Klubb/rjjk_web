@@ -103,6 +103,7 @@ class IncomingEmailProcessor
       end
       postpone_email(raw_email) if postponed
     end
+    delete_old
   end
 
   def self.prefix_subject(subject, tags)
@@ -116,5 +117,10 @@ class IncomingEmailProcessor
   def self.postpone_email(raw_email)
     logger.info 'Mail postponed.'
     raw_email.update! postponed_at: Time.current
+  end
+
+  def self.delete_old
+    RawIncomingEmail.where('processed_at < ? OR postponed_at < ?', 1.year.ago, 6.months.ago)
+        .order(:created_at).limit(5).each(&:destroy!)
   end
 end
