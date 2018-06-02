@@ -12,15 +12,7 @@ module ParallelRunner
     queue = Queue.new
     values.each { |value| queue << value }
     threads = Array.new(CONCURRENT_REQUESTS) do
-      Thread.start do
-        Rails.application.executor.wrap do
-          begin
-            loop { yield queue.pop(true), queue }
-          rescue ThreadError => e
-            logger.debug "ThreadError running parallel tasks: #{e}"
-          end
-        end
-      end
+      Thread.start { Rails.application.executor.wrap { yield(queue.pop(true), queue) until queue.empty? } }
     end
     threads.each(&:join)
   end
