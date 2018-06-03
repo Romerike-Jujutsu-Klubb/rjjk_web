@@ -28,13 +28,13 @@ ul.nav.nav-tabs role="tablist"
   #tab_user.tab-pane.fade.show.active.pt-3 = render 'users/form', user: @member.user, submit: true
   #tab_membership.tab-pane.fade = render 'form'
   - if @member.user.contact_user
-    #tab_contact_user.tab-pane.fade.pt-3 = render 'related_user', user: @member.user.contact_user, column: :contact_user_id
+    #tab_contact_user.tab-pane.fade.pt-3 = render 'related_user', user: @member.user, related_user: @member.user.contact_user, column: :contact_user_id
   - if @member.user.guardian_1
-    #tab_guardian_1.tab-pane.fade.pt-3 = render 'related_user', user: @member.user.guardian_1, column: :guardian_1_id
+    #tab_guardian_1.tab-pane.fade.pt-3 = render 'related_user', user: @member.user, related_user: @member.user.guardian_1, column: :guardian_1_id
   - if @member.user.guardian_2
-    #tab_guardian_2.tab-pane.fade.pt-3 = render 'related_user', user: @member.user.guardian_2, column: :guardian_2_id
+    #tab_guardian_2.tab-pane.fade.pt-3 = render 'related_user', user: @member.user, related_user: @member.user.guardian_2, column: :guardian_2_id
   - if @member.user.billing_user
-    #tab_billing_user.tab-pane.fade.pt-3 = render 'related_user', user: @member.user.billing_user, column: :billing_user_id
+    #tab_billing_user.tab-pane.fade.pt-3 = render 'related_user', user: @member.user, related_user: @member.user.billing_user, column: :billing_user_id
   - if @member.user.depending_users.any?
     #tab_depending_users.tab-pane.fade.pt-3
       ul

@@ -1,6 +1,6 @@
-- if user.multiple_depending_members?
+- if related_user.multiple_depending_members?
   = bootstrap_form_for user do |f|
-    = f.select column, @users.map{|u| [u.name, u.id]}, prompt: true
+    = f.select column, @users.map{|u| [u.name, u.id]}, prompt: true, append: link_to('Vis', related_user.member || related_user)
     = f.primary
 - else
-  = render 'users/form', user: user, submit: true
+  = render 'users/form', user: related_user, submit: true
