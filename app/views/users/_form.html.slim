@@ -4,10 +4,11 @@
     .col-sm-6
       = f.text_field :first_name
       = f.text_field :last_name
-      = f.text_field :email, autocomplete: :off
+      .row
+        .col = f.text_field :email, autocomplete: :off
+        - if user.login.present?
+          .col = f.text_field :login, autocomplete: :off
       = f.text_field :phone
-      - if user.login.present?
-        = f.text_field :login, autocomplete: :off
       - unless @member
         = link_to('(medlem)', controller: :members, action: :edit, id: user.member.id) if user.member
       = f.text_field :address
@@ -20,11 +21,11 @@
           br
           label.mt-3 Alder
           =< "#{user.age} år" if user.birthdate
-      = f.select :male, [['Mann', true], ['Kvinne', false]], prompt: true
+      = f.select :male, [[nil, ''], ['Mann', 'true'], ['Kvinne', 'false']], selected: user.male.to_s
       - if admin?
         = f.select :verified, [['Nei', false], ['Ja', true]], \
           help: link_to('Send e-post med login link', send_login_link_path(user: {email: user.email}), method: :post)
-        = f.select :role, [['Medlem', nil], ['Administrator', UserSystem::ADMIN_ROLE]]
+        = f.select :role, [['Medlem', ''], ['Administrator', UserSystem::ADMIN_ROLE]], selected: user.role.to_s
   - if submit
     .float-right = f.primary user.new_record? ? 'Meld inn' : 'Lagre'
 

@@ -6,14 +6,16 @@ ul.nav.nav-tabs role="tablist"
     | Medlemskap
     - if @member.left_on
       .badge.badge-danger.ml-1 title='Utmeldt' data-toggle='tooltip' U
+  - if @member.user.contact_user
+    li.nav-item: a.nav-link data-target="#tab_contact_user" data-toggle="tab" Kontakt
   - if @member.user.guardian_1
     li.nav-item: a.nav-link data-target="#tab_guardian_1" data-toggle="tab" Foresatt 1
   - if @member.user.guardian_2
     li.nav-item: a.nav-link data-target="#tab_guardian_2" data-toggle="tab" Foresatt 2
   - if @member.user.billing_user
     li.nav-item: a.nav-link data-target="#tab_billing_user" data-toggle="tab" Betaler
-  - if @member.user.contact_user
-    li.nav-item: a.nav-link data-target="#tab_contact_user" data-toggle="tab" Kontakt
+  - if @member.user.depending_users.any?
+    li.nav-item: a.nav-link data-target="#tab_depending_users" data-toggle="tab" Relasjoner
   li.nav-item: a.nav-link data-target="#tab_graduations" data-toggle="tab" Graderinger
   li.nav-item: a.nav-link data-target="#tab_duties" data-toggle="tab" Verv
   li.nav-item: a.nav-link data-target="#tab_signatures" data-toggle="tab" Signaturer
@@ -25,17 +27,19 @@ ul.nav.nav-tabs role="tablist"
   / FIXME(uwe): Save all form tabs when pressing "Save"
   #tab_user.tab-pane.fade.show.active.pt-3 = render 'users/form', user: @member.user, submit: true
   #tab_membership.tab-pane.fade = render 'form'
-  - if @member.user.guardian_1
-    #tab_guardian_1.tab-pane.fade.pt-3 = render 'users/form', user: @member.user.guardian_1, submit: true
-  - if @member.user.guardian_2
-    #tab_guardian_2.tab-pane.fade.pt-3 = render 'users/form', user: @member.user.guardian_2, submit: true
-  - if @member.user.billing_user
-    #tab_billing_user.tab-pane.fade.pt-3
-      = bootstrap_form_for @member.user do |f|
-        = f.select :billing_user_id, @users.map{|u| [u.name, u.id]}, prompt: true
-        = f.primary
   - if @member.user.contact_user
-    #tab_contact_user.tab-pane.fade.pt-3 = render 'users/form', user: @member.user.contact_user, submit: true
+    #tab_contact_user.tab-pane.fade.pt-3 = render 'related_user', user: @member.user.contact_user, column: :contact_user_id
+  - if @member.user.guardian_1
+    #tab_guardian_1.tab-pane.fade.pt-3 = render 'related_user', user: @member.user.guardian_1, column: :guardian_1_id
+  - if @member.user.guardian_2
+    #tab_guardian_2.tab-pane.fade.pt-3 = render 'related_user', user: @member.user.guardian_2, column: :guardian_2_id
+  - if @member.user.billing_user
+    #tab_billing_user.tab-pane.fade.pt-3 = render 'related_user', user: @member.user.billing_user, column: :billing_user_id
+  - if @member.user.depending_users.any?
+    #tab_depending_users.tab-pane.fade.pt-3
+      ul
+        - @member.user.depending_users.each do |u|
+          li = link_to u.name, u.member
   #tab_graduations.tab-pane.fade = render 'graduations'
   #tab_duties.tab-pane.fade = render 'duties'
   #tab_signatures.tab-pane.fade
@@ -47,3 +51,23 @@ ul.nav.nav-tabs role="tablist"
         .col-3 = image_tag image_signature_path(signature), width: '100%'
   - if @member.nkf_member
     #tab_nkf.tab-pane.fade = render 'nkf_fields'
+
+javascript:
+    $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {
+        var tab = $(e.target);
+        var target_id = tab.data('target');
+        var fields = $(target_id + ' form :input');
+        var changed_fields = fields.filter(':changed');
+        var warningClass = 'border-warning';
+        if (changed_fields.length > 0) {
+            tab.addClass('bg-warning');
+            changed_fields.addClass(warningClass);
+            if (confirm('Noen felt i skjemaet er endret.  Vil du lagre skjemaet?')) {
+                $(target_id + ' form').submit();
+            }
+        } else {
+            tab.removeClass('bg-warning');
+            fields.removeClass(warningClass);
+        }
+        return true;
+    });

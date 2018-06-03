@@ -81,7 +81,6 @@ class User < ApplicationRecord
       billing_user.errors.add :email, I18n.t('activerecord.errors.messages.blank')
     end
   end
-
   # validates_associated :member, on: :update # TODO(uwe): Activate this?
 
   def initialize(*args)
@@ -270,6 +269,15 @@ class User < ApplicationRecord
     u = guardian_1 || billing_user
     u = self.guardian_1 = User.new if u.nil? && value.present?
     u.name = value if u
+  end
+
+  def multiple_depending_members?
+    [payees, primary_wards, secondary_wards, contactees]
+        .inject([]) {|list, a| list.size > 1 ? (break list) : (list + a).uniq}.size > 1
+  end
+
+  def depending_users
+    [payees, primary_wards, secondary_wards, contactees].inject(&:+).uniq
   end
 
   protected

@@ -39,9 +39,10 @@
     .col-6
       = f.text_field :left_on, class: 'date'
   .row
-    .col-6
-      = f.select :billing_type, [%w(AutoGiro AUTOGIRO), ['Manuell Giro', 'MANUELL GIRO'], %w(AvtaleGiro AvtaleGiro), \
-          @member.billing_type && [@member.billing_type, @member.billing_type]].compact.uniq.sort
+    - if @member.billing_type.present?
+      .col-6
+        = f.select :billing_type, [%w(AvtaleGiro AvtaleGiro), %w(AutoGiro AUTOGIRO), ['Manuell Giro', 'MANUELL GIRO'], \
+            @member.billing_type && [@member.billing_type, @member.billing_type]].compact.uniq(&:second), prompt: 'Velg betalingsform'
     .col-6
       = f.text_field :account_no
 

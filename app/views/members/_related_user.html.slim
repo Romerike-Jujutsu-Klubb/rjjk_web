@@ -1,0 +1,6 @@
+- if user.multiple_depending_members?
+  = bootstrap_form_for user do |f|
+    = f.select column, @users.map{|u| [u.name, u.id]}, prompt: true
+    = f.primary
+- else
+  = render 'users/form', user: user, submit: true

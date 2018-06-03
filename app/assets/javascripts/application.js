@@ -20,6 +20,7 @@
 //= require highcharts
 //= require chartkick
 //= require serviceworker-companion
+//= require changed_selector
 
 // Switch to Bootstrap modal
 NProgress.configure({showSpinner: false,  ease: 'ease',  speed: 500});
