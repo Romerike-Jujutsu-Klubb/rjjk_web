@@ -10,12 +10,6 @@
   .row
     .col-sm-6
       = f.select :member_id, @members.map{|m| [m.name, m.id]}, prompt: 'Velg medlem'
-    - if @appointment.member.try(:guardians).try(:any?)
-      .col-sm-6
-        = f.select :guardian_index, \
-            [*@appointment.member.guardians.map { |i,g| ["#{g[:name]} (#{g[:email] || 'e-post mangler'})", i] }], \
-            {include_blank: @appointment.guardian_index ? 'Ingen foresatt' : 'Velg foresatt hvis passende'}, \
-            class: 'form-control'
   = f.select :role_id, @roles.map { |r| [r.name, r.id] }, prompt: 'Velg rolle'
   .row
     .col-sm-6

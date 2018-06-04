@@ -4,10 +4,6 @@
             label: 'Stilling', prompt: 'Velg rolle'
   = f.select :member_id, options_from_collection_for_select(@members, :id, :name, @election.member_id),
             label: 'Medlem', prompt: 'Velg medlem'
-  - if @election.member&.guardians&.any?
-    = f.select :guardian_index,
-        [*@election.member.guardians.map { |i,g| ["#{g[:name]} (#{g[:email] || 'e-post mangler'})", i] }],
-        label: 'Foresatt', include_blank: @election.guardian_index ? 'Ingen foresatt' : 'Velg foresatt hvis passende'
   - unless @election.new_record?
     = f.text_field :resigned_on, label: 'Trukket seg'
 

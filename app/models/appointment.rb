@@ -11,31 +11,18 @@ class Appointment < ApplicationRecord
   validates :from, :member_id, :role_id, presence: true
 
   def label
-    if guardian_index
-      "#{member.guardians[guardian_index][:name]} (for #{member.name})"
-    else
-      member.name
-    end
+    member.name
   end
 
   def appointed_name
-    if guardian_index
-      member.guardians[guardian_index][:name]
-    else
-      member.name
-    end
+    member.name
   end
 
   def appointed_first_name
-    if guardian_index
-      member.guardians[guardian_index][:name].split(/\s+/).first
-    else
-      member.first_name
-    end
+    member.first_name
   end
 
   def elected_contact
-    (guardian_index && member.guardians[guardian_index]) ||
-        { name: member.name, email: member.email || member.emails.first }
+    { name: member.name, email: member.email || member.emails.first }
   end
 end
