@@ -1,4 +1,4 @@
-one:
+lars_kyu_1:
   member: lars
   graduation: voksne
   passed: true
@@ -6,7 +6,7 @@ one:
   paid_graduation: true
   paid_belt: true
 
-two:
+uwe_kyu_5:
   member: uwe
   graduation: panda
   passed: false

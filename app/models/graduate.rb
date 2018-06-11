@@ -11,6 +11,8 @@ class Graduate < ApplicationRecord
                                       message: 'har allerede bestått denne graden.' }
   validates :passed, inclusion: { in: [true, false], if: ->(g) { g.graduation.approved? } }
 
+  before_destroy { throw :abort if invitation_sent_at }
+
   def training_start_date
     member.current_graduate(graduation.group.martial_art, graduation.held_on - 1).try(:graduation)
         .try(:held_on).try(:+, 1) ||

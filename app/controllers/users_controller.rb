@@ -30,8 +30,9 @@ class UsersController < ApplicationController
                 unclean_params.delete_if { |k, *| !User::CHANGEABLE_FIELDS.include?(k) }
               end
           if @user.update user_params
-            flash.notice = 'User has been updated.'
+            flash.notice = 'Brukeren er oppdatert.'
           else
+            flash.notice = 'En feil oppsto ved lagring av brukeren.'
             edit
             render action: :edit
             return
