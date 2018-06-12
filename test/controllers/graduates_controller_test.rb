@@ -6,7 +6,7 @@ class GraduatesControllerTest < ActionController::TestCase
   fixtures :users, :members, :graduations, :ranks, :graduates
 
   def setup
-    @first_id = graduates(:one).id
+    @first_id = graduates(:lars_kyu_1).id
     login(:admin)
   end
 

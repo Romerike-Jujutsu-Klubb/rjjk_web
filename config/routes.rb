@@ -160,6 +160,10 @@ Rails.application.routes.draw do
       post :expire
       post :like
       post :move_to_top
+      get :preview
+    end
+    collection do
+      get :preview
     end
   end
 

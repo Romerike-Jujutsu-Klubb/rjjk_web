@@ -1,22 +1,19 @@
 # frozen_string_literal: true
 
-# require 'google_drive'
-# require 'oauth2'
-# require 'json'
-# require 'pry'
-
 # https://console.developers.google.com/apis/dashboard?project=api-project-983694128192&duration=PT1H
 # https://console.developers.google.com/apis/library/drive.googleapis.com/?id=e44a1596-da14-427c-9b36-5eb6acce3775&project=api-project-983694128192&authuser=1
 # https://console.developers.google.com/apis/library/drive.googleapis.com
-#
 
 class GoogleDriveService
   WEB_IMAGES_DIR = 'Web Images'
 
   attr_reader :session
 
+  # https://github.com/gimite/google-drive-ruby/blob/master/doc/authorization.md#on-behalf-of-you-command-line-authorization
   def initialize
-    @session = GoogleDrive::Session.from_access_token(Rails.application.secrets.google_drive_refresh_token)
+    google_drive_client_config = Rails.application.secrets.google_drive_client_config
+    @session = GoogleDrive::Session
+        .from_config('tmp/google_drive_client_secret.json', google_drive_client_config.stringify_keys)
   end
 
   def get_file(id)

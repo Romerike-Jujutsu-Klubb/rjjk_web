@@ -44,10 +44,9 @@ class NewsFeatureTest < FeatureTest
     select 'Kladd', from: 'news_item[publication_state]'
     select_date(:news_item_publish_at, 15)
     select_date(:news_item_expire_at, 16)
-    # fill_in 'news_item[summary]', with: 'A new hope is rising in the tortured galaxy.'
-    tinymce_fill_in 'news_item_summary', with: 'A new hope is rising in the tortured galaxy.'
-    # fill_in 'news_item[body]', with: 'A long time ago in a galaxy far, far away.'
-    tinymce_fill_in 'news_item_body', with: 'A long time ago in a galaxy far, far away.'
+    fill_in 'news_item_summary', with: 'A new hope is rising in the tortured galaxy.'
+    click_on 'Mer informasjon (valgfritt)'
+    fill_in 'news_item_body', with: 'A long time ago in a galaxy far, far away.'
     screenshot('form_filled_in')
     click_button('Lagre')
     screenshot('saved')

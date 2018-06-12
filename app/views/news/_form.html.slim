@@ -11,12 +11,10 @@
           = f.text_field :publish_at, value: @news_item.publish_at.try(:strftime, '%F %R'), class: 'datetime', data: {:'default-date' => Time.current.strftime('%F %R') }
         .col-md-4
           = f.text_field :expire_at, value: @news_item.expire_at&.strftime('%F %R'), class: 'datetime', data: {'default-date': 1.week.from_now.strftime('%F %R')}
-      - if false # Markdown
-        = f.text_area :summary
-        = f.text_area :body, label: 'Mer informasjon (valgfritt)'
-      - else # HTML
-        = tinymce
-        = f.text_area :summary, class: :tinymce
+      .float-right = link_to('https://kramdown.gettalong.org/quickref.html', target: :kramdown)
+        i.fa.fa-question-circle>
+        | Formatering
+      = f.text_area :summary, class: :expanding
 
       .btn-toolbar.float-right
         = back_or_link_to 'Avbryt', news_items_path, class: 'btn btn-secondary'
@@ -26,10 +24,51 @@
         .fa.fa-chevron-circle-down>
         = t('activerecord.attributes.news_item.body')
       .collapse#moreInfoCollapse.mt-3 class=(:show if @news_item.body.present?)
-        = f.text_area :body, hide_label: true, class: :tinymce
+        .text-right = link_to('https://kramdown.gettalong.org/quickref.html', target: :kramdown)
+          i.fa.fa-question-circle>
+          | Formatering
+        = f.text_area :body, hide_label: true, class: (:expanding if @news_item.body.present?)
+    .card.mt-5
+      .card-header Forhåndsvisning
+      #preview.card-body
+
+    javascript:
+        function preview() {
+            var form_selector = '##{@news_item.new_record? ? :new_news_item : "edit_news_item_#{@news_item.id}"} :input';
+            $('#preview').load('preview?' + $(form_selector)
+                .map(function () {
+                    return "" + $(this).attr('name') + "=" + encodeURIComponent($(this).val())
+                }).get().join("&"))
+        }
+
+        $('input,textarea').on('input', function () {
+            preview();
+        });
+        preview();
   .col-md-3
     .float-right.lazy-container style="height: 680px; overflow:auto; border: 1px solid black"
       = render '/images/list', images: @images
+
 javascript:
-  $('#news_item_title').focus();
-  $('#news_item_title').select();
+  $('#moreInfoCollapse').on('shown.bs.collapse', function(){$(this).find('textarea').expanding().focus()});
+
+  $("textarea").on("dragover", function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+  });
+
+  $("textarea").on("dragleave", function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+  });
+
+  $('textarea').on('drop', function (e, e2) {
+      console.log('drop'); // for debugging reasons
+      e.preventDefault();  // stop default behaviour
+      var uri = e.originalEvent.dataTransfer.getData('text/uri-list');
+      var newURL = uri.replace(/^[a-z]{4,5}\:\/{2}[a-z]{1,}\:[0-9]{1,4}.(.*)/, '$1'); // http or https
+      console.trace(newURL);
+      console.trace(e.originalEvent.dataTransfer.getData('text/html'));
+      $(this).val($(this).val() + '![IMAGE](/' + newURL + ' "Image")\n');
+      preview();
+  });

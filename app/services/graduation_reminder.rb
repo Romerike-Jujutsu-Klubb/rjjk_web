@@ -124,13 +124,33 @@ class GraduationReminder
     end
   end
 
-  def self.notify_graduates
+  def self.invite_graduates
     Graduate.includes(graduation: %i[censors group]).references(:groups)
         .where('graduations.held_on BETWEEN ? AND ?',
             Date.current, GRADUATES_INVITATION_LIMIT.from_now)
         .where('graduates.confirmed_at IS NULL')
         .where('graduates.invitation_sent_at IS NULL OR graduates.invitation_sent_at < ?',
             1.week.ago)
+        .order('graduations.held_on')
+        .each do |graduate|
+
+      # TODO(uwe): Solve in SQL
+      next unless graduate.graduation.censors.select(&:examiner?).any?
+      next unless graduate.graduation.censors.select(&:examiner?).all?(&:approved_graduates?)
+      # ODOT
+
+      GraduationMailer.invite_graduate(graduate)
+          .store(graduate.member, tag: :graduate_invite)
+      graduate.update! invitation_sent_at: Time.current
+    end
+  end
+
+  # FIXME(uwe): Added/removed, date/time change, planned rank
+  def self.notify_graduate_changes
+    Graduate.includes(graduation: %i[censors group]).references(:groups)
+        .where('graduations.held_on BETWEEN ? AND ?',
+            Date.current, GRADUATES_INVITATION_LIMIT.from_now)
+        .where('invitation_sent_at IS NOT NULL AND invitation_sent_at < graduates.updated_at')
         .order('graduations.held_on')
         .each do |graduate|
 

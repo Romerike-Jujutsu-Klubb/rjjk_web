@@ -92,9 +92,14 @@ div.main_right ul {
   margin-bottom: 10px
 }
 
-.post h3 {
-  margin-bottom: 0;
-  color: #046CB8;
+.post {
+  h3 {
+    margin-bottom: 0;
+    color: #046CB8;
+  }
+  img {
+    max-width: 100%;
+  }
 }
 
 h4 {

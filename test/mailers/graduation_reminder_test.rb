@@ -113,13 +113,13 @@ class GraduationReminderTest < ActionMailer::TestCase
   end
 
   def test_notify_graduates_skip_unless_examiner_approved_graduates
-    assert_mail_stored(0) { GraduationReminder.notify_graduates }
+    assert_mail_stored(0) { GraduationReminder.invite_graduates }
   end
 
   def test_notify_graduates
     censors(:uwe_voksne_upcoming).update! locked_at: Time.current
 
-    assert_mail_stored { GraduationReminder.notify_graduates }
+    assert_mail_stored { GraduationReminder.invite_graduates }
 
     mail = UserMessage.pending[0]
     assert_equal ['newbie@example.com'], mail.to

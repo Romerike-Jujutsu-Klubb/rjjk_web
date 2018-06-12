@@ -1,5 +1,9 @@
+<% if @graduate.destroyed? %>
 $('#graduate_<%=@graduate.id%>').remove();
 $('#graduate_member_id optgroup[label="<%=@graduate.graduation.group.name%>"]').prepend($('<option/>', {
     value: '<%=@graduate.member_id%>',
     text: '<%=@graduate.member.name%> <%=@graduate.member.age(@graduate.graduation.held_on)%> år'
 }));
+<% else %>
+  $('#graduate_<%= @graduate.id %> .fa-question').attr('data-original-title', 'Kunne ikke slette kandidaten: <%=@graduate.errors.full_messages.join %>').tooltip('show')
+<% end %>

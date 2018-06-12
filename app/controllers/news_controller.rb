@@ -23,6 +23,14 @@ class NewsController < ApplicationController
     render action: :new
   end
 
+  def preview
+    @news_item = NewsItem.new(params[:news_item])
+    @news_item.id = 42
+    @news_item.created_at ||= Time.current
+    @news_item.creator ||= current_user
+    render action: :show, layout: false
+  end
+
   def create
     @news_item = NewsItem.new(params[:news_item])
     if @news_item.save

@@ -109,7 +109,7 @@ else
         GraduationReminder.notify_missing_censors
         GraduationReminder.notify_censors
         GraduationReminder.notify_missing_locks
-        GraduationReminder.notify_graduates
+        GraduationReminder.invite_graduates
         GraduationReminder.send_shopping_list
         GraduationReminder.notify_missing_approvals
         GraduationReminder.congratulate_graduates
