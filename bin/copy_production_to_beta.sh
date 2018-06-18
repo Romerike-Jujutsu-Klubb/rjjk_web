@@ -16,7 +16,7 @@ cd /u/apps/rjjk_web_beta/current
 
 echo "Re-creating database"
 ruby -v
-bundle exec rake db:drop db:create
+DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:drop db:create
 
 echo "Transferring database"
 pg_dump -U capistrano -h localhost rjjk_production | psql -U capistrano -h localhost $DB_NAME
