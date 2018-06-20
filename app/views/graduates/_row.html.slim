@@ -32,14 +32,16 @@ tr id="graduate_#{graduate.id}"
         = graduate.passed ? 'Ja' : 'Nei'
       - else
         = bootstrap_form_for graduate, html: { remote: true, class: 'form-inline' } do |f|
+          / FIXME(uwe): Prettier 3-way button
           /= f.radio_button :passed, true, label: :Ja, class: 'mr-1', label_class: 'mr-2', onchange: "$('#passed_btn_#{graduate.id}').click()"
           /= f.radio_button :passed, false, label: :Nei, class: 'mr-1', onchange: "$('#passed_btn_#{graduate.id}').click()"
           / https://codepen.io/Davide_sd/pen/AmazD
           .btn-group data-toggle="buttons"
-            label.btn.btn-sm class=("btn-#{'outline-' unless graduate.passed}success")
-              input type="radio" name="graduate[passed]" id="graduate_passed_true" value=:true autocomplete="off" checked=graduate.passed onchange="$('#passed_btn_#{graduate.id}').click()" Ja
-            label.btn.btn-sm class=("btn-#{'outline-' unless graduate.passed == false}danger")
-              input type="radio" name="graduate[passed]" id="graduate_passed_false" value=:false autocomplete="off" checked=graduate.passed==false onchange="$('#passed_btn_#{graduate.id}').click()" Nei
+            label.btn.btn-sm.p-1 class=("btn-#{'outline-' unless graduate.passed}success")
+              | Ja
+              input.ml-1 type="radio" name="graduate[passed]" id="graduate_passed_true" value=:true autocomplete="off" checked=graduate.passed onchange="$('#passed_btn_#{graduate.id}').click()"
+            label.btn.btn-sm.p-1 class=("btn-#{'outline-' unless graduate.passed == false}danger")
+              input.mr-1 type="radio" name="graduate[passed]" id="graduate_passed_false" value=:false autocomplete="off" checked=graduate.passed==false onchange="$('#passed_btn_#{graduate.id}').click()" Nei
 
           = f.submit id: "passed_btn_#{graduate.id}", class: 'sr-only'
   td
