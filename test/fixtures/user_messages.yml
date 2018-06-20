@@ -3,7 +3,7 @@ one:
   tag: MyString
   from: MyString
   subject: MyString
-  key: MyString
+  key: SecretToken
   html_body: MyHTML
   sent_at: 2016-07-28 14:29:13
   read_at: 2016-07-28 14:29:13

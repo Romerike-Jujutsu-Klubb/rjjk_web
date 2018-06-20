@@ -104,7 +104,7 @@ class GraduationReminder
         .order('graduations.held_on')
         .select(&:should_lock?)
         .each do |censor|
-      GraduationMailer.lock_reminder(censor).store(censor.member, tag: :censor_invite)
+      GraduationMailer.lock_reminder(censor).store(censor.member, tag: :censor_lock_reminder)
       censor.update! lock_reminded_at: Time.zone.now
     end
   end
@@ -160,7 +160,7 @@ class GraduationReminder
       # ODOT
 
       GraduationMailer.invite_graduate(graduate)
-          .store(graduate.member, tag: :graduate_invite)
+          .store(graduate.member, tag: :graduate_changes)
       graduate.update! invitation_sent_at: Time.current
     end
   end

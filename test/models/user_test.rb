@@ -14,6 +14,11 @@ class UserTest < ActionMailer::TestCase
     assert_equal user, User.authenticate_by_token(user.security_token)
   end
 
+  def test_authenticate_by_token_from_user_message
+    user = users(:admin)
+    assert_equal user, User.authenticate_by_token(user_messages(:one).key)
+  end
+
   def test_authenticate_by_token__fails_if_expired
     user = users(:unverified_user)
     Timecop.freeze(Time.current + User.token_lifetime) do
