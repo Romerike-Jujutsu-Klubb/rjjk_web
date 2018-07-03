@@ -10,6 +10,8 @@ class GoogleDriveService
   attr_reader :session
 
   # https://github.com/gimite/google-drive-ruby/blob/master/doc/authorization.md#on-behalf-of-you-command-line-authorization
+  # Run this to generate tmp/google_drive_client_secret.json
+  #   PORT=3005 RAILS_ENV=production bin/rails s
   def initialize
     google_drive_client_config = Rails.application.secrets.google_drive_client_config
     @session = GoogleDrive::Session

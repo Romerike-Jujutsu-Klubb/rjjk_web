@@ -56,6 +56,12 @@ end
 
 begin
   require 'bundler/setup'
+rescue => e
+  log "Exception loading bundle: #{e}"
+  raise
+end
+
+begin
   require 'mail'
   orig_mail = Mail.read_from_string(content)
   if (encoding = orig_mail.content_type_parameters&.[]('charset'))
