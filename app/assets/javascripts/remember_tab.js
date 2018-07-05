@@ -17,7 +17,8 @@ function show_tab() {
 
 $().ready(function () {
     $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-        var tab_id = $(e.target).attr('data-target').substr(1);
+        var event_target = $(e.target);
+        var tab_id = (event_target.attr('data-target') || event_target.attr('href')).substr(1);
         tab = $('#' + tab_id);
         if (location.hash.slice(1, -4) !== tab_id) {
             if (history.pushState) {
