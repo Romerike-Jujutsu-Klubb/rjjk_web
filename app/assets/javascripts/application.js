@@ -13,6 +13,7 @@
 //= require nprogress
 //= require nprogress-turbolinks
 //= require chosen-jquery
+//= require bootstrap_tabs_ios
 //= require remember_tab
 //= require jquery.lazyload
 //= require fileinput
@@ -22,7 +23,6 @@
 //= require serviceworker-companion
 //= require changed_selector
 
-// Switch to Bootstrap modal
 NProgress.configure({showSpinner: false,  ease: 'ease',  speed: 500});
 
 $().ready(function () {
