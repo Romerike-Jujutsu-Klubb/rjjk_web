@@ -209,17 +209,18 @@ body:not(.wide) .container-fluid {
 
 
 .main_right {
-  padding: 1rem;
   background-color: #222222;
-  width: $sidebar_width;
-  position: fixed;
-  top: 0;
-  right: 0;
-  transition: 0.5s;
-  transform: translate($sidebar_width, 0);
-  z-index: 1000;
+  height: 100% !important;
   max-height: 100vh;
   overflow-y: scroll;
+  padding: 1rem;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transform: translate($sidebar_width, 0);
+  transition: 0.5s;
+  width: $sidebar_width;
+  z-index: 1000;
 }
 
 .main_right > div.padded {
@@ -296,13 +297,14 @@ body:not(.wide) .container-fluid {
   }
 
   .main_right {
+    height: inherit !important;
+    max-height: none;
     padding-top: $sidebar_width;
     position: static;
-    width: $right_sidebar_width;
     transform: translate(0, 0) !important;
-    z-index: 0;
     transition: z-index 0s, transform 0.5s;
-    max-height: none;
+    width: $right_sidebar_width;
+    z-index: 0;
   }
 
   .main_right img {

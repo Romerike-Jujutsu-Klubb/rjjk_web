@@ -59,7 +59,7 @@ html lang="nb"
           .row
             .col-12.p-0 = render 'layouts/header'
           .row style="flex-grow: 1"
-            .subnav.h-100 style="overflow-y: scroll" = render 'layouts/navigation'
+            .subnav style="overflow-y: scroll" = render 'layouts/navigation'
             .main.col
               .padded = yield
         .main_right.lazy-container = render 'layouts/right_column'
