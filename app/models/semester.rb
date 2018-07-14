@@ -34,7 +34,8 @@ class Semester < ApplicationRecord
   end
 
   def name
-    "#{start_on.year}: #{start_on.strftime('%m-%d')}→#{end_on.strftime('%m-%d')}"
+    month_names = I18n.t('date.month_names')
+    "#{start_on.year}: #{month_names[start_on.mon]}→#{month_names[end_on.mon]}"
   end
 
   def current?

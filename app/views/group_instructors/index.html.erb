@@ -10,6 +10,8 @@
         <h3>Neste semester (<%= s.name %>)</h3>
     <% elsif s.past? %>
         <h3>Tidligere semester (<%= s.name %>)</h3>
+    <% else %>
+        <h3>Dette semester (<%= s.name %>)</h3>
     <% end %>
 
     <table class="table table-striped">

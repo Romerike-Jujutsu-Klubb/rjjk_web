@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'application_system_test_case'
+require 'feature_test'
 
 Capybara::Node::Element.class_eval do
   def click_at
@@ -8,13 +8,13 @@ Capybara::Node::Element.class_eval do
   end
 end
 
-class SmallDevicesTest < ApplicationSystemTestCase
+class SmallDevicesTest < FeatureTest
   setup { screenshot_section :small_devices }
 
   test 'front_page' do
     screenshot_group :front_page
     Capybara.current_session.current_window.resize_to(412, 732)
-    visit root_url
+    visit root_path
     assert_selector 'h1', text: 'Velkommen'
     screenshot :index
     find('.fa-navicon').click
