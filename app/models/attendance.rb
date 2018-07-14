@@ -51,12 +51,11 @@ class Attendance < ApplicationRecord
   scope :on_date, ->(date) { where('year = ? AND week = ?', date.year, date.cweek) }
   scope :until_date, ->(date) {
     includes(practice: :group_schedule).references(:group_schedules)
-        .where(<<~SQL,
+        .where(<<~SQL, date.year, date.year, date.cweek, date.year, date.cweek, date.cwday)
           practices.year < ? OR (practices.year = ? AND practices.week < ?)
           OR (practices.year = ? AND practices.week = ?
             AND group_schedules.weekday <= ?)
-            SQL
-            date.year, date.year, date.cweek, date.year, date.cweek, date.cwday)
+        SQL
   }
 
   belongs_to :member

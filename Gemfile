@@ -23,13 +23,12 @@ gem 'bcrypt'
 gem 'bootstrap'
 gem 'bootstrap-chosen-rails', github: 'donv/bootstrap-chosen-rails'
 gem 'bootstrap3-datetimepicker-rails'
-gem 'bootstrap_form', github: 'bootstrap-ruby/rails-bootstrap-forms'
+gem 'bootstrap_form', github: 'bootstrap-ruby/bootstrap_form'
 # https://mdbootstrap.com/javascript/sidenav/
 # https://github.com/flatlogic/awesome-bootstrap-checkbox
 # gem "bootstrap-select-rails"
 # gem "bootstrap-switch-rails"
 # gem "bootstrap-wysihtml5-rails"
-gem 'capistrano3-puma'
 gem 'chartkick'
 gem 'chosen-rails'
 gem 'coffee-rails'
@@ -85,11 +84,6 @@ group :development, :beta do
 end
 
 group :development do
-  gem 'capistrano', '<3.9'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rails'
-  gem 'capistrano-rvm'
-  gem 'capistrano-scm-copy'
   gem 'listen'
 end
 

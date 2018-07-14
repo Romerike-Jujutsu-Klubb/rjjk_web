@@ -86,7 +86,7 @@ class Member < ApplicationRecord
   def self.instructors(date = Date.current)
     active(date).where(<<~SQL).order(:id)
       instructor = true OR id IN (SELECT member_id FROM group_instructors GROUP BY member_id)
-        SQL
+    SQL
   end
 
   delegate :age, :birthdate, :email, :first_name, :last_name, :male, :name, to: :user, allow_nil: true
