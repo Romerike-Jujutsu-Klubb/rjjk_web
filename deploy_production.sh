@@ -25,5 +25,5 @@ ssh ${USER}@${HOST} "set -e
 
   echo Restart the app
   sudo systemctl daemon-reload
-  sudo systemctl restart ${APP}
+  sudo systemctl reload-or-restart ${APP}
 "

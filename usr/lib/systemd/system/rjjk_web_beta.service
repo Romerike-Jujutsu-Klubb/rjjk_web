@@ -8,6 +8,7 @@ Group=capistrano
 WorkingDirectory=/u/apps/rjjk_web_beta/current
 ExecStart=/u/apps/rjjk_web_beta/current/etc/init.d/rjjk_web_beta start
 ExecReload=/u/apps/rjjk_web_beta/current/etc/init.d/rjjk_web_beta restart
+ExecStop=/u/apps/rjjk_web_beta/current/etc/init.d/rjjk_web_beta stop
 PIDFile=/u/apps/rjjk_web_beta/shared/pids/server.pid
 
 # Timeout for start up/shut down

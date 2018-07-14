@@ -9,7 +9,7 @@
 . /etc/rc.d/init.d/functions
 
 APP=rjjk_web
-RAILS_ENV=production
+export RAILS_ENV=production
 PORT=3005
 RUN_AS_USER=capistrano
 PID_FILE="/u/apps/$APP/shared/pids/server.pid"
@@ -45,7 +45,7 @@ function start() {
   rm -f $PID_FILE
 
   echo -n "Starting $APP"
-  setsid $START_CMD >$LOG_DIR/stdout.log 2>&1 &
+  setsid $START_CMD >$LOG_DIR/stdout.log 2>&1
 
   PID="$!"
 
@@ -142,6 +142,7 @@ function stop() {
 
 function restart() {
   if status ; then
+    echo bundle exec pumactl --pidfile $PID_FILE phased-restart
     bundle exec pumactl --pidfile $PID_FILE phased-restart
   else
     stop
