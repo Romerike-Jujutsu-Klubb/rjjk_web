@@ -1,0 +1,34 @@
+- @content_width = 1024
+
+h2
+  = @rank.label
+  = detour_to('Rediger', {action: 'edit', id: @rank}, class: 'btn btn-primary float-right') if technical_committy?
+
+p Normert tid: #{@rank.standard_months} måneder
+
+= textalize @rank.description
+
+- if @rank.basic_techniques.any?
+  h3 Grunnteknikker
+
+  table.table
+    - @rank.basic_techniques.group_by(&:waza).each do |waza, bts|
+      tr
+        td = waza.name
+        td == bts.map { |bt| detour_to bt.name, bt }.join(', ')
+
+- if @rank.katas.any?
+  h3 Kata
+
+  table.table
+    - @rank.katas.sort_by(&:name).each do |app|
+      tr
+        td = link_to app.name, app
+
+- if @rank.applications.any?
+  h3 Applikasjoner
+
+  table.table
+    - @rank.applications.sort_by(&:name).each do |app|
+      tr
+        td = link_to app.name, app

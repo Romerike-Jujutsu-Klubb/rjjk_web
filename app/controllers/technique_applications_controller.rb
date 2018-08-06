@@ -40,7 +40,8 @@ class TechniqueApplicationsController < ApplicationController
     respond_to do |format|
       if @technique_application.save
         format.html do
-          redirect_to @technique_application, notice: 'Application was successfully created.'
+          redirect_to edit_technique_application_path(@technique_application),
+              notice: 'Opprettet ny applikasjon.'
         end
         format.json do
           render json: @technique_application, status: :created, location: @technique_application

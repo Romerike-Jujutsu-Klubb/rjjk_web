@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Role < ApplicationRecord
+  acts_as_list scope: [:years_on_the_board]
+
   has_many :appointments, dependent: :restrict_with_exception
   has_many :elections, dependent: :restrict_with_exception
 

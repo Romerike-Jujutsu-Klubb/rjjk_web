@@ -28,7 +28,7 @@ class TechniqueApplicationsControllerTest < ActionController::TestCase
       assert_no_errors :technique_application
     end
 
-    assert_redirected_to technique_application_path(assigns(:technique_application))
+    assert_redirected_to edit_technique_application_path(assigns(:technique_application))
   end
 
   test 'should show application' do

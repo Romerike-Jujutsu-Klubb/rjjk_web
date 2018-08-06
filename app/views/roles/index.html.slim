@@ -1,0 +1,26 @@
+a.btn.btn-primary.float-right href=new_role_path
+  i.fa.fa-plus>
+  | Ny rolle
+
+h1 Definerte roller i RJJK
+
+table.table
+  tr
+    th
+    th Navn
+    th År i styret
+    th
+  - @roles.each do |role|
+    tr
+      td
+        a> href=move_up_role_path(role)
+          i.fa.fa-arrow-up
+        a href=move_down_role_path(role)
+          i.fa.fa-arrow-down
+      td = link_to role.name, edit_role_path(role)
+      td align="center" = role.years_on_the_board
+      td
+        - if role.elections.any?
+          / | #{role.elections.size} valg
+        - else
+          = link_to('', role, method: :delete, data: {confirm: 'Er du sikker?'}, class: 'fa fa-trash')

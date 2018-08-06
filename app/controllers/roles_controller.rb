@@ -4,7 +4,7 @@ class RolesController < ApplicationController
   before_action :admin_required
 
   def index
-    @roles = Role.order('years_on_the_board DESC NULLS LAST, name').to_a
+    @roles = Role.order('years_on_the_board DESC NULLS LAST, position NULLS LAST, name').to_a
 
     respond_to do |format|
       format.html
@@ -60,6 +60,28 @@ class RolesController < ApplicationController
         format.json { render json: @role.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def move_up
+    role = Role.find(params[:id])
+    if role.in_list?
+      role.move_higher
+    else
+      role.insert_at(1)
+      role.move_to_bottom
+    end
+    redirect_back fallback_location: roles_path
+  end
+
+  def move_down
+    role = Role.find(params[:id])
+    if role.in_list?
+      role.move_lower
+    else
+      role.insert_at(1)
+      role.move_to_bottom
+    end
+    redirect_back fallback_location: roles_path
   end
 
   def destroy

@@ -9,12 +9,12 @@ class Rank < ApplicationRecord
 
   belongs_to :martial_art
   belongs_to :group
-  has_many :applications, -> { where('system <> ?', 'Kata') },
+  has_many :applications, -> { where('system <> ?', TechniqueApplication::System::KATA) },
       class_name: TechniqueApplication.name
   has_many :basic_techniques, dependent: :nullify
   has_many :embus, dependent: :destroy
   has_many :graduates, dependent: :destroy
-  has_many :katas, -> { where 'system = ?', 'Kata' },
+  has_many :katas, -> { where 'system = ?', TechniqueApplication::System::KATA },
       class_name: TechniqueApplication.name
   has_many :members, through: :graduates
   has_many :technique_applications, dependent: :nullify

@@ -2,9 +2,9 @@
   i.fa.fa-plus>
   | Registrer nytt årsmøte
 
-h1 Listing annual_meetings
+h1 Årsmøter
 
-table.table
+table.table data-record-path=annual_meetings_path
   tr
     th Start at
     th Invitation
@@ -14,7 +14,7 @@ table.table
     th
 
   - @annual_meetings.each do |annual_meeting|
-    tr
+    tr data-record-id=(annual_meeting.id)
       td = annual_meeting.start_at.strftime('%F %R')
       td = annual_meeting.invitation_sent_at
       td = annual_meeting.public_record_updated_at

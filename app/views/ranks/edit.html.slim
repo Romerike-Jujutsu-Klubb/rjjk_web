@@ -1,7 +1,42 @@
-.float-right
-  =  link_to new_technique_application_path(technique_application: {rank_id: @rank.id}), class: 'btn btn-info'
-    i.fa.fa-plus>
-    | Ny teknikk
 h1 Rediger Grad
 
 = render 'form'
+
+.clearfix.mb-3
+
+a.btn.btn-info.float-right href=new_basic_technique_path(basic_technique: { rank_id: @rank.id })
+  i.fa.fa-plus>
+  | Ny grunnteknikk
+
+h3 Grunnteknikker
+
+- if @rank.basic_techniques.any?
+  table.table
+    - @rank.basic_techniques.group_by(&:waza).each do |waza, bts|
+      tr
+        td = waza.name
+        td == bts.map { |bt| detour_to bt.name, edit_basic_technique_path(bt) }.join(', ')
+
+a.btn.btn-info.float-right href=new_technique_application_path(technique_application: { rank_id: @rank.id, system: TechniqueApplication::System::KATA })
+  i.fa.fa-plus>
+  | Ny kata
+
+h3 Kata
+
+- if @rank.katas.any?
+  table.table
+    - @rank.katas.sort_by(&:name).each do |app|
+      tr
+        td = link_to app.name, edit_technique_application_path(app)
+
+a.btn.btn-info.float-right href=new_technique_application_path(technique_application: { rank_id: @rank.id })
+  i.fa.fa-plus>
+  | Ny applikasjon
+
+h3 Applikasjoner
+
+- if @rank.applications.any?
+  table.table
+    - @rank.applications.sort_by(&:name).each do |app|
+      tr
+        td = link_to app.name, edit_technique_application_path(app)

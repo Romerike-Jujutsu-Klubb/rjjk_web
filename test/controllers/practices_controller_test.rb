@@ -28,7 +28,7 @@ class PracticesControllerTest < ActionController::TestCase
       } }
     end
 
-    assert_redirected_to practice_path(assigns(:practice))
+    assert_redirected_to practices_path
   end
 
   test 'should show practice' do
@@ -47,7 +47,7 @@ class PracticesControllerTest < ActionController::TestCase
       group_schedule_id: @practice.group_schedule_id,
       week: @practice.week, year: @practice.year
     } }
-    assert_redirected_to practice_path(assigns(:practice))
+    assert_redirected_to practices_path
   end
 
   test 'should destroy practice' do

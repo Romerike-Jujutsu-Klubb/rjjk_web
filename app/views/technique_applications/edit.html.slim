@@ -1,0 +1,7 @@
+h1 Redigere applikasjon
+
+= render 'form'
+
+a.btn.btn-link href=technique_applications_path Applikasjoner
+a.btn.btn-link href=url_for(@technique_application) Vis
+a.btn.btn-link href=edit_rank_path(@technique_application.rank) = @technique_application.rank.name

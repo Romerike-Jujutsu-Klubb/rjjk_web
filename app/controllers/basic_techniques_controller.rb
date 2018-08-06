@@ -14,7 +14,7 @@ class BasicTechniquesController < ApplicationController
   end
 
   def new
-    @basic_technique = BasicTechnique.new
+    @basic_technique ||= BasicTechnique.new
     load_form_data
     render :new
   end
@@ -28,7 +28,7 @@ class BasicTechniquesController < ApplicationController
   def create
     @basic_technique = BasicTechnique.new(params[:basic_technique])
     if @basic_technique.save
-      redirect_to @basic_technique, notice: 'Basic technique was successfully created.'
+      redirect_to edit_basic_technique_path(@basic_technique), notice: 'Opprettet ny grunnteknikk.'
     else
       new
     end
@@ -52,7 +52,7 @@ class BasicTechniquesController < ApplicationController
   private
 
   def load_form_data
-    @wazas = Waza.all.to_a
+    @wazas = Waza.order(:name).to_a
     @ranks = Rank.includes(:martial_art)
         .where(martial_arts: { name: 'Kei Wa Ryu' }).order(:position).to_a
   end

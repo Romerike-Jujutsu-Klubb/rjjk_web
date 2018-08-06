@@ -1,0 +1,31 @@
+p#notice = notice
+
+.float-right
+  = link_to 'Liste', annual_meetings_path, class: 'btn btn-link'
+  = link_to 'Endre', edit_annual_meeting_path(@annual_meeting), class: 'btn btn-primary'
+
+h1 Årsmøte #{@annual_meeting.start_at.strftime('%F %R')}
+
+.row
+  .col
+    b> Invitation sent at:
+    = @annual_meeting.invitation_sent_at
+  .col
+    b> Public record updated at:
+    = @annual_meeting.public_record_updated_at
+
+- withdrawn = @annual_meeting.elections.any?(&:resigned_on)
+
+table.table.mt-3
+  tr
+    th Rolle
+    th Medlem/Foresatt
+    - if withdrawn
+      th Trukket
+    th
+  - @annual_meeting.elections.sort_by { |e| [-e.years.to_i, e.role.position.to_i, e.role.name] }.each do |election|
+    tr
+      td = election.role.name
+      td = detour_to election.elected_name, election.member
+      - if withdrawn
+        td = election.resigned_on

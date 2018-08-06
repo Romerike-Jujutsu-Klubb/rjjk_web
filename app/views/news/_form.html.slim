@@ -41,9 +41,17 @@
                 }).get().join("&"))
         }
 
+        var previewTimeout = null;
         $('input,textarea').on('input', function () {
-            preview();
+            if (previewTimeout != null) {
+                clearTimeout(previewTimeout);
+            }
+            previewTimeout = setTimeout(function () {
+                previewTimeout = null;
+                preview();
+            }, 200);
         });
+
         preview();
   .col-md-3
     .float-right.lazy-container style="height: 680px; overflow:auto; border: 1px solid black"

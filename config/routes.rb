@@ -178,7 +178,12 @@ Rails.application.routes.draw do
     end
   end
   resources :raw_incoming_emails
-  resources :roles
+  resources :roles do
+    member do
+      get :move_up
+      get :move_down
+    end
+  end
   resources :semesters
   resources :signatures do
     member do

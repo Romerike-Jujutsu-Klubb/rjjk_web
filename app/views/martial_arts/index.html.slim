@@ -1,0 +1,17 @@
+a.btn.btn-primary.float-right href=new_martial_art_path
+  i.fa.fa-plus>
+  | Ny stilart
+
+h1 Stiler
+
+table.table
+  tr
+    - for column in MartialArt.content_columns
+      th = column.human_name
+  - for martial_art in @martial_arts
+    tr
+      - for column in MartialArt.content_columns
+        td = h martial_art.send(column.name)
+      td = link_to 'Show', action: :show, id: martial_art
+      td = link_to 'Edit', action: :edit, id: martial_art
+      td = link_to 'Destroy', { action: 'destroy', id: martial_art }, data: {confirm: 'Are you sure?'}, method: :post

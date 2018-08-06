@@ -44,7 +44,7 @@ class PracticesController < ApplicationController
     respond_to do |format|
       if @practice.save
         format.html do
-          redirect_to @practice, notice: 'Scheduled practice was successfully created.'
+          redirect_to practices_path, notice: 'Scheduled practice was successfully created.'
         end
         format.json { render json: @practice, status: :created, location: @practice }
       else
@@ -60,7 +60,7 @@ class PracticesController < ApplicationController
     respond_to do |format|
       if @practice.update_attributes(params[:practice])
         format.html do
-          redirect_to @practice, notice: 'Scheduled practice was successfully updated.'
+          redirect_to practices_path, notice: 'Scheduled practice was successfully updated.'
         end
         format.json { head :no_content }
       else

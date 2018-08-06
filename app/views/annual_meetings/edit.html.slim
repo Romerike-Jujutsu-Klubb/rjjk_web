@@ -1,0 +1,16 @@
+h1 Årsmøte #{@annual_meeting.start_at.year}
+
+= render 'form'
+
+h3 Valg
+
+table.table data-record-path=elections_path
+  tr
+    th Medlem
+    th Rolle
+    th År
+  - @annual_meeting.elections.sort_by(&:years).reverse.each do |election|
+    tr data-record-id=election.id
+      td = election.member.name
+      td = election.role.name
+      td = election.years

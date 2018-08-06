@@ -2,5 +2,6 @@ h1 Rediger grunnteknikk
 
 = render 'form'
 
-= link_to 'Vis', @basic_technique
-=< link_to 'Tilbake', basic_techniques_path
+= link_to 'Grunnteknikker', basic_techniques_path, class: 'btn btn-link'
+= link_to 'Vis', @basic_technique, class: 'btn btn-link'
+= link_to @basic_technique.rank.name, edit_rank_path(@basic_technique.rank), class: 'btn btn-link'

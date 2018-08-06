@@ -1,0 +1,20 @@
+= form_for(@technique_application) do |f|
+  - if @technique_application.errors.any?
+    #error_explanation
+      h2 #{pluralize(@technique_application.errors.count, "error")} prohibited this application from being saved:
+
+      ul
+        - @technique_application.errors.full_messages.each do |msg|
+          li = msg
+
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :system
+    = f.text_field :system, class: 'form-control'
+  .form-group
+    = f.label :rank_id
+    = f.select :rank_id, @ranks.to_options, {prompt:'Velg grad'}, class: 'form-control'
+  .float-right
+    = f.submit 'Lagre', class: 'btn btn-primary'

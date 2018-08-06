@@ -29,7 +29,7 @@ class BasicTechniquesControllerTest < ActionController::TestCase
       } }
     end
 
-    assert_redirected_to basic_technique_path(assigns(:basic_technique))
+    assert_redirected_to edit_basic_technique_path(assigns(:basic_technique))
   end
 
   test 'should show basic_technique' do

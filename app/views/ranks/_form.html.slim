@@ -1,0 +1,49 @@
+= form_for @rank do |f|
+  = f.error_messages
+
+  .row
+    .col-md-4
+      .form-group
+        = f.label :martial_art_id, :Stil
+        = f.select :martial_art_id, @martial_arts.map { |ma| [ma.name, ma.id] }, {}, class: 'form-control'
+    .col-md-4
+      .form-group
+        =f.label :group_id, :Gruppe
+        = f.select :group_id, @groups.map { |g| [g.name, g.id] }, {}, class:'form-control'
+    .col-md-4
+      p
+        label for="rank_position" Posisjon
+        br
+        = f.text_field :position, size: 4, class: 'form-control'
+
+  .row
+    .col-md-4
+      p
+        label for="rank_name" Navn
+        br
+        = f.text_field :name, class: 'form-control'
+    .col-md-4
+      label for="rank_colour" Beltebeskrivelse
+      br
+      = f.text_field :colour, size: 32, class: 'form-control'
+    .col-md-4
+      =f.label :decoration, 'Dekorasjon'
+      = f.text_field :decoration, size: 32, class: 'form-control'
+
+  .row
+    .col-md-4
+      p
+        label for="rank_standard_months" Måneder
+        br
+        = f.text_field :standard_months, class: 'form-control'
+
+  .row
+    .col-md-12
+      .form-group
+        label for="rank_description" Beskrivelse
+        = f.text_area :description, class: 'form-control expanding'
+
+  .float-right
+    => back_or_link_to 'Tilbake', {action: 'index'}, class: 'btn btn-secondary'
+    => link_to('Vis', {action: 'show', id: @rank}, class: 'btn btn-secondary') unless @rank.new_record?
+    = submit_tag 'Lagre', class: 'btn btn-primary'
