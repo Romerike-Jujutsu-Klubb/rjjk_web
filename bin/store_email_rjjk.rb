@@ -14,9 +14,7 @@ started_at = Time.now
 Dir.chdir File.expand_path('..', __dir__)
 
 def log(message = nil)
-  open('log/email.log', 'a') do |f|
-    f.puts message
-  end
+  open('log/email.log', 'a') { |f| f.puts message }
 rescue Exception => e # rubocop: disable  Lint/RescueException
   puts e
 end
@@ -110,7 +108,7 @@ def check_spam(orig_content, orig_mail)
         end
       end
     else
-      puts 'Empty message: mark as spam.'
+      log 'Empty message: mark as spam.'
       mail_is_spam = :EMPTY
       log 'Discarding the empty email.'
       exit 0
@@ -121,8 +119,14 @@ def check_spam(orig_content, orig_mail)
     log "Exception scanning for SPAM: #{e}\n#{e.backtrace.join("\n")}"
     mail_is_spam = 'ERROR'
   end
-  content ||= orig_content
-  mail ||= orig_mail
+  unless content
+    log 'Restoring original content'
+    content = orig_content
+  end
+  unless mail
+    log 'Restoring original mail'
+    mail = orig_mail
+  end
   log "Spam check took: #{Time.now - spam_start}s"
   [content, mail, mail_is_spam, spam_score]
 end
@@ -165,7 +169,6 @@ rescue Exception => e # rubocop: disable Lint/RescueException
 end
 
 create_record('production', from, prod_recipients, content) if prod_recipients.any?
-
 create_record('beta', from, beta_recipients, content) if beta_recipients.any?
 
 if rest_recipients.any?
@@ -173,11 +176,11 @@ if rest_recipients.any?
   begin
     log content.lines.grep(/spam|^\s+\*/i)
   rescue Exception => e # rubocop: disable Lint/RescueException
-    puts e
     log "Exception logging spam lines: #{e}"
     log "Content Encoding: #{content.encoding}"
   end
   begin
+    mail['X-Spam-My-Status'] = mail['X-Spam-Status']&.value
     mail.smtp_envelope_from = from
     mail.smtp_envelope_to = rest_recipients
     mail.delivery_method :sendmail
@@ -198,5 +201,6 @@ end
 finished_at = Time.now
 log "\n#{finished_at.strftime('%F %T')} Finished in #{finished_at - started_at}s\n\n"
 
-exit 0
+exit 0 # Message has been handled
+
 # rubocop: enable Rails/TimeZone
