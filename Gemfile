@@ -10,9 +10,9 @@ end
 gem 'rails', '~>5.1.4'
 
 platform :ruby do
+  gem 'mini_racer'
   gem 'oily_png'
   gem 'pg'
-  gem 'therubyracer'
 end
 
 gem 'actionpack-page_caching', github: 'rails/actionpack-page_caching'
@@ -95,7 +95,7 @@ group :test do
   # gem 'coveralls', require: false
   gem 'database_cleaner'
   gem 'minitest-rails-capybara'
-  gem 'minitest-reporters', '!=1.1.19'
+  gem 'minitest-reporters'
   gem 'mocha', require: 'mocha/setup'
   gem 'rubocop'
   # gem 'rubycritic', require: false

@@ -191,7 +191,7 @@ GEM
     kramdown (1.17.0)
     lazyload-rails (0.3.1)
       nokogiri (~> 1.5)
-    libv8 (3.16.14.19)
+    libv8 (6.3.292.48.1-x86_64-darwin-17)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -227,6 +227,8 @@ GEM
     mime-types-data (3.2016.0521)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
+    mini_racer (0.1.15)
+      libv8 (~> 6.3)
     minitest (5.11.3)
     minitest-capybara (0.8.2)
       capybara (~> 2.2)
@@ -331,7 +333,6 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    ref (2.0.0)
     representable (3.0.4)
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
@@ -367,7 +368,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    selenium-webdriver (3.8.0)
+    selenium-webdriver (3.13.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2)
     serviceworker-rails (0.5.5)
@@ -401,9 +402,6 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     temple (0.8.0)
-    therubyracer (0.12.3)
-      libv8 (~> 3.16.14.15)
-      ref
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
@@ -468,8 +466,9 @@ DEPENDENCIES
   lograge
   mechanize
   medusa!
+  mini_racer
   minitest-rails-capybara
-  minitest-reporters (!= 1.1.19)
+  minitest-reporters
   mocha
   momentjs-rails
   nokogiri
@@ -499,7 +498,6 @@ DEPENDENCIES
   simple_workflow
   simplecov
   slim-rails
-  therubyracer
   timecop
   tinymce-rails
   tinymce-rails-langs
