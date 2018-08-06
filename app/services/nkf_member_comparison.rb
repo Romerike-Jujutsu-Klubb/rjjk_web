@@ -89,15 +89,13 @@ class NkfMemberComparison
 
   def create_new_members
     @new_members = @orphan_nkf_members.map do |nkf_member|
-      begin
-        logger.info "Create member from NKF: #{nkf_member.inspect}"
-        nkf_member.create_corresponding_member!
-      rescue => e
-        logger.error e
-        logger.error e.backtrace.join("\n")
-        @errors << ['New member', e, nkf_member]
-        nil
-      end
+      logger.info "Create member from NKF: #{nkf_member.inspect}"
+      nkf_member.create_corresponding_member!
+    rescue => e
+      logger.error e
+      logger.error e.backtrace.join("\n")
+      @errors << ['New member', e, nkf_member]
+      nil
     end.compact
   end
 

@@ -186,13 +186,11 @@ class GraduationReminder
         .order(:held_on)
         .each do |graduation|
       graduation.graduates.where(gratz_sent_at: nil, passed: true).each do |graduate|
-        begin
-          GraduationMailer.congratulate_graduate(graduate)
-              .store(graduate.member, tag: :graduate_gratz)
-          graduate.update! gratz_sent_at: Time.current
-        rescue
-          raise "Exception congratulating graduate: #{graduate.id}"
-        end
+        GraduationMailer.congratulate_graduate(graduate)
+            .store(graduate.member, tag: :graduate_gratz)
+        graduate.update! gratz_sent_at: Time.current
+      rescue
+        raise "Exception congratulating graduate: #{graduate.id}"
       end
     end
   end

@@ -37,22 +37,20 @@ class ApplicationController < ActionController::Base
     end
     unless @image
       3.times do
-        begin
-          Image.uncached do
-            image_query = Image
-                .select(%w[approved content_type description height id name public user_id width])
-                .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
-                .order(Rails.env.test? ? :id : 'RANDOM()')
-            image_query = image_query.where('approved = ?', true) unless admin?
-            image_query = image_query.where('public = ?', true) unless user?
-            @image = image_query.first
-          end
-          break unless @image
-          @image.update_dimensions! unless @image.video?
-          break
-        rescue => e
-          ExceptionNotifier.notify_exception(e)
+        Image.uncached do
+          image_query = Image
+              .select(%w[approved content_type description height id name public user_id width])
+              .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
+              .order(Rails.env.test? ? :id : 'RANDOM()')
+          image_query = image_query.where('approved = ?', true) unless admin?
+          image_query = image_query.where('public = ?', true) unless user?
+          @image = image_query.first
         end
+        break unless @image
+        @image.update_dimensions! unless @image.video?
+        break
+      rescue => e
+        ExceptionNotifier.notify_exception(e)
       end
     end
 
