@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~>5.1.4'
+gem 'rails', '~>5.2.0'
 
 platform :ruby do
   gem 'mini_racer'
@@ -20,6 +20,7 @@ gem 'activerecord-time'
 gem 'acts_as_list' # https://github.com/swanandp/acts_as_list/pull/283
 gem 'acts_as_tree'
 gem 'bcrypt'
+gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap'
 gem 'bootstrap-chosen-rails', github: 'donv/bootstrap-chosen-rails'
 gem 'bootstrap3-datetimepicker-rails'

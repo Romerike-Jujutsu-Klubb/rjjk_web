@@ -157,6 +157,9 @@ Rails/AssertNot:
     - 'test/integration/user_system_test.rb'
     - 'test/models/user_test.rb'
 
+Rails/BulkChangeTable:
+  Enabled: false
+
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.

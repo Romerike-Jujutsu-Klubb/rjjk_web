@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    if (m = current_user.try(:member)) && (group = m.groups.find { |g| g.name == 'Voksne' })
+    if (m = current_user.try(:member)) && (group = m.groups.find(&:planning))
       @next_practice = group.next_practice
       @next_schedule = @next_practice.group_schedule
       attendances_next_practice = @next_practice.attendances.to_a

@@ -7,7 +7,7 @@ Rails.application.configure do
   # config.action_controller.asset_host = 'http://assets.example.com'
   config.action_controller.perform_caching = true
   config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
-  config.action_mailer.asset_host = 'https://jujutsu.no'
+  # config.action_mailer.asset_host = 'https://jujutsu.no'
   config.action_mailer.default_url_options = { protocol: 'https', host: 'jujutsu.no' }
   config.action_mailer.delivery_method = :sendmail
   config.action_mailer.perform_caching = false
@@ -15,6 +15,7 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "rjjk_web_#{Rails.env}"
   config.active_record.dump_schema_after_migration = false
+  config.active_storage.service = :local
   config.active_support.deprecation = :notify
   config.assets.compile = false
   # config.assets.css_compressor = :sass
@@ -31,7 +32,7 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
   config.lograge.enabled = true
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
-  config.read_encrypted_secrets = true
+  # config.require_master_key = true
   if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter

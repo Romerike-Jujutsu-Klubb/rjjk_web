@@ -85,7 +85,7 @@ class Graduation < ApplicationRecord
   end
 
   def start_at
-    held_on.try(:at, group_schedule.try(:start_at) || TimeOfDay.new(17, 45))
+    held_on&.at(group_schedule&.start_at || TimeOfDay.new(17, 45))
   end
 
   def end_at
