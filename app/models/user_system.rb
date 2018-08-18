@@ -30,8 +30,6 @@ module UserSystem
     options.merge key: user.generate_security_token, only_path: false
   end
 
-  protected
-
   #   before_filter :authenticate_user
   def authenticate_user
     return true if authenticated_user?
