@@ -34,7 +34,7 @@ class NewsItem < ApplicationRecord
   validates :publication_state, inclusion: { in: PublicationState.constants.map(&:to_s) }
 
   def self.front_page_items
-    (admin? ? self : current).order('COALESCE(publish_at, created_at) DESC').limit(10)
+    (admin? ? self : current).order(Arel.sql('COALESCE(publish_at, created_at) DESC')).limit(10)
         .includes(creator: :member).to_a
   end
 
