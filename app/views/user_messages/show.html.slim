@@ -3,7 +3,7 @@ p#notice = notice
 .card
   .card-header
     .float-right
-      = @user_message.sent_at.strftime('%F %R')
+      = @user_message.sent_at&.strftime('%F %R')
     h3 =< @user_message.subject
     strong Fra:
     =< [*@user_message.from].join(', ')

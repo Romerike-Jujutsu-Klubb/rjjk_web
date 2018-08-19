@@ -12,7 +12,7 @@ rsync -aPv --delete --exclude "*~" --exclude "/coverage" --exclude "/doc" --excl
 
 ssh ${USER}@${HOST} "set -e
   export RAILS_ENV=beta
-  ruby-install --no-reinstall ${REQUIRED_RUBY_VERSION}
+  ruby-install --no-reinstall --no-doc ${REQUIRED_RUBY_VERSION}
   . /etc/profile
   cd ${INSTALL_DIR}
   mkdir -p log
