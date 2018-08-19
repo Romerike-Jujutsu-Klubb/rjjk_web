@@ -1,0 +1,6 @@
+= link_to new_signature_path, class: 'btn btn-primary float-right my-3'
+  = fa_icon :plus, text: 'Registrer signatur'
+.clearfix
+.row
+  - @member.signatures.each do |signature|
+    .col-3 = image_tag image_signature_path(signature), width: '100%'

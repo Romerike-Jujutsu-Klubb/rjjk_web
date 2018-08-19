@@ -42,13 +42,7 @@ ul.nav.nav-tabs role="tablist"
           li = link_to u.name, u.member
   #tab_graduations.tab-pane.fade = render 'graduations'
   #tab_duties.tab-pane.fade = render 'duties'
-  #tab_signatures.tab-pane.fade
-    = link_to new_signature_path, class: 'btn btn-primary float-right my-3'
-      = fa_icon :plus, text: 'Registrer signatur'
-    .clearfix
-    .row
-      - @member.signatures.each do |signature|
-        .col-3 = image_tag image_signature_path(signature), width: '100%'
+  #tab_signatures.tab-pane.fade = render 'signatures'
   - if @member.nkf_member
     #tab_nkf.tab-pane.fade = render 'nkf_fields'
 
