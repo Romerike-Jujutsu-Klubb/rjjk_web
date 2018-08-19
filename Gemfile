@@ -90,8 +90,7 @@ end
 
 group :test do
   # gem 'bullet'
-  gem 'capybara-screenshot-diff'
-  # gem 'capybara-screenshot-diff', path: '~/work/open-source/capybara-screenshot-diff'
+  gem 'capybara-screenshot-diff' # , path: '~/work/open-source/capybara-screenshot-diff'
   gem 'chunky_png'
   # gem 'coveralls', require: false
   gem 'database_cleaner'
