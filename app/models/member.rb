@@ -313,7 +313,7 @@ class Member < ApplicationRecord
   end
 
   def billing_email
-    billing_user&.email
+    user.billing_user&.email
   end
 
   def related_users
