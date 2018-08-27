@@ -13,7 +13,7 @@ rsync -aPv --delete --exclude "*~" --exclude "/coverage" --exclude "/doc" --excl
   --exclude "/tmp" \
   ./.ruby-version ./* ${USER}@${HOST}:${INSTALL_DIR}/ | grep -v "/$"
 
-rsync -aPv tmp/google_drive_client_secret.json ${USER}@${HOST}:${INSTALL_DIR}/tmp/
+# rsync -aPv tmp/google_drive_client_secret.json ${USER}@${HOST}:${INSTALL_DIR}/tmp/
 
 ssh ${USER}@${HOST} "set -e
   export RAILS_ENV=beta

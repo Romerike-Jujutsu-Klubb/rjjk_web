@@ -13,4 +13,4 @@ another:
   created_by: <%=ActiveRecord::FixtureSet.identify(:lars)%>
   created_at: 2007-07-13T00:08:23+2
   publication_state: PUBLISHED
-  summary: "Summary: <img title='Vår vakre logo!' src='/assets/rjjk_logo_&_txt_320.png' align='right' width='50%'/>"
+  summary: "Summary: <img title='Vår vakre logo!' src='/assets/rjjk_logo_plus_txt_320.png' align='right' width='50%'/>"
