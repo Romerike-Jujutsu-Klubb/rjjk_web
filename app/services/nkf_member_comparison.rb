@@ -5,14 +5,14 @@ class NkfMemberComparison
       :orphan_nkf_members, :outgoing_changes
 
   def initialize
-    fetch
+    load_changes
   end
 
   def any?
     [@new_members, @member_changes, @errors].any?(&:present?)
   end
 
-  private def fetch
+  private def load_changes
     @orphan_nkf_members = NkfMember.where(member_id: nil).order(:fornavn, :etternavn, :id).to_a
     @orphan_members = NkfMember.find_free_members
     @members = []
@@ -42,9 +42,7 @@ class NkfMemberComparison
     sync_member_with_agent(agent, front_page, member)
   end
 
-  private
-
-  def assign_nkf_attributes(member)
+  private def assign_nkf_attributes(member)
     converted_attributes = member.nkf_member.converted_attributes
     relations = []
     converted_attributes.each do |target, nkf_values|
@@ -87,7 +85,7 @@ class NkfMemberComparison
     relations
   end
 
-  def create_new_members
+  private def create_new_members
     @new_members = @orphan_nkf_members.map do |nkf_member|
       logger.info "Create member from NKF: #{nkf_member.inspect}"
       nkf_member.create_corresponding_member!
@@ -132,42 +130,51 @@ class NkfMemberComparison
   private def sync_member_with_agent(agent, front_page, m)
     logger.info "Synching member: #{m.user.name} #{m.nkf_member.medlemsnummer} #{m.inspect}"
     logger.info "m.changes: #{m.changes.pretty_inspect}"
-    if m.user.invalid?
-      if m.user.errors[:phone]
-        if m.user.phone.present? &&
-              (conflicting_phone_user = User.where.not(id: m.user_id).find_by(phone: m.user.phone))
-          if conflicting_phone_user.member.nil? || conflicting_phone_user.member.left_on
-            logger.info "Move phone #{m.user.phone} from user #{conflicting_phone_user.id} "\
-                "#{conflicting_phone_user.name} to #{m.user.inspect}"
-            conflicting_phone_user.phone = nil
-            if conflicting_phone_user.contact_info?
-              conflicting_phone_user.save!
-            else
-              logger.info "Delete user #{conflicting_phone_user.name} #{conflicting_phone_user.id} " \
-                  'since it has no contact information.'
-              conflicting_phone_user.contactees.each { |u| u.update! contact_user_id: m.user.id }
-              conflicting_phone_user.payees.each { |u| u.update! billing_user_id: m.user.id }
-              conflicting_phone_user.primary_wards.each { |u| u.update! guardian_1_id: m.user.id }
-              conflicting_phone_user.secondary_wards.each { |u| u.update! guardian_2_id: m.user.id }
-              conflicting_phone_user.destroy!
-            end
-          else
-            logger.info "Reset user phone #{m.user.phone} since it is used by "\
-                "#{conflicting_phone_user.inspect}"
-            m.user.phone = nil
-          end
-        end
+    verify_user(m)
+    verify_billing_user(m)
+    submit_changes_to_nkf(agent, front_page, m)
+    return if Rails.env.production?
+    save_incoming_changes(m)
+  rescue => e
+    logger.error "Exception saving member changes for #{m.attributes.inspect}"
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    @errors << ['Changes', e, m]
+    nil
+  end
+
+  private def gather_changes(m)
+    changes = m.changes
+    m.related_users.each do |relationship, u|
+      if u.changed?
+        changes[relationship] = u.changes
+      elsif relationship == :billing && m.user.billing_user_id_changed?
+        # changes.delete('billing_user_id')
+        changes[relationship] = Hash[u.attributes.except('created_at', 'updated_at')
+            .reject { |_k, v| v.nil? }.map { |k, v| [k, [nil, v]] }]
       end
     end
-    if m.user.billing_user
-      logger.info "m.user.billing_user: #{m.user.billing_user.changes.pretty_inspect}"
-      if !m.user.billing_user.persisted? && (related_user_email = m.user.billing_user.email)
-        if (existing_billing_user = User.find_by(email: related_user_email))
-          # FIXME(uwe): Should this ever happen?
-          m.user.billing_user = existing_billing_user
-        end
-      end
-    end
+    changes
+  end
+
+  private def submit_changes_to_nkf(agent, front_page, m)
+    member_form, outgoing_changes_for_member = find_outgoing_changes(agent, front_page, m)
+    return unless Rails.env.production? && outgoing_changes_for_member.any?
+    # m.restore_attributes(outgoing_changes_for_member.keys)
+    logger.info 'Submitting form to NKF'
+    logger.info member_form.pretty_inspect
+    member_form['p_ks_medlprofil_action'] = 'OK'
+    member_form.submit
+  end
+
+  private def save_incoming_changes(m)
+    changes = gather_changes(m)
+    return if changes.empty?
+    m.save!
+    [m, changes]
+  end
+
+  private def find_outgoing_changes(agent, front_page, m)
     search_form = front_page.form('ks_reg_medladm') do |search|
       search.p_ks_reg_medladm_action = 'SEARCH'
       search['frm_27_v29'] = 0
@@ -192,35 +199,43 @@ class NkfMemberComparison
       @outgoing_changes << [m, outgoing_changes_for_member] if outgoing_changes_for_member.any?
     end
     logger.info "outgoing_changes: #{outgoing_changes_for_member}"
-    if Rails.env.production?
-      if outgoing_changes_for_member.any?
-        # m.restore_attributes(outgoing_changes_for_member.keys)
-        logger.info 'Submitting form to NKF'
-        logger.info member_form.pretty_inspect
-        member_form['p_ks_medlprofil_action'] = 'OK'
-        member_form.submit
+    [member_form, outgoing_changes_for_member]
+  end
+
+  private def verify_user(m)
+    return unless m.user.invalid?
+    return unless m.user.errors[:phone]
+    if m.user.phone.present? &&
+          (conflicting_phone_user = User.where.not(id: m.user_id).find_by(phone: m.user.phone))
+      if conflicting_phone_user.member.nil? || conflicting_phone_user.member.left_on
+        logger.info "Move phone #{m.user.phone} from user #{conflicting_phone_user.id} "\
+            "#{conflicting_phone_user.name} to #{m.user.inspect}"
+        conflicting_phone_user.phone = nil
+        if conflicting_phone_user.contact_info?
+          conflicting_phone_user.save!
+        else
+          logger.info "Delete user #{conflicting_phone_user.name} #{conflicting_phone_user.id} " \
+              'since it has no contact information.'
+          conflicting_phone_user.contactees.each { |u| u.update! contact_user_id: m.user.id }
+          conflicting_phone_user.payees.each { |u| u.update! billing_user_id: m.user.id }
+          conflicting_phone_user.primary_wards.each { |u| u.update! guardian_1_id: m.user.id }
+          conflicting_phone_user.secondary_wards.each { |u| u.update! guardian_2_id: m.user.id }
+          conflicting_phone_user.destroy!
+        end
+      else
+        logger.info "Reset user phone #{m.user.phone} since it is used by "\
+            "#{conflicting_phone_user.inspect}"
+        m.user.phone = nil
       end
-      return
     end
-    changes = m.changes
-    m.related_users.each do |relationship, u|
-      if u.changed?
-        changes[relationship] = u.changes
-      elsif relationship == :billing && m.billing_user_id_changed?
-        # changes.delete('billing_user_id')
-        changes[relationship] = Hash[u.attributes.except('created_at', 'updated_at')
-            .reject { |_k, v| v.nil? }.map { |k, v| [k, [nil, v]] }]
-      end
-    end
-    unless changes.empty?
-      m.save!
-      [m, changes]
-    end
-  rescue => e
-    logger.error "Exception saving member changes for #{m.attributes.inspect}"
-    logger.error e.message
-    logger.error e.backtrace.join("\n")
-    @errors << ['Changes', e, m]
-    nil
+  end
+
+  private def verify_billing_user(m)
+    return unless m.user.billing_user
+    logger.info "m.user.billing_user: #{m.user.billing_user.changes.pretty_inspect}"
+    return if m.user.billing_user.persisted? || (related_user_email = m.user.billing_user.email).blank?
+    return unless (existing_billing_user = User.find_by(email: related_user_email))
+    # FIXME(uwe): Should this ever happen?
+    m.user.billing_user = existing_billing_user
   end
 end

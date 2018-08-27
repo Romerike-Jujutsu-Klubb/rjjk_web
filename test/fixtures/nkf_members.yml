@@ -24,17 +24,17 @@ uwe:
   postnr: 1479
 lars:
   adresse_2: Torsvei 8b
+  epost: lars@example.net
   etternavn: Bråten
   fodselsdato: 01.03.1967
   fornavn: Lars
   gren_stilart_avd_parti___gren_stilart_avd_parti: Kei Wa Ryu
   innmeldtdato: 01.04.2001
   kjonn: Mann
+  medlemsnummer: 40000993
+  medlemsstatus: A
   member: lars
   postnr: 1472
-  medlemsnummer: 40000993
-  epost: lars@example.net
-  medlemsstatus: A
 sebastian:
   adresse_2: Møllesvingen 5
   betalt_t_o_m__dato: 31.03.2018
