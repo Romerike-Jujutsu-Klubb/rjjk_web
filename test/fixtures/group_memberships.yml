@@ -1,7 +1,20 @@
-uwe_voksne:
+lars_voksne:
   group: voksne
-  member: uwe
+  member: lars
+
+newbie_voksne:
+  group: voksne
+  member: newbie
+
+sebastian_panda:
+  group: panda
+  member: sebastian
 
 sebastian_tiger:
   group: tiger
   member: sebastian
+
+uwe_voksne:
+  group: voksne
+  member: uwe
+

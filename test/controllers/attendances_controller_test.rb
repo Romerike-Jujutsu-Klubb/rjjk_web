@@ -3,10 +3,7 @@
 require 'controller_test'
 
 class AttendancesControllerTest < ActionController::TestCase
-  def setup
-    super
-    login(:admin)
-  end
+  setup { login(:admin) }
 
   def test_should_get_index
     get :index
@@ -114,6 +111,18 @@ class AttendancesControllerTest < ActionController::TestCase
 
   def test_should_get_form
     get :form, params: { date: '2013-10-01', group_id: groups(:panda).id }
+    assert_response :success
+  end
+
+  def test_should_get_form_without_group_id
+    GroupMembership.delete_all
+    get :form, params: { date: '2013-10-01' }
+    assert_response :success
+  end
+
+  test 'should get form for others' do
+    GroupMembership.delete_all
+    get :form, params: { date: '2013-10-01', group_id: :others }
     assert_response :success
   end
 end
