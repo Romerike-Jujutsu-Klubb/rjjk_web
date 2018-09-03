@@ -4,6 +4,7 @@ require 'test_helper'
 
 class NkfMemberComparisonTest < ActionMailer::TestCase
   def test_comparison
+    c = nil
     VCR.use_cassette('NKF Comparison', match_requests_on: %i[method host path query]) do
       c = NkfMemberComparison.new
       c.sync
