@@ -22,7 +22,6 @@ ul.nav.nav-tabs role="tablist"
   li.nav-item.ml-auto = back_or_link_to 'Tilbake', { action: :index }, class: 'btn btn-link'
 
 .tab-content
-  / FIXME(uwe): Save all form tabs when pressing "Save"
   #tab_user.tab-pane.fade.show.active.pt-3 = render 'users/form', user: @member.user, submit: true
   #tab_membership.tab-pane.fade = render 'form'
   #tab_contacts.tab-pane.fade.pt-3 = render 'related_users', user: @member.user
@@ -30,7 +29,7 @@ ul.nav.nav-tabs role="tablist"
     #tab_depending_users.tab-pane.fade.pt-3
       ul
         - @member.user.depending_users.each do |u|
-          li = link_to u.name, u.member
+          li = link_to u.name, member_path(u.member, anchor: :tab_contacts_tab)
   #tab_graduations.tab-pane.fade = render 'graduations'
   #tab_duties.tab-pane.fade = render 'duties'
   #tab_signatures.tab-pane.fade = render 'signatures'
