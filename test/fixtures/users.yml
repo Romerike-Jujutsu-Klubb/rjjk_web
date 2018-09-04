@@ -25,7 +25,6 @@ lars:
   salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
   email: lars@example.com
   verified: true
-  deleted: false
   security_token: random_token_string
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
   birthdate: 1967-06-21
@@ -41,7 +40,6 @@ sebastian:
   salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
   email: sebastian@example.com
   verified: true
-  deleted: false
   security_token: random_token_string
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
   birthdate: 2004-06-03
@@ -54,7 +52,6 @@ long_user:
   salt: c068e3671780f16898c0a8295ae8d82cc59713e2
   email: long_user@example.com
   verified: true
-  deleted: false
 
 deletable_user:
   first_name: Deletable
@@ -63,8 +60,7 @@ deletable_user:
   salt: c068e3671780f16898c0a8295ae8d82cc59713e2
   email: deletable_user@example.com
   verified: true
-  deleted: false
-  
+
 deleted_user:
   first_name: Deleted
   login: deleted_user
@@ -72,7 +68,7 @@ deleted_user:
   salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
   email: deleted_user@example.com
   verified: true
-  deleted: true
+  deleted_at: <%=(TEST_TIME - 1.day).utc.strftime('%Y-%m-%d %H:%M:%S') %>
 
 unverified_user:
   first_name: Unverified
@@ -83,7 +79,6 @@ unverified_user:
   verified: false
   security_token: another_random_token_string
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
-  deleted: false
 
 newbie:
   first_name: Newbie

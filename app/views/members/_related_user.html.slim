@@ -1,6 +1,7 @@
-- if related_user.multiple_depending_members?
-  = bootstrap_form_for user do |f|
-    = f.select column, @users.map{|u| [u.name, u.id]}, prompt: true, append: link_to('Vis', related_user.member || related_user)
-    = f.primary
-- else
-  = render 'users/form', user: related_user, submit: true
+- related_user = related_user&.member || related_user
+.row
+  .col = f.select column, [[nil, nil]] + @users.map{|u| [u.label(last_name_first: true), u.id]}, \
+      selected: user.send(column).to_s, \
+      prepend: (link_to('Vis', related_user) if related_user), \
+      append: (f.submit('Koble fra', class: 'btn btn-danger', \
+      onclick: "$(this).closest('.input-group').find('select').val('')") if related_user)

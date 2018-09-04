@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180716181932) do
+ActiveRecord::Schema.define(version: 2018_09_03_235207) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -662,7 +662,6 @@ ActiveRecord::Schema.define(version: 20180716181932) do
     t.string 'security_token', limit: 40
     t.datetime 'token_expiry'
     t.boolean 'verified', default: false
-    t.boolean 'deleted', default: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.bigint 'billing_user_id'
@@ -677,6 +676,7 @@ ActiveRecord::Schema.define(version: 20180716181932) do
     t.boolean 'male'
     t.string 'phone', limit: 32
     t.string 'postal_code', limit: 4
+    t.datetime 'deleted_at'
     t.index ['billing_user_id'], name: 'index_users_on_billing_user_id'
     t.index ['contact_user_id'], name: 'index_users_on_contact_user_id'
     t.index ['guardian_1_id'], name: 'index_users_on_guardian_1_id'

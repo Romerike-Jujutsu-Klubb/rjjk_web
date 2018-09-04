@@ -12,49 +12,35 @@ class UsersController < ApplicationController
   end
 
   def edit
-    generate_filled_in
+    @user ||= User.find(params[:id])
+    if (@member = @user.member)
+      @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').where(closed_on: nil)
+          .to_a
+      @groups |= @member.groups
+      @users = User.order(:last_name, :first_name, :email, :phone).to_a
+      lookup_context.prefixes.prepend 'members'
+    end
+    render action: :edit
+  ensure
+    lookup_context.prefixes.delete 'members'
   end
 
   def update
     @user = User.find(params[:id])
-    if params['user']['form']
-      form = params['user'].delete('form')
-      begin
-        case form
-        when 'edit'
-          unclean_params = params['user']
-          user_params =
-              if current_user.admin?
-                unclean_params
-              else
-                unclean_params.delete_if { |k, *| !User::CHANGEABLE_FIELDS.include?(k) }
-              end
-          if @user.update user_params
-            flash.notice = 'Brukeren er oppdatert.'
-          else
-            flash.notice = 'En feil oppsto ved lagring av brukeren.'
-            edit
-            render action: :edit
-            return
-          end
-        when 'change_password'
-          change_password
-        when 'delete'
-          destroy
-          return
-        else
-          raise 'unknown edit action'
-        end
-      rescue => ex
-        report_exception(ex)
-      end
+    form = params[:user].delete(:form)
+    logger.warn "User form: #{form}" if form
+    if @user.update params[:user]
+      flash.notice = 'Brukeren er oppdatert.'
+      back_or_redirect_to edit_user_path(@user)
+    else
+      flash.now.alert = 'En feil oppsto ved lagring av brukeren.'
+      edit
     end
-    redirect_to action: :edit
   end
 
   def destroy
     @user = User.find(params[:id])
-    @user.update!(deleted: true)
+    @user.destroy!
     back_or_redirect_to users_path
   end
 
@@ -76,18 +62,6 @@ class UsersController < ApplicationController
     when 'GET'
       @user = User.new params[:user]
       render
-      true
-    else
-      false
-    end
-  end
-
-  # Generate a template user for certain actions on get
-  def generate_filled_in
-    @user ||= User.find(params[:id])
-    case request.method
-    when 'GET'
-      render action: :edit
       true
     else
       false

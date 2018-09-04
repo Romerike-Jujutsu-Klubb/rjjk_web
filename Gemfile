@@ -52,6 +52,7 @@ gem 'nokogiri'
 gem 'nprogress-rails'
 gem 'oauth2'
 # gem 'paper_trail' # http://railscasts.com/episodes/255-undo-with-paper-trail?view=similar
+gem 'paranoia'
 gem 'prawn'
 # gem 'prawn-gmagick'
 gem 'prawn-table'

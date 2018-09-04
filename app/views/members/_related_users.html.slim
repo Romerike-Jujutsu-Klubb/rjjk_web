@@ -1,0 +1,9 @@
+.row
+  .col-xl-8.offset-xl-2 = bootstrap_form_for user, url: with_detour(edit_user_path(anchor: :tab_contacts_tab), anchor: :tab_contacts_tab) do |f|
+    p "Foresatt 1" er bare nødvendig hvis medlemmet er under 18 år gammel.  Alle andre kontaktpersoner er valgfrie dersom medlemmet har egen e-post eller telefon.
+    = render 'related_user', f: f, user: @member.user, related_user: @member.user.guardian_1, column: :guardian_1_id
+    = render 'related_user', f: f, user: @member.user, related_user: @member.user.guardian_2, column: :guardian_2_id
+    = render 'related_user', f: f, user: @member.user, related_user: @member.user.billing_user, column: :billing_user_id
+    = render 'related_user', f: f, user: @member.user, related_user: @member.user.contact_user, column: :contact_user_id
+
+    .float-right.mt-3 = f.primary

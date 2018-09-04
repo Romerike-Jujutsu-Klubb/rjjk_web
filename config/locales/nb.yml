@@ -104,8 +104,12 @@ nb:
       user:
         address: Adresse
         birthdate: Fødselsdato
+        billing_user_id: Betaler
+        contact_user_id: Kontakt
         email: E-post
         first_name: Fornavn
+        guardian_1_id: Foresatt 1
+        guardian_2_id: Foresatt 2
         last_name: Etternavn
         login: Brukernavn
         male: Kjønn

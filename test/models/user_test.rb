@@ -141,7 +141,6 @@ class UserTest < ActionMailer::TestCase
   test 'emails' do
     assert_equal [
       ['deletable_user@example.com'],
-      ['deleted_user@example.com'],
       ['lars@example.com'],
       ['long_user@example.com'],
       ['newbie@example.com'],
@@ -149,5 +148,13 @@ class UserTest < ActionMailer::TestCase
       ['unverified_user@example.com'],
       ['uwe@example.com'],
     ], User.all.map(&:emails).sort
+  end
+
+  test 'name with last name first' do
+    assert_equal 'Bråten, Lars', users(:lars).name(last_name_first: true)
+  end
+
+  test 'label with last name first' do
+    assert_equal 'Bråten, Lars', users(:lars).label(last_name_first: true)
   end
 end

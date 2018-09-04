@@ -14,6 +14,7 @@ class Attendance < ApplicationRecord
 
   STATES = [
     [Status::WILL_ATTEND, 'Kommer!', 'thumbs-up', 'success'],
+    [Status::INSTRUCTOR, 'Instruere', 'thumbs-up', 'success'],
     [Status::HOLIDAY, 'Bortreist', 'hand-o-right', 'warning'],
     [Status::SICK, 'Syk', 'plus', 'danger'],
     [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
@@ -21,6 +22,7 @@ class Attendance < ApplicationRecord
 
   PAST_STATES = [
     [Status::ATTENDED, 'Trente!', 'thumbs-up', 'success'],
+    [Status::INSTRUCTOR, 'Instruerte', 'thumbs-up', 'success'],
     [Status::HOLIDAY, 'Bortreist', 'hand-o-right', 'warning'],
     [Status::SICK, 'Syk', 'plus', 'danger'],
     [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],

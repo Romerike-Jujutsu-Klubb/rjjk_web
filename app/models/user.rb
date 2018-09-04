@@ -5,6 +5,8 @@ require 'digest/sha1'
 class User < ApplicationRecord
   include UserSystem
 
+  acts_as_paranoid
+
   attr_accessor :password, :password_confirmation
 
   # geocoded_by :full_address
@@ -59,7 +61,8 @@ class User < ApplicationRecord
   validates :email,
       # presence: { unless: ->{phone || member} }, # TODO(uwe): Activate this?  Ensure contact method!
       format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_nil: true },
-      uniqueness: { case_sensitive: false, scope: :deleted, unless: :deleted, allow_nil: true }
+      uniqueness: { case_sensitive: false, scope: :deleted_at, unless: :deleted_at, allow_nil: true }
+  validates :guardian_1_id, presence: {if: ->{age < 18}}
   validates :login, length: { within: 3..64 }, uniqueness: { case_sensitive: false }, allow_nil: true
   validates :password, presence: { if: :validate_password? },
       confirmation: { if: :validate_password? },
@@ -72,7 +75,7 @@ class User < ApplicationRecord
     if will_save_change_to_role? && role.present? && !current_user&.admin?
       errors.add(:role, 'Bare administratorer kan gi administratorrettigheter.')
     end
-    errors.add(:base, 'trenger kontaktinfo.') unless contact_info?
+    errors.add(:base, 'trenger kontaktinfo.') unless deleted? || contact_info?
     # if !left_on && !billing_user&.email && user.emails.empty?
     #   errors.add :base, 'The member is missing a contact email'
     # end
@@ -95,7 +98,7 @@ class User < ApplicationRecord
   def self.authenticate(email, pass)
     users = includes(:member)
         .where('login = :email OR email = :email', email: email)
-        .where('verified = ? AND (deleted IS NULL OR deleted = ?)', true, false).to_a
+        .where('verified = ? AND (deleted_at IS NULL)', true).to_a
     users
         .select { |u| u.salted_password == salted_password(u.salt, hashed(pass)) }
         .first
@@ -163,8 +166,16 @@ class User < ApplicationRecord
     [self, guardian_1, guardian_2, billing_user, contact_user].map {|u| u&.phone}.compact.uniq.sort
   end
 
-  def name
-    [first_name, last_name].select(&:present?).join(' ').presence
+  def label(last_name_first: false)
+    name(last_name_first: last_name_first) || email || phone
+  end
+
+  def name(last_name_first: false)
+    if last_name_first
+      [last_name, first_name].select(&:present?).join(', ').presence
+    else
+      [first_name, last_name].select(&:present?).join(' ').presence
+    end
   end
 
   def name_was
