@@ -47,7 +47,7 @@ class AttendancePlanFeatureTest < FeatureTest
     next_button = find('#button_2013_42_545305079')
     assert_equal 'Kommer!', next_button.text
     next_button.find('button.dropdown-toggle').click
-    assert_equal 'Kommer! Kommer! Bortreist Syk Annet', next_button.text
+    assert_equal 'Kommer! Kommer! Instruere Bortreist Syk Annet', next_button.text
     screenshot('dropdown')
     next_button.click_link('Annet')
     assert_equal 'Annet', next_button.text

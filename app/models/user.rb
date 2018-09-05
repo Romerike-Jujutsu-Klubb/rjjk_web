@@ -62,7 +62,7 @@ class User < ApplicationRecord
       # presence: { unless: ->{phone || member} }, # TODO(uwe): Activate this?  Ensure contact method!
       format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_nil: true },
       uniqueness: { case_sensitive: false, scope: :deleted_at, unless: :deleted_at, allow_nil: true }
-  validates :guardian_1_id, presence: { if: -> {age && age < 18} }
+  # validates :guardian_1_id, presence: { if: -> {age && age < 18} }
   validates :login, length: { within: 3..64 }, uniqueness: { case_sensitive: false }, allow_nil: true
   validates :password, presence: { if: :validate_password? },
       confirmation: { if: :validate_password? },

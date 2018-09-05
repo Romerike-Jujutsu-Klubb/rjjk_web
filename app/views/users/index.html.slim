@@ -6,16 +6,15 @@
 
 h1 Brukere
 
-table.table.table-sm
+table.table.table-sm data-record-path=users_path
   tr
     th =l :user_last_name_form
     th =l :user_first_name_form
     th align="center" Admin
     th align="center" Bekreftet
   - for user in @users
-    tr
-      td = user.last_name || user.member&.last_name
+    tr data-record-id=user.id
+      td = user.last_name || user.member&.last_name || user.email || user.phone
       td = user.first_name || user.member&.first_name
       td align="center" =('*' if user.admin?)
       td align="center" =('*' if user.verified?)
-      td =link_to(l(:user_edit_head), action: :edit, id: user)

@@ -5,7 +5,13 @@ default: &default
   password:
   pool: 50
   encoding: utf8
-  collation: C
+  <% if OS.linux? %>
+  collation: nb_NO.UTF-8
+  ctype: nb_NO.UTF-8
+  <% elsif OS.mac? %>
+  collation: no_NO.UTF-8
+  ctype: no_NO.UTF-8
+  <% end %>
   template: template0
 
 development:

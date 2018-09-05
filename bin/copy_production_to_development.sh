@@ -10,7 +10,7 @@ set -e
 
 echo "Re-creating database"
 dropdb --if-exists $DB_NAME
-createdb -T template0 -l en_US.UTF-8 $DB_NAME
+bin/rake db:create
 
 echo "Transferring database"
 time ssh root@kubosch.no "pg_dump -U capistrano rjjk_production | gzip" |

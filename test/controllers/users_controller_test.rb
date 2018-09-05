@@ -27,11 +27,19 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   def test_delete
-    user = login(:admin)
-    post :update, params: { id: user.id, user: { form: 'delete' } }
+    login(:admin)
+    user = users(:deletable_user)
+    delete :destroy, params: { id: user.id }
     user.reload
-    assert user.deleted
+    assert user.deleted?
     assert_not_logged_in
+  end
+
+  test 'delete_with_dependent_member' do
+    user = login(:admin)
+    assert_raises(ActiveRecord::DeleteRestrictionError) { delete :destroy, params: { id: user.id } }
+    user.reload
+    assert_not user.deleted?
   end
 
   private

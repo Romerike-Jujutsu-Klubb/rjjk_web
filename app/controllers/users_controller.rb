@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :admin_required
 
   def index
-    @users = User.order(:last_name, :first_name, :id).to_a
+    @users = User.order('UPPER(last_name), UPPER(first_name), email, phone, id').to_a
   end
 
   def show
@@ -45,8 +45,7 @@ class UsersController < ApplicationController
   end
 
   def like
-    UserImage.where(user_id: current_user.id, image_id: params[:id], rel_type: 'LIKE')
-        .first_or_create!
+    UserImage.where(user_id: current_user.id, image_id: params[:id], rel_type: 'LIKE').first_or_create!
     redirect_to controller: :news, action: :index
   end
 
