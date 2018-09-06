@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://www.googleapis.com/oauth2/v4/token
+    uri: https://oauth2.googleapis.com/token
     body:
       encoding: ASCII-8BIT
       string: grant_type=refresh_token&refresh_token=1%2FKV3YUjopq2llrdhp1DlmDuhBbRxYWx5H-Z05uT5diDAcPXIwTFPF3BOp3sn46Dra&client_id=452925651630-egr1f18o96acjjvphpbbd1qlsevkho1d.apps.googleusercontent.com&client_secret=1U3-Krii5x1oLPrwD5zgn-ry
@@ -724,7 +724,7 @@ http_interactions:
   recorded_at: Thu, 17 Oct 2013 16:46:00 GMT
 - request:
     method: post
-    uri: https://www.googleapis.com/oauth2/v4/token
+    uri: https://oauth2.googleapis.com/token
     body:
       encoding: ASCII-8BIT
       string: grant_type=refresh_token&refresh_token=1%2FKV3YUjopq2llrdhp1DlmDuhBbRxYWx5H-Z05uT5diDAcPXIwTFPF3BOp3sn46Dra&client_id=452925651630-egr1f18o96acjjvphpbbd1qlsevkho1d.apps.googleusercontent.com&client_secret=1U3-Krii5x1oLPrwD5zgn-ry
