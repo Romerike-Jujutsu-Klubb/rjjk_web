@@ -5,9 +5,7 @@ default: &default
   password:
   pool: 50
   encoding: utf8
-  <% if ENV['TRAVIS'].present? %>
-  collation: C
-  ctype: C
+  <% if ENV['TRAVIS'] %>
   <% elsif OS.linux? %>
   collation: nb_NO.UTF-8
   ctype: nb_NO.UTF-8
