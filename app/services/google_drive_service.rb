@@ -13,9 +13,17 @@ class GoogleDriveService
   # Run this to generate tmp/google_drive_client_secret.json
   #   PORT=3005 RAILS_ENV=production bin/rails s
   def initialize
-    google_drive_client_config = Rails.application.secrets.google_drive_client_config
-    @session = GoogleDrive::Session
-        .from_config('tmp/google_drive_client_secret.json', google_drive_client_config.stringify_keys)
+    google_drive_client_config = Rails.application.credentials.google_drive_client_config
+    config_file = 'tmp/google_drive_client_secret.json'
+    unless File.exist?(config_file)
+      File.write(config_file, JSON.dump(
+          client_id: google_drive_client_config[:client_id],
+          client_secret: google_drive_client_config[:client_secret],
+          scope: %w[https://www.googleapis.com/auth/drive https://spreadsheets.google.com/feeds/],
+          refresh_token: Rails.application.credentials.google_drive_refresh_token
+        ))
+    end
+    @session = GoogleDrive::Session.from_config(config_file, google_drive_client_config.stringify_keys)
   end
 
   def get_file(id)
