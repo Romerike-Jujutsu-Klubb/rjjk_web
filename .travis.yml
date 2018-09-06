@@ -7,6 +7,9 @@ cache: bundler
 addons:
   chrome: stable
   postgresql: "9.6"
+  apt:
+    packages:
+      - language-pack-nb
 
 before_install:
   - wget "http://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip"
