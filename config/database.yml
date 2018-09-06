@@ -6,6 +6,8 @@ default: &default
   pool: 50
   encoding: utf8
   <% if ENV['TRAVIS'] %>
+  collation: C
+  ctype: C
   <% elsif OS.linux? %>
   collation: nb_NO.UTF-8
   ctype: nb_NO.UTF-8
