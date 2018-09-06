@@ -6,12 +6,11 @@ class NkfAgent
 
   APP_PATH = 'https://nkfwww.kampsport.no/portal'
   NKF_USERNAME = '40001062'
-  NKF_PASSWORD_KEY = 'NKF_PASSWORD'
-  NKF_PASSWORD = ENV[NKF_PASSWORD_KEY]
+  NKF_PASSWORD = Rails.application.credentials.nkf_password
   BACKOFF_LIMIT = 15.minutes
 
   def initialize
-    raise "#{NKF_PASSWORD_KEY} required!" if NKF_PASSWORD.blank?
+    raise 'NKF PASSWORD required!' if NKF_PASSWORD.blank?
     super
     @agent = Mechanize.new
     @agent.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
