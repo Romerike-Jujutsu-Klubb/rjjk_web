@@ -1,26 +1,21 @@
 h1 Web
 
-#admin_menu
-  ul
-    li = link_to 'Ny nyhet', controller: :news, action: :new
-    li = link_to 'Ny info-side', controller: :info, action: :new
-    li = link_to 'Ny hendelse', controller: :events, action: :new
-    li = link_to 'Brukere', controller: :users, action: :index
+ul
+  li = link_to 'Ny nyhet', controller: :news, action: :new
+  li = link_to 'Ny info-side', controller: :info, action: :new
+  li = link_to 'Ny hendelse', controller: :events, action: :new
+  li = link_to 'Brukere', controller: :users, action: :index
+  li = menu_item 'Versjon', controller: :info, action: :versjon
+  li = menu_item 'Status', controller: :status
 
 h1 Administrasjon
 
-#members_menu
-  ul
-    li = menu_item 'Medlemsliste', controller: :members, action: :list_active
-    li = menu_item 'Styremøter', controller: :board_meetings
-    li = menu_item 'Årsmøter', controller: :annual_meetings
-    li = menu_item 'Styret', controller: :elections
-    li = menu_item 'Spørre&shy;undersøkelser'.html_safe, controller: :surveys
-    li = menu_item 'Bursdager', controller: :birthday_celebrations
-    li = menu_item 'Roller', controller: :roles
-    li = menu_item 'Verv', controller: :appointments
-    /
-          <li><%= menu_item 'Inntekt', controller: :members, action: :income %></li>
-          <li><%= menu_item 'NKF Medlemsliste', controller: :nkf_members, action: :index %></li>
-          <li><%= menu_item 'NKF Avstemming', controller: :nkf_members, action: :comparison %></li>
-    li = menu_item 'Versjon', controller: :info, action: :versjon
+ul
+  li = menu_item 'Medlemsliste', controller: :members, action: :list_active
+  li = menu_item 'Styremøter', controller: :board_meetings
+  li = menu_item 'Årsmøter', controller: :annual_meetings
+  li = menu_item 'Styret', controller: :elections
+  li = menu_item 'Spørre&shy;undersøkelser'.html_safe, controller: :surveys
+  li = menu_item 'Bursdager', controller: :birthday_celebrations
+  li = menu_item 'Roller', controller: :roles
+  li = menu_item 'Verv', controller: :appointments

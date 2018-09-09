@@ -145,7 +145,6 @@ Rails.application.routes.draw do
       get :image
       get :missing_contract
       get :photo
-      post :remove_group
       post :save_image
       get :since_graduation
       get :thumbnail

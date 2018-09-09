@@ -5,7 +5,7 @@ class MembersController < ApplicationController
 
   caches_page :age_chart, :image, :thumbnail, :history_graph, :grade_history_graph,
       :grade_history_graph_percentage
-  cache_sweeper :member_sweeper, only: %i[add_group create update destroy]
+  cache_sweeper :member_sweeper, only: %i[create update destroy]
 
   def index
     @members = Member.all.sort_by(&:name)
@@ -190,18 +190,6 @@ class MembersController < ApplicationController
     @name = "#{@trial.fornavn} #{@trial.etternavn}"
     @email = @trial.epost_faktura || @trial.epost
     render :missing_contract, layout: 'print'
-  end
-
-  def add_group
-    @member = Member.find(params[:id])
-    @member.groups << Group.find(params[:group_id])
-    redirect_to controller: :nkf_members, action: :comparison, id: 0
-  end
-
-  def remove_group
-    @member = Member.find(params[:id])
-    @member.groups.delete(Group.find(params[:group_id]))
-    redirect_to controller: :nkf_members, action: :comparison, id: 0
   end
 
   def map
