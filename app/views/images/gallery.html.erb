@@ -26,24 +26,29 @@
 <% width = 492 / 5 %>
 <% @images.each_slice(5) do |slice| %>
     <hr style="margin: 10px 0"/>
-    <div align="center">
+    <div class="row text-center">
       <% slice.each do |i| %>
-          <div style="float: left; width: 20%">
-            <%= link_to :id => i.id do %>
-                <%= image_tag url_for(:controller => :images, :action => :inline, :id => i.id, :format => i.format, :width => width),
-                              :title => i.name || 'Bilde', :width => width, :class => 'img-thumbnail' %>
-            <% end %>
-          </div>
-      <% end %>
-      <br clear="all"/>
-      <% slice.each do |i| %>
-          <div style="float: left; width: 20%; text-align: center">
+          <div class="col">
             <%= i.description || i.name.gsub(/[._-]/, ' ').chomp(i.format) %>
           </div>
       <% end %>
-      <br clear="all"/>
+    </div>
+    <div class="row text-center">
       <% slice.each do |i| %>
-          <div style="float: left; width: 20%; text-align: center">
+          <% image_width = width - 10 %>
+          <% image_height = i.height_at(image_width) %>
+          <% height = image_height + 10 %>
+          <div class="col">
+            <%= link_to id: i.id do %>
+                <%= image_tag url_for(controller: :images, action: :inline, id: i.id, format: i.format, width: image_width),
+                    title: i.name || 'Bilde', style: "width:#{width}px;height:#{height}px;object-fit:cover", class: 'img-thumbnail', lazy: true %>
+            <% end %>
+          </div>
+      <% end %>
+    </div>
+    <div class="row text-center">
+      <% slice.each do |i| %>
+          <div class="col">
             <ul class="controls">
               <li><%= link_to 'Godkjenn', {:controller => :images, :action => :update, :id => i.id, :image => {:approved => true}}, :method => :put if admin? && !i.approved? %></li>
               <li><%= link_to i.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => i.id, :image => {:public => !i.public?}}, :method => :put if admin? %></li>

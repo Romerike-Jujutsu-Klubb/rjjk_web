@@ -32,7 +32,10 @@ class GoogleDriveService
 
   def get_file_io(id)
     logger.info 'download'
-    @session.file_by_id(id).download_to_string
+    sio = StringIO.new
+    sio.set_encoding(Encoding::BINARY)
+    @session.file_by_id(id).download_to_io(sio)
+    sio.string
     # logger.info "download...OK"
     # Streamer.new(self, id)
   end

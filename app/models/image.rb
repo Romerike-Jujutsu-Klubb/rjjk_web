@@ -75,6 +75,7 @@ class Image < ApplicationRecord
   end
 
   def height_at(max_width)
+    return max_width * 240 / 320 if video?
     update_dimensions!
     ratio = max_width.to_f / width
     max_height = height * ratio
@@ -83,10 +84,7 @@ class Image < ApplicationRecord
 
   def update_dimensions!
     return unless width.nil? || height.nil?
-    if attributes[:content_data].nil?
-      self.content_data = self.class.select(:content_data).find(id).content_data
-    end
-    magick_image = Magick::Image.from_blob(content_data).first
+    magick_image = Magick::Image.from_blob(content_data_io).first
     self.width = magick_image.columns
     self.height = magick_image.rows
     save!

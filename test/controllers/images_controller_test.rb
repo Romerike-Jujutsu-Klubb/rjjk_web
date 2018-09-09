@@ -126,7 +126,9 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_gallery
-    get :gallery, params: { id: @first_id }
+    VCR.use_cassette('GoogleDriveGallery') do
+      get :gallery, params: { id: @first_id }
+    end
 
     assert_response :success
     assert_template 'gallery'
