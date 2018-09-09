@@ -1,9 +1,10 @@
 $(function () {
     $('table[data-record-path]').click(function (event) {
-        console.trace(event);
-        console.trace(event.target);
         var row = $(event.target).closest('tr');
-        console.trace(row);
-        window.location = row.closest('table').data('record-path') + '/' + row.data('record-id')
+        var record_id = row.data('record-id');
+        if (!record_id) {
+            return
+        }
+        window.location = row.closest('table').data('record-path') + '/' + record_id
     }).css('cursor', 'pointer').addClass('table-hover');
 });
