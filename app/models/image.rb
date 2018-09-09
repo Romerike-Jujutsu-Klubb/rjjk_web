@@ -71,7 +71,7 @@ class Image < ApplicationRecord
 
   def aspect_ratio
     update_dimensions! unless video?
-    return width / height if width && height
+    return (width.to_f / height) if width && height
     320 / 240
   end
 
