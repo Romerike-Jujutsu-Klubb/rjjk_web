@@ -146,7 +146,8 @@ class ImagesController < ApplicationController
   end
 
   def mine
-    image_select = Image.select(%i[approved content_type description id name public user_id])
+    image_select = Image
+        .select(%i[approved content_type description google_drive_reference id name public user_id])
         .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
         .order('created_at DESC')
     image_select = image_select.where('user_id = ?', current_user.id)

@@ -136,7 +136,9 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_mine
-    get :mine
+    VCR.use_cassette('GoogleDriveGallery') do
+      get :mine
+    end
 
     assert_response :success
     assert_template 'gallery'

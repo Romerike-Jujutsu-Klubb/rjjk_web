@@ -69,6 +69,12 @@ class Image < ApplicationRecord
     content_type =~ %r{^video/}
   end
 
+  def aspect_ratio
+    update_dimensions! unless video?
+    return width / height if width && height
+    320 / 240
+  end
+
   def width_max(max_width)
     update_dimensions!
     [width, max_width].min.to_i
@@ -106,7 +112,12 @@ class Image < ApplicationRecord
 
   def move_to_google_drive!
     logger.info "Store image in Google Drive: #{id}, #{name}"
-    image_content = self.class.where(id: id).pluck(:content_data).first
+    image_content, google_reference =
+        self.class.where(id: id).pluck(:content_data, :google_drive_reference).first
+    if image_content.nil? && google_reference
+      self.google_drive_reference = google_reference
+      return
+    end
     google_id = GoogleDriveService.new.store_file(:images, id, image_content, content_type)
     update! google_drive_reference: google_id, content_data: nil
     image_content
