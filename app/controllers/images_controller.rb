@@ -10,7 +10,7 @@ class ImagesController < ApplicationController
   cache_sweeper :image_sweeper, only: %i[update destroy]
 
   def index
-    @images = Image.order(created_at: :desc).to_a
+    @images = Image.without_image.order(created_at: :desc).to_a
   end
 
   def show
