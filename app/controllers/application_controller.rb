@@ -35,25 +35,25 @@ class ApplicationController < ActionController::Base
       @information_pages = @information_pages.where('hidden IS NULL OR hidden = ?', false) unless admin?
       @information_pages = @information_pages.where('title <> ?', 'Velkommen') unless user?
     end
-    unless @image
-      3.times do
-        Image.uncached do
-          image_query = Image
-              .select(%w[approved content_type description google_drive_reference height id name public
-                         user_id width])
-              .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
-              .order(Rails.env.test? ? :id : 'RANDOM()')
-          image_query = image_query.where('approved = ?', true) unless admin?
-          image_query = image_query.where('public = ?', true) unless user?
-          @image = image_query.first
-        end
-        break unless @image
-        @image.update_dimensions! unless @image.video?
-        break
-      rescue => e
-        ExceptionNotifier.notify_exception(e)
-      end
-    end
+    # unless @image
+    #   3.times do
+    #     Image.uncached do
+    #       image_query = Image
+    #           .select(%w[approved content_type description google_drive_reference height id name public
+    #                      user_id width])
+    #           .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
+    #           .order(Rails.env.test? ? :id : 'RANDOM()')
+    #       image_query = image_query.where('approved = ?', true) unless admin?
+    #       image_query = image_query.where('public = ?', true) unless user?
+    #       @image = image_query.first
+    #     end
+    #     break unless @image
+    #     @image.update_dimensions! unless @image.video?
+    #     break
+    #   rescue => e
+    #     ExceptionNotifier.notify_exception(e)
+    #   end
+    # end
 
     if (m = current_user.try(:member)) && (group = m.groups.find(&:planning))
       @next_practice = group.next_practice
