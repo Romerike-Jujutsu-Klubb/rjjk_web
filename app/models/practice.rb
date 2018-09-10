@@ -8,6 +8,11 @@ class Practice < ApplicationRecord
 
   validates :group_schedule_id, uniqueness: { scope: %i[year week] }
 
+  def group_semester
+    GroupSemester.where(group_id: group_schedule.group_id)
+        .find_by('first_session <= :date AND last_session >= :date', date: date)
+  end
+
   def date
     Date.commercial(year, week, group_schedule.weekday)
   end

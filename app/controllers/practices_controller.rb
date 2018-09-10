@@ -7,30 +7,15 @@ class PracticesController < ApplicationController
     @practices = Practice.includes(group_schedule: :group).references(:group_schedules)
         .order('year, week, group_schedules.weekday, end_at, start_at, name DESC')
         .reverse_order.to_a
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @practices }
-    end
   end
 
   def show
     @practice = Practice.find(params[:id])
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @practice }
-    end
   end
 
   def new
     @practice = Practice.new
     load_form_data
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @practice }
-    end
   end
 
   def edit
@@ -40,44 +25,26 @@ class PracticesController < ApplicationController
 
   def create
     @practice = Practice.new(params[:practice])
-
-    respond_to do |format|
-      if @practice.save
-        format.html do
-          redirect_to practices_path, notice: 'Scheduled practice was successfully created.'
-        end
-        format.json { render json: @practice, status: :created, location: @practice }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @practice.errors, status: :unprocessable_entity }
-      end
+    if @practice.save
+      redirect_to practices_path, notice: 'Scheduled practice was successfully created.'
+    else
+      render :new
     end
   end
 
   def update
     @practice = Practice.find(params[:id])
-
-    respond_to do |format|
-      if @practice.update_attributes(params[:practice])
-        format.html do
-          redirect_to practices_path, notice: 'Scheduled practice was successfully updated.'
-        end
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @practice.errors, status: :unprocessable_entity }
-      end
+    if @practice.update_attributes(params[:practice])
+      redirect_to @practice.group_semester || @practice, notice: 'Treningen er oppdatert.'
+    else
+      render :edit
     end
   end
 
   def destroy
     @practice = Practice.find(params[:id])
     @practice.destroy
-
-    respond_to do |format|
-      format.html { redirect_to practices_url }
-      format.json { head :no_content }
-    end
+    redirect_to practices_url
   end
 
   private
