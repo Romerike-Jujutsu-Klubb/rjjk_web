@@ -7,7 +7,7 @@
       = image_tag url_for(controller: :images, action: :inline, id: @image.id, format: @image.format, width: 762), title: @image.name || 'Bilde', class: 'img-thumbnail w-100 p-1', style: media_style
   .w-100 align="center"
     = @image.description || @image.name
-    | av #{@image.user&.name}
+    | av #{@image.user.name}
     br
     ul.controls.pb-0
       li = link_to 'Godkjenn', {:controller => :images, :action => :update, :id => @image.id, :image => {:approved => true}}, :method => :put if admin? && !@image.approved?
