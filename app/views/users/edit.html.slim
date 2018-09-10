@@ -1,4 +1,8 @@
-= link_to 'Slett bruker', user_path(@user), method: :delete, class: 'btn btn-danger float-right'
+- if @user.deleted?
+  h2
+    .badge.badge-danger.float-right Slettet
+-else
+  = link_to 'Slett bruker', user_path(@user), method: :delete, class: 'btn btn-danger float-right'
 
 h2 Rediger bruker
 
@@ -7,7 +11,9 @@ h2 Rediger bruker
     ' Brukeren
     = error_msgs.join('  ')
 
-= render 'form', user: @user, submit: true
-br
-= form_tag(url_for(action: :change_password)) do
-  = render 'password', submit: true
+= render 'form', user: @user, submit: !@user.deleted?
+
+/ - unless @user.deleted?
+/   br
+/   = form_tag(url_for(action: :change_password)) do
+/     = render 'password', submit: true

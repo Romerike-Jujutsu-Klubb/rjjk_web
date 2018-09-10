@@ -109,7 +109,7 @@ class ImagesController < ApplicationController
       flash.notice = 'Bildet ble oppdatert.'
       back_or_redirect_to action: :edit, id: @image
     else
-      flash.now.warning = 'Bildet kunne ikke oppdateres.'
+      flash.now.alert = 'Bildet kunne ikke oppdateres.'
       render action: 'edit'
     end
   end

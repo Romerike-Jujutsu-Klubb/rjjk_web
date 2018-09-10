@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user ||= User.find(params[:id])
+    @user ||= User.with_deleted.find(params[:id])
     if (@member = @user.member)
       @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').where(closed_on: nil)
           .to_a
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = User.with_deleted.find(params[:id])
     form = params[:user].delete(:form)
     logger.warn "User form: #{form}" if form
     if @user.update params[:user]
