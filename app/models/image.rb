@@ -8,7 +8,7 @@ class Image < ApplicationRecord
   scope :published, -> { where(public: true, approved: true) }
   scope :images, -> { where("content_type LIKE 'image/%'") }
 
-  belongs_to :user, -> { with_deleted }
+  belongs_to :user, -> { with_deleted }, inverse_of: :images
   has_one :member_image, dependent: :destroy
   has_many :user_images, dependent: :destroy
   has_many :likers, -> { where("user_images.rel_type = 'LIKE'") },
