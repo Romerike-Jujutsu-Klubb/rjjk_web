@@ -7,8 +7,6 @@ table.table
       td align="center"
         = link_to(image_path(image), title: image.name, author: 'RJJK', caption: image.name) do
           = image_tag(url_for(only_path: false, controller: 'images', action: :inline, id: image.id, format: image.format), width: 160, title: image.name, alt: image.name, lazy: true)
-          - if image.google_drive_reference.nil?
-            .badge.badge-warning Not stored in Google Drive
         br
         small = truncate(image.name.chomp('.jpg').gsub('_', ' '), length: 29)
         br
