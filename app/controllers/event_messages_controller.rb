@@ -32,7 +32,7 @@ class EventMessagesController < ApplicationController
 
   def update
     @event_message = EventMessage.find(params[:id])
-    if @event_message.update_attributes(params[:event_message])
+    if @event_message.update(params[:event_message])
       back_or_redirect_to @event_message, notice: 'Event message was successfully updated.'
     else
       render action: 'edit'

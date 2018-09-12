@@ -31,7 +31,7 @@ class MartialArtsController < ApplicationController
 
   def update
     @martial_art = MartialArt.find(params[:id])
-    if @martial_art.update_attributes(params[:martial_art])
+    if @martial_art.update(params[:martial_art])
       flash[:notice] = 'MartialArt was successfully updated.'
       redirect_to action: 'show', id: @martial_art
     else

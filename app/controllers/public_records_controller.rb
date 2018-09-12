@@ -30,7 +30,7 @@ class PublicRecordsController < ApplicationController
 
   def update
     @public_record = PublicRecord.find(params[:id])
-    if @public_record.update_attributes(params[:public_record])
+    if @public_record.update(params[:public_record])
       redirect_to @public_record, notice: 'Public record was successfully updated.'
     else
       render action: 'edit'

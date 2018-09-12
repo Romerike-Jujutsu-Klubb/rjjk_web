@@ -43,7 +43,7 @@ class SignaturesController < ApplicationController
 
   def update
     @signature = Signature.find(params[:id])
-    if @signature.update_attributes(params[:signature])
+    if @signature.update(params[:signature])
       redirect_to @signature, notice: 'Signaturen ble oppdatert.'
     else
       edit

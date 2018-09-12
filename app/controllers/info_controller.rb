@@ -71,7 +71,7 @@ class InfoController < ApplicationController
   def update
     @information_page = InformationPage.find(params[:id])
     set_revised_at_param
-    if @information_page.update_attributes(params[:information_page])
+    if @information_page.update(params[:information_page])
       flash[:notice] = 'InformationPage was successfully updated.'
       redirect_to action: 'show', id: @information_page
     else

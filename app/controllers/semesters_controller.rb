@@ -44,7 +44,7 @@ class SemestersController < ApplicationController
 
   def update
     @semester = Semester.find(params[:id])
-    if @semester.update_attributes(params[:semester])
+    if @semester.update(params[:semester])
       redirect_to @semester, notice: 'Semester was successfully updated.'
     else
       render action: :edit

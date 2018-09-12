@@ -58,7 +58,7 @@ class BirthdayCelebrationsController < ApplicationController
 
   def update
     @birthday_celebration = BirthdayCelebration.find(params[:id])
-    if @birthday_celebration.update_attributes(params[:birthday_celebration])
+    if @birthday_celebration.update(params[:birthday_celebration])
       redirect_to @birthday_celebration,
           notice: 'Birthday celebration was successfully updated.'
     else

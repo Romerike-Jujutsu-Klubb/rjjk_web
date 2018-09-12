@@ -56,7 +56,7 @@ class TechniqueApplicationsController < ApplicationController
   def update
     @technique_application = TechniqueApplication.find(params[:id])
     respond_to do |format|
-      if @technique_application.update_attributes(params[:technique_application])
+      if @technique_application.update(params[:technique_application])
         format.html do
           redirect_to @technique_application, notice: 'Application was successfully updated.'
         end

@@ -58,7 +58,7 @@ class GroupSemestersController < ApplicationController
     @group_semester = GroupSemester.find(params[:id])
 
     respond_to do |format|
-      if @group_semester.update_attributes(params[:group_semester])
+      if @group_semester.update(params[:group_semester])
         create_practices
         format.html do
           redirect_to @group_semester, notice: 'Semesterplan er lagret'

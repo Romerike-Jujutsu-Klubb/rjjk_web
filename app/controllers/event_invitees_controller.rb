@@ -45,7 +45,7 @@ class EventInviteesController < ApplicationController
     @event_invitee = EventInvitee.find(params[:id])
 
     respond_to do |format|
-      if @event_invitee.update_attributes(params[:event_invitee])
+      if @event_invitee.update(params[:event_invitee])
         format.html do
           back_or_redirect_to(@event_invitee, notice: 'Event invitee was successfully updated.')
         end

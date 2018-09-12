@@ -52,7 +52,7 @@ class PageAliasesController < ApplicationController
     @page_alias = PageAlias.find(params[:id])
 
     respond_to do |format|
-      if @page_alias.update_attributes(params[:page_alias])
+      if @page_alias.update(params[:page_alias])
         format.html { redirect_to @page_alias, notice: 'Page alias was successfully updated.' }
         format.json { head :no_content }
       else

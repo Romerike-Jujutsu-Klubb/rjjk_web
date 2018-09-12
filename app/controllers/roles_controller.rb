@@ -52,7 +52,7 @@ class RolesController < ApplicationController
     @role = Role.find(params[:id])
 
     respond_to do |format|
-      if @role.update_attributes(params[:role])
+      if @role.update(params[:role])
         format.html { redirect_to @role, notice: 'Job position was successfully updated.' }
         format.json { head :no_content }
       else

@@ -95,11 +95,6 @@ Performance/RegexpMatch:
     - 'config/initializers/mail.rb'
     - 'import_techniques.rb'
 
-# Offense count: 33
-# Cop supports --auto-correct.
-Rails/ActiveRecordAliases:
-  Enabled: false
-
 # Offense count: 18
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb

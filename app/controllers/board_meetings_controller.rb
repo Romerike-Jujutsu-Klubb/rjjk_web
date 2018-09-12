@@ -51,7 +51,7 @@ class BoardMeetingsController < ApplicationController
   def update
     @board_meeting = BoardMeeting.find(params[:id])
     respond_to do |format|
-      if @board_meeting.update_attributes(params[:board_meeting])
+      if @board_meeting.update(params[:board_meeting])
         format.html do
           redirect_to board_meetings_path, notice: 'Board meeting was successfully updated.'
         end

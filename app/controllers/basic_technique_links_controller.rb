@@ -34,7 +34,7 @@ class BasicTechniqueLinksController < ApplicationController
 
   def update
     @basic_technique_link = BasicTechniqueLink.find(params[:id])
-    if @basic_technique_link.update_attributes(params[:basic_technique_link])
+    if @basic_technique_link.update(params[:basic_technique_link])
       redirect_to @basic_technique_link, notice: 'Basic technique link was successfully updated.'
     else
       edit

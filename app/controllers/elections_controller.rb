@@ -55,7 +55,7 @@ class ElectionsController < ApplicationController
   def update
     @election = Election.find(params[:id])
     respond_to do |format|
-      if @election.update_attributes(params[:election])
+      if @election.update(params[:election])
         format.html do
           redirect_to elections_path, notice: 'Board appointment was successfully updated.'
         end

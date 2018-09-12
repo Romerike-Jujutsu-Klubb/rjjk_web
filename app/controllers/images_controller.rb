@@ -105,7 +105,7 @@ class ImagesController < ApplicationController
 
   def update
     @image = Image.find(params[:id])
-    if @image.update_attributes(params[:image])
+    if @image.update(params[:image])
       flash.notice = 'Bildet ble oppdatert.'
       back_or_redirect_to action: :edit, id: @image
     else

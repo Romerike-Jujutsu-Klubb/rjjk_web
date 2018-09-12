@@ -64,7 +64,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         AttendanceMailer.message_reminder(pr, gi.member)
             .store(gi.member, tag: :instructor_message_reminder)
       end
-      pr.update_attributes message_nagged_at: Time.current
+      pr.update message_nagged_at: Time.current
     end
   end
 
@@ -133,7 +133,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
               .select { |a| a.date <= Date.current && a.date >= 1.year.ago }.reverse
       AttendanceMailer.review(member, completed_attendances, older_attendances)
           .store(member, tag: :attendance_review)
-      completed_attendances.each { |a| a.update_attributes sent_review_email_at: now }
+      completed_attendances.each { |a| a.update sent_review_email_at: now }
     end
   end
 end

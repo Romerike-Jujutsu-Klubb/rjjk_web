@@ -36,7 +36,7 @@ class NkfMembersController < ApplicationController
 
   def update
     @nkf_member = NkfMember.find(params[:id])
-    if @nkf_member.update_attributes(params[:nkf_member])
+    if @nkf_member.update(params[:nkf_member])
       flash[:notice] = 'NkfMember was successfully updated.'
       redirect_to(@nkf_member)
     else

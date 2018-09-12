@@ -49,7 +49,7 @@ class NkfMemberTrialsController < ApplicationController
     @nkf_member_trial = NkfMemberTrial.find(params[:id])
 
     respond_to do |format|
-      if @nkf_member_trial.update_attributes(params[:nkf_member_trial])
+      if @nkf_member_trial.update(params[:nkf_member_trial])
         flash[:notice] = 'NkfMemberTrial was successfully updated.'
         format.html { redirect_to(@nkf_member_trial) }
         format.xml  { head :ok }

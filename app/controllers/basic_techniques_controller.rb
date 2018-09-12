@@ -36,7 +36,7 @@ class BasicTechniquesController < ApplicationController
 
   def update
     @basic_technique = BasicTechnique.find(params[:id])
-    if @basic_technique.update_attributes(params[:basic_technique])
+    if @basic_technique.update(params[:basic_technique])
       redirect_to @basic_technique, notice: 'Basic technique was successfully updated.'
     else
       edit

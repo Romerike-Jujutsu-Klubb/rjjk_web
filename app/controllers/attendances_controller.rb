@@ -70,7 +70,7 @@ class AttendancesController < ApplicationController
 
   def update
     @attendance = Attendance.find(params[:id])
-    if @attendance.update_attributes(params[:attendance])
+    if @attendance.update(params[:attendance])
       flash[:notice] = 'Attendance was successfully updated.'
       redirect_to(@attendance)
     else

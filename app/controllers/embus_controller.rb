@@ -46,7 +46,7 @@ class EmbusController < ApplicationController
 
   def update
     @embu = Embu.mine.find(params[:id])
-    if @embu.update_attributes(params[:embu])
+    if @embu.update(params[:embu])
       redirect_to action: :edit, id: @embu.id, notice: 'Embu was successfully updated.'
     else
       render action: :edit

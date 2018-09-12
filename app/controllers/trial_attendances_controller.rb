@@ -54,7 +54,7 @@ class TrialAttendancesController < ApplicationController
     @trial_attendance = TrialAttendance.find(params[:id])
 
     respond_to do |format|
-      if @trial_attendance.update_attributes(params[:trial_attendance])
+      if @trial_attendance.update(params[:trial_attendance])
         format.html do
           redirect_to(@trial_attendance, notice: 'TrialAttendance was successfully updated.')
         end

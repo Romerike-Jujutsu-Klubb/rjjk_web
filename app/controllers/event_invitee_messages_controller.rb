@@ -41,7 +41,7 @@ class EventInviteeMessagesController < ApplicationController
 
   def update
     @event_invitee_message = EventInviteeMessage.find(params[:id])
-    if @event_invitee_message.update_attributes(params[:event_invitee_message])
+    if @event_invitee_message.update(params[:event_invitee_message])
       back_or_redirect_to @event_invitee_message,
           notice: 'Signup confirmation was successfully updated.'
     else

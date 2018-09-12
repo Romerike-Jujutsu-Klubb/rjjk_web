@@ -30,7 +30,7 @@ class WazasController < ApplicationController
 
   def update
     @waza = Waza.find(params[:id])
-    if @waza.update_attributes(params[:waza])
+    if @waza.update(params[:waza])
       redirect_to @waza, notice: 'Waza was successfully updated.'
     else
       render action: 'edit'

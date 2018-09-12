@@ -49,7 +49,7 @@ class NewsController < ApplicationController
 
   def update
     @news_item = NewsItem.find(params[:id])
-    if @news_item.update_attributes(params[:news_item])
+    if @news_item.update(params[:news_item])
       flash[:notice] = 'Nyheten ble oppdatert.'
       back_or_redirect_to action: :show, id: @news_item
     else

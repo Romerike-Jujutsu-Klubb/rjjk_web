@@ -64,7 +64,7 @@ class GroupSchedulesController < ApplicationController
     @group_schedule = GroupSchedule.find(params[:id])
 
     respond_to do |format|
-      if @group_schedule.update_attributes(params[:group_schedule])
+      if @group_schedule.update(params[:group_schedule])
         flash[:notice] = 'GroupSchedule was successfully updated.'
         format.html { redirect_to group_schedules_path }
         format.xml { head :ok }

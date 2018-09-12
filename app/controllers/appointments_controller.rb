@@ -33,7 +33,7 @@ class AppointmentsController < ApplicationController
 
   def update
     @appointment = Appointment.find(params[:id])
-    if @appointment.update_attributes(params[:appointment])
+    if @appointment.update(params[:appointment])
       redirect_to appointments_path, notice: 'Vervet ble oppdatert.'
     else
       render action: 'edit'

@@ -28,7 +28,7 @@ class CorrespondencesController < ApplicationController
 
   def update
     @correspondence = Correspondence.find(params[:id])
-    if @correspondence.update_attributes(params[:correspondence])
+    if @correspondence.update(params[:correspondence])
       redirect_to @correspondence, notice: 'Correspondence was successfully updated.'
     else
       render action: 'edit'
