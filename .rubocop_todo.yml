@@ -95,18 +95,6 @@ Performance/RegexpMatch:
     - 'config/initializers/mail.rb'
     - 'import_techniques.rb'
 
-# Offense count: 10
-# Cop supports --auto-correct.
-Performance/UnneededSort:
-  Exclude:
-    - 'app/controllers/graduations_controller.rb'
-    - 'app/models/group.rb'
-    - 'app/models/member.rb'
-    - 'app/models/member_grade_history_graph.rb'
-    - 'app/models/nkf_member.rb'
-    - 'app/services/survey_sender.rb'
-    - 'db/migrate/20130530151501_add_group_to_graduations.rb'
-
 # Offense count: 33
 # Cop supports --auto-correct.
 Rails/ActiveRecordAliases:

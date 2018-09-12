@@ -153,7 +153,7 @@ class Member < ApplicationRecord
   end
 
   def next_rank(graduation =
-      Graduation.new(held_on: Date.current, group: groups.sort_by(&:from_age).last))
+      Graduation.new(held_on: Date.current, group: groups.max_by(&:from_age)))
     age = self.age(graduation.held_on)
     ma = graduation.group.try(:martial_art) ||
         MartialArt.includes(:ranks).find_by(name: 'Kei Wa Ryu')

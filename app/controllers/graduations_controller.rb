@@ -203,7 +203,7 @@ class GraduationsController < ApplicationController
 
   def load_current_user_approval
     @graduation.censors.select { |c| c.member == current_user.member }
-        .sort_by { |c| c.approved_grades_at ? 0 : 1 }.last
+        .max_by { |c| c.approved_grades_at ? 0 : 1 }
   end
 
   def load_graduates

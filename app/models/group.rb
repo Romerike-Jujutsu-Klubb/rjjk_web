@@ -72,13 +72,13 @@ class Group < ApplicationRecord
     return if contracts.empty?
 
     self.monthly_price = contracts.map(&:kontraktsbelop).group_by { |x| x }
-        .group_by { |_k, v| v.size }.sort.last.last.map(&:first).first
+        .group_by { |_k, v| v.size }.max.last.map(&:first).first
     self.yearly_price = contracts.map(&:kont_belop).group_by { |x| x }
-        .group_by { |_k, v| v.size }.sort.last.last.map(&:first).first
+        .group_by { |_k, v| v.size }.max.last.map(&:first).first
   end
 
   def next_schedule
-    group_schedules.sort_by { |gs| gs.next_practice.date }.first
+    group_schedules.min_by { |gs| gs.next_practice.date }
   end
 
   delegate :next_practice, to: :next_schedule
