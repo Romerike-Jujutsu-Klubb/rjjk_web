@@ -104,7 +104,7 @@ class NkfMemberComparison
     end
     return if nkf_mapping && nkf_mapping[:import]
     if (nkf_field = nkf_mapping&.fetch(:form_field, nil))
-      form_value = old_value.is_a?(Date) ? old_value.strftime('%d.%m.%Y') : old_value # rubocop: disable Style/FormatStringToken
+      form_value = old_value.is_a?(Date) ? old_value.strftime('%d.%m.%Y') : old_value
       logger.info "set form value #{nkf_field.inspect} = #{form_value.inspect}"
       form[nkf_field.to_s] = form_value
       outgoing_changes[attr_sym] = { new_value => old_value }

@@ -44,13 +44,6 @@ Layout/SpaceInsideBlockBraces:
   Exclude:
     - 'app/models/user.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Lint/UnneededCopDisableDirective:
-  Exclude:
-    - 'app/controllers/survey_requests_controller.rb'
-    - 'app/services/nkf_member_comparison.rb'
-
 # Offense count: 237
 Metrics/AbcSize:
   Max: 201
