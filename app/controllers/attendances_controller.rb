@@ -29,7 +29,7 @@ class AttendancesController < ApplicationController
 
   def new
     @attendance ||= Attendance.new params[:attendance]
-    if @attendance.practice && @attendance.practice.try(:new_record?)
+    if @attendance.practice&.new_record?
       practice = Practice
           .where(group_schedule_id: @attendance.practice.group_schedule_id,
                  year: @attendance.practice.year, week: @attendance.practice.week)
