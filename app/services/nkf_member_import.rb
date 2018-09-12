@@ -177,8 +177,7 @@ class NkfMemberImport
       attributes = {}
       columns.each_with_index do |column, i|
         next if %w[aktivitetsomrade_id aktivitetsomrade_navn alder avtalegiro
-                   beltefarge dan_graderingsserifikat forbundskontingent]
-              .include? column
+                   beltefarge dan_graderingsserifikat forbundskontingent].include? column
 
         attributes[column] = row[i]&.strip
       end
