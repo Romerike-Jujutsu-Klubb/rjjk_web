@@ -56,6 +56,7 @@ class NewsFeatureTest < FeatureTest
 
   def tinymce_fill_in(name, options = {})
     raise 'huh?!' if page.driver.browser == :chrome
+
     page.execute_script("tinyMCE.get('#{name}').setContent('#{options[:with]}')")
   end
 

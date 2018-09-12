@@ -228,6 +228,7 @@ class Member < ApplicationRecord
   def passive?(date = Date.current, group = nil)
     return true if passive_on
     return false if joined_on >= date - 2.months
+
     start_date = date - 92
     end_date = date + 31
     if date == Date.current && recent_attendances.loaded?
@@ -262,6 +263,7 @@ class Member < ApplicationRecord
 
   def age_group
     return nil unless age
+
     if age >= JUNIOR_AGE_LIMIT
       'Senior'
     else
@@ -291,6 +293,7 @@ class Member < ApplicationRecord
 
   def image_file=(file)
     return if file.blank?
+
     transaction do
       image = Image.create! user_id: user.id, name: file.original_filename,
           content_type: file.content_type, content_data: file.read
@@ -304,6 +307,7 @@ class Member < ApplicationRecord
 
   def thumbnail(x = 120, y = 160)
     return unless image?
+
     magick_image = Magick::Image.from_blob(image.content_data).first
     magick_image.crop_resized(x, y).to_blob
   end

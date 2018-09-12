@@ -138,6 +138,7 @@ class User < ApplicationRecord
 
   def age(date = Date.current)
     return nil unless birthdate
+
     age = date.year - birthdate.year
     age -= 1 if date < birthdate + age.years
     age
@@ -249,6 +250,7 @@ class User < ApplicationRecord
     previous_contact_email = contact_email
     logger.info "previous_contact_email: #{previous_contact_email.inspect}"
     return if value == previous_contact_email
+
     new_contact_user = User.find_by(email: value) if value.present?
     logger.info "new_contact_user: #{new_contact_user.inspect}"
     if new_contact_user&.== self
@@ -299,6 +301,7 @@ class User < ApplicationRecord
 
   def crypt_password
     return unless @password_needs_confirmation
+
     self['salt'] = self.class.hashed("salt-#{Time.current}")
     self['salted_password'] = self.class.salted_password(salt, self.class.hashed(@password))
   end

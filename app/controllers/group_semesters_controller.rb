@@ -98,6 +98,7 @@ class GroupSemestersController < ApplicationController
 
   def create_practices
     return unless @group_semester.first_session && @group_semester.last_session
+
     schedules = @group_semester.group.group_schedules
     (@group_semester.first_session..@group_semester.last_session).each do |date|
       if (gs = schedules.find { |grsc| grsc.weekday == date.cwday })

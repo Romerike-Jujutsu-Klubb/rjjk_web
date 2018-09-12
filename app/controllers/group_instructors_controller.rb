@@ -24,6 +24,7 @@ class GroupInstructorsController < ApplicationController
     end
     @semesters = group_instructors.group_by { |gi| gi.group_semester.semester }
     return unless Semester.current && !@semesters.include?(Semester.current)
+
     @semesters = { Semester.current => [] }.update @semesters
   end
 
@@ -82,6 +83,7 @@ class GroupInstructorsController < ApplicationController
   def convert_semester_id
     semester_id = params[:group_instructor].delete(:semester_id)
     return unless semester_id.present? && params[:group_instructor][:group_schedule_id].present?
+
     group_schedule = GroupSchedule.find(params[:group_instructor][:group_schedule_id])
     group_semester = GroupSemester
         .where(group_id: group_schedule.group_id, semester_id: semester_id).first

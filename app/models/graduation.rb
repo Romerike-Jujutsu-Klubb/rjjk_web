@@ -124,6 +124,7 @@ class Graduation < ApplicationRecord
                 .include?(group.group_semesters.for_date(held_on).first&.chief_instructor)
       return true
     end
+
     non_declined_examiners = censors.select(&:examiner).reject(&:declined?)
     non_declined_examiners.any? && non_declined_examiners.all?(&:locked_at?)
   end

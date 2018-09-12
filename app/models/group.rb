@@ -42,6 +42,7 @@ class Group < ApplicationRecord
 
   def contains_age(age)
     return false if age.nil?
+
     age >= from_age && age <= to_age
   end
 
@@ -52,6 +53,7 @@ class Group < ApplicationRecord
 
   def registered_trainings_in_period(period)
     return 0 if group_schedules.empty?
+
     Practice
         .where("status = 'X' AND group_schedule_id IN (?)", group_schedules.map(&:id))
         .where('year > ? OR (year = ? AND week >= ?)',
@@ -68,6 +70,7 @@ class Group < ApplicationRecord
   def update_prices
     contracts = NkfMember.where(kontraktstype: contract).to_a
     return if contracts.empty?
+
     self.monthly_price = contracts.map(&:kontraktsbelop).group_by { |x| x }
         .group_by { |_k, v| v.size }.sort.last.last.map(&:first).first
     self.yearly_price = contracts.map(&:kont_belop).group_by { |x| x }
@@ -94,6 +97,7 @@ class Group < ApplicationRecord
 
   def waiting_list
     return [] unless target_size
+
     trial_list = trials.sort_by { |t| [-t.trial_attendances.size, t.reg_dato] }
     active_size = members.select(&:active?).size
     active_trial_count = (target_size - active_size)

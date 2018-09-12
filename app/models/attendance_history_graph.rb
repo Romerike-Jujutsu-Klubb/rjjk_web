@@ -32,6 +32,7 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
       values = attendances.map
           .with_index { |a, i| sessions[i].positive? ? a.size / sessions[i] : nil }
       next unless values.any? { |v| v }
+
       g.data(group.name, values, group.color)
       sessions.each.with_index do |session, i|
         totals[i] = totals[i].to_i + values[i] if values[i]
@@ -50,6 +51,7 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
       next unless totals[i] && (current_month.nil? ||
           ((month - current_month > 1) && [1, 8].include?(month)) ||
           year != current_year)
+
       labels[i] = year != current_year ? "#{month}\n    #{year}" : month.to_s
       current_year = year
       current_month = month

@@ -8,6 +8,7 @@ class LoginController < ApplicationController
 
   def login_with_password
     return if generate_blank_form
+
     remember_me = params.delete(:remember_me)
     if (user = User.authenticate(params['user']['login'], params['user']['password']))
       self.session_user = user
@@ -57,6 +58,7 @@ class LoginController < ApplicationController
 
   def signup
     return if generate_blank_form
+
     @user = User.new(
         login: params['user'][:login],
         password: params['user'][:password],
@@ -93,6 +95,7 @@ class LoginController < ApplicationController
 
   def change_password
     return if generate_filled_in
+
     params['user'].delete('form')
     begin
       @user.change_password(params['user']['password'], params['user']['password_confirmation'])

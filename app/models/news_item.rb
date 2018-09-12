@@ -57,6 +57,7 @@ class NewsItem < ApplicationRecord
 
   def cleanup_html(field)
     return unless field
+
     field.gsub(%r{(<td[^>]*>\s*)<p>((?:(?!</td>).)*)</p>(\s*</td>)}, '\1\2\3')
         .gsub(/<table>/, '<table class="table">')
         .gsub(%r{\s*<p>(\s*|&nbsp;)*</p>\s*}, '')

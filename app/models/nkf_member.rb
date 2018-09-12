@@ -93,6 +93,7 @@ class NkfMember < ApplicationRecord
       target, target_attribute, mapped_value = self.class.rjjk_attribute(k, v)
       next unless target && target_attribute &&
             (include_blank || mapped_value.present? || mapped_value == false)
+
       new_attributes[target][target_attribute] = mapped_value
     end
     if new_attributes[:user][:phone]&.==(new_attributes[:guardian_1][:phone]) ||
@@ -109,6 +110,7 @@ class NkfMember < ApplicationRecord
 
   def self.rjjk_attribute(k, v)
     raise "Unknown attribute: #{k}" unless FIELD_MAP.keys.include?(k.to_sym)
+
     if (mapped_attribute = FIELD_MAP[k.to_sym][:map_to])
       mapped_attribute = { membership: mapped_attribute } unless mapped_attribute.is_a?(Hash)
       target, target_attribute = mapped_attribute.to_a[0]
@@ -182,6 +184,7 @@ class NkfMember < ApplicationRecord
           logger.info "Found existing phone user: #{existing_phone_user.inspect}"
           existing_phone_user.guardians.each do |gu|
             next if gu.phone
+
             phone = user_attributes.delete(:phone)
             logger.info "promoting phone #{phone} from #{user_attributes} to #{gu.name}"
             existing_phone_user.update! phone: nil

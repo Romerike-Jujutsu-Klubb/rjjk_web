@@ -85,6 +85,7 @@ class MemberGradeHistoryGraph
     current_year = nil
     dates.each_with_index do |date, i|
       next unless date.year != current_year
+
       labels[i] = date.strftime('%Y').to_s
       current_year = date.year
     end

@@ -8,6 +8,7 @@ class WelcomeController < ApplicationController
       return
     end
     return unless (@information_page = InformationPage.find_by(title: 'Velkommen'))
+
     render template: 'info/show'
   end
 end

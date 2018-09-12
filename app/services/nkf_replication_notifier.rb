@@ -11,6 +11,7 @@ class NkfReplicationNotifier
         )
     end
     return if wrong_contracts.empty?
+
     recipient = Role[:Leder]
     NkfReplicationMailer.wrong_contracts(wrong_contracts).store(recipient, tag: :wrong_contracts)
   end

@@ -15,6 +15,7 @@ class GraduationReminder
     missing_groups = groups - planned_groups
     month_start = Date.civil(today.year, today.mon >= 7 ? 12 : 6)
     return if month_start > 4.months.from_now
+
     missing_groups.each do |g|
       instructor = Semester.current.group_semesters.find { |gs| gs.group_id == g.id }
           &.chief_instructor
@@ -38,6 +39,7 @@ class GraduationReminder
       graduation.group.members.active(graduation.held_on).order(:id).each do |member|
         next if member.next_rank(graduation).position >= Rank::SHODAN_POSITION
         next if member.passive?
+
         GraduationMailer.group_date_info(graduation, member)
             .store(member, tag: :graduation_date_info)
       end
@@ -54,14 +56,17 @@ class GraduationReminder
       minimum_attendances = m.next_rank.minimum_attendances
       attendances_since_graduation = m.attendances_since_graduation.size
       next unless attendances_since_graduation >= minimum_attendances
+
       group = m.next_rank.group
       next if group.school_breaks? &&
             (group.next_graduation.nil? ||
                 !m.active?(group.next_graduation.held_on))
       next if m.next_graduate
+
       true
     end
     return if overdue_graduates.empty?
+
     # TODO(uwe): Send to chief instructor for each group
     GraduationMailer.overdue_graduates(overdue_graduates)
         .store(Role[:'Hovedinstruktør'], tag: :overdue_graduates)
@@ -74,6 +79,7 @@ class GraduationReminder
         .order(:id)
         .each do |graduation|
       next if graduation.censors.select(&:examiner?).any?
+
       instructor = graduation.group.current_semester&.chief_instructor || Role[:Hovedinstruktør]
       GraduationMailer.missing_censors(graduation, instructor)
           .store(instructor, tag: :graduation_missing_censors)
@@ -117,6 +123,7 @@ class GraduationReminder
         .order('graduations.held_on')
         .each do |graduation|
       next if graduation.graduates.empty?
+
       eq_manager = Role['Materialforvalter', return_record: true]
       GraduationMailer.send_shopping_list(graduation, eq_manager)
           .store(eq_manager.member, tag: :graduation_shopping_list)
@@ -137,6 +144,7 @@ class GraduationReminder
       # TODO(uwe): Solve in SQL
       next unless graduate.graduation.censors.select(&:examiner?).any?
       next unless graduate.graduation.censors.select(&:examiner?).all?(&:approved_graduates?)
+
       # ODOT
 
       GraduationMailer.invite_graduate(graduate)
@@ -157,6 +165,7 @@ class GraduationReminder
       # TODO(uwe): Solve in SQL
       next unless graduate.graduation.censors.select(&:examiner?).any?
       next unless graduate.graduation.censors.select(&:examiner?).all?(&:approved_graduates?)
+
       # ODOT
 
       GraduationMailer.invite_graduate(graduate)
@@ -175,6 +184,7 @@ class GraduationReminder
         .each do |censor|
       next unless censor.examiner? ||
             censor.graduation.censors.select(&:examiner?).all?(&:approved?)
+
       GraduationMailer.missing_approval(censor).store(censor.member)
       censor.update! approval_requested_at: Time.current
     end

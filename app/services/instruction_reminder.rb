@@ -18,6 +18,7 @@ class InstructionReminder
       end
     end.flatten
     return if missing_chief_instructions.empty? && missing_instructions.empty?
+
     InstructionMailer
         .missing_instructors(missing_chief_instructions, missing_instructions)
         .store(Role[:'Hovedinstruktør'], tag: :missing_instructors)

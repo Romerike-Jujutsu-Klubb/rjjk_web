@@ -10,6 +10,7 @@ class NewsPublisher
         .where("updated_at IS NULL OR updated_at < timestamp ? - interval '10 minutes'", now)
         .first
     return unless news_item
+
     Member.active(2.months.from_now).order(:joined_on).each do |m|
       NewsletterMailer.newsletter(news_item, m).store(m, tag: :newsletter)
     end

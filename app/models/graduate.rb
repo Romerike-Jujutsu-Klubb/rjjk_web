@@ -59,8 +59,10 @@ class Graduate < ApplicationRecord
   def estimated_attendances
     registered_attendances = training_attendances
     return registered_attendances if planned_trainings.zero?
+
     registered_trainings = registrered_trainings
     return registered_attendances if registered_trainings
+
     registered_attendances / registration_percentage
   end
 

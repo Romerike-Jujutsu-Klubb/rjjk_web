@@ -14,6 +14,7 @@ class InformationPageNotifier
         .where('revised_at IS NULL OR revised_at < ?', 6.months.ago)
         .order(:revised_at).limit(3).to_a
     return if pages.empty?
+
     recipients.each do |recipient|
       InformationPageMailer.notify_outdated_pages(recipient, pages)
           .store(recipient, tag: :outdated_info)
@@ -33,6 +34,7 @@ class InformationPageNotifier
         .where('mailed_at IS NULL OR mailed_at < ?', 6.months.ago)
         .order(:mailed_at).first
     return unless page
+
     Member.active(3.months.from_now).sort_by(&:name).each do |m|
       if m.user
         InformationPageMailer.send_weekly_page(m, page).store(m, tag: :weekly_info)

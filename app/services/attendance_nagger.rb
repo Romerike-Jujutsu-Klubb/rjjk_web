@@ -37,6 +37,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
           .where(practices: { group_schedule_id: gs.id, year: now.year, week: now.to_date.cweek })
           .to_a
       next if attendances.empty?
+
       practice = attendances[0].practice
       non_attendees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:member)
       attendees = attendances.map(&:member) - non_attendees
@@ -81,6 +82,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
               gs.id, now.year, now.to_date.cweek).to_a
       new_attendances = attendances.select { |a| a.updated_at >= 1.hour.ago }.map(&:member)
       next if new_attendances.empty?
+
       practice = attendances[0].practice
       absentees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }
           .map(&:member)
@@ -92,6 +94,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
       recipients.each do |recipient|
         if recipient != uwe
           next if new_attendances.empty?
+
           displayed_absentees = if new_absentees.size > new_attendances.size
                                   []
                                 else

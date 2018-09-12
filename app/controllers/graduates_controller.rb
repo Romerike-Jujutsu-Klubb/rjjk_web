@@ -38,6 +38,7 @@ class GraduatesController < ApplicationController
     @graduate.paid_belt ||= true
     @graduate.passed = true if @graduate.passed.nil? && @graduate.graduation.group.school_breaks?
     return unless admin_or_censor_required(@graduate.graduation)
+
     if @graduate.save
       flash[:notice] = 'Graduate was successfully created.'
       back_or_redirect_to action: :index
@@ -55,6 +56,7 @@ class GraduatesController < ApplicationController
   def update
     @graduate = Graduate.includes(:graduation, :member, :rank).find(params[:id])
     return unless admin_or_censor_required(@graduate.graduation)
+
     respond_to do |format|
       if @graduate.update(params[:graduate])
         format.html do
@@ -77,6 +79,7 @@ class GraduatesController < ApplicationController
   def confirm
     @graduate = Graduate.find(params[:id])
     return unless admin_or_graduate_required(@graduate)
+
     if @graduate.update(confirmed_at: Time.zone.now, declined: false)
       flash[:notice] = 'Din deltakelse på gradering er bekreftet.'
     else
@@ -89,6 +92,7 @@ class GraduatesController < ApplicationController
   def decline
     @graduate = Graduate.find(params[:id])
     return unless admin_or_graduate_required(@graduate)
+
     if @graduate.update(confirmed_at: Time.zone.now, declined: true)
       flash[:notice] = 'Ditt avslag på gradering er bekreftet.'
     else
@@ -100,6 +104,7 @@ class GraduatesController < ApplicationController
   def destroy
     @graduate = Graduate.find(params[:id])
     return unless admin_or_censor_required(@graduate.graduation)
+
     @graduate.destroy
     respond_to do |format|
       format.html { redirect_to action: :index }

@@ -17,6 +17,7 @@ class PublicRecordImporter
         deputies: find_field(doc, 'Varamedlem')
       ).first_or_initialize
     return unless record.new_record?
+
     record.save!
     PublicRecordMailer.new_record(record).store(Role[:Leder], tag: :new_public_record)
   end

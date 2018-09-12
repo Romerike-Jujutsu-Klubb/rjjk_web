@@ -11,6 +11,7 @@ class MakeChiefInstructorUniquePerGroupSemester < ActiveRecord::Migration
               SELECT id FROM group_semesters WHERE group_id = #{g['id']} AND semester_id = #{s['id']}
             SQL
         next unless existing_semesters.empty?
+
         execute <<~SQL
           INSERT INTO group_semesters(group_id, semester_id, created_at, updated_at)
           VALUES (#{g['id']}, #{s['id']}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)

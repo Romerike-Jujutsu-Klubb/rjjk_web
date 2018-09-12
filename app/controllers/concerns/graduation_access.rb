@@ -5,6 +5,7 @@ module GraduationAccess
     return access_denied('Du må logge inn for å redigere graderinger.') unless authenticate_user
     return true if admin?
     return true if graduation_admin?(graduation, approval)
+
     access_denied('Du må være hovedinstruktør, gruppeinstruktør, eksaminator, sensor eller ' \
         'administrator for å redigere graderinger.')
   end
@@ -14,6 +15,7 @@ module GraduationAccess
     return true if graduation&.group&.current_semester&.chief_instructor&.member == current_user.member
     return true if graduation&.group&.current_semester&.group_instructors&.map(&:member)
           &.include?(current_user.member)
+
     false
   end
 
@@ -21,6 +23,7 @@ module GraduationAccess
     return false unless authenticate_user
     return true if admin?
     return true if graduate&.member == current_user.member
+
     access_denied('Du kan bare bekrefte din egen graderingspåmlding.')
   end
 end

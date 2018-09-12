@@ -12,6 +12,7 @@ class Embu < ApplicationRecord
 
   def image=(file)
     return if file == ''
+
     images.create file: file
   end
 end

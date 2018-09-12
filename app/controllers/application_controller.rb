@@ -30,6 +30,7 @@ class ApplicationController < ActionController::Base
 
   def load_layout_model
     return if request.xhr? || _layout([]) != DEFAULT_LAYOUT
+
     unless @information_pages
       @information_pages = InformationPage.roots
       @information_pages = @information_pages.where('hidden IS NULL OR hidden = ?', false) unless admin?

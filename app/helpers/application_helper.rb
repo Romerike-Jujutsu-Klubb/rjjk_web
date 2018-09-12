@@ -22,11 +22,13 @@ module ApplicationHelper
 
   def l(time)
     return t(time) if time.is_a?(Symbol) || time.is_a?(String)
+
     super
   end
 
   def t(time)
     return super if time.is_a?(Symbol) || time.is_a?(String)
+
     time&.strftime('%H:%M')
   end
 
@@ -36,6 +38,7 @@ module ApplicationHelper
 
   def textalize(s)
     return '' if s.nil?
+
     with_links = auto_link(s, link: :all, target: '_blank', sanitize: false)
     html = Kramdown::Document.new(with_links.strip).to_html
     html.force_encoding(Encoding::UTF_8)
@@ -64,12 +67,14 @@ module ApplicationHelper
 
   def textify(s)
     return '' if s.blank?
+
     h = Kramdown::Document.new(s.strip).to_kramdown.gsub(/\{: .*?\}\s*/, '')
     absolute_links(h)
   end
 
   def holiday_label(date)
     return unless date
+
     date.month < 8 ? 'sommer' : 'jule'
   end
 end

@@ -33,6 +33,7 @@ module UserSystem
   #   before_filter :authenticate_user
   def authenticate_user
     return true if authenticated_user?
+
     access_denied
     false
   end
@@ -41,6 +42,7 @@ module UserSystem
   def admin_required
     return false unless authenticate_user
     return true if admin?
+
     access_denied('Du må være administrator for å se denne siden.')
   end
 
@@ -48,6 +50,7 @@ module UserSystem
   def instructor_required
     return false unless authenticate_user
     return true if instructor?
+
     access_denied('Du må være instruktør for å se denne siden.')
   end
 
@@ -55,6 +58,7 @@ module UserSystem
   def technical_committy_required
     return false unless authenticate_user
     return true if current_user.technical_committy?
+
     access_denied('Du må være i teknisk komite for å se denne siden.')
   end
 
@@ -120,6 +124,7 @@ module UserSystem
   def store_current_user_in_thread
     return if login_from_params
     return if session_user? && (self.current_user = session_user)
+
     login_from_cookie
   end
 

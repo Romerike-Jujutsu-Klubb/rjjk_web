@@ -36,6 +36,7 @@ class NkfMemberImport
 
     extra_function_codes = search_body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
     raise search_body if extra_function_codes.empty?
+
     extra_function_code = extra_function_codes[0][0]
     member_trial_rows = get_member_trial_rows(nkf_agent, session_id, extra_function_code)
 
@@ -73,12 +74,14 @@ class NkfMemberImport
     3.times do
       details_body = nkf_agent.get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}").body
       break if details_body.present?
+
       logger.error 'Empty response when getting waiting KID'
     end
     unless details_body =~
           /class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
       raise "Could not find member id:\n#{details_body.inspect}"
     end
+
     member_id = Regexp.last_match(1)
     active =
         if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
@@ -92,6 +95,7 @@ class NkfMemberImport
         end
     raise 'Both Active status and waiting kid were found' if active && waiting_kid
     raise "Neither active status nor waiting kid were found:\n#{details_body}" if !active && !waiting_kid
+
     import_rows.find { |ir| ir[0] == member_id } << waiting_kid
   end
 
@@ -122,6 +126,7 @@ class NkfMemberImport
       trial_details_body = nkf_agent.get(trial_details_url).body
           .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
       raise 'Could not find invoice email' unless trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
+
       first_name = Regexp.last_match(1)
       unless trial_details_body =~ /name="frm_28_v09" value="(.*?)"/
         logger.error trial_details_body
@@ -129,10 +134,12 @@ class NkfMemberImport
       end
       last_name = Regexp.last_match(1)
       raise 'Could not find first name' unless trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
+
       invoice_email = Regexp.last_match(1)
       unless trial_details_body =~ %r{<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren/stilart -</option>.*?<option selected value="\d+">([^<]*)</option>.*</select>} # rubocop: disable Metrics/LineLength
         raise 'Could not find martial art'
       end
+
       martial_art = Regexp.last_match(1)
       trial_row = member_trial_rows.find do |ir|
         ir.size < member_trial_rows[0].size && ir[1] == last_name && ir[2] == first_name
@@ -172,6 +179,7 @@ class NkfMemberImport
         next if %w[aktivitetsomrade_id aktivitetsomrade_navn alder avtalegiro
                    beltefarge dan_graderingsserifikat forbundskontingent]
               .include? column
+
         attributes[column] = row[i]&.strip
       end
       record = NkfMember.find_by(medlemsnummer: row[0]) || NkfMember.new
@@ -191,6 +199,7 @@ class NkfMemberImport
       end
       was_new_record = record.new_record?
       next unless record.changed?
+
       c = record.changes
       logger.debug "Found changes: #{c.inspect}"
       if record.save
@@ -252,6 +261,7 @@ class NkfMemberImport
       record ||= NkfMemberTrial.new
       record.attributes = attributes
       next unless record.changed?
+
       c = record.changes
       if record.save
         @trial_changes << { record: record, changes: c }

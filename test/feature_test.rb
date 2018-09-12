@@ -78,6 +78,7 @@ class FeatureTest < ActionDispatch::IntegrationTest
       loop do
         active = page.evaluate_script('jQuery.active')
         break if active.zero?
+
         sleep 0.01
       end
     end

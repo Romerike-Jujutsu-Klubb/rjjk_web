@@ -11,6 +11,7 @@ class NkfAgent
 
   def initialize
     raise 'NKF PASSWORD required!' if NKF_PASSWORD.blank?
+
     super
     @agent = Mechanize.new
     @agent.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -31,6 +32,7 @@ class NkfAgent
     @agent.submit(login_form)
   rescue Mechanize::ResponseCodeError, SocketError => e
     raise e if backoff > BACKOFF_LIMIT
+
     logger.info "Retrying agent login #{backoff} #{e}"
     sleep backoff
     backoff *= 2
@@ -78,6 +80,7 @@ class NkfAgent
     @agent.get(url)
   rescue Errno::ECONNREFUSED => e
     raise e if backoff > BACKOFF_LIMIT
+
     logger.info "Retrying agent GET #{backoff} #{e}"
     sleep backoff
     backoff *= 2

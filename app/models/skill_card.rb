@@ -44,6 +44,7 @@ class SkillCard
         end
 
         next unless rank.technique_applications.any?
+
         rows = [['', "Applikasjoner #{rank.name}".upcase, 'G', 'F', 'A', 'I']]
         rank.technique_applications.group_by(&:system).each do |system_name, apps|
           apps.each_slice(14) do |app_slice|

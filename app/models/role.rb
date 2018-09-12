@@ -18,6 +18,7 @@ class Role < ApplicationRecord
       else
         appointments.current.each do |a|
           next unless (am = AnnualMeeting.find_by('DATE(start_at) = ?', a.from))
+
           a.destroy
           elections.create! member_id: a.member_id, annual_meeting_id: am.id,
                             years: years_on_the_board
@@ -32,8 +33,10 @@ class Role < ApplicationRecord
   def self.[](name, return_record: false)
     role = by_name(name).first
     return nil unless role
+
     record = (role.elections.current.first || role.appointments.current.first)
     return record if return_record
+
     record&.member
   end
 

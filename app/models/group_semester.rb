@@ -39,6 +39,7 @@ class GroupSemester < ApplicationRecord
 
   def practices
     return [] unless first_session && last_session
+
     q = Practice.where('group_schedule_id IN (?)', group.group_schedules.map(&:id))
     q = q.where('year > ? OR (year = ? and week >= ?)', first_session.year,
         first_session.year, first_session.cweek)

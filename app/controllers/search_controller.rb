@@ -3,6 +3,7 @@
 class SearchController < ApplicationController
   def index
     return unless params[:q]
+
     @query = params[:q].strip
 
     if admin?

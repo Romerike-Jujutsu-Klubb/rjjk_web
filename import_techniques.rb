@@ -75,6 +75,7 @@ ranks.each do |rank_name, rank_dir|
       waza = Waza.where(name: waza_name).first_or_create! unless DUMP
       tecs.each do |t|
         next if DUMP
+
         begin
           bt = waza.basic_techniques
               .where(BasicTechnique.arel_table[:name].matches(t))

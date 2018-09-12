@@ -12,6 +12,7 @@ class InfoController < ApplicationController
         .where('UPPER(title) = ?', UnicodeUtils.upcase(params[:id])).first
     @information_page ||= InformationPage.find_by(id: params[:id].to_i)
     return if @information_page
+
     if (page_alias = PageAlias.where(old_path: request.path).first)
       redirect_to page_alias.new_path, status: :moved_permanently
       return
@@ -93,6 +94,7 @@ class InfoController < ApplicationController
 
   def set_revised_at_param
     return if params[:information_page].nil? || params[:information_page][:revised_at].blank?
+
     params[:information_page][:revised_at] = Time.current
   end
 end

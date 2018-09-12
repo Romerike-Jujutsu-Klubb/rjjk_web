@@ -182,6 +182,7 @@ class Certificates < Prawn::Document
 
   def write_censor(sensor, offset, signature_offset = 0)
     return unless sensor
+
     text_box sensor[:title], at: [CENSOR_TITLE_X, SENSOR_Y - offset], size: 18, align: :left
     if sensor[:signature]
       image StringIO.new(sensor[:signature]),

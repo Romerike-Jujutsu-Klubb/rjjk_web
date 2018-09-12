@@ -30,6 +30,7 @@ class CensorsController < ApplicationController
         Censor.new(examiner: false)
     @censor.attributes = params[:censor]
     return unless admin_or_censor_required(@censor.graduation)
+
     if @censor.save
       flash[:notice] = "La til **#{@censor.member.name}** som #{@censor.role_name} på graderingen."
       back_or_redirect_to action: :index
@@ -56,6 +57,7 @@ class CensorsController < ApplicationController
   def confirm
     @censor = Censor.find(params[:id])
     return unless admin_or_censor_required(@censor.graduation)
+
     if @censor.update(confirmed_at: Time.zone.now, declined: false)
       flash[:notice] = 'Din deltakelse på gradering er bekreftet.'
       redirect_to edit_graduation_path(@censor.graduation, anchor: :censors_tab)
@@ -68,6 +70,7 @@ class CensorsController < ApplicationController
   def decline
     @censor = Censor.find(params[:id])
     return unless admin_or_censor_required(@censor.graduation)
+
     if @censor.update(confirmed_at: Time.zone.now, declined: true)
       flash[:notice] = 'Ditt avslag på gradering er bekreftet.'
       redirect_to action: :show, id: @censor

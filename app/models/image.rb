@@ -32,6 +32,7 @@ class Image < ApplicationRecord
   after_create do |_|
     next unless @content_file
     raise "Unexpected @content_file: #{@content_file}" unless RUBY_ENGINE == 'jruby'
+
     conn = self.class.connection.raw_connection.connection
     is = java.io.FileInputStream.new(java.io.File.new(@content_file))
     st = conn.prepareStatement('UPDATE images SET content_data = ? WHERE id = ?')
@@ -44,6 +45,7 @@ class Image < ApplicationRecord
 
   def file=(file)
     return if file == ''
+
     self.name = file.original_filename if name.blank?
     if RUBY_ENGINE == 'jruby'
       # Allow huge file uploads
@@ -72,6 +74,7 @@ class Image < ApplicationRecord
   def aspect_ratio
     update_dimensions! unless video?
     return (width.to_f / height) if width && height
+
     320 / 240
   end
 
@@ -82,6 +85,7 @@ class Image < ApplicationRecord
 
   def height_at(max_width)
     return max_width * 240 / 320 if video?
+
     update_dimensions!
     ratio = max_width.to_f / width
     max_height = height * ratio
@@ -90,6 +94,7 @@ class Image < ApplicationRecord
 
   def update_dimensions!
     return unless width.nil? || height.nil?
+
     magick_image = Magick::Image.from_blob(content_data_io).first
     self.width = magick_image.columns
     self.height = magick_image.rows

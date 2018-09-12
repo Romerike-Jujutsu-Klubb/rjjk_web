@@ -23,11 +23,13 @@ class NkfAppointmentsScraper
       member_name = r[0]
       m = User.where("(last_name || ' ' || first_name) = ?", member_name).map(&:member).compact.first
       next "Ukjent medlem: #{member_name}" if m.nil?
+
       date = Date.strptime(r[5], '%d.%m.%Y')
       if role.on_the_board?
         annual_meeting = AnnualMeeting
             .find_by("DATE((start_at AT TIME ZONE 'UTC') AT TIME ZONE 'CET') = ?", date)
         next "Ukjent årsmøtedato: #{r[5]} (#{r[0]} #{role_name})" if annual_meeting.nil?
+
         Election.includes(:member, :role)
             .where(annual_meeting_id: annual_meeting.id, role_id: role.id,
                    years: role.years_on_the_board, member_id: m.id)

@@ -9,6 +9,7 @@ class Signature < ApplicationRecord
 
   def file=(file)
     return if file.blank?
+
     self.name = file.original_filename
     self.image = file.read
     self.content_type = file.content_type

@@ -39,6 +39,7 @@ class GraduationsController < ApplicationController
     @graduation = Graduation.for_edit.find(params[:id])
     @approval = load_current_user_approval
     return unless admin_or_censor_required(@graduation, @approval)
+
     @censor = Censor.new graduation_id: @graduation.id
     @instructors = Member.instructors(@graduation.held_on).to_a.sort_by(&:current_rank).reverse -
         @graduation.censors.map(&:member)
@@ -48,6 +49,7 @@ class GraduationsController < ApplicationController
     @graduation = Graduation.for_edit.find(params[:id])
     approval = load_current_user_approval
     return unless admin_or_censor_required(@graduation, approval)
+
     @groups = Group.order(:from_age).includes(members: %i[attendances nkf_member]).to_a
     @groups.unshift(@groups.delete(@graduation.group))
     @ranks = Rank.where(martial_art_id: @graduation.group.martial_art_id)
@@ -169,6 +171,7 @@ class GraduationsController < ApplicationController
       members.each do |member|
         next_rank = member.next_rank(graduation)
         next if graduation.group_notification && next_rank.position >= Rank::SHODAN_POSITION
+
         g = Graduate.new graduation_id: graduation.id, member_id: member.id,
                          rank_id: next_rank.id,
                          passed: graduation.group.school_breaks? || nil,

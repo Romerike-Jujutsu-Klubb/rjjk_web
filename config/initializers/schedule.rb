@@ -27,9 +27,11 @@ else
         Rails.logger.error e
         Rails.logger.error e.backtrace.join("\n")
         break unless e.cause
+
         e = e.cause
       end
       raise e if Rails.env.test?
+
       ExceptionNotifier.notify_exception(e)
     end
 

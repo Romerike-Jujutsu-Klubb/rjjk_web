@@ -72,9 +72,11 @@ class NkfMemberComparison
                 ((nkf_values.any? { |_k, v| v.present? } || nil) && member.user.build_guardian_2)
           end
       next unless relation
+
       nkf_values.each do |attribute, nkf_value|
         rjjk_value = relation.send(:"#{attribute}")
         next unless nkf_value != rjjk_value
+
         logger.info "Member (#{'%4d' % member.id}) #{target} #{relation.class} " \
               "(#{'%4s' % relation.id.inspect}): #{attribute}: " \
               "#{rjjk_value.inspect} => #{nkf_value.inspect}"
@@ -99,10 +101,12 @@ class NkfMemberComparison
 
   private def sync_attribute(attr_sym, form, new_value, old_value, outgoing_changes, record)
     return if old_value.blank? && new_value.blank?
+
     _nkf_column, nkf_mapping = NkfMember::FIELD_MAP.find do |_k, v|
       [*v[:map_from]].include?(attr_sym) || v[:map_to] == attr_sym
     end
     return if nkf_mapping && nkf_mapping[:import]
+
     if (nkf_field = nkf_mapping&.fetch(:form_field, nil))
       form_value = old_value.is_a?(Date) ? old_value.strftime('%d.%m.%Y') : old_value
       logger.info "set form value #{nkf_field.inspect} = #{form_value.inspect}"
@@ -111,6 +115,7 @@ class NkfMemberComparison
     elsif attr_sym == { user: :billing_user_id }
       record.billing_user.attributes.each do |billing_attr, new_billing_value|
         next if new_billing_value.nil?
+
         billing_attr_sym = { billing: billing_attr.to_sym }
         sync_attribute(billing_attr_sym, form, new_billing_value, nil, outgoing_changes, record)
       end
@@ -134,6 +139,7 @@ class NkfMemberComparison
     verify_billing_user(m)
     submit_changes_to_nkf(agent, front_page, m)
     return if Rails.env.production?
+
     save_incoming_changes(m)
   rescue => e
     logger.error "Exception saving member changes for #{m.attributes.inspect}"
@@ -160,6 +166,7 @@ class NkfMemberComparison
   private def submit_changes_to_nkf(agent, front_page, m)
     member_form, outgoing_changes_for_member = find_outgoing_changes(agent, front_page, m)
     return unless Rails.env.production? && outgoing_changes_for_member.any?
+
     # m.restore_attributes(outgoing_changes_for_member.keys)
     logger.info 'Submitting form to NKF'
     logger.info member_form.pretty_inspect
@@ -170,6 +177,7 @@ class NkfMemberComparison
   private def save_incoming_changes(m)
     changes = gather_changes(m)
     return if changes.empty?
+
     m.save!
     [m, changes]
   end
@@ -205,6 +213,7 @@ class NkfMemberComparison
   private def verify_user(m)
     return unless m.user.invalid?
     return unless m.user.errors[:phone]
+
     if m.user.phone.present? &&
           (conflicting_phone_user = User.where.not(id: m.user_id).find_by(phone: m.user.phone))
       if conflicting_phone_user.member.nil? || conflicting_phone_user.member.left_on
@@ -232,9 +241,11 @@ class NkfMemberComparison
 
   private def verify_billing_user(m)
     return unless m.user.billing_user
+
     logger.info "m.user.billing_user: #{m.user.billing_user.changes.pretty_inspect}"
     return if m.user.billing_user.persisted? || (related_user_email = m.user.billing_user.email).blank?
     return unless (existing_billing_user = User.find_by(email: related_user_email))
+
     # FIXME(uwe): Should this ever happen?
     m.user.billing_user = existing_billing_user
   end
