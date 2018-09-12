@@ -59,8 +59,8 @@ class GraduationReminder
 
       group = m.next_rank.group
       next if group.school_breaks? &&
-            (group.next_graduation.nil? ||
-                !m.active?(group.next_graduation.held_on))
+          (group.next_graduation.nil? ||
+              !m.active?(group.next_graduation.held_on))
       next if m.next_graduate
 
       true
@@ -183,7 +183,7 @@ class GraduationReminder
         .order(:id)
         .each do |censor|
       next unless censor.examiner? ||
-            censor.graduation.censors.select(&:examiner?).all?(&:approved?)
+          censor.graduation.censors.select(&:examiner?).all?(&:approved?)
 
       GraduationMailer.missing_approval(censor).store(censor.member)
       censor.update! approval_requested_at: Time.current

@@ -92,7 +92,7 @@ class NkfMember < ApplicationRecord
     attributes.each do |k, v|
       target, target_attribute, mapped_value = self.class.rjjk_attribute(k, v)
       next unless target && target_attribute &&
-            (include_blank || mapped_value.present? || mapped_value == false)
+          (include_blank || mapped_value.present? || mapped_value == false)
 
       new_attributes[target][target_attribute] = mapped_value
     end
