@@ -64,7 +64,7 @@ class LoginController < ApplicationController
         email: params['user'][:email],
         first_name: params['user'][:first_name],
         last_name: params['user'][:last_name]
-    )
+      )
     begin
       User.transaction do
         @user.password_needs_confirmation = true

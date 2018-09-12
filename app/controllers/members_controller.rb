@@ -18,7 +18,7 @@ class MembersController < ApplicationController
           'rank_pos' => m.current_rank.try(:position),
           'rank_name' => m.current_rank.try(:name),
           'active' => m.active?
-      )
+        )
     end
     render body: records.to_yaml, content_type: 'text/yaml', layout: false
   end

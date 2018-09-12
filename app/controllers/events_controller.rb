@@ -76,7 +76,7 @@ class EventsController < ApplicationController
       event_invitee = EventInvitee.new(event: event, name: recipient.name, email: recipient.email)
       event_invitee_message = EventInviteeMessage.new(
           event_invitee: event_invitee, message_type: EventMessage::MessageType::INVITATION
-      )
+        )
       event_invitee_message.id = -event.id
       NewsletterMailer.event_invitee_message(event_invitee_message)
           .store(recipient, tag: :event_invite)

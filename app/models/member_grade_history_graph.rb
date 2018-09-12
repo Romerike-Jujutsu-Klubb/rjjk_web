@@ -113,7 +113,7 @@ class MemberGradeHistoryGraph
                                 next_date: next_date, next_year: next_date.cwyear,
                                 next_week: next_date.cweek, date: date]
               end
-          )
+            )
           .includes(graduates: [{ graduation: { group: :martial_art } }, :rank]).to_a
       ranks = @active_members[date].select do |m|
         m.graduates.select { |g| g.graduation.martial_art.kwr? && g.graduation.held_on <= date }

@@ -8,7 +8,7 @@ class NkfReplicationNotifier
           (m.member.age < 10 && m.kont_sats !~ /^Barn/) ||
           (m.member.age >= 10 && m.member.age <= 25 && m.kont_sats !~ /^Ungdom|Trenere/) ||
           (m.member.age > 25 && m.kont_sats !~ /^(Voksne|Styre|Trenere|Æresmedlem|Støttemedlem)/)
-      )
+        )
     end
     return if wrong_contracts.empty?
     recipient = Role[:Leder]

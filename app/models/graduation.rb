@@ -31,7 +31,7 @@ class Graduation < ApplicationRecord
           rank: [{ group: %i[group_schedules ranks] }, :martial_art],
         },
         group: { members: :nkf_member }
-    )
+      )
   end
   scope :censors_confirmed,
       ->(date) { where(<<~SQL, date) }

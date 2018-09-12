@@ -52,7 +52,7 @@ class AttendancesController < ApplicationController
       params[:attendance][:practice_id] = Practice.find_by(
           group_schedule_id: params[:attendance].delete(:group_schedule_id),
           year: params[:attendance].delete(:year), week: params[:attendance].delete(:week)
-      ).id
+        ).id
     end
     @attendance = Attendance.new(params[:attendance])
     if @attendance.save

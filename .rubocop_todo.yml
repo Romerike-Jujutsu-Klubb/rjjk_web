@@ -6,24 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 16
-# Cop supports --auto-correct.
-Layout/ClosingParenthesisIndentation:
-  Exclude:
-    - 'app/controllers/attendances_controller.rb'
-    - 'app/controllers/event_invitee_messages_controller.rb'
-    - 'app/controllers/events_controller.rb'
-    - 'app/controllers/login_controller.rb'
-    - 'app/controllers/members_controller.rb'
-    - 'app/models/graduation.rb'
-    - 'app/models/member_grade_history_graph.rb'
-    - 'app/models/member_sweeper.rb'
-    - 'app/services/nkf_replication_notifier.rb'
-    - 'app/services/public_record_importer.rb'
-    - 'config/environment.rb'
-    - 'test/mailers/graduation_reminder_test.rb'
-    - 'test/mailers/survey_sender_test.rb'
-
 # Offense count: 133
 # Cop supports --auto-correct.
 Layout/EmptyLineAfterGuardClause:

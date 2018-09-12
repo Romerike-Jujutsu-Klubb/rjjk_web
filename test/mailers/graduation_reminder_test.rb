@@ -87,7 +87,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(
         /Jujutsu Klubb vil med dette invitere deg til å være\s+eksaminator\s+på\s+gradering for Voksne\s+den 2013-10-24./, # rubocop: disable Metrics/LineLength
         mail.body
-    )
+      )
     assert_match(/Har du mulighet til delta\?  Klikk på en av linkene nedenfor for å gi beskjed\n  om du kan eller ikke./, # rubocop: disable Metrics/LineLength
         mail.body)
     assert_match(%r{<a href="https://example.com/censors/306982868/confirm">Jeg kommer :\)</a>}, mail.body)
@@ -130,7 +130,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(
         /Har du mulighet til delta\?  Klikk på en av linkene nedenfor for å gi beskjed om du kan eller ikke./,
         mail.body
-    )
+      )
     assert_match(%r{<a href="https://example.com/graduates/397971580/confirm">Jeg kommer :\)</a>}, mail.body)
     assert_match(%r{<a href="https://example.com/graduates/397971580/decline">Beklager, jeg kommer ikke.</a>},
         mail.body)
@@ -209,7 +209,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match('Vi har registrert din gradering 2013-10-10 til 1. kyu brunt belte.', mail.body)
     assert_match(
         'Neste grad for deg er shodan svart belte.  Frem til da kreves 0-0 treninger.', mail.body
-    )
+      )
     assert_match('Vi har registrert 0 treninger på deg siden forrige gradering.', mail.body)
 
     mail = UserMessage.pending[1]

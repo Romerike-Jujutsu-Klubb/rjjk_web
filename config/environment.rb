@@ -68,7 +68,7 @@ module Prawn
                       @pdf.cursor
                     end,
                   ]
-              ).render
+                ).render
             end
           end
         end
