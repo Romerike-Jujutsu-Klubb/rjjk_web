@@ -100,16 +100,6 @@ Performance/RegexpMatch:
 Rails/ActiveRecordAliases:
   Enabled: false
 
-# Offense count: 14
-# Cop supports --auto-correct.
-# Configuration parameters: Include.
-# Include: **/test/**/*
-Rails/AssertNot:
-  Exclude:
-    - 'test/controllers/login_controller_test.rb'
-    - 'test/integration/user_system_test.rb'
-    - 'test/models/user_test.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.

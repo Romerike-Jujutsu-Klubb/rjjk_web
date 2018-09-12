@@ -73,7 +73,7 @@ class LoginControllerTest < ActionController::TestCase
     assert_match(/Passord\s*:\s+\w+\n/, mail.body)
     user = User.find_by(email: 'newemail@example.com')
     assert_match(/key=#{user.security_token}/, mail.body)
-    assert !user.verified
+    assert_not user.verified
   end
 
   def test_signup__cannot_set_arbitrary_attributes
@@ -83,7 +83,7 @@ class LoginControllerTest < ActionController::TestCase
                 verified: '1',
                 role: 'superadmin'
     user = User.find_by(email: 'skunk@example.com')
-    assert !user.verified
+    assert_not user.verified
     assert_nil user.role
   end
 
@@ -122,7 +122,7 @@ class LoginControllerTest < ActionController::TestCase
     Timecop.freeze(Time.current + User.token_lifetime) do # now past verification deadline
       get :welcome, params: { user: { id: user.id }, key: user.security_token }
       user.reload
-      assert !user.verified
+      assert_not user.verified
       assert_not_logged_in
     end
   end
@@ -131,7 +131,7 @@ class LoginControllerTest < ActionController::TestCase
     user = users(:unverified_user)
     get :welcome, params: { user: { id: user.id }, key: 'boguskey' }
     user.reload
-    assert !user.verified
+    assert_not user.verified
     assert_not_logged_in
   end
 
@@ -217,7 +217,7 @@ class LoginControllerTest < ActionController::TestCase
   end
 
   def assert_contains(target, container)
-    assert !container.nil?, %( Failed to find "#{target}" in nil String )
+    assert_not container.nil?, %( Failed to find "#{target}" in nil String )
     assert container.include?(target), "#{container.inspect} does not contain #{target.inspect}"
   end
 end

@@ -26,7 +26,7 @@ class UserSystemTest < ActionDispatch::IntegrationTest
       get url_for(controller: :login, action: :welcome), params: { key: key }
       assert_redirected_to_login
       user.reload
-      assert !user.verified
+      assert_not user.verified
       assert_not_logged_in
     end
 
@@ -34,7 +34,7 @@ class UserSystemTest < ActionDispatch::IntegrationTest
     assert_redirected_to_login
     assert_not_logged_in
     user.reload
-    assert !user.verified
+    assert_not user.verified
 
     get url_for(controller: :login, action: :welcome), params: { key: key }
     assert_response :success

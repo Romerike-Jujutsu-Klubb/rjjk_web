@@ -69,15 +69,15 @@ class UserTest < ActionMailer::TestCase
     u.email = 'disallowed_password@example.com'
 
     u.change_password('tiny')
-    assert !u.save
+    assert_not u.save
     assert u.errors['password'].any?
 
     u.change_password('huge' * 50)
-    assert !u.save
+    assert_not u.save
     assert u.errors['password'].any?
 
     u.change_password('')
-    assert !u.save
+    assert_not u.save
     assert u.errors['password'].any?
 
     u.change_password('a_s3cure_p4ssword')
@@ -91,11 +91,11 @@ class UserTest < ActionMailer::TestCase
     u.email = 'bad_login_tesla@example.com'
 
     u.login = 'x'
-    assert !u.save
+    assert_not u.save
     assert u.errors[:login].any?
 
     u.login = 'hugetesla' * 20
-    assert !u.save
+    assert_not u.save
     assert u.errors[:login].any?
 
     u.login = ''
@@ -120,7 +120,7 @@ class UserTest < ActionMailer::TestCase
     u.login = users(:lars).login
     u.email = 'new@example.com'
     u.change_password('password')
-    assert !u.save
+    assert_not u.save
   end
 
   def test_create__validates_unique_email
@@ -128,7 +128,7 @@ class UserTest < ActionMailer::TestCase
     u.login = 'new_user'
     u.email = users(:lars).email
     u.change_password('password')
-    assert !u.save
+    assert_not u.save
   end
 
   def test_technical_committy
