@@ -124,11 +124,3 @@ Style/AccessModifierDeclarations:
   Exclude:
     - 'app/services/google_drive_service.rb'
     - 'app/services/nkf_member_comparison.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/ExpandPathArguments:
-  Exclude:
-    - 'Rakefile'
-    - 'script/rails'
-    - 'test/test_helper.rb'
