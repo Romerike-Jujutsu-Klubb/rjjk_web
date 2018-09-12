@@ -100,14 +100,6 @@ Performance/RegexpMatch:
 Rails/ActiveRecordAliases:
   Enabled: false
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: numeric, symbolic
-Rails/HttpStatus:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-
 # Offense count: 18
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb

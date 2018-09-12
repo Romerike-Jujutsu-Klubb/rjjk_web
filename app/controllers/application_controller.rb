@@ -107,7 +107,7 @@ class ApplicationController < ActionController::Base
       if referrer.present?
         redirect_to referrer
       else
-        render status: 429
+        render status: :too_many_requests
       end
       false
     else
