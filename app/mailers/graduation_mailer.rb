@@ -24,7 +24,7 @@ class GraduationMailer < ApplicationMailer
     @member = member
     sender = graduation.examiner_emails
     if sender.empty?
-      sender = graduation.group.current_semester.chief_instructor&.member&.emails ||
+      sender = graduation.group.current_semester.chief_instructor&.emails ||
           Role[:Hovedinstruktør]&.emails || noreply_address
     end
     mail subject: "Gradering for #{@graduation.group.name} #{@graduation.held_on}",
