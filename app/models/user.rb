@@ -56,8 +56,8 @@ class User < ApplicationRecord
   after_save { @password_needs_confirmation = false }
   after_validation :crypt_password
 
-  validates :birthdate, presence: true, if: -> {member && member.left_on.nil?}
-  validates :male, inclusion: { in: [true, false] }, if: -> {member && member.left_on.nil?}
+  validates :birthdate, presence: true, if: -> { member && member.left_on.nil? }
+  validates :male, inclusion: { in: [true, false] }, if: -> { member && member.left_on.nil? }
   validates :email,
       # presence: { unless: ->{phone || member} }, # TODO(uwe): Activate this?  Ensure contact method!
       format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_nil: true },
@@ -158,13 +158,13 @@ class User < ApplicationRecord
   end
 
   def emails
-    [self, guardian_1, guardian_2, billing_user, contact_user].map {|u| u&.email}.compact.uniq.sort
+    [self, guardian_1, guardian_2, billing_user, contact_user].map { |u| u&.email }.compact.uniq.sort
     # result.sort_by! { |e| -e.size }
     # result.uniq { |e| e =~ /<(.*@.*)>/ ? Regexp.last_match(1) : e }
   end
 
   def phones
-    [self, guardian_1, guardian_2, billing_user, contact_user].map {|u| u&.phone}.compact.uniq.sort
+    [self, guardian_1, guardian_2, billing_user, contact_user].map { |u| u&.phone }.compact.uniq.sort
   end
 
   def label(last_name_first: false)
@@ -286,7 +286,7 @@ class User < ApplicationRecord
 
   def multiple_depending_members?
     [payees, primary_wards, secondary_wards, contactees]
-        .inject([]) {|list, a| list.size > 1 ? (break list) : (list + a).uniq}.size > 1
+        .inject([]) { |list, a| list.size > 1 ? (break list) : (list + a).uniq }.size > 1
   end
 
   def depending_users

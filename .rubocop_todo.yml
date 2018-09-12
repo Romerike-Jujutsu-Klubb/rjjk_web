@@ -12,15 +12,6 @@ Layout/RescueEnsureAlignment:
   Exclude:
     - 'app/services/nkf_member_comparison.rb'
 
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
-# SupportedStyles: space, no_space
-# SupportedStylesForEmptyBraces: space, no_space
-Layout/SpaceInsideBlockBraces:
-  Exclude:
-    - 'app/models/user.rb'
-
 # Offense count: 237
 Metrics/AbcSize:
   Max: 201
