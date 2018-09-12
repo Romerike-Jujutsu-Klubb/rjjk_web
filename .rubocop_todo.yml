@@ -81,12 +81,6 @@ Naming/UncommunicativeMethodParamName:
     - 'bin/learn_spam.rb'
     - 'config/initializers/schedule.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Performance/InefficientHashSearch:
-  Exclude:
-    - 'app/models/nkf_member.rb'
-
 # Offense count: 15
 # Cop supports --auto-correct.
 Performance/RegexpMatch:

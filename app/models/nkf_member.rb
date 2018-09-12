@@ -109,7 +109,7 @@ class NkfMember < ApplicationRecord
   end
 
   def self.rjjk_attribute(k, v)
-    raise "Unknown attribute: #{k}" unless FIELD_MAP.keys.include?(k.to_sym)
+    raise "Unknown attribute: #{k}" unless FIELD_MAP.key?(k.to_sym)
 
     if (mapped_attribute = FIELD_MAP[k.to_sym][:map_to])
       mapped_attribute = { membership: mapped_attribute } unless mapped_attribute.is_a?(Hash)
