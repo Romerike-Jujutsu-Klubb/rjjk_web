@@ -7,7 +7,7 @@ module UserSystem
 
   CONFIG = {
     # Source address for user emails
-    email_from: 'webmaster@jujutsu.no',
+    email_from: "webmaster@#{"#{Rails.env}." if Rails.env.beta?}jujutsu.no",
 
     # Destination email for system errors
     admin_email: 'webmaster@jujutsu.no',
