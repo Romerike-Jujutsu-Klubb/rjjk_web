@@ -1,5 +1,15 @@
 # frozen_string_literal: true
 
+class Mechanize
+  def clone
+    Mechanize.new do |a|
+      a.cookie_jar = cookie_jar
+      a.max_history = max_history
+      a.read_timeout = read_timeout
+    end
+  end
+end
+
 class NkfAgent
   include ParallelRunner
   include MonitorMixin
@@ -57,7 +67,7 @@ class NkfAgent
     logger.debug("more_pages: #{more_pages.inspect}")
     in_parallel(more_pages - ['1']) do |page_number, queue|
       logger.debug page_number
-      page_body = @agent.get(search_url + page_number).body
+      page_body = @agent.clone.get(search_url + page_number).body
       even_more_pages = page_body
           .scan(%r{<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)</a>})
           .map(&:first)
