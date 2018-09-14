@@ -1,0 +1,20 @@
+- @title = @information_page.title
+
+h1 = @information_page.title
+
+= @information_page.body
+
+- if admin?
+  ul.controls
+    li = link_to 'Rediger', { controller: :info, action: :edit, id: @information_page }, class: :edit
+    li = link_to 'Slett', { controller: :info, action: :destroy, id: @information_page }, class: :edit, data: { confirm: 'Er du sikker?' }, method: :post
+
+= render 'layouts/modal_image'
+
+javascript:
+    $('.main img').addClass('img-thumbnail').css({cursor: 'pointer'});
+    $('.main img').on('click', function () {
+        $('#imageModal .modal-title').html($(this).attr('title'));
+        $('#modalImage').attr('src', $(this).attr('src').replace("inline", "show"));
+        $('#imageModal').modal();
+    });

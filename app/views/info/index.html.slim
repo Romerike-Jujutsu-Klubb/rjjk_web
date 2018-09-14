@@ -1,0 +1,18 @@
+- @content_width = 1024
+
+h1 Informasjonssider
+
+table
+  tr valign="top"
+  - for column in InformationPage.content_columns
+    th = column.human_name
+
+  - for information_page in @information_pages
+    tr valign="top"
+      - for column in InformationPage.content_columns
+        td = information_page.send(column.name)
+      td = link_to 'Vis', action: :show, id: information_page
+      td = link_to 'Rediger', action: :edit, id: information_page
+      td = link_to 'Slett', { action: :destroy, id: information_page }, data: {confirm: 'Er du sikker?'}, method: :post
+
+= link_to 'Ny side', action: :new
