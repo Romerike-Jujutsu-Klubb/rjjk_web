@@ -69,6 +69,11 @@ nb:
         name: Navn
         file: Bilde
         public: Publiser
+      information_page:
+        body: Tekst
+        hidden: Skjul
+        revised_at: Revidert
+        title: Tittel
       instructor_meeting:
         end_at: Slutt
         start_at: Start

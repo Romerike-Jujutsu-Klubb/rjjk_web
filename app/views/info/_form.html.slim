@@ -3,38 +3,26 @@
 .row
   .col-md-9
     = tinymce
-    = form_for @information_page, :html => {:role => 'form'} do |f|
+    = bootstrap_form_for @information_page, html: {role: 'form'} do |f|
       = f.error_messages
 
-      .float-left.mr-3
-        label for="information_page_title" Tittel
-        br
-        = f.text_field :title
-
-      .float-left.mr-3
-        label for="information_page_hidden" Skjul
-        br
-        = f.check_box :hidden
-
-      .control-group.float-left.mr-3 style=('color:red' if @information_page.revised_at.nil? || @information_page.revised_at < 6.months.ago)
-        label.pl-0 for="information_page_revised_at" Revidert
-        br
-
-        label for="information_page_revised_at"
+      .row
+        .col-6 = f.text_field :title
+        .float-left.mr-3
+          .mt-3 &nbsp;
+          = f.check_box :hidden
+        .float-left.mr-3 style=('color:red' if @information_page.revised_at.nil? || @information_page.revised_at < 6.months.ago)
+          .mt-3 &nbsp;
           = f.check_box :revised_at, {checked: false}, 1, nil
           = @information_page.revised_at.strftime('%Y-%m-%d %H:%M') if @information_page.revised_at
 
-      br clear="left"
-
-      p
-        label.pl-0 for="information_page_body" Tekst
-        br
-        = f.text_area :body, class: :tinymce
+      = f.text_area :body, class: :tinymce
 
       .float-right
-        => back_or_link_to 'Tilbake', action: :index
-        => link_to 'Vis', action: :show, id: @information_page unless @information_page.new_record?
-        = f.submit 'Lagre', id: :save, class: 'btn btn-primary'
+        = back_or_link_to 'Tilbake', information_pages_path, class: 'btn btn-link'
+        - unless @information_page.new_record?
+          a.btn.btn-link.mr-2 href=url_for(@information_page) Vis
+        submit#save.btn.btn-primary Lagre
 
     javascript:
         document.getElementById('information_page_title').focus();
