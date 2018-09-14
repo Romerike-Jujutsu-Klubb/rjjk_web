@@ -6,6 +6,7 @@ class Mechanize
       a.cookie_jar = cookie_jar
       a.max_history = max_history
       a.read_timeout = read_timeout
+      a.agent.http.verify_mode = agent.http.verify_mode
     end
   end
 end
