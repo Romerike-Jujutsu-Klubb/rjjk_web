@@ -24,10 +24,5 @@
           a.btn.btn-link.mr-2 href=url_for(@information_page) Vis
         submit#save.btn.btn-primary Lagre
 
-    javascript:
-        document.getElementById('information_page_title').focus();
-        document.getElementById('information_page_title').select();
-        $('body').scrollTo(".main");
-
   .col-md-3 style="height:680px;overflow:auto;border:1px solid black"
     = render '/images/list', images: @images
