@@ -24,9 +24,11 @@ class ApplicationStepsControllerTest < ActionController::TestCase
       post :create, params: { application_step: {
         technique_application_id: @application_step.technique_application_id,
         description: @application_step.description,
-        image_content_data: @application_step.image_content_data,
-        image_content_type: @application_step.image_content_type,
-        image_filename: @application_step.image_filename,
+        image_attributes: {
+          content_data: 'image.content_data',
+          content_type: @application_step.image.content_type,
+          name: @application_step.image.name,
+        },
         position: 3,
       } }
       assert_no_errors :application_step
@@ -49,9 +51,11 @@ class ApplicationStepsControllerTest < ActionController::TestCase
     put :update, params: { id: @application_step.id, application_step: {
       technique_application_id: @application_step.technique_application_id,
       description: @application_step.description,
-      image_content_data: @application_step.image_content_data,
-      image_content_type: @application_step.image_content_type,
-      image_filename: @application_step.image_filename,
+      image_attributes: {
+        content_data: 'content_data',
+        content_type: @application_step.image.content_type,
+        name: @application_step.image.name,
+      },
       position: @application_step.position,
     } }
     assert_no_errors :application_step
@@ -64,37 +68,5 @@ class ApplicationStepsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to application_steps_path
-  end
-
-  test 'should hide image from public user' do
-    logout
-    get :image, params: { id: @application_step }
-    assert_response :redirect
-    assert_redirected_to login_path
-  end
-
-  test 'should show image to unranked member' do
-    login :newbie
-    get :image, params: { id: @application_step }
-    assert_response :success
-  end
-
-  test 'should hide high-rank image from unranked member' do
-    login :newbie
-    get :image, params: { id: application_steps(:defence_against_dual_hair_grip_with_kneeing_step_1) }
-    assert_redirected_to login_path
-  end
-
-  test 'should show image to ranked member' do
-    login :lars
-    get :image, params: { id: @application_step }
-    assert_response :success
-  end
-
-  test 'should redirect to dummy image if no image content' do
-    login :lars
-    get :image, params: { id: application_steps(:two).id }
-    assert_response :redirect
-    assert_redirected_to '/assets/pdficon_large.png'
   end
 end

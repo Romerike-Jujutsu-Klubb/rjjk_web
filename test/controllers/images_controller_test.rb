@@ -7,6 +7,7 @@ class ImagesControllerTest < ActionController::TestCase
 
   def setup
     @first_id = images(:one).id
+    @application_step = application_steps(:one)
     login(:admin)
   end
 
@@ -25,6 +26,41 @@ class ImagesControllerTest < ActionController::TestCase
   def test_inline
     get :inline, params: { id: @first_id, format: 'png' }
     assert_response :success
+  end
+
+  %i[show inline].each do |action|
+    test "should hide #{action} image from public user" do
+      logout
+      get action, params: { id: @application_step.image_id, width: 320, format: :jpg }
+      assert_response :redirect
+      assert_redirected_to login_path
+    end
+
+    test "should #{action} image to unranked member" do
+      login :newbie
+      get action, params: { id: @application_step.image_id, width: 320, format: :jpg }
+      assert_response :success
+    end
+
+    test "should hide high-rank #{action} image from unranked member" do
+      login :newbie
+      get action, params: { id: id(:application_step_kneeing), width: 320, format: :jpg }
+      assert_redirected_to login_path
+    end
+
+    test "should #{action} image to ranked member" do
+      login :lars
+      get action, params: { id: @application_step, width: 320, format: :jpg }
+      assert_response :success
+    end
+
+    test "should redirect #{action} to dummy image if no image content" do
+      login :lars
+      get action, params: { id: application_steps(:two).image_id, width: 320, format: :jpg }
+      assert_response :redirect
+      assert_redirected_to \
+          '/assets/pdficon_large-f755e8f306b39714f4efa5d7928e1a54b29571e78af77c96c95f950528468cb4.png'
+    end
   end
 
   def test_new

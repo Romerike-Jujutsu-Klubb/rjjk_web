@@ -2,24 +2,16 @@ one:
   technique_application: defence_against_wrist_grip_in_front
   position: 1
   description: MyText
-  image_filename: MyString
-  image_content_type: MyString
-  image_content_data: !binary |
-    iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==
+  image: application_step_one
 
 two:
   technique_application: defence_against_wrist_grip_in_front
   position: 2
   description: MyText
-  image_filename: MyString
-  image_content_type: MyString
-  image_content_data:
+  image: application_step_two
 
 defence_against_dual_hair_grip_with_kneeing_step_1:
   technique_application: defence_against_dual_hair_grip_with_kneeing
   position: 1
   description: Panic!
-  image_filename: MyString
-  image_content_type: MyString
-  image_content_data: !binary |
-    iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==
+  image: application_step_kneeing

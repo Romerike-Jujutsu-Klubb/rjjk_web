@@ -36,8 +36,6 @@ class GoogleDriveService
     sio.set_encoding(Encoding::BINARY)
     @session.file_by_id(id).download_to_io(sio)
     sio.string
-    # logger.info "download...OK"
-    # Streamer.new(self, id)
   end
 
   def store_file(section, id, content, content_type)
@@ -53,7 +51,7 @@ class GoogleDriveService
   private def find_or_create_folder(section)
     environment_folder = find_or_create_environment_folder
     if (section_folder = environment_folder.file_by_title(section.to_s))
-      logger.info "Google Drive section folder alrready exists: #{section}"
+      logger.info "Google Drive section folder already exists: #{section}"
       return section_folder
     end
     logger.info "Create Google Drive section folder: #{section}"
@@ -63,7 +61,7 @@ class GoogleDriveService
   private def find_or_create_environment_folder
     top_folder = find_or_create_top_folder
     if (environment_folder = top_folder.file_by_title(Rails.env))
-      logger.info "Google Drive environment folder alrready exists: #{Rails.env}"
+      logger.info "Google Drive environment folder already exists: #{Rails.env}"
       return environment_folder
     end
     logger.info "Create Google Drive environment folder: #{Rails.env}"
@@ -72,7 +70,7 @@ class GoogleDriveService
 
   private def find_or_create_top_folder
     if (top_folder = @session.file_by_title(WEB_IMAGES_DIR))
-      logger.info "Google Drive folder alrready exists: #{WEB_IMAGES_DIR}"
+      logger.info "Google Drive folder already exists: #{WEB_IMAGES_DIR}"
       return top_folder
     end
     logger.info "Create Google Drive folder: #{WEB_IMAGES_DIR}"

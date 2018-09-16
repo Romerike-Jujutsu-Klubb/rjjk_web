@@ -39,4 +39,5 @@
         ul.controls
           li = link_to 'Godkjenn', {:controller => :images, :action => :update, :id => i.id, :image => {:approved => true}}, :method => :put if admin? && !i.approved?
           li = link_to i.public? ? 'Skjul' : 'Publiser', {:controller => :images, :action => :update, :id => i.id, :image => {:public => !i.public?}}, :method => :put if admin?
-          li = link_to 'Liker', {:controller => :users, :action => :like, :id => i.id}, :method => :post if user? && !i.likers.include?(current_user)
+          - if user? && !i.user_like
+            li = link_to 'Liker', {controller: :users, action: :like, id: i.id}, method: :post

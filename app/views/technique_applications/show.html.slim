@@ -1,0 +1,19 @@
+- @content_width = 1024
+
+h3
+  = @technique_application.name
+  - if @technique_application.rank_id
+    |  (#{link_to("#{@technique_application.rank.label}", @technique_application.rank)})
+  - if admin?
+    = link_to('Rediger', edit_technique_application_path(@technique_application), class: 'btn btn-primary float-right')
+
+p#notice = notice
+
+table.table.table-striped
+  - @technique_application.application_steps.order(:position).each.with_index do |as, i|
+    tr
+      td = as.position
+      td
+        - if as.image_id
+          img.float-left.col-md-6 src=image_path(as.image_id) style="margin:0 1em 0 0;padding:4px"
+        = as.description

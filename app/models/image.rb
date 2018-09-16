@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Image < ApplicationRecord
+  include GoogleDriveContent
   include UserSystem
 
   scope :without_image, -> { select((column_names - %w[content_data]).map { |c| "images.#{c}" }) }
@@ -9,8 +10,18 @@ class Image < ApplicationRecord
   scope :images, -> { where("content_type LIKE 'image/%'") }
 
   belongs_to :user, -> { with_deleted }, inverse_of: :images
+
+  has_one :application_step, dependent: :nullify
   has_one :member_image, dependent: :destroy
+  has_one :user_like,
+      -> do
+        where("user_images.rel_type = 'LIKE'").where('user_images.user_id = ?', Thread.current[:user].id)
+      end,
+      class_name: 'UserImage',
+      inverse_of: :image
+
   has_many :user_images, dependent: :destroy
+
   has_many :likers, -> { where("user_images.rel_type = 'LIKE'") },
       class_name: 'User', through: :user_images, source: :user
 
@@ -57,12 +68,6 @@ class Image < ApplicationRecord
     self.content_type = file.content_type if file.content_type.present?
   end
 
-  def content_data_io
-    logger.info "get google drive io: #{id} #{google_drive_reference}"
-    move_to_google_drive! unless google_drive_reference
-    GoogleDriveService.new.get_file_io(google_drive_reference)
-  end
-
   def format
     name.split('.').last
   end
@@ -95,36 +100,21 @@ class Image < ApplicationRecord
   def update_dimensions!
     return unless width.nil? || height.nil?
 
-    magick_image = Magick::Image.from_blob(content_data_io).first
+    magick_image = Magick::Image.from_blob(load_content(no_caching: true)).first
     self.width = magick_image.columns
     self.height = magick_image.rows
     save!
   end
 
-  def load_content
+  def load_content(no_caching: false)
     if google_drive_reference
       image_content = GoogleDriveService.new.get_file(google_drive_reference)
       logger.info "Image found in Google Drive: #{id}, #{name}, #{google_drive_reference}"
-    elsif Rails.env.test? # TODO(uwe): How can we test this?  WebMock?
+    elsif no_caching || Rails.env.test? # TODO(uwe): How can we test this?  WebMock?
       image_content = self.class.where(id: id).pluck(:content_data).first
     else
       image_content = move_to_google_drive!
     end
-    image_content
-  end
-
-  private
-
-  def move_to_google_drive!
-    logger.info "Store image in Google Drive: #{id}, #{name}"
-    image_content, google_reference =
-        self.class.where(id: id).pluck(:content_data, :google_drive_reference).first
-    if image_content.nil? && google_reference
-      self.google_drive_reference = google_reference
-      return
-    end
-    google_id = GoogleDriveService.new.store_file(:images, id, image_content, content_type)
-    update! google_drive_reference: google_id, content_data: nil
     image_content
   end
 end

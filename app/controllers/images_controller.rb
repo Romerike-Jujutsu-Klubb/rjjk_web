@@ -9,12 +9,23 @@ class ImagesController < ApplicationController
   caches_page :show, :inline
   cache_sweeper :image_sweeper, only: %i[update destroy]
 
+  def rank_required(image)
+    if (step = image.application_step) && (current_user&.member.nil? ||
+        step.technique_application.rank > current_user.member.next_rank)
+      redirect_to login_path, notice: 'Du må ha høyere grad for å se på dette pensumet.'
+      return true
+    end
+    false
+  end
+
   def index
     @images = Image.without_image.order(created_at: :desc).to_a
   end
 
   def show
     image = Image.select('id, content_type, name, user_id, google_drive_reference').find(params[:id])
+    return if rank_required(image)
+
     if params[:format].nil?
       redirect_to width: params[:width], format: image.format
       return
@@ -25,21 +36,25 @@ class ImagesController < ApplicationController
       headers['Content-disposition'] = "inline; filename=\"#{image.name}\""
       self.response_body = streamer
     else
-      image_content = image.load_content
-      send_data(image_content, disposition: 'inline', type: image.content_type, filename: image.name)
+      begin
+        image_content = image.content_data_io
+        if image_content.nil?
+          icon_name = image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
+          redirect_to ActionController::Base.helpers.asset_path icon_name
+          return
+        end
+        send_data(image_content, disposition: 'inline', type: image.content_type, filename: image.name)
+      rescue
+        redirect_to '/assets/pdficon_large.png'
+        return
+      end
     end
   end
 
-  JAVA_IMAGE_EXCPTIONS =
-      if RUBY_ENGINE == 'jruby'
-        [java.lang.NullPointerException, java.lang.OutOfMemoryError, javax.imageio.IIOException,
-         Java::JavaLang::ArrayIndexOutOfBoundsException]
-      else
-        []
-      end
-
   def inline
     @image = Image.select('id,name,content_type,user_id,google_drive_reference').find(params[:id])
+    return if rank_required(@image)
+
     if params[:format].nil?
       redirect_to width: params[:width], format: @image.format
       return
@@ -56,15 +71,14 @@ class ImagesController < ApplicationController
       redirect_to ActionController::Base.helpers.asset_path 'pdficon_large.png'
       return
     end
-    begin
-      imgs = Magick::ImageList.new
-      imgs.from_blob @image.load_content
-    rescue *JAVA_IMAGE_EXCPTIONS => e
-      logger.error "Exception loading image: #{e.class} #{e}"
+    content_data_io = @image.content_data_io
+    if content_data_io.nil?
       icon_name = @image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
       redirect_to ActionController::Base.helpers.asset_path icon_name
       return
     end
+    imgs = Magick::ImageList.new
+    imgs.from_blob content_data_io
     width = params[:width].to_i
     width = 492 if width < 8
     img_width = imgs.first.columns
@@ -147,10 +161,11 @@ class ImagesController < ApplicationController
 
   def mine
     image_select = Image
-        .select(%i[approved content_type description height id name public user_id
+        .select(%i[approved content_type description google_drive_reference height id name public user_id
                    width])
         .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
         .order('created_at DESC')
+        .includes(:user_like)
     image_select = image_select.where('user_id = ?', current_user.id)
     image_select = image_select.includes(:user)
     @images = image_select.to_a

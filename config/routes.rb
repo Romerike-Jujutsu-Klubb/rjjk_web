@@ -27,11 +27,7 @@ Rails.application.routes.draw do
   post 'svar/:id', controller: :survey_requests, action: :save_answers
   get 'takk/:id', controller: :survey_requests, action: :thanks
 
-  resources :application_steps do
-    member do
-      get :image
-    end
-  end
+  resources :application_steps
   resources :appointments
   resources :annual_meetings
   resources :attendances do

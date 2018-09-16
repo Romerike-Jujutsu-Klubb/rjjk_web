@@ -23,37 +23,6 @@ class ApplicationStepsController < ApplicationController
     end
   end
 
-  IMAGE_EXCEPTIONS =
-      if defined?(JRUBY_VERSION)
-        [java.lang.NullPointerException, java.lang.OutOfMemoryError]
-      else
-        [TypeError]
-      end
-
-  def image
-    step = ApplicationStep
-        .select('id,image_filename,image_content_type,image_content_data,technique_application_id')
-        .find(params[:id])
-    if step.technique_application.rank > current_user.member.next_rank
-      redirect_to login_path,
-          notice: 'Du må ha høyere grad for å se på dette pensumet.'
-      return
-    end
-    begin
-      imgs = Magick::ImageList.new
-      imgs.from_blob step.image_content_data
-    rescue NoMethodError, *IMAGE_EXCEPTIONS
-      redirect_to '/assets/pdficon_large.png'
-      return
-    end
-    width = 320
-    img_width = imgs.first.columns
-    ratio = width.to_f / img_width
-    imgs.each { |img| img.crop_resized!(width, img.rows * ratio) }
-    send_data(imgs.to_blob,
-        disposition: 'inline', type: step.image_content_type, filename: step.image_filename)
-  end
-
   def new
     @application_step = ApplicationStep.new
     respond_to do |format|
