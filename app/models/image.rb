@@ -69,7 +69,7 @@ class Image < ApplicationRecord
   end
 
   def format
-    MIME::Types[content_type].first.extensions.first
+    MIME::Types[content_type].first&.extensions&.first || name.split('.').last
   end
 
   def video?
