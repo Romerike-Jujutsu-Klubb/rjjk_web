@@ -116,7 +116,10 @@ Rails.application.routes.draw do
       get :gallery
     end
   end
-  resources(:information_pages, controller: :info, path: :info) { collection { get :preview } }
+  resources :information_pages, controller: :info, path: :info do
+    collection { get :preview }
+    member { get :preview }
+  end
   resources :instructor_meetings
   resources :martial_arts
   resources :members do
