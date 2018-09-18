@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class InfoController < ApplicationController
-  before_action :admin_required, except: %i[index show show_content]
+  before_action :admin_required, except: %i[show show_content]
 
   def index
     @information_pages = InformationPage.all
@@ -32,6 +32,13 @@ class InfoController < ApplicationController
     rescue ArgumentError # rubocop: disable Lint/HandleExceptions
     end
     raise ActiveRecord::RecordNotFound
+  end
+
+  def preview
+    @information_page = InformationPage.new(params[:information_page])
+    @information_page.id = 42
+    @information_page.created_at ||= Time.current
+    render action: :show, layout: false
   end
 
   def move_down

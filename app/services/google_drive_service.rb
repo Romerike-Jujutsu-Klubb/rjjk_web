@@ -31,11 +31,10 @@ class GoogleDriveService
   end
 
   def get_file_io(id)
-    logger.info 'download'
+    logger.info "download: #{id.inspect}"
     sio = StringIO.new
     sio.set_encoding(Encoding::BINARY)
     @session.file_by_id(id).download_to_io(sio)
-    sio.string
   end
 
   def store_file(section, id, content, content_type)

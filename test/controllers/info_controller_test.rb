@@ -6,6 +6,7 @@ class InfoControllerTest < ActionController::TestCase
   fixtures :users, :information_pages
 
   def test_index
+    login(:admin)
     get :index
     assert_response :success
     assert_template :index

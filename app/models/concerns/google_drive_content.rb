@@ -5,7 +5,7 @@ module GoogleDriveContent
     logger.info "get google drive io: #{id} #{google_drive_reference}"
     unless google_drive_reference
       stored_content = move_to_google_drive!
-      return stored_content if Rails.env.test?
+      return stored_content && StringIO.new(stored_content) if Rails.env.test?
     end
     GoogleDriveService.new.get_file_io(google_drive_reference)
   end

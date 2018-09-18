@@ -2,9 +2,9 @@
 
 h1 = @information_page.title
 
-== @information_page.body
+.md = textalize @information_page.body
 
-- if admin?
+- if admin? && @information_page.persisted?
   ul.controls
     li = link_to 'Rediger', { controller: :info, action: :edit, id: @information_page }, class: :edit
     li = link_to 'Slett', { controller: :info, action: :destroy, id: @information_page }, class: :edit, data: { confirm: 'Er du sikker?' }, method: :post

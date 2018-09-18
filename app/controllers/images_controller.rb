@@ -78,7 +78,7 @@ class ImagesController < ApplicationController
       return
     end
     imgs = Magick::ImageList.new
-    imgs.from_blob content_data_io
+    imgs.from_blob content_data_io.string
     width = params[:width].to_i
     width = 492 if width < 8
     img_width = imgs.first.columns

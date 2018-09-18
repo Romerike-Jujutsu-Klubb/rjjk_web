@@ -23,6 +23,7 @@
 //= require serviceworker-companion
 //= require changed_selector
 //= require table_navigation
+//= require draggable
 
 NProgress.configure({showSpinner: false,  ease: 'ease',  speed: 500});
 

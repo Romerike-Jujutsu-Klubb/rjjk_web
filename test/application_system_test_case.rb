@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'system_test_helper'
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
+  include Capybara::Screenshot::Diff
+  include SystemTestHelper
+
   driven_by :selenium, using: :chrome, screen_size: [1024, 768], options: {
     desired_capabilities: {
       chromeOptions: {
@@ -14,14 +18,4 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       },
     },
   }
-  include Capybara::Screenshot::Diff
-
-  def open_menu
-    find('#navBtn').click
-  end
-
-  def click_menu(menu_item)
-    open_menu
-    click_link menu_item
-  end
 end

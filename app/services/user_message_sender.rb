@@ -6,5 +6,6 @@ class UserMessageSender
       UserMessageMailer.send_message(m).deliver_now
       m.update! sent_at: Time.current
     end
+    # FIXME(uwe): Delete old messages after 10 years
   end
 end
