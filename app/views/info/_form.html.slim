@@ -123,7 +123,12 @@ javascript:
                 var l = getLocation(data_url);
 
                 $('#information_page_body').val(function (i, text) {
-                    return text + "\n![Bilde](" + l.pathname + "){:width=\"50%\" align=\"right\"}\n";
+                    if (text && !text.endsWith("\n")) {
+                        prefix = "\n";
+                    } else {
+                        prefix = '';
+                    }
+                    return prefix + text + "![Bilde](" + l.pathname + "){:width=\"50%\" align=\"right\"}\n";
                 });
 
                 $('#information_page_body').trigger('input');
