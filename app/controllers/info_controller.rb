@@ -96,7 +96,7 @@ class InfoController < ApplicationController
   private
 
   def load_images
-    @images = Image.published.images.select('id, name').to_a
+    @images = Image.published.images.select('id, name, content_type').to_a
   end
 
   def set_revised_at_param

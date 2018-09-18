@@ -63,6 +63,12 @@ css:
   /*}*/
 
 javascript:
+    function getLocation(href) {
+        var l = document.createElement("a");
+        l.href = href;
+        return l;
+    }
+
     function preview() {
         var form_selector = '##{@information_page.new_record? ? :new_information_page : "edit_information_page_#{@information_page.id}"} :input';
         $('#preview').load('preview?' + $(form_selector)
@@ -108,15 +114,25 @@ javascript:
             $(this).css('background', '#FFF');
             e.preventDefault();
 
-            console.log(e);
-            console.log(e.originalEvent);
-            console.log(e.originalEvent.dataTransfer);
-            console.log(e.originalEvent.dataTransfer.getData('URL'));
-            console.log(e.originalEvent.dataTransfer.getData('text/html'));
-            console.log(e.originalEvent.dataTransfer.files);
+            var data_url = e.originalEvent.dataTransfer.getData('URL');
 
-            var image = e.originalEvent.dataTransfer.files;
-            console.log(image);
+            if (data_url) {
+                if (data_url.startsWith("data:")) {
+                    return;
+                }
+                var l = getLocation(data_url);
+
+                $('#information_page_body').val(function (i, text) {
+                    return text + "\n![Bilde](" + l.pathname + "){:width=\"50%\" align=\"right\"}\n";
+                });
+
+                $('#information_page_body').trigger('input');
+            }
+
+            var images = e.originalEvent.dataTransfer.files;
+            if (images.length > 0) {
+                console.log(images);
+            }
         });
     });
 

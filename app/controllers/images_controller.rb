@@ -27,7 +27,7 @@ class ImagesController < ApplicationController
     return if rank_required(image)
 
     if params[:format].nil?
-      redirect_to width: params[:width], format: image.format
+      redirect_to image_path(image, width: params[:width], format: image.format)
       return
     end
     if image.video?
@@ -37,7 +37,7 @@ class ImagesController < ApplicationController
       self.response_body = streamer
     else
       begin
-        image_content = image.content_data_io
+        image_content = image.content_data_io&.string
         if image_content.nil?
           icon_name = image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
           redirect_to ActionController::Base.helpers.asset_path icon_name
@@ -46,7 +46,6 @@ class ImagesController < ApplicationController
         send_data(image_content, disposition: 'inline', type: image.content_type, filename: image.name)
       rescue
         redirect_to '/assets/pdficon_large.png'
-        return
       end
     end
   end
