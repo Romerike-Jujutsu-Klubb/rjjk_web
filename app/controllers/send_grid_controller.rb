@@ -11,8 +11,8 @@ class SendGridController < ApplicationController
   def receive
     started_at = Time.current
 
-    from = params[:from]
-    to = params[:to]
+    from = params[:envelope][:from]
+    to = params[:envelope][:to]
 
     logger.info "#{started_at.strftime('%F %T')} Got email From: #{from}, To: #{to}"
 
@@ -40,10 +40,6 @@ class SendGridController < ApplicationController
       mail_is_spam = 'LARGE'
     end
     mail = orig_mail
-    spam_score = nil
-
-    safe_subject = safe_subject(orig_mail.subject, mail_is_spam, spam_score)
-    logger.info "Store: #{safe_subject.inspect}"
 
     prod_recipients = to.grep(/@jujutsu.no/)
     beta_recipients = to.grep(/@beta.jujutsu.no/)
@@ -79,6 +75,8 @@ class SendGridController < ApplicationController
     finished_at = Time.current
     logger.info "\n#{finished_at.strftime('%F %T')} Finished in #{finished_at - started_at}s\n\n"
   end
+
+  def delivered; end
 
   private
 
