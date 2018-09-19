@@ -11,6 +11,8 @@ class SendGridController < ApplicationController
   def receive
     started_at = Time.current
 
+    logger.info "params[:envelope]: #{params[:envelope].inspect}"
+
     from = params[:envelope][:from]
     to = params[:envelope][:to]
 
