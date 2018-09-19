@@ -79,6 +79,10 @@ gem 'tinymce-rails-langs'
 gem 'uglifier', '<4'
 gem 'unicode_utils'
 
+# group :heroku do
+#   gem 'sendgrid-ruby'
+# end
+
 group :beta, :email, :heroku, :production do
   gem 'lograge'
 end
