@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class LoginController < ApplicationController
-  EMAIL_COOKIE_NAME = :"#{'rjjk_' if Rails.env.development?}email#{'_beta' if Rails.env.beta?}"
+  EMAIL_COOKIE_NAME = :"#{'rjjk_' if Rails.env.development?}email#{"_#{Rails.env}" unless Rails.env.production?}"
 
   before_action :authenticate_user, except: %i[forgot_password login_link_form login_with_password
                                                logout send_login_link signup]

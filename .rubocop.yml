@@ -60,7 +60,7 @@ Rails/FilePath:
   Enabled: false
 
 Rails/UnknownEnv:
-  Environments: development, test, beta, production
+  Environments: development, test, beta, heroku, production
 
 Style/ClassAndModuleChildren:
   Enabled: false

@@ -2,7 +2,7 @@
 
 # Be sure to restart your server when you modify this file.
 
-COOKIE_SCOPE = if Rails.env.production?
+COOKIE_SCOPE = if Rails.env.production? || Rails.env.heroku?
                  { domain: :all, tld_length: 2 }
                elsif Rails.env.beta?
                  { domain: 'beta.jujutsu.no' }
@@ -11,4 +11,4 @@ COOKIE_SCOPE = if Rails.env.production?
                end
 
 Rails.application.config.session_store :cookie_store,
-    { key: "_rjjk_web#{'_beta' if Rails.env.beta?}_session" }.merge(COOKIE_SCOPE)
+    { key: "_rjjk_web#{"_#{Rails.env}" unless Rails.env.production?}_session" }.merge(COOKIE_SCOPE)

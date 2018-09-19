@@ -79,7 +79,7 @@ gem 'tinymce-rails-langs'
 gem 'uglifier', '<4'
 gem 'unicode_utils'
 
-group :beta, :email, :production do
+group :beta, :email, :heroku, :production do
   gem 'lograge'
 end
 
