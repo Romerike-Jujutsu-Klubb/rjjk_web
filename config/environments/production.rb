@@ -6,7 +6,7 @@ Rails.application.configure do
   # config.action_cable.url = 'wss://example.com/cable'
   # config.action_controller.asset_host = 'http://assets.example.com'
   config.action_controller.perform_caching = true
-  config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
+  # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
   config.action_mailer.asset_host = 'https://jujutsu.no'
   config.action_mailer.default_url_options = { protocol: 'https', host: 'jujutsu.no' }
   config.action_mailer.delivery_method = :sendmail
