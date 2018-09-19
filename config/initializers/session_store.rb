@@ -2,8 +2,10 @@
 
 # Be sure to restart your server when you modify this file.
 
-COOKIE_SCOPE = if Rails.env.production? || Rails.env.heroku?
+COOKIE_SCOPE = if Rails.env.production?
                  { domain: :all, tld_length: 2 }
+               elsif Rails.env.heroku?
+                 { domain: 'jujutsu-no.herokuapp.com' }
                elsif Rails.env.beta?
                  { domain: 'beta.jujutsu.no' }
                else
