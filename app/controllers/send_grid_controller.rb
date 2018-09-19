@@ -11,10 +11,11 @@ class SendGridController < ApplicationController
   def receive
     started_at = Time.current
 
-    logger.info "params[:envelope]: #{params[:envelope].inspect}"
+    envelope = JSON.parse(params[:envelope]).symbolize_keys
+    logger.info "params[:envelope]: #{envelope.inspect}"
 
-    from = params[:envelope][:from]
-    to = params[:envelope][:to]
+    from = envelope[:from]
+    to = envelope[:to]
 
     logger.info "#{started_at.strftime('%F %T')} Got email From: #{from}, To: #{to}"
 
