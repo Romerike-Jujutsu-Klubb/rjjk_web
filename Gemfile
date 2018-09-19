@@ -7,6 +7,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+ruby File.read("#{__dir__}/.ruby-version")[5..-1]
+
 gem 'rails', '~>5.2.0'
 
 platform :ruby do
