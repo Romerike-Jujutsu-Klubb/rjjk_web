@@ -62,7 +62,6 @@ class SendGridController < ApplicationController
         mail['X-Spam-My-Status'] = mail['X-Spam-Status']&.value
         mail.smtp_envelope_from = from
         mail.smtp_envelope_to = rest_recipients
-        mail.delivery_method :sendmail
         mail.deliver
         logger.info "\nDelivered OK to #{rest_recipients}"
       rescue => e
