@@ -44,7 +44,7 @@ class SendGridController < ApplicationController
     end
     mail = orig_mail
 
-    prod_recipients = to.grep(/@([a-z0-9]\.)?jujutsu.no/i)
+    prod_recipients = to.grep(/@([a-z0-9]+\.)?jujutsu.no/i)
     create_record('production', from, prod_recipients, content) if prod_recipients.any?
 
     rest_recipients = to - prod_recipients
@@ -65,6 +65,9 @@ class SendGridController < ApplicationController
         mail.delivery_method Rails.configuration.action_mailer.delivery_method,
             Rails.configuration.action_mailer.smtp_settings
         mail.deliver
+
+        # ActionMailer::Base.mail(from: from, to: rest_recipients, subject: mail.subject, body: "test").deliver
+
         logger.info "\nDelivered OK to #{rest_recipients}"
       rescue => e
         logger.info "Exception sending email: #{e.class} #{e}"
