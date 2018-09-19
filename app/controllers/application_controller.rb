@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   DEFAULT_LAYOUT = 'dark_ritual'
 
-  protect_from_forgery with: :exception unless Rails.env.beta? # allow medusa login on beta
+  protect_from_forgery prepend: true, with: :exception unless Rails.env.beta? # allow medusa login on beta
 
   layout DEFAULT_LAYOUT
 
