@@ -44,12 +44,10 @@ class SendGridController < ApplicationController
     end
     mail = orig_mail
 
-    prod_recipients = to.grep(/@jujutsu.no/)
-    beta_recipients = to.grep(/@beta.jujutsu.no/)
-    rest_recipients = to - prod_recipients - beta_recipients
-
+    prod_recipients = to.grep(/@([a-z0-9]\.)?jujutsu.no/i)
     create_record('production', from, prod_recipients, content) if prod_recipients.any?
 
+    rest_recipients = to - prod_recipients
     if rest_recipients.any?
       logger.info "Sending to rest: #{from} => #{rest_recipients}"
 
