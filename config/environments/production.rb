@@ -24,7 +24,7 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
   config.consider_all_requests_local = false
   config.eager_load = true
-  config.force_ssl = true
+  # config.force_ssl = true # FIXME(uwe): Enable when we have paid dynos on Heroku
   config.i18n.fallbacks = true
   config.log_formatter = ::Logger::Formatter.new
   config.log_level = :debug
