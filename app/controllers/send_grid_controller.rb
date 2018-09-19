@@ -104,7 +104,7 @@ class SendGridController < ApplicationController
   end
 
   def create_record(env, from, recipients, content)
-    log "Storing in #{env} to: #{from} => #{recipients}"
+    logger.info "Storing in #{env} to: #{from} => #{recipients}"
 
     content_with_envelope = <<~HEADERS + content
       X-Envelope-From: #{from}
@@ -113,7 +113,7 @@ class SendGridController < ApplicationController
 
     RawIncomingEmail.create content: content_with_envelope
   rescue Exception => e # rubocop: disable Lint/RescueException
-    log "Exception storing record: #{e}"
+    logger.error "Exception storing record: #{e}"
     render status: :internal_server_error
   end
 end
