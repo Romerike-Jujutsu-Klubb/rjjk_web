@@ -65,10 +65,7 @@ class SendGridController < ApplicationController
         mail.delivery_method Rails.configuration.action_mailer.delivery_method,
             Rails.configuration.action_mailer.smtp_settings
         mail.deliver
-
-        # ActionMailer::Base.mail(from: from, to: rest_recipients, subject: mail.subject, body: "test").deliver
-
-        logger.info "\nDelivered OK to #{rest_recipients}"
+        logger.info "Delivered OK to #{rest_recipients}"
       rescue => e
         logger.info "Exception sending email: #{e.class} #{e}"
         logger.info e.backtrace.join("\n")
