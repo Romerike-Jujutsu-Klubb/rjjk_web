@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get 'pensum' => 'ranks#pensum'
   get 'pensum/pdf' => 'ranks#pdf'
   get 'search' => 'search#index'
+  post 'send_grid/receive' => 'send_grid#receive'
   get 'status' => 'status#index'
   get 'svar/:id', controller: :survey_requests, action: :answer_form
   patch 'svar/:id', controller: :survey_requests, action: :save_answers
