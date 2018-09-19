@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddStandardTimeToRanks < ActiveRecord::Migration
+class AddStandardTimeToRanks < ActiveRecord::Migration[4.2]
   def self.up
     add_column :ranks, :standard_months, :integer, null: true
     Rank.update_all standard_months: 6 # rubocop:disable Rails/SkipsModelValidations

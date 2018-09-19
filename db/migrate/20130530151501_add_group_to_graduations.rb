@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddGroupToGraduations < ActiveRecord::Migration
+class AddGroupToGraduations < ActiveRecord::Migration[4.2]
   def change
     add_column :graduations, :group_id, :integer
     Graduation.all.each do |graduation|

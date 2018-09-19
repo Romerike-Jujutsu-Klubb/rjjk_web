@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateNkfMemberTrials < ActiveRecord::Migration
+class CreateNkfMemberTrials < ActiveRecord::Migration[4.2]
   def self.up
     create_table :nkf_member_trials do |t|
       t.string :medlems_type, limit: 16, null: false

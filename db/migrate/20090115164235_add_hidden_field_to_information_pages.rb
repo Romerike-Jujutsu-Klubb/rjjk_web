@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddHiddenFieldToInformationPages < ActiveRecord::Migration
+class AddHiddenFieldToInformationPages < ActiveRecord::Migration[4.2]
   def self.up
     add_column :information_pages, :hidden, :boolean
   end

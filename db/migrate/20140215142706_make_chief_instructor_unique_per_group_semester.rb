@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MakeChiefInstructorUniquePerGroupSemester < ActiveRecord::Migration
+class MakeChiefInstructorUniquePerGroupSemester < ActiveRecord::Migration[4.2]
   def up
     groups = execute 'SELECT id FROM groups WHERE closed_on IS NULL ORDER BY id'
     semesters = execute 'SELECT id FROM semesters ORDER BY id'

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateGroupSchedules < ActiveRecord::Migration
+class CreateGroupSchedules < ActiveRecord::Migration[4.2]
   def self.up
     create_table :group_schedules do |t|
       t.integer :group_id, null: false

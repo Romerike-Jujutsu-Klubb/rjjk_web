@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateNkfMembers < ActiveRecord::Migration
+class CreateNkfMembers < ActiveRecord::Migration[4.2]
   def self.up
     create_table :nkf_members do |t|
       t.integer :member_id

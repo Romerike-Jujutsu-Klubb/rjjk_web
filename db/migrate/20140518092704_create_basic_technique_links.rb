@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateBasicTechniqueLinks < ActiveRecord::Migration
+class CreateBasicTechniqueLinks < ActiveRecord::Migration[4.2]
   def change
     create_table :basic_technique_links do |t|
       t.integer :basic_technique_id, null: false

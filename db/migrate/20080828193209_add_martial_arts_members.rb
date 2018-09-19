@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddMartialArtsMembers < ActiveRecord::Migration
+class AddMartialArtsMembers < ActiveRecord::Migration[4.2]
   def self.up
     create_table :martial_arts_members, id: false do |t|
       t.integer :martial_art_id, null: false

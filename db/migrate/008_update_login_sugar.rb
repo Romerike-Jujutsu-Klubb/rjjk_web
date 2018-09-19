@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UpdateLoginSugar < ActiveRecord::Migration
+class UpdateLoginSugar < ActiveRecord::Migration[4.2]
   def self.up
     add_column :users, :verified_tmp, :boolean, default: false
     add_column :users, :deleted_tmp, :boolean, default: false

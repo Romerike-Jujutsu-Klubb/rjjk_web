@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateTechniqueApplications < ActiveRecord::Migration
+class CreateTechniqueApplications < ActiveRecord::Migration[4.2]
   def change
     create_table :technique_applications do |t|
       t.string :name, null: false

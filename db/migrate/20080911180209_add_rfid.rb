@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddRfid < ActiveRecord::Migration
+class AddRfid < ActiveRecord::Migration[4.2]
   def self.up
     add_column :members, :rfid, :string, limit: 25
   end

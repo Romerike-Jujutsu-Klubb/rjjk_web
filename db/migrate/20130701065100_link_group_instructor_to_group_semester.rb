@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LinkGroupInstructorToGroupSemester < ActiveRecord::Migration
+class LinkGroupInstructorToGroupSemester < ActiveRecord::Migration[4.2]
   def up
     execute 'DELETE FROM group_instructors'
     add_column :group_instructors, :semester_id, :integer, null: false # rubocop:disable Rails/NotNullColumn

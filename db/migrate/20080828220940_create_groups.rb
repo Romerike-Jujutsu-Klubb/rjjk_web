@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateGroups < ActiveRecord::Migration
+class CreateGroups < ActiveRecord::Migration[4.2]
   def self.up
     create_table :groups do |t|
       t.integer :martial_art_id, null: false

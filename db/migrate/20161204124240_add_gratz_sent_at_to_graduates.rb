@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddGratzSentAtToGraduates < ActiveRecord::Migration
+class AddGratzSentAtToGraduates < ActiveRecord::Migration[4.2]
   def change
     add_column :graduates, :gratz_sent_at, :datetime
     reversible do |dir|

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateEventInvitees < ActiveRecord::Migration
+class CreateEventInvitees < ActiveRecord::Migration[4.2]
   def change
     create_table :event_invitees do |t|
       t.integer :event_id

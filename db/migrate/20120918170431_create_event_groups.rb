@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateEventGroups < ActiveRecord::Migration
+class CreateEventGroups < ActiveRecord::Migration[4.2]
   def change
     create_table :events_groups do |t|
       t.integer :event_id

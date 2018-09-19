@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddFamilyToMartialArt < ActiveRecord::Migration
+class AddFamilyToMartialArt < ActiveRecord::Migration[4.2]
   def self.up
     add_column :martial_arts, :family, :string, limit: 16, null: false, default: 'Jujutsu'
     change_column :martial_arts, :family, :string, default: nil

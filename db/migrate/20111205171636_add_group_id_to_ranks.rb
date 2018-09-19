@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddGroupIdToRanks < ActiveRecord::Migration
+class AddGroupIdToRanks < ActiveRecord::Migration[4.2]
   def self.up
     add_column :ranks, :group_id, :integer
     Rank.reset_column_information

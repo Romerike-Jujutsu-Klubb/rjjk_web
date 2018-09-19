@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateCmsMembers < ActiveRecord::Migration
+class CreateCmsMembers < ActiveRecord::Migration[4.2]
   def self.up
     create_table :cms_members do |t|
       t.column 'first_name',           :string,  limit: 100, default: '',    null: false

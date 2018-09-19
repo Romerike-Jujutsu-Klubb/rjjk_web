@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddTimestampsToImages < ActiveRecord::Migration
+class AddTimestampsToImages < ActiveRecord::Migration[4.2]
   def up
     add_column :images, :created_at, :datetime
     add_column :images, :updated_at, :datetime

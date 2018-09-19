@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateElections < ActiveRecord::Migration
+class CreateElections < ActiveRecord::Migration[4.2]
   def change
     create_table :elections do |t|
       t.integer :annual_meeting_id, null: false

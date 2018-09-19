@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateGroupSemesters < ActiveRecord::Migration
+class CreateGroupSemesters < ActiveRecord::Migration[4.2]
   def change
     create_table :group_semesters do |t|
       t.integer :group_id, null: false

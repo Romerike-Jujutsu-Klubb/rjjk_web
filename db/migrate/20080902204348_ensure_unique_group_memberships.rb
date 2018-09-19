@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EnsureUniqueGroupMemberships < ActiveRecord::Migration
+class EnsureUniqueGroupMemberships < ActiveRecord::Migration[4.2]
   def self.up
     execute 'DELETE FROM groups_members gm1
         WHERE EXISTS (

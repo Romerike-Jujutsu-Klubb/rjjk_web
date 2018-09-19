@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateSurveyAnswerTranslations < ActiveRecord::Migration
+class CreateSurveyAnswerTranslations < ActiveRecord::Migration[4.2]
   def change
     create_table :survey_answer_translations do |t|
       t.string :answer, null: false, limit: 254

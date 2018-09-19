@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateBirthdayCelebrations < ActiveRecord::Migration
+class CreateBirthdayCelebrations < ActiveRecord::Migration[4.2]
   def change
     create_table :birthday_celebrations do |t|
       t.date :held_on, null: false

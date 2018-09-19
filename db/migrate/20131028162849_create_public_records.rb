@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreatePublicRecords < ActiveRecord::Migration
+class CreatePublicRecords < ActiveRecord::Migration[4.2]
   def change
     create_table :public_records do |t|
       t.string :contact, null: false

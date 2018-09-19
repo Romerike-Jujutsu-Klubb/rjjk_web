@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateBasicTechniques < ActiveRecord::Migration
+class CreateBasicTechniques < ActiveRecord::Migration[4.2]
   def change
     create_table :basic_techniques do |t|
       t.string :name, null: false, index: :unique

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddRatingAndCommentToAttendances < ActiveRecord::Migration
+class AddRatingAndCommentToAttendances < ActiveRecord::Migration[4.2]
   def change
     add_column :attendances, :sent_review_email_at, :datetime
     add_column :attendances, :rating, :integer

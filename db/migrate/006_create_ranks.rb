@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateRanks < ActiveRecord::Migration
+class CreateRanks < ActiveRecord::Migration[4.2]
   def self.up
     create_table :martial_arts, force: true do |t|
       t.column :name, :string, limit: 16, null: false

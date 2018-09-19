@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateApplicationSteps < ActiveRecord::Migration
+class CreateApplicationSteps < ActiveRecord::Migration[4.2]
   def change
     create_table :application_steps do |t|
       t.integer :technique_application_id, null: false

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddRoleToGroupInstructor < ActiveRecord::Migration
+class AddRoleToGroupInstructor < ActiveRecord::Migration[4.2]
   def up
     add_column :group_instructors, :role, :string, limit: 16
     execute "UPDATE group_instructors SET role = 'Instruktør'"

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateTrialAttendances < ActiveRecord::Migration
+class CreateTrialAttendances < ActiveRecord::Migration[4.2]
   def self.up
     create_table 'trial_attendances', force: true do |t|
       t.integer 'nkf_member_trial_id', null: false

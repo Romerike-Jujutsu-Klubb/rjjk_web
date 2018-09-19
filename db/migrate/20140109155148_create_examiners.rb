@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateExaminers < ActiveRecord::Migration
+class CreateExaminers < ActiveRecord::Migration[4.2]
   def change
     add_column :censors, :examiner, :boolean
     add_column :censors, :requested_at, :datetime

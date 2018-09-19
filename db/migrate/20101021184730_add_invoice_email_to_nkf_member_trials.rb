@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddInvoiceEmailToNkfMemberTrials < ActiveRecord::Migration
+class AddInvoiceEmailToNkfMemberTrials < ActiveRecord::Migration[4.2]
   def self.up
     execute 'DELETE FROM nkf_member_trials'
     add_column :nkf_member_trials, :tid, :integer, null: false # rubocop:disable Rails/NotNullColumn

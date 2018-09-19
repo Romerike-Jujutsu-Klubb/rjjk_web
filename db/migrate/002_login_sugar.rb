@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LoginSugar < ActiveRecord::Migration
+class LoginSugar < ActiveRecord::Migration[4.2]
   def self.up
     create_table :users, force: true do |t|
       t.column :login, :string, limit: 80, null: false

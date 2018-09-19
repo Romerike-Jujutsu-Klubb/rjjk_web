@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateEmbus < ActiveRecord::Migration
+class CreateEmbus < ActiveRecord::Migration[4.2]
   def change
     create_table :embus do |t|
       t.integer :user_id, null: false

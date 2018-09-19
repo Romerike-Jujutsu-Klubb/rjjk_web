@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateBoardMeetings < ActiveRecord::Migration
+class CreateBoardMeetings < ActiveRecord::Migration[4.2]
   def change
     create_table :board_meetings do |t|
       t.datetime :start_at, null: false

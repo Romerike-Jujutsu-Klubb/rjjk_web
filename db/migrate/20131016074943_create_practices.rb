@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreatePractices < ActiveRecord::Migration
+class CreatePractices < ActiveRecord::Migration[4.2]
   def change
     create_table :practices do |t|
       t.integer :group_schedule_id, null: false

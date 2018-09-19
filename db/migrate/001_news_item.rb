@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class NewsItem < ActiveRecord::Migration
+class NewsItem < ActiveRecord::Migration[4.2]
   def self.up
     create_table 'news_items' do |t|
       t.column 'title', :string, limit: 32, null: false

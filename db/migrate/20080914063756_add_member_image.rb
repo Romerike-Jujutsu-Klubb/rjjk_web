@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddMemberImage < ActiveRecord::Migration
+class AddMemberImage < ActiveRecord::Migration[4.2]
   def self.up
     add_column :members, :image, :binary
     add_column :members, :image_name, :string, limit: 64

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateSurveys < ActiveRecord::Migration
+class CreateSurveys < ActiveRecord::Migration[4.2]
   def change
     create_table :surveys do |t|
       t.string :category, limit: 8 # passive/active/left

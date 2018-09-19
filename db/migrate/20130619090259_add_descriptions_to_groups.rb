@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddDescriptionsToGroups < ActiveRecord::Migration
+class AddDescriptionsToGroups < ActiveRecord::Migration[4.2]
   def change
     add_column :groups, :monthly_price, :integer
     add_column :groups, :yearly_price, :integer

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateInstructions < ActiveRecord::Migration
+class CreateInstructions < ActiveRecord::Migration[4.2]
   def change
     create_table :instructions do |t|
       t.integer :group_id

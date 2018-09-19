@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CorrectBirthDate < ActiveRecord::Migration
+class CorrectBirthDate < ActiveRecord::Migration[4.2]
   def self.up
     rename_column :cms_members, :birtdate, :birthdate
     rename_column :members, :birtdate, :birthdate

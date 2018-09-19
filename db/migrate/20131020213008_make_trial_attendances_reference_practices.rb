@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MakeTrialAttendancesReferencePractices < ActiveRecord::Migration
+class MakeTrialAttendancesReferencePractices < ActiveRecord::Migration[4.2]
   def up
     add_index :attendances, %i[member_id practice_id], unique: true
 
