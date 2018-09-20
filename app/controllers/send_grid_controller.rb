@@ -6,7 +6,7 @@ class SendGridController < ApplicationController
   EX_TEMPFAIL = 75
   EX_UNAVAILABLE = 69
 
-  skip_before_action :verify_authenticity_token
+  skip_before_action :verify_authenticity_token unless Rails.env.beta? # allow medusa login on beta
 
   def receive
     started_at = Time.current

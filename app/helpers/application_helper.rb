@@ -37,14 +37,19 @@ module ApplicationHelper
   end
 
   def textalize(s)
-    return '' if s.nil?
+    return '' if s.blank?
 
     with_links = auto_link(s, link: :all, target: '_blank', sanitize: false)
     html = Kramdown::Document.new(with_links.strip).to_html
     html.force_encoding(Encoding::UTF_8)
-    html_with_base = absolute_links(html)
-    html_with_bold_links = html_with_base
-    html_with_bold_links.html_safe # rubocop: disable Rails/OutputSafety
+    absolute_links(html).html_safe # rubocop: disable Rails/OutputSafety
+  end
+
+  def textify(s)
+    return '' if s.blank?
+
+    h = Kramdown::Document.new(s.strip).to_kramdown.gsub(/\{: .*?\}\s*/, '')
+    absolute_links(h)
   end
 
   def absolute_links(html)
@@ -63,13 +68,6 @@ module ApplicationHelper
         with_base
       end
     end
-  end
-
-  def textify(s)
-    return '' if s.blank?
-
-    h = Kramdown::Document.new(s.strip).to_kramdown.gsub(/\{: .*?\}\s*/, '')
-    absolute_links(h)
   end
 
   def holiday_label(date)

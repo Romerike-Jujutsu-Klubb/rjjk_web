@@ -50,18 +50,6 @@
       .modal-body style="overflow-y:scroll"
         = render '/images/list', images: @images
 
-css:
-  /*#image-list-modal {*/
-    /*position: relative;*/
-  /*}*/
-
-  /*.modal-dialog {*/
-    /*position: fixed;*/
-    /*width: 100%;*/
-    /*margin: 0;*/
-    /*padding: 10px;*/
-  /*}*/
-
 javascript:
     function getLocation(href) {
         var l = document.createElement("a");
@@ -96,6 +84,9 @@ javascript:
         });
         $('body').removeClass("modal-open");
         $(document).off('focusin.modal');
+        $("img[data-original]").each(function () {
+            $(this).lazyload();
+        });
     });
 
     $(document).ready(function () {
