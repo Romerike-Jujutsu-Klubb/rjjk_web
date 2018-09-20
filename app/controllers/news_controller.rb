@@ -95,6 +95,6 @@ class NewsController < ApplicationController
   private
 
   def load_images
-    @images = Image.published.images.select(:id, :name).order(created_at: :desc).to_a
+    @images = Image.published.images.select(:id, :name, :content_type).order(created_at: :desc).to_a
   end
 end

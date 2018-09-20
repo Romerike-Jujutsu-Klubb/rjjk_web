@@ -27,7 +27,7 @@
 
 NProgress.configure({showSpinner: false,  ease: 'ease',  speed: 500});
 
-$().ready(function () {
+$(function () {
     $('.chosen-select').chosen();
 });
 
@@ -43,6 +43,6 @@ $(window).on('load', function () {
     });
 });
 
-$().ready(function () {
+$(function () {
     $('[data-toggle=tooltip]').tooltip()
 });

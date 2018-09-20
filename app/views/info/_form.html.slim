@@ -84,8 +84,9 @@ javascript:
         });
         $('body').removeClass("modal-open");
         $(document).off('focusin.modal');
+        var container = $("#image-list-modal .modal-body")[0];
         $("img[data-original]").each(function () {
-            $(this).lazyload();
+            $(this).lazyload({container: container});
         });
     });
 

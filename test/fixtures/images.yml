@@ -4,6 +4,8 @@ one:
   content_data: !binary |
     iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==
   user: lars
+  approved: true
+  public: true
 two:
   name: picture two
   content_type: image/gif
@@ -19,14 +21,17 @@ application_step_one:
   content_data: !binary |
     R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=
   user: admin
+  approved: true
 application_step_two:
   name: Step 2
   content_type: MyString
   content_data:
   user: admin
+  approved: true
 application_step_kneeing:
   name: Step 3
   content_type: MyString
   content_data: !binary |
     R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
   user: admin
+  approved: true

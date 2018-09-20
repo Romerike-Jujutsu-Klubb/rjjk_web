@@ -68,7 +68,9 @@ class NkfAgent
     logger.debug("more_pages: #{more_pages.inspect}")
     in_parallel(more_pages - ['1']) do |page_number, queue|
       logger.debug page_number
-      page_body = @agent.clone.get(search_url + page_number).body
+      page_body = with_retries(exceptions: Mechanize::ChunkedTerminationError) do
+        @agent.clone.get(search_url + page_number).body
+      end
       even_more_pages = page_body
           .scan(%r{<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)</a>})
           .map(&:first)
@@ -86,15 +88,23 @@ class NkfAgent
   end
 
   def get(url)
-    backoff ||= 1
-    url = "#{APP_PATH}/#{url}" unless url.start_with?(APP_PATH)
-    @agent.get(url)
-  rescue Errno::ECONNREFUSED => e
-    raise e if backoff > BACKOFF_LIMIT
+    with_retries do
+      url = "#{APP_PATH}/#{url}" unless url.start_with?(APP_PATH)
+      @agent.get(url)
+    end
+  end
 
-    logger.info "Retrying agent GET #{backoff} #{e}"
+  def with_retries(label: 'agent GET', attempts: nil, exceptions: Errno::ECONNREFUSED, backoff: 1.second,
+      backoff_factor: 2, backoff_limit: BACKOFF_LIMIT)
+    attempt ||= 1
+    yield
+  rescue *exceptions => e
+    raise e if (attempts && attempt >= attempts) || backoff > backoff_limit
+
+    attempt += 1
+    logger.info "Retrying #{label} #{attempt} #{backoff} #{e}"
     sleep backoff
-    backoff *= 2
+    backoff *= backoff_factor
     retry
   end
 
