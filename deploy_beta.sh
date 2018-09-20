@@ -9,8 +9,7 @@ REQUIRED_BUNDLER_VERSION=$(grep -A1 "BUNDLED WITH" Gemfile.lock | tail -n 1)
 
 echo Transferring changes
 rsync -aPv --delete --exclude "*~" --exclude "/coverage" --exclude "/doc" --exclude "/log" \
-  --exclude "/public/503.html" --exclude "/public/assets" --exclude "/public/members" --exclude "/test" \
-  --exclude "/tmp" \
+  --exclude "/public/503.html" --exclude "/public/assets" --exclude "/test" --exclude "/tmp" \
   ./.ruby-version ./* ${USER}@${HOST}:${INSTALL_DIR}/ | grep -v "/$"
 
 # rsync -aPv tmp/google_drive_client_secret.json ${USER}@${HOST}:${INSTALL_DIR}/tmp/
