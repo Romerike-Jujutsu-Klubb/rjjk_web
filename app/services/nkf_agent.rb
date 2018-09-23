@@ -68,9 +68,7 @@ class NkfAgent
     logger.debug("more_pages: #{more_pages.inspect}")
     in_parallel(more_pages - ['1']) do |page_number, queue|
       logger.debug page_number
-      page_body = with_retries(exceptions: Mechanize::ChunkedTerminationError) do
-        @agent.clone.get(search_url + page_number).body
-      end
+      page_body = get(search_url + page_number).body
       even_more_pages = page_body
           .scan(%r{<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)</a>})
           .map(&:first)
@@ -90,11 +88,12 @@ class NkfAgent
   def get(url)
     with_retries do
       url = "#{APP_PATH}/#{url}" unless url.start_with?(APP_PATH)
-      @agent.get(url)
+      thread_local_agent.get(url)
     end
   end
 
-  def with_retries(label: 'agent GET', attempts: nil, exceptions: Errno::ECONNREFUSED, backoff: 1.second,
+  def with_retries(label: 'agent GET', attempts: nil,
+      exceptions: [Errno::ECONNREFUSED, Mechanize::ChunkedTerminationError], backoff: 1.second,
       backoff_factor: 2, backoff_limit: BACKOFF_LIMIT)
     attempt ||= 1
     yield
@@ -110,5 +109,11 @@ class NkfAgent
 
   def submit(form)
     @agent.submit(form)
+  end
+
+  private
+
+  def thread_local_agent
+    (Thread.current[:nkf_agent] ||= @agent.clone)
   end
 end
