@@ -93,8 +93,8 @@ class NkfAgent
   end
 
   def with_retries(label: 'agent GET', attempts: nil,
-      exceptions: [Errno::ECONNREFUSED, Mechanize::ChunkedTerminationError], backoff: 1.second,
-      backoff_factor: 2, backoff_limit: BACKOFF_LIMIT)
+      exceptions: [Errno::ECONNREFUSED, Mechanize::ChunkedTerminationError, Mechanize::ResponseReadError],
+      backoff: 1.second, backoff_factor: 2, backoff_limit: BACKOFF_LIMIT)
     attempt ||= 1
     yield
   rescue *exceptions => e
