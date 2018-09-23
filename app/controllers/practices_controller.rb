@@ -35,7 +35,11 @@ class PracticesController < ApplicationController
   def update
     @practice = Practice.find(params[:id])
     if @practice.update(params[:practice])
-      redirect_to @practice.group_semester || @practice, notice: 'Treningen er oppdatert.'
+      if request.xhr?
+        render plain: ''
+      else
+        redirect_to @practice.group_semester || @practice, notice: 'Treningen er oppdatert.'
+      end
     else
       render :edit
     end
