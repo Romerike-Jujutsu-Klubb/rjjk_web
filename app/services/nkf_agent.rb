@@ -31,24 +31,23 @@ class NkfAgent
 
   # Returns the front page
   def login
-    backoff ||= 1
-    # rubocop: disable Metrics/LineLength
-    token_page = get("#{APP_PATH}/pls/portal/portal.wwptl_login.show_site2pstoretoken?p_url=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpls%2Fportal%2Fmyports.st_login_proc.set_language%3Fref_path%3D7513_ST_LOGIN_463458038&p_cancel=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpage%2Fportal%2Fks_utv%2Fst_login")
-    # rubocop: enable Metrics/LineLength
-    token = token_page.form('freshTokenForm').field_with(name: 'site2pstoretoken').value
-    login_page = get("#{APP_PATH}/page/portal/ks_utv/st_login")
-    login_form = login_page.form('st_login')
-    login_form.ssousername = NKF_USERNAME
-    login_form.password = NKF_PASSWORD
-    login_form.site2pstoretoken = token
-    submit(login_form)
-  rescue Mechanize::ResponseCodeError, SocketError => e
-    raise e if backoff > BACKOFF_LIMIT
-
-    logger.info "Retrying agent login #{backoff} #{e}"
-    sleep backoff
-    backoff *= 2
-    retry
+    with_retries(label: 'agent login',
+        exceptions: [Mechanize::ResponseCodeError, Net::HTTP::Persistent::Error, SocketError]) do
+      prefix = 'http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2F'
+      next_url =
+          "#{prefix}pls%2Fportal%2Fmyports.st_login_proc.set_language%3Fref_path%3D7513_ST_LOGIN_463458038"
+      cancel_url = "#{prefix}page%2Fportal%2Fks_utv%2Fst_login"
+      token_page = get(<<~URL)
+        #{APP_PATH}/pls/portal/portal.wwptl_login.show_site2pstoretoken?p_url=#{next_url}&p_cancel=#{cancel_url}
+      URL
+      token = token_page.form('freshTokenForm').field_with(name: 'site2pstoretoken').value
+      login_page = get("#{APP_PATH}/page/portal/ks_utv/st_login")
+      login_form = login_page.form('st_login')
+      login_form.ssousername = NKF_USERNAME
+      login_form.password = NKF_PASSWORD
+      login_form.site2pstoretoken = token
+      submit(login_form)
+    end
   end
 
   def search_members(nkf_member_id = nil)
