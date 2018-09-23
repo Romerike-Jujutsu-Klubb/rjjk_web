@@ -26,21 +26,22 @@ class NkfAgent
     super
     @agent = Mechanize.new
     @agent.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    Thread.current[:nkf_agent] = @agent
   end
 
   # Returns the front page
   def login
     backoff ||= 1
     # rubocop: disable Metrics/LineLength
-    token_page = @agent.get("#{APP_PATH}/pls/portal/portal.wwptl_login.show_site2pstoretoken?p_url=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpls%2Fportal%2Fmyports.st_login_proc.set_language%3Fref_path%3D7513_ST_LOGIN_463458038&p_cancel=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpage%2Fportal%2Fks_utv%2Fst_login")
+    token_page = get("#{APP_PATH}/pls/portal/portal.wwptl_login.show_site2pstoretoken?p_url=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpls%2Fportal%2Fmyports.st_login_proc.set_language%3Fref_path%3D7513_ST_LOGIN_463458038&p_cancel=http%3A%2F%2Fnkfwww.kampsport.no%2Fportal%2Fpage%2Fportal%2Fks_utv%2Fst_login")
     # rubocop: enable Metrics/LineLength
     token = token_page.form('freshTokenForm').field_with(name: 'site2pstoretoken').value
-    login_page = @agent.get("#{APP_PATH}/page/portal/ks_utv/st_login")
+    login_page = get("#{APP_PATH}/page/portal/ks_utv/st_login")
     login_form = login_page.form('st_login')
     login_form.ssousername = NKF_USERNAME
     login_form.password = NKF_PASSWORD
     login_form.site2pstoretoken = token
-    @agent.submit(login_form)
+    submit(login_form)
   rescue Mechanize::ResponseCodeError, SocketError => e
     raise e if backoff > BACKOFF_LIMIT
 
@@ -60,7 +61,7 @@ class NkfAgent
         "&frm_27_v34=%3D&frm_27_v37=-1#{"&frm_27_v40=#{nkf_member_id}" if nkf_member_id}&frm_27_v44=%3D" \
         '&frm_27_v45=%3D&frm_27_v46=11&frm_27_v47=11&frm_27_v49=N&frm_27_v50=134002.PNG&frm_27_v53=-1' \
         '&p_ks_reg_medladm_action=SEARCH&p_page_search='
-    search_result_page = @agent.get(search_url)
+    search_result_page = get(search_url)
     search_result_body = search_result_page.body
     more_pages = ['1'] + search_result_body
         .scan(%r{<a class="aPagenr" href="javascript:window.next_page27\('(\d+)'\)">(\d+)</a>})
@@ -107,9 +108,7 @@ class NkfAgent
     retry
   end
 
-  def submit(form)
-    @agent.submit(form)
-  end
+  delegate :submit, to: :thread_local_agent
 
   private
 
