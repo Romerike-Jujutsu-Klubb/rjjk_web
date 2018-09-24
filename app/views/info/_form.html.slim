@@ -59,10 +59,9 @@ javascript:
 
     function preview() {
         var form_selector = '##{@information_page.new_record? ? :new_information_page : "edit_information_page_#{@information_page.id}"} :input';
-        $('#preview').load('preview?' + $(form_selector)
-            .map(function () {
-                return "" + $(this).attr('name') + "=" + encodeURIComponent($(this).val())
-            }).get().join("&"))
+        $('#preview').load('preview', $(form_selector)).map(function () {
+            return "" + $(this).attr('name') + "=" + encodeURIComponent($(this).val())
+        }).get().join("&")
     }
 
     var previewTimeout = null;

@@ -118,8 +118,8 @@ Rails.application.routes.draw do
     end
   end
   resources :information_pages, controller: :info, path: :info do
-    collection { get :preview }
-    member { get :preview }
+    collection { post :preview }
+    member { patch :preview }
   end
   resources :instructor_meetings
   resources :martial_arts
