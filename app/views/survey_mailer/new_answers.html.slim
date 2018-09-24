@@ -2,13 +2,13 @@ h2 Hei #{@user.name}!
 
 p Her er nye svar på spørreundersøkelser.
 
-h2 Nye svar (#{@new_answers.size})
+h2 Nye svar (#{@new_answers.group_by(&:survey_request).size})
 = render 'summary', answers: @new_answers
 
-h2 Siste 12 måneder (#{@last_year.size})
+h2 Siste 12 måneder (#{@last_year.group_by(&:survey_request).size})
 = render 'summary', answers: @last_year
 
-h2 Totalt (#{@total.size})
+h2 Totalt (#{@total.group_by(&:survey_request).size})
 = render 'summary', answers: @total
 
 p

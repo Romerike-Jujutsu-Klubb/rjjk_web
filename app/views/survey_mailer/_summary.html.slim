@@ -7,8 +7,5 @@ ul
           li
             h4 = question.title
             ul
-              - answers.group_by(&:answer).each do |answer, instances|
-                - answer_text = YAML.load(answer)
-                - if answer_text.is_a? Array
-                  - answer_text = (answer_text.reject(&:blank?) - ['annet']).join(', ')
-                li #{instances.size} : #{answer_text}
+              - answers.map(&:answer).map{|a|YAML.load(a)}.flatten.map(&:strip).reject(&:blank?).reject{|a| a == 'annet'}.group_by(&:itself).sort_by{|a,i| -i.size}.each do |answer, instances|
+                li #{instances.size} : #{answer}
