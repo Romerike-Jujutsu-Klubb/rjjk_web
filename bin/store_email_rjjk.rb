@@ -150,6 +150,7 @@ rest_recipients = to - prod_recipients - beta_recipients
 
 def create_record(env, from, recipients, content)
   require 'active_record'
+  require 'erb'
   require_relative '../app/models/application_record'
   require_relative '../app/models/raw_incoming_email'
   log "Storing in #{env} to: #{from} => #{recipients}"
@@ -159,7 +160,9 @@ def create_record(env, from, recipients, content)
     X-Envelope-To: #{recipients.join(', ')}
   HEADERS
 
-  RawIncomingEmail.configurations = YAML.load_file('config/database.yml')
+  raw_db_config = File.read('config/database.yml')
+  db_config = ERB.new(raw_db_config).result(binding)
+  RawIncomingEmail.configurations = YAML.safe_load(db_config)
   RawIncomingEmail.establish_connection(env.to_sym)
   RawIncomingEmail.create content: content_with_envelope
 rescue Exception => e # rubocop: disable Lint/RescueException
