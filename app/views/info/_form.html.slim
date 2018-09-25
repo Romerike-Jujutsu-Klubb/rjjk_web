@@ -18,14 +18,7 @@
             .mt-3 &nbsp;
             = @information_page.revised_at.strftime('%Y-%m-%d %H:%M')
 
-      .float-right
-        a.btn.btn-link href='https://kramdown.gettalong.org/quickref.html' target=:kramdown
-          i.fa.fa-question-circle>
-          | Formatering
-        button.btn.btn-link.btn-sm.ml-2 type="button" data-toggle="modal" data-target="#image-list-modal"
-          i.fa.fa-image>
-          | Bilder
-
+      = render 'layouts/textarea_input_buttons', images: @images
       = f.text_area :body, class: :expanding, value: @information_page.body && (document = Kramdown::Document.new(@information_page.body, html_to_native: true)) && document.to_kramdown
 
       .float-right
@@ -39,50 +32,9 @@
       .card-header Forhåndsvisning
       #preview.card-body
 
-/ Image List Modal
-#image-list-modal.modal.fade tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false" style="pointer-events: none;"
-  .modal-dialog.mr-0 role="document" style="right:0"
-    .modal-content style="max-height:90vh"
-      .modal-header
-        h5#exampleModalLabel.modal-title Bilder
-        button.close type="button" data-dismiss="modal" aria-label="Close"
-          span aria-hidden="true" &times;
-      .modal-body style="overflow-y:scroll"
-        = render '/images/list', images: @images
 
 javascript:
-    function preview() {
-        var form_selector = '##{@information_page.new_record? ? :new_information_page : "edit_information_page_#{@information_page.id}"} :input';
-        $('#preview').load('preview', $(form_selector)).map(function () {
-            return "" + $(this).attr('name') + "=" + encodeURIComponent($(this).val())
-        }).get().join("&")
-    }
-
-    var previewTimeout = null;
-    $('input,textarea').on('input', function () {
-        if (previewTimeout != null) {
-            clearTimeout(previewTimeout);
-        }
-        previewTimeout = setTimeout(function () {
-            previewTimeout = null;
-            preview();
-        }, 200);
-    });
-
-    preview();
-
-    $("#image-list-modal").on('shown.bs.modal', function () {
-        $("#image-list-modal").draggable({
-            handle: ".modal-header"
-        });
-        $('body').removeClass("modal-open");
-        $(document).off('focusin.modal');
-        var container = $("#image-list-modal .modal-body")[0];
-        $("img[data-original]").each(function () {
-            $(this).lazyload({container: container});
-        });
-    });
-
     $(document).ready(function () {
+        preview('##{@information_page.new_record? ? :new_information_page : "edit_information_page_#{@information_page.id}"} :input', '#preview');
         image_dropzone($("#information_page_body"));
     });

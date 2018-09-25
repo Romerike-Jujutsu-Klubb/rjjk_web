@@ -11,9 +11,8 @@
           = f.text_field :publish_at, value: @news_item.publish_at.try(:strftime, '%F %R'), class: 'datetime', data: {:'default-date' => Time.current.strftime('%F %R') }
         .col-md-4
           = f.text_field :expire_at, value: @news_item.expire_at&.strftime('%F %R'), class: 'datetime', data: {'default-date': 1.week.from_now.strftime('%F %R')}
-      .float-right = link_to('https://kramdown.gettalong.org/quickref.html', target: :kramdown)
-        i.fa.fa-question-circle>
-        | Formatering
+
+      = render 'layouts/textarea_input_buttons', images: @images
       = f.text_area :summary, class: :expanding
 
       .btn-toolbar.float-right

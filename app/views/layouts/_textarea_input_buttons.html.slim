@@ -1,0 +1,31 @@
+.float-right
+  a.btn.btn-link href='https://kramdown.gettalong.org/quickref.html' target=:kramdown
+    i.fa.fa-question-circle>
+    | Formatering
+  button.btn.btn-link.btn-sm.ml-2 type="button" data-toggle="modal" data-target="#image-list-modal"
+    i.fa.fa-image>
+    | Bilder
+
+/ Image List Modal
+#image-list-modal.modal.fade tabindex="-1" role="dialog" aria-labelledby="imageListModalLabel" aria-hidden="true" data-backdrop="false" style="pointer-events: none;"
+  .modal-dialog.mr-0 role="document" style="right:0"
+    .modal-content style="max-height:90vh"
+      .modal-header
+        h5#imageListModalLabel.modal-title Bilder
+        button.close type="button" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true" &times;
+      .modal-body style="overflow-y:scroll"
+        = render '/images/list', images: images
+
+javascript:
+    $("#image-list-modal").on('shown.bs.modal', function () {
+        $("#image-list-modal").draggable({
+            handle: ".modal-header"
+        });
+        $('body').removeClass("modal-open");
+        $(document).off('focusin.modal');
+        var container = $("#image-list-modal .modal-body")[0];
+        $("img[data-original]").each(function () {
+            $(this).lazyload({container: container});
+        });
+    });
