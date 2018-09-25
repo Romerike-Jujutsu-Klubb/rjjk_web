@@ -24,7 +24,7 @@
         p.read_more
           = detour_to('Les mer...', news_item)
 
-    - if user?
+    - if user? && news_item.persisted?
       ul.controls.mb-0
         li.mr-2 id="like_#{news_item.id}" = link_to fa_icon(:'thumbs-o-up', text: 'Liker'), like_news_item_path(news_item), method: :post
         li = detour_to 'Endre', edit_news_item_path(news_item), class: :edit

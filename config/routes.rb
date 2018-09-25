@@ -154,15 +154,15 @@ Rails.application.routes.draw do
   resources :news_item_likes
 
   resources :news_items, controller: :news, path: :news do
-    collection { get :list }
+    collection do
+      get :list
+      post :preview
+    end
     member do
       post :expire
       post :like
       post :move_to_top
-      get :preview
-    end
-    collection do
-      get :preview
+      patch :preview
     end
   end
 

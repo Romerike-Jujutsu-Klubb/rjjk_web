@@ -1,7 +1,7 @@
 - @content_width = 1024
 
 .row
-  .col-md-9
+  .col-lg-6
     = bootstrap_form_for @news_item, html: {role: 'form'} do |f|
       = f.text_field :title
       .row
@@ -27,35 +27,12 @@
           i.fa.fa-question-circle>
           | Formatering
         = f.text_area :body, hide_label: true, class: (:expanding if @news_item.body.present?)
-    .card.mt-5
+  .col-lg-6
+    .card
       .card-header Forhåndsvisning
       #preview.card-body
 
-    javascript:
-        function preview() {
-            var form_selector = '##{@news_item.new_record? ? :new_news_item : "edit_news_item_#{@news_item.id}"} :input';
-            $('#preview').load('preview?' + $(form_selector)
-                .map(function () {
-                    return "" + $(this).attr('name') + "=" + encodeURIComponent($(this).val())
-                }).get().join("&"))
-        }
-
-        var previewTimeout = null;
-        $('input,textarea').on('input', function () {
-            if (previewTimeout != null) {
-                clearTimeout(previewTimeout);
-            }
-            previewTimeout = setTimeout(function () {
-                previewTimeout = null;
-                preview();
-            }, 200);
-        });
-
-        preview();
-  .col-md-3
-    .float-right.lazy-container style="height: 680px; overflow:auto; border: 1px solid black"
-      = render '/images/list', images: @images
-
 javascript:
   $('#moreInfoCollapse').on('shown.bs.collapse', function(){$(this).find('textarea').expanding().focus()});
+  preview('##{@news_item.new_record? ? :new_news_item : "edit_news_item_#{@news_item.id}"} :input', '#preview');
   image_dropzone($("#news_item_summary"));
