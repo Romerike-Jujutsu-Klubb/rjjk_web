@@ -51,12 +51,6 @@
         = render '/images/list', images: @images
 
 javascript:
-    function getLocation(href) {
-        var l = document.createElement("a");
-        l.href = href;
-        return l;
-    }
-
     function preview() {
         var form_selector = '##{@information_page.new_record? ? :new_information_page : "edit_information_page_#{@information_page.id}"} :input';
         $('#preview').load('preview', $(form_selector)).map(function () {
@@ -90,46 +84,5 @@ javascript:
     });
 
     $(document).ready(function () {
-        $("#information_page_body").on('dragenter', function (e) {
-            e.preventDefault();
-            $(this).css('border', '#39b311 2px dashed');
-            $(this).css('background', '#f1ffef');
-        });
-
-        $("#information_page_body").on('dragover', function (e) {
-            e.preventDefault();
-        });
-
-        $("#information_page_body").on('drop', function (e) {
-            $(this).css('border', '#07c6f1 2px dashed');
-            $(this).css('background', '#FFF');
-            e.preventDefault();
-
-            var data_url = e.originalEvent.dataTransfer.getData('URL');
-
-            if (data_url) {
-                if (data_url.startsWith("data:")) {
-                    return;
-                }
-                var l = getLocation(data_url);
-
-                $('#information_page_body').val(function (i, text) {
-                    if (text && !text.endsWith("\n")) {
-                        prefix = "\n";
-                    } else {
-                        prefix = '';
-                    }
-                    return prefix + text + "![Bilde](" + l.pathname + "){:width=\"50%\" align=\"right\" title=\"Bilde\"}\n";
-                });
-
-                $('#information_page_body').trigger('input');
-            }
-
-            var images = e.originalEvent.dataTransfer.files;
-            if (images.length > 0) {
-                console.log(images);
-            }
-        });
+        image_dropzone($("#information_page_body"));
     });
-
-    // https://phppot.com/jquery/responsive-image-upload-using-jquery-drag-and-drop/
