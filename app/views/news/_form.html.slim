@@ -1,7 +1,7 @@
 - @content_width = 1024
 
 .row
-  .col-lg-6
+  .col-xl-6
     = bootstrap_form_for @news_item, html: {role: 'form'} do |f|
       = f.text_field :title
       .row
@@ -13,7 +13,7 @@
           = f.text_field :expire_at, value: @news_item.expire_at&.strftime('%F %R'), class: 'datetime', data: {'default-date': 1.week.from_now.strftime('%F %R')}
 
       = render 'layouts/textarea_input_buttons', images: @images
-      = f.text_area :summary, class: :expanding
+      = f.text_area :summary, class: :expanding, value: @news_item.summary && (document = Kramdown::Document.new(@news_item.summary, html_to_native: true)) && document.to_kramdown
 
       .btn-toolbar.float-right
         = back_or_link_to 'Avbryt', news_items_path, class: 'btn btn-secondary'
@@ -26,8 +26,8 @@
         .text-right = link_to('https://kramdown.gettalong.org/quickref.html', target: :kramdown)
           i.fa.fa-question-circle>
           | Formatering
-        = f.text_area :body, hide_label: true, class: (:expanding if @news_item.body.present?)
-  .col-lg-6
+        = f.text_area :body, hide_label: true, class: (:expanding if @news_item.body.present?), value: @news_item.body && (document = Kramdown::Document.new(@news_item.body, html_to_native: true)) && document.to_kramdown
+  .col-xl-6
     .card
       .card-header Forhåndsvisning
       #preview.card-body
