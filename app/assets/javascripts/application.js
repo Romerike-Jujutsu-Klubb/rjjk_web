@@ -24,6 +24,7 @@
 //= require changed_selector
 //= require table_navigation
 //= require draggable
+//= require image_dropzone
 
 NProgress.configure({showSpinner: false,  ease: 'ease',  speed: 500});
 
