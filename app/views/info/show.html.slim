@@ -10,11 +10,3 @@ h1 = @information_page.title
     li = link_to 'Slett', { controller: :info, action: :destroy, id: @information_page }, class: :edit, data: { confirm: 'Er du sikker?' }, method: :post
 
 = render 'layouts/modal_image'
-
-javascript:
-    $('.main img').addClass('img-thumbnail').css({cursor: 'pointer'});
-    $('.main img').on('click', function () {
-        $('#imageModal .modal-title').html($(this).attr('title'));
-        $('#modalImage').attr('src', $(this).attr('src').replace("inline", "show"));
-        $('#imageModal').modal();
-    });
