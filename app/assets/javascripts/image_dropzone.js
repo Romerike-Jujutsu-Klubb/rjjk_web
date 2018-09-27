@@ -47,7 +47,7 @@ function image_dropzone(target) {
                 } else {
                     prefix = '';
                 }
-                return text + prefix + "![Bilde](" + image_url + "){:width=\"50%\" align=\"right\" title=\"Bilde\"}\n";
+                return text + prefix + "![Bilde](" + image_url + " \"Bilde\"){:width=\"50%\" align=\"right\"}\n";
             });
             target.trigger('input');
         }
