@@ -37,7 +37,7 @@ function image_dropzone(target) {
                 } else {
                     prefix = '';
                 }
-                return prefix + text + "![Bilde](" + l.pathname + "){:width=\"50%\" align=\"right\" title=\"Bilde\"}\n";
+                return text + prefix + "![Bilde](" + l.pathname + "){:width=\"50%\" align=\"right\" title=\"Bilde\"}\n";
             });
             target.trigger('input');
         }
@@ -45,6 +45,14 @@ function image_dropzone(target) {
         var images = e.originalEvent.dataTransfer.files;
         if (images.length > 0) {
             console.log(images);
+            target.val(function (i, text) {
+                if (text && !text.endsWith("\n")) {
+                    prefix = "\n";
+                } else {
+                    prefix = '';
+                }
+                return text + prefix + images + "\n";
+            });
         }
     }).on("dragleave", function (event) {
         $(this).css('border', '#07c6f1 2px dashed');
