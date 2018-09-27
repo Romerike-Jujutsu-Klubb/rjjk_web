@@ -24,20 +24,30 @@ function image_dropzone(target) {
         $(this).css('background', '#FFF');
         e.preventDefault();
 
-        var data_url = e.originalEvent.dataTransfer.getData('URL');
+        var data_html = e.originalEvent.dataTransfer.getData('text/html');
+        image_src = $(data_html).filter('img').attr('src');
 
-        if (data_url) {
-            if (data_url.startsWith("data:")) {
+        if (image_src) {
+            image_url = image_src;
+        } else {
+            image_url = e.originalEvent.dataTransfer.getData('URL');
+        }
+        if (image_url) {
+            if (image_url.startsWith("data:")) {
                 return;
             }
-            var l = getLocation(data_url);
+            var l = getLocation(image_url);
+            if (l.hostname === window.location.hostname) {
+                image_url = l.pathname
+            }
+
             target.val(function (i, text) {
                 if (text && !text.endsWith("\n")) {
                     prefix = "\n";
                 } else {
                     prefix = '';
                 }
-                return text + prefix + "![Bilde](" + l.pathname + "){:width=\"50%\" align=\"right\" title=\"Bilde\"}\n";
+                return text + prefix + "![Bilde](" + image_url + "){:width=\"50%\" align=\"right\" title=\"Bilde\"}\n";
             });
             target.trigger('input');
         }
