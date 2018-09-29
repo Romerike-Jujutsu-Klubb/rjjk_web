@@ -35,7 +35,6 @@ class GoogleDriveService
   end
 
   def get_file_io(id)
-    logger.info "download: #{id.inspect}"
     sio = StringIO.new
     sio.set_encoding(Encoding::BINARY)
     @session.file_by_id(id).download_to_io(sio)
@@ -44,7 +43,6 @@ class GoogleDriveService
   def store_file(section, id, content, content_type)
     # FIXME(uwe): Try finding the file first
     folder = find_or_create_folder(section)
-    logger.info "Photos folder: #{folder}"
     folder.upload_from_string(content, "#{section}_#{id}", content_type: content_type, convert: false)
   end
 
@@ -58,9 +56,9 @@ class GoogleDriveService
   private def find_or_create_folder(section)
     environment_folder = find_or_create_environment_folder
     if (section_folder = environment_folder.file_by_title(section.to_s))
-      logger.info "Google Drive section folder already exists: #{section}"
       return section_folder
     end
+
     logger.info "Create Google Drive section folder: #{section}"
     environment_folder.create_subcollection(section)
   end
@@ -68,18 +66,18 @@ class GoogleDriveService
   private def find_or_create_environment_folder
     top_folder = find_or_create_top_folder
     if (environment_folder = top_folder.file_by_title(Rails.env))
-      logger.info "Google Drive environment folder already exists: #{Rails.env}"
       return environment_folder
     end
+
     logger.info "Create Google Drive environment folder: #{Rails.env}"
     top_folder.create_subcollection(Rails.env)
   end
 
   private def find_or_create_top_folder
     if (top_folder = @session.file_by_title(WEB_IMAGES_DIR))
-      logger.info "Google Drive folder already exists: #{WEB_IMAGES_DIR}"
       return top_folder
     end
+
     logger.info "Create Google Drive folder: #{WEB_IMAGES_DIR}"
     @session.root_collection.create_subcollection(WEB_IMAGES_DIR)
   end

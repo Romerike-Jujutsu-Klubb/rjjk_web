@@ -2,7 +2,7 @@
 
 .card-deck
   .card
-    h5.card-header Redigèr nyhet
+    h5.card-header = form_header
     .card-body = bootstrap_form_for @news_item, html: {role: 'form'} do |f|
       = f.text_field :title
       .row

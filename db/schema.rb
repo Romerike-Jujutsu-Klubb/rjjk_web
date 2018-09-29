@@ -314,6 +314,7 @@ ActiveRecord::Schema.define(version: 2018_09_28_203614) do
     t.integer 'height'
     t.string 'google_drive_reference', limit: 33
     t.string 'md5_checksum', limit: 32, null: false
+    t.index ['md5_checksum'], name: 'index_images_on_md5_checksum', unique: true
   end
 
   create_table 'information_pages', force: :cascade do |t|

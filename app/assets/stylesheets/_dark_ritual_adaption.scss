@@ -279,60 +279,77 @@ body:not(.wide) .container-fluid {
 }
 
 @media (min-width: 992px) { // lg
-  body {
+  body:not(.wide) {
     padding-top: 0;
-  }
-  .header {
-    position: relative;
-    padding-right: 0;
-    .fb-buttons {
-      margin-right: 46px;
+
+    #sidebarShadow {
+      display: none;
     }
-  }
 
-  #logo_img {
-    position: absolute;
-    width: $sidebar_width;
-    height: $sidebar_width;
-  }
+    #calendarBtn {
+      display: none;
+    }
 
-  .main_right {
-    height: inherit !important;
-    max-height: none;
-    padding-top: $sidebar_width;
-    position: static;
-    transform: translate(0, 0) !important;
-    transition: z-index 0s, transform 0.5s;
-    width: $right_sidebar_width;
-    z-index: 0;
-  }
+    .header {
+      position: relative;
+      padding-right: 0;
+      .fb-buttons {
+        margin-right: 46px;
+      }
+    }
 
-  .main_right img {
-    width: 224px;
-    height: 167px;
+    #logo_img {
+      position: absolute;
+      width: $sidebar_width;
+      height: $sidebar_width;
+    }
+
+    .main_right {
+      height: inherit !important;
+      max-height: none;
+      padding-top: $sidebar_width;
+      position: static;
+      transform: translate(0, 0) !important;
+      transition: z-index 0s, transform 0.5s;
+      width: $right_sidebar_width;
+      z-index: 0;
+
+      img {
+        width: 224px;
+        height: 167px;
+      }
+    }
   }
 }
 
 @media (min-width: 1200px) { // xl
-  #logo_img {
-    width: $sidebar_width;
-    height: $sidebar_width;
-  }
+  body:not(.wide) {
+    #navBtn {
+      display: none;
+    }
+    #menuShadow {
+      display: none;
+    }
+    #logo_img {
+      width: $sidebar_width;
+      height: $sidebar_width;
+    }
 
-  .subnav {
-    position: static;
-    transform: translate(0, 0) !important;
-    height: auto;
-  }
+    .subnav {
+      position: static;
+      transform: translate(0, 0) !important;
+      height: auto;
+    }
 
-  .main_right {
-    padding-top: $sidebar_width;
-    width: 290px;
-  }
+    .main_right {
+      padding-top: $sidebar_width;
+      width: 290px;
+    }
 
-  .main_right img {
-    width: $sidebar_width;
-    height: 201px;
+    .main_right img {
+      width: $sidebar_width;
+      height: 201px;
+    }
   }
 }
 
