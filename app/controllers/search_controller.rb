@@ -12,8 +12,16 @@ class SearchController < ApplicationController
       @trials = NkfMemberTrial.search(@query).to_a
     end
 
+    query = "%#{UnicodeUtils.upcase(@query)}%"
     @pages = InformationPage
-        .where('UPPER(title) LIKE ? OR UPPER(body) LIKE ?',
-            *(["%#{UnicodeUtils.upcase(@query)}%"] * 2))
+        .where('UPPER(title) LIKE :query OR UPPER(body) LIKE :query', query: query)
+        .order(:title)
+        .to_a
+    news_items = NewsItem
+        .where('UPPER(title) LIKE :query OR UPPER(summary) LIKE :query OR UPPER(body) LIKE :query',
+            query: query)
+        .order(created_at: :desc)
+        .to_a
+    @news = news_items.group_by { |n| n.created_at.year }
   end
 end
