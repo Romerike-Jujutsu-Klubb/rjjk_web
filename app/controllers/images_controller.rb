@@ -10,10 +10,11 @@ class ImagesController < ApplicationController
   cache_sweeper :image_sweeper, only: %i[update destroy]
 
   def rank_required(image)
-    if (step = image.application_step) && (current_user&.member.nil? ||
-        step.technique_application.rank > current_user.member.next_rank)
-      redirect_to login_path, notice: 'Du må ha høyere grad for å se på dette pensumet.'
-      return true
+    image.application_steps.each do |step|
+      if current_user&.member.nil? || step.technique_application.rank > current_user.member.next_rank
+        redirect_to login_path, notice: 'Du må ha høyere grad for å se på dette pensumet.'
+        return true
+      end
     end
     false
   end
@@ -23,7 +24,8 @@ class ImagesController < ApplicationController
   end
 
   def show
-    image = Image.select('id, content_type, name, user_id, google_drive_reference').find(params[:id])
+    image = Image.select('id, content_type, name, user_id, google_drive_reference, md5_checksum')
+        .find(params[:id])
     return if rank_required(image)
 
     if params[:format].nil?
@@ -44,7 +46,9 @@ class ImagesController < ApplicationController
           return
         end
         send_data(image_content, disposition: 'inline', type: image.content_type, filename: image.name)
-      rescue
+      rescue => e
+        logger.error e
+        logger.error e.backtrace.join("\n")
         redirect_to '/assets/pdficon_large.png'
       end
     end

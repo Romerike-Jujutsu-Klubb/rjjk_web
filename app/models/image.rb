@@ -11,7 +11,7 @@ class Image < ApplicationRecord
 
   belongs_to :user, -> { with_deleted }, inverse_of: :images
 
-  has_one :application_step, dependent: :nullify
+  has_many :application_steps, dependent: :nullify
   has_one :member_image, dependent: :destroy
   has_one :user_like,
       -> do
@@ -25,8 +25,12 @@ class Image < ApplicationRecord
   has_many :likers, -> { where("user_images.rel_type = 'LIKE'") },
       class_name: 'User', through: :user_images, source: :user
 
-  before_validation { self.user_id ||= current_user&.id }
+  before_validation do
+    self.user_id ||= current_user&.id
+    self.md5_checksum = Digest::MD5.hexdigest(content_data) if md5_checksum.blank? && content_loaded?
+  end
 
+  validates :md5_checksum, presence: true, uniqueness: true
   validates :name, presence: true
   validate do
     errors.add :file, 'må velges.' if content_type.blank?
@@ -76,6 +80,10 @@ class Image < ApplicationRecord
     content_type =~ %r{^video/}
   end
 
+  def image?
+    content_type =~ %r{^image/}
+  end
+
   def aspect_ratio
     update_dimensions! unless video?
     return (width.to_f / height) if width && height
@@ -98,23 +106,30 @@ class Image < ApplicationRecord
   end
 
   def update_dimensions!
-    return unless width.nil? || height.nil?
+    return if width && height && md5_checksum
 
-    magick_image = Magick::Image.from_blob(load_content(no_caching: true)).first
-    self.width = magick_image.columns
-    self.height = magick_image.rows
-    save!
-  end
-
-  def load_content(no_caching: false)
-    if google_drive_reference
-      image_content = GoogleDriveService.new.get_file(google_drive_reference)
-      logger.info "Image found in Google Drive: #{id}, #{name}, #{google_drive_reference}"
-    elsif no_caching || Rails.env.test? # TODO(uwe): How can we test this?  WebMock?
-      image_content = self.class.where(id: id).pluck(:content_data).first
-    else
-      image_content = move_to_google_drive!
+    if image?
+      begin
+        content = load_content(no_caching: true)
+        magick_image = Magick::Image.from_blob(content).first
+        self.width = magick_image.columns
+        self.height = magick_image.rows
+      rescue => e
+        logger.error e
+        logger.error e.backtrace.join("\n")
+      end
     end
-    image_content
+
+    if content
+      md5_checksum = Digest::MD5.hexdigest(content)
+    elsif content_loaded?
+      md5_checksum = Digest::MD5.hexdigest(content_data)
+    elsif google_drive_reference
+      md5_checksum = GoogleDriveService.new.get_file(google_drive_reference).md5_checksum
+    end
+
+    self.md5_checksum = md5_checksum if md5_checksum
+
+    save!
   end
 end

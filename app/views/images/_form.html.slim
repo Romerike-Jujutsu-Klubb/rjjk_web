@@ -11,7 +11,10 @@
     - unless @image.new_record?
       .col-6.text-center
         = image_tag(url_for(action: :show, id: @image.id, format: @image.format), style: 'max-height:65vh') if @image.name
-        div = "#{@image.width}x#{@image.height} (#{@image.content_data.size / 1024}KB)"
+        div
+          = "#{@image.width}x#{@image.height}"
+          - if @image.content_data
+            = " (#{@image.content_data.size / 1024}KB)"
         div = @image.google_drive_reference
 
   - if @image.new_record?

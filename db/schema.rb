@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_15_163730) do
+ActiveRecord::Schema.define(version: 2018_09_28_203614) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -313,6 +313,7 @@ ActiveRecord::Schema.define(version: 2018_09_15_163730) do
     t.integer 'width'
     t.integer 'height'
     t.string 'google_drive_reference', limit: 33
+    t.string 'md5_checksum', limit: 32, null: false
   end
 
   create_table 'information_pages', force: :cascade do |t|

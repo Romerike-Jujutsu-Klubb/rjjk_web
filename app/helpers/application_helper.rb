@@ -39,10 +39,10 @@ module ApplicationHelper
   def textalize(s)
     return '' if s.blank?
 
-    with_links = auto_link(s, link: :all, target: '_blank', sanitize: false)
-    html = Kramdown::Document.new(with_links.strip).to_html
-    html.force_encoding(Encoding::UTF_8)
-    absolute_links(html).html_safe # rubocop: disable Rails/OutputSafety
+    html = Kramdown::Document.new(s.strip).to_html
+    with_links = auto_link(html, link: :all, target: '_blank', sanitize: false)
+    with_links.force_encoding(Encoding::UTF_8)
+    absolute_links(with_links).html_safe # rubocop: disable Rails/OutputSafety
   end
 
   def textify(s)

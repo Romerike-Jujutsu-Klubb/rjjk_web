@@ -1,3 +1,18 @@
+function append_line(target, line) {
+    target.val(function (i, text) {
+        if (text && !text.endsWith("\n")) {
+            prefix = "\n";
+        } else {
+            prefix = '';
+        }
+        return text + prefix + line + "\n";
+    });
+}
+
+function upload_tag(name) {
+    return '<Uploading ' + name + ' />';
+}
+
 // https://phppot.com/jquery/responsive-image-upload-using-jquery-drag-and-drop/
 function image_dropzone(target) {
     $('img').on("dragstart", function (event) {
@@ -41,27 +56,36 @@ function image_dropzone(target) {
                 image_url = l.pathname
             }
 
-            target.val(function (i, text) {
-                if (text && !text.endsWith("\n")) {
-                    prefix = "\n";
-                } else {
-                    prefix = '';
-                }
-                return text + prefix + "![Bilde](" + image_url + " \"Bilde\"){:width=\"50%\" align=\"right\"}\n";
-            });
+            var base = new String(image_url).substring(image_url.lastIndexOf('/') + 1);
+            if (base.length > 16) {
+                base = 'Bilde'
+            }
+            append_line(target, "![" + base + "](" + image_url + ' "' + base + '"){:width="50%" align="right"}');
             target.trigger('input');
         }
 
         var images = e.originalEvent.dataTransfer.files;
-        if (images.length > 0) {
-            console.log(images);
-            target.val(function (i, text) {
-                if (text && !text.endsWith("\n")) {
-                    prefix = "\n";
-                } else {
-                    prefix = '';
+
+        for (var i = 0; i < images.length; i++) {
+            var image = images[i];
+            var name = image.name;
+            append_line(target, upload_tag(name));
+            var fd = new FormData();
+            fd.append('image[file]', image);
+            fd.append('image[name]', name);
+            $.ajax({
+                url: '/image_dropzone/upload',
+                type: 'post',
+                data: fd,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function (response) {
+                    target.val(
+                        target.val().replace(upload_tag(response.org_name), '![' + response.name + '](/images/' + response.id + ' "' + response.name + '"){:width="50%" align="right"}')
+                    );
+                    target.trigger('input');
                 }
-                return text + prefix + images + "\n";
             });
         }
     }).on("dragleave", function (event) {

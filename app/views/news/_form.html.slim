@@ -1,8 +1,9 @@
 - @content_width = 1024
 
-.row
-  .col-xl-6
-    = bootstrap_form_for @news_item, html: {role: 'form'} do |f|
+.card-deck
+  .card
+    h5.card-header Redigèr nyhet
+    .card-body = bootstrap_form_for @news_item, html: {role: 'form'} do |f|
       = f.text_field :title
       .row
         .col-md-4
@@ -27,12 +28,15 @@
           i.fa.fa-question-circle>
           | Formatering
         = f.text_area :body, hide_label: true, class: (:expanding if @news_item.body.present?), value: @news_item.body && (document = Kramdown::Document.new(@news_item.body, html_to_native: true)) && document.to_kramdown
-  .col-xl-6
-    .card
-      .card-header Forhåndsvisning
-      #preview.card-body
+  .card
+    .card-header Forhåndsvisning
+    #preview.card-body
+
+ruby:
+  form_id = @news_item.new_record? ? :new_news_item : "edit_news_item_#{@news_item.id}"
 
 javascript:
   $('#moreInfoCollapse').on('shown.bs.collapse', function(){$(this).find('textarea').expanding().focus()});
-  preview('##{@news_item.new_record? ? :new_news_item : "edit_news_item_#{@news_item.id}"} :input', '#preview');
+  preview('##{form_id} :input', '#preview');
   image_dropzone($("#news_item_summary"));
+  image_dropzone($("#news_item_body"));

@@ -1,41 +1,59 @@
 h1 Søkeresultat for "#{@query}"
 
 - if @query
-  - if [@members, @former_members, @trials, @users, @pages].any?(&:present?)
-    .row
+  - if [@members, @former_members, @trials, @users, @pages, @news].any?(&:present?)
+    .card-deck.mt-3
       - if @members.present?
-        .col-md
-          h3 Medlemmer
-          ul
-            - @members.each do |m|
-              li
-                => link_to m.name, m
-                | (#{m.age} år)
+        .card
+          h3.card-header Medlemmer
+          .card-body
+            ul
+              - @members.each do |m|
+                li
+                  => link_to m.name, m
+                  | (#{m.age} år)
       - if @former_members.present?
-        .col-md
-          h3 Tidligere Medlemmer (#{@former_members.size})
-          ul
-            - @former_members.each do |m|
-              li
-                => link_to m.name, m
-                | (#{m.age} år)
-    - if @trials.present?
-      h3 Søkere i prøvetid
-      ul
-        - @trials.each do |tr|
-          li = link_to tr.name, tr
-    - if @users.present?
-      h3 Brukere
-      ul
-        - @users.each do |u|
-          li = link_to u.name, u
-    - if @pages.present?
-      h3 Informasjonssider
-      ul
-        - @pages.each do |p|
-          li = link_to p.title, p
+        .card
+          h3.card-header Tidligere Medlemmer (#{@former_members.size})
+          .card-body
+            ul
+              - @former_members.each do |m|
+                li
+                  => link_to m.name, m
+                  | (#{m.age} år)
+      - if @trials.present?
+        .card
+          h3.card-header Søkere i prøvetid
+          .card-body
+            ul
+              - @trials.each do |tr|
+                li = link_to tr.name, tr
+      - if @users.present?
+        .card
+          h3.card-header Brukere
+          .card-body
+            ul
+              - @users.each do |u|
+                li = link_to u.name, u
+      - if @pages.present?
+        .card
+          h3.card-header Informasjonssider
+          .card-body
+            ul
+              - @pages.each do |p|
+                li = link_to p.title, p
+      - if @news.present?
+        .card
+          h3.card-header Nyheter
+          .card-body
+            - @news.each do |year, items|
+              h4 = year
+              ul
+                - items.each do |p|
+                  li = link_to p.title, p
   - else
     | Fant ingenting om "#{@query}".
+
   h2.mt-3 Savner du noe?
   p
     ' Hvis du vil ha flere søkeresultater, si ifra til

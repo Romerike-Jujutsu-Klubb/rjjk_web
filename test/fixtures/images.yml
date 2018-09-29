@@ -3,6 +3,7 @@ one:
   content_type: image/png
   content_data: !binary |
     iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==
+  md5_checksum: 93ca32a536da1698ea979f183679af29
   user: lars
   approved: true
   public: true
@@ -14,18 +15,21 @@ two:
                  OTk6enp56enmlpaWNjY6Ojo4SEhP/++f/++f/++f/++f/++f/++f/++f/++f/+
                  +f/++f/++f/++f/++f/++SH+Dk1hZGUgd2l0aCBHSU1QACwAAAAADAAMAAAFLC
                  AgjoEwnuNAFOhpEMTRiggcz4BNJHrv/zCFcLiwMWYNG84BwwEeECcgggoBADs=
+  md5_checksum: checksum
   user: lars
 application_step_one:
   name: Step 1
   content_type: MyString
   content_data: !binary |
     R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=
+  md5_checksum: checksum
   user: admin
   approved: true
 application_step_two:
   name: Step 2
   content_type: MyString
   content_data:
+  md5_checksum: checksum
   user: admin
   approved: true
 application_step_kneeing:
@@ -33,5 +37,6 @@ application_step_kneeing:
   content_type: MyString
   content_data: !binary |
     R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
+  md5_checksum: checksum
   user: admin
   approved: true

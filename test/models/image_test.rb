@@ -7,6 +7,6 @@ class ImageTest < ActiveSupport::TestCase
 
   def test_create
     login
-    Image.create! name: 'new file', content_type: 'image/png', content_data: 'qwerty'.bytes.to_a
+    Image.create! name: 'new file', content_type: 'image/png', content_data: 'qwerty'
   end
 end

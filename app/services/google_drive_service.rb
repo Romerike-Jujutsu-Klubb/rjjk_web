@@ -27,6 +27,10 @@ class GoogleDriveService
   end
 
   def get_file(id)
+    @session.file_by_id(id)
+  end
+
+  def get_file_content(id)
     @session.file_by_id(id).download_to_string
   end
 
@@ -38,14 +42,18 @@ class GoogleDriveService
   end
 
   def store_file(section, id, content, content_type)
+    # FIXME(uwe): Try finding the file first
     folder = find_or_create_folder(section)
     logger.info "Photos folder: #{folder}"
-    file = folder
-        .upload_from_string(content, "#{section}_#{id}", content_type: content_type, convert: false)
-    file.id
+    folder.upload_from_string(content, "#{section}_#{id}", content_type: content_type, convert: false)
   end
 
   private
+
+  private def find_file_by_md5_checksum(section, md5_checksum)
+    folder = find_or_create_folder(section)
+    folder.files.find { |file| file.md5_checksum == md5_checksum }
+  end
 
   private def find_or_create_folder(section)
     environment_folder = find_or_create_environment_folder

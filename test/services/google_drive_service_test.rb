@@ -3,26 +3,16 @@
 require 'test_helper'
 
 class GoogleDriveServiceTest < ActiveSupport::TestCase
-  def setup
-    # Do nothing
-  end
-
-  def teardown
-    # Do nothing
-  end
-
   test 'initialize' do
-    VCR.use_cassette('GoogleDriveInit') do
-      GoogleDriveService.new
-    end
+    VCR.use_cassette('GoogleDriveInit') { GoogleDriveService.new }
   end
 
   test 'store and get image' do
     VCR.use_cassette('GoogleDriveStoreAndGetFile') do
-      content = File.read("#{Rails.root}/test/fixtures/files/tiny.png")
-      id = GoogleDriveService.new.store_file(:images, 42, content, 'image/png')
-      file = GoogleDriveService.new.get_file(id)
-      assert_equal content, file
+      expected_content = File.read("#{Rails.root}/test/fixtures/files/tiny.png")
+      file = GoogleDriveService.new.store_file(:images, 42, expected_content, 'image/png')
+      content = GoogleDriveService.new.get_file_content(file.id)
+      assert_equal expected_content, content
     end
   end
 end

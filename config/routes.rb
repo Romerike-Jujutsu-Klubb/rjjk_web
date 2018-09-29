@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
+  post 'image_dropzone/upload'
   get 'info/versjon'
   get 'mitt/oppmote(/:reviewed_attendance_id)' => 'attendances#plan', as: :attendance_plan
   get 'attendances/plan' # must be after "mitt/oppmote"

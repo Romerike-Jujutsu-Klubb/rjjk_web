@@ -141,6 +141,18 @@ class ImagesControllerTest < ActionController::TestCase
     assert assigns(:image).valid?
   end
 
+  def test_edit_without_local_content
+    Image.find(@first_id).update!(content_data: nil)
+
+    get :edit, params: { id: @first_id }
+
+    assert_response :success
+    assert_template 'edit'
+
+    assert_not_nil assigns(:image)
+    assert assigns(:image).valid?
+  end
+
   def test_update
     post :update, params: { id: @first_id, image: { approved: true } }
     assert_response :redirect
