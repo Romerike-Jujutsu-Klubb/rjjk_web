@@ -1,16 +1,10 @@
-- @content_width = 880
-
-h3
+h4.clearfix
   a.carousel-control.left.mb-3 style="position:inherit" href="#{url_for year: @first_date.year, month: @first_date.month}"
     i.fa.fa-chevron-left>
     | Forrige måned
   a.carousel-control.right.mb-3 style="position:inherit" href="#{url_for year: (@last_date + 1).year, month: (@last_date + 1).month}"
     ' Neste måned
     i.fa.fa-chevron-right
-
-img.rounded.mx-auto.d-block.w-100.h-auto src=url_for(action: :history_graph, id: '832x600', format: :png) title='Medlemmer graf' style="max-width:832px;max-height:600px"
-
-.clearfix
 
 h2.mt-4 Medlemsrapport #{t(:date)[:month_names][@month]} #{@year}
 
@@ -32,6 +26,8 @@ table.table
         td = group&.name || 'Uten gruppe'
         td = members.size
         = diff != 0 ? "(#{diff > 0 ? '+' : nil}#{diff})" : nil
+
+img.rounded.d-block.mx-auto.my-4.w-100.h-auto src=url_for(action: :history_graph, id: '832x600', format: :png) title='Medlemmer graf' style="max-width:832px;max-height:600px"
 
 / TODO(uwe): Display trial members, maybe with attendances
 
