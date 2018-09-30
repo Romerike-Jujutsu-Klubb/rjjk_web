@@ -55,8 +55,18 @@ class NkfMemberImport
         .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
     import_rows = members_body.split("\n")
         .map { |line| CGI.unescapeHTML(line.chomp).gsub(/[^[:print:]]/, '').split(';', -1)[0..-2] }
+    sort_groups(import_rows)
     add_waiting_kids(nkf_agent, import_rows, detail_codes)
     import_rows
+  end
+
+  def sort_groups(import_rows)
+    groups_index = import_rows[0].index { |f| f =~ %r{^Gren/Stilart/Avd/Parti} }
+    raise 'Column not found' unless groups_index
+
+    import_rows.each do |row|
+      row[groups_index] = row[groups_index].split(' - ').sort.join(' - ')
+    end
   end
 
   def add_waiting_kids(nkf_agent, import_rows, detail_codes)
