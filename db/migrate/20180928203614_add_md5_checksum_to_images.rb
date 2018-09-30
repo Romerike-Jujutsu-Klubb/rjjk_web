@@ -26,7 +26,8 @@ class AddMd5ChecksumToImages < ActiveRecord::Migration[5.2]
             puts 'Merging into the original image:'
 
             image.application_steps.each do |as|
-              puts "  as: #{as.position}: #{as.technique_application.name}, #{as.technique_application.rank.name}"
+              puts "  as: #{as.position}: #{as.technique_application.name}, " \
+                  "#{as.technique_application.rank.name}"
               as2 = ApplicationStep.find as.id
               as2.update! image_id: original_image.id
             end
