@@ -4,7 +4,7 @@ require 'feature_test'
 
 class MemberGradeHistoryFeatureTest < FeatureTest
   def test_grade_history
-    login_and_visit '/members/800/grade_history_graph.png'
-    screenshot('members/grade_history_graph', color_distance_limit: 79.1)
+    login_and_visit member_reports_grade_history_graph_path(id: 800, format: :png)
+    screenshot('member_reports/grade_history_graph', color_distance_limit: 79.1)
   end
 end

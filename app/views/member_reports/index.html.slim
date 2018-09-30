@@ -1,0 +1,65 @@
+- @content_width = 880
+
+div
+  a.carousel-control.left style="position: inherit; margin-top: -0.05em" href="#{url_for year: @first_date.year, month: @first_date.month}" &lsaquo;
+  a.carousel-control.right style="position: inherit; margin-top: -0.05em" href="#{url_for year: (@last_date + 1).year, month: (@last_date + 1).month}" &rsaquo;
+
+  h2 Medlemsrapport #{t(:date)[:month_names][@month]} #{@year}
+
+  table.table
+    thead
+      tr
+        th width="70%" Gruppe
+        th Antall
+    tfoot
+      tr
+        th Totalt
+        th = @members_after.size
+    tbody
+      / TODO(uwe): Separate honorary/passive members
+      - before_by_group = @members_before.group_by { |m| m.groups.sort_by(&:to_age).last }
+      - @members_after.group_by { |m| m.groups.sort_by(&:to_age).last }.each do |group, members|
+        - diff = members.size - before_by_group[group]&.size.to_i
+        tr
+          td = group&.name || 'Uten gruppe'
+          td = members.size
+          = diff != 0 ? "(#{diff > 0 ? '+' : nil}#{diff})" : nil
+
+  / TODO(uwe): Display trial members, maybe with attendances
+
+  table.table
+    tr
+      th width="70%" Nye medlemmer
+      td = @members_in.size
+    tr
+      th Utmeldinger
+      td = @members_out.size
+
+= image_tag url_for(action: :history_graph, id: '832x600', format: :png), title: 'Medlemmer graf', class: 'rounded', style: 'width: 100%'
+
+/ FIXME(uwe): Hvis medlem er meldt inn og ut i samme måned?  Ref. Test Testesen.
+
+- if @members_in.any?
+  table.table
+    tr
+      th width="70%" Nye medlemmer
+      th Alder
+      th Innmelding
+    - @members_in.each do |m|
+      tr
+        td = link_to m.name, m
+        td = m.age(m.joined_on)
+        td = m.joined_on
+        td = m.left_on
+
+- if @members_out.any?
+  table.table
+    tr
+      th width="70%" Utmeldinger
+      th Alder
+      th Utmelding
+    - @members_out.each do |m|
+      tr
+        td = link_to m.name, m
+        td = m.age(m.left_on)
+        td = m.left_on

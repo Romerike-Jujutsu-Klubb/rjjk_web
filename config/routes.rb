@@ -19,6 +19,11 @@ Rails.application.routes.draw do
   match 'login/signup', via: %i[get post]
   get 'login/welcome'
   get 'map' => 'map#index'
+  get 'member_reports' => 'member_reports#index'
+  get 'member_reports/age_chart'
+  get 'member_reports/grade_history_graph'
+  get 'member_reports/grade_history_graph_percentage'
+  get 'member_reports/history_graph'
   get 'pensum' => 'ranks#pensum'
   get 'pensum/pdf' => 'ranks#pdf'
   get 'search' => 'search#index'
@@ -128,21 +133,13 @@ Rails.application.routes.draw do
     collection do
       get :email_list
       get :excel_export
-      get :grade_history_graph
-      get :grade_history_graph_percentage
-      get :history_graph
       get :list_active
       get :list_inactive
-      get :report
       get :telephone_list
       get :trial_missing_contract
       get :yaml
     end
     member do
-      get :age_chart
-      get :grade_history_graph
-      get :grade_history_graph_percentage
-      get :history_graph
       get :image
       get :missing_contract
       get :photo

@@ -129,27 +129,6 @@ class MembersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_grade_history_graph
-    get :grade_history_graph
-    assert_response :success
-  end
-
-  def test_grade_history_graph_800
-    get :grade_history_graph, params: { id: 800, format: 'png' }
-    assert_response :success
-  end
-
-  def test_grade_history_graph_percentage
-    get :grade_history_graph_percentage
-    assert_response :success
-  end
-
-  def test_grade_history_graph_percentage_800
-    get :grade_history_graph_percentage, params: { id: 800, format: 'png',
-                                                   interval: 365, percentage: 67, step: 30 }
-    assert_response :success
-  end
-
   def test_yaml
     get :yaml
     assert_response :success
