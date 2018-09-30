@@ -1,3 +1,11 @@
+h4.clearfix
+  a.carousel-control.left.mb-3 style="position:inherit" href="#{url_for year: (@first_date - 1).year, month: (@first_date - 1).month}"
+    i.fa.fa-chevron-left>
+    | Forrige måned
+  a.carousel-control.right.mb-3 style="position:inherit" href="#{url_for year: (@last_date + 1).year, month: (@last_date + 1).month}"
+    ' Neste måned
+    i.fa.fa-chevron-right
+
 h2 Oppmøterapport #{t(:date)[:month_names][@first_date.month]} #{@first_date.year}
 
 css:

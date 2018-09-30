@@ -1,5 +1,5 @@
 h4.clearfix
-  a.carousel-control.left.mb-3 style="position:inherit" href="#{url_for year: @first_date.year, month: @first_date.month}"
+  a.carousel-control.left.mb-3 style="position:inherit" href="#{url_for year: (@first_date - 1).year, month: (@first_date - 1).month}"
     i.fa.fa-chevron-left>
     | Forrige måned
   a.carousel-control.right.mb-3 style="position:inherit" href="#{url_for year: (@last_date + 1).year, month: (@last_date + 1).month}"
@@ -14,19 +14,24 @@ table.table
       th width="70%" Gruppe
       th.text-center Aktive
       th.text-center Passive
+      th.text-center Ikke-betalende
   tfoot
     tr
       th Totalt
-      th.text-center = @members_after.reject(&:passive?).size
-      th.text-center = @members_after.select(&:passive?).size
+      th.text-center = @members_after.select(&:paying?).reject(&:passive?).size
+      th.text-center = @members_after.select(&:paying?).select(&:passive?).size
+      th.text-center = @members_after.reject(&:paying?).size
   tbody
     / TODO(uwe): Separate honorary/passive members
-    - active_before_by_group = @members_before.reject(&:passive?).group_by { |m| m.groups.sort_by(&:to_age).last }
-    - passive_before_by_group = @members_before.select(&:passive?).group_by { |m| m.groups.sort_by(&:to_age).last }
+    - non_paying_before_by_group = @members_before.reject(&:paying?).group_by { |m| m.groups.sort_by(&:to_age).last }
+    - active_before_by_group = @members_before.select(&:paying?).reject(&:passive?).group_by { |m| m.groups.sort_by(&:to_age).last }
+    - passive_before_by_group = @members_before.select(&:paying?).select(&:passive?).group_by { |m| m.groups.sort_by(&:to_age).last }
     - @members_after.group_by { |m| m.groups.sort_by(&:to_age).last }.each do |group, members|
-      - passive, active = members.partition(&:passive?)
+      - non_paying = members.reject(&:paying?)
+      - passive, active = members.select(&:paying?).partition(&:passive?)
       - active_diff = active.size - active_before_by_group[group]&.size.to_i
       - passive_diff = passive.size - passive_before_by_group[group]&.size.to_i
+      - non_paying_diff = non_paying.size - non_paying_before_by_group[group]&.size.to_i
       tr
         td = group&.name || 'Uten gruppe'
         td.text-center
@@ -35,6 +40,9 @@ table.table
         td.text-center
           = passive.size
           = passive_diff != 0 ? " (#{passive_diff > 0 ? '+' : nil}#{passive_diff})" : nil
+        td.text-center
+          = non_paying.size
+          = non_paying_diff != 0 ? " (#{non_paying_diff > 0 ? '+' : nil}#{non_diff})" : nil
 
 img.rounded.d-block.mx-auto.my-4.w-100.h-auto src=url_for(action: :history_graph, id: '832x600', format: :png) title='Medlemmer graf' style="max-width:832px;max-height:600px"
 

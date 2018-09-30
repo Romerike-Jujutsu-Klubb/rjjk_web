@@ -11,9 +11,9 @@ class MemberReportsController < ApplicationController
             end
     @year = @date.year
     @month = @date.month
-    @first_date = @date.beginning_of_month - 1
+    @first_date = @date.beginning_of_month
     @last_date = @date.end_of_month
-    @members_before = Member.active(@first_date).to_a
+    @members_before = Member.active(@first_date - 1).to_a
     @members_after = Member.active(@last_date).to_a
     @members_in = @members_after - @members_before
     @members_out = @members_before - @members_after

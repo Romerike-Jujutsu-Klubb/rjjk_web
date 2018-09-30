@@ -249,6 +249,10 @@ class Member < ApplicationRecord
     end
   end
 
+  def paying?
+    nkf_member.kontraktsbelop > 0
+  end
+
   def senior?
     birthdate && (age >= JUNIOR_AGE_LIMIT)
   end
