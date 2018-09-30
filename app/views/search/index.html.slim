@@ -1,7 +1,7 @@
 h1 Søkeresultat for "#{@query}"
 
 - if @query
-  - if [@members, @former_members, @trials, @users, @pages, @news].any?(&:present?)
+  - if [@members, @former_members, @trials, @users, @pages, @news, @images].any?(&:present?)
     .card-deck.mt-3
       - if @members.present?
         .card
@@ -51,6 +51,13 @@ h1 Søkeresultat for "#{@query}"
               ul
                 - items.each do |p|
                   li = link_to p.title, p
+      - if @images.present?
+        .card
+          h3.card-header Bilder
+          .card-body
+            ul
+              - @images.each do |i|
+                li = link_to i.name, i
   - else
     | Fant ingenting om "#{@query}".
 

@@ -85,7 +85,7 @@ class Image < ApplicationRecord
   end
 
   def aspect_ratio
-    update_dimensions! unless video?
+    update_dimensions!
     return (width.to_f / height) if width && height
 
     320 / 240
@@ -106,23 +106,25 @@ class Image < ApplicationRecord
   end
 
   def update_dimensions!
-    return if width && height && md5_checksum
+    return if (width && height) || !image?
 
-    if image?
-      begin
-        content = load_content(no_caching: true)
-        magick_image = Magick::Image.from_blob(content).first
-        self.width = magick_image.columns
-        self.height = magick_image.rows
-      rescue => e
-        logger.error e
-        logger.error e.backtrace.join("\n")
-      end
-    end
+    content = load_content(no_caching: true)
+    magick_image = Magick::Image.from_blob(content).first
+    self.width = magick_image.columns
+    self.height = magick_image.rows
 
-    if content
-      md5_checksum = Digest::MD5.hexdigest(content)
-    elsif content_loaded?
+    save!
+  rescue => e
+    logger.error e
+    logger.error e.backtrace.join("\n")
+  end
+
+  private
+
+  def update_md5_checksum!
+    return if md5_checksum
+
+    if content_loaded?
       md5_checksum = Digest::MD5.hexdigest(content_data)
     elsif google_drive_reference
       md5_checksum = GoogleDriveService.new.get_file(google_drive_reference).md5_checksum

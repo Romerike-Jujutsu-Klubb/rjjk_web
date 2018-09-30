@@ -10,6 +10,7 @@ class AddMd5ChecksumToImages < ActiveRecord::Migration[5.2]
         i = 0
         Image.order(:id).each do |image|
           image.update_dimensions!
+          image.update_md5_checksum!
         rescue ActiveRecord::RecordInvalid => e
           raise "Unknown error: #{e}" unless e.to_s == 'Det oppstod feil: Md5 checksum er allerede i bruk'
 
@@ -25,7 +26,7 @@ class AddMd5ChecksumToImages < ActiveRecord::Migration[5.2]
             puts 'Merging into the original image:'
 
             image.application_steps.each do |as|
-              puts "  as: #{as.technique_application.name}"
+              puts "  as: #{as.technique_application.name}, #{as.technique_application.rank.name}"
               as2 = ApplicationStep.find as.id
               as2.update! image_id: original_image.id
             end
