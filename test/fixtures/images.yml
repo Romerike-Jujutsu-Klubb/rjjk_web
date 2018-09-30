@@ -22,14 +22,14 @@ application_step_one:
   content_type: MyString
   content_data: !binary |
     R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=
-  md5_checksum: checksum
+  md5_checksum: application_step_one
   user: admin
   approved: true
 application_step_two:
   name: Step 2
   content_type: MyString
   content_data:
-  md5_checksum: checksum
+  md5_checksum: application_step_two
   user: admin
   approved: true
 application_step_kneeing:
@@ -37,6 +37,6 @@ application_step_kneeing:
   content_type: MyString
   content_data: !binary |
     R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
-  md5_checksum: checksum
+  md5_checksum: application_step_kneeing
   user: admin
   approved: true
