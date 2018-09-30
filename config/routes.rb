@@ -42,7 +42,7 @@ Rails.application.routes.draw do
       get :form
       get :form_index
       get :history_graph
-      get :month_chart
+      get 'month_chart(/:year/:month/:size)', action: :month_chart
       get :month_per_year_chart
       get :report
       match 'review/:year/:week/:group_schedule_id/:status', action: :review, via: %i[get post]
