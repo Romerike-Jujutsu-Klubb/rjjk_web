@@ -3,6 +3,16 @@ $right_sidebar_width: 290px;
 
 body {
   background-attachment: fixed;
+}
+
+body.wide {
+  min-height: 100vh;
+  > .container-fluid {
+    min-height: 100%;
+  }
+}
+
+body:not(.wide) {
   padding-top: 4rem;
 }
 
@@ -155,9 +165,6 @@ ul.controls li a.delete {
 }
 
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
   background: asset_url('dark_ritual/header_left.png') left no-repeat, asset_url('dark_ritual/header_right.png') right no-repeat, asset_url('dark_ritual/header_lines.png') left repeat;
   background-color: #F4F4F4;
   height: 4rem;
@@ -167,6 +174,17 @@ ul.controls li a.delete {
 
   .fb-buttons {
     float: right;
+  }
+}
+
+body:not(.wide) {
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  #logo_img {
+    position: fixed;
   }
 }
 
@@ -207,7 +225,6 @@ body:not(.wide) .container-fluid {
   width: inherit
 }
 
-
 .main_right {
   background-color: #222222;
   height: 100% !important;
@@ -230,7 +247,7 @@ body:not(.wide) .container-fluid {
 }
 
 #logo_img {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 50%;
   width: 4rem;
@@ -252,8 +269,17 @@ body:not(.wide) .container-fluid {
 }
 
 @media (min-width: 768px) { // md
-  body {
+  body:not(.wide) {
     padding-top: 149px;
+    #logo_img {
+      right: 0;
+    }
+  }
+
+  body.wide {
+    #logo_img {
+      margin-right: -0.7rem;
+    }
   }
 
   .header {

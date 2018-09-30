@@ -44,7 +44,7 @@ table.table
           = non_paying.size
           = non_paying_diff != 0 ? " (#{non_paying_diff > 0 ? '+' : nil}#{non_diff})" : nil
 
-img.rounded.d-block.mx-auto.my-4.w-100.h-auto src=url_for(action: :history_graph, id: '832x600', format: :png) title='Medlemmer graf' style="max-width:832px;max-height:600px"
+img.rounded.d-block.mx-auto.my-4.w-100.h-auto src=url_for(action: :history_graph, size: '832x600', format: :png) title='Medlemmer graf' style="max-width:832px;max-height:600px"
 
 / TODO(uwe): Display trial members, maybe with attendances
 

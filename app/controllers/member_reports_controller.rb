@@ -20,11 +20,11 @@ class MemberReportsController < ApplicationController
   end
 
   def history_graph
-    args = if params[:id] && params[:id].to_i <= 1280
-             if /^\d+x\d+$/.match?(params[:id])
-               [params[:id]]
+    args = if params[:size] && params[:size].to_i <= 1280
+             if /^\d+x\d+$/.match?(params[:size])
+               [params[:size]]
              else
-               [params[:id].to_i]
+               [params[:size].to_i]
              end
            else
              []
@@ -34,8 +34,8 @@ class MemberReportsController < ApplicationController
   end
 
   def grade_history_graph
-    g = if params[:id] && params[:id].to_i <= 1280
-          MemberGradeHistoryGraph.new.history_graph size: params[:id].to_i,
+    g = if params[:size] && params[:size].to_i <= 1280
+          MemberGradeHistoryGraph.new.history_graph size: params[:size].to_i,
                                                     interval: params[:interval]&.to_i&.days,
                                                     step: params[:step].try(:to_i).try(:days),
                                                     percentage: params[:percentage].try(:to_i)
@@ -50,8 +50,8 @@ class MemberReportsController < ApplicationController
   end
 
   def age_chart
-    g = if params[:id] && params[:id].to_i <= 1280
-          MemberAgeChart.chart params[:id].to_i
+    g = if params[:size] && params[:size].to_i <= 1280
+          MemberAgeChart.chart params[:size].to_i
         else
           MemberAgeChart.chart
         end

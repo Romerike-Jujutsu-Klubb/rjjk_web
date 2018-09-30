@@ -20,10 +20,13 @@ Rails.application.routes.draw do
   get 'login/welcome'
   get 'map' => 'map#index'
   get 'member_reports' => 'member_reports#index'
-  get 'member_reports/age_chart'
+  get 'member_reports/age_chart(/:size)' => 'member_reports#age_chart', as: :member_reports_age_chart
   get 'member_reports/grade_history_graph'
-  get 'member_reports/grade_history_graph_percentage'
-  get 'member_reports/history_graph'
+  get 'member_reports/grade_history_graph_percentage(/:size)' =>
+      'member_reports#grade_history_graph_percentage',
+      as: :member_reports_grade_history_graph_percentage
+  get 'member_reports/history_graph(/:size)' => 'member_reports#history_graph',
+      as: :member_reports_history_graph
   get 'pensum' => 'ranks#pensum'
   get 'pensum/pdf' => 'ranks#pdf'
   get 'search' => 'search#index'
