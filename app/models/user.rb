@@ -40,7 +40,7 @@ class User < ApplicationRecord
   SEARCH_FIELDS = %i[address email first_name last_name login phone postal_code].freeze
   scope :search, ->(query) {
     where(SEARCH_FIELDS.map { |c| "to_tsvector(UPPER(#{c})) @@ to_tsquery(:query)" }.join(' OR '),
-        query: UnicodeUtils.upcase(query).split(/\s+/).join(' | '))
+        query: UnicodeUtils.upcase(query).split(/\s+/).map { |t| %("#{t.tr('<->&!()', '')}") }.join(' | '))
         .order(:first_name, :last_name)
   }
 
