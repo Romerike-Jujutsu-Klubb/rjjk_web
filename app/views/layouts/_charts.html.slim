@@ -1,7 +1,7 @@
 - chart_width = column_width_sm
 - if Rails.env != 'development'
   - history_chart_link = image_tag(member_reports_history_graph_path(format: :png, id: chart_width), title: 'Historikk graf', class: 'rounded', lazy: true)
-  - attendance_chart_link = image_tag(url_for(controller: :attendances, action: :history_graph, format: :png, id: chart_width), title: 'Oppmøte graf', class: 'rounded', lazy: true)
+  - attendance_chart_link = image_tag(url_for(controller: :attendances, action: :history_graph, format: :png, size: chart_width), title: 'Oppmøte graf', class: 'rounded', lazy: true)
   - grades_chart_link = image_tag(member_reports_grade_history_graph_path(format: :png, id: chart_width), title: 'Historikk over grader', class: 'rounded', lazy: true)
   - age_chart_link = image_tag(member_reports_age_chart_path(format: :png, id: chart_width), title: 'Aldersfordeling', class: 'rounded', lazy: true)
   - good_attendance_chart_link = image_tag(member_reports_grade_history_graph_percentage_path(format: :png, id: chart_width, percentage: 33, step: 28, interval: 92), title: 'Jevnt oppmøte voksne per grad', class: 'rounded', lazy: true)

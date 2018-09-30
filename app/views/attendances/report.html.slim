@@ -22,7 +22,7 @@ css:
       = image_tag url_for(controller: :attendances, action: :month_per_year_chart, month: @month, size: '832x300', format: :png), \
                     title: 'Oppmøtegraf', class: :rounded, style: 'width:832px;height:300px'
     .carousel-item
-      = image_tag url_for(controller: :attendances, action: :history_graph, id: '832x300', format: :png), \
+      = image_tag url_for(controller: :attendances, action: :history_graph, size: '832x300', format: :png), \
                     title: 'Oppmøtegraf', class: :rounded, style: 'width:832px;height:300px'
   a.carousel-control-prev href="#carouselIndicators" role="button" data-slide="prev"
     span.carousel-control-prev-icon aria-hidden="true"

@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     collection do
       get :form
       get :form_index
-      get :history_graph
+      get 'history_graph(/:size)', action: :history_graph
       get 'month_chart(/:year/:month/:size)', action: :month_chart
       get 'month_per_year_chart(/:month/:size)', action: :month_per_year_chart
       get :report

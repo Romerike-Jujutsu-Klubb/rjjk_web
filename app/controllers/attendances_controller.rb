@@ -127,11 +127,11 @@ class AttendancesController < ApplicationController
   end
 
   def history_graph
-    args = if params[:id] && params[:id].to_i <= 1280
-             if params[:id] =~ /^\d+x\d+$/
-               [params[:id]]
+    args = if params[:size] && params[:size].to_i <= 1280
+             if params[:size] =~ /^\d+x\d+$/
+               [params[:size]]
              else
-               [params[:id].to_i]
+               [params[:size].to_i]
              end
            else
              []
