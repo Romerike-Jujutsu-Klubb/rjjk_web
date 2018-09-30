@@ -8,9 +8,10 @@ class AddMd5ChecksumToImages < ActiveRecord::Migration[5.2]
     reversible do |dir|
       dir.up do
         i = 0
+        Image.send :public, :content_loaded?
         Image.order(:id).each do |image|
           image.update_dimensions!
-          image.update_md5_checksum!
+          update_md5_checksum!(image)
         rescue ActiveRecord::RecordInvalid => e
           raise "Unknown error: #{e}" unless e.to_s == 'Det oppstod feil: Md5 checksum er allerede i bruk'
 
@@ -64,7 +65,7 @@ class AddMd5ChecksumToImages < ActiveRecord::Migration[5.2]
       image.md5_checksum = GoogleDriveService.new.get_file(image.google_drive_reference).md5_checksum
     end
 
-    save!
+    image.save!
   end
 
   def relations?(image)
