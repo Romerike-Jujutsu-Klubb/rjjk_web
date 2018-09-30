@@ -12,11 +12,9 @@ class SearchController < ApplicationController
       @trials = NkfMemberTrial.search(@query).to_a
     end
 
-    query = "%#{UnicodeUtils.upcase(@query)}%"
+    query = "%#{UnicodeUtils.upcase(@query).gsub(/(_|%)/, '\\\\\\1')}%"
     @pages = InformationPage
-        .where('UPPER(title) LIKE :query OR UPPER(body) LIKE :query', query: query)
-        .order(:title)
-        .to_a
+        .where('UPPER(title) LIKE :query OR UPPER(body) LIKE :query', query: query).order(:title).to_a
     news_items = NewsItem
         .where('UPPER(title) LIKE :query OR UPPER(summary) LIKE :query OR UPPER(body) LIKE :query',
             query: query)

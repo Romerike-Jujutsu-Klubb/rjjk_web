@@ -7,8 +7,8 @@ class NkfMemberTrial < ApplicationRecord
 
   scope :for_group, ->(group) { where('alder BETWEEN ? AND ?', group.from_age, group.to_age) }
   scope :search, ->(query) do
-    where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) LIKE ?" }.join(' OR '),
-        *(["%#{UnicodeUtils.upcase(query)}%"] * SEARCH_FIELDS.size))
+    where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) LIKE :query" }.join(' OR '),
+        query: "%#{UnicodeUtils.upcase(query).gsub(/(_|%)/, '\\\\\\1')}%")
         .order(:fornavn, :etternavn).all
   end
 
