@@ -249,7 +249,7 @@ class Member < ApplicationRecord
   end
 
   def paying?
-    nkf_member.kontraktsbelop > 0
+    nkf_member&.kontraktsbelop.to_i > 0
   end
 
   def senior?
