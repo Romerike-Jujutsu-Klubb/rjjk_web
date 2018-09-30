@@ -118,20 +118,4 @@ class Image < ApplicationRecord
     logger.error e
     logger.error e.backtrace.join("\n")
   end
-
-  private
-
-  def update_md5_checksum!
-    return if md5_checksum
-
-    if content_loaded?
-      md5_checksum = Digest::MD5.hexdigest(content_data)
-    elsif google_drive_reference
-      md5_checksum = GoogleDriveService.new.get_file(google_drive_reference).md5_checksum
-    end
-
-    self.md5_checksum = md5_checksum if md5_checksum
-
-    save!
-  end
 end

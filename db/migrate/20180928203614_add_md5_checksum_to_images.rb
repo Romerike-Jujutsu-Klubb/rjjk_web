@@ -55,6 +55,18 @@ class AddMd5ChecksumToImages < ActiveRecord::Migration[5.2]
 
   private
 
+  def update_md5_checksum!(image)
+    return if image.md5_checksum
+
+    if image.content_loaded?
+      image.md5_checksum = Digest::MD5.hexdigest(image.content_data)
+    elsif image.google_drive_reference
+      image.md5_checksum = GoogleDriveService.new.get_file(image.google_drive_reference).md5_checksum
+    end
+
+    save!
+  end
+
   def relations?(image)
     return unless image.application_steps.count > 0 || image.member_image || image.user_images.count > 0
 
