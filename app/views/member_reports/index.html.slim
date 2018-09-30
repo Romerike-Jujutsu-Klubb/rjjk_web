@@ -12,20 +12,29 @@ table.table
   thead
     tr
       th width="70%" Gruppe
-      th Antall
+      th.text-center Aktive
+      th.text-center Passive
   tfoot
     tr
       th Totalt
-      th = @members_after.size
+      th.text-center = @members_after.reject(&:passive?).size
+      th.text-center = @members_after.select(&:passive?).size
   tbody
     / TODO(uwe): Separate honorary/passive members
-    - before_by_group = @members_before.group_by { |m| m.groups.sort_by(&:to_age).last }
+    - active_before_by_group = @members_before.reject(&:passive?).group_by { |m| m.groups.sort_by(&:to_age).last }
+    - passive_before_by_group = @members_before.select(&:passive?).group_by { |m| m.groups.sort_by(&:to_age).last }
     - @members_after.group_by { |m| m.groups.sort_by(&:to_age).last }.each do |group, members|
-      - diff = members.size - before_by_group[group]&.size.to_i
+      - passive, active = members.partition(&:passive?)
+      - active_diff = active.size - active_before_by_group[group]&.size.to_i
+      - passive_diff = passive.size - passive_before_by_group[group]&.size.to_i
       tr
         td = group&.name || 'Uten gruppe'
-        td = members.size
-        = diff != 0 ? "(#{diff > 0 ? '+' : nil}#{diff})" : nil
+        td.text-center
+          = active.size
+          = active_diff != 0 ? " (#{active_diff > 0 ? '+' : nil}#{active_diff})" : nil
+        td.text-center
+          = passive.size
+          = passive_diff != 0 ? " (#{passive_diff > 0 ? '+' : nil}#{passive_diff})" : nil
 
 img.rounded.d-block.mx-auto.my-4.w-100.h-auto src=url_for(action: :history_graph, id: '832x600', format: :png) title='Medlemmer graf' style="max-width:832px;max-height:600px"
 
@@ -34,23 +43,21 @@ img.rounded.d-block.mx-auto.my-4.w-100.h-auto src=url_for(action: :history_graph
 table.table
   tr
     th width="70%" Nye medlemmer
-    td = @members_in.size
+    td.text-center = @members_in.size
   tr
     th Utmeldinger
-    td = @members_out.size
-
-/ FIXME(uwe): Hvis medlem er meldt inn og ut i samme måned?  Ref. Test Testesen.
+    td.text-center = @members_out.size
 
 - if @members_in.any?
   table.table
     tr
       th width="70%" Nye medlemmer
-      th Alder
+      th.text-center Alder
       th Innmelding
     - @members_in.each do |m|
       tr
         td = link_to m.name, m
-        td = m.age(m.joined_on)
+        td.text-center = m.age(m.joined_on)
         td = m.joined_on
         td = m.left_on
 
@@ -58,10 +65,10 @@ table.table
   table.table
     tr
       th width="70%" Utmeldinger
-      th Alder
+      th.text-center Alder
       th Utmelding
     - @members_out.each do |m|
       tr
         td = link_to m.name, m
-        td = m.age(m.left_on)
+        td.text-center = m.age(m.left_on)
         td = m.left_on

@@ -226,8 +226,8 @@ class Member < ApplicationRecord
   end
 
   def passive?(date = Date.current, group = nil)
-    return true if passive_on
-    return false if joined_on >= date - 2.months
+    return true if passive_on && date >= passive_on
+    return false if date <= joined_on + 2.months
 
     start_date = date - 92
     end_date = date + 31
