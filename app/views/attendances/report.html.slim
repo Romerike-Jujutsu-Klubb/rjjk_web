@@ -1,0 +1,46 @@
+h2 Oppmøterapport #{t(:date)[:month_names][@first_date.month]} #{@first_date.year}
+
+css:
+  .carousel-control-prev, .carousel-control-next {
+    align-items: flex-start;
+    margin-top: 2rem;
+  }
+#carouselIndicators.carousel.slide.my-3 data-interval="false"
+  .carousel-inner
+    .carousel-item.active
+      = image_tag url_for(controller: :attendances, action: :month_chart, year: @year, month: @month, size: '832x300', format: :png), \
+                    title: 'Oppmøtegraf', class: :rounded, style: 'width:832px;height:300px'
+    .carousel-item
+      = image_tag url_for(controller: :attendances, action: :month_per_year_chart, month: @month, size: '832x300', format: :png), \
+                    title: 'Oppmøtegraf', class: :rounded, style: 'width:832px;height:300px'
+    .carousel-item
+      = image_tag url_for(controller: :attendances, action: :history_graph, id: '832x300', format: :png), \
+                    title: 'Oppmøtegraf', class: :rounded, style: 'width:832px;height:300px'
+  a.carousel-control-prev href="#carouselIndicators" role="button" data-slide="prev"
+    span.carousel-control-prev-icon aria-hidden="true"
+    span.sr-only Previous
+  a.carousel-control-next href="#carouselIndicators" role="button" data-slide="next"
+    span.carousel-control-next-icon aria-hidden="true"
+    span.sr-only Next
+
+table.table
+  - @monthly_summary_per_group.each do |g, stats|
+    tr
+      th = g.name
+      td = stats[:present].size
+      td Gjennomsnittlig #{stats[:present].empty? ? 0 : (stats[:present].size.to_f / stats[:practices]).round} deltakere på #{stats[:practices]} treninger
+
+h3 Antall deltakere
+
+table.table
+  tr
+    th
+    th style="text-align:center" Totalt
+    th style="text-align:center" Tilstede +50%
+    th style="text-align:center" Tilstede +67%
+  - @by_group_and_member.each do |group, members|
+    tr
+      th = group.name
+      td style="text-align:center" = members.select { |m, ats| true }.size
+      td style="text-align:center" = members.select { |m, ats| ats.size >= @monthly_summary_per_group[group][:practices] * 0.5 }.size
+      td style="text-align:center" = members.select { |m, ats| ats.size >= @monthly_summary_per_group[group][:practices] * 0.67 }.size
