@@ -133,13 +133,22 @@ h1,h2,h3 {color: #994;}
 
 /* footer */
 .footer {
-	background: asset_url('dark_ritual/bgfooter.gif') repeat-x;
-	color: #CCC;
-	font-size: 0.9em;
-	line-height: 39px;
-    background-color: #61614E;
-	text-align: center;
+  @extend .py-2;
+  background: asset_url('dark_ritual/bgfooter.gif') repeat-x;
+  color: #CCC;
+  font-size: 0.9em;
+  background-color: #61614E;
+  text-align: center;
 }
-.footer .left,.footer .right {padding: 0 16px;}
-.footer a {color: #EEE;}
-.footer a:hover {color: #FAFCB0;}
+
+.footer .left, .footer .right {
+  padding: 0 16px;
+}
+
+.footer a {
+  color: #EEE;
+}
+
+.footer a:hover {
+  color: #FAFCB0;
+}
