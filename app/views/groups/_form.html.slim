@@ -23,25 +23,25 @@
         = f.label :to_age, 'Til alder'
         = f.text_field :to_age, class: 'form-control input-sm'
 
-      br clear="all"
-
-      .form-group
+      .form-group.float-left
         = f.label :color, 'Farge'
         = f.text_field :color, class: 'form-control input-sm'
+
+      br clear="all"
 
       .form-group style="float: left ; margin-right: 1em"
         = f.label :monthly_price, 'Månedspris'
         = f.text_field :monthly_price, class: 'form-control input-sm'
 
-      .form-group.float-left
+      .form-group.float-left.mr-3
         = f.label :yearly_price, 'Årskontingent'
         = f.text_field :yearly_price, class: 'form-control input-sm'
 
-      br clear="all"
-
-      .form-group
+      .form-group.float-left
         = f.label :contract_type, 'Kontraktstype'
         = f.select :contract, [nil] + @contracts, {}, class: 'form-control'
+
+      br clear="all"
 
       .form-group style="float: left ; margin-right: 1em"
         = f.label :school_breaks, 'Følger skoleåret'
@@ -50,10 +50,6 @@
       .form-group style="float: left ; margin-right: 1em"
         = f.label :planning, 'Påmelding'
         = f.check_box :planning, class: 'form-control input-sm'
-
-      .form-group.float-left
-        = f.label :closed_on, 'Avsluttet'
-        = f.text_field :closed_on, class: 'date form-control input-sm'
 
       br clear="all"
 
@@ -87,10 +83,15 @@
         = f.label :description, :Beskrivelse
         = f.text_area :description, rows: 10, class: 'form-control input-lg'
 
-      .form-group
-        = f.label :target_size, 'Ønsket størrelse'
-        = f.text_field :target_size, class: 'form-control'
+      .row
+        .form-group.col
+          = f.label :target_size, 'Ønsket størrelse'
+          = f.text_field :target_size, class: 'form-control'
 
-  .col-6.text-right
+        .form-group.col
+          = f.label :closed_on, 'Avsluttet'
+          = f.text_field :closed_on, class: 'date form-control input-sm', placeholder: :dato
+
+  .text-right
     = back_or_link_to 'Tilbake', groups_path, class: 'btn btn-link mr-2'
     = f.submit 'Lagre', class: 'btn btn-secondary'
