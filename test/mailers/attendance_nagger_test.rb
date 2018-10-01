@@ -48,19 +48,19 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_equal 'Trening i kveld: 1 deltaker påmeldt', mail.subject
     assert_equal ['uwe@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
-    assert_match "<ul>\n      <li>Uwe Kubosch</li>\n</ul>", mail.html_body
+    assert_match '<ul><li>Uwe Kubosch</li></ul>', mail.html_body
 
     mail = UserMessage.pending[1]
     assert_equal 'Trening i kveld: 1 deltaker påmeldt', mail.subject
     assert_equal ['lars@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
-    assert_match "<ul>\n      <li>Uwe Kubosch</li>\n</ul>", mail.html_body
+    assert_match '<ul><li>Uwe Kubosch</li></ul>', mail.html_body
 
     mail = UserMessage.pending[2]
     assert_equal 'Trening i kveld: 1 deltaker påmeldt', mail.subject
     assert_equal ['newbie@example.com'], mail.to
     assert_equal ['noreply@test.jujutsu.no'], mail.from
-    assert_match "<ul>\n      <li>Uwe Kubosch</li>\n</ul>", mail.html_body
+    assert_match '<ul><li>Uwe Kubosch</li></ul>', mail.html_body
   end
 
   def test_send_attendance_changes
@@ -70,19 +70,19 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_equal 'Trening i kveld: 1 ny deltaker påmeldt', mail.subject
     assert_equal ['uwe@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
-    assert_match "Nylig påmeldt</h3>\n\n    <ul>\n          <li>Uwe Kubosch</li>", mail.body
+    assert_match 'Nylig påmeldt</h3><ul><li>Uwe Kubosch</li>', mail.body
 
     mail = UserMessage.pending[1]
     assert_equal 'Trening i kveld: 1 ny deltaker påmeldt', mail.subject
     assert_equal ['lars@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
-    assert_match "Nylig påmeldt</h3>\n\n    <ul>\n          <li>Uwe Kubosch</li>", mail.body
+    assert_match 'Nylig påmeldt</h3><ul><li>Uwe Kubosch</li>', mail.body
 
     mail = UserMessage.pending[2]
     assert_equal 'Trening i kveld: 1 ny deltaker påmeldt', mail.subject
     assert_equal ['newbie@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
-    assert_match "Nylig påmeldt</h3>\n\n    <ul>\n          <li>Uwe Kubosch</li>", mail.body
+    assert_match 'Nylig påmeldt</h3><ul><li>Uwe Kubosch</li>', mail.body
   end
 
   def test_send_attendance_review
