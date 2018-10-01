@@ -11,7 +11,7 @@ html lang="nb"
     link rel="manifest" href='/manifest.json'
 
     - if Rails.env.production?
-      = render 'google_analytics'
+      = render 'layouts/google_analytics'
 
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = csrf_meta_tags

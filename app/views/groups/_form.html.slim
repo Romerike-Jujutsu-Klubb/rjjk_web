@@ -1,0 +1,96 @@
+- @content_width = 880
+
+= form_for @group do |f|
+  = f.error_messages
+
+  .row
+    .col-md-6
+      div
+        .form-group
+          = f.label :name
+          = f.text_field :name, class: 'form-control'
+
+        - if @group.martial_art && @group.martial_art.name != 'Kei Wa Ryu'
+          .form-group
+            = f.label :martial_art_id, 'Gren'
+            = f.select :martial_art_id, @martial_arts.map { |ma| [ma.name, ma.id] }, class: 'form-control'
+
+      .form-group style="float: left ; margin-right: 1em"
+        = f.label :from_age, 'Fra alder'
+        = f.text_field :from_age, class: 'form-control input-sm'
+
+      .form-group style="float: left ; margin-right: 1em"
+        = f.label :to_age, 'Til alder'
+        = f.text_field :to_age, class: 'form-control input-sm'
+
+      br clear="all"
+
+      .form-group
+        = f.label :color, 'Farge'
+        = f.text_field :color, class: 'form-control input-sm'
+
+      .form-group style="float: left ; margin-right: 1em"
+        = f.label :monthly_price, 'Månedspris'
+        = f.text_field :monthly_price, class: 'form-control input-sm'
+
+      .form-group.float-left
+        = f.label :yearly_price, 'Årskontingent'
+        = f.text_field :yearly_price, class: 'form-control input-sm'
+
+      br clear="all"
+
+      .form-group
+        = f.label :contract_type, 'Kontraktstype'
+        = f.select :contract, [nil] + @contracts, {}, class: 'form-control'
+
+      .form-group style="float: left ; margin-right: 1em"
+        = f.label :school_breaks, 'Følger skoleåret'
+        = f.check_box :school_breaks, class: 'form-control input-sm'
+
+      .form-group style="float: left ; margin-right: 1em"
+        = f.label :planning, 'Påmelding'
+        = f.check_box :planning, class: 'form-control input-sm'
+
+      .form-group.float-left
+        = f.label :closed_on, 'Avsluttet'
+        = f.text_field :closed_on, class: 'date form-control input-sm'
+
+      br clear="all"
+
+      .row
+        .form-group.col-6.col-xl
+          = f.fields_for :current_semester, @group.current_semester do |csf|
+            = csf.label :first_session, 'Første trening'
+            = csf.text_field :first_session, class: 'date form-control input-sm', \
+                placeholder: "etter #{holiday_label(@group.current_semester.semester.start_on)}ferien"
+
+        .form-group.col-6.col-xl
+          = f.fields_for :current_semester, @group.current_semester do |csf|
+            = csf.label :last_session, 'Siste trening'
+            = csf.text_field :last_session, class: 'date form-control input-sm', \
+                data: {'default-date': @group.suggested_graduation_date.end_of_week + 4.days}, \
+                placeholder: "før #{holiday_label(csf.object&.last_session || @group.current_semester.first_session)}ferien"
+
+        .form-group.col-6.col-xl-5
+          = f.fields_for :next_semester, @group.next_semester do |csf|
+            = csf.label :first_session, 'Første trening neste semester'
+            = csf.text_field :first_session, class: 'date form-control input-sm', \
+                data: {'default-date': @group.next_semester.semester.start_on}, \
+                    placeholder: "etter #{holiday_label(csf.object&.first_session ||@group.current_semester.last_session || @group.current_semester.first_session)}ferien"
+
+    .col-md-6
+      .form-group
+        = f.label :summary, :Sammendrag
+        = f.text_area :summary, rows: 5, class: 'form-control input-lg'
+
+      .form-group
+        = f.label :description, :Beskrivelse
+        = f.text_area :description, rows: 10, class: 'form-control input-lg'
+
+      .form-group
+        = f.label :target_size, 'Ønsket størrelse'
+        = f.text_field :target_size, class: 'form-control'
+
+  .col-6.text-right
+    = back_or_link_to 'Tilbake', groups_path, class: 'btn btn-link mr-2'
+    = f.submit 'Lagre', class: 'btn btn-secondary'
