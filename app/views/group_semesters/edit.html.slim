@@ -12,24 +12,25 @@ ul.nav.nav-tabs role="tablist"
 
 .tab-content
   #plan.tab-pane.active
-    table.table
+    table.table.table-sm
       - @group_semester.practices.select{|p| p.date >= Date.current}.sort_by(&:date).each do |practice|
         tr
-          td nowrap=true
-            = practice.date
-            .badge.badge-info.float-right = practice.status
+          td.text-nowrap = practice.date
+          td: .badge.badge-info = practice.status
           td
             = form_for practice do |f|
               = f.text_area :message, class: 'form-control expanding', onkeyup: "$.post( '#{practice_path(practice, format: :json)}', { _method: 'patch', 'practice[message]': $(this).val() })"
   #history.tab-pane
-    table.table
+    table.table.table-sm
       - @group_semester.practices.select{|p| p.date < Date.current}.sort_by(&:date).reverse.each do |practice|
         tr
-          td = practice.date
+          td.text-nowrap = practice.date
+          td: .badge.badge-info = practice.status
           td
             = form_for practice do |f|
-              = f.text_area :message, rows: 5, style: 'width: 100%'
-              br
-              = f.submit class: 'btn btn-secondary'
-              = link_to 'Vis', practice, class: 'btn btn-secondary'
-          td = practice.status
+              = f.text_area :message, class: 'form-control', onkeyup: "$.post( '#{practice_path(practice, format: :json)}', { _method: 'patch', 'practice[message]': $(this).val() })"
+
+javascript:
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $($(e.target).data("target")).find('form > textarea').expanding();
+    });
