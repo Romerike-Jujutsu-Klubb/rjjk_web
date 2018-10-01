@@ -11,7 +11,10 @@ class AnnualMeetingReminderTest < ActionMailer::TestCase
 
   def test_notify_missing_date
     annual_meetings(:next).destroy
-    assert_mail_stored(2) { AnnualMeetingReminder.notify_missing_date }
+
+    Timecop.freeze(Time.zone.local(2013, 11, 17, 18, 46, 0)) do
+      assert_mail_stored(2) { AnnualMeetingReminder.notify_missing_date }
+    end
 
     mail = UserMessage.pending[0]
     assert_equal 'På tide å sette dato for årsmøte 2014', mail.subject
@@ -19,11 +22,11 @@ class AnnualMeetingReminderTest < ActionMailer::TestCase
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_match '<h1>Hei Lars!</h1>', mail.body
     assert_match 'Det er på tide å sette opp dato for årsmøtet 2014. ' \
-        "For å registrere datoen\n  kan du gå inn på linken under.",
+        'For å registrere datoen kan du gå inn på linken under.',
         mail.body
     assert_match %r{<a href="https://example.com/annual_meetings/new">Årsmøte 2014</a>},
         mail.body
-    assert_match 'Årsmøtet skal holdes i februar.', mail.body
+    assert_match 'Årsmøtet skal holdes innen 31. mars.', mail.body
 
     mail = UserMessage.pending[1]
     assert_equal 'På tide å sette dato for årsmøte 2014', mail.subject
@@ -31,11 +34,11 @@ class AnnualMeetingReminderTest < ActionMailer::TestCase
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_match '<h1>Hei Sebastian!</h1>', mail.body
     assert_match 'Det er på tide å sette opp dato for årsmøtet 2014. ' \
-        "For å registrere datoen\n  kan du gå inn på linken under.",
+        'For å registrere datoen kan du gå inn på linken under.',
         mail.body
     assert_match %r{<a href="https://example.com/annual_meetings/new">Årsmøte 2014</a>},
         mail.body
-    assert_match 'Årsmøtet skal holdes i februar.', mail.body
+    assert_match 'Årsmøtet skal holdes innen 31. mars.', mail.body
   end
 
   def test_notify_missing_invitation_not_sent_if_in_far_future

@@ -1,0 +1,5 @@
+h1 Hei #{@member.first_name}!
+
+p Det er på tide å sette opp dato for årsmøtet #{@year}. For å registrere datoen kan du gå inn på linken under.
+p = link_to "Årsmøte #{@year}", @email_url
+p Årsmøtet skal holdes innen 31. mars.
