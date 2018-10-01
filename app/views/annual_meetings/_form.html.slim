@@ -11,5 +11,5 @@
       = f.text_field :start_at, class: 'datetime'
 
       .text-right
+        => back_or_link_to 'Tilbake', nil, class: 'btn btn-secondary'
         = f.primary 'Lagre'
-        = back_or_link_to 'Tilbake', nil, :class => 'btn btn-secondary'
