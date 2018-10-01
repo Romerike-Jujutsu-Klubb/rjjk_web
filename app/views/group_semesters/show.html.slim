@@ -37,13 +37,15 @@ ul.nav.nav-tabs role="tablist"
     table.table.table-sm
       - @group_semester.practices.select { |p| p.date >= Date.current }.sort_by(&:date).each do |practice|
         tr
-          td = practice.date
+          td.text-nowrap = practice.date
+          td = I18n.t('date.day_names')[practice.date.cwday]
           td: .badge.badge-info = practice.status
           td = practice.message
   #history.tab-pane
-    table.table
+    table.table.table-sm
       - @group_semester.practices.select { |p| p.date < Date.current }.sort_by(&:date).reverse.each do |practice|
         tr
-          td = practice.date
+          td.text-nowrap = practice.date
+          td = I18n.t('date.day_names')[practice.date.cwday]
           td: .badge.badge-info = practice.status
           td = practice.message
