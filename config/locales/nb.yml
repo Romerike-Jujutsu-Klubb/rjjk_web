@@ -47,9 +47,17 @@ nb:
         held_on: Dato
         group_notification: Gruppevarsel
       group:
+        closed_on: Avsluttet
+        color: Farge i grafer
+        contract: Kontraktstype
         from_age: Nedre aldersgrense
+        monthly_price: Månedspris
         name: Navn
+        planning: Påmelding
+        school_breaks: Følger skoleåret
+        target_size: Ønsket størrelse
         to_age: Øvre aldersgrense
+        yearly_price: Årskontingent
       group_instructor:
         assistant: Hjelpeinstruktør
         group_schedule_id: Gruppe
