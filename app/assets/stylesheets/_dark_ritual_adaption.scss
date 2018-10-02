@@ -192,8 +192,6 @@ body:not(.wide) {
   background: #222222;
 }
 
-// FIXME(uwer): Hide right sidebar for wide pages
-
 body:not(.wide) .container-fluid {
   max-width: 1440px;
 }

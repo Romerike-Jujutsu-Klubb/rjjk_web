@@ -65,7 +65,7 @@ class GraduationsController < ApplicationController
   def update
     @graduation = Graduation.for_edit.find(params[:id])
     if @graduation.update(params[:graduation])
-      # FIXME(uwe): If the date har changed:
+      # FIXME(uwe): If the date has changed:
       # * Clear sensor confirmations
       # * Request sensors again
       # * Clear graduate confirmations
