@@ -9,6 +9,6 @@ class SurveyMailerPreview < ActionMailer::Preview
 
   # Preview this email at http://localhost:3000/rails/mailers/survey_mailer/reminder
   def reminder
-    SurveyMailer.reminder
+    SurveyMailer.reminder(SurveyRequest.first)
   end
 end
