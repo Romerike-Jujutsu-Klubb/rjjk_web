@@ -27,7 +27,7 @@ class NkfSynchronizationJobTest < ActiveJob::TestCase
     assert_match(/\b#{nkf_new_count} medlemmer opprettet\n#{nkf_update_count} medlemmer oppdatert\n/,
         mail.body.decoded)
     assert_match "Endringer prøvetid:\n", mail.body.decoded
-    assert_match "Nye medlemmer:\n    Sebastian Aagren:\n", mail.body.decoded
+    assert_match "Nye medlemmer:\n\n    Sebastian Aagren:\n", mail.body.decoded
 
     rjjk_new_count = 413
     rjjk_update_count = 3
