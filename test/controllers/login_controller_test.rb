@@ -149,7 +149,6 @@ class LoginControllerTest < ActionController::TestCase
   def test_change_password__confirms_password
     login(:lars)
     post :change_password, params: { user: { password: 'bad', password_confirmation: 'bad' } }
-    user = users(:lars)
     assert_response :success
     assert_equal 0, UserMessage.pending.size
   end
