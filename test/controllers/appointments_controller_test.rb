@@ -2,7 +2,6 @@
 
 require 'controller_test'
 
-# FIXME(uwe): Convert to IntergratonTest instead
 class AppointmentsControllerTest < ActionController::TestCase
   setup do
     @appointment = appointments(:uwe_first)
