@@ -20,18 +20,20 @@ Endringer prøvetid:
 <% end -%>
 <% if @import.new_records.any? -%>
 Nye medlemmer:
-    <% @import.new_records.each do |r| -%>
+
+<% @import.new_records.each do |r| -%>
     <%= r[:record].fornavn %> <%= r[:record].etternavn %>:
-        <%= r[:record].attributes.inspect.html_safe %>
-    <% end -%>
+        <%= r[:record].attributes %>
+<% end -%>
 
 <% end -%>
 <% if @import.changes.any? -%>
 Endringer:
-    <% @import.changes.each do |r| -%>
+
+<% @import.changes.each do |r| -%>
     <%= r[:record].fornavn %> <%= r[:record].etternavn %>:
-        <%= r[:changes].inspect.html_safe %>
-    <% end -%>
+        <%= r[:changes].pretty_inspect.html_safe %>
+<% end -%>
 
 <% end -%>
 <% if @import.error_records.any? -%>
