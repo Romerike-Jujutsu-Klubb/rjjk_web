@@ -69,9 +69,7 @@ class NewsFeatureTest < FeatureTest
     assert has_field?(date_field_id, with: /^2013-10-#{day}/),
         "Unable to find field #{date_field_id} with value '2013-10-#{day}'.  " \
         "Found: #{find("##{date_field_id}").value}"
-    # FIXME(uwe): Bootstrap 4 beta2 leaves a stray line after blur animation
-    screenshot("form_#{date_field_id}_selected_date_#{day}", area_size_limit: 33)
-    # EMXIF
+    screenshot("form_#{date_field_id}_selected_date_#{day}")
     find('#news_item_title').click
   end
 end
