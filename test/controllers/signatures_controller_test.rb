@@ -11,7 +11,6 @@ class SignaturesControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:signatures)
   end
 
   test 'should get new' do
@@ -25,10 +24,9 @@ class SignaturesControllerTest < ActionController::TestCase
         content_type: @signature.content_type, image: 'Some image data',
         member_id: @signature.member_id, name: @signature.name
       } }
-      assert_no_errors :signature
     end
 
-    assert_redirected_to member_path(assigns(:signature).member, anchor: :tab_signatures_tab)
+    assert_redirected_to member_path(Signature.last.member, anchor: :tab_signatures_tab)
   end
 
   test 'should show signature' do
@@ -46,7 +44,7 @@ class SignaturesControllerTest < ActionController::TestCase
       content_type: @signature.content_type, image: 'Other image data.',
       member_id: @signature.member_id, name: @signature.name
     } }
-    assert_redirected_to signature_path(assigns(:signature))
+    assert_redirected_to signature_path(@signature)
   end
 
   test 'should destroy signature' do

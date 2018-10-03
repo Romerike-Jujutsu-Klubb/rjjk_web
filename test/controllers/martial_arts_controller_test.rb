@@ -13,48 +13,30 @@ class MartialArtsControllerTest < ActionController::TestCase
   def test_index
     get :index
     assert_response :success
-    assert_template :index
-    assert_not_nil assigns(:martial_arts)
   end
 
   def test_show
     get :show, params: { id: @first_id }
-
     assert_response :success
-    assert_template 'show'
-
-    assert_not_nil assigns(:martial_art)
-    assert assigns(:martial_art).valid?
   end
 
   def test_new
     get :new
-
     assert_response :success
-    assert_template 'new'
-
-    assert_not_nil assigns(:martial_art)
   end
 
   def test_create
     num_martial_arts = MartialArt.count
 
     post :create, params: { martial_art: { family: 'Karate', name: 'Wado Ryu' } }
-    assert_no_errors :martial_art
     assert_response :redirect
     assert_redirected_to action: :index
-
     assert_equal num_martial_arts + 1, MartialArt.count
   end
 
   def test_edit
     get :edit, params: { id: @first_id }
-
     assert_response :success
-    assert_template 'edit'
-
-    assert_not_nil assigns(:martial_art)
-    assert assigns(:martial_art).valid?
   end
 
   def test_update

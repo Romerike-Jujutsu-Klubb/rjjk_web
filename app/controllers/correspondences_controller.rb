@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# FIXME(uwe): Not used?  Remove?
 class CorrespondencesController < ApplicationController
   def index
     @correspondences = Correspondence.all

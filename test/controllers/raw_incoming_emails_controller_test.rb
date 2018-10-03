@@ -11,7 +11,6 @@ class RawIncomingEmailsControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:raw_emails)
   end
 
   test 'should get new' do
@@ -24,7 +23,7 @@ class RawIncomingEmailsControllerTest < ActionController::TestCase
       post :create, params: { raw_incoming_email: { content: @raw_incoming_email.content } }
     end
 
-    assert_redirected_to raw_incoming_email_path(assigns(:raw_incoming_email))
+    assert_redirected_to raw_incoming_email_path(RawIncomingEmail.last)
   end
 
   test 'should show raw_incoming_email' do
@@ -41,7 +40,7 @@ class RawIncomingEmailsControllerTest < ActionController::TestCase
     patch :update, params: { id: @raw_incoming_email, raw_incoming_email: {
       content: @raw_incoming_email.content,
     } }
-    assert_redirected_to raw_incoming_email_path(assigns(:raw_incoming_email))
+    assert_redirected_to raw_incoming_email_path(@raw_incoming_email)
   end
 
   test 'should destroy raw_incoming_email' do

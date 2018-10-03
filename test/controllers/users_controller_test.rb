@@ -50,7 +50,6 @@ class UsersControllerTest < ActionController::TestCase
 
   def assert_not_logged_in
     assert_nil @request.session[:user_id]
-    assert_nil assigns(:current_user)
   end
 
   def assert_redirected_to_login

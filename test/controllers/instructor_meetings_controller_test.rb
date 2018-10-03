@@ -10,7 +10,6 @@ class InstructorMeetingsControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:instructor_meetings)
   end
 
   test 'should get new' do

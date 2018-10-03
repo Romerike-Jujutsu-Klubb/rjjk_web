@@ -10,7 +10,6 @@ class CorrespondencesControllerTest < ActionController::TestCase
   test('should get index') do
     get :index
     assert_response :success
-    assert_not_nil assigns(:correspondences)
   end
 
   test('should get new') do
@@ -26,7 +25,7 @@ class CorrespondencesControllerTest < ActionController::TestCase
       } }
     end
 
-    assert_redirected_to correspondence_path(assigns(:correspondence))
+    assert_redirected_to correspondence_path(Correspondence.last)
   end
 
   test 'should show correspondence' do
@@ -45,7 +44,7 @@ class CorrespondencesControllerTest < ActionController::TestCase
       related_model_id: @correspondence.related_model_id,
       sent_at: @correspondence.sent_at,
     } }
-    assert_redirected_to correspondence_path(assigns(:correspondence))
+    assert_redirected_to correspondence_path(@correspondence)
   end
 
   test 'should destroy correspondence' do

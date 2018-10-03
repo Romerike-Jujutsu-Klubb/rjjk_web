@@ -11,7 +11,6 @@ class PageAliasesControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:page_aliases)
   end
 
   test 'should get new' do
@@ -22,10 +21,9 @@ class PageAliasesControllerTest < ActionController::TestCase
   test 'should create page_alias' do
     assert_difference('PageAlias.count') do
       post :create, params: { page_alias: { new_path: @page_alias.new_path, old_path: '/someother_path' } }
-      assert_no_errors :page_alias
     end
 
-    assert_redirected_to page_alias_path(assigns(:page_alias))
+    assert_redirected_to page_alias_path(PageAlias.last)
   end
 
   test 'should show page_alias' do
@@ -42,7 +40,7 @@ class PageAliasesControllerTest < ActionController::TestCase
     put :update, params: { id: @page_alias, page_alias: {
       new_path: @page_alias.new_path, old_path: @page_alias.old_path
     } }
-    assert_redirected_to page_alias_path(assigns(:page_alias))
+    assert_redirected_to page_alias_path(@page_alias)
   end
 
   test 'should destroy page_alias' do

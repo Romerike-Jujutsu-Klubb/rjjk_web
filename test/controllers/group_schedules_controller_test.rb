@@ -10,7 +10,6 @@ class GroupSchedulesControllerTest < ActionController::TestCase
   def test_should_get_index
     get :index
     assert_response :success
-    assert_not_nil assigns(:group_schedules)
   end
 
   def test_should_get_new
@@ -23,10 +22,9 @@ class GroupSchedulesControllerTest < ActionController::TestCase
       post :create, params: { group_schedule: {
         end_at: '18:45', group_id: groups(:panda).id, start_at: '17:45', weekday: 1
       } }
-      assert_no_errors :group_schedule
     end
 
-    assert_redirected_to group_schedule_path(assigns(:group_schedule))
+    assert_redirected_to group_schedule_path(GroupSchedule.last)
   end
 
   def test_should_show_group_schedule

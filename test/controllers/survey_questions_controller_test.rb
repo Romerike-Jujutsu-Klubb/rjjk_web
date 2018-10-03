@@ -11,7 +11,6 @@ class SurveyQuestionsControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:survey_questions)
   end
 
   test 'should get new' do
@@ -29,7 +28,7 @@ class SurveyQuestionsControllerTest < ActionController::TestCase
       } }
     end
 
-    assert_redirected_to survey_question_path(assigns(:survey_question))
+    assert_redirected_to survey_question_path(SurveyQuestion.last)
   end
 
   test 'should show survey_question' do
@@ -49,7 +48,7 @@ class SurveyQuestionsControllerTest < ActionController::TestCase
       survey_id: @survey_question.survey_id,
       title: @survey_question.title,
     } }
-    assert_redirected_to survey_question_path(assigns(:survey_question))
+    assert_redirected_to survey_question_path(@survey_question)
   end
 
   test 'should destroy survey_question' do

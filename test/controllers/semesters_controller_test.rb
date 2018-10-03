@@ -11,7 +11,6 @@ class SemestersControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:semesters)
   end
 
   test 'should get new' do
@@ -22,10 +21,9 @@ class SemestersControllerTest < ActionController::TestCase
   test 'should create semester' do
     assert_difference('Semester.count') do
       post :create, params: { semester: { end_on: @semester.end_on, start_on: @semester.start_on } }
-      assert_no_errors :semester
     end
 
-    assert_redirected_to semester_path(assigns(:semester))
+    assert_redirected_to semester_path(Semester.last)
   end
 
   test 'should show semester' do
@@ -40,8 +38,7 @@ class SemestersControllerTest < ActionController::TestCase
 
   test 'should update semester' do
     put :update, params: { id: @semester, semester: { end_on: @semester.end_on, start_on: @semester.start_on } }
-    assert_no_errors :semester
-    assert_redirected_to semester_path(assigns(:semester))
+    assert_redirected_to semester_path(@semester)
   end
 
   test 'should destroy semester' do

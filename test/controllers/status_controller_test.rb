@@ -2,7 +2,7 @@
 
 require 'integration_test'
 
-class StatusControllerTest < ActionDispatch::IntegrationTest
+class StatusControllerTest < IntegrationTest
   test 'should get index' do
     get status_url
     assert_response :success

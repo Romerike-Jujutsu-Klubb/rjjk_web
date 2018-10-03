@@ -2,6 +2,7 @@
 
 require 'controller_test'
 
+# FIXME(uwe): Convert to IntergratonTest instead
 class AppointmentsControllerTest < ActionController::TestCase
   setup do
     @appointment = appointments(:uwe_first)
@@ -11,7 +12,6 @@ class AppointmentsControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:appointments)
   end
 
   test 'should get new' do
@@ -24,10 +24,9 @@ class AppointmentsControllerTest < ActionController::TestCase
       post :create, params: { appointment: { from: @appointment.from,
                                              member_id: @appointment.member_id,
                                              role_id: @appointment.role_id, to: @appointment.to } }
-      assert_no_errors :appointment
     end
 
-    assert_redirected_to appointment_path(assigns(:appointment))
+    assert_redirected_to appointment_path(Appointment.last)
   end
 
   test 'should show appointment' do

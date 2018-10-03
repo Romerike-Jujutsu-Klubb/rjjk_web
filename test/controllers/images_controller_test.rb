@@ -14,8 +14,6 @@ class ImagesControllerTest < ActionController::TestCase
   def test_index
     get :index
     assert_response :success
-    assert_template 'index'
-    assert_not_nil assigns(:images)
   end
 
   def test_show
@@ -65,11 +63,7 @@ class ImagesControllerTest < ActionController::TestCase
 
   def test_new
     get :new
-
     assert_response :success
-    assert_template 'new'
-
-    assert_not_nil assigns(:image)
   end
 
   def test_create
@@ -80,8 +74,8 @@ class ImagesControllerTest < ActionController::TestCase
     end
 
     assert_response :redirect
-    assert_redirected_to action: :gallery, id: assigns(:image).id
     image = Image.last
+    assert_redirected_to action: :gallery, id: image.id
     assert_equal 'new file', image.name
     assert_equal 'image/png', image.content_type
     assert_equal 6, image.content_data.length
@@ -98,8 +92,8 @@ class ImagesControllerTest < ActionController::TestCase
     end
 
     assert_response :redirect
-    assert_redirected_to action: :gallery, id: assigns(:image).id
     image = Image.last
+    assert_redirected_to action: :gallery, id: image.id
     assert_equal 'new file', image.name
     assert_equal 'image/png', image.content_type
     assert_equal 67, image.content_data.length
@@ -114,8 +108,8 @@ class ImagesControllerTest < ActionController::TestCase
     end
 
     assert_response :redirect
-    assert_redirected_to action: :gallery, id: assigns(:image).id
     image = Image.last
+    assert_redirected_to action: :gallery, id: image.id
     assert_equal 'tiny.png', image.name
     assert_equal 'image/png', image.content_type
     assert_equal 67, image.content_data.length
@@ -133,24 +127,13 @@ class ImagesControllerTest < ActionController::TestCase
 
   def test_edit
     get :edit, params: { id: @first_id }
-
     assert_response :success
-    assert_template 'edit'
-
-    assert_not_nil assigns(:image)
-    assert assigns(:image).valid?
   end
 
   def test_edit_without_local_content
     Image.find(@first_id).update!(content_data: nil)
-
     get :edit, params: { id: @first_id }
-
     assert_response :success
-    assert_template 'edit'
-
-    assert_not_nil assigns(:image)
-    assert assigns(:image).valid?
   end
 
   def test_update
@@ -179,8 +162,6 @@ class ImagesControllerTest < ActionController::TestCase
     end
 
     assert_response :success
-    assert_template 'gallery'
-    assert_not_nil assigns(:images)
   end
 
   def test_mine
@@ -189,7 +170,5 @@ class ImagesControllerTest < ActionController::TestCase
     end
 
     assert_response :success
-    assert_template 'gallery'
-    assert_not_nil assigns(:images)
   end
 end

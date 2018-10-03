@@ -11,7 +11,6 @@ class EventInviteesControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:event_invitees)
   end
 
   test 'should get new' do
@@ -32,7 +31,7 @@ class EventInviteesControllerTest < ActionController::TestCase
       } }
     end
 
-    assert_redirected_to event_invitee_path(assigns(:event_invitee))
+    assert_redirected_to event_invitee_path(EventInvitee.last)
   end
 
   test 'should show event_invitee' do
@@ -55,7 +54,7 @@ class EventInviteesControllerTest < ActionController::TestCase
       payed: @event_invitee.payed,
       will_attend: @event_invitee.will_attend,
     } }
-    assert_redirected_to event_invitee_path(assigns(:event_invitee))
+    assert_redirected_to event_invitee_path(@event_invitee)
   end
 
   test 'should destroy event_invitee' do

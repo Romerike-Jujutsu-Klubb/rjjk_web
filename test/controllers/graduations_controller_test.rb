@@ -13,37 +13,22 @@ class GraduationsControllerTest < ActionController::TestCase
   def test_index
     get :index
     assert_response :success
-    assert assigns :graduations
-    assert_template 'index'
   end
 
   def test_show
     get :show, params: { id: @first_id }
-
     assert_response :success
-    assert_template 'show'
-
-    assert_not_nil assigns(:graduation)
-    assert assigns(:graduation).valid?
   end
 
   def test_new
     get :new
-
     assert_response :success
-    assert_template 'new'
-
-    assert_not_nil assigns(:graduation)
   end
 
   def test_new_for_instructor
     login(:lars)
     get :new
-
     assert_response :success
-    assert_template 'new'
-
-    assert_not_nil assigns(:graduation)
   end
 
   def test_create
@@ -51,9 +36,8 @@ class GraduationsControllerTest < ActionController::TestCase
       post :create, params: { graduation: { held_on: '2007-10-07', group_id: groups(:panda).id,
                                             group_notification: true } }
     end
-    assert_no_errors :graduation
     assert_response :redirect
-    assert_redirected_to edit_graduation_path(assigns(:graduation))
+    assert_redirected_to edit_graduation_path(Graduation.last)
   end
 
   def test_create_for_instructor
@@ -62,19 +46,13 @@ class GraduationsControllerTest < ActionController::TestCase
       post :create, params: { graduation: { held_on: '2007-10-07', group_id: groups(:panda).id,
                                             group_notification: true } }
     end
-    assert_no_errors :graduation
     assert_response :redirect
-    assert_redirected_to edit_graduation_path(assigns(:graduation))
+    assert_redirected_to edit_graduation_path(Graduation.last)
   end
 
   def test_edit
     get :edit, params: { id: @first_id }
-
     assert_response :success
-    assert_template 'edit'
-
-    assert_not_nil assigns(:graduation)
-    assert assigns(:graduation).valid?
   end
 
   def test_update

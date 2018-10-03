@@ -11,7 +11,6 @@ class GroupInstructorsControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:semesters)
   end
 
   test 'should get new' do
@@ -27,7 +26,6 @@ class GroupInstructorsControllerTest < ActionController::TestCase
         group_semester_id: group_semesters(:current_panda).id,
         assistant: false,
       } }
-      assert_no_errors :group_instructor
     end
     assert_redirected_to group_instructors_path
   end
@@ -48,14 +46,12 @@ class GroupInstructorsControllerTest < ActionController::TestCase
       member_id: @group_instructor.member_id,
       semester_id: @group_instructor.group_semester.semester_id,
     } }
-    assert_no_errors :group_instructor
     assert_redirected_to group_instructors_path
   end
 
   test 'should destroy group_instructor' do
     assert_difference('GroupInstructor.count', -1) do
       delete :destroy, params: { id: @group_instructor }
-      assert_no_errors :group_instructor
     end
 
     assert_redirected_to group_instructors_path

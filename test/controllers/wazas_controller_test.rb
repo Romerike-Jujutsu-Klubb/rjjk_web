@@ -11,7 +11,6 @@ class WazasControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:wazas)
   end
 
   test 'should get new' do
@@ -23,10 +22,9 @@ class WazasControllerTest < ActionController::TestCase
     assert_difference('Waza.count') do
       post :create, params: { waza: { description: @waza.description, name: 'Super-punch',
                                       translation: @waza.translation } }
-      assert_no_errors :waza
     end
 
-    assert_redirected_to waza_path(assigns(:waza))
+    assert_redirected_to waza_path(Waza.last)
   end
 
   test 'should show waza' do
@@ -42,7 +40,7 @@ class WazasControllerTest < ActionController::TestCase
   test 'should update waza' do
     put :update, params: { id: @waza, waza: { description: @waza.description,
                                               name: @waza.name, translation: @waza.translation } }
-    assert_redirected_to waza_path(assigns(:waza))
+    assert_redirected_to waza_path(@waza)
   end
 
   test 'should destroy waza' do

@@ -41,21 +41,18 @@ class LoginControllerTest < ActionController::TestCase
   def test_login__wrong_password
     post :login_with_password, params: { user: { login: 'lars', password: 'wrong password' } }
     assert_not_logged_in
-    assert_template 'login_with_password'
     assert_contains 'Innlogging feilet.', flash.notice
   end
 
   def test_login__wrong_login
     post :login_with_password, params: { user: { login: 'wrong login', password: 'atest' } }
     assert_not_logged_in
-    assert_template 'login_with_password'
     assert_contains 'Innlogging feilet.', flash.notice
   end
 
   def test_login__deleted_user_cant_login
     post :login_with_password, params: { user: { login: 'deleted_tesla', password: 'atest' } }
     assert_not_logged_in
-    assert_template 'login_with_password'
     assert_contains 'Innlogging feilet.', flash.notice
   end
 
@@ -97,16 +94,12 @@ class LoginControllerTest < ActionController::TestCase
     post :signup, params: { user: {
       login: 'newtesla', email: 'newtesla@example.com', password: 'newpassword', password_confirmation: 'wrong'
     } }
-    user = assigns(:user)
-    assert_equal 1, user.errors.size, -> { user.errors.full_messages.to_s }
-    assert_not_nil user.errors['password']
+    assert_response :success
   end
 
   def test_signup__bad_login
     post_signup login: 'yo', email: 'yo@example.com', password: 'newpassword', password_confirmation: 'newpassword'
-    user = assigns(:user)
-    assert_equal 1, user.errors.size, -> { user.errors.full_messages.to_s }
-    assert_not_nil user.errors['login']
+    assert_response :success
   end
 
   def test_welcome
@@ -147,7 +140,6 @@ class LoginControllerTest < ActionController::TestCase
     post :change_password, params: { user: {
       password: 'changed_password', password_onfirmation: 'changed_password'
     } }
-    assert_no_errors :user
     assert_equal 1, UserMessage.pending.size
     mail = UserMessage.pending[0]
     assert_equal ['lars@example.com'], mail.to
@@ -157,8 +149,7 @@ class LoginControllerTest < ActionController::TestCase
   def test_change_password__confirms_password
     login(:lars)
     post :change_password, params: { user: { password: 'bad', password_confirmation: 'bad' } }
-    user = assigns(:user)
-    assert_equal [:password], user.errors.keys
+    user = users(:lars)
     assert_response :success
     assert_equal 0, UserMessage.pending.size
   end
@@ -186,7 +177,6 @@ class LoginControllerTest < ActionController::TestCase
     post :login_with_password, params: { user: { login: 'lars', password: 'not_correct' } }
     assert_not_logged_in
     assert_response :success
-    assert_template 'login_with_password'
   end
 
   def test_logout
@@ -209,9 +199,6 @@ class LoginControllerTest < ActionController::TestCase
   end
 
   def assert_password_validation_fails
-    user = assigns(:user)
-    assert_equal 1, user.errors.size
-    assert_not_nil user.errors['password']
     assert_response :success
     assert_equal 0, UserMessage.pending.size
   end

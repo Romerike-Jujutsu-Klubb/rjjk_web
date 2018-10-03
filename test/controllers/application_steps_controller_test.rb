@@ -1,27 +1,26 @@
 # frozen_string_literal: true
 
-require 'controller_test'
+require 'integration_test'
 
-class ApplicationStepsControllerTest < ActionController::TestCase
+class ApplicationStepsControllerTest < IntegrationTest
   setup do
     @application_step = application_steps(:one)
     login(:lars)
   end
 
   test 'should get index' do
-    get :index
+    get application_steps_path
     assert_response :success
-    assert_not_nil assigns(:application_steps)
   end
 
   test 'should get new' do
-    get :new
+    get new_application_step_path
     assert_response :success
   end
 
   test 'should create application_step' do
     assert_difference('ApplicationStep.count(:all)') do
-      post :create, params: { application_step: {
+      post application_steps_path, params: { application_step: {
         technique_application_id: @application_step.technique_application_id,
         description: @application_step.description,
         image_attributes: {
@@ -31,24 +30,23 @@ class ApplicationStepsControllerTest < ActionController::TestCase
         },
         position: 3,
       } }
-      assert_no_errors :application_step
     end
 
-    assert_redirected_to application_step_path(assigns(:application_step))
+    assert_redirected_to application_step_path(ApplicationStep.last)
   end
 
   test 'should show application_step' do
-    get :show, params: { id: @application_step }
+    get application_step_path(@application_step)
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, params: { id: @application_step }
+    get edit_application_step_path(@application_step)
     assert_response :success
   end
 
   test 'should update application_step' do
-    put :update, params: { id: @application_step.id, application_step: {
+    put application_step_path(@application_step), params: { application_step: {
       technique_application_id: @application_step.technique_application_id,
       description: @application_step.description,
       image_attributes: {
@@ -58,13 +56,12 @@ class ApplicationStepsControllerTest < ActionController::TestCase
       },
       position: @application_step.position,
     } }
-    assert_no_errors :application_step
-    assert_redirected_to application_step_path(assigns(:application_step))
+    assert_redirected_to application_step_path(@application_step)
   end
 
   test 'should destroy application_step' do
     assert_difference('ApplicationStep.count(:all)', -1) do
-      delete :destroy, params: { id: @application_step }
+      delete application_step_path(@application_step)
     end
 
     assert_redirected_to application_steps_path

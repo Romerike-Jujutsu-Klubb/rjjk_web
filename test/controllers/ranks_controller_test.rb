@@ -13,35 +13,21 @@ class RanksControllerTest < ActionController::TestCase
   def test_index
     get :index
     assert_response :success
-    assert_template :index
   end
 
   def test_list
     get :index
-
     assert_response :success
-    assert_template :index
-
-    assert_not_nil assigns(:ranks)
   end
 
   def test_show
     get :show, params: { id: @first_id }
-
     assert_response :success
-    assert_template 'show'
-
-    assert_not_nil assigns(:rank)
-    assert assigns(:rank).valid?
   end
 
   def test_new
     get :new
-
     assert_response :success
-    assert_template 'new'
-
-    assert_not_nil assigns(:rank)
   end
 
   def test_create
@@ -51,27 +37,20 @@ class RanksControllerTest < ActionController::TestCase
       group_id: groups(:panda).id, martial_art_id: martial_arts(:keiwaryu).id,
       name: '3.kyu', colour: 'grønt', position: -3, standard_months: 12
     } }
-    assert_no_errors :rank
     assert_response :redirect
     assert_redirected_to action: :index
-
     assert_equal num_ranks + 1, Rank.count
   end
 
   def test_edit
     get :edit, params: { id: @first_id }
-
     assert_response :success
-    assert_template 'edit'
-
-    assert_not_nil assigns(:rank)
-    assert assigns(:rank).valid?
   end
 
   def test_update
     post :update, params: { id: @first_id, rank: { name: '3.kyu' } }
     assert_response :redirect
-    assert_redirected_to rank_path(assigns(:rank))
+    assert_redirected_to rank_path(@first_id)
   end
 
   def test_destroy

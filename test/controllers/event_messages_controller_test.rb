@@ -11,7 +11,6 @@ class EventMessagesControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:event_messages)
   end
 
   test 'should get new' do
@@ -30,7 +29,7 @@ class EventMessagesControllerTest < ActionController::TestCase
       } }
     end
 
-    assert_redirected_to event_message_path(assigns(:event_message))
+    assert_redirected_to event_message_path(EventMessage.last)
   end
 
   test 'should show event_message' do
@@ -51,7 +50,7 @@ class EventMessagesControllerTest < ActionController::TestCase
       ready_at: @event_message.ready_at,
       subject: @event_message.subject,
     } }
-    assert_redirected_to event_message_path(assigns(:event_message))
+    assert_redirected_to event_message_path(@event_message)
   end
 
   test 'should destroy event_message' do

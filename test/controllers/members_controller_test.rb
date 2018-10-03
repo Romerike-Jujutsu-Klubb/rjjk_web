@@ -12,50 +12,37 @@ class MembersControllerTest < ActionController::TestCase
   def test_index
     get :index
     assert_response :success
-    assert_template :index
   end
 
   def test_list_active
     get :list_active
     assert_response :success
-    assert_template :index
-    assert_not_nil assigns(:members)
   end
 
   def test_list_inactive
     get :list_inactive
     assert_response :success
-    assert_template :index
-    assert_not_nil assigns(:members)
   end
 
   def test_list
     get :index
     assert_response :success
-    assert_template :index
-    assert_not_nil assigns(:members)
   end
 
   def test_email_list
     get :email_list
     assert_response :success
-    assert_template 'email_list'
   end
 
   def test_telephone_list
     get :telephone_list
     assert_response :success
-    assert_template 'members/telephone_list'
-    assert_template layout: 'dark_ritual'
   end
 
   def test_new
     get :new
 
     assert_response :success
-    assert_template 'new'
-
-    assert_not_nil assigns(:member)
   end
 
   def test_create_with_user_and_guardians
@@ -82,7 +69,7 @@ class MembersControllerTest < ActionController::TestCase
     end
 
     assert_response :redirect
-    assert_redirected_to action: :edit, id: assigns(:member).id
+    assert_redirected_to action: :edit, id: Member.last.id
     assert_equal 'Medlem opprettet.', flash[:notice]
     assert_equal num_members + 1, Member.count
   end
@@ -91,9 +78,6 @@ class MembersControllerTest < ActionController::TestCase
     get :edit, params: { id: @lars.id }
 
     assert_response :success
-    assert_template 'edit'
-
-    assert_no_errors :member
   end
 
   def test_update
@@ -103,7 +87,6 @@ class MembersControllerTest < ActionController::TestCase
       end
     end
     assert_equal 1, ActiveJob::Base.queue_adapter.enqueued_jobs.count
-    assert_no_errors :member
     assert_response :redirect
     assert_redirected_to action: :edit, id: @lars.id
   end

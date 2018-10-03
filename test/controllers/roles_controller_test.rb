@@ -11,7 +11,6 @@ class RolesControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:roles)
   end
 
   test 'should get new' do
@@ -39,7 +38,7 @@ class RolesControllerTest < ActionController::TestCase
 
   test 'should update role' do
     put :update, params: { id: @role, role: { name: @role.name, years_on_the_board: @role.years_on_the_board } }
-    assert_redirected_to role_path(assigns(:role))
+    assert_redirected_to role_path(@role)
   end
 
   test 'should not destroy role if election exists' do

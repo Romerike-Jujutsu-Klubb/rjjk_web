@@ -10,7 +10,6 @@ class EventsControllerTest < ActionController::TestCase
   def test_should_get_index
     get :index
     assert_response :success
-    assert_not_nil assigns(:events)
   end
 
   def test_should_get_new
@@ -21,10 +20,9 @@ class EventsControllerTest < ActionController::TestCase
   def test_should_create_event
     assert_difference('Event.count') do
       post :create, params: { event: { name: 'Stuff', start_at: '2012-02-18' } }
-      assert_no_errors :event
     end
 
-    assert_redirected_to event_path(assigns(:event))
+    assert_redirected_to event_path(Event.last)
   end
 
   def test_should_show_event
@@ -39,8 +37,9 @@ class EventsControllerTest < ActionController::TestCase
   end
 
   def test_should_update_event
-    put :update, params: { id: events(:one).id, event: { name: 'Stuff' } }
-    assert_redirected_to edit_event_path(assigns(:event))
+    event = events(:one)
+    put :update, params: { id: event.id, event: { name: 'Stuff' } }
+    assert_redirected_to edit_event_path(event)
   end
 
   def test_should_destroy_event

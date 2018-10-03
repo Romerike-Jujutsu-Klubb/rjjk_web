@@ -8,37 +8,22 @@ class NewsControllerTest < ActionController::TestCase
   def test_index
     get :index
     assert_response :success
-    assert_template 'news/index'
-    assert_template layout: 'dark_ritual'
   end
 
   def test_list
     get :index
-
     assert_response :success
-    assert_template 'index'
-
-    assert_not_nil assigns(:news_items)
   end
 
   def test_show
     get :show, params: { id: news_items(:first).id }
-
     assert_response :success
-    assert_template 'show'
-
-    assert_not_nil assigns(:news_item)
-    assert assigns(:news_item).valid?
   end
 
   def test_new
     login(:admin)
     get :new
-
     assert_response :success
-    assert_template 'new'
-
-    assert_not_nil assigns(:news_item)
   end
 
   def test_create
@@ -58,11 +43,6 @@ class NewsControllerTest < ActionController::TestCase
     get :edit, params: { id: news_items(:first).id }
 
     assert_response :success
-    assert_template 'edit'
-
-    assert_not_nil assigns(:news_item)
-    assert assigns(:news_item).valid?
-
     assert_select '#news_item_publish_at[value="2007-07-12 13:37"]'
     assert_equal '2199-12-31 23:59', css_select('#news_item_expire_at')[0]['value']
   end

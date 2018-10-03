@@ -11,7 +11,6 @@ class EmbuImagesControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:embu_images)
   end
 
   test 'should get new' do
@@ -24,7 +23,7 @@ class EmbuImagesControllerTest < ActionController::TestCase
       post :create, params: { embu_image: { embu_id: embus(:one).id, image_id: images(:one) } }
     end
 
-    assert_redirected_to embu_image_path(assigns(:embu_image))
+    assert_redirected_to embu_image_path(EmbuImage.last)
   end
 
   test 'should show embu_image' do
@@ -39,8 +38,7 @@ class EmbuImagesControllerTest < ActionController::TestCase
 
   test 'should update embu_image' do
     put :update, params: { id: @embu_image, embu_image: { embu_id: id(:one), image_id: id(:one) } }
-    assert_no_errors :embu_image
-    assert_redirected_to embu_image_path(assigns(:embu_image))
+    assert_redirected_to embu_image_path(@embu_image)
   end
 
   test 'should destroy embu_image' do

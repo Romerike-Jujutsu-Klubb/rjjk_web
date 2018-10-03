@@ -10,7 +10,6 @@ class NkfMemberTrialsControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:nkf_member_trials)
   end
 
   test 'should get new' do
@@ -26,10 +25,9 @@ class NkfMemberTrialsControllerTest < ActionController::TestCase
         medlems_type: 'EnkeltMedlem', mobil: '12345678', postnr: '1234', reg_dato: '2012.03.14',
         res_sms: '0', sted: 'sted', stilart: 'Jujutsu', tid: '12345678'
       } }
-      assert_no_errors :nkf_member_trial
     end
 
-    assert_redirected_to nkf_member_trial_path(assigns(:nkf_member_trial))
+    assert_redirected_to nkf_member_trial_path(NkfMemberTrial.last)
   end
 
   test 'should show nkf_member_trial' do
@@ -43,9 +41,9 @@ class NkfMemberTrialsControllerTest < ActionController::TestCase
   end
 
   test 'should update nkf_member_trial' do
-    put :update, params: { id: nkf_member_trials(:one).to_param, nkf_member_trial: { etternavn: 'Madsen' } }
-    assert_no_errors :nkf_member_trial
-    assert_redirected_to nkf_member_trial_path(assigns(:nkf_member_trial))
+    nkf_member_trial = nkf_member_trials(:one)
+    put :update, params: { id: nkf_member_trial.to_param, nkf_member_trial: { etternavn: 'Madsen' } }
+    assert_redirected_to nkf_member_trial_path(nkf_member_trial)
   end
 
   test 'should destroy nkf_member_trial' do

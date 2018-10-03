@@ -8,7 +8,6 @@ class AttendancesControllerTest < ActionController::TestCase
   def test_should_get_index
     get :index
     assert_response :success
-    assert_not_nil assigns(:attendances)
   end
 
   def test_should_get_new
@@ -21,10 +20,9 @@ class AttendancesControllerTest < ActionController::TestCase
       post :create, params: { attendance: { member_id: members(:uwe).id,
                                             practice_id: practices(:panda_2010_42).id,
                                             status: 'X' } }
-      assert_no_errors(:attendance)
     end
 
-    assert_redirected_to attendance_path(assigns(:attendance))
+    assert_redirected_to attendance_path(Attendance.last)
   end
 
   def test_create_with_group_schedule_id_and_year_and_week
@@ -32,9 +30,8 @@ class AttendancesControllerTest < ActionController::TestCase
       post :create, params: { attendance: { member_id: members(:uwe).id,
                                             group_schedule_id: group_schedules(:panda).id, year: 2010, week: 42,
                                             status: 'X' } }
-      assert_no_errors(:attendance)
     end
-    assert_redirected_to attendance_path(assigns(:attendance))
+    assert_redirected_to attendance_path(Attendance.last)
   end
 
   def test_should_show_attendance
@@ -48,8 +45,9 @@ class AttendancesControllerTest < ActionController::TestCase
   end
 
   def test_should_update_attendance
-    put :update, params: { id: attendances(:lars_panda_2010_42).id, attendance: { status: 'X' } }
-    assert_redirected_to attendance_path(assigns(:attendance))
+    attendance = attendances(:lars_panda_2010_42)
+    put :update, params: { id: attendance.id, attendance: { status: 'X' } }
+    assert_redirected_to attendance_path(attendance)
   end
 
   def test_should_destroy_attendance

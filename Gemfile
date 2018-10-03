@@ -61,7 +61,6 @@ gem 'prawn-table'
 gem 'puma'
 gem 'rack-attack'
 gem 'rails-assets-tether'
-gem 'rails-controller-testing' # FIXME(uwe): Remove and convert to IntergratonTest instead
 gem 'rails-i18n'
 gem 'rails-observers', github: 'rails/rails-observers'
 gem 'rails_autolink'

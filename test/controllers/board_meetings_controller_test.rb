@@ -11,7 +11,6 @@ class BoardMeetingsControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:board_meetings)
   end
 
   test 'should get new' do
@@ -22,7 +21,6 @@ class BoardMeetingsControllerTest < ActionController::TestCase
   test 'should create board_meeting' do
     assert_difference('BoardMeeting.count') do
       post :create, params: { board_meeting: { start_at: @board_meeting.start_at } }
-      assert_no_errors :board_meeting
     end
     assert_redirected_to board_meetings_path
   end

@@ -11,7 +11,6 @@ class BasicTechniquesControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:basic_techniques)
   end
 
   test 'should get new' do
@@ -29,7 +28,7 @@ class BasicTechniquesControllerTest < ActionController::TestCase
       } }
     end
 
-    assert_redirected_to edit_basic_technique_path(assigns(:basic_technique))
+    assert_redirected_to edit_basic_technique_path(BasicTechnique.last)
   end
 
   test 'should show basic_technique' do
@@ -50,7 +49,7 @@ class BasicTechniquesControllerTest < ActionController::TestCase
       translation: @basic_technique.translation,
       waza_id: @basic_technique.waza_id,
     } }
-    assert_redirected_to basic_technique_path(assigns(:basic_technique))
+    assert_redirected_to basic_technique_path(@basic_technique)
   end
 
   test 'should destroy basic_technique' do

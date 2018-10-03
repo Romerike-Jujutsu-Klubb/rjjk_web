@@ -11,7 +11,6 @@ class UserMessagesControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:user_messages)
   end
 
   test 'should get new' do
@@ -33,7 +32,7 @@ class UserMessagesControllerTest < ActionController::TestCase
       } }
     end
 
-    assert_redirected_to user_message_path(assigns(:user_message))
+    assert_redirected_to user_message_path(UserMessage.last)
   end
 
   test 'should show user_message' do
@@ -57,7 +56,7 @@ class UserMessagesControllerTest < ActionController::TestCase
       tag: @user_message.tag,
       user_id: @user_message.user_id,
     } }
-    assert_redirected_to user_message_path(assigns(:user_message))
+    assert_redirected_to user_message_path(@user_message)
   end
 
   test 'should destroy user_message' do

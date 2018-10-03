@@ -11,7 +11,6 @@ class PracticesControllerTest < ActionDispatch::IntegrationTest
   test 'should get index' do
     get practices_path
     assert_response :success
-    assert_not_nil assigns(:practices)
   end
 
   test 'should get new' do

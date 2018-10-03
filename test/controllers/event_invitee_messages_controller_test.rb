@@ -11,7 +11,6 @@ class EventInviteeMessagesControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:event_invitee_messages)
   end
 
   test 'should get new' do
@@ -28,9 +27,8 @@ class EventInviteeMessagesControllerTest < ActionController::TestCase
         sent_at: @event_invitee_message.sent_at,
         subject: @event_invitee_message.subject,
       } }
-      assert_no_errors :event_invitee_message
     end
-    assert_redirected_to event_invitee_message_path(assigns(:event_invitee_message))
+    assert_redirected_to event_invitee_message_path(EventInviteeMessage.last)
   end
 
   test 'should show event_invitee_message' do
@@ -51,14 +49,12 @@ class EventInviteeMessagesControllerTest < ActionController::TestCase
       sent_at: @event_invitee_message.sent_at,
       subject: @event_invitee_message.subject,
     } }
-    assert_no_errors :event_invitee_message
-    assert_redirected_to event_invitee_message_path(assigns(:event_invitee_message))
+    assert_redirected_to event_invitee_message_path(@event_invitee_message)
   end
 
   test 'should destroy event_invitee_message' do
     assert_difference('EventInviteeMessage.count', -1) do
       delete :destroy, params: { id: @event_invitee_message }
-      assert_no_errors :event_invitee_message
     end
 
     assert_redirected_to event_invitee_messages_path

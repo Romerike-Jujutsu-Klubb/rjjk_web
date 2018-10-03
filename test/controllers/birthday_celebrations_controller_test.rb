@@ -11,7 +11,6 @@ class BirthdayCelebrationsControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:birthday_celebrations)
   end
 
   test 'should get new' do
@@ -25,10 +24,9 @@ class BirthdayCelebrationsControllerTest < ActionController::TestCase
         held_on: @birthday_celebration.held_on,
         participants: @birthday_celebration.participants,
       } }
-      assert_no_errors :birthday_celebration
     end
 
-    assert_redirected_to birthday_celebration_path(assigns(:birthday_celebration))
+    assert_redirected_to birthday_celebration_path(BirthdayCelebration.last)
   end
 
   test 'should show birthday_celebration' do
@@ -46,7 +44,7 @@ class BirthdayCelebrationsControllerTest < ActionController::TestCase
       held_on: @birthday_celebration.held_on,
       participants: @birthday_celebration.participants,
     } }
-    assert_redirected_to birthday_celebration_path(assigns(:birthday_celebration))
+    assert_redirected_to birthday_celebration_path(@birthday_celebration)
   end
 
   test 'should destroy birthday_celebration' do

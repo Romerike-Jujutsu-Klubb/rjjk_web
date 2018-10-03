@@ -11,7 +11,6 @@ class PublicRecordsControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:public_records)
   end
 
   test 'should get new' do
@@ -28,7 +27,7 @@ class PublicRecordsControllerTest < ActionController::TestCase
       } }
     end
 
-    assert_redirected_to public_record_path(assigns(:public_record))
+    assert_redirected_to public_record_path(PublicRecord.last)
   end
 
   test 'should show public_record' do
@@ -47,7 +46,7 @@ class PublicRecordsControllerTest < ActionController::TestCase
       chairman: @public_record.chairman, contact: @public_record.contact,
       deputies: @public_record.deputies
     } }
-    assert_redirected_to public_record_path(assigns(:public_record))
+    assert_redirected_to public_record_path(@public_record)
   end
 
   test 'should destroy public_record' do

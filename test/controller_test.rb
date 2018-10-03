@@ -2,6 +2,7 @@
 
 require 'test_helper'
 
+# FIXME(uwe): Remove and use IntegrationTest instead
 class ActionController::TestCase
   teardown { clear_user }
 
@@ -16,12 +17,5 @@ class ActionController::TestCase
 
   def assert_not_logged_in
     assert_nil session[:user_id]
-    assert_nil assigns(:current_user)
-  end
-
-  def assert_no_errors(symbol)
-    v = assigns(symbol)
-    assert v, "Assignment #{symbol} not found in the controller."
-    assert_equal [], v.errors.full_messages
   end
 end

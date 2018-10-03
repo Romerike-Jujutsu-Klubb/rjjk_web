@@ -9,18 +9,11 @@ class InfoControllerTest < ActionController::TestCase
     login(:admin)
     get :index
     assert_response :success
-    assert_template :index
-    assert_not_nil assigns(:information_pages)
   end
 
   def test_show
     get :show, params: { id: information_pages(:first).id }
-
     assert_response :success
-    assert_template 'show'
-
-    assert_not_nil assigns(:information_page)
-    assert assigns(:information_page).valid?
   end
 
   test 'show with unknown utf8 title' do
@@ -32,11 +25,7 @@ class InfoControllerTest < ActionController::TestCase
   def test_new
     login(:admin)
     get :new
-
     assert_response :success
-    assert_template 'new'
-
-    assert_not_nil assigns(:information_page)
   end
 
   def test_create
@@ -44,7 +33,6 @@ class InfoControllerTest < ActionController::TestCase
 
     login(:admin)
     post :create, params: { information_page: { title: 'an article' } }
-    assert_no_errors :information_page
 
     assert_response :redirect
     assert_redirected_to action: :show, id: InformationPage.find_by(title: 'an article')
@@ -55,12 +43,7 @@ class InfoControllerTest < ActionController::TestCase
   def test_edit
     login(:admin)
     get :edit, params: { id: information_pages(:first).id }
-
     assert_response :success
-    assert_template 'edit'
-
-    assert_not_nil assigns(:information_page)
-    assert assigns(:information_page).valid?
   end
 
   def test_update

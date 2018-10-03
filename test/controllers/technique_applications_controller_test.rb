@@ -11,7 +11,6 @@ class TechniqueApplicationsControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:technique_applications)
   end
 
   test 'should get new' do
@@ -25,10 +24,9 @@ class TechniqueApplicationsControllerTest < ActionController::TestCase
         name: @technique_application.name + '_2',
         rank_id: @technique_application.rank_id, system: 'Goho'
       } }
-      assert_no_errors :technique_application
     end
 
-    assert_redirected_to edit_technique_application_path(assigns(:technique_application))
+    assert_redirected_to edit_technique_application_path(TechniqueApplication.last)
   end
 
   test 'should show application' do
@@ -46,7 +44,7 @@ class TechniqueApplicationsControllerTest < ActionController::TestCase
       name: @technique_application.name,
       rank_id: @technique_application.rank_id,
     } }
-    assert_redirected_to technique_application_path(assigns(:technique_application))
+    assert_redirected_to technique_application_path(@technique_application)
   end
 
   test 'should destroy application' do

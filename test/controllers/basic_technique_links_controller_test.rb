@@ -11,7 +11,6 @@ class BasicTechniqueLinksControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:basic_technique_links)
   end
 
   test 'should get new' do
@@ -27,10 +26,9 @@ class BasicTechniqueLinksControllerTest < ActionController::TestCase
         title: @basic_technique_link.title,
         url: 'a new url to somewhere',
       } }
-      assert_no_errors :basic_technique_link
     end
 
-    assert_redirected_to basic_technique_link_path(assigns(:basic_technique_link))
+    assert_redirected_to basic_technique_link_path(BasicTechniqueLink.last)
   end
 
   test 'should show basic_technique_link' do
@@ -50,13 +48,12 @@ class BasicTechniqueLinksControllerTest < ActionController::TestCase
       title: @basic_technique_link.title,
       url: @basic_technique_link.url,
     } }
-    assert_redirected_to basic_technique_link_path(assigns(:basic_technique_link))
+    assert_redirected_to basic_technique_link_path(@basic_technique_link)
   end
 
   test 'should destroy basic_technique_link' do
     assert_difference('BasicTechniqueLink.count', -1) do
       delete :destroy, params: { id: @basic_technique_link }
-      assert_no_errors :basic_technique_link
     end
 
     assert_redirected_to basic_technique_links_path

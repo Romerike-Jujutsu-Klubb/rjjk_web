@@ -8,7 +8,6 @@ class NkfMembersControllerTest < ActionController::TestCase
   test 'should get index' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:nkf_members)
   end
 
   test 'should get new' do
@@ -19,10 +18,9 @@ class NkfMembersControllerTest < ActionController::TestCase
   test 'should create nkf_member' do
     assert_difference('NkfMember.count') do
       post :create, params: { nkf_member: { kjonn: 'Mann' } }
-      assert_no_errors :nkf_member
     end
 
-    assert_redirected_to nkf_member_path(assigns(:nkf_member))
+    assert_redirected_to nkf_member_path(NkfMember.last)
   end
 
   test 'should show nkf_member' do
