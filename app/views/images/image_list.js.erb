@@ -1,3 +1,0 @@
-var tinyMCEImageList = new Array(
-<%=@images.map {|i| %Q{\t["#{i.name}", "#{url_for :controller => :images, :action => :inline, :id => i.id, :format => i.format}"]}}.join(",\n") %>
-);

@@ -54,12 +54,6 @@ class NewsFeatureTest < FeatureTest
 
   private
 
-  def tinymce_fill_in(name, options = {})
-    raise 'huh?!' if page.driver.browser == :chrome
-
-    page.execute_script("tinyMCE.get('#{name}').setContent('#{options[:with]}')")
-  end
-
   def select_date(date_field_id, day)
     find("##{date_field_id}").click
     assert has_css?("##{date_field_id} + .bootstrap-datetimepicker-widget")

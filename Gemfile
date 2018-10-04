@@ -73,8 +73,6 @@ gem 'serviceworker-rails'
 gem 'simple_drilldown'
 gem 'simple_workflow'
 gem 'slim-rails'
-gem 'tinymce-rails'
-gem 'tinymce-rails-langs'
 gem 'uglifier', '<4'
 gem 'unicode_utils'
 

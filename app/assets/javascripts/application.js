@@ -2,7 +2,6 @@
 // require jquery.turbolinks
 //= require jquery_ujs
 // require turbolinks
-//= require tinymce-jquery
 //= require expanding
 //= require popper
 //= require bootstrap

@@ -1,7 +1,5 @@
 - @content_width = 880
 
-= tinymce
-
 ul.nav.nav-tabs
   li.nav-item: a.nav-link.active data-target="#description" data-toggle="tab" Beskrivelse
   li.nav-item: a.nav-link data-target="#invitation" data-toggle="tab" Invitasjon
@@ -22,7 +20,7 @@ ul.nav.nav-tabs
           = f.text_field :end_at, value: @event.end_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Til (valgfritt)'
       .row
         .col-sm-12
-          = f.text_area :description, :class => :tinymce, label: 'Beskrivelse'
+          = f.text_area :description, :class => :expanding, label: 'Beskrivelse'
 
     #invitation.tab-pane
       - if @event.id

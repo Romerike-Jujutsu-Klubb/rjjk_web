@@ -1,5 +1,4 @@
 - @content_width = 800
-= tinymce
 
 = bootstrap_form_for(@event_message) do |f|
   = f.static_control :event_id, label: :hendelse do
@@ -18,7 +17,7 @@
       = f.check_box :ready_at, {}, Time.current, nil
 
   = f.text_field :subject, size: 64
-  = f.text_area :body, class: :tinymce
+  = f.text_area :body, class: :expanding
   .btn-toolbar.float-right
     = back_or_link_to 'Tilbake', event_messages_path, class: 'btn btn-link'
     = link_to 'Vis', @event_message if @event_message.id

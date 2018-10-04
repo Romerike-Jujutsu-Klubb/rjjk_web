@@ -1,3 +1,0 @@
-var tinyMCEMediaList = [
-<%=@media.map {|m| %Q{\t["#{m.name}", "#{url_for :controller => :images, :action => :show, :id => m.id, :format => m.format}"]}}.join(",\n") %>
-];
