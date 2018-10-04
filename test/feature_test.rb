@@ -38,13 +38,10 @@ class FeatureTest < ActionDispatch::IntegrationTest
   end
   Capybara.default_max_wait_time = 30
 
-  self.use_transactional_tests = false
-
   setup { Timecop.travel TEST_TIME }
 
   teardown do
     Capybara.reset_sessions! # Forget the (simulated) browser state
-    DatabaseCleaner.clean # Truncate the database
   end
 end
 
