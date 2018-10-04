@@ -5,11 +5,6 @@ require 'minitest/rails/capybara'
 require 'capybara/screenshot/diff'
 require 'system_test_helper'
 
-# Transactional fixtures do not work with Selenium tests, because Capybara
-# uses a separate server thread, which the transactions would be hidden
-# from. We hence use DatabaseCleaner to truncate our test database.
-# DatabaseCleaner.strategy = :truncation
-
 class FeatureTest < ActionDispatch::IntegrationTest
   include Capybara::Screenshot::Diff
   include SystemTestHelper
@@ -22,7 +17,6 @@ class FeatureTest < ActionDispatch::IntegrationTest
   Capybara::Screenshot.stability_time_limit = 0.5
 
   Capybara.register_driver :chrome do |app|
-    # Capybara::Selenium::Driver.load_selenium
     browser_options = ::Selenium::WebDriver::Chrome::Options.new
     browser_options.args << '--headless'
     browser_options.args << '--disable-gpu' if Gem.win_platform?
@@ -39,10 +33,7 @@ class FeatureTest < ActionDispatch::IntegrationTest
   Capybara.default_max_wait_time = 30
 
   setup { Timecop.travel TEST_TIME }
-
-  teardown do
-    Capybara.reset_sessions! # Forget the (simulated) browser state
-  end
+  teardown { Capybara.reset_sessions! }
 end
 
 if Capybara.default_driver == :chrome
