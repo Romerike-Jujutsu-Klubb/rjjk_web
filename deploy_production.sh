@@ -6,6 +6,7 @@ HOST=kubosch.no
 INSTALL_DIR=/u/apps/${APP}/current
 REQUIRED_RUBY_VERSION=`cat .ruby-version`
 REQUIRED_BUNDLER_VERSION=$(grep -A1 "BUNDLED WITH" Gemfile.lock | tail -n 1)
+SERVER_PID_FILE="tmp/pids/server.pid"
 
 echo Transferring changes
 rsync -aPv --delete --exclude "*~" --exclude "/coverage" --exclude "/doc" --exclude "/log" \
@@ -25,7 +26,14 @@ ssh ${USER}@${HOST} "set -e
 
   bundle exec rake db:migrate assets:precompile
 
-  echo Restart the app
   sudo systemctl daemon-reload
-  sudo systemctl reload-or-restart ${APP}
+
+  if [[ -f ${SERVER_PID_FILE} ]] && [ ".ruby-version" -nt ${SERVER_PID_FILE} ] ; then
+    echo Stop and  start the app
+    sudo systemctl stop ${APP}
+    sudo systemctl start ${APP}
+  else
+    echo Restart the app
+    sudo systemctl reload-or-restart ${APP}
+  fi
 "
