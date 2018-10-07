@@ -43,7 +43,7 @@ h1.mb-4 Søkeresultat for "#{@query}"
           .card-body
             - @news.each do |year, items|
               h4 = year
-              ul
+              ul.pl-3
                 - items.each do |p|
                   li = link_to p.title, p
       - if @images.present?
