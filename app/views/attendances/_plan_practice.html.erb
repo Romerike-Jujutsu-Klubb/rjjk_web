@@ -10,26 +10,12 @@
              action: practice_passed ? :review : :announce, year: year,
              week: week, group_schedule_id: gs.id, status: 'toggle'}
      if attendance
-       if attendance.status == Attendance::Status::INSTRUCTOR
-         initial_class = 'success'
-         initial_text = 'Instruerte!'
-         initial_icon = 'thumbs-up'
-       elsif Attendance::PRESENT_STATES.include?(attendance.status)
-         initial_class = 'success'
-         initial_text = 'Trente!'
-         initial_icon = 'thumbs-up'
-       else
-         Attendance::STATES.each do |state, link_text, link_icon, link_class|
-           if attendance.status == state
-             if state == Attendance::Status::WILL_ATTEND && practice_passed
-               initial_text = 'Ubekreftet'
-             else
-               initial_text = link_text
-             end
-             initial_icon = link_icon
-             initial_class = link_class
-             break
-           end
+       (practice_passed ? Attendance::PAST_STATES : Attendance::STATES).each do |state, link_text, link_icon, link_class|
+         if attendance.status == state
+           initial_text = link_text
+           initial_icon = link_icon
+           initial_class = link_class
+           break
          end
        end
      end

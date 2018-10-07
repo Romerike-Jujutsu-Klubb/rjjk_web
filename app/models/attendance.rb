@@ -21,8 +21,9 @@ class Attendance < ApplicationRecord
   ].freeze
 
   PAST_STATES = [
+    [Status::WILL_ATTEND, 'Ubekreftet', 'question', 'warning'],
     [Status::ATTENDED, 'Trente!', 'thumbs-up', 'success'],
-    [Status::INSTRUCTOR, 'Instruerte', 'thumbs-up', 'success'],
+    [Status::INSTRUCTOR, 'Instruerte!', 'thumbs-up', 'success'],
     [Status::HOLIDAY, 'Bortreist', 'hand-o-right', 'warning'],
     [Status::SICK, 'Syk', 'plus', 'danger'],
     [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
