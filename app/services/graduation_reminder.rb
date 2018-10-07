@@ -185,7 +185,7 @@ class GraduationReminder
       next unless censor.examiner? ||
           censor.graduation.censors.select(&:examiner?).all?(&:approved?)
 
-      GraduationMailer.missing_approval(censor).store(censor.member)
+      GraduationMailer.missing_approval(censor).store(censor.member, tag: :censor_missing_approval)
       censor.update! approval_requested_at: Time.current
     end
   end

@@ -49,7 +49,7 @@ class SurveySender
     last_year = SurveyAnswer.where('created_at >= ?', 1.year.ago).to_a
     total = SurveyAnswer.all.to_a
     [Role[:Hovedinstruktør], Role[:Medlemsansvarlig]].compact.map(&:user).each do |user|
-      SurveyMailer.new_answers(user, new_answers, last_year, total).store(user)
+      SurveyMailer.new_answers(user, new_answers, last_year, total).store(user, tag: :survey_new_answers)
     end
   end
 end

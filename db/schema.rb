@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_28_203614) do
+ActiveRecord::Schema.define(version: 2018_10_07_211128) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -634,7 +634,7 @@ ActiveRecord::Schema.define(version: 2018_09_28_203614) do
 
   create_table 'user_messages', force: :cascade do |t|
     t.integer 'user_id', null: false
-    t.string 'tag', limit: 64
+    t.string 'tag', limit: 64, null: false
     t.string 'key', limit: 64, null: false
     t.string 'from', null: false
     t.string 'subject', limit: 160, null: false

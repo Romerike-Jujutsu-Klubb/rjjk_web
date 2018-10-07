@@ -3,7 +3,7 @@
 require 'mail'
 
 class Mail::Message
-  def store(recipient, tag: nil)
+  def store(recipient, tag:)
     user_id =
         if recipient.is_a?(Member)
           recipient.user.id

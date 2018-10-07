@@ -2,48 +2,43 @@ h1 Søkeresultat for "#{@query}"
 
 - if @query
   - if [@members, @former_members, @trials, @users, @pages, @news, @images].any?(&:present?)
-    .card-deck.mt-3
+    .row
       - if @members.present?
-        .card
+        .col.mb-4: .card.h-100
           h3.card-header Medlemmer
-          .card-body
-            ul
-              - @members.each do |m|
-                li
-                  => link_to m.name, m
-                  | (#{m.age} år)
+          ul.card-body
+            - @members.each do |m|
+              li
+                => link_to m.name, m
+                | (#{m.age} år)
       - if @former_members.present?
-        .card
+        .col.mb-4: .card.h-100
           h3.card-header Tidligere Medlemmer (#{@former_members.size})
-          .card-body
-            ul
-              - @former_members.each do |m|
-                li
-                  => link_to m.name, m
-                  | (#{m.age} år)
+          ul.card-body
+            - @former_members.each do |m|
+              li
+                => link_to m.name, m
+                | (#{m.age} år)
       - if @trials.present?
-        .card
+        .col.mb-4: .card.h-100
           h3.card-header Søkere i prøvetid
-          .card-body
-            ul
-              - @trials.each do |tr|
-                li = link_to tr.name, tr
+          ul.card-body
+            - @trials.each do |tr|
+              li = link_to tr.name, tr
       - if @users.present?
-        .card
+        .col.mb-4: .card.h-100
           h3.card-header Brukere
-          .card-body
-            ul
-              - @users.each do |u|
-                li = link_to u.name, u
+          ul.card-body
+            - @users.each do |u|
+              li = link_to u.name, u
       - if @pages.present?
-        .card
+        .col.mb-4: .card.h-100
           h3.card-header Informasjonssider
-          .card-body
-            ul
-              - @pages.each do |p|
-                li = link_to p.title, p
+          ul.card-body
+            - @pages.each do |p|
+              li = link_to p.title, p
       - if @news.present?
-        .card
+        .col.mb-4: .card.h-100
           h3.card-header Nyheter
           .card-body
             - @news.each do |year, items|
@@ -52,12 +47,11 @@ h1 Søkeresultat for "#{@query}"
                 - items.each do |p|
                   li = link_to p.title, p
       - if @images.present?
-        .card
+        .col.mb-4: .card.h-100
           h3.card-header Bilder
-          .card-body
-            ul
-              - @images.each do |i|
-                li = link_to i.name, i
+          ul.card-body
+            - @images.each do |i|
+              li = link_to i.name, i
   - else
     | Fant ingenting om "#{@query}".
 
