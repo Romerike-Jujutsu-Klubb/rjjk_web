@@ -20,7 +20,7 @@ class UserMessageSenderTest < ActionMailer::TestCase
       and an <a href="http://example.net/external/link?b=4">external link with parameter</a>
     HTML
 
-    um = UserMessage.create! user_id: users(:admin).id, from: sender, key: '42',
+    um = UserMessage.create! user_id: users(:admin).id, from: sender, key: '42', tag: :test,
                              subject: subject, title: title, message_timestamp: TEST_TIME.to_date,
                              html_body: html_message, plain_body: plain_message
 
