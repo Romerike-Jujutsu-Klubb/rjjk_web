@@ -311,7 +311,7 @@ class Member < ApplicationRecord
   def thumbnail(x = 120, y = 160)
     return unless image?
 
-    magick_image = Magick::Image.from_blob(image.content_data).first
+    magick_image = Magick::Image.from_blob(image.content_data_io.string).first
     magick_image.crop_resized(x, y).to_blob
   end
 
