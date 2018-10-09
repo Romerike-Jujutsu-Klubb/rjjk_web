@@ -1,5 +1,5 @@
 <% if your_attendance %>
-    <% if [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED].include? your_attendance.status %>
+    <% if Attendance::PRESENT_STATES.include? your_attendance.status %>
         <% other_attendees |= [your_attendance] %>
     <% else %>
         <% other_absentees |= [your_attendance] %>

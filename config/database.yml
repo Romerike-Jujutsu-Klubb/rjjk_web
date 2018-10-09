@@ -3,8 +3,6 @@
 default: &default
   adapter: postgresql
   host: localhost
-  username: postgres
-  password:
   pool: 50
   encoding: utf8
   <% if ENV['TRAVIS'].present? %>
