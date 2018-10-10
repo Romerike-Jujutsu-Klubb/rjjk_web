@@ -124,6 +124,8 @@ Rails.application.routes.draw do
     end
     member do
       get :gallery
+      get 'inline(/:width).:format', action: :inline, as: :inline
+      get 'show(/:width).:format', action: :show
     end
   end
   resources :information_pages, controller: :info, path: :info do
