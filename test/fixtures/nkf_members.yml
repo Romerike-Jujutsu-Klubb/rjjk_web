@@ -6,7 +6,7 @@ erik:
   kjonn: Mann
   fodselsdato: 01.04.1974
   innmeldtdato: 01.05.1996
-  gren_stilart_avd_parti___gren_stilart_avd_parti: Kei Wa Ryu
+  gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu/Jujutsu (Ingen stilartstilknytning)/Strømmen Storsenter/Voksne
   epost: erik@example.net
   medlemsstatus: A
 uwe:
@@ -17,7 +17,7 @@ uwe:
   kjonn: Mann
   member: uwe
   innmeldtdato: 05.01.1987
-  gren_stilart_avd_parti___gren_stilart_avd_parti: Kei Wa Ryu
+  gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu/Jujutsu (Ingen stilartstilknytning)/Strømmen Storsenter/Voksne
   medlemsnummer: <%=NkfAgent::NKF_USERNAME%>
   epost: uwe@example.net
   medlemsstatus: A
@@ -28,7 +28,7 @@ lars:
   etternavn: Bråten
   fodselsdato: 01.03.1967
   fornavn: Lars
-  gren_stilart_avd_parti___gren_stilart_avd_parti: Kei Wa Ryu
+  gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu/Jujutsu (Ingen stilartstilknytning)/Strømmen Storsenter/Voksne
   innmeldtdato: 01.04.2001
   kjonn: Mann
   medlemsnummer: 40000993

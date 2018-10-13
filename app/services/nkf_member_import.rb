@@ -64,8 +64,14 @@ class NkfMemberImport
     groups_index = import_rows[0].index { |f| f =~ %r{^Gren/Stilart/Avd/Parti} }
     raise 'Column not found' unless groups_index
 
-    import_rows.each do |row|
-      row[groups_index] = row[groups_index].split(' - ').sort.join(' - ')
+    import_rows[1..-1].each do |row|
+      groups_names = row[groups_index].split(' - ')
+      groups_names.each do |gn|
+        unless gn =~ /^(Jujutsu|Aikido)/
+          raise "Bad martial arts name: #{gn.inspect} (#{row[groups_index].inspect})"
+        end
+      end
+      row[groups_index] = groups_names.sort.join(' - ')
     end
   end
 
