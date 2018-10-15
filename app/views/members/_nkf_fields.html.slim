@@ -1,4 +1,4 @@
-table.table.table-striped.table-sm.table-responsive
+.table-responsive: table.table.table-striped.table-sm
   thead
     tr
       th NKF attribute
@@ -13,7 +13,7 @@ table.table.table-striped.table-sm.table-responsive
       - diff_class = ('text-danger' if mapped_value != rjjk_value)
       - v = v.strftime('%F %R') if v.is_a?(Time)
       tr
-        th style="word-break:break-word" = k
+        th style="word-break:break-word" = k.split('___').uniq.join(' ')
         td = v
         td class=diff_class = mapped_value
         td class=diff_class = rjjk_value
