@@ -1,9 +1,9 @@
 <% if your_attendance %>
-    <% if Attendance::PRESENT_STATES.include? your_attendance.status %>
-        <% other_attendees |= [your_attendance] %>
-    <% else %>
-        <% other_absentees |= [your_attendance] %>
-    <% end %>
+  <% if Attendance::PRESENT_STATES.include? your_attendance.status %>
+    <% other_attendees |= [your_attendance] %>
+  <% else %>
+    <% other_absentees |= [your_attendance] %>
+  <% end %>
 <% end %>
 
 <span class="float-right" style="font-size: 30pt;background-attachment: scroll;
@@ -33,31 +33,31 @@
 "><%= other_attendees.size %></span>
 
 <% if other_attendees.any? %>
-    <h5>Påmeldt</h5>
-    <ul>
-      <% other_attendees.sort_by { |a| [a.member.next_rank, a.member.joined_on, -a.member.age] }.each do |a| %>
-          <li>
-            <% if admin? %>
-                <%= link_to a.member.name, a.member %>
-            <% else %>
-                <%= a.member.name %>
-            <% end %>
-          </li>
-      <% end %>
-    </ul>
+  <h5>Påmeldt</h5>
+  <ul>
+    <% other_attendees.sort_by { |a| [a.member.next_rank, a.member.joined_on, -a.member.age] }.each do |a| %>
+      <li>
+        <% if admin? %>
+          <%= link_to a.member.name, a.member %>
+        <% else %>
+          <%= a.member.name %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
 <% end %>
 
 <% if other_absentees.any? %>
-    <h5>Avmeldt</h5>
-    <ul>
-      <% other_absentees.each do |a| %>
-          <li>
-            <% if admin? %>
-                <%= link_to a.member.name, a.member %>
-            <% else %>
-                <%= a.member.name %>
-            <% end %>
-          </li>
-      <% end %>
-    </ul>
+  <h5>Avmeldt</h5>
+  <ul>
+    <% other_absentees.each do |a| %>
+      <li>
+        <% if admin? %>
+          <%= link_to a.member.name, a.member %>
+        <% else %>
+          <%= a.member.name %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
 <% end %>
