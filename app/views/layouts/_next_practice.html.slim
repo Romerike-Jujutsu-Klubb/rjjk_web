@@ -1,6 +1,6 @@
 - if @next_practice
   #next_practice.mb-3
-    h4 Neste trening
+    h4 = link_to 'Neste trening', @next_practice.group_schedule.group.current_semester
 
     h5 style="color: #FFB400"
       => t(:date)[:day_names][@next_practice.group_schedule.weekday]

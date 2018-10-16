@@ -1,0 +1,56 @@
+- if your_attendance
+  - if Attendance::PRESENCE_STATES.include? your_attendance.status
+    - other_attendees |= [your_attendance]
+  - else
+    - other_absentees |= [your_attendance]
+
+css:
+  .attendance_badge {
+    float: right;
+    font-size: 30pt;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgb(0, 0, 255);
+    background-image: none;
+    background-origin: padding-box;
+    background-size: auto;
+    border-bottom-color: rgb(255, 255, 255);
+    border-bottom-left-radius: 23px;
+    border-bottom-right-radius: 23px;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-left-color: rgb(255, 255, 255);
+    border-left-style: solid;
+    border-left-width: 3px;
+    border-right-color: rgb(255, 255, 255);
+    border-right-style: solid;
+    border-right-width: 3px;
+    border-top-color: rgb(255, 255, 255);
+    border-top-left-radius: 23px;
+    border-top-right-radius: 23px;
+    border-top-style: solid;
+    border-top-width: 3px;
+    color: rgb(255, 255, 255);
+    padding: 0.25em;
+  }
+span.attendance_badge = other_attendees.size
+
+- if other_attendees.any?
+  h5 Påmeldt
+  ul
+    - other_attendees.sort_by { |a| [a.member.next_rank, a.member.joined_on, -a.member.age] }.each do |a|
+      li
+        - if admin?
+          = link_to a.member.name, a.member
+        - else
+          = a.member.name
+
+- if other_absentees.any?
+  h5 Avmeldt
+  ul
+    - other_absentees.each do |a|
+      li
+        - if admin?
+          = link_to a.member.name, a.member
+        - else
+          = a.member.name
