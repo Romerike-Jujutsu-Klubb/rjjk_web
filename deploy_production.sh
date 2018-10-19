@@ -9,7 +9,7 @@ REQUIRED_BUNDLER_VERSION=$(grep -A1 "BUNDLED WITH" Gemfile.lock | tail -n 1)
 SERVER_PID_FILE="tmp/pids/server.pid"
 
 echo Transferring changes
-rsync -aPv --delete --exclude "*~" --exclude "/coverage" --exclude "/doc" --exclude "/log" \
+rsync -acPv --delete --exclude "*~" --exclude "/coverage" --exclude "/doc" --exclude "/log" \
   --exclude "/public/503.html" --exclude "/public/assets" --exclude "/test" --exclude "/tmp" \
   ./.ruby-version ./* ${USER}@${HOST}:${INSTALL_DIR}/ | grep -v "/$"
 
@@ -20,7 +20,6 @@ ssh ${USER}@${HOST} "set -e
   cd ${INSTALL_DIR}
   mkdir -p log
   mkdir -p tmp/pids
-  ruby -v
   gem query -i -n '^bundler$' -v "${REQUIRED_BUNDLER_VERSION}" > /dev/null || gem install --no-doc -v "${REQUIRED_BUNDLER_VERSION}" bundler
   bundle check || bundle install --without development test --deployment
 
@@ -29,7 +28,7 @@ ssh ${USER}@${HOST} "set -e
   sudo systemctl daemon-reload
 
   if [[ -f ${SERVER_PID_FILE} ]] && [ ".ruby-version" -nt ${SERVER_PID_FILE} ] ; then
-    echo Stop and  start the app
+    echo Stop and start the app
     sudo systemctl stop ${APP}
     sudo systemctl start ${APP}
   else
