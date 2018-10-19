@@ -21,7 +21,9 @@ Rails.application.routes.draw do
   get 'map' => 'map#index'
   get 'member_reports' => 'member_reports#index'
   get 'member_reports/age_chart(/:size)' => 'member_reports#age_chart', as: :member_reports_age_chart
-  get 'member_reports/grade_history_graph'
+  get 'member_reports/grade_history_graph(/:size)' =>
+      'member_reports#grade_history_graph',
+      as: :member_reports_grade_history_graph
   get 'member_reports/grade_history_graph_percentage(/:size)' =>
       'member_reports#grade_history_graph_percentage',
       as: :member_reports_grade_history_graph_percentage
