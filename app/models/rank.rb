@@ -42,12 +42,14 @@ class Rank < ApplicationRecord
     "#{name} #{colour}#{" #{decoration}" if decoration.present?}"
   end
 
-  delegate :kwr?, to: :martial_art
+  def kwr?
+    martial_art_id == MartialArt::KWR_ID
+  end
 
   def <=>(other)
     return 1 if other.nil? || other == UNRANKED
     return nil unless other.is_a? Rank
-    return kwr? ? 1 : -1 if other.kwr? != kwr?
+    return kwr? ? 1 : -1 if other.martial_art_id != martial_art_id
 
     position <=> other.position
   end

@@ -101,8 +101,12 @@ class Member < ApplicationRecord
   end
 
   def current_graduate(martial_art, date = Date.current)
-    graduates.includes(:graduation, :rank).sort_by { |g| -g.rank.position }
-        .find do |g|
+    grs = if graduates.loaded?
+            graduates.sort_by { |g| -g.rank.position }
+          else
+            graduates.includes(:graduation, :rank).order('ranks.position DESC')
+          end
+    grs.find do |g|
       g.passed? && g.graduation.held_on < date &&
           (martial_art.nil? || g.rank.martial_art_id == martial_art.id)
     end
@@ -151,8 +155,7 @@ class Member < ApplicationRecord
         .compact.join(' ')
   end
 
-  def next_rank(graduation =
-      Graduation.new(held_on: Date.current, group: groups.max_by(&:from_age)))
+  def next_rank(graduation = Graduation.new(held_on: Date.current, group: groups.max_by(&:from_age)))
     age = self.age(graduation.held_on)
     ma = graduation.group.try(:martial_art) ||
         MartialArt.includes(:ranks).find_by(name: 'Kei Wa Ryu')

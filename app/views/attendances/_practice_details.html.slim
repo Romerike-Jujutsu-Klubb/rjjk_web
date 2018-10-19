@@ -38,7 +38,7 @@ span.attendance_badge = other_attendees.size
 - if other_attendees.any?
   h5 Påmeldt
   ul
-    - other_attendees.sort_by { |a| [a.member.next_rank, a.member.joined_on, -a.member.age] }.each do |a|
+    - other_attendees.sort_by { |a| [a.member.current_rank || Rank::UNRANKED, a.member.joined_on, -a.member.age] }.each do |a|
       li
         - if admin?
           = link_to a.member.name, a.member

@@ -21,7 +21,7 @@ Rails.application.configure do
 
   if defined? Bullet
     config.after_initialize do
-      # Bullet.enable = true
+      Bullet.enable = true
       Bullet.bullet_logger = true
       Bullet.raise = true # raise an error if an n+1 query occurs
     end

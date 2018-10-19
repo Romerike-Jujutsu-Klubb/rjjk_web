@@ -13,7 +13,13 @@
         ' og
         = others.size == 1 ? others.first.member.first_name : "#{others.size} andre"
       = render 'layouts/modal', id: "attendance_details_#{practice.id}"
-        = render 'attendances/practice_details', your_attendance: attendance, other_attendees: attendances, other_absentees: absences
+        .text-center: i.fa.fa-spinner.fa-pulse.fa-5x.my-5
+      javascript:
+          $(function () {
+              $("#attendance_details_#{practice.id}").on('show.bs.modal', function (e) {
+                  $(this).find('.modal-body').load('#{practice_details_attendance_path practice}')
+              });
+          });
     - elsif attendance.present?
       ' Du
       - if others.any?

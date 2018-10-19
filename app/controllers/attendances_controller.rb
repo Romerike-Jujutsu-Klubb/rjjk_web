@@ -265,6 +265,19 @@ class AttendancesController < ApplicationController
     @months << ['Siden gradering', *@attended_groups.map { |g| (by_group[g] || []).size }]
   end
 
+  def practice_details
+    practice = Practice
+        .includes(attendances: { member: [{ graduates: %i[graduation rank] }, :user] })
+        .find(params[:id])
+    attendances = practice.attendances.to_a
+    other_attendees = attendances.select { |a| Attendance::PRESENCE_STATES.include? a.status }
+    other_absentees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }
+    render partial: 'practice_details', layout: false, locals: {
+      practice: practice, your_attendance: nil, other_attendees: other_attendees,
+      other_absentees: other_absentees
+    }
+  end
+
   def review
     group_schedule_id = params[:group_schedule_id]
     year = params[:year].to_i

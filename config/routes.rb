@@ -51,6 +51,9 @@ Rails.application.routes.draw do
       match 'review/:year/:week/:group_schedule_id/:status', action: :review, via: %i[get post]
       get :since_graduation
     end
+    member do
+      get :practice_details
+    end
   end
   resources :basic_technique_links
   resources :basic_techniques

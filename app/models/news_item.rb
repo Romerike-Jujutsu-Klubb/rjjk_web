@@ -35,7 +35,7 @@ class NewsItem < ApplicationRecord
 
   def self.front_page_items
     (admin? ? self : current).order(Arel.sql('COALESCE(publish_at, created_at) DESC')).limit(10)
-        .includes(creator: :member).to_a
+        .includes(:news_item_likes, creator: :member).to_a
   end
 
   def initialize(*args)
