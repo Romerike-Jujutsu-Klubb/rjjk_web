@@ -14,7 +14,7 @@
           = f.text_field :expire_at, value: @news_item.expire_at&.strftime('%F %R'), class: 'datetime', data: {'default-date': 1.week.from_now.strftime('%F %R')}
 
       = render 'layouts/textarea_input_buttons', images: @images
-      = f.text_area :summary, class: :expanding, value: @news_item.summary && (document = Kramdown::Document.new(@news_item.summary, html_to_native: true)) && document.to_kramdown
+      = f.text_area :summary, class: :expanding, value: kramdown(@news_item.summary)
 
       .btn-toolbar.float-right
         = back_or_link_to 'Avbryt', news_items_path, class: 'btn btn-secondary'

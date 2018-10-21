@@ -52,6 +52,11 @@ module ApplicationHelper
     absolute_links(h)
   end
 
+  def kramdown(src)
+    src && (document = Kramdown::Document.new(src, html_to_native: true)) &&
+        document.to_kramdown.gsub(/\s+\z/, "\n")
+  end
+
   def absolute_links(html)
     base = root_url
 
