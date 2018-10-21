@@ -39,6 +39,7 @@ class GoogleDriveService
     sio.set_encoding(Encoding::BINARY)
     file = @session.file_by_id(id).download_to_io(sio)
     raise unless file == sio
+
     file.rewind
     file
   end
@@ -83,28 +84,5 @@ class GoogleDriveService
 
     logger.info "Create Google Drive folder: #{WEB_IMAGES_DIR}"
     @session.root_collection.create_subcollection(WEB_IMAGES_DIR)
-  end
-
-  class Streamer
-    CHUNK_SIZE = 1 * 1024 * 1024
-
-    def initialize(service, id)
-      @service = service
-      @file = @service.session.file_by_id(id)
-      @chunk_no = 0
-      logger.info "Streaming file: #{@file.size} bytes"
-    end
-
-    def each
-      while @chunk_no * CHUNK_SIZE < @file.size
-        @chunk_no += 1
-        end_index = @chunk_no * CHUNK_SIZE - 1
-        end_index = @file.size - 1 if end_index >= @file.size
-        range = "bytes=#{(@chunk_no - 1) * CHUNK_SIZE}-#{end_index}"
-        logger.info "Getting bytes: #{range}"
-        data = @file.download_to_string # (options: {header: { Range: range }})
-        yield(data) if data
-      end
-    end
   end
 end
