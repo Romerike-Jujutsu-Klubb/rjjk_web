@@ -20,7 +20,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     #   we do not want max either, so this is a good compromise
     # use-fake-ui-for-media-stream
     #   Avoid dialogs to grant permission to use the camera
-
     capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chromeOptions: {
       args: %w[no-sandbox headless disable-gpu window-size=1024,768 use-fake-ui-for-media-stream],
       prefs: {
