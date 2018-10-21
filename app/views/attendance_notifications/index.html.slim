@@ -9,7 +9,6 @@ javascript:
         window.vapidPublicKey = new Uint8Array(#{Base64.urlsafe_decode64(ENV['VAPID_PUBLIC_KEY']).bytes});
 
         $(function () {
-
             // Let's check if the browser supports notifications
             if (!("Notification" in window)) {
                 console.error("This browser does not support desktop notification");
@@ -37,30 +36,14 @@ javascript:
                         applicationServerKey: window.vapidPublicKey
                     }).then(function (subscription) {
                         console.log('endpoint:', subscription.endpoint);
-                        $.post("/subscribe", {subscription: subscription.toJSON()});
+                        $.post("#{subscribe_attendance_notifications_path}", {subscription: subscription.toJSON()});
                     });
                 });
             });
 
             $(function () {
                 $('.js-push-button').on("click", function onClick() {
-                    $.post("/push");
-                });
-            });
-
-            // application.js
-            // Send the subscription and message from the client for the backend
-            // to set up a push notification
-            $(".webpush-button").on("click", function(e) {
-                navigator.serviceWorker.ready
-                    .then(function(serviceWorkerRegistration) {
-                    serviceWorkerRegistration.pushManager.getSubscription()
-                        .then(function(subscription) {
-                        $.post("/push", {
-                            subscription: subscription.toJSON(),
-                            message: "You clicked a button!"
-                        });
-                    });
+                    $.post("#{push_attendance_notifications_path}");
                 });
             });
 

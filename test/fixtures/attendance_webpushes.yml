@@ -1,0 +1,11 @@
+one:
+  member: lars
+  endpoint: MyString
+  p256dh: MyString
+  auth: MyString
+
+two:
+  member: uwe
+  endpoint: MyString
+  p256dh: MyString
+  auth: MyString

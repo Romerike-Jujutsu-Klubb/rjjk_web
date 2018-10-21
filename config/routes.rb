@@ -57,6 +57,13 @@ Rails.application.routes.draw do
       get :practice_details
     end
   end
+  resources :attendance_notifications, only: :index do
+    collection do
+      post :push
+      post :subscribe
+    end
+  end
+  resources :attendance_webpushes
   resources :basic_technique_links
   resources :basic_techniques
   resources :birthday_celebrations do

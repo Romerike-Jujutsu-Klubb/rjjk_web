@@ -1,0 +1,27 @@
+h1 Attendance Webpushes
+
+table
+  thead
+    tr
+      th Member
+      th Endpoint
+      th P256dh
+      th Auth
+      th
+      th
+      th
+
+  tbody
+    - @attendance_webpushes.each do |attendance_webpush|
+      tr
+        td = attendance_webpush.member_id
+        td = attendance_webpush.endpoint
+        td = attendance_webpush.p256dh
+        td = attendance_webpush.auth
+        td = link_to 'Show', attendance_webpush
+        td = link_to 'Edit', edit_attendance_webpush_path(attendance_webpush)
+        td = link_to 'Destroy', attendance_webpush, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Attendance webpush', new_attendance_webpush_path

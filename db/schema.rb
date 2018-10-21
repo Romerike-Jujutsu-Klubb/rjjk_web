@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_07_211128) do
+ActiveRecord::Schema.define(version: 2018_10_21_175134) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -45,6 +45,16 @@ ActiveRecord::Schema.define(version: 2018_10_07_211128) do
     t.datetime 'updated_at', null: false
     t.index ['member_id'], name: 'fk__appointments_member_id'
     t.index ['role_id'], name: 'fk__appointments_role_id'
+  end
+
+  create_table 'attendance_webpushes', force: :cascade do |t|
+    t.bigint 'member_id', null: false
+    t.string 'endpoint', null: false
+    t.string 'p256dh', null: false
+    t.string 'auth', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['member_id'], name: 'index_attendance_webpushes_on_member_id'
   end
 
   create_table 'attendances', force: :cascade do |t|

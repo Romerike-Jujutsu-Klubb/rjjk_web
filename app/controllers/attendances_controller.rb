@@ -188,7 +188,16 @@ class AttendancesController < ApplicationController
       new_status = Attendance::Status::ATTENDED
     end
 
-    @attendance.update!(status: new_status) if new_status
+    if new_status
+      @attendance.update!(status: new_status)
+
+      # FIXME(uwe): Only send about practice later today after 0800.
+      # FIXME(uwe): Do this in a background job to avoid slow response
+      AttendanceWebpush
+          .push_all("#{@attendance.member.name}: #{@attendance.status}", except: @attendance.member_id)
+      # EMXIF
+    end
+
     if request.xhr?
       if params[:status] == 'toggle'
         render partial: 'plan_practice', locals: { gs: practice.group_schedule,

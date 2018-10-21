@@ -1,0 +1,21 @@
+= form_for @attendance_webpush do |f|
+  - if @attendance_webpush.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@attendance_webpush.errors.count, "error")} prohibited this attendance_webpush from being saved:"
+      ul
+        - @attendance_webpush.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :member_id
+    = f.number_field :member_id
+  .field
+    = f.label :endpoint
+    = f.text_field :endpoint
+  .field
+    = f.label :p256dh
+    = f.text_field :p256dh
+  .field
+    = f.label :auth
+    = f.text_field :auth
+  .actions = f.submit

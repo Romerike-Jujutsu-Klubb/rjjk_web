@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Member:
+  = @attendance_webpush.member_id
+p
+  strong Endpoint:
+  = @attendance_webpush.endpoint
+p
+  strong P256dh:
+  = @attendance_webpush.p256dh
+p
+  strong Auth:
+  = @attendance_webpush.auth
+
+=> link_to 'Edit', edit_attendance_webpush_path(@attendance_webpush)
+'|
+=< link_to 'Back', attendance_webpushes_path
