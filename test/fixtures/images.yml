@@ -19,7 +19,7 @@ two:
   user: lars
 application_step_one:
   name: Step 1
-  content_type: MyString
+  content_type: image/jpeg
   content_data: !binary |
     R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=
   md5_checksum: application_step_one
@@ -27,14 +27,14 @@ application_step_one:
   approved: true
 application_step_two:
   name: Step 2
-  content_type: MyString
+  content_type: image/jpeg
   content_data:
   md5_checksum: application_step_two
   user: admin
   approved: true
 application_step_kneeing:
   name: Step 3
-  content_type: MyString
+  content_type: image/jpeg
   content_data: !binary |
     R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
   md5_checksum: application_step_kneeing

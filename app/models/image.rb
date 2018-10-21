@@ -73,7 +73,8 @@ class Image < ApplicationRecord
   end
 
   def format
-    MIME::Types[content_type].first&.extensions&.first || name.split('.').last
+    extensions = MIME::Types[content_type].first&.extensions
+    extensions&.select { |e| e.size <= 3 }&.first || extensions&.first || name.split('.').last
   end
 
   def video?
@@ -100,6 +101,8 @@ class Image < ApplicationRecord
     return max_width * 240 / 320 if video?
 
     update_dimensions!
+    return max_width * 240 / 320 unless width && height
+
     ratio = max_width.to_f / width
     max_height = height * ratio
     [height, max_height].min.to_i

@@ -29,7 +29,7 @@ class ImagesController < ApplicationController
     return if rank_required(image)
 
     if params[:format].nil? || params[:format] != image.format
-      redirect_to image_path(image, width: params[:width], format: image.format)
+      redirect_to show_image_path(image, width: params[:width], format: image.format)
       return
     end
     if image.video?

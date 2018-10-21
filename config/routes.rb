@@ -120,17 +120,17 @@ Rails.application.routes.draw do
   get 'icon/:width' => 'icons#inline'
 
   resources :images do
+    member do
+      get :gallery
+      get 'inline(/:width).:format', action: :inline, as: :inline
+      get 'show(/:width).:format', action: :show, as: :show
+    end
     collection do
       get :gallery
       get :mine
       post :upload
       get 'inline/:id(/:width).:format', action: :inline
       get 'show/:id(/:width).:format', action: :show
-    end
-    member do
-      get :gallery
-      get 'inline(/:width).:format', action: :inline, as: :inline
-      get 'show(/:width).:format', action: :show
     end
   end
   resources :information_pages, controller: :info, path: :info do
