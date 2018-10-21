@@ -75,10 +75,7 @@ gem 'simple_workflow'
 gem 'slim-rails'
 gem 'uglifier', '<4'
 gem 'unicode_utils'
-
-# group :heroku do
-#   gem 'sendgrid-ruby'
-# end
+gem 'webpush'
 
 group :beta, :email, :heroku, :production do
   gem 'lograge'

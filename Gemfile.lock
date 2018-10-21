@@ -177,6 +177,7 @@ GEM
     gruff (0.7.0)
       rmagick (~> 2.13, >= 2.13.4)
     hashdiff (0.3.7)
+    hkdf (0.3.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     httpclient (2.8.3)
@@ -425,6 +426,9 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
+    webpush (0.3.2)
+      hkdf (~> 0.2)
+      jwt
     webrobots (0.1.2)
     websocket-driver (0.7.0)
       websocket-extensions (>= 0.1.0)
@@ -502,6 +506,7 @@ DEPENDENCIES
   unicode_utils
   vcr
   webmock
+  webpush
 
 RUBY VERSION
    ruby 2.5.3p105

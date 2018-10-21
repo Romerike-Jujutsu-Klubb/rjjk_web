@@ -1,0 +1,92 @@
+h1 Notifications
+
+button.js-subscribe-button Subscribe
+button.js-push-button Send a message
+button.js-unsubscribe-button Unsubscribe
+
+javascript:
+    if (navigator.serviceWorker) {
+        window.vapidPublicKey = new Uint8Array(#{Base64.urlsafe_decode64(ENV['VAPID_PUBLIC_KEY']).bytes});
+
+        $(function () {
+
+            // Let's check if the browser supports notifications
+            if (!("Notification" in window)) {
+                console.error("This browser does not support desktop notification");
+            }
+
+            // Let's check whether notification permissions have already been granted
+            else if (Notification.permission === "granted") {
+                console.log("Permission to receive notifications has been granted");
+            }
+
+            // Otherwise, we need to ask the user for permission
+            else if (Notification.permission !== 'denied') {
+                Notification.requestPermission(function (permission) {
+                    // If the user accepts, let's create a notification
+                    if (permission === "granted") {
+                        console.log("Permission to receive notifications has been granted");
+                    }
+                });
+            }
+
+            $('.js-subscribe-button').on("click", function onClick() {
+                navigator.serviceWorker.ready.then(function (registration) {
+                    registration.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: window.vapidPublicKey
+                    }).then(function (subscription) {
+                        console.log('endpoint:', subscription.endpoint);
+                        $.post("/subscribe", {subscription: subscription.toJSON()});
+                    });
+                });
+            });
+
+            $(function () {
+                $('.js-push-button').on("click", function onClick() {
+                    $.post("/push");
+                });
+            });
+
+            // application.js
+            // Send the subscription and message from the client for the backend
+            // to set up a push notification
+            $(".webpush-button").on("click", function(e) {
+                navigator.serviceWorker.ready
+                    .then(function(serviceWorkerRegistration) {
+                    serviceWorkerRegistration.pushManager.getSubscription()
+                        .then(function(subscription) {
+                        $.post("/push", {
+                            subscription: subscription.toJSON(),
+                            message: "You clicked a button!"
+                        });
+                    });
+                });
+            });
+
+            function unsubscribe() {
+                navigator.serviceWorker.ready
+                    .then(function (serviceWorkerRegistration) {
+                        serviceWorkerRegistration.pushManager.getSubscription()
+                            .then(function (subscription) {
+                                if (!subscription) {
+                                    console.log("Not subscribed, nothing to do.");
+                                    return;
+                                }
+
+                                subscription.unsubscribe()
+                                    .then(function () {
+                                        console.log("Successfully unsubscribed!.");
+                                    })
+                                    .catch(function (e) {
+                                        logger.error('Error thrown while unsubscribing from push messaging', e);
+                                    });
+                            });
+                    });
+            }
+
+            $(".js-unsubscribe-button").on("click", unsubscribe);
+        });
+    } else {
+        $('.js-subscribe-button,.js-push-button,.js-unsubscribe-button').hide();
+    }
