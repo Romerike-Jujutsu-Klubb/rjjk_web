@@ -37,7 +37,10 @@ class GoogleDriveService
   def get_file_io(id)
     sio = StringIO.new
     sio.set_encoding(Encoding::BINARY)
-    @session.file_by_id(id).download_to_io(sio)
+    file = @session.file_by_id(id).download_to_io(sio)
+    raise unless file == sio
+    file.rewind
+    file
   end
 
   def store_file(section, id, content, content_type)
