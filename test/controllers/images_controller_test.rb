@@ -16,7 +16,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   %i[show inline].each do |action|
-    test action do
+    test action.to_s do
       get action, params: { id: @first_id, format: 'png' }
       assert_response :success
     end
