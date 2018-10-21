@@ -28,7 +28,7 @@ class ImagesController < ApplicationController
         .find(params[:id])
     return if rank_required(image)
 
-    if params[:format].nil?
+    if params[:format].nil? || params[:format] != image.format
       redirect_to image_path(image, width: params[:width], format: image.format)
       return
     end
@@ -58,7 +58,7 @@ class ImagesController < ApplicationController
     @image = Image.select('id,name,content_type,user_id,google_drive_reference').find(params[:id])
     return if rank_required(@image)
 
-    if params[:format].nil?
+    if params[:format].nil? || params[:format] != image.format
       redirect_to width: params[:width], format: @image.format
       return
     end
