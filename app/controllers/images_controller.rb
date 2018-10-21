@@ -55,28 +55,28 @@ class ImagesController < ApplicationController
   end
 
   def inline
-    @image = Image.select('id,name,content_type,user_id,google_drive_reference').find(params[:id])
-    return if rank_required(@image)
+    image = Image.select('id,name,content_type,user_id,google_drive_reference').find(params[:id])
+    return if rank_required(image)
 
     if params[:format].nil? || params[:format] != image.format
-      redirect_to width: params[:width], format: @image.format
+      redirect_to width: params[:width], format: image.format
       return
     end
-    if @image.video?
+    if image.video?
       redirect_to ActionController::Base.helpers.asset_path 'video-icon-tran.png'
       return
     end
-    if @image.content_type == 'application/msword'
+    if image.content_type == 'application/msword'
       redirect_to ActionController::Base.helpers.asset_path 'msword-icon.png'
       return
     end
-    if @image.content_type == 'application/pdf'
+    if image.content_type == 'application/pdf'
       redirect_to ActionController::Base.helpers.asset_path 'pdficon_large.png'
       return
     end
-    content_data_io = @image.content_data_io
+    content_data_io = image.content_data_io
     if content_data_io.nil?
-      icon_name = @image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
+      icon_name = image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
       redirect_to ActionController::Base.helpers.asset_path icon_name
       return
     end
@@ -87,7 +87,7 @@ class ImagesController < ApplicationController
     img_width = imgs.first.columns
     ratio = width.to_f / img_width
     imgs.each { |img| img.crop_resized!(width, img.rows * ratio) }
-    send_data(imgs.to_blob, disposition: 'inline', type: @image.content_type, filename: @image.name)
+    send_data(imgs.to_blob, disposition: 'inline', type: image.content_type, filename: image.name)
   end
 
   def new
