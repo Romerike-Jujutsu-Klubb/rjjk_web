@@ -83,7 +83,7 @@ function onNotificationClick(event) {
 
     if (event.notification.action == 'close') {
         event.notification.close();
-    } else if (event.notification.action == 'open' || event.notification.action == '') {
+    } else if (event.notification.action == 'open' || !event.notification.action) {
         event.notification.close();
         event.waitUntil(
             clients.openWindow('<%= root_url %>')
@@ -92,6 +92,24 @@ function onNotificationClick(event) {
         console.log('onNotificationClick', 'Unknown action: ' + event.notification.action);
     }
 }
+
+self.addEventListener('pushsubscriptionchange', function (e) {
+    e.waitUntil(registration.pushManager.subscribe(e.oldSubscription.options)
+        .then(function (subscription) {
+            // TODO: Send new subscription to application server
+            console.log('Subscribed after expiration: endpoint: ', subscription.endpoint);
+
+            $.post("#{subscribe_attendance_notifications_path}", {subscription: subscription.toJSON()});
+
+            return fetch('<%=subscribe_attendance_notifications_path%> %>', {
+                method: 'post',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(subscription)
+            });
+        }));
+});
 
 self.addEventListener('install', onInstall);
 self.addEventListener('activate', onActivate);

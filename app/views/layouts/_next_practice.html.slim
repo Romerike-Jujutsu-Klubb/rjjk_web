@@ -1,5 +1,7 @@
 - if @next_practice
   #next_practice.mb-3
+    - if admin?
+      a.float-right href=attendance_notifications_path &Pi;
     h4 = link_to 'Neste trening', @next_practice.group_schedule.group.current_semester
 
     h5 style="color: #FFB400"

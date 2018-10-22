@@ -81,7 +81,7 @@ class AttendancesController < ApplicationController
   def destroy
     @attendance = Attendance.find(params[:id])
     @attendance.destroy
-    AttendanceNotificationJob.perform_later(@attendance.practice, current_user.member, nil)
+    AttendanceNotificationJob.perform_later(@attendance.practice, @attendance.member, nil)
     if request.xhr?
       flash.clear
       render partial: 'attendances/attendance_create_link', locals: {

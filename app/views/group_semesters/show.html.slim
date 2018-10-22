@@ -36,16 +36,20 @@ ul.nav.nav-tabs role="tablist"
   #plan.tab-pane.active
     table.table.table-sm
       - @group_semester.practices.select { |p| p.date >= Date.current }.sort_by(&:date).each do |practice|
-        tr
-          td.text-nowrap = practice.date
-          td = I18n.t('date.day_names')[practice.date.cwday]
-          td: .badge.badge-info = practice.status
+        tr class=('bg-danger' unless practice.status == 'X')
+          td.text-nowrap
+            = practice.date
+            .d-block.d-md-inline
+            =< I18n.t('date.day_names')[practice.date.cwday]
+          / td: .badge.badge-info = practice.status
           td = practice.message
   #history.tab-pane
     table.table.table-sm
       - @group_semester.practices.select { |p| p.date < Date.current }.sort_by(&:date).reverse.each do |practice|
-        tr
-          td.text-nowrap = practice.date
-          td = I18n.t('date.day_names')[practice.date.cwday]
-          td: .badge.badge-info = practice.status
+        tr class=('bg-danger' unless practice.status == 'X')
+          td.text-nowrap
+            = practice.date
+            .d-block.d-md-inline
+            =< I18n.t('date.day_names')[practice.date.cwday]
+          / td: .badge.badge-info = practice.status
           td = practice.message
