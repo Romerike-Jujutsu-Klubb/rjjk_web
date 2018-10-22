@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  default_url_options Rails.application.config.action_mailer.default_url_options
+
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
   post 'image_dropzone/upload'
   get 'info/versjon'

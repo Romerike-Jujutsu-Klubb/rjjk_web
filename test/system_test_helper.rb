@@ -1,6 +1,31 @@
 # frozen_string_literal: true
 
 module SystemTestHelper
+  WINDOW_SIZE = [1024, 768].freeze
+
+  # options explained https://peter.sh/experiments/chromium-command-line-switches/
+  # no-sandbox
+  #   because the user namespace is not enabled in the container by default
+  # headless
+  #   run w/o actually launching gui
+  # disable-gpu
+  #   Disables graphics processing unit(GPU) hardware acceleration
+  # window-size
+  #   sets default window size in case the smaller default size is not enough
+  #   we do not want max either, so this is a good compromise
+  # use-fake-ui-for-media-stream
+  #   Avoid dialogs to grant permission to use the camera
+
+  Capybara.register_driver :chrome do |app|
+    browser_options = ::Selenium::WebDriver::Chrome::Options.new
+    browser_options.args << '--disable-gpu' if Gem.win_platform?
+    browser_options.args << '--force-device-scale-factor=1'
+    browser_options.args << '--headless'
+    browser_options.args << '--use-fake-ui-for-media-stream'
+    browser_options.args << "--window-size=#{WINDOW_SIZE.join('x')}"
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+  end
+
   def visit_with_login(path, redirected_path: path, user: :admin)
     visit path
     if current_path == '/login'

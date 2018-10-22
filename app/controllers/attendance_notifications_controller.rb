@@ -13,7 +13,7 @@ class AttendanceNotificationsController < ApplicationController
   end
 
   def push
-    AttendanceWebpush.push_all("Hello world, the time is #{Time.zone.now}")
+    AttendanceWebpush.push_all("Hello world, the time is #{Time.zone.now}", 'All is well.', tag: :test)
     head :ok
   end
 end

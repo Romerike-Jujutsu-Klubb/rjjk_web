@@ -60,33 +60,37 @@ function onFetch(event) {
 }
 
 function onPush(event) {
-    var title = (event.data && event.data.text()) || "Yay a message";
-
+    var message = (event.data && event.data.json()) || {};
     event.waitUntil(
-        self.registration.showNotification(title, {
-            body: "We have received a push message",
+        self.registration.showNotification(message.title || "<No title>", {
+            body: message.body,
             icon: "/icon/192.png",
-            tag: "push-simple-demo-notification-tag",
+            tag: message.tag,
             actions: [
-                {
-                    action: 'explore', title: 'Explore this new world'
-                },
-                {
-                    action: 'close', title: 'Close'
-                }
+                {action: 'open', title: 'Åpne'},
+                {action: 'close', title: 'Close'}
             ]
         })
     )
 }
 
+<% environment.context_class.instance_eval { include Rails.application.routes.url_helpers } %>
+
 function onNotificationClick(event) {
-  console.log('[Service Worker] Notification click Received.');
+    console.log('[Service Worker] Notification click Received.');
+    console.log('On notification click: ', event.notification.tag);
+    console.log('On notification click: ', event.notification.action);
 
-  event.notification.close();
-
-  event.waitUntil(
-    clients.openWindow('https://jujutsu.no/')
-  );
+    if (event.notification.action == 'close') {
+        event.notification.close();
+    } else if (event.notification.action == 'open' || event.notification.action == '') {
+        event.notification.close();
+        event.waitUntil(
+            clients.openWindow('<%= root_url %>')
+        );
+    } else {
+        console.log('onNotificationClick', 'Unknown action: ' + event.notification.action);
+    }
 }
 
 self.addEventListener('install', onInstall);

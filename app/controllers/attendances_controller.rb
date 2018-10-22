@@ -81,6 +81,7 @@ class AttendancesController < ApplicationController
   def destroy
     @attendance = Attendance.find(params[:id])
     @attendance.destroy
+    AttendanceNotificationJob.perform_later(@attendance.practice, current_user.member, nil)
     if request.xhr?
       flash.clear
       render partial: 'attendances/attendance_create_link', locals: {
@@ -188,15 +189,9 @@ class AttendancesController < ApplicationController
       new_status = Attendance::Status::ATTENDED
     end
 
-    if new_status
-      @attendance.update!(status: new_status)
+    @attendance.update!(status: new_status) if new_status
 
-      # FIXME(uwe): Only send about practice later today after 0800.
-      # FIXME(uwe): Do this in a background job to avoid slow response
-      AttendanceWebpush
-          .push_all("#{@attendance.member.name}: #{@attendance.status}", except: @attendance.member_id)
-      # EMXIF
-    end
+    AttendanceNotificationJob.perform_later(practice, m, new_status)
 
     if request.xhr?
       if params[:status] == 'toggle'
