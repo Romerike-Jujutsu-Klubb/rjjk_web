@@ -2,7 +2,7 @@
 
 class AttendancesController < ApplicationController
   include AttendanceFormDataLoader
-  USER_ACTIONS = %i[announce plan review].freeze
+  USER_ACTIONS = %i[announce plan practice_details review].freeze
   before_action :authenticate_user, only: USER_ACTIONS
   before_action :instructor_required, except: USER_ACTIONS
 

@@ -1,17 +1,20 @@
 - @content_width = 1024
 
+- if admin?
+  a.float-right href=attendance_notifications_path &Pi;
+
 h1 Semester for #{@group_semester.group.name}
 
-= render 'form'
-
-h2.mt-3 Treninger
-
 ul.nav.nav-tabs role="tablist"
-  li.nav-item: a.nav-link.active data-target="#plan" role="tab" data-toggle="tab" Plan
+  li.nav-item: a.nav-link.active data-target="#form" role="tab" data-toggle="tab" Generelt
+  li.nav-item: a.nav-link data-target="#plan" role="tab" data-toggle="tab" Plan
   li.nav-item: a.nav-link data-target="#history" role="tab" data-toggle="tab" Historie
 
 .tab-content
-  #plan.tab-pane.active
+  #form.tab-pane.active = render 'form'
+  #plan.tab-pane
+    h2.mt-3 Treninger
+
     table.table.table-sm
       - @group_semester.practices.select{|p| p.date >= Date.current}.sort_by(&:date).each do |practice|
         tr
@@ -22,6 +25,7 @@ ul.nav.nav-tabs role="tablist"
             = form_for practice do |f|
               = f.text_area :message, rows: 1, class: 'form-control expanding', onkeyup: "$.post( '#{practice_path(practice, format: :json)}', { _method: 'patch', 'practice[message]': $(this).val() })"
   #history.tab-pane
+    h2.mt-3 Treninger
     table.table.table-sm
       - @group_semester.practices.select{|p| p.date < Date.current}.sort_by(&:date).reverse.each do |practice|
         tr

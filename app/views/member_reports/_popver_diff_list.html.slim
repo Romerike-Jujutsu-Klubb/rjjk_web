@@ -1,0 +1,4 @@
+- if members_in.any?
+  = render 'popover_list', title: 'Innmeldt', members: members_in
+- if members_out.any?
+  = render 'popover_list', title: 'Utmeldt', members: members_out

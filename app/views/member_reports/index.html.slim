@@ -11,16 +11,35 @@ h2.mt-4 Medlemsrapport #{t(:date)[:month_names][@month]} #{@year}
 table.table
   thead
     tr
-      th width="70%" Gruppe
+      th width="60%" Gruppe
       th.text-center Aktive
       th.text-center Passive
       th.text-center Ikke-betalende
   tfoot
     tr
       th Totalt
-      th.text-center = @members_after.select(&:paying?).reject(&:passive?).size
-      th.text-center = @members_after.select(&:paying?).select(&:passive?).size
-      th.text-center = @members_after.reject(&:paying?).size
+      th.text-center
+        - members_after = @members_after.select(&:paying?).reject(&:passive?)
+        = members_after.size
+        - members_before = @members_before.select(&:paying?).reject(&:passive?)
+        - members_new = members_after - members_before
+        - members_gone = members_before - members_after
+        - members_diff_size = members_after.size - members_before.size
+        - if members_new.any? || members_gone.any?
+          a< href="#" data-toggle=:popover data-trigger=:hover data-content=render('popver_diff_list', members_in: members_new, members_out: members_gone).to_str data-html=:true
+            | (#{members_diff_size > 0 ? '+' : nil}#{members_diff_size})
+      th.text-center
+        - passive_members_after_size =  @members_after.select(&:paying?).select(&:passive?).size
+        = passive_members_after_size
+        - passive_members_before_size =  @members_before.select(&:paying?).select(&:passive?).size
+        - passive_members_diff = passive_members_after_size - passive_members_before_size
+        = passive_members_diff != 0 ? " (#{passive_members_diff > 0 ? '+' : nil}#{passive_members_diff})" : nil
+      th.text-center
+        - total_non_pay_after = @members_after.reject(&:paying?).size
+        = total_non_pay_after
+        - total_non_pay_before = @members_before.reject(&:paying?).size
+        - total_non_pay_diff = total_non_pay_after - total_non_pay_before
+        = total_non_pay_diff != 0 ? " (#{total_non_pay_diff > 0 ? '+' : nil}#{total_non_pay_diff})" : nil
   tbody
     / TODO(uwe): Separate honorary/passive members
     - non_paying_before_by_group = @members_before.reject(&:paying?).group_by { |m| m.groups.sort_by(&:to_age).last }
@@ -41,7 +60,7 @@ table.table
           = passive.size
           = passive_diff != 0 ? " (#{passive_diff > 0 ? '+' : nil}#{passive_diff})" : nil
         td.text-center
-          = non_paying.size
+          a href="#" data-toggle=:popover data-trigger=:hover data-content="<table class='table table-sm mb-0'><tbody>#{non_paying.map{|m| "<tr><td>#{m.name}</td></tr>"}.sort.join("\n")}</tbody></table>" data-html=:true = non_paying.size
           = non_paying_diff != 0 ? " (#{non_paying_diff > 0 ? '+' : nil}#{non_diff})" : nil
 
 img.rounded.d-block.mx-auto.my-4.w-100.h-auto src=url_for(action: :history_graph, size: '832x600', format: :png) title='Medlemmer graf' style="max-width:832px;max-height:600px"
