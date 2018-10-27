@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_21_175134) do
+ActiveRecord::Schema.define(version: 2018_10_26_155523) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -519,14 +519,6 @@ ActiveRecord::Schema.define(version: 2018_10_21_175134) do
     t.string 'decoration', limit: 16
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-  end
-
-  create_table 'raw_incoming_emails', force: :cascade do |t|
-    t.binary 'content', null: false
-    t.datetime 'created_at'
-    t.datetime 'updated_at'
-    t.datetime 'processed_at'
-    t.datetime 'postponed_at'
   end
 
   create_table 'roles', force: :cascade do |t|

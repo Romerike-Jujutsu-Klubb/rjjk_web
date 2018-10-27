@@ -193,7 +193,6 @@ Rails.application.routes.draw do
       get :card
     end
   end
-  resources :raw_incoming_emails
   resources :roles do
     member do
       get :move_up
