@@ -36,7 +36,6 @@ else
     end
 
     # email
-    scheduler.every('10s') { Rails.application.executor.wrap { IncomingEmailProcessor.forward_emails } }
     scheduler.every('10s') { Rails.application.executor.wrap { UserMessageSender.send } }
 
     # Users
