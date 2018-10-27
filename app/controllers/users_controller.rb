@@ -31,6 +31,7 @@ class UsersController < ApplicationController
     logger.warn "User form: #{form}" if form
     if @user.update params[:user]
       flash.notice = 'Brukeren er oppdatert.'
+      NkfMemberSyncJob.perform_later @user.member if @user.member
       back_or_redirect_to edit_user_path(@user)
     else
       flash.now.alert = 'En feil oppsto ved lagring av brukeren.'

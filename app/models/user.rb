@@ -159,8 +159,10 @@ class User < ApplicationRecord
 
   def emails
     [self, guardian_1, guardian_2, billing_user, contact_user].map { |u| u&.email }.compact.uniq.sort
-    # result.sort_by! { |e| -e.size }
-    # result.uniq { |e| e =~ /<(.*@.*)>/ ? Regexp.last_match(1) : e }
+  end
+
+  def emails_was
+    [self, guardian_1, guardian_2, billing_user, contact_user].map { |u| u&.email_was }.compact.uniq.sort
   end
 
   def phones
@@ -245,6 +247,11 @@ class User < ApplicationRecord
     contact_user&.email || email || emails&.first || billing_user&.email || 'post@jujutsu.no'
   end
 
+  def contact_email_was
+    contact_user&.email_was || email_was || emails_was&.first || billing_user&.email_was ||
+        'post@jujutsu.no'
+  end
+
   def contact_email=(value)
     logger.info "user(#{id}).contact_email=(#{value.inspect})"
     previous_contact_email = contact_email
@@ -276,6 +283,10 @@ class User < ApplicationRecord
 
   def guardian_1_or_billing_name
     guardian_1&.name || billing_user&.name
+  end
+
+  def guardian_1_or_billing_name_was
+    guardian_1&.name_was || billing_user&.name_was
   end
 
   def guardian_1_or_billing_name=(value)

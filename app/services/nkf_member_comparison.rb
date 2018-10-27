@@ -99,7 +99,7 @@ class NkfMemberComparison
     end.compact
   end
 
-  private def sync_attribute(attr_sym, form, new_value, old_value, outgoing_changes, record)
+  private def sync_attribute(membership, attr_sym, form, new_value, old_value, outgoing_changes, record)
     return if old_value.blank? && new_value.blank?
 
     _nkf_column, nkf_mapping = NkfMember::FIELD_MAP.find do |_k, v|
@@ -108,16 +108,23 @@ class NkfMemberComparison
     return if nkf_mapping && nkf_mapping[:import]
 
     if (nkf_field = nkf_mapping&.fetch(:form_field, nil))
-      form_value = old_value.is_a?(Date) ? old_value.strftime('%d.%m.%Y') : old_value
+      if nkf_mapping[:map_to] != attr_sym
+        translation = nkf_mapping[:map_to].to_a[0]
+        export_value = membership.send(translation[0]).send("#{translation[1]}_was")
+      else
+        export_value = old_value
+      end
+      form_value = export_value.is_a?(Date) ? export_value.strftime('%d.%m.%Y') : export_value
       logger.info "set form value #{nkf_field.inspect} = #{form_value.inspect}"
       form[nkf_field.to_s] = form_value
-      outgoing_changes[attr_sym] = { new_value => old_value }
+      outgoing_changes[attr_sym] = { new_value => export_value }
     elsif attr_sym == { user: :billing_user_id }
       record.billing_user.attributes.each do |billing_attr, new_billing_value|
         next if new_billing_value.nil?
 
         billing_attr_sym = { billing: billing_attr.to_sym }
-        sync_attribute(billing_attr_sym, form, new_billing_value, nil, outgoing_changes, record)
+        sync_attribute(membership, billing_attr_sym, form, new_billing_value, nil, outgoing_changes,
+            record)
       end
     else
       @errors << ['Unhandled change', attr_sym, record]
@@ -182,11 +189,11 @@ class NkfMemberComparison
     [m, changes]
   end
 
-  private def find_outgoing_changes(agent, front_page, m)
+  private def find_outgoing_changes(agent, front_page, membership)
     search_form = front_page.form('ks_reg_medladm') do |search|
       search.p_ks_reg_medladm_action = 'SEARCH'
       search['frm_27_v29'] = 0
-      search['frm_27_v40'] = m.nkf_member.medlemsnummer
+      search['frm_27_v40'] = membership.nkf_member.medlemsnummer
     end
     search_result = search_form.submit
     edit_link = search_result.css('tr.trList td.tdListData1')[9]
@@ -194,17 +201,17 @@ class NkfMemberComparison
     member_page = agent.get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{token}")
     outgoing_changes_for_member = {}
     member_form = member_page.form('ks_medlprofil') do |form|
-      m.changes.each do |attr, (old_value, new_value)|
-        sync_attribute({ membership: attr.to_sym }, form, new_value, old_value,
-            outgoing_changes_for_member, m)
+      membership.changes.each do |attr, (old_value, new_value)|
+        sync_attribute(membership, { membership: attr.to_sym }, form, new_value, old_value,
+            outgoing_changes_for_member, membership)
       end
-      m.related_users.each do |relationship, u|
+      membership.related_users.each do |relationship, u|
         u.changes.each do |attr, (old_value, new_value)|
           attr = { relationship => attr.to_sym }
-          sync_attribute(attr, form, new_value, old_value, outgoing_changes_for_member, u)
+          sync_attribute(membership, attr, form, new_value, old_value, outgoing_changes_for_member, u)
         end
       end
-      @outgoing_changes << [m, outgoing_changes_for_member] if outgoing_changes_for_member.any?
+      @outgoing_changes << [membership, outgoing_changes_for_member] if outgoing_changes_for_member.any?
     end
     logger.info "outgoing_changes: #{outgoing_changes_for_member}"
     [member_form, outgoing_changes_for_member]

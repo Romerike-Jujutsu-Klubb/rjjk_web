@@ -27,7 +27,7 @@
           help: link_to('Send e-post med login link', send_login_link_path(user: {email: user.email}), method: :post)
         = f.select :role, [['Medlem', ''], ['Administrator', UserSystem::ADMIN_ROLE]], selected: user.role.to_s
   - if submit
-    .float-right = f.primary user.new_record? ? 'Meld inn' : 'Lagre'
+    .float-right.mt-0.mb-3 = f.primary user.new_record? ? 'Meld inn' : 'Lagre'
 
 - if user.new_record?
   javascript:
