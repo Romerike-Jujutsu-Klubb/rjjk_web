@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  default_url_options Rails.application.config.action_mailer.default_url_options unless Rails.env.test?
+  unless Rails.env.test? && !ENV['TRAVIS']
+    default_url_options Rails.application.config.action_mailer.default_url_options
+  end
 
   get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
   post 'image_dropzone/upload'
