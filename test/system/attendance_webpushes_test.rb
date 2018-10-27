@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-require 'feature_test'
+require 'application_system_test_case'
 
-class AttendanceWebpushesTest < FeatureTest
+class AttendanceWebpushesTest < ApplicationSystemTestCase
   setup do
     @attendance_webpush = attendance_webpushes(:one)
   end
 
   test 'visiting the index' do
-    visit attendance_webpushes_url
+    visit attendance_webpushes_path
     assert_selector 'h1', text: 'Attendance Webpushes'
   end
 
   test 'creating a Attendance webpush' do
-    visit attendance_webpushes_url
+    visit attendance_webpushes_path
     click_on 'New Attendance webpush'
 
     fill_in 'Auth', with: @attendance_webpush.auth
@@ -27,7 +27,7 @@ class AttendanceWebpushesTest < FeatureTest
   end
 
   test 'updating a Attendance webpush' do
-    visit attendance_webpushes_url
+    visit attendance_webpushes_path
     click_on 'Edit', match: :first
 
     fill_in 'Auth', with: @attendance_webpush.auth
@@ -41,7 +41,7 @@ class AttendanceWebpushesTest < FeatureTest
   end
 
   test 'destroying a Attendance webpush' do
-    visit attendance_webpushes_url
+    visit attendance_webpushes_path
     page.accept_confirm do
       click_on 'Destroy', match: :first
     end
