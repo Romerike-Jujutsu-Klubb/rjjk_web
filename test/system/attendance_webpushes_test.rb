@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'application_system_test_case'
+require 'feature_test'
 
-class AttendanceWebpushesTest < ApplicationSystemTestCase
+class AttendanceWebpushesTest < FeatureTest
   setup do
     @attendance_webpush = attendance_webpushes(:one)
   end
