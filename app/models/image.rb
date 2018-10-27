@@ -44,31 +44,11 @@ class Image < ApplicationRecord
     errors.add :approved, 'kan bare endres av en administrator' if approved_changed? && !admin?
   end
 
-  after_create do |_|
-    next unless @content_file
-    raise "Unexpected @content_file: #{@content_file}" unless RUBY_ENGINE == 'jruby'
-
-    conn = self.class.connection.raw_connection.connection
-    is = java.io.FileInputStream.new(java.io.File.new(@content_file))
-    st = conn.prepareStatement('UPDATE images SET content_data = ? WHERE id = ?')
-    st.java_send(:setBinaryStream, [Java::int, java.io.InputStream, Java::int], 1, is, is.available)
-    st.setInt(2, id)
-    st.executeUpdate
-    st.close
-    @content_file = nil
-  end
-
   def file=(file)
     return if file == ''
 
     self.name = file.original_filename if name.blank?
-    if RUBY_ENGINE == 'jruby'
-      # Allow huge file uploads
-      self.content_data = 'Temporary'
-      @content_file = file.path
-    else
-      self.content_data = file.read
-    end
+    self.content_data = file.read
     self.content_type = file.content_type if file.content_type.present?
   end
 
