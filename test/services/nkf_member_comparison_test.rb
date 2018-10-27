@@ -51,7 +51,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
         { user: :birthdate } => { Date.parse('2004-06-04') => Date.parse('2004-06-03') },
         { user: :phone } => { '92929292' => nil },
         { user: :email } => { 'sebastian@example.net' => 'sebastian@example.com' },
-        { guardian_1: :first_name } => { 'Lise' => 'Uwe' },
+        { guardian_1: :first_name } => { 'Lise' => 'Uwe Kubosch' },
         { guardian_1: :email } => { nil => 'uwe@example.com' },
         { billing: :email } => { 'lise@example.net' => nil },
       }],
