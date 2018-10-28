@@ -8,7 +8,27 @@ class UsersController < ApplicationController
   end
 
   def show
-    edit
+    respond_to do |format|
+      format.vcf do
+        user ||= User.find(params[:id])
+        send_data user.to_vcard, filename: "#{user.id}.vcf", type: 'text/vcard'
+      end
+      format.html do
+        edit
+      end
+    end
+  end
+
+  def photo
+    user = User.with_deleted.find(params[:id])
+    if user&.member&.image?
+      send_data(user.member.image.content_data,
+          disposition: 'inline',
+          type: user.member.image.content_type,
+          filename: user.member.image.name)
+    else
+      render text: 'Bilde mangler'
+    end
   end
 
   def edit

@@ -218,6 +218,7 @@ Rails.application.routes.draw do
       post :change_password
       post :forgot_password
       post :like
+      get :photo
     end
   end
   resources :wazas

@@ -10,7 +10,8 @@ h1.mb-4 Søkeresultat for "#{@query}"
             - @members.each do |m|
               li
                 => link_to m.name, m
-                | (#{m.age} år)
+                ' (#{m.age} år)
+                a href=user_path(m.user, format: :vcf) vcard
       - if @former_members.present?
         .col.mb-4: .card.h-100
           h3.card-header Tidligere Medlemmer (#{@former_members.size})

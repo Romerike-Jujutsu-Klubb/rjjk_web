@@ -4,6 +4,7 @@ require 'digest/sha1'
 
 class User < ApplicationRecord
   include UserSystem
+  include Rails.application.routes.url_helpers
 
   acts_as_paranoid
 
@@ -193,6 +194,22 @@ class User < ApplicationRecord
 
   def to_s
     name || email
+  end
+
+  def to_vcard
+    <<~VCARD
+      BEGIN:VCARD
+      VERSION:3.0
+      N:#{last_name};#{first_name};;;
+      FN:#{name}
+      PHOTO;VALUE=URI;TYPE=#{member.image.format.upcase}:#{photo_user_url(self, format: member.image.format)}
+      TEL;TYPE=CEL#{phone}
+      ADR;TYPE=HOME,PREF:;;#{address};#{postal_code};Norway
+      LABEL;TYPE=HOME:#{address}\n#{postal_code}\nNorway
+      EMAIL:#{email}
+      REV:#{updated_at.iso8601}
+      END:VCARD
+    VCARD
   end
 
   def token_expired?
