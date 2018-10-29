@@ -11,7 +11,8 @@ h1.mb-4 Søkeresultat for "#{@query}"
               li
                 => link_to m.name, m
                 ' (#{m.age} år)
-                a href=user_path(m.user, format: :vcf) vcard
+                a href=user_path(m.user, format: :vcf)
+                  i.fa.fa-address-card
       - if @former_members.present?
         .col.mb-4: .card.h-100
           h3.card-header Tidligere Medlemmer (#{@former_members.size})
@@ -19,7 +20,9 @@ h1.mb-4 Søkeresultat for "#{@query}"
             - @former_members.each do |m|
               li
                 => link_to m.name, m
-                | (#{m.age} år)
+                ' (#{m.age} år)
+                a href=user_path(m.user, format: :vcf)
+                  i.fa.fa-address-card
       - if @trials.present?
         .col.mb-4: .card.h-100
           h3.card-header Søkere i prøvetid
@@ -31,7 +34,10 @@ h1.mb-4 Søkeresultat for "#{@query}"
           h3.card-header Brukere
           ul.card-body
             - @users.each do |u|
-              li = link_to u.name, u
+              li
+                => link_to u.name, u
+                a href=user_path(u, format: :vcf)
+                  i.fa.fa-address-card
       - if @pages.present?
         .col.mb-4: .card.h-100
           h3.card-header Informasjonssider
