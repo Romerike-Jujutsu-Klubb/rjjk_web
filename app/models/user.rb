@@ -109,7 +109,9 @@ class User < ApplicationRecord
   # (and not the regular authenticate call)
   def self.authenticate_by_token(token)
     logger.info "Attempting authentication with token: #{token.inspect}"
-    if (u = find_by(security_token: token) || UserMessage.find_by(key: token)&.user)
+    if (u = find_by(security_token: token) ||
+        (um = UserMessage.includes(:user).for_login.find_by(key: CGI.unescape(token)))&.user)
+      um.update!(read_at: Time.current) if um && !um.read_at
       logger.info "Identified by token: #{u.inspect}"
     else
       logger.info 'Not authenticated'

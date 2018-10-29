@@ -7,6 +7,7 @@ class UserMessage < ApplicationRecord
   belongs_to :user
 
   scope :for_user, ->(user_id) { where user_id: user_id }
+  scope :for_login, -> { where 'created_at > ?', User.token_lifetime(:login).ago }
   scope :tagged_as, ->(tag) { where tag: tag }
   scope :pending, -> { where(sent_at: nil, read_at: nil).order(:id) }
 

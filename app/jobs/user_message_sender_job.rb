@@ -6,9 +6,12 @@ class UserMessageSenderJob < ApplicationJob
   queue_as :default
 
   def perform
-    messages = UserMessage.where(sent_at: nil, read_at: nil).order(:created_at).each do |m|
-      UserMessageMailer.send_message(m).deliver_now
-      m.update! sent_at: Time.current
+    messages = nil
+    UserMessage.transaction(requires_new: true) do
+      messages = UserMessage.lock.where(sent_at: nil, read_at: nil).order(:created_at).each do |m|
+        UserMessageMailer.send_message(m).deliver_now
+        m.update! sent_at: Time.current
+      end
     end
 
     return unless messages.any?

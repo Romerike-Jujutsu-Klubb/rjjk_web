@@ -93,11 +93,9 @@ module UserSystem
 
   def login_from_params
     if (token = params[:key])
-      if (self.session_user = User.authenticate_by_token(token) ||
-            (um = UserMessage.includes(:user).find_by(key: CGI.unescape(token)))&.user)
+      if (self.session_user = User.authenticate_by_token(token))
         params.delete(:key)
         store_cookie(current_user)
-        um&.update!(read_at: Time.current) if um && !um.read_at
         logger.info "User #{current_user.name} (#{current_user.id}) logged in by key."
       end
 

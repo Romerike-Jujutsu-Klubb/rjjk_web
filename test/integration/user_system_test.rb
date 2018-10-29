@@ -12,13 +12,16 @@ class UserSystemTest < ActionDispatch::IntegrationTest
 
     assert_not_logged_in
     assert_redirected_to_login
-    assert_equal 1, UserMessage.pending.size
+    UserMessageSenderJob.perform_now
+    assert_equal 1, Mail::TestMailer.deliveries.size
 
-    mail = UserMessage.pending[0]
-    assert_equal ['newemail@example.com'], mail.to
-    assert_match(/Brukernavn:\s+\w+\n/, mail.body)
-    assert_match(/Passord\s*:\s+\w+\n/, mail.body)
-    assert(mail.body =~ /key=(.*?)"/)
+    mail = Mail::TestMailer.deliveries[0]
+    assert_equal ['uwe@kubosch.no'], mail.to # Test email
+    assert_equal ['"newemail@example.com" <uwe@kubosch.no>'], mail[:to].address_list.addresses.map(&:to_s)
+    body = mail.body.decoded
+    assert_match(/Brukernavn:\s+\w+\n/, body)
+    assert_match(/Passord\s*:\s+\w+\n/, body)
+    assert(body =~ /key=(.*?)"/)
     key = Regexp.last_match(1)
 
     assert user = User.find_by(login: 'newuser')

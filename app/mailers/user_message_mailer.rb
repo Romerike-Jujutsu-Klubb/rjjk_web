@@ -46,6 +46,7 @@ class UserMessageMailer < ApplicationMailer
         %(href="#{url_opts[:protocol] || :http}://#{url_opts[:host]}#{port}\\1")
   end
 
+  # FIXME(uwe): Remove existing key if present
   def add_security_key(body, url_key)
     body.gsub!(%r{href="([^/]*)://([^/]*)([^"?#]*)(?:\?([^"#]+))?(\#[^"]+)?"}) do
       params = "#{"#{Regexp.last_match(4)}&" if Regexp.last_match(4)}key=#{url_key}"
