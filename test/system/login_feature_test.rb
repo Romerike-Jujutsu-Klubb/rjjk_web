@@ -82,11 +82,6 @@ class LoginFeatureTest < FeatureTest
     click_on 'Send e-post'
     assert_current_path '/'
     screenshot :email_sent
-    assert_equal 1, UserMessage.pending.size
-    msg = UserMessage.pending[0]
-    assert_match %r{<h1>Hei Uwe Kubosch!</h1>}, msg.body
-    assert_match %r{<a href="https://example.com/">Klikk meg for å logge på Romerike Jujutsu Klubb!</a>},
-        msg.body
     UserMessageSenderJob.perform_now
     assert_equal 1, Mail::TestMailer.deliveries.size
     email = Mail::TestMailer.deliveries[0]
