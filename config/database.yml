@@ -32,4 +32,3 @@ beta:
 
 production: &production
   <<: *default
-  url: <%= ENV['HEROKU_POSTGRESQL_CRIMSON_URL'] %>
