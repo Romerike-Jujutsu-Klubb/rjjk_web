@@ -3,6 +3,7 @@
 require 'controller_test'
 
 class LoginControllerTest < ActionController::TestCase
+  include ActionMailer::TestCase::ClearTestDeliveries
   def test_login__valid_login__redirects_as_specified
     add_stored_detour controller: :welcome, action: :index
     post :login_with_password, params: { user: { login: 'lars', password: 'atest' } }
@@ -62,14 +63,16 @@ class LoginControllerTest < ActionController::TestCase
                 email: 'newemail@example.com'
     assert_not_logged_in
     assert_redirected_to_login
-    assert_equal 1, UserMessage.pending.size
+    UserMessageSenderJob.perform_now
+    assert_equal 1, Mail::TestMailer.deliveries.size
 
-    mail = UserMessage.pending[0]
-    assert_equal ['newemail@example.com'], mail.to
-    assert_match(/Brukernavn:\s+\w+\n/, mail.body)
-    assert_match(/Passord\s*:\s+\w+\n/, mail.body)
+    mail = Mail::TestMailer.deliveries[0]
+    assert_equal ['"newemail@example.com" <uwe@kubosch.no>'], mail[:to].address_list.addresses.map(&:to_s)
+    body = mail.body.decoded
+    assert_match(/Brukernavn:\s+\w+\n/, body)
+    assert_match(/Passord\s*:\s+\w+\n/, body)
     user = User.find_by(email: 'newemail@example.com')
-    assert_match(/key=#{user.security_token}/, mail.body)
+    assert_match(/key=#{user.security_token}/, body)
     assert_not user.verified
   end
 
@@ -140,9 +143,10 @@ class LoginControllerTest < ActionController::TestCase
     post :change_password, params: { user: {
       password: 'changed_password', password_onfirmation: 'changed_password'
     } }
-    assert_equal 1, UserMessage.pending.size
-    mail = UserMessage.pending[0]
-    assert_equal ['lars@example.com'], mail.to
+    UserMessageSenderJob.perform_now
+    assert_equal 1, Mail::TestMailer.deliveries.size
+    mail = Mail::TestMailer.deliveries[0]
+    assert_equal ['"lars@example.com" <uwe@kubosch.no>'], mail[:to].address_list.addresses.map(&:to_s)
     assert_equal user, User.authenticate(user.login, 'changed_password')
   end
 
@@ -150,26 +154,30 @@ class LoginControllerTest < ActionController::TestCase
     login(:lars)
     post :change_password, params: { user: { password: 'bad', password_confirmation: 'bad' } }
     assert_response :success
-    assert_equal 0, UserMessage.pending.size
+    UserMessageSenderJob.perform_now
+    assert_equal 0, Mail::TestMailer.deliveries.size
   end
 
   def test_forgot_password__when_logged_in_redirects_to_change_password
     user = login(:lars)
     post :forgot_password, params: { user: { email: user.email } }
-    assert_equal 0, UserMessage.pending.size
+    UserMessageSenderJob.perform_now
+    assert_equal 0, Mail::TestMailer.deliveries.size
     assert_response :redirect
     assert_equal @controller.url_for(action: 'change_password'), @response.redirect_url
   end
 
   def test_forgot_password__requires_valid_email_address
     post :forgot_password, params: { user: { email: '' } }
-    assert_equal 0, UserMessage.pending.size
+    UserMessageSenderJob.perform_now
+    assert_equal 0, Mail::TestMailer.deliveries.size
     assert_match(/Skriv inn en gyldig e-postadresse./, @response.body)
   end
 
   def test_forgot_password__ignores_unknown_email_address
     post :forgot_password, params: { user: { email: 'unknown_email@example.com' } }
-    assert_equal 0, UserMessage.pending.size
+    UserMessageSenderJob.perform_now
+    assert_equal 0, Mail::TestMailer.deliveries.size
   end
 
   def test_invalid_login
@@ -199,7 +207,8 @@ class LoginControllerTest < ActionController::TestCase
 
   def assert_password_validation_fails
     assert_response :success
-    assert_equal 0, UserMessage.pending.size
+    UserMessageSenderJob.perform_now
+    assert_equal 0, Mail::TestMailer.deliveries.size
   end
 
   def assert_contains(target, container)

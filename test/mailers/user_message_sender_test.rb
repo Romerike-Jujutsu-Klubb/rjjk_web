@@ -30,7 +30,7 @@ class UserMessageSenderTest < ActionMailer::TestCase
 
     mail = Mail::TestMailer.deliveries[0]
     assert_equal "[RJJK][TEST] #{subject}", mail.subject
-    assert_equal '"Uwe Kubosch" <uwe@kubosch.no>', mail['to'].value
+    assert_equal '"uwe@example.com" <uwe@kubosch.no>', mail['to'].value
     assert_equal [sender], mail.from
     assert_equal 2, mail.parts.size
 

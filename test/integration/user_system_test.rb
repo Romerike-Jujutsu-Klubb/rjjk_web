@@ -51,12 +51,15 @@ class UserSystemTest < ActionDispatch::IntegrationTest
 
     post url_for(controller: :login, action: :forgot_password), params: { user: { email: user.email } }
 
-    assert_equal 1, UserMessage.pending.size
-    mail = UserMessage.pending[0]
-    assert_equal ['lars@example.com'], mail.to
-    assert mail.plain_body
-    assert mail.html_body
-    key = mail.key
+    UserMessageSenderJob.perform_now
+    assert_equal 1, Mail::TestMailer.deliveries.size
+    mail = Mail::TestMailer.deliveries[0]
+    assert_equal ['"lars@example.com" <uwe@kubosch.no>'], mail[:to].address_list.addresses.map(&:to_s)
+    html_part, plain_part = mail.parts_by_type
+    assert plain_part&.body&.decoded
+    assert html_part&.body&.decoded
+    assert(html_part&.body&.decoded =~ /key=(.*?)"/)
+    key = Regexp.last_match(1)
 
     post url_for(controller: :login, action: :change_password), params: {
       user: { password: 'newpassword',
