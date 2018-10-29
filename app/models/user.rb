@@ -197,13 +197,20 @@ class User < ApplicationRecord
   end
 
   def to_vcard
+    photo_src =
+        if member&.image
+          binary = Base64.encode64(member.image.content_data_io.string).chomp("\n").gsub("\n", "\n ")
+          "TYPE=#{member.image.format.upcase};ENCODING=b:#{binary}"
+        else
+          "VALUE=URI;TYPE=JPEG:#{photo_user_url(self, format: :jpeg)}"
+        end
     <<~VCARD
       BEGIN:VCARD
       VERSION:3.0
       N:#{last_name};#{first_name};;;
       FN:#{name}
-      PHOTO;VALUE=URI;TYPE=#{member.image.format.upcase}:#{photo_user_url(self, format: member.image.format)}
-      TEL;TYPE=CEL#{phone}
+      PHOTO;#{photo_src}
+      TEL;TYPE=mobile:#{phone}
       ADR;TYPE=HOME,PREF:;;#{address};#{postal_code};Norway
       LABEL;TYPE=HOME:#{address}\n#{postal_code}\nNorway
       EMAIL:#{email}

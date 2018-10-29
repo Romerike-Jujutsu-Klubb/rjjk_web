@@ -4,7 +4,7 @@ require 'test_helper'
 
 class UserMessageSenderTest < ActionMailer::TestCase
   def test_send
-    UserMessageSender.send
+    UserMessageSenderJob.perform_now
     assert_mail_deliveries 0
   end
 
@@ -24,7 +24,7 @@ class UserMessageSenderTest < ActionMailer::TestCase
                              subject: subject, title: title, message_timestamp: TEST_TIME.to_date,
                              html_body: html_message, plain_body: plain_message
 
-    UserMessageSender.send
+    UserMessageSenderJob.perform_now
 
     assert_mail_deliveries 1
 

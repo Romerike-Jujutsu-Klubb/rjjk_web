@@ -87,7 +87,7 @@ class LoginFeatureTest < FeatureTest
     assert_match %r{<h1>Hei Uwe Kubosch!</h1>}, msg.body
     assert_match %r{<a href="https://example.com/">Klikk meg for å logge på Romerike Jujutsu Klubb!</a>},
         msg.body
-    UserMessageSender.send
+    UserMessageSenderJob.perform_now
     assert_equal 1, Mail::TestMailer.deliveries.size
     email = Mail::TestMailer.deliveries[0]
     assert %r{<a href="(https://example.com/\?key=([^"]+))">Klikk meg for å logge på Romerike Jujutsu Klubb!</a>} =~

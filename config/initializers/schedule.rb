@@ -35,9 +35,6 @@ else
       ExceptionNotifier.notify_exception(e)
     end
 
-    # email
-    scheduler.every('10s') { Rails.application.executor.wrap { UserMessageSender.send } }
-
     # Users
     scheduler.cron('0 7    * * mon') do
       Rails.application.executor.wrap { AttendanceNagger.send_attendance_plan }

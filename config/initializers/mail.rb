@@ -4,20 +4,14 @@ require 'mail'
 
 class Mail::Message
   def store(recipient, tag:)
-    user_id =
-        if recipient.is_a?(Member)
-          recipient.user.id
-        elsif recipient.is_a?(User)
-          recipient.id
-        else
-          recipient
-        end
-    parts =
-        if body.parts.any?
-          body.parts
-        else
-          [self]
-        end
+    user_id = if recipient.is_a?(Member)
+                recipient.user.id
+              elsif recipient.is_a?(User)
+                recipient.id
+              else
+                recipient
+              end
+    parts = body.parts.any? ? body.parts : [self]
     html_part = plain_part = nil
     parts.each do |part|
       if part.content_type =~ %r{text/html}
@@ -41,5 +35,6 @@ class Mail::Message
                         title: title, message_timestamp: timestamp,
                         html_body: html_part&.body&.decoded,
                         plain_body: plain_part&.body&.decoded
+    UserMessageSenderJob.perform_later
   end
 end

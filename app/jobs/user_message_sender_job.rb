@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
-class UserMessageSender
+class UserMessageSenderJob < ApplicationJob
   SHORT_STORAGE_TAGS = %i[attendance_change attendance_summary].freeze
 
-  def self.send
+  queue_as :default
+
+  def perform
     messages = UserMessage.where(sent_at: nil, read_at: nil).order(:created_at).each do |m|
       UserMessageMailer.send_message(m).deliver_now
       m.update! sent_at: Time.current
