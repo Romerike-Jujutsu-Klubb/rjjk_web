@@ -77,7 +77,7 @@ gem 'uglifier', '<4'
 gem 'unicode_utils'
 gem 'webpush'
 
-group :beta, :email, :heroku, :production do
+group :beta, :email, :production do
   gem 'lograge'
 end
 

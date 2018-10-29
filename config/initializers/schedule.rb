@@ -6,7 +6,7 @@ elsif caller.none? { |l| l =~ /config.ru/ }
   Rails.logger.info('Disable scheduler since we are not running as a rack application')
 elsif caller.any? { |l| l =~ %r{/lib/rake/task.rb:\d+:in `execute'} }
   Rails.logger.info('Disable scheduler since we are running Rake')
-elsif !%w[development beta heroku production].include?(Rails.env)
+elsif !%w[development beta production].include?(Rails.env)
   Rails.logger.info("Disable scheduler since env == #{Rails.env}")
 elsif ENV['DISABLE_SCHEDULER'].present?
   Rails.logger.info("Disable scheduler since ENV['DISABLE_SCHEDULER'] is set")
