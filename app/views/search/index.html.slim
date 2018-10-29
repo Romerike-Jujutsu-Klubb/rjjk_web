@@ -45,9 +45,9 @@ h1.mb-4 Søkeresultat for "#{@query}"
             - @pages.each do |p|
               li = link_to p.title, p
       - if @news.present?
-        .col.mb-4: .card.h-100
+        .col.mb-4: .card.h-100 style="max-height:50vh"
           h3.card-header Nyheter
-          .card-body
+          .card-body style="overflow-y:auto"
             - @news.each do |year, items|
               h4 = year
               ul.pl-3
@@ -58,7 +58,7 @@ h1.mb-4 Søkeresultat for "#{@query}"
           h3.card-header Bilder
           ul.card-body
             - @images.each do |i|
-              li = link_to i.name, i
+              li: a href=gallery_image_path(i) = i.name
   - else
     | Fant ingenting om "#{@query}".
 
