@@ -32,8 +32,4 @@ beta:
 
 production: &production
   <<: *default
-  database: rjjk_production
-  username: capistrano
-
-email:
-  <<: *production
+  url: <%= ENV['HEROKU_POSTGRESQL_CRIMSON_URL'] %>
