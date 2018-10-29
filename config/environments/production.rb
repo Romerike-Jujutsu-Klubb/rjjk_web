@@ -36,7 +36,7 @@ Rails.application.configure do
   config.force_ssl = true
   config.i18n.fallbacks = true
   config.log_formatter = ::Logger::Formatter.new
-  config.log_level = :debug
+  config.log_level = :info
   config.log_tags = [:request_id]
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
   config.lograge.enabled = true
