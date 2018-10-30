@@ -26,7 +26,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap'
 gem 'bootstrap-chosen-rails', github: 'donv/bootstrap-chosen-rails'
 gem 'bootstrap3-datetimepicker-rails'
-gem 'bootstrap_form', github: 'bootstrap-ruby/bootstrap_form'
+gem 'bootstrap_form'
 # https://mdbootstrap.com/javascript/sidenav/
 # https://github.com/flatlogic/awesome-bootstrap-checkbox
 # gem "bootstrap-select-rails"

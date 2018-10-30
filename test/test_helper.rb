@@ -20,11 +20,11 @@ TEST_TIME = Time.zone.local(2013, 10, 17, 18, 46, 0) # Week 42, thursday
 Geocoder.configure(lookup: :test)
 Geocoder::Lookup::Test.set_default_stub([{
   'latitude' => 40.7143528,
-  'longitude'    => -74.0059731,
-  'address'      => 'New York, NY, USA',
-  'state'        => 'New York',
-  'state_code'   => 'NY',
-  'country'      => 'United States',
+  'longitude' => -74.0059731,
+  'address' => 'New York, NY, USA',
+  'state' => 'New York',
+  'state_code' => 'NY',
+  'country' => 'United States',
   'country_code' => 'US',
 }])
 

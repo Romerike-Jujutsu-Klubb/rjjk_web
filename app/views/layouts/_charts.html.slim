@@ -1,5 +1,5 @@
 - chart_width = column_width_sm
-- if Rails.env != 'development'
+- if !Rails.env.development? && !Rails.env.production?
   - history_chart_link = image_tag(member_reports_history_graph_path(format: :png, size: chart_width), title: 'Historikk graf', class: 'rounded', lazy: true)
   - attendance_chart_link = image_tag(url_for(controller: :attendances, action: :history_graph, format: :png, size: chart_width), title: 'Oppmøte graf', class: 'rounded', lazy: true)
   - grades_chart_link = image_tag(member_reports_grade_history_graph_path(format: :png, size: chart_width), title: 'Historikk over grader', class: 'rounded', lazy: true)
