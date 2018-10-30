@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'gruff'
 class MemberAgeChart
   def self.chart(size = 480)
     g = Gruff::Bar.new(size)
