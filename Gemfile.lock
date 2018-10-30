@@ -169,8 +169,6 @@ GEM
       multi_json (~> 1.11)
       os (>= 0.9, < 2.0)
       signet (~> 0.7)
-    gruff (0.7.0)
-      rmagick (~> 2.13, >= 2.13.4)
     hashdiff (0.3.7)
     hkdf (0.3.0)
     http-cookie (1.0.3)
@@ -224,6 +222,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2018.0812)
     mimemagic (0.3.2)
+    mini_magick (4.9.2)
     mini_mime (1.0.1)
     mini_portile2 (2.3.0)
     mini_racer (0.2.3)
@@ -340,7 +339,6 @@ GEM
       rack (>= 1.4)
     retriable (3.1.2)
     ri_cal (0.8.8)
-    rmagick (2.16.0)
     robotex (1.0.0)
     rubocop (0.60.0)
       jaro_winkler (~> 1.5.1)
@@ -455,7 +453,6 @@ DEPENDENCIES
   font-awesome-rails
   geocoder
   google_drive
-  gruff
   jbuilder
   jquery-rails
   kramdown
@@ -464,6 +461,7 @@ DEPENDENCIES
   lograge
   mechanize
   medusa!
+  mini_magick
   mini_racer
   minitest-rails-capybara
   minitest-reporters

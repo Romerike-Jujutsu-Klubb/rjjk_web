@@ -80,14 +80,12 @@ class ImagesController < ApplicationController
       redirect_to ActionController::Base.helpers.asset_path icon_name
       return
     end
-    imgs = Magick::ImageList.new
-    imgs.from_blob content_data_io.string
+    magick_image = MiniMagick::Image.read content_data_io
     width = params[:width].to_i
     width = 492 if width < 8
-    img_width = imgs.first.columns
-    ratio = width.to_f / img_width
-    imgs.each { |img| img.crop_resized!(width, img.rows * ratio) }
-    send_data(imgs.to_blob, disposition: 'inline', type: image.content_type, filename: image.name)
+    ratio = width.to_f / magick_image.width
+    magick_image.resize("#{width}x#{(magick_image.height * ratio).round}")
+    send_data(magick_image.to_blob, disposition: 'inline', type: image.content_type, filename: image.name)
   end
 
   def new

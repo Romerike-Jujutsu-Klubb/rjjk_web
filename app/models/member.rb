@@ -311,11 +311,14 @@ class Member < ApplicationRecord
     image.present?
   end
 
-  def thumbnail(x = 120, y = 160)
+  # FIXME(uwe): Limit to Y-axis as well
+  def thumbnail(x = 120, _y = 160)
     return unless image?
 
-    magick_image = Magick::Image.from_blob(image.content_data_io.string).first
-    magick_image.crop_resized(x, y).to_blob
+    magick_image = MiniMagick::Image.read(image.content_data_io)
+    ratio = x.to_f / magick_image.width
+    magick_image.resize("#{x}x#{(magick_image.height * ratio).round}")
+    magick_image.to_blob
   end
 
   def invoice_email
