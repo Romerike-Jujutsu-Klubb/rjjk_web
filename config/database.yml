@@ -3,7 +3,7 @@
 default: &default
   adapter: postgresql
   host: localhost
-  pool: 50
+  pool: 20
   encoding: utf8
   <% if ENV['TRAVIS'].present? %>
   collation: C
