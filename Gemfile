@@ -68,8 +68,12 @@ gem 'uglifier', '<4'
 gem 'unicode_utils'
 gem 'webpush'
 
-group :beta, :email, :production do
+group :beta, :production do
   gem 'lograge'
+end
+
+group :production do
+  gem 'newrelic_rpm'
 end
 
 group :development, :beta do

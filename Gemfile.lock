@@ -199,7 +199,7 @@ GEM
       activesupport (>= 4)
       railties (>= 4)
       request_store (~> 1.0)
-    loofah (2.2.2)
+    loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.0)
@@ -258,6 +258,7 @@ GEM
     net-http-digest_auth (1.4.1)
     net-http-persistent (3.0.0)
       connection_pool (~> 2.2)
+    newrelic_rpm (5.4.0.347)
     nio4r (2.3.1)
     nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
@@ -290,7 +291,7 @@ GEM
     puma (3.12.0)
     raabro (1.1.6)
     rack (2.0.5)
-    rack-attack (5.4.1)
+    rack-attack (5.4.2)
       rack (>= 1.0, < 3)
     rack-mini-profiler (1.0.0)
       rack (>= 1.2.0)
@@ -467,6 +468,7 @@ DEPENDENCIES
   minitest-reporters
   mocha
   momentjs-rails
+  newrelic_rpm
   nokogiri
   nprogress-rails
   oauth2
