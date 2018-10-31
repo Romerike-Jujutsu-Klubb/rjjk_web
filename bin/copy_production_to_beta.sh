@@ -2,7 +2,7 @@
 
 DB_NAME=rjjk_web_beta
 MARKER_PREFIX="/tmp/${DB_NAME}_backup_"
-MARKER_FILE="${MARKER_PREFIX}`date +%Y-%m-%d`"
+MARKER_FILE="${MARKER_PREFIX}`date +%Y-%m`"
 
 export JRUBY_OPTS="--dev -J-Xmx2G"
 export RAILS_ENV=beta
@@ -19,7 +19,7 @@ ruby -v
 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:drop db:create
 
 echo "Transferring database"
-pg_dump -U capistrano -h localhost rjjk_production | psql -U capistrano -h localhost $DB_NAME
+/usr/pgsql-10/bin/pg_dump $HEROKU_POSTGRESQL_CRIMSON_URL | /usr/pgsql-10/bin/psql -U capistrano -h localhost -p5433 $DB_NAME
 
 bundle exec rake db:migrate
 
