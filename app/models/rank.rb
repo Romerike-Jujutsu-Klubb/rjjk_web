@@ -53,4 +53,8 @@ class Rank < ApplicationRecord
 
     position <=> other.position
   end
+
+  def to_s
+    name
+  end
 end

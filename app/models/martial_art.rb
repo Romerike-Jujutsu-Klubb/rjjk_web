@@ -16,4 +16,8 @@ class MartialArt < ApplicationRecord
   def kwr?
     name == KWR_NAME
   end
+
+  def to_s
+    name
+  end
 end

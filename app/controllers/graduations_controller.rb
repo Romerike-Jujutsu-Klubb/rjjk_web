@@ -50,13 +50,14 @@ class GraduationsController < ApplicationController
     approval = load_current_user_approval
     return unless admin_or_censor_required(@graduation, approval)
 
-    @groups = Group.order(:from_age).includes(members: %i[attendances nkf_member]).to_a
+    @groups = Group.order(:from_age).includes(members: %i[attendances nkf_member user])
+        .merge(Member.active(@graduation.held_on)).to_a
     @groups.unshift(@groups.delete(@graduation.group))
     @ranks = Rank.where(martial_art_id: @graduation.group.martial_art_id)
         .order(:position).to_a
     included_members = @graduation.graduates.map(&:member)
     @excluded_members = @groups
-        .map { |g| [g, g.members.active(@graduation.held_on).sort_by(&:name) - included_members] }
+        .map { |g| [g, g.members.sort_by(&:name) - included_members] }
         .select { |_g, members| members.any? }
     @graduate = Graduate.new(graduation_id: @graduation.id)
     render partial: 'graduates_tab'

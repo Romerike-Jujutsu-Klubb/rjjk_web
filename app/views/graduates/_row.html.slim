@@ -48,15 +48,15 @@ tr id="graduate_#{graduate.id}"
     - if graduate.graduation.approved?
       = graduate.rank.label
     - else
+      - next_rank = mbr.next_rank(graduate.graduation)
       = form_for graduate, html: { remote: true } do |f|
-        = f.select :rank_id, @ranks.map { |r| [r.label, r.id] }, {}, class: 'form-control form-control-sm', onchange: "$('#rank_btn_#{graduate.id}').click()"
+        = f.select :rank_id, @ranks.map { |r| [r.label + (r == next_rank ? ' *' : ''), r.id] }, {}, class: 'form-control form-control-sm', onchange: "$('#rank_btn_#{graduate.id}').click()"
         = f.submit id: "rank_btn_#{graduate.id}", class: 'sr-only'
 
       - graduated = graduate.member.graduates.find { |gr2| gr2 != graduate && gr2.passed && gr2.rank_id == graduate.rank_id }
       - if graduated
         div.text-danger Har allerede bestått denne graden (#{link_to graduated.graduation.held_on, action: :index, id: graduated.graduation_id}).
       - else
-        - next_rank = mbr.next_rank(graduate.graduation)
         - current_graduate = mbr.current_graduate(graduate.graduation.group.martial_art, graduate.graduation.held_on)
         - if next_rank && graduate.rank != next_rank
           - if current_graduate

@@ -51,7 +51,9 @@ class Member < ApplicationRecord
   scope :active, ->(from_date = nil, to_date = nil) do
     from_date ||= Date.current
     to_date ||= from_date
-    where('joined_on <= ? AND left_on IS NULL OR left_on >= ?', to_date, from_date)
+    references(:members)
+        .where('members.joined_on <= ? AND members.left_on IS NULL OR members.left_on >= ?',
+            to_date, from_date)
   end
   scope :search, ->(query) do
     includes(:nkf_member).references(:nkf_members)
@@ -157,48 +159,28 @@ class Member < ApplicationRecord
 
   def next_rank(graduation = Graduation.new(held_on: Date.current, group: groups.max_by(&:from_age)))
     age = self.age(graduation.held_on)
-    ma = graduation.group.try(:martial_art) ||
-        MartialArt.includes(:ranks).find_by(name: 'Kei Wa Ryu')
+    ma = graduation.group.try(:martial_art) || MartialArt.includes(:ranks).find_by(name: 'Kei Wa Ryu')
     current_rank = current_rank(ma, graduation.held_on)
-    ranks = ma.ranks.to_a
-    if current_rank
-      next_rank = ranks.find do |r|
-        !future_ranks(graduation.held_on, ma).include?(r) &&
-            r.position > current_rank.position &&
-            (r.group.from_age..r.group.to_age).cover?(age) &&
-            (age.nil? || age >= r.minimum_age) &&
-            attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
-      end
-      next_rank ||= ranks.find do |r|
-        !future_ranks(graduation.held_on, ma).include?(r) &&
-            r.position > current_rank.position &&
-            (age.nil? || age >= r.group.from_age) &&
-            (age.nil? || age >= r.minimum_age) &&
-            attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
-      end
-      next_rank ||= ranks.find do |r|
-        !future_ranks(graduation.held_on, ma).include?(r) &&
-            r.position > current_rank.position &&
-            (r.group.from_age..r.group.to_age).cover?(age) &&
-            (age.nil? || age >= r.minimum_age)
-      end
-      next_rank ||= ranks.find { |r| r.position > current_rank.position }
+    future_ranks = future_ranks(graduation.held_on, ma)
+    available_ranks = ma.ranks.to_a - future_ranks
+    available_ranks.select! { |r| r.position > current_rank.position } if current_rank
+    next_rank = available_ranks.find do |r|
+      (r.group.from_age..r.group.to_age).cover?(age) &&
+          age >= r.minimum_age &&
+          attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
     end
-    next_rank ||= ranks.find do |r|
-      !future_ranks(graduation.held_on, ma).include?(r) &&
-          (r.group.from_age..r.group.to_age).cover?(age) &&
+    next_rank ||= available_ranks.find do |r|
+      (age.nil? || age >= r.group.from_age) &&
           (age.nil? || age >= r.minimum_age) &&
           attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
     end
-    next_rank ||= ranks.find do |r|
-      !future_ranks(graduation.held_on, ma).include?(r) &&
-          (age.nil? || age >= r.minimum_age) &&
-          attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
+    if age
+      next_rank ||= available_ranks.find do |r|
+        (r.group.from_age..r.group.to_age).cover?(age) && age >= r.minimum_age
+      end
+      next_rank ||= available_ranks.find { |r| age >= r.minimum_age }
     end
-    next_rank ||= ranks.find do |r|
-      age.nil? || (age >= r.minimum_age && (r.group.from_age..r.group.to_age).cover?(age))
-    end
-    next_rank ||= ranks.first
+    next_rank ||= available_ranks.first
     next_rank
   end
 
