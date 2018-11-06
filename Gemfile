@@ -64,6 +64,7 @@ gem 'serviceworker-rails'
 gem 'simple_drilldown'
 gem 'simple_workflow'
 gem 'slim-rails'
+gem 'tunemygc'
 gem 'uglifier', '<4'
 gem 'unicode_utils'
 gem 'webpush'
@@ -81,7 +82,7 @@ group :development, :beta do
 end
 
 group :development do
-  # gem 'derailed'
+  gem 'derailed'
   gem 'listen'
 end
 
