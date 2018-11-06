@@ -69,8 +69,8 @@ class LoginControllerTest < ActionController::TestCase
     mail = Mail::TestMailer.deliveries[0]
     assert_equal ['"newemail@example.com" <uwe@kubosch.no>'], mail[:to].address_list.addresses.map(&:to_s)
     body = mail.body.decoded
-    assert_match(/Brukernavn:\s+\w+\n/, body)
-    assert_match(/Passord\s*:\s+\w+\n/, body)
+    assert_match(/Brukernavn:\s+\w+\r\n/, body)
+    assert_match(/Passord\s*:\s+\w+\r\n/, body)
     user = User.find_by(email: 'newemail@example.com')
     assert_match(/key=#{user.security_token}/, body)
     assert_not user.verified

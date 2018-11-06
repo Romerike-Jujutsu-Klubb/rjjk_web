@@ -23,11 +23,11 @@ class NkfSynchronizationJobTest < ActiveJob::TestCase
     assert_match(/^Hentet #{nkf_change_count} endringer fra NKF$/, mail.subject, mail.body.decoded)
     assert_equal 'uwe@kubosch.no', mail.header[:to].value
     assert_equal 'noreply@test.jujutsu.no', mail.header[:from].value
-    assert_match "NKF Import\n\nEndringer fra NKF-portalen.\n", mail.body.decoded
-    assert_match(/\b#{nkf_new_count} medlemmer opprettet\n#{nkf_update_count} medlemmer oppdatert\n/,
+    assert_match "NKF Import\r\n\r\nEndringer fra NKF-portalen.\r\n", mail.body.decoded
+    assert_match(/\b#{nkf_new_count} medlemmer opprettet\r\n#{nkf_update_count} medlemmer oppdatert\r\n/,
         mail.body.decoded)
-    assert_match "Endringer prøvetid:\n", mail.body.decoded
-    assert_match "Nye medlemmer:\n\n    Sebastian Aagren:\n", mail.body.decoded
+    assert_match "Endringer prøvetid:\r\n", mail.body.decoded
+    assert_match "Nye medlemmer:\r\n\r\n    Sebastian Aagren:\r\n", mail.body.decoded
 
     rjjk_new_count = 413
     rjjk_update_count = 3

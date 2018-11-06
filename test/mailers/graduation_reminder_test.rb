@@ -88,7 +88,7 @@ class GraduationReminderTest < ActionMailer::TestCase
         /Jujutsu Klubb vil med dette invitere deg til å være\s+eksaminator\s+på\s+gradering for Voksne\s+den 2013-10-24./, # rubocop: disable Metrics/LineLength
         mail.body
       )
-    assert_match(/Har du mulighet til delta\?  Klikk på en av linkene nedenfor for å gi beskjed\n  om du kan eller ikke./, # rubocop: disable Metrics/LineLength
+    assert_match(/Har du mulighet til delta\?  Klikk på en av linkene nedenfor for å gi beskjed\r\n  om du kan eller ikke./, # rubocop: disable Metrics/LineLength
         mail.body)
     assert_match(%r{<a href="https://example.com/censors/306982868/confirm">Jeg kommer :\)</a>}, mail.body)
     assert_match(%r{<a href="https://example.com/censors/306982868/decline">Beklager, jeg kommer ikke.</a>},

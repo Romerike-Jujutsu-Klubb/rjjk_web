@@ -48,7 +48,7 @@ class UserMessageSenderTest < ActionMailer::TestCase
     assert_match %(href="https://example.com/user_messages/#{um.id}?) +
         %(email=dXdlQGV4YW1wbGUuY29t%0A&amp;key=#{escaped_key}"),
         body
-    assert_match <<~HTML, body
+    assert_match <<~HTML.gsub("\n", "\r\n"), body
       An HTML message with an <a href="https://example.com/internal/link?key=42">internal link</a>
       and an <a href="https://example.com/internal/link?a=2&key=42">internal link with parameter</a>
       and an <a href="http://example.net/external/link?key=42">external link</a>

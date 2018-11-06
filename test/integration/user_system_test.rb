@@ -19,8 +19,8 @@ class UserSystemTest < ActionDispatch::IntegrationTest
     assert_equal ['uwe@kubosch.no'], mail.to # Test email
     assert_equal ['"newemail@example.com" <uwe@kubosch.no>'], mail[:to].address_list.addresses.map(&:to_s)
     body = mail.body.decoded
-    assert_match(/Brukernavn:\s+\w+\n/, body)
-    assert_match(/Passord\s*:\s+\w+\n/, body)
+    assert_match(/Brukernavn:\s+\w+\r\n/, body)
+    assert_match(/Passord\s*:\s+\w+\r\n/, body)
     assert(body =~ /key=(.*?)"/)
     key = Regexp.last_match(1)
 
