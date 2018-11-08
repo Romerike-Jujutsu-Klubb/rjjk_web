@@ -109,20 +109,21 @@ class User < ApplicationRecord
   # (and not the regular authenticate call)
   def self.authenticate_by_token(token)
     logger.info "Attempting authentication with token: #{token.inspect}"
-    if (u = find_by(security_token: token) ||
-        (um = UserMessage.includes(:user).for_login.find_by(key: CGI.unescape(token)))&.user)
-      um.update!(read_at: Time.current) if um && !um.read_at
-      logger.info "Identified by token: #{u.inspect}"
+    if (u = find_by(security_token: token))
+      if u.token_expired?
+        logger.info 'Token expired.'
+        return nil
+      end
+      logger.info "Authenticated by user token: #{u.inspect}.  Extending token lifetime."
+      u.token_expiry = Time.current + token_lifetime
+    elsif (u = (um = UserMessage.includes(:user).for_login.find_by(key: CGI.unescape(token)))&.user)
+      logger.info "Identified by user message token: #{u.inspect}"
+      um.update!(read_at: Time.current) unless um.read_at
     else
       logger.info 'Not authenticated'
       return nil
     end
-    if u.token_expired?
-      logger.info 'Token expired.'
-      return nil
-    end
-    logger.info "Authenticated by token: #{u.inspect}.  Extending token lifetime."
-    u.update! verified: true, token_expiry: Time.current + token_lifetime
+    u.update! verified: true
     u
   end
 
