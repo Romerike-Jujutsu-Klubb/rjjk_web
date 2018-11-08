@@ -4,7 +4,6 @@ require 'test_helper'
 
 class MemberHistoryGraphTest < ActiveSupport::TestCase
   def test_history_graph
-    skip 'gruff'
-    MemberHistoryGraph.history_graph
+    MemberHistoryGraph.data_set
   end
 end

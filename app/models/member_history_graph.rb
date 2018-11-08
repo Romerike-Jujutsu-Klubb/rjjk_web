@@ -46,11 +46,9 @@ class MemberHistoryGraph
     g.hide_dots = true
     g.colors = %w[gray blue brown orange black red yellow lightblue green]
 
-    first_date = Date.civil(2011, 1, 1)
-    dates = []
-    Date.current.step(first_date, -14) { |date| dates << date }
-    dates.reverse!
-    g.data('Totalt', totals(dates))
+    data, dates = data_set
+
+    g.data('Totalt', data['Totalt'])
     g.data('Totalt betalende', totals_jj(dates))
     g.data('Voksne', seniors_jj(dates))
     g.data('Tiger', juniors_jj(dates))
@@ -171,5 +169,23 @@ class MemberHistoryGraph
 
   def self.junior_birthdate(date)
     date - ASPIRANT_AGE_LIMIT.years
+  end
+
+  def self.data_set
+    first_date = Date.civil(2011, 1, 1)
+    dates = []
+    Date.current.step(first_date, -14) { |date| dates << date }
+    dates.reverse!
+    data = {
+      'Totalt' => totals(dates),
+      'Totalt betalende' => totals_jj(dates),
+      'Voksne' => seniors_jj(dates),
+      'Tiger' => juniors_jj(dates),
+      'Panda' => aspirants(dates),
+      'Gratis' => gratis(dates),
+      'Prøvetid' => dates.map { |d| NkfMemberTrial.where('reg_dato <= ?', d).count }
+          .without_consecutive_zeros,
+    }
+    [data, dates]
   end
 end

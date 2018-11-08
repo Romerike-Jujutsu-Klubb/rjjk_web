@@ -13,8 +13,7 @@ dropdb --if-exists $DB_NAME
 bin/rake db:create
 
 echo "Transferring database"
-time ssh root@kubosch.no "pg_dump -U capistrano rjjk_production | gzip" |
-    gunzip | sed -e s/capistrano/uwe/ | psql $DB_NAME
+time pg_dump $HEROKU_POSTGRESQL_CRIMSON_URL | psql $DB_NAME
 
 export JRUBY_OPTS=--dev
 RAILS_ENV=development rake db:migrate

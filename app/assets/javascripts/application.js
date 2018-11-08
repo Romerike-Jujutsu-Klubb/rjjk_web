@@ -17,7 +17,7 @@
 //= require jquery.lazyload
 //= require fileinput
 //= require fileinput-fa-theme
-//= require highcharts
+//= require Chart.bundle
 //= require chartkick
 //= require serviceworker-companion
 //= require changed_selector

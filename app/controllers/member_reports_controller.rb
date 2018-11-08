@@ -20,17 +20,12 @@ class MemberReportsController < ApplicationController
   end
 
   def history_graph
-    args = if params[:size] && params[:size].to_i <= 1280
-             if /^\d+x\d+$/.match?(params[:size])
-               [params[:size]]
-             else
-               [params[:size].to_i]
-             end
-           else
-             []
-           end
-    g = MemberHistoryGraph.history_graph(*args)
-    send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Medlemshistorikk.png')
+    data, dates = MemberHistoryGraph.data_set
+    expanded_data = data.map do |name, values|
+      { name: name, data: Hash[dates.zip(values)] }
+    end
+
+    render json: expanded_data.to_json
   end
 
   def grade_history_graph
