@@ -11,10 +11,11 @@ h2.mt-4 Medlemsrapport #{t(:date)[:month_names][@month]} #{@year}
 table.table
   thead
     tr
-      th width="60%" Gruppe
+      th width="50%" Gruppe
       th.text-center Aktive
       th.text-center Passive
       th.text-center Ikke-betalende
+      th Totalt
   tfoot
     tr
       th Totalt
@@ -40,6 +41,7 @@ table.table
         - total_non_pay_before = @members_before.reject(&:paying?).size
         - total_non_pay_diff = total_non_pay_after - total_non_pay_before
         = total_non_pay_diff != 0 ? " (#{total_non_pay_diff > 0 ? '+' : nil}#{total_non_pay_diff})" : nil
+      th.text-center = @members_after.size
   tbody
     / TODO(uwe): Separate honorary/passive members
     - non_paying_before_by_group = @members_before.reject(&:paying?).group_by { |m| m.groups.sort_by(&:to_age).last }
@@ -62,6 +64,7 @@ table.table
         td.text-center
           a href="#" data-toggle=:popover data-trigger=:hover data-content="<table class='table table-sm mb-0'><tbody>#{non_paying.map{|m| "<tr><td>#{m.name}</td></tr>"}.sort.join("\n")}</tbody></table>" data-html=:true = non_paying.size
           = non_paying_diff != 0 ? " (#{non_paying_diff > 0 ? '+' : nil}#{non_diff})" : nil
+        td.text-center = members.size
 
 = line_chart member_reports_history_graph_path, points: false, height: '24rem'
 
