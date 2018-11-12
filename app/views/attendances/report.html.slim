@@ -6,7 +6,10 @@ h4.clearfix
     ' Neste måned
     i.fa.fa-chevron-right
 
-h2 Oppmøterapport #{t(:date)[:month_names][@first_date.month]} #{@first_date.year}
+- report_month = t(:date)[:month_names][@first_date.month]
+- report_year = @first_date.year
+
+h2 Oppmøterapport #{report_month} #{report_year}
 
 css:
   .carousel-control-prev, .carousel-control-next {
@@ -16,14 +19,11 @@ css:
 #carouselIndicators.carousel.slide.my-3 data-interval="false"
   .carousel-inner
     .carousel-item.active
-      = image_tag url_for(controller: :attendances, action: :month_chart, year: @year, month: @month, size: '832x300', format: :png), \
-                    title: 'Oppmøtegraf', class: :rounded, style: 'width:832px;height:300px'
+      = line_chart month_chart_data_attendances_path(year: @year, month: @month), points: false, height: '24rem', title: "Oppmøte #{report_month} #{report_year}", width: '832px', height: '300px', curve: false
     .carousel-item
-      = image_tag url_for(controller: :attendances, action: :month_per_year_chart, month: @month, size: '832x300', format: :png), \
-                    title: 'Oppmøtegraf', class: :rounded, style: 'width:832px;height:300px'
+      = line_chart month_per_year_chart_data_attendances_path(month: @month), points: false, height: '24rem', title: "Oppmøte #{report_month} per år", width: '832px', height: '300px', curve: false
     .carousel-item
-      = image_tag url_for(controller: :attendances, action: :history_graph, size: '832x300', format: :png), \
-                    title: 'Oppmøtegraf', class: :rounded, style: 'width:832px;height:300px'
+      = line_chart history_graph_data_attendances_path(year: @year, month: @month), points: false, height: '24rem', title: 'Oppmøte', width: '832px', height: '300px', curve: false
   a.carousel-control-prev href="#carouselIndicators" role="button" data-slide="prev"
     span.carousel-control-prev-icon aria-hidden="true"
     span.sr-only Previous

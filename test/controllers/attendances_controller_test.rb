@@ -98,8 +98,12 @@ class AttendancesControllerTest < ActionController::TestCase
   end
 
   def test_should_get_month_chart
-    skip 'gruff'
-    get :month_chart, params: { year: 2013, month: 10, size: '800x300', format: 'png' }
+    get :month_chart, params: { year: 2013, month: 10 }
+    assert_response :success
+  end
+
+  def test_should_get_month_per_year_chart
+    get :month_per_year_chart, params: { year: 2013, month: 10 }
     assert_response :success
   end
 

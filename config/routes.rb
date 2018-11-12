@@ -38,11 +38,14 @@ Rails.application.routes.draw do
     collection do
       get :form
       get :form_index
-      get 'history_graph', action: :history_graph
-      get 'history_graph_data', action: :history_graph_data
-      get 'month_chart(/:year/:month/:size)', action: :month_chart
-      get 'month_per_year_chart(/:month/:size)', action: :month_per_year_chart
-      get :report
+      get :history_graph, action: :history_graph
+      get :history_graph_data, action: :history_graph_data
+      get 'month_chart(/:year/:month)', action: :month_chart, as: :month_chart
+      get 'month_chart_data(/:year/:month)', action: :month_chart_data, as: :month_chart_data
+      get 'month_per_year_chart(/:month)', action: :month_per_year_chart, as: :month_per_year_chart
+      get 'month_per_year_chart_data(/:month)', action: :month_per_year_chart_data,
+          as: :month_per_year_chart_data
+      get 'report(/:year/:month)', action: :report, as: :report
       match 'review/:year/:week/:group_schedule_id/:status', action: :review, via: %i[get post]
       get :since_graduation
     end

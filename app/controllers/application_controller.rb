@@ -32,9 +32,10 @@ class ApplicationController < ActionController::Base
     return if request.xhr? || _layout([]) != DEFAULT_LAYOUT
 
     unless @information_pages
-      @information_pages = InformationPage.roots
-      @information_pages = @information_pages.where('hidden IS NULL OR hidden = ?', false) unless admin?
-      @information_pages = @information_pages.where('title <> ?', 'Velkommen') unless user?
+      info_query = InformationPage.roots
+      info_query = info_query.where('hidden IS NULL OR hidden = ?', false) unless admin?
+      info_query = info_query.where('title <> ?', 'Velkommen') unless user?
+      @information_pages = info_query.to_a
     end
     # unless @image
     #   3.times do
@@ -69,8 +70,11 @@ class ApplicationController < ActionController::Base
       @other_absentees = attendances_next_practice - @other_attendees
     end
 
-    @groups ||= Group.active(Date.current).order('to_age, from_age DESC')
-        .includes(:current_semester, :group_schedules).to_a
+    unless @groups
+      group_query = Group.active(Date.current).order('to_age, from_age DESC')
+      group_query = group_query.includes(:current_semester, :group_schedules) if admin?
+      @groups = group_query.to_a
+    end
 
     unless @layout_events # rubocop: disable Style/GuardClause
       @layout_events = Event

@@ -49,7 +49,7 @@ class MemberReportsController < ApplicationController
   def age_chart; end
 
   def age_chart_data
-    json_data = Rails.cache.fetch("xmember_reports/age_chart_data/#{Member.maximum(:updated_at)}") do
+    json_data = Rails.cache.fetch("member_reports/age_chart_data/#{Member.maximum(:updated_at)}") do
       age_data, age_groups = MemberAgeChart.data_set
       expanded_data = Hash[age_groups.zip(age_data).map { |group, value| [group.to_s, value] }]
       expanded_data.to_json

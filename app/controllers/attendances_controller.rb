@@ -127,11 +127,11 @@ class AttendancesController < ApplicationController
   def history_graph_data
     json_data = Rails.cache.fetch("attendances/history/#{Attendance.maximum(:updated_at)}") do
       group_data, weeks, _labels = AttendanceHistoryGraph.history_graph_data
-      expanded_data = group_data.map do |label, values, _color|
+      expanded_data = group_data.map do |label, values, color|
         next unless values
 
         exp = weeks.zip(values).map { |(year, week), value| [Date.commercial(year, week, 1), value] }
-        { name: label, data: Hash[exp] }
+        { name: label, data: Hash[exp], color: color }
       end
       expanded_data.compact.to_json
     end
@@ -139,19 +139,20 @@ class AttendancesController < ApplicationController
     render json: json_data
   end
 
-  def month_chart
-    g = if params[:size] && params[:size].to_i <= 1280
-          if params[:size] =~ /^\d+x\d+$/
-            AttendanceHistoryGraph.new.month_chart params[:year].to_i,
-                params[:month].to_i, params[:size]
-          else
-            AttendanceHistoryGraph.new.month_chart params[:year].to_i,
-                params[:month].to_i, params[:size].to_i
-          end
-        else
-          AttendanceHistoryGraph.new.month_chart
-        end
-    send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Oppmøtehistorikk.png')
+  def month_chart; end
+
+  def month_chart_data
+    year = params[:year].to_i
+    month = params[:month].to_i
+    json_data = Rails.cache
+        .fetch("attendances/month_chart_data/#{year}/#{month}/#{Attendance.maximum(:updated_at)}") do
+      data, _dates = AttendanceHistoryGraph.month_chart_data(year, month)
+      expanded_data = data.map do |name, values, color|
+        { name: name, data: Hash[values.sort], color: color }
+      end
+      expanded_data.to_json
+    end
+    render json: json_data
   end
 
   def announce
@@ -328,17 +329,18 @@ class AttendancesController < ApplicationController
     render layout: 'print'
   end
 
-  def month_per_year_chart
-    size = if params[:size] && params[:size].to_i <= 1600
-             if params[:size] =~ /^\d+x\d+$/
-               params[:size]
-             else
-               params[:size].to_i
-             end
-           else
-             '800x600'
-           end
-    g = AttendanceHistoryGraph.new.month_per_year_chart params[:month].to_i, size
-    send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Oppmøtehistorikk.png')
+  def month_per_year_chart; end
+
+  def month_per_year_chart_data
+    month = params[:month].to_i
+    json_data = Rails.cache
+        .fetch("attendances/month_per_year_chart_data/#{month}/#{Attendance.maximum(:updated_at)}") do
+      data, _years = AttendanceHistoryGraph.month_per_year_chart_data(month)
+      expanded_data = data.map do |name, values, color|
+        { name: name, data: Hash[values], color: color }
+      end
+      expanded_data.to_json
+    end
+    render json: json_data
   end
 end
