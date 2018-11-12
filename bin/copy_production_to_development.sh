@@ -13,7 +13,7 @@ dropdb --if-exists $DB_NAME
 bin/rake db:create
 
 echo "Transferring database"
-time pg_dump $HEROKU_POSTGRESQL_CRIMSON_URL | psql $DB_NAME
+time pg_dump `heroku config:get --app=jujutsu-no HEROKU_POSTGRESQL_CRIMSON_URL` | psql $DB_NAME
 
 export JRUBY_OPTS=--dev
 RAILS_ENV=development rake db:migrate
