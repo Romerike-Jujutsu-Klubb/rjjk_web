@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require 'integration_test'
 
-class AttendanceWebpushesControllerTest < ActionDispatch::IntegrationTest
+class AttendanceWebpushesControllerTest < IntegrationTest
   setup do
     @attendance_webpush = attendance_webpushes(:one)
   end

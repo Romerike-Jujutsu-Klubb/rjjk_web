@@ -2,7 +2,7 @@
 
 require 'integration_test'
 
-class UserSystemTest < ActionDispatch::IntegrationTest
+class UserSystemTest < IntegrationTest
   def test_signup_and_verify
     post url_for(controller: :login, action: :signup), params: {
       user: { login: 'newuser',

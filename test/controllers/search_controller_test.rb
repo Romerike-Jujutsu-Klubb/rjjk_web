@@ -2,7 +2,7 @@
 
 require 'integration_test'
 
-class SearchControllerTest < ActionDispatch::IntegrationTest
+class SearchControllerTest < IntegrationTest
   test 'user query' do
     get '/search', params: { q: 'Uwe' }
     assert_response :success

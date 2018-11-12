@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'controller_test'
+require 'integration_test'
 
-class PracticesControllerTest < ActionDispatch::IntegrationTest
+class PracticesControllerTest < IntegrationTest
   setup do
     @practice = practices(:panda_2010_42)
     login(:admin)

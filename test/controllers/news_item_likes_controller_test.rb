@@ -2,10 +2,8 @@
 
 require 'integration_test'
 
-class NewsItemLikesControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @news_item_like = news_item_likes(:one)
-  end
+class NewsItemLikesControllerTest < IntegrationTest
+  setup { @news_item_like = news_item_likes(:one) }
 
   test 'should get index' do
     get news_item_likes_url

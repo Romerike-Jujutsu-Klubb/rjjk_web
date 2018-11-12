@@ -2,7 +2,7 @@
 
 require 'integration_test'
 
-class MapControllerTest < ActionDispatch::IntegrationTest
+class MapControllerTest < IntegrationTest
   test 'should get index' do
     get map_url
     assert_response :success
