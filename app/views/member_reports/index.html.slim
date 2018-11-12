@@ -8,6 +8,11 @@ h4.clearfix
 
 h2.mt-4 Medlemsrapport #{t(:date)[:month_names][@month]} #{@year}
 
+css:
+  tbody.no-title tr:first-of-type td {
+    border-top: 0;
+  }
+
 table.table
   thead
     tr
@@ -59,14 +64,15 @@ table.table
           = active.size
           = active_diff != 0 ? " (#{active_diff > 0 ? '+' : nil}#{active_diff})" : nil
         td.text-center
-          = passive.size
-          = passive_diff != 0 ? " (#{passive_diff > 0 ? '+' : nil}#{passive_diff})" : nil
+          - if passive.size > 0 || passive_diff != 0
+            a href='#' data-toggle=:popover data-trigger=:hover data-content=render('popover_list', title: nil, members: passive).to_str data-html=:true = passive.size
+            = passive_diff != 0 ? " (#{passive_diff > 0 ? '+' : nil}#{passive_diff})" : nil
         td.text-center
-          a href="#" data-toggle=:popover data-trigger=:hover data-content="<table class='table table-sm mb-0'><tbody>#{non_paying.map{|m| "<tr><td>#{m.name}</td></tr>"}.sort.join("\n")}</tbody></table>" data-html=:true = non_paying.size
+          a href='#' data-toggle=:popover data-trigger=:hover data-content="<table class='table table-sm mb-0'><tbody>#{non_paying.map{|m| "<tr><td>#{m.name}</td></tr>"}.sort.join("\n")}</tbody></table>" data-html=:true = non_paying.size
           = non_paying_diff != 0 ? " (#{non_paying_diff > 0 ? '+' : nil}#{non_diff})" : nil
         td.text-center = members.size
 
-= line_chart member_reports_history_graph_path, points: false, height: '24rem'
+= line_chart member_reports_history_graph_data_path, points: false, height: '24rem', title: 'Antall aktive medlemmer'
 
 / TODO(uwe): Display trial members, maybe with attendances
 

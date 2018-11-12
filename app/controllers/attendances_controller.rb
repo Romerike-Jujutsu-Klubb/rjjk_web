@@ -6,11 +6,6 @@ class AttendancesController < ApplicationController
   before_action :authenticate_user, only: USER_ACTIONS
   before_action :instructor_required, except: USER_ACTIONS
 
-  caches_page :history_graph, :month_chart, :month_per_year_chart
-  UPDATE_ACTIONS = %i[announce create destroy review update].freeze
-  cache_sweeper :attendance_image_sweeper, only: UPDATE_ACTIONS
-  cache_sweeper :grade_history_image_sweeper, only: UPDATE_ACTIONS
-
   def index
     @attendances = Attendance.includes(:practice)
         .order('practices.year DESC, practices.week DESC, attendances.created_at DESC').limit(100).to_a
@@ -127,18 +122,21 @@ class AttendancesController < ApplicationController
         .map { |g, ats| [g, ats.group_by(&:member)] }]
   end
 
-  def history_graph
-    args = if params[:size] && params[:size].to_i <= 1280
-             if params[:size] =~ /^\d+x\d+$/
-               [params[:size]]
-             else
-               [params[:size].to_i]
-             end
-           else
-             []
-           end
-    g = AttendanceHistoryGraph.new.history_graph(*args)
-    send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Oppmøtehistorikk.png')
+  def history_graph; end
+
+  def history_graph_data
+    json_data = Rails.cache.fetch("attendances/history/#{Attendance.maximum(:updated_at)}") do
+      group_data, weeks, _labels = AttendanceHistoryGraph.history_graph_data
+      expanded_data = group_data.map do |label, values, _color|
+        next unless values
+
+        exp = weeks.zip(values).map { |(year, week), value| [Date.commercial(year, week, 1), value] }
+        { name: label, data: Hash[exp] }
+      end
+      expanded_data.compact.to_json
+    end
+
+    render json: json_data
   end
 
   def month_chart

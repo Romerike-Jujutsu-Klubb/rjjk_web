@@ -21,16 +21,6 @@ Rails.application.routes.draw do
   match 'login/signup', via: %i[get post]
   get 'login/welcome'
   get 'map' => 'map#index'
-  get 'member_reports' => 'member_reports#index'
-  get 'member_reports/age_chart(/:size)' => 'member_reports#age_chart', as: :member_reports_age_chart
-  get 'member_reports/grade_history_graph(/:size)' =>
-      'member_reports#grade_history_graph',
-      as: :member_reports_grade_history_graph
-  get 'member_reports/grade_history_graph_percentage(/:size)' =>
-      'member_reports#grade_history_graph_percentage',
-      as: :member_reports_grade_history_graph_percentage
-  get 'member_reports/history_graph(/:size)' => 'member_reports#history_graph',
-      as: :member_reports_history_graph
   get 'pensum' => 'ranks#pensum'
   get 'pensum/pdf' => 'ranks#pdf'
   get 'search' => 'search#index'
@@ -48,7 +38,8 @@ Rails.application.routes.draw do
     collection do
       get :form
       get :form_index
-      get 'history_graph(/:size)', action: :history_graph
+      get 'history_graph', action: :history_graph
+      get 'history_graph_data', action: :history_graph_data
       get 'month_chart(/:year/:month/:size)', action: :month_chart
       get 'month_per_year_chart(/:month/:size)', action: :month_per_year_chart
       get :report
@@ -148,6 +139,21 @@ Rails.application.routes.draw do
   end
   resources :instructor_meetings
   resources :martial_arts
+
+  controller :member_reports do
+    get 'member_reports', action: :index
+    get 'member_reports/age_chart', action: :age_chart, as: :member_reports_age_chart
+    get 'member_reports/age_chart_data', action: :age_chart_data, as: :member_reports_age_chart_data
+    get 'member_reports/grade_history_graph(/:size)', action: :grade_history_graph,
+        as: :member_reports_grade_history_graph
+    get 'member_reports/grade_history_graph_data', action: :grade_history_graph_data,
+        as: :member_reports_grade_history_graph_data
+    get 'member_reports/history_graph(/:size)', action: :history_graph,
+        as: :member_reports_history_graph
+    get 'member_reports/history_graph_data', action: :history_graph_data,
+        as: :member_reports_history_graph_data
+  end
+
   resources :members do
     collection do
       get :email_list

@@ -4,7 +4,6 @@ require 'test_helper'
 
 class MemberAgeChartTest < ActiveSupport::TestCase
   def test_chart
-    skip 'gruff'
-    MemberAgeChart.chart
+    MemberAgeChart.data_set
   end
 end

@@ -40,13 +40,7 @@ class MemberGradeHistoryGraph
   end
 
   def history_graph(options = {})
-    size = options[:size] || 480
-    interval = options[:interval] || 8.weeks
-    step = (options[:step] || 3.months)
-    percentage = options[:percentage]
-
-    ranks = MartialArt.find_by(name: 'Kei Wa Ryu').ranks.reverse
-    ranks = ranks.first(9)[1..-1]
+    data, dates, percentage, _ranks, size, colors = data_set(options)
 
     g = Gruff::Line.new(size)
     g.theme_37signals
@@ -60,24 +54,9 @@ class MemberGradeHistoryGraph
     end
     g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
     g.hide_dots = true
-    g.colors = (%w[yellow yellow orange orange green green blue blue] * 2 +
-        %w[brown yellow orange green blue brown black black black]
-               ).last(ranks.size)
+    g.colors = colors
 
-    # first_date = 5.years.ago.to_date
-    first_date = Date.civil(2011, 1, 1)
-    dates = Date.current.step(first_date, -step / 1.day).to_a.reverse
-    sums = nil
-    data = ranks.map do |rank|
-      rank_totals = totals(rank, dates, interval, percentage)
-      sums = if sums
-               sums.zip(rank_totals).map { |s, t| s + t }
-             else
-               rank_totals
-             end
-    end
-
-    data.reverse.zip(ranks.reverse) { |d, rank| g.data(rank.name, d) }
+    data.each { |d, rank| g.data(rank.name, d) }
 
     g.minimum_value = 0
 
@@ -92,6 +71,35 @@ class MemberGradeHistoryGraph
     g.labels = labels
     g.y_axis_increment = 5
     g.to_blob
+  end
+
+  def data_set(options)
+    size = options[:size] || 480
+    interval = options[:interval] || 8.weeks
+    step = (options[:step] || 3.months)
+    percentage = options[:percentage]
+
+    ranks = MartialArt.find_by(name: 'Kei Wa Ryu').ranks.reverse
+    ranks = ranks.first(9)[1..-1]
+    colors = (%w[yellow yellow orange orange green green blue blue] * 2 +
+        %w[brown yellow orange green blue brown black black black]
+             ).last(ranks.size)
+
+    # first_date = 5.years.ago.to_date
+    first_date = Date.civil(2011, 1, 1)
+    dates = Date.current.step(first_date, -step / 1.day).to_a.reverse
+    sums = nil
+    ranks_data = ranks.map do |rank|
+      rank_totals = totals(rank, dates, interval, percentage)
+      sums = if sums
+               sums.zip(rank_totals).map { |s, t| s + t }
+             else
+               rank_totals
+             end
+    end
+
+    data = Hash[ranks.reverse.zip(ranks_data.reverse)]
+    [data, dates, percentage, ranks, size, colors]
   end
 
   private

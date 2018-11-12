@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class MemberReportsController < ApplicationController
-  caches_page :age_chart, :history_graph, :grade_history_graph, :grade_history_graph_percentage
-
   def index
     @date = if params[:year] && params[:month]
               Date.new(params[:year].to_i, params[:month].to_i, 1)
@@ -19,37 +17,44 @@ class MemberReportsController < ApplicationController
     @members_out = @members_before - @members_after
   end
 
-  def history_graph
-    data, dates = MemberHistoryGraph.data_set
-    expanded_data = data.map do |name, values|
-      { name: name, data: Hash[dates.zip(values)] }
+  def history_graph_data
+    json_data = Rails.cache.fetch("member_reports/history_graph_data/#{Member.maximum(:updated_at)}") do
+      data, dates = MemberHistoryGraph.data_set
+      expanded_data = data.map do |name, values|
+        { name: name, data: Hash[dates.zip(values)] }
+      end
+      expanded_data.to_json
     end
 
-    render json: expanded_data.to_json
+    render json: json_data
   end
 
-  def grade_history_graph
-    g = if params[:size] && params[:size].to_i <= 1280
-          MemberGradeHistoryGraph.new.history_graph size: params[:size].to_i,
-                                                    interval: params[:interval]&.to_i&.days,
-                                                    step: params[:step].try(:to_i).try(:days),
-                                                    percentage: params[:percentage].try(:to_i)
-        else
-          MemberGradeHistoryGraph.new.history_graph
-        end
-    send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_MedlemsGradsHistorikk.png')
+  def grade_history_graph; end
+
+  def grade_history_graph_data
+    opts = { interval: params[:interval]&.to_i&.days, step: params[:step].try(:to_i).try(:days),
+             percentage: params[:percentage].try(:to_i) }
+    cache_key = "member_reports/grade_history_graph_data/#{opts.hash}/#{Member.maximum(:updated_at)}"
+    json_data = Rails.cache.fetch(cache_key) do
+      data, dates, _percentage = MemberGradeHistoryGraph.new.data_set(opts)
+      expanded_data = data.map do |rank, values|
+        { name: rank.name, data: Hash[dates.zip(values)] }
+      end
+      expanded_data.reverse.to_json
+    end
+
+    render json: json_data
   end
 
-  def grade_history_graph_percentage
-    grade_history_graph
-  end
+  def age_chart; end
 
-  def age_chart
-    g = if params[:size] && params[:size].to_i <= 1280
-          MemberAgeChart.chart params[:size].to_i
-        else
-          MemberAgeChart.chart
-        end
-    send_data(g, disposition: 'inline', type: 'image/png', filename: 'RJJK_Aldersfordeling.png')
+  def age_chart_data
+    json_data = Rails.cache.fetch("xmember_reports/age_chart_data/#{Member.maximum(:updated_at)}") do
+      age_data, age_groups = MemberAgeChart.data_set
+      expanded_data = Hash[age_groups.zip(age_data).map { |group, value| [group.to_s, value] }]
+      expanded_data.to_json
+    end
+
+    render json: json_data
   end
 end

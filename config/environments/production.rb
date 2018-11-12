@@ -30,7 +30,7 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass
   config.assets.js_compressor = :uglifier
   config.cache_classes = true
-  # config.cache_store = :mem_cache_store
+  config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] } if ENV['REDIS_URL']
   config.consider_all_requests_local = false
   config.eager_load = true
   config.force_ssl = true

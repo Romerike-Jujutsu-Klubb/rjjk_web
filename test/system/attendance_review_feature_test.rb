@@ -6,7 +6,6 @@ class AttendanceReviewFeatureTest < FeatureTest
   setup { screenshot_section :attendance }
 
   def test_review_displays_old_attendance
-    skip 'gruff'
     screenshot_group :review
     visit_with_login "/attendances/review/2013/41/#{group_schedules(:voksne_thursday).id}/I",
         redirected_path: '/mitt/oppmote/466112031'

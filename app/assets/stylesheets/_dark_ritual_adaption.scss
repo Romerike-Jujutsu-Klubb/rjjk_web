@@ -75,31 +75,38 @@ body:not(.wide) {
   margin-bottom: 1em;
 }
 
-div.main_right > div.padded > div {
-  margin-bottom: 1em;
-}
+div.main_right {
+  > div.padded > div {
+    margin-bottom: 1em;
+  }
 
-div.main_right > .row > div {
-  max-height: 100vh;
-}
+  > .row > div {
+    max-height: 100vh;
+  }
 
-div.main_right div.events p {
-  padding: 0;
-}
+  div.events p {
+    padding: 0;
+  }
 
-div.main_right ul.controls {
-  padding-bottom: 0;
-  padding-left: 0;
-  width: 100%;
-}
+  ul.controls {
+    padding-bottom: 0;
+    padding-left: 0;
+    width: 100%;
+  }
 
-div.main_right ul {
-  margin: 0 0 1rem 0;
-  padding-left: 26px;
-}
+  ul {
+    margin: 0 0 1rem 0;
+    padding-left: 26px;
+  }
 
-.main_right form[role=search] {
-  margin-bottom: 10px
+  form[role=search] {
+    margin-bottom: 10px
+  }
+
+  canvas.chartjs-render-monitor {
+    @extend .bg-white;
+    @extend .rounded;
+  }
 }
 
 .post {

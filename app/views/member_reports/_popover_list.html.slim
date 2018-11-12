@@ -1,5 +1,6 @@
 table.table.table-sm.mb-0
-  thead: tr: th.border-top-0 = title
-  tbody
+  - if title
+    thead: tr: th.border-top-0 = title
+  tbody class=('no-title' unless title)
     - members.sort_by(&:name).each do |member|
       tr: td #{member.name} (#{member.age} år)
