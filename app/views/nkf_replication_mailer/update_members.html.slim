@@ -38,10 +38,10 @@
 
 - if @errors.any?
   h2 Feil (#{@errors.size})
-  - @errors.each do |operation, record, exception|
+  - @errors.each do |operation, exception, record|
     h3 Operation:
-    =< operation
+    = operation
     h3 Record:
-    =< record.inspect.html_safe
+    = record.inspect
     h3 Exception:
-    =< exception.to_s
+    = exception.to_s

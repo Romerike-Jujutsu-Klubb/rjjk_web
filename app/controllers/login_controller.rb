@@ -63,7 +63,9 @@ class LoginController < ApplicationController
     end
   end
 
-  def login_link_message_sent; end
+  def login_link_message_sent
+    back_or_redirect_to root_path if current_user && !flash[:message]
+  end
 
   def signup
     return if generate_blank_form
