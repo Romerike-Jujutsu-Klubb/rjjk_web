@@ -31,11 +31,26 @@ module SystemTestHelper
   included do
     setup { Timecop.travel TEST_TIME }
     teardown do
-      # visit logout_path
-      # find('.alert button.close').click
-      # open_menu
-      # find('a', text: 'Logg inn')
+      visit logout_path
+      find('.alert button.close').click
+      open_menu
+      find('a', text: 'Logg inn')
+      # FIXME(uwe): Is this necessary?
       Capybara.reset_sessions!
+      clear_cookies
+    end
+  end
+
+  def clear_cookies
+    browser = Capybara.current_session.driver.browser
+    if browser.respond_to?(:clear_cookies)
+      # Rack::MockSession
+      browser.clear_cookies
+    elsif browser.respond_to?(:manage) && browser.manage.respond_to?(:delete_all_cookies)
+      # Selenium::WebDriver
+      browser.manage.delete_all_cookies
+    else
+      raise "Don't know how to clear cookies. Weird driver?"
     end
   end
 
