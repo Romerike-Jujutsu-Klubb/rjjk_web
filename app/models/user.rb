@@ -266,6 +266,10 @@ class User < ApplicationRecord
     [address, postal_code, 'Norway'].select(&:present?).join(', ')
   end
 
+  def contact_user_was
+    @old_contact_user ||= contact_user_id_was && User.find(contact_user_id_was)
+  end
+
   def contact_info?
     emails.present? || phones.present?
   end
@@ -275,7 +279,7 @@ class User < ApplicationRecord
   end
 
   def contact_email_was
-    contact_user&.email_was || email_was || emails_was&.first || billing_user&.email_was ||
+    contact_user_was&.email_was || email_was || emails_was&.first || billing_user_was&.email_was ||
         'post@jujutsu.no'
   end
 

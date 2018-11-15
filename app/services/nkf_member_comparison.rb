@@ -4,20 +4,21 @@ class NkfMemberComparison
   attr_reader :errors, :member_changes, :members, :new_members, :orphan_members,
       :orphan_nkf_members, :outgoing_changes
 
-  def initialize
-    load_changes
+  def initialize(member_id = nil)
+    load_changes(member_id)
   end
 
   def any?
     [@new_members, @member_changes, @errors].any?(&:present?)
   end
 
-  private def load_changes
+  private def load_changes(member_id)
     @orphan_nkf_members = NkfMember.where(member_id: nil).order(:fornavn, :etternavn, :id).to_a
     @orphan_members = NkfMember.find_free_members
     @members = []
-    nkf_members = NkfMember.where('member_id IS NOT NULL').order(:fornavn, :etternavn, :id).to_a
-    nkf_members.each do |nkfm|
+    base_query = NkfMember.order(:fornavn, :etternavn, :id)
+    query = member_id ? base_query.where(member_id: member_id) : base_query.where.not(member_id: nil)
+    query.each do |nkfm|
       member = nkfm.member
       relations = assign_nkf_attributes(member)
       @members << member if relations.any?(&:changed?)
@@ -34,12 +35,6 @@ class NkfMemberComparison
     @member_changes = @members.map do |m|
       sync_member_with_agent(agent, front_page, m)
     end.compact
-  end
-
-  def sync_member(member)
-    agent, front_page = setup_sync
-    assign_nkf_attributes(member)
-    sync_member_with_agent(agent, front_page, member)
   end
 
   private def assign_nkf_attributes(member)
