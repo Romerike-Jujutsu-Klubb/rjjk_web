@@ -4,8 +4,8 @@ class LoginController < ApplicationController
   EMAIL_COOKIE_NAME =
       :"#{'rjjk_' if Rails.env.development?}email#{"_#{Rails.env}" unless Rails.env.production?}"
 
-  before_action :authenticate_user, except: %i[forgot_password login_link_form login_with_password
-                                               logout send_login_link signup]
+  before_action :authenticate_user, except: %i[forgot_password login_link_form login_link_message_sent
+                                               login_with_password logout send_login_link signup]
 
   def login_with_password
     return if generate_blank_form
@@ -44,8 +44,14 @@ class LoginController < ApplicationController
           User.transaction do
             users.each { |user| UserMailer.login_link(user).store(user, tag: :login_link) }
           end
-          flash.notice = "En e-post med innloggingslenke er sendt til #{escaped_email}."
-          back_or_redirect_to '/'
+          message = "En e-post med innloggingslenke er sendt til #{escaped_email}."
+          if current_user
+            flash.notice = message
+            back_or_redirect_to login_link_message_sent_path
+          else
+            flash[:message] = message
+            redirect_to login_link_message_sent_path
+          end
         else
           flash.notice = 'Du er allerede logget på.'
           redirect_to :login
@@ -56,6 +62,8 @@ class LoginController < ApplicationController
       end
     end
   end
+
+  def login_link_message_sent; end
 
   def signup
     return if generate_blank_form

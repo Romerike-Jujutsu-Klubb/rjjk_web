@@ -10,16 +10,6 @@ Rails.application.routes.draw do
   get 'attendances/plan' # must be after "mitt/oppmote"
   post 'attendances/announce(/:year/:week/:group_schedule_id)/:status(/:member_id)' =>
       'attendances#announce'
-  get 'login/change_password'
-  post 'login/change_password'
-  get 'login/forgot_password'
-  post 'login/forgot_password'
-  match 'login/password' => 'login#login_with_password', as: :login_password, via: %i[get post]
-  get 'logout' => 'login#logout', as: :logout
-  get 'login' => 'login#login_link_form', as: :login
-  post 'login' => 'login#send_login_link', as: :send_login_link
-  match 'login/signup', via: %i[get post]
-  get 'login/welcome'
   get 'map' => 'map#index'
   get 'pensum' => 'ranks#pensum'
   get 'pensum/pdf' => 'ranks#pdf'
@@ -74,6 +64,19 @@ Rails.application.routes.draw do
     get :confirm, on: :member
     get :decline, on: :member
   end
+
+  controller :login do
+    match 'login/change_password', action: :change_password, via: %i[get post], as: :change_password
+    match 'login/forgot_password', action: :forgot_password, via: %i[get post], as: :forgot_password
+    get 'login/link_message_sent', action: :login_link_message_sent, as: :login_link_message_sent
+    match 'login/password', action: :login_with_password, via: %i[get post], as: :login_password
+    match 'login/signup', via: %i[get post]
+    get 'login/welcome'
+    get 'login', action: :login_link_form, as: :login
+    post 'login', action: :send_login_link, as: :send_login_link
+    get 'logout', action: :logout, as: :logout
+  end
+
   resources :correspondences
   resources :elections
   resources :embus do
