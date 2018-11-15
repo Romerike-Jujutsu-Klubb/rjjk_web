@@ -8,7 +8,7 @@ class NkfMember < ApplicationRecord
     antall_etiketter_1: {},
     betalt_t_o_m__dato: {},
     created_at: {},
-    epost: { map_to: { user: :contact_email }, map_from: [{ user: :email },{ user: :contact_user_id }],
+    epost: { map_to: { user: :contact_email }, map_from: [{ user: :email }, { user: :contact_user_id }],
              form_field: :frm_48_v10 },
     epost_faktura: { map_to: { billing: :email }, form_field: :frm_48_v22 },
     etternavn: { map_to: { user: :last_name }, form_field: :frm_48_v04 },

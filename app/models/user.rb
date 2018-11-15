@@ -267,7 +267,7 @@ class User < ApplicationRecord
   end
 
   def contact_user_was
-    @old_contact_user ||= contact_user_id_was && User.find(contact_user_id_was)
+    @contact_user_was ||= contact_user_id_was && User.find(contact_user_id_was)
   end
 
   def contact_info?

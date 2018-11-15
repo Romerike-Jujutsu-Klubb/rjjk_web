@@ -73,8 +73,14 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
       c.sync
     end
     assert_equal([], c.errors)
-    assert_equal([members(:lars), members(:sebastian), members(:uwe)], c.members)
-    assert_nil c.member_changes
+    assert_equal([members(:lars)], c.members)
+    assert_equal [[lars, {
+      'joined_on' => [Date.new(2007, 6, 21), Date.new(2001, 4, 1)],
+      'user' => { 'birthdate' => [Date.new(1967, 6, 21), Date.new(1967, 3, 1)],
+                  'email' => %w(lars@example.com lars@example.net) },
+      'billing' => { 'email' => %w(long_user@example.com newbie@example.com) },
+    }]],
+        c.member_changes
     assert_equal([
       [members(:lars), {
         { billing: :email } => { 'newbie@example.com' => 'long_user@example.com' },
@@ -83,7 +89,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
         { user: :birthdate } => { Date.new(1967, 3, 1) => Date.new(1967, 6, 21) },
       }],
     ], c.outgoing_changes)
-    assert_nil c.new_members
+    assert_equal [nkf_members(:erik).member], c.new_members
     assert_equal([members(:newbie)], c.orphan_members)
     assert_equal([nkf_members(:erik)], c.orphan_nkf_members)
   end
