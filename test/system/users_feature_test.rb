@@ -18,9 +18,9 @@ class UsersFeatureTest < FeatureTest
   end
 
   def test_send_login_link
-    visit_with_login user_path(users(:lars))
+    visit_with_login user_path(id(:lars))
     click_link 'Send e-post med login link'
-    assert_current_path login_link_message_sent_path
+    assert_current_path user_path(id(:lars))
     find '.alert-warning p', text: 'En e-post med innloggingslenke er sendt til lars@example.com.'
   end
 end
