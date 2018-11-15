@@ -25,12 +25,12 @@ html lang="nb"
         = link_to image_tag('rjjk_logo_plus_txt_320.png', id: :logo_img), '/'
     .row.fixed-top.container-fluid.px-0.mx-auto style='top:#{@content_width ? 2 : 1}px;left:1px;pointer-events:none'
       .col style="margin-right:2px"
-        .alert.alert-danger.alert-dismissible.fade.show.w-100.mt-1.mt-md-3 class=(:invisible unless flash.alert) role="alert" style='pointer-events:auto;font-size:1rem;line-height:1.5 !important;font:normal 1.0rem Verdana, sans-serif'
+        .alert.alert-danger.alert-dismissible.fade.show.w-100.mt-1.mt-md-3 class=(:invisible unless flash.alert) role="alert" style='pointer-events:auto;line-height:1.5 !important;font:normal 1.0rem Verdana, sans-serif'
           button.close type="button" data-dismiss="alert" aria-label="Close"
             span aria-hidden="true" &times;
           = textalize flash.alert || '&nbsp;'
         - if flash[:notice]
-          .alert.alert-warning.alert-dismissible.fade.show.w-100.mt-3 role="alert" style='font-size:1rem;line-height:1.5 !important;font:normal 1.0rem Verdana,sans-serif;pointer-events:auto'
+          .alert.alert-warning.alert-dismissible.fade.show.w-100.mt-3 role="alert" style='line-height:1.5 !important;font:normal 1.0rem Verdana,sans-serif;pointer-events:auto'
             button.close type="button" data-dismiss="alert" aria-label="Close"
               span aria-hidden="true" &times;
             = textalize flash[:notice]
