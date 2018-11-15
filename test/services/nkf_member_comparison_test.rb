@@ -77,8 +77,8 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
     assert_equal [[lars, {
       'joined_on' => [Date.new(2007, 6, 21), Date.new(2001, 4, 1)],
       'user' => { 'birthdate' => [Date.new(1967, 6, 21), Date.new(1967, 3, 1)],
-                  'email' => %w(lars@example.com lars@example.net) },
-      'billing' => { 'email' => %w(long_user@example.com newbie@example.com) },
+                  'email' => %w[lars@example.com lars@example.net] },
+      'billing' => { 'email' => %w[long_user@example.com newbie@example.com] },
     }]],
         c.member_changes
     assert_equal([
