@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module SystemTestHelper
+  extend ActiveSupport::Concern
+
   WINDOW_SIZE = [1024, 768].freeze
 
   # options explained https://peter.sh/experiments/chromium-command-line-switches/
@@ -26,13 +28,23 @@ module SystemTestHelper
     Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
   end
 
+  included do
+    setup { Timecop.travel TEST_TIME }
+    teardown do
+      # visit logout_path
+      # find('.alert button.close').click
+      # open_menu
+      # find('a', text: 'Logg inn')
+      Capybara.reset_sessions!
+    end
+  end
+
   def visit_with_login(path, redirected_path: path, user: :admin)
     visit path
-    if current_path == '/login'
-      click_on 'logge på med passord'
-      assert_current_path login_password_path
-      fill_login_form(user)
-    end
+    assert_current_path '/login'
+    click_on 'logge på med passord'
+    assert_current_path login_password_path
+    fill_login_form(user)
     assert_current_path redirected_path
   end
 

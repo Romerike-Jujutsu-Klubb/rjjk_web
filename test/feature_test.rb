@@ -20,9 +20,6 @@ class FeatureTest < ActionDispatch::IntegrationTest
     Capybara::Screenshot::Diff.area_size_limit = 18
   end
   Capybara.default_max_wait_time = 30
-
-  setup { Timecop.travel TEST_TIME }
-  teardown { Capybara.reset_sessions! }
 end
 
 if Capybara.default_driver == :chrome
