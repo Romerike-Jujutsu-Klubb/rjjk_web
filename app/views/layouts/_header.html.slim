@@ -1,16 +1,4 @@
 .header
-  - if flash[:notice]
-    .fixed-bottom.mx-3.text-left style='position: absolute;font-size:1rem;line-height:1.5'
-      .alert.alert-warning.alert-dismissible.fade.show role="alert"
-        button.close type="button" data-dismiss="alert" aria-label="Close"
-          span aria-hidden="true" &times;
-        = textalize flash[:notice]
-  - if flash.alert
-    .fixed-bottom.mx-3.text-left style='position: absolute;font-size:1rem;line-height:1.5'
-      .alert.alert-danger.alert-dismissible.fade.show role="alert"
-        button.close type="button" data-dismiss="alert" aria-label="Close"
-          span aria-hidden="true" &times;
-        = textalize flash.alert
   i#navBtn.fa.fa-navicon.btn.btn-secondary.my-2.mx-1.mx-sm-2.float-left
 
   .d-none.d-md-block.mt-md-5.mb-1 Romerike Jujutsu Klubb
