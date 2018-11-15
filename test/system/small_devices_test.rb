@@ -9,11 +9,20 @@ Capybara::Node::Element.class_eval do
 end
 
 class SmallDevicesTest < FeatureTest
-  setup { screenshot_section :small_devices }
+  SMALL_WINDOW_SIZE = [412, 732].freeze
+
+  setup do
+    screenshot_section :small_devices
+    Capybara::Screenshot.window_size = SMALL_WINDOW_SIZE
+    Capybara.current_session.current_window.resize_to(*SMALL_WINDOW_SIZE)
+  end
+
+  teardown do
+    Capybara::Screenshot.window_size = SystemTestHelper::WINDOW_SIZE
+  end
 
   test 'front_page' do
     screenshot_group :front_page
-    Capybara.current_session.current_window.resize_to(412, 732)
     visit root_path
     assert_selector 'h1', text: 'Velkommen'
     screenshot :index
