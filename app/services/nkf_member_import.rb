@@ -86,29 +86,17 @@ class NkfMemberImport
   end
 
   def add_waiting_kid(nkf_agent, import_rows, dc)
-    details_body = nil
-    3.times do
-      details_body = nkf_agent.get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}").body
-      break if details_body.present?
-
-      logger.error 'Empty response when getting waiting KID'
-    end
-    unless details_body =~
-          /class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
-      raise "Could not find member id:\n#{details_body.inspect}"
+    details_page = nkf_agent.get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}")
+    details_body = details_page.body
+    unless details_body =~ /class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
+      raise "Could not find member id:\n#{details_page.code}\n#{details_body.inspect}"
     end
 
     member_id = Regexp.last_match(1)
-    active =
-        if details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/
-          true
-        else
-          false
-        end
-    waiting_kid =
-        if details_body =~ %r{<span class="kid_1">(\d+)</span><span class="kid_2">(\d+)</span>}
-          "#{Regexp.last_match(1)}#{Regexp.last_match(2)}"
-        end
+    active = (details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/)
+    if details_body =~ %r{<span class="kid_1">(\d+)</span><span class="kid_2">(\d+)</span>}
+      waiting_kid = "#{Regexp.last_match(1)}#{Regexp.last_match(2)}"
+    end
     raise 'Both Active status and waiting kid were found' if active && waiting_kid
     raise "Neither active status nor waiting kid were found:\n#{details_body}" if !active && !waiting_kid
 

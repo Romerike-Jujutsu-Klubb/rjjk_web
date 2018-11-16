@@ -88,7 +88,14 @@ class NkfAgent
   def get(url)
     with_retries do
       url = "#{APP_PATH}/#{url}" unless url.start_with?(APP_PATH)
-      thread_local_agent.get(url)
+      response = thread_local_agent.get(url)
+      if response.body == <<~BAD_BODY
+        An error occurred while processing the request. Try refreshing your browser. If the problem persists contact the site administrator'
+      BAD_BODY
+        raise Mechanize::ResponseReadError
+      end
+
+      response
     end
   end
 
