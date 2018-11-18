@@ -20,6 +20,6 @@ class StatusController < ApplicationController
 
   def gc
     GC.start
-    redirect_to :status_index
+    redirect_to :status, notice: 'GC started.'
   end
 end

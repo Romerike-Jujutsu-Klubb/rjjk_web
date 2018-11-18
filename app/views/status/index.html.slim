@@ -7,10 +7,10 @@ ul
 
 - if ENV['OBJECT_SPACE'] == 'ENABLED'
   h3 Heap dumps
-  a href=gc_status_index_path GC
+  a href=status_gc_path GC
   ul
     - @heap_dumps.each do |hd, size|
-      li: a href=hd #{hd} (#{size / (1024 * 1024)}mb)
-    li: a href=heap_dump_status_index_path New heap dump
+      li: a href=hd download=true #{hd} (#{size / (1024 * 1024)}mb)
+    li: a href=status_heap_dump_path download=true New heap dump
 
   p: a href='http://tenderlove.github.io/heap-analyzer' target=:heap_analyser Heap Analyser
