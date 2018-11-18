@@ -4,6 +4,12 @@ ul
   li: a href='https://www.ssllabs.com/ssltest/analyze.html?d=jujutsu.no' https://www.ssllabs.com/ssltest/analyze.html?d=jujutsu.no
   li: a href='https://www.ssllabs.com/ssltest/analyze.html?d=www.jujutsu.no' https://www.ssllabs.com/ssltest/analyze.html?d=www.jujutsu.no
   li: a href='https://www.ssllabs.com/ssltest/analyze.html?d=beta.jujutsu.no' https://www.ssllabs.com/ssltest/analyze.html?d=beta.jujutsu.no
-  - if ENV['OBJECT_SPACE'] == 'ENABLED'
-    li: a href=status_heap_dump_path Heap dump
 
+- if ENV['OBJECT_SPACE'] == 'ENABLED'
+  h3 Heap dumps
+  ul
+    - @heap_dumps.each do |hd|
+      li: a href=hd = hd
+    li: a href=status_heap_dump_path New heap dump
+
+  p: a href='http://tenderlove.github.io/heap-analyzer' Heap Analyser

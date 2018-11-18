@@ -1,12 +1,19 @@
 # frozen_string_literal: true
 
-class StatusController < ApplicationController
-  PUBLIC_FILE = '/heap.json'
+# http://tenderlove.github.io/heap-analyzer/
 
-  def index; end
+class StatusController < ApplicationController
+  HEAP_DUMP_PATH = "#{Rails.root}/public"
+  HEAP_DUMP_PREFIX = "heap_"
+  HEAP_DUMP_SUFFIX = ".json"
+
+  def index
+    @heap_dumps = Dir["#{HEAP_DUMP_PATH}/#{HEAP_DUMP_PREFIX}*#{HEAP_DUMP_SUFFIX}"].map{|f| f.split('/').last}
+  end
 
   def heap_dump
-    File.open("#{Rails.root}/public#{PUBLIC_FILE}", 'w') { |file| ObjectSpace.dump_all(output: file) }
-    redirect_to PUBLIC_FILE
+    public_file = "/#{HEAP_DUMP_PREFIX}#{Time.current.strftime('%F_%H%M')}#{HEAP_DUMP_SUFFIX}"
+    File.open("#{HEAP_DUMP_PATH}#{public_file}", 'w') { |file| ObjectSpace.dump_all(output: file) }
+    redirect_to public_file
   end
 end
