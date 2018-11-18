@@ -15,7 +15,6 @@ Rails.application.routes.draw do
   get 'pensum/pdf' => 'ranks#pdf'
   get 'search' => 'search#index'
   post 'send_grid/receive' => 'send_grid#receive'
-  get 'status' => 'status#index'
   get 'svar/:id', controller: :survey_requests, action: :answer_form
   patch 'svar/:id', controller: :survey_requests, action: :save_answers
   post 'svar/:id', controller: :survey_requests, action: :save_answers
@@ -217,6 +216,12 @@ Rails.application.routes.draw do
       get :image
     end
   end
+
+  controller :status do
+    get 'status', action: :index
+    get 'status/heap_dump', action: :heap_dump
+  end
+
   resources :survey_answer_translations
   resources :survey_answers
   resources :survey_questions
