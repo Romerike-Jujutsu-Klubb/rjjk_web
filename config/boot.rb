@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if ENV['OBJECT_SPACE'] == 'ENABLED'
-  puts 'Object space enabled.'
+  puts 'Object space enabled.' # rubocop: disable Rails/Output
   require 'objspace'
   ObjectSpace.trace_object_allocations_start
 end
