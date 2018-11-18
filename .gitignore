@@ -4,6 +4,7 @@
 /archive.tar.gz
 /coverage
 /log/*.log
+/public/heap.json
 /tmp
 
 # Ignore master key for decrypting credentials and more.
