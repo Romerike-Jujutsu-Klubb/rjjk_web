@@ -217,9 +217,11 @@ Rails.application.routes.draw do
     end
   end
 
-  controller :status do
-    get 'status', action: :index
-    get 'status/heap_dump', action: :heap_dump
+  resources :status, only: :index do
+    collection do
+      get :gc
+      get :heap_dump
+    end
   end
 
   resources :survey_answer_translations

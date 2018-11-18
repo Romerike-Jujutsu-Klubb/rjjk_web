@@ -17,4 +17,9 @@ class StatusController < ApplicationController
     File.open("#{HEAP_DUMP_PATH}#{public_file}", 'w') { |file| ObjectSpace.dump_all(output: file) }
     redirect_to public_file
   end
+
+  def gc
+    GC.start
+    redirect_to :status_index
+  end
 end
