@@ -9,7 +9,7 @@ class StatusController < ApplicationController
 
   def index
     @heap_dumps = Dir["#{HEAP_DUMP_PATH}/#{HEAP_DUMP_PREFIX}*#{HEAP_DUMP_SUFFIX}"]
-        .map { |f| f.split('/').last }
+        .map { |f| [f.split('/').last, File.size(f)] }
   end
 
   def heap_dump
