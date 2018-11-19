@@ -1,16 +1,24 @@
 # frozen_string_literal: true
 
-if defined?(Rails::Console)
-  Rails.logger.info('Disable scheduler since Console is defined.')
-elsif caller.none? { |l| l =~ /config.ru/ }
-  Rails.logger.info('Disable scheduler since we are not running as a rack application')
-elsif caller.any? { |l| l =~ %r{/lib/rake/task.rb:\d+:in `execute'} }
-  Rails.logger.info('Disable scheduler since we are running Rake')
-elsif !%w[development beta production].include?(Rails.env)
-  Rails.logger.info("Disable scheduler since env == #{Rails.env}")
-elsif ENV['DISABLE_SCHEDULER'].present?
-  Rails.logger.info("Disable scheduler since ENV['DISABLE_SCHEDULER'] is set")
-else
+reason =
+    if defined?(Rails::Console)
+      Rails.logger.info('Disable scheduler since Console is defined.')
+      :console
+    elsif caller.none? { |l| l =~ /config.ru/ }
+      Rails.logger.info('Disable scheduler since we are not running as a rack application')
+      :no_rack
+    elsif caller.any? { |l| l =~ %r{/lib/rake/task.rb:\d+:in `execute'} }
+      Rails.logger.info('Disable scheduler since we are running Rake')
+      :rack
+    elsif !%w[development beta production].include?(Rails.env)
+      Rails.logger.info("Disable scheduler since env == #{Rails.env}")
+      :bad_env
+    elsif ENV['DISABLE_SCHEDULER'].present?
+      Rails.logger.info("Disable scheduler since ENV['DISABLE_SCHEDULER'] is set")
+      :disabled
+    end
+
+unless reason
   begin
     scheduler =
         Rufus::Scheduler.new lockfile: "#{Rails.root}/tmp/rufus-scheduler.lock", max_work_threads: 1
@@ -71,7 +79,7 @@ else
     end
 
     # Admin Hourly
-    scheduler.cron('15 9-23 * * *') do
+    scheduler.cron('35 9-23 * * *') do
       Rails.application.executor.wrap { NkfSynchronizationJob.perform_now }
     end
     scheduler.cron('10 * * * *') do
