@@ -50,7 +50,8 @@ class GraduationsController < ApplicationController
     approval = load_current_user_approval
     return unless admin_or_censor_required(@graduation, approval)
 
-    @groups = Group.order(:from_age).includes(members: %i[attendances nkf_member user])
+    @groups = Group.order(:from_age)
+        .includes(members: [{ attendances: { practice: :group_schedule } }, :nkf_member, :user])
         .merge(Member.active(@graduation.held_on)).to_a
     @groups.unshift(@groups.delete(@graduation.group))
     @ranks = Rank.where(martial_art_id: @graduation.group.martial_art_id)

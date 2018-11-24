@@ -6,7 +6,8 @@ class GraduatesControllerTest < ActionController::TestCase
   fixtures :users, :members, :graduations, :ranks, :graduates
 
   def setup
-    @first_id = graduates(:lars_kyu_1).id
+    @graduate = graduates(:lars_kyu_1)
+    @first_id = @graduate.id
     login(:admin)
   end
 
@@ -50,15 +51,15 @@ class GraduatesControllerTest < ActionController::TestCase
 
   def test_destroy
     assert_nothing_raised do
-      Graduate.find(@first_id)
+      @graduate.reload
     end
 
     post :destroy, params: { id: @first_id }
     assert_response :redirect
-    assert_redirected_to action: :index
+    assert_redirected_to edit_graduation_path(@graduate.graduation_id)
 
     assert_raise(ActiveRecord::RecordNotFound) do
-      Graduate.find(@first_id)
+      @graduate.reload
     end
   end
 end

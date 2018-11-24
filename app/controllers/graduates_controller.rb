@@ -33,10 +33,7 @@ class GraduatesController < ApplicationController
       back_or_redirect_to @graduate.graduation
       return
     end
-    @graduate.rank_id ||= @graduate.member.next_rank(@graduate.graduation).id
-    @graduate.paid_graduation ||= true
-    @graduate.paid_belt ||= true
-    @graduate.passed = true if @graduate.passed.nil? && @graduate.graduation.group.school_breaks?
+    @graduate.populate_defaults!
     return unless admin_or_censor_required(@graduate.graduation)
 
     if @graduate.save
@@ -44,7 +41,7 @@ class GraduatesController < ApplicationController
       back_or_redirect_to action: :index
     else
       new
-      render action: :new
+      render action: :new, layout: !request.xhr?
     end
   end
 
@@ -107,7 +104,7 @@ class GraduatesController < ApplicationController
 
     @graduate.destroy
     respond_to do |format|
-      format.html { redirect_to action: :index }
+      format.html { back_or_redirect_to edit_graduation_path(@graduate.graduation) }
       format.js
     end
   end

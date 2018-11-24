@@ -1,0 +1,17 @@
+- graduation = graduates[0].graduation
+- move_right = graduates[0].passed != false && !graduation.approved?
+
+.col
+  h5 #{title} (#{graduates.size})
+  table.table.table-sm
+    thead
+      tr
+        th
+        th Navn
+        - if graduation.locked? && !graduation.approved?
+          th
+        th Grad
+        - if move_right
+          th Fjern
+    tbody
+      = render partial: 'graduates/row', collection: graduates, as: :graduate, cached: true

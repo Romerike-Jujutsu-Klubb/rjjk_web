@@ -12,12 +12,20 @@ ruby:
   end
 
 tr id="graduate_#{graduate.id}"
+  - if !graduate.graduation.approved? && (graduate.new_record? || graduate.passed == false)
+    td
+      - if graduate.new_record?
+        a href=with_detour(graduates_path(graduate: { graduation_id: @graduate.graduation_id, member_id: graduate.member_id }), edit_graduation_path(@graduation, anchor: :graduates_tab)) title='Legg til' data-method=:post
+          i.fa.fa-arrow-left>
+      - elsif graduate.passed == false
+        = link_to({ controller: :graduates, action: :destroy, id: graduate.id }, method: :delete, remote: false) do
+          i.fa.fa-arrow-left title="Sett som kandidat"
   td
     = link_to "#{fn} #{ln}", :controller => :members, :action => :edit, :id => mbr.id
     - if below_minimum_age || not_in_rank_age || not_in_group_age
       '
       | (<span class="text-danger text-nowrap">#{member_age} år</span>)
-    - if graduate.changed?
+    - if graduate.persisted? && graduate.changed?
       '
       | &nbsp;<span class="text-danger">* IKKE LAGRET! *</span>
   - if graduate.graduation.locked? && !graduate.graduation.approved?
@@ -50,6 +58,9 @@ tr id="graduate_#{graduate.id}"
     - else
       - next_rank = mbr.next_rank(graduate.graduation)
       = form_for graduate, html: { remote: true } do |f|
+        - if graduate.new_record?
+          = f.hidden_field :graduation_id
+          = f.hidden_field :member_id
         = f.select :rank_id, @ranks.map { |r| [r.label + (r == next_rank ? ' *' : ''), r.id] }, {}, class: 'form-control form-control-sm', onchange: "$('#rank_btn_#{graduate.id}').click()"
         = f.submit id: "rank_btn_#{graduate.id}", class: 'sr-only'
 
@@ -62,7 +73,7 @@ tr id="graduate_#{graduate.id}"
           - if current_graduate
             div
               ' Har #{current_graduate.rank.name} fra
-              = link_to current_graduate.graduation.held_on, {controller: :graduations, action: :index, id: current_graduate.graduation.id}, class: 'text-danger'
+              = link_to current_graduate.graduation.held_on, edit_graduation_path(current_graduate.graduation_id), class: 'text-danger'
               | .
           - else
             div Har ingen grad fra før.
@@ -103,11 +114,15 @@ tr id="graduate_#{graduate.id}"
           div.text-danger Deltakeren er utmeldt siden #{graduate.member.left_on}.
 
   - unless graduate.graduation.approved?
-    td
-      = link_to({ controller: :graduates, action: :destroy, id: graduate.id }, method: :delete, remote: true, data: {confirm: 'Er du sikker på at du vil fjerne denne kandidaten fra graderingen?'}) do
-        i.fa.fa-trash.text-danger title="Slett"
+    td.text-center
+      - if graduate.new_record?
+        a href=with_detour(graduates_path(graduate: { graduation_id: @graduate.graduation_id, member_id: graduate.member_id, passed: false }), edit_graduation_path(@graduation, anchor: :graduates_tab)) data-method=:post
+          i.fa.fa-arrow-right
+      - elsif graduate.passed != false
+        = link_to({ controller: :graduates, action: :destroy, id: graduate.id }, method: :delete, remote: false) do
+          i.fa.fa-arrow-right.text-danger title="Fjern"
 
 javascript:
     $('#graduate_#{graduate.id}').find("form").on('ajax:beforeSend', function (event, xhr, settings) {
-        $('#graduate_#{graduate.id}').replaceWith('<tr id="graduate_#{graduate.id}"><td>#{graduate.member.name}</td><td></td><td>Oppdaterer...</td><td></td></tr>')
+        $('#graduate_#{graduate.id}').replaceWith('<tr id="graduate_#{graduate.id}"><td></td><td>#{graduate.member.name}</td><td>Oppdaterer...</td><td></td></tr>')
     });

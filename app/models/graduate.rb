@@ -18,6 +18,13 @@ class Graduate < ApplicationRecord
     end
   end
 
+  def populate_defaults!
+    self.rank_id ||= member.next_rank(graduation).id
+    self.paid_graduation ||= true
+    self.paid_belt ||= true
+    self.passed = true if passed.nil? && graduation.group.school_breaks?
+  end
+
   def training_start_date
     member.current_graduate(graduation.group.martial_art, graduation.held_on - 1).try(:graduation)
         .try(:held_on).try(:+, 1) ||
@@ -83,5 +90,11 @@ class Graduate < ApplicationRecord
 
   def current_rank_age
     member.current_rank_age(graduation.group.martial_art, graduation.held_on)
+  end
+
+  def cache_key
+    return super if persisted?
+
+    { class: self.class.name, graduation_id: graduation_id, member_id: member_id }
   end
 end

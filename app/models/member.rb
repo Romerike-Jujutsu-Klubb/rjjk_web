@@ -162,7 +162,8 @@ class Member < ApplicationRecord
     ma = graduation.group.try(:martial_art) || MartialArt.includes(:ranks).find_by(name: 'Kei Wa Ryu')
     current_rank = current_rank(ma, graduation.held_on)
     future_ranks = future_ranks(graduation.held_on, ma)
-    available_ranks = ma.ranks.to_a - future_ranks
+    all_ranks = ma.ranks.to_a.sort_by { |r| [r.group_id == graduation.group_id ? 0 : 1, r.position] }
+    available_ranks = all_ranks - future_ranks
     available_ranks.select! { |r| r.position > current_rank.position } if current_rank
     next_rank = available_ranks.find do |r|
       (r.group.from_age..r.group.to_age).cover?(age) &&
@@ -353,5 +354,11 @@ class Member < ApplicationRecord
 
   def to_s
     name
+  end
+
+  def to_graduate(graduation)
+    g = Graduate.new graduation: graduation, member: self
+    g.populate_defaults!
+    g
   end
 end

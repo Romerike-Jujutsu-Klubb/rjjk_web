@@ -45,6 +45,7 @@ nb:
         rank_id: Grad
       graduation:
         held_on: Dato
+        group_id: Gruppe
         group_notification: Gruppevarsel
       group:
         closed_on: Avsluttet
