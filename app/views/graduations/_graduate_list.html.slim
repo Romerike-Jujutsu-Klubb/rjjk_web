@@ -6,7 +6,8 @@
   table.table.table-sm
     thead
       tr
-        th
+        - unless graduation.approved?
+          th
         th Navn
         - if graduation.locked? && !graduation.approved?
           th
