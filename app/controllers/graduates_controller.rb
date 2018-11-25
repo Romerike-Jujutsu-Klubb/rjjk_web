@@ -22,11 +22,14 @@ class GraduatesController < ApplicationController
   end
 
   def new
-    @graduate ||= Graduate.new
+    @graduate ||= Graduate.new(params[:graduate])
     load_form_data
+    render action: :new, layout: !request.xhr?
   end
 
   def create
+    return new if params[:commit] == 'Preview'
+
     @graduate = Graduate.new(params[:graduate])
     if @graduate.member_id.blank?
       flash.notice = 'Velg en deltaker'
@@ -36,12 +39,11 @@ class GraduatesController < ApplicationController
     @graduate.populate_defaults!
     return unless admin_or_censor_required(@graduate.graduation)
 
-    if !@graduate.passed.nil? && @graduate.save
+    if @graduate.save
       flash[:notice] = 'Graduate was successfully created.'
       back_or_redirect_to action: :index
     else
       new
-      render action: :new, layout: !request.xhr?
     end
   end
 

@@ -62,7 +62,7 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
           = f.hidden_field :graduation_id
           = f.hidden_field :member_id
         = f.select :rank_id, @ranks.map { |r| [r.label + (r == next_rank ? ' *' : ''), r.id] }, {}, class: 'form-control form-control-sm', onchange: "$('#rank_btn_#{graduate.id || "m#{graduate.member_id}"}').click()"
-        = f.submit id: "rank_btn_#{graduate.id || "m#{graduate.member_id}"}", class: 'sr-only'
+        = f.submit 'Preview', id: "rank_btn_#{graduate.id || "m#{graduate.member_id}"}", class: 'sr-only'
 
       - graduated = graduate.member.graduates.find { |gr2| gr2 != graduate && gr2.passed && gr2.rank_id == graduate.rank_id }
       - if graduated
