@@ -1,0 +1,28 @@
+h5 #{title} (#{graduates.size})
+
+- if graduates.any?
+  - graduation = graduates[0].graduation
+  - move_right = graduates[0].passed != false && !graduation.approved?
+
+  table.table.table-sm
+    thead
+      tr
+        - if !graduation.approved? && (graduates[0].new_record? || graduates[0].passed == false)
+          th
+        th Navn
+        - if graduation.locked? && !graduation.approved?
+          th
+        th Grad
+        - if move_right
+          th Fjern
+    tbody
+      = render partial: 'graduates/row', collection: graduates, as: :graduate, cached: true
+  javascript:
+      $('#graduates_list_#{id}').show();
+- else
+  javascript:
+      $('#graduates_list_#{id}').hide();
+  - if id == :added
+    p.mt-3
+      ' Det er ikke lagt til noen deltakere på denne graderingen enda.
+      | Det er vanlig å legge til deltakerne 4-5 uker før gradering.

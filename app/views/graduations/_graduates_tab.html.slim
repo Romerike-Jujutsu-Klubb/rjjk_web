@@ -1,22 +1,31 @@
 .row.mt-3
-  - graduates = @graduation.graduates.select{|g| g.passed != false}.sort_by { |gr| [-gr.rank.position, gr.member.name] }
-  - if graduates.any?
-    = render 'graduate_list', title: 'Deltakere', graduates: graduates
-  - else
-    col
-      p.mt-3
-        ' Det er ikke lagt til noen deltakere på denne graderingen enda.
-        | Det er vanlig å legge til deltakerne 4-5 uker før gradering.
+  .col id="graduates_list_added"
+    .text-center.p-5
+      i.fa.fa-circle-o-notch.fa-spin.fa-5x.mb-3
+      br
+      | Et øyeblikk...
+  .col id="graduates_list_candidates"
+    .text-center.p-5
+      i.fa.fa-circle-o-notch.fa-spin.fa-5x.mb-3
+      br
+      | Et øyeblikk...
+  .col id="graduates_list_removed"
+    .text-center.p-5
+      i.fa.fa-circle-o-notch.fa-spin.fa-5x.mb-3
+      br
+      | Et øyeblikk...
 
-  - unless @graduation.approved?
-    - @excluded_members.each do |group, members|
-      - next unless group == @graduation.group
-      - members.reject!(&:passive?)
-      - next if members.empty?
-      = render 'graduate_list', title: 'Kandidater', graduates: members.map{|m| m.to_graduate(@graduation)}
-    - postponed_members = @graduation.graduates.select{|g| g.passed == false}.sort_by { |gr| -gr.rank.position }
-    - if postponed_members.any?
-      = render 'graduate_list', title: 'Skal ikke delta', graduates: postponed_members
+javascript:
+    function handleGraduatesListLoad(responseText, textStatus, req) {
+        if (textStatus == "error") {
+            tab.html('<div class="text-center text-danger" style="padding: 3em">Hoppsann!  Der gikk det galt.</div>');
+            tab.append('<pre>' + responseText + '</pre>');
+        }
+    }
+
+    $('#graduates_list_added').load('#{graduates_list_graduation_path(@graduation, :added)}', handleGraduatesListLoad);
+    $('#graduates_list_candidates').load('#{graduates_list_graduation_path(@graduation, :candidates)}', handleGraduatesListLoad);
+    $('#graduates_list_removed').load('#{graduates_list_graduation_path(@graduation, :removed)}', handleGraduatesListLoad);
 
 - if request.xhr?
   javascript:

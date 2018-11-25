@@ -15,13 +15,13 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
   - if !graduate.graduation.approved? && (graduate.new_record? || graduate.passed == false)
     td
       - if graduate.new_record?
-        a href=with_detour(graduates_path(graduate: { graduation_id: @graduate.graduation_id, member_id: graduate.member_id }), edit_graduation_path(graduate.graduation_id, anchor: :graduates_tab)) title='Legg til' data-method=:post
+        a href=with_detour(graduates_path(graduate: { graduation_id: graduate.graduation_id, member_id: graduate.member_id }), edit_graduation_path(graduate.graduation_id, anchor: :graduates_tab)) title='Legg til' data-method=:post
           i.fa.fa-arrow-left>
       - elsif graduate.passed == false
         = link_to({ controller: :graduates, action: :destroy, id: graduate.id }, method: :delete, remote: false) do
           i.fa.fa-arrow-left title="Sett som kandidat"
   td
-    = link_to "#{fn} #{ln}", :controller => :members, :action => :edit, :id => mbr.id
+    = link_to "#{fn} #{ln}", edit_member_path(mbr)
     - if below_minimum_age || not_in_rank_age || not_in_group_age
       '
       | (<span class="text-danger text-nowrap">#{member_age} år</span>)
@@ -116,7 +116,7 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
   - unless graduate.graduation.approved?
     td.text-center
       - if graduate.new_record?
-        a href=with_detour(graduates_path(graduate: { graduation_id: @graduate.graduation_id, member_id: graduate.member_id, passed: false }), edit_graduation_path(graduate.graduation_id, anchor: :graduates_tab)) data-method=:post
+        a href=with_detour(graduates_path(graduate: { graduation_id: graduate.graduation_id, member_id: graduate.member_id, passed: false }), edit_graduation_path(graduate.graduation_id, anchor: :graduates_tab)) data-method=:post
           i.fa.fa-arrow-right
       - elsif graduate.passed != false
         = link_to({ controller: :graduates, action: :destroy, id: graduate.id }, method: :delete, remote: false) do

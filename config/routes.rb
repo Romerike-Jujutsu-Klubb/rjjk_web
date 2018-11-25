@@ -109,7 +109,7 @@ Rails.application.routes.draw do
       get :censor_form_pdf
       get :certificates
       post :disapprove
-      get :graduates_tab
+      get 'graduates_list/:section', action: :graduates_list, as: :graduates_list
       post :lock
     end
   end

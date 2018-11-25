@@ -37,7 +37,7 @@ class GraduationsController < ApplicationController
 
   def edit
     @graduation = Graduation.for_edit.find(params[:id])
-    @approval = load_current_user_approval
+    @approval = load_current_user_approval(@graduation)
     return unless admin_or_censor_required(@graduation, @approval)
 
     @censor = Censor.new graduation_id: @graduation.id
@@ -45,23 +45,30 @@ class GraduationsController < ApplicationController
         @graduation.censors.map(&:member)
   end
 
-  def graduates_tab
-    @graduation = Graduation.for_edit.find(params[:id])
-    approval = load_current_user_approval
-    return unless admin_or_censor_required(@graduation, approval)
+  def graduates_list
+    graduation = Graduation.for_edit.find(params[:id])
+    return unless admin_or_censor_required(graduation, load_current_user_approval(graduation))
 
-    @groups = Group.order(:from_age)
-        .includes(members: [{ attendances: { practice: :group_schedule } }, :nkf_member, :user])
-        .merge(Member.active(@graduation.held_on)).to_a
-    @groups.unshift(@groups.delete(@graduation.group))
-    @ranks = Rank.where(martial_art_id: @graduation.group.martial_art_id)
-        .order(:position).to_a
-    included_members = @graduation.graduates.map(&:member)
-    @excluded_members = @groups
-        .map { |g| [g, g.members.sort_by(&:name) - included_members] }
-        .select { |_g, members| members.any? }
-    @graduate = Graduate.new(graduation_id: @graduation.id)
-    render partial: 'graduates_tab'
+    @ranks = Rank.where(martial_art_id: graduation.group.martial_art_id).order(:position).to_a
+    case params[:section]
+    when 'added'
+      graduates = graduation.graduates.reject { |g| g.passed == false }
+          .sort_by { |gr| [-gr.rank.position, gr.member.name] }
+      render 'graduate_list', layout: false,
+          locals: { id: :added, title: 'Deltakere', graduates: graduates }
+    when 'candidates'
+      graduation_members = graduation.graduates.map(&:member)
+      members = graduation.group.members.active(graduation.held_on)
+          .reject { |m| m.passive? graduation.held_on, graduation.group } - graduation_members
+      render 'graduate_list', layout: false, locals: {
+        id: :candidates, title: 'Kandidater', graduates: members.map { |m| m.to_graduate(graduation) }
+      }
+    when 'removed'
+      postponed_members = graduation.graduates.select { |g| g.passed == false }
+          .sort_by { |gr| -gr.rank.position }
+      render 'graduate_list', layout: false,
+          locals: { id: :removed, title: 'Skal ikke delta', graduates: postponed_members }
+    end
   end
 
   def update
@@ -203,8 +210,8 @@ class GraduationsController < ApplicationController
 
   private
 
-  def load_current_user_approval
-    @graduation.censors.select { |c| c.member == current_user.member }
+  def load_current_user_approval(graduation)
+    graduation.censors.select { |c| c.member == current_user.member }
         .max_by { |c| c.approved_grades_at ? 0 : 1 }
   end
 
