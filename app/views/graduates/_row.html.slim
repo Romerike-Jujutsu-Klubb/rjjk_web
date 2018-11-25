@@ -18,7 +18,7 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
         a href=with_detour(graduates_path(graduate: { graduation_id: graduate.graduation_id, member_id: graduate.member_id }), edit_graduation_path(graduate.graduation_id, anchor: :graduates_tab)) title='Legg til' data-method=:post
           i.fa.fa-arrow-left>
       - elsif graduate.passed == false
-        = link_to({ controller: :graduates, action: :destroy, id: graduate.id }, method: :delete, remote: false) do
+        a href=with_detour(graduate_path(graduate), edit_graduation_path(graduate.graduation_id, anchor: :graduates_tab)) data-method=:delete data-remote=false
           i.fa.fa-arrow-left title="Sett som kandidat"
   td
     = link_to "#{fn} #{ln}", edit_member_path(mbr)
