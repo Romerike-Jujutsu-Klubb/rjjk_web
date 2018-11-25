@@ -12,7 +12,7 @@ if Rails.env.test?
 
   namespace :test do
     desc 'Run Rubocop and all tests'
-    task full: %i[rubocop:auto_correct test test:system]
+    task full: %i[rubocop:auto_correct log:clear test test:system]
     # task(:test) { Rake::Task[:rubycritic].invoke }
 
     desc 'Run all tests except system tests'
