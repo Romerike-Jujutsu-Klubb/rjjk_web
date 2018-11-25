@@ -32,7 +32,6 @@ module SystemTestHelper
     setup { Timecop.travel TEST_TIME }
     teardown do
       visit logout_path
-      find('.alert button.close').click
       open_menu
       find('a', text: 'Logg inn')
       Capybara.reset_sessions!
@@ -91,7 +90,13 @@ module SystemTestHelper
     end
   end
 
+  def close_alerts
+    all('.alert button.close').each(&:click)
+    assert has_no_css?('.alert button.close')
+  end
+
   def open_menu
+    close_alerts
     find('#navBtn').click
   end
 

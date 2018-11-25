@@ -69,7 +69,6 @@ module UserSystem
   # a popup window might just close itself for instance
   def access_denied(message = 'Access denied!')
     flash.alert = message
-    flash.notice = message
     store_detour(params)
     redirect_to login_path
   end
