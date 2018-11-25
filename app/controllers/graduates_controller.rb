@@ -36,7 +36,7 @@ class GraduatesController < ApplicationController
     @graduate.populate_defaults!
     return unless admin_or_censor_required(@graduate.graduation)
 
-    if @graduate.save
+    if !@graduate.passed.nil? && @graduate.save
       flash[:notice] = 'Graduate was successfully created.'
       back_or_redirect_to action: :index
     else

@@ -11,7 +11,7 @@
       - if @approval.should_lock?
         = link_to lock_graduation_path(@graduation), class: 'btn btn-primary ml-2', method: :post
           i.fa.fa-envelope>
-          | Send innkalling
+          | Send invitasjoner
       - elsif !@graduation.locked?
         .btn.btn-warning.disabled
           ' Utsending av innkalling venter på
@@ -37,7 +37,10 @@ h2 Gradering #{@graduation.group.name} #{@graduation.held_on}
   - if @graduation.graduates.empty?
     .alert.alert-warning Det er på tide å <a href="#graduates_tab">registrere kandidater</a>.
   - elsif @graduation.held_on >= Date.current && !@graduation.locked?
-    .alert.alert-warning Det er på tide å sende ut invitasjoner til kandidatene.
+    .alert.alert-warning
+      ' Det er på tide å
+      a> href=lock_graduation_path(@graduation) data-method=:post sende ut invitasjoner
+      | til kandidatene.
 
 ul.nav.nav-tabs
   li.nav-item: a.nav-link.active data-target='#graduates' data-toggle='tab' Deltakere

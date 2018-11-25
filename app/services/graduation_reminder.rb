@@ -135,6 +135,7 @@ class GraduationReminder
     Graduate.includes(graduation: %i[censors group]).references(:groups)
         .where('graduations.held_on BETWEEN ? AND ?',
             Date.current, GRADUATES_INVITATION_LIMIT.from_now)
+        .where.not(passed: false)
         .where('graduates.confirmed_at IS NULL')
         .where('graduates.invitation_sent_at IS NULL OR graduates.invitation_sent_at < ?',
             1.week.ago)

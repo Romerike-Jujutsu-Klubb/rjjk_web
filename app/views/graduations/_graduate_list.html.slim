@@ -6,7 +6,7 @@
   table.table.table-sm
     thead
       tr
-        - unless graduation.approved?
+        - if !graduation.approved? && (graduates[0].new_record? || graduates[0].passed == false)
           th
         th Navn
         - if graduation.locked? && !graduation.approved?
