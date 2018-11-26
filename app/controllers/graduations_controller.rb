@@ -60,12 +60,14 @@ class GraduationsController < ApplicationController
       graduation_members = graduation.graduates.map(&:member)
       members = graduation.group.members.active(graduation.held_on)
           .reject { |m| m.passive? graduation.held_on, graduation.group } - graduation_members
+      candidates = members.map { |m| m.to_graduate(graduation) }
+          .sort_by { |gr| [-gr.rank.position, gr.member.name] }
       render 'graduate_list', layout: false, locals: {
-        id: :candidates, title: 'Kandidater', graduates: members.map { |m| m.to_graduate(graduation) }
+        id: :candidates, title: 'Kandidater', graduates: candidates
       }
     when 'removed'
       postponed_members = graduation.graduates.select { |g| g.passed == false }
-          .sort_by { |gr| -gr.rank.position }
+          .sort_by { |gr| [-gr.rank.position, gr.member.name] }
       render 'graduate_list', layout: false,
           locals: { id: :removed, title: 'Skal ikke delta', graduates: postponed_members }
     end
