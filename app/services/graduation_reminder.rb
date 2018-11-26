@@ -49,10 +49,12 @@ class GraduationReminder
 
   def self.notify_overdue_graduates
     today = Date.current
-    members = Member.active(today)
+    active_members = Member.active(today)
         .includes(:ranks, attendances: { practice: { group_schedule: :group } })
         .to_a
-    overdue_graduates = members.select do |m|
+    overdue_graduates = active_members.select do |m|
+      next if m.passive?
+
       minimum_attendances = m.next_rank.minimum_attendances
       attendances_since_graduation = m.attendances_since_graduation.size
       next unless attendances_since_graduation >= minimum_attendances
@@ -67,9 +69,10 @@ class GraduationReminder
     end
     return if overdue_graduates.empty?
 
-    # TODO(uwe): Send to chief instructor for each group
-    GraduationMailer.overdue_graduates(overdue_graduates)
-        .store(Role[:'Hovedinstruktør'], tag: :overdue_graduates)
+    overdue_graduates.group_by(&:group).each do |group, _members|
+      GraduationMailer.overdue_graduates(overdue_graduates)
+          .store(group.current_semester.chief_instructor.member, tag: :overdue_graduates)
+    end
   end
 
   def self.notify_missing_censors
