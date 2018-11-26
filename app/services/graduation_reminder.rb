@@ -69,9 +69,13 @@ class GraduationReminder
     end
     return if overdue_graduates.empty?
 
-    overdue_graduates.group_by(&:group).each do |group, _members|
-      GraduationMailer.overdue_graduates(overdue_graduates)
-          .store(group.current_semester.chief_instructor.member, tag: :overdue_graduates)
+    # FIXME(uwe): each instructor should get only one email
+    overdue_graduates.group_by(&:groups).each do |groups, members|
+      groups.each do |group|
+        recipient = (group.current_semester || group.next_semester)&.chief_instructor&.member ||
+            Role[:'Hovedinstruktør']
+        GraduationMailer.overdue_graduates(members).store(recipient, tag: :overdue_graduates)
+      end
     end
   end
 
