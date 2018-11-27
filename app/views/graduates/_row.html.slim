@@ -18,8 +18,8 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
   - if move_left
     td
       - if graduate.new_record?
-        a href=with_detour(graduates_path(graduate: { graduation_id: graduate.graduation_id, member_id: graduate.member_id }), edit_graduation_path(graduate.graduation_id, anchor: :graduates_tab)) title='Legg til' data-method=:post
-          i.fa.fa-arrow-left>
+        a href=graduates_path(graduate: { graduation_id: graduate.graduation_id, member_id: graduate.member_id }) title='Legg til' data-method=:post data-remote=true
+          i.fa.fa-arrow-left
       - elsif graduate.passed == false
         a href=graduate_path(graduate) data-method=:delete data-remote=true title="Sett som kandidat"
           i.fa.fa-arrow-left
@@ -119,7 +119,7 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
   - if move_right
     td.text-center
       - if graduate.new_record?
-        a href=with_detour(graduates_path(graduate: { graduation_id: graduate.graduation_id, member_id: graduate.member_id, passed: false }), edit_graduation_path(graduate.graduation_id, anchor: :graduates_tab)) data-method=:post
+        a href=graduates_path(graduate: { graduation_id: graduate.graduation_id, member_id: graduate.member_id, passed: false }) data-method=:post data-remote=true
           i.fa.fa-arrow-right
       - elsif graduate.passed != false
         a href=graduate_path(graduate) data-method=:delete data-remote=true title=:Fjern

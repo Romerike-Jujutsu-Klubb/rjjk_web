@@ -40,8 +40,13 @@ class GraduatesController < ApplicationController
     return unless admin_or_censor_required(@graduate.graduation)
 
     if @graduate.save
-      flash[:notice] = 'Graduate was successfully created.'
-      back_or_redirect_to action: :index
+      respond_to do |format|
+        format.html do
+          flash[:notice] = 'Graduate was successfully created.'
+          back_or_redirect_to action: :index
+        end
+        format.js
+      end
     else
       new
     end
