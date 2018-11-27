@@ -10,9 +10,12 @@ ruby:
       not_in_group_age = member_age && (mbr.age(graduate.graduation.held_on - 1.month) > graduate.graduation.group.to_age || member_age < graduate.graduation.group.from_age)
     end
   end
+  move_left = !graduate.graduation.approved? && (graduate.new_record? || graduate.passed == false)
+  show_invite_status = graduate.graduation.locked? && !graduate.graduation.approved?
+  move_right = graduate.passed != false && !graduate.graduation.approved?
 
 tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
-  - if !graduate.graduation.approved? && (graduate.new_record? || graduate.passed == false)
+  - if move_left
     td
       - if graduate.new_record?
         a href=with_detour(graduates_path(graduate: { graduation_id: graduate.graduation_id, member_id: graduate.member_id }), edit_graduation_path(graduate.graduation_id, anchor: :graduates_tab)) title='Legg til' data-method=:post
@@ -28,7 +31,7 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
     - if graduate.persisted? && graduate.changed?
       '
       | &nbsp;<span class="text-danger">* IKKE LAGRET! *</span>
-  - if graduate.graduation.locked? && !graduate.graduation.approved?
+  - if show_invite_status
     td
       - if graduate.confirmed_at
         span.fa.fa-thumbs-up data-toggle="tooltip" title="#{graduate.member.first_name} bekreftet #{graduate.confirmed_at.strftime('%F %R')}"
@@ -113,7 +116,7 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
         - if graduate.member.left_on && graduate.member.left_on < graduate.graduation.held_on
           div.text-danger Deltakeren er utmeldt siden #{graduate.member.left_on}.
 
-  - unless graduate.graduation.approved?
+  - if move_right
     td.text-center
       - if graduate.new_record?
         a href=with_detour(graduates_path(graduate: { graduation_id: graduate.graduation_id, member_id: graduate.member_id, passed: false }), edit_graduation_path(graduate.graduation_id, anchor: :graduates_tab)) data-method=:post
@@ -122,7 +125,8 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
         = link_to({ controller: :graduates, action: :destroy, id: graduate.id }, method: :delete, remote: false) do
           i.fa.fa-arrow-right.text-danger title="Fjern"
 
-javascript:
+  javascript:
     $('#graduate_#{graduate.id || "m#{graduate.member_id}"}').find("form").on('ajax:beforeSend', function (event, xhr, settings) {
-        $('#graduate_#{graduate.id || "m#{graduate.member_id}"}').replaceWith('<tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"><td></td><td>#{graduate.member.name}</td><td>Oppdaterer...</td><td></td></tr>')
+        var cell = $(this).closest('td');
+        cell.html('Oppdaterer...');
     });
