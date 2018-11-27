@@ -2,6 +2,7 @@
 $('#graduate_m<%=@graduate.member_id%>').remove();
 <% section = @graduate.passed == false ? :removed : :added %>
 $('#graduates_list_<%=section%>').html('<div class="text-center p-5"><i class="fa fa-circle-o-notch fa-spin fa-5x mb-3"></i><br>Et øyeblikk...</div>');
+$('#graduates_list_<%=section%>').show();
 $('#graduates_list_<%=section%>').load('<%=graduates_list_graduation_path(@graduate.graduation, section)%>', handleGraduatesListLoad);
 <% else %>
   $('#graduate_m<%= @graduate.member_id %> .fa-question').attr('data-original-title', 'Kunne ikke opprette kandidaten: <%=@graduate.errors.full_messages.join %>').tooltip('show')
