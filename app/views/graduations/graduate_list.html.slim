@@ -19,11 +19,9 @@ h5 #{title} (#{graduates.size})
           th Fjern
     tbody
       = render partial: 'graduates/row', collection: graduates, as: :graduate, cached: true
-  javascript:
-      $('#graduates_list_#{id}').show();
+  javascript: $('#graduates_list_#{id}').show();
 - else
-  javascript:
-      $('#graduates_list_#{id}').hide();
+  javascript: $('#graduates_list_#{id}').hide();
   - if id == :added
     p.mt-3
       ' Det er ikke lagt til noen deltakere på denne graderingen enda.

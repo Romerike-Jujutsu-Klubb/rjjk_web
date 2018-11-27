@@ -1,9 +1,7 @@
 <% if @graduate.destroyed? %>
 $('#graduate_<%=@graduate.id%>').remove();
-$('#graduate_member_id optgroup[label="<%=@graduate.graduation.group.name%>"]').prepend($('<option/>', {
-    value: '<%=@graduate.member_id%>',
-    text: '<%=@graduate.member.name%> <%=@graduate.member.age(@graduate.graduation.held_on)%> år'
-}));
+$('#graduates_list_candidates').html('<div class="text-center p-5"><i class="fa fa-circle-o-notch fa-spin fa-5x mb-3"></i><br>Et øyeblikk...</div>');
+$('#graduates_list_candidates').load('<%=graduates_list_graduation_path(@graduate.graduation, :candidates)%>', handleGraduatesListLoad);
 <% else %>
   $('#graduate_<%= @graduate.id %> .fa-question').attr('data-original-title', 'Kunne ikke slette kandidaten: <%=@graduate.errors.full_messages.join %>').tooltip('show')
 <% end %>
