@@ -228,6 +228,9 @@ class User < ApplicationRecord
 
   def generate_security_token(duration = :short)
     if security_token.nil? || token_expiry.nil? || token_stale?(duration)
+      self.salt ||= self.class.hashed("salt-#{Time.current}")
+      self.salted_password ||=
+          self.class.salted_password(salt, self.class.hashed(SecureRandom.urlsafe_base64(12)))
       new_security_token(duration)
     else
       security_token
@@ -344,14 +347,14 @@ class User < ApplicationRecord
   def crypt_password
     return unless @password_needs_confirmation
 
-    self['salt'] = self.class.hashed("salt-#{Time.current}")
-    self['salted_password'] = self.class.salted_password(salt, self.class.hashed(@password))
+    self.salt = self.class.hashed("salt-#{Time.current}")
+    self.salted_password = self.class.salted_password(salt, self.class.hashed(@password))
   end
 
   def new_security_token(duration)
-    self['security_token'] = self.class.hashed(salted_password + Time.current.to_i.to_s + rand.to_s)
-    self['token_expiry'] = Time.zone.at(Time.current.to_i + User.token_lifetime(duration))
-    save
+    self.security_token = self.class.hashed(salted_password + Time.current.to_i.to_s + rand.to_s)
+    self.token_expiry = Time.zone.at(Time.current.to_i + User.token_lifetime(duration))
+    save!
     security_token
   end
 end

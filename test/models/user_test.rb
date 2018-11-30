@@ -39,9 +39,16 @@ class UserTest < ActionMailer::TestCase
   end
 
   def test_generate_security_token
-    user = User.new login: 'user', email: 'user@example.com',
-        salt: 'salt', salted_password: 'tlas'
-    user.save
+    user = User.create! login: 'user', email: 'user@example.com', salt: 'salt', salted_password: 'tlas'
+    token = user.generate_security_token
+    assert_not_nil token
+    user.reload
+    assert_equal token, user.security_token
+    assert_equal((Time.current + User.token_lifetime).to_i, user.token_expiry.to_i)
+  end
+
+  test 'generate security token when no password is set' do
+    user = User.create! login: 'user', email: 'user@example.com'
     token = user.generate_security_token
     assert_not_nil token
     user.reload

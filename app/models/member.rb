@@ -34,10 +34,8 @@ class Member < ApplicationRecord
       class_name: :Attendance
 
   has_many :member_images, dependent: :destroy
-  has_many :passed_graduates, -> { where graduates: { passed: true } },
-      class_name: 'Graduate'
-  has_many :recent_attendances,
-      -> { merge(Attendance.after(92.days.ago).before(31.days.from_now)) },
+  has_many :passed_graduates, -> { where graduates: { passed: true } }, class_name: 'Graduate'
+  has_many :recent_attendances, -> { merge(Attendance.after(92.days.ago).before(31.days.from_now)) },
       class_name: :Attendance
 
   has_many :signatures, dependent: :destroy
@@ -216,8 +214,9 @@ class Member < ApplicationRecord
 
     start_date = date - 92
     end_date = date + 31
-    if date == Date.current && recent_attendances.loaded?
-      set = recent_attendances.select { |a| Attendance::PRESENT_STATES.include? a.status }
+    if date >= Date.current && recent_attendances.loaded?
+      set = recent_attendances
+          .select { |a| Attendance::PRESENT_STATES.include?(a.status) && a.date > start_date }
       set = set.select { |a| a.group_schedule.group_id == group.id } if group
       set.empty?
     elsif attendances.loaded?
