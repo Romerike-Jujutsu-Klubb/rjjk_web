@@ -126,7 +126,7 @@ class AttendancesController < ApplicationController
   def history_graph; end
 
   def history_graph_data
-    json_data = Rails.cache.fetch("attendances/history/#{Attendance.maximum(:updated_at)}") do
+    json_data = Rails.cache.fetch("attendances/history/#{Attendance.maximum(:updated_at).strftime('%F_%T.%N')}") do
       group_data, weeks, _labels = AttendanceHistoryGraph.history_graph_data
       expanded_data = group_data.map do |label, values, color|
         next unless values
@@ -146,7 +146,7 @@ class AttendancesController < ApplicationController
     year = params[:year].to_i
     month = params[:month].to_i
     json_data = Rails.cache
-        .fetch("attendances/month_chart_data/#{year}/#{month}/#{Attendance.maximum(:updated_at)}") do
+        .fetch("attendances/month_chart_data/#{year}/#{month}/#{Attendance.maximum(:updated_at).strftime('%F_%T.%N')}") do
       data, _dates = AttendanceHistoryGraph.month_chart_data(year, month)
       expanded_data = data.map do |name, values, color|
         { name: name, data: Hash[values.sort], color: color }
@@ -335,7 +335,7 @@ class AttendancesController < ApplicationController
   def month_per_year_chart_data
     month = params[:month].to_i
     json_data = Rails.cache
-        .fetch("attendances/month_per_year_chart_data/#{month}/#{Attendance.maximum(:updated_at)}") do
+        .fetch("attendances/month_per_year_chart_data/#{month}/#{Attendance.maximum(:updated_at).strftime('%F_%T.%N')}") do
       data, _years = AttendanceHistoryGraph.month_per_year_chart_data(month)
       expanded_data = data.map do |name, values, color|
         { name: name, data: Hash[values], color: color }
