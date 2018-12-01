@@ -7,7 +7,7 @@ class Graduation < ApplicationRecord
 
   scope :for_edit, -> do
     includes(
-        censors: { member: { graduates: { rank: :martial_art } } },
+        censors: { member: [{ graduates: { rank: :martial_art } }, :user] },
         graduates: {
           graduation: {
             group: {
