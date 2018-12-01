@@ -41,10 +41,9 @@ class GraduationsController < ApplicationController
     return unless admin_or_censor_required(@graduation, @approval)
 
     @censor = Censor.new graduation_id: @graduation.id
-    @instructors = Member
-        .instructors(@graduation.held_on, includes: {graduates: {member: [{graduates: :rank}, :user]}})
-        .to_a.sort_by(&:current_rank).reverse -
-        @graduation.censors.map(&:member)
+    @instructors = Member.instructors(@graduation.held_on, includes: {
+      graduates: { member: [{ graduates: :rank }, :user] },
+    }).to_a.sort_by(&:current_rank).reverse - @graduation.censors.map(&:member)
   end
 
   def graduates_list
