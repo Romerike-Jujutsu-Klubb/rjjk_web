@@ -19,6 +19,7 @@ class Member < ApplicationRecord
   end, class_name: :Graduate
   has_one :nkf_member, dependent: :nullify
 
+  has_many :active_group_instructors, -> { active }, class_name: :GroupInstructor, inverse_of: :member
   has_many :appointments, dependent: :destroy
   has_many :attendances, dependent: :destroy
   has_many :censors, dependent: :destroy
@@ -339,12 +340,12 @@ class Member < ApplicationRecord
     elections.current.any? || appointments.current.any?
   end
 
-  def instructor?(date = Date.current)
-    instructor || group_instructor?(date)
+  def instructor?
+    instructor || group_instructor?
   end
 
-  def group_instructor?(date = Date.current)
-    group_instructors.active(date).any?
+  def group_instructor?
+    active_group_instructors.any?
   end
 
   def technical_committy?

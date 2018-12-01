@@ -8,16 +8,16 @@ ul
         ul
           - g.instructors.each do |m|
             li = m.name
-              - roles = g.group_schedules.map { |gs| gs.group_instructors.active.select { |gi| gi.member_id == m.id }.map(&:role) }.flatten.uniq
+              - roles = g.group_schedules.map { |gs| gs.active_group_instructors.select { |gi| gi.member_id == m.id }.map(&:role) }.flatten.uniq
               - if roles != [GroupInstructor::Role::INSTRUCTOR]
                 | (#{roles.join(', ')})
-              - unless g.group_schedules.all? { |gs2| gs2.group_instructors.active.map(&:member).include?(m) }
+              - unless g.group_schedules.all? { |gs2| gs2.active_group_instructors.map(&:member).include?(m) }
                 - g.group_schedules.each do |gs|
-                  - if gs.group_instructors.active.map(&:member).include?(m)
+                  - if gs.active_group_instructors.map(&:member).include?(m)
                     | (#{gs.weekday_name})
 
           - g.group_schedules.each do |gs|
-            - if gs.group_instructors.active.empty? && g.current_semester
+            - if gs.active_group_instructors.empty? && g.current_semester
               li
                 = link_to "#{gs.weekday_name} mangler!", new_group_instructor_path( \
                     group_instructor: {group_schedule_id: gs.id, \

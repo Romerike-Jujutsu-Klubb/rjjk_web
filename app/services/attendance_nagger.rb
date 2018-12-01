@@ -60,7 +60,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         .where('groups.planning = ?', true) # TODO(uwe): Make a scope :with_planning
         .to_a
     practices.each do |pr|
-      pr.group_schedule.group_instructors.active.each do |gi|
+      pr.group_schedule.active_group_instructors.each do |gi|
         AttendanceMailer.message_reminder(pr, gi.member)
             .store(gi.member, tag: :instructor_message_reminder)
       end

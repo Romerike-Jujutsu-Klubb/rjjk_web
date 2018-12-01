@@ -72,7 +72,12 @@ class ApplicationController < ActionController::Base
 
     unless @groups
       group_query = Group.active(Date.current).order('to_age, from_age DESC')
-      group_query = group_query.includes(:current_semester, :group_schedules) if admin?
+      if admin?
+        group_query =
+            group_query.includes(:current_semester, group_schedules: { active_group_instructors: {
+              member: [{ graduates: %i[graduation rank] }, :user],
+            } })
+      end
       @groups = group_query.to_a
     end
 

@@ -2,6 +2,8 @@
 
 class GroupSchedule < ApplicationRecord
   belongs_to :group
+  has_many :active_group_instructors, -> { active }, class_name: :GroupInstructor,
+      inverse_of: :group_schedule
   has_many :group_instructors, dependent: :destroy
   has_many :practices, dependent: :destroy
 

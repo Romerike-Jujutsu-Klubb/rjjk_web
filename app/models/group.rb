@@ -37,7 +37,7 @@ class Group < ApplicationRecord
   validates :contract, length: { maximum: 32 }
 
   def full_name
-    "#{"#{martial_art.name} " if martial_art.name != 'Kei Wa Ryu'}#{name}"
+    "#{"#{martial_art.name} " if martial_art_id != MartialArt::KWR_ID}#{name}"
   end
 
   def contains_age(age)
@@ -84,8 +84,8 @@ class Group < ApplicationRecord
   delegate :next_practice, to: :next_schedule
 
   def instructors
-    group_schedules.map { |gs| gs.group_instructors.active.includes(:member) }.flatten.map(&:member)
-        .uniq.sort_by { |m| -(m.current_rank.try(:position) || -99) }
+    group_schedules.map(&:active_group_instructors).flatten.map(&:member).uniq
+        .sort_by { |m| -(m.current_rank.try(:position) || -99) }
   end
 
   def trials
