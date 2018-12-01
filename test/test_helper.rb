@@ -42,7 +42,10 @@ class ActiveSupport::TestCase
   if defined?(Bullet) && Bullet.enable?
     Rails.backtrace_cleaner.remove_silencers!
     setup { Bullet.start_request }
-    teardown { Bullet.end_request }
+    teardown do
+      Bullet.perform_out_of_channel_notifications if Bullet.notification?
+      Bullet.end_request
+    end
   end
 
   def login(login = :admin)
