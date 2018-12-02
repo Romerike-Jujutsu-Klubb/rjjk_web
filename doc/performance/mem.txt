@@ -1,0 +1,395 @@
+2018-11-02:  bundle exec derailed bundle:mem
+
+TOP: 80.1133 MiB
+  rails/all: 22.2188 MiB
+    rails: 10.0234 MiB (Also required by: active_record/railtie, active_model/railtie, and 12 others)
+      active_support: 6.0586 MiB (Also required by: active_support/railtie, active_support/i18n_railtie, and 14 others)
+        active_support/logger: 4.8789 MiB
+          active_support/logger_silence: 4.875 MiB
+            concurrent: 4.8633 MiB (Also required by: sprockets/manifest)
+              concurrent/atomics: 0.8945 MiB (Also required by: concurrent/executor/simple_executor_service)
+              concurrent/executors: 0.8906 MiB
+                concurrent/executor/timer_set: 0.4766 MiB
+              concurrent/promises: 0.8828 MiB
+              concurrent/agent: 0.418 MiB
+              concurrent/configuration: 0.3359 MiB (Also required by: concurrent/scheduled_task, concurrent/options, and 2 others)
+        active_support/dependencies/autoload: 1.125 MiB (Also required by: rails, active_support/rails)
+          active_support/inflector/methods: 1.125 MiB (Also required by: active_support/inflector, active_support/core_ext/string/inflections, and 3 others)
+            active_support/inflections: 1.1133 MiB (Also required by: active_support/inflector)
+              active_support/inflector/inflections: 0.9648 MiB (Also required by: active_support/inflector)
+                active_support/deprecation: 0.3906 MiB (Also required by: rails/application, active_support/duration, and 2 others)
+                concurrent/map: 0.3047 MiB (Also required by: i18n, active_support/notifications/fanout, and 10 others)
+      rails/application: 2.8047 MiB
+        active_support/key_generator: 1.9648 MiB
+          openssl: 1.9648 MiB (Also required by: active_support/message_encryptor, bcrypt, and 9 others)
+            openssl/ssl: 1.0742 MiB
+            openssl.so: 0.7422 MiB
+        yaml: 0.3711 MiB (Also required by: active_support/encrypted_configuration, rails/secrets, and 9 others)
+          psych: 0.3711 MiB
+      active_support/railtie: 1.0547 MiB
+        active_support/i18n_railtie: 1.0117 MiB
+          active_support/file_update_checker: 0.7969 MiB (Also required by: rails/application/configuration)
+            active_support/core_ext/time/calculations: 0.7969 MiB (Also required by: active_support/core_ext/time, active_support/core_ext/numeric/time)
+              active_support/core_ext/time/conversions: 0.5313 MiB (Also required by: active_support/core_ext/time, active_support/core_ext/date_time/conversions)
+                active_support/values/time_zone: 0.5313 MiB (Also required by: active_support/time_with_zone, active_support/core_ext/date_time/conversions)
+                  tzinfo: 0.4375 MiB (Also required by: et-orbi)
+    active_record/railtie: 6.8164 MiB
+      active_record: 4.0547 MiB (Also required by: active_storage)
+        active_record/connection_adapters/abstract_adapter: 3.0391 MiB
+          active_record/connection_adapters/abstract/schema_statements: 1.1016 MiB
+            active_record/migration/join_table: 0.6992 MiB
+              active_record/migration: 0.6797 MiB
+          active_record/connection_adapters/abstract/quoting: 0.3594 MiB (Also required by: activerecord-time/extension_5_0)
+          active_support/callbacks: 0.3438 MiB
+        arel: 0.6328 MiB
+          arel/visitors: 0.4063 MiB
+      action_controller/railtie: 2.7305 MiB (Also required by: rails/all, sprockets/railtie)
+        action_controller: 2.2578 MiB (Also required by: simple_workflow)
+          action_controller/metal/live: 1.2031 MiB
+            action_dispatch/http/response: 1.0977 MiB
+              rack/response: 0.7461 MiB
+                rack/request: 0.6289 MiB (Also required by: action_dispatch/http/request, rack/file)
+                  rack/utils: 0.4492 MiB (Also required by: rack/response, sprockets/server, and 3 others)
+          action_controller/metal/strong_parameters: 0.9492 MiB
+            rack/test: 0.3594 MiB
+        action_view/railtie: 0.375 MiB (Also required by: rails/all)
+          action_view: 0.3398 MiB (Also required by: sprockets/rails/helper, lazyload-rails)
+            active_support/core_ext/string/output_safety: 0.332 MiB (Also required by: action_view/helpers/tag_helper, action_view/helpers/capture_helper, and 6 others)
+    sprockets/railtie: 3.875 MiB (Also required by: sass/rails/railtie)
+      sprockets/rails/context: 2.7266 MiB
+        action_view/helpers: 2.7188 MiB (Also required by: action_view/helpers/dynamic_form, action_view/base)
+          action_view/helpers/form_helper: 1.9258 MiB (Also required by: action_view/helpers/form_options_helper)
+            action_view/helpers/form_tag_helper: 1.7734 MiB
+              action_view/helpers/text_helper: 1.7148 MiB
+                action_view/helpers/sanitize_helper: 1.7148 MiB
+                  rails-html-sanitizer: 1.7031 MiB
+                    loofah: 1.6484 MiB
+                      nokogiri: 1.4727 MiB (Also required by: google_drive/session, lazyload-rails, and 3 others)
+                        nokogiri/xml: 0.8047 MiB
+                          nokogiri/xml/builder: 0.4766 MiB
+                        nokogiri/html: 0.3594 MiB
+                          nokogiri/html/element_description_defaults: 0.3359 MiB
+      sprockets: 0.9648 MiB (Also required by: sprockets/rails/context, sprockets/rails/helper)
+        sprockets/environment: 0.5625 MiB
+          sprockets/base: 0.543 MiB (Also required by: sprockets/cached_environment, sprockets/legacy)
+            sprockets/configuration: 0.3242 MiB (Also required by: sprockets)
+    active_storage/engine: 1.2422 MiB
+      action_dispatch/routing/route_set: 1.0977 MiB
+        action_dispatch/journey: 0.4453 MiB
+          action_dispatch/journey/router: 0.3359 MiB
+        action_dispatch/http/request: 0.3828 MiB
+  google_drive: 14.3867 MiB
+    google_drive/session: 12.8906 MiB
+      google_drive/api_client_fetcher: 12.3672 MiB
+        google/apis/drive_v3: 12.3594 MiB
+          google/apis/drive_v3/service.rb: 11.4258 MiB
+            google/apis/core/base_service: 11.207 MiB (Also required by: google/apis/drive_v3/classes.rb, google/apis/drive_v3/representations.rb)
+              google/apis/core/batch: 7.6602 MiB
+                google/apis/core/upload: 7.5273 MiB (Also required by: google/apis/core/composite_io, google/apis/core/base_service)
+                  mime-types: 7.4453 MiB
+                    mime/types: 7.4453 MiB (Also required by: mechanize/pluggable_parsers)
+                      mime/types/registry: 7.0039 MiB
+              httpclient: 2.1406 MiB
+                httpclient/cookie: 1.3203 MiB
+                  http-cookie: 1.2813 MiB
+                    http/cookie: 1.2813 MiB (Also required by: http/cookie_jar, mechanize/cookie)
+                      domain_name: 1.1523 MiB
+                        domain_name/etld_data: 1.1172 MiB
+                httpclient/session: 0.3203 MiB (Also required by: httpclient/auth)
+              google/apis/core/api_command: 1.125 MiB (Also required by: google/apis/core/upload, google/apis/core/download)
+                google/apis/core/http_command: 1.1172 MiB (Also required by: google/apis/core/batch, google/apis/core/upload)
+                  pp: 0.9805 MiB (Also required by: mechanize)
+          google/apis/drive_v3/representations.rb: 0.7305 MiB
+      google_drive/spreadsheet: 0.3398 MiB (Also required by: google_drive/collection)
+    googleauth: 1.4961 MiB (Also required by: google_drive/session, google/apis/core/base_service)
+      googleauth/application_default: 1.4609 MiB
+        googleauth/compute_engine: 1.4414 MiB
+          googleauth/signet: 1.082 MiB (Also required by: googleauth/service_account, googleauth/user_refresh, and 3 others)
+            signet/oauth_2/client: 1.0703 MiB (Also required by: googleauth/credentials)
+              addressable/uri: 1.0273 MiB (Also required by: signet/errors, google/apis/core/base_service, and 8 others)
+                addressable/idna: 0.8164 MiB
+                  addressable/idna/pure: 0.8164 MiB
+          faraday: 0.3516 MiB (Also required by: signet/oauth_2/client, oauth2/client)
+  prawn: 5.832 MiB (Also required by: prawn/table)
+    pdf/core: 0.7617 MiB
+    matrix: 0.5625 MiB
+  bootstrap: 5.5664 MiB
+    sass: 4.5625 MiB (Also required by: sass/rails/helpers, sass/rails/importer, and 4 others)
+      sass/engine: 3.5391 MiB
+        sass/script: 1.1016 MiB (Also required by: sass/script/css_parser)
+          sass/script/functions: 0.3555 MiB (Also required by: sass/script/tree/funcall)
+        sass/selector: 0.3008 MiB
+      sass/version: 0.8984 MiB
+        sass/util: 0.7813 MiB (Also required by: sass, sass/script/tree/funcall)
+    bootstrap/engine: 0.8594 MiB
+      autoprefixer-rails: 0.8203 MiB
+        execjs: 0.6445 MiB (Also required by: coffee_script, uglifier)
+          execjs/runtimes: 0.5352 MiB
+  unicode_utils: 3.707 MiB
+    unicode_utils/each_word: 0.9141 MiB (Also required by: unicode_utils/titlecase)
+    unicode_utils/display_width: 0.8477 MiB (Also required by: unicode_utils/char_display_width, unicode_utils/debug)
+      unicode_utils/gc: 0.8398 MiB (Also required by: unicode_utils/graphic_char_q, unicode_utils, and 3 others)
+    unicode_utils/char_name: 0.7266 MiB (Also required by: unicode_utils/codepoint)
+    unicode_utils/each_grapheme: 0.4453 MiB
+  newrelic_rpm: 3.2031 MiB
+    new_relic/control: 3.1992 MiB
+      new_relic/agent: 3.0313 MiB
+        new_relic/agent/agent: 1.5 MiB
+          new_relic/agent/configuration/manager: 0.4883 MiB (Also required by: new_relic/agent/configuration)
+            new_relic/agent/configuration/default_source: 0.4102 MiB
+        new_relic/agent/instrumentation/controller_instrumentation: 0.3945 MiB
+          new_relic/agent/transaction: 0.3477 MiB
+  oily_png: 2.8477 MiB
+    chunky_png: 2.7813 MiB (Also required by: oily_png/canvas)
+      chunky_png/canvas: 2.0 MiB
+        chunky_png/canvas/png_decoding: 1.4102 MiB
+      chunky_png/color: 0.3477 MiB
+  simple_drilldown: 2.6328 MiB
+    simple_drilldown/search: 2.4883 MiB
+  rufus-scheduler: 2.0 MiB
+    rufus/scheduler: 1.9883 MiB
+      fugit: 1.3125 MiB
+        et-orbi: 0.4375 MiB
+  rake: 1.7266 MiB
+    optparse: 0.7383 MiB (Also required by: rake/application)
+    rake/rake_module: 0.4141 MiB
+      rake/application: 0.4102 MiB (Also required by: rake)
+  pg: 1.6172 MiB
+    pg_ext: 1.2031 MiB
+      socket: 0.4219 MiB (Also required by: net/http, resolv, and 6 others)
+  rack-mini-profiler: 1.2031 MiB
+    mini_profiler/profiler: 0.3867 MiB
+  mechanize: 1.1758 MiB
+  geocoder: 1.1406 MiB
+    geocoder/lookup: 0.5078 MiB
+      geocoder/lookups/test: 0.5039 MiB
+        geocoder/lookups/base: 0.4883 MiB
+          net/http: 0.4609 MiB (Also required by: net/https, net/http/digest_auth, and 4 others)
+    geocoder/ip_address: 0.4766 MiB
+      resolv: 0.4766 MiB (Also required by: new_relic/agent)
+  activerecord-time: 1.125 MiB
+    activerecord-time/extension_5_0: 1.0117 MiB
+      active_record/type: 0.9688 MiB
+        active_model/type: 0.4766 MiB
+  paranoia: 1.1016 MiB
+    active_record/validations: 0.7148 MiB
+      active_model/validations: 0.5938 MiB
+    paranoia/active_record_5_2: 0.375 MiB
+  slim-rails: 1.0039 MiB
+    slim: 0.9609 MiB
+      slim/parser: 0.3125 MiB
+  serviceworker-rails: 0.8359 MiB
+    serviceworker/rails: 0.6289 MiB
+      serviceworker/rails/handler: 0.543 MiB
+        rack/file: 0.5 MiB
+          rack/mime: 0.418 MiB
+  prawn/table: 0.793 MiB
+  mini_racer: 0.7305 MiB (Also required by: execjs)
+    mini_racer_extension: 0.6016 MiB
+  sass-rails: 0.6992 MiB
+    sass/rails: 0.6953 MiB
+      sass/rails/importer: 0.4766 MiB
+        tilt: 0.3516 MiB (Also required by: sass/rails/template, temple/templates/tilt)
+  redis: 0.6055 MiB
+  ri_cal: 0.4609 MiB
+    ri_cal/core_extensions.rb: 0.3945 MiB
+  dynamic_form: 0.4258 MiB
+    action_view/base: 0.4141 MiB
+  acts_as_list: 0.3984 MiB
+  mini_magick: 0.3984 MiB
+  oauth2: 0.3867 MiB
+
+
+
+TOP: 81.6133 MiBjk_web uwe$ bundle exec derailed bundle:mem
+  rails/all: 22.8828 MiB
+    rails: 10.4141 MiB (Also required by: active_record/railtie, active_model/railtie, and 12 others)
+      active_support: 5.7852 MiB (Also required by: active_support/railtie, active_support/i18n_railtie, and 14 others)
+        active_support/logger: 5.0586 MiB
+          active_support/logger_silence: 5.0234 MiB
+            concurrent: 5.0 MiB (Also required by: sprockets/manifest)
+              concurrent/executors: 0.9648 MiB
+                concurrent/executor/timer_set: 0.5352 MiB
+                  concurrent/scheduled_task: 0.3359 MiB (Also required by: concurrent, concurrent/timer_task)
+              concurrent/promises: 0.918 MiB
+              concurrent/atomics: 0.8867 MiB (Also required by: concurrent/executor/simple_executor_service)
+              concurrent/agent: 0.418 MiB
+        active_support/dependencies/autoload: 0.6953 MiB (Also required by: rails, active_support/rails)
+          active_support/inflector/methods: 0.6953 MiB (Also required by: active_support/inflector, active_support/core_ext/string/inflections, and 3 others)
+            active_support/inflections: 0.6875 MiB (Also required by: active_support/inflector)
+              active_support/inflector/inflections: 0.625 MiB (Also required by: active_support/inflector)
+      rails/application: 3.0898 MiB
+        active_support/key_generator: 1.9414 MiB
+          openssl: 1.9414 MiB (Also required by: active_support/message_encryptor, bcrypt, and 9 others)
+            openssl/ssl: 1.1445 MiB
+            openssl.so: 0.7383 MiB
+        yaml: 0.5625 MiB (Also required by: active_support/encrypted_configuration, rails/secrets, and 9 others)
+          psych: 0.5586 MiB
+            psych/visitors: 0.3281 MiB
+      active_support/railtie: 1.3867 MiB
+        active_support/i18n_railtie: 1.3867 MiB
+          active_support/file_update_checker: 0.9766 MiB (Also required by: rails/application/configuration)
+            active_support/core_ext/time/calculations: 0.9766 MiB (Also required by: active_support/core_ext/time, active_support/core_ext/numeric/time)
+              active_support/core_ext/time/conversions: 0.5508 MiB (Also required by: active_support/core_ext/time, active_support/core_ext/date_time/conversions)
+                active_support/values/time_zone: 0.5313 MiB (Also required by: active_support/time_with_zone, active_support/core_ext/date_time/conversions)
+                  tzinfo: 0.4297 MiB (Also required by: et-orbi)
+          rails/railtie/configuration: 0.4102 MiB (Also required by: rails/engine/configuration)
+            rails/configuration: 0.3828 MiB
+              active_support/core_ext/object: 0.3242 MiB
+    active_record/railtie: 7.0156 MiB
+      active_record: 4.2773 MiB (Also required by: active_storage)
+        active_record/connection_adapters/abstract_adapter: 3.0195 MiB
+          active_record/connection_adapters/abstract/schema_statements: 1.1133 MiB
+            active_record/migration/join_table: 0.7383 MiB
+              active_record/migration: 0.7227 MiB
+          active_record/connection_adapters/abstract/quoting: 0.332 MiB (Also required by: activerecord-time/extension_5_0)
+          active_support/callbacks: 0.3086 MiB
+        arel: 0.6484 MiB
+          arel/visitors: 0.3477 MiB
+      action_controller/railtie: 2.7188 MiB (Also required by: rails/all, sprockets/railtie)
+        action_controller: 2.2734 MiB (Also required by: simple_workflow)
+          action_controller/metal/live: 1.207 MiB
+            action_dispatch/http/response: 1.1016 MiB
+              rack/response: 0.7305 MiB
+                rack/request: 0.5898 MiB (Also required by: action_dispatch/http/request, rack/file)
+                  rack/utils: 0.3984 MiB (Also required by: rack/response, sprockets/server, and 3 others)
+          action_controller/metal/strong_parameters: 0.9609 MiB
+            rack/test: 0.3242 MiB
+        action_view/railtie: 0.3945 MiB (Also required by: rails/all)
+          action_view: 0.3281 MiB (Also required by: sprockets/rails/helper, lazyload-rails)
+    sprockets/railtie: 3.9492 MiB (Also required by: sass/rails/railtie)
+      sprockets/rails/context: 2.6211 MiB
+        action_view/helpers: 2.6211 MiB (Also required by: action_view/helpers/dynamic_form, action_view/base)
+          action_view/helpers/form_helper: 1.8984 MiB (Also required by: action_view/helpers/form_options_helper)
+            action_view/helpers/form_tag_helper: 1.668 MiB
+              action_view/helpers/text_helper: 1.6016 MiB
+                action_view/helpers/sanitize_helper: 1.5898 MiB
+                  rails-html-sanitizer: 1.5859 MiB
+                    loofah: 1.582 MiB
+                      nokogiri: 1.375 MiB (Also required by: google_drive/session, lazyload-rails, and 3 others)
+                        nokogiri/xml: 0.7617 MiB
+                          nokogiri/xml/builder: 0.4766 MiB
+      sprockets: 1.082 MiB (Also required by: sprockets/rails/context, sprockets/rails/helper)
+        sprockets/environment: 0.5742 MiB
+          sprockets/base: 0.5586 MiB (Also required by: sprockets/cached_environment, sprockets/legacy)
+            sprockets/configuration: 0.3477 MiB (Also required by: sprockets)
+    active_storage/engine: 1.2109 MiB
+      action_dispatch/routing/route_set: 1.0586 MiB
+        action_dispatch/journey: 0.4609 MiB
+          action_dispatch/journey/router: 0.3086 MiB
+  google_drive: 20.4531 MiB
+    google_drive/session: 18.7773 MiB
+      google_drive/api_client_fetcher: 17.8398 MiB
+        google/apis/drive_v3: 11.8555 MiB
+          google/apis/drive_v3/service.rb: 11.3477 MiB
+            google/apis/core/base_service: 11.1797 MiB (Also required by: google/apis/drive_v3/classes.rb, google/apis/drive_v3/representations.rb, and 3 others)
+              google/apis/core/batch: 7.6328 MiB
+                google/apis/core/upload: 7.5195 MiB (Also required by: google/apis/core/composite_io, google/apis/core/base_service)
+                  mime-types: 7.4375 MiB
+                    mime/types: 7.418 MiB (Also required by: mechanize/pluggable_parsers)
+                      mime/types/registry: 6.9727 MiB
+              httpclient: 2.3242 MiB
+                httpclient/cookie: 1.2188 MiB
+                  http-cookie: 1.2109 MiB
+                    http/cookie: 1.2109 MiB (Also required by: http/cookie_jar, mechanize/cookie)
+                      domain_name: 1.1055 MiB
+                        domain_name/etld_data: 1.0586 MiB
+                httpclient/session: 0.543 MiB (Also required by: httpclient/auth)
+                  httpclient/http: 0.3047 MiB (Also required by: httpclient)
+              google/apis/core/api_command: 1.0977 MiB (Also required by: google/apis/core/upload, google/apis/core/download)
+                google/apis/core/http_command: 1.0586 MiB (Also required by: google/apis/core/batch, google/apis/core/upload)
+                  pp: 0.9609 MiB (Also required by: mechanize)
+        google/apis/sheets_v4: 5.9531 MiB
+          google/apis/sheets_v4/representations.rb: 5.3047 MiB
+          google/apis/sheets_v4/classes.rb: 0.5273 MiB
+      google_drive/spreadsheet: 0.8477 MiB (Also required by: google_drive/collection)
+        google_drive/worksheet: 0.6367 MiB (Also required by: google_drive/session)
+    googleauth: 1.6758 MiB (Also required by: google_drive/session, google/apis/core/base_service)
+      googleauth/application_default: 1.6602 MiB
+        googleauth/compute_engine: 1.6328 MiB
+          googleauth/signet: 1.1172 MiB (Also required by: googleauth/service_account, googleauth/user_refresh, and 3 others)
+            signet/oauth_2/client: 1.1016 MiB (Also required by: googleauth/credentials)
+              addressable/uri: 0.918 MiB (Also required by: signet/errors, google/apis/core/base_service, and 8 others)
+                addressable/idna: 0.5664 MiB
+                  addressable/idna/pure: 0.5625 MiB
+          faraday: 0.4922 MiB (Also required by: signet/oauth_2/client, oauth2/client)
+  bootstrap: 5.7031 MiB
+    sass: 4.6797 MiB (Also required by: sass/rails/helpers, sass/rails/importer, and 4 others)
+      sass/engine: 3.5352 MiB
+        sass/script: 1.0898 MiB (Also required by: sass/script/css_parser)
+          sass/script/parser: 0.332 MiB
+        sass/scss: 0.3359 MiB
+      sass/version: 0.9766 MiB
+        sass/util: 0.8594 MiB (Also required by: sass, sass/script/tree/funcall)
+    bootstrap/engine: 0.9102 MiB
+      autoprefixer-rails: 0.8633 MiB
+        execjs: 0.6563 MiB (Also required by: coffee_script, uglifier)
+          execjs/runtimes: 0.5703 MiB
+  mechanize: 4.6914 MiB
+    mechanize/http/agent: 1.5664 MiB
+      webrobots: 0.5 MiB
+        webrobots/robotstxt: 0.3789 MiB
+      net/ntlm: 0.4805 MiB
+    mechanize/form: 0.6797 MiB
+    mechanize/page: 0.5195 MiB (Also required by: mechanize/pluggable_parsers)
+    net/http/persistent: 0.3125 MiB
+  rufus-scheduler: 3.3164 MiB
+    rufus/scheduler: 3.3047 MiB
+      fugit: 3.0 MiB
+        et-orbi: 2.5 MiB
+          et-orbi/zone_aliases: 2.4219 MiB
+  oily_png: 2.7188 MiB
+    chunky_png: 2.6563 MiB (Also required by: oily_png/canvas)
+      chunky_png/canvas: 1.9414 MiB
+        chunky_png/canvas/png_decoding: 1.4219 MiB
+  unicode_utils: 2.582 MiB
+    unicode_utils/display_width: 0.9336 MiB (Also required by: unicode_utils/char_display_width, unicode_utils/debug)
+      unicode_utils/gc: 0.8984 MiB (Also required by: unicode_utils/graphic_char_q, unicode_utils, and 3 others)
+    unicode_utils/each_word: 0.3828 MiB (Also required by: unicode_utils/titlecase)
+    unicode_utils/char_name: 0.3242 MiB (Also required by: unicode_utils/codepoint)
+  prawn: 2.5664 MiB (Also required by: prawn/table)
+    matrix: 0.3516 MiB
+    pdf/core: 0.3086 MiB
+  newrelic_rpm: 2.0469 MiB
+    new_relic/control: 2.0469 MiB
+      new_relic/agent: 2.0156 MiB
+        new_relic/agent/agent: 1.1914 MiB
+          new_relic/agent/configuration/manager: 0.5195 MiB (Also required by: new_relic/agent/configuration)
+            new_relic/agent/configuration/default_source: 0.4141 MiB
+  paranoia: 1.9102 MiB
+    active_record/validations: 0.9727 MiB
+      active_model/validations: 0.8086 MiB
+    paranoia/active_record_5_2: 0.7656 MiB
+      active_record/associations: 0.4258 MiB
+  pg: 1.5391 MiB
+    pg_ext: 1.1914 MiB
+      socket: 0.5 MiB (Also required by: net/http, resolv, and 6 others)
+  redis: 1.1836 MiB
+  activerecord-time: 1.168 MiB
+    activerecord-time/extension_5_0: 1.0234 MiB
+      active_record/type: 0.9805 MiB
+        active_model/type: 0.5 MiB
+  geocoder: 1.1289 MiB
+    geocoder/lookup: 0.5391 MiB
+      geocoder/lookups/test: 0.5117 MiB
+        geocoder/lookups/base: 0.4883 MiB
+          net/http: 0.4531 MiB (Also required by: net/https, net/http/digest_auth, and 4 others)
+    geocoder/ip_address: 0.3828 MiB
+      resolv: 0.3633 MiB (Also required by: new_relic/agent)
+  mini_magick: 0.8125 MiB
+    mini_magick/tool: 0.3828 MiB
+    mini_magick/image: 0.3203 MiB
+  oauth2: 0.8086 MiB
+    oauth2/response: 0.3008 MiB
+  rake: 0.7227 MiB
+    optparse: 0.4023 MiB (Also required by: rake/application)
+  mini_racer: 0.6875 MiB (Also required by: execjs)
+    mini_racer_extension: 0.6016 MiB
+  jbuilder: 0.5977 MiB
+    jbuilder/railtie: 0.3555 MiB
+      jbuilder/jbuilder_template: 0.3398 MiB
+  dynamic_form: 0.5117 MiB
+    action_view/base: 0.5078 MiB
+  acts_as_list: 0.4727 MiB
+  slim-rails: 0.4453 MiB
+    slim: 0.4297 MiB

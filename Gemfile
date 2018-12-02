@@ -51,6 +51,7 @@ gem 'prawn'
 gem 'prawn-table'
 gem 'puma'
 gem 'rack-attack'
+gem 'rack-mini-profiler'
 gem 'rails-i18n'
 gem 'rails-observers', github: 'rails/rails-observers'
 gem 'rails_autolink'
@@ -75,10 +76,6 @@ end
 group :production do
   gem 'newrelic_rpm'
   gem 'redis', '~> 4.0'
-end
-
-group :development, :beta do
-  gem 'rack-mini-profiler'
 end
 
 group :development do
