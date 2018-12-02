@@ -2,10 +2,11 @@
   - attendances = practice.attendances.select { |a| Attendance::PRESENCE_STATES.include?(a.status) }
   - absences = practice.attendances.select { |a| Attendance::ABSENT_STATES.include?(a.status) }
   - others = attendances.select { |a| a.member_id != current_user.member.id }
+  - if others.size >= 2
+    - others = others.sort_by { |a| a.member.current_rank || Rank::UNRANKED }.reverse
   - attendance = practice.attendances.find { |a| a.member_id == current_user.member.id }
   - if attendances.any?
     - if attendances.size > 2
-      - others = others.sort_by{|a| a.member.current_rank || Rank::UNRANKED}.reverse
       a data-toggle="modal" data-target="#attendance_details_#{practice.id}" href="#" title="#{practice.passed? ? 'Oppmøte' : 'Påmeldt til'} trening #{t(:date)[:day_names][practice.group_schedule.weekday].downcase} #{practice.date.day}. #{t(:date)[:month_names][practice.date.mon].downcase}"
         - if attendance.present?
           ' Du
