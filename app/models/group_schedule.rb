@@ -2,6 +2,17 @@
 
 class GroupSchedule < ApplicationRecord
   belongs_to :group
+
+  has_one :next_practice, ->(gs) do
+    now = Time.current
+    date = now.to_date
+    if gs.weekday < date.cwday ||
+          (gs.weekday == date.cwday && (gs.end_at.nil? || gs.end_at <= now.time_of_day))
+      date += 1.week
+    end
+    where(year: date.cwyear, week: date.cweek)
+  end, class_name: :Practice, inverse_of: :group_schedule
+
   has_many :active_group_instructors, -> { active }, class_name: :GroupInstructor,
       inverse_of: :group_schedule
   has_many :group_instructors, dependent: :destroy
@@ -13,13 +24,8 @@ class GroupSchedule < ApplicationRecord
     I18n.t(:date)[:day_names][weekday]
   end
 
-  def next_practice(now = Time.current)
-    date = now.to_date
-    date += 1.week if weekday < date.cwday ||
-        (weekday == date.cwday && (end_at.nil? || end_at <= now.time_of_day))
-    Practice.where(group_schedule_id: id, year: date.cwyear, week: date.cweek).first_or_create!
-  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotUnique
-    retry
+  def next_practice
+    super || create_next_practice
   end
 
   def to_s
