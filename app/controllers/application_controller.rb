@@ -86,7 +86,7 @@ class ApplicationController < ActionController::Base
           .where('(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)',
               Date.current, Date.current)
           .order('start_at, end_at').limit(5).to_a
-      @layout_events += Graduation.where('held_on >= ?', Date.current).to_a
+      @layout_events += Graduation.includes(:graduates).where('held_on >= ?', Date.current).to_a
       @groups.select(&:school_breaks).each do |g|
         if (first_session = g.current_semester&.first_session) && first_session >= Date.current
           @layout_events << Event.new(name: "Oppstart #{g.name}", start_at: first_session)
