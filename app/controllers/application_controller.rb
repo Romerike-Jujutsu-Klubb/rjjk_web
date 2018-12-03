@@ -9,6 +9,9 @@ class ApplicationController < ActionController::Base
 
   layout DEFAULT_LAYOUT
 
+  if Rails.env.production?
+    before_action { redirect_to(host: 'jujutsu.no') if request.host != 'jujutsu.no' }
+  end
   before_action :reject_bots
   before_action :store_current_user_in_thread
 
