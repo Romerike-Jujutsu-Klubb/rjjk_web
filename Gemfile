@@ -59,7 +59,7 @@ gem 'rake'
 gem 'ri_cal'
 gem 'rufus-scheduler'
 gem 'sass-rails'
-# gem 'script_relocator' # TODO(uwe): Messes up the design.  Why?!
+gem 'script_relocator'
 gem 'serviceworker-rails'
 gem 'simple_drilldown'
 gem 'simple_workflow'
