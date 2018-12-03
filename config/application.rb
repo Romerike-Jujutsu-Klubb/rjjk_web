@@ -20,5 +20,7 @@ module RjjkWeb
     config.i18n.available_locales = %i[nb en]
     config.i18n.default_locale = :nb
     config.time_zone = 'Copenhagen'
+
+    config.middleware.insert_after ActionDispatch::Static, Rack::Deflater
   end
 end
