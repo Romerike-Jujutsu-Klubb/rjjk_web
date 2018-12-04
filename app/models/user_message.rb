@@ -10,6 +10,7 @@ class UserMessage < ApplicationRecord
   scope :for_login, -> { where 'created_at > ?', User.token_lifetime(:login).ago }
   scope :tagged_as, ->(tag) { where tag: tag }
   scope :pending, -> { where(sent_at: nil, read_at: nil).order(:id) }
+  scope :search, ->(query) { where(key: query).order(:key) }
 
   before_validation do
     self.key ||= BCrypt::Password.create(Time.current.to_i.to_s + rand.to_s).checksum
