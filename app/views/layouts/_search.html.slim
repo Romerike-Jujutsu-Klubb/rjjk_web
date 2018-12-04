@@ -1,0 +1,6 @@
+form.mt-3 action="/search" role="search"
+  .input-group
+    = search_field nil, nil, name: :q, value: @query, placeholder: 'Søk', class: 'search-query form-control', onmouseup: 'select()'
+    span.input-group-btn
+      button.btn.btn-secondary type="submit"
+        i.fa.fa-search
