@@ -13,14 +13,10 @@ class FeatureTest < ActionDispatch::IntegrationTest
   Capybara::Screenshot.window_size = WINDOW_SIZE
   Capybara::Screenshot.enabled = ENV['TRAVIS'].blank?
   Capybara::Screenshot.hide_caret = true
-  Capybara::Screenshot.stability_time_limit = 0.5
+  Capybara::Screenshot.stability_time_limit = 0.1
 
   Capybara.default_driver = :chrome # :selenium, :chrome
-  if Capybara.default_driver == :chrome
-    Capybara::Screenshot::Diff.color_distance_limit = 14.5
-    Capybara::Screenshot::Diff.area_size_limit = 18
-  end
-  Capybara.default_max_wait_time = 30
+  Capybara::Screenshot::Diff.color_distance_limit = 14.5 if Capybara.default_driver == :chrome
 end
 
 if Capybara.default_driver == :chrome
