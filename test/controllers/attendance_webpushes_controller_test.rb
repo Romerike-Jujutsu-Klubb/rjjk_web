@@ -3,9 +3,7 @@
 require 'integration_test'
 
 class AttendanceWebpushesControllerTest < IntegrationTest
-  setup do
-    @attendance_webpush = attendance_webpushes(:one)
-  end
+  setup { @attendance_webpush = attendance_webpushes(:one) }
 
   test 'should get index' do
     get attendance_webpushes_url
