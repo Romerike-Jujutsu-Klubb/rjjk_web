@@ -18,7 +18,8 @@ class AttendancesControllerTest < ActionController::TestCase
   def test_should_create_attendance
     assert_difference('Attendance.count') do
       post :create, params: { attendance: {
-          member_id: members(:uwe).id, practice_id: practices(:panda_2010_42).id, status: 'X' } }
+        member_id: members(:uwe).id, practice_id: practices(:panda_2010_42).id, status: 'X'
+      } }
     end
 
     assert_redirected_to attendance_path(Attendance.last)

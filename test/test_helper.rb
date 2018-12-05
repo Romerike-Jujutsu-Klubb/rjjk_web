@@ -116,7 +116,6 @@ class ActionMailer::TestCase
           end
       yield
     end
-    assert_equal initial + count, UserMessage.pending.count,
-        -> { UserMessage.all.map(&:inspect).to_s }
+    assert_equal initial + count, UserMessage.pending.count, -> { UserMessage.all.map(&:inspect).to_s }
   end
 end

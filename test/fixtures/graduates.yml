@@ -33,7 +33,7 @@ uwe_nidan:
 newbie_kyu_5:
   member: newbie
   graduation: voksne_upcoming
-  passed: true
+  passed: nil
   rank: kyu_5
   paid_graduation: true
   paid_belt: true
