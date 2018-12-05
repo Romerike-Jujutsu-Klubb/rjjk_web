@@ -162,11 +162,14 @@ class GraduationReminderTest < ActionMailer::TestCase
         /Har du mulighet til delta\? {2}Klikk på en av linkene nedenfor for å gi beskjed om du kan eller ikke./,
         mail.body
       )
-    assert_match(%r{<a href="https://example.com/graduates/#{id :sebastian_kyu_5}/confirm">Jeg kommer :\)</a>}, mail.body)
-    assert_match(%r{<a href="https://example.com/graduates/#{id :sebastian_kyu_5}/decline">Beklager, jeg kommer ikke.</a>},
+    seb_id = id :sebastian_kyu_5
+    assert_match(%r{<a href="https://example.com/graduates/#{seb_id}/confirm">Jeg kommer :\)</a>}, mail.body)
+    assert_match(%r{<a href="https://example.com/graduates/#{seb_id}/decline">Beklager, jeg kommer ikke.</a>},
         mail.body)
-    assert_match(/Krav til gradering er 10-20 treninger. Vi har registrert 0 treninger på deg siden gradering 2007-10-08./,
-        mail.body)
+    assert_match(
+        /Krav til gradering er 10-20 treninger. Vi har registrert 0 treninger på deg siden gradering 2007-10-08./,
+        mail.body
+      )
   end
 
   def test_notify_missing_approvals
