@@ -100,7 +100,9 @@ class Graduation < ApplicationRecord
     true
   end
 
-  delegate :size, to: :graduates
+  def size
+    graduates.select { |g| g.passed || g.passed.nil? }.size
+  end
 
   def group_schedule
     group.group_schedules.find { |gs| gs.weekday == held_on.try(:cwday) }
