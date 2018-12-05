@@ -134,7 +134,7 @@ class GraduationReminderTest < ActionMailer::TestCase
   def test_notify_graduates
     censors(:uwe_voksne_upcoming).update! locked_at: Time.current
 
-    assert_mail_stored { GraduationReminder.invite_graduates }
+    assert_mail_stored(2) { GraduationReminder.invite_graduates }
 
     mail = UserMessage.pending[0]
     assert_equal ['newbie@example.com'], mail.to
@@ -143,13 +143,29 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(/Hei Newbie Neuer!/, mail.body)
     assert_match(/Du er satt opp til gradering torsdag 24. oktober/, mail.body)
     assert_match(
-        /Har du mulighet til delta\?  Klikk på en av linkene nedenfor for å gi beskjed om du kan eller ikke./,
+        /Har du mulighet til delta\? {2}Klikk på en av linkene nedenfor for å gi beskjed om du kan eller ikke./,
         mail.body
       )
     assert_match(%r{<a href="https://example.com/graduates/397971580/confirm">Jeg kommer :\)</a>}, mail.body)
     assert_match(%r{<a href="https://example.com/graduates/397971580/decline">Beklager, jeg kommer ikke.</a>},
         mail.body)
     assert_match(/Krav til gradering er 10-20 treninger. Vi har registrert 1 trening på deg siden du startet./,
+        mail.body)
+
+    mail = UserMessage.pending[1]
+    assert_equal ['sebastian@example.com', 'uwe@example.com'], mail.to
+    assert_equal %w[uwe@example.com], mail.from
+    assert_equal 'Invitasjon til gradering', mail.subject
+    assert_match(/Hei Sebastian Kubosch!/, mail.body)
+    assert_match(/Du er satt opp til gradering torsdag 24. oktober/, mail.body)
+    assert_match(
+        /Har du mulighet til delta\? {2}Klikk på en av linkene nedenfor for å gi beskjed om du kan eller ikke./,
+        mail.body
+      )
+    assert_match(%r{<a href="https://example.com/graduates/#{id :sebastian_kyu_5}/confirm">Jeg kommer :\)</a>}, mail.body)
+    assert_match(%r{<a href="https://example.com/graduates/#{id :sebastian_kyu_5}/decline">Beklager, jeg kommer ikke.</a>},
+        mail.body)
+    assert_match(/Krav til gradering er 10-20 treninger. Vi har registrert 0 treninger på deg siden gradering 2007-10-08./,
         mail.body)
   end
 
@@ -208,7 +224,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_equal 'Liste over belter for gradering for Voksne 2013-10-24', mail.subject
     assert_match(/Hei Newbie!/, mail.body)
     assert_match(/Her er liste over belter for gradering for Voksne 2013-10-24./, mail.body)
-    assert_match(/gult belte.*1/, mail.body)
+    assert_match(/gult belte.*2/, mail.body)
   end
 
   def test_congratulate_graduates
