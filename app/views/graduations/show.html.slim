@@ -3,19 +3,19 @@ h2 Gradering
 table.table
   tr
     th Dato
-    td =@graduation.held_on
+    td = @graduation.held_on
   tr
     th Gruppe
-    td =@graduation.group.name
+    td = @graduation.group.name
   tr
     th Eksaminator
-    td =@graduation.censors.select(&:examiner).map(&:member).map(&:name).join(', ')
+    td = @graduation.censors.select(&:examiner).map(&:member).map(&:name).join(', ')
   tr
     th Sensorer
-    td =@graduation.censors.reject(&:examiner).map(&:member).map(&:name).join(', ')
+    td = @graduation.censors.reject(&:examiner).map(&:member).map(&:name).join(', ')
   tr
     th Påmeldte
-    td =@graduation.graduates.count
+    td = @graduation.size
 
 .float-right
   = back_or_link_to 'Tilbake', graduations_path, class: 'btn btn-secondary mr-2'
