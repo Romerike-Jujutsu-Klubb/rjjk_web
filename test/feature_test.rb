@@ -12,6 +12,7 @@ class FeatureTest < ActionDispatch::IntegrationTest
   Capybara::Screenshot.add_driver_path = true
   Capybara::Screenshot.window_size = WINDOW_SIZE
   Capybara::Screenshot.enabled = ENV['TRAVIS'].blank?
+  Capybara::Screenshot.hide_caret = true
   Capybara::Screenshot.stability_time_limit = 0.5
 
   Capybara.default_driver = :chrome # :selenium, :chrome

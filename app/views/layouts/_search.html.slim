@@ -1,6 +1,12 @@
-form.mt-3 action="/search" role="search"
-  .input-group
+form#search-form.mb-3.mx-3.collapse action="/search" role="search" class=(:show if @query)
+  .input-group.mt-3
     = search_field nil, nil, name: :q, value: @query, placeholder: 'Søk', class: 'search-query form-control', onmouseup: 'select()'
-    span.input-group-btn
+    .input-group-append
       button.btn.btn-secondary type="submit"
         i.fa.fa-search
+
+javascript:
+    $('#search-form').on('shown.bs.collapse', function () {
+        $('#search-form input').focus();
+    });
+    $('#search-form input').focus();

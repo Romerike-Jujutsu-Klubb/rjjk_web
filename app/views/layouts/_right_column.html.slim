@@ -15,19 +15,15 @@ css:
   }
 
 .w-100.align-items-justify.p-0.m-0
-  = render 'layouts/search'
+  / = render 'layouts/gallery_image', column_width_sm: column_width_sm, column_width_1200: column_width_1200, column_width_992: column_width_992
+  / - if user?
+  /   = render 'layouts/media_upload'
 
-  /= render 'layouts/gallery_image', column_width_sm: column_width_sm, column_width_1200: column_width_1200, column_width_992: column_width_992
-
-  - if false && user?
-    = render 'layouts/media_upload'
-
-  h3
+  h3.mt-2
     | Hva skjer?
     =< link_to image_tag('ical.png', :style => 'width: 24px;height: 24px'), \
-      {only_path: false, protocol: 'webcal', controller: :events, \
-          action: :calendar, format: :ics}, \
-      title: 'Abonnér på hendelseskalender!'
+      {only_path: false, protocol: 'webcal', controller: :events, action: :calendar, format: :ics}, \
+      title: 'Abonnér på hendelseskalender!', class: 'float-right'
   = render 'layouts/next_practice'
   = render 'layouts/events', events: @layout_events
 
