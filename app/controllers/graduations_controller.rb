@@ -99,8 +99,7 @@ class GraduationsController < ApplicationController
     date = graduation.held_on
 
     content = graduation.graduates.sort_by { |g| -g.rank.position }.map do |g|
-      censors = graduation.censors.to_a
-          .sort_by { |c| -(c.member.current_rank.try(:position) || 99) }
+      censors = graduation.censors.confirmed.sort_by { |c| -(c.member.current_rank.try(:position) || 99) }
       censor_1 =
           if censors[0]
             { title: censors[0].member.title, name: censors[0].member.name,
