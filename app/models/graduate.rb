@@ -5,6 +5,8 @@ class Graduate < ApplicationRecord
   belongs_to :member
   belongs_to :rank
 
+  scope :without_failed, -> { where 'passed IS NULL OR passed = ?', true }
+
   validates :graduation, :graduation_id, :member, :member_id, :rank, :rank_id, presence: true
   validates :member_id, uniqueness: { scope: :graduation_id }
   validates :member_id, uniqueness: { scope: %i[passed rank_id], if: :passed,

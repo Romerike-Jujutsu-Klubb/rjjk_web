@@ -98,7 +98,7 @@ class GraduationsController < ApplicationController
     graduation = Graduation.find(params[:id])
     date = graduation.held_on
 
-    content = graduation.graduates.sort_by { |g| -g.rank.position }.map do |g|
+    content = graduation.graduates.without_failed.sort_by { |g| -g.rank.position }.map do |g|
       censors = graduation.censors.confirmed.sort_by { |c| -(c.member.current_rank.try(:position) || 99) }
       censor_1 =
           if censors[0]
