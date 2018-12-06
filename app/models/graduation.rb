@@ -107,7 +107,7 @@ class Graduation < ApplicationRecord
   def admin?(user: current_user, approval: nil)
     return true if approval || (user && censors.any? { |c| c.member == user.member })
     return true if user && group&.current_semester&.chief_instructor == user.member
-    return true if group&.current_semester&.group_instructors&.map(&:member)&.include?(user.member)
+    return true if user && group&.current_semester&.group_instructors&.map(&:member)&.include?(user.member)
 
     false
   end
