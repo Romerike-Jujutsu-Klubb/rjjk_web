@@ -45,7 +45,7 @@
             class: 'float-right', title: "Sett '#{event.name}' på din kalender!"
       h5.clearfix style="margin-bottom:0;color:#FFB400"
         - if body
-          = link_to event.name, event, style: 'color: #FFB400'
+          = link_to event.name, admin? && event.persisted? ? edit_polymorphic_path(event) : event, style: 'color: #FFB400'
         - else
           = event.name
 
@@ -61,8 +61,6 @@
       - control_links = []
       - if ingress && event.description.size > ingress.size
         - control_links << link_to('Les mer', { controller: :events, action: :show, id: event.id }, class: :edit)
-      - if admin? && event.persisted?
-        - control_links << link_to('Redigèr', edit_polymorphic_path(event), class: :edit)
       - if control_links.any?
         ul.controls
           - control_links.each do |link|

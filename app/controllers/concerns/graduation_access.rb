@@ -3,7 +3,7 @@
 module GraduationAccess
   def admin_or_censor_required(graduation, approval = nil)
     return access_denied('Du må logge inn for å redigere graderinger.') unless authenticate_user
-    return true if admin? || graduation.admin?(user: current_user, approval: approval)
+    return true if graduation.admin?(user: current_user, approval: approval)
 
     access_denied('Du må være hovedinstruktør, gruppeinstruktør, eksaminator, sensor eller ' \
         'administrator for å redigere graderinger.')
