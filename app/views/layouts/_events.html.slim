@@ -11,14 +11,14 @@
       - body = event.body
       - if event.start_at.year != last_year
         - last_year = event.start_at.year
-        h4.mt-3 style="color: #E20916" = last_year
+        h4.mt-3 style="color:#E20916;margin-bottom:-1rem" = last_year
       - if event.start_at.mon != last_mon
         - last_mon = event.start_at.mon
-        h5 style="color: #E20916" = t Date::MONTHNAMES[last_mon]
+        h5.mt-3 style="color: #E20916" = t Date::MONTHNAMES[last_mon]
       - if event.start_at != last_start_at || event.end_at != last_end_at
         - last_start_at = event.start_at
         - last_end_at = event.end_at
-        h5
+        h5.mt-3.mb-1
           - if event.end_at.nil? || event.end_at == event.start_at
             ' #{event.start_at.mday}.
             = t(:date)[:day_names][event.start_at.wday]
