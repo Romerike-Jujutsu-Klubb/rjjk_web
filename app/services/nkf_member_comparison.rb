@@ -83,7 +83,7 @@ class NkfMemberComparison
   end
 
   private def create_new_members
-    @new_members = @orphan_nkf_members.map do |nkf_member|
+    created_members = @orphan_nkf_members.map do |nkf_member|
       logger.info "Create member from NKF: #{nkf_member.inspect}"
       nkf_member.create_corresponding_member!
     rescue => e
@@ -91,7 +91,8 @@ class NkfMemberComparison
       logger.error e.backtrace.join("\n")
       @errors << ['New member', e, nkf_member]
       nil
-    end.compact
+    end
+    @new_members = created_members.compact
   end
 
   private def sync_attribute(membership, attr_sym, form, new_value, old_value, outgoing_changes, record)
