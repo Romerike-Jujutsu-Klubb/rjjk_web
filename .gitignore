@@ -6,7 +6,9 @@
 /log/*.log
 /public/heap*.json
 /public/icon/*.png
-/public/images/*/inline/*
+/public/images/inline/*.*
+/public/images/*/inline/*.*
+/public/images/*/inline.*
 /public/images/*/show.*
 /public/members/*/image.*
 /public/members/*/thumbnail.*
