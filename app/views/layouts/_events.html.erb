@@ -64,6 +64,9 @@
               <% if (crowd_size = event.size) > 0 -%>
                   <div class="details">
                     <%= crowd_size %> påmeldte.
+                    <% if event.attendees.include?(current_user) -%>
+                      Du er påmeldt.
+                    <% end %>
                   </div>
               <% end %>
           <% end %>

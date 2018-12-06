@@ -17,6 +17,6 @@ table.table
     th Påmeldte
     td = @graduation.size
 
-.float-right
+.float-right.mb-3
   = back_or_link_to 'Tilbake', graduations_path, class: 'btn btn-secondary mr-2'
   = link_to 'Endre', edit_graduation_path(@graduation), class: 'btn btn-primary'

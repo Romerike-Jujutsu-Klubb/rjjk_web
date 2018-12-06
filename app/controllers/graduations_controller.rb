@@ -3,8 +3,7 @@
 class GraduationsController < ApplicationController
   include GraduationAccess
 
-  CENSOR_ACTIONS = %i[add_group approve create disapprove edit graduates_tab index new update]
-      .freeze
+  CENSOR_ACTIONS = %i[add_group approve create disapprove edit graduates_tab index new update].freeze
   before_action :admin_required, except: CENSOR_ACTIONS
   before_action :authenticate_user, only: CENSOR_ACTIONS
 

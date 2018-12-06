@@ -53,6 +53,10 @@ class Event < ApplicationRecord
     description.try(:slice, %r{\A.*?(?:<br ?/><br ?/>|</p>|\Z)}im)
   end
 
+  def attendees
+    attending_invitees.map(&:user)
+  end
+
   def body
     ingress = self.ingress
     description[ingress.size..-1] if ingress && description.size > ingress.size

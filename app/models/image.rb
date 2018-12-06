@@ -2,7 +2,6 @@
 
 class Image < ApplicationRecord
   include GoogleDriveContent
-  include UserSystem
 
   scope :without_image, -> { select((column_names - %w[content_data]).map { |c| "images.#{c}" }) }
   scope :with_image, -> { select('*') }

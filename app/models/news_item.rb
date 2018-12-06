@@ -8,7 +8,6 @@ class NewsItem < ApplicationRecord
   end
 
   extend UserSystem
-  include UserSystem
 
   scope :current, -> {
     where('publication_state IS NULL OR publication_state = ?',
