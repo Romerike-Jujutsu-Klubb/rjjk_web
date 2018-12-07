@@ -6,7 +6,7 @@ table.table.table-striped.table-sm
       th Tid før grad
       th Treninger
   tbody
-    - for graduate in @member.graduates.sort_by { |g| g.graduation.held_on }.reverse
+    - for graduate in @member.graduates.without_failed.sort_by { |g| g.graduation.held_on }.reverse
       tr
         td = link_to graduate.graduation.held_on, controller: :graduations, action: :edit, id: graduate.graduation_id
         td
