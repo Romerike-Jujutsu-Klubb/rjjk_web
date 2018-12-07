@@ -12,6 +12,7 @@ ruby:
   end
   move_left = !graduate.graduation.approved? && (graduate.new_record? || graduate.passed == false)
   show_invite_status = graduate.graduation.locked? && !graduate.graduation.approved?
+  show_passed = graduate.persisted? && (graduate.graduation.held_on&.<= Date.current) && (!graduate.passed? || !graduate.graduation.group.school_breaks?)
   move_right = graduate.passed != false && !graduate.graduation.approved?
 
 tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
@@ -37,7 +38,7 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
         span.fa.fa-thumbs-up data-toggle="tooltip" title="#{graduate.member.first_name} bekreftet #{graduate.confirmed_at.strftime('%F %R')}"
       - elsif graduate.invitation_sent_at
         span.fa.fa-question data-toggle="tooltip" title="Invitert #{graduate.invitation_sent_at.strftime('%F %R')}"
-  - if (graduate.graduation.held_on&.<= Date.current) && (!graduate.passed?|| !graduate.graduation.group.school_breaks?)
+  - if show_passed
     td
       - if graduate.graduation.approved?
         = graduate.passed ? 'Ja' : 'Nei'
@@ -52,7 +53,8 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
               | Ja
               input.ml-1 type="radio" name="graduate[passed]" id="graduate_passed_true" value=:true autocomplete="off" checked=graduate.passed onchange="$('#passed_btn_#{graduate.id}').click()"
             label.btn.btn-sm.p-1 class=("btn-#{'outline-' unless graduate.passed == false}danger")
-              input.mr-1 type="radio" name="graduate[passed]" id="graduate_passed_false" value=:false autocomplete="off" checked=graduate.passed==false onchange="$('#passed_btn_#{graduate.id}').click()" Nei
+              input.mr-1 type="radio" name="graduate[passed]" id="graduate_passed_false" value=:false autocomplete="off" checked=graduate.passed==false onchange="$('#passed_btn_#{graduate.id}').click()"
+              | Nei
 
           = f.submit id: "passed_btn_#{graduate.id}", class: 'sr-only'
   td

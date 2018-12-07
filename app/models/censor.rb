@@ -7,7 +7,7 @@ class Censor < ApplicationRecord
   validates :graduation, :graduation_id, :member, :member_id, presence: true
   validate do
     if approved_grades_at && graduation.graduates.any? { |g| g.passed.nil? }
-      errors.add :bas, 'må sette "bestått Ja/Nei" på alle kandidatene.'
+      errors.add :base, 'Du må sette "bestått Ja/Nei" på alle kandidatene.'
     end
   end
 

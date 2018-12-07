@@ -54,23 +54,22 @@ class GraduationsController < ApplicationController
     when 'added'
       graduates = graduation.graduates.reject { |g| g.passed == false }
           .sort_by { |gr| [-gr.rank.position, gr.member.name] }
-      render 'graduate_list', layout: false,
-          locals: { id: :added, title: 'Deltakere', graduates: graduates }
+      title = 'Deltakere'
     when 'candidates'
-      graduation_members = graduation.graduates.map(&:member)
-      members = graduation.group.members.active(graduation.held_on)
-          .reject { |m| m.passive? graduation.held_on, graduation.group } - graduation_members
-      candidates = members.map { |m| m.to_graduate(graduation) }
-          .sort_by { |gr| [-gr.rank.position, gr.member.name] }
-      render 'graduate_list', layout: false, locals: {
-        id: :candidates, title: 'Kandidater', graduates: candidates
-      }
+      unless graduation.approved?
+        graduation_members = graduation.graduates.map(&:member)
+        members = graduation.group.members.active(graduation.held_on)
+            .reject { |m| m.passive? graduation.held_on, graduation.group } - graduation_members
+        graduates = members.map { |m| m.to_graduate(graduation) }
+            .sort_by { |gr| [-gr.rank.position, gr.member.name] }
+        title = 'Kandidater'
+      end
     when 'removed'
-      postponed_members = graduation.graduates.select { |g| g.passed == false }
+      graduates = graduation.graduates.select { |g| g.passed == false }
           .sort_by { |gr| [-gr.rank.position, gr.member.name] }
-      render 'graduate_list', layout: false,
-          locals: { id: :removed, title: 'Skal ikke delta', graduates: postponed_members }
+      title = graduation.passed? ? 'Ikke bestått' : 'Skal ikke delta'
     end
+    render layout: false, locals: { id: params[:section].to_sym, title: title, graduates: graduates }
   end
 
   def update
@@ -153,8 +152,11 @@ class GraduationsController < ApplicationController
     censor.confirmed_at ||= Time.current
     censor.locked_at ||= Time.current
     censor.approved_grades_at ||= Time.current
-    censor.save!
-    flash.notice = 'Gradering godkjent!'
+    if censor.save
+      flash.notice = 'Gradering godkjent!'
+    else
+      flash.alert = "Godkjenning feilet: #{censor.errors.full_messages.join}"
+    end
     redirect_to edit_graduation_path(graduation)
   end
 

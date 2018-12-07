@@ -1,1 +1,10 @@
-$("#graduate_<%=@graduate.id%>").replaceWith("<%=escape_javascript render('row', graduate: @graduate)%>");
+<% if @graduate.passed_previously_changed? %>
+  $('#graduate_<%=@graduate.id%>').remove();
+  <% target_list_id = @graduate.passed == false ? :removed : :added %>
+  var list = $('#graduates_list_<%= target_list_id %>');
+  list.html('<div class="text-center p-5"><i class="fa fa-circle-o-notch fa-spin fa-5x mb-3"></i><br>Et øyeblikk...</div>');
+  list.show();
+  list.load('<%=graduates_list_graduation_path(@graduate.graduation, target_list_id)%>', handleGraduatesListLoad);
+<% else %>
+  $("#graduate_<%=@graduate.id%>").replaceWith("<%=escape_javascript render('row', graduate: @graduate)%>");
+<% end %>
