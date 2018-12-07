@@ -21,8 +21,8 @@ class MemberReportsController < ApplicationController
     timestamp = Member.maximum(:updated_at).strftime('%F_%T.%N')
     json_data = Rails.cache.fetch("member_reports/history_graph_data/#{timestamp}") do
       data, dates = MemberHistoryGraph.data_set
-      expanded_data = data.map do |name, values|
-        { name: name, data: Hash[dates.zip(values)] }
+      expanded_data = data.map do |name, (values, color)|
+        { name: name, data: Hash[dates.zip(values)], color: color }
       end
       expanded_data.to_json
     end

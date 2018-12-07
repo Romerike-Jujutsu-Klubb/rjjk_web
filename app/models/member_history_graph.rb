@@ -177,14 +177,16 @@ class MemberHistoryGraph
     Date.current.step(first_date, -14) { |date| dates << date }
     dates.reverse!
     data = {
-      'Totalt' => totals(dates),
-      'Totalt betalende' => totals_jj(dates),
-      'Voksne' => seniors_jj(dates),
-      'Tiger' => juniors_jj(dates),
-      'Panda' => aspirants(dates),
-      'Gratis' => gratis(dates),
-      'Prøvetid' => dates.map { |d| NkfMemberTrial.where('reg_dato <= ?', d).count }
-          .without_consecutive_zeros,
+      'Totalt' => [totals(dates), :gray] ,
+      'Totalt betalende' => [totals_jj(dates), :blue],
+      'Voksne' => [seniors_jj(dates), Group.find_by(name: 'Voksne').color],
+      'Tiger' => [juniors_jj(dates), Group.find_by(name: 'Tiger').color],
+      'Panda' => [aspirants(dates), Group.find_by(name: 'Panda').color],
+      'Gratis' => [gratis(dates), :red],
+      'Prøvetid' => [
+          dates.map { |d| NkfMemberTrial.where('reg_dato <= ?', d).count }.without_consecutive_zeros,
+          :yellow
+      ]
     }
     [data, dates]
   end

@@ -16,6 +16,7 @@ nb:
         approved_grades_at: Godkjent grader
         declined: Avslått
         confirmed_at: Bekreftet
+        examiner: Eksaminator
         lock_reminded_at: Påmindt kandidatgodkjenning
         locked_at: Bekreftet kandidater
         requested_at: Invitert
