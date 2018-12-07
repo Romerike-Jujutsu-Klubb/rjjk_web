@@ -21,8 +21,11 @@
         = f.static_control :declined
       .col-sm-6
         = f.static_control :approved_grades_at
+    .row
+      .col-sm-6
+        = f.check_box :examiner
 
   .btn-toolbar.float-right
-    = back_or_link_to 'Tilbake', {:action => :index}, :class => 'btn btn-secondary'
-    = link_to('Vis', @censor, :class => 'btn btn-secondary') unless @censor.new_record?
-    = submit_tag 'Lagre', :class => 'btn btn-primary'
+    = back_or_link_to 'Tilbake', {action: :index}, class: 'btn btn-secondary mr-2'
+    = link_to('Vis', @censor, class: 'btn btn-secondary mr-2') unless @censor.new_record?
+    = submit_tag 'Lagre', class: 'btn btn-primary'
