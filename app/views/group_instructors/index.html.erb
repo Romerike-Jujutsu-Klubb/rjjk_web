@@ -29,7 +29,7 @@
           <tr>
             <td rowspan="<%= group_instructions.size %>"><%= link_to group_instruction.group_schedule.group.name, group_instruction.group_semester %></td>
             <td rowspan="<%= group_instructions.select { |gi| gi.group_schedule.weekday == group_instruction.group_schedule.weekday }.size %>"><%= group_instruction.group_schedule.weekday_name %></td>
-            <td><%= group_instruction.member.name %></td>
+            <td><%= link_to group_instruction.member.name, group_instruction.member %></td>
             <td><%= group_instruction.role %></td>
             <td><%= link_to 'Endre', edit_group_instructor_path(group_instruction) %></td>
             <td><%= link_to 'Slett', group_instruction, data: {confirm: 'Er du sikker?'}, method: :delete %></td>
@@ -41,7 +41,7 @@
                 <% if day_instruction.group_schedule.weekday != group_instruction.group_schedule.weekday %>
                     <td rowspan="<%= day_instructions.size %>"><%= day_instruction.group_schedule.weekday_name %></td>
                 <% end %>
-                <td><%= day_instruction.member.name %></td>
+                <td><%= link_to day_instruction.member.name, day_instruction.member %></td>
                 <td><%= day_instruction.role %></td>
                 <td><%= link_to 'Endre', edit_group_instructor_path(day_instruction) %></td>
                 <td><%= link_to 'Slett', day_instruction, data: {confirm: 'Er du sikker?'}, method: :delete %></td>
