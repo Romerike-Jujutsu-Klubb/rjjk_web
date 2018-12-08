@@ -3,9 +3,7 @@
 require 'application_system_test_case'
 
 class AttendanceWebpushesTest < ApplicationSystemTestCase
-  setup do
-    @attendance_webpush = attendance_webpushes(:one)
-  end
+  setup { @attendance_webpush = attendance_webpushes(:one) }
 
   test 'visiting the index' do
     visit attendance_webpushes_path
