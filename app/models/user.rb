@@ -10,11 +10,11 @@ class User < ApplicationRecord
 
   attr_accessor :password, :password_confirmation
 
-  # geocoded_by :full_address
-  # after_validation :geocode, if: ->(u) {
-  #   (u.address.present? || u.postal_code.present?) &&
-  #       ((latitude.blank? || longitude.blank? || u.address_changed? || u.postal_code_changed?))
-  # }
+  geocoded_by :full_address
+  after_validation :geocode, if: ->(u) do
+    (u.address.present? || u.postal_code.present?) &&
+        ((latitude.blank? || longitude.blank? || u.address_changed? || u.postal_code_changed?))
+  end
 
   belongs_to :billing_user, class_name: :User, optional: true
   belongs_to :contact_user, class_name: :User, optional: true
@@ -267,6 +267,11 @@ class User < ApplicationRecord
   # db column, you can dry your code, see wiki
   def full_address
     [address, postal_code, 'Norway'].select(&:present?).join(', ')
+  end
+
+  def map_url
+    return "https://www.google.com/maps/search/?api=1&query=#{latitude},#{longitude}" if latitude
+    return "https://www.google.com/maps/place/#{full_address}" if full_address
   end
 
   def contact_user_was
