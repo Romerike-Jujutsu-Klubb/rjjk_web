@@ -21,4 +21,4 @@ javascript:
         #{coordinates.map{|lat,lng| "new google.maps.Marker({position: {lat: #{lat}, lng: #{lng}}, map: map})"}.join("\n")}
     }
 
-script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRDVE28qEcU9U7uWakh9rZG82_Jd8tX5Q&callback=initMap"
+script src="https://maps.googleapis.com/maps/api/js?key=#{ENV[']GOOGLE_MAPS_API_KEY']}&callback=initMap"
