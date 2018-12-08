@@ -118,7 +118,9 @@ class Graduation < ApplicationRecord
   end
 
   def group_schedule
-    group.group_schedules.find { |gs| gs.weekday == held_on.try(:cwday) }
+    return unless held_on
+
+    group.group_schedules.find { |gs| gs.weekday == held_on.cwday }
   end
 
   def martial_art

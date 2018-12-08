@@ -15,11 +15,11 @@
       - if news_item.expire_at && news_item.expire_at < Time.current
         b> Utløpt
         | #{news_item.expire_at.strftime('%F %R')}.
-    - texts = [news_item.summary, news_item.body].select { |text| !text.blank? }
-    = textalize(texts[0].strip) if texts[0]
+    - texts = [news_item.summary, news_item.body].select(&:present?)
+    .md = textalize(texts[0].strip) if texts[0]
     - if texts[1]
       - if full
-        = textalize(texts[1].strip)
+        .md = textalize(texts[1].strip)
       - else
         p.read_more
           = detour_to('Les mer...', news_item)
