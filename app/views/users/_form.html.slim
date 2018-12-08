@@ -8,7 +8,7 @@
         .col = f.text_field :email, autocomplete: :off
         - if user.login.present?
           .col = f.text_field :login, autocomplete: :off
-      = f.text_field :phone
+      = f.text_field :phone, append: (link_to('<i class="fa fa-phone"></i>'.html_safe, "tel://#{user.phone}") if user.phone.present?)
       - unless @member
         = link_to('(medlem)', controller: :members, action: :edit, id: user.member.id) if user.member
       = f.text_field :address
