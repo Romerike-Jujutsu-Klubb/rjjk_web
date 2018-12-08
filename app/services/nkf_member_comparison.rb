@@ -122,6 +122,7 @@ class NkfMemberComparison
         sync_attribute(membership, billing_attr_sym, form, new_billing_value, nil, outgoing_changes,
             record)
       end
+    elsif [{ user: :latitude }, { user: :longitude }].include?(attr_sym)
     else
       @errors << ['Unhandled change', attr_sym, record]
     end

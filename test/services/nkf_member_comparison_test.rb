@@ -21,6 +21,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
         'user' => {
           'birthdate' => [Date.parse('Wed, 21 Jun 1967'), Date.parse('Wed, 01 Mar 1967')],
           'email' => ['lars@example.com', 'lars@example.net'],
+          'latitude' => [nil, 40.714353], 'longitude' => [nil, -74.005973]
         },
       }],
       [members(:sebastian), {
@@ -29,6 +30,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
           'birthdate' => [Date.parse('2004-06-03'), Date.parse('2004-06-04')],
           'phone' => [nil, '92929292'],
           'email' => ['sebastian@example.com', 'sebastian@example.net'],
+          'latitude' => [nil, 0.40714353e2], 'longitude' => [nil, -0.74005973e2]
         },
         'guardian_1' => {
           'first_name' => %w[Uwe Lise],
@@ -37,7 +39,8 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
         'billing' => { 'email' => [nil, 'lise@example.net'] },
       }],
       [members(:uwe), {
-        'user' => { 'email' => ['uwe@example.com', 'uwe@example.net'] },
+        'user' => { 'email' => ['uwe@example.com', 'uwe@example.net'], 'latitude' => [nil, 0.40714353e2],
+                    'longitude' => [nil, -0.74005973e2] },
       }],
     ], c.member_changes)
     assert_equal([
