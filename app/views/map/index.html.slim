@@ -9,7 +9,7 @@ css:
 
 #map
 
-- coordinates = Member.active.to_a.map(&:user).select(&:latitude).map{|u|[u.latitude, u.longitude]}
+- coordinates = Member.active.to_a.map(&:user).select(&:latitude).map{|u|[u.name, u.latitude, u.longitude]}
 
 javascript:
     function initMap() {
@@ -18,7 +18,7 @@ javascript:
             zoom: 10,
             center: storsenteret
         });
-        #{coordinates.map{|lat,lng| "new google.maps.Marker({position: {lat: #{lat}, lng: #{lng}}, map: map})"}.join("\n")}
+        #{{coordinates.map{|name,lat,lng| "new google.maps.Marker({title: '#{name}', position: {lat: #{lat}, lng: #{lng}}, map: map})"}.join("\n")}}
     }
 
 script src="https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"
