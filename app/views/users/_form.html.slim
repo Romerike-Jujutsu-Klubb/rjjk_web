@@ -5,10 +5,10 @@
       = f.text_field :first_name
       = f.text_field :last_name
       .row
-        .col = f.text_field :email, autocomplete: :off
+        .col = f.text_field :email, autocomplete: :off, append: (link_to('<i class="fa fa-envelope"></i>'.html_safe, %Q{mailto:"#{user.name}" <#{user.email}>}) if user.email.present?)
         - if user.login.present?
           .col = f.text_field :login, autocomplete: :off
-      = f.text_field :phone, append: (link_to('<i class="fa fa-phone"></i>'.html_safe, "tel://#{user.phone}") if user.phone.present?)
+      = f.text_field :phone, append: (link_to('<i class="fa fa-phone"></i>'.html_safe, "tel:#{user.phone}") if user.phone.present?)
       - unless @member
         = link_to('(medlem)', controller: :members, action: :edit, id: user.member.id) if user.member
       = f.text_field :address
