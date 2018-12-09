@@ -12,7 +12,7 @@
       .row
         .col = f.text_field :from_age
         .col = f.text_field :to_age
-        .col = f.text_field :color
+        .col = f.text_field :color, append: ("<span style='width:1.5rem;background-color:#{@group.color}'>&nbsp;</span>".html_safe if @group.color.present?)
 
       .row
         .col = f.text_field :monthly_price

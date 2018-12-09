@@ -151,9 +151,7 @@ class AttendancesController < ApplicationController
     timestamp = Attendance.maximum(:updated_at).strftime('%F_%T.%N')
     json_data = Rails.cache.fetch("attendances/month_chart_data/#{year}/#{month}/#{timestamp}") do
       data, _dates = AttendanceHistoryGraph.month_chart_data(year, month)
-      expanded_data = data.map do |name, values, color|
-        { name: name, data: Hash[values.sort], color: color }
-      end
+      expanded_data = data.map { |name, values, color| { name: name, data: values.sort, color: color } }
       expanded_data.to_json
     end
     render json: json_data
