@@ -35,7 +35,8 @@ class MemberReportsController < ApplicationController
   def grade_history_graph_data
     opts = { interval: params[:interval]&.to_i&.days, step: params[:step].try(:to_i).try(:days),
              percentage: params[:percentage].try(:to_i) }
-    cache_key = "member_reports/grade_history_graph_data/#{opts.hash}/#{Member.maximum(:updated_at)}"
+    timestamp = [Attendance, Graduate, Member].map { |c| c.maximum(:updated_at) }.max.strftime('%F_%T.%N')
+    cache_key = "member_reports/grade_history_graph_data/#{opts.hash}/#{timestamp}"
     json_data = Rails.cache.fetch(cache_key) do
       data, dates, _percentage = MemberGradeHistoryGraph.new.data_set(opts)
       expanded_data = data.map do |rank, values|

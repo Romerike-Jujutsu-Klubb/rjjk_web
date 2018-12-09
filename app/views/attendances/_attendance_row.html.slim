@@ -12,8 +12,8 @@ tr class=cycle('odd', 'even')
     - if member.phones
       br
       = member.phones.join(' / ')
-  td nowrap="true" align="right"
-    = h member.age
+  td nowrap="true" align="center"
+    = member.age
   td nowrap="true"
     - if member.left_on && member.left_on < (@dates[0] + 2.months)
       | Utmeldt fra #{member.left_on}
