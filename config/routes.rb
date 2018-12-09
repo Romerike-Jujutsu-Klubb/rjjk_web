@@ -153,6 +153,8 @@ Rails.application.routes.draw do
         as: :member_reports_grade_history_graph
     get 'member_reports/grade_history_graph_data', action: :grade_history_graph_data,
         as: :member_reports_grade_history_graph_data
+    get 'member_reports/grades_graph_data', action: :grades_graph_data,
+        as: :member_reports_grades_graph_data
     get 'member_reports/history_graph(/:size)', action: :history_graph,
         as: :member_reports_history_graph
     get 'member_reports/history_graph_data', action: :history_graph_data,

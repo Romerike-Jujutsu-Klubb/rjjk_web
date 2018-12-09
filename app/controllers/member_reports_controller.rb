@@ -48,6 +48,20 @@ class MemberReportsController < ApplicationController
     render json: json_data
   end
 
+  def grades_graph_data
+    timestamp = [Attendance, Graduate, Member].map { |c| c.maximum(:updated_at) }.max.strftime('%F_%T.%N')
+    cache_key = "member_reports/grades_graph_data/#{timestamp}"
+    json_data = Rails.cache.fetch(cache_key) do
+      data, dates, _percentage = MemberGradeHistoryGraph.new.ranks
+      expanded_data = data.map do |rank, values|
+        { name: rank.name, data: dates.zip(values) }
+      end
+      expanded_data.reverse.to_json
+    end
+
+    render json: json_data
+  end
+
   def age_chart; end
 
   def age_chart_data

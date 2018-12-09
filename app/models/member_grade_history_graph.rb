@@ -79,6 +79,8 @@ class MemberGradeHistoryGraph
     step = (options[:step] || 3.months)
     percentage = options[:percentage]
 
+    raise unless interval > 0 && step > 0
+
     ranks = MartialArt.find_by(name: 'Kei Wa Ryu').ranks.reverse
     ranks = ranks.first(9)[1..-1]
     colors = (%w[yellow yellow orange orange green green blue blue] * 2 +
@@ -100,6 +102,21 @@ class MemberGradeHistoryGraph
 
     data = Hash[ranks.reverse.zip(ranks_data.reverse)]
     [data, dates, percentage, ranks, size, colors]
+  end
+
+  def ranks
+    ranks = MartialArt.find_by(name: 'Kei Wa Ryu').ranks.reverse.first(9)[1..-1]
+    colors = (%w[yellow yellow orange orange green green blue blue] * 2 +
+        %w[brown yellow orange green blue brown black black black]
+             ).last(ranks.size)
+
+    dates = [Date.current]
+    ranks_data = ranks.map do |rank|
+      totals(rank, dates, 92, nil)
+    end
+
+    data = Hash[ranks.reverse.zip(ranks_data.reverse)]
+    [data, dates, nil, ranks, 480, colors]
   end
 
   private
