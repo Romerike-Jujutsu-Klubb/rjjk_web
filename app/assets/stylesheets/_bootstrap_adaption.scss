@@ -11,3 +11,11 @@
 label.required:after {
   content:" *";
 }
+
+.carousel-control-next, .carousel-control-prev {
+  @extend .btn;
+  @extend .btn-dark;
+  height: 2.5rem;
+  margin-top: 1rem;
+  max-width: 2.8rem;
+  }
