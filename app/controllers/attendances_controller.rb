@@ -2,6 +2,9 @@
 
 class AttendancesController < ApplicationController
   include AttendanceFormDataLoader
+
+  skip_before_action :verify_authenticity_token, only: :announce
+
   USER_ACTIONS = %i[announce plan practice_details review].freeze
   before_action :authenticate_user, only: USER_ACTIONS
   before_action :instructor_required, except: USER_ACTIONS
