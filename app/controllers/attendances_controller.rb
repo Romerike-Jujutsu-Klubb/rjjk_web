@@ -104,10 +104,9 @@ class AttendancesController < ApplicationController
     @first_date = @date
     @last_date = @date.end_of_month
     @attendances = Attendance.includes(practice: :group_schedule).references(:practices)
-        .where('practices.year = ? AND practices.week >= ? AND practices.week <= ?',
-            @year, @first_date.cweek, @last_date.cweek)
+        .from_date(@first_date).to_date(@last_date)
         .where('attendances.status NOT IN (?)', Attendance::ABSENT_STATES)
-        .to_a.select { |a| (@first_date..@last_date).cover? a.date }
+        .to_a
     monthly_per_group = @attendances.group_by { |a| a.group_schedule.group }
         .sort_by { |g, _ats| g.from_age }
     @monthly_summary_per_group = {}
