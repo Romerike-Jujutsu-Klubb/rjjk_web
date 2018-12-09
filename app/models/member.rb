@@ -28,17 +28,10 @@ class Member < ApplicationRecord
   has_many :graduates, dependent: :destroy
   has_many :group_instructors, dependent: :destroy
   has_many :group_memberships, dependent: :destroy
-  has_many :last_6_months_attendances, -> do
-    includes(practice: :group_schedule).references(:group_schedules)
-        .merge(Attendance.after(count.months.ago.to_date).before(Time.zone.today))
-  end,
-      class_name: :Attendance
-
   has_many :member_images, dependent: :destroy
   has_many :passed_graduates, -> { where graduates: { passed: true } }, class_name: 'Graduate'
-  has_many :recent_attendances, -> { merge(Attendance.after(92.days.ago).before(31.days.from_now)) },
+  has_many :recent_attendances, -> { merge(Attendance.from_date(92.days.ago).to_date(31.days.from_now)) },
       class_name: :Attendance
-
   has_many :signatures, dependent: :destroy
   has_many :survey_requests, dependent: :destroy
 
@@ -123,7 +116,7 @@ class Member < ApplicationRecord
       if (c = current_graduate(g.martial_art, before_date))
         ats = ats.after(c.graduation.held_on)
       end
-      ats = ats.until_date(before_date)
+      ats = ats.to_date(before_date)
       ats = ats.includes(includes) if includes
       ats
     end
@@ -228,8 +221,7 @@ class Member < ApplicationRecord
     else
       query = attendances.where('attendances.status IN (?)', Attendance::PRESENCE_STATES)
       query = query.by_group_id(group.id) if group
-      query = query.after(start_date)
-      query = query.until_date(end_date)
+      query = query.from_date(start_date).to_date(end_date)
       query.empty?
     end
   end

@@ -141,12 +141,11 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
 
   def self.month_chart_data(year, month)
     first_date = Date.civil(year, month, 1)
-    last_date = Date.civil(year, month, -1)
+    last_date = [Date.civil(year, month, -1), Date.current].min
     attendances = Attendance.includes(:practice).references(:practices)
-        .where('practices.year = ? AND practices.week >= ? AND practices.week <= ?',
-            year, first_date.cweek, last_date.cweek)
+        .from_date(first_date).to_date(last_date)
         .where('attendances.status NOT IN (?)', Attendance::ABSENT_STATES)
-        .to_a.select { |a| a.date >= first_date && a.date <= last_date && a.date <= Date.current }
+        .to_a
     group_schedules = attendances.map(&:group_schedule).uniq
     groups = group_schedules.map(&:group).uniq.sort_by(&:from_age)
     dates = attendances.map(&:date).sort.uniq
