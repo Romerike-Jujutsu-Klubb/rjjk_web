@@ -5,6 +5,7 @@ require 'digest/sha1'
 class User < ApplicationRecord
   include UserSystem
   include Rails.application.routes.url_helpers
+  include Searching
 
   acts_as_paranoid
 
@@ -37,13 +38,8 @@ class User < ApplicationRecord
       inverse_of: :guardian_2
   has_many :user_messages, dependent: :destroy
 
-  # http://www.postgresql.org/docs/9.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
-  SEARCH_FIELDS = %i[address email first_name last_name login phone postal_code].freeze
-  scope :search, ->(query) {
-    where(SEARCH_FIELDS.map { |c| "to_tsvector(UPPER(#{c})) @@ to_tsquery(:query)" }.join(' OR '),
-        query: UnicodeUtils.upcase(query).split(/\s+/).map { |t| %("#{t.tr('<->&!()', '')}") }.join(' | '))
-        .order(:first_name, :last_name)
-  }
+  search_scope %i[address email first_name last_name login phone postal_code],
+      order: %i[first_name last_name]
 
   CHANGEABLE_FIELDS = %w[first_name last_name email].freeze
   attr_accessor :password_needs_confirmation
