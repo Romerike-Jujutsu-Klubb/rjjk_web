@@ -135,7 +135,7 @@ class AttendancesController < ApplicationController
         next unless values
 
         exp = weeks.zip(values).map { |(year, week), value| [Date.commercial(year, week, 1), value] }
-        { name: label, data: Hash[exp], color: color }
+        { name: label, data: exp, color: color }
       end
       expanded_data.compact.to_json
     end
@@ -339,7 +339,7 @@ class AttendancesController < ApplicationController
     json_data = Rails.cache.fetch("attendances/month_per_year_chart_data/#{month}/#{timestamp}") do
       data, _years = AttendanceHistoryGraph.month_per_year_chart_data(month)
       expanded_data = data.map do |name, values, color|
-        { name: name, data: Hash[values], color: color }
+        { name: name, data: values, color: color }
       end
       expanded_data.to_json
     end

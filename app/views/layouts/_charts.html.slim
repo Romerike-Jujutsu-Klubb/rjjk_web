@@ -1,10 +1,11 @@
 - chart_width = column_width_sm
 - if true || !Rails.env.development?
-  - history_chart_link = line_chart member_reports_history_graph_data_path, points: false, legend: false, width: '258px', height: '194px', title: 'Medlemmer'
-  - attendance_chart_link = line_chart history_graph_data_attendances_path, points: false, legend: false, width: '258px', height: '194px', title: 'Oppmøte'
-  - grades_chart_link = area_chart member_reports_grade_history_graph_data_path, points: false, legend: false, width: '258px', height: '194px', colors: %i[yellow orange green blue brown grey #444444 black].reverse, title: 'Beltegrader voksne'
-  - age_chart_link = column_chart member_reports_age_chart_data_path, legend: false, width: '258px', height: '194px', title: 'Aldersfordeling'
-  - good_attendance_chart_link = area_chart member_reports_grade_history_graph_data_path(params.slice(:interval, :step, :percentage)), points: false, legend: false, width: '258px', height: '194px', colors: %i[yellow orange green blue brown grey #444444 black].reverse, title: 'Jevnt oppmøte voksne'
+  - chart_opts = {points: false, legend: false, width: '258px', height: '194px', defer: true}
+  - history_chart_link = line_chart member_reports_history_graph_data_path, chart_opts.merge(title: 'Medlemmer')
+  - attendance_chart_link = line_chart history_graph_data_attendances_path, chart_opts.merge(title: 'Oppmøte')
+  - grades_chart_link = area_chart member_reports_grade_history_graph_data_path, chart_opts.merge(colors: %i[yellow orange green blue brown grey #444444 black].reverse, title: 'Beltegrader voksne')
+  - age_chart_link = column_chart member_reports_age_chart_data_path, chart_opts.merge(title: 'Aldersfordeling')
+  - good_attendance_chart_link = area_chart member_reports_grade_history_graph_data_path(params.slice(:interval, :step, :percentage)), chart_opts.merge(colors: %i[yellow orange green blue brown grey #444444 black].reverse, title: 'Jevnt oppmøte voksne')
 - else
   - history_chart_link = 'Medlemshistorikk'
   - attendance_chart_link = 'Oppmøte'

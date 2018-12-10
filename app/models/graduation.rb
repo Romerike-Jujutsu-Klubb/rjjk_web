@@ -97,7 +97,7 @@ class Graduation < ApplicationRecord
   end
 
   def attendees
-    graduates.select { |g| g.passed || g.passed.nil? }.map(&:member).map(&:user)
+    (graduates.select { |g| g.passed || g.passed.nil? } + censors).map(&:member).map(&:user)
   end
 
   def body
