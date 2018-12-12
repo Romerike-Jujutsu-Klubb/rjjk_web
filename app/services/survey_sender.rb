@@ -42,7 +42,7 @@ class SurveySender
     end
   end
 
-  def self.notify_new_ansers
+  def self.notify_new_answers
     new_answers = SurveyAnswer.where('created_at >= ?', 1.week.ago).to_a
     return if new_answers.empty?
 

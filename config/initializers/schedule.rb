@@ -129,7 +129,7 @@ unless reason
     scheduler.cron('0 3 * * mon') do
       Rails.application.executor.wrap { InstructionReminder.notify_missing_instructors }
     end
-    scheduler.cron('0 4 * * mon') do
+    scheduler.cron('0 8 * * thu') do
       Rails.application.executor.wrap { NkfMemberTrialReminder.notify_overdue_trials }
     end
     scheduler.cron('0 6 * * mon') do
@@ -138,7 +138,7 @@ unless reason
     scheduler.cron('0 7 * * mon') do
       Rails.application.executor.wrap { PublicRecordImporter.import_public_record }
     end
-    scheduler.cron('0 8 * * mon') { Rails.application.executor.wrap { SurveySender.notify_new_ansers } }
+    scheduler.cron('0 8 * * mon') { Rails.application.executor.wrap { SurveySender.notify_new_answers } }
 
     Rails.logger.info('Scheduler started')
   rescue => e
