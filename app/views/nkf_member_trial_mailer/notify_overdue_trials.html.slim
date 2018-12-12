@@ -1,0 +1,13 @@
+| Følgende prøvemedlemmer har utløpt prøvetid:
+
+ul
+  - @trials.each do |trial|
+    li
+      => link_to trial.name, trial
+      | (#{trial.alder} år)
+      ul
+        li Registrert: #{trial.reg_dato}
+        li
+          => trial.trial_attendances.select { |a| a.date >= 2.months.ago.to_date }.size
+          | treninger siste 2 måneder
+        li #{trial.trial_attendances.size} treninger totalt
