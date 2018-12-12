@@ -1,19 +1,16 @@
 # frozen_string_literal: true
 
 class NkfMemberTrial < ApplicationRecord
-  SEARCH_FIELDS = %i[fornavn etternavn epost].freeze
+  include Searching
 
   has_many :trial_attendances, dependent: :destroy
 
   scope :for_group, ->(group) { where('alder BETWEEN ? AND ?', group.from_age, group.to_age) }
-  scope :search, ->(query) do
-    where(SEARCH_FIELDS.map { |c| "UPPER(#{c}) LIKE :query" }.join(' OR '),
-        query: "%#{UnicodeUtils.upcase(query).gsub(/(_|%)/, '\\\\\\1')}%")
-        .order(:fornavn, :etternavn).all
-  end
 
-  validates :alder, :epost, :etternavn, :fodtdato,
-      :fornavn, :medlems_type, :postnr, :reg_dato, :stilart, :tid, presence: true
+  search_scope %i[fornavn etternavn epost], order: %i[fornavn etternavn]
+
+  validates_presence_of :alder, :epost, :etternavn, :fodtdato, :fornavn, :medlems_type, :postnr, :reg_dato,
+      :stilart, :tid
   validates :res_sms, inclusion: { in: [true, false] }
 
   def age

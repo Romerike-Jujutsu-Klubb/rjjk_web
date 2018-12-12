@@ -10,8 +10,8 @@ module Searching
   class_methods do
     def search_scope(fields, text: nil, order: nil)
       scope :search, ->(query) do
-        scope = where(fields.map { |c| "#{c} ILIKE :query" }.join(' OR '),
-            query: "%#{query.gsub(/(_|%)/, '\\\\\\1')}%")
+        scope = where(fields.map { |f| "#{f} ~* :query" }.join(' OR '),
+            query: query.split(/\s+/).map{|w| Regexp.escape w}.join('|'))
 
         if text
           ts_query = query.split(/\s+/).map { |t| %("#{t.tr('<->&!()', '')}") }.join(' | ')
