@@ -75,7 +75,7 @@ Rails.application.routes.draw do
   end
 
   resources :correspondences
-  resources :curriculums, path: :pensum do
+  resources :curriculums, path: :pensum, only: :index do
     collection do
       get :card_pdf
     end
