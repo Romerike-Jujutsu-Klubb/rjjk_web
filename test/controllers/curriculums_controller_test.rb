@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class CurriculumControllerTest < ActionDispatch::IntegrationTest
+class CurriculumsControllerTest < ActionDispatch::IntegrationTest
   test 'index' do
     login(:lars)
     get curriculums_path
