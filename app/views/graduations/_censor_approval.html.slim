@@ -23,7 +23,7 @@
 
 i.fa class="fa-#{icon}" title=title data-toggle="tooltip"
 
-- if icon == :question && censor.member == current_user.member
+- if title == 'Ubekreftet' && censor.member == current_user.member
   .btn-group<
     = link_to confirm_censor_path(censor),class: 'btn btn-secondary btn-sm', title: 'Jeg kommer!', data: {toggle: :tooltip}
       i.fa.fa-thumbs-up
