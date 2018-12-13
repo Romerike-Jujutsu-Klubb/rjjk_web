@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CurriculumController < ApplicationController
+class CurriculumsController < ApplicationController
   before_action :authenticate_user
 
   def index

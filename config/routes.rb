@@ -75,11 +75,14 @@ Rails.application.routes.draw do
   end
 
   resources :correspondences
-  scope controller: :curriculum, path: :pensum, as: :curriculum do
-    get '', action: :index
-    get :card
-    get :card_pdf
-    get :pdf
+  resources :curriculums, path: :pensum do
+    collection do
+      get :card_pdf
+    end
+    member do
+      get :card
+      get :pdf
+    end
   end
   resources :elections
   resources :embus do

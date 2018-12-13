@@ -3,7 +3,7 @@ ul
   - if member?
     - if current_user.member.groups.any?(&:planning)
       li = detour_to 'Mitt oppmøte', controller: :attendances, action: :plan
-    li = menu_item 'Pensum', controller: :curriculum, action: :index
+    li = menu_item 'Pensum', controller: :curriculums, action: :index
     li = link_to 'Min Embu', controller: :embus, action: :index
   li = link_to 'Mine media', controller: :images, action: :mine
   li = link_to 'Logg på NKF', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login', onclick: 'return !window.open(this.href)'

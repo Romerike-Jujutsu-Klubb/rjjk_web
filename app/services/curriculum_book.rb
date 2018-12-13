@@ -48,8 +48,6 @@ class CurriculumBook < Prawn::Document
           text ta.name, size: 30
           ta.application_steps[0..2].each do |as|
             move_down 0.5.cm
-            # image as.image.content_data_io, fit: [page_width * 0.45, page_width * 0.45]
-            # text_box as.description, width: page_width * 0.45, position: :right
             table([[
               { image: as.image.content_data_io, width: page_width * 0.35,
                 fit: [page_width * 0.33, page_width * 0.45] },
