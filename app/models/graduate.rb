@@ -50,9 +50,10 @@ class Graduate < ApplicationRecord
 
   def training_attendances
     ats = if member.attendances.loaded?
-            member.attendances.select { |a| training_period.include? a.date }
+            member.attendances.select { |a| a.present? && training_period.include?(a.date) }
           else
             member.attendances.includes(:practice).after(training_start_date).before(graduation.held_on)
+                .present
           end
     ats.size
   end
@@ -97,6 +98,6 @@ class Graduate < ApplicationRecord
   def cache_key
     return [super, graduation.approved?] if persisted?
 
-    [self.class.name, graduation_id, member_id, graduation.approved?]
+    [self.class.name, graduation_id, member_id, graduation.approved?, graduation.passed?]
   end
 end
