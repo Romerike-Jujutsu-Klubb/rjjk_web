@@ -5,7 +5,7 @@
 
 if defined?(Rake) && (RUBY_ENGINE != 'jruby' || org.jruby.RubyInstanceConfig.FULL_TRACE_ENABLED)
   require 'simplecov'
-  SimpleCov.start('rails') { minimum_coverage 84 } # FIXME(uwe): Increase coverage to at least 85%
+  SimpleCov.start('rails') { minimum_coverage 85 }
 end
 
 ENV['RAILS_ENV'] ||= 'test'
