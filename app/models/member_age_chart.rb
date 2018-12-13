@@ -1,23 +1,6 @@
 # frozen_string_literal: true
 
 class MemberAgeChart
-  def self.chart(size = 480)
-    g = Gruff::Bar.new(size)
-    g.theme_37signals
-    g.title = 'Antall aktive medlemmer'
-    g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
-    g.hide_legend = true
-    g.colors = %w[darkblue]
-    g.labels = {}
-    age_data, age_groups = data_set
-    age_groups.each.with_index { |ag, i| g.labels[i] = ag.to_s }
-    g.data('Antall per årstrinn', age_data)
-    g.minimum_value = 0
-    g.maximum_value = 30
-    g.marker_count = 6
-    g.to_blob
-  end
-
   def self.data_set
     members = Member.active(Date.current).to_a
     member_ages = members.map(&:age)

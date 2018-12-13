@@ -21,16 +21,19 @@ class CurriculumControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'card' do
+    login(:lars)
     get curriculum_card_path
     assert_response :success
   end
 
   test 'card_pdf' do
+    login(:lars)
     get curriculum_card_pdf_path
     assert_response :success
   end
 
   test 'pdf' do
+    login(:lars)
     get curriculum_pdf_path
     assert_response :success
   end

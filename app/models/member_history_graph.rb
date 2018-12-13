@@ -30,64 +30,6 @@ class MemberHistoryGraph
     )"
   end
 
-  def self.history_graph(size = 480)
-    begin
-      require 'gruff'
-    rescue MissingSourceFile
-      return File.read('public/images/rails.png')
-    end
-
-    g = Gruff::Line.new(size)
-    g.theme_37signals
-    g.title = 'Antall aktive medlemmer'
-    g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
-    g.legend_font_size = 14
-    g.marker_font_size = 14
-    g.hide_dots = true
-    g.colors = %w[gray blue brown orange black red yellow lightblue green]
-
-    data, dates = data_set
-
-    g.data('Totalt', data['Totalt'])
-    g.data('Totalt betalende', totals_jj(dates))
-    g.data('Voksne', seniors_jj(dates))
-    g.data('Tiger', juniors_jj(dates))
-    g.data('Panda', aspirants(dates))
-    g.data('Gratis', gratis(dates))
-    g.data('Prøvetid', dates.map { |d| NkfMemberTrial.where('reg_dato <= ?', d).count }
-        .without_consecutive_zeros)
-
-    g.minimum_value = 0
-
-    labels = {}
-    current_year = nil
-    current_month = nil
-    dates.each_with_index do |date, i|
-      next unless date.month != current_month && [1, 8].include?(date.month)
-
-      labels[i] =
-          if date.year != current_year
-            "#{date.strftime('%m')}\n    #{date.strftime('%Y')}"
-          else
-            date.strftime('%m')
-          end
-      current_year = date.year
-      current_month = date.month
-    end
-    g.labels = labels
-
-    # g.draw_vertical_legend
-
-    precision = 1
-    if g.maximum_value.positive?
-      g.maximum_value = (g.maximum_value.to_s[0..precision].to_i + 1) *
-          (10**(Math.log10(g.maximum_value.to_i).to_i - precision))
-    end
-    g.maximum_value = [100, g.maximum_value].max
-    g.marker_count = g.maximum_value / 10
-    g.to_blob
-  end
-
   def self.totals(dates)
     dates.map do |date|
       Member.where(ACTIVE_CLAUSE.call(date)).count + Member.where(NON_PAYING_CLAUSE.call(date))

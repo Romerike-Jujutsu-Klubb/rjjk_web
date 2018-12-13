@@ -39,40 +39,6 @@ class MemberGradeHistoryGraph
     @group = Group.includes(:group_schedules).find_by(name: 'Voksne')
   end
 
-  def history_graph(options = {})
-    data, dates, percentage, _ranks, size, colors = data_set(options)
-
-    g = Gruff::Line.new(size)
-    g.theme_37signals
-    g.title = 'Fordeling av grader'
-    g.legend_font_size = 15
-    g.legend_box_size = 15
-    g.marker_font_size = 14
-    if percentage
-      g.title_font_size *= 0.95
-      g.title += "\nmed oppmøte over #{percentage}%"
-    end
-    g.font = '/usr/share/fonts/bitstream-vera/Vera.ttf'
-    g.hide_dots = true
-    g.colors = colors
-
-    data.each { |d, rank| g.data(rank.name, d) }
-
-    g.minimum_value = 0
-
-    labels = {}
-    current_year = nil
-    dates.each_with_index do |date, i|
-      next unless date.year != current_year
-
-      labels[i] = date.strftime('%Y').to_s
-      current_year = date.year
-    end
-    g.labels = labels
-    g.y_axis_increment = 5
-    g.to_blob
-  end
-
   def data_set(options)
     size = options[:size] || 480
     interval = options[:interval] || 8.weeks
