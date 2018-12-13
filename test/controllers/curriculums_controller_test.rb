@@ -33,11 +33,10 @@ class CurriculumsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'pdf' do
-    skip('Not ready') if ENV['TRAVIS']
     login(:lars)
-    assert_raises Prawn::Errors::UnsupportedImageType do
-      get pdf_curriculum_path(id(:kyu_5))
-      assert_response :success
-    end
+    get pdf_curriculum_path(id(:kyu_5))
+    assert_response :success
+  rescue Prawn::Errors::UnsupportedImageType => e
+    raise e if ENV['TRAVIS']
   end
 end
