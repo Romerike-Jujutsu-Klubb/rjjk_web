@@ -17,5 +17,21 @@ class CurriculumControllerTest < ActionDispatch::IntegrationTest
   test 'index for beginner' do
     login :newbie
     get curriculum_path
+    assert_response :success
+  end
+
+  test 'card' do
+    get curriculum_card_path
+    assert_response :success
+  end
+
+  test 'card_pdf' do
+    get curriculum_card_pdf_path
+    assert_response :success
+  end
+
+  test 'pdf' do
+    get curriculum_pdf_path
+    assert_response :success
   end
 end
