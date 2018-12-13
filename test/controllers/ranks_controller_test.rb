@@ -62,13 +62,4 @@ class RanksControllerTest < ActionController::TestCase
 
     assert_raise(ActiveRecord::RecordNotFound) { Rank.find(@first_id) }
   end
-
-  def test_pensum
-    get :pensum
-  end
-
-  def test_pensum_for_beginner
-    login :newbie
-    get :pensum
-  end
 end

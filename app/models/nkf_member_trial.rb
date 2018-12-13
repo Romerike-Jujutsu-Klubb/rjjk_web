@@ -9,8 +9,8 @@ class NkfMemberTrial < ApplicationRecord
 
   search_scope %i[fornavn etternavn epost], order: %i[fornavn etternavn]
 
-  validates_presence_of :alder, :epost, :etternavn, :fodtdato, :fornavn, :medlems_type, :postnr, :reg_dato,
-      :stilart, :tid
+  validates :alder, :epost, :etternavn, :fodtdato, :fornavn, :medlems_type, :postnr, :reg_dato,
+      :stilart, :tid, presence: true
   validates :res_sms, inclusion: { in: [true, false] }
 
   def age

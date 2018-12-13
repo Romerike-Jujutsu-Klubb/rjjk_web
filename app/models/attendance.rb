@@ -59,6 +59,7 @@ class Attendance < ApplicationRecord
             year: from_date.cwyear, week: from_date.cweek, wday: from_date.cwday)
   }
   scope :on_date, ->(date) { where('year = ? AND week = ?', date.year, date.cweek) }
+  scope :present, -> { where status: PRESENCE_STATES }
   scope :to_date, ->(limit) {
     to_date = limit.to_date
     includes(practice: :group_schedule).references(:group_schedules)

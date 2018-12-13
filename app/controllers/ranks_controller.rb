@@ -10,27 +10,8 @@ class RanksController < ApplicationController
     @martial_arts = @ranks.group_by(&:martial_art)
   end
 
-  def pensum
-    next_rank = current_user.member.next_rank
-    @ranks = Rank.kwr.where('group_id = ? AND position <= ?',
-        next_rank.group_id, next_rank.position).order(:position).to_a
-  end
-
   def show
     @rank = Rank.find(params[:id])
-  end
-
-  def card
-    @rank = Rank.find(params[:id])
-    render layout: 'print'
-  end
-
-  def pdf
-    @rank = current_user.member.next_rank
-    filename = "Skill_Card_#{@rank.name}.pdf"
-    send_data SkillCard.pdf(@rank.group.ranks
-        .select { |r| r.position <= @rank.position }.sort_by(&:position)),
-        type: 'text/pdf', filename: filename, disposition: 'attachment'
   end
 
   def new

@@ -24,6 +24,6 @@ p
   ' treninger for deg siden
   = @member.current_rank ? 'forrige gradering' : 'du startet'
   - if @member.age >= 13
-    ' .  Du finner pensum for neste grad på #{link_to pensum_url, pensum_url}.
+    ' .  Du finner pensum for neste grad på #{link_to curriculum_url, curriculum_url}.
 p
   | Ny invitasjon til gradering vil sendes nærmere gradering dersom kravene for gradering er oppfylt.

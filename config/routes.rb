@@ -11,8 +11,6 @@ Rails.application.routes.draw do
   post 'attendances/announce(/:year/:week/:group_schedule_id)/:status(/:member_id)' =>
       'attendances#announce'
   get 'map' => 'map#index'
-  get 'pensum' => 'ranks#pensum'
-  get 'pensum/pdf' => 'ranks#pdf'
   get 'search' => 'search#index'
   post 'send_grid/receive' => 'send_grid#receive'
   get 'svar/:id', controller: :survey_requests, action: :answer_form
@@ -77,6 +75,12 @@ Rails.application.routes.draw do
   end
 
   resources :correspondences
+  scope controller: :curriculum, path: :pensum, as: :curriculum do
+    get '', action: :index
+    get :card
+    get :card_pdf
+    get :pdf
+  end
   resources :elections
   resources :embus do
     member do
