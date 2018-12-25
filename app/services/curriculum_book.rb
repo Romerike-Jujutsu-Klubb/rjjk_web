@@ -13,12 +13,14 @@ class CurriculumBook < Prawn::Document
       page_width = PDF::Core::PageGeometry::SIZES['A4'][1] - 1.cm
       # page_height = PDF::Core::PageGeometry::SIZES['A4'][0] - 1.cm
 
-      text 'Grunnteknikker', size: 18
+      # Table of contents
+
+      text 'Grunnteknikker', size: 36
 
       rank.basic_techniques.group_by(&:waza).each do |waza, techniques|
         group do |g|
           g.move_down 0.5.cm
-          g.text waza.name
+          g.text waza.name, size: 30
           g.move_down 0.5.cm
           techniques.each do |bt|
             g.text bt.name
@@ -37,15 +39,18 @@ class CurriculumBook < Prawn::Document
         end
       end
 
+      # Content
+
       start_new_page
-      text 'Applikasjoner', size: 18
-      rank.technique_applications.group_by(&:system).each do |system, applications|
+      text 'Applikasjoner', size: 36
+      move_down 0.5.cm
+      rank.technique_applications.group_by(&:system).each.with_index do |(system, applications), j|
+        start_new_page unless j == 0
+        text system, size: 30
         move_down 0.5.cm
-        text system
-        move_down 0.5.cm
-        applications[0..0].each do |ta|
-          start_new_page
-          text ta.name, size: 30
+        applications[0..0].each.with_index do |ta, i|
+          start_new_page unless i == 0
+          text ta.name, size: 24
           ta.application_steps[0..2].each do |as|
             move_down 0.5.cm
             table([[

@@ -71,15 +71,13 @@ class MemberGradeHistoryGraph
   end
 
   def ranks
-    ranks = MartialArt.find_by(name: 'Kei Wa Ryu').ranks.reverse.first(9)[1..-1]
+    ranks = MartialArt.kwr.first.ranks.reverse.first(9)[1..-1]
     colors = (%w[yellow yellow orange orange green green blue blue] * 2 +
         %w[brown yellow orange green blue brown black black black]
              ).last(ranks.size)
 
     dates = [Date.current]
-    ranks_data = ranks.map do |rank|
-      totals(rank, dates, 92, nil)
-    end
+    ranks_data = ranks.map { |rank| totals(rank, dates, 92, nil) }
 
     data = Hash[ranks.reverse.zip(ranks_data.reverse)]
     [data, dates, nil, ranks, 480, colors]
@@ -108,8 +106,8 @@ class MemberGradeHistoryGraph
             )
           .includes(graduates: [{ graduation: { group: :martial_art } }, :rank]).to_a
       ranks = @active_members[date].select do |m|
-        m.graduates.select { |g| g.graduation.martial_art.kwr? && g.graduation.held_on <= date }
-            .max_by { |g| g.graduation.held_on }.try(:rank) == rank
+        m.graduates.select { |g| g.passed? && g.graduation.martial_art.kwr? && g.graduation.held_on <= date }
+            .max_by { |g| g.graduation.held_on }&.rank == rank
       end.size
       logger.debug <<~MSG
         "#{prev_date} #{date} #{next_date} Active members: #{@active_members[date].size}, ranks: #{ranks}"
