@@ -14,7 +14,7 @@ Rails.application.configure do
     # user_name: ENV['SENDGRID_USERNAME'],
     # password: ENV['SENDGRID_PASSWORD'],
     # address: 'smtp.sendgrid.net',
-    user_name: ENV["SMTP_USERNAME_#{Date.current.cwday}"] || ENV['SMTP_USERNAME'],
+    user_name: ENV['SMTP_USERNAME'].gsub('@', "-#{Date.current.cwday}@"),
     password: ENV['SMTP_PASSWORD'],
     address: 'smtp.webhuset.no',
     domain: 'jujutsu.no',
