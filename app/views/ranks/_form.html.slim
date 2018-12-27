@@ -15,7 +15,7 @@
     .col-md-4 = f.text_field :css_color, append: (raw("<span style='width:1.5rem;background-color:#{@rank.css_color}'>&nbsp;</span>") if @rank.css_color.present?)
 
   .row
-    .col-md-12 = f.text_area :description
+    .col-md-12 = f.text_area :description, class: :expanding
 
   .float-right
     => back_or_link_to 'Tilbake', {action: 'index'}, class: 'btn btn-secondary'
