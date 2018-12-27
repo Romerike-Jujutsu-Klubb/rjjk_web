@@ -44,5 +44,7 @@ class Mail::Message
   end
 end
 
-smtp_user_name = Rails.application.config.action_mailer.smtp_settings[:user_name]
-Rails.logger.info "Sending email using SMTP user name: #{smtp_user_name}"
+if Rails.application.config.action_mailer.delivery_method == :smtp
+  smtp_user_name = Rails.application.config.action_mailer.smtp_settings[:user_name]
+  Rails.logger.info "Sending email using SMTP user name: #{smtp_user_name}"
+end
