@@ -71,7 +71,7 @@ nidan:
   martial_art: keiwaryu
   standard_months: 24
   group: voksne
-  css_color: #444
+  css_color: "#444"
 
 sandan:
   name: 'sandan'
