@@ -31,11 +31,11 @@ h1.mb-4 Søkeresultat for "#{@query}"
               li = link_to tr.name, tr
       - if @users.present?
         .col.mb-4: .card.h-100
-          h3.card-header Brukere
+          h3.card-header Folk
           ul.card-body
             - @users.each do |u|
               li
-                => link_to u.name, u
+                => link_to u, u
                 a href=user_path(u, format: :vcf)
                   i.fa.fa-address-card
       - if @pages.present?
