@@ -6,6 +6,7 @@ class Rank < ApplicationRecord
   UNRANKED = new(position: -99, standard_months: 0, name: 'Ugradert', colour: 'Hvitt',
                  martial_art_id: MartialArt::KWR_ID)
   SHODAN_POSITION = 15
+  COLORS = %i[yellow orange green blue brown grey #444444 black]
 
   belongs_to :martial_art
   belongs_to :group

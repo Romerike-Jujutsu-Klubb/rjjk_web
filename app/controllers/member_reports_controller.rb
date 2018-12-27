@@ -53,18 +53,17 @@ class MemberReportsController < ApplicationController
     cache_key = "member_reports/grades_graph_data/#{timestamp}"
     json_data = Rails.cache.fetch(cache_key) do
       data, _dates, _percentage = MemberGradeHistoryGraph.new.ranks
-      ranks = data.keys.reverse
-      colors = %i[yellow orange green blue brown grey #444444 black].reverse
+      colors = Rank::COLORS.reverse
       expanded_data = []
       data.to_a.reverse_each.with_index do |(rank, values), i|
         expanded_data << {
           name: "#{rank.name} Left",
-          data: ranks.map { |r| [r.name, r == rank ? -values[0] : 0] },
+          data: [[rank.name, -values[0]]],
           color: colors[i],
         }
         expanded_data << {
           name: "#{rank.name} Right",
-          data: ranks.map { |r| [r.name, r == rank ? values[0] : 0] },
+          data: [[rank.name, values[0]]],
           color: colors[i],
         }
       end
