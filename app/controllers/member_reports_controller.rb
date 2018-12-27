@@ -52,11 +52,23 @@ class MemberReportsController < ApplicationController
     timestamp = [Attendance, Graduate, Member].map { |c| c.maximum(:updated_at) }.max.strftime('%F_%T.%N')
     cache_key = "member_reports/grades_graph_data/#{timestamp}"
     json_data = Rails.cache.fetch(cache_key) do
-      data, dates, _percentage = MemberGradeHistoryGraph.new.ranks
-      expanded_data = data.map do |rank, values|
-        { name: rank.name, data: dates.zip(values) }
+      data, _dates, _percentage = MemberGradeHistoryGraph.new.ranks
+      ranks = data.keys.reverse
+      colors = %i[yellow orange green blue brown grey #444444 black].reverse
+      expanded_data = []
+      data.to_a.reverse_each.with_index do |(rank, values), i|
+        expanded_data << {
+          name: "#{rank.name} Left",
+          data: ranks.map { |r| [r.name, r == rank ? -values[0] : 0] },
+          color: colors[i],
+        }
+        expanded_data << {
+          name: "#{rank.name} Right",
+          data: ranks.map { |r| [r.name, r == rank ? values[0] : 0] },
+          color: colors[i],
+        }
       end
-      expanded_data.reverse.to_json
+      expanded_data.to_json
     end
 
     render json: json_data

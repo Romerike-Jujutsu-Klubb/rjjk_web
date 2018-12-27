@@ -105,14 +105,10 @@ class MemberGradeHistoryGraph
               end
             )
           .includes(graduates: [{ graduation: { group: :martial_art } }, :rank]).to_a
-      ranks = @active_members[date].select do |m|
-        m.graduates.select { |g| g.passed? && g.graduation.martial_art.kwr? && g.graduation.held_on <= date }
+      @active_members[date].select do |m|
+        m.graduates.select { |g| g.passed? && g.graduation.held_on <= date }
             .max_by { |g| g.graduation.held_on }&.rank == rank
       end.size
-      logger.debug <<~MSG
-        "#{prev_date} #{date} #{next_date} Active members: #{@active_members[date].size}, ranks: #{ranks}"
-      MSG
-      ranks
     end
   end
 end
