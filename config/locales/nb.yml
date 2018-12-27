@@ -113,6 +113,16 @@ nb:
         message: Melding
         week: Uke
         year: År
+      rank:
+        css_color: CSS Farge
+        colour: Beltebeskrivelse
+        decoration: Dekorasjon
+        description: Beskrivelse
+        group_id: Gruppe
+        martial_art_id: Stil
+        name: Navn
+        position: Posisjon
+        standard_months: Måneder
       signature:
         member_id: Medlem
         file: Bilde

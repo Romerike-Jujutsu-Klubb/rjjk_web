@@ -40,7 +40,7 @@ class MemberReportsController < ApplicationController
     json_data = Rails.cache.fetch(cache_key) do
       data, dates, _percentage = MemberGradeHistoryGraph.new.data_set(opts)
       expanded_data = data.map do |rank, values|
-        { name: rank.name, data: Hash[dates.zip(values)] }
+        { name: rank.name, data: Hash[dates.zip(values)], color: rank.css_color }
       end
       expanded_data.reverse.to_json
     end
@@ -52,19 +52,14 @@ class MemberReportsController < ApplicationController
     timestamp = [Attendance, Graduate, Member].map { |c| c.maximum(:updated_at) }.max.strftime('%F_%T.%N')
     cache_key = "member_reports/grades_graph_data/#{timestamp}"
     json_data = Rails.cache.fetch(cache_key) do
-      data, _dates, _percentage = MemberGradeHistoryGraph.new.ranks
-      colors = Rank::COLORS.reverse
+      data = MemberGradeHistoryGraph.new.ranks
       expanded_data = []
-      data.to_a.reverse_each.with_index do |(rank, values), i|
+      data.reverse_each do |rank, values|
         expanded_data << {
-          name: "#{rank.name} Left",
-          data: [[rank.name, -values[0]]],
-          color: colors[i],
+          name: "#{rank.name} Left", data: [[rank.name, -values[0]]], color: rank.css_color
         }
         expanded_data << {
-          name: "#{rank.name} Right",
-          data: [[rank.name, values[0]]],
-          color: colors[i],
+          name: "#{rank.name} Right", data: [[rank.name, values[0]]], color: rank.css_color
         }
       end
       expanded_data.to_json

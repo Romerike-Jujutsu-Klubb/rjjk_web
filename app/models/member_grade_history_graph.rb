@@ -71,16 +71,10 @@ class MemberGradeHistoryGraph
   end
 
   def ranks
-    ranks = MartialArt.kwr.first.ranks.reverse.first(9)[1..-1]
-    colors = (%w[yellow yellow orange orange green green blue blue] * 2 +
-        %w[brown yellow orange green blue brown black black black]
-             ).last(ranks.size)
-
+    ranks = MartialArt.kwr.first.ranks.last(9)[0..-2]
     dates = [Date.current]
     ranks_data = ranks.map { |rank| totals(rank, dates, 92, nil) }
-
-    data = Hash[ranks.reverse.zip(ranks_data.reverse)]
-    [data, dates, nil, ranks, 480, colors]
+    ranks.zip(ranks_data)
   end
 
   private

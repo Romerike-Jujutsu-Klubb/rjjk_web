@@ -5,6 +5,8 @@ mon_12:
   martial_art: keiwaryu
   standard_months: 6
   group: panda
+  css_color: blue
+
 
 mon_11:
   name: '11. mon'
@@ -14,6 +16,7 @@ mon_11:
   martial_art: keiwaryu
   standard_months: 6
   group: panda
+  css_color: blue
 
 mon_10:
   name: '10. mon'
@@ -22,6 +25,7 @@ mon_10:
   martial_art: keiwaryu
   standard_months: 6
   group: tiger
+  css_color: yellow
 
 kyu_5:
   name: '5. kyu'
@@ -30,6 +34,7 @@ kyu_5:
   martial_art: keiwaryu
   standard_months: 3
   group: voksne
+  css_color: yellow
 
 kyu_4:
   name: '4. kyu'
@@ -38,6 +43,7 @@ kyu_4:
   martial_art: keiwaryu
   standard_months: 6
   group: voksne
+  css_color: orange
 
 kyu_1:
   name: '1. kyu'
@@ -46,6 +52,7 @@ kyu_1:
   martial_art: keiwaryu
   standard_months: 24
   group: voksne
+  css_color: brown
 
 shodan:
   name: 'shodan'
@@ -54,6 +61,7 @@ shodan:
   martial_art: keiwaryu
   standard_months: 24
   group: voksne
+  css_color: grey
 
 nidan:
   name: 'nidan'
@@ -63,6 +71,7 @@ nidan:
   martial_art: keiwaryu
   standard_months: 24
   group: voksne
+  css_color: #444
 
 sandan:
   name: 'sandan'
@@ -72,3 +81,4 @@ sandan:
   martial_art: keiwaryu
   standard_months: 24
   group: voksne
+  css_color: black
