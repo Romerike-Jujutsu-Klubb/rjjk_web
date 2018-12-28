@@ -68,7 +68,7 @@ class GraduationsController < ApplicationController
     when 'removed'
       graduates = graduation.graduates.select { |g| g.passed == false }
           .sort_by { |gr| [-gr.rank.position, gr.member.name] }
-      title = graduation.passed? ? 'Ikke bestått' : 'Skal ikke delta'
+      title = graduation.passed? ? 'Ikke deltatt / ikke bestått' : 'Skal ikke delta'
     end
     render layout: false, locals: { id: params[:section].to_sym, title: title, graduates: graduates }
   end
