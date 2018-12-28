@@ -26,7 +26,10 @@ table.table
       - @groups.each do |group|
         td
           - if (g = graduations.find { |gr| gr.group_id == group.id })
-            => link_to g.group.name, edit_graduation_path(g)
+            - if g.admin?
+              => link_to g.group.name, edit_graduation_path(g)
+            - else
+              => g.group.name
             - if g.graduates.empty?
               = link_to g, method: :delete
                 span.fa.fa-trash.text-danger data-toggle="tooltip" title='Slett'
