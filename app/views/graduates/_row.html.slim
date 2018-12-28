@@ -12,7 +12,7 @@ ruby:
   end
   move_left = !graduate.graduation.approved? && (graduate.new_record? || graduate.passed == false)
   show_invite_status = graduate.graduation.locked? && !graduate.graduation.approved?
-  show_passed = graduate.persisted? && (graduate.graduation.passed?) && (!graduate.passed? || !graduate.graduation.group.school_breaks?)
+  show_passed = graduate.persisted? && graduate.graduation.passed? && !graduate.graduation.group.school_breaks?
   move_right = graduate.passed != false && !graduate.graduation.approved?
 
 tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"

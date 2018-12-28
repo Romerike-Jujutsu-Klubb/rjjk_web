@@ -5,5 +5,5 @@
   list.show();
   list.load('<%=graduates_list_graduation_path(@graduate.graduation, :candidates)%>', handleGraduatesListLoad);
 <% else %>
-  $('#graduate_<%= @graduate.id %> .fa-question').attr('data-original-title', 'Kunne ikke slette kandidaten: <%=@graduate.errors.full_messages.join %>').tooltip('show')
+  $('#graduate_<%= @graduate.id %> [data-method=delete]').attr('title', 'Kunne ikke slette kandidaten: <%=@graduate.errors.full_messages.join %>').tooltip('show')
 <% end %>
