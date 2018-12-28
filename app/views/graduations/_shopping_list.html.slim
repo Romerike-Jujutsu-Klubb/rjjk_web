@@ -4,7 +4,7 @@ table.table
       th Belte
       th Antall
   tbody
-    - @graduation.graduates.select { |g| g.passed != false && g.member.current_rank&.colour != g.rank.colour }.sort_by(&:rank).group_by { |gr| gr.rank.colour }.each do |colour, graduates|
+    - @graduation.graduates.select { |g| g.passed != false && g.member.current_rank(@graduation.group.martial_art, @graduation.held_on)&.colour != g.rank.colour }.sort_by(&:rank).group_by { |gr| gr.rank.colour }.each do |colour, graduates|
       tr
         th = colour
         td = graduates.size
