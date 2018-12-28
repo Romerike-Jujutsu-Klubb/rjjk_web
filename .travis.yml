@@ -1,6 +1,4 @@
 dist: trusty
-# sudo: false # FIXME(uwe): Turn off sudo when chrome works again
-sudo: required
 language: ruby
 cache: bundler
 
