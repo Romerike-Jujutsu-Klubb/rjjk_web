@@ -71,6 +71,7 @@ module UserSystem
     flash.alert = message
     store_detour(params)
     redirect_to login_path
+    false
   end
 
   def store_cookie(user = current_user)
