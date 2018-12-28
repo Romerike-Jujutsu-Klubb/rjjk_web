@@ -19,6 +19,6 @@ ul
   ul
     - @older_attendances.each do |a|
       li
-        = a.date
-        = t(:date)[:day_names][a.date.cwday]
+        => a.date
+        => t(:date)[:day_names][a.date.cwday]
         = render 'review_link', a: a

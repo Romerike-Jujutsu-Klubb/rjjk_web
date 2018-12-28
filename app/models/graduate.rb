@@ -96,7 +96,7 @@ class Graduate < ApplicationRecord
   end
 
   def cache_key
-    return [super, graduation.approved?] if persisted?
+    return [super, graduation.passed?, graduation.approved?] if persisted?
 
     [self.class.name, graduation_id, member_id, graduation.passed?, graduation.approved?]
   end

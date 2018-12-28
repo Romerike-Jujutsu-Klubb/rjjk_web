@@ -2,7 +2,7 @@
   - graduation = graduates[0].graduation
   - move_left = !graduation.approved? && (graduates[0].new_record? || graduates[0].passed == false)
   - show_invite_status = graduation.locked? && !graduation.approved?
-  - show_passed = id != :candidates && graduation.locked? && graduation.passed? && !graduation.group.school_breaks?
+  - show_passed = id != :candidates && graduation.passed? && !graduation.group.school_breaks?
   - move_right = graduates[0].passed != false && !graduation.approved?
 
   h5 #{title} (#{graduates.size})
