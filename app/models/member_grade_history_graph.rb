@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class MemberGradeHistoryGraph
+  DEFAULT_INTERVAL = 2.months
+
   ACTIVE_CLAUSE = <<~SQL
     EXISTS (
       SELECT 1
@@ -40,40 +42,26 @@ class MemberGradeHistoryGraph
   end
 
   def data_set(options)
-    size = options[:size] || 480
-    interval = options[:interval] || 8.weeks
+    interval = options[:interval] || DEFAULT_INTERVAL
     step = (options[:step] || 3.months)
     percentage = options[:percentage]
 
     raise unless interval > 0 && step > 0
 
-    ranks = MartialArt.find_by(name: 'Kei Wa Ryu').ranks.reverse
-    ranks = ranks.first(9)[1..-1]
-    colors = (%w[yellow yellow orange orange green green blue blue] * 2 +
-        %w[brown yellow orange green blue brown black black black]
-             ).last(ranks.size)
-
+    ranks = Group.find_by(name: 'Voksne').ranks.reverse
     # first_date = 5.years.ago.to_date
+    # first_date = 10.years.ago.to_date
     first_date = Date.civil(2011, 1, 1)
     dates = Date.current.step(first_date, -step / 1.day).to_a.reverse
-    sums = nil
-    ranks_data = ranks.map do |rank|
-      rank_totals = totals(rank, dates, interval, percentage)
-      sums = if sums
-               sums.zip(rank_totals).map { |s, t| s + t }
-             else
-               rank_totals
-             end
-    end
-
-    data = Hash[ranks.reverse.zip(ranks_data.reverse)]
-    [data, dates, percentage, ranks, size, colors]
+    ranks_data = ranks.map { |rank| totals(rank, dates, interval, percentage) }
+    data = Hash[ranks.reverse.zip(ranks_data.reverse)].select { |_rank, values| values.any?(&:positive?) }
+    [dates, data]
   end
 
   def ranks
     ranks = MartialArt.kwr.first.ranks.last(9)[0..-2]
     dates = [Date.current]
-    ranks_data = ranks.map { |rank| totals(rank, dates, 92, nil) }
+    ranks_data = ranks.map { |rank| totals(rank, dates, DEFAULT_INTERVAL, nil) }
     ranks.zip(ranks_data)
   end
 

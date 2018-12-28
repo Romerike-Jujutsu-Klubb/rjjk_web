@@ -38,7 +38,7 @@ class MemberReportsController < ApplicationController
     timestamp = [Attendance, Graduate, Member].map { |c| c.maximum(:updated_at) }.max.strftime('%F_%T.%N')
     cache_key = "member_reports/grade_history_graph_data/#{opts.hash}/#{timestamp}"
     json_data = Rails.cache.fetch(cache_key) do
-      data, dates, _percentage = MemberGradeHistoryGraph.new.data_set(opts)
+      dates, data = MemberGradeHistoryGraph.new.data_set(opts)
       expanded_data = data.map do |rank, values|
         { name: rank.name, data: Hash[dates.zip(values)], color: rank.css_color }
       end
