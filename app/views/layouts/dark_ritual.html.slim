@@ -13,7 +13,7 @@ html lang="nb"
     - if Rails.env.production?
       = render 'layouts/google_analytics'
 
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload', async: true, defer: true
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = csrf_meta_tags
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
