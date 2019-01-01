@@ -1,10 +1,18 @@
-- if @user.deleted?
-  h2
-    .badge.badge-danger.float-right Slettet
--else
-  = link_to 'Slett bruker', user_path(@user), method: :delete, class: 'btn btn-danger float-right'
+h2.float-right
+  - if @user.deleted?
+    span.text-danger.mr-3 Brukeren er slettet
+    = link_to restore_user_path(@user), method: :post, class: 'btn btn-warning'
+      i.fa.fa-undo>
+      | Gjenopprett
+  -else
+    a.btn.btn-secondary.mr-3 href=user_path(@user, format: :vcf)
+      i.fa.fa-address-card>
+      | Kontaktkort
+    = link_to user_path(@user), method: :delete, class: 'btn btn-danger', data: {confirm: 'Er du sikker på at du vil slette denne brukeren?'}
+      i.fa.fa-trash>
+      | Slett bruker
 
-h2 Rediger bruker
+h2.clearfix Rediger bruker
 
 - if (error_msgs = @user.errors.full_messages_for(:base)).any?
   .alert.alert-danger

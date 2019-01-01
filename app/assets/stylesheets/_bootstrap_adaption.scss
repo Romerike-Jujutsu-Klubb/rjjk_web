@@ -19,3 +19,9 @@ label.required:after {
   margin-top: 1rem;
   max-width: 2.8rem;
   }
+
+.card-body tbody:first-child tr:first-child td {
+  border-top: 0;
+  margin-top: 0;
+  padding-top: 0;
+}

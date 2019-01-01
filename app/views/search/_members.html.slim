@@ -1,0 +1,23 @@
+- if members.present?
+  .col.mb-4: .card.h-100
+    h3.card-header
+      .badge.badge-info.float-right #{members.size}
+      = title
+    .card-body
+      table.table.table-sm
+        tbody
+          - members.each do |m|
+            tr
+              td
+                => link_to m.name, m
+                - if m.age
+                  ' (#{m.age} år)
+              td
+                - user = m.user
+                - phone = user.phones.first
+                - if phone
+                  a.float-right href="tel:#{phone}"
+                    i.fa.fa-phone
+                - else
+                  a.float-right href="mailto:#{user.email}"
+                    i.fa.fa-envelope

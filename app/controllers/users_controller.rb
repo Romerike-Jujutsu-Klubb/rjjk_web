@@ -57,7 +57,13 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy!
-    back_or_redirect_to users_path
+    redirect_to @user
+  end
+
+  def restore
+    @user = User.with_deleted.find(params[:id])
+    @user.restore!
+    redirect_to @user
   end
 
   def like

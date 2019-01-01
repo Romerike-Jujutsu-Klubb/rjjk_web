@@ -3,41 +3,15 @@ h1.mb-4 Søkeresultat for "#{@query}"
 - if @query
   - if [@members, @former_members, @trials, @users, @pages, @news, @images, @user_messages].any?(&:present?)
     .row
-      - if @members.present?
-        .col.mb-4: .card.h-100
-          h3.card-header Medlemmer
-          ul.card-body
-            - @members.each do |m|
-              li
-                => link_to m.name, m
-                ' (#{m.age} år)
-                a href=user_path(m.user, format: :vcf)
-                  i.fa.fa-address-card
-      - if @former_members.present?
-        .col.mb-4: .card.h-100
-          h3.card-header Tidligere Medlemmer (#{@former_members.size})
-          ul.card-body
-            - @former_members.each do |m|
-              li
-                => link_to m.name, m
-                ' (#{m.age} år)
-                a href=user_path(m.user, format: :vcf)
-                  i.fa.fa-address-card
+      = render 'members', members: @members, title: 'Medlemmer'
+      = render 'members', members: @former_members, title: 'Tidligere Medlemmer'
       - if @trials.present?
         .col.mb-4: .card.h-100
           h3.card-header Søkere i prøvetid
           ul.card-body
             - @trials.each do |tr|
               li = link_to tr.name, tr
-      - if @users.present?
-        .col.mb-4: .card.h-100
-          h3.card-header Folk
-          ul.card-body
-            - @users.each do |u|
-              li
-                => link_to u, u
-                a href=user_path(u, format: :vcf)
-                  i.fa.fa-address-card
+      = render 'users', users: @users
       - if @pages.present?
         .col.mb-4: .card.h-100
           h3.card-header Informasjonssider
