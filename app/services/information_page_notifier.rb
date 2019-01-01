@@ -16,8 +16,7 @@ class InformationPageNotifier
     return if pages.empty?
 
     recipients.each do |recipient|
-      InformationPageMailer.notify_outdated_pages(recipient, pages)
-          .store(recipient, tag: :outdated_info)
+      InformationPageMailer.notify_outdated_pages(recipient, pages).store(recipient, tag: :outdated_info)
     end
   end
 
