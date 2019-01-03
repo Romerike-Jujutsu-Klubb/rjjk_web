@@ -12,7 +12,7 @@ h1 Grader
 ul.nav.nav-tabs
   - @martial_arts.each.with_index do |(ma, ranks), i|
     li.nav-item
-      a.nav-link class=(:active if i == 0) data-target=ma.name.gsub(/\s+/, '') data-toggle='tab' = ma.name
+      a.nav-link class=(:active if i == 0) data-target="##{ma.name.gsub(/\s+/, '')}" data-toggle='tab' = ma.name
 
 .tab-content
   - @martial_arts.each.with_index do |(ma, ranks), i|
