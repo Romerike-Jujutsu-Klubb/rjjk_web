@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong embu:
+  = @embu_part.embu
+p
+  strong Position:
+  = @embu_part.position
+p
+  strong Description:
+  = @embu_part.description
+
+=> link_to 'Edit', edit_embu_part_path(@embu_part)
+'|
+=< link_to 'Back', embu_parts_path

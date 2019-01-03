@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_27_135807) do
+ActiveRecord::Schema.define(version: 2019_01_01_171926) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -162,6 +162,25 @@ ActiveRecord::Schema.define(version: 2018_12_27_135807) do
     t.integer 'image_id', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+  end
+
+  create_table 'embu_part_videos', force: :cascade do |t|
+    t.bigint 'embu_part_id', null: false
+    t.bigint 'image_id', null: false
+    t.text 'comment'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['embu_part_id'], name: 'index_embu_part_videos_on_embu_part_id'
+    t.index ['image_id'], name: 'index_embu_part_videos_on_image_id'
+  end
+
+  create_table 'embu_parts', force: :cascade do |t|
+    t.bigint 'embu_id', null: false
+    t.integer 'position', null: false
+    t.text 'description'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['embu_id'], name: 'index_embu_parts_on_embu_id'
   end
 
   create_table 'embus', force: :cascade do |t|
@@ -708,6 +727,9 @@ ActiveRecord::Schema.define(version: 2018_12_27_135807) do
   add_foreign_key 'elections', 'annual_meetings', name: 'fk_elections_annual_meeting_id'
   add_foreign_key 'elections', 'members', name: 'fk_elections_member_id'
   add_foreign_key 'elections', 'roles', name: 'fk_elections_role_id'
+  add_foreign_key 'embu_part_videos', 'embu_parts'
+  add_foreign_key 'embu_part_videos', 'images'
+  add_foreign_key 'embu_parts', 'embus'
   add_foreign_key 'graduates', 'graduations', name: 'graduates_graduation_id_fkey'
   add_foreign_key 'graduates', 'members', name: 'graduates_member_id_fkey'
   add_foreign_key 'graduates', 'ranks', name: 'graduates_rank_id_fkey'

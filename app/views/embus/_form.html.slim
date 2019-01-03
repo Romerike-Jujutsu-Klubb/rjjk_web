@@ -1,0 +1,44 @@
+- @content_width = 1024
+
+= bootstrap_form_for @embu do |f|
+  - if @embu.errors.any?
+    #error_explanation
+      h2 #{pluralize(@embu.errors.count, "error")} prohibited this embu from being saved:
+
+      ul
+        - @embu.errors.full_messages.each do |msg|
+          li = msg
+
+  .field
+    - if @embu.new_record?
+      = f.select :rank_id, @ranks.map { |r| [r.name, r.id] }, label: t(:rank)
+    - else
+      | #{t(:rank)}:
+      = @embu.rank.name
+      | (#{link_to 'Print', action: :print})
+
+  .row
+    .col-md-9
+      = f.text_area :description, hide_label: true, class: :expanding, value: kramdown(@embu.description)
+      .mt-3
+        = f.submit class: 'btn btn-secondary'
+        = link_to 'Ny Embu', new_embu_path
+    .col-md-3 style="height: 90%; overflow:auto; border: 1px solid black; padding-top: 0.5em; text-align: center"
+      - @embu.embu_images.order('created_at DESC').each do |e|
+        - i = e.image
+        - if i.video?
+          = video_tag url_for(:controller => :images, :action => :show, :id => i.id, :format => i.format), :title => i.name || 'Film', :controls => true, :autobuffer => true, :style => 'width: 185px'
+        - else
+          = image_tag url_for(:controller => :images, :action => :inline, :id => i.id, :format => i.format, :width => 185), :title => i.name || 'Bilde', :style => 'float: right; width: 19%'
+        ul.controls
+          li = detour_to 'Fjern', embu_image_path(e), :class => :delete, :method => :delete, :confirm => "Er du sikker på at du vil fjerne #{i.video? ? 'denne videoen' : 'dette bildet'} fra din embu?"
+        br clear="right"
+      - unless @embu.new_record?
+        = f.file_field :image
+
+  a.btn.btn-primary href=new_embu_part_path(embu_part: {embu_id: @embu.id})
+    i.fa.fa-plus>
+    | Legg til sekvens
+
+  - fields_for :embu_parts do |epf|
+    epf.file_field accept: "video/*" capture: true

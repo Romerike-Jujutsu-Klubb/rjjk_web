@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Embu part:
+  = @embu_part_video.embu_part
+p
+  strong Image:
+  = @embu_part_video.image
+p
+  strong Comment:
+  = @embu_part_video.comment
+
+=> link_to 'Edit', edit_embu_part_video_path(@embu_part_video)
+'|
+=< link_to 'Back', embu_part_videos_path

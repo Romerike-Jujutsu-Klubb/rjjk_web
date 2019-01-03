@@ -1,0 +1,25 @@
+h1 Listing embu_part_videos
+
+table
+  thead
+    tr
+      th Embu part
+      th Image
+      th Comment
+      th
+      th
+      th
+
+  tbody
+    - @embu_part_videos.each do |embu_part_video|
+      tr
+        td = embu_part_video.embu_part
+        td = embu_part_video.image
+        td = embu_part_video.comment
+        td = link_to 'Show', embu_part_video
+        td = link_to 'Edit', edit_embu_part_video_path(embu_part_video)
+        td = link_to 'Destroy', embu_part_video, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Embu part video', new_embu_part_video_path

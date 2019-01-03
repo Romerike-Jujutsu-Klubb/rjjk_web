@@ -1,0 +1,9 @@
+one:
+  embu_part: one
+  image: one
+  comment: MyText
+
+two:
+  embu_part: two
+  image: two
+  comment: MyText
