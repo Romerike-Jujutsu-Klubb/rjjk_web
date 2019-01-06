@@ -73,16 +73,14 @@ class ApplicationController < ActionController::Base
       @other_absentees = attendances_next_practice - @other_attendees
     end
 
-    unless @groups
-      group_query = Group.active(Date.current).order('to_age, from_age DESC')
-      if admin?
-        group_query =
-            group_query.includes(:current_semester, group_schedules: { active_group_instructors: {
-              member: [{ graduates: %i[graduation rank] }, :user],
-            } })
-      end
-      @groups = group_query.to_a
+    group_query = Group.active(Date.current).order('to_age, from_age DESC')
+    if admin?
+      group_query =
+          group_query.includes(:current_semester, group_schedules: { active_group_instructors: {
+            member: [{ graduates: %i[graduation rank] }, :user],
+          } })
     end
+    @layout_groups = group_query.to_a
 
     unless @layout_events # rubocop: disable Style/GuardClause
       @layout_events = Event
@@ -91,7 +89,7 @@ class ApplicationController < ActionController::Base
           .order('start_at, end_at').limit(5).to_a
       @layout_events += Graduation.includes(:graduates).where(group_notification: true)
           .where('held_on >= ?', Date.current).to_a
-      @groups.select(&:school_breaks).each do |g|
+      @layout_groups.select(&:school_breaks).each do |g|
         if (first_session = g.current_semester&.first_session) && first_session >= Date.current
           @layout_events << Event.new(name: "Oppstart #{g.name}", start_at: first_session)
         end

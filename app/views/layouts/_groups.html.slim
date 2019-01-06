@@ -1,6 +1,6 @@
 h3 Grupper
 ul
-  - @groups.each do |g|
+  - @layout_groups.each do |g|
     li
       => link_to g.name, g
       span style="white-space:nowrap" (#{g.from_age}-#{g.to_age} år)
