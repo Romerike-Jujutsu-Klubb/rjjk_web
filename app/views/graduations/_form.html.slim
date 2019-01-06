@@ -15,7 +15,7 @@
 
   .row
     .col-md-6
-      = f.select :group_id, @groups.map { |c| [c.name, c.id] },
+      = f.select :group_id, @layout_groups.map { |c| [c.name, c.id] },
           {prompt: 'Velg gruppe'},
           class: 'form-control'
     .col-md-6

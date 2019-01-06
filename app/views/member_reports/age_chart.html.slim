@@ -1,1 +1,8 @@
-= column_chart member_reports_age_chart_data_path, height: '24rem'
+= column_chart @chart_data, height: '24rem'
+
+table.table
+  tbody
+    - @age_groups.each do |group, members|
+      tr
+        td = group
+        td = members.join(', ')
