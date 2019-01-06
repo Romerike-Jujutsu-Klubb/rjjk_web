@@ -8,7 +8,7 @@ class SearchController < ApplicationController
 
     if admin?
       member_users, @users = User.search(@query).to_a.partition(&:member)
-      @former_members, @members = member_users.map(&:member).partition(&:left_on)
+      @former_members, @members = member_users.map(&:member).partition(&:left?)
       @trials = NkfMemberTrial.search(@query).to_a
       @user_messages = UserMessage.search(@query).to_a
     end

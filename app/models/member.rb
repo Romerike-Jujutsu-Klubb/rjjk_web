@@ -234,6 +234,10 @@ class Member < ApplicationRecord
     birthdate && (age >= JUNIOR_AGE_LIMIT)
   end
 
+  def left?(date = Date.current)
+    left_on&.< date
+  end
+
   def nkf_fee_amount
     if senior?
       (nkf_fee? ? (279.0 / 12).ceil : 0)
