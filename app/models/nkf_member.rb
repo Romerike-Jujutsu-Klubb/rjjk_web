@@ -284,7 +284,14 @@ class NkfMember < ApplicationRecord
       member.update! member_attributes_with_defaults
       member.update! user: user # FIXME(uwe):  Why is this needed?  Remove!
 
-      member.groups = Group.where(name: group_names).to_a
+      member_groups = if (nkf_group_names = group_names).any?
+                        logger.info "Adding groups from NKF: #{nkf_group_names}"
+                        Group.where(name: nkf_group_names)
+                      else
+                        logger.info "Adding groups by age: #{member.age}"
+                        Group.where(from_age: 0..member.age, to_age: member.age..100)
+      end
+      member.groups = member_groups.to_a
       member.save!
 
       member
