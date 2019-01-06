@@ -290,7 +290,7 @@ class NkfMember < ApplicationRecord
                       else
                         logger.info "Adding groups by age: #{member.age}"
                         Group.where(from_age: 0..member.age, to_age: member.age..100)
-      end
+                      end
       member.groups = member_groups.to_a
       member.save!
 
