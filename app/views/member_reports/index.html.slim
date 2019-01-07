@@ -73,22 +73,14 @@ table.table
             = non_paying_diff != 0 ? " (#{non_paying_diff > 0 ? '+' : nil}#{non_diff})" : nil
         td.text-center = members.size
 
-= line_chart member_reports_history_graph_data_path, points: false, height: '24rem', title: 'Antall aktive medlemmer'
+.mb-5 = line_chart member_reports_history_graph_data_path, points: false, height: '24rem', title: 'Antall aktive medlemmer'
 
 / TODO(uwe): Display trial members, maybe with attendances
-
-table.table
-  tr
-    th width="70%" Nye medlemmer
-    td.text-center = @members_in.size
-  tr
-    th Utmeldinger
-    td.text-center = @members_out.size
 
 - if @members_in.any?
   table.table
     tr
-      th width="70%" Nye medlemmer
+      th width="70%" Nye medlemmer (#{@members_in.size})
       th.text-center Alder
       th Innmelding
     - @members_in.each do |m|
@@ -101,7 +93,7 @@ table.table
 - if @members_out.any?
   table.table
     tr
-      th width="70%" Utmeldinger
+      th width="70%" Utmeldinger (#{@members_out.size})
       th.text-center Alder
       th Utmelding
     - @members_out.each do |m|
