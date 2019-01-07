@@ -71,7 +71,7 @@ class MemberReportsController < ApplicationController
   def age_chart
     timestamp = Member.maximum(:updated_at).strftime('%F_%T.%N')
     @age_groups = Rails.cache.fetch(age_group_key(timestamp)) { MemberAgeChart.data_set }
-    @chart_data = @groups.map { |group, value| [group, value.size] }
+    @chart_data = @age_groups.map { |group, value| [group, value.size] }
   end
 
   def age_chart_data
