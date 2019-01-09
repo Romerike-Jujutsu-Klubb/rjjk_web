@@ -55,11 +55,13 @@ class GraduationReminder
     overdue_graduates = active_members.select do |m|
       next if m.passive?
 
-      minimum_attendances = m.next_rank.minimum_attendances
+      next_rank = m.next_rank
+      next if next_rank.position >= Rank::SHODAN_POSITION
+      minimum_attendances = next_rank.minimum_attendances
       attendances_since_graduation = m.attendances_since_graduation.size
       next unless attendances_since_graduation >= minimum_attendances
 
-      group = m.next_rank.group
+      group = next_rank.group
       next if group.school_breaks? &&
           (group.next_graduation.nil? ||
               !m.active?(group.next_graduation.held_on))
