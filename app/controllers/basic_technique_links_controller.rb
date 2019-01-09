@@ -25,6 +25,7 @@ class BasicTechniqueLinksController < ApplicationController
 
   def create
     @basic_technique_link = BasicTechniqueLink.new(params[:basic_technique_link])
+    @basic_technique_link.position = 1
     if @basic_technique_link.save
       redirect_to @basic_technique_link, notice: 'Basic technique link was successfully created.'
     else
