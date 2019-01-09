@@ -103,7 +103,7 @@ unless reason
     end
 
     scheduler.cron('0 1 * * mon') do
-      Rails.application.executor.wrap { GraduationReminder.notify_overdue_graduates }
+      # Rails.application.executor.wrap { GraduationReminder.notify_overdue_graduates }
     end
     scheduler.cron('0 1 * * *') do
       Rails.application.executor.wrap { GraduationReminder.notify_missing_graduations }
