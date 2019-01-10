@@ -23,7 +23,7 @@
   <div id="button_<%= year %>_<%= week %>_<%= gs.id %>" class="btn-group">
     <%= link_to(link_target, method: :post, remote: !initial_disabled,
             id: "btn_#{year}_#{week}_#{gs.id}", class: "btn btn-#{initial_class}",
-            style: 'width: 7.5em', onclick: initial_disabled ? 'return false' : nil,
+            style: 'width: 7.6em', onclick: initial_disabled ? 'return false' : nil,
             data: {replace: initial_disabled || "#practice_#{week}_#{gs.id}"}) do %>
         <i class="fa fa-<%= initial_icon %>"></i>
         <span><%= initial_text %></span>

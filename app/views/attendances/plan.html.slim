@@ -4,25 +4,26 @@ css:
     text-align: center;
   }
 
-table width="100%" cellpadding="5"
-  - @weeks.each.with_index do |(year, week), i|
-    tr
-      td colspan="4"
-        h4> = [year, week] == [(Date.current - 7).cwyear, (Date.current - 7).cweek] ? 'Forrige uke' : [year, week] == [Date.current.cwyear, Date.current.cweek] ? 'Denne uken' : [year, week] == [(Date.current + 7).cwyear, (Date.current + 7).cweek] ? 'Neste uke' : "Uke #{week}#{" #{year}" if year != Date.current.cwyear}"
-    tr
-      - @group_schedules.each do |gs|
-        - date = Date.commercial(year, week, gs.weekday)
-        th
-          => t(:date)[:day_names][gs.weekday]
-          ' #{date.day}.
-          = t(:date)[:month_names][date.mon]
-          - if @group_schedules.map(&:group).uniq.size > 1
-            =< gs.group.full_name
-    tr
-      - @group_schedules.each do |gs|
-        td valign="top"
-          - attendance = @planned_attendances.find { |a| a.group_schedule == gs && a.practice.year == year && a.practice.week == week }
-          = render 'plan_practice', gs: gs, year: year, week: week, attendance: attendance
+.table-responsive
+  table width="100%" cellpadding="5"
+    - @weeks.each.with_index do |(year, week), i|
+      tr
+        td colspan="4"
+          h4> = [year, week] == [(Date.current - 7).cwyear, (Date.current - 7).cweek] ? 'Forrige uke' : [year, week] == [Date.current.cwyear, Date.current.cweek] ? 'Denne uken' : [year, week] == [(Date.current + 7).cwyear, (Date.current + 7).cweek] ? 'Neste uke' : "Uke #{week}#{" #{year}" if year != Date.current.cwyear}"
+      tr
+        - @group_schedules.each do |gs|
+          - date = Date.commercial(year, week, gs.weekday)
+          th
+            => t(:date)[:day_names][gs.weekday]
+            ' #{date.day}.
+            = t(:date)[:month_names][date.mon]
+            - if @group_schedules.map(&:group).uniq.size > 1
+              =< gs.group.full_name
+      tr
+        - @group_schedules.each do |gs|
+          td valign="top"
+            - attendance = @planned_attendances.find { |a| a.group_schedule == gs && a.practice.year == year && a.practice.week == week }
+            = render 'plan_practice', gs: gs, year: year, week: week, attendance: attendance
 br
 
 p For å kunne organisere treningene fremover ønsker vi at alle på voksengruppen merker av når de planlegger å komme og når de ikke kan komme.
