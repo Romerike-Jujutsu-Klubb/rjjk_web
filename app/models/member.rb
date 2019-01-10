@@ -329,7 +329,7 @@ class Member < ApplicationRecord
 
   def title(date = Date.current)
     current_rank = current_rank(MartialArt.find_by(name: 'Kei Wa Ryu'), date)
-    current_rank&.name =~ /dan/ ? 'Sensei' : 'Sempai'
+    /dan/.match?(current_rank&.name) ? 'Sensei' : 'Sempai'
   end
 
   def admin?

@@ -146,7 +146,7 @@ class User < ApplicationRecord
 
   def full_email
     current_email = member&.email || email
-    if current_email =~ /<(.*)>/
+    if /<(.*)>/.match?(current_email)
       current_email
     else
       %("#{name}" <#{current_email}>)

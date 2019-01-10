@@ -34,11 +34,11 @@ def text_from_part(m)
       header = "#{header}Convert to #{encoding.inspect}\n"
     end
     text_body =
-        if m.content_type =~ %r{text/html}
+        if %r{text/html}.match?(m.content_type)
           doc = Nokogiri::HTML(body)
           doc.css('script, link').each(&:remove)
           doc.css('body').text
-        elsif m.content_type =~ /text/
+        elsif /text/.match?(m.content_type)
           body
         else
           puts "Unknown content type: #{m.content_type}"
@@ -79,7 +79,7 @@ def learn(interactive)
           break true
         end
 
-        if f =~ /_\[EMPTY\]_/
+        if /_\[EMPTY\]_/.match?(f)
           puts ': EMPTY'.rjust(PROMPT_COLUMN - f.size + 3, ' ')
           break true
         end

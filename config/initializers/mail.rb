@@ -32,9 +32,9 @@ class Mail::Message
     parts = body.parts.any? ? body.parts : [self]
     html_part = plain_part = nil
     parts.each do |part|
-      if part.content_type =~ %r{text/html}
+      if %r{text/html}.match?(part.content_type)
         html_part = part
-      elsif part.content_type =~ %r{text/plain}
+      elsif %r{text/plain}.match?(part.content_type)
         plain_part = part
       else
         raise "Unknown content type: #{part.content_type.inspect}"

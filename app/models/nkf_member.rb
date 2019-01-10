@@ -117,7 +117,7 @@ class NkfMember < ApplicationRecord
       mapped_value =
           if /^\s*(?<day>\d{2})\.(?<month>\d{2})\.(?<year>\d{4})\s*$/ =~ v
             Date.new(year.to_i, month.to_i, day.to_i)
-          elsif v =~ /Mann|Kvinne/
+          elsif /Mann|Kvinne/.match?(v)
             v == 'Mann'
           elsif v.blank? && (target =~ /^(billing|guardian_)/ ||
               target_attribute =~ /^guardian_|email|mobile|phone|_on$/)

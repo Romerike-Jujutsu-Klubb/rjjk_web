@@ -67,7 +67,7 @@ class NkfMemberImport
     import_rows[1..-1].each do |row|
       groups_names = row[groups_index].split(' - ')
       groups_names.each do |gn|
-        unless gn =~ /^(Jujutsu|Aikido)/
+        unless /^(Jujutsu|Aikido)/.match?(gn)
           raise "Bad martial arts name: #{gn.inspect} (#{row[groups_index].inspect})"
         end
       end
