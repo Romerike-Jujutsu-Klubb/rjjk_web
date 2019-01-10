@@ -22,7 +22,6 @@ class BasicTechniqueLinksControllerTest < ActionController::TestCase
     assert_difference('BasicTechniqueLink.count') do
       post :create, params: { basic_technique_link: {
         basic_technique_id: @basic_technique_link.basic_technique_id,
-        position: @basic_technique_link.position + 2,
         title: @basic_technique_link.title,
         url: 'a new url to somewhere',
       } }
