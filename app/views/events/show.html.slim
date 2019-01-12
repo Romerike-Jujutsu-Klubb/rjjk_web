@@ -10,7 +10,7 @@ p
     = @event.end_at.strftime('%Y-%m-%d')
     =< @event.end_at.strftime('%H:%M') if @event.end_at.hour != 0 || @event.end_at.min != 0
 
-= @event.description.try(:html_safe)
+= textalize @event.description
 
 - if user? || admin?
   .clearfix

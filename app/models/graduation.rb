@@ -100,6 +100,10 @@ class Graduation < ApplicationRecord
     (graduates.select { |g| g.passed || g.passed.nil? } + censors).map(&:member).map(&:user)
   end
 
+  def ingress
+    nil
+  end
+
   def body
     admin?
   end

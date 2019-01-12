@@ -50,7 +50,7 @@ class Event < ApplicationRecord
   end
 
   def ingress
-    description.try(:slice, %r{\A.*?(?:<br ?/><br ?/>|</p>|\Z)}im)
+    paragraphs&.first
   end
 
   def attendees
@@ -58,9 +58,14 @@ class Event < ApplicationRecord
   end
 
   def body
-    ingress = self.ingress
-    description[ingress.size..-1] if ingress && description.size > ingress.size
+    paragraphs&.[](1..-1)
   end
 
   delegate :size, to: :attending_invitees
+
+  private
+
+  def paragraphs
+    description&.split(/\r?\n\r?\n/)
+  end
 end
