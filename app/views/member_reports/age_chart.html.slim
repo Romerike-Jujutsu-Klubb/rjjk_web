@@ -5,4 +5,6 @@ table.table
     - @age_groups.each do |group, members|
       tr
         td = group
+        td.text-center
+          .badge.badge-info = members.size if members.size > 0
         td = members.join(', ')

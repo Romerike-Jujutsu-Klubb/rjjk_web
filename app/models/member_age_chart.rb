@@ -11,6 +11,10 @@ class MemberAgeChart
       age_groups = age_groups.map(&:to_s).zip(age_data)
       chart_data = [
         {
+          name: 'Totalt',
+          data: age_groups.map { |group, mbrs| [group, mbrs.size] }, color: :black
+        },
+        {
           name: 'Betalende',
           data: age_groups.map { |group, mbrs| [group, mbrs.select(&:paying?).size] }, color: :red
         },
