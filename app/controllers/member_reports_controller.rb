@@ -69,25 +69,16 @@ class MemberReportsController < ApplicationController
   end
 
   def age_chart
-    timestamp = Member.maximum(:updated_at).strftime('%F_%T.%N')
-    @age_groups = Rails.cache.fetch(age_group_key(timestamp)) { MemberAgeChart.data_set }
-    @chart_data = @age_groups.map { |group, value| [group, value.size] }
+    @age_groups, @chart_data = MemberAgeChart.data_set
   end
 
   def age_chart_data
     timestamp = Member.maximum(:updated_at).strftime('%F_%T.%N')
     json_data = Rails.cache.fetch("member_reports/age_chart_data/#{timestamp}") do
-      age_groups = Rails.cache.fetch(age_group_key(timestamp)) { MemberAgeChart.data_set }
-      chart_data = age_groups.map { |group, value| [group, value.size] }
+      _age_groups, chart_data = MemberAgeChart.data_set(timestamp)
       chart_data.to_json
     end
 
     render json: json_data
-  end
-
-  private
-
-  def age_group_key(timestamp)
-    "member_reports/age_groups/#{timestamp}"
   end
 end

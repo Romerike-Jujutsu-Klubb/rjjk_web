@@ -52,12 +52,12 @@ class GoogleDriveService
 
   private
 
-  private def find_file_by_md5_checksum(section, md5_checksum)
+  def find_file_by_md5_checksum(section, md5_checksum)
     folder = find_or_create_folder(section)
     folder.files.find { |file| file.md5_checksum == md5_checksum }
   end
 
-  private def find_or_create_folder(section)
+  def find_or_create_folder(section)
     environment_folder = find_or_create_environment_folder
     if (section_folder = environment_folder.file_by_title(section.to_s))
       return section_folder
@@ -67,7 +67,7 @@ class GoogleDriveService
     environment_folder.create_subcollection(section)
   end
 
-  private def find_or_create_environment_folder
+  def find_or_create_environment_folder
     top_folder = find_or_create_top_folder
     if (environment_folder = top_folder.file_by_title(Rails.env))
       return environment_folder
@@ -77,7 +77,7 @@ class GoogleDriveService
     top_folder.create_subcollection(Rails.env)
   end
 
-  private def find_or_create_top_folder
+  def find_or_create_top_folder
     if (top_folder = @session.file_by_title(WEB_IMAGES_DIR))
       return top_folder
     end

@@ -91,11 +91,3 @@ Rails/InverseOf:
 Security/Open:
   Exclude:
     - 'app/services/public_record_importer.rb'
-
-# Offense count: 17
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: inline, group
-Style/AccessModifierDeclarations:
-  Exclude:
-    - 'app/services/google_drive_service.rb'
-    - 'app/services/nkf_member_comparison.rb'

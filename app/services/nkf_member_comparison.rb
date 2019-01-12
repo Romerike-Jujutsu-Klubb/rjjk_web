@@ -12,7 +12,15 @@ class NkfMemberComparison
     [@new_members, @member_changes, @errors].any?(&:present?)
   end
 
-  private def load_changes(member_id)
+  def sync
+    agent, front_page = setup_sync
+    create_new_members
+    sync_members(agent, front_page)
+  end
+
+  private
+
+  def load_changes(member_id)
     @orphan_nkf_members = NkfMember.where(member_id: nil).order(:fornavn, :etternavn, :id).to_a
     @orphan_members = NkfMember.find_free_members
     @members = []
@@ -25,19 +33,13 @@ class NkfMemberComparison
     end
   end
 
-  def sync
-    agent, front_page = setup_sync
-    create_new_members
-    sync_members(agent, front_page)
-  end
-
-  private def sync_members(agent, front_page)
+  def sync_members(agent, front_page)
     @member_changes = @members.map do |m|
       sync_member_with_agent(agent, front_page, m)
     end.compact
   end
 
-  private def assign_nkf_attributes(member)
+  def assign_nkf_attributes(member)
     converted_attributes = member.nkf_member.converted_attributes
     relations = []
     converted_attributes.each do |target, nkf_values|
@@ -82,7 +84,7 @@ class NkfMemberComparison
     relations
   end
 
-  private def create_new_members
+  def create_new_members
     created_members = @orphan_nkf_members.map do |nkf_member|
       logger.info "Create member from NKF: #{nkf_member.inspect}"
       nkf_member.create_corresponding_member!
@@ -95,7 +97,7 @@ class NkfMemberComparison
     @new_members = created_members.compact
   end
 
-  private def sync_attribute(membership, attr_sym, form, new_value, old_value, outgoing_changes, record)
+  def sync_attribute(membership, attr_sym, form, new_value, old_value, outgoing_changes, record)
     return if old_value.blank? && new_value.blank?
 
     _nkf_column, nkf_mapping = NkfMember::FIELD_MAP.find do |_k, v|
@@ -128,7 +130,7 @@ class NkfMemberComparison
     end
   end
 
-  private def setup_sync
+  def setup_sync
     @errors = []
     @outgoing_changes = []
     agent = NkfAgent.new
@@ -136,7 +138,7 @@ class NkfMemberComparison
     [agent, front_page]
   end
 
-  private def sync_member_with_agent(agent, front_page, m)
+  def sync_member_with_agent(agent, front_page, m)
     logger.info "Synching member: #{m.user.name} #{m.nkf_member.medlemsnummer} #{m.inspect}"
     logger.info "m.changes: #{m.changes.pretty_inspect}"
     verify_user(m)
@@ -153,7 +155,7 @@ class NkfMemberComparison
     nil
   end
 
-  private def gather_changes(m)
+  def gather_changes(m)
     changes = m.changes
     m.related_users.each do |relationship, u|
       if u.changed?
@@ -167,7 +169,7 @@ class NkfMemberComparison
     changes
   end
 
-  private def submit_changes_to_nkf(agent, front_page, m)
+  def submit_changes_to_nkf(agent, front_page, m)
     member_form, outgoing_changes_for_member = find_outgoing_changes(agent, front_page, m)
     return unless Rails.env.production? && outgoing_changes_for_member.any?
 
@@ -178,7 +180,7 @@ class NkfMemberComparison
     member_form.submit
   end
 
-  private def save_incoming_changes(m)
+  def save_incoming_changes(m)
     changes = gather_changes(m)
     return if changes.empty?
 
@@ -186,7 +188,7 @@ class NkfMemberComparison
     [m, changes]
   end
 
-  private def find_outgoing_changes(agent, front_page, membership)
+  def find_outgoing_changes(agent, front_page, membership)
     search_form = front_page.form('ks_reg_medladm') do |search|
       search.p_ks_reg_medladm_action = 'SEARCH'
       search['frm_27_v29'] = 0
@@ -214,7 +216,7 @@ class NkfMemberComparison
     [member_form, outgoing_changes_for_member]
   end
 
-  private def verify_user(m)
+  def verify_user(m)
     return unless m.user.invalid?
     return unless m.user.errors[:phone]
 
@@ -243,7 +245,7 @@ class NkfMemberComparison
     end
   end
 
-  private def verify_billing_user(m)
+  def verify_billing_user(m)
     return unless m.user.billing_user
 
     logger.info "m.user.billing_user: #{m.user.billing_user.changes.pretty_inspect}"
