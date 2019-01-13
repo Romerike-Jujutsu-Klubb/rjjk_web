@@ -41,7 +41,8 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @event.groups = params[:group][:id].map { |group_id| Group.find(group_id) } if params[:group]
     if @event.update(params[:event])
-      selected_members = @event.groups.map(&:members).flatten.uniq
+      selected_members =
+          @event.groups.map(&:members).map { |m| m.includes(:user) }.map(&:active).flatten.uniq
       selected_users = selected_members.map(&:user).compact
       missing_users = selected_users - @event.users
       missing_users.each do |u|

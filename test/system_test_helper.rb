@@ -30,6 +30,12 @@ module SystemTestHelper
 
   included do
     setup { Timecop.travel TEST_TIME }
+
+    setup do
+      Rails.application.routes.default_url_options =
+          { host: Capybara.server_host, port: Capybara.server_port }
+    end
+
     teardown do
       visit logout_path
       open_menu
@@ -103,5 +109,11 @@ module SystemTestHelper
   def click_menu(menu_item)
     open_menu
     click_link menu_item
+  end
+
+  def select_from_chosen(item_text, options)
+    field = find_field(options[:from], visible: false, disabled: :all)
+    find("##{field[:id]}_chosen").click
+    find("##{field[:id]}_chosen ul.chosen-results li", text: item_text).click
   end
 end

@@ -38,7 +38,8 @@ class EventsControllerTest < ActionController::TestCase
 
   def test_should_update_event
     event = events(:one)
-    put :update, params: { id: event.id, event: { name: 'Stuff' }, group: { id: [id(:panda), id(:tiger), id(:voksne)] } }
+    put :update, params: { id: event.id, event: { name: 'Stuff' },
+                           group: { id: [id(:panda), id(:tiger), id(:voksne)] } }
     assert_redirected_to edit_event_path(event)
   end
 
