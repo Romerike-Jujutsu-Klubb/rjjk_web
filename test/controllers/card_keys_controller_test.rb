@@ -20,7 +20,7 @@ class CardKeysControllerTest < ActionDispatch::IntegrationTest
   test 'should create card_key' do
     assert_difference('CardKey.count') do
       post card_keys_url, params: { card_key: {
-        comment: @card_key.comment, label: @card_key.label, user_id: @card_key.user_id
+        comment: @card_key.comment, label: 'Card III', user_id: @card_key.user_id
       } }
     end
 

@@ -1,9 +1,9 @@
 one:
-  label: MyString
+  label: First card
   user: admin
   comment: MyText
 
 two:
-  label: MyString
+  label: Card two
   user: lars
   comment: MyText

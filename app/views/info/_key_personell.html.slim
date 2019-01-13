@@ -1,5 +1,5 @@
 table.table
-  - CardKey.includes(:user).map(&:user).sort_by(&:name).each do |user|
+  - CardKey.includes(:user).map(&:user).compact.sort_by(&:name).each do |user|
     tr
       td = user.name
       td = user.contact_info

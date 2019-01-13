@@ -166,7 +166,7 @@ class User < ApplicationRecord
   end
 
   def phones
-    [self, guardian_1, guardian_2, billing_user, contact_user].map { |u| u&.phone }.compact.uniq.sort
+    [self, guardian_1, guardian_2, billing_user, contact_user].map { |u| u&.phone }.compact.uniq
   end
 
   def label(last_name_first: false)
@@ -279,7 +279,7 @@ class User < ApplicationRecord
   end
 
   def contact_info
-    emails.first || phones.first
+    phones.first || emails.first
   end
 
   def contact_email

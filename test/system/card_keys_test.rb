@@ -17,7 +17,7 @@ class CardKeysTest < ApplicationSystemTestCase
     click_on 'Nytt kort'
 
     fill_in 'Kommentar', with: @card_key.comment
-    fill_in 'Kortnummer', with: @card_key.label
+    fill_in 'Kortnummer', with: 'Casd III'
     select_from_chosen @card_key.user.name, from: 'card_key[user_id]'
     click_on 'Lagre'
 
@@ -29,7 +29,7 @@ class CardKeysTest < ApplicationSystemTestCase
     click_on 'Rediger', match: :first
 
     fill_in 'Kommentar', with: @card_key.comment
-    fill_in 'Kortnummer', with: @card_key.label
+    fill_in 'Kortnummer', with: 'New label'
     select_from_chosen @card_key.user.name, from: 'card_key[user_id]'
     click_on 'Lagre'
 

@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_13_172652) do
+ActiveRecord::Schema.define(version: 2019_01_13_225638) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -115,12 +115,13 @@ ActiveRecord::Schema.define(version: 2019_01_13_172652) do
   end
 
   create_table 'card_keys', force: :cascade do |t|
-    t.string 'label', null: false
+    t.string 'label'
     t.bigint 'user_id'
     t.boolean 'office_key'
     t.text 'comment'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.index ['label'], name: 'index_card_keys_on_label', unique: true
     t.index ['user_id'], name: 'index_card_keys_on_user_id'
   end
 
