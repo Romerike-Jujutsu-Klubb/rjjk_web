@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Label:
+  = @card_key.label
+p
+  strong User:
+  = @card_key.user
+p
+  strong Comment:
+  = @card_key.comment
+
+=> link_to 'Edit', edit_card_key_path(@card_key)
+'|
+=< link_to 'Back', card_keys_path

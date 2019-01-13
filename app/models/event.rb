@@ -53,6 +53,10 @@ class Event < ApplicationRecord
     paragraphs&.first
   end
 
+  def invited_users
+    event_invitees.map(&:user)
+  end
+
   def attendees
     attending_invitees.map(&:user)
   end

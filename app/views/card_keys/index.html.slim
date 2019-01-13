@@ -1,0 +1,29 @@
+a.btn.btn-primary.float-right href=new_card_key_path
+  i.fa.fa-plus>
+  | Nytt kort
+
+h1 Nøkkelkort
+
+table.table
+  thead
+    tr
+      th Kortnummer
+      th Person
+      th Kontornøkkel
+      th Kommentar
+      th
+      th
+      th
+
+  tbody
+    - @card_keys.each do |card_key|
+      tr
+        td = card_key.label
+        td = card_key.user
+        td.text-center = card_key.office_key ? :X : nil
+        td = card_key.comment
+        td = link_to 'Rediger', edit_card_key_path(card_key)
+        td = link_to 'Slett', card_key, data: { confirm: 'Er du sikker på at du vil slette dettte kortet?' }, method: :delete
+
+br
+

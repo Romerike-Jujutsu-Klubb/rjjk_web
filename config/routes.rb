@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :card_keys
   resources :embu_part_videos
   resources :embu_parts
   default_url_options Rails.application.config.action_mailer.default_url_options

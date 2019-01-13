@@ -29,7 +29,7 @@
 NProgress.configure({showSpinner: false,  ease: 'ease',  speed: 500});
 
 $(function () {
-    $('.chosen-select').chosen();
+    $('.chosen,.chosen-select').chosen();
 });
 
 // Lazy load marked images

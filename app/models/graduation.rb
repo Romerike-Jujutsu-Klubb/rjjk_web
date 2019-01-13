@@ -96,8 +96,12 @@ class Graduation < ApplicationRecord
     "Gradering #{group.name}"
   end
 
-  def attendees
+  def invited_users
     (graduates.select { |g| g.passed || g.passed.nil? } + censors).map(&:member).map(&:user)
+  end
+
+  def attendees
+    invited_users
   end
 
   def ingress

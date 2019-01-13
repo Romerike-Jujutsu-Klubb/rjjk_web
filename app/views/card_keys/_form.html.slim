@@ -1,0 +1,13 @@
+= bootstrap_form_for @card_key do |f|
+  - if @card_key.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@card_key.errors.count, "error")} prohibited this card_key from being saved:"
+      ul
+        - @card_key.errors.full_messages.each do |message|
+          li = message
+
+  = f.text_field :label
+  = f.collection_select :user_id, @users, :id, :name, {include_blank: '(Ikke utlevert)'}, class: :chosen
+  = f.check_box :office_key
+  .mt-3 = f.text_area :comment
+  .float-right.mb-3 = f.primary

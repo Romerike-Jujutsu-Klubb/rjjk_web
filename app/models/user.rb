@@ -278,6 +278,10 @@ class User < ApplicationRecord
     emails.present? || phones.present?
   end
 
+  def contact_info
+    emails.first || phones.first
+  end
+
   def contact_email
     contact_user&.email || email || emails&.first || billing_user&.email || 'post@jujutsu.no'
   end

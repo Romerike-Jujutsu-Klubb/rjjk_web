@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_01_171926) do
+ActiveRecord::Schema.define(version: 2019_01_13_172652) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -112,6 +112,16 @@ ActiveRecord::Schema.define(version: 2019_01_01_171926) do
     t.binary 'minutes_content_data'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+  end
+
+  create_table 'card_keys', force: :cascade do |t|
+    t.string 'label', null: false
+    t.bigint 'user_id'
+    t.boolean 'office_key'
+    t.text 'comment'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['user_id'], name: 'index_card_keys_on_user_id'
   end
 
   create_table 'censors', force: :cascade do |t|
@@ -722,6 +732,7 @@ ActiveRecord::Schema.define(version: 2019_01_01_171926) do
   add_foreign_key 'basic_technique_links', 'basic_techniques', name: 'fk_basic_technique_links_basic_technique_id'
   add_foreign_key 'basic_techniques', 'ranks', name: 'fk_basic_techniques_rank_id'
   add_foreign_key 'basic_techniques', 'wazas', name: 'fk_basic_techniques_waza_id'
+  add_foreign_key 'card_keys', 'users'
   add_foreign_key 'censors', 'graduations', name: 'censors_graduation_id_fkey'
   add_foreign_key 'censors', 'members', name: 'censors_member_id_fkey'
   add_foreign_key 'elections', 'annual_meetings', name: 'fk_elections_annual_meeting_id'

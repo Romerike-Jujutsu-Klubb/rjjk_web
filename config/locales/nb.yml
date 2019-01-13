@@ -12,6 +12,11 @@ nb:
       attendance:
         member_id: Medlem
         practice_id: Trening
+      card_key:
+        comment: Kommentar
+        label: Kortnummer
+        office_key: Kontornøkkel
+        user_id: Person
       censor:
         approved_grades_at: Godkjent grader
         declined: Avslått

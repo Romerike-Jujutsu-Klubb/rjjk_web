@@ -3,6 +3,7 @@
 class EventInvitee < ApplicationRecord
   belongs_to :event
   belongs_to :user, required: false
+
   has_one :invitation, -> { where("message_type = '#{EventMessage::MessageType::INVITATION}'") },
       class_name: 'EventInviteeMessage', dependent: :destroy
   has_one :signup_confirmation,
@@ -11,6 +12,7 @@ class EventInvitee < ApplicationRecord
   has_one :signup_rejection,
       -> { where("message_type = '#{EventInviteeMessage::MessageType::SIGNUP_REJECTION}'") },
       class_name: 'EventInviteeMessage', dependent: :destroy
+
   has_many :event_invitee_messages, -> do
     where("message_type IS NULL OR message_type <> '#{EventMessage::MessageType::INVITATION}'")
   end, dependent: :destroy
@@ -19,19 +21,19 @@ class EventInvitee < ApplicationRecord
   validates :user_id, uniqueness: { scope: :event_id, allow_nil: true }
   validates :will_work, inclusion: { in: [nil, false], if: proc { |r| r.will_attend == false } }
 
-  before_create do
+  before_validation do
     if user
-      self.name = user.name
-      self.email = user.email
-      self.organization = 'Romerike Jujutsu Klubb' if user.member
+      self.name ||= user.name
+      self.email ||= user.contact_info
+      self.organization ||= 'Romerike Jujutsu Klubb' if user.member
     end
   end
 
   def name
-    user.try(:name) || super
+    user&.name || super
   end
 
   def email
-    user.try(:email) || super
+    user&.email || super
   end
 end

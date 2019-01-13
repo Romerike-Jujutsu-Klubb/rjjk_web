@@ -3,7 +3,10 @@
 ul.nav.nav-tabs
   li.nav-item: a.nav-link.active data-target="#description" data-toggle="tab" Beskrivelse
   li.nav-item: a.nav-link data-target="#invitation" data-toggle="tab" Invitasjon
-  li.nav-item: a.nav-link data-target="#invitees" data-toggle="tab" Deltagere
+  li.nav-item: a.nav-link data-target="#invitees" data-toggle="tab"
+    | Deltagere
+    - if @event.event_invitees.any?
+      .badge.badge-info< #{@event.event_invitees.size}
 
 = bootstrap_form_for(@event) do |f|
   = f.error_messages
@@ -53,7 +56,7 @@ ul.nav.nav-tabs
     #invitees.tab-pane
       - if @event.event_invitees.any?
         div style="float: left"
-          table.table
+          table.table class=('table-sm' if @event.event_invitees.size > 24)
             thead
               tr
                 th Navn
@@ -66,7 +69,7 @@ ul.nav.nav-tabs
                 th Kommentar
                 th
             tbody
-              - for inv in @event.event_invitees
+              - for inv in @event.event_invitees.sort_by(&:name)
                 tr
                   td = detour_to inv.name, edit_event_invitee_path(inv)
                   td = inv.organization

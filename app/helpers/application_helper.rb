@@ -5,11 +5,15 @@ module ApplicationHelper
   include GraduationAccess
 
   def menu_item(name, options = {})
-    options[:controller] ||= 'info'
-    link_to name,
-        { controller: options[:controller], action: options[:action],
-          id: options[:id], anchor: options[:anchor] },
-        class: (controller.controller_name.to_s == options[:controller].to_s ? 'active' : nil)
+    if options.is_a? Hash
+      options[:controller] ||= 'info'
+      path = url_for(controller: options[:controller], action: options[:action], id: options[:id],
+          anchor: options[:anchor])
+    else
+      path = options
+    end
+    css_class = (controller.controller_name.to_s == Rails.application.routes.recognize_path(path)[:controller] ? 'active' : nil)
+    link_to name, path, class: css_class
   end
 
   def yes_no(bool)
