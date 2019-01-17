@@ -24,7 +24,9 @@
           i.fa.fa-thumbs-up>
           | Godkjenn grader
       - else
-        = link_to disapprove_graduation_path(@graduation), class: 'btn btn-success ml-2', method: :post, title: "Venter på #{@graduation.censors.reject(&:approved?).map(&:member).map(&:name).join(' og ')}", data: {confirm: 'Vil du oppheve din godkjenning av gradene?', toggle: (:tooltip unless @graduation.approved?)}
+        - pending_censors = @graduation.censors.reject(&:approved?)
+        - pending_censor_names = pending_censors.map(&:member).map(&:name).join(' og ')
+        = link_to disapprove_graduation_path(@graduation), class: 'btn btn-success ml-2', method: :post, title: ("Venter på #{pending_censor_names}" if pending_censor_names.present?), data: {confirm: 'Vil du oppheve din godkjenning av gradene?', toggle: (:tooltip unless @graduation.approved?)}
           i.fa.fa-thumbs-up>
           = @graduation.approved? ? :Godkjent : 'Du har godkjent'
   = link_to 'Til listen', {action: :index}, class: 'btn btn-secondary ml-2'
