@@ -7,7 +7,9 @@ class CardKeysController < ApplicationController
     @card_keys = CardKey.all.sort_by { |ck| [ck.user&.name || '', ck.label] }
   end
 
-  def show; end
+  def show
+    edit
+  end
 
   def new
     @card_key ||= CardKey.new
@@ -31,7 +33,7 @@ class CardKeysController < ApplicationController
 
   def update
     if @card_key.update(card_key_params)
-      redirect_to card_keys_path, notice: 'Card key was successfully updated.'
+      redirect_to card_keys_path, notice: 'Nøkkelkortet ble oppdatert.'
     else
       edit
     end
@@ -40,7 +42,7 @@ class CardKeysController < ApplicationController
   def destroy
     @card_key.destroy
     respond_to do |format|
-      format.html { redirect_to card_keys_url, notice: 'Card key was successfully destroyed.' }
+      format.html { redirect_to card_keys_url, notice: 'Nøkkelkortet ble slettet.' }
       format.json { head :no_content }
     end
   end

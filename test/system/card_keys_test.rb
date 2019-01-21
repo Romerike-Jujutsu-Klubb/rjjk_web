@@ -26,22 +26,20 @@ class CardKeysTest < ApplicationSystemTestCase
 
   test 'updating a Card key' do
     visit card_keys_url
-    click_on 'Rediger', match: :first
-
+    find('td', text: 'First card').click
     fill_in 'Kommentar', with: @card_key.comment
     fill_in 'Kortnummer', with: 'New label'
     select_from_chosen @card_key.user.name, from: 'card_key[user_id]'
     click_on 'Lagre'
 
-    assert_text 'Card key was successfully updated'
+    assert_text 'Nøkkelkortet ble oppdatert.'
   end
 
   test 'destroying a Card key' do
     visit card_keys_url
-    page.accept_confirm do
-      click_on 'Slett', match: :first
-    end
+    find('td', text: 'First card').click
+    page.accept_confirm { click_on 'Slett' }
 
-    assert_text 'Card key was successfully destroyed'
+    assert_text 'Nøkkelkortet ble slettet.'
   end
 end
