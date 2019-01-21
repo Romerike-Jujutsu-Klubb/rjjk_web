@@ -4,13 +4,15 @@ a.btn.btn-primary.float-right href=new_card_key_path
 
 h1 Nøkkelkort
 
+- any_comment = @card_keys.map(&:comment).any?(&:present?)
 table.table.table-sorted data-record-path=card_keys_path
   thead
     tr
       th Kortnummer
       th Person
       th Kontornøkkel
-      th Kommentar
+      - if any_comment
+        th Kommentar
 
   tbody
     - @card_keys.each do |card_key|
@@ -20,4 +22,5 @@ table.table.table-sorted data-record-path=card_keys_path
         td.text-center
           - if card_key.office_key
             i.fa.fa-key
-        td = card_key.comment
+        - if any_comment
+          td = card_key.comment
