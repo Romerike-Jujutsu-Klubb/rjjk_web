@@ -59,8 +59,9 @@ css:
   h5 Avmeldt
   ul
     - other_absentees.each do |a|
-      li
+      li class=(:key if a.member.user.card_key)
+        - member_label = a.member.name
         - if admin?
-          = link_to a.member.name, a.member
+          = link_to member_label, a.member
         - else
-          = a.member.name
+          = member_label
