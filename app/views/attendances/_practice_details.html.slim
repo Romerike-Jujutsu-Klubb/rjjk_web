@@ -35,15 +35,25 @@ css:
   }
 span.attendance_badge = other_attendees.size
 
+css:
+  li.key:before {
+    content: "\f084"; /* FontAwesome Unicode */
+    font-family: FontAwesome;
+    display: inline-block;
+    margin-left: -1.3em; /* same as padding-left set on li */
+    width: 1.3em; /* same as padding-left set on li */
+  }
+
 - if other_attendees.any?
   h5 Påmeldt
   ul
     - other_attendees.sort_by { |a| [a.member.current_rank || Rank::UNRANKED, a.member.joined_on, -a.member.age] }.each do |a|
-      li
+      li class=(:key if a.member.user.card_key)
+        - member_label = a.member.name
         - if admin?
-          = link_to a.member.name, a.member
+          = link_to member_label, a.member
         - else
-          = a.member.name
+          = member_label
 
 - if other_absentees.any?
   h5 Avmeldt
