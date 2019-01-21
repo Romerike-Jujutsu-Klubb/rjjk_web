@@ -17,5 +17,7 @@ table.table.table-sorted data-record-path=card_keys_path
       tr data-record-id=card_key.id
         td = card_key.label
         td = card_key.user
-        td.text-center = card_key.office_key ? :X : nil
+        td.text-center
+          - if card_key.office_key
+            i.fa.fa-key
         td = card_key.comment
