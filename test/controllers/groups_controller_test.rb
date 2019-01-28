@@ -31,6 +31,10 @@ class GroupsControllerTest < ActionController::TestCase
     get :show, params: { id: groups(:panda).id }
     assert_response :success
   end
+  test 'should_show_group_without_current_semester' do
+    get :show, params: { id: id(:voksne) }
+    assert_response :success
+  end
 
   def test_should_get_edit
     get :edit, params: { id: groups(:panda).id }

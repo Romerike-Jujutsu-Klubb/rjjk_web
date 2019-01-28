@@ -22,7 +22,7 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.includes(members: %i[recent_attendances nkf_member]).find(params[:id])
-    chief_instructor = @group.current_semester.chief_instructor
+    chief_instructor = @group.current_semester&.chief_instructor
     @instructors = ([chief_instructor] + @group.instructors).compact.uniq
 
     respond_to do |format|
