@@ -92,3 +92,16 @@ newbie:
   verified: true
   birthdate: 1990-05-17
   male: true
+  guardian_1: neuer
+
+neuer:
+  first_name: Manuel
+  last_name: Neuer
+  address: Rookie Road 5
+  postal_code: 1472
+  salted_password: de6db7cdf638e5ba522b9e5728d551315bf750f4 # atest
+  salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
+  email: neuer@example.com
+  verified: true
+  birthdate: 1990-05-17
+  male: true

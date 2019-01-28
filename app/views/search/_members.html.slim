@@ -12,12 +12,14 @@
                 => link_to m.name, m
                 - if m.age
                   ' (#{m.age} år)
-              td
+              td.text-right
                 - user = m.user
                 - phone = user.phones.first
                 - if phone
-                  a.float-right href="tel:#{phone}"
+                  a href="sms:/#{phone}/"
+                    i.fa.fa-mobile-phone
+                  a.ml-2 href="tel:#{phone}"
                     i.fa.fa-phone
                 - else
-                  a.float-right href="mailto:#{user.email}"
+                  a href="mailto:#{user.email}"
                     i.fa.fa-envelope

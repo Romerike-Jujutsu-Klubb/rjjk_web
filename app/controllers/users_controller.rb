@@ -49,7 +49,7 @@ class UsersController < ApplicationController
       NkfMemberSyncJob.perform_later @user.member if @user.member
       back_or_redirect_to edit_user_path(@user)
     else
-      flash.now.alert = 'En feil oppsto ved lagring av brukeren.'
+      flash.now.alert = "En feil oppsto ved lagring av brukeren: #{@user.errors.full_messages.join("\n")}"
       edit
     end
   end

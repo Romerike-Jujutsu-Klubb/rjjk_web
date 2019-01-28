@@ -16,7 +16,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[1]
     assert_equal 'Kommer du?', mail.subject
-    assert_equal ['newbie@example.com'], mail.to
+    assert_equal ['neuer@example.com', 'newbie@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_match %r{Følg linken til\s*<a href="https://example.com/mitt/oppmote">Mitt oppmøte</a>},
         mail.body
@@ -58,7 +58,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[2]
     assert_equal 'Trening i kveld: 1 deltaker påmeldt', mail.subject
-    assert_equal ['newbie@example.com'], mail.to
+    assert_equal ['neuer@example.com', 'newbie@example.com'], mail.to
     assert_equal ['noreply@test.jujutsu.no'], mail.from
     assert_match '<ul><li>Uwe Kubosch</li></ul>', mail.html_body
   end
@@ -80,7 +80,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[2]
     assert_equal 'Trening i kveld: 1 ny deltaker påmeldt', mail.subject
-    assert_equal ['newbie@example.com'], mail.to
+    assert_equal ['neuer@example.com', 'newbie@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_match 'Nylig påmeldt</h3><ul><li>Uwe Kubosch</li>', mail.body
   end
