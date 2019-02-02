@@ -99,7 +99,3 @@ group :test do
   gem 'vcr'
   gem 'webmock'
 end
-
-group :development, :beta do
-  gem 'medusa', github: 'donv/medusa', branch: 'patch-1'
-end

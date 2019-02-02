@@ -5,15 +5,6 @@ GIT
     bootstrap-chosen-rails (0.0.4)
 
 GIT
-  remote: https://github.com/donv/medusa.git
-  revision: c93d6975c50571448d99ea341b8dc0c3172b91bf
-  branch: patch-1
-  specs:
-    medusa (0.0.2)
-      nokogiri (>= 1.3.0)
-      robotex (>= 1.0.0)
-
-GIT
   remote: https://github.com/rails/actionpack-page_caching.git
   revision: b46012c1e5771e7b701bcc69051caaff8c48a0c0
   specs:
@@ -357,7 +348,6 @@ GEM
       rack (>= 1.4)
     retriable (3.1.2)
     ri_cal (0.8.8)
-    robotex (1.0.0)
     rubocop (0.62.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -490,7 +480,6 @@ DEPENDENCIES
   listen
   lograge
   mechanize
-  medusa!
   mini_magick
   mini_racer
   minitest-rails-capybara
@@ -535,7 +524,7 @@ DEPENDENCIES
   webpush
 
 RUBY VERSION
-   ruby 2.6.0p0
+   ruby 2.6.1p33
 
 BUNDLED WITH
    1.17.3
