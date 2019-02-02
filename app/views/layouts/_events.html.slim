@@ -56,6 +56,12 @@
             ' #{crowd_size} påmeldte.
             - if will_attend
               | Du er påmeldt.
+            - elsif is_invited
+              | Kommer du?
+              .btn-group
+                a.btn.btn-secondary href='#' Ja
+                a.btn.btn-secondary href='#' Nei
+                a.btn.btn-secondary href='#' Vet ikke
 
       - unless @event == event
         - if ingress

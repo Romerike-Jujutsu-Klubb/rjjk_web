@@ -105,8 +105,10 @@ class Group < ApplicationRecord
   end
 
   def suggested_graduation_date(date = Date.current)
-    month_start = Date.civil(date.year, date.mon >= 7 ? 12 : 6)
-    second_week = month_start + (7 - month_start.wday)
-    second_week + group_schedules.first.weekday
+    group_schedule = group_schedules.min_by(&:weekday)
+    return unless group_schedule
+
+    second_week = Date.civil(date.year, date.mon >= 7 ? 12 : 6, 11).beginning_of_week
+    second_week + group_schedule.weekday - 1
   end
 end
