@@ -55,6 +55,28 @@ class EventsController < ApplicationController
     end
   end
 
+  def accept
+    @event = Event.find(params[:id])
+    invitee = @event.event_invitees.find { |ei| ei.user_id == current_user.id }
+    if invitee.update(will_attend: true)
+      flash[:notice] = 'Du er påmeldt.'
+      redirect_to @event
+    else
+      redirect_back fallback_location: root_path
+    end
+  end
+
+  def decline
+    @event = Event.find(params[:id])
+    invitee = @event.event_invitees.find { |ei| ei.user_id == current_user.id }
+    if invitee.update(will_attend: false)
+      flash[:notice] = 'Du er avmeldt.'
+      redirect_to @event
+    else
+      redirect_back fallback_location: root_path
+    end
+  end
+
   def destroy
     @event = Event.find(params[:id])
     @event.destroy

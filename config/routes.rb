@@ -100,10 +100,15 @@ Rails.application.routes.draw do
   resources :events do
     collection do
       get :attendance_form
+      get :calendar
     end
-    get :calendar, on: :collection
-    get :calendar, on: :member
-    get :invite, on: :member
+    member do
+      get :accept
+      get :calendar
+      get :decline
+      get :invite
+      get :tentative
+    end
   end
   resources :graduates do
     member do
@@ -113,14 +118,17 @@ Rails.application.routes.draw do
   end
   resources :graduations do
     member do
+      get :accept
       patch :add_group
       post :approve
       get :censor_form
       get :censor_form_pdf
       get :certificates
+      get :decline
       post :disapprove
       get 'graduates_list/:section', action: :graduates_list, as: :graduates_list
       post :lock
+      get :tentative
     end
   end
   resources :group_instructors
