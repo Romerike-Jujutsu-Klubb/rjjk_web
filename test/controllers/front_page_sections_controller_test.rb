@@ -27,7 +27,7 @@ class FrontPageSectionsControllerTest < ActionDispatch::IntegrationTest
       } }
     end
 
-    assert_redirected_to front_page_section_url(FrontPageSection.last)
+    assert_redirected_to front_page_sections_url
   end
 
   test 'should show front_page_section' do

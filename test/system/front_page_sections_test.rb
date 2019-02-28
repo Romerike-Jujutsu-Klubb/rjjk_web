@@ -25,7 +25,6 @@ class FrontPageSectionsTest < ApplicationSystemTestCase
     click_on 'Lag Front page section'
 
     assert_text 'Front page section was successfully created'
-    click_on 'Back'
   end
 
   test 'updating a front page section' do
