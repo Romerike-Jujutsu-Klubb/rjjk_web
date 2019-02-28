@@ -23,7 +23,7 @@ class FrontPageSectionsController < ApplicationController
     @front_page_section = FrontPageSection.new(front_page_section_params)
 
     if @front_page_section.save
-      redirect_to @front_page_section, notice: 'Front page section was successfully created.'
+      redirect_to front_page_sections_path, notice: 'Front page section was successfully created.'
     else
       render :new
     end
