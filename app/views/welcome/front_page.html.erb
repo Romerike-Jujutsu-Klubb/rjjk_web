@@ -572,7 +572,7 @@
                             <section id="background-wrapper">
                 <!-- THE BACKGROUND SLIDER -->
                 <article class="cinematic" data-contentholder="#slidercontent-wrapper">
-                    <!-- SLIDER LIST -->
+                  <!-- SLIDER LIST -->
                   <ul>
 
                     <% @front_page_sections.each do |fps| %>
@@ -585,14 +585,15 @@
                              data-height="1080"></div>
                         <section class="slidercontent">
                           <h2>
-                            <a href="<%=information_page_path fps.information_page_id%>" title="<%=fps.title%>"><%=fps.title%></a></h2>
+                            <a href="<%= information_page_path fps.information_page_id %>" title="<%= fps.title %>"><%= fps.title %></a>
+                          </h2>
                           <div class='hidden-phone'>
-                            <p class="mainTitleSlider"><%=fps.subtitle%></p>
-                            <div class="fbuilder_module sliderBtn" data-shortcode="tp_button" data-modid="0">
-                              <a href="<%=information_page_path fps.information_page_id%>" class="smoothscroll" target="_self">
-                                <button style="color:#ffffff;background-color:#4e89b7" class="btn txtshadow fullwidth">
-                                  <%=fps.button_text%>
-                                  <i style="float:right;margin-top:1rem" class="fa fa-chevron-right"></i>
+                            <p class="mainTitleSlider"><%= fps.subtitle %></p>
+                            <div class="fbuilder_module sliderBtn" style="width:auto" data-shortcode="tp_button" data-modid="0">
+                              <a href="<%= information_page_path fps.information_page_id %>" class="smoothscroll" target="_self">
+                                <button style="color:#ffffff;background-color:#4e89b7;white-space:nowrap!important" class="btn txtshadow fullwidth">
+                                  <%= fps.button_text %>
+                                  <i style="float:right;margin-top:1rem;margin-left:1rem" class="fa fa-chevron-right"></i>
                                 </button>
                               </a>
                             </div>
@@ -602,32 +603,8 @@
                       <!-- END OF A SLIDE ITEM -->
                     <% end %>
 
-                    <li><!-- USE  data-repeatbg="true" for Tiled BG 's -->
-                      <div class="slide-background-image" data-repeatbg="false" data-repeatbg2="false" data-src="/images/277"
-                           data-srcblur="https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-content/uploads/2014/06/bg_1900px_2_blur.jpg"
-                           data-width="1900"
-                           data-height="1069"></div>
-                      <section
-                        class="slidercontent"><h2>
-                        <a href="/info/6" title="Integration of SQL / NoSQL / Hadoop with Cloud Foundry">
-                          Stress ned i et hyggelig miljø.</a></h2>
-                        <div class='hidden-phone'>
-                          <p class="mainTitleSlider">
-                            Bygg deg opp fysisk og mentalt for en bedre hverdag
-                          </p>
-                          <div class="fbuilder_module sliderBtn" data-shortcode="tp_button" data-modid="2">
-                            <a href="/info/6" class="smoothscroll" target="_self">
-                              <button style="color:#ffffff;background-color:#3a4c4e" class="btn  txtshadow fullwidth">
-                                Kontakt oss
-                                <i style="float:right;margin-top:1rem" class="fa fa-chevron-right"></i>
-                              </button>
-                            </a></div>
-                        </div>
-                      </section>
-                    </li><!-- END OF A SLIDE ITEM -->
-
-                                                    </ul>
-                    <!-- END OF SLIDER LIST -->
+                  </ul>
+                  <!-- END OF SLIDER LIST -->
                 </article>
             </section><!-- END OF THE BACKGROUND WRAPPER -->
             <section id="cinematic-title-wrapper" class="txtshadow empty">
