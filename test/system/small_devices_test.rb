@@ -40,7 +40,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
   test 'new front_page' do
     screenshot_group :front_page
     visit front_page_path
-    screenshot :index
+    # screenshot :index
     find('#headermenuholder > i').click
     assert_selector '.menubutton', text: 'My first article'
     screenshot :menu

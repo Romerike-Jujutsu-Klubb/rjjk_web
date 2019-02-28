@@ -22,7 +22,7 @@
     <%#= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'font-awesome', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%#= csrf_meta_tags %>
-    <%#= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
 <link rel='dns-prefetch' href='//maps.google.com' />
 <link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />
@@ -800,7 +800,7 @@
 				if (typeof(inputs[i].value) != 'unknown' && inputs[i].value != null && (inputs[i].type == "button" || inputs[i].type == "submit") && inputs[i].value.search(/^Search$/) != -1) {
 					var oElement = inputs[i];
 					function fn(e) { ClickTaleTag("Search"); }
-					YAHOO.util.Event.addListener(oElement, "click", fn);
+					$(oElement).on("click", fn);
 				}
 			}
 			/*--*//*]]>*/
@@ -812,7 +812,7 @@
 				if (typeof(document.forms[i].action) != 'unknown' && document.forms[i].action != null && document.forms[i].action.search(/\/wp-comments-post\.php$/) != -1) {
 					var oElement = document.forms[i];
 					function fn(e) { ClickTaleTag("Comment");}
-					YAHOO.util.Event.addListener(oElement, "submit", fn);
+					$(oElement).on("submit", fn);
 				}
 			}
 			/*--*//*]]>*/
@@ -824,7 +824,7 @@
 				if (typeof(document.links[i].href) != 'unknown' && document.links[i].href != null && document.links[i].href.search(/(feed=rss2$)|(feed$)|(feed\/$)/) != -1) {
 					var oElement = document.links[i];
 					function fn(e) { ClickTaleTag("RSS"); }
-					YAHOO.util.Event.addListener(oElement, "click", fn);
+					$(oElement).on("click", fn);
 				}
 			}
 			/*--*//*]]>*/
@@ -836,7 +836,7 @@
 				if (typeof(document.links[i].href) != 'unknown' && document.links[i].href != null && document.links[i].href.search(/(feed=comments-rss2$)|(comments\/feed$)|(comments\/feed\/$)/) != -1) {
 					var oElement = document.links[i];
 					function fn(e) { ClickTaleTag("Comments-RSS"); }
-					YAHOO.util.Event.addListener(oElement, "click", fn);
+					$(oElement).on("click", fn);
 				}
 			}
 			/*--*//*]]>*/
@@ -848,7 +848,7 @@
 				if (typeof(document.links[i].href) != 'unknown' && document.links[i].href != null && document.links[i].href.search(/(feed=rss2$)|(feed$)|(feed\/$)/) != -1) {
 					var oElement = document.links[i];
 					function fn(e) { ClickTaleTag("RSS-Rightclick"); }
-					YAHOO.util.Event.addListener(oElement, "contextmenu", fn);
+					$(oElement).on( "contextmenu", fn);
 				}
 			}
 			/*--*//*]]>*/
@@ -860,7 +860,7 @@
 				if (typeof(document.links[i].href) != 'unknown' && document.links[i].href != null && document.links[i].href.search(/(feed=comments-rss2$)|(comments\/feed$)|(comments\/feed\/$)/) != -1) {
 					var oElement = document.links[i];
 					function fn(e) { ClickTaleTag("Comments-RSS-Rightclick"); }
-					YAHOO.util.Event.addListener(oElement, "contextmenu", fn);
+					$(oElement).on( "contextmenu", fn);
 				}
 			}
 			/*--*//*]]>*/

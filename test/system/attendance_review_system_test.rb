@@ -2,7 +2,7 @@
 
 require 'application_system_test_case'
 
-class AttendanceReviewFeatureTest < ApplicationSystemTestCase
+class AttendanceReviewSystemTest < ApplicationSystemTestCase
   setup { screenshot_section :attendance }
 
   def test_review_displays_old_attendance

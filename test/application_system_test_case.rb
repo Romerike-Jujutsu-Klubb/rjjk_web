@@ -38,6 +38,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   Capybara::Screenshot.enabled = ENV['TRAVIS'].blank?
   Capybara::Screenshot.hide_caret = true
   Capybara::Screenshot.stability_time_limit = 0.1
+  Capybara::Screenshot::Diff.color_distance_limit = 6
 
   driven_by :chrome
   Capybara.server = :puma, { Silent: true }

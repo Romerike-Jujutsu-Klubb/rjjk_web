@@ -75,8 +75,7 @@ module UserSystem
   end
 
   def store_cookie(user = current_user)
-    cookies.encrypted[COOKIE_NAME] = { value: user.id, expires: 30.days.from_now }
-        .merge(COOKIE_SCOPE)
+    cookies.encrypted[COOKIE_NAME] = { value: user.id, expires: 30.days.from_now }.merge(COOKIE_SCOPE)
   end
 
   def login_from_cookie

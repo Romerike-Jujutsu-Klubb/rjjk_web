@@ -2,7 +2,7 @@
 
 require 'application_system_test_case'
 
-class GraduationsFeatureTest < ApplicationSystemTestCase
+class GraduationsSystemTest < ApplicationSystemTestCase
   setup { screenshot_section :graduations }
 
   def test_show

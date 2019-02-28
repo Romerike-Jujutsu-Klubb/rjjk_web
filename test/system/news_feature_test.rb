@@ -13,7 +13,6 @@ class NewsFeatureTest < ApplicationSystemTestCase
     all('.post img')[0].click
     assert has_css?('.close')
     screenshot('image') || sleep(Capybara::Screenshot.stability_time_limit || 0.5)
-    sleep 1 # FIXME(uwe): Remove sleep!
     find('#imageModal .modal-header > button.close').click
     assert has_no_css?('#imageModal .close')
     all('.post img')[1].click
