@@ -89,6 +89,7 @@ class InfoController < ApplicationController
   def edit
     @information_page = InformationPage.find(params[:id])
     load_images
+    render action: :edit
   end
 
   def update
@@ -98,13 +99,17 @@ class InfoController < ApplicationController
       flash[:notice] = 'InformationPage was successfully updated.'
       redirect_to action: 'show', id: @information_page
     else
-      render action: :edit
+      edit
     end
   end
 
   def destroy
-    InformationPage.find(params[:id]).destroy
-    redirect_to controller: :news, action: :index
+    @information_page = InformationPage.find(params[:id])
+    if @information_page.destroy
+      redirect_to controller: :news, action: :index
+    else
+      edit
+    end
   end
 
   def versjon; end

@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @front_page_section.title
+p
+  strong Subtitle:
+  = @front_page_section.subtitle
+p
+  strong Image:
+  = @front_page_section.image
+p
+  strong Button text:
+  = @front_page_section.button_text
+p
+  strong Information page:
+  = @front_page_section.information_page
+
+=> link_to 'Edit', edit_front_page_section_path(@front_page_section)
+'|
+=< link_to 'Back', front_page_sections_path

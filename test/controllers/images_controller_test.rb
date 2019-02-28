@@ -80,6 +80,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_create_with_file
+    FrontPageSection.destroy_all
     images(:one).destroy! # same content
     login :lars
 
@@ -98,6 +99,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_create_with_file_gets_name
+    FrontPageSection.destroy_all
     images(:one).destroy! # same content
     login :lars
 
@@ -141,6 +143,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_destroy
+    FrontPageSection.destroy_all
     assert_nothing_raised do
       Image.find(@first_id)
     end
@@ -151,6 +154,16 @@ class ImagesControllerTest < ActionController::TestCase
 
     assert_raise(ActiveRecord::RecordNotFound) do
       Image.find(@first_id)
+    end
+  end
+
+  def test_destroy_fails_for_existing_front_page_section
+    assert_nothing_raised do
+      Image.find(@first_id)
+    end
+
+    assert_raise(ActiveRecord::InvalidForeignKey) do
+      post :destroy, params: { id: @first_id }
     end
   end
 

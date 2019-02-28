@@ -38,7 +38,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
   end
 
   test 'new front_page' do
-    screenshot_group :front_page
+    screenshot_group :new_front_page
     visit front_page_path
     # screenshot :index
     find('#headermenuholder > i').click

@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_03_212454) do
+ActiveRecord::Schema.define(version: 2019_02_28_192440) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -253,6 +253,19 @@ ActiveRecord::Schema.define(version: 2019_02_03_212454) do
     t.datetime 'created_at'
     t.datetime 'updated_at'
     t.text 'invitees'
+  end
+
+  create_table 'front_page_sections', force: :cascade do |t|
+    t.integer 'position', null: false
+    t.string 'title'
+    t.string 'subtitle'
+    t.bigint 'image_id'
+    t.string 'button_text'
+    t.bigint 'information_page_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['image_id'], name: 'index_front_page_sections_on_image_id'
+    t.index ['information_page_id'], name: 'index_front_page_sections_on_information_page_id'
   end
 
   create_table 'graduates', force: :cascade do |t|
@@ -743,6 +756,8 @@ ActiveRecord::Schema.define(version: 2019_02_03_212454) do
   add_foreign_key 'embu_part_videos', 'embu_parts'
   add_foreign_key 'embu_part_videos', 'images'
   add_foreign_key 'embu_parts', 'embus'
+  add_foreign_key 'front_page_sections', 'images'
+  add_foreign_key 'front_page_sections', 'information_pages'
   add_foreign_key 'graduates', 'graduations', name: 'graduates_graduation_id_fkey'
   add_foreign_key 'graduates', 'members', name: 'graduates_member_id_fkey'
   add_foreign_key 'graduates', 'ranks', name: 'graduates_rank_id_fkey'

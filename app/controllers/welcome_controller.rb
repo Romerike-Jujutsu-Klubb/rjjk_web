@@ -37,6 +37,7 @@ class WelcomeController < ApplicationController
 
   # https://web.archive.org/web/20190203085358/https://www.altoros.com/
   def front_page
+    @front_page_sections = FrontPageSection.all
     render layout: false
   end
 

@@ -1,0 +1,15 @@
+one:
+  position: 1
+  title: Section 1
+  subtitle: Subtitle 1
+  image: one
+  button_text: More info
+  information_page: first
+
+two:
+  position: 2
+  title: Section two
+  subtitle: Subtitle two
+  image: two
+  button_text: Learn more
+  information_page: second

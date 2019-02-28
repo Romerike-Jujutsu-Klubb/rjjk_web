@@ -111,6 +111,7 @@ Rails.application.routes.draw do
       get :tentative
     end
   end
+  resources :front_page_sections
   resources :graduates do
     member do
       get :confirm

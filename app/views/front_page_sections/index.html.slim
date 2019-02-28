@@ -1,0 +1,30 @@
+- @content_width = 1280
+= link_to new_front_page_section_path, class: 'btn btn-primary float-right'
+  i.fa.fa-plus>
+  | Ny seksjon
+
+h1 Seksjoner på forsiden
+
+table.table
+  thead
+    tr
+      th #
+      th Tittel
+      th Undertittel
+      th Knappetekst
+      th Informasjonsside
+      th
+      th
+      th
+
+  tbody
+    - @front_page_sections.each do |front_page_section|
+      tr
+        td = front_page_section.position
+        td = front_page_section.title
+        td = front_page_section.subtitle
+        td = front_page_section.button_text
+        td = front_page_section.information_page&.title
+        td = link_to 'Show', front_page_section
+        td = link_to 'Edit', edit_front_page_section_path(front_page_section)
+        td = link_to 'Destroy', front_page_section, data: { confirm: 'Are you sure?' }, method: :delete

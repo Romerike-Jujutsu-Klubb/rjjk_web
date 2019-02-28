@@ -54,17 +54,27 @@ class InfoControllerTest < ActionController::TestCase
   end
 
   def test_destroy
+    FrontPageSection.destroy_all
     information_page = information_pages(:first)
-    assert_not_nil information_page
 
     login(:admin)
-    post :destroy, params: { id: information_page.id }
+    delete :destroy, params: { id: information_page.id }
     assert_response :redirect
     assert_redirected_to controller: :news, action: :index
 
     assert_raise(ActiveRecord::RecordNotFound) do
       InformationPage.find(information_page.id)
     end
+  end
+
+  def test_destroy_fails_for_existing_front_page_section
+    information_page = information_pages(:first)
+
+    login(:admin)
+    delete :destroy, params: { id: information_page.id }
+    assert_response :success
+
+    InformationPage.find(information_page.id)
   end
 
   def test_versjon

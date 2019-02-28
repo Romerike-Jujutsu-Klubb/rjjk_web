@@ -43,6 +43,12 @@ nb:
         message_type: Meldingstype
         ready_at: Klar til utsending
         subject: Emne
+      front_page_section:
+        button_text: Knappetekst
+        image_id: Bilde
+        information_page_id: Informasjonsside
+        subtitle: Undertittel
+        title: Tittel
       graduate:
         member_id: Medlem
         paid_belt: Betalt belte

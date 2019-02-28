@@ -1,0 +1,15 @@
+= bootstrap_form_for @front_page_section do |f|
+  - if @front_page_section.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@front_page_section.errors.count, "error")} prohibited this front_page_section from being saved:"
+      ul
+        - @front_page_section.errors.full_messages.each do |message|
+          li = message
+
+  = f.text_field :title
+  = f.text_field :subtitle
+  = f.collection_select :image_id, @images, :id, :name, {}, class: :chosen
+  = f.text_field :button_text
+  = f.collection_select :information_page_id, @information_pages, :id, :title, {}, class: :chosen
+
+  .float-right = f.primary
