@@ -52,8 +52,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   teardown do
     visit logout_path
-    open_menu
-    find('a', text: 'Logg inn')
+    # open_menu
+    # find('a', text: 'Logg inn')
     Capybara.reset_sessions!
     clear_cookies
   end
