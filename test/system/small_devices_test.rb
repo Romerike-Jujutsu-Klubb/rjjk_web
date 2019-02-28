@@ -41,7 +41,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
     screenshot_group :new_front_page
     visit front_page_path
     assert_css('#headermenuholder > i', visible: true)
-    screenshot :index, area_size_limit: 18
+    screenshot :index, color_distance_limit: 11
     find('#headermenuholder > i').click
     assert_selector '.menubutton', text: 'My first article'
     screenshot :menu

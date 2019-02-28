@@ -8,8 +8,8 @@
 
   = f.text_field :title
   = f.text_field :subtitle
-  = f.collection_select :image_id, @images, :id, :name, {}, class: :chosen
+  = f.collection_select :image_id, @images, :id, :name, {prompt: true}, class: :chosen
   = f.text_field :button_text
-  = f.collection_select :information_page_id, @information_pages, :id, :title, {}, class: :chosen
+  = f.collection_select :information_page_id, @information_pages, :id, :title, {prompt: true}, class: :chosen
 
   .float-right = f.primary
