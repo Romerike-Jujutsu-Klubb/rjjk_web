@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'attendances/plan' # must be after "mitt/oppmote"
   post 'attendances/announce(/:year/:week/:group_schedule_id)/:status(/:member_id)' =>
       'attendances#announce'
+  get 'velkommen' => 'welcome#front_page', as: :front_page
   get 'map' => 'map#index'
   get 'search' => 'search#index'
   post 'send_grid/receive' => 'send_grid#receive'
@@ -158,7 +159,11 @@ Rails.application.routes.draw do
   end
   resources :information_pages, controller: :info, path: :info do
     collection { post :preview }
-    member { patch :preview }
+    member do
+      get :move_up
+      get :move_down
+      patch :preview
+    end
   end
   resources :instructor_meetings
   resources :martial_arts

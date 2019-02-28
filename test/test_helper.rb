@@ -36,7 +36,10 @@ class ActiveSupport::TestCase
   fixtures :all
 
   setup { Timecop.freeze(TEST_TIME) }
-  teardown { Timecop.return }
+  # FIXME(uwe): Re-enable teardown!
+  # teardown do
+  #   Timecop.return unless is_a?(ApplicationSystemTestCase)
+  # end
   teardown { clear_user }
 
   if defined?(Bullet) && Bullet.enable?

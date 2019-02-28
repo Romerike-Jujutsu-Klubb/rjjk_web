@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class AttendanceWebpushesController < ApplicationController
+  before_action :authenticate_user
   before_action :set_attendance_webpush, only: %i[show edit update destroy]
 
   def index

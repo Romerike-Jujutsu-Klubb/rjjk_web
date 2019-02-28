@@ -1,19 +1,41 @@
 - @content_width = 1024
 
+.float-right = link_to 'Ny side', action: :new
+
 h1 Informasjonssider
 
-table.table
+table.table.table-sm
   tr valign="top"
-  - for column in InformationPage.content_columns
-    th = column.human_name
+    th
+    th Tittel
+    th Oppdatert
+    th Revidert
+    th Utsendt
 
   - for information_page in @information_pages
     tr valign="top"
-      - for column in InformationPage.content_columns
-        - value = information_page.send(column.name)
-        td = value.respond_to?(:strftime) ? value.strftime('%F %R') : value
+      td.text-center
+        - unless information_page.first?
+          a.my-0 href=move_up_information_page_path(information_page)
+            i.fa.fa-chevron-up
+        .my-0
+          = information_page.parent_id
+          = information_page.position
+        - if information_page.in_list?
+          a.my-0 href=move_down_information_page_path(information_page)
+            i.fa.fa-chevron-down
+      td
+        a href=edit_information_page_path(information_page) = information_page.title
+        - if information_page.public
+          .text-warning Offentlig
+        - else
+          .text-success Intern
+        .text-danger = information_page.hidden && :Skjult || nil
+      / td = textalize(information_page.body)
+      td = information_page.updated_at.strftime('%F %R')
+      td = information_page.revised_at&.strftime('%F %R')
+      td = information_page.mailed_at&.strftime('%F %R')
       td = link_to 'Vis', action: :show, id: information_page
       td = link_to 'Rediger', action: :edit, id: information_page
       td = link_to 'Slett', { action: :destroy, id: information_page }, data: {confirm: 'Er du sikker?'}, method: :post
 
-= link_to 'Ny side', action: :new

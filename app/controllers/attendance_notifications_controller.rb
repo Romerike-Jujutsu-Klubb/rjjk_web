@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# https://serviceworke.rs/push-rich.html
+
 class AttendanceNotificationsController < ApplicationController
   before_action :admin_required
 

@@ -60,7 +60,7 @@ class NkfMember < ApplicationRecord
     yrke: {},
   }.freeze
 
-  belongs_to :member, required: false
+  belongs_to :member, optional: true
 
   validates :kjonn, presence: true
   validates :member_id, uniqueness: { allow_nil: true }

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class EmbuPartsController < ApplicationController
+  before_action :authenticate_user
   before_action :set_embu_part, only: %i[show edit update destroy]
 
   def index
@@ -17,36 +18,24 @@ class EmbuPartsController < ApplicationController
 
   def create
     @embu_part = EmbuPart.new(embu_part_params)
-
-    respond_to do |format|
-      if @embu_part.save
-        format.html { redirect_to @embu_part, notice: 'Embu part was successfully created.' }
-        format.json { render :show, status: :created, location: @embu_part }
-      else
-        format.html { render :new }
-        format.json { render json: @embu_part.errors, status: :unprocessable_entity }
-      end
+    if @embu_part.save
+      redirect_to @embu_part, notice: 'Embu part was successfully created.'
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @embu_part.update(embu_part_params)
-        format.html { redirect_to @embu_part, notice: 'Embu part was successfully updated.' }
-        format.json { render :show, status: :ok, location: @embu_part }
-      else
-        format.html { render :edit }
-        format.json { render json: @embu_part.errors, status: :unprocessable_entity }
-      end
+    if @embu_part.update(embu_part_params)
+      redirect_to @embu_part, notice: 'Embu part was successfully updated.'
+    else
+      render :edit
     end
   end
 
   def destroy
     @embu_part.destroy
-    respond_to do |format|
-      format.html { redirect_to embu_parts_url, notice: 'Embu part was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to embu_parts_url, notice: 'Embu part was successfully destroyed.'
   end
 
   private

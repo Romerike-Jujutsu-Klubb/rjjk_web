@@ -6,8 +6,8 @@ class InstructionReminder
         .where("start_on < (:current_date::date + interval '3 months')", current_date: Date.current)
         .where('end_on > :current_date::date', current_date: Date.current)
         .order(:end_on).to_a
-    missing_chief_instructions =
-        semesters.map(&:group_semesters).flatten.reject(&:chief_instructor_id)
+    missing_chief_instructions = semesters.map(&:group_semesters).flatten.reject(&:chief_instructor_id)
+    missing_chief_instructions.reject! { |gs| gs.group.group_schedules.empty? }
     missing_instructions = semesters.map(&:group_semesters).flatten.map do |gs|
       group_schedules = gs.group.group_schedules.sort_by(&:weekday)
       group_schedules_without_instructor = group_schedules.select do |gsc|

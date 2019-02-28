@@ -1,5 +1,5 @@
 ul
-  li = link_to 'Forsiden', root_path
+  li = link_to 'Forsiden', user? ? front_page_path : root_path
   li = link_to 'Nyheter', controller: :news
 
 - if user?

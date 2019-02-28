@@ -4,7 +4,7 @@ class InfoController < ApplicationController
   before_action :admin_required, except: %i[show show_content]
 
   def index
-    @information_pages = InformationPage.all
+    @information_pages = InformationPage.order(:parent_id, :position)
   end
 
   def show
@@ -41,11 +41,27 @@ class InfoController < ApplicationController
     render action: :show, layout: false
   end
 
+  def move_up
+    @information_page = InformationPage.find(params[:id])
+    if @information_page.in_list?
+      @information_page.move_higher
+    else
+      @information_page.insert_at
+      @information_page.move_to_bottom
+    end
+    @information_page.save!
+    redirect_to action: :index
+  end
+
   def move_down
     @information_page = InformationPage.find(params[:id])
-    @information_page.move_lower
+    if @information_page.last?
+      @information_page.remove_from_list
+    else
+      @information_page.move_lower
+    end
     @information_page.save!
-    render action: :show
+    redirect_to action: :index
   end
 
   def show_content

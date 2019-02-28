@@ -87,6 +87,7 @@ nb:
       information_page:
         body: Tekst
         hidden: Skjul
+        public: Offentlig
         revised_at: Revidert
         title: Tittel
       instructor_meeting:

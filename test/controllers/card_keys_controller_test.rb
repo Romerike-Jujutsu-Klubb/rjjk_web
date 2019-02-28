@@ -5,6 +5,7 @@ require 'test_helper'
 class CardKeysControllerTest < ActionDispatch::IntegrationTest
   setup do
     @card_key = card_keys(:one)
+    login
   end
 
   test 'should get index' do

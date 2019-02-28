@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-# require 'application_system_test_case'
-require 'feature_test'
+require 'application_system_test_case'
 
-# class InformationPagesTest < ApplicationSystemTestCase
-class InformationPagesTest < FeatureTest
+class InformationPagesTest < ApplicationSystemTestCase
   setup do
     screenshot_section :information_pages
     login :lars

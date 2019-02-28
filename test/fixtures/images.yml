@@ -40,3 +40,39 @@ application_step_kneeing:
   md5_checksum: application_step_kneeing
   user: admin
   approved: true
+front_page_1:
+  id: 238
+  name: Front page 1
+  content_type: image/jpeg
+  content_data: !binary |
+    R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
+  md5_checksum: front_page_1
+  user: admin
+  approved: true
+front_page_2:
+  id: 883
+  name: Front page 2
+  content_type: image/jpeg
+  content_data: !binary |
+    R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
+  md5_checksum: front_page_2
+  user: admin
+  approved: true
+front_page_3:
+  id: 734
+  name: Front page 3
+  content_type: image/jpeg
+  content_data: !binary |
+    R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
+  md5_checksum: front_page_3
+  user: admin
+  approved: true
+front_page_4:
+  id: 277
+  name: Front page 4
+  content_type: image/jpeg
+  content_data: !binary |
+    R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
+  md5_checksum: front_page_4
+  user: admin
+  approved: true

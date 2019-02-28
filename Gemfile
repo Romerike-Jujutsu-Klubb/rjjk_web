@@ -51,7 +51,6 @@ gem 'prawn-grouping'
 gem 'prawn-table'
 gem 'puma'
 gem 'rack-attack'
-gem 'rack-mini-profiler'
 gem 'rails-i18n'
 gem 'rails-observers', github: 'rails/rails-observers'
 gem 'rails_autolink'
@@ -81,6 +80,7 @@ end
 group :development do
   gem 'derailed'
   gem 'listen'
+  gem 'rack-mini-profiler'
 end
 
 group :test do
@@ -88,7 +88,9 @@ group :test do
   gem 'capybara-screenshot-diff' # , path: '~/work/open-source/capybara-screenshot-diff'
   gem 'chunky_png'
   # gem 'coveralls', require: false
-  gem 'minitest-rails-capybara'
+  gem 'minitest-capybara'
+  gem 'minitest-metadata'
+  gem 'minitest-rails'
   gem 'minitest-reporters'
   gem 'mocha', require: 'mocha/setup'
   gem 'rubocop'

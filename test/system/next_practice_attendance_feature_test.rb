@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'feature_test'
+require 'application_system_test_case'
 
-class NextPracticeAttendanceFeatureTest < FeatureTest
+class NextPracticeAttendanceFeatureTest < ApplicationSystemTestCase
   setup { login_and_visit '/' }
 
   def test_announce_attendance

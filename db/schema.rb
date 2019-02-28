@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_13_225638) do
+ActiveRecord::Schema.define(version: 2019_02_03_212454) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -367,6 +367,7 @@ ActiveRecord::Schema.define(version: 2019_01_13_225638) do
     t.boolean 'hidden'
     t.datetime 'revised_at'
     t.datetime 'mailed_at'
+    t.boolean 'public', null: false
   end
 
   create_table 'instructor_meetings', force: :cascade do |t|

@@ -2,15 +2,9 @@
 
 require 'controller_test'
 require 'integration_test'
-require 'feature_test'
+require 'application_system_test_case'
 
 # This file contains differents ways to log in during tests to test wether they interfere with each other.
-
-# Sequence that fails:
-#
-#
-# Sequences that succeed:
-#
 
 class LoginControllerTest < ActionController::TestCase
   test 'controller test login' do
@@ -36,7 +30,7 @@ class LoginIntegrationTest < IntegrationTest
   end
 end
 
-class LoginFeatureTest < FeatureTest
+class LoginSystemTest < ApplicationSystemTestCase
   setup { screenshot_section :session }
 
   def test_login_with_password

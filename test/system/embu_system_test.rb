@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'feature_test'
+require 'application_system_test_case'
 
-class EmbuSystemTest < FeatureTest
+class EmbuSystemTest < ApplicationSystemTestCase
   setup { screenshot_section :embus }
 
   def test_display_my_embu

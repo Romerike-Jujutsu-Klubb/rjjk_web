@@ -35,6 +35,11 @@ class WelcomeController < ApplicationController
     render template: 'info/show'
   end
 
+  # https://web.archive.org/web/20190203085358/https://www.altoros.com/
+  def front_page
+    render layout: false
+  end
+
   private
 
   def graduation_body(graduations)

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class BirthdayCelebration < ApplicationRecord
-  belongs_to :sensor1, class_name: 'Member', required: false
-  belongs_to :sensor2, class_name: 'Member', required: false
-  belongs_to :sensor3, class_name: 'Member', required: false
+  belongs_to :sensor1, class_name: 'Member', optional: true
+  belongs_to :sensor2, class_name: 'Member', optional: true
+  belongs_to :sensor3, class_name: 'Member', optional: true
 
   validates :held_on, presence: true
 

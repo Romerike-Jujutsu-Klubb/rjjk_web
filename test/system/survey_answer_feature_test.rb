@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'feature_test'
+require 'application_system_test_case'
 
-class SurveyAnswerFeatureTest < FeatureTest
+class SurveyAnswerFeatureTest < ApplicationSystemTestCase
   def test_show_form
     id = survey_requests(:sent).id
     visit_with_login "/svar/#{id}", user: :lars

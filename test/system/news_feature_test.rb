@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'feature_test'
+require 'application_system_test_case'
 
-class NewsFeatureTest < FeatureTest
+class NewsFeatureTest < ApplicationSystemTestCase
   setup { screenshot_section :news }
 
   def test_index_public
@@ -11,9 +11,11 @@ class NewsFeatureTest < FeatureTest
     assert_current_path '/news'
     screenshot('index')
     all('.post img')[0].click
+    assert has_css?('.close')
     screenshot('image') || sleep(Capybara::Screenshot.stability_time_limit || 0.5)
-    find('.close').click
-    assert has_no_css?('.close')
+    sleep 1 # FIXME(uwe): Remove sleep!
+    find('#imageModal .modal-header > button.close').click
+    assert has_no_css?('#imageModal .close')
     all('.post img')[1].click
     screenshot('image_2')
   end

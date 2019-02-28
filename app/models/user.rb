@@ -17,25 +17,25 @@ class User < ApplicationRecord
         ((latitude.blank? || longitude.blank? || u.address_changed? || u.postal_code_changed?))
   end
 
-  belongs_to :billing_user, class_name: :User, optional: true
-  belongs_to :contact_user, class_name: :User, optional: true
-  belongs_to :guardian_1, class_name: :User, optional: true
-  belongs_to :guardian_2, class_name: :User, optional: true
+  belongs_to :billing_user, class_name: 'User', optional: true
+  belongs_to :contact_user, class_name: 'User', optional: true
+  belongs_to :guardian_1, class_name: 'User', optional: true
+  belongs_to :guardian_2, class_name: 'User', optional: true
 
   has_one :card_key, dependent: :nullify
   has_one :member, dependent: :restrict_with_exception
 
-  has_many :contactees, dependent: :nullify, class_name: :User, foreign_key: :contact_user_id,
+  has_many :contactees, dependent: :nullify, class_name: 'User', foreign_key: :contact_user_id,
       inverse_of: :contact_user
   has_many :embus, dependent: :destroy
   has_many :images, dependent: :destroy
   has_many :news_item_likes, dependent: :destroy
   has_many :news_items, dependent: :destroy, inverse_of: :creator, foreign_key: :created_by
-  has_many :payees, dependent: :nullify, class_name: :User, foreign_key: :billing_user_id,
+  has_many :payees, dependent: :nullify, class_name: 'User', foreign_key: :billing_user_id,
       inverse_of: :billing_user
-  has_many :primary_wards, dependent: :nullify, class_name: :User, foreign_key: :guardian_1_id,
+  has_many :primary_wards, dependent: :nullify, class_name: 'User', foreign_key: :guardian_1_id,
       inverse_of: :guardian_1
-  has_many :secondary_wards, dependent: :nullify, class_name: :User, foreign_key: :guardian_2_id,
+  has_many :secondary_wards, dependent: :nullify, class_name: 'User', foreign_key: :guardian_2_id,
       inverse_of: :guardian_2
   has_many :user_messages, dependent: :destroy
 

@@ -37,7 +37,6 @@ Rails.application.configure do
   config.consider_all_requests_local = false
   config.eager_load = true
   config.force_ssl = true
-  config.i18n.fallbacks = true
   config.log_formatter = ::Logger::Formatter.new
   config.log_level = ENV['RAILS_LOG_LEVEL'] || :info
   config.log_tags = [:request_id]

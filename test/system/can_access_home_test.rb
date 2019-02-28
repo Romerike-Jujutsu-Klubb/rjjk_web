@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'feature_test'
+require 'application_system_test_case'
 
-class CanAccessHomeTest < FeatureTest
+class CanAccessHomeTest < ApplicationSystemTestCase
   setup { screenshot_section :home }
 
   test 'front' do

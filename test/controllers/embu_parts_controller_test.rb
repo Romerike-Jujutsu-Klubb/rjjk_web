@@ -5,6 +5,7 @@ require 'test_helper'
 class EmbuPartsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @embu_part = embu_parts(:one)
+    login
   end
 
   test 'should get index' do

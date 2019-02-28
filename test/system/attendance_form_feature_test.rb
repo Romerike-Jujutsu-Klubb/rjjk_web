@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'feature_test'
+require 'application_system_test_case'
 
-class AttendanceFormFeatureTest < FeatureTest
+class AttendanceFormFeatureTest < ApplicationSystemTestCase
   def test_index
     login_and_visit '/'
     click_menu('Oppmøtelister')
@@ -27,8 +27,10 @@ class AttendanceFormFeatureTest < FeatureTest
     assert_equal ['Uwe Kubosch',
                   'Totalt 1',
                   'Lars Bråten',
-                  'Erik Hansen NKF_mt_two@example.com',
-                  'Hans Eriksen faktura@eriksen.org',
+                  'Erik Hansen
+NKF_mt_two@example.com',
+                  'Hans Eriksen
+faktura@eriksen.org',
                   'Totalt 3', 'Sebastian Kubosch (Permisjon)', 'Totalt 1'],
         all('tr td:first-child').map(&:text).reject(&:blank?)
   end
@@ -38,15 +40,17 @@ class AttendanceFormFeatureTest < FeatureTest
     assert_equal ['Uwe Kubosch',
                   'Totalt 1',
                   'Lars Bråten',
-                  'Erik Hansen NKF_mt_two@example.com',
-                  'Hans Eriksen faktura@eriksen.org',
+                  'Erik Hansen
+NKF_mt_two@example.com',
+                  'Hans Eriksen
+faktura@eriksen.org',
                   'Totalt 3', 'Sebastian Kubosch (Permisjon)', 'Totalt 1'],
         all('tr td:first-child').map(&:text).reject(&:blank?)
 
     uwe_row = find('table:first-of-type tbody tr:first-of-type')
     assert uwe_row
     assert_equal ['Uwe Kubosch', '42', 'svart belte', '', '', 'P', '', ''], # , '1 / 1'],
-        uwe_row.all('td').map(&:text)
+        uwe_row.all('td').map(&:text).map(&:strip)
     assert_difference 'Attendance.count' do
       uwe_row.find('td:nth-of-type(4)').find('a').click
       uwe_row.find('td:nth-of-type(4)').find('a', text: 'X')
@@ -56,13 +60,13 @@ class AttendanceFormFeatureTest < FeatureTest
     lars_row = find('table:first-of-type tbody tr:nth-of-type(5)')
     assert lars_row
     assert_equal ['Lars Bråten', '46', 'brunt belte', '', 'X', '', '', ''], # , '1 / 2'],
-        lars_row.all('td').map(&:text)
+        lars_row.all('td').map(&:text).map(&:strip)
 
     # Mark Lars as present
     new_instructor_row = find('table:first-of-type tbody tr:nth-of-type(2)')
     assert new_instructor_row
     assert_equal ['', '', '', '', '', '', ''],
-        new_instructor_row.all('td').map(&:text)
+        new_instructor_row.all('td').map(&:text).map(&:strip)
     assert_difference 'Attendance.count' do
       new_instructor_row.find('td:nth-of-type(2)').click
       assert_current_path '/attendances/new', ignore_query: true
@@ -74,16 +78,16 @@ class AttendanceFormFeatureTest < FeatureTest
       lars_row = find('table:first-of-type tbody tr:nth-of-type(5)')
       assert lars_row
       assert_equal ['Lars Bråten', '46', 'brunt belte', 'X', 'X', '', '', ''], # , '2 / 3'],
-          lars_row.all('td').map(&:text)
+          lars_row.all('td').map(&:text).map(&:strip)
       lars_row.find('td:nth-of-type(4)').find('a', text: 'X')
     end
 
     assert_difference 'TrialAttendance.count' do
       erik_row = find('table:first-of-type tbody tr:nth-of-type(6)')
       assert erik_row
-      assert_equal ['Erik Hansen NKF_mt_two@example.com', '7',
+      assert_equal(['Erik Hansen NKF_mt_two@example.com', '7',
                     'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', '', '', ''], # , ''],
-          erik_row.all('td').map(&:text)
+          erik_row.all('td').map(&:text).map(&:strip).map { |s| s.gsub(/\s+/, ' ') })
       assert_difference 'TrialAttendance.count' do
         erik_row.find('td:nth-of-type(4)').find('a').click
         erik_row.find('td:nth-of-type(4)').find('a', text: 'X')
@@ -92,9 +96,9 @@ class AttendanceFormFeatureTest < FeatureTest
     assert_difference 'TrialAttendance.count' do
       hans_row = find('table:first-of-type tbody tr:nth-of-type(7)')
       assert hans_row
-      assert_equal ['Hans Eriksen faktura@eriksen.org', '6',
+      assert_equal(['Hans Eriksen faktura@eriksen.org', '6',
                     'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', 'X', '', ''], # , '2'],
-          hans_row.all('td').map(&:text)
+          hans_row.all('td').map(&:text).map(&:strip).map { |s| s.gsub(/\s+/, ' ') })
       assert_difference 'TrialAttendance.count' do
         hans_row.find('td:nth-of-type(4)').find('a').click
         hans_row.find('td:nth-of-type(4)').find('a', text: 'X')

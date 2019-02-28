@@ -10,14 +10,9 @@
         .float-left.mr-3
           .mt-3 &nbsp;
           = f.check_box :hidden
-        .float-left.mr-3 style=('color:red' if @information_page.revised_at.nil? || @information_page.revised_at < 6.months.ago)
+        .float-left.mr-3
           .mt-3 &nbsp;
-          = f.check_box :revised_at, {checked: false}, 1, nil
-        - if @information_page.revised_at
-          .float-left.mr-3 style=('color:red' if @information_page.revised_at.nil? || @information_page.revised_at < 6.months.ago)
-            .mt-3 &nbsp;
-            = @information_page.revised_at.strftime('%Y-%m-%d %H:%M')
-
+          = f.check_box :public
       = render 'layouts/textarea_input_buttons', images: @images
       = f.text_area :body, class: :expanding, value: @information_page.body && (document = Kramdown::Document.new(@information_page.body, html_to_native: true)) && document.to_kramdown
 
@@ -27,6 +22,10 @@
           a.btn.btn-link.mr-2 href=url_for(@information_page) Vis
         = f.submit 'Lagre', id: :save, class: 'btn btn-primary'
 
+      .float-left style=('color:red' if @information_page.revised_at.nil? || @information_page.revised_at < 6.months.ago) = f.check_box :revised_at, { checked: false }, 1, nil
+      - if @information_page.revised_at
+        span.mx-3 style=('color:red' if @information_page.revised_at.nil? || @information_page.revised_at < 6.months.ago)
+          = @information_page.revised_at.strftime('%Y-%m-%d %H:%M')
   .col
     .card
       .card-header Forhåndsvisning

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'feature_test'
+require 'application_system_test_case'
 
-class InstructionFeatureTest < FeatureTest
+class InstructionFeatureTest < ApplicationSystemTestCase
   setup { screenshot_section :instruction }
 
   def test_index

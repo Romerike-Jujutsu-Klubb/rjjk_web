@@ -5,6 +5,7 @@ require 'application_system_test_case'
 class EmbuPartsTest < ApplicationSystemTestCase
   setup do
     @embu_part = embu_parts(:one)
+    login
   end
 
   test 'visiting the index' do
@@ -12,7 +13,7 @@ class EmbuPartsTest < ApplicationSystemTestCase
     assert_selector 'h1', text: 'Listing embu_parts'
   end
 
-  test 'creating a Embu part' do
+  test 'creating an embu part' do
     visit embu_parts_path
     click_on 'New Embu part'
 
@@ -25,7 +26,7 @@ class EmbuPartsTest < ApplicationSystemTestCase
     click_on 'Back'
   end
 
-  test 'updating a Embu part' do
+  test 'updating an embu part' do
     visit embu_parts_path
     click_on 'Edit', match: :first
 
@@ -38,7 +39,7 @@ class EmbuPartsTest < ApplicationSystemTestCase
     click_on 'Back'
   end
 
-  test 'destroying a Embu part' do
+  test 'destroying an embu part' do
     visit embu_parts_path
     page.accept_confirm do
       click_on 'Destroy', match: :first

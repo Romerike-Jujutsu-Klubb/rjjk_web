@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'feature_test'
+require 'application_system_test_case'
 
-class MemberFeatureTest < FeatureTest
+class MemberFeatureTest < ApplicationSystemTestCase
   setup { screenshot_section :member }
 
   def test_show

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CardKeysController < ApplicationController
+  before_action :admin_required
   before_action :set_card_key, only: %i[show edit update destroy]
 
   def index

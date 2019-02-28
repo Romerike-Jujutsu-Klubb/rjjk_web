@@ -35,30 +35,11 @@ class ApplicationController < ActionController::Base
     return if request.xhr? || _layout([]) != DEFAULT_LAYOUT
 
     unless @information_pages
-      info_query = InformationPage.roots
+      info_query = InformationPage.roots.for_all.order(:position)
       info_query = info_query.where('hidden IS NULL OR hidden = ?', false) unless admin?
       info_query = info_query.where('title <> ?', 'Velkommen') unless user?
       @information_pages = info_query.to_a
     end
-    # unless @image
-    #   3.times do
-    #     Image.uncached do
-    #       image_query = Image
-    #           .select(%w[approved content_type description google_drive_reference height id name public
-    #                      user_id width])
-    #           .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
-    #           .order(Rails.env.test? ? :id : 'RANDOM()')
-    #       image_query = image_query.where('approved = ?', true) unless admin?
-    #       image_query = image_query.where('public = ?', true) unless user?
-    #       @image = image_query.first
-    #     end
-    #     break unless @image
-    #     @image.update_dimensions! unless @image.video?
-    #     break
-    #   rescue => e
-    #     ExceptionNotifier.notify_exception(e)
-    #   end
-    # end
 
     if (m = current_user.try(:member)) && (group = m.groups.find(&:planning))
       @next_practice = group.next_practice

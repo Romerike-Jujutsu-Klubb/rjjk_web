@@ -32,7 +32,7 @@ class InfoControllerTest < ActionController::TestCase
     num_information_pages = InformationPage.count
 
     login(:admin)
-    post :create, params: { information_page: { title: 'an article' } }
+    post :create, params: { information_page: { title: 'an article', public: true } }
 
     assert_response :redirect
     assert_redirected_to action: :show, id: InformationPage.find_by(title: 'an article')

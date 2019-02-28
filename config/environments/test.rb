@@ -5,7 +5,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
   config.action_dispatch.show_exceptions = false
   # config.action_mailer.asset_host = 'https://example.com'
-  config.action_mailer.default_url_options = { protocol: 'https', host: 'example.com' }
+  config.action_mailer.default_url_options = { protocol: 'https', host: 'example.com', port: nil }
   config.action_mailer.delivery_method = :test
   config.action_mailer.perform_caching = false
   config.action_view.raise_on_missing_translations = true
