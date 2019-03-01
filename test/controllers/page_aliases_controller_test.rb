@@ -23,7 +23,7 @@ class PageAliasesControllerTest < ActionController::TestCase
       post :create, params: { page_alias: { new_path: @page_alias.new_path, old_path: '/someother_path' } }
     end
 
-    assert_redirected_to page_alias_path(PageAlias.last)
+    assert_redirected_to page_aliases_path
   end
 
   test 'should show page_alias' do
@@ -40,7 +40,7 @@ class PageAliasesControllerTest < ActionController::TestCase
     put :update, params: { id: @page_alias, page_alias: {
       new_path: @page_alias.new_path, old_path: @page_alias.old_path
     } }
-    assert_redirected_to page_alias_path(@page_alias)
+    assert_redirected_to page_aliases_path
   end
 
   test 'should destroy page_alias' do
