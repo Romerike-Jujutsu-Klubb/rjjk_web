@@ -120,6 +120,9 @@ nb:
         title: Tittel
       next_semester:
         first_session: Første trening neste semester
+      page_alias:
+        new_path: Ny sti
+        old_path: Gammel sti
       practice:
         group_schedule_id: Treningstid
         message: Melding
