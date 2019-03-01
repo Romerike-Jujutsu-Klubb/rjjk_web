@@ -8,7 +8,7 @@ class PageAliasesController < ApplicationController
   end
 
   def show
-    @page_alias = PageAlias.find(params[:id])
+    edit
   end
 
   def new
@@ -17,6 +17,7 @@ class PageAliasesController < ApplicationController
 
   def edit
     @page_alias = PageAlias.find(params[:id])
+    render :edit
   end
 
   def create
