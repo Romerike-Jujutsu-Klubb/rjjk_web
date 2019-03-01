@@ -11,10 +11,11 @@ class NewsFeatureTest < ApplicationSystemTestCase
     assert_current_path '/news'
     screenshot('index')
     all('.post img')[0].click
-    assert has_css?('.close')
-    screenshot('image') || sleep(Capybara::Screenshot.stability_time_limit || 0.5)
+    img_close_selector = '#imageModal .close'
+    assert has_css?(img_close_selector)
+    screenshot('image') || (sleep(0.5) if ENV['TRAVIS'].present?)
     find('#imageModal .modal-header > button.close').click
-    assert_no_css('#imageModal .close')
+    assert_no_css(img_close_selector)
     all('.post img')[1].click
     screenshot('image_2')
   end
