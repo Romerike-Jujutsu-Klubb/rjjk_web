@@ -6,7 +6,7 @@ class ImagesController < ApplicationController
   before_action :admin_required, except: PUBLIC_ACTIONS + PERSONAL_ACTIONS
   before_action :authenticate_user, only: PERSONAL_ACTIONS
 
-  caches_page :show, :inline
+  caches_page :show, :inline, :blurred
   cache_sweeper :image_sweeper, only: %i[update destroy]
 
   def rank_required(image)
@@ -86,6 +86,37 @@ class ImagesController < ApplicationController
     ratio = width.to_f / magick_image.width
     magick_image.resize("#{width}x#{(magick_image.height * ratio).round}")
     send_data(magick_image.to_blob, disposition: 'inline', type: image.content_type, filename: image.name)
+  end
+
+  def blurred
+    image = Image.select('id,name,content_type,user_id,google_drive_reference').find(params[:id])
+    return if rank_required(image)
+
+    if params[:format].nil? || params[:format] != image.format
+      redirect_to width: params[:width], format: image.format
+      return
+    end
+    if image.video?
+      redirect_to ActionController::Base.helpers.asset_path 'video-icon-tran.png'
+      return
+    end
+    if image.content_type == 'application/msword'
+      redirect_to ActionController::Base.helpers.asset_path 'msword-icon.png'
+      return
+    end
+    if image.content_type == 'application/pdf'
+      redirect_to ActionController::Base.helpers.asset_path 'pdficon_large.png'
+      return
+    end
+    content_data_io = image.content_data_io
+    if content_data_io.nil?
+      icon_name = image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
+      redirect_to ActionController::Base.helpers.asset_path icon_name
+      return
+    end
+    magick_image = MiniMagick::Image.read content_data_io
+    img = magick_image.radial_blur 10
+    send_data(img.to_blob, disposition: 'inline', type: image.content_type, filename: image.name)
   end
 
   def new

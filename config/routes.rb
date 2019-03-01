@@ -147,6 +147,7 @@ Rails.application.routes.draw do
   resources :images do
     member do
       get :gallery
+      get :blurred
       get 'inline(/:width).:format', action: :inline, as: :inline
       get 'show(/:width).:format', action: :show, as: :show
     end

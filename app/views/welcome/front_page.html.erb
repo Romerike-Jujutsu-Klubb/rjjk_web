@@ -721,7 +721,7 @@
         <a href="/"><img src="<%= asset_path('rjjk_logo_plus_txt_320.png') %>" style="height:2rem"/></a>
         <div class="clear"></div>
       </li>
-      <% @information_pages.reject(&:hidden).each do |ip| %>
+      <% @information_pages.select(&:public).reject(&:hidden).each do |ip| %>
         <li id="menu-item-<%= ip.id %> %>" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children">
           <a href="<%= url_for ip %>"><%= ip.title %></a>
           <div class="clear"></div>
@@ -785,7 +785,7 @@
           <li>
             <!-- USE  data-repeatbg="true" for Tiled BG 's -->
             <div class="slide-background-image" data-repeatbg="false" data-repeatbg2="false" data-src="<%= image_path fps.image_id %>"
-                 data-srcblur="https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-content/uploads/2017/04/training_blur2.jpg"
+                 data-srcblur="<%= blurred_image_path fps.image_id %>"
                  data-width="1920"
                  data-height="1080"></div>
             <section class="slidercontent">
@@ -861,7 +861,7 @@
 
     <section class="container">
       <div class="row">
-        <article class="span4">
+        <article class="span4" style="margin-bottom: 1rem">
           <div class="widget-1  last divide30 footer_widget_spacer clear"></div>
           <div id="nav_menu-11" class="widget-1  last footer_widget widget_nav_menu">
             <div class="menu-footerwidgetnavigation-container">
@@ -909,28 +909,31 @@
         </article>
 
         <article class="span4">
-          <div class="widget-1  last divide30 footer_widget_spacer clear"></div>
-          <div id="rss-2" class="widget-1  last footer_widget widget_rss"><h4 class="widget-title">
-            <a class="rsswidget" href="https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/blog/feed"><img class="rss-widget-icon" style="border:0" width="14" height="14" src="https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-includes/images/rss.png" alt="RSS"/></a>
-            <a class="rsswidget" href="https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/blog">
-              BLOG ON DIGITAL TRANSFORMATION</a></h4>
+          <div class="widget-1 last divide30 footer_widget_spacer clear"></div>
+          <div id="rss-2" class="widget-1 last footer_widget widget_rss">
+            <h4 class="widget-title"  style="margin-bottom: .5rem">
+<!--              <a class="rsswidget" href="<%#=news_items_path %>">-->
+<!--                <img class="rss-widget-icon" style="border:0" width="14" height="14" src="https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-includes/images/rss.png" alt="RSS"/>-->
+<!--              </a>-->
+              <i class="fa fa-newspaper-o"></i>
+              <a class="rsswidget" href="<%=news_items_path %>">
+                Nyheter
+              </a>
+            </h4>
             <ul>
-              <li>
-                <a class='rsswidget' href='https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/blog/zero-knowledge-proof-improving-privacy-for-a-blockchain/'>A
-                  Zero-Knowledge Proof: Improving Privacy on a Blockchain</a>
-                <span class="rss-date">January 25, 2019</span></li>
-              <li>
-                <a class='rsswidget' href='https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/blog/github-crafts-10-custom-kubernetes-controllers-to-refine-provisioning/'>GitHub
-                  Crafts 10+ Custom Kubernetes Controllers to Refine Provisioning</a>
-                <span class="rss-date">January 17, 2019</span></li>
-              <li>
-                <a class='rsswidget' href='https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/blog/cloud-foundry-advisory-board-meeting-jan-2019-the-multiapps-cf-plugin/'>
-                  Cloud Foundry Advisory Board Meeting, Jan 2019: The MultiApps CF Plugin</a>
-                <span class="rss-date">January 17, 2019</span></li>
+              <% @news_items.each do |news_item| %>
+                <li>
+                  <div class="rss-date" style="float: right"><%= news_item.created_at.to_date %></div>
+                  <a class='rsswidget' href='<%= news_item_path news_item %>'>
+                    <%= news_item.title %>
+                  </a>
+                </li>
+              <% end %>
             </ul>
             <div class="clear"></div>
           </div>
         </article>
+
         <article class="span4 last">
           <div class="widget-1  first divide30 footer_widget_spacer clear"></div>
           <div id="nav_menu-17" class="widget-1  first footer_widget widget_nav_menu">
@@ -947,7 +950,7 @@
           </div>
           <div class="widget-2  last divide30 footer_widget_spacer clear"></div>
           <div id="text-3" class="widget-2  last footer_widget widget_text">
-            <div class="textwidget">
+            <div class="textwidget" style="text-align: center">
               <a href="<%= information_page_path(6) %>"><img alt="RJJK kart" src="<%= asset_path 'kart.png'%>" width="332"/></a>
             </div>
             <div class="clear"></div>

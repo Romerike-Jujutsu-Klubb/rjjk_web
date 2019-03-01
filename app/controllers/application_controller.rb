@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     return if request.xhr? || _layout([]) != DEFAULT_LAYOUT
 
     unless @information_pages
-      info_query = InformationPage.roots.for_all.order(:position)
+      info_query = InformationPage.roots.order(:position)
       info_query = info_query.where('hidden IS NULL OR hidden = ?', false) unless admin?
       info_query = info_query.where('title <> ?', 'Velkommen') unless user?
       @information_pages = info_query.to_a
