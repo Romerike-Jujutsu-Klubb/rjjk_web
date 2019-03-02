@@ -58,3 +58,25 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     clear_cookies
   end
 end
+
+# FIXME(uwe): remove when fixed
+# Fix Puma + TimeCop issue https://github.com/puma/puma/issues/1582
+# https://github.com/puma/puma/issues/1582
+# https://gist.github.com/2rba/74d57775ac83ffcb0ff1da5eb5371212
+module CoreExtensions
+  module Puma
+    module Reactor
+      def calculate_sleep
+        if @timeouts.empty?
+          @sleep_for = ::Puma::Reactor::DefaultSleepFor
+        else
+          diff = @timeouts.first.timeout_at.to_f - Time.now.to_f
+          @sleep_for = diff < 0.0 || diff > 60 ? 0 : diff
+        end
+      end
+    end
+  end
+end
+require 'puma/reactor'
+Puma::Reactor.prepend CoreExtensions::Puma::Reactor
+# EMXIF
