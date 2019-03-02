@@ -38,7 +38,7 @@ class WelcomeController < ApplicationController
   # https://web.archive.org/web/20190203085358/https://www.altoros.com/
   def front_page
     @front_page_sections = FrontPageSection.all
-    @news_items = NewsItem.front_page_items
+    @news_items = NewsItem.front_page_items.reject(&:expired?)
     render layout: false
   end
 

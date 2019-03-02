@@ -8,6 +8,7 @@
 /public/icon/*.png
 /public/images/inline/*.*
 /public/images/*/inline/*.*
+/public/images/*/blurred.*
 /public/images/*/inline.*
 /public/images/*/show.*
 /public/members/*/image.*
