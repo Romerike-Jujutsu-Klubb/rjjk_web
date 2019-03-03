@@ -92,7 +92,8 @@ nb:
         public: Publiser
       information_page:
         body: Tekst
-        hidden: Skjul
+        hidden: Skjult
+        icon_class: Ikon
         public: Offentlig
         revised_at: Revidert
         title: Tittel
