@@ -17,4 +17,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.configuration.assets.precompile += %w[print.css]
 Rails.configuration.assets.precompile += %w[serviceworker.js manifest.json]
 Rails.configuration.assets.precompile += %w[font-awesome.css]
-Rails.configuration.assets.precompile += %w[new_front_page/*.css]
+Rails.configuration.assets.precompile += %w[new_front_page/*]

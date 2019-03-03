@@ -2,16 +2,16 @@
 
 @font-face {
   font-family: 'fontello';
-  src: url("/web/20190202220844im_/https://www.altoros.com/wp-content/themes/goodweb/css/type/fontello/fontello.eot");
-  src: url("/web/20190202220844im_/https://www.altoros.com/wp-content/themes/goodweb/css/type/fontello/fontello.eot#iefix") format('embedded-opentype'), url("/web/20190202220844im_/https://www.altoros.com/wp-content/themes/goodweb/css/type/fontello/fontello.woff") format('woff'), url("/web/20190202220844im_/https://www.altoros.com/wp-content/themes/goodweb/css/type/fontello/fontello.ttf") format('truetype'), url("/web/20190202220844im_/https://www.altoros.com/wp-content/themes/goodweb/css/type/fontello/fontello.svg#fontello") format('svg');
+  src: asset-url("new_front_page/fontello.eot");
+  src: asset-url("new_front_page/fontello.eot#iefix") format('embedded-opentype'), asset-url("new_front_page/fontello.woff") format('woff'), asset-url("new_front_page/fontello.ttf") format('truetype'), asset-url("new_front_page/fontello.svg#fontello") format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'fontello-social';
-  src: url("/web/20190202220844im_/https://www.altoros.com/wp-content/themes/goodweb/css/type/fontello/fontello-social.eot");
-  src: url("/web/20190202220844im_/https://www.altoros.com/wp-content/themes/goodweb/css/type/fontello/fontello-social.eot#iefix") format('embedded-opentype'), url("/web/20190202220844im_/https://www.altoros.com/wp-content/themes/goodweb/css/type/fontello/fontello-social.woff") format('woff'), url("/web/20190202220844im_/https://www.altoros.com/wp-content/themes/goodweb/css/type/fontello/fontello-social.ttf") format('truetype'), url("/web/20190202220844im_/https://www.altoros.com/wp-content/themes/goodweb/css/type/fontello/fontello-social.svg#fontello") format('svg');
+  src: asset-url("new_front_page/fontello-social.eot");
+  src: asset-url("new_front_page/fontello-social.eot#iefix") format('embedded-opentype'), asset-url("new_front_page/fontello-social.woff") format('woff'), asset-url("new_front_page/fontello-social.ttf") format('truetype'), asset-url("new_front_page/fontello-social.svg#fontello") format('svg');
   font-weight: normal;
   font-style: normal;
 }
