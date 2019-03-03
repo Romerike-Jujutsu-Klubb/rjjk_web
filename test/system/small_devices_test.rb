@@ -52,11 +52,13 @@ class SmallDevicesTest < ApplicationSystemTestCase
   test 'new front page scroll' do
     screenshot_group :new_front_page_scroll
     visit front_page_path
+    assert_css('#headermenuholder > i')
     assert_css('.fa-chevron-down')
+    screenshot :index, color_distance_limit: 11
     find('.fa-chevron-down').click
-    assert_css('#footer .menu-item a', text: 'MY FIRST ARTICLE', visible: :visible)
-    screenshot :scrolled
-    find('#footer .menu-item a', text: 'MY FIRST ARTICLE').click
+    article_link = find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
+    screenshot :scrolled, area_size_limit: 4, color_distance_limit: 49 # FIXME(uwe): Ignore bottom slider progress bar
+    article_link.click
     assert_css('h1', text: 'My first article')
     screenshot :article
   end
