@@ -558,6 +558,12 @@
     }
   </style>
 
+  <% if Rails.env.test? %>
+    <script>
+        $.fx.off = true;
+    </script>
+  <% end %>
+
   <script>
       jQuery("document").ready(function () {
           jQuery(".form-submit input[type=submit]").each(function () {

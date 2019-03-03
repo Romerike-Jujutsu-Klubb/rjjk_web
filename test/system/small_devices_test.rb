@@ -54,8 +54,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
     visit front_page_path
     assert_css('.fa-chevron-down')
     find('.fa-chevron-down').click
-    sleep 0.5 # Wait for scroll to complete
-    assert_css('#footer .menu-item a', text: 'MY FIRST ARTICLE')
+    assert_css('#footer .menu-item a', text: 'MY FIRST ARTICLE', visible: :visible)
     screenshot :scrolled
     find('#footer .menu-item a', text: 'MY FIRST ARTICLE').click
     assert_css('h1', text: 'My first article')
