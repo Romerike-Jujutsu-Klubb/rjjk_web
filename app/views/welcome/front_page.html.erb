@@ -781,7 +781,7 @@
               <ul id="menu-footerwidgetnavigation" class="menu">
                 <% @information_pages.select(&:public).reject(&:hidden).each do |ip| %>
                   <li id="menu-item-<%= ip.id %>" class="menu-item menu-item-type-post_type menu-item-object-page">
-                    <a href="<%= information_page_path ip %>"><i class="demoicon <%= ip.icon_class || 'fa fa-file-text' %>"></i>
+                    <a href="<%= information_page_path ip %>"><i class="demoicon <%= ip.icon_class || 'fa fa-file-text' %>" style="text-align: center"></i>
                       <%= ip.title %>
                     </a>
                     <div class="clear"></div>

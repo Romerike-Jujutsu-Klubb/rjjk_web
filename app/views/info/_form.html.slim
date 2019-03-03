@@ -6,15 +6,32 @@
       = f.error_messages
 
       .row
-        .col-6 = f.text_field :title
-        .float-left.mr-3
+        .col-5.col-sm-6 = f.text_field :title
+        .float-left
+          = f.hidden_field :icon_class
+          .mt-2 &nbsp;
+          .dropdown
+            button#iconDropdownBtn.btn.btn-secondary.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              i class=@information_page.icon_class
+            .dropdown-menu aria-labelledby="iconDropdownBtn"
+              - @icon_classes.each do |ic|
+                a class="dropdown-item" href="#" class=(:active if ic == @information_page.icon_class)
+                  i> class=ic
+                  = ic
+            javascript:
+              $('#iconDropdownBtn + .dropdown-menu a').on('click', function(e){
+                  var icon_class = $(e.target).find('i').attr('class');
+                  $('#iconDropdownBtn i').attr('class', icon_class);
+                  $('#information_page_icon_class').val(icon_class);
+                  $(e.target).closest('.dropdown-menu').find('a.active').removeClass('active');
+                  $(e.target).closest('.dropdown-menu').find('a i[class="' + icon_class + '"]').closest('a').addClass('active');
+              });
+        .float-left.ml-2.ml-sm-3
           .mt-3 &nbsp;
           = f.check_box :hidden
-        .float-left.mr-3
+        .float-left.ml-2.ml-sm-3
           .mt-3 &nbsp;
           = f.check_box :public
-        .float-left.mr-3
-          = f.text_field :icon_class
       = render 'layouts/textarea_input_buttons', images: @images
       = f.text_area :body, class: :expanding, value: @information_page.body && (document = Kramdown::Document.new(@information_page.body, html_to_native: true)) && document.to_kramdown
 

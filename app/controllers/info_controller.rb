@@ -118,6 +118,16 @@ class InfoController < ApplicationController
 
   def load_images
     @images = Image.published.images.select('id, name, content_type').to_a
+    @icon_classes = [
+      'fa fa-star',
+      'fa fa-picture-o',
+      'fa fa-clipboard',
+      'fa fa-file-text',
+      'fa fa-info',
+      'fa fa-phone',
+    ]
+    @icon_classes |= InformationPage.pluck(:icon_class)
+    @icon_classes.uniq!
   end
 
   def set_revised_at_param
