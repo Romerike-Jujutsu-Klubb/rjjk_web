@@ -1,11 +1,11 @@
 one:
   member: lars
-  endpoint: MyString
-  p256dh: MyString
-  auth: MyString
+  endpoint: end_one
+  p256dh: p256dh_one
+  auth: auth_one
 
 two:
   member: uwe
-  endpoint: MyString
-  p256dh: MyString
-  auth: MyString
+  endpoint: end_two
+  p256dh: p256dh_two
+  auth: auth_two
