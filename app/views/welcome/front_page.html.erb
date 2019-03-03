@@ -697,8 +697,8 @@
             <!-- USE  data-repeatbg="true" for Tiled BG 's -->
             <div class="slide-background-image" data-repeatbg="false" data-repeatbg2="false" data-src="<%= image_path fps.image_id %>"
                  data-srcblur="<%= blurred_image_path fps.image_id %>"
-                 data-width="<%=fps.image.width %>"
-                 data-height="<%=fps.image.height %>"></div>
+                 data-width="<%=fps.image.width || 1920 %>"
+                 data-height="<%=fps.image.height || 1080 %>"></div>
             <section class="slidercontent">
               <h2>
                 <a href="<%= information_page_path fps.information_page_id %>" title="<%= fps.title %>"><%= fps.title %></a>
