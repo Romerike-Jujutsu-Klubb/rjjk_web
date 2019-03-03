@@ -54,11 +54,10 @@ class SmallDevicesTest < ApplicationSystemTestCase
     visit front_page_path
     assert_css('.fa-chevron-down')
     find('.fa-chevron-down').click
-    find('.fa-chevron-down').click
-    find('.fa-chevron-down').click
-    find('.menu-item a', text: 'My first article', wait: 10)
+    assert_css('#footer .menu-item a', text: 'MY FIRST ARTICLE')
     screenshot :scrolled
-    find('.menu-item a', text: 'My first article').click
+    find('#footer .menu-item a', text: 'MY FIRST ARTICLE').click
+    assert_css('h1', text: 'My first article')
     screenshot :article
   end
 end
