@@ -158,12 +158,8 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_destroy_fails_for_existing_front_page_section
-    assert_nothing_raised do
-      Image.find(@first_id)
-    end
-
     assert_raise(ActiveRecord::InvalidForeignKey) do
-      post :destroy, params: { id: @first_id }
+      post :destroy, params: { id: id(:front_page_1) }
     end
   end
 
