@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_28_192440) do
+ActiveRecord::Schema.define(version: 2019_03_02_232511) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -381,6 +381,7 @@ ActiveRecord::Schema.define(version: 2019_02_28_192440) do
     t.datetime 'revised_at'
     t.datetime 'mailed_at'
     t.boolean 'public', null: false
+    t.string 'icon_class'
   end
 
   create_table 'instructor_meetings', force: :cascade do |t|

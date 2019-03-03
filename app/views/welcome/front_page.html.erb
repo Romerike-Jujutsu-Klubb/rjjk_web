@@ -91,97 +91,6 @@
   <link rel="alternate" type="text/xml+oembed" href="https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.altoros.com%2F&#038;format=xml"/>
 
   <style>
-    #fbuilder_wrapper h1 {
-    }
-
-    #fbuilder_wrapper h2 {
-    }
-
-    #fbuilder_wrapper h3 {
-    }
-
-    #fbuilder_wrapper h4 {
-    }
-
-    #fbuilder_wrapper h5 {
-    }
-
-    #fbuilder_wrapper h6 {
-    }
-
-    #fbuilder_wrapper .content-slide {
-    }
-
-    #fbuilder_wrapper a.frb_button {
-    }
-
-    #fbuilder_wrapper .frb_testimonials_name b {
-    }
-
-    #fbuilder_wrapper .frb_testimonials_name span {
-    }
-
-    #fbuilder_wrapper .frb_testimonials_quote {
-    }
-
-    #fbuilder_wrapper .frb_accordion h3 {
-    }
-
-    #fbuilder_wrapper .frb_accordion .ui-accordion-content {
-    }
-
-    #fbuilder_wrapper .frb_tabs ul:first-child li a {
-    }
-
-    #fbuilder_wrapper .frb_tabs-content {
-    }
-
-    #fbuilder_wrapper .frb_alert_text {
-    }
-
-    #fbuilder_wrapper .frb_features h3.frb_features_title,
-    #fbuilder_wrapper a .frb_features h3.frb_features_title {
-    }
-
-    #fbuilder_wrapper .frb_features .frb_features_content,
-    #fbuilder_wrapper a .frb_features .frb_features_content {
-    }
-
-    #fbuilder_wrapper ul.frb_menu_header {
-    }
-
-    #fbuilder_wrapper ul.frb_menu.frb_menu_horizontal-clean li a,
-    #fbuilder_wrapper ul.frb_menu.frb_menu_horizontal-squared li a,
-    #fbuilder_wrapper ul.frb_menu.frb_menu_horizontal-rounded li a {
-    }
-
-    #fbuilder_wrapper ul.frb_menu.frb_menu_horizontal-clean li li a,
-    #fbuilder_wrapper ul.frb_menu.frb_menu_horizontal-squared li li a,
-    #fbuilder_wrapper ul.frb_menu.frb_menu_horizontal-rounded li li a,
-    #fbuilder_wrapper ul.frb_menu li a {
-    }
-
-    #fbuilder_wrapper input.frb_searchinput {
-    }
-
-    #fbuilder_wrapper .frb_image_desc {
-    }
-
-    #fbuilder_wrapper h3.frb_post_title {
-    }
-
-    #fbuilder_wrapper .frb_post_meta,
-    #fbuilder_wrapper .frb_post_meta a {
-    }
-
-    #fbuilder_wrapper .frb_post_content {
-    }
-
-    #fbuilder_wrapper .frb_post a.frb_button {
-    }
-  </style>
-
-  <style>
     .fbuilder_column.fbuilder_column-1-2 {
       width: 48%;
       margin-left: 4%;
@@ -866,42 +775,14 @@
           <div id="nav_menu-11" class="widget-1  last footer_widget widget_nav_menu">
             <div class="menu-footerwidgetnavigation-container">
               <ul id="menu-footerwidgetnavigation" class="menu">
-                <li id="menu-item-2240" class="menu-item menu-item-type-post_type menu-item-object-page">
-                  <a href="<%= information_page_path 19 %>"><i class="demoicon icon-star"></i>
-                    Velkommen
-                  </a>
-                  <div class="clear"></div>
-                </li>
-                <li id="menu-item-2241" class="menu-item menu-item-type-post_type menu-item-object-page">
-                  <a href="<%= information_page_path 3 %>"><i class="demoicon fa fa-picture-o"></i>
-                    Kei Wa Ryu
-                  </a>
-                  <div class="clear"></div>
-                </li>
-                <li id="menu-item-2242" class="menu-item menu-item-type-post_type menu-item-object-page">
-                  <a href="<%= information_page_path 2 %>"><i class="demoicon fa fa-clipboard"></i>
-                    Priser og innmelding
-                  </a>
-                  <div class="clear"></div>
-                </li>
-                <li id="menu-item-2243" class="menu-item menu-item-type-post_type menu-item-object-page">
-                  <a href="<%= information_page_path 21 %>"><i class="demoicon fa fa-file-text"></i>
-                    Drakter og Utstyr
-                  </a>
-                  <div class="clear"></div>
-                </li>
-                <li id="menu-item-14924" class="menu-item menu-item-type-custom menu-item-object-custom">
-                  <a href="<%= information_page_path 16 %>"><i class="demoicon icon-info"></i>
-                    Bursdagsfeiringer
-                  </a>
-                  <div class="clear"></div>
-                </li>
-                <li id="menu-item-2244" class="menu-item menu-item-type-post_type menu-item-object-page">
-                  <a href="<%= information_page_path 6 %>"><i class="demoicon fa fa-phone"></i>
-                    Kontakt oss
-                  </a>
-                  <div class="clear"></div>
-                </li>
+                <% @information_pages.select(&:public).reject(&:hidden).each do |ip| %>
+                  <li id="menu-item-<%= ip.id %>" class="menu-item menu-item-type-post_type menu-item-object-page">
+                    <a href="<%= information_page_path ip %>"><i class="demoicon <%= ip.icon_class || 'fa fa-file-text' %>"></i>
+                      <%= ip.title %>
+                    </a>
+                    <div class="clear"></div>
+                  </li>
+                <% end %>
               </ul>
             </div>
             <div class="clear"></div>

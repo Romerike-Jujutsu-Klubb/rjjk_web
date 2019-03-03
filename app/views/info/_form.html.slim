@@ -13,6 +13,8 @@
         .float-left.mr-3
           .mt-3 &nbsp;
           = f.check_box :public
+        .float-left.mr-3
+          = f.text_field :icon_class
       = render 'layouts/textarea_input_buttons', images: @images
       = f.text_area :body, class: :expanding, value: @information_page.body && (document = Kramdown::Document.new(@information_page.body, html_to_native: true)) && document.to_kramdown
 

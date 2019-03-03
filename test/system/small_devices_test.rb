@@ -45,7 +45,20 @@ class SmallDevicesTest < ApplicationSystemTestCase
     find('#headermenuholder > i').click
     assert_selector '.menubutton', text: 'My first article'
     screenshot :menu
-    find('MENU A', text: 'My first article').click
+    find('menu a', text: 'My first article').click
+    screenshot :article
+  end
+
+  test 'new front page scroll' do
+    screenshot_group :new_front_page_scroll
+    visit front_page_path
+    assert_css('.fa-chevron-down')
+    find('.fa-chevron-down').click
+    find('.fa-chevron-down').click
+    find('.fa-chevron-down').click
+    find('.menu-item a', text: 'My first article', wait: 10)
+    screenshot :scrolled
+    find('.menu-item a', text: 'My first article').click
     screenshot :article
   end
 end
