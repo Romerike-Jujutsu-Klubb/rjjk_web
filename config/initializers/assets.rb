@@ -11,10 +11,9 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.paths << Rails.root.join('node_modules')
 
 # Precompile additional assets.
-# application.js, application.css, and all non-JS/CSS in the app/assets
-# folder are already added.
+# application.js, application.css, and all non-JS/CSS in the app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 Rails.configuration.assets.precompile += %w[print.css]
 Rails.configuration.assets.precompile += %w[serviceworker.js manifest.json]
 Rails.configuration.assets.precompile += %w[font-awesome.css]
-Rails.configuration.assets.precompile += %w[new_front_page/*]
+Rails.configuration.assets.precompile += %w[fontello.scss]
