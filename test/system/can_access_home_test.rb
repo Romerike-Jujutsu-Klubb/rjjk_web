@@ -11,4 +11,13 @@ class CanAccessHomeTest < ApplicationSystemTestCase
     assert_selector 'h1', text: 'Velkommen'
     screenshot :index
   end
+
+  test 'new front' do
+    screenshot_group :new_front
+    visit front_page_path
+    assert_selector 'h2', text: 'Section 1'
+    screenshot :index
+    find('.fa-chevron-down').click
+    screenshot :footer
+  end
 end
