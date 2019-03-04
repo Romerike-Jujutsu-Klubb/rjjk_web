@@ -18,6 +18,7 @@ Rails.application.config.assets.precompile += %w[serviceworker.js manifest.json]
 Rails.application.config.assets.precompile += %w[font-awesome.css]
 Rails.application.config.assets.precompile += %w[fontello.css]
 Rails.application.config.assets.precompile += %w[fontello.scss]
+Rails.application.config.assets.precompile += %w[new_front_page/fontello.scss]
 Rails.application.config.assets.precompile += %w[
   new_front_page/*.css new_front_page/*.scss new_front_page/*.eot new_front_page/*.svg new_front_page/*.ttf
   new_front_page/*.woff
