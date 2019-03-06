@@ -600,12 +600,12 @@
         <div class="single_blurredbg"></div>
         <div class="single_bluroverlay"></div>
       </div>
-      <i class="icon-cancel"></i></div>
+      <i class="fa fa-times fa-2x"></i></div>
   </a>
   <div id="navigation" class="menu-main-menu-container">
     <ul id="menu-main-menu" class="">
       <li class="header-menu-closer visible-phone visible-tablet"><a>
-        <div class="menubutton txt-center"><i class="icon-cancel"></i></div>
+        <div class="menubutton txt-center"><i class="fa fa-times fa-2x"></i></div>
       </a></li>
       <li id="menu-item-15458" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item">
         <a href="/"><img src="<%= asset_path('rjjk_logo_plus_txt_320.png') %>" style="height:2rem"/></a>
@@ -644,7 +644,7 @@
           <div class="single_bluroverlay"></div>
         </div>
 
-        <i class="icon-menu menu-toggler"></i>
+        <i class="fa fa-bars menu-toggler"></i>
 
         <div id="current-menu-txt" style="">Home</div>
         <div class="clear"></div>
@@ -719,6 +719,7 @@
         <div class="cinematic-right cinematic-navbutton"><i class="fa fa-chevron-right fa-3x"></i></div>
         <div class="cinematic-down cinematic-navbutton"><i class="fa fa-chevron-down fa-3x"></i></div>
         <script type="text/javascript">
+            $ = jQuery;
             $(".fa-chevron-down").click(function (e) {
                 e.stopPropagation();
                 $([document.documentElement, document.body]).animate({
