@@ -70,7 +70,7 @@ table.table
         td.text-center
           - if non_paying.size > 0 || non_paying_diff != 0
             a href='#' data-toggle=:popover data-trigger=:hover data-content="<table class='table table-sm mb-0'><tbody>#{non_paying.map{|m| "<tr><td>#{m.name}</td></tr>"}.sort.join("\n")}</tbody></table>" data-html=:true = non_paying.size
-            = non_paying_diff != 0 ? " (#{non_paying_diff > 0 ? '+' : nil}#{non_diff})" : nil
+            = non_paying_diff != 0 ? " (#{non_paying_diff > 0 ? '+' : nil}#{non_paying_diff})" : nil
         td.text-center = members.size
 
 .mb-5 = line_chart member_reports_history_graph_data_path, points: false, height: '24rem', title: 'Antall aktive medlemmer'
