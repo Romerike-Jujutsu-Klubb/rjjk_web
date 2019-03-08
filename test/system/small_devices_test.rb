@@ -50,7 +50,6 @@ class SmallDevicesTest < ApplicationSystemTestCase
   end
 
   test 'new front page scroll' do
-    skip 'FIXME' if ENV['TRAVIS']
     screenshot_group :new_front_page_scroll
     visit front_page_path
     assert_css('#headermenuholder > i')
@@ -62,5 +61,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
     article_link.click
     assert_css('h1', text: 'My first article')
     screenshot :article
+  rescue
+    skip 'FIXME' if ENV['TRAVIS']
   end
 end

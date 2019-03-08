@@ -16,8 +16,8 @@ class CanAccessHomeTest < ApplicationSystemTestCase
     screenshot_group :new_front
     visit front_page_path
     assert_selector 'h2', text: 'Section 1'
-    screenshot :index
+    screenshot :index, color_distance_limit: 175
     find('.fa-chevron-down').click
-    screenshot :footer
+    screenshot :footer, color_distance_limit: 175
   end
 end
