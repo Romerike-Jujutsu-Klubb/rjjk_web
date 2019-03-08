@@ -41,7 +41,8 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
       practice = attendances[0].practice
       non_attendees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:member)
       attendees = attendances.map(&:member) - non_attendees
-      recipients = gs.group.members.order(:joined_on, :id).reject(&:passive?) - non_attendees
+      recipients =
+          gs.group.members.order(:joined_on, :id).reject(&:passive?).reject(&:left?) - non_attendees
       recipients.each do |recipient|
         AttendanceMailer.summary(practice, gs, recipient, attendees, non_attendees)
             .store(recipient, tag: :attendance_summary)
@@ -90,7 +91,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
       new_attendees = new_attendances & attendees
       new_absentees = new_attendances & absentees
       uwe = User.find_by(first_name: 'Uwe', last_name: 'Kubosch')&.member
-      recipients = gs.group.members.order(:joined_on).reject(&:passive?) - absentees
+      recipients = gs.group.members.order(:joined_on).reject(&:passive?).reject(&:left?) - absentees
       recipients.each do |recipient|
         if recipient != uwe
           next if new_attendances.empty?

@@ -149,6 +149,7 @@ class UserTest < ActionMailer::TestCase
     assert_equal [
       ['deletable_user@example.com'],
       ['lars@example.com'],
+      ['leftie@example.com'],
       ['long_user@example.com'],
       ['neuer@example.com'],
       ['neuer@example.com', 'newbie@example.com'],

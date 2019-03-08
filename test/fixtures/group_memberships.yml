@@ -18,3 +18,6 @@ uwe_voksne:
   group: voksne
   member: uwe
 
+leftie_voksne:
+  group: voksne
+  member: leftie

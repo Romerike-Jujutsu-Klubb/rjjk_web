@@ -61,7 +61,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
       [members(:uwe), { { user: :email } => { 'uwe@example.net' => 'uwe@example.com' } }],
     ], c.outgoing_changes)
     assert_equal([Member.last], c.new_members)
-    assert_equal([members(:newbie)], c.orphan_members)
+    assert_equal([members(:leftie), members(:newbie)], c.orphan_members)
     assert_equal([nkf_members(:erik)], c.orphan_nkf_members)
   end
 
@@ -93,7 +93,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
       }],
     ], c.outgoing_changes)
     assert_equal [nkf_members(:erik).member], c.new_members
-    assert_equal([members(:newbie)], c.orphan_members)
+    assert_equal([members(:leftie), members(:newbie)], c.orphan_members)
     assert_equal([nkf_members(:erik)], c.orphan_nkf_members)
   end
 end

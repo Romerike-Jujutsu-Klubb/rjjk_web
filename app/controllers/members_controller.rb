@@ -28,7 +28,7 @@ class MembersController < ApplicationController
   end
 
   def list_inactive
-    @members = Member.where('left_on IS NOT NULL').order('last_name')
+    @members = Member.includes(:user).where('left_on IS NOT NULL').order('users.last_name').to_a
     render :index
   end
 

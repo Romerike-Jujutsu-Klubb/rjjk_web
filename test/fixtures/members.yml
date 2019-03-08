@@ -25,3 +25,11 @@ newbie:
   nkf_fee: true
   payment_problem: false
   user: newbie
+
+leftie:
+  instructor: false
+  joined_on: 2012-05-23
+  left_on: 2013-10-16
+  nkf_fee: true
+  payment_problem: false
+  user: leftie

@@ -105,3 +105,15 @@ neuer:
   verified: true
   birthdate: 1990-05-17
   male: true
+
+leftie:
+  first_name: Leftie
+  last_name: Leftist
+  address: Comi Road 1908
+  postal_code: 2000
+  salted_password: de6db7cdf638e5ba522b9e5728d551315bf750f4 # atest
+  salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
+  email: leftie@example.com
+  verified: true
+  birthdate: 1999-09-19
+  male: true
