@@ -23,14 +23,14 @@
 
   <%#= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%#= csrf_meta_tags %>
-  <%#= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'new_front_page', 'data-turbolinks-track': 'reload' %>
 
   <link rel='dns-prefetch' href='//maps.google.com'/>
   <link rel='dns-prefetch' href='//cdnjs.cloudflare.com'/>
   <link rel='dns-prefetch' href='//fonts.googleapis.com'/>
   <link rel='dns-prefetch' href='//s.w.org'/>
   <link rel="alternate" type="application/rss+xml" title="Altoros &raquo; Home Comments Feed" href="https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/home-2.html/feed"/>
-  <link rel='stylesheet' id='fbuilder_fornt_css-css' href='<%=asset_path 'new_front_page.css'%>' type='text/css' media='all'/>
+  <link rel='stylesheet' id='new_front_page.css' href='<%=asset_path 'new_front_page.css'%>' type='text/css' media='all'/>
 
   <!--[if IE 8]>
   <link rel='stylesheet' id='ie8-style-css'
@@ -43,10 +43,6 @@
         type='text/css' media='all'/>
   <![endif]-->
 
-  <script type='text/javascript' src='<%= asset_path 'jquery_1.12.4.js'%>'></script>
-  <script type='text/javascript' src='<%= asset_path 'jquery-migrate.min.js'%>'></script>
-  <script type='text/javascript' src='<%= asset_path 'jquery.fancybox.pack.js'%>'></script>
-  <script type='text/javascript' defer src='<%= asset_path 'jquery.themepunch.showbizpro.min.js' %>'></script>
   <link rel='https://api.w.org/' href='https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-json/'/>
   <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/xmlrpc.php?rsd"/>
   <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-includes/wlwmanifest.xml"/>
@@ -616,28 +612,15 @@
   <!-- HEADER -->
   <header id="headerwrapper">
     <div class="header_innerwrapper container">
-
       <div class="header-menu-wrapper txtshadow pull-left bgholderparent" id="headermenuholder" style="width: 113px;">
         <div class="single_blurredbg_holder">
           <div class="single_blurredbg" style="opacity: 1; transform-origin: center center 0px; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -0.00333, 0, 0, 0, 1); width: 680px; height: 379.5px; background-image: url(&quot;https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-content/uploads/2014/05/bg_1200px_4_blur.jpg&quot;); background-position: 0px -1.75px;"></div>
           <div class="single_bluroverlay"></div>
         </div>
-
         <i class="fa fa-bars menu-toggler"></i>
-
         <div id="current-menu-txt" style="">Home</div>
         <div class="clear"></div>
-
       </div>
-
-      <!-- !LOGO -->
-      <a href="https://www.altoros.com">
-        <div id="logo-wrapper">
-          <img id="logo" src="https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-content/uploads/2014/06/AltorosLogo_v6_2702.png" alt="">
-        </div>
-      </a><!-- END OF LOGO -->
-
-
       <div class="clear"></div>
     </div>
   </header>
@@ -966,7 +949,6 @@
 <script type='text/javascript' defer src='https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-content/plugins/showbiz/showbiz-plugin/js/jquery.themepunch.plugins.min.js?rev=1.6.3&#038;ver=5.0.1'></script>
 <script type='text/javascript' defer src='https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-content/themes/goodweb/js/bootstrap.min.js?ver=5.0.1'></script>
 <script type='text/javascript' defer src='https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-content/themes/goodweb/js/punchbox/js/jquery.themepunch.punchbox.js?ver=5.0.1'></script>
-<script type='text/javascript' src='https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-content/themes/goodweb/js/jquery.isotope.min.js?ver=5.0.1'></script>
 <script type='text/javascript' defer src='https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-content/themes/goodweb/libs/popup/jquery.magnific-popup.js?ver=5.0.1'></script>
 <script type='text/javascript' defer src='https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-content/themes/goodweb/libs/scrollspy/scrollspy.js?ver=5.0.1'></script>
 <script type='text/javascript' defer src='https://web.archive.org/web/20190203085358cs_/https://www.altoros.com/wp-content/themes/goodweb/libs/scrollspyjquery/scrollspyjquery.js?ver=5.0.1'></script>

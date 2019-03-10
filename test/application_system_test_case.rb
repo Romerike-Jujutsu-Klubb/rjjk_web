@@ -59,6 +59,12 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 end
 
+Capybara::Node::Element.class_eval do
+  def click_at
+    driver.browser.action.move_to(native).click.perform
+  end
+end
+
 # FIXME(uwe): remove when fixed
 # Fix Puma + TimeCop issue https://github.com/puma/puma/issues/1582
 # https://github.com/puma/puma/issues/1582

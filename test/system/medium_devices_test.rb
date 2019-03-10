@@ -2,13 +2,29 @@
 
 require 'application_system_test_case'
 
-class SmallDevicesTest < ApplicationSystemTestCase
-  SMALL_WINDOW_SIZE = [412, 732].freeze
+class MediumDevicesTest < ApplicationSystemTestCase
+  MEDIUM_WINDOW_SIZE = [640, 480].freeze
+
+  Capybara.register_driver :chrome_medium do |app|
+    browser_options = ::Selenium::WebDriver::Chrome::Options.new
+    browser_options.args << '--force-device-scale-factor=1'
+    browser_options.args << '--headless'
+    browser_options.args << '--use-fake-ui-for-media-stream'
+    browser_options.add_emulation(
+        device_metrics: { width: 640, height: 480, pixelRatio: 1, touch: true }, user_agent: <<~UA )
+          Mozilla/5.0 (Linux; Android 6.0.1; Nexus 7 Build/MOB30X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36
+        UA
+    # browser_options.add_emulation( device_name: 'Nexus 7')
+    # browser_options.headless!
+    # browser_options.add_emulation( device_name: 'iPad')
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+  end
+
+  driven_by :chrome_medium
 
   setup do
-    screenshot_section :small_devices
-    Capybara::Screenshot.window_size = SMALL_WINDOW_SIZE
-    Capybara.current_session.current_window.resize_to(*SMALL_WINDOW_SIZE)
+    screenshot_section :medium_devices
+    Capybara::Screenshot.window_size = nil
   end
 
   teardown do
@@ -49,7 +65,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
     visit front_page_path
     assert_css('#headermenuholder > i')
     assert_css('.fa-chevron-down')
-    screenshot :index, color_distance_limit: 11
+    screenshot :index
     find('.fa-chevron-down').click
     article_link = find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
     screenshot :scrolled, area_size_limit: 4, color_distance_limit: 49 # FIXME(uwe): Ignore bottom slider progress bar

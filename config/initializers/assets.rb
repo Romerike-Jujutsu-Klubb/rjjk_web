@@ -15,8 +15,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 Rails.application.config.assets.precompile += %w[print.css]
 Rails.application.config.assets.precompile += %w[serviceworker.js manifest.json]
-Rails.application.config.assets.precompile += %w[new_front_page.css]
-Rails.application.config.assets.precompile += %w[jquery.themepunch.showbizpro.min.js]
-Rails.application.config.assets.precompile += %w[jquery_1.12.4.js]
-Rails.application.config.assets.precompile += %w[jquery-migrate.min.js]
-Rails.application.config.assets.precompile += %w[jquery.fancybox.pack.js]
+Rails.application.config.assets.precompile += %w[new_front_page.css new_front_page.js]
