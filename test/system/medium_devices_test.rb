@@ -4,19 +4,21 @@ require 'application_system_test_case'
 
 class MediumDevicesTest < ApplicationSystemTestCase
   MEDIUM_WINDOW_SIZE = [640, 480].freeze
+  USER_AGENT = <<~UA
+    Mozilla/5.0 (Linux; Android 6.0.1; Nexus 7 Build/MOB30X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36
+  UA
 
   Capybara.register_driver :chrome_medium do |app|
     browser_options = ::Selenium::WebDriver::Chrome::Options.new
-    browser_options.args << '--force-device-scale-factor=1'
-    browser_options.args << '--headless'
-    browser_options.args << '--use-fake-ui-for-media-stream'
+    browser_options.args << '--force-device-scale-factor=1' # FIXME(uwe): Remove with Chrome 74
+    browser_options.args << "--window-size=#{MEDIUM_WINDOW_SIZE.join('x')}" # FIXME(uwe): Remove with Chrome 74
     browser_options.add_emulation(
-        device_metrics: { width: 640, height: 480, pixelRatio: 1, touch: true }, user_agent: <<~UA )
-          Mozilla/5.0 (Linux; Android 6.0.1; Nexus 7 Build/MOB30X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36
-        UA
-    # browser_options.add_emulation( device_name: 'Nexus 7')
-    # browser_options.headless!
-    # browser_options.add_emulation( device_name: 'iPad')
+        # FIXME(uwe): Re-enable with Chrome 74
+        # device_metrics: { width: MEDIUM_WINDOW_SIZE[0], height: MEDIUM_WINDOW_SIZE[1], pixelRatio: 1, touch: true },
+        # EMXIF
+        user_agent: USER_AGENT
+      )
+    browser_options.headless!
     Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
   end
 
@@ -25,6 +27,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
   setup do
     screenshot_section :medium_devices
     Capybara::Screenshot.window_size = nil
+    Capybara.current_session.current_window.resize_to(*MEDIUM_WINDOW_SIZE) # FIXME(uwe): Remove with Chrome 74
   end
 
   teardown do
@@ -35,15 +38,27 @@ class MediumDevicesTest < ApplicationSystemTestCase
     screenshot_group :front_page
     visit root_path
     assert_selector 'h1', text: 'Velkommen'
+    assert_offset '.subnav', :left, -268
+    assert_offset '.main_right', :right, -268
     screenshot :index
-    find('.fa-navicon').click
+
+    find('.fa-navicon').click # Display menu
+    assert_offset '.subnav', :left, 0
     assert_selector 'li a', text: 'My first article'
+    assert_css '#menuShadow'
     screenshot :menu
-    find('.fa-calendar').click_at
+    find('.fa-calendar').click_at # Hide menu
+    assert_offset '.subnav', :left, -268
+    assert_no_css '#menuShadow'
     screenshot :menu_closed
-    find('.fa-calendar').click
+
+    find('#calendarBtn').click # Display calendar sidebar
+    assert_offset '.main_right', :right, 0
+    assert_css '#sidebarShadow'
     screenshot :calendar
-    find('.fa-navicon').click_at
+    find('#sidebarShadow').click # Hide calendar sidebar
+    assert_offset '.main_right', :right, -268
+    assert_no_css '#sidebarShadow'
     screenshot :calendar_closed
   end
 
@@ -53,10 +68,11 @@ class MediumDevicesTest < ApplicationSystemTestCase
     assert_css('#headermenuholder > i')
     screenshot :index, color_distance_limit: 11
     find('#headermenuholder > i').click
-    assert_selector '.menubutton', text: 'My first article'
-    find('.menubutton', text: 'My first article').hover
+    assert_css '.menubutton', text: 'My first article'
+    find('.menubutton', text: 'My first article').hover # FIXME(uwe): Remove with Chrome 74 + mobile emulation
     screenshot :menu
-    find('menu a', text: 'My first article').click
+    find('.menubutton', text: 'My first article').click
+    assert_css 'h1', text: 'My first article'
     screenshot :article
   end
 
@@ -68,11 +84,31 @@ class MediumDevicesTest < ApplicationSystemTestCase
     screenshot :index
     find('.fa-chevron-down').click
     article_link = find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
-    screenshot :scrolled, area_size_limit: 4, color_distance_limit: 49 # FIXME(uwe): Ignore bottom slider progress bar
+    screenshot :scrolled
     article_link.click
     assert_css('h1', text: 'My first article')
     screenshot :article
   rescue
     skip 'FIXME' if ENV['TRAVIS']
+  end
+
+  private
+
+  def assert_offset(selector, side, expected_offset)
+    start = Time.now
+    loop do
+      offset = evaluate_script("$('#{selector}').offset().left")
+      if side == :right
+        window_width = evaluate_script('Math.max(document.documentElement.clientWidth, window.innerWidth || 0)')
+        width = evaluate_script("$('#{selector}').outerWidth()")
+        offset = window_width - offset - width
+      end
+      break if offset == expected_offset
+      if Time.now - start > Capybara.default_max_wait_time
+        raise "Expected #{side} offset of #{selector.inspect} to be #{expected_offset.inspect}, but was #{offset.inspect}"
+      end
+
+      sleep 0.01
+    end
   end
 end
