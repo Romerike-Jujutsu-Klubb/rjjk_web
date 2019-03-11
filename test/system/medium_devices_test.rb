@@ -95,7 +95,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
   private
 
   def assert_offset(selector, side, expected_offset)
-    start = Time.now
+    start = Time.current
     loop do
       offset = evaluate_script("$('#{selector}').offset().left")
       if side == :right
@@ -104,8 +104,8 @@ class MediumDevicesTest < ApplicationSystemTestCase
         offset = window_width - offset - width
       end
       break if offset == expected_offset
-      if Time.now - start > Capybara.default_max_wait_time
-        raise "Expected #{side} offset of #{selector.inspect} to be #{expected_offset.inspect}, but was #{offset.inspect}"
+      if Time.current - start > Capybara.default_max_wait_time
+        raise "Expected #{side} offset of #{selector.inspect} to be #{expected_offset}, but was #{offset}"
       end
 
       sleep 0.01
