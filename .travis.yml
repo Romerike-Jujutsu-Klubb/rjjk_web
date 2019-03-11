@@ -5,11 +5,11 @@ addons:
   chrome: beta # FIXME(uwe): Use "stable" when reaching version 74
   postgresql: "9.6"
 
-#before_install:
-#  - wget "https://chromedriver.storage.googleapis.com/73.0.3683.68/chromedriver_linux64.zip"
-#  - unzip chromedriver_linux64.zip
-#  - rm chromedriver_linux64.zip
-#  - mv chromedriver /home/travis/bin/
+before_install:
+  - wget "https://chromedriver.storage.googleapis.com/73.0.3683.68/chromedriver_linux64.zip"
+  - unzip chromedriver_linux64.zip
+  - rm chromedriver_linux64.zip
+  - mv chromedriver /home/travis/bin/
 
 script:
   - bin/rails db:setup test:full
