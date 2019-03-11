@@ -48,4 +48,5 @@ h1.mb-4 Søkeresultat for "#{@query}"
     = link_to 'nettansvarlig', 'mailto:web@jujutsu.no?subject=[RJJK] Bedre søk på web'
     | .
 - else
-  | Fyll inn søkeboksen oppe til høyre for å søke.
+  | Fyll inn søkeboksen over for å søke.
+  javascript: $('#search-form').collapse('show');

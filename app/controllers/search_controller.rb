@@ -2,9 +2,8 @@
 
 class SearchController < ApplicationController
   def index
-    return unless params[:q]
-
-    @query = params[:q].strip
+    @query = params[:q].presence
+    return unless @query
 
     if admin?
       member_users, @users = User.search(@query).to_a.partition(&:member)
