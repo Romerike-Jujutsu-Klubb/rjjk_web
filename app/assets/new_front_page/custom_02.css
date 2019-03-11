@@ -1,0 +1,203 @@
+/* Highlight Color */
+.sticky a h3.bo-title, .sticky a:visited h3.bo-title {
+    color: #8e3233
+}
+
+a {
+    color: #8e3233 !important
+}
+
+a:hover icon {
+    color: #8e3233 !important
+}
+
+#subfooter a:hover {
+    color: #8e3233
+}
+
+.subfooter-socials:hover {
+    color: #8e3233 !important
+}
+
+.widget_pages ul li a:hover {
+    color: #8e3233 !important
+}
+
+.widget_pages ul li.current_page_item a {
+    color: #8e3233 !important
+}
+
+.widget_nav_menu ul li a:hover {
+    color: #8e3233 !important
+}
+
+.widget_nav_menu ul li.current_page_item a {
+    color: #8e3233 !important
+}
+
+.widget_archive ul li a:hover, .widget_categories ul li a:hover, .widget_meta ul li a:hover, .widget_recent_entries ul li a:hover {
+    color: #8e3233 !important
+}
+
+.tagcloud a:hover {
+    color: #8e3233;
+    border: 1px solid #8e3233
+}
+
+menu #navigation ul li:hover > a .menubutton,
+menu #navigation ul li.active > a .menubutton {
+    color: #8e3233
+}
+
+menu #navigation ul li.hassubmenu:hover > a:after {
+    color: #8e3233
+}
+
+.single_bluroverlay {
+    background-color: #8e3233
+}
+
+.minibtn, .logged-in-as a, #cancel-comment-reply-link {
+    color: #8e3233 !important;
+    border: 1px solid #8e3233 !important
+}
+
+.glassbtn input[type="submit"] {
+    color: #8e3233 !important;
+    border: 1px solid #8e3233 !important
+}
+
+.mediawall-filter:hover,
+.mediawall-filter.selected {
+    color: #8e3233 !important
+}
+
+.teamgroup .centeredlist li a:hover {
+    color: #8e3233 !important
+}
+
+#bo-loadmorebutton:hover {
+    background: #8e3233
+}
+
+.blog-author a:hover,
+.blog-category a:hover,
+.blog-comments:hover,
+.bo-comments:hover,
+.bo-category a:hover,
+.blog-tag a:hover,
+.tagcloud a:hover {
+    color: #8e3233 !important
+}
+
+.sb-nav-goodweb .sb-navigation-left:hover i,
+.sb-nav-goodweb .sb-navigation-right:hover i {
+    color: #8e3233
+}
+
+.accordion-colored .accordion-heading .accordion-toggle,
+.accordion-colored .accordion-heading .accordion-toggle:hover {
+    color: #8e3233 !important
+}
+
+.accordion-glas .accordion-heading .accordion-toggle,
+.accordion-glas .accordion-heading .accordion-toggle:hover {
+    color: #8e3233 !important
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:visited,
+.nav-tabs > li > a:hover {
+    color: #8e3233 !important
+}
+
+.skill-overlay {
+    background: #8e3233
+}
+
+.ptglas.highlight .decoredbutton {
+    background-color: #8e3233 !important
+}
+
+.thecomments .comment-details a:hover {
+    color: #8e3233 !important
+}
+
+.thecomments .comment-details .comment-reply-link span {
+    color: #8e3233 !important
+}
+
+.comment-reply-link:hover .icon-forward {
+    color: #8e3233 !important
+}
+
+#code {
+    background-color: #8e3233
+}
+
+#bo-loadmorebutton:hover {
+    background: #8e3233
+}
+
+.page-navi ul li a:hover {
+    color: #8e3233 !important;
+    border: 1px solid #8e3233 !important;
+}
+
+.page-navi ul li a.current {
+    color: #8e3233 !important;
+    border: 1px solid #8e3233 !important;
+}
+
+.page-navi ul li a.current span {
+    color: #8e3233 !important;
+}
+
+.postlist-title a:hover {
+    color: #8e3233 !important;
+    font-weight: 300 !important
+}
+
+ul#recentcomments li a:hover {
+    color: #8e3233 !important;
+    font-weight: 300 !important
+}
+
+ul#recentcomments li a.url:hover {
+    color: #8e3233 !important;
+    font-weight: 400 !important
+}
+
+.sb-goodweb-skin .showbiz-title a:hover {
+    color: #8e3233 !important;
+}
+
+.mediawall-lightbox a:hover,
+.mediawall-link a:hover {
+    color: #8e3233 !important;
+}
+
+.mediawall-categories a:hover {
+    color: #8e3233 !important;
+}
+
+.search-results h2.section-title a:hover {
+    color: #8e3233 !important;
+}
+
+.skill-overlay {
+    background: #8e3233
+}
+
+.menuontop menu #navigation > ul > li > a:hover > .menubutton, .menuontop menu #navigation > ul > li.active > a > .menubutton {
+    color: #8e3233 !important;
+}
+
+menu .had-logo {
+    display: none;
+}
+
+.glassbtn input[type="submit"] {
+    color: #fff !important
+}
