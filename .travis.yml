@@ -2,7 +2,7 @@ language: ruby
 cache: bundler
 
 addons:
-  chrome: beta # FIXME(uwe): Use "stable" when reaching version 74
+  chrome: stable
   postgresql: "9.6"
 
 before_install:
