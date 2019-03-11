@@ -3,8 +3,6 @@
 require 'controller_test'
 
 class GraduatesControllerTest < ActionController::TestCase
-  fixtures :users, :members, :graduations, :ranks, :graduates
-
   def setup
     @graduate = graduates(:lars_kyu_1)
     @first_id = @graduate.id

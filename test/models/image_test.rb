@@ -3,8 +3,6 @@
 require 'test_helper'
 
 class ImageTest < ActiveSupport::TestCase
-  fixtures :images
-
   def test_create
     login
     Image.create! name: 'new file', content_type: 'image/png', content_data: 'qwerty'

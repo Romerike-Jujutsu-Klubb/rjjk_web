@@ -3,8 +3,6 @@
 require 'test_helper'
 
 class RankTest < ActiveSupport::TestCase
-  fixtures :ranks
-
   def test_minimum_age
     graduation = Graduation.create! group_id: groups(:tiger).id, held_on: Date.parse('2014-06-10'),
                                     group_notification: true

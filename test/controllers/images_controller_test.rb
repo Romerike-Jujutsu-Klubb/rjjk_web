@@ -3,8 +3,6 @@
 require 'controller_test'
 
 class ImagesControllerTest < ActionController::TestCase
-  fixtures :images
-
   def setup
     @first_id = images(:one).id
     login(:admin)

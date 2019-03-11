@@ -3,8 +3,6 @@
 require 'controller_test'
 
 class TrialAttendancesControllerTest < ActionController::TestCase
-  fixtures :group_schedules, :nkf_member_trials
-
   def setup
     login(:admin)
   end

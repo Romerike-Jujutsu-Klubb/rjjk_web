@@ -3,8 +3,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GraduateTest < ActiveSupport::TestCase
-  fixtures :graduates
-
   test 'cannot be destroyed after invitation' do
     g = graduates(:lars_kyu_1)
     g.update! invitation_sent_at: Time.current

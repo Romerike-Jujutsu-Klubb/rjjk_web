@@ -3,8 +3,6 @@
 require 'controller_test'
 
 class MartialArtsControllerTest < ActionController::TestCase
-  fixtures :martial_arts
-
   def setup
     @first_id = martial_arts(:keiwaryu).id
     login(:admin)

@@ -3,8 +3,6 @@
 require 'controller_test'
 
 class InfoControllerTest < ActionController::TestCase
-  fixtures :users, :information_pages
-
   def test_index
     login(:admin)
     get :index

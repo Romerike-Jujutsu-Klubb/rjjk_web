@@ -3,8 +3,6 @@
 require 'controller_test'
 
 class RanksControllerTest < ActionController::TestCase
-  fixtures :ranks
-
   def setup
     @first_id = ranks(:kyu_5).id
     login(:lars)

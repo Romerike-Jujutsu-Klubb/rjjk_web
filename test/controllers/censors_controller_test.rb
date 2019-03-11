@@ -3,8 +3,6 @@
 require 'controller_test'
 
 class CensorsControllerTest < ActionController::TestCase
-  fixtures :users, :censors
-
   def setup
     @first_id = censors(:lars_panda).id
     login :admin

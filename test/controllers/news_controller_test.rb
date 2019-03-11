@@ -3,8 +3,6 @@
 require 'controller_test'
 
 class NewsControllerTest < ActionController::TestCase
-  fixtures :users, :news_items
-
   def test_index
     get :index
     assert_response :success

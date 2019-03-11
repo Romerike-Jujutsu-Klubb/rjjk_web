@@ -3,8 +3,6 @@
 require 'controller_test'
 
 class GraduationsControllerTest < ActionController::TestCase
-  fixtures :users, :martial_arts, :graduations
-
   def setup
     @first_id = graduations(:panda).id
     login(:admin)
