@@ -45,7 +45,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
   end
 
   test 'new front page scroll' do
-    skip 'FIXME' if ENV['TRAVIS']
+    skip 'FIXME' if ENV['TRAVIS'] # FIXME(uwe): Enable when Chrome 74 is stable
     screenshot_group :new_front_page_scroll
     visit front_page_path
     assert_css('#headermenuholder > i')
