@@ -537,9 +537,9 @@ input[type="tel"]:focus, input[type="color"]:focus,
 /******************************
 	-	BUTTONS	-
 ********************************/
-.decoredbutton			{	background-image:url(/web/20190202220911im_/https://www.altoros.com/wp-content/themes/goodweb/images/assets/transparent.png);color:#fff; }
+.decoredbutton			{	background-image:asset-url('transparent.png');color:#fff; }
 .decoredbutton:before	{	border-right:1px solid rgba(255,255,255,0.1);border-left:1px solid rgba(0,0,0,0.08);}
-.decoredbutton:hover	{	background-image:url(/web/20190202220911im_/https://www.altoros.com/wp-content/themes/goodweb/images/assets/white10.png);}
+.decoredbutton:hover	{	background-image:asset-url('white10.png');}
 
 
 

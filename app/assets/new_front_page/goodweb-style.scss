@@ -4308,7 +4308,7 @@ input[type="submit"].fullwidth {
 .btn:hover,
 .decoredbutton:hover {
     outline: none !important;
-    background-image: url(/web/20190202220838im_/https://www.altoros.com/wp-content/themes/goodweb/images/assets/white10.png);
+    background-image: asset-url('white10.png');
 }
 
 .minibtn, .logged-in-as a, #cancel-comment-reply-link {
