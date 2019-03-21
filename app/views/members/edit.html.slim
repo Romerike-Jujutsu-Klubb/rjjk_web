@@ -20,6 +20,7 @@ ul.nav.nav-tabs role="tablist"
   - if @member.nkf_member
     li.nav-item: a.nav-link data-target="#tab_nkf" data-toggle="tab" NKF
   li.nav-item.ml-auto = back_or_link_to 'Tilbake', { action: :index }, class: 'btn btn-link'
+  li.nav-item = link_to 'Sporing', audit_path(@member.class, @member.id), class: 'btn btn-link'
 
 .tab-content
   #tab_user.tab-pane.fade.show.active.pt-3 = render 'users/form', user: @member.user, submit: true

@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   end
   before_action :reject_bots
   before_action :store_current_user_in_thread
+  before_action :set_paper_trail_whodunnit
 
   if defined?(Rack::MiniProfiler) && (Rails.env.beta? || ENV['RACK_MINI_PROFILER'] == 'ENABLED')
     before_action { Rack::MiniProfiler.authorize_request if current_user.try(:admin?) }

@@ -48,6 +48,7 @@ Rails.application.routes.draw do
     end
   end
   resources :attendance_webpushes
+  get 'audit/index/:item_type/:item_id' => 'audit#index', as: :audit
   resources :basic_technique_links
   resources :basic_techniques
   resources :birthday_celebrations do

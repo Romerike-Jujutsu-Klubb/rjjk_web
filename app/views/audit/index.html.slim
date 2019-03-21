@@ -1,0 +1,18 @@
+- @content_width = 1024
+
+h1 Sporing av #{params[:item_type]} #{params[:item_id]}
+
+table.table.table-sm
+  thead
+    tr
+      th Dato/Tid
+      th Hendelse
+      th Hvem
+      th Endring
+  tbody
+    - @versions.each do |v|
+      tr
+        td = v.created_at
+        td = v.event
+        td = User.find_by(id: v.whodunnit) || v.whodunnit
+        td = v.object_changes.except('updated_at')

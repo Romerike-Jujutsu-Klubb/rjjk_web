@@ -7,6 +7,7 @@ class User < ApplicationRecord
   include Rails.application.routes.url_helpers
   include Searching
 
+  has_paper_trail
   acts_as_paranoid
 
   attr_accessor :password, :password_confirmation

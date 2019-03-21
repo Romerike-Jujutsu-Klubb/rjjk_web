@@ -9,6 +9,8 @@ class Member < ApplicationRecord
   SEARCH_FIELDS =
       %i[comment nkf_members.medlemsnummer phone_home phone_work].freeze
 
+  has_paper_trail
+
   belongs_to :user, -> { with_deleted }, inverse_of: :member
 
   has_one :last_member_image, -> { order :created_at }, class_name: :MemberImage
