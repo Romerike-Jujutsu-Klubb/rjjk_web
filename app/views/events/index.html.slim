@@ -1,0 +1,26 @@
+- @content_width = 1024
+
+.float-right
+  = link_to new_event_path, class: 'btn btn-primary'
+    i.fa.fa-plus>
+    | Nytt arrangement
+
+h1 Arrangementsarkiv
+
+table.table.table-striped
+  tr
+    th Hendelse
+    th Start
+    th Slutt
+    th Beskrivelse
+  tr
+  - for event in @events
+    tr
+      td = link_to event.name, event
+      td nowrap="true" = h event.start_at.to_date
+      td nowrap="true" = h event.end_at&.to_date
+      td
+        = link_to 'Endre', edit_event_path(event)
+        = link_to 'Slett', event, data: { confirm: 'Er du sikker på at du vil endre denne hendelsen?' }, method: :delete
+    tr
+      td colspan="4" = h event.description&.html_safe
