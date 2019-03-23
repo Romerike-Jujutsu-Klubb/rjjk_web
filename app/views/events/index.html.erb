@@ -12,18 +12,18 @@
   <tr/>
 
   <% for event in @events %>
-      <tr>
-        <td><%= link_to event.name, event %></td>
-        <td nowrap="true"><%= h event.start_at.to_date %></td>
-        <td nowrap="true"><%= h event.end_at.try(:to_date) %></td>
-        <td>
-          <%= link_to 'Endre', edit_event_path(event) %>
-          <%= link_to 'Slett', event, :data => {:confirm => 'Er du sikker på at du vil endre denne hendelsen?'}, :method => :delete %>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="4"><%= h event.description.try(:html_safe) %></td>
-      </tr>
+    <tr>
+      <td><%= link_to event.name, event %></td>
+      <td nowrap="true"><%= h event.start_at.to_date %></td>
+      <td nowrap="true"><%= h event.end_at.try(:to_date) %></td>
+      <td>
+        <%= link_to 'Endre', edit_event_path(event) %>
+        <%= link_to 'Slett', event, :data => { :confirm => 'Er du sikker på at du vil endre denne hendelsen?' }, :method => :delete %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4"><%= h event.description.try(:html_safe) %></td>
+    </tr>
   <% end %>
 </table>
 
