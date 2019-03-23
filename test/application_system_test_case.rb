@@ -25,6 +25,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   Capybara.register_driver :chrome do |app|
     browser_options = ::Selenium::WebDriver::Chrome::Options.new
     browser_options.args << '--disable-gpu' if Gem.win_platform?
+    browser_options.args << '--force-color-profile=srgb'
     browser_options.args << '--force-device-scale-factor=1'
     browser_options.args << '--headless'
     browser_options.args << '--use-fake-ui-for-media-stream'
