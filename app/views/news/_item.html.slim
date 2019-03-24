@@ -11,7 +11,8 @@
   .contentarea
     .details
       = "Skrevet av #{news_item.creator.name}" if news_item.creator
-      =<> news_item.created_at.strftime '%Y-%m-%d'
+      - if title
+        =<> news_item.created_at.strftime '%Y-%m-%d'
       - if news_item.expire_at && news_item.expire_at < Time.current
         b> Utløpt
         | #{news_item.expire_at.strftime('%F %R')}.

@@ -43,18 +43,7 @@ class ApplicationController < ActionController::Base
       @information_pages = info_query.to_a
     end
 
-    if (m = current_user.try(:member)) && (group = m.groups.find(&:planning))
-      @next_practice = group.next_practice
-      @next_schedule = @next_practice.group_schedule
-      attendances_next_practice = @next_practice.attendances.to_a
-      @your_attendance_next_practice = attendances_next_practice.find { |a| a.member_id == m.id }
-      attendances_next_practice.delete @your_attendance_next_practice
-      @other_attendees = attendances_next_practice.select do |a|
-        [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED]
-            .include? a.status
-      end
-      @other_absentees = attendances_next_practice - @other_attendees
-    end
+    load_next_practice
 
     group_query = Group.active(Date.current).order('to_age, from_age DESC')
     if admin?
@@ -85,6 +74,23 @@ class ApplicationController < ActionController::Base
       end
 
       @layout_events.sort_by!(&:start_at)
+    end
+  end
+
+  def load_next_practice
+    return if @next_practice
+
+    if (m = current_user&.member) && (group = m.groups.find(&:planning))
+      @next_practice = group.next_practice
+      @next_schedule = @next_practice.group_schedule
+      attendances_next_practice = @next_practice.attendances.to_a
+      @your_attendance_next_practice = attendances_next_practice.find { |a| a.member_id == m.id }
+      attendances_next_practice.delete @your_attendance_next_practice
+      @other_attendees = attendances_next_practice.select do |a|
+        [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED]
+            .include? a.status
+      end
+      @other_absentees = attendances_next_practice - @other_attendees
     end
   end
 
