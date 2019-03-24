@@ -12,7 +12,7 @@ p
 
 = textalize @event.description
 
-- if user? || admin?
+- if admin? && @event.persisted?
   .clearfix
   ul.controls
-    li = link_to 'Rediger', {:action => :edit, :id => @event}, :class => :edit
+    li = link_to 'Rediger', {action: :edit, id: @event}, class: :edit

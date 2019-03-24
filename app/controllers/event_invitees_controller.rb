@@ -5,20 +5,10 @@ class EventInviteesController < ApplicationController
 
   def index
     @event_invitees = EventInvitee.order(:name).to_a
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @event_invitees }
-    end
   end
 
   def show
     @event_invitee = EventInvitee.find(params[:id])
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @event_invitee }
-    end
   end
 
   def new
@@ -43,29 +33,18 @@ class EventInviteesController < ApplicationController
 
   def update
     @event_invitee = EventInvitee.find(params[:id])
-
-    respond_to do |format|
-      if @event_invitee.update(params[:event_invitee])
-        format.html do
-          back_or_redirect_to(@event_invitee, notice: 'Event invitee was successfully updated.')
-        end
-        format.json { head :no_content }
-      else
-        load_users
-        format.html { render action: 'edit' }
-        format.json { render json: @event_invitee.errors, status: :unprocessable_entity }
-      end
+    if @event_invitee.update(params[:event_invitee])
+      back_or_redirect_to(@event_invitee, notice: 'Event invitee was successfully updated.')
+    else
+      load_users
+      render action: 'edit'
     end
   end
 
   def destroy
     @event_invitee = EventInvitee.find(params[:id])
     @event_invitee.destroy
-
-    respond_to do |format|
-      format.html { back_or_redirect_to event_invitees_url }
-      format.json { head :no_content }
-    end
+    back_or_redirect_to event_invitees_url
   end
 
   private

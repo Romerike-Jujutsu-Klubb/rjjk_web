@@ -49,6 +49,10 @@ class Event < ApplicationRecord
     end
   end
 
+  def upcoming?
+    (end_at || start_at).to_date >= Date.current
+  end
+
   def ingress
     paragraphs&.first
   end

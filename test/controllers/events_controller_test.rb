@@ -22,7 +22,7 @@ class EventsControllerTest < ActionController::TestCase
       post :create, params: { event: { name: 'Stuff', start_at: '2012-02-18' } }
     end
 
-    assert_redirected_to event_path(Event.last)
+    assert_redirected_to edit_event_path(Event.last)
   end
 
   def test_should_show_event

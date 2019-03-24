@@ -5,22 +5,18 @@
     i.fa.fa-plus>
     | Nytt arrangement
 
-h1 Arrangementsarkiv
+h1 Arrangement
 
-table.table.table-striped
-  tr
-    th Hendelse
-    th Start
-    th Slutt
-    th Beskrivelse
-  tr
-  - for event in @events
-    tr
-      td = link_to event.name, event
-      td nowrap="true" = h event.start_at.to_date
-      td nowrap="true" = h event.end_at&.to_date
-      td
-        = link_to 'Endre', edit_event_path(event)
-        = link_to 'Slett', event, data: { confirm: 'Er du sikker på at du vil endre denne hendelsen?' }, method: :delete
-    tr
-      td colspan="4" = h event.description&.html_safe
+- upcoming_events, past_events = @events.partition(&:upcoming?)
+
+ul#myTab.nav.nav-tabs role="tablist"
+  li.nav-item
+    a#upcoming-tab.nav-link.active data-toggle="tab" data-target="#upcoming" role="tab" aria-controls="upcoming" aria-selected="true" Upcoming
+  li.nav-item
+    a#past-tab.nav-link data-toggle="tab" data-target="#past" role="tab" aria-controls="past" aria-selected="false" Past
+
+#myTabContent.tab-content
+  #upcoming.tab-pane.fade.show.active role="tabpanel" aria-labelledby="upcoming-tab"
+    = render 'table', events: upcoming_events.reverse
+  #past.tab-pane.fade role="tabpanel" aria-labelledby="past-tab"
+    = render 'table', events: past_events

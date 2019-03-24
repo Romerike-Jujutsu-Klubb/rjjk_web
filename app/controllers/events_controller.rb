@@ -11,6 +11,13 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
   end
 
+  def preview
+    @event = Event.new(params[:event])
+    @event.id = 42
+    @event.created_at ||= Time.current
+    render action: :show, layout: false
+  end
+
   def attendance_form
     @event = Event.find(params[:id])
     render layout: 'print'
@@ -31,7 +38,7 @@ class EventsController < ApplicationController
 
     if @event.save
       flash[:notice] = 'Event was successfully created.'
-      redirect_to(@event)
+      redirect_to edit_event_path(@event)
     else
       render action: 'new'
     end

@@ -103,12 +103,14 @@ Rails.application.routes.draw do
     collection do
       get :attendance_form
       get :calendar
+      post :preview
     end
     member do
       get :accept
       get :calendar
       get :decline
       get :invite
+      patch :preview
       get :tentative
     end
   end
