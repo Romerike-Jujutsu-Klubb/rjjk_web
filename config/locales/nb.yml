@@ -172,21 +172,9 @@ nb:
       member: medlem
       practice: Trening
       user: Bruker
-  April: April
-  August: August
   connect: Koble
   create: Opprett
-  December: Desember
-  February: Februar
-  January: Januar
-  June: Juni
-  July: Juli
-  March: Mars
-  May: Mai
   member_created: Nytt medlem opprettet OK.
-  November: November
-  October: Oktober
-  September: September
 
   support:
     array:

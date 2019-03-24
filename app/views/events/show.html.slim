@@ -1,7 +1,7 @@
 - @title = I18n.locale != :nb ? @event.name_en : @event.name
 
-.float-right: a href=url_for(locale: :en)
-  = image_tag('gb.svg', style: 'width: 3rem')
+- if I18n.locale != :en && @event.name_en && @event.description_en
+  .float-right: a href=url_for(locale: :en) = image_tag('gb.svg', style: 'width: 3rem')
 
 h1 = @title
 
