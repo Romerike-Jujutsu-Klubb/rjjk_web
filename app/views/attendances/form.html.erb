@@ -11,7 +11,7 @@
 
 <h1 style="font-family:Arial, Helvetica, sans-serif">
   Oppmøteliste <%= @group.try(:name) %>
-  <%= l Date::MONTHNAMES[@date.mon] %> <%= @date.year %>
+  <%= t('date.month_names')[@date.mon] %> <%= @date.year %>
 </h1>
 
 <% @member_count = 0 %>

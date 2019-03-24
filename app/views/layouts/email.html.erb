@@ -82,17 +82,17 @@
                             <% last_mon = @timestamp.mon %>
                               <% if @email_end_at.nil? || @email_end_at == @timestamp %>
                                   <% if @timestamp.min != 0 || @timestamp.hour != 0 %>
-                                      <%= t(:date)[:day_names][@timestamp.wday]%> <%= @timestamp.mday %>. <%= t Date::MONTHNAMES[last_mon] %> kl. <%= @timestamp.strftime('%H:%M') %>
+                                      <%= t(:date)[:day_names][@timestamp.wday]%> <%= @timestamp.mday %>. <%= t('date.month_names')[last_mon] %> kl. <%= @timestamp.strftime('%H:%M') %>
                                   <% else %>
-                                      <%= t(:date)[:day_names][@timestamp.wday] %> <%= @timestamp.mday %>. <%= t Date::MONTHNAMES[last_mon] %>
+                                      <%= t(:date)[:day_names][@timestamp.wday] %> <%= @timestamp.mday %>. <%= t('date.month_names')[last_mon] %>
                                   <% end %>
                               <% else %>
                                   <% if @email_end_at.to_date == @timestamp.to_date %>
-                                      <%= t(:date)[:day_names][@timestamp.wday]%> <%= @timestamp.mday %>. <%= t Date::MONTHNAMES[last_mon] %><br/>
+                                      <%= t(:date)[:day_names][@timestamp.wday]%> <%= @timestamp.mday %>. <%= t('date.month_names')[last_mon] %><br/>
                                       kl. <%= @timestamp.strftime('%H:%M') %>-<%= @email_end_at.strftime('%H:%M') %>
                                   <% else %>
                                       <% if @timestamp.min == 0 && @timestamp.hour == 0 && @email_end_at.hour == 0 && @email_end_at.min == 0 %>
-                                          <%= @timestamp.mday %>-<%=@email_end_at.mday%>. <%= t Date::MONTHNAMES[last_mon] %>
+                                          <%= @timestamp.mday %>-<%=@email_end_at.mday%>. <%= t('date.month_names')[last_mon] %>
                                       <% else %>
                                           <%= t(:date)[:day_names][@timestamp.wday] %>
                                       <% end %>

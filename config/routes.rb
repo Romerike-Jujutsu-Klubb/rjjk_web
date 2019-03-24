@@ -110,7 +110,9 @@ Rails.application.routes.draw do
       get :calendar
       get :decline
       get :invite
+      get :preview
       patch :preview
+      post :preview
       get :tentative
     end
   end

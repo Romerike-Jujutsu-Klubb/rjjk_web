@@ -13,6 +13,7 @@
 
   #localeTabContent.tab-content
     #nb-content.tab-pane.fade.show.active role="tabpanel" aria-labelledby="nb-tab"
+      input type='hidden' name=:preview_locale value=:nb
       .row
         .col-sm-6
           = f.text_field :name, size: 52, label: 'Tittel'
@@ -26,6 +27,7 @@
             .card-header Forhåndsvisning
             #preview.card-body.overflow-auto style='max-height:50vh'
     #en-content.tab-pane.fade role="tabpanel" aria-labelledby="en-tab"
+      input type='hidden' name=:preview_locale value=:en
       .row
         .col-sm-6
           = f.text_field :name_en, size: 52, label: 'Title'
@@ -45,9 +47,10 @@
       = link_to 'Oppmøteliste', { action: :attendance_form, id: (@event.id if @event.try(:event_invitees).try(:any?)) }, class: 'btn btn-link'
     = f.primary 'Lagre'
 
+- form_id = @event.new_record? ? :new_event : "edit_event_#{@event.id}"
 javascript:
-    preview('form :input', '#preview');
-    preview('form :input', '#preview-en');
+    preview('##{form_id} :input:not(#en-content :input)', '#preview');
+    preview('##{form_id} :input:not(#nb-content :input)', '#preview-en');
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         $($(e.target).data('target')).find('.expanding').expanding();
     });

@@ -7,7 +7,7 @@ form
   table.table
     tbody
       - for group in @groups
-        - options = (0..months).map { |i| ["#{t Date::MONTHNAMES[1 + (7 + i) % 12]} #{2009 + (8 + i) / 12}", url_for(action: :form, year: (start_date + i.months).year, month: (start_date + i.months).month, group_id: group.id)] }.reverse
+        - options = (0..months).map { |i| ["#{t('date.month_names')[1 + (7 + i) % 12]} #{2009 + (8 + i) / 12}", url_for(action: :form, year: (start_date + i.months).year, month: (start_date + i.months).month, group_id: group.id)] }.reverse
         tr
           td: label = group.name
           td = select :group_name, group.name, options, {prompt: 'Velg måned'}, onchange: 'document.location = options[selectedIndex].value', class: 'form-control'

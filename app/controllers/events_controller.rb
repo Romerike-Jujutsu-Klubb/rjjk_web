@@ -12,9 +12,11 @@ class EventsController < ApplicationController
   end
 
   def preview
+    I18n.locale = params[:preview_locale]
     @event = Event.new(params[:event])
     @event.id = 42
     @event.created_at ||= Time.current
+    @event.start_at ||= @event.created_at
     render action: :show, layout: false
   end
 
