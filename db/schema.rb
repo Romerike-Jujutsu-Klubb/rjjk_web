@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_16_131422) do
+ActiveRecord::Schema.define(version: 2019_03_24_185519) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -253,6 +253,8 @@ ActiveRecord::Schema.define(version: 2019_03_16_131422) do
     t.datetime 'created_at'
     t.datetime 'updated_at'
     t.text 'invitees'
+    t.string 'name_en', limit: 80
+    t.text 'description_en'
   end
 
   create_table 'front_page_sections', force: :cascade do |t|
