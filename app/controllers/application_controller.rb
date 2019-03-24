@@ -110,7 +110,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    if (locale_param = params.delete(:locale))
+    if (locale_param = params.delete(:lang))
       session[:locale] = locale_param
     end
     I18n.locale = session[:locale] || request.env['HTTP_ACCEPT_LANGUAGE']&.scan(/^[a-z]{2}/)&.first ||
