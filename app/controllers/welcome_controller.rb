@@ -26,9 +26,9 @@ class WelcomeController < ApplicationController
           @news_items.prepend event_news
         end
       end
-      load_next_practice
-      if @next_practice
-        @news_items << NewsItem.new(publish_at: @next_practice.start_at - 1.day, body: render_to_string(partial: 'layouts/next_practice'))
+      if load_next_practice
+        @news_items << NewsItem.new(publish_at: @next_practice.start_at - 1.day,
+            body: render_to_string(partial: 'layouts/next_practice'))
       end
       @news_items.sort_by! { |n| n.publish_at || n.created_at }.reverse!
       render template: 'news/index'

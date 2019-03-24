@@ -79,19 +79,19 @@ class ApplicationController < ActionController::Base
 
   def load_next_practice
     return if @next_practice
+    return unless (m = current_user&.member) && (group = m.groups.find(&:planning))
 
-    if (m = current_user&.member) && (group = m.groups.find(&:planning))
-      @next_practice = group.next_practice
-      @next_schedule = @next_practice.group_schedule
-      attendances_next_practice = @next_practice.attendances.to_a
-      @your_attendance_next_practice = attendances_next_practice.find { |a| a.member_id == m.id }
-      attendances_next_practice.delete @your_attendance_next_practice
-      @other_attendees = attendances_next_practice.select do |a|
-        [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED]
-            .include? a.status
-      end
-      @other_absentees = attendances_next_practice - @other_attendees
+    @next_practice = group.next_practice
+    @next_schedule = @next_practice.group_schedule
+    attendances_next_practice = @next_practice.attendances.to_a
+    @your_attendance_next_practice = attendances_next_practice.find { |a| a.member_id == m.id }
+    attendances_next_practice.delete @your_attendance_next_practice
+    @other_attendees = attendances_next_practice.select do |a|
+      [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED]
+          .include? a.status
     end
+    @other_absentees = attendances_next_practice - @other_attendees
+    @next_practice
   end
 
   def send_data(*)
@@ -119,8 +119,16 @@ class ApplicationController < ActionController::Base
     if (locale_param = params.delete(:lang))
       session[:locale] = locale_param
     end
-    I18n.locale = session[:locale] || request.env['HTTP_ACCEPT_LANGUAGE']&.scan(/^[a-z]{2}/)&.first ||
-        I18n.default_locale
+    header_locale = request.env['HTTP_ACCEPT_LANGUAGE']&.scan(/^[a-z]{2}/)&.first
+    case header_locale
+    when 'nb', 'en'
+      header_locale = header_locale.to_sym
+    when 'no'
+      header_locale = :nb
+    else
+      header_locale = nil
+    end
+    I18n.locale = session[:locale] || header_locale || I18n.default_locale
   end
 
   def report_exception(ex)
