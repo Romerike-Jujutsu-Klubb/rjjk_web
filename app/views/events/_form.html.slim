@@ -1,20 +1,43 @@
 = bootstrap_form_for(@event) do |f|
   .row
-    .col-sm-6
-      = f.text_field :name, size: 52, label: 'Hendelse'
     .col-sm-3
       = f.text_field :start_at, value: @event.start_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Fra'
     .col-sm-3
       = f.text_field :end_at, value: @event.end_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Til (valgfritt)'
-  .row
-    .col-sm-6
-      .card
-        .card-header Beskrivelse
-        .card-body.p-0 = f.text_area :description, class: 'expanding', rows: 4, style: 'max-height:50vh', wrapper: false
-    .col-sm-6
-      .card
-        .card-header Forhåndsvisning
-        #preview.card-body.overflow-auto style='max-height:50vh'
+
+  ul#localeTab.nav.nav-tabs role="tablist"
+    li.nav-item
+      a#nb-tab.nav-link.active data-toggle="tab" data-target="#nb-content" role="tab" aria-controls="nb-content" aria-selected="true" Norsk
+    li.nav-item
+      a#en-tab.nav-link data-toggle="tab" data-target="#en-content" role="tab" aria-controls="en-content" aria-selected="false" English
+
+  #localeTabContent.tab-content
+    #nb-content.tab-pane.fade.show.active role="tabpanel" aria-labelledby="nb-tab"
+      .row
+        .col-sm-6
+          = f.text_field :name, size: 52, label: 'Tittel'
+      .row
+        .col-sm-6
+          .card
+            .card-header Beskrivelse
+            .card-body.p-0 = f.text_area :description, class: 'expanding', rows: 4, style: 'max-height:50vh', wrapper: false
+        .col-sm-6
+          .card
+            .card-header Forhåndsvisning
+            #preview.card-body.overflow-auto style='max-height:50vh'
+    #en-content.tab-pane.fade role="tabpanel" aria-labelledby="en-tab"
+      .row
+        .col-sm-6
+          = f.text_field :name_en, size: 52, label: 'Title'
+      .row
+        .col-sm-6
+          .card
+            .card-header Description
+            .card-body.p-0 = f.text_area :description_en, class: 'expanding', rows: 4, style: 'max-height:50vh', wrapper: false
+        .col-sm-6
+          .card
+            .card-header Preview
+            #preview-en.card-body.overflow-auto style='max-height:50vh'
 
   .float-right.my-3
     = back_or_link_to 'Tilbake', events_path, class: 'btn btn-link'
@@ -24,3 +47,7 @@
 
 javascript:
     preview('form :input', '#preview');
+    preview('form :input', '#preview-en');
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $($(e.target).data('target')).find('.expanding').expanding();
+    });
