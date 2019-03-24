@@ -1,6 +1,9 @@
-- @title = @event.name
+- @title = I18n.locale != :nb ? @event.name_en : @event.name
 
-h1 = @event.name
+.float-right: a href=url_for(locale: :en)
+  = image_tag('gb.svg', style: 'width: 3rem')
+
+h1 = @title
 
 p
   = @event.start_at.strftime('%Y-%m-%d')
@@ -10,7 +13,7 @@ p
     = @event.end_at.strftime('%Y-%m-%d')
     =< @event.end_at.strftime('%H:%M') if @event.end_at.hour != 0 || @event.end_at.min != 0
 
-= textalize @event.description
+= textalize(I18n.locale != :nb ? @event.description_en : @event.description)
 
 - if admin? && @event.persisted?
   .clearfix

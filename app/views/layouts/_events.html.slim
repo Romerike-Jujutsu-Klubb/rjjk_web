@@ -13,7 +13,7 @@
         h4.mt-3.logo-red style="margin-bottom:-1rem" = last_year
       - if event.start_at.mon != last_mon
         - last_mon = event.start_at.mon
-        h5.mt-3 style="color: #E20916" = t Date::MONTHNAMES[last_mon]
+        h5.mt-3 style="color: #E20916" = I18n.t("date.month_names")[last_mon]
       - if event.start_at != last_start_at || event.end_at != last_end_at
         - last_start_at = event.start_at
         - last_end_at = event.end_at

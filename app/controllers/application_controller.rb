@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   before_action :reject_bots
   before_action :store_current_user_in_thread
   before_action :set_paper_trail_whodunnit
+  before_action :set_locale
 
   if defined?(Rack::MiniProfiler) && (Rails.env.beta? || ENV['RACK_MINI_PROFILER'] == 'ENABLED')
     before_action { Rack::MiniProfiler.authorize_request if current_user.try(:admin?) }
@@ -106,6 +107,14 @@ class ApplicationController < ActionController::Base
     else
       true
     end
+  end
+
+  def set_locale
+    if (locale_param = params.delete(:locale))
+      session[:locale] = locale_param
+    end
+    I18n.locale = session[:locale] || request.env['HTTP_ACCEPT_LANGUAGE']&.scan(/^[a-z]{2}/)&.first ||
+        I18n.default_locale
   end
 
   def report_exception(ex)
