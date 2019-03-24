@@ -146,7 +146,7 @@ Gradering er ..." %>
 
 <% unless @passive_members.empty? %>
     <h2 style="page-break-before:always">Passive
-      medlemmer <%= @group.try(:name) %> <%= l Date::MONTHNAMES[@date.mon] %> <%= @date.year %></h2>
+      medlemmer <%= @group.try(:name) %> <%= t('date.month_names')[@date.mon] %> <%= @date.year %></h2>
 
     <%= render :partial => 'attendance_form_header' %>
     <% for member in @passive_members %>
