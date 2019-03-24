@@ -1,9 +1,11 @@
 - @title = I18n.locale != :nb ? @event.name_en : @event.name
 
 - if I18n.locale != :en && @event.name_en && @event.description_en
-  .float-right: a href=url_for(locale: :en) = image_tag('gb.svg', style: 'width: 3rem')
+  .float-right: a href=url_for(locale: :en) title='Click for English version' data-toggle=:tooltip
+    = image_tag('no.svg', style: 'width: 3rem')
 - elsif I18n.locale != :nb && @event.name && @event.description
-  .float-right: a href=url_for(locale: :nb) = image_tag('no.svg', style: 'width: 3rem')
+  .float-right: a href=url_for(locale: :nb) title='Klikk for Norsk versjon' data-toggle=:tooltip
+    = image_tag('gb.svg', style: 'width: 3rem')
 
 h1 = @title
 
