@@ -1,4 +1,6 @@
-h1 = current_user.name
+h1: a.text-white href=current_user
+  i.fa.fa-user>
+  = current_user.name
 ul
   - if member?
     - if current_user.member.groups.any?(&:planning)

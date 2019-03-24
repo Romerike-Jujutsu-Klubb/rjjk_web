@@ -10,7 +10,7 @@
       - body = event.body
       - if event.start_at.year != last_year
         - last_year = event.start_at.year
-        h4.mt-3 style="color:#E20916;margin-bottom:-1rem" = last_year
+        h4.mt-3.logo-red style="margin-bottom:-1rem" = last_year
       - if event.start_at.mon != last_mon
         - last_mon = event.start_at.mon
         h5.mt-3 style="color: #E20916" = t Date::MONTHNAMES[last_mon]

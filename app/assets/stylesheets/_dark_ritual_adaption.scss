@@ -1,5 +1,11 @@
 $sidebar_width: 268px;
 $right_sidebar_width: 290px;
+$logo_light_blue: #046CB8;
+$logo_red: #E20916;
+
+.logo-red {
+  color: $logo_red !important;
+}
 
 body {
   background-attachment: fixed;
@@ -75,13 +81,56 @@ body:not(.wide) {
   margin-bottom: 1em;
 }
 
-div.main_right {
-  > div.padded > div {
-    margin-bottom: 1em;
+.main {
+  background: asset_url('dark_ritual/bg_shadow_left.png') top left repeat-y, asset_url('dark_ritual/bg_shadow_right.png') top right repeat-y;
+  background-color: #F7F7F7;
+  padding: 0;
+  overflow-x: scroll;
+
+  h1, h2, h3 {
+    @extend .text-body;
+  }
+
+  .img-thumbnail[align=right],.img-thumbnail.float-right {
+    @extend .ml-3;
+  }
+}
+
+.main_right {
+  background-color: #222222;
+  height: 100% !important;
+  max-height: 100vh;
+  overflow-y: scroll;
+  padding: 1rem;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transform: translate($sidebar_width, 0);
+  transition: 0.5s;
+  width: $sidebar_width;
+  z-index: 1000;
+
+  h1, h2, h3 {
+    color: #CCC;
+  }
+
+  > div.padded {
+    padding-top: 0;
+    padding-right: 16px;
+    background-color: #222222;
+
+    > div {
+      margin-bottom: 1em;
+    }
   }
 
   > .row > div {
     max-height: 100vh;
+  }
+
+  img {
+    border: 0;
+    width: 100%;
   }
 
   div.events p {
@@ -112,7 +161,7 @@ div.main_right {
 .post {
   h3 {
     margin-bottom: 0;
-    color: #046CB8;
+    color: $logo_light_blue !important;
   }
   img {
     max-width: 100%;
@@ -120,7 +169,7 @@ div.main_right {
 }
 
 h4 {
-  color: #046CB8;
+  color: $logo_light_blue !important;
 }
 
 ul.controls {
@@ -230,27 +279,6 @@ body:not(.wide) .container-fluid {
   width: inherit
 }
 
-.main_right {
-  background-color: #222222;
-  height: 100% !important;
-  max-height: 100vh;
-  overflow-y: scroll;
-  padding: 1rem;
-  position: fixed;
-  right: 0;
-  top: 0;
-  transform: translate($sidebar_width, 0);
-  transition: 0.5s;
-  width: $sidebar_width;
-  z-index: 1000;
-}
-
-.main_right > div.padded {
-  padding-top: 0;
-  padding-right: 16px;
-  background-color: #222222;
-}
-
 #logo_img {
   position: absolute;
   top: 0;
@@ -266,11 +294,6 @@ body:not(.wide) .container-fluid {
   @media (min-width: 640px) {
     margin-right: -2rem;
   }
-}
-
-.main_right img {
-  border: 0;
-  width: 100%;
 }
 
 @media (min-width: 768px) { // md
@@ -375,11 +398,11 @@ body:not(.wide) .container-fluid {
     .main_right {
       padding-top: $sidebar_width;
       width: 290px;
-    }
 
-    .main_right img {
-      width: $sidebar_width;
-      height: 201px;
+      img {
+        width: $sidebar_width;
+        height: 201px;
+      }
     }
   }
 }
@@ -395,15 +418,4 @@ ul.nav.nav-tabs {
 
 .main_left {
   transition: 0.5s;
-}
-
-.main {
-  background: asset_url('dark_ritual/bg_shadow_left.png') top left repeat-y, asset_url('dark_ritual/bg_shadow_right.png') top right repeat-y;
-  background-color: #F7F7F7;
-  padding: 0;
-  overflow-x: scroll;
-
-  .img-thumbnail[align=right],.img-thumbnail.float-right {
-    @extend .ml-3;
-  }
 }

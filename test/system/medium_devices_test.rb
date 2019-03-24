@@ -68,7 +68,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
     screenshot_group :new_front_page
     visit front_page_path
     assert_css('#headermenuholder > i')
-    screenshot :index, color_distance_limit: 11
+    screenshot :index, area_size_limit: 533
     find('#headermenuholder > i').click
     assert_css '.menubutton', text: 'My first article'
     find('.menubutton', text: 'My first article').hover # FIXME(uwe): Remove with Chrome 74 + mobile emulation
@@ -84,7 +84,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
     visit front_page_path
     assert_css('#headermenuholder > i')
     assert_css('.fa-chevron-down')
-    screenshot :index
+    screenshot :index, area_size_limit: 533
     find('.fa-chevron-down').click
     article_link = find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
     screenshot :scrolled
