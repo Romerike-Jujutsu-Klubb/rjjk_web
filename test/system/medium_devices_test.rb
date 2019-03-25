@@ -10,6 +10,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
 
   Capybara.register_driver :chrome_medium do |app|
     browser_options = ::Selenium::WebDriver::Chrome::Options.new
+    browser_options.args << '--force-color-profile=srgb'
     browser_options.args << '--force-device-scale-factor=1' # FIXME(uwe): Remove with Chrome 74
     browser_options.args << "--window-size=#{MEDIUM_WINDOW_SIZE.join('x')}" # FIXME(uwe): Remove with Chrome 74
     browser_options.add_emulation(
