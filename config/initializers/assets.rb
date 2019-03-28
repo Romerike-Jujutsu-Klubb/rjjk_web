@@ -16,3 +16,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.precompile += %w[print.css]
 Rails.application.config.assets.precompile += %w[serviceworker.js manifest.json]
 Rails.application.config.assets.precompile += %w[new_front_page.css new_front_page.js deferred.js]
+Rails.application.config.assets.precompile += %w[parallax.css]

@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   get 'attendances/plan' # must be after "mitt/oppmote"
   post 'attendances/announce(/:year/:week/:group_schedule_id)/:status(/:member_id)' =>
       'attendances#announce'
-  get 'velkommen' => 'welcome#front_page', as: :front_page
   get 'map' => 'map#index'
   get 'search' => 'search#index'
   post 'send_grid/receive' => 'send_grid#receive'
@@ -18,6 +17,8 @@ Rails.application.routes.draw do
   patch 'svar/:id', controller: :survey_requests, action: :save_answers
   post 'svar/:id', controller: :survey_requests, action: :save_answers
   get 'takk/:id', controller: :survey_requests, action: :thanks
+  get 'velkommen' => 'welcome#front_page', as: :front_page
+  get 'velkommst' => 'welcome#front_parallax', as: :front_parallax
 
   resources :application_steps
   resources :appointments

@@ -1,0 +1,16 @@
+- fps = @front_page_sections[0]
+.w-100.h-100.mh-100 style="overflow:hidden"
+  img src=image_path(fps.image_id) alt=fps.title style="xwidth:100vw;x  object-fit:center" data-srcblur=blurred_image_path(fps.image_id) data-width=(fps.image.width || 1920) data-height=(fps.image.height || 1080)
+
+- @front_page_sections[1..-1].each.with_index do |fps, i|
+  .row
+    .col-6 class=(i.odd? ? 'order-6' : 'order-0') style="height:33vh;overflow-y:hidden"
+      img.w-100 src=image_path(fps.image_id) data-srcblur=blurred_image_path(fps.image_id) data-width=(fps.image.width || 1920) data-height=(fps.image.height || 1080)
+    .col-6 style="height:33vh"
+      h2
+        a href=information_page_path(fps.information_page_id) title=(fps.title) = fps.title
+      p = fps.subtitle
+      a.smoothscroll href=information_page_path(fps.information_page_id) target="_self"
+        button.btn.txtshadow.fullwidth style="color:#ffffff;background-color:#4e89b7;white-space:nowrap!important"
+          = fps.button_text
+          i.fa.fa-chevron-right style="float:right;margin-top:1rem;margin-left:1rem"

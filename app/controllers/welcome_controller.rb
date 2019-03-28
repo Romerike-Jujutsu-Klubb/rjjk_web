@@ -46,6 +46,12 @@ class WelcomeController < ApplicationController
     render layout: false
   end
 
+  def front_parallax
+    @front_page_sections = FrontPageSection.all
+    @news_items = NewsItem.front_page_items.reject(&:expired?)
+    render layout: 'parallax'
+  end
+
   private
 
   def graduation_body(graduations)

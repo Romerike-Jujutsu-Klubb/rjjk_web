@@ -1,0 +1,16 @@
+@import "bootstrap_adaption";
+@import "bootstrap";
+@import "chosen";
+@import "bootstrap-chosen";
+@import "rails_bootstrap_forms";
+@import 'bootstrap-datetimepicker';
+@import 'nprogress';
+@import 'nprogress-bootstrap';
+@import 'font-awesome';
+@import 'fileinput';
+
+.md {
+  table {
+    @extend .table;
+  }
+}

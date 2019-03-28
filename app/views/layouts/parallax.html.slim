@@ -1,0 +1,22 @@
+doctype html
+html lang="nb"
+  head
+    title #{"#{Rails.env.upcase} " unless Rails.env.production?}#{ @layout_title || 'Romerike Jujutsu Klubb'}
+    meta http-equiv="Content-Type" content="text/html;charset=utf-8"
+    meta name="description" content="description"
+    meta name="keywords" content="jujutsu aikijutsu jujitsu jiu jitsu strømmen lørenskog skedsmo lillestrøm romerike kampsport kampkunst selvforsvar trygghet trening trim"
+    meta name="author" content="author"
+    meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    meta http-equiv="x-ua-compatible" content="ie=edge"
+    link rel="manifest" href='/manifest.json'
+
+    - if Rails.env.production?
+      = render 'layouts/google_analytics'
+
+    = stylesheet_link_tag 'parallax', media: 'all', 'data-turbolinks-track': 'reload'
+    = csrf_meta_tags
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+  body class=(:wide if @content_width)
+
+    = yield
