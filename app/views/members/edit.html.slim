@@ -16,6 +16,7 @@ ul.nav.nav-tabs role="tablist"
     li.nav-item: a.nav-link data-target="#tab_depending_users" data-toggle="tab" Relasjoner
   li.nav-item: a.nav-link data-target="#tab_graduations" data-toggle="tab" Graderinger
   li.nav-item: a.nav-link data-target="#tab_duties" data-toggle="tab" Verv
+  li.nav-item: a.nav-link data-target="#tab_surveys" data-toggle="tab" Spørreskjema
   li.nav-item: a.nav-link data-target="#tab_signatures" data-toggle="tab" Signaturer
   - if @member.nkf_member
     li.nav-item: a.nav-link data-target="#tab_nkf" data-toggle="tab" NKF
@@ -33,6 +34,7 @@ ul.nav.nav-tabs role="tablist"
           li = link_to u.name, member_path(u.member, anchor: :tab_contacts_tab)
   #tab_graduations.tab-pane.fade = render 'graduations'
   #tab_duties.tab-pane.fade = render 'duties'
+  #tab_surveys.tab-pane.fade = render 'surveys'
   #tab_signatures.tab-pane.fade = render 'signatures'
   - if @member.nkf_member
     #tab_nkf.tab-pane.fade = render 'nkf_fields'

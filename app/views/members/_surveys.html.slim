@@ -1,0 +1,9 @@
+table.table
+  thead
+    tr
+      th Surveys
+      th Answers
+  tbody
+    - @member.survey_requests.each do |request|
+      tr
+        td = request.survey_answers.map(&:answer).join(', ')
