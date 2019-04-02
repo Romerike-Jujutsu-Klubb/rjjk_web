@@ -1,9 +1,16 @@
 table.table
   thead
     tr
-      th Surveys
+      th Survey
+      th Sent
+      th Reminded
+      th Completeted
       th Answers
   tbody
     - @member.survey_requests.each do |request|
       tr
+        td = link_to request.survey.title, request.survey
+        td = request.sent_at.to_date
+        td = request.reminded_at&.to_date
+        td = request.completed_at&.to_date
         td = request.survey_answers.map(&:answer).join(', ')
