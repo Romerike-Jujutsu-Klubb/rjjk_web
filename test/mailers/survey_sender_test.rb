@@ -73,7 +73,7 @@ class SurveySenderTest < ActionMailer::TestCase
   end
 
   test 'do not send reminders to ex-members' do
-    Member.update_all left_on: 7.days.ago
+    Member.all.each { |m| m.update! left_on: 7.days.ago }
 
     assert_mail_stored(0) do
       assert_difference 'SurveyRequest.count', -1 do
