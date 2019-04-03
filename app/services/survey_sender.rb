@@ -19,7 +19,7 @@ class SurveySender
     logger.info 'Checking surveys!'
     request = nil
     Survey.order(:position).each do |survey|
-      unrequested_member = survey.ready_members.select(&:active?).first
+      unrequested_member = survey.ready_members.first
       request =
           if unrequested_member
             survey.survey_requests.where(member_id: unrequested_member.id).first_or_create!
@@ -33,7 +33,9 @@ class SurveySender
     end
     return unless request
 
-    if request.sent_at.nil?
+    if request.member.left_on
+      request.destroy!
+    elsif request.sent_at.nil?
       SurveyMailer.survey(request).store(request.member, tag: :suvey_request)
       request.update! sent_at: Time.current
     else
