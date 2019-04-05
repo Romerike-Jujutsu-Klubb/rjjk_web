@@ -34,6 +34,17 @@ nb:
       event:
         group_ids: Grupper
         invitees: Inviter
+      event_invitee:
+        address: Adresse
+        comment: Kommentar
+        email: E-post
+        name: Navn
+        organization: Organisasjon
+        payed: Betalt
+        phone: Telefon
+        user_id: Bruker
+        will_attend: Vil delta
+        will_work: Vil hjelpe til
       event_invitee_message:
         body: Melding
         ready_at: Klar til utsending

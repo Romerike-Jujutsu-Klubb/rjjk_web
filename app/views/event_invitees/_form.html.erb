@@ -1,81 +1,31 @@
-<%= form_for(@event_invitee) do |f| %>
-    <% if @event_invitee.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@event_invitee.errors.count, "error") %> prohibited this event_invitee from being
-            saved:</h2>
+<%= bootstrap_form_for(@event_invitee) do |f| %>
+  <div class="field">
+    <%= f.label :hendelse %>:
+    <%= @event_invitee.event.try :name %>
+    <%= f.hidden_field :event_id %>
+  </div>
 
-          <ul>
-            <% @event_invitee.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
+  <% user_link = link_to('Bruker', controller: :users, action: :edit, id: @event_invitee.user_id) if @event_invitee.user_id %>
+  <%= f.select :user_id, [['', nil]] + @users.map { |u| [u.name, u.id] }, { append: user_link }, class: 'chosen-select' %>
 
-    <div class="field">
-      <%= f.label :hendelse %>:
-      <%= @event_invitee.event.try :name %>
-      <%= f.hidden_field :event_id %>
-    </div>
-
+  <% if @event_invitee.user.nil? %>
+    eller
     <fieldset title="Kontaktinformasjon">
-      <legend>Bruker</legend>
-    <div class="field">
-      <%= f.select :user_id, [['', nil]] + @users.map { |u| [u.name, u.id] }, {}, class: 'chosen-select' %>
-      <%=link_to('(bruker)', :controller => :users, :action => :edit, :id => @event_invitee.user_id) if @event_invitee.user_id %>
-    </div>
-      </fieldset>
-    <% if @event_invitee.user.nil? %>
-        eller
+      <legend>Kontaktinformasjon</legend>
+      <%= f.text_field :name %>
+      <%= f.text_field :organization %>
+      <%= f.text_area :address, :rows => 4, :cols => 64 %>
+      <%= f.text_field :email %>
+      <%= f.text_field :phone %>
+    </fieldset>
+  <% end %>
+  <%= f.select :will_attend, [['', nil], ['Ja', true], ['Nei', false]] %>
+  <%= f.select :will_work, [['', nil], ['Ja', true], ['Nei', false]] %>
+  <%= f.text_field :payed %>
+  <%= f.text_area :comment, :rows => 5 %>
 
-        <fieldset title="Kontaktinformasjon">
-          <legend>Kontaktinformasjon</legend>
-
-          <div class="field">
-            <%= f.label :navn %>
-            <br/>
-            <%= f.text_field :name %>
-          </div>
-          <div class="field">
-            <%= f.label :organisasjon %>
-            <br/>
-            <%= f.text_field :organization %>
-          </div>
-          <div class="field">
-            <%= f.label :adresse %>
-            <br/>
-            <%= f.text_area :address, :rows => 4, :cols => 64 %>
-          </div>
-          <div class="field">
-            <%= f.label :"e-post" %>
-            <br/>
-            <%= f.text_field :email %>
-          </div>
-          <div class="field">
-            <%= f.label :telefon %>
-            <br/>
-            <%= f.text_field :phone %>
-          </div>
-        </fieldset>
-    <% end %>
-    <div class="field">
-      <%= f.label 'Vil delta' %>
-      <%= f.select :will_attend, [['', nil], ['Ja', true], ['Nei', false]] %>
-      Vil hjelpe til
-      <%= f.select :will_work, [['', nil], ['Ja', true], ['Nei', false]] %>
-    </div>
-    <div class="field">
-      <%= f.label :betalt %>
-      <br/>
-      <%= f.text_field :payed %>
-    </div>
-    <div class="field">
-      <%= f.label :kommentar %>
-      <br/>
-      <%= f.text_area :comment, :rows => 5 %>
-    </div>
-    <div class="actions">
-      <%= f.submit %>
-      <%= back_or_link_to 'Tilbake', event_invitees_path %>
-    </div>
+  <div class="float-right my-3">
+    <%= back_or_link_to 'Tilbake', event_invitees_path, class: 'btn btn-link' %>
+    <%= f.submit 'Lagre deltaker' %>
+  </div>
 <% end %>

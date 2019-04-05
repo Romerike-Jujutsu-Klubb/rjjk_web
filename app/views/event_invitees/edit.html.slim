@@ -1,0 +1,17 @@
+h1 Arrangementsdeltaker
+
+= render 'form'
+
+- if @event_invitee.event_invitee_messages.any?
+  h2.mt-4 Meldinger
+
+  table.table
+    thead
+      tr
+        th Dato
+        th Melding
+    tbody
+      - @event_invitee.event_invitee_messages.each do |eim|
+        tr
+          td = eim.created_at.to_date
+          td = eim.subject
