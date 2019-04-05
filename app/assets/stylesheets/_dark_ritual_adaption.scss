@@ -156,6 +156,14 @@ body:not(.wide) {
     @extend .bg-white;
     @extend .rounded;
   }
+
+  .next-practice-txt {
+    flex-grow: 1;
+   }
+}
+
+.next-practice-btn {
+  @extend .ml-2;
 }
 
 .post {
@@ -174,7 +182,6 @@ body:not(.wide) {
     }
   }
   .next-practice-btn {
-    @extend .ml-2;
     flex-grow: 1;
    }
 }

@@ -32,8 +32,9 @@ Du kommer.',
         all('td').map(&:text).reject(&:blank?).map(&:strip).map { |s| s.gsub(/\s+/, ' ') })
 
     all('a.btn')[1].click
-    assert has_css?('a.btn', text: 'Kommer du?', count: 3), all('a.btn').map(&:text)
-    assert_equal ['Denne uken', 'Annet', 'Kommer du?', 'Neste uke', 'Kommer du?',
+    assert has_css?('a.btn', text: 'Kommer du?', count: 2), all('a.btn').map(&:text)
+    assert has_css?('a.btn', text: 'Trener du?'), all('a.btn').map(&:text)
+    assert_equal ['Denne uken', 'Annet', 'Trener du?', 'Neste uke', 'Kommer du?',
                   'Kommer du?', 'Oktober', '1', 'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?)
 
@@ -51,6 +52,7 @@ Du kommer.',
     next_button.find('button.dropdown-toggle').click
     assert_equal 'Kommer!
 Kommer!
+Trener!
 Instruere
 Bortreist
 Syk
