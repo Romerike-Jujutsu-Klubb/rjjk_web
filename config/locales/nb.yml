@@ -32,6 +32,7 @@ nb:
         role_id: Rolle
         member_id: Medlem
       event:
+        group_ids: Grupper
         invitees: Inviter
       event_invitee_message:
         body: Melding
