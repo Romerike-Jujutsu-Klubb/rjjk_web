@@ -17,7 +17,9 @@ class EventInvitee < ApplicationRecord
     where("message_type IS NULL OR message_type <> '#{EventMessage::MessageType::INVITATION}'")
   end, dependent: :destroy
 
-  validates :event, :event_id, :name, :email, presence: true
+  validates :event, :event_id, :name, presence: true
+  validates :email, presence: { unless: :phone }
+  validates :phone, presence: { unless: :email }
   validates :user_id, uniqueness: { scope: :event_id, allow_nil: true }
   validates :will_work, inclusion: { in: [nil, false], if: proc { |r| r.will_attend == false } }
 
@@ -35,6 +37,10 @@ class EventInvitee < ApplicationRecord
   end
 
   def email
-    user&.email || super
+    user&.contact_email || super
+  end
+
+  def phone
+    user&.contact_phone || super
   end
 end
