@@ -66,18 +66,6 @@ Rails.application.routes.draw do
     get :decline, on: :member
   end
 
-  controller :login do
-    match 'login/change_password', action: :change_password, via: %i[get post], as: :change_password
-    match 'login/forgot_password', action: :forgot_password, via: %i[get post], as: :forgot_password
-    get 'login/link_message_sent', action: :login_link_message_sent, as: :login_link_message_sent
-    match 'login/password', action: :login_with_password, via: %i[get post], as: :login_password
-    match 'login/signup', via: %i[get post]
-    get 'login/welcome'
-    get 'login', action: :login_link_form, as: :login
-    post 'login', action: :send_login_link, as: :send_login_link
-    get 'logout', action: :logout, as: :logout
-  end
-
   resources :correspondences
   resources :curriculums, path: :pensum, only: :index do
     collection do
@@ -99,7 +87,11 @@ Rails.application.routes.draw do
   resources :embu_parts
   resources :event_invitee_messages
   resources :event_invitees
-  resources :event_messages
+  resources :event_messages do
+    collection do
+      get :template
+    end
+  end
   resources :events do
     collection do
       get :attendance_form
@@ -174,6 +166,19 @@ Rails.application.routes.draw do
     end
   end
   resources :instructor_meetings
+
+  controller :login do
+    match 'login/change_password', action: :change_password, via: %i[get post], as: :change_password
+    match 'login/forgot_password', action: :forgot_password, via: %i[get post], as: :forgot_password
+    get 'login/link_message_sent', action: :login_link_message_sent, as: :login_link_message_sent
+    match 'login/password', action: :login_with_password, via: %i[get post], as: :login_password
+    match 'login/signup', via: %i[get post]
+    get 'login/welcome'
+    get 'login', action: :login_link_form, as: :login
+    post 'login', action: :send_login_link, as: :send_login_link
+    get 'logout', action: :logout, as: :logout
+  end
+
   resources :martial_arts
 
   controller :member_reports do

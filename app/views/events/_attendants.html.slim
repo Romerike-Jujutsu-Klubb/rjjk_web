@@ -29,20 +29,20 @@
             td align="center"
               = {true => 'Ja', false => 'Nei'}[inv.will_attend]
               - if inv.will_attend
-                = detour_to('Bekreft', controller: :event_invitee_messages, \
+                = detour_to('Bekreft', {controller: :event_invitee_messages, \
                               action: inv.signup_confirmation ? :edit : :new, \
                               id: inv.signup_confirmation.try(:id), \
                               event_invitee_message: { \
                                       message_type: EventInviteeMessage::MessageType::SIGNUP_CONFIRMATION, \
                                       event_invitee_id: inv.id, \
-                              }) unless inv.signup_confirmation.try(:ready_at)
-                = detour_to('Avslå', controller: :event_invitee_messages, \
+                              }}, class: 'btn btn-success btn-sm mx-2') unless inv.signup_confirmation.try(:ready_at)
+                = detour_to('Avslå', {controller: :event_invitee_messages, \
                               action: inv.signup_confirmation ? :edit : :new, \
                               id: inv.signup_confirmation.try(:id), \
                               event_invitee_message: { \
                                       message_type: EventInviteeMessage::MessageType::SIGNUP_REJECTION, \
                                       event_invitee_id: inv.id, \
-                              }) unless inv.signup_confirmation.try(:ready_at)
+                              }}, class: 'btn btn-danger btn-sm') unless inv.signup_confirmation.try(:ready_at)
               - elsif inv.will_attend.nil?
                 - unless inv.invitation&.ready_at
                   = link_to('Send invitasjon', with_detour({controller: :event_invitee_messages, \

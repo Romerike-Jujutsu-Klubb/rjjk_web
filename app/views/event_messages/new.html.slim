@@ -1,0 +1,8 @@
+h1 Ny arrangementsmelding
+
+= render 'form'
+
+javascript:
+  $('#event_message_message_type').on('change', function(e) {
+      $.get("#{template_event_messages_path event_id: @event_message.event_id, template: ''}" + $(e.target).val());
+  });

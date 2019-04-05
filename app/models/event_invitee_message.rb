@@ -24,20 +24,10 @@ class EventInviteeMessage < ApplicationRecord
           .html_safe # rubocop: disable Rails/OutputSafety
     elsif message_type == MessageType::SIGNUP_CONFIRMATION
       self.subject ||= "Bekreftelse av påmelding #{event_invitee.event.name}"
-      self.body ||= <<~TEXT
-        Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
-        og kan bekrefte at du har fått plass.
-
-        Deltakeravgiften på kr 800,- kan betales til konto 7035.05.37706.
-        Merk betalingen med "#{event_invitee.event.name}".
-
-        Har du noen spørsmål, så ta kontakt med Svein Robert på medlem@jujutsu.no eller på telefon 975 34 766.
-
-        --
-        Med vennlig hilsen,
-        Uwe Kubosch
-        Romerike Jujutsu Klubb
-      TEXT
+      self.body ||=
+          event_invitee.event.event_messages
+              .find_by(message_type: EventMessage::MessageType::SIGNUP_CONFIRMATION)
+      self.body ||= EventMessage::Templates.SIGNUP_CONFIRMATION(self)
     elsif message_type == MessageType::SIGNUP_REJECTION
       self.subject ||= "Påmelding til #{event_invitee.event.name}"
       self.body ||= <<~TEXT

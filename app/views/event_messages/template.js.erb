@@ -1,0 +1,6 @@
+if ($('#event_message_subject').val() == '') {
+    $('#event_message_subject').val('<%=j @subject %>')
+}
+if ($('#event_message_body').val() == '') {
+    $('#event_message_body').val('<%=j @body %>').change();
+}

@@ -13,8 +13,6 @@ class EventMessagesController < ApplicationController
 
   def new
     @event_message = EventMessage.new(params[:event_message])
-    @event_message.subject ||= @event_message.event.try(:name)
-    @event_message.body ||= @event_message.event.try(:description)
   end
 
   def edit
@@ -43,5 +41,17 @@ class EventMessagesController < ApplicationController
     @event_message = EventMessage.find(params[:id])
     @event_message.destroy
     redirect_to event_messages_url
+  end
+
+  def template
+    event = Event.find(params[:event_id])
+    template_name = params[:template]
+    if EventMessage::Templates.const_defined?(template_name)
+      @subject = EventMessage::Templates.const_get("#{template_name}_SUBJECT")
+      @body = EventMessage::Templates.const_get(template_name)
+    elsif template_name == EventMessage::MessageType::INVITATION
+      @subject = event.name
+      @body = event.description
+    end
   end
 end

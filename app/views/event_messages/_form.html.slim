@@ -1,9 +1,7 @@
 - @content_width = 800
 
 = bootstrap_form_for(@event_message) do |f|
-  = f.static_control :event_id, label: :hendelse do
-    = @event_message.event.try(:name)
-  = f.hidden_field :event_id
+  = f.static_control :event_id, label: :hendelse, value: @event_message.event_id, label: @event_message.event&.name
 
   .row
     .col-sm-6
@@ -18,7 +16,7 @@
 
   = f.text_field :subject, size: 64
   = f.text_area :body, class: :expanding
-  .btn-toolbar.float-right
+  .btn-toolbar.float-right.my-3
     = back_or_link_to 'Tilbake', event_messages_path, class: 'btn btn-link'
     = link_to 'Vis', @event_message if @event_message.id
     = f.primary
