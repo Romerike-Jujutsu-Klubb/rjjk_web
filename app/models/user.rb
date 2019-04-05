@@ -289,7 +289,7 @@ class User < ApplicationRecord
   end
 
   def contact_email
-    contact_users.find(&:email)
+    contact_users.find(&:email).email
   end
 
   def contact_email_was
