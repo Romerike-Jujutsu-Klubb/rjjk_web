@@ -13,9 +13,7 @@ class EventInvitee < ApplicationRecord
       -> { where("message_type = '#{EventInviteeMessage::MessageType::SIGNUP_REJECTION}'") },
       class_name: 'EventInviteeMessage', dependent: :destroy
 
-  has_many :event_invitee_messages, -> do
-    where("message_type IS NULL OR message_type <> '#{EventMessage::MessageType::INVITATION}'")
-  end, dependent: :destroy
+  has_many :event_invitee_messages, dependent: :destroy
 
   validates :event, :event_id, :name, presence: true
   validates :email, presence: { unless: :phone }

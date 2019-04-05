@@ -14,4 +14,4 @@ h1 Arrangementsdeltaker
       - @event_invitee.event_invitee_messages.each do |eim|
         tr
           td = eim.created_at.to_date
-          td = eim.subject
+          td = link_to eim.subject, eim
