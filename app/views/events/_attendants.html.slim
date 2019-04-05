@@ -22,7 +22,9 @@
           tr
             td = detour_to inv.name, edit_event_invitee_path(inv)
             td = inv.organization
-            td = link_to inv.email, "mailto:#{inv.email}?subject=#{@event.name}"
+            td
+              - if inv.email.present?
+                = link_to inv.email, "mailto:#{inv.email}?subject=#{@event.name}"
             td = inv.phone
             td align="center"
               = {true => 'Ja', false => 'Nei'}[inv.will_attend]
