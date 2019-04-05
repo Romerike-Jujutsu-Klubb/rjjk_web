@@ -20,6 +20,15 @@ class Attendance < ApplicationRecord
     [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
   ].freeze
 
+  CURRENT_STATES = [
+    [Status::WILL_ATTEND, 'Kommer!', 'thumbs-up', 'success'],
+    [Status::ATTENDED, 'Trener!', 'thumbs-up', 'success'],
+    [Status::INSTRUCTOR, 'Instruere', 'thumbs-up', 'success'],
+    [Status::HOLIDAY, 'Bortreist', 'hand-o-right', 'warning'],
+    [Status::SICK, 'Syk', 'plus', 'danger'],
+    [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
+  ].freeze
+
   PAST_STATES = [
     [Status::WILL_ATTEND, 'Ubekreftet', 'question', 'warning'],
     [Status::ATTENDED, 'Trente!', 'thumbs-up', 'success'],

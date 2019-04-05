@@ -14,28 +14,32 @@
       p = @next_practice.message
 
     - if @your_attendance_next_practice && Attendance::PRESENCE_STATES.include?(@your_attendance_next_practice.status)
-      = render 'attendances/details_link', practice: @next_practice
-      - unless @other_absentees.empty?
-        => @other_absentees.size
-        ' har meldt fravær.
-      = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT), \
-          class: 'btn btn-secondary btn-sm', title: 'Kan ikke allikevel...', method: :post)
-        i.fa.fa-thumbs-down>
-        | Angre
+      .d-flex
+        .next-practice-txt
+          = render 'attendances/details_link', practice: @next_practice
+          - unless @other_absentees.empty?
+            => @other_absentees.size
+            ' har meldt fravær.
+        .next-practice-btn
+          = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT), \
+              class: 'btn btn-secondary btn-sm', title: 'Kan ikke allikevel...', method: :post)
+            i.fa.fa-thumbs-down>
+            | Angre
     - elsif @your_attendance_next_practice
-      ' Du kommer ikke.
-      = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::WILL_ATTEND), \
-          class: 'btn btn-secondary btn-sm', title: 'Kommer allikevel!', method: :post)
-        i.fa.fa-thumbs-up>
-        ' Kommer allikevel
-      - unless @other_attendees.empty?
-        br
-        => @other_attendees.size
-        ' andre kommer.
-      - unless @other_absentees.empty?
-        br
-        => @other_absentees.size
-        ' har meldt fravær.
+      .d-flex
+        .next-practice-txt
+          ' Du kommer ikke.
+          - unless @other_attendees.empty?
+            => @other_attendees.size
+            ' andre kommer.
+          - unless @other_absentees.empty?
+            => @other_absentees.size
+            ' har meldt fravær.
+        .next-practice-btn
+          = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::WILL_ATTEND), \
+              class: 'btn btn-secondary btn-sm', title: 'Kommer allikevel!', method: :post)
+            i.fa.fa-thumbs-up>
+            ' Kommer allikevel
     - else
       .input-group.input-group-sm
         .input-group-prepend

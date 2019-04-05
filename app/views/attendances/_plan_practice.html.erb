@@ -1,16 +1,19 @@
 <div id="practice_<%= week %>_<%= gs.id %>">
   <%
-     initial_icon = nil
+    initial_icon = nil
      initial_class = 'secondary'
      initial_disabled = nil
      practice_end = Date.commercial(year, week, gs.weekday).at(gs.end_at)
      practice_passed = Time.current > practice_end
-     initial_text = practice_passed ? 'Trente du?' : 'Kommer du?'
+     practice_start = Date.commercial(year, week, gs.weekday).at(gs.start_at)
+     practice_imminent = Time.current > (practice_start - 15.minutes)
+     initial_text = practice_passed ? 'Trente du?' : practice_imminent ? 'Trener du?' : 'Kommer du?'
      link_target = {controller: :attendances,
              action: practice_passed ? :review : :announce, year: year,
              week: week, group_schedule_id: gs.id, status: 'toggle'}
-     if attendance
-       (practice_passed ? Attendance::PAST_STATES : Attendance::STATES).each do |state, link_text, link_icon, link_class|
+    states = (practice_passed ? Attendance::PAST_STATES : practice_imminent ? Attendance::CURRENT_STATES : Attendance::STATES)
+    if attendance
+       states.each do |state, link_text, link_icon, link_class|
          if attendance.status == state
            initial_text = link_text
            initial_icon = link_icon
@@ -31,7 +34,7 @@
     <button id="btn_<%="#{year}_#{week}_#{gs.id}"%>_tgl" type="button" class="<%= 'disabled' if initial_disabled %> btn btn-<%=initial_class%> dropdown-toggle dropdown-toggle-split" <%= 'data-toggle="dropdown"'.html_safe unless initial_disabled %>>
     </button>
     <div class="dropdown-menu dropdown-menu-right">
-      <% (practice_passed ? Attendance::PAST_STATES : Attendance::STATES).each do |state, link_text, link_icon, link_class| %>
+      <% states.each do |state, link_text, link_icon, link_class| %>
           <%= link_to({ controller: :attendances, action: :announce, year: year, week: week, group_schedule_id: gs.id, status: state },
               method: :post, remote: true,
               onclick: "$('#btn_#{year}_#{week}_#{gs.id}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('btn-#{link_class}').html($(this).html()); $(this).closest('.btn-group.show').find('[data-toggle=dropdown]').dropdown('toggle'); $(this).closest('.btn-group').find('[data-toggle=dropdown]').removeClass('btn-info btn-success btn-warning btn-danger').addClass('btn-#{link_class}'); return true",

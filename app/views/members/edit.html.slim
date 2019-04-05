@@ -20,7 +20,6 @@ ul.nav.nav-tabs role="tablist"
   li.nav-item: a.nav-link data-target="#tab_signatures" data-toggle="tab" Signaturer
   - if @member.nkf_member
     li.nav-item: a.nav-link data-target="#tab_nkf" data-toggle="tab" NKF
-  li.nav-item.ml-auto = back_or_link_to 'Tilbake', { action: :index }, class: 'btn btn-link'
   li.nav-item = link_to 'Sporing', audit_path(@member.class, @member.id), class: 'btn btn-link'
 
 .tab-content

@@ -163,9 +163,20 @@ body:not(.wide) {
     margin-bottom: 0;
     color: $logo_light_blue !important;
   }
+
   img {
     max-width: 100%;
   }
+
+  .md {
+    table {
+      @extend .table;
+    }
+  }
+  .next-practice-btn {
+    @extend .ml-2;
+    flex-grow: 1;
+   }
 }
 
 h4 {
