@@ -1,8 +1,12 @@
 - @content_width = 880
 
-.float-right: a.btn.btn-primary href=event_path(@event)
-  i.fa.fa-users>
-  | Arrangementsside
+.float-right
+  = detour_to({controller: :event_invitees, action: :new, event_invitee: { event_id: @event.id } }, class: 'btn btn-secondary mr-3')
+    i.fa.fa-plus>
+    | Legg til deltaker
+  a.btn.btn-primary href=event_path(@event)
+    i.fa.fa-users>
+    | Arrangementsside
 
 ul.nav.nav-tabs
   li.nav-item: a.nav-link.active data-target="#description" data-toggle="tab" Beskrivelse
@@ -10,21 +14,20 @@ ul.nav.nav-tabs
     | Deltagere
     - if @event.event_invitees.any?
       .badge.badge-info< #{@event.event_invitees.size}
-  li.nav-item: a.nav-link data-target="#invitation" data-toggle="tab" Invitasjon
+  li.nav-item: a.nav-link data-target="#messages" data-toggle="tab" Meldinger
 
 .tab-content
   #description.tab-pane.active
     = render 'form'
   #invitees.tab-pane
     = render 'attendants'
-  #invitation.tab-pane
+  #messages.tab-pane
     .row
       .col-sm-8
         / = f.text_area :invitees, cols: 100, rows: 3, help: '(Kommaseparert liste: Navn 1 <e-post1>, e-post2, Navn 3 <e-post3>, etc.)'
         .btn-toolbar
           /= detour_to 'Rediger invitasjonen', :controller => :event_messages, :action => :edit, :id => @event.invitation
           button.btn.btn-secondary.mr-3 type=:button onclick="$.get('#{url_for(action: :invite, id: @event.id, example: true)}')" Send meg eksempel på innbydelse
-          = detour_to 'Legg til deltaker', { controller: :event_invitees, action: :new, event_invitee: { event_id: @event.id } }, class: 'btn btn-secondary mr-3'
           = detour_to 'Lag melding', { :controller => :event_messages, :action => :new, :event_message => { :event_id => @event.id } }, class: 'btn btn-secondary'
     /= f.button 'Send innbydelse til de inviterte', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :invited)}')"
     table.table

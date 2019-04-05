@@ -1,14 +1,6 @@
 .float-right
-  = bootstrap_form_for(@event) do |f|
-    table.table
-      tr
-        th Gruppe
-        th Invitert
-      - for g in @groups
-        tr
-          td: label for="group_id_#{g.id}" = g.name
-          td
-            = check_box :group, 'id', { multiple: true, checked: @event.groups.include?(g) }, g.id, nil
+  = bootstrap_form_for @event, url: with_detour(@event, anchor: :invitees_tab) do |f|
+    = f.collection_check_boxes :group_ids, @groups, :id, :name
     = f.primary 'Legg til'
 
 - if @event.event_invitees.any?

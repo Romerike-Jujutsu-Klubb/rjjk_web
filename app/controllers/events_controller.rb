@@ -58,7 +58,7 @@ class EventsController < ApplicationController
         EventInvitee.create!(event: @event, user_id: u.id)
       end
       flash[:notice] = 'Event was successfully updated.'
-      redirect_to action: :edit
+      back_or_redirect_to action: :edit
     else
       render action: 'edit'
     end
