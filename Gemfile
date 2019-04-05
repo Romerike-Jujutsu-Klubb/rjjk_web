@@ -95,6 +95,7 @@ group :test do
   gem 'minitest-reporters'
   gem 'mocha', require: 'mocha/setup'
   gem 'rubocop'
+  gem 'rubocop-performance'
   # gem 'rubycritic', require: false
   gem 'selenium-webdriver'
   gem 'simplecov', require: false

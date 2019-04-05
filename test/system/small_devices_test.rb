@@ -54,7 +54,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
     find('.fa-chevron-down').click
     article_link = find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
     # FIXME(uwe): Ignore bottom slider progress bar
-    screenshot :scrolled, area_size_limit: 4, skip_area: [left: 0, bottom: 0, width: 320, height: 60]
+    screenshot :scrolled, area_size_limit: 4 # , skip_area: [left: 0, bottom: 0, width: 320, height: 60]
     article_link.click
     assert_css('h1', text: 'My first article')
     screenshot :article

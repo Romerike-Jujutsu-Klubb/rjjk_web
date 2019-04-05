@@ -55,8 +55,8 @@ class LoginController < ApplicationController
           flash.notice = 'Du er allerede logget på.'
           redirect_to :login
         end
-      rescue => ex
-        report_exception ex
+      rescue => e
+        report_exception e
         flash.now[:notice] = "Beklager!  Link for innlogging kunne ikke sendes til #{escaped_email}"
       end
     end
