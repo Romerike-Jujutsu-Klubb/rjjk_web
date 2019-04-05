@@ -24,7 +24,8 @@ class EventInvitee < ApplicationRecord
   before_validation do
     if user
       self.name ||= user.name
-      self.email ||= user.contact_info
+      self.email ||= user.contact_email
+      self.phone ||= user.contact_phone
       self.organization ||= 'Romerike Jujutsu Klubb' if user.member
     end
   end

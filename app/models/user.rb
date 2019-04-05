@@ -284,8 +284,12 @@ class User < ApplicationRecord
     phones.first || emails.first
   end
 
+  def contact_phone
+    contact_user&.phone || phones&.first
+  end
+
   def contact_email
-    contact_user&.email || email || emails&.first || billing_user&.email || 'post@jujutsu.no'
+    contact_user&.email || emails&.first || 'post@jujutsu.no'
   end
 
   def contact_email_was

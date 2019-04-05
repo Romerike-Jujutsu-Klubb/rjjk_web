@@ -32,8 +32,7 @@ class EventInviteeMessagesController < ApplicationController
   def create
     @event_invitee_message = EventInviteeMessage.new(params[:event_invitee_message])
     if @event_invitee_message.save
-      back_or_redirect_to @event_invitee_message,
-          notice: 'Signup confirmation was successfully created.'
+      back_or_redirect_to @event_invitee_message, notice: 'Signup confirmation was successfully created.'
     else
       render action: 'new'
     end

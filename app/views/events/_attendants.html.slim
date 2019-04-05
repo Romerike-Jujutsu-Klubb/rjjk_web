@@ -1,0 +1,73 @@
+.float-right
+  = bootstrap_form_for(@event) do |f|
+    table.table
+      tr
+        th Gruppe
+        th Invitert
+      - for g in @groups
+        tr
+          td: label for="group_id_#{g.id}" = g.name
+          td
+            = check_box :group, 'id', { multiple: true, checked: @event.groups.include?(g) }, g.id, nil
+    = f.primary 'Legg til'
+
+- if @event.event_invitees.any?
+  div style="float: left"
+    table.table.table-hover class=('table-sm' if @event.event_invitees.size > 24)
+      thead
+        tr
+          th Navn
+          th Organisasjon
+          th E-post
+          th Telefon
+          th Vil delta
+          th Medhjelper
+          th Betalt
+          th Kommentar
+          th
+      tbody
+        - for inv in @event.event_invitees.sort_by(&:name)
+          tr
+            td = detour_to inv.name, edit_event_invitee_path(inv)
+            td = inv.organization
+            td = link_to inv.email, "mailto:#{inv.email}?subject=#{@event.name}"
+            td = inv.phone
+            td align="center"
+              = {true => 'Ja', false => 'Nei'}[inv.will_attend]
+              - if inv.will_attend
+                = detour_to('Bekreft', :controller => :event_invitee_messages, \
+                              :action => inv.signup_confirmation ? :edit : :new, \
+                              :id => inv.signup_confirmation.try(:id), \
+                              :event_invitee_message => { \
+                                      :message_type => EventInviteeMessage::MessageType::SIGNUP_CONFIRMATION, \
+                                      :event_invitee_id => inv.id, \
+                              }) unless inv.signup_confirmation.try(:ready_at)
+                = detour_to('Avslå', :controller => :event_invitee_messages, \
+                              :action => inv.signup_confirmation ? :edit : :new, \
+                              :id => inv.signup_confirmation.try(:id), \
+                              :event_invitee_message => { \
+                                      :message_type => EventInviteeMessage::MessageType::SIGNUP_REJECTION, \
+                                      :event_invitee_id => inv.id, \
+                              }) unless inv.signup_confirmation.try(:ready_at)
+              - elsif inv.will_attend.nil?
+                = link_to('Send invitasjon', with_detour({controller: :event_invitee_messages, \
+                              action: inv.invitation ? :edit : :new, \
+                              id: inv.invitation.try(:id), \
+                              event_invitee_message: { \
+                                      message_type: EventMessage::MessageType::INVITATION, \
+                                      event_invitee_id: inv.id, \
+                              }}, anchor: :invitees_tab)) unless inv.invitation.try(:ready_at)
+                = "Invitert #{inv.invitation.sent_at.to_date}" if inv.invitation.try(:sent_at)
+            td align="center"
+              = {true => 'Ja', false => 'Nei'}[inv.will_work] if inv.will_attend
+            td align="right" = inv.payed if inv.payed.to_i > 0
+            td = inv.comment
+            td = link_to 'Slett', with_detour(inv, anchor: :invitees_tab), data: {confirm: 'Er du sikker?'}, method: :delete
+        tr
+          td
+          td
+          td
+          td
+          td Ja: #{@event.event_invitees.select(&:will_attend).size}
+- else
+  .alert.alert-info Det er ingen påmeldte enda.

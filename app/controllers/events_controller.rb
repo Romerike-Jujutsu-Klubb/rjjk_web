@@ -49,7 +49,7 @@ class EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
     @event.groups = params[:group][:id].map { |group_id| Group.find(group_id) } if params[:group]
-    if @event.update(params[:event])
+    if @event.update(params[:event] || {})
       selected_members =
           @event.groups.map(&:members).map { |m| m.includes(:user) }.map(&:active).flatten.uniq
       selected_users = selected_members.map(&:user).compact
@@ -113,7 +113,7 @@ class EventsController < ApplicationController
       NewsletterMailer.event_invitee_message(event_invitee_message)
           .store(recipient, tag: :event_invite)
     end
-    render text: ''
+    render plain: ''
   end
 
   def calendar
