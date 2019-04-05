@@ -1,1 +1,10 @@
-.alert.alert-info = flash[:message]
+.alert.alert-info En e-post med innloggingslenke er sendt til #{flash[:message_email]}.
+
+p Finner du ikke e-posten?  Sjekk søppelmappen din (Spam/Junk).
+
+p
+  ' Hvis du fremdeles ikke kan logge på, prøv å
+  a> href="#" sende e-posten på nytt
+  ' eller kontakt
+  a> href="mailto:web@jujutsu.no" web@jujutsu.no
+  | .

@@ -44,12 +44,11 @@ class LoginController < ApplicationController
           User.transaction do
             users.each { |user| UserMailer.login_link(user).store(user, tag: :login_link) }
           end
-          message = "En e-post med innloggingslenke er sendt til #{escaped_email}."
           if current_user
-            flash.notice = message
+            flash.notice = "En e-post med innloggingslenke er sendt til #{escaped_email}."
             back_or_redirect_to login_link_message_sent_path
           else
-            flash[:message] = message
+            flash[:message_email] = escaped_email
             redirect_to login_link_message_sent_path
           end
         else
@@ -64,7 +63,7 @@ class LoginController < ApplicationController
   end
 
   def login_link_message_sent
-    back_or_redirect_to root_path if current_user && !flash[:message]
+    back_or_redirect_to root_path if current_user && !flash[:message_email]
   end
 
   def signup
