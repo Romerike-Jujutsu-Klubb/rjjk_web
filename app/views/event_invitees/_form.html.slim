@@ -1,0 +1,29 @@
+= bootstrap_form_for(@event_invitee) do |f|
+  .field
+    = f.label :hendelse
+    ' :
+    = @event_invitee.event&.name
+    = f.hidden_field :event_id
+  - user_link = link_to('Bruker', controller: :users, action: :edit, id: @event_invitee.user_id) if @event_invitee.user_id
+  = f.select :user_id, [['', nil]] + @users.map { |u| [u.name, u.id] }, { append: user_link }, class: 'chosen-select'
+  - if @event_invitee.user.nil?
+    ' eller
+    fieldset title="Kontaktinformasjon"
+      legend Kontaktinformasjon
+      = f.text_field :name
+      = f.text_field :organization
+      = f.text_area :address, rows: 4, cols: 64
+      = f.text_field :email
+      = f.text_field :phone
+  .row
+    .col
+      = f.select :will_attend, [['', nil], ['Ja', true], ['Nei', false]]
+    .col
+      = f.select :will_work, [['', nil], ['Ja', true], ['Nei', false]]
+    .col
+      = f.text_field :payed
+  = f.text_area :comment, :rows => 5
+
+  .float-right.my-3
+    = back_or_link_to 'Tilbake', event_invitees_path, class: 'btn btn-link'
+    = f.submit 'Lagre deltaker'

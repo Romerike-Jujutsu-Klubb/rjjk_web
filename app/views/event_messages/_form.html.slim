@@ -1,7 +1,7 @@
 - @content_width = 800
 
 = bootstrap_form_for(@event_message) do |f|
-  = f.static_control :event_id, label: :hendelse, value: @event_message.event_id, label: @event_message.event&.name
+  = f.static_control :event_id, value: @event_message.event_id, label: @event_message.event&.name
 
   .row
     .col-sm-6

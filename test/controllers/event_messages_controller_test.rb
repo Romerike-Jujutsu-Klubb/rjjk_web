@@ -23,7 +23,7 @@ class EventMessagesControllerTest < ActionController::TestCase
       post :create, params: { event_message: {
         body: @event_message.body,
         event_id: @event_message.event_id,
-        message_type: @event_message.message_type,
+        message_type: EventMessage::MessageType::INVITATION,
         ready_at: @event_message.ready_at,
         subject: @event_message.subject,
       } }

@@ -9,9 +9,11 @@ h1 Arrangementsdeltaker
     thead
       tr
         th Dato
+        th Type
         th Melding
     tbody
       - @event_invitee.event_invitee_messages.each do |eim|
         tr
-          td = eim.created_at.to_date
+          td.text-nowrap = eim.created_at.to_date
+          td = eim.message_type.humanize
           td = link_to eim.subject, eim
