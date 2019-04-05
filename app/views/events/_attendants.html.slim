@@ -44,7 +44,11 @@
                                       event_invitee_id: inv.id, \
                               }}, class: 'btn btn-danger btn-sm') unless inv.signup_confirmation.try(:ready_at)
               - elsif inv.will_attend.nil?
-                - unless inv.invitation&.ready_at
+                - if inv.invitation&.sent_at
+                  = "Invitert #{inv.invitation.sent_at.to_date}"
+                - elsif inv.invitation&.ready_at
+                  | Inviterer #{inv.invitation.ready_at.to_date}
+                - else
                   = link_to('Send invitasjon', with_detour({controller: :event_invitee_messages, \
                                 action: inv.invitation ? :edit : :new, \
                                 id: inv.invitation.try(:id), \
@@ -53,14 +57,14 @@
                                         event_invitee_id: inv.id, \
                                 }}, anchor: :invitees_tab))
                   - unless inv.invitation
-                    = link_to('=>', with_detour({ controller: :event_invitee_messages, \
-                                  action: :create, id: inv.invitation.try(:id), \
+                    - create_link = with_detour({ controller: :event_invitee_messages, action: :create, id: inv.invitation.try(:id), \
                                   event_invitee_message: { \
                                           message_type: EventMessage::MessageType::INVITATION, \
                                           event_invitee_id: inv.id, \
                                           ready_at: Time.current, \
-                                   } }, anchor: :invitees_tab), method: :post)
-                = "Invitert #{inv.invitation.sent_at.to_date}" if inv.invitation.try(:sent_at)
+                                   } }, anchor: :invitees_tab)
+                    a.btn.btn-danger.btn-sm.ml-2 title='Send nå!' data-toggle=:tooltip href=create_link data-method=:post
+                      i.fa.fa-angle-double-right
             td align="center"
               = {true => 'Ja', false => 'Nei'}[inv.will_work] if inv.will_attend
             td align="right" = inv.payed if inv.payed.to_i > 0
