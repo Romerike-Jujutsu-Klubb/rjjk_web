@@ -160,15 +160,15 @@ class User < ApplicationRecord
   end
 
   def emails
-    [self, guardian_1, guardian_2, billing_user, contact_user].map { |u| u&.email }.compact.uniq.sort
+    contact_users.map { |u| u&.email }.compact.uniq.sort
   end
 
   def emails_was
-    [self, guardian_1, guardian_2, billing_user, contact_user].map { |u| u&.email_was }.compact.uniq.sort
+    contact_users.map { |u| u&.email_was }.compact.uniq.sort
   end
 
   def phones
-    [self, guardian_1, guardian_2, billing_user, contact_user].map { |u| u&.phone }.compact.uniq
+    contact_users.map { |u| u&.phone }.compact.uniq
   end
 
   def label(last_name_first: false)
@@ -289,7 +289,7 @@ class User < ApplicationRecord
   end
 
   def contact_email
-    contact_user&.email || emails&.first || 'post@jujutsu.no'
+    contact_users.find(&:email)
   end
 
   def contact_email_was
@@ -367,5 +367,11 @@ class User < ApplicationRecord
     self.token_expiry = Time.zone.at(Time.current.to_i + User.token_lifetime(duration))
     save!
     security_token
+  end
+
+  private
+
+  def contact_users
+    [self, guardian_1, guardian_2, billing_user, contact_user]
   end
 end
