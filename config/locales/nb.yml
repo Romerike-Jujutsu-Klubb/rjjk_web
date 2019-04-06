@@ -233,7 +233,7 @@ nb:
       - :day
       - :month
       - :year
-  
+
   time:
     formats:
       default: "%A, %e. %B %Y, %H:%M"
@@ -244,7 +244,7 @@ nb:
 
     am: "formiddag"
     pm: "ettermiddag"
-      
+
   datetime:
     distance_in_words:
       half_a_minute: 'et halvt minutt'
@@ -278,18 +278,18 @@ nb:
       over_x_years:
         one: 'over 1 år'
         other: 'over %{count} år'
-                  
+
   number:
     format:
       separator: ","
       delimiter: "."
       precision: 2
-      
+
     currency:
       format:
         format: "%n %u"
         unit: "kr"
-            
+
     precision:
       format:
         delimiter: ""
@@ -310,6 +310,7 @@ nb:
   published: Publisert
   rank: Grad
   rank_id: Grad
+  registration_link: "Du kan melde deg på på web."
   sick: Syk
   user_login_succeeded: Login successful
   user_login_failed: Login unsuccessful

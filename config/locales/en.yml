@@ -16,6 +16,8 @@ en:
   June: June
   October: October
 
+  registration_link: "You can register on the web."
+
   # Controller
   user_login_succeeded: Login successful
   user_login_failed: Login unsuccessful

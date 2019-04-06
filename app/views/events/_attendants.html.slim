@@ -67,7 +67,9 @@
                   = {true => 'Ja', false => 'Nei'}[inv.will_work] if inv.will_attend
                 td align="right" = inv.payed if inv.payed.to_i > 0
                 td = inv.comment
-                td = link_to 'Slett', with_detour(inv, anchor: :invitees_tab), data: {confirm: 'Er du sikker?'}, method: :delete
+                td
+                  = link_to 'Vis', with_detour(event_invitee_user_path(inv), anchor: :invitees_tab), class: 'btn btn-link'
+                  = link_to 'Slett', with_detour(inv, anchor: :invitees_tab), data: {confirm: 'Er du sikker?'}, method: :delete, class: 'btn btn-link'
             tr
               td
               td

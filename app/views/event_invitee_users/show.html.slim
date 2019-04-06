@@ -1,0 +1,37 @@
+h1 Påmelding til #{@event_invitee.event.name}
+h2 for #{@event_invitee.name}
+
+- if @event_invitee.confirmed?
+  .alert.alert-success.mt-5
+    h3 Du er bekreftet påmeldt.
+- else
+  .row.align-items-center
+    .col.text-center.p-5
+      - if @event_invitee.will_attend
+        .alert.alert-success.m-0
+          h3 Du er påmeldt.
+      - else
+        = link_to 'Jeg kommer!', accept_event_invitee_user_path(@event_invitee), class: 'btn btn-success'
+    .col.text-center.p-5
+      - if @event_invitee.will_attend == false
+        .alert.alert-info.m-0
+          h3 Du er avmeldt.
+      - else
+        = link_to 'Jeg kommer ikke', decline_event_invitee_user_path(@event_invitee), class: 'btn btn-secondary'
+
+- if @event_invitee.will_attend && @event_invitee.user&.member
+  h3.mt-5 Vil du hjelpe til på leiren?
+
+  .row.align-items-center
+    .col.text-center.p-5
+      - if @event_invitee.will_work
+        .alert.alert-success.m-0
+          h3 Du vil hjelpe til på leiren.
+      - else
+        = link_to 'Jeg vil hjelpe til!', will_work_event_invitee_user_path(@event_invitee), class: 'btn btn-success'
+    .col.text-center.p-5
+      - if @event_invitee.will_work == false
+        .alert.alert-info.m-0
+          h3 Du vil ikke hjelpe til.
+      - else
+        = link_to @event_invitee.will_work.nil? ? 'Nei takk' : 'Jeg vil ikke hjelpe til', will_not_work_event_invitee_user_path(@event_invitee), class: 'btn btn-secondary'

@@ -29,10 +29,13 @@ class EventInviteeMessage < ApplicationRecord
         self.subject ||= event_message.subject
         self.body ||= event_message.body
       end
+
       self.subject ||= EventMessage::Templates::SIGNUP_CONFIRMATION_SUBJECT
-          .gsub('[EVENT_NAME]', event_invitee.event.name)
       self.body ||= EventMessage::Templates::SIGNUP_CONFIRMATION
-          .gsub('[EVENT_NAME]', event_invitee.event.name).gsub('[EVENT_INVITEE_NAME]', event_invitee.name)
+
+      self.subject = self.subject.gsub('[EVENT_NAME]', event_invitee.event.name)
+      self.body = self.body.gsub('[EVENT_NAME]', event_invitee.event.name)
+          .gsub('[EVENT_INVITEE_NAME]', event_invitee.name)
     elsif message_type == MessageType::SIGNUP_REJECTION
       self.subject ||= "Påmelding til #{event_invitee.event.name}"
       self.body ||= <<~TEXT

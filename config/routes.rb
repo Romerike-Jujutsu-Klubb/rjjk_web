@@ -87,6 +87,14 @@ Rails.application.routes.draw do
   resources :embu_parts
   resources :event_invitee_messages
   resources :event_invitees
+  resources :event_invitee_users, only: [:show] do
+    member do
+      get :accept
+      get :decline
+      get :will_work
+      get :will_not_work
+    end
+  end
   resources :event_messages do
     collection do
       get :template

@@ -27,6 +27,8 @@ class EventInvitee < ApplicationRecord
       self.email ||= user.contact_email
       self.phone ||= user.contact_phone
       self.organization ||= 'Romerike Jujutsu Klubb' if user.member
+    elsif security_token.blank?
+      self.security_token = SecureRandom.base58(4)
     end
   end
 
@@ -44,5 +46,13 @@ class EventInvitee < ApplicationRecord
 
   def confirmed?
     signup_confirmation&.ready_at
+  end
+
+  def locale
+    user&.locale || :nb
+  end
+
+  def security_token_matches(token)
+    token == security_token || security_token.blank?
   end
 end

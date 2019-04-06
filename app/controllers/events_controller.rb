@@ -9,6 +9,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @event_invitee = EventInvitee.find_by(event_id: @event.id, user_id: current_user.id)
   end
 
   def preview
@@ -17,6 +18,7 @@ class EventsController < ApplicationController
     @event.id = 42
     @event.created_at ||= Time.current
     @event.start_at ||= @event.created_at
+    @event_invitee = EventInvitee.new(id: 0, event_id: @event.id)
     render action: :show, layout: false
   end
 
