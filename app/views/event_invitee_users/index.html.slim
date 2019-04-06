@@ -3,4 +3,9 @@ h1 Påmelding til arrangement
 .row.mt-5
   - Event.upcoming.each do |e|
     .col
-      .alert.alert-success = link_to e.name, event_invitee_user_path(e.event_invitees.for_user(current_user.id).first.id)
+      .alert.alert-success
+        - inv = current_user && e.event_invitees.for_user(current_user.id).first
+        - if inv
+          = link_to e.name, event_invitee_user_path(inv.id)
+        - else
+          = link_to e.name, e
