@@ -76,7 +76,7 @@ class Event < ApplicationRecord
   end
 
   def localized_name
-    I18n.locale == :nb ? name : name_en
+    (I18n.locale == :nb ? name : name_en) || name
   end
 
   def body
@@ -88,6 +88,6 @@ class Event < ApplicationRecord
   private
 
   def paragraphs
-    (I18n.locale == :nb ? description : description_en)&.split(/\r?\n\r?\n/)
+    ((I18n.locale == :nb ? description : description_en.presence) || description)&.split(/\r?\n\r?\n/)
   end
 end

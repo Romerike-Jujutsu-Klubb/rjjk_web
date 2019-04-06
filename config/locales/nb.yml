@@ -303,6 +303,7 @@ nb:
   description: Beskrivelse
   draft: Kladd
   expired: Utdatert
+  graduation_title: "Gradering %{name}"
   holiday: Ferie
   image: Bilde
   instructor: Instruktør

@@ -16,6 +16,7 @@ en:
   June: June
   October: October
 
+  graduation_title: "Graduation %{name}"
   registration: "Registration"
   registration_link: "You can register on the web."
 

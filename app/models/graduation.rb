@@ -93,7 +93,7 @@ class Graduation < ApplicationRecord
   end
 
   def name
-    "Gradering #{group.name}"
+    I18n.t('graduation_title', name: group.name)
   end
 
   def invited_users
@@ -141,6 +141,10 @@ class Graduation < ApplicationRecord
 
   def martial_art
     group.try(:martial_art) || MartialArt.find_by(name: 'Kei Wa Ryu')
+  end
+
+  def localized_name
+    name
   end
 
   def description
