@@ -6,6 +6,7 @@ class Event < ApplicationRecord
   has_one :invitation, class_name: 'EventMessage', dependent: :destroy
 
   has_many :attending_invitees, -> { where(will_attend: true) }, class_name: :EventInvitee
+  has_many :declined_invitees, -> { where(will_attend: false) }, class_name: :EventInvitee
   has_many :event_groups, dependent: :destroy
   has_many :event_invitees, dependent: :destroy
   has_many :event_messages, dependent: :destroy
@@ -61,8 +62,16 @@ class Event < ApplicationRecord
     event_invitees.map(&:user)
   end
 
+  def confirmed_users
+    attending_invitees.select(&:confirmed?).map(&:user)
+  end
+
   def attendees
     attending_invitees.map(&:user)
+  end
+
+  def declined_users
+    declined_invitees.map(&:user)
   end
 
   def body

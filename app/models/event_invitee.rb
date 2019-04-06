@@ -16,7 +16,7 @@ class EventInvitee < ApplicationRecord
   has_many :event_invitee_messages, dependent: :destroy
 
   validates :event, :event_id, :name, presence: true
-  validates :email, presence: { unless: :phone }
+  validates :email, presence: { unless: :phone }, uniqueness: { scope: :event_id }
   validates :phone, presence: { unless: :email }
   validates :user_id, uniqueness: { scope: :event_id, allow_nil: true }
   validates :will_work, inclusion: { in: [nil, false], if: proc { |r| r.will_attend == false } }
@@ -40,5 +40,9 @@ class EventInvitee < ApplicationRecord
 
   def phone
     user&.contact_phone || super
+  end
+
+  def confirmed?
+    signup_confirmation&.ready_at
   end
 end

@@ -104,6 +104,14 @@ class Graduation < ApplicationRecord
     invited_users
   end
 
+  def declined_users
+    graduates.select(&:declined)
+  end
+
+  def confirmed_users
+    (graduates.select { |g| g.passed || g.passed.nil? } + censors).select(&:confirmed?).map(&:user)
+  end
+
   def ingress
     nil
   end

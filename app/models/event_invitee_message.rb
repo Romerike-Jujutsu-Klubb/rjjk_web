@@ -26,7 +26,7 @@ class EventInviteeMessage < ApplicationRecord
       self.subject ||= "Bekreftelse av påmelding #{event_invitee.event.name}"
       self.body ||=
           event_invitee.event.event_messages
-              .find_by(message_type: EventMessage::MessageType::SIGNUP_CONFIRMATION)
+              .find_by(message_type: EventMessage::MessageType::SIGNUP_CONFIRMATION)&.body
       self.body ||= EventMessage::Templates.SIGNUP_CONFIRMATION(self)
     elsif message_type == MessageType::SIGNUP_REJECTION
       self.subject ||= "Påmelding til #{event_invitee.event.name}"
