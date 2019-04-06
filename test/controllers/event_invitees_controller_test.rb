@@ -22,7 +22,7 @@ class EventInviteesControllerTest < ActionController::TestCase
     assert_difference('EventInvitee.count') do
       post :create, params: { event_invitee: {
         address: @event_invitee.address,
-        email: @event_invitee.email,
+        email: 'third_email',
         event_id: @event_invitee.event_id,
         name: @event_invitee.name,
         organization: @event_invitee.organization,

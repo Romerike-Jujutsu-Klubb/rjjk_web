@@ -9,7 +9,7 @@ one:
 
 two:
   event: one
-  email: ei_one@example.com
+  email: ei_two@example.com
   name: MyString
   address: MyString
   organization: MyString
