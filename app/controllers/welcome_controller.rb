@@ -30,7 +30,7 @@ class WelcomeController < ApplicationController
         @news_items << NewsItem.new(publish_at: @next_practice.start_at - 1.day,
             body: render_to_string(partial: 'layouts/next_practice'))
       end
-      @news_items.concat Event.upcoming.to_a
+      @news_items.push(*Event.upcoming.to_a)
       @news_items.sort_by! { |n| n.publish_at || n.created_at }.reverse!
       render template: 'news/index'
       return

@@ -56,7 +56,7 @@ class Event < ApplicationRecord
   end
 
   def publish_at
-    [1.month.ago, ((start_at - Time.current) / 2).seconds.ago].max
+    [created_at, ((start_at - Time.current) / 2).seconds.ago].max
   end
 
   def expired?

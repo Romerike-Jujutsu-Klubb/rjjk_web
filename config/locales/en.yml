@@ -1,4 +1,9 @@
 en:
+  activerecord:
+    attributes:
+      news_item:
+        body: Body
+
   active_record_errors_inclusion: Inclusion error
   active_record_errors_inclusion: is not included in the list
   active_record_errors_invalid: is invalid
@@ -16,8 +21,10 @@ en:
   June: June
   October: October
 
+  draft: Draft
   expired: Expired
   graduation_title: "Graduation %{name}"
+  published: Published
   registration: "Registration"
   registration_link: "You can register on the web."
 
