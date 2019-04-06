@@ -23,11 +23,16 @@ class EventInviteeMessage < ApplicationRecord
           .gsub(%r{<p>(.*?)</p>}m, "\\1\n").gsub(%r{<a .*?>(.*?)</a>}, '\\1')
           .html_safe # rubocop: disable Rails/OutputSafety
     elsif message_type == MessageType::SIGNUP_CONFIRMATION
-      self.subject ||= "Bekreftelse av påmelding #{event_invitee.event.name}"
-      self.body ||=
-          event_invitee.event.event_messages
-              .find_by(message_type: EventMessage::MessageType::SIGNUP_CONFIRMATION)&.body
-      self.body ||= EventMessage::Templates.SIGNUP_CONFIRMATION(self)
+      event_message = event_invitee.event.event_messages
+          .find_by(message_type: EventMessage::MessageType::SIGNUP_CONFIRMATION)
+      if event_message
+        self.subject ||= event_message.subject
+        self.body ||= event_message.body
+      end
+      self.subject ||= EventMessage::Templates::SIGNUP_CONFIRMATION_SUBJECT
+          .gsub('[EVENT_NAME]', event_invitee.event.name)
+      self.body ||= EventMessage::Templates::SIGNUP_CONFIRMATION
+          .gsub('[EVENT_NAME]', event_invitee.event.name).gsub('[EVENT_INVITEE_NAME]', event_invitee.name)
     elsif message_type == MessageType::SIGNUP_REJECTION
       self.subject ||= "Påmelding til #{event_invitee.event.name}"
       self.body ||= <<~TEXT

@@ -36,3 +36,5 @@ ul.nav.nav-tabs
           td = em.message_type
           td = em.subject
           td = em.ready_at
+          td: a.btn.btn-danger.btn-sm href=event_message_path(em) data-method=:delete data-confirm="Er du sikker?"
+            i.fa.fa-trash

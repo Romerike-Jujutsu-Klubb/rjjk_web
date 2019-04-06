@@ -100,4 +100,8 @@ class Graduate < ApplicationRecord
 
     [self.class.name, graduation_id, member_id, graduation.passed?, graduation.approved?]
   end
+
+  def confirmed?
+    confirmed_at? && !declined?
+  end
 end

@@ -17,7 +17,7 @@
           tbody
             - for inv in @event.event_invitees.sort_by(&:name)
               tr
-                td = detour_to inv.name, edit_event_invitee_path(inv)
+                td = link_to inv.name, with_detour(edit_event_invitee_path(inv), anchor: :invitees_tab)
                 td = inv.organization
                 td
                   - if inv.email.present?

@@ -14,6 +14,10 @@ class Censor < ApplicationRecord
   scope :examiners, -> { where examiner: true }
   scope :confirmed, -> { where(declined: false) }
 
+  def confirmed?
+    confirmed_at? && !declined?
+  end
+
   def approved_graduates?
     !!locked_at
   end
