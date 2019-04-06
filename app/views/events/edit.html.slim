@@ -22,19 +22,21 @@ ul.nav.nav-tabs
   #invitees.tab-pane
     = render 'attendants'
   #messages.tab-pane
-    .row
-      .col-sm-8
-        / = f.text_area :invitees, cols: 100, rows: 3, help: '(Kommaseparert liste: Navn 1 <e-post1>, e-post2, Navn 3 <e-post3>, etc.)'
-        .btn-toolbar
+    .row.mt-3
+      .col-sm-9
+        table.table
+          - @event.event_messages.each do |em|
+            tr
+              td = em.message_type
+              td = em.subject
+              td = em.ready_at
+              td: a.btn.btn-danger.btn-sm href=event_message_path(em) data-method=:delete data-confirm="Er du sikker?"
+                i.fa.fa-trash
+      .col-3
+        .text-center
           /= detour_to 'Rediger invitasjonen', :controller => :event_messages, :action => :edit, :id => @event.invitation
-          a.btn.btn-secondary.mr-3 href=url_for(action: :invite, id: @event.id, example: true) Send meg eksempel på innbydelse
-          = link_to 'Lag melding', with_detour(new_event_message_path(event_message: {event_id: @event.id}), anchor: :messages_tab), class: 'btn btn-secondary'
-    /= f.button 'Send innbydelse til de inviterte', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :invited)}')"
-    table.table
-      - @event.event_messages.each do |em|
-        tr
-          td = em.message_type
-          td = em.subject
-          td = em.ready_at
-          td: a.btn.btn-danger.btn-sm href=event_message_path(em) data-method=:delete data-confirm="Er du sikker?"
-            i.fa.fa-trash
+          a.btn.btn-secondary.btn-lg.w-100.mb-3 href=url_for(action: :invite, id: @event.id, example: true) Send meg eksempel på innbydelse
+          a.btn.btn-secondary.btn-lg.w-100 href=with_detour(new_event_message_path(event_message: { event_id: @event.id }), anchor: :messages_tab)
+            i.fa.fa-plus>
+            | Lag melding
+          /= f.button 'Send innbydelse til de inviterte', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :invited)}')"
