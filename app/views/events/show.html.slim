@@ -1,6 +1,8 @@
 - @title = I18n.locale != :nb ? @event.name_en : @event.name
 
 .float-right
+  - if admin? && @event.persisted?
+    a.btn.btn-primary.mr-3 href=edit_event_path(@event) Admin
   - if @event_invitee
     a.btn.btn-info.mr-3 href=event_invitee_user_path(@event_invitee.id) = t :registration
   - if I18n.locale != :en && @event.name_en && @event.description_en
@@ -26,8 +28,3 @@ p
 - else
   - registration_link = ''
 == body.gsub('[EVENT_REGISTRATION_LINK]', registration_link)
-
-- if admin? && @event.persisted?
-  .clearfix
-  ul.controls
-    li = link_to 'Rediger', {action: :edit, id: @event}, class: :edit
