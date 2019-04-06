@@ -1,7 +1,9 @@
 .row
-  .col-9
+  .col-xl-9
     - if @event.event_invitees.any?
-      table.table.table-hover class=('table-sm' if @event.event_invitees.size > 24)
+      - show_payment_column = @event.event_invitees.any?{|ei| ei.payed.to_i > 0}
+      - show_comment_column = @event.event_invitees.any?{|ei| ei.comment.present?}
+      table.table.table-hover.table-responsive class=('table-sm' if @event.event_invitees.size > 24)
         thead
           tr
             th Navn
@@ -10,8 +12,10 @@
             th Telefon
             th Vil delta
             th Medhjelper
-            th Betalt
-            th Kommentar
+            - if show_payment_column
+              th Betalt
+            - if show_comment_column
+              th Kommentar
             th
         tbody
           - for inv in @event.event_invitees.sort_by(&:name)
@@ -64,8 +68,10 @@
                         i.fa.fa-angle-double-right
               td align="center"
                 = {true => 'Ja', false => 'Nei'}[inv.will_work] if inv.will_attend
-              td align="right" = inv.payed if inv.payed.to_i > 0
-              td = inv.comment
+              - if show_payment_column
+                td align="right" = inv.payed if inv.payed.to_i > 0
+              - if show_comment_column
+                td = inv.comment.inspect
               td
                 = link_to 'Vis', with_detour(event_invitee_user_path(inv), anchor: :invitees_tab), class: 'btn btn-link'
                 = link_to 'Slett', with_detour(inv, anchor: :invitees_tab), data: {confirm: 'Er du sikker?'}, method: :delete, class: 'btn btn-link'
@@ -77,7 +83,7 @@
             td Ja: #{@event.event_invitees.select(&:will_attend).size}
     - else
       .alert.alert-info Det er ingen påmeldte enda.
-  .col-3
+  .col-xl-3
     = bootstrap_form_for @event, url: with_detour(@event, anchor: :invitees_tab) do |f|
       = f.collection_check_boxes :group_ids, @groups, :id, :name
       = f.primary 'Legg til'

@@ -23,8 +23,7 @@ class EventInviteeMessage < ApplicationRecord
           .gsub(%r{<br />}, "\n")
           .gsub(%r{<p>(.*?)</p>}m, "\\1\n").gsub(%r{<a .*?>(.*?)</a>}, '\\1')
           .gsub('[EVENT_REGISTRATION_LINK]', I18n.with_locale(:nb) { event_invitee.registration_link })
-          .gsub('[EVENT_LINK]', Rails.application.routes.url_helpers.event_path(event_invitee.event.id,
-              security_token: security_token))
+          .gsub('[EVENT_LINK]', Rails.application.routes.url_helpers.event_path(event_invitee.event.id))
           .html_safe # rubocop: disable Rails/OutputSafety
     elsif message_type == MessageType::SIGNUP_CONFIRMATION
       event_message = event_invitee.event.event_messages
