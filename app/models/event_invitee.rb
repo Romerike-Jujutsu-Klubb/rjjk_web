@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class EventInvitee < ApplicationRecord
+  include ActionView::Helpers::UrlHelper
+
   scope :for_user, ->(user_id) { where user_id: user_id }
 
   belongs_to :event
@@ -56,5 +58,10 @@ class EventInvitee < ApplicationRecord
 
   def security_token_matches(token)
     token == security_token || security_token.blank?
+  end
+
+  def registration_link
+    link_to(I18n.t(:registration_link),
+        Rails.application.routes.url_helpers.event_invitee_user_path(id, security_token: security_token))
   end
 end

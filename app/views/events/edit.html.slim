@@ -27,7 +27,7 @@ ul.nav.nav-tabs
         / = f.text_area :invitees, cols: 100, rows: 3, help: '(Kommaseparert liste: Navn 1 <e-post1>, e-post2, Navn 3 <e-post3>, etc.)'
         .btn-toolbar
           /= detour_to 'Rediger invitasjonen', :controller => :event_messages, :action => :edit, :id => @event.invitation
-          button.btn.btn-secondary.mr-3 type=:button onclick="$.get('#{url_for(action: :invite, id: @event.id, example: true)}')" Send meg eksempel på innbydelse
+          a.btn.btn-secondary.mr-3 href=url_for(action: :invite, id: @event.id, example: true) Send meg eksempel på innbydelse
           = detour_to 'Lag melding', { :controller => :event_messages, :action => :new, :event_message => { :event_id => @event.id } }, class: 'btn btn-secondary'
     /= f.button 'Send innbydelse til de inviterte', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :invited)}')"
     table.table

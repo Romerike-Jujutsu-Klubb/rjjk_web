@@ -19,8 +19,10 @@ class EventInviteeMessage < ApplicationRecord
     super
     if message_type == EventMessage::MessageType::INVITATION
       self.subject ||= "Invitasjon til #{event_invitee.event.name}"
-      self.body ||= event_invitee.event.description.gsub(%r{<br />}, "\n")
+      self.body ||= event_invitee.event.description
+          .gsub(%r{<br />}, "\n")
           .gsub(%r{<p>(.*?)</p>}m, "\\1\n").gsub(%r{<a .*?>(.*?)</a>}, '\\1')
+          .gsub('[EVENT_REGISTRATION_LINK]', event_invitee.registration_link)
           .html_safe # rubocop: disable Rails/OutputSafety
     elsif message_type == MessageType::SIGNUP_CONFIRMATION
       event_message = event_invitee.event.event_messages

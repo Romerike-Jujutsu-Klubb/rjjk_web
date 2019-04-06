@@ -107,15 +107,15 @@ class EventsController < ApplicationController
       recipients = event.groups.map(&:members).flatten
     end
     recipients.each do |recipient|
-      event_invitee = EventInvitee.new(event: event, name: recipient.name, email: recipient.email)
+      event_invitee = event.event_invitees.for_user(current_user.id)&.first ||
+          EventInvitee.new(event: event, name: recipient.name, email: recipient.email)
       event_invitee_message = EventInviteeMessage.new(
           event_invitee: event_invitee, message_type: EventMessage::MessageType::INVITATION
         )
       event_invitee_message.id = -event.id
-      NewsletterMailer.event_invitee_message(event_invitee_message)
-          .store(recipient, tag: :event_invite)
+      NewsletterMailer.event_invitee_message(event_invitee_message).store(recipient, tag: :event_invite)
     end
-    render plain: ''
+    redirect_to edit_event_path(event, anchor: :messages_tab), notice: 'Invitasjon er sendt.'
   end
 
   def calendar
