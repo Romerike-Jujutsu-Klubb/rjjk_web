@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_06_062115) do
+ActiveRecord::Schema.define(version: 2019_04_06_092310) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -689,11 +689,11 @@ ActiveRecord::Schema.define(version: 2019_04_06_062115) do
     t.string 'tag', limit: 64, null: false
     t.string 'key', limit: 64, null: false
     t.string 'from', null: false
-    t.string 'subject', limit: 160, null: false
+    t.string 'subject', limit: 255, null: false
     t.datetime 'message_timestamp'
     t.string 'email_url', limit: 254
     t.string 'user_email', limit: 128
-    t.string 'title', limit: 64
+    t.string 'title', limit: 255
     t.text 'html_body'
     t.text 'plain_body'
     t.datetime 'sent_at'

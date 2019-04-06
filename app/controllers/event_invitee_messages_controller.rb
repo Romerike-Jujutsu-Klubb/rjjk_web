@@ -4,7 +4,7 @@ class EventInviteeMessagesController < ApplicationController
   before_action :admin_required, except: %i[index show]
 
   def index
-    @event_invitee_messages = EventInviteeMessage.all
+    @event_invitee_messages = EventInviteeMessage.order(created_at: :desc).to_a
   end
 
   def show

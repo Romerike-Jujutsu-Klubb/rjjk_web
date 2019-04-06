@@ -15,9 +15,10 @@ class UserMessage < ApplicationRecord
   before_validation do
     self.key ||= BCrypt::Password.create(Time.current.to_i.to_s + rand.to_s).checksum
   end
-  validates :subject, length: { maximum: 160, allow_blank: false }
+  validates :subject, length: { maximum: 255, allow_blank: false }
   validates :key, length: { maximum: 64, allow_blank: false }
   validates :tag, length: { maximum: 64 }
+  validates :title, length: { maximum: 255, allow_blank: false }
 
   def to
     user.emails
