@@ -28,7 +28,7 @@ ul.nav.nav-tabs
         .btn-toolbar
           /= detour_to 'Rediger invitasjonen', :controller => :event_messages, :action => :edit, :id => @event.invitation
           a.btn.btn-secondary.mr-3 href=url_for(action: :invite, id: @event.id, example: true) Send meg eksempel på innbydelse
-          = detour_to 'Lag melding', { :controller => :event_messages, :action => :new, :event_message => { :event_id => @event.id } }, class: 'btn btn-secondary'
+          = link_to 'Lag melding', with_detour(new_event_message_path(event_message: {event_id: @event.id}), anchor: :messages_tab), class: 'btn btn-secondary'
     /= f.button 'Send innbydelse til de inviterte', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :invited)}')"
     table.table
       - @event.event_messages.each do |em|

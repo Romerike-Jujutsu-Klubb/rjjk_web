@@ -8,56 +8,12 @@ h1 Påmelding til arrangement
     last_end_at = nil
 
   - Event.upcoming.each do |event|
+    - display_year = event.start_at.year != last_year
+    - display_month = event.start_at.mon != last_mon
+    - display_times = event.start_at != last_start_at || event.end_at != last_end_at
+    - last_year = event.start_at.year
+    - last_mon = event.start_at.mon
+    - last_start_at = event.start_at
+    - last_end_at = event.end_at
     .col
-      .alert.alert-info
-        - inv = current_user && event.event_invitees.for_user(current_user.id).first
-        - if inv
-          - more_url = event_invitee_user_path(inv.id)
-        - else
-          - more_url = admin? && event.persisted? ? edit_polymorphic_path(event) : event
-
-        - ingress = event.ingress.presence
-        - body = event.body
-        - if event.start_at.year != last_year
-          - last_year = event.start_at.year
-          h4.mt-3.logo-red style="margin-bottom:-1rem" = last_year
-        - if event.start_at.mon != last_mon
-          - last_mon = event.start_at.mon
-          h5.mt-3 style="color: #E20916" = I18n.t("date.month_names")[last_mon]
-        - if event.start_at != last_start_at || event.end_at != last_end_at
-          - last_start_at = event.start_at
-          - last_end_at = event.end_at
-          h5.mt-3.mb-1
-            - if event.end_at.nil? || event.end_at == event.start_at
-              ' #{event.start_at.mday}.
-              = t(:date)[:day_names][event.start_at.wday]
-              - if event.start_at.min != 0 || event.start_at.hour != 0
-                =< event.start_at.strftime('kl. %H:%M')
-            - else
-              - if event.end_at.to_date == event.start_at.to_date
-                ' #{event.start_at.mday}.
-                => t(:date)[:day_names][event.start_at.wday]
-                | #{event.start_at.strftime('%H:%M')} - #{event.end_at.strftime('%H:%M')}
-              - else
-                - if event.start_at.min == 0 && event.start_at.hour == 0 && event.end_at.hour == 0 && event.end_at.min == 0
-                  ' #{event.start_at.mday}-#{event.end_at.mday}.
-                - else
-                  ' #{t(:date)[:day_names][event.start_at.wday]} #{event.start_at.mday}.
-                  = event.start_at.strftime('%H:%M')
-                  | -
-                  ' #{t(:date)[:day_names][event.end_at.wday]}  #{event.end_at.mday}.
-                  = event.end_at.strftime('%H:%M')
-
-        h5.clearfix style="margin-bottom:0;color:#FFB400"
-          - if admin? || body
-            = link_to event.localized_name, more_url
-          - else
-            = event.localized_name
-
-        - if user?
-          = render 'layouts/event_details', event: event
-        = textalize ingress
-        .text-right
-          = link_to more_url, class: 'btn btn-info'
-            => more_url == event ? 'Les mer' : t(:registration)
-            i.fa.fa-angle-double-right
+      .alert.alert-info = render 'layouts/event_main', event: event, display_year: display_year, display_month: display_month, display_times: display_times
