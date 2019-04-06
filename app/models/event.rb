@@ -55,6 +55,22 @@ class Event < ApplicationRecord
     (end_at || start_at).to_date >= Date.current
   end
 
+  def publish_at
+    [1.month.ago, ((start_at - Time.current) / 2).seconds.ago].max
+  end
+
+  def expired?
+    Time.current > expire_at
+  end
+
+  def expire_at
+    (end_at || start_at) + 1.week
+  end
+
+  def summary
+    ingress
+  end
+
   def ingress
     paragraphs&.first
   end
@@ -75,6 +91,20 @@ class Event < ApplicationRecord
     declined_invitees.map(&:user)
   end
 
+  def creator; end
+
+  def title
+    localized_name
+  end
+
+  def publication_state
+    if [name, start_at].all?(&:present?)
+      NewsItem::PublicationState::PUBLISHED
+    else
+      NewsItem::PublicationState::DRAFT
+    end
+  end
+
   def localized_name
     (I18n.locale == :nb ? name : name_en) || name
   end
@@ -84,6 +114,10 @@ class Event < ApplicationRecord
   end
 
   delegate :size, to: :attending_invitees
+
+  def news_item_likes
+    nil
+  end
 
   private
 

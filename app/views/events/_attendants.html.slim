@@ -1,81 +1,80 @@
 .row
   .col-9
     - if @event.event_invitees.any?
-      div style="float: left"
-        table.table.table-hover class=('table-sm' if @event.event_invitees.size > 24)
-          thead
+      table.table.table-hover class=('table-sm' if @event.event_invitees.size > 24)
+        thead
+          tr
+            th Navn
+            th Organisasjon
+            th E-post
+            th Telefon
+            th Vil delta
+            th Medhjelper
+            th Betalt
+            th Kommentar
+            th
+        tbody
+          - for inv in @event.event_invitees.sort_by(&:name)
             tr
-              th Navn
-              th Organisasjon
-              th E-post
-              th Telefon
-              th Vil delta
-              th Medhjelper
-              th Betalt
-              th Kommentar
-              th
-          tbody
-            - for inv in @event.event_invitees.sort_by(&:name)
-              tr
-                td = link_to inv.name, with_detour(edit_event_invitee_path(inv), anchor: :invitees_tab)
-                td = inv.organization
-                td
-                  - if inv.email.present?
-                    = link_to inv.email, "mailto:#{inv.email}?subject=#{@event.name}"
-                td = inv.phone
-                td align="center"
-                  = {true => 'Ja', false => 'Nei'}[inv.will_attend]
-                  - if inv.will_attend
-                    - unless inv.confirmed?
-                      = link_to('Bekreft', with_detour({controller: :event_invitee_messages, \
-                                    action: inv.signup_confirmation ? :edit : :new, \
-                                    id: inv.signup_confirmation.try(:id), \
-                                    event_invitee_message: { \
-                                            message_type: EventInviteeMessage::MessageType::SIGNUP_CONFIRMATION, \
-                                            event_invitee_id: inv.id, \
-                                    }}, anchor: :invitees_tab), class: 'btn btn-success btn-sm mx-2')
-                    = link_to('Avslå', with_detour({controller: :event_invitee_messages, \
+              td = link_to inv.name, with_detour(edit_event_invitee_path(inv), anchor: :invitees_tab)
+              td = inv.organization
+              td
+                - if inv.email.present?
+                  = link_to inv.email, "mailto:#{inv.email}?subject=#{@event.name}"
+              td = inv.phone
+              td align="center"
+                = {true => 'Ja', false => 'Nei'}[inv.will_attend]
+                - if inv.will_attend
+                  - unless inv.confirmed?
+                    = link_to('Bekreft', with_detour({controller: :event_invitee_messages, \
                                   action: inv.signup_confirmation ? :edit : :new, \
                                   id: inv.signup_confirmation.try(:id), \
                                   event_invitee_message: { \
-                                          message_type: EventInviteeMessage::MessageType::SIGNUP_REJECTION, \
+                                          message_type: EventInviteeMessage::MessageType::SIGNUP_CONFIRMATION, \
                                           event_invitee_id: inv.id, \
-                                  }}, anchor: :invitees_tab), class: 'btn btn-danger btn-sm') unless inv.signup_confirmation.try(:ready_at)
-                  - elsif inv.will_attend.nil?
-                    - if inv.invitation&.sent_at
-                      = "Invitert #{inv.invitation.sent_at.to_date}"
-                    - elsif inv.invitation&.ready_at
-                      | Inviterer #{inv.invitation.ready_at.to_date}
-                    - else
-                      = link_to('Send invitasjon', with_detour({controller: :event_invitee_messages, \
-                                    action: inv.invitation ? :edit : :new, \
-                                    id: inv.invitation.try(:id), \
+                                  }}, anchor: :invitees_tab), class: 'btn btn-success btn-sm mx-2')
+                  = link_to('Avslå', with_detour({controller: :event_invitee_messages, \
+                                action: inv.signup_confirmation ? :edit : :new, \
+                                id: inv.signup_confirmation.try(:id), \
+                                event_invitee_message: { \
+                                        message_type: EventInviteeMessage::MessageType::SIGNUP_REJECTION, \
+                                        event_invitee_id: inv.id, \
+                                }}, anchor: :invitees_tab), class: 'btn btn-danger btn-sm') unless inv.signup_confirmation.try(:ready_at)
+                - elsif inv.will_attend.nil?
+                  - if inv.invitation&.sent_at
+                    = "Invitert #{inv.invitation.sent_at.to_date}"
+                  - elsif inv.invitation&.ready_at
+                    | Inviterer #{inv.invitation.ready_at.to_date}
+                  - else
+                    = link_to('Send invitasjon', with_detour({controller: :event_invitee_messages, \
+                                  action: inv.invitation ? :edit : :new, \
+                                  id: inv.invitation.try(:id), \
+                                  event_invitee_message: { \
+                                          message_type: EventMessage::MessageType::INVITATION, \
+                                          event_invitee_id: inv.id, \
+                                  }}, anchor: :invitees_tab))
+                    - unless inv.invitation
+                      - create_link = with_detour({ controller: :event_invitee_messages, action: :create, id: inv.invitation.try(:id), \
                                     event_invitee_message: { \
                                             message_type: EventMessage::MessageType::INVITATION, \
                                             event_invitee_id: inv.id, \
-                                    }}, anchor: :invitees_tab))
-                      - unless inv.invitation
-                        - create_link = with_detour({ controller: :event_invitee_messages, action: :create, id: inv.invitation.try(:id), \
-                                      event_invitee_message: { \
-                                              message_type: EventMessage::MessageType::INVITATION, \
-                                              event_invitee_id: inv.id, \
-                                              ready_at: Time.current, \
-                                       } }, anchor: :invitees_tab)
-                        a.btn.btn-danger.btn-sm.ml-2 title='Send nå!' data-toggle=:tooltip href=create_link data-method=:post
-                          i.fa.fa-angle-double-right
-                td align="center"
-                  = {true => 'Ja', false => 'Nei'}[inv.will_work] if inv.will_attend
-                td align="right" = inv.payed if inv.payed.to_i > 0
-                td = inv.comment
-                td
-                  = link_to 'Vis', with_detour(event_invitee_user_path(inv), anchor: :invitees_tab), class: 'btn btn-link'
-                  = link_to 'Slett', with_detour(inv, anchor: :invitees_tab), data: {confirm: 'Er du sikker?'}, method: :delete, class: 'btn btn-link'
-            tr
+                                            ready_at: Time.current, \
+                                     } }, anchor: :invitees_tab)
+                      a.btn.btn-danger.btn-sm.ml-2 title='Send nå!' data-toggle=:tooltip href=create_link data-method=:post
+                        i.fa.fa-angle-double-right
+              td align="center"
+                = {true => 'Ja', false => 'Nei'}[inv.will_work] if inv.will_attend
+              td align="right" = inv.payed if inv.payed.to_i > 0
+              td = inv.comment
               td
-              td
-              td
-              td
-              td Ja: #{@event.event_invitees.select(&:will_attend).size}
+                = link_to 'Vis', with_detour(event_invitee_user_path(inv), anchor: :invitees_tab), class: 'btn btn-link'
+                = link_to 'Slett', with_detour(inv, anchor: :invitees_tab), data: {confirm: 'Er du sikker?'}, method: :delete, class: 'btn btn-link'
+          tr
+            td
+            td
+            td
+            td
+            td Ja: #{@event.event_invitees.select(&:will_attend).size}
     - else
       .alert.alert-info Det er ingen påmeldte enda.
   .col-3
