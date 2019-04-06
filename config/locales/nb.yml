@@ -310,6 +310,7 @@ nb:
   published: Publisert
   rank: Grad
   rank_id: Grad
+  registration: "Påmelding"
   registration_link: "Du kan melde deg på på web."
   sick: Syk
   user_login_succeeded: Login successful

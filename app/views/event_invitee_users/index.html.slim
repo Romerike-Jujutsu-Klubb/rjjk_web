@@ -1,0 +1,5 @@
+h1 Påmelding til arrangement
+
+.row
+  - Event.upcoming.each do |e|
+    .col = link_to e.name, e

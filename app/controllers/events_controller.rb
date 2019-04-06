@@ -9,7 +9,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-    @event_invitee = EventInvitee.find_by(event_id: @event.id, user_id: current_user.id)
+    @event_invitee = @event.event_invitees.find { |ei| ei.user_id == current_user.id }
   end
 
   def preview

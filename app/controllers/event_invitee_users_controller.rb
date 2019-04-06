@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EventInviteeUsersController < ApplicationController
-  before_action do
+  before_action except: :index do
     @event_invitee = EventInvitee.find(params[:id])
 
     token = params[:security_token]
@@ -11,6 +11,8 @@ class EventInviteeUsersController < ApplicationController
       redirect_to @event_invitee.event, alert: I18n.t(:access_denied, locale: @event_invitee.locale)
     end
   end
+
+  def index; end
 
   def show; end
 
@@ -43,7 +45,7 @@ class EventInviteeUsersController < ApplicationController
 
   def will_not_work
     if @event_invitee.update(will_work: false)
-      flash[:notice] = 'Du vill ikke jobbe på leiren.'
+      flash[:notice] = 'Du vil ikke jobbe på leiren.'
       redirect_to event_invitee_user_path(@event_invitee)
     else
       redirect_back fallback_location: root_path
