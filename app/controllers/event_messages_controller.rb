@@ -41,7 +41,7 @@ class EventMessagesController < ApplicationController
   def destroy
     @event_message = EventMessage.find(params[:id])
     @event_message.destroy
-    redirect_to event_messages_url
+    redirect_to edit_event_path(@event_message.event.id, anchor: :messages_tab)
   end
 
   def template

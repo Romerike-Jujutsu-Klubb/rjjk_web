@@ -22,6 +22,7 @@ class EventMessage < ApplicationRecord
 
       Har du noen spørsmål, så ta kontakt med Svein Robert på medlem@jujutsu.no eller på telefon 975 34 766.
 
+      Vi vil fortløpende oppdatere informasjon på [jujutsu.no]([EVENT_LINK]).
       --
       Med vennlig hilsen,
       Uwe Kubosch
