@@ -35,3 +35,9 @@ h2 for #{@event_invitee.name}
           h3 Du vil ikke hjelpe til.
       - else
         = link_to @event_invitee.will_work.nil? ? 'Nei takk' : 'Jeg vil ikke hjelpe til', will_not_work_event_invitee_user_path(@event_invitee), class: 'btn btn-secondary'
+
+- if @event_invitee.will_attend && (!@event_invitee.user&.member || !@event_invitee.will_work.nil? )
+  .text-center
+    a.btn.btn-info.btn-lg href=event_path(@event_invitee.event.id)
+      ' Gå til informasjonssiden
+      i.fa.fa-angle-double-right

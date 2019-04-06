@@ -75,6 +75,10 @@ class Event < ApplicationRecord
     declined_invitees.map(&:user)
   end
 
+  def localized_name
+    I18n.locale == :nb ? name : name_en
+  end
+
   def body
     paragraphs&.[](1..-1)
   end
@@ -84,6 +88,6 @@ class Event < ApplicationRecord
   private
 
   def paragraphs
-    description&.split(/\r?\n\r?\n/)
+    (I18n.locale == :nb ? description : description_en)&.split(/\r?\n\r?\n/)
   end
 end
