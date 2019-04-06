@@ -60,7 +60,7 @@ class Event < ApplicationRecord
   end
 
   def invited_users
-    event_invitees.map(&:user)
+    users
   end
 
   def confirmed_users

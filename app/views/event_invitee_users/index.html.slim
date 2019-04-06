@@ -1,5 +1,6 @@
 h1 Påmelding til arrangement
 
-.row
+.row.mt-5
   - Event.upcoming.each do |e|
-    .col = link_to e.name, e
+    .col
+      .alert.alert-success = link_to e.name, event_invitee_user_path(e.event_invitees.for_user(current_user.id).first.id)

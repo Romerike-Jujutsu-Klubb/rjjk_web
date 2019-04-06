@@ -18,7 +18,7 @@ class UserMessage < ApplicationRecord
   validates :subject, length: { maximum: 255, allow_blank: false }
   validates :key, length: { maximum: 64, allow_blank: false }
   validates :tag, length: { maximum: 64 }
-  validates :title, length: { maximum: 255, allow_blank: false }
+  validates :title, length: { maximum: 255 }
 
   def to
     user.emails

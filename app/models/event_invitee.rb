@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class EventInvitee < ApplicationRecord
+  scope :for_user, ->(user_id) { where user_id: user_id }
+
   belongs_to :event
   belongs_to :user, optional: true
 
