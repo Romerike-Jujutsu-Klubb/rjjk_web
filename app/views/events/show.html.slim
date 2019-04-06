@@ -1,6 +1,8 @@
 - @title = I18n.locale != :nb ? @event.name_en : @event.name
 - if @event_invitee
   - registration_link = link_to(t(:registration_link), event_invitee_user_path(@event_invitee.id))
+- else
+  - registration_link = ''
 
 .float-right
   - if @event_invitee
