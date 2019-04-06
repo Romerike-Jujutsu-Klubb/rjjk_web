@@ -29,7 +29,7 @@ class EventMessagesControllerTest < ActionController::TestCase
       } }
     end
 
-    assert_redirected_to event_message_path(EventMessage.last)
+    assert_redirected_to edit_event_message_path(EventMessage.last, anchor: :messages_tab)
   end
 
   test 'should show event_message' do

@@ -31,10 +31,12 @@ class WelcomeController < ApplicationController
             body: render_to_string(partial: 'layouts/next_practice'))
       end
       Event.upcoming.order(:start_at).each do |event|
-        @news_items << NewsItem.new(publish_at: @next_practice.start_at - 1.day,
-            body: render_to_string(partial: 'layouts/event_main', locals: { event: event,
-                                                                            display_year: event.start_at.to_date.cwyear != Date.current.cwyear,
-                                                                            display_month: true, display_times: true }))
+        @news_items << NewsItem.new(publish_at: event.publish_at,
+            body: render_to_string(partial: 'layouts/event_main', locals: {
+              event: event,
+              display_year: event.start_at.to_date.cwyear != Date.current.cwyear,
+              display_month: true, display_times: true
+            }))
       end
       @news_items.sort_by! { |n| n.publish_at || n.created_at }.reverse!
       render template: 'news/index'

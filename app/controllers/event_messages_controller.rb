@@ -22,7 +22,8 @@ class EventMessagesController < ApplicationController
   def create
     @event_message = EventMessage.new(params[:event_message])
     if @event_message.save
-      back_or_redirect_to edit_event_message_path(@event_message, anchor: :messages_tab), notice: 'Event message was successfully created.'
+      back_or_redirect_to edit_event_message_path(@event_message, anchor: :messages_tab),
+          notice: 'Event message was successfully created.'
     else
       render action: 'new'
     end
