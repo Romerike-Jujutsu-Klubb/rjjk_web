@@ -58,6 +58,6 @@ class EventMessagesControllerTest < ActionController::TestCase
       delete :destroy, params: { id: @event_message }
     end
 
-    assert_redirected_to event_messages_path
+    assert_redirected_to edit_event_path(@event_message.event, anchor: :messages_tab)
   end
 end
