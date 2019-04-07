@@ -88,16 +88,12 @@
       = f.collection_check_boxes :group_ids, @groups, :id, :name
       = f.primary 'Legg til'
 
-    h3.mt-3 Klubber
-    table.table
-      tbody
-        - EventInvitee.where(user_id: nil).where.not(organization: 'Romerike Jujutsu Klubb').where.not(event_id: @event.id).where.not(email: @event.event_invitees.map(&:email)).group_by(&:organization).sort_by{|o,i| [-i.size, o]}.each do |org, invitees|
-          tr
-            td.align-top = org.presence || :Ingen
-            td
-              ul.m-0.pl-0 style="list-style: none"
-                - invitees.sort_by(&:email).each do |i|
-                  li
-                    = link_to(with_detour({ controller: :event_invitees, action: :new, event_invitee: i.attributes.except('comment', 'will_attend').merge(event_id: @event.id) }, anchor: :invitees_tab), class: 'btn btn-secondary btn-sm mr-1 py-0')
-                      i.fa.fa-plus
-                    = link_to i.email, with_detour(edit_event_invitee_path(i), anchor: :invitees_tab)
+    h3.mt-4 Klubber
+    - EventInvitee.where(user_id: nil).where.not(organization: 'Romerike Jujutsu Klubb').where.not(event_id: @event.id).where.not(email: @event.event_invitees.map(&:email)).group_by(&:organization).sort_by{|o,i| [-i.size, o]}.each do |org, invitees|
+      h4.mt-3 = org.presence || 'Ingen klubb'
+      ul.m-0.pl-0 style="list-style: none"
+        - invitees.sort_by(&:email).each do |i|
+          li
+            a.btn.btn-secondary.btn-sm.mr-2.py-0 href=with_detour({ controller: :event_invitees, action: :new, event_invitee: i.attributes.except('comment', 'will_attend').merge(event_id: @event.id) }, anchor: :invitees_tab)
+              i.fa.fa-plus
+            = link_to i.email, with_detour(edit_event_invitee_path(i), anchor: :invitees_tab)
