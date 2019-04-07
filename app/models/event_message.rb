@@ -17,16 +17,31 @@ class EventMessage < ApplicationRecord
       Vi har mottatt din påmelding til [EVENT_NAME],
       og kan bekrefte at du har fått plass.
 
-      Deltakeravgiften på kr 800,- kan betales til konto 7035.05.37706.
-      Merk betalingen med "[EVENT_NAME]".
+      Deltakeravgiften på kr 800,- betales på leiren med kort eller Vipps.
 
-      Har du noen spørsmål, så ta kontakt med Svein Robert på medlem@jujutsu.no eller på telefon 975 34 766.
+      Har du noen spørsmål, så ta kontakt med oss på leir@jujutsu.no eller på telefon xxx xx xxx.
 
       Vi vil fortløpende oppdatere informasjon på [jujutsu.no]([EVENT_LINK]).
       --
       Med vennlig hilsen,
-      Uwe Kubosch
       Romerike Jujutsu Klubb
+      https://jujutsu.no/
+    TEXT
+    SIGNUP_REJECTION_SUBJECT = 'Påmelding til [EVENT_NAME]'
+    SIGNUP_REJECTION = <<~TEXT
+      Hei [EVENT_INVITEE_NAME]!
+
+      Vi har mottatt din påmelding til [EVENT_NAME],
+      men må dessverre meddele at du ikke har fått plass pga. plassmangel.
+
+      Vi har din kontaktinfo og vil ta kontakt hvis det skulle bli ledig plass.
+
+      Har du noen spørsmål, så ta kontakt med oss på leir@jujutsu.no eller på telefon xxx xx xxx.
+
+      --
+      Med vennlig hilsen,
+      Romerike Jujutsu Klubb
+      https://jujutsu.no/
     TEXT
   end
   belongs_to :event

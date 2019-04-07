@@ -52,6 +52,10 @@ class EventInvitee < ApplicationRecord
     signup_confirmation&.ready_at
   end
 
+  def rejected?
+    signup_rejection&.ready_at
+  end
+
   def locale
     user&.locale || :nb
   end

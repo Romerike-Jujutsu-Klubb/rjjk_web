@@ -17,37 +17,21 @@ class EventInviteeMessage < ApplicationRecord
 
   def initialize(*args)
     super
-    if message_type == EventMessage::MessageType::INVITATION
+    return if subject.present? && body.present?
+    return unless message_type
+
+    if (event_message = event_invitee.event.event_messages.find_by(message_type: message_type))
+      self.subject ||= event_message.subject
+      self.body ||= event_message.body
+    elsif EventMessage::Templates.const_defined?(message_type)
+      self.subject ||= EventMessage::Templates.const_get("#{message_type}_SUBJECT")
+      self.body ||= EventMessage::Templates.const_get(message_type)
+    elsif message_type == EventMessage::MessageType::INVITATION
       self.subject ||= "Invitasjon til #{event_invitee.event.name}"
-      self.body ||= event_invitee.replace_markers(event_invitee.event.description)
-    elsif message_type == MessageType::SIGNUP_CONFIRMATION
-      event_message = event_invitee.event.event_messages
-          .find_by(message_type: EventMessage::MessageType::SIGNUP_CONFIRMATION)
-      if event_message
-        self.subject ||= event_message.subject
-        self.body ||= event_message.body
-      end
-
-      self.subject ||= EventMessage::Templates::SIGNUP_CONFIRMATION_SUBJECT
-      self.body ||= EventMessage::Templates::SIGNUP_CONFIRMATION
-
-      self.subject = event_invitee.replace_markers(subject)
-      self.body = event_invitee.replace_markers(body)
-    elsif message_type == MessageType::SIGNUP_REJECTION
-      self.subject ||= "Påmelding til #{event_invitee.event.name}"
-      self.body ||= <<~TEXT
-        Hei #{event_invitee.name}!\n\nVi har mottatt din påmelding til #{event_invitee.event.name},
-        men må dessverre meddele at du ikke har fått plass pga. plassmangel.
-
-        Vi har din kontaktinfo og vil ta kontakt hvis det skulle bli ledig plass.
-
-        Har du noen spørsmål, så ta kontakt med Uwe på uwe@kubosch.no eller på telefon 922 06 046.
-
-        --
-        Med vennlig hilsen,
-        Uwe Kubosch
-        Romerike Jujutsu Klubb
-      TEXT
+      self.body ||= event_invitee.event.description
     end
+
+    self.subject = event_invitee.replace_markers(subject)
+    self.body = event_invitee.replace_markers(body)
   end
 end
