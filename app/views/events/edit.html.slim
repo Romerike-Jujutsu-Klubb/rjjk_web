@@ -29,7 +29,7 @@ ul.nav.nav-tabs
           - @event.event_messages.each do |em|
             tr
               td = em.message_type
-              td = link_to em.subject, em
+              td = link_to em.subject, edit_event_message_path(em)
               td = em.ready_at
               td: a.btn.btn-danger.btn-sm href=event_message_path(em) data-method=:delete data-confirm="Er du sikker?"
                 i.fa.fa-trash
