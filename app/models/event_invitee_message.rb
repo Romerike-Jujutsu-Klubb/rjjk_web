@@ -19,12 +19,7 @@ class EventInviteeMessage < ApplicationRecord
     super
     if message_type == EventMessage::MessageType::INVITATION
       self.subject ||= "Invitasjon til #{event_invitee.event.name}"
-      self.body ||= event_invitee.event.description
-          .gsub(%r{<br />}, "\n")
-          .gsub(%r{<p>(.*?)</p>}m, "\\1\n").gsub(%r{<a .*?>(.*?)</a>}, '\\1')
-          .gsub('[EVENT_REGISTRATION_LINK]', I18n.with_locale(:nb) { event_invitee.registration_link })
-          .gsub('[EVENT_LINK]', Rails.application.routes.url_helpers.event_path(event_invitee.event.id))
-          .html_safe # rubocop: disable Rails/OutputSafety
+      self.body ||= event_invitee.replace_markers(event_invitee.event.description)
     elsif message_type == MessageType::SIGNUP_CONFIRMATION
       event_message = event_invitee.event.event_messages
           .find_by(message_type: EventMessage::MessageType::SIGNUP_CONFIRMATION)
@@ -36,10 +31,8 @@ class EventInviteeMessage < ApplicationRecord
       self.subject ||= EventMessage::Templates::SIGNUP_CONFIRMATION_SUBJECT
       self.body ||= EventMessage::Templates::SIGNUP_CONFIRMATION
 
-      self.subject = self.subject.gsub('[EVENT_NAME]', event_invitee.event.name)
-      self.body = self.body.gsub('[EVENT_NAME]', event_invitee.event.name)
-          .gsub('[EVENT_INVITEE_NAME]', event_invitee.name)
-          .gsub('[EVENT_LINK]', Rails.application.routes.url_helpers.event_url(event_invitee.event.id))
+      self.subject = event_invitee.replace_markers(subject)
+      self.body = event_invitee.replace_markers(body)
     elsif message_type == MessageType::SIGNUP_REJECTION
       self.subject ||= "Påmelding til #{event_invitee.event.name}"
       self.body ||= <<~TEXT

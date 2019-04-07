@@ -6,7 +6,7 @@ h4.clearfix
     ' Neste måned
     i.fa.fa-chevron-right
 
-- report_month = t(:date)[:month_names][@first_date.month]
+- report_month = month_name(@first_date.month)
 - report_year = @first_date.year
 
 h2 Oppmøterapport #{report_month} #{report_year}

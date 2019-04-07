@@ -34,8 +34,9 @@ class Semester < ApplicationRecord
   end
 
   def name
-    month_names = I18n.t('date.month_names')
-    "#{start_on.year}: #{month_names[start_on.mon]}→#{month_names[end_on.mon]}"
+    start_month = ApplicationController.helpers.month_name(start_on.mon)
+    end_month = ApplicationController.helpers.month_name(end_on.mon)
+    "#{start_on.year}: #{start_month}→#{end_month}"
   end
 
   def current?

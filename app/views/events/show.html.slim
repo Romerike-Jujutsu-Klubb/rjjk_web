@@ -1,17 +1,18 @@
 - @title = I18n.locale != :nb ? @event.name_en : @event.name
 
-.float-right
+.float-right.mb-3
   - if @event_invitee
     a.btn.btn-info.mr-3 href=event_invitee_user_path(@event_invitee.id) = t :registration
   - if I18n.locale != :en && @event.name_en && @event.description_en
-    a href=url_for(lang: :en) title='Click for English version' data-toggle=:tooltip
-      = image_tag('no.svg', style: 'width: 3rem')
+    a href=url_for(lang: :en)
+      img style='width:3rem' src=asset_path('no.svg') title='Click for English version' data-toggle=:tooltip
   - elsif I18n.locale != :nb && @event.name && @event.description
     a href=url_for(lang: :nb) title='Klikk for Norsk versjon' data-toggle=:tooltip
       = image_tag('gb.svg', style: 'width: 3rem')
-  - if admin? && @event.persisted?
-    .text-right.mt-3
-      a.btn.btn-primary href=edit_event_path(@event, anchor: :invitees_tab) Admin
+
+- if admin? && @event.persisted?
+  .float-right.clear-right
+    a.btn.btn-primary href=edit_event_path(@event, anchor: :invitees_tab) Admin
 
 h1 = @title
 
@@ -25,7 +26,6 @@ p
 
 - body = textalize(I18n.locale != :nb ? @event.description_en : @event.description)
 - if @event_invitee
-  - registration_link = @event_invitee.registration_link
+  == @event_invitee.replace_markers(body)
 - else
-  - registration_link = ''
-== body.gsub('[EVENT_REGISTRATION_LINK]', registration_link)
+  - body.gsub('[EVENT_REGISTRATION_LINK]', '')

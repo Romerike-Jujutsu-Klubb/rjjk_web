@@ -64,7 +64,7 @@ class WelcomeController < ApplicationController
 
   def graduation_body(graduations)
     table_rows = graduations.map do |g|
-      weekday = t(:date)[:day_names][g.held_on.wday]
+      weekday = helpers.day_name(g.held_on.wday)
       "|#{g.group.name}|#{weekday}|#{g.held_on}|kl. #{g.start_at.strftime('%R')}|"
     end
     "Følgende graderinger er satt opp dette semesteret:\n\n#{table_rows.join("\n")}"

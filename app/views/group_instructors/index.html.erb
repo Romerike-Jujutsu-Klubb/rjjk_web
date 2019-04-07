@@ -28,7 +28,7 @@
           <% group_instruction = group_instructions.first %>
           <tr>
             <td rowspan="<%= group_instructions.size %>"><%= link_to group_instruction.group_schedule.group.name, group_instruction.group_semester %></td>
-            <td rowspan="<%= group_instructions.select { |gi| gi.group_schedule.weekday == group_instruction.group_schedule.weekday }.size %>"><%= group_instruction.group_schedule.weekday_name %></td>
+            <td rowspan="<%= group_instructions.select { |gi| gi.group_schedule.weekday == group_instruction.group_schedule.weekday }.size %>"><%= day_name group_instruction.group_schedule.weekday %></td>
             <td><%= link_to group_instruction.member.name, group_instruction.member %></td>
             <td><%= group_instruction.role %></td>
             <td><%= link_to 'Endre', edit_group_instructor_path(group_instruction) %></td>
@@ -39,7 +39,7 @@
               <% day_instruction = day_instructions.first %>
               <tr>
                 <% if day_instruction.group_schedule.weekday != group_instruction.group_schedule.weekday %>
-                    <td rowspan="<%= day_instructions.size %>"><%= day_instruction.group_schedule.weekday_name %></td>
+                    <td rowspan="<%= day_instructions.size %>"><%= day_name day_instruction.group_schedule.weekday %></td>
                 <% end %>
                 <td><%= link_to day_instruction.member.name, day_instruction.member %></td>
                 <td><%= day_instruction.role %></td>

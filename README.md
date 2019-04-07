@@ -47,3 +47,10 @@ https://developers.google.com/apis-explorer/?hl=en_US#p/drive/v3/
 ## testmysite
 
 https://testmysite.withgoogle.com/intl/no-no/?utm_source=google_search&utm_medium=dcallout&utm_campaign=v2f_no
+
+
+## Linting
+
+###Static code analysis:
+
+https://github.com/slim-template/slim#related-projects

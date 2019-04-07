@@ -13,29 +13,29 @@
         h4.mt-3.logo-red style="margin-bottom:-1rem" = last_year
       - if event.start_at.mon != last_mon
         - last_mon = event.start_at.mon
-        h5.mt-3 style="color: #E20916" = I18n.t("date.month_names")[last_mon]
+        h5.mt-3 style="color: #E20916" = month_name(last_mon)
       - if event.start_at != last_start_at || event.end_at != last_end_at
         - last_start_at = event.start_at
         - last_end_at = event.end_at
         h5.mt-3.mb-1
           - if event.end_at.nil? || event.end_at == event.start_at
             ' #{event.start_at.mday}.
-            = t(:date)[:day_names][event.start_at.wday]
+            = day_name(event.start_at.wday)
             - if event.start_at.min != 0 || event.start_at.hour != 0
               =< event.start_at.strftime('kl. %H:%M')
           - else
             - if event.end_at.to_date == event.start_at.to_date
               ' #{event.start_at.mday}.
-              => t(:date)[:day_names][event.start_at.wday]
+              => day_name(event.start_at.wday)
               | #{event.start_at.strftime('%H:%M')} - #{event.end_at.strftime('%H:%M')}
             - else
               - if event.start_at.min == 0 && event.start_at.hour == 0 && event.end_at.hour == 0 && event.end_at.min == 0
                 ' #{event.start_at.mday}-#{event.end_at.mday}.
               - else
-                ' #{t(:date)[:day_names][event.start_at.wday]} #{event.start_at.mday}.
+                ' #{day_name(event.start_at.wday)} #{event.start_at.mday}.
                 = event.start_at.strftime('%H:%M')
                 | -
-                ' #{t(:date)[:day_names][event.end_at.wday]}  #{event.end_at.mday}.
+                ' #{day_name(event.end_at.wday)}  #{event.end_at.mday}.
                 = event.end_at.strftime('%H:%M')
 
       - if event.id

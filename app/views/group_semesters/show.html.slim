@@ -40,7 +40,7 @@ h1
               td.text-nowrap
                 = practice.date
                 .d-block.d-md-inline
-                =< I18n.t('date.day_names')[practice.date.cwday]
+                =< day_name(practice.date.cwday)
               / td: .badge.badge-info = practice.status
               td = practice.message
       #history.tab-pane
@@ -50,6 +50,6 @@ h1
               td.text-nowrap
                 = practice.date
                 .d-block.d-md-inline
-                =< I18n.t('date.day_names')[practice.date.cwday]
+                =< day_name(practice.date.cwday)
               / td: .badge.badge-info = practice.status
               td = practice.message

@@ -49,7 +49,7 @@
               <tr>
                 <td><%= link_to gi.group_schedule.group.name, only_path: false, controller: :group_instructors,
                     action: :new, group_instructor: gi.attributes.except('id').select { |k, v| v } %></td>
-                <td><%= gi.group_schedule.weekday_name %></td>
+                <td><%= day_name gi.group_schedule.weekday %></td>
               </tr>
           <% end %>
         </table>

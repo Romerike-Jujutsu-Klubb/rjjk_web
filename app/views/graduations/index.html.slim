@@ -18,7 +18,7 @@ table.table
       th
         - if held_on.month != month
           - month = held_on.month
-          = t('date.month_names')[held_on.month]
+          = month_name(held_on.month)
       th
         - if held_on != date
           - date = held_on

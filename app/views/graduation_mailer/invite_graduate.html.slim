@@ -1,8 +1,8 @@
 h3 Hei #{@graduate.member.name}!
 
-' Du er satt opp til gradering #{I18n.t(:"date.day_names")[@graduate.graduation.held_on.cwday].downcase}
+' Du er satt opp til gradering #{day_name(@graduate.graduation.held_on.cwday).downcase}
 ' #{@graduate.graduation.held_on.strftime '%d'}.
-' #{I18n.t(:"date.month_names")[@graduate.graduation.held_on.mon].downcase}
+' #{month_name(@graduate.graduation.held_on.mon).downcase}
 
 p
   ' Har du mulighet til delta?  Klikk på en av linkene nedenfor for å gi beskjed

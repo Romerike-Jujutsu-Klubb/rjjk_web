@@ -3,7 +3,7 @@
     .col-md-6
       = f.select :group_schedule_id, \
               @group_schedules.sort_by { |gs| [gs.group.from_age, gs.weekday] }. \
-                      map { |gs| ["#{gs.group.name} #{gs.weekday_name}", gs.id] }, \
+                      map { |gs| ["#{gs.group.name} #{day_name gs.weekday}", gs.id] }, \
               {prompt: 'Velg gruppe og dag'}
     .col-md-6
       = f.select :member_id, @group_instructors.map { |g| [g&.name, g&.id] }, \

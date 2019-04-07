@@ -18,5 +18,5 @@
   = f.text_area :body, class: :expanding
   .btn-toolbar.float-right.my-3
     = back_or_link_to 'Tilbake', event_messages_path, class: 'btn btn-link'
-    = link_to 'Vis', @event_message if @event_message.id
+    = link_to 'Vis', @event_message, class: 'btn btn-link' if @event_message.id
     = f.primary

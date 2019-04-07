@@ -7,7 +7,7 @@ h1 Registrer oppmøte
     - if @attendance.practice.nil? || @attendance.practice.new_record?
       = f.fields_for :practice do |pf|
         .col-md-4
-          = pf.select :group_schedule_id, ['', ''] + @group_schedules.map { |gs| ["#{gs.group.name} #{gs.weekday_name}", gs.id] }
+          = pf.select :group_schedule_id, ['', ''] + @group_schedules.map { |gs| ["#{gs.group.name} #{day_name gs.weekday}", gs.id] }
         .col-md-4
           = pf.text_field :year, size: 4
         .col-md-4

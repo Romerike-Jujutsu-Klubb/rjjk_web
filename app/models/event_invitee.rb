@@ -60,8 +60,17 @@ class EventInvitee < ApplicationRecord
     token == security_token || security_token.blank?
   end
 
+  def replace_markers(string)
+    string
+        .gsub('[EVENT_NAME]', event.name)
+        .gsub('[EVENT_LINK]',
+            Rails.application.routes.url_helpers.event_url(event.id, security_token: security_token))
+        .gsub('[EVENT_INVITEE_NAME]', name)
+        .gsub('[EVENT_REGISTRATION_LINK]', I18n.with_locale(:nb) { registration_link })
+  end
+
   def registration_link
     link_to(I18n.t(:registration_link),
-        Rails.application.routes.url_helpers.event_invitee_user_path(id, security_token: security_token))
+        Rails.application.routes.url_helpers.event_invitee_user_url(id, security_token: security_token))
   end
 end

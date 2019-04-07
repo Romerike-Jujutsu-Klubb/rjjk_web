@@ -14,7 +14,7 @@
 <% @group_semesters.each do |group_semester| %>
   <tr>
     <td><%= group_semester.group.name %></td>
-    <td><%= group_semester.semester.start_on.year %> <%= t(:date)[:month_names][group_semester.semester.start_on.month] %> - <%= t(:date)[:month_names][group_semester.semester.end_on.month] %></td>
+    <td><%= group_semester.semester.start_on.year %> <%= month_name(group_semester.semester.start_on.month) %> - <%= t(:date)[:month_names][group_semester.semester.end_on.month] %></td>
     <td><%= group_semester.first_session %></td>
     <td><%= group_semester.last_session %></td>
     <td><%= link_to 'Vis', group_semester %></td>

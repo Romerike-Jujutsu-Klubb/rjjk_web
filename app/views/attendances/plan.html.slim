@@ -14,9 +14,9 @@ css:
         - @group_schedules.each do |gs|
           - date = Date.commercial(year, week, gs.weekday)
           th
-            => t(:date)[:day_names][gs.weekday]
+            => day_name(gs.weekday)
             ' #{date.day}.
-            = t(:date)[:month_names][date.mon]
+            = month_name(date.mon)
             - if @group_schedules.map(&:group).uniq.size > 1
               =< gs.group.full_name
       tr

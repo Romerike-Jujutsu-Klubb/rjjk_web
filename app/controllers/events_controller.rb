@@ -15,10 +15,10 @@ class EventsController < ApplicationController
   def preview
     I18n.locale = params[:preview_locale]
     @event = Event.new(params[:event])
-    @event.id = 42
+    @event.id ||= params[:id] || 42
     @event.created_at ||= Time.current
     @event.start_at ||= @event.created_at
-    @event_invitee = EventInvitee.new(id: 0, event_id: @event.id)
+    @event_invitee = EventInvitee.new(id: 0, event_id: @event.id, name: 'Bruce Lee')
     render action: :show, layout: false
   end
 
@@ -115,6 +115,7 @@ class EventsController < ApplicationController
       event_invitee_message.id = -event.id
       NewsletterMailer.event_invitee_message(event_invitee_message).store(recipient, tag: :event_invite)
     end
+    UserMessageSenderJob.perform_now if params[:example]
     redirect_to edit_event_path(event, anchor: :messages_tab), notice: 'Invitasjon er sendt.'
   end
 

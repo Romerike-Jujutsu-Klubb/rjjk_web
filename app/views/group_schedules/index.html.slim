@@ -14,8 +14,8 @@ table.table
   - for group_schedule in @group_schedules
     tr
       td = group_schedule.group.full_name
-      td align="center" = wday group_schedule.weekday
-      td = t group_schedule.start_at
-      td = t group_schedule.end_at
+      td align="center" = day_name group_schedule.weekday
+      td = group_schedule.start_at.strftime('%R')
+      td = group_schedule.end_at.strftime('%R')
       td = link_to 'Endre', edit_group_schedule_path(group_schedule)
       td = link_to 'Slett', group_schedule, data: {confirm: 'Sikker?'}, method: :delete

@@ -42,7 +42,7 @@ class ImagesController < ApplicationController
         image_content = image.content_data_io&.string
         if image_content.nil?
           icon_name = image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
-          redirect_to ActionController::Base.helpers.asset_path icon_name
+          redirect_to helpers.asset_path icon_name
           return
         end
         send_data(image_content, disposition: 'inline', type: image.content_type, filename: image.name)
@@ -63,21 +63,21 @@ class ImagesController < ApplicationController
       return
     end
     if image.video?
-      redirect_to ActionController::Base.helpers.asset_path 'video-icon-tran.png'
+      redirect_to helpers.asset_path 'video-icon-tran.png'
       return
     end
     if image.content_type == 'application/msword'
-      redirect_to ActionController::Base.helpers.asset_path 'msword-icon.png'
+      redirect_to helpers.asset_path 'msword-icon.png'
       return
     end
     if image.content_type == 'application/pdf'
-      redirect_to ActionController::Base.helpers.asset_path 'pdficon_large.png'
+      redirect_to helpers.asset_path 'pdficon_large.png'
       return
     end
     content_data_io = image.content_data_io
     if content_data_io.nil?
       icon_name = image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
-      redirect_to ActionController::Base.helpers.asset_path icon_name
+      redirect_to helpers.asset_path icon_name
       return
     end
     magick_image = MiniMagick::Image.read content_data_io
@@ -97,21 +97,21 @@ class ImagesController < ApplicationController
       return
     end
     if image.video?
-      redirect_to ActionController::Base.helpers.asset_path 'video-icon-tran.png'
+      redirect_to helpers.asset_path 'video-icon-tran.png'
       return
     end
     if image.content_type == 'application/msword'
-      redirect_to ActionController::Base.helpers.asset_path 'msword-icon.png'
+      redirect_to helpers.asset_path 'msword-icon.png'
       return
     end
     if image.content_type == 'application/pdf'
-      redirect_to ActionController::Base.helpers.asset_path 'pdficon_large.png'
+      redirect_to helpers.asset_path 'pdficon_large.png'
       return
     end
     content_data_io = image.content_data_io
     if content_data_io.nil?
       icon_name = image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
-      redirect_to ActionController::Base.helpers.asset_path icon_name
+      redirect_to helpers.asset_path icon_name
       return
     end
     magick_image = MiniMagick::Image.read content_data_io

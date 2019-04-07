@@ -20,15 +20,11 @@ class GroupSchedule < ApplicationRecord
 
   validates :end_at, :group, :start_at, :weekday, presence: true
 
-  def weekday_name
-    I18n.t(:date)[:day_names][weekday]
-  end
-
   def next_practice
     super || create_next_practice
   end
 
   def to_s
-    "#{group.full_name} #{weekday_name} #{start_at.to_s(false)}"
+    "#{group.full_name} #{ApplicationController.helpers.day_name weekday} #{start_at.to_s(false)}"
   end
 end

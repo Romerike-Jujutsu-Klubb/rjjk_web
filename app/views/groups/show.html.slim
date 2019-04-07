@@ -46,7 +46,7 @@ h3 = @group.name
 
   p: strong
     - @group.group_schedules.each do |gs|
-      => gs.weekday_name
+      => day_name gs.weekday
       = gs.start_at.strftime '%H:%M'
       | - #{gs.end_at.strftime '%H:%M'}
       br
@@ -76,10 +76,10 @@ div
           = @group.current_semester.first_session.month > 6 ? 'sommer' : 'jule'
           ' ferien er
           strong
-            => t(:date)[:day_names][@group.current_semester.first_session.cwday].downcase
+            => day_name(@group.current_semester.first_session.cwday).downcase
             = @group.current_semester.first_session.day
             ' .
-            = t(:date)[:month_names][@group.current_semester.first_session.month].downcase
+            = month_name(@group.current_semester.first_session.month).downcase
           | .
           br
         - if @group.current_semester.last_session
@@ -87,10 +87,10 @@ div
           = holiday_label(@group.current_semester.last_session)
           ' ferien er
           strong
-            => t(:date)[:day_names][@group.current_semester.last_session.cwday].downcase
+            => day_name(@group.current_semester.last_session.cwday).downcase
             = @group.current_semester.last_session.day
             | .
-            = t(:date)[:month_names][@group.current_semester.last_session.month].downcase
+            = month_name(@group.current_semester.last_session.month).downcase
           | .
           br
         - if @group.next_semester.try(:first_session)
@@ -98,10 +98,10 @@ div
           = @group.next_semester.first_session.month > 6 ? 'sommer' : 'jule'
           ' ferien er
           strong
-            = t(:date)[:day_names][@group.next_semester.first_session.cwday].downcase
+            = day_name(@group.next_semester.first_session.cwday).downcase
             = @group.next_semester.first_session.day
             | .
-            = t(:date)[:month_names][@group.next_semester.first_session.month].downcase
+            = month_name(@group.next_semester.first_session.month).downcase
           | .
           br
     - else

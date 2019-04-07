@@ -25,20 +25,12 @@ module ApplicationHelper
     end
   end
 
-  def l(time)
-    return t(time) if time.is_a?(Symbol) || time.is_a?(String)
-
-    super
+  def day_name(wday_index)
+    I18n.t('date.day_names')[wday_index % 7]
   end
 
-  def t(time)
-    return super if time.is_a?(Symbol) || time.is_a?(String)
-
-    time&.strftime('%H:%M')
-  end
-
-  def wday(wday_index)
-    %w[Søndag Mandag Tirsdag Onsdag Torsdag Fredag Lørdag Søndag][wday_index]
+  def month_name(month_index)
+    I18n.t('date.month_names')[month_index]
   end
 
   def textalize(s)
