@@ -87,6 +87,12 @@
               .badge.badge-success => @event.confirmed.size
               ' Invitert:
               .badge.badge-info = @event.invited.size
+            td
+              ' Ja:
+              .badge.badge-success => @event.confirmed.select{|ei| ei.will_work}.size
+              ' Nei:
+              .badge.badge-warning = @event.confirmed.select{|ei| ei.will_work == false}.size
+            td
     - else
       .alert.alert-info Det er ingen påmeldte enda.
 
