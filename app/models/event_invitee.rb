@@ -33,6 +33,7 @@ class EventInvitee < ApplicationRecord
       self.phone ||= user.contact_phone
       self.organization ||= 'Romerike Jujutsu Klubb' if user.member
     elsif security_token.blank?
+      # FIXME(uwe): Remove all use of `security_token` and use `User` security instead.
       self.security_token = SecureRandom.base58(4)
     end
   end
