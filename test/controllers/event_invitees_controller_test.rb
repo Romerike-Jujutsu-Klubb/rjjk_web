@@ -21,6 +21,7 @@ class EventInviteesControllerTest < ActionController::TestCase
   test 'should create event_invitee' do
     assert_difference('EventInvitee.count') do
       post :create, params: { event_invitee: {
+        user_id: id(:lars),
         address: @event_invitee.address,
         email: 'third_email',
         event_id: @event_invitee.event_id,
@@ -46,6 +47,7 @@ class EventInviteesControllerTest < ActionController::TestCase
 
   test 'should update event_invitee' do
     put :update, params: { id: @event_invitee, event_invitee: {
+      user_id: id(:lars),
       address: @event_invitee.address,
       email: @event_invitee.email,
       event_id: @event_invitee.event_id,

@@ -18,8 +18,9 @@ class EventInviteesController < ApplicationController
   end
 
   def edit
-    @event_invitee = EventInvitee.find(params[:id])
+    @event_invitee ||= EventInvitee.find(params[:id])
     load_users
+    render action: 'edit'
   end
 
   def create
@@ -36,8 +37,7 @@ class EventInviteesController < ApplicationController
     if @event_invitee.update(params[:event_invitee])
       back_or_redirect_to(@event_invitee, notice: 'Event invitee was successfully updated.')
     else
-      load_users
-      render action: 'edit'
+      edit
     end
   end
 
