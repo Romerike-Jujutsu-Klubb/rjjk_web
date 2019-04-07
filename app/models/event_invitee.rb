@@ -6,7 +6,7 @@ class EventInvitee < ApplicationRecord
   scope :for_user, ->(user_id) { where user_id: user_id }
 
   belongs_to :event
-  belongs_to :user, optional: true
+  belongs_to :user # FIXME(uwe): Set column user_id NOT NULL
 
   has_one :invitation, -> { where("message_type = '#{EventMessage::MessageType::INVITATION}'") },
       class_name: 'EventInviteeMessage', dependent: :destroy
@@ -19,10 +19,11 @@ class EventInvitee < ApplicationRecord
 
   has_many :event_invitee_messages, dependent: :destroy
 
+  # FIXME(uwe): Remove contact info (email, phone, address) when all invitees are users
   validates :event, :event_id, :name, presence: true
-  validates :email, presence: { unless: :phone }, uniqueness: { scope: :event_id }
+  validates :email, presence: { unless: :phone }
   validates :phone, presence: { unless: :email }
-  validates :user_id, uniqueness: { scope: :event_id, allow_nil: true }
+  validates :user_id, uniqueness: { scope: :event_id }
   validates :will_work, inclusion: { in: [nil, false], if: proc { |r| r.will_attend == false } }
 
   before_validation do

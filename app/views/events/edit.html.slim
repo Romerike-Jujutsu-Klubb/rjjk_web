@@ -1,7 +1,7 @@
 - @content_width = 880
 
 .float-right
-  = detour_to({controller: :event_invitees, action: :new, event_invitee: { event_id: @event.id } }, class: 'btn btn-secondary mr-3')
+  a.btn.btn-secondary.mr-3 href=with_detour(new_event_invitee_path(event_invitee: { event_id: @event.id }), anchor: :invitees_tab)
     i.fa.fa-plus>
     | Legg til deltaker
   a.btn.btn-primary href=event_path(@event)

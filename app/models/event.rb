@@ -16,6 +16,8 @@ class Event < ApplicationRecord
 
   before_validation do |r|
     r.description = nil if r.description.blank?
+
+    # FIXME(uwe): Remove column `invitees` and all use of it
     if r.invitees.nil? || r.invitees.blank?
       r.invitees = nil
     else
@@ -24,11 +26,13 @@ class Event < ApplicationRecord
       r.invitees = r.invitees.gsub(/\s+/, ' ')
       r.invitees = r.invitees.split(/\s*,\s*/).sort_by(&:upcase).join(",\n") + "\n"
     end
+    # EMXIF
   end
 
   validates :name, :start_at, presence: true
 
   before_update do |r|
+    # FIXME(uwe): Remove column `invitees` and all use of it
     if r.invitees.present?
       r.invitees = r.invitees.gsub(/^\s+/, '')
       r.invitees = r.invitees.gsub(/\s+$/, '')
@@ -49,6 +53,7 @@ class Event < ApplicationRecord
       end
       r.invitees = nil
     end
+    # EMXIF
   end
 
   def upcoming?

@@ -32,7 +32,7 @@ class EventNotifier
       if eim.event_invitee.user_id
         event_invitee_message.store(eim.event_invitee.user_id, tag: :event_invitee_message)
       else
-        event_invitee_message.deliver_now
+        event_invitee_message.deliver_now # FIXME(uwe): Remove when all invitees are users
       end
       eim.update! sent_at: now
     rescue => e
