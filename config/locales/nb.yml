@@ -184,14 +184,10 @@ nb:
       member: medlem
       practice: Trening
       user: Bruker
-  connect: Koble
-  create: Opprett
-  member_created: Nytt medlem opprettet OK.
 
   support:
     array:
       sentence_connector: "og"
-
   date:
     formats:
       default: "%d.%m.%Y"
@@ -233,7 +229,6 @@ nb:
       - :day
       - :month
       - :year
-
   time:
     formats:
       default: "%A, %e. %B %Y, %H:%M"
@@ -244,7 +239,6 @@ nb:
 
     am: "formiddag"
     pm: "ettermiddag"
-
   datetime:
     distance_in_words:
       half_a_minute: 'et halvt minutt'
@@ -278,7 +272,6 @@ nb:
       over_x_years:
         one: 'over 1 år'
         other: 'over %{count} år'
-
   number:
     format:
       separator: ","
@@ -295,11 +288,15 @@ nb:
         delimiter: ""
         precision: 4
 
+
   absent: Fraværende
+  access_denied: Tilgang mangler
   assistant: Hjelpeinstruktør
   attendances:
     X: Deltok
   attended: Deltok
+  connect: Koble
+  create: Opprett
   description: Beskrivelse
   draft: Kladd
   expired: Utdatert
@@ -307,6 +304,7 @@ nb:
   holiday: Ferie
   image: Bilde
   instructor: Instruktør
+  member_created: Nytt medlem opprettet OK.
   present: Tilstede
   published: Publisert
   rank: Grad

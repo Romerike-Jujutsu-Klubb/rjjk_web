@@ -18,6 +18,7 @@ class EventMessage < ApplicationRecord
       og kan bekrefte at du har fått plass.
 
       Deltakeravgiften på kr 800,- betales på leiren med kort eller Vipps.
+      Dette inkluderer lunsj og frukt på leiren.
 
       Har du noen spørsmål, så ta kontakt med oss på leir@jujutsu.no eller på telefon xxx xx xxx.
 
