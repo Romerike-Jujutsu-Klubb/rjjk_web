@@ -2,7 +2,7 @@
   .field
     = f.label :hendelse
     ' :
-    = @event_invitee.event&.name
+    = link_to @event_invitee.event&.name, @event_invitee.event
     = f.hidden_field :event_id
   - user_link = link_to('Bruker', controller: :users, action: :edit, id: @event_invitee.user_id) if @event_invitee.user_id
   = f.select :user_id, [['', nil]] + @users.map { |u| [u.name, u.id] }, { append: user_link }, class: 'chosen-select'
