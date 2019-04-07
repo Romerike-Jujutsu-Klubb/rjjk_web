@@ -84,9 +84,9 @@
             td
             td
               ' Ja:
-              span.badge.badge-success => @event.event_invitees.select(&:will_attend).size
+              .badge.badge-success => @event.confirmed.size
               ' Invitert:
-              span.badge.badge-info = @event.event_invitees.select{|ei| ei.will_attend.nil? && inv.invitation&.sent_at}.size
+              .badge.badge-info = @event.invited.size
     - else
       .alert.alert-info Det er ingen påmeldte enda.
 

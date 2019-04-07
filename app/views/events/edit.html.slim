@@ -13,7 +13,8 @@ ul.nav.nav-tabs
   li.nav-item: a.nav-link data-target="#invitees" data-toggle="tab"
     | Deltagere
     - if @event.event_invitees.any?
-      .badge.badge-info< #{@event.event_invitees.size}
+      .badge.badge-success< => @event.confirmed.size
+      .badge.badge-info< = @event.invited.size
   li.nav-item: a.nav-link data-target="#messages" data-toggle="tab" Meldinger
 
 .tab-content

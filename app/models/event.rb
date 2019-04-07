@@ -75,12 +75,20 @@ class Event < ApplicationRecord
     paragraphs&.first
   end
 
+  def invited
+    event_invitees.select { |ei| ei.will_attend.nil? && ei.invitation&.sent_at }
+  end
+
   def invited_users
-    users
+    invited.map(&:user)
+  end
+
+  def confirmed
+    attending_invitees.select(&:confirmed?)
   end
 
   def confirmed_users
-    attending_invitees.select(&:confirmed?).map(&:user)
+    confirmed.map(&:user)
   end
 
   def attendees
