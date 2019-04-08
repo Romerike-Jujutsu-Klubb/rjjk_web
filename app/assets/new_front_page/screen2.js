@@ -1299,7 +1299,7 @@ function initBackgroundSlider() {
             TweenLite.to(jQuery(this), .3, {scale: 1.25, ease: Power3.easeOut})
         }), jQuery(".cinematic-navbutton").on("mouseout", function () {
             TweenLite.to(jQuery(this), .3, {scale: 1, ease: Power3.easeOut})
-        }), null != jQuery("body").data("autoslider") && !is_mobile() && 0 < parseInt(jQuery("body").data("autoslider"), 0)) {
+        }), null != jQuery("body").data("autoslider") /* && !is_mobile() */ && 0 < parseInt(jQuery("body").data("autoslider"), 0)) {
             var e = parseInt(jQuery("body").data("autoslider"), 0);
             jQuery("body").append('<div id="slidertimera" style="position:fixed;bottom:0px;left:0px;width:100%;z-index:10000;height:3px;background:#fff"></div>'), TweenLite.set(jQuery("#slidertimera"), {
                 width: "0%",
