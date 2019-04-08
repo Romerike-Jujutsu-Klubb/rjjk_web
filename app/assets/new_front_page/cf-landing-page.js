@@ -12,14 +12,14 @@ jQuery(document).ready(function () {
     jQuery('#inlineContactLinkPopup').magnificPopup({
         delegate: 'a',
         callbacks: {
-            beforeOpen: function() {
+            beforeOpen: function () {
                 this.st.mainClass = this.st.el.attr('data-effect');
             },
-            open: function() {
+            open: function () {
                 // window.location.href = window.location.href + "#viewContactPopup";
                 window.location.hash = 'viewContactPopup';
             },
-            close: function() {
+            close: function () {
                 window.location.hash = '';
             }
         },
@@ -28,40 +28,37 @@ jQuery(document).ready(function () {
     jQuery('.custom-form').scrollSpy();
     jQuery('#footer').scrollSpy();
     jQuery('.form-show-popup').scrollSpy();
-    jQuery('.custom-form').on('scrollSpy:enter', function() {
+    jQuery('.custom-form').on('scrollSpy:enter', function () {
         jQuery('#inlineContactLinkPopup').hide();
     });
-    jQuery('.form-show-popup').on('scrollSpy:enter', function() {
+    jQuery('.form-show-popup').on('scrollSpy:enter', function () {
         jQuery('#inlineContactLinkPopup').hide();
     });
     var pgOffset = pageYOffset;
     var up = false;
-    jQuery(window).scroll(function() {
+    jQuery(window).scroll(function () {
         pageYOffset < pgOffset ? up = true : up = false;
-            jQuery('.custom-form').on('scrollSpy:exit', function() {
-                if (up) {
-                    jQuery('#inlineContactLinkPopup').show();
-                }
-            });
-            jQuery('.form-show-popup').on('scrollSpy:exit', function() {
-                if (up) {
-                    jQuery('#inlineContactLinkPopup').show();
-                }
-            });
+        jQuery('.custom-form').on('scrollSpy:exit', function () {
+            if (up) {
+                jQuery('#inlineContactLinkPopup').show();
+            }
+        });
+        jQuery('.form-show-popup').on('scrollSpy:exit', function () {
+            if (up) {
+                jQuery('#inlineContactLinkPopup').show();
+            }
+        });
         pgOffset = pageYOffset;
     });
-    jQuery('#footer').on('scrollSpy:enter', function() {
+    jQuery('#footer').on('scrollSpy:enter', function () {
         jQuery('#inlineContactLinkPopup').hide();
     });
 
-    jQuery('.animate-link').on('click', function(e) {
+    jQuery('.animate-link').on('click', function (e) {
         e.preventDefault();
         var pathId = jQuery(this).attr('href');
-        jQuery("html, body").animate({ scrollTop: jQuery(pathId).offset().top - 80 }, 1000);
+        jQuery("html, body").animate({scrollTop: jQuery(pathId).offset().top - 80}, 1000);
     });
-
-
-
 
     if (is_mobile()) {
         if (jQuery('.no-offset-top').length > 0) {
@@ -73,24 +70,3 @@ jQuery(document).ready(function () {
         }
     }
 });
-/*
-     FILE ARCHIVED ON 22:08:37 Feb 02, 2019 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 19:17:17 Mar 11, 2019.
-     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
-
-     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
-     SECTION 108(a)(3)).
-*/
-/*
-playback timings (ms):
-  LoadShardBlock: 62.297 (3)
-  esindex: 0.012
-  captures_list: 81.495
-  CDXLines.iter: 13.44 (3)
-  PetaboxLoader3.datanode: 63.716 (4)
-  exclusion.robots: 0.437
-  exclusion.robots.policy: 0.415
-  RedisCDXSource: 1.585
-  PetaboxLoader3.resolve: 41.063
-  load_resource: 57.523
-*/
