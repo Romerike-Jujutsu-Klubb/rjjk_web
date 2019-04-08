@@ -1,5 +1,5 @@
 - inv = current_user && event.event_invitees.for_user(current_user.id).first
-- if inv
+- if inv && (inv.will_attend.nil? || inv.user.member && inv.will_work.nil?)
   - more_url = event_invitee_user_path(inv.id)
 - else
   - more_url = admin? && event.persisted? ? edit_polymorphic_path(event) : event
@@ -33,15 +33,12 @@
           = event.end_at.strftime('%H:%M')
 
 h5.clearfix style="margin-bottom:0;color:#FFB400"
-  - if admin? || body
-    = link_to event.localized_name, more_url
-  - else
-    = event.localized_name
+  = link_to event.localized_name, more_url
 
 - if user?
   = render 'layouts/event_details', event: event
 = textalize ingress
 .text-right
   = link_to more_url, class: 'btn btn-info'
-    => more_url == event ? 'Les mer' : t(:registration)
+    => more_url == event ? 'Les mer' : more_url == edit_polymorphic_path(event) ? :Admin : t(:registration)
     i.fa.fa-angle-double-right
