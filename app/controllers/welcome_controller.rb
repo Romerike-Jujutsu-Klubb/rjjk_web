@@ -51,7 +51,7 @@ class WelcomeController < ApplicationController
   def front_page
     @front_page_sections = FrontPageSection.all
     @news_items = NewsItem.front_page_items.reject(&:expired?)
-    render layout: false
+    render layout: 'public'
   end
 
   def front_parallax

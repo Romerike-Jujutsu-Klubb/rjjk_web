@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: http://ogp.me/ns#">
+<head>
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <!--[if IE]>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <![endif]-->
+  <title>Trening - Teknikk - Trygghet | Romerike Jujutsu Klubb</title>
+  <meta name="description" content="Martial arts club with over 40 years of experience in Jujutsu, Kung Fu, and Aikijutsu."/>
+  <link rel="canonical" href="https://www.jujutsu.no/"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Trening - Teknikk - Trygghet | Romerike Jujutsu Klubb"/>
+  <meta property="og:description" content="Martial arts club with over 40 years of experience in Jujutsu, Kung Fu, and Aikijutsu."/>
+  <meta property="og:url" content="https://www.jujutsu.no/"/>
+  <meta property="og:site_name" content="Romerike Jujutsu Klubb"/>
+  <script type='application/ld+json'>{"@context":"https:\/\/schema.org","@type":"WebSite","@id":"#website","url":"https:\/\/www.jujutsu.no\/","name":"Romerike Jujutsu Klubb","potentialAction":{"@type":"SearchAction","target":"https:\/\/www.jujutsu.no\/search?q={search_term_string}","query-input":"required name=search_term_string"}}</script>
+
+  <%#= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%#= csrf_meta_tags %>
+  <%= javascript_include_tag 'new_front_page', 'data-turbolinks-track': 'reload' %>
+
+  <link rel='dns-prefetch' href='//maps.google.com'/>
+  <link rel='dns-prefetch' href='//cdnjs.cloudflare.com'/>
+  <link rel='dns-prefetch' href='//fonts.googleapis.com'/>
+  <link rel='stylesheet' id='new_front_page.css' href='<%= asset_path 'new_front_page.css' %>' type='text/css' media='all'/>
+  <link rel='shortlink' href='https://www.jujutsu.no/'/>
+</head>
+
+<body class="home page-template page-template-one_page page-template-one_page-php page page-id-240  withoutmoduleanimations menuontop gw_light wpb-js-composer js-comp-ver-5.4.7 vc_responsive" data-menutitle="Home" data-autoslider="7">
+
+<!-- THE FIREFOX FALL BACK GRADIENT HEADER -->
+<svg height="0">
+  <mask id="m1" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+    <linearGradient id="g" gradientUnits="objectBoundingBox" x2="0" y2="1">
+      <stop stop-color="white" stop-opacity="1" offset="0"/>
+      <stop stop-color="white" stop-opacity="1" offset="0.80"/>
+      <stop stop-color="white" stop-opacity="0" offset="1"/>
+    </linearGradient>
+    <rect x="0" y="0" width="1" height="1" fill="url(#g)"/>
+  </mask>
+</svg>
+<!-- END OF GRADIENT HEAdER FALL BACK -->
+
+<%=render 'menu' %>
+
+<!-- TO BE ABLE TO SCROLL ALL THE CONTENT IN CASE MENU HAS BEEN PRESSED -->
+<section id="allcontent">
+
+  <!-- HEADER -->
+  <header id="headerwrapper">
+    <div class="header_innerwrapper container">
+      <div class="header-menu-wrapper txtshadow pull-left bgholderparent" id="headermenuholder" style="width: 113px;">
+        <div class="single_blurredbg_holder">
+          <div class="single_bluroverlay"></div>
+        </div>
+        <i class="fa fa-bars menu-toggler"></i>
+        <div id="current-menu-txt" style="">Home</div>
+        <div class="clear"></div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </header>
+  <!-- END OF HEADER -->
+
+  <%= yield %>
+
+  <footer id="footer">
+    <section class="container">
+      <div class="row">
+        <article class="span4" style="margin-bottom: 1rem">
+          <div class="widget-1  last divide30 footer_widget_spacer clear"></div>
+          <div id="nav_menu-11" class="widget-1  last footer_widget widget_nav_menu">
+            <div class="menu-footerwidgetnavigation-container">
+              <ul id="menu-footerwidgetnavigation" class="menu">
+                <% @information_pages.select(&:public).reject(&:hidden).each do |ip| %>
+                  <li id="menu-item-<%= ip.id %>" class="menu-item menu-item-type-post_type menu-item-object-page">
+                    <a href="<%= information_page_path ip %>"><i class="demoicon <%= ip.icon_class || 'fa fa-file-text' %>" style="text-align: center"></i>
+                      <%= ip.title %>
+                    </a>
+                    <div class="clear"></div>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </article>
+
+        <article class="span4">
+          <div class="widget-1 last divide30 footer_widget_spacer clear"></div>
+          <div id="rss-2" class="widget-1 last footer_widget widget_rss">
+            <h4 class="widget-title" style="margin-bottom: .5rem">
+              <i class="fa fa-newspaper-o"></i>
+              <a class="rsswidget" href="<%= news_items_path %>">
+                Nyheter
+              </a>
+            </h4>
+            <ul>
+              <% @news_items.each do |news_item| %>
+                <li>
+                  <div class="rss-date" style="float: right"><%= news_item.created_at.to_date %></div>
+                  <a class='rsswidget' href='<%= news_item_path news_item %>'>
+                    <%= news_item.title %>
+                  </a>
+                </li>
+              <% end %>
+            </ul>
+            <div class="clear"></div>
+          </div>
+        </article>
+
+        <article class="span4 last">
+          <div class="widget-1  first divide30 footer_widget_spacer clear"></div>
+          <div id="nav_menu-17" class="widget-1  first footer_widget widget_nav_menu">
+            <div class="menu-for-contact-us-widget-container">
+              <ul id="menu-for-contact-us-widget" class="menu">
+                <li id="menu-item-2374" class="menu-item menu-item-type-post_type menu-item-object-page">
+                  <a href="<%= information_page_path(6) %>"><i class="fa fa-map" style="margin-right:0.5rem"></i>
+                    Kontakt oss</a>
+                  <div class="clear"></div>
+                </li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="widget-2  last divide30 footer_widget_spacer clear"></div>
+          <div id="text-3" class="widget-2  last footer_widget widget_text">
+            <div class="textwidget" style="text-align: center">
+              <a href="<%= information_page_path(6) %>"><img alt="RJJK kart" src="<%= asset_path 'kart.png' %>" width="332"/></a>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </article>
+        <div class="clear"></div>
+      </div><!-- END OF THE ROW -->
+    </section><!-- END OF THE FOOTER CONTAINER -->
+  </footer>
+
+
+  <!-- SUBFOOTER -->
+  <section id="subfooter">
+    <div class="container">
+      <!-- ROW -->
+      <div class="row">
+        <article class="span6">
+          <div class="widget-1  last widget_text">
+            <div class="textwidget"><p>© 1999–2019 Romerike Jujutsu Klubb</p>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </article>
+
+        <article class="span6 txt-right">
+          <div class="widget-1  last goodwebSocials rightfloat subright">
+            <a href="http://twitter.com/donv70" class="subfooter-socials" target="_blank"><i class="fa fa-twitter"></i></a>
+            <a href="http://www.linkedin.com/in/uwekubosch" class="subfooter-socials" target="_blank"><i class="fa fa-linkedin"></i></a>
+            <a href="https://www.youtube.com/channel/UCFfNdnuxB3FWA2zttnLDkWA" class="subfooter-socials" target="_blank"><i class="fa fa-youtube"></i></a>
+            <a href="https://www.facebook.com/Romerikejujutsuklubb" class="subfooter-socials" target="_blank"><i class="fa fa-facebook"></i></a>
+            <a href="http://plus.google.com/b/106511337358259588944/106511337358259588944/posts" class="subfooter-socials" target="_blank"><i class="fa fa-google-plus"></i></a>
+            <div class="clear"></div>
+          </div>
+        </article>
+
+      </div><!-- END OF ROW -->
+    </div>
+  </section><!-- END OF SUBFOOTER -->
+
+</section><!-- END OF ALL CONTENT HERE -->
+
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+<%= javascript_include_tag 'deferred', 'data-turbolinks-track': 'reload', defer: 'defer' %>
+
+</body>
+</html>

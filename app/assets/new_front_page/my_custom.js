@@ -676,21 +676,7 @@ function validate_slack_email() {
         return true;
 }
 
-jQuery(document).ready(function() {
-    jQuery('.form-popup').magnificPopup({
-        type: 'inline',
-        preloader: false,
-        mainClass: 'mfp-with-zoom',
-        zoom: {
-            enabled: true,
-            duration: 300
-        }
-    });
-});
-
 jQuery(document).ready(function () {
-
-
     var source, medium, term, content, campaign, session_count, pageview_count;
 
     function get_campaign_info() {
