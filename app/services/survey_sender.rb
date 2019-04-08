@@ -19,7 +19,7 @@ class SurveySender
     logger.info 'Checking surveys!'
     request = nil
     Survey.order(:position).each do |survey|
-      unrequested_member = survey.ready_members.first
+      unrequested_member = survey.ready_members.select(&:active?).first
       request =
           if unrequested_member
             survey.survey_requests.where(member_id: unrequested_member.id).first_or_create!
