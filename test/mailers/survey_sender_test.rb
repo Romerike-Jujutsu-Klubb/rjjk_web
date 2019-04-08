@@ -51,12 +51,32 @@ class SurveySenderTest < ActionMailer::TestCase
         mail.body
 
     assert_mail_stored initial: 2 do
-      assert_no_difference 'SurveyRequest.count' do
+      assert_difference 'SurveyRequest.count' do
         SurveySender.send_surveys
       end
     end
 
     mail = UserMessage.pending[2]
+    assert_equal 'First survey', mail.subject
+    assert_equal ['oldie@example.com'], mail.to
+    assert_equal ['medlem@test.jujutsu.no'], mail.from
+    assert_match 'First header text', mail.body
+    assert_match 'First question', mail.body
+    assert_match 'Second question', mail.body
+    assert_match 'What do you think of this survey?', mail.body
+    assert_match %r{
+          For\ å\ svare\ på\ spørsmålene,\ kan\ du\ følge\ denne\ linken:\s+
+          <a\ href="https://example.com/svar/985934509">https://example.com/svar/985934509</a>
+        }x,
+        mail.body
+
+    assert_nil survey_requests(:sent).reminded_at
+    assert_mail_stored initial: 3 do
+      assert_no_difference 'SurveyRequest.count' do
+        SurveySender.send_surveys
+      end
+    end
+    mail = UserMessage.pending[3]
     assert_equal 'First survey', mail.subject
     assert_equal ['lars@example.com'], mail.to
     assert_equal ['medlem@test.jujutsu.no'], mail.from
@@ -69,7 +89,7 @@ class SurveySenderTest < ActionMailer::TestCase
           <a\ href="https://example.com/svar/985934507">https://example.com/svar/985934507</a>
         }x,
         mail.body
-    assert survey_requests(:sent).reminded_at
+    assert survey_requests(:sent).reload.reminded_at
   end
 
   test 'do not send reminders to ex-members' do

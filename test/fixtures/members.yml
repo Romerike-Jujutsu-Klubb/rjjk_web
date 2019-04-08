@@ -19,6 +19,13 @@ sebastian:
   payment_problem: false
   user: sebastian
 
+oldie:
+  instructor: false
+  joined_on: 2013-08-26
+  nkf_fee: true
+  payment_problem: false
+  user: oldie
+
 newbie:
   instructor: false
   joined_on: 2013-08-25

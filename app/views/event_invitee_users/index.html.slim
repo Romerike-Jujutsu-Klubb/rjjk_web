@@ -1,19 +1,22 @@
 h1 Påmelding til arrangement
 
-.row.mt-5
-  ruby:
-    last_year = Date.current.year
-    last_mon = nil
-    last_start_at = nil
-    last_end_at = nil
+- if @events.any?
+  .row.mt-5
+    ruby:
+      last_year = Date.current.year
+      last_mon = nil
+      last_start_at = nil
+      last_end_at = nil
 
-  - Event.upcoming.each do |event|
-    - display_year = event.start_at.year != last_year
-    - display_month = event.start_at.mon != last_mon
-    - display_times = event.start_at != last_start_at || event.end_at != last_end_at
-    - last_year = event.start_at.year
-    - last_mon = event.start_at.mon
-    - last_start_at = event.start_at
-    - last_end_at = event.end_at
-    .col
-      .alert.alert-info = render 'layouts/event_main', event: event, display_year: display_year, display_month: display_month, display_times: display_times
+    - @events.each do |event|
+      - display_year = event.start_at.year != last_year
+      - display_month = event.start_at.mon != last_mon
+      - display_times = event.start_at != last_start_at || event.end_at != last_end_at
+      - last_year = event.start_at.year
+      - last_mon = event.start_at.mon
+      - last_start_at = event.start_at
+      - last_end_at = event.end_at
+      .col
+        .alert.alert-info = render 'layouts/event_main', event: event, display_year: display_year, display_month: display_month, display_times: display_times
+- else
+  .alert.alert-info.mt-5 Det er ingen planlagte arrangement.

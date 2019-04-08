@@ -103,16 +103,14 @@ class ActionMailer::TestCase
           }
       yield
     end
-    assert_equal initial + count, Mail::TestMailer.deliveries.size,
-        -> { Mail::TestMailer.deliveries.to_s }
+    assert_equal initial + count, Mail::TestMailer.deliveries.size, -> { Mail::TestMailer.deliveries.to_s }
   end
 
   def assert_mail_stored(count = 1, initial: 0)
     if block_given?
       assert_equal initial, UserMessage.pending.count,
           -> do
-            "Unexpected user messages before block:\n#{UserMessage.pending}\n" \
-                "#{UserMessage.pending.map(&:body).join("\n")}\n"
+            "Unexpected user messages before block:\n#{UserMessage.pending.map(&:body).join("\n")}\n"
           end
       yield
     end

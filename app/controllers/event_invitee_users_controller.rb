@@ -1,18 +1,16 @@
 # frozen_string_literal: true
 
 class EventInviteeUsersController < ApplicationController
+  before_action :authenticate_user, except: :index
   before_action except: :index do
     @event_invitee = EventInvitee.find(params[:id])
 
-    token = params[:security_token]
-    if @event_invitee.security_token_matches(token)
-      cookies.encrypted["ei_#{@event_invitee.id}"] = token
-    elsif cookies["ei_#{@event_invitee.id}"] != @event_invitee.security_token
-      redirect_to @event_invitee.event, alert: I18n.t(:access_denied, locale: @event_invitee.locale)
-    end
+    admin_required if @event_invitee.user_id != current_user.id
   end
 
-  def index; end
+  def index
+    @events = Event.upcoming.to_a
+  end
 
   def show; end
 

@@ -222,10 +222,10 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_mail_stored { GraduationReminder.send_shopping_list }
 
     mail = UserMessage.pending[0]
-    assert_equal ['neuer@example.com', 'newbie@example.com'], mail.to
+    assert_equal ['oldie@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_equal 'Liste over belter for gradering for Voksne 2013-10-24', mail.subject
-    assert_match(/Hei Newbie!/, mail.body)
+    assert_match(/Hei Oldie!/, mail.body)
     assert_match(/Her er liste over belter for gradering for Voksne 2013-10-24./, mail.body)
     assert_match(/gult belte.*2/, mail.body)
   end

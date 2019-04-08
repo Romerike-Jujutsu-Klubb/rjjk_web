@@ -24,7 +24,7 @@
           = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT), \
               class: 'btn btn-secondary btn-sm', title: 'Kan ikke allikevel...', method: :post)
             i.fa.fa-thumbs-down>
-            | Angre
+            | Meld av
     - elsif @your_attendance_next_practice
       .d-flex
         .next-practice-txt

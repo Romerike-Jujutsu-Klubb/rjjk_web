@@ -130,7 +130,7 @@ module UserSystem
   end
 
   def admin?
-    current_user.try(:admin?)
+    current_user&.admin?
   end
 
   def instructor?

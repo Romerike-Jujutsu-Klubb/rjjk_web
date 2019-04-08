@@ -20,7 +20,7 @@ class EventInviteesController < ApplicationController
   def edit
     @event_invitee ||= EventInvitee.find(params[:id])
     load_users
-    render action: 'edit'
+    render action: :edit
   end
 
   def create

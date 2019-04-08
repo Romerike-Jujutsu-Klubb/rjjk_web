@@ -250,7 +250,7 @@ class User < ApplicationRecord
   end
 
   def admin?
-    role == UserSystem::ADMIN_ROLE || member.try(:admin?)
+    role == UserSystem::ADMIN_ROLE || member&.admin?
   end
 
   def technical_committy?

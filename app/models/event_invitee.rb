@@ -23,7 +23,7 @@ class EventInvitee < ApplicationRecord
   validates :event, :event_id, :name, presence: true
   validates :email, presence: { unless: :phone }
   validates :phone, presence: { unless: :email }
-  validates :user_id, uniqueness: { scope: :event_id }
+  validates :user_id, uniqueness: { scope: :event_id, allow_nil: true }
   validates :will_work, inclusion: { in: [nil, false], if: proc { |r| r.will_attend == false } }
 
   before_validation do

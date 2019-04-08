@@ -24,7 +24,7 @@ class MemberTest < ActiveSupport::TestCase
   end
 
   test 'next_rank' do
-    assert_equal ['sandan', 'shodan', '11. mon', '5. kyu', '5. kyu'],
+    assert_equal ['sandan', 'shodan', '11. mon', '5. kyu', '5. kyu', '5. kyu'],
         Member.order(:joined_on).all.map(&:next_rank).map(&:name)
   end
 
@@ -37,13 +37,13 @@ class MemberTest < ActiveSupport::TestCase
 
   test 'passive? preloaded attendances for group' do
     members = Member.includes(:attendances).order(:id)
-    assert_equal [false, true, true, false, false],
+    assert_equal [false, true, true, false, false, false],
         (members.map { |m| m.passive?(Date.current, groups(:voksne)) })
   end
 
   test 'passive? preloaded recent_attendances' do
     members = Member.includes(:recent_attendances).order(:id)
-    assert_equal [false, true, true, false, false],
+    assert_equal [false, true, true, false, false, false],
         (members.map { |m| m.passive?(Date.current, groups(:voksne)) })
   end
 
@@ -53,6 +53,7 @@ class MemberTest < ActiveSupport::TestCase
       ['leftie@example.com'],
       ['sebastian@example.com', 'uwe@example.com'],
       ['neuer@example.com', 'newbie@example.com'],
+      ['oldie@example.com'],
       ['uwe@example.com'],
     ], Member.order(:id).map(&:emails)
   end

@@ -6,6 +6,7 @@ one:
   organization: MyString
   will_attend: true
   payed: false
+  user: newbie
 
 two:
   event: one
@@ -15,3 +16,4 @@ two:
   organization: MyString
   will_attend: false
   payed: false
+  user: oldie
