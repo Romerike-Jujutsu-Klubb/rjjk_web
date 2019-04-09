@@ -309,8 +309,10 @@ nb:
   published: Publisert
   rank: Grad
   rank_id: Grad
+  register: "Registrer deg"
   registration: "Påmelding"
   registration_link: "Du kan melde deg på på web."
+  registration_request: "Jeg vil være med!"
   sick: Syk
   user_login_succeeded: Login successful
   user_login_failed: Login unsuccessful
@@ -318,7 +320,7 @@ nb:
   user_confirmation_email_error: 'Det oppsto en feil ved oppretting av brukerkonto: bekreftelses e-post kunne ikke sendes.'
   user_updated_password: Your updated password has been emailed to %s.
   user_change_password_email_error: Your password could not be changed at this time. Please retry.
-  user_enter_valid_email_address: Please enter a valid email address.
+  user_enter_valid_email_address: Vennligst skriv inn en gyldig e-postadresse
   user_email_address_not_found: We could not find a user with the email address %s.
   user_forgotten_password_emailed: Instructions on resetting your password have been emailed to %s.
   user_forgotten_password_email_error: Your password could not be emailed to %s.

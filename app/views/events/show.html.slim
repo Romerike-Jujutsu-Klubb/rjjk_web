@@ -2,7 +2,9 @@
 
 .float-right.mb-3
   - if @event_invitee
-    a.btn.btn-info href=event_invitee_user_path(@event_invitee.id) = t :registration
+    a.btn.btn-info href=event_registration_path(@event_invitee.id) = t :registration
+  - else
+    a.btn.btn-info href=new_event_registration_path(event_invitee: {event_id: @event.id}) = t :registration
   - if I18n.locale != :en && @event.name_en && @event.description_en
     a.ml-3 href=url_for(lang: :en)
       img style='width:3rem' src=asset_path('no.svg') title='Click for English version' data-toggle=:tooltip

@@ -25,8 +25,10 @@ en:
   expired: Expired
   graduation_title: "Graduation %{name}"
   published: Published
+  register: "Register"
   registration: "Registration"
   registration_link: "You can register on the web."
+  registration_request: "I want to participate!"
 
   # Controller
   user_login_succeeded: Login successful

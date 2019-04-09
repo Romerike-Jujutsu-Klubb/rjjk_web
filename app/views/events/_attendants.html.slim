@@ -75,7 +75,7 @@
               - if show_comment_column
                 td = inv.comment
               td
-                = link_to 'Vis', event_invitee_user_path(inv), class: 'btn btn-link'
+                = link_to 'Vis', event_registration_path(inv), class: 'btn btn-link'
                 = link_to 'Slett', with_detour(inv, anchor: :invitees_tab), data: {confirm: 'Er du sikker?'}, method: :delete, class: 'btn btn-link'
           tr
             td

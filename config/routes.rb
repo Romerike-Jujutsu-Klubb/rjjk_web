@@ -87,7 +87,7 @@ Rails.application.routes.draw do
   resources :embu_parts
   resources :event_invitee_messages
   resources :event_invitees
-  resources :event_invitee_users, path: 'event/registration', only: %i[index show] do
+  resources :event_registration, path: 'event/registration' do
     member do
       get :accept
       get :decline
