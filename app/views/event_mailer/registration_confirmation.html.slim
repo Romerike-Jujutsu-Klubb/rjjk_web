@@ -1,0 +1,9 @@
+h3 Hei #{@event_registration.name}!
+
+p Vi har mottatt din registrering for arrangement
+
+h4 = @event_registration.event.name
+
+p For å fullføre registreringen, vennligst følg lenken under:
+
+a href=event_registration_url(@event_registration.id) Klikk her!

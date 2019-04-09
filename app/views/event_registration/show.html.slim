@@ -1,6 +1,9 @@
 h1 Påmelding til #{@event_invitee.event.name}
 h2 for #{@event_invitee.name}
 
+- unless current_user || @event_invitee.user.verified?
+  .alert.alert-warning Du har ikke bekreftet påmeldingen enda.
+
 - if @event_invitee.confirmed?
   .alert.alert-success.mt-5
     h3 Du er bekreftet påmeldt.
@@ -10,13 +13,13 @@ h2 for #{@event_invitee.name}
       - if @event_invitee.will_attend
         .alert.alert-success.m-0
           h3 Du er påmeldt.
-      - else
+      - elsif current_user
         = link_to 'Jeg kommer!', accept_event_registration_path(@event_invitee), class: 'btn btn-success'
     .col.text-center.p-5
       - if @event_invitee.will_attend == false
         .alert.alert-info.m-0
           h3 Du er avmeldt.
-      - else
+      - elsif current_user
         = link_to 'Jeg kommer ikke', decline_event_registration_path(@event_invitee), class: 'btn btn-secondary'
 
 - if @event_invitee.will_attend && @event_invitee.user&.member

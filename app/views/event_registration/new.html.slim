@@ -3,10 +3,12 @@ h1 Påmelding til #{@event_invitee.event.name}
 = bootstrap_form_for @event_invitee, url: event_registration_index_path do |f|
   = f.hidden_field :event_id
   - if @event_invitee.user_id
-    h2 for #{current_user.name}
+    h2 for #{current_user&.name}
 
     .alert.alert-success.text-center.mt-5
       h3.m-0 = t(:registration_request)
   - else
-    .mt-5 = f.text_field :email, placeholder: t(:user_enter_valid_email_address)
+    .mt-5
+      = f.text_field :name
+      = f.text_field :email, placeholder: t(:user_enter_valid_email_address)
   .text-right = f.primary t(:register)

@@ -113,7 +113,7 @@ class EventsController < ApplicationController
           event_invitee: event_invitee, message_type: EventMessage::MessageType::INVITATION
         )
       event_invitee_message.id = -event.id
-      NewsletterMailer.event_invitee_message(event_invitee_message).store(recipient, tag: :event_invite)
+      EventMailer.event_invitee_message(event_invitee_message).store(recipient, tag: :event_invite)
     end
     UserMessageSenderJob.perform_now if params[:example]
     redirect_to edit_event_path(event, anchor: :messages_tab), notice: 'Invitasjon er sendt.'

@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 class EventRegistrationController < ApplicationController
-  before_action :authenticate_user, except: %i[create index new]
-  before_action except: %i[create index new] do
+  before_action :authenticate_user, except: %i[create index new show]
+  before_action except: %i[create index new show] do
     @event_invitee = EventInvitee.find(params[:id])
-
     admin_required if @event_invitee.user_id != current_user.id
   end
 
@@ -12,7 +11,12 @@ class EventRegistrationController < ApplicationController
     @events = Event.upcoming.to_a
   end
 
-  def show; end
+  def show
+    @event_invitee = EventInvitee.find(params[:id])
+    return unless current_user
+
+    admin_required if @event_invitee.user_id != current_user.id
+  end
 
   def new
     @event_invitee = EventInvitee.new(params[:event_invitee])
@@ -20,13 +24,29 @@ class EventRegistrationController < ApplicationController
   end
 
   def create
-    @event_invitee = EventInvitee.new(params[:event_invitee])
-    @event_invitee.will_attend = true
-    @event_invitee.user_id = current_user.id if current_user
-    if @event_invitee.save
-      redirect_to event_registration_path(@event_invitee.id)
-    else
-      render :new
+    EventInvitee.transaction do
+      @event_invitee = EventInvitee.new(params[:event_invitee])
+      @event_invitee.will_attend = true
+      if current_user
+        @event_invitee.user_id = current_user.id
+      elsif (user = User.find_by(email: @event_invitee.email.strip))
+        @event_invitee.user_id = user.id
+      else
+        user = User.create! email: @event_invitee.email, name: @event_invitee.name
+        @event_invitee.user_id = user.id
+      end
+      if (existing_registration = EventInvitee.find_by(user_id: @event_invitee.user_id))
+        @event_invitee = existing_registration
+        redirect_to event_registration_path(@event_invitee.id)
+      elsif @event_invitee.save
+        unless current_user
+          EventMailer.registration_confirmation(@event_invitee)
+              .store(@event_invitee.user, tag: :event_registration_user)
+        end
+        redirect_to event_registration_path(@event_invitee.id)
+      else
+        render :new
+      end
     end
   end
 
