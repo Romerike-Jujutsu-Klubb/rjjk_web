@@ -1,4 +1,4 @@
-Har du problemer med <%#= textify 'å' %> lese denne e-posten, klikk her:
+Har du problemer med å lese denne e-posten, klikk her:
 <%= url_for :only_path => false, :controller => :events, :action => :show, :id => @event.id %>
 
 <%= textify @event.name %>
@@ -6,6 +6,3 @@ Har du problemer med <%#= textify 'å' %> lese denne e-posten, klikk her:
 <%= textify @event.ingress %>
 
 <%= textify @event.body if @event.body %>
-
-Ønsker du ikke flere nyhetsbrev fra oss, vennligst klikk på denne linken:
-<%= url_for :only_path => false, :controller => :events, :action => :unsubscribe, :email => @email %>
