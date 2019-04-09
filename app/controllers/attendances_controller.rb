@@ -257,7 +257,7 @@ class AttendancesController < ApplicationController
     end
     @months = per_month.keys.sort.reverse.map do |ym|
       per_group = per_month[ym].group_by { |a| a.group_schedule.group }
-      [helpers.month_name(ym[1]), *@attended_groups.map { |g| (per_group[g] || []).size }]
+      [helpers.month_name(ym[1]).capitalize, *@attended_groups.map { |g| (per_group[g] || []).size }]
     end
     return unless @member.current_rank
 

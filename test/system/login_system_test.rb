@@ -36,7 +36,7 @@ class LoginSystemTest < ApplicationSystemTestCase
   def test_login_with_password
     screenshot_group :login_with_password
     visit '/'
-    click_menu 'Logg inn'
+    click_on 'Medlemssider'
     assert_current_path '/login?detour%5Baction%5D=index&detour%5Bcontroller%5D=welcome'
     click_on 'logge på med passord'
     assert_current_path '/login/password'
@@ -52,7 +52,7 @@ class LoginSystemTest < ApplicationSystemTestCase
   def test_send_email_link
     screenshot_group :email_link
     visit '/'
-    click_menu 'Logg inn'
+    click_on 'Medlemssider'
     assert_current_path '/login?detour%5Baction%5D=index&detour%5Bcontroller%5D=welcome'
     screenshot :email_form
     fill_in 'user_email', with: users(:admin).email
@@ -70,7 +70,7 @@ class LoginSystemTest < ApplicationSystemTestCase
     assert has_css?('h1', text: 'Uwe Kubosch'), all('h1').to_a.map(&:text).inspect
     screenshot :welcome
     click_link 'Logg ut'
-    click_menu 'Logg inn'
+    click_on 'Medlemssider'
     assert has_field?('user[email]', with: users(:admin).email)
   end
 end

@@ -15,10 +15,10 @@ class SmallDevicesTest < ApplicationSystemTestCase
     Capybara::Screenshot.window_size = ApplicationSystemTestCase::WINDOW_SIZE
   end
 
-  test 'front_page' do
+  test 'member front_page' do
     screenshot_group :front_page
-    visit root_path
-    assert_selector 'h1', text: 'Velkommen'
+    login_and_visit root_path
+    assert_selector 'h4', text: 'Neste trening'
     screenshot :index
     find('.fa-navicon').click
     assert_selector 'li a', text: 'My first article'
@@ -34,6 +34,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
   test 'new front_page' do
     screenshot_group :new_front_page
     visit front_page_path
+    assert_selector 'h5', text: 'THE EVENT'
     assert_css('#headermenuholder > i')
     screenshot :index, color_distance_limit: 11
     find('#headermenuholder > i').click

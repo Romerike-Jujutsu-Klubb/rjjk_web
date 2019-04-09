@@ -30,7 +30,9 @@ module ApplicationHelper
   end
 
   def month_name(month_index)
-    I18n.t('date.month_names')[month_index]
+    name = I18n.t('date.month_names')[month_index]
+    name = name.downcase if I18n.locale == :nb
+    name
   end
 
   def textalize(s)

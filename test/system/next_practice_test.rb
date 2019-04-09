@@ -8,7 +8,7 @@ class NextPracticeTest < ApplicationSystemTestCase
     screenshot_group :next_practice
     visit root_path
     assert_no_selector 'h4', text: 'Neste trening'
-    screenshot :anonymous
+    screenshot :anonymous, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
     login
     assert_selector 'h4', text: 'Neste trening'
     assert_text 'Du kommer.'

@@ -44,7 +44,7 @@
 </svg>
 <!-- END OF GRADIENT HEAdER FALL BACK -->
 
-<%=render 'menu' %>
+<%=render 'layouts/menu' %>
 
 <!-- TO BE ABLE TO SCROLL ALL THE CONTENT IN CASE MENU HAS BEEN PRESSED -->
 <section id="allcontent">
@@ -64,6 +64,12 @@
     </div>
   </header>
   <!-- END OF HEADER -->
+
+  <% if flash.notice %>
+    <div class="alert alert-info">
+      <%= flash.notice %>
+    </div>
+  <% end %>
 
   <%= yield %>
 

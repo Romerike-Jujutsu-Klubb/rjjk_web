@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ImagesController < ApplicationController
-  PUBLIC_ACTIONS = %i[gallery inline show].freeze
+  PUBLIC_ACTIONS = %i[blurred gallery inline show].freeze
   PERSONAL_ACTIONS = %i[create mine new upload].freeze
   before_action :admin_required, except: PUBLIC_ACTIONS + PERSONAL_ACTIONS
   before_action :authenticate_user, only: PERSONAL_ACTIONS
@@ -10,6 +10,9 @@ class ImagesController < ApplicationController
   cache_sweeper :image_sweeper, only: %i[update destroy]
 
   def rank_required(image)
+    if [root_url, front_page_url].include? request.headers['HTTP_REFERER']
+      return false if FrontPageSection.where(image_id: image.id).exists?
+    end
     image.application_steps.each do |step|
       if current_user&.member.nil? || step.technique_application.rank > current_user.member.next_rank
         redirect_to login_path, notice: 'Du må ha høyere grad for å se på dette pensumet.'
@@ -114,9 +117,15 @@ class ImagesController < ApplicationController
       redirect_to helpers.asset_path icon_name
       return
     end
-    magick_image = MiniMagick::Image.read content_data_io
-    img = magick_image.radial_blur 10
-    send_data(img.to_blob, disposition: 'inline', type: image.content_type, filename: image.name)
+    begin
+      magick_image = MiniMagick::Image.read content_data_io
+      img = magick_image.radial_blur 10
+      send_data(img.to_blob, disposition: 'inline', type: image.content_type, filename: image.name)
+    rescue => e
+      logger.error e
+      logger.error e.backtrace.join("\n")
+      redirect_to '/assets/pdficon_large.png'
+    end
   end
 
   def new

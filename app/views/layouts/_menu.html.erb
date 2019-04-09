@@ -25,7 +25,7 @@
         </li>
       <% end %>
       <li id="menu-item-1723" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children">
-        <a href="<%= current_user ? root_path : login_path %>">Medlemssider<%= " (#{current_user&.name})" if current_user %></a>
+        <a href="<%= current_user ? root_path : with_detour(login_path) %>">Medlemssider<%= " (#{current_user&.name})" if current_user %></a>
         <div class="clear"></div>
       </li>
     </ul>

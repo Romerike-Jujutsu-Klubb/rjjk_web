@@ -6,7 +6,7 @@
       => day_name(@next_practice.group_schedule.weekday)
       = @next_practice.date.day
       ' .
-      => month_name(@next_practice.date.month).downcase
+      => month_name(@next_practice.date.month)
       span.text-nowrap
         ' kl
         = @next_practice.group_schedule.start_at.strftime('%R')

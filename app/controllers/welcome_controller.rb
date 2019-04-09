@@ -40,18 +40,22 @@ class WelcomeController < ApplicationController
       end
       @news_items.sort_by! { |n| n.publish_at || n.created_at }.reverse!
       render template: 'news/index'
-      return
+      # return
+    else
+      front_page
+      # return
     end
-    return unless (@information_page = InformationPage.find_by(title: 'Velkommen'))
+    # return unless (@information_page = InformationPage.find_by(title: 'Velkommen'))
 
-    render template: 'info/show'
+    # render template: 'info/show'
   end
 
   # https://web.archive.org/web/20190203085358/https://www.altoros.com/
   def front_page
     @front_page_sections = FrontPageSection.all
-    @news_items = NewsItem.front_page_items.reject(&:expired?)
-    render layout: 'public'
+    @event = Event.upcoming.order(:start_at).first
+    @news_items = NewsItem.front_page_items.reject(&:expired?).first(5)
+    render 'front_page', layout: 'public'
   end
 
   def front_parallax

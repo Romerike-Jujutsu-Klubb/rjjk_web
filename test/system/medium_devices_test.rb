@@ -4,6 +4,7 @@ require 'application_system_test_case'
 
 class MediumDevicesTest < ApplicationSystemTestCase
   MEDIUM_WINDOW_SIZE = [640, 480].freeze
+  FRONT_PAGE_PROGRESS_BAR_AREA = [0, 477, 292, 479].freeze
   USER_AGENT = <<~UA
     Mozilla/5.0 (Linux; Android 6.0.1; Nexus 7 Build/MOB30X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36
   UA
@@ -35,10 +36,10 @@ class MediumDevicesTest < ApplicationSystemTestCase
     Capybara::Screenshot.window_size = ApplicationSystemTestCase::WINDOW_SIZE
   end
 
-  test 'front_page' do
+  test 'member front_page' do
     screenshot_group :front_page
-    visit root_path
-    assert_selector 'h1', text: 'Velkommen'
+    login_and_visit root_path
+    assert_selector 'h4', text: 'Neste trening'
     assert_offset '.subnav', :left, -268
     assert_offset '.main_right', :right, -268
     screenshot :index
@@ -69,7 +70,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
     screenshot_group :new_front_page
     visit front_page_path
     assert_css('#headermenuholder > i')
-    screenshot :index, area_size_limit: 533
+    screenshot :index, area_size_limit: 533, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
     find('#headermenuholder > i').click
     assert_css '.menubutton', text: 'My first article'
     find('.menubutton', text: 'My first article').hover # FIXME(uwe): Remove with Chrome 74 + mobile emulation

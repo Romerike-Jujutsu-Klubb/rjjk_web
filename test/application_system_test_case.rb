@@ -8,6 +8,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   include SystemTestHelper
 
   WINDOW_SIZE = [1024, 768].freeze
+  FRONT_PAGE_PROGRESS_BAR_AREA = [0, 765, 292, 767].freeze
 
   # options explained https://peter.sh/experiments/chromium-command-line-switches/
   # no-sandbox

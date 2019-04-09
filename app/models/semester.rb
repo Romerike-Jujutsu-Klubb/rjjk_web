@@ -34,8 +34,8 @@ class Semester < ApplicationRecord
   end
 
   def name
-    start_month = ApplicationController.helpers.month_name(start_on.mon)
-    end_month = ApplicationController.helpers.month_name(end_on.mon)
+    start_month = ApplicationController.helpers.month_name(start_on.mon).capitalize
+    end_month = ApplicationController.helpers.month_name(end_on.mon).capitalize
     "#{start_on.year}: #{start_month}→#{end_month}"
   end
 
