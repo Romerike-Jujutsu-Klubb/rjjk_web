@@ -13,7 +13,7 @@
       = image_tag('gb.svg', style: 'width: 3rem')
 
 - if admin? && @event.persisted?
-  .float-right.clear-right
+  .float-right.clear-right.d-print-none
     a.btn.btn-primary href=edit_event_path(@event, anchor: :invitees_tab) Admin
 
 h1 = @title
