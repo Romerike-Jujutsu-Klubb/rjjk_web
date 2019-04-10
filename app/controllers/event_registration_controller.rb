@@ -31,11 +31,13 @@ class EventRegistrationController < ApplicationController
         @event_invitee.user_id = current_user.id
       elsif (user = User.find_by(email: @event_invitee.email.strip))
         @event_invitee.user_id = user.id
-      else
+      elsif  @event_invitee.email.present? && @event_invitee.name.present?
         user = User.create! email: @event_invitee.email, name: @event_invitee.name
         @event_invitee.user_id = user.id
       end
-      if (existing_registration = EventInvitee.find_by(user_id: @event_invitee.user_id))
+      if @event_invitee.user_id &&
+            (existing_registration = EventInvitee
+                .find_by(event_id: @event_invitee.event_id, user_id: @event_invitee.user_id))
         @event_invitee = existing_registration
         redirect_to event_registration_path(@event_invitee.id)
       elsif @event_invitee.save

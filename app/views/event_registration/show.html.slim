@@ -1,7 +1,7 @@
 h1 Påmelding til #{@event_invitee.event.name}
 h2 for #{@event_invitee.name}
 
-- unless current_user || @event_invitee.user.verified?
+- unless current_user || @event_invitee.user&.verified?
   .alert.alert-warning Du har ikke bekreftet påmeldingen enda.
 
 - if @event_invitee.confirmed?
