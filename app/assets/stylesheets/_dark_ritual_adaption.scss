@@ -7,6 +7,17 @@ $logo_red: #E20916;
   color: $logo_red !important;
 }
 
+@page {
+  size: A4;
+  margin: 0;
+}
+@media print {
+  html, body {
+    width: 210mm;
+    height: 297mm;
+  }
+}
+
 body {
   background-attachment: fixed;
 }
