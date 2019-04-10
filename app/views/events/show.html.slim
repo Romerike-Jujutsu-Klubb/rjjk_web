@@ -1,6 +1,6 @@
 - @title = I18n.locale != :nb ? @event.name_en : @event.name
 
-.float-right.mb-3
+.float-right.mb-3.d-print-none
   - if @event_invitee
     a.btn.btn-info href=event_registration_path(@event_invitee.id) = t :registration
   - else

@@ -83,6 +83,14 @@ body:not(.wide) {
 
 .main {
   background: asset_url('dark_ritual/bg_shadow_left.png') top left repeat-y, asset_url('dark_ritual/bg_shadow_right.png') top right repeat-y;
+
+  @media print {
+    background: white;
+    .padded {
+      background: white;
+    }
+  }
+
   background-color: #F7F7F7;
   padding: 0;
   overflow-x: scroll;
@@ -347,6 +355,12 @@ body:not(.wide) .container-fluid {
 
   .main_right {
     transition: z-index 0s ease 0.5s, transform 0.5s;
+  }
+}
+
+@media only print and (max-width: 991px) { // smaller than lg
+  body:not(.wide) {
+    padding-top: 0;
   }
 }
 

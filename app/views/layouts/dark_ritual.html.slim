@@ -20,7 +20,7 @@ html lang="nb"
   body class=(:wide if @content_width)
     #menuShadow.shadow.w-100.h-100 style="position: fixed; left:0;top:0; z-index:5;opacity: 0;visibility:hidden;background-color:black"
     #sidebarShadow.shadow.w-100.h-100 style="position: fixed; left:0;top:0; z-index:5;opacity: 0;visibility:hidden;background-color:black"
-    .container-fluid
+    .container-fluid.d-print-none
       .position-relative style="margin-right:-4px"
         = link_to image_tag('rjjk_logo_plus_txt_320.png', id: :logo_img), '/'
     .row.fixed-top.container-fluid.px-0.mx-auto style='top:#{@content_width ? 2 : 1}px;left:1px;pointer-events:none'
@@ -40,14 +40,15 @@ html lang="nb"
     .container-fluid
       .row
         .main_left.col.d-flex.flex-column
-          .row
+          .row.d-print-none
             .col-12.p-0 = render 'layouts/header'
           .row style="flex-grow: 1"
-            .subnav style="overflow-y: scroll" = render 'layouts/navigation'
+            .subnav.d-print-none style="overflow-y: scroll" = render 'layouts/navigation'
             .main.col
+              = image_tag('rjjk_logo_plus_txt_320.png', class: 'd-none d-print-block float-right w-25')
               = render 'layouts/search'
               .padded = yield
-        .main_right.lazy-container = render 'layouts/right_column'
+        .main_right.lazy-container.d-print-none = render 'layouts/right_column'
 
       .footer.row
         .col-lg-4.col-12.left
