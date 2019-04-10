@@ -21,8 +21,8 @@ class EventInvitee < ApplicationRecord
 
   # FIXME(uwe): Remove contact info (email, phone, address) when all invitees are users
   validates :event, :event_id, :name, presence: true
-  validates :email, presence: { unless: :phone }
-  validates :phone, presence: { unless: :email }
+  validates :email, presence: { unless: ->(ei) { ei.phone.present? } }
+  validates :phone, presence: { unless: ->(ei) { ei.email.present? } }
   validates :user_id, uniqueness: { scope: :event_id, allow_nil: true }
   validates :will_work, inclusion: { in: [nil, false], if: proc { |r| r.will_attend == false } }
 

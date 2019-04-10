@@ -11,5 +11,6 @@ h1 Påmelding til #{@event_invitee.event.name}
     .mt-5
       = f.text_field :name
       = f.text_field :email, placeholder: t(:user_enter_valid_email_address)
+      = f.text_field :phone
       = f.text_field :organization
   .text-right = f.primary t(:register)
