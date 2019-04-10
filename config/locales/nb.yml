@@ -39,7 +39,7 @@ nb:
         comment: Kommentar
         email: E-post
         name: Navn
-        organization: Organisasjon
+        organization: Organisasjon / klubb
         payed: Betalt
         phone: Telefon
         user_id: Bruker
