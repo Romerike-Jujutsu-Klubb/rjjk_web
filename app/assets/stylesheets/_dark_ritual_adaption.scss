@@ -89,6 +89,12 @@ body:not(.wide) {
     .padded {
       background: white;
     }
+    h2 {
+      break-before: page;
+    }
+    table {
+      break-inside: avoid-page;
+    }
   }
 
   background-color: #F7F7F7;
