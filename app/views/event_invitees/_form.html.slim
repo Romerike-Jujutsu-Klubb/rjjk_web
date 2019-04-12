@@ -8,7 +8,7 @@
     - user_link = link_to('Bruker', controller: :users, action: :edit, id: @event_invitee.user_id)
   - elsif @matching_email_user
     .float-right
-      a href=edit_user_path(@matching_email_user) = eu.name
+      a href=edit_user_path(@matching_email_user) = @matching_email_user.name
       a.btn.btn-secondary.btn-sm.ml-2 href='#' onclick="$('#event_invitee_user_id').val('#{@matching_email_user.id}').trigger('chosen:updated')" Bruk
   - elsif @matching_phone_user
     .float-right
@@ -16,7 +16,7 @@
       a.btn.btn-secondary.btn-sm.ml-2 href='#' onclick="$('#event_invitee_user_id').val('#{@matching_phone_user.id}').trigger('chosen:updated')" Bruk
   - else
     a.float-right href=with_detour(users_path(user: {email: @event_invitee.email, name: @event_invitee.name, phone: @event_invitee.phone})) data-method=:post Opprett bruker
-  = f.select :user_id, [['', nil]] + @users.map { |u| [u.name, u.id] }, { append: user_link }, class: 'chosen-select'
+  = f.select :user_id, [['', nil]] + @users.map { |u| [u.name.presence || u.email, u.id] }, { append: user_link }, class: 'chosen-select'
   - if @event_invitee.user.nil?
     ' eller
     fieldset title="Kontaktinformasjon"
