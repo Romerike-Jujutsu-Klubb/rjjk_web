@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     lookup_context.prefixes.delete 'members'
   end
 
-    def create
+  def create
     @user = User.new(user_params)
     if @user.save
       back_or_redirect_to @user, notice: 'User was successfully created.'
@@ -100,10 +100,9 @@ class UsersController < ApplicationController
 
   private
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user)
         .permit(:name, :email, :phone)
   end
-
 end
