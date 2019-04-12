@@ -66,7 +66,7 @@ class SurveySenderTest < ActionMailer::TestCase
     assert_match 'What do you think of this survey?', mail.body
     assert_match %r{
           For\ å\ svare\ på\ spørsmålene,\ kan\ du\ følge\ denne\ linken:\s+
-          <a\ href="https://example.com/svar/985934509">https://example.com/svar/985934509</a>
+          <a\ href="https://example.com/svar/9859345(09|10)">https://example.com/svar/9859345(09|10)</a>
         }x,
         mail.body
 
