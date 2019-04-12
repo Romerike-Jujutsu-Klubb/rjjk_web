@@ -86,7 +86,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
     visit front_page_path
     assert_css('#headermenuholder > i')
     assert_css('.fa-chevron-down')
-    screenshot :index, area_size_limit: 533
+    screenshot :index, area_size_limit: 533, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
     find('.fa-chevron-down').click
     article_link = find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
     screenshot :scrolled
