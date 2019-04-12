@@ -29,6 +29,7 @@ class User < ApplicationRecord
   has_many :contactees, dependent: :nullify, class_name: 'User', foreign_key: :contact_user_id,
       inverse_of: :contact_user
   has_many :embus, dependent: :destroy
+  has_many :event_invitees, dependent: :restrict_with_error
   has_many :images, dependent: :destroy
   has_many :news_item_likes, dependent: :destroy
   has_many :news_items, dependent: :destroy, inverse_of: :creator, foreign_key: :created_by

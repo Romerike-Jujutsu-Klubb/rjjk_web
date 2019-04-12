@@ -3,6 +3,8 @@
 class EventInvitee < ApplicationRecord
   include ActionView::Helpers::UrlHelper
 
+  INTERNAL_ORG = 'Romerike Jujutsu Klubb'
+
   scope :for_user, ->(user_id) { where user_id: user_id }
 
   belongs_to :event
@@ -31,7 +33,7 @@ class EventInvitee < ApplicationRecord
       self.name ||= user.name
       self.email ||= user.contact_email
       self.phone ||= user.contact_phone
-      self.organization ||= 'Romerike Jujutsu Klubb' if user.member
+      self.organization ||= INTERNAL_ORG if user.member
     elsif security_token.blank?
       # FIXME(uwe): Remove all use of `security_token` and `security_token_generated_at`
       #             and use `User` security instead.
