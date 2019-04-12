@@ -12,7 +12,7 @@
       a.btn.btn-secondary.btn-sm.ml-2 href='#' onclick="$('#event_invitee_user_id').val('#{@matching_email_user.id}').trigger('chosen:updated')" Bruk
   - elsif @matching_phone_user
     .float-right
-      a href=edit_user_path(@matching_phone_user) = eu.name
+      a href=edit_user_path(@matching_phone_user) = @matching_phone_user.name
       a.btn.btn-secondary.btn-sm.ml-2 href='#' onclick="$('#event_invitee_user_id').val('#{@matching_phone_user.id}').trigger('chosen:updated')" Bruk
   - else
     a.float-right href=with_detour(users_path(user: {email: @event_invitee.email, name: @event_invitee.name, phone: @event_invitee.phone})) data-method=:post Opprett bruker

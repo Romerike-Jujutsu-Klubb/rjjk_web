@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_06_092310) do
+ActiveRecord::Schema.define(version: 2019_04_12_215457) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -772,6 +772,7 @@ ActiveRecord::Schema.define(version: 2019_04_06_092310) do
   add_foreign_key 'embu_part_videos', 'embu_parts'
   add_foreign_key 'embu_part_videos', 'images'
   add_foreign_key 'embu_parts', 'embus'
+  add_foreign_key 'event_invitees', 'users'
   add_foreign_key 'front_page_sections', 'images'
   add_foreign_key 'front_page_sections', 'information_pages'
   add_foreign_key 'graduates', 'graduations', name: 'graduates_graduation_id_fkey'
