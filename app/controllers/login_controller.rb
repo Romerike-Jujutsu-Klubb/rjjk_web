@@ -99,6 +99,10 @@ class LoginController < ApplicationController
     self.session_user = nil
     clear_cookie
     reset_session
+    if params[:reply]
+      render plain: params[:reply]
+      return
+    end
     flash.notice = 'Velkommen tilbake!'
     back_or_redirect_to '/'
   end

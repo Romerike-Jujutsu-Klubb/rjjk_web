@@ -124,7 +124,7 @@ class ImagesController < ApplicationController
     rescue => e
       logger.error e
       logger.error e.backtrace.join("\n")
-      redirect_to '/assets/pdficon_large.png'
+      redirect_to helpers.asset_path 'pdficon_large.png'
     end
   end
 

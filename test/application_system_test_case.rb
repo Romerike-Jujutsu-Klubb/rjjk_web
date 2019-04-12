@@ -53,10 +53,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   teardown do
-    visit logout_path
-    assert_selector 'h5', text: 'THE EVENT'
-    Capybara.reset_sessions!
-    clear_cookies
+    visit logout_path reply: 'done'
+    assert_text 'done'
   end
 end
 

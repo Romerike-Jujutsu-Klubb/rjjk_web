@@ -1,12 +1,13 @@
 - @content_width = 880
 
-.float-right
+.float-md-right.mb-3.mb-md-0
   a.btn.btn-secondary.mr-3 href=with_detour(new_event_invitee_path(event_invitee: { event_id: @event.id }), anchor: :invitees_tab)
     i.fa.fa-plus>
     | Legg til deltaker
   a.btn.btn-primary href=event_path(@event)
     i.fa.fa-users>
     | Arrangementsside
+.clear-xl-right
 
 ul.nav.nav-tabs
   li.nav-item: a.nav-link.active data-target="#description" data-toggle="tab" Beskrivelse
@@ -25,7 +26,7 @@ ul.nav.nav-tabs
   #messages.tab-pane
     .row.mt-3
       .col-sm-9
-        table.table
+        table.table.table-responsive
           - @event.event_messages.each do |em|
             tr
               td = em.message_type
@@ -33,7 +34,7 @@ ul.nav.nav-tabs
               td = em.ready_at
               td: a.btn.btn-danger.btn-sm href=event_message_path(em) data-method=:delete data-confirm="Er du sikker?"
                 i.fa.fa-trash
-      .col-3
+      .col-sm-3
         .text-center
           /= detour_to 'Rediger invitasjonen', :controller => :event_messages, :action => :edit, :id => @event.invitation
           a.btn.btn-secondary.btn-lg.w-100.mb-3 href=url_for(action: :invite, id: @event.id, example: true) Send meg eksempel på innbydelse

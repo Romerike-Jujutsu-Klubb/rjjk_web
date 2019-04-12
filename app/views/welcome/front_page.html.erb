@@ -1,19 +1,10 @@
 <style>
-  @media (max-height: 412px) {
-    #event-splash-top {
-      display: none;
-    }
-  }
-
-  @media (min-height: 413px) {
+  @media (min-height: 593px) {
     #event-splash-top {
       margin-left: 2rem;
       margin-right: 2rem;
     }
 
-    #event-splash-main {
-      display: none;
-    }
   }
 
   #event-splash-top {
@@ -22,10 +13,28 @@
     padding: 2rem;
   }
 
+  @media (max-height: 650px) {
+    #event-splash-top {
+      margin-top: 4rem;
+      padding: 1rem;
+    }
+  }
+
   #event-splash-main {
+    display: none;
     box-sizing: border-box;
     padding: 2rem;
     width: 100%;
+  }
+
+  @media (max-height: 592px) and (max-width: 522px) {
+    #event-splash-top {
+      display: none;
+    }
+
+    #event-splash-main {
+      display: block;
+    }
   }
 
   .event-splash {
@@ -76,9 +85,9 @@
     border-color: #17a2b8;
   }
 
-    #footer {
-      margin-top: 4rem;
-    }
+  #footer {
+    margin-top: 4rem;
+  }
 </style>
 
 <div id="event-splash-top" class="event-splash">
