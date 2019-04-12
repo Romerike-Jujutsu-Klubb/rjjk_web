@@ -115,7 +115,7 @@ module UserSystem
   end
 
   def member?
-    !!current_user.try(:member)
+    current_user&.member.present?
   end
 
   def store_current_user_in_thread

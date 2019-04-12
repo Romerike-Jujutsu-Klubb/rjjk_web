@@ -254,8 +254,8 @@ class User < ApplicationRecord
     role == UserSystem::ADMIN_ROLE || member&.admin?
   end
 
-  def member?
-    member.present?
+  def member?(date_time = DateTime.current)
+    member.present? && member.joined_on <= date_time && !member.left?(date_time)
   end
 
   def technical_committy?
