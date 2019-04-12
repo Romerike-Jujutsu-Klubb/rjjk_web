@@ -50,7 +50,12 @@ class EventInviteesController < ApplicationController
   private
 
   def load_users
-    @users = [@event_invitee.user].compact +
-        (User.order(:first_name, :last_name).to_a - @event_invitee.event.users)
+    @users = User.order(:first_name, :last_name).to_a - @event_invitee.event.users
+    if @event_invitee.user
+      @users.prepend @event_invitee.user
+    else
+      @matching_email_user = User.find_by(email: @event_invitee.email)
+      @matching_phone_user = User.find_by(phone: @event_invitee.phone)
+    end
   end
 end

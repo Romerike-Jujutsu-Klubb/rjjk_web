@@ -113,7 +113,7 @@
             = link_to i.email, with_detour(edit_event_invitee_path(i), anchor: :invitees_tab)
 
     h3.mt-4 Klubber
-    - EventInvitee.includes(user: :member).where(members: {id: nil}).where.not(event_id: @event.id).group_by(&:organization).sort_by{|o,i| [-i.size, o]}.each do |org, invitees|
+    - EventInvitee.includes(user: :member).where(members: {id: nil}).where.not(user_id: @event.event_invitees.map(&:user_id)).group_by(&:organization).sort_by{|o,i| [-i.size, o]}.each do |org, invitees|
       h4.mt-3 = org.presence || "Ingen klubb (#{org.inspect})"
       ul.m-0.pl-0 style="list-style: none"
         - invitees.sort_by(&:email).each do |i|

@@ -253,6 +253,10 @@ class User < ApplicationRecord
     role == UserSystem::ADMIN_ROLE || member&.admin?
   end
 
+  def member?
+    member.present?
+  end
+
   def technical_committy?
     member.try(:technical_committy?)
   end
