@@ -102,7 +102,7 @@
       = f.collection_check_boxes :group_ids, @groups, :id, :name
       = f.primary 'Legg til'
 
-    - no_user = EventInvitee.where(user_id: nil).where.not(event_id: @event.id).group_by(&:organization).sort_by { |o, i| [-i.size, o] }
+    - no_user = EventInvitee.where(user_id: nil).where.not(event_id: @event.id).group_by(&:organization).sort_by { |o, i| [-i.size, o.to_s] }
     - if no_user.any?
       h3.mt-4 Uten bruker (#{no_user.size})
       - no_user.each do |org, invitees|
