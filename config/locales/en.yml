@@ -24,6 +24,7 @@ en:
   draft: Draft
   expired: Expired
   graduation_title: "Graduation %{name}"
+  my_registration: "My registration"
   published: Published
   register: "Register"
   registration: "Registration"

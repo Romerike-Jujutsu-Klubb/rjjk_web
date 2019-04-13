@@ -16,3 +16,6 @@ h1 Påmelding til #{@event_invitee.event.name}
         .col-md-5 = f.text_field :phone
       = f.text_field :organization
   .text-right = f.primary t(:register)
+
+javascript:
+  $('#event_invitee_name').focus();

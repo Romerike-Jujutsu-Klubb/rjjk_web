@@ -7,6 +7,8 @@ class User < ApplicationRecord
   include Rails.application.routes.url_helpers
   include Searching
 
+  EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i.freeze
+
   has_paper_trail
   acts_as_paranoid
 
@@ -60,7 +62,7 @@ class User < ApplicationRecord
   validates :male, inclusion: { in: [true, false] }, if: -> { member && member.left_on.nil? }
   validates :email,
       # presence: { unless: ->{phone || member} }, # TODO(uwe): Activate this?  Ensure contact method!
-      format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_nil: true },
+      format: { with: EMAIL_REGEXP, allow_nil: true },
       uniqueness: { case_sensitive: false, scope: :deleted_at, unless: :deleted_at, allow_nil: true }
   # validates :guardian_1_id, presence: { if: -> {age && age < 18} }
   validates :login, length: { within: 3..64 }, uniqueness: { case_sensitive: false }, allow_nil: true

@@ -3,6 +3,7 @@
 class EventInvitee < ApplicationRecord
   include ActionView::Helpers::UrlHelper
 
+  EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i.freeze
   INTERNAL_ORG = 'Romerike Jujutsu Klubb'
 
   scope :for_user, ->(user_id) { where user_id: user_id }
@@ -23,7 +24,8 @@ class EventInvitee < ApplicationRecord
 
   # FIXME(uwe): Remove contact info (email, phone, address) when all invitees are users
   validates :event, :event_id, :name, presence: true
-  validates :email, presence: { unless: ->(ei) { ei.phone.present? } }
+  validates :email, presence: { unless: ->(ei) { ei.phone.present? } },
+      format: { with: EMAIL_REGEXP, allow_nil: true }
   validates :phone, presence: { unless: ->(ei) { ei.email.present? } }
   validates :user_id, uniqueness: { scope: :event_id, allow_nil: true }
   validates :will_work, inclusion: { in: [nil, false], if: proc { |r| r.will_attend == false } }

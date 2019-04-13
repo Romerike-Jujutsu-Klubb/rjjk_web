@@ -1,9 +1,4 @@
 - inv = current_user && event.event_invitees.for_user(current_user.id).first
-- if inv && (inv.will_attend.nil? || inv.user.member && inv.will_work.nil?)
-  - more_url = event_registration_path(inv.id)
-- else
-  - more_url = admin? && event.persisted? ? edit_polymorphic_path(event) : event
-
 - ingress = event.ingress.presence
 - body = event.body
 - if display_year
@@ -36,12 +31,31 @@
           = event.end_at.strftime('%H:%M')
 
 h5.clearfix style="margin-bottom:0;color:#FFB400"
+  - if inv && (inv.will_attend.nil? || inv.user.member && inv.will_work.nil?)
+    - more_url = event_registration_path(inv.id)
+  - else
+    - more_url = admin? && event.persisted? ? edit_polymorphic_path(event) : event
   = link_to event.localized_name, more_url
 
 - if user?
   = render 'layouts/event_details', event: event
 = textalize ingress
 .text-right
-  = link_to more_url, class: 'btn btn-info'
-    => more_url == event ? 'Les mer' : more_url == edit_polymorphic_path(event) ? :Admin : t(:registration)
+  - if admin? && event.persisted?
+    = link_to edit_polymorphic_path(event), class: 'btn btn-primary'
+      ' Admin
+      i.fa.fa-angle-double-right
+
+  = link_to event, class: 'btn btn-info ml-3'
+    ' Les mer
     i.fa.fa-angle-double-right
+
+  - if inv
+    - if (inv.will_attend.nil? || inv.user.member && inv.will_work.nil?)
+      = link_to event_registration_path(inv.id), class: 'btn btn-success ml-3'
+        => t(:my_registration)
+        i.fa.fa-angle-double-right
+  - else # Event allows registration
+    = link_to new_event_registration_path(event_invitee: {event_id: event.id}), class: 'btn btn-success ml-3'
+      => t(:registration)
+      i.fa.fa-angle-double-right

@@ -19,14 +19,16 @@ class EventRegistrationController < ApplicationController
   end
 
   def new
-    @event_invitee = EventInvitee.new(params[:event_invitee])
+    @event_invitee ||= EventInvitee.new(params[:event_invitee])
     @event_invitee.user_id = current_user.id if current_user
+    render :new
   end
 
   def create
     EventInvitee.transaction do
       @event_invitee = EventInvitee.new(params[:event_invitee])
       @event_invitee.will_attend = true
+
       if current_user
         @event_invitee.user_id = current_user.id
       elsif @event_invitee.email.present? && (user = User.find_by(email: @event_invitee.email.strip))
@@ -34,12 +36,13 @@ class EventRegistrationController < ApplicationController
       elsif @event_invitee.phone.present? &&
             (user = User.find_by(phone: @event_invitee.phone.strip.delete_prefix('+47')))
         @event_invitee.user_id = user.id
-      elsif  @event_invitee.email.present? && @event_invitee.name.present?
+      elsif @event_invitee.email.present? && @event_invitee.email.match?(User::EMAIL_REGEXP) &&
+            @event_invitee.name.present?
         user = User.create! email: @event_invitee.email, name: @event_invitee.name
         @event_invitee.user_id = user.id
       end
-      if @event_invitee.user_id &&
-            (existing_registration = EventInvitee
+
+      if @event_invitee.user_id && (existing_registration = EventInvitee
                 .find_by(event_id: @event_invitee.event_id, user_id: @event_invitee.user_id))
         @event_invitee = existing_registration
         redirect_to event_registration_path(@event_invitee.id)
@@ -50,7 +53,7 @@ class EventRegistrationController < ApplicationController
         end
         redirect_to event_registration_path(@event_invitee.id)
       else
-        render :new
+        new
       end
     end
   end
