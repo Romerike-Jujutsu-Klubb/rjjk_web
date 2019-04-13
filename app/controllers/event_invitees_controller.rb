@@ -54,8 +54,12 @@ class EventInviteesController < ApplicationController
     if @event_invitee.user
       @users.prepend @event_invitee.user
     else
-      @matching_email_user = User.find_by(email: @event_invitee.email) if @event_invitee.email.present?
-      @matching_phone_user = User.find_by(phone: @event_invitee.phone) if @event_invitee.phone.present?
+      if @event_invitee.email.present?
+        @matching_email_user = User.with_deleted.find_by(email: @event_invitee.email.downcase)
+      end
+      if @event_invitee.phone.present?
+        @matching_phone_user = User.with_deleted.find_by(phone: @event_invitee.phone)
+      end
     end
   end
 end

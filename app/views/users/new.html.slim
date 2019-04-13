@@ -1,0 +1,8 @@
+h2 Ny bruker
+
+- if (error_msgs = @user.errors.full_messages_for(:base)).any?
+  .alert.alert-danger
+    ' Brukeren
+    = error_msgs.join('  ')
+
+= render 'form', user: @user, submit: !@user.deleted?
