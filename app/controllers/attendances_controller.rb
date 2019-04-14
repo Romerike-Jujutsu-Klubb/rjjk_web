@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class AttendancesController < ApplicationController
-  include AttendanceFormDataLoader
-
   skip_before_action :verify_authenticity_token, only: :announce
 
   USER_ACTIONS = %i[announce plan practice_details review].freeze
@@ -83,7 +81,7 @@ class AttendancesController < ApplicationController
     AttendanceNotificationJob.perform_later(@attendance.practice, @attendance.member, nil)
     if request.xhr?
       flash.clear
-      render partial: 'attendances/attendance_create_link', locals: {
+      render partial: 'attendance_form/attendance_create_link', locals: {
         member_id: @attendance.member_id,
         group_schedule: @attendance.practice.group_schedule,
         date: @attendance.date,
@@ -199,7 +197,7 @@ class AttendancesController < ApplicationController
         render partial: 'plan_practice', locals: { gs: practice.group_schedule,
                                                    year: year, week: week, attendance: @attendance }
       else
-        render partial: 'attendance_delete_link', locals: { attendance: @attendance }
+        render partial: 'attendance_form/attendance_delete_link', locals: { attendance: @attendance }
       end
     else
       back_or_redirect_to(@attendance)
@@ -320,15 +318,6 @@ class AttendancesController < ApplicationController
           "#{t(:attendances)[@attendance.status.to_sym]}"
       redirect_to attendance_plan_path(reviewed_attendance_id: @attendance.id)
     end
-  end
-
-  def form_index
-    @groups = Group.active(Date.current).order :from_age
-  end
-
-  def form
-    load_form_data(params[:year], params[:month], params[:group_id])
-    render layout: 'print'
   end
 
   def month_per_year_chart; end

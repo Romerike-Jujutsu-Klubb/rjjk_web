@@ -6,7 +6,7 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
   def test_index
     login_and_visit '/'
     click_menu('Oppmøtelister')
-    assert_current_path '/attendances/form_index'
+    assert_current_path attendance_forms_path
     screenshot('attendance/form/index')
     find('#group_name_Panda').click
     sleep 0.5
@@ -20,9 +20,9 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
   end
 
   def test_select_panda_october
-    visit_with_login '/attendances/form_index'
+    visit_with_login attendance_forms_path
     select('Oktober 2013', from: 'group_name_Panda')
-    assert_current_path "/attendances/form/2013/10/#{groups(:panda).id}"
+    assert_current_path attendance_form_path year: 2013, month: 10, group_id: id(:panda)
     assert has_css? 'tr td:first-child'
     assert_equal ['Uwe Kubosch',
                   'Totalt 1',
@@ -36,7 +36,7 @@ faktura@eriksen.org',
   end
 
   def test_record_panda_october
-    visit_with_login "/attendances/form/2013/10/#{groups(:panda).id}"
+    visit_with_login attendance_form_path year: 2013, month: 10, group_id: id(:panda)
     assert_equal ['Uwe Kubosch',
                   'Totalt 1',
                   'Lars Bråten',
@@ -72,7 +72,7 @@ faktura@eriksen.org',
       assert_current_path '/attendances/new', ignore_query: true
       select('Lars Bråten', from: 'attendance_member_id')
       click_button('Lagre')
-      assert_current_path "/attendances/form/2013/10/#{groups(:panda).id}"
+      assert_current_path attendance_form_path year: 2013, month: 10, group_id: id(:panda)
 
       # Attendance 'X' present
       lars_row = find('table:first-of-type tbody tr:nth-of-type(5)')

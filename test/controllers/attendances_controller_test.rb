@@ -119,21 +119,4 @@ class AttendancesControllerTest < ActionController::TestCase
       [{"name":"Voksne","data":[["2010-08-23",null],["2010-09-20",null],["2010-10-18",null],["2010-11-15",null],["2010-12-13",null],["2011-01-10",null],["2011-02-07",null],["2011-03-07",null],["2011-04-04",null],["2011-05-02",null],["2011-05-30",null],["2011-06-27",null],["2011-07-25",null],["2011-08-22",null],["2011-09-19",null],["2011-10-17",null],["2011-11-14",null],["2011-12-12",null],["2012-01-09",null],["2012-02-06",null],["2012-03-05",null],["2012-04-02",null],["2012-04-30",null],["2012-05-28",null],["2012-06-25",null],["2012-07-23",null],["2012-08-20",null],["2012-09-17",null],["2012-10-15",null],["2012-11-12",null],["2012-12-10",null],["2013-01-07",null],["2013-02-04",null],["2013-03-04",null],["2013-04-01",null],["2013-04-29",null],["2013-05-27",null],["2013-06-24",null],["2013-07-22",null],["2013-08-19",null],["2013-09-16",1],["2013-10-14",null]],"color":null},{"name":"Panda","data":[["2010-08-23",null],["2010-09-20",2],["2010-10-18",null],["2010-11-15",null],["2010-12-13",null],["2011-01-10",null],["2011-02-07",null],["2011-03-07",null],["2011-04-04",null],["2011-05-02",null],["2011-05-30",null],["2011-06-27",null],["2011-07-25",null],["2011-08-22",null],["2011-09-19",null],["2011-10-17",null],["2011-11-14",null],["2011-12-12",null],["2012-01-09",null],["2012-02-06",null],["2012-03-05",null],["2012-04-02",null],["2012-04-30",null],["2012-05-28",null],["2012-06-25",null],["2012-07-23",null],["2012-08-20",null],["2012-09-17",null],["2012-10-15",null],["2012-11-12",null],["2012-12-10",null],["2013-01-07",null],["2013-02-04",null],["2013-03-04",null],["2013-04-01",null],["2013-04-29",null],["2013-05-27",null],["2013-06-24",null],["2013-07-22",null],["2013-08-19",null],["2013-09-16",1],["2013-10-14",null]],"color":null}]
     JSON
   end
-
-  def test_should_get_form
-    get :form, params: { date: '2013-10-01', group_id: groups(:panda).id }
-    assert_response :success
-  end
-
-  def test_should_get_form_without_group_id
-    GroupMembership.delete_all
-    get :form, params: { date: '2013-10-01' }
-    assert_response :success
-  end
-
-  test 'should get form for others' do
-    GroupMembership.delete_all
-    get :form, params: { date: '2013-10-01', group_id: :others }
-    assert_response :success
-  end
 end

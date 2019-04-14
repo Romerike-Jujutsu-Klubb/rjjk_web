@@ -7,10 +7,10 @@ form
   table.table
     tbody
       - for group in @groups
-        - options = (0..months).map { |i| ["#{month_name(1 + (7 + i) % 12).capitalize} #{2009 + (8 + i) / 12}", url_for(action: :form, year: (start_date + i.months).year, month: (start_date + i.months).month, group_id: group.id)] }.reverse
+        - options = (0..months).map { |i| ["#{month_name(1 + (7 + i) % 12).capitalize} #{2009 + (8 + i) / 12}", attendance_form_path(year: (start_date + i.months).year, month: (start_date + i.months).month, group_id: group.id)] }.reverse
         tr
           td: label = group.name
           td = select :group_name, group.name, options, {prompt: 'Velg måned'}, onchange: 'document.location = options[selectedIndex].value', class: 'form-control'
       tr
         td
-        td = link_to 'Andre', {action: :form, group_id: 'others'}, class: 'btn btn-secondary'
+        td = link_to 'Andre', attendance_form_path(year: Time.current.year, month: Time.current.mon, group_id: 'others'), class: 'btn btn-secondary'

@@ -10,8 +10,19 @@
       span.text-nowrap
         ' kl
         = @next_practice.group_schedule.start_at.strftime('%R')
+
     - if @next_practice.message.present?
       p = @next_practice.message
+
+    / TODO(uwe): Move this to service worker when available
+    - attendances = @next_practice.attendances.select { |a| Attendance::PRESENCE_STATES.include?(a.status) }
+    javascript:
+      if (window.ExperimentalBadge) {
+        $(function () {
+            window.ExperimentalBadge.set(#{attendances.size});
+        });
+      }
+    / ODOT
 
     - if @your_attendance_next_practice && Attendance::PRESENCE_STATES.include?(@your_attendance_next_practice.status)
       .d-flex

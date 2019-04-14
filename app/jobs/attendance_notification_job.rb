@@ -10,7 +10,7 @@ class AttendanceNotificationJob < ApplicationJob
     attendees = attendances.select { |a| Attendance::PRESENCE_STATES.include?(a.status) }.size
     absentees = attendances.select { |a| Attendance::ABSENT_STATES.include?(a.status) }.size
     group_name = practice.group_schedule.group.name
-    body = -"#{attendees} er påmeldt."
+    body = +"#{attendees} er påmeldt."
     body << "\n#{absentees} er avmeldt." if absentees > 0
     AttendanceWebpush
         .push_all("#{member.name}: #{new_status.inspect} #{group_name} #{practice.date}",

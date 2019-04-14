@@ -144,7 +144,7 @@ Gradering er ..." %>
 
 
 
-<% unless @passive_members.empty? %>
+<% if @passive_members.present? %>
     <h2 style="page-break-before:always">Passive
       medlemmer <%= @group.try(:name) %> <%= month_name(@date.mon) %> <%= @date.year %></h2>
 

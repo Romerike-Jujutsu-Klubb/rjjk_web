@@ -25,6 +25,9 @@ class ApplicationController < ActionController::Base
   before_action { params.permit! }
 
   after_action :clear_user
+  after_action do
+    response.set_header('Origin-Trial', Rails.application.credentials.google_badge_origin_token)
+  end
 
   def render(*args)
     load_layout_model unless args[0].is_a?(Hash) && args[0][:text] && !args[0][:layout]

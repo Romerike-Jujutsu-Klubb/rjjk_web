@@ -3,13 +3,16 @@
 Rails.application.routes.draw do
   default_url_options Rails.application.config.action_mailer.default_url_options
 
-  get 'attendances/form/:year/:month/:group_id' => 'attendances#form'
   post 'image_dropzone/upload'
   get 'info/versjon'
+
+  # FIXME(uwe): Separate to MyAttendanceController
   get 'mitt/oppmote(/:reviewed_attendance_id)' => 'attendances#plan', as: :attendance_plan
   get 'attendances/plan' # must be after "mitt/oppmote"
   post 'attendances/announce(/:year/:week/:group_schedule_id)/:status(/:member_id)' =>
       'attendances#announce'
+  # EMXIF
+
   get 'map' => 'map#index'
   get 'search' => 'search#index'
   post 'send_grid/receive' => 'send_grid#receive'
@@ -23,10 +26,12 @@ Rails.application.routes.draw do
   resources :application_steps
   resources :appointments
   resources :annual_meetings
+  scope controller: :attendance_form, path: 'oppmøte/skjema' do
+    root action: :index, as: :attendance_forms
+    get ':year/:month/:group_id', action: :show, as: :attendance_form
+  end
   resources :attendances do
     collection do
-      get :form
-      get :form_index
       get :history_graph, action: :history_graph
       get :history_graph_data, action: :history_graph_data
       get 'month_chart(/:year/:month)', action: :month_chart, as: :month_chart

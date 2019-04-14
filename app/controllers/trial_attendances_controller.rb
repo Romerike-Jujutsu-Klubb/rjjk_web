@@ -36,7 +36,7 @@ class TrialAttendancesController < ApplicationController
       if @trial_attendance.save
         format.html do
           if request.xhr?
-            render partial: 'attendances/trial_attendance_delete_link',
+            render partial: 'attendance_form/trial_attendance_delete_link',
                    locals: { trial_attendance: @trial_attendance }
           else
             redirect_to(@trial_attendance, notice: 'TrialAttendance was successfully created.')
@@ -73,7 +73,7 @@ class TrialAttendancesController < ApplicationController
     respond_to do |format|
       format.html do
         if request.xhr?
-          render partial: '/attendances/trial_attendance_create_link',
+          render partial: '/attendance_form/trial_attendance_create_link',
                  locals: {
                    nkf_member_trial_id: @trial_attendance.nkf_member_trial_id,
                    group_schedule_id: @trial_attendance.practice.group_schedule_id,

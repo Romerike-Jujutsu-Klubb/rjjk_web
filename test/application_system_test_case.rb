@@ -55,6 +55,10 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   teardown do
     visit logout_path reply: 'done'
     assert_text 'done'
+    unless passed?
+      puts 'Browser log:'
+      puts page.driver.browser.manage.logs.get(:browser).map(&:message).join("\n")
+    end
   end
 end
 

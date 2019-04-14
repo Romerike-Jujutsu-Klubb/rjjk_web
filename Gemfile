@@ -85,7 +85,7 @@ group :development do
 end
 
 group :test do
-  # gem 'bullet'
+  # gem 'bullet' # Uncomment to hunt N+1 kind of problems
   gem 'capybara-screenshot-diff' # , path: '~/work/open-source/capybara-screenshot-diff'
   gem 'chunky_png'
   # gem 'coveralls', require: false
