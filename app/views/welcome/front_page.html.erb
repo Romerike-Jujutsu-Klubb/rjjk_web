@@ -29,7 +29,7 @@
     position: relative;
     margin-left: auto;
     padding: 1rem;
-    z-index: 11;
+    z-index: 501;
   }
 
   #event-teaser > div {
@@ -145,16 +145,13 @@
     <%= render 'layouts/event_teaser', event: @event, display_year: false, display_month: true, display_times: true %>
   </div>
   <script type="text/javascript">
-    console.log('js');
       $ = jQuery;
-      console.log($);
       $(".fa-angle-double-down").closest('a').click(function (e) {
-          console.log('click');
-          console.log($(e.target).closest('a').attr('href'));
           e.stopPropagation();
           $([document.documentElement, document.body]).animate({
               scrollTop: $($(e.target).closest('a').attr('href')).offset().top
           }, 700, "swing");
+          return false;
       });
   </script>
 </div>
