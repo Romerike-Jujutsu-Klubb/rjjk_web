@@ -19,6 +19,29 @@
     }
   }
 
+  #event-teaser {
+    background-color: rgba(255, 255, 255, .67);
+    box-sizing: border-box;
+    color: black;
+    display: none;
+    max-width: 32rem;
+    opacity: 1.0;
+    position: relative;
+    margin-left: auto;
+    padding: 1rem;
+    z-index: 11;
+  }
+
+  #event-teaser > div {
+    position: relative;
+    background-color: rgba(255, 255, 255, .8);
+    color: black;
+    z-index: 1;
+    max-width: 100%;
+    margin: 0;
+    padding: 2rem;
+  }
+
   #event-splash-main {
     display: none;
     box-sizing: border-box;
@@ -26,9 +49,13 @@
     width: 100%;
   }
 
-  @media (max-height: 412px), (max-height: 592px) and (max-width: 522px) {
+  @media (max-height: 35rem), (max-height: 592px) and (max-width: 522px) {
     #event-splash-top {
       display: none;
+    }
+
+    #event-teaser {
+      display: block;
     }
 
     #event-splash-main {
@@ -59,7 +86,7 @@
     text-align: right !important;
   }
 
-  .event-splash a.btn {
+  .event-splash a.btn, #event-teaser a.btn {
     background-color: transparent;
     border: 1px solid transparent !important;
     border-radius: 0.25rem !important;
@@ -78,26 +105,59 @@
     user-select: none;
   }
 
-  .event-splash a.btn-info {
+  .event-splash a.btn-info, #event-teaser a.btn-info {
     color: #fff !important;
     background-color: #17a2b8;
     border-color: #17a2b8;
   }
 
-  .event-splash a.btn-success {
+  .event-splash a.btn-primary, #event-teaser a.btn-primary {
+    color: #fff !important;
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+
+  .event-splash a.btn-success, #event-teaser a.btn-success {
     color: #ffffff !important;
     background-color: #5bb75b;
     border-color: #51a351 #51a351 #387038;
   }
 
+  .float-right {
+    float: right;
+  }
+
+  .ml-2 {
+    margin-left: 0.5rem;
+  }
+
   .ml-3 {
-    margin-left: 1.5rem;
+    margin-left: 1rem;
   }
 
   #footer {
     margin-top: 4rem;
   }
 </style>
+
+<div id="event-teaser">
+  <div>
+    <%= render 'layouts/event_teaser', event: @event, display_year: false, display_month: true, display_times: true %>
+  </div>
+  <script type="text/javascript">
+    console.log('js');
+      $ = jQuery;
+      console.log($);
+      $(".fa-angle-double-down").closest('a').click(function (e) {
+          console.log('click');
+          console.log($(e.target).closest('a').attr('href'));
+          e.stopPropagation();
+          $([document.documentElement, document.body]).animate({
+              scrollTop: $($(e.target).closest('a').attr('href')).offset().top
+          }, 700, "swing");
+      });
+  </script>
+</div>
 
 <div id="event-splash-top" class="event-splash">
   <div>

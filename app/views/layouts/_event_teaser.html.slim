@@ -1,0 +1,14 @@
+- inv = current_user && event.event_invitees.for_user(current_user.id).first
+
+.float-right
+  - if admin? && event.persisted?
+  = link_to '#event-splash-main', class: 'btn btn-info ml-3'
+    ' Les mer
+    i.fa.fa-angle-double-down
+
+h5.clearfix style="margin-bottom:0;color:#FFB400"
+  - if inv && (inv.will_attend.nil? || inv.user.member && inv.will_work.nil?)
+    - more_url = event_registration_path(inv.id)
+  - else
+    - more_url = admin? && event.persisted? ? edit_polymorphic_path(event) : event
+  = link_to event.localized_name, more_url
