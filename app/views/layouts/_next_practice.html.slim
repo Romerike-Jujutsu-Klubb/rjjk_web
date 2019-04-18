@@ -29,8 +29,10 @@
         .next-practice-txt
           = render 'attendances/details_link', practice: @next_practice
           - unless @other_absentees.empty?
-            => @other_absentees.size
-            ' har meldt fravær.
+            span.text-nowrap
+              => @other_absentees.size
+              ' har
+            ' meldt fravær.
         .next-practice-btn
           = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT), \
               class: 'btn btn-secondary btn-sm', title: 'Kan ikke allikevel...', method: :post)
@@ -44,8 +46,10 @@
             => @other_attendees.size
             ' andre kommer.
           - unless @other_absentees.empty?
-            => @other_absentees.size
-            ' har meldt fravær.
+            span.text-nowrap
+              => @other_absentees.size
+              ' har
+            ' meldt fravær.
         .next-practice-btn
           = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::WILL_ATTEND), \
               class: 'btn btn-secondary btn-sm', title: 'Kommer allikevel!', method: :post)
