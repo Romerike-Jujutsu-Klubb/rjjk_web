@@ -8,7 +8,7 @@ class AttendanceNotificationsController < ApplicationController
   def index; end
 
   def subscribe
-    subscription = params[:subscription].to_unsafe_hash
+    subscription = params.require(:subscription).permit(:endpoint, keys: %i[auth p256dh])
     AttendanceWebpush.where(member_id: current_user.member.id, endpoint: subscription[:endpoint],
             p256dh: subscription[:keys][:p256dh], auth: subscription[:keys][:auth]).first_or_create!
     head :ok
