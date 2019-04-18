@@ -3,7 +3,10 @@
 require 'test_helper'
 
 class IntegrationTest < ActionDispatch::IntegrationTest
-  teardown { get '/logout' }
+  teardown do
+    get logout_path reply: 'done'
+    assert_equal 'done', response.body
+  end
 
   def login(login = :admin)
     user = users(login)

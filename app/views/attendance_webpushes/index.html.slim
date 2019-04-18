@@ -3,6 +3,7 @@ h1 Attendance Webpushes
 table
   thead
     tr
+      th Created
       th Member
       th Endpoint
       th P256dh
@@ -14,7 +15,8 @@ table
   tbody
     - @attendance_webpushes.each do |attendance_webpush|
       tr
-        td = attendance_webpush.member_id
+        td = attendance_webpush.created_at
+        td = attendance_webpush.member.name
         td = attendance_webpush.endpoint
         td = attendance_webpush.p256dh
         td = attendance_webpush.auth
