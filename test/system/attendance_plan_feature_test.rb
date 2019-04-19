@@ -32,7 +32,7 @@ Du kommer.',
         all('td').map(&:text).reject(&:blank?).map(&:strip).map { |s| s.gsub(/\s+/, ' ') })
 
     all('a.btn')[1].click
-    assert has_css?('a.btn', text: 'Kommer du?', count: 2), all('a.btn').map(&:text)
+    assert_css 'a.btn', text: 'Kommer du?', count: 2
     assert has_css?('a.btn', text: 'Trener du?'), all('a.btn').map(&:text)
     assert_equal ['Denne uken', 'Annet', 'Trener du?', 'Neste uke', 'Kommer du?',
                   'Kommer du?', 'Oktober', '1', 'Siden gradering', '1'],
