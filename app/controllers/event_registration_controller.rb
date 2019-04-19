@@ -21,6 +21,7 @@ class EventRegistrationController < ApplicationController
   def new
     @event_invitee ||= EventInvitee.new(params[:event_invitee])
     @event_invitee.user_id = current_user.id if current_user
+    @upcoming_events = Event.upcoming.order(:start_at).to_a
     render :new
   end
 

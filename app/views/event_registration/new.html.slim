@@ -1,7 +1,10 @@
-h1 Påmelding til #{@event_invitee.event.name}
+h1 Påmelding til #{@event_invitee.event&.name}
 
 = bootstrap_form_for @event_invitee, url: event_registration_index_path do |f|
-  = f.hidden_field :event_id
+  - if @event_invitee.event_id
+    = f.hidden_field :event_id
+  - else
+    = f.collection_select :event_id, @upcoming_events, :id, :name, prompt: true
   - if @event_invitee.user_id
     h2 for #{current_user&.name}
 
