@@ -8,7 +8,7 @@ class EventRegistrationController < ApplicationController
   end
 
   def index
-    @events = Event.upcoming.to_a
+    @events = Event.upcoming.order(:start_at).to_a
   end
 
   def show
