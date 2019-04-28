@@ -271,6 +271,7 @@ Rails.application.routes.draw do
   controller :status do
     get 'status', action: :index
     get 'status/gc', action: :gc
+    get 'status/health', action: :health
     get 'status/heap_dump', action: :heap_dump
   end
 

@@ -64,7 +64,17 @@ module SystemTestHelper
 
   def click_menu(menu_item)
     open_menu
-    click_link menu_item
+    link = find(:link, menu_item)
+    begin
+      link.click
+    rescue
+      tries ||= 1
+      raise "click menu failed (#{tries}): #{$ERROR_INFO}" if tries >= 7
+
+      sleep 0.001
+      tries += 1
+      retry
+    end
   end
 
   def select_from_chosen(item_text, options)

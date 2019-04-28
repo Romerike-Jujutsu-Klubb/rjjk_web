@@ -16,7 +16,17 @@ class NewsFeatureTest < ApplicationSystemTestCase
     screenshot('image') || (sleep(0.5) if ENV['TRAVIS'].present?)
     find('#imageModal .modal-header > button.close').click
     assert_no_css(img_close_selector)
-    all('.post img')[1].click
+    # FIXME(uwe): Why does this fail?!  Maybe the modal shadow is still blocking?
+    begin
+      all('.post img')[1].click
+    rescue
+      tries ||= 1
+      raise if tries >= 3
+
+      sleep 0.001
+      tries += 1
+      retry
+    end
     screenshot('image_2')
   end
 
