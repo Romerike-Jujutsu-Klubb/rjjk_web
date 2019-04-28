@@ -6,13 +6,9 @@ addons:
   postgresql: "9.6"
 
 before_install:
-  - LATEST_CHROMEDRIVER=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE)
-  - echo $LATEST_CHROMEDRIVER
-  - ls -l /opt/
-  - ls -l /opt/google/
-  - ls -l /opt/google/chrome/
-  - /opt/google/chrome/chrome --version
-  - LATEST_CHROMEDRIVER=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE_`chrome --version`)
+  - CHROME_VERSION=`/opt/google/chrome/chrome --version`
+  - echo $CHROME_VERSION
+  - LATEST_CHROMEDRIVER=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION})
   - echo $LATEST_CHROMEDRIVER
   - wget http://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip
