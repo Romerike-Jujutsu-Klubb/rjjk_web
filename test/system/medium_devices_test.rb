@@ -80,7 +80,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
       article_menu_link.click
     rescue
       tries ||= 1
-      raise "article menu click failed (#{tries}): #{$ERROR_INFO}" if tries >= 5
+      raise "article menu click failed (#{tries}): #{$ERROR_INFO}" if tries >= 6
 
       sleep 0.001
       tries += 1
