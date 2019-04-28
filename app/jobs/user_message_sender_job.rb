@@ -15,7 +15,8 @@ class UserMessageSenderJob < ApplicationJob
         UserMessageMailer.send_message(um).deliver_now
         um.update! sent_at: Time.current
       rescue => e
-        logger.error "Failed to send UserMessage: #{e} #{um.inspect}"
+        ExceptionNotifier.notify_exception(e)
+        raise e
       end
     end
 
