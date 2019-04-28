@@ -72,7 +72,6 @@ class MediumDevicesTest < ApplicationSystemTestCase
     assert_css('#headermenuholder > i')
     screenshot :index, area_size_limit: 533, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
     find('#headermenuholder > i').click
-    assert_css '.menubutton', text: 'My first article'
     article_menu_link = find('.menubutton', text: 'My first article')
     article_menu_link.hover # FIXME(uwe): Remove with Chrome 74 + mobile emulation
     screenshot :menu

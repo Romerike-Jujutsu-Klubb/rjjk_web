@@ -52,10 +52,20 @@ class SmallDevicesTest < ApplicationSystemTestCase
     assert_css('#headermenuholder > i')
     screenshot :index, color_distance_limit: 11
     find('#headermenuholder > i').click
-    assert_selector '.menubutton', text: 'My first article'
-    find('.menubutton', text: 'My first article').hover
+    article_menu_link = find('.menubutton', text: 'My first article')
+    article_menu_link.hover
     screenshot :menu
-    find('menu a', text: 'My first article').click
+    begin
+      article_menu_link.click
+    rescue
+      tries ||= 1
+      raise "article menu click failed (#{tries}): #{$ERROR_INFO}" if tries >= 6
+
+      sleep 0.001
+      tries += 1
+      retry
+    end
+
     screenshot :article
   end
 
