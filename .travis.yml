@@ -3,11 +3,7 @@ cache: bundler
 
 addons:
   chrome: stable
-  postgresql: "10"
-  apt:
-    packages:
-    - postgresql-10
-    - postgresql-client-10
+  postgresql: "9.6"
 
 before_install:
   - CHROME_VERSION=`/opt/google/chrome/chrome --version | grep -Po '(?<=Google Chrome )[^.]+'`
@@ -21,6 +17,4 @@ script:
   - bin/rails db:setup test:full
 
 env:
-  global:
-    - PGPORT=5433
-    - secure: KhzvCYgAuP5G/6gnHrYLVa/XJ3oFPAXUtsM/HqpY9U+TKXmp/mw3ktAgYBu5ydQCkjQd6mNOB2z42RC6jfJh8LKoT84IB4Iz5v0nmPuSal5QMYd8culUFH+B/9olrekYFb2xVuyCzv2Vvi0dS33nE1yrLCtayVt/G7HtQ2LvNhg=
+  secure: KhzvCYgAuP5G/6gnHrYLVa/XJ3oFPAXUtsM/HqpY9U+TKXmp/mw3ktAgYBu5ydQCkjQd6mNOB2z42RC6jfJh8LKoT84IB4Iz5v0nmPuSal5QMYd8culUFH+B/9olrekYFb2xVuyCzv2Vvi0dS33nE1yrLCtayVt/G7HtQ2LvNhg=
