@@ -58,7 +58,7 @@ class LoginSystemTest < ApplicationSystemTestCase
     fill_in 'user_email', with: users(:admin).email
     screenshot :email_filled_in
     click_on 'Send e-post'
-    assert_current_path login_link_message_sent_path
+    assert_current_path login_link_message_sent_path email: 'uwe@example.com'
     screenshot :email_sent
     UserMessageSenderJob.perform_now
     assert_equal 1, Mail::TestMailer.deliveries.size
