@@ -7,9 +7,7 @@ addons:
 
 before_install:
   - CHROME_VERSION=`/opt/google/chrome/chrome --version | grep -Po '(?<=Google Chrome )[^.]+'`
-  - echo $CHROME_VERSION
   - LATEST_CHROMEDRIVER=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
-  - echo $LATEST_CHROMEDRIVER
   - wget http://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip
   - rm chromedriver_linux64.zip
