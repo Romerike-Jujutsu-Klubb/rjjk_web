@@ -10,6 +10,7 @@ before_install:
   - echo LATEST_CHROMEDRIVER
   - chrome --version
   - LATEST_CHROMEDRIVER=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE_`chrome --version`)
+  - echo LATEST_CHROMEDRIVER
   - wget http://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip
   - rm chromedriver_linux64.zip
