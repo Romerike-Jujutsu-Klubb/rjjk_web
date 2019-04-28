@@ -11,7 +11,7 @@ before_install:
   - ls -l /opt/
   - ls -l /opt/google/
   - ls -l /opt/google/chrome/
-  - chrome --version
+  - /opt/google/chrome/chrome --version
   - LATEST_CHROMEDRIVER=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE_`chrome --version`)
   - echo $LATEST_CHROMEDRIVER
   - wget http://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER/chromedriver_linux64.zip
