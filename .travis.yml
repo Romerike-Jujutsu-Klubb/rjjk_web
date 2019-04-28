@@ -5,12 +5,6 @@ addons:
   chrome: stable
   postgresql: "9.6"
 
-before_install:
-  - wget "https://chromedriver.storage.googleapis.com/74.0.3729.6/chromedriver_linux64.zip"
-  - unzip chromedriver_linux64.zip
-  - rm chromedriver_linux64.zip
-  - mv chromedriver /home/travis/bin/
-
 script:
   - bin/rails db:setup test:full
 
