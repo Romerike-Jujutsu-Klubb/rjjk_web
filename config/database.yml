@@ -8,6 +8,7 @@ default: &default
   <% if ENV['TRAVIS'].present? %>
   collation: C
   ctype: C
+  password:
   <% elsif OS.linux? %>
   collation: nb_NO.UTF-8
   ctype: nb_NO.UTF-8
