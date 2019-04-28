@@ -52,7 +52,7 @@ class MemberReportsController < ApplicationController
     timestamp = [Attendance, Graduate, Member].map { |c| c.maximum(:updated_at) }.max.strftime('%F_%T.%N')
     json_data_cache_key = "member_reports/grades_graph_json_data/#{timestamp}"
     json_data = Rails.cache.fetch(json_data_cache_key) do
-      data = load_cached_ranks_data(timestamp)
+      data = load_cached_ranks_data(timestamp).map { |rank, members| [rank, members.size] }
       expanded_data = []
       data.reverse_each do |rank, count|
         expanded_data << {

@@ -147,7 +147,7 @@ class GraduationReminder
         .where('passed IS NULL OR passed = ?', true)
         .where('graduates.confirmed_at IS NULL')
         .where('graduates.invitation_sent_at IS NULL OR graduates.invitation_sent_at < ?', 1.week.ago)
-        .order('graduations.held_on')
+        .order('graduations.held_on, graduates.id')
         .each do |graduate|
       next unless graduate.graduation.censors.select(&:examiner?).any?
       next unless graduate.graduation.censors.select(&:examiner?).all?(&:approved_graduates?)

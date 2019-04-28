@@ -48,18 +48,18 @@ class MemberGradeHistoryGraph
 
     raise unless interval > 0 && step > 0
 
-    ranks = Group.find_by(name: 'Voksne').ranks.reverse
+    ranks = Group.find_by(name: 'Voksne').ranks.reverse + [Rank::UNRANKED]
     # first_date = 5.years.ago.to_date
     # first_date = 10.years.ago.to_date
     first_date = Date.civil(2011, 1, 1)
     dates = Date.current.step(first_date, -step / 1.day).to_a.reverse
-    ranks_data = ranks.map { |rank| totals(rank, dates, interval, percentage) }
+    ranks_data = ranks.map { |rank| totals(rank, dates, interval, percentage).map(&:size) }
     data = Hash[ranks.reverse.zip(ranks_data.reverse)].select { |_rank, values| values.any?(&:positive?) }
     [dates, data]
   end
 
   def ranks
-    ranks = MartialArt.kwr.first.ranks.last(9)[0..-2]
+    ranks = [Rank::UNRANKED] + MartialArt.kwr.first.ranks.last(9)[0..-2]
     ranks_data = ranks.map { |rank| totals(rank, [Date.current], DEFAULT_INTERVAL, nil)[0] }
     ranks.zip(ranks_data)
   end
@@ -89,7 +89,7 @@ class MemberGradeHistoryGraph
       @active_members[date].select do |m|
         m.graduates.select { |g| g.passed? && g.graduation.held_on <= date }
             .max_by { |g| g.graduation.held_on }&.rank == rank
-      end.size
+      end
     end
   end
 end

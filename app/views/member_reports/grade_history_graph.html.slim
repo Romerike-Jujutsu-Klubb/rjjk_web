@@ -8,7 +8,8 @@ table.table
       th Grad
       th Antall
   tbody
-    - @data.each do |rank, count|
+    - @data.each do |rank, members|
       tr
         td = rank
-        td = count
+        td = members.size
+        td = members.join(', ')

@@ -136,7 +136,7 @@ class GraduationReminderTest < ActionMailer::TestCase
 
     assert_mail_stored(2) { GraduationReminder.invite_graduates }
 
-    mail = UserMessage.pending[0]
+    mail = UserMessage.pending[1]
     assert_equal ['neuer@example.com', 'newbie@example.com'], mail.to
     assert_equal %w[uwe@example.com], mail.from
     assert_equal 'Invitasjon til gradering', mail.subject
@@ -152,7 +152,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(/Krav til gradering er 10-20 treninger. Vi har registrert 1 trening på deg siden du startet./,
         mail.body)
 
-    mail = UserMessage.pending[1]
+    mail = UserMessage.pending[0]
     assert_equal ['sebastian@example.com', 'uwe@example.com'], mail.to
     assert_equal %w[uwe@example.com], mail.from
     assert_equal 'Invitasjon til gradering', mail.subject
