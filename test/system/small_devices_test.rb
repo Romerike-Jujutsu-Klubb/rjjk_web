@@ -22,8 +22,11 @@ class SmallDevicesTest < ApplicationSystemTestCase
     screenshot :index
     find('.fa-navicon').click
     assert_selector 'li a', text: 'My first article'
+    assert_css '#menuShadow', visible: :visible
+    find('.fa-calendar').hover # FIXME(uwe): Remove with Chrome 74 + mobile emulation
     screenshot :menu
     find('.fa-calendar').click_at
+    assert_no_css '#menuShadow', visible: :visible
     screenshot :menu_closed
     find('.fa-calendar').click
     screenshot :calendar
