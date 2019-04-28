@@ -27,7 +27,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
     screenshot :menu
     find('.fa-calendar').click_at
     assert_css '#menuShadow', visible: :hidden
-    screenshot :menu_closed || (sleep 0.1 if ENV['TRAVIS'])
+    screenshot :menu_closed || (sleep 0.2 if ENV['TRAVIS'])
     find('.fa-calendar').click
     screenshot :calendar
     find('.fa-navicon').click_at
