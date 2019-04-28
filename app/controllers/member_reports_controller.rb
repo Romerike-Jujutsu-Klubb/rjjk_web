@@ -30,19 +30,19 @@ class MemberReportsController < ApplicationController
     render json: json_data
   end
 
-  def grade_history_graph; end
+  def grade_history_graph
+    timestamp = [Attendance, Graduate, Member].map { |c| c.maximum(:updated_at) }.max.strftime('%F_%T.%N')
+    @data = load_cached_ranks_data(timestamp)
+  end
 
   def grade_history_graph_data
     opts = { interval: params[:interval]&.to_i&.days, step: params[:step].try(:to_i).try(:days),
-             percentage: params[:percentage].try(:to_i) }
+        percentage: params[:percentage].try(:to_i) }
     timestamp = [Attendance, Graduate, Member].map { |c| c.maximum(:updated_at) }.max.strftime('%F_%T.%N')
-    cache_key = "member_reports/grade_history_graph_data/#{opts.hash}/#{timestamp}"
-    json_data = Rails.cache.fetch(cache_key) do
-      dates, data = MemberGradeHistoryGraph.new.data_set(opts)
-      expanded_data = data.map do |rank, values|
-        { name: rank.name, data: Hash[dates.zip(values)], color: rank.css_color }
-      end
-      expanded_data.reverse.to_json
+    json_data_cache_key = "member_reports/grade_history_graph_json_data/#{opts.hash}/#{timestamp}"
+    json_data = Rails.cache.fetch(json_data_cache_key) do
+      data = load_cached_grade_history_data(opts, timestamp)
+      data.reverse.to_json
     end
 
     render json: json_data
@@ -50,16 +50,16 @@ class MemberReportsController < ApplicationController
 
   def grades_graph_data
     timestamp = [Attendance, Graduate, Member].map { |c| c.maximum(:updated_at) }.max.strftime('%F_%T.%N')
-    cache_key = "member_reports/grades_graph_data/#{timestamp}"
-    json_data = Rails.cache.fetch(cache_key) do
-      data = MemberGradeHistoryGraph.new.ranks
+    json_data_cache_key = "member_reports/grades_graph_json_data/#{timestamp}"
+    json_data = Rails.cache.fetch(json_data_cache_key) do
+      data = load_cached_ranks_data(timestamp)
       expanded_data = []
-      data.reverse_each do |rank, values|
+      data.reverse_each do |rank, count|
         expanded_data << {
-          name: "#{rank.name} Left", data: [[rank.name, -values[0]]], color: rank.css_color
+          name: "#{rank.name} Left", data: [[rank.name, -count]], color: rank.css_color
         }
         expanded_data << {
-          name: "#{rank.name} Right", data: [[rank.name, values[0]]], color: rank.css_color
+          name: "#{rank.name} Right", data: [[rank.name, count]], color: rank.css_color
         }
       end
       expanded_data.to_json
@@ -80,5 +80,19 @@ class MemberReportsController < ApplicationController
     end
 
     render json: json_data
+  end
+
+  private
+
+  def load_cached_ranks_data(timestamp)
+    data_cache_key = "member_reports/grades_graph_data/#{timestamp}"
+    Rails.cache.fetch(data_cache_key) { MemberGradeHistoryGraph.new.ranks }
+  end
+
+  def load_cached_grade_history_data(opts, timestamp)
+    Rails.cache.fetch("member_reports/grade_history_graph_data/#{opts.hash}/#{timestamp}") do
+      dates, data = MemberGradeHistoryGraph.new.data_set(opts)
+      data.map { |rank, values| { name: rank.name, data: Hash[dates.zip(values)], color: rank.css_color } }
+    end
   end
 end

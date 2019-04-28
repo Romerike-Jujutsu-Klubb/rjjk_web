@@ -60,8 +60,7 @@ class MemberGradeHistoryGraph
 
   def ranks
     ranks = MartialArt.kwr.first.ranks.last(9)[0..-2]
-    dates = [Date.current]
-    ranks_data = ranks.map { |rank| totals(rank, dates, DEFAULT_INTERVAL, nil) }
+    ranks_data = ranks.map { |rank| totals(rank, [Date.current], DEFAULT_INTERVAL, nil)[0] }
     ranks.zip(ranks_data)
   end
 
