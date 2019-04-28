@@ -26,7 +26,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
     find('.fa-calendar').hover # FIXME(uwe): Remove with Chrome 74 + mobile emulation
     screenshot :menu
     find('.fa-calendar').click_at
-    assert_no_css '#menuShadow', visible: :visible
+    assert_css '#menuShadow', visible: :hidden
     screenshot :menu_closed
     find('.fa-calendar').click
     screenshot :calendar
