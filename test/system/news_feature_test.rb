@@ -13,7 +13,7 @@ class NewsFeatureTest < ApplicationSystemTestCase
     all('.post img')[0].click
     modal_selector = '.modal-backdrop'
     assert_css(modal_selector)
-    screenshot('image')
+    screenshot('image') || (sleep(0.5) if ENV['TRAVIS'].present?)
     find('#imageModal .modal-header > button.close').click
     assert_no_css(modal_selector)
     all('.post img')[1].click
