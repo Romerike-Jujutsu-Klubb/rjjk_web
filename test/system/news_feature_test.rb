@@ -11,22 +11,12 @@ class NewsFeatureTest < ApplicationSystemTestCase
     assert_current_path '/news'
     screenshot('index')
     all('.post img')[0].click
-    img_close_selector = '#imageModal .close'
-    assert has_css?(img_close_selector)
-    screenshot('image') || (sleep(0.5) if ENV['TRAVIS'].present?)
+    modal_selector = '.modal-backdrop'
+    assert_css(modal_selector)
+    screenshot('image')
     find('#imageModal .modal-header > button.close').click
-    assert_no_css(img_close_selector)
-    # FIXME(uwe): Why does this fail?!  Maybe the modal shadow is still blocking?
-    begin
-      all('.post img')[1].click
-    rescue
-      tries ||= 1
-      raise if tries >= 3
-
-      sleep 0.001
-      tries += 1
-      retry
-    end
+    assert_no_css(modal_selector)
+    all('.post img')[1].click
     screenshot('image_2')
   end
 
