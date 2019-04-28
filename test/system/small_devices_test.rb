@@ -33,7 +33,6 @@ class SmallDevicesTest < ApplicationSystemTestCase
       find('.fa-calendar').click
     rescue
       tries ||= 1
-      puts "fa-calendar click failed (#{tries}): #{$ERROR_INFO}"
       raise "fa-calendar click failed (#{tries}): #{$ERROR_INFO}" if tries >= 6
 
       sleep 0.001
