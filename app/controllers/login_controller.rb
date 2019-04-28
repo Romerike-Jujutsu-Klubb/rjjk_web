@@ -49,7 +49,7 @@ class LoginController < ApplicationController
             back_or_redirect_to login_link_message_sent_path
           else
             flash[:message_email] = escaped_email
-            redirect_to login_link_message_sent_path
+            redirect_to login_link_message_sent_path email: email
           end
         else
           flash.notice = 'Du er allerede logget på.'
@@ -63,7 +63,7 @@ class LoginController < ApplicationController
   end
 
   def login_link_message_sent
-    back_or_redirect_to root_path if current_user && !flash[:message_email]
+    back_or_redirect_to root_path if current_user && !params[:email]
   end
 
   def signup
