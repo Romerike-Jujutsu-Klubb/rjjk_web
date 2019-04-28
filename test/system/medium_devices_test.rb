@@ -73,9 +73,20 @@ class MediumDevicesTest < ApplicationSystemTestCase
     screenshot :index, area_size_limit: 533, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
     find('#headermenuholder > i').click
     assert_css '.menubutton', text: 'My first article'
-    find('.menubutton', text: 'My first article').hover # FIXME(uwe): Remove with Chrome 74 + mobile emulation
+    article_menu_link = find('.menubutton', text: 'My first article')
+    article_menu_link.hover # FIXME(uwe): Remove with Chrome 74 + mobile emulation
     screenshot :menu
-    find('.menubutton', text: 'My first article').click
+    begin
+      article_menu_link.click
+    rescue
+      tries ||= 1
+      puts "article menu click failed (#{tries}): #{$ERROR_INFO}"
+      raise "article menu click failed (#{tries}): #{$ERROR_INFO}" if tries >= 3
+
+      sleep 0.001
+      tries += 1
+      retry
+    end
     assert_css 'h1', text: 'My first article'
     screenshot :article
   end
