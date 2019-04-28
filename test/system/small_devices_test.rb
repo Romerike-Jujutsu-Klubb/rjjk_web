@@ -27,8 +27,20 @@ class SmallDevicesTest < ApplicationSystemTestCase
     screenshot :menu
     find('.fa-calendar').click_at
     assert_css '#menuShadow', visible: :hidden
-    screenshot :menu_closed || (sleep 1.0 if ENV['TRAVIS'])
-    find('.fa-calendar').click
+    screenshot :menu_closed
+
+    begin
+      find('.fa-calendar').click
+    rescue
+      tries ||= 1
+      puts "fa-calendar click failed (#{tries}): #{$ERROR_INFO}"
+      raise "fa-calendar click failed (#{tries}): #{$ERROR_INFO}" if tries >= 6
+
+      sleep 0.001
+      tries += 1
+      retry
+    end
+
     screenshot :calendar
     find('.fa-navicon').click_at
     screenshot :calendar_closed
