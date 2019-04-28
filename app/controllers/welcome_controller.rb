@@ -15,16 +15,6 @@ class WelcomeController < ApplicationController
               body: graduation_body(graduations))
           @news_items.prepend graduation_news
         end
-        events = Event
-            .includes(:event_groups).references(:event_groups)
-            .where('event_groups.group_id in (?)', current_user.member.groups.map(&:id))
-            .where('start_at BETWEEN ? AND ?', Date.current, 1.month.from_now)
-            .order(:start_at).to_a
-        events.each do |event|
-          publish_at = [event.created_at, 1.month.before(event.start_at)].max
-          event_news = NewsItem.new(created_at: publish_at, title: event.name, body: event.description)
-          @news_items.prepend event_news
-        end
       end
       if load_next_practice
         @news_items << NewsItem.new(publish_at: @next_practice.start_at - 1.day,
@@ -40,14 +30,9 @@ class WelcomeController < ApplicationController
       end
       @news_items.sort_by! { |n| n.publish_at || n.created_at }.reverse!
       render template: 'news/index'
-      # return
     else
       front_page
-      # return
     end
-    # return unless (@information_page = InformationPage.find_by(title: 'Velkommen'))
-
-    # render template: 'info/show'
   end
 
   # https://web.archive.org/web/20190203085358/https://www.altoros.com/
