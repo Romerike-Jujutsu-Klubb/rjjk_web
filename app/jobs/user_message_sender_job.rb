@@ -8,9 +8,15 @@ class UserMessageSenderJob < ApplicationJob
   def perform
     messages = nil
     UserMessage.transaction(requires_new: true) do
-      messages = UserMessage.lock.where(sent_at: nil, read_at: nil).order(:created_at).each do |m|
-        UserMessageMailer.send_message(m).deliver_now
-        m.update! sent_at: Time.current
+      messages = UserMessage.lock.where(sent_at: nil, read_at: nil).order(:created_at).each do |um|
+        # FIXME(uwe): Notify by push message if possible, or SMS?
+        next if um.emails.empty?
+        # EMXIF
+
+        UserMessageMailer.send_message(um).deliver_now
+        um.update! sent_at: Time.current
+      rescue
+        logger.error "Failed to send UserMessage: #{um.inspect}"
       end
     end
 
