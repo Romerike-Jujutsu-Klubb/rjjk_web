@@ -10,8 +10,7 @@ class UserMessageSenderJob < ApplicationJob
     UserMessage.transaction(requires_new: true) do
       messages = UserMessage.lock.where(sent_at: nil, read_at: nil).order(:created_at).each do |um|
         # FIXME(uwe): Notify by push message if possible, or SMS?
-        next if um.emails.empty?
-        # EMXIF
+        next if um.user.emails.empty?
 
         UserMessageMailer.send_message(um).deliver_now
         um.update! sent_at: Time.current
