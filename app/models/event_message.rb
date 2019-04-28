@@ -22,11 +22,11 @@ class EventMessage < ApplicationRecord
 
       Har du noen spørsmål, så ta kontakt med oss på leir@jujutsu.no eller på telefon xxx xx xxx.
 
-      Vi vil fortløpende oppdatere informasjon på [jujutsu.no]([EVENT_LINK]).
+      Vi vil fortløpende oppdatere informasjon på [www.jujutsu.no]([EVENT_LINK]).
       --
       Med vennlig hilsen,
       Romerike Jujutsu Klubb
-      https://jujutsu.no/
+      https://www.jujutsu.no/
     TEXT
     SIGNUP_REJECTION_SUBJECT = 'Påmelding til [EVENT_NAME]'
     SIGNUP_REJECTION = <<~TEXT
@@ -42,7 +42,7 @@ class EventMessage < ApplicationRecord
       --
       Med vennlig hilsen,
       Romerike Jujutsu Klubb
-      https://jujutsu.no/
+      https://www.jujutsu.no/
     TEXT
   end
   belongs_to :event

@@ -13,7 +13,7 @@ module UserSystem
     admin_email: 'webmaster@jujutsu.no',
 
     # Sent in emails to users
-    app_url: 'https://jujutsu.no/',
+    app_url: 'https://www.jujutsu.no/',
 
     # Sent in emails to users
     app_name: 'RJJK',
