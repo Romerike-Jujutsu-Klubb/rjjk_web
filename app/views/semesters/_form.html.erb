@@ -1,30 +1,30 @@
 <%= form_for(@semester) do |f| %>
-    <% if @semester.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@semester.errors.count, "error") %> prohibited this
-            semester from being saved:</h2>
+  <% if @semester.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@semester.errors.count, "error") %> prohibited this
+        semester from being saved:</h2>
 
-          <ul>
-            <% @semester.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
+      <ul>
+        <% @semester.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-    <div class="row">
-      <div class="form-group col-md-3">
-        <%= f.label :start_on, 'Fra' %>
-        <%= f.text_field :start_on, class: 'date form-control', size: 18 %>
-      </div>
-
-      <div class="form-group col-md-3">
-        <%= f.label :end_on, 'Til' %>
-        <%= f.text_field :end_on, class: 'date form-control', size: 18 %>
-      </div>
+  <div class="row">
+    <div class="form-group col-md-3">
+      <%= f.label :start_on, 'Fra' %>
+      <%= f.text_field :start_on, class: 'date form-control', size: 18 %>
     </div>
 
-    <%= f.submit 'Lagre', class: 'btn btn-primary' %>
-    <%= back_or_link_to 'Tilbake', semesters_path, class: 'btn btn-secondary fa fa-back' %>
-    <%= link_to('Show', @semester, class: 'btn btn-secondary') unless @semester.new_record? %>
+    <div class="form-group col-md-3">
+      <%= f.label :end_on, 'Til' %>
+      <%= f.text_field :end_on, class: 'date form-control', size: 18 %>
+    </div>
+  </div>
+
+  <%= f.submit 'Lagre', class: 'btn btn-primary' %>
+  <%= back_or_link_to 'Tilbake', semesters_path, class: 'btn btn-secondary fa fa-back' %>
+  <%= link_to('Show', @semester, class: 'btn btn-secondary') unless @semester.new_record? %>
 <% end %>
