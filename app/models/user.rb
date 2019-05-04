@@ -61,7 +61,6 @@ class User < ApplicationRecord
   validates :birthdate, presence: true, if: -> { member && member.left_on.nil? }
   validates :male, inclusion: { in: [true, false] }, if: -> { member && member.left_on.nil? }
   validates :email,
-      # presence: { unless: ->{phone || member} }, # TODO(uwe): Activate this?  Ensure contact method!
       format: { with: EMAIL_REGEXP, allow_nil: true },
       uniqueness: { case_sensitive: false, scope: :deleted_at, unless: :deleted_at, allow_nil: true }
   # validates :guardian_1_id, presence: { if: -> {age && age < 18} }

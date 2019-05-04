@@ -48,7 +48,7 @@
               </tr>
               <% day_instructions[1..-1].each do |day_instruction| %>
                   <tr>
-                    <td><%= day_instruction.member.name %></td>
+                    <td><%= link_to day_instruction.member.name, day_instruction.member %></td>
                     <td><%= day_instruction.role %></td>
                     <td><%= link_to 'Endre', edit_group_instructor_path(day_instruction) %></td>
                     <td><%= link_to 'Slett', day_instruction, data: {confirm: 'Er du sikker?'}, method: :delete %></td>

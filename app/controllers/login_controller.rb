@@ -89,8 +89,8 @@ class LoginController < ApplicationController
           redirect_to login_path
         end
       end
-    rescue => ex
-      report_exception ex
+    rescue => e
+      report_exception e
       flash.notice = 'Error creating account: confirmation email not sent'
     end
   end
@@ -114,16 +114,16 @@ class LoginController < ApplicationController
     begin
       @user.change_password(params['user']['password'], params['user']['password_confirmation'])
       @user.save!
-    rescue => ex
-      report_exception ex
+    rescue => e
+      report_exception e
       flash.now.notice = 'Your password could not be changed at this time. Please retry.'
       return
     end
     begin
       UserMailer.change_password(@user, params['user']['password'])
           .store(@user.id, tag: :change_password)
-    rescue => ex
-      report_exception ex
+    rescue => e
+      report_exception e
     end
     redirect_to controller: :login, action: :welcome
   end
@@ -166,8 +166,8 @@ class LoginController < ApplicationController
           redirect_to action: 'change_password'
           return
         end
-      rescue => ex
-        report_exception ex
+      rescue => e
+        report_exception e
         flash.now[:notice] = "Beklager!  Link for innlogging kunne ikke sendes til #{escaped_email}"
       end
     end
@@ -197,9 +197,9 @@ class LoginController < ApplicationController
         else
           raise 'unknown edit action'
         end
-      rescue => ex
-        logger.warn ex
-        logger.warn ex.backtrace
+      rescue => e
+        logger.warn e
+        logger.warn e.backtrace
       end
     end
     redirect_to action: :edit

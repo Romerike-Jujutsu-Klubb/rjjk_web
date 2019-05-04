@@ -19,9 +19,7 @@ class SemestersController < ApplicationController
     return unless (last_semester = Semester.order(:end_on).last)
 
     @semester.start_on = last_semester.end_on + 1
-    @semester.end_on = last_semester.end_on + 1 +
-        ((last_semester.end_on + 1).year * 12 + (last_semester.end_on + 1).month -
-            last_semester.start_on.year * 12 - last_semester.start_on.month).months - 1
+    @semester.end_on = (@semester.start_on >> 6) - 1
   end
 
   def edit

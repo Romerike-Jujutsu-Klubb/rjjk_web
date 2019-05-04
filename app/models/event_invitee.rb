@@ -81,7 +81,7 @@ class EventInvitee < ApplicationRecord
   end
 
   def registration_link
-    link_to(I18n.t(:registration_link),
-        Rails.application.routes.url_helpers.event_registration_url(id, security_token: security_token))
+    url = Rails.application.routes.url_helpers.event_registration_url(id, security_token: security_token)
+    link_to(I18n.t(:registration_link), url)
   end
 end

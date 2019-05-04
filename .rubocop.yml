@@ -11,18 +11,26 @@ AllCops:
 Layout/AlignHash:
   EnforcedLastArgumentHashStyle: ignore_implicit
 
+# Offense count: 1
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, IndentationWidth.
+# SupportedStyles: with_first_argument, with_fixed_indentation
+Layout/AlignArguments:
+  EnforcedStyle: with_fixed_indentation
+  IndentationWidth: 4
+
 Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
   IndentationWidth: 4
 
-Layout/FirstParameterIndentation:
+Layout/IndentFirstArgument:
   EnforcedStyle: consistent
   IndentationWidth: 4
 
-Layout/IndentArray:
+Layout/IndentFirstArrayElement:
   EnforcedStyle: consistent
 
-Layout/IndentHash:
+Layout/IndentFirstHashElement:
   EnforcedStyle: consistent
 
 Layout/IndentAssignment:
