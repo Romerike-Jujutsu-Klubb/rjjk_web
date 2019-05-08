@@ -175,9 +175,12 @@ class NkfMemberComparison
 
     # m.restore_attributes(outgoing_changes_for_member.keys)
     logger.info 'Submitting form to NKF'
-    logger.info member_form.pretty_inspect
+    logger.debug member_form.pretty_inspect
     member_form['p_ks_medlprofil_action'] = 'OK'
-    member_form.submit
+    change_response_page = member_form.submit
+    logger.debug "change_response_page: code: #{change_response_page.code.inspect}"
+    logger.debug "change_response_page:\n#{change_response_page}"
+    change_response_page
   end
 
   def save_incoming_changes(m)

@@ -56,7 +56,7 @@ class Member < ApplicationRecord
   end
   scope :with_user, -> { includes(:user).references(:users) }
 
-  NILLABLE_FIELDS = %i[phone_home phone_work].freeze
+  NILLABLE_FIELDS = %i[account_no comment phone_home phone_work].freeze
   before_validation do
     NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? }
   end

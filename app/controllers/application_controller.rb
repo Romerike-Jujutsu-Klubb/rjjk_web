@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   if Rails.env.production?
     before_action { redirect_to(host: 'www.jujutsu.no') if request.host != 'www.jujutsu.no' }
   end
-  before_action :reject_bots
+  # before_action :reject_bots
   before_action :store_current_user_in_thread
   before_action :set_paper_trail_whodunnit
   before_action :set_locale
