@@ -25,6 +25,8 @@
       = f.text_area :address, rows: 4, cols: 64
       = f.text_field :email
       = f.text_field :phone
+  - else
+    .text-danger = error_messages_for :event_invitee, header_message: nil, message: nil
   - unless @event_invitee.user&.member?
     = f.text_field :organization
   .row
