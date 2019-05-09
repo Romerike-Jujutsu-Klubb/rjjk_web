@@ -13,7 +13,7 @@ class EventInvitee < ApplicationRecord
 
   has_one :invitation, -> do
     where("message_type = '#{EventMessage::MessageType::INVITATION}'")
-        .order(:sent_at, :ready_at, :created_at)
+        .order(:sent_at, :ready_at, :created_at).reverse_order
   end,
       class_name: 'EventInviteeMessage', dependent: :destroy
   has_one :signup_confirmation,
