@@ -54,7 +54,7 @@
                   - else
                     = link_to('Send invitasjon', with_detour({controller: :event_invitee_messages, \
                                   action: inv.invitation ? :edit : :new, \
-                                  id: inv.invitation.try(:id), \
+                                  id: inv.invitation&.id, \
                                   event_invitee_message: { \
                                           message_type: EventMessage::MessageType::INVITATION, \
                                           event_invitee_id: inv.id, \
