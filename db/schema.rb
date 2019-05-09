@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_12_215457) do
+ActiveRecord::Schema.define(version: 2019_05_09_132644) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -220,7 +220,7 @@ ActiveRecord::Schema.define(version: 2019_04_12_215457) do
   end
 
   create_table 'event_invitees', force: :cascade do |t|
-    t.integer 'event_id'
+    t.integer 'event_id', null: false
     t.string 'email', limit: 255
     t.string 'name', limit: 255
     t.string 'address', limit: 255
@@ -230,7 +230,7 @@ ActiveRecord::Schema.define(version: 2019_04_12_215457) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.string 'phone', limit: 255
-    t.integer 'user_id'
+    t.integer 'user_id', null: false
     t.boolean 'will_work'
     t.string 'comment', limit: 255
     t.string 'security_token'

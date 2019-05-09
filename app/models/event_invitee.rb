@@ -9,9 +9,12 @@ class EventInvitee < ApplicationRecord
   scope :for_user, ->(user_id) { where user_id: user_id }
 
   belongs_to :event
-  belongs_to :user # FIXME(uwe): Set column user_id NOT NULL
+  belongs_to :user
 
-  has_one :invitation, -> { where("message_type = '#{EventMessage::MessageType::INVITATION}'") },
+  has_one :invitation, -> do
+    where("message_type = '#{EventMessage::MessageType::INVITATION}'")
+        .order(:sent_at, :ready_at, :created_at)
+  end,
       class_name: 'EventInviteeMessage', dependent: :destroy
   has_one :signup_confirmation,
       -> { where("message_type = '#{EventInviteeMessage::MessageType::SIGNUP_CONFIRMATION}'") },

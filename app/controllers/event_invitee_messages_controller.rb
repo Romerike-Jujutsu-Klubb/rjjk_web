@@ -22,11 +22,13 @@ class EventInviteeMessagesController < ApplicationController
   end
 
   def new
-    @event_invitee_message = EventInviteeMessage.new params[:event_invitee_message]
+    @event_invitee_message ||= EventInviteeMessage.new params[:event_invitee_message]
+    render action: 'new'
   end
 
   def edit
-    @event_invitee_message = EventInviteeMessage.find(params[:id])
+    @event_invitee_message ||= EventInviteeMessage.find(params[:id])
+    render action: 'edit'
   end
 
   def create
@@ -34,7 +36,7 @@ class EventInviteeMessagesController < ApplicationController
     if @event_invitee_message.save
       back_or_redirect_to @event_invitee_message, notice: 'Signup confirmation was successfully created.'
     else
-      render action: 'new'
+      new
     end
   end
 
@@ -44,7 +46,7 @@ class EventInviteeMessagesController < ApplicationController
       back_or_redirect_to @event_invitee_message,
           notice: 'Signup confirmation was successfully updated.'
     else
-      render action: 'edit'
+      edit
     end
   end
 
