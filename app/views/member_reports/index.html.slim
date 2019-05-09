@@ -65,7 +65,10 @@ table.table
           = active_diff != 0 ? " (#{active_diff > 0 ? '+' : nil}#{active_diff})" : nil
         td.text-center
           - if passive.size > 0 || passive_diff != 0
-            a href='#' data-toggle=:popover data-trigger=:hover data-content=render('popover_list', title: nil, members: passive).to_str data-html=:true = passive.size
+            - if passive.size > 0
+              a href='#' data-toggle=:popover data-trigger=:hover data-content=render('popover_list', title: nil, members: passive).to_str data-html=:true = passive.size
+            - else
+              = passive.size
             = passive_diff != 0 ? " (#{passive_diff > 0 ? '+' : nil}#{passive_diff})" : nil
         td.text-center
           - if non_paying.size > 0 || non_paying_diff != 0
