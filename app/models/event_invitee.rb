@@ -82,6 +82,9 @@ class EventInvitee < ApplicationRecord
 
   def registration_link
     url = Rails.application.routes.url_helpers.event_registration_url(id, security_token: security_token)
-    link_to(I18n.t(:registration_link), url)
+    root_url = Rails.application.routes.url_helpers.root_url
+    print_link = "#{I18n.t(:registration_link).chomp('.')}: #{link_to(root_url, root_url)}"
+    print_span = "<span class='d-none d-print-inline'>#{print_link} .</span>"
+    "#{link_to(I18n.t(:registration_link), url, class: 'd-print-none')}#{print_span}"
   end
 end

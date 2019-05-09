@@ -32,4 +32,7 @@ p
 - if @event_invitee
   == @event_invitee.replace_markers(body)
 - else
-  == body.gsub('[EVENT_REGISTRATION_LINK]', '')
+  - root_url = Rails.application.routes.url_helpers.root_url
+  - print_span = "<span class='d-none d-print-inline'>#{I18n.t(:registration_link).chomp('.')}: #{link_to(root_url, root_url)} .</span>"
+  - link = "#{link_to(I18n.t(:registration_link), new_event_registration_path(event_invitee: {event_id: @event.id}), class: 'd-print-none')}#{print_span}"
+  == body.gsub('[EVENT_REGISTRATION_LINK]', link)
