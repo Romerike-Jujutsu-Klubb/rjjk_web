@@ -77,7 +77,7 @@ class EventInvitee < ApplicationRecord
         .gsub('[EVENT_LINK]',
             Rails.application.routes.url_helpers.event_url(event.id, security_token: security_token))
         .gsub('[EVENT_INVITEE_NAME]', name)
-        .gsub('[EVENT_REGISTRATION_LINK]', I18n.with_locale(:nb) { registration_link })
+        .gsub('[EVENT_REGISTRATION_LINK]', registration_link)
   end
 
   def registration_link
