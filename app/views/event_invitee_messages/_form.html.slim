@@ -1,0 +1,35 @@
+- @content_width = 1024
+= bootstrap_form_for(@event_invitee_message) do |f|
+  .field
+    = f.label :hendelse
+    ' :
+    = f.hidden_field :event_invitee_id
+    = @event_invitee_message.event_invitee.event.name
+
+  .field
+    = f.label :deltaker
+    ' :
+    = f.hidden_field :event_invitee_id
+    = @event_invitee_message.event_invitee.name
+
+  .field
+    = f.label :meldingstype
+    ' :
+    - if @event_invitee_message.message_type.blank?
+      = f.select :message_type, [nil] + EventMessage::MessageType.constants.sort
+    - else
+      = @event_invitee_message.message_type
+      = f.hidden_field :message_type
+
+  = f.text_field :subject
+  = f.text_area :body, class: 'expanding'
+
+  .float-right.mb-3
+    = back_or_link_to 'Tilbake', event_invitee_messages_path, class: 'btn btn-link'
+    = f.primary 'Lagre melding'
+  .float-right.btn.btn-link
+    = f.check_box :ready_at, {}, Time.current, nil
+    - if @event_invitee_message.sent_at
+      = f.label :sendt
+      ' :
+      = @event_invitee_message.sent_at
