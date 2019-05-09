@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class NkfMember < ApplicationRecord
+  # `map_to` is used to set a new value in the RJJK model.
+  # `map_from` is used to detect changes in the RJJK model.
   FIELD_MAP = {
     adresse_1: {},
     adresse_2: { map_to: { user: :address }, form_field: :frm_48_v05 },
@@ -122,8 +124,6 @@ class NkfMember < ApplicationRecord
           elsif v.blank? && (target =~ /^(billing|guardian_)/ ||
               target_attribute =~ /^guardian_|email|mobile|phone|_on$/)
             nil
-          # elsif v == 'post@jujutsu.no'
-          #   'ulla'
           elsif v.present? && target_attribute =~ /email/
             v.downcase
           else

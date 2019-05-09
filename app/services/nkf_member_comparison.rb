@@ -178,8 +178,9 @@ class NkfMemberComparison
     logger.debug member_form.pretty_inspect
     member_form['p_ks_medlprofil_action'] = 'OK'
     change_response_page = member_form.submit
-    logger.debug "change_response_page: code: #{change_response_page.code.inspect}"
-    logger.debug "change_response_page:\n#{change_response_page.body}"
+    logger.debug do
+      "change_response_page: code: #{change_response_page.code.inspect}\n#{change_response_page.body}"
+    end
     change_response_page
   end
 
