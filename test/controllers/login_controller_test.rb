@@ -155,7 +155,7 @@ class LoginControllerTest < ActionController::TestCase
     post :change_password, params: { user: { password: 'bad', password_confirmation: 'bad' } }
     assert_response :success
     UserMessageSenderJob.perform_now
-    assert_equal 0, Mail::TestMailer.deliveries.size
+    assert_equal 1, Mail::TestMailer.deliveries.size
   end
 
   def test_forgot_password__when_logged_in_redirects_to_change_password
