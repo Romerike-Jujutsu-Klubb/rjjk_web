@@ -6,12 +6,12 @@ body {
 }
 
 div.dialog {
+    display: inline-block;
     padding: 0 4em;
     margin: 0.5rem auto 0;
 }
 
 div.dialog > div {
-    display: inline-block;
     border: 1px solid #CCC;
     border-right-color: #999;
     border-left-color: #999;
@@ -25,7 +25,6 @@ div.dialog > div {
 }
 
 div.dialog > p {
-    display: inline-block;
     margin: 0 0 1em;
     padding: 1em;
     background-color: #F7F7F7;
@@ -39,9 +38,12 @@ div.dialog > p {
     color: #666;
     box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
 }
+a {
+    display: block;
+}
 
 img {
-    margin: 1.5rem
+    margin: 1.5rem;
 }
 
 h1 {
