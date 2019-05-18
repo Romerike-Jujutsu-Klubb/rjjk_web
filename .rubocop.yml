@@ -59,6 +59,9 @@ Metrics/LineLength:
   Exclude:
     - db/schema.rb
 
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
 Naming/VariableNumber:
   Enabled: false
 

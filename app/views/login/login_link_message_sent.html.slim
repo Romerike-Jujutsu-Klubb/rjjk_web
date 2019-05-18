@@ -1,10 +1,13 @@
-.alert.alert-info En e-post med innloggingslenke er sendt til #{flash[:message_email]}.
+.alert.alert-info
+  ' En e-post med innloggingslenke er sendt til
+  b = flash[:message_identity]
+  | .
 
-p Finner du ikke e-posten?  Sjekk søppelmappen din (Spam/Junk).
+p Finner du ikke meldingen?  Sjekk søppelmappen din (Spam/Junk).
 
 p
   ' Hvis du fremdeles ikke kan logge på, prøv å
-  a> href=send_login_link_path(user: {email: params[:email]}) data-method=:post sende e-posten på nytt
+  a> href=send_login_link_path(user: {identity: params[:identity]}) data-method=:post sende meldingen på nytt
   ' eller kontakt
   a> href="mailto:web@jujutsu.no" web@jujutsu.no
   | .

@@ -2,18 +2,18 @@ h3 Venligst logg inn
 
 .form-padding
   p
-    ' Skriv inn e-postadressen din i feltet under, og klikk
-    strong> Send e-post
-    ' for å motta en e-post med lenke for å logge inn.
+    ' Skriv inn telefonnummeret eller e-postadressen din i feltet under, og klikk
+    strong> Send melding
+    ' for å motta en melding med lenke for å logge inn.
     ' Hvis du har registrert et passord, kan du
     = link_to 'logge på med passord', login_password_path
     | .
   = bootstrap_form_for :user, url: send_login_link_path, remote: false do |f|
-    = f.text_field :email, placeholder: 'e-post', value: @email, label: 'E-post'
+    = f.text_field :identity, placeholder: 'Mobil eller e-post', value: @identity, label: 'Telefonnummer eller e-post'
 
     .float-right.mb-3
-      = f.primary 'Send e-post'
+      = f.primary 'Send melding'
       = back_or_link_to 'Avbryt', root_path, class: 'btn btn-secondary ml-2'
 
 javascript:
-    $('#user_email').focus();
+    $('#user_identity').focus();

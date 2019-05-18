@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class LoginController < ApplicationController
-  EMAIL_COOKIE_NAME =
-      :"#{'rjjk_' if Rails.env.development?}email#{"_#{Rails.env}" unless Rails.env.production?}"
+  IDENTITY_COOKIE_NAME =
+      :"#{'rjjk_' if Rails.env.development?}identity#{"_#{Rails.env}" unless Rails.env.production?}"
 
   before_action :authenticate_user, except: %i[forgot_password login_link_form login_link_message_sent
                                                login_with_password logout send_login_link signup]
@@ -24,32 +24,48 @@ class LoginController < ApplicationController
   end
 
   def login_link_form
-    @email = cookies.encrypted[EMAIL_COOKIE_NAME]
+    @identity = cookies.encrypted[IDENTITY_COOKIE_NAME]
   end
 
   def send_login_link
-    email = params[:user][:email]
-    escaped_email = CGI.escapeHTML(email)
-    if email.blank? || email !~ /.+@.+\..+/
-      flash.notice = 'Skriv inn en gyldig e-postadresse.'
+    identity = params[:user][:identity]
+    escaped_identity = CGI.escapeHTML(identity.to_s)
+    /(?<phone>\d{8})|(?<email>.+@.+\..+)/ =~ identity
+    if phone.nil? && email.nil?
+      flash.notice = 'Skriv inn et gyldig telefonnummer eller e-postadresse.'
       redirect_to :login
-    elsif (users_by_email = User.search(email).uniq).empty?
-      flash.notice = "Vi kunne ikke finne noen bruker tilknyttet e-postadresse #{escaped_email}"
+    elsif (users_by_identity = User.search(identity).uniq).empty?
+      flash.notice = "Vi kunne ikke finne noen bruker tilknyttet <b>#{escaped_identity}</b>."
       redirect_to :login
     else
-      cookies.permanent.encrypted[EMAIL_COOKIE_NAME] = { value: escaped_email }.merge(COOKIE_SCOPE)
       begin
-        users = users_by_email - [current_user]
+        users = users_by_identity - [current_user]
         if users.any?
+          raise 'Fler enn en bruker identifisert.' if users.size > 1
+
           User.transaction do
-            users.each { |user| UserMailer.login_link(user).store(user, tag: :login_link) }
+            users.each do |user|
+              if phone
+                if ENV['CPAS_API_BASE_URL']
+                  Datek::Cpas.send_sms to: phone, text: root_url(key: user.generate_security_token)
+                else
+                  flash.notice = 'SMS-utsending er ikke aktiv.'
+                end
+              elsif email
+                UserMailer.login_link(user).store(user, tag: :login_link)
+              else
+                raise 'Huh?'
+              end
+            end
           end
           if current_user
-            flash.notice = "En e-post med innloggingslenke er sendt til #{escaped_email}."
+            flash.notice = "En e-post med innloggingslenke er sendt til #{escaped_identity}."
             back_or_redirect_to login_link_message_sent_path
           else
-            flash[:message_email] = escaped_email
-            redirect_to login_link_message_sent_path email: email
+            cookies.permanent.encrypted[IDENTITY_COOKIE_NAME] =
+                { value: escaped_identity }.merge(COOKIE_SCOPE)
+            flash[:message_identity] = escaped_identity
+            redirect_to login_link_message_sent_path identity: identity
           end
         else
           flash.notice = 'Du er allerede logget på.'
@@ -57,13 +73,13 @@ class LoginController < ApplicationController
         end
       rescue => e
         report_exception e
-        flash.now[:notice] = "Beklager!  Link for innlogging kunne ikke sendes til #{escaped_email}"
+        flash.now[:notice] = "Beklager!  Lenke for innlogging kunne ikke sendes til #{escaped_identity}"
       end
     end
   end
 
   def login_link_message_sent
-    back_or_redirect_to root_path if current_user && !params[:email]
+    back_or_redirect_to root_path if current_user && !params[:identity]
   end
 
   def signup

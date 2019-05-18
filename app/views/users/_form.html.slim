@@ -8,7 +8,10 @@
         .col = f.text_field :email, autocomplete: :off, append: (link_to('<i class="fa fa-envelope"></i>'.html_safe, %Q{mailto:"#{user.name}" <#{user.email}>}) if user.email.present?)
         - if user.login.present?
           .col = f.text_field :login, autocomplete: :off
-      = f.text_field :phone, prepend: (link_to('<i class="fa fa-mobile-phone"></i>'.html_safe, "sms:/#{user.phone}/") if user.phone.present?), append: (link_to('<i class="fa fa-phone"></i>'.html_safe, "tel:#{user.phone}") if user.phone.present?)
+      = f.text_field :phone, \
+          prepend: (link_to('<i class="fa fa-mobile-phone"></i>'.html_safe, "sms:/#{user.phone}/") if user.phone.present?), \
+          append: (link_to('<i class="fa fa-phone"></i>'.html_safe, "tel:#{user.phone}") if user.phone.present?), \
+          help: (detour_to('Send SMS med login link', send_login_link_path(user: { identity: user.phone }), method: :post) if user.phone)
       - unless @member
         = link_to('(medlem)', controller: :members, action: :edit, id: user.member.id) if user.member
       = f.text_field :address, append: (link_to('<i class="fa fa-globe"></i>'.html_safe, user.map_url, target: :_blank) if user.map_url)
@@ -24,7 +27,7 @@
       = f.select :male, [[nil, ''], ['Mann', 'true'], ['Kvinne', 'false']], selected: user.male.to_s
       - if admin?
         = f.select :verified, [['Nei', false], ['Ja', true]], \
-          help: (detour_to('Send e-post med login link', send_login_link_path(user: {email: user.email}), method: :post) if user.email)
+          help: (detour_to('Send e-post med login link', send_login_link_path(user: {identity: user.email}), method: :post) if user.email)
         = f.select :role, [['Medlem', ''], ['Administrator', UserSystem::ADMIN_ROLE]], selected: user.role.to_s
   - if submit
     .float-right.mt-0.mb-3 = f.primary user.new_record? ? 'Meld inn' : 'Lagre'

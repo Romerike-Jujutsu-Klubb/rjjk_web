@@ -55,10 +55,10 @@ class LoginSystemTest < ApplicationSystemTestCase
     click_on 'Medlemssider'
     assert_current_path '/login?detour%5Baction%5D=index&detour%5Bcontroller%5D=welcome'
     screenshot :email_form
-    fill_in 'user_email', with: users(:admin).email
+    fill_in 'user_identity', with: users(:admin).email
     screenshot :email_filled_in
-    click_on 'Send e-post'
-    assert_current_path login_link_message_sent_path email: 'uwe@example.com'
+    click_on 'Send melding'
+    assert_current_path login_link_message_sent_path identity: 'uwe@example.com'
     screenshot :email_sent
     UserMessageSenderJob.perform_now
     assert_equal 1, Mail::TestMailer.deliveries.size
@@ -71,6 +71,6 @@ class LoginSystemTest < ApplicationSystemTestCase
     screenshot :welcome
     click_link 'Logg ut'
     click_on 'Medlemssider'
-    assert has_field?('user[email]', with: users(:admin).email)
+    assert has_field?('user[identity]', with: users(:admin).email)
   end
 end
