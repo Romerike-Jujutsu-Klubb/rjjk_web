@@ -17,8 +17,8 @@ class CardKeysTest < ApplicationSystemTestCase
     visit card_keys_url
     click_on 'Nytt kort'
 
-    fill_in 'Kommentar', with: @card_key.comment
-    fill_in 'Kortnummer', with: 'Card III'
+    fill_in 'card_key_comment', with: @card_key.comment
+    fill_in 'card_key_label', with: 'Card III'
     select_from_chosen @card_key.user.name, from: 'card_key[user_id]'
     click_on 'Lagre'
 
@@ -28,8 +28,8 @@ class CardKeysTest < ApplicationSystemTestCase
   test 'updating a card key' do
     visit card_keys_url
     find('td', text: 'First card').click
-    fill_in 'Kommentar', with: @card_key.comment
-    fill_in 'Kortnummer', with: 'New label'
+    fill_in 'card_key_comment', with: @card_key.comment
+    fill_in 'card_key_label', with: 'New label'
     select_from_chosen @card_key.user.name, from: 'card_key[user_id]'
     click_on 'Lagre'
 

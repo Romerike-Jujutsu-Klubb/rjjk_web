@@ -21,6 +21,8 @@ en:
   June: June
   October: October
 
+  attendances:
+    X: Deltok
   draft: Draft
   expired: Expired
   graduation_title: "Graduation %{name}"

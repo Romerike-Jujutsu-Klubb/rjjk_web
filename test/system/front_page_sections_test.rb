@@ -17,7 +17,7 @@ class FrontPageSectionsTest < ApplicationSystemTestCase
     visit front_page_sections_url
     click_on 'Ny seksjon'
 
-    fill_in 'Knappetekst', with: @front_page_section.button_text
+    fill_in 'front_page_section_button_text', with: @front_page_section.button_text
     select_from_chosen @front_page_section.image.name, from: 'Bilde'
     select_from_chosen @front_page_section.information_page.title, from: 'Informasjonsside'
     fill_in 'Undertittel', with: @front_page_section.subtitle
@@ -31,7 +31,7 @@ class FrontPageSectionsTest < ApplicationSystemTestCase
     visit front_page_sections_url
     click_on 'Edit', match: :first
 
-    fill_in 'Knappetekst', with: @front_page_section.button_text
+    fill_in 'front_page_section_button_text', with: @front_page_section.button_text
     select_from_chosen @front_page_section.image.name, from: 'Bilde'
     select_from_chosen @front_page_section.information_page.title, from: 'Informasjonsside'
     fill_in 'Undertittel', with: @front_page_section.subtitle

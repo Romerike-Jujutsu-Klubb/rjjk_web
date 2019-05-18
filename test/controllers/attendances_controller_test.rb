@@ -73,6 +73,10 @@ class AttendancesControllerTest < ActionController::TestCase
     assert_redirected_to 'http://test.host/mitt/oppmote/911313225'
   end
 
+  def test_should_get_review_en
+    I18n.with_locale(:en) { test_should_get_review }
+  end
+
   def test_should_announce_toggle_off
     practice = practices(:voksne_2013_42_thursday)
     assert_equal 1, practice.attendances.count
