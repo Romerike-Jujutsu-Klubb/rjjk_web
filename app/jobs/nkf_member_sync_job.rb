@@ -16,7 +16,7 @@ class NkfMemberSyncJob < ApplicationJob
       target, mapped_key, mapped_value = NkfMember.rjjk_attribute(k, v)
       next unless mapped_key
 
-      rjjk_value = @member.send(target)&.send(mapped_key)
+      rjjk_value = member.send(target)&.send(mapped_key)
       v = v.strftime('%F %R') if v.is_a?(Time)
       if mapped_value != rjjk_value
         raise "Attribute did not sync: #{k}: #{v}: #{target}, #{mapped_key}, #{mapped_value}"
