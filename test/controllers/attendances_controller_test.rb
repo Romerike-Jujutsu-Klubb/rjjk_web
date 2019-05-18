@@ -65,12 +65,15 @@ class AttendancesControllerTest < ActionController::TestCase
 
   def test_should_get_review
     practice = practices(:voksne_2013_42_thursday)
-    get :review, params: {
-      group_schedule_id: practice.group_schedule_id,
-      year: practice.year, week: practice.week, status: :X
-    }
-    assert_response :redirect
-    assert_redirected_to 'http://test.host/mitt/oppmote/911313225'
+    Attendance::Status.constants(false).map(&Attendance::Status.method(:const_get)).each do |status|
+      login(:admin)
+      get :review, params: {
+          group_schedule_id: practice.group_schedule_id,
+          year: practice.year, week: practice.week, status: status
+      }
+      assert_response :redirect
+      assert_redirected_to 'http://test.host/mitt/oppmote/911313225'
+    end
   end
 
   def test_should_get_review_en
