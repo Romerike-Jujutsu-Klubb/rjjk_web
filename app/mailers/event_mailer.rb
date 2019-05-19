@@ -2,7 +2,7 @@
 
 class EventMailer < ApplicationMailer
   default from: if Rails.env.production?
-                  '"Romerike Jujutsu Klubb" <post@jujutsu.no>'
+                  '"Romerike Jujutsu Klubb" <leir@jujutsu.no>'
                 else
                   "#{Rails.env}@jujutsu.no"
                 end
