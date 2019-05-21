@@ -28,7 +28,7 @@
     = back_or_link_to 'Tilbake', event_invitee_messages_path, class: 'btn btn-link'
     = f.primary 'Lagre melding'
   .float-right.btn.btn-link
-    = f.check_box :ready_at, {}, Time.current, nil
+    = f.check_box :ready_at, {}, @event_invitee_message.ready_at || Time.current, nil
     - if @event_invitee_message.sent_at
       = f.label :sendt
       ' :
