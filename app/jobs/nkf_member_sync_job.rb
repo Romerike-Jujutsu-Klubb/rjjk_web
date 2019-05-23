@@ -19,7 +19,7 @@ class NkfMemberSyncJob < ApplicationJob
       rjjk_value = member.send(target)&.send(mapped_key)
       v = v.strftime('%F %R') if v.is_a?(Time)
       if mapped_value != rjjk_value
-        raise "Attribute did not sync: #{k}: #{v}: #{target}, #{mapped_key}, #{mapped_value}"
+        raise "NKF sync: #{member.id} #{k}: #{v}: #{target}, #{mapped_key}, #{mapped_value.inspect}"
       end
     rescue => e
       ExceptionNotifier.notify_exception(e)
