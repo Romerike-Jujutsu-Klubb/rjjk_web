@@ -245,7 +245,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :nkf_members
+  resources :nkf_members do
+    collection do
+      get :sync_errors
+    end
+  end
   resources :nkf_member_trials
   resources :page_aliases
   resources :practices

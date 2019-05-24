@@ -1,0 +1,12 @@
+- @content_width = 1024
+
+h1 NKF Synchronization errors
+
+table.table.table-sm
+  tbody
+    - @errors.each do |member_row|
+      - member_row.each do |row|
+        tr
+          td: a href=member_path(row[0], anchor: :tab_nkf_tab) = row[0]
+          - row[1..-1].each do |col|
+            td = col.inspect

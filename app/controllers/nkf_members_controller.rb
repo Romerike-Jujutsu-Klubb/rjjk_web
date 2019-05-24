@@ -7,6 +7,19 @@ class NkfMembersController < ApplicationController
     @nkf_members = NkfMember.order(:fornavn, :etternavn).to_a
   end
 
+  def sync_errors
+    @errors = NkfMember.includes(member: { user: %i[guardian_1 guardian_2 billing_user contact_user] })
+        .references(:members).order(:left_on, :updated_at).map do |nkf_member|
+      nkf_member.attributes.sort.map do |k, v|
+        target, mapped_key, mapped_value = NkfMember.rjjk_attribute(k, v)
+        next unless mapped_key
+
+        rjjk_value = nkf_member.member.send(target)&.send(mapped_key)
+        [nkf_member.member, k, mapped_value, target, mapped_key, rjjk_value] if mapped_value != rjjk_value
+      end.compact
+    end.reject(&:empty?)
+  end
+
   def show
     if params[:id] && respond_to?(params[:id])
       send params[:id]

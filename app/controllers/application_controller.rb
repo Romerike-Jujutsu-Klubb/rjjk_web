@@ -59,10 +59,12 @@ class ApplicationController < ActionController::Base
 
     unless @layout_events # rubocop: disable Style/GuardClause
       @layout_events = Event
+          .includes(attending_invitees: %i[signup_confirmation user], declined_invitees: :user,
+              event_invitees: %i[signup_confirmation invitation user])
           .where('(end_at IS NULL AND start_at >= ?) OR (end_at IS NOT NULL AND end_at >= ?)',
               Date.current, Date.current)
           .order('start_at, end_at').limit(5).to_a
-      @layout_events += Graduation.includes(:graduates).where(group_notification: true)
+      @layout_events += Graduation.includes(graduates: { member: :user }).where(group_notification: true)
           .where('held_on >= ?', Date.current).to_a
       @layout_groups.select(&:school_breaks).each do |g|
         if (first_session = g.current_semester&.first_session) && first_session >= Date.current
