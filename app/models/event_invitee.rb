@@ -59,7 +59,7 @@ class EventInvitee < ApplicationRecord
   end
 
   def confirmed?
-    signup_confirmation&.ready_at
+    will_attend && signup_confirmation&.ready_at
   end
 
   def rejected?
