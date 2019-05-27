@@ -34,7 +34,7 @@ h5.clearfix style="margin-bottom:0;color:#FFB400"
   = link_to event.localized_name, event
 
 - if user?
-  = render 'layouts/event_details', event: event
+  .mt-2 = render 'layouts/event_details', event: event
 = textalize ingress
 .text-right
   - if admin? && event.persisted?
