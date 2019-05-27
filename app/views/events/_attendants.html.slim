@@ -3,11 +3,11 @@
     - if @event.event_invitees.any?
       ul.nav.nav-tabs.mt-3 role="tablist"
         li.nav-item
-          a#confirmed-tab.nav-link.active data-toggle="tab" href="#confirmed" role="tab" aria-controls="confirmed" aria-selected="true" Bekreftet
+          a#confirmed-tab.nav-link.active data-toggle="tab" data-target="#confirmed" role="tab" aria-controls="confirmed" aria-selected="true" Bekreftet
         li.nav-item
-          a#invited-tab.nav-link data-toggle="tab" href="#invited" role="tab" aria-controls="invited" aria-selected="false" Invitert
+          a#invited-tab.nav-link data-toggle="tab" data-target="#invited" role="tab" aria-controls="invited" aria-selected="false" Invitert
         li.nav-item
-          a#candidates-tab.nav-link data-toggle="tab" href="#candidates" role="tab" aria-controls="candidates" aria-selected="false" Kandidater
+          a#candidates-tab.nav-link data-toggle="tab" data-target="#candidates" role="tab" aria-controls="candidates" aria-selected="false" Kandidater
 
       #myTabContent.tab-content
         #confirmed.tab-pane.fade.show.active role="tabpanel" aria-labelledby="confirmed-tab"

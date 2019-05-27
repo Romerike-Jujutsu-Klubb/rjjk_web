@@ -9,6 +9,7 @@
 //= require jquery.themepunch.punchbox
 //= require scrollspy
 //= require scrollspyjquery
+//= require isMobile
 //= require my_custom
 
 var goodweb_theme_vars = {"load": "LOAD", "more": "MORE"};

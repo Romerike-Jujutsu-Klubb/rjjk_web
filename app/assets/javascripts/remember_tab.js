@@ -15,7 +15,7 @@ function show_tab() {
     }
 }
 
-$().ready(function () {
+$(function () {
     $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
         var event_target = $(e.target);
         var tab_id = (event_target.attr('data-target') || event_target.attr('href')).substr(1);
@@ -37,10 +37,17 @@ $().ready(function () {
                         tab.html('<div class="text-center text-danger" style="padding: 3em">Hoppsann!  Der gikk det galt.</div>');
                         tab.append('<pre>' + responseText + '</pre>');
                     }
-                });            }
+                });
+            }
         }
         return true;
     });
     $(window).on('popstate', show_tab);
     show_tab();
+    if (isMobile.iOS()) {
+        $('a.nav-link[data-target][data-toggle="tab"]').each(function (i, link_el) {
+            var link = $(link_el);
+            link.attr('href', link.data('target')).data('target', null);
+        });
+    }
 });

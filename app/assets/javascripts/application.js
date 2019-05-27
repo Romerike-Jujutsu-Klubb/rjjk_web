@@ -2,6 +2,7 @@
 // require jquery.turbolinks
 //= require jquery_ujs
 // require turbolinks
+//= require isMobile
 //= require expanding
 //= require popper
 //= require bootstrap
