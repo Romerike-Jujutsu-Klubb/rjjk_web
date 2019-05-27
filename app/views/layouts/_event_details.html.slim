@@ -4,7 +4,7 @@
 - is_confirmed = event.confirmed_users.include?(current_user)
 - if will_attend || is_invited
   - crowd_size = event.size
-  .details
+  .details.mt-1
     - unless is_confirmed
       .btn-group.text-right.mr-2
         a.btn.btn-secondary.btn-sm class=('active disabled' if will_attend) href=polymorphic_path([:accept, event])

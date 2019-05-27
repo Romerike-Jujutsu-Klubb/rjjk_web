@@ -1,17 +1,18 @@
 table.table.table-striped class=('table-sm' if events.size > 24)
-  tr
-    th Hendelse
-    th Start
-    th Slutt
-    th Beskrivelse
-  tr
-  - for event in events
+  thead
     tr
-      td = link_to event.name, event
-      td nowrap="true" = h event.start_at.to_date
-      td nowrap="true" = h event.end_at&.to_date
-      td
-        = link_to 'Endre', edit_event_path(event)
-        = link_to 'Slett', event, data: { confirm: 'Er du sikker på at du vil endre denne hendelsen?' }, method: :delete, class: 'ml-3'
-    tr
-      td colspan="4" = event.ingress
+      th Hendelse
+      th Start
+      th Slutt
+      th Beskrivelse
+  tbody
+    - for event in events
+      tr
+        td = link_to event.name, edit_event_path(event)
+        td nowrap="true" = h event.start_at.to_date
+        td nowrap="true" = h event.end_at&.to_date
+        td
+          = link_to 'Endre', edit_event_path(event)
+          = link_to 'Slett', event, data: { confirm: 'Er du sikker på at du vil endre denne hendelsen?' }, method: :delete, class: 'ml-3'
+      tr
+        td colspan="4" = event.ingress
