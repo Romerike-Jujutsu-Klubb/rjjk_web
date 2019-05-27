@@ -97,7 +97,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
     screenshot :index, area_size_limit: 533, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
     find('.fa-chevron-down').click
     article_link = find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
-    screenshot :scrolled
+    screenshot(:scrolled) || (sleep(0.5) if ENV['TRAVIS'])
     article_link.click
     assert_css('h1', text: 'My first article')
     screenshot :article
