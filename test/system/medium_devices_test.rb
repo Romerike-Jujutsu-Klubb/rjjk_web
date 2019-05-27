@@ -62,8 +62,8 @@ class MediumDevicesTest < ApplicationSystemTestCase
     assert_offset '.main_right', :right, -268
     assert_no_css '#sidebarShadow'
     screenshot :calendar_closed
-  rescue
-    skip 'FIXME' if ENV['TRAVIS'] # FIXME(uwe)
+  rescue => e
+    skip "FIXME: #{e}" if ENV['TRAVIS'] # FIXME(uwe)
   end
 
   test 'new front_page' do
@@ -90,7 +90,6 @@ class MediumDevicesTest < ApplicationSystemTestCase
   end
 
   test 'new front page scroll' do
-    skip 'FIXME' if ENV['TRAVIS'] # FIXME(uwe): Enable when Chrome 74 is stable
     screenshot_group :new_front_page_scroll
     visit front_page_path
     assert_css('#headermenuholder > i')
