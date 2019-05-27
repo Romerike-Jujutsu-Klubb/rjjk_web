@@ -4,7 +4,7 @@ require 'application_system_test_case'
 
 class SmallDevicesTest < ApplicationSystemTestCase
   SMALL_WINDOW_SIZE = [412, 732].freeze
-  PROGRESS_BAR_AREA = [0, 700, 320, 32]
+  PROGRESS_BAR_AREA = [0, 700, 320, 32].freeze
 
   setup do
     screenshot_section :small_devices
