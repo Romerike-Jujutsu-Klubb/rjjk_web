@@ -4,6 +4,7 @@ require 'application_system_test_case'
 
 class SmallDevicesTest < ApplicationSystemTestCase
   SMALL_WINDOW_SIZE = [412, 732].freeze
+  PROGRESS_BAR_AREA = [0, 700, 320, 32]
 
   setup do
     screenshot_section :small_devices
@@ -77,7 +78,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
     screenshot :index, color_distance_limit: 11
     find('.fa-chevron-down').click
     article_link = find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
-    screenshot :scrolled, skip_area: [0, 700, 320, 32]
+    screenshot(:scrolled, skip_area: PROGRESS_BAR_AREA) || (sleep(0.5) if ENV['TRAVIS'])
     article_link.click
     assert_css('h1', text: 'My first article')
     screenshot :article
