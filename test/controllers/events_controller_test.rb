@@ -26,12 +26,17 @@ class EventsControllerTest < ActionController::TestCase
   end
 
   def test_should_show_event
-    get :show, params: { id: events(:one).id }
+    get :show, params: { id: id(:one) }
+    assert_response :success
+  end
+
+  test 'should get event preview' do
+    get :preview, params: { id: id(:one) }
     assert_response :success
   end
 
   def test_should_get_edit
-    get :edit, params: { id: events(:one).id }
+    get :edit, params: { id: id(:one) }
     assert_response :success
     assert_equal '2017-08-19 13:37', css_select('#event_start_at')[0]['value']
   end
@@ -45,7 +50,7 @@ class EventsControllerTest < ActionController::TestCase
 
   def test_should_destroy_event
     assert_difference('Event.count', -1) do
-      delete :destroy, params: { id: events(:one).id }
+      delete :destroy, params: { id: id(:one) }
     end
     assert_redirected_to events_path
   end
