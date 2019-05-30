@@ -9,7 +9,7 @@ class NkfMembersController < ApplicationController
 
   def sync_errors
     @errors = NkfMember.includes(member: { user: %i[guardian_1 guardian_2 billing_user contact_user] })
-        .references(:members).order(:left_on, :updated_at).map do |nkf_member|
+        .references(:members).order(:left_on, :updated_at).reverse_order.map do |nkf_member|
       nkf_member.attributes.sort.map do |k, v|
         target, mapped_key, mapped_value = NkfMember.rjjk_attribute(k, v)
         next unless mapped_key
