@@ -147,6 +147,27 @@ class GraduationsController < ApplicationController
     redirect_to edit_graduation_path(@graduation)
   end
 
+  def send_date_change_message
+    graduation = Graduation.find(params[:id])
+    if graduation.held_on != graduation.date_info_sent_for
+      Graduation.transaction do
+        graduation.group.members.active(graduation.held_on).order(:id).each do |member|
+          next if member.next_rank(graduation).position >= Rank::SHODAN_POSITION
+          next if member.passive?
+
+          GraduationMailer.group_date_change(graduation, member)
+              .store(member, tag: :graduation_date_change)
+        end
+        graduation.update! date_info_sent_at: Time.current, date_info_sent_for: graduation.held_on
+      end
+      flash.notice = 'Melding om endring av dato er sendt.'
+    else
+      flash.alert = 'Dato har ikke blitt endret.'
+    end
+
+    redirect_to edit_graduation_path(graduation, anchor: :form_tab)
+  end
+
   def approve
     graduation = Graduation.find(params[:id])
     censor = graduation.censors.find_by(member_id: current_user.member.id)

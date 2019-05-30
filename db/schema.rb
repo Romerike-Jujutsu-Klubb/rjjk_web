@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_09_132644) do
+ActiveRecord::Schema.define(version: 2019_05_29_061622) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -296,6 +296,7 @@ ActiveRecord::Schema.define(version: 2019_05_09_132644) do
     t.datetime 'updated_at', null: false
     t.datetime 'date_info_sent_at'
     t.datetime 'notified_missing_censors_at'
+    t.date 'date_info_sent_for'
   end
 
   create_table 'group_instructors', force: :cascade do |t|

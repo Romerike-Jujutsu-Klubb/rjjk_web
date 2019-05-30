@@ -97,7 +97,7 @@ html
                             td
                               img src=asset_url('rjjk_logo_plus_txt_320.png') alt="RJJK Logo" width="160" height="160"
                             td align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#acabab;"
-                              p style="margin:0 0 10px 0; font-size:18px; color:#E20916;" = @title
+                              p style="margin:0 0 10px 0; font-size:18px; color:#E20916;" == @title
                               - if @timestamp
                                 - last_mon = @timestamp.mon
                                 - if @email_end_at.nil? || @email_end_at == @timestamp

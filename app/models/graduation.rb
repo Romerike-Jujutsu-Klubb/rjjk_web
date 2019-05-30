@@ -92,6 +92,19 @@ class Graduation < ApplicationRecord
     held_on.try(:at, group_schedule.try(:end_at) || TimeOfDay.new(20, 30))
   end
 
+  def human_time
+    return unless held_on
+
+    now = Date.current
+    if held_on == now
+      'I DAG!'
+    elsif held_on > now
+      "Om #{(held_on - now).to_i} dager."
+    else
+      "For #{(now - held_on).to_i} dager siden."
+    end
+  end
+
   def name
     I18n.t('graduation_title', name: group.name)
   end
@@ -157,6 +170,7 @@ class Graduation < ApplicationRecord
   end
 
   def locked?
+    return unless held_on
     if held_on < GraduationReminder::CHIEF_INSTRUCTOR_LOCK_LIMIT.from_now &&
           censors.reject(&:declined?).select(&:locked_at).map(&:member)
                 .include?(group.group_semesters.for_date(held_on).first&.chief_instructor)

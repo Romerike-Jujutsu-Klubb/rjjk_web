@@ -141,6 +141,7 @@ Rails.application.routes.draw do
       post :disapprove
       get 'graduates_list/:section', action: :graduates_list, as: :graduates_list
       post :lock
+      patch :send_date_change_message
       get :tentative
     end
   end

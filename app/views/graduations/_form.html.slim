@@ -1,29 +1,31 @@
 = bootstrap_form_for @graduation do |f|
   .row.mt-3
-    .col-md-4
-      = f.text_field :held_on, size: 18, class: 'date form-control'
+    .col-md-3.col-xl-2
+      = f.text_field :held_on, size: 18, class: 'date form-control', help: @graduation.human_time, disabled: @graduation.locked?
     - if @graduation.held_on
-      .col-md-4
-        label.form-control-label &nbsp;
-        .form-control-plaintext
-          - if @graduation.held_on == Date.current
-            | I DAG!
-          - elsif @graduation.held_on > Date.current
-            | Om #{(@graduation.held_on - Date.current).to_i} dager.
-          - else
-            | For #{(Date.current - @graduation.held_on).to_i} dager siden.
+      - if @graduation.date_info_sent_at
+        .col-md-3.col-xl-2
+          label.form-control-label Datoinformasjon
+          .form-control-plaintext
+            ' sendt
+            b = @graduation.date_info_sent_at.to_date
+        - if @graduation.held_on != @graduation.date_info_sent_for
+          .col-md-4.col-lg-2
+            label.form-control-label.text-danger Flyttet fra #{@graduation.date_info_sent_for}
+            .form-control-plaintext.pt-0
+              = link_to 'Send melding om flytting', {action: :send_date_change_message, id: @graduation}, class: 'btn btn-warning', method: :patch
 
   .row
-    .col-md-6
+    .col-md-4.col-lg-3
       = f.select :group_id, @layout_groups.map { |c| [c.name, c.id] },
           {prompt: 'Velg gruppe'},
           class: 'form-control'
-    .col-md-6
+    .col-md-5.col-lg-4.col-xl-3
       = f.select :group_notification, [['Ja', true], ['Nei, bare utvalgte kandidater', false]],
               {prompt: @graduation.group_notification.nil?}
   / FIXME(uwe): Add group_schedule_id and start_at, both optional
   .row
-    .col-md-12
+    .col-md-10.col-lg-8.col-xl-6
       .btn-toolbar.float-right
         = back_or_link_to 'Tilbake', {action: :index}, class: 'btn btn-secondary ml-2'
         - unless @graduation.new_record?

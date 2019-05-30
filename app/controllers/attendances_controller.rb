@@ -163,7 +163,7 @@ class AttendancesController < ApplicationController
     practice = if year.positive? && week.positive? && gs_id
                  Practice.where(group_schedule_id: gs_id, year: year, week: week).first_or_create!
                else
-                 m.groups.where(name: 'Voksne').first.next_practice
+                 m.groups.find_by(planning: true).next_practice
                end
     criteria = { member_id: m.id, practice_id: practice.id }
     @attendance = Attendance.includes(:practice).where(criteria).first_or_initialize

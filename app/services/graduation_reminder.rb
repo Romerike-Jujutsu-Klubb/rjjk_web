@@ -40,10 +40,9 @@ class GraduationReminder
         next if member.next_rank(graduation).position >= Rank::SHODAN_POSITION
         next if member.passive?
 
-        GraduationMailer.group_date_info(graduation, member)
-            .store(member, tag: :graduation_date_info)
+        GraduationMailer.group_date_info(graduation, member).store(member, tag: :graduation_date_info)
       end
-      graduation.update! date_info_sent_at: Time.current
+      graduation.update! date_info_sent_at: Time.current, date_info_sent_for: graduation.held_on
     end
   end
 

@@ -20,15 +20,14 @@ class GraduationMailer < ApplicationMailer
   end
 
   def group_date_info(graduation, member)
-    @graduation = graduation
-    @member = member
-    sender = graduation.examiner_emails
-    if sender.empty?
-      sender = graduation.group.current_semester.chief_instructor&.emails ||
-          Role[:Hovedinstruktør]&.emails || noreply_address
-    end
-    mail subject: "Gradering for #{@graduation.group.name} #{@graduation.held_on}",
-        from: sender
+    sender = setup_group_date_info(graduation, member)
+    mail subject: "Gradering for #{@graduation.group.name} #{@graduation.held_on}", from: sender
+  end
+
+  def group_date_change(graduation, member)
+    sender = setup_group_date_info(graduation, member)
+    @title = "Gradering for #{graduation.group.name}<br/>flyttet til #{graduation.held_on}"
+    mail subject: "Gradering for #{graduation.group.name} flyttet til #{graduation.held_on}", from: sender
   end
 
   def missing_censors(graduation, instructor)
@@ -85,5 +84,18 @@ class GraduationMailer < ApplicationMailer
   def congratulate_graduate(graduate)
     @graduate = graduate
     mail to: graduate.member, subject: 'Gratulerer med bestått gradering!'
+  end
+
+  private
+
+  def setup_group_date_info(graduation, member)
+    @graduation = graduation
+    @member = member
+    sender = graduation.examiner_emails
+    if sender.empty?
+      sender = graduation.group.current_semester.chief_instructor&.emails ||
+          Role[:Hovedinstruktør]&.emails || noreply_address
+    end
+    sender
   end
 end
