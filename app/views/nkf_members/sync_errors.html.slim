@@ -5,8 +5,10 @@ h1 NKF Synchronization errors
 table.table.table-sm
   tbody
     - @errors.each do |member_row|
-      - member_row.each do |row|
+      - member_row.each.with_index do |row, i|
         tr
-          td: a href=member_path(row[0], anchor: :tab_nkf_tab) = row[0]
+          - if i == 0
+            td rowspan=member_row.size
+              a href=member_path(row[0], anchor: :tab_nkf_tab) = row[0]
           - row[1..-1].each do |col|
             td = col.inspect
