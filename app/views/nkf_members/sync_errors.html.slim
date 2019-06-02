@@ -1,6 +1,6 @@
 - @content_width = 1024
 
-h1 NKF Synchronization errors
+h1 NKF Synchronization errors (#{@errors.inject(0){|a,e| a + e.size}})
 
 table.table.table-sm
   thead
@@ -14,7 +14,7 @@ table.table.table-sm
   tbody
     - @errors.each do |member_row|
       - member_row.each.with_index do |row, i|
-        tr
+        tr class=('bg-warning' if row[0].left_on)
           - if i == 0
             td rowspan=member_row.size
               a href=member_path(row[0], anchor: :tab_nkf_tab) = row[0]
