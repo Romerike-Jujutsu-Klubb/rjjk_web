@@ -287,12 +287,17 @@ Rails.application.routes.draw do
   resources :surveys
   resources :technique_applications
   resources :trial_attendances
+  resources :user_images, only: [] do
+    member do
+      post :like
+    end
+  end
+  resources :user_merge, only: %i[show update]
   resources :user_messages
   resources :users do
     member do
       post :change_password
       post :forgot_password
-      post :like
       get :photo
       patch :restore
     end

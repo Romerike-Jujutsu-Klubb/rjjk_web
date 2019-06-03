@@ -78,11 +78,6 @@ class UsersController < ApplicationController
     redirect_to @user
   end
 
-  def like
-    UserImage.where(user_id: current_user.id, image_id: params[:id], rel_type: 'LIKE').first_or_create!
-    redirect_to controller: :news, action: :index
-  end
-
   protected
 
   def protect?(action)

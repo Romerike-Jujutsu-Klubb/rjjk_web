@@ -15,7 +15,7 @@ class NkfMembersController < ApplicationController
         next unless mapped_key
 
         rjjk_value = nkf_member.member.send(target)&.send(mapped_key)
-        [nkf_member.member, k, mapped_value, target, mapped_key, rjjk_value] if mapped_value != rjjk_value
+        [nkf_member.member, target, mapped_key, rjjk_value, mapped_value, k] if mapped_value != rjjk_value
       end.compact
     end.reject(&:empty?)
   end

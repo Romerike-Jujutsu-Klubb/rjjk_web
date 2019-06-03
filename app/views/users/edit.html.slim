@@ -4,6 +4,9 @@ h2.float-right
     = link_to restore_user_path(@user), method: :patch, class: 'btn btn-warning'
       i.fa.fa-undo>
       | Gjenopprett
+  = link_to show_user_merge_path(@user), class: 'btn btn-warning'
+    i.fa.fa-undo>
+    | Slå sammen med annen bruker
   -else
     a.btn.btn-secondary.mr-3 href=user_path(@user, format: :vcf)
       i.fa.fa-address-card>
