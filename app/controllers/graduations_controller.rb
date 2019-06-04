@@ -3,8 +3,8 @@
 class GraduationsController < ApplicationController
   include GraduationAccess
 
-  CENSOR_ACTIONS =
-      %i[add_group approve create disapprove edit graduates_list graduates_tab index new update].freeze
+  CENSOR_ACTIONS = %i[add_group approve create disapprove edit graduates_list graduates_tab index lock new
+                      update].freeze
   before_action :admin_required, except: CENSOR_ACTIONS
   before_action :authenticate_user, only: CENSOR_ACTIONS
 
@@ -122,7 +122,7 @@ class GraduationsController < ApplicationController
     end
     filename = "Certificates_#{graduation.group.martial_art.name}_#{graduation.held_on}.pdf"
     send_data Certificates.pdf(date, content), type: 'text/pdf',
-                                               filename: filename, disposition: 'attachment'
+        filename: filename, disposition: 'attachment'
   end
 
   def censor_form
@@ -139,6 +139,8 @@ class GraduationsController < ApplicationController
 
   def lock
     @graduation = Graduation.find(params[:id])
+    return unless admin_or_censor_required(@graduation, load_current_user_approval(@graduation))
+
     censor = @graduation.censors.find_by(member_id: current_user.member.id)
     censor.confirmed_at ||= Time.current
     censor.locked_at ||= Time.current
@@ -207,9 +209,9 @@ class GraduationsController < ApplicationController
         next if graduation.group_notification && next_rank.position >= Rank::SHODAN_POSITION
 
         g = Graduate.new graduation_id: graduation.id, member_id: member.id,
-                         rank_id: next_rank.id,
-                         passed: graduation.group.school_breaks? || nil,
-                         paid_graduation: true, paid_belt: true
+            rank_id: next_rank.id,
+            passed: graduation.group.school_breaks? || nil,
+            paid_graduation: true, paid_belt: true
         if g.save
           success_count += 1
         else
