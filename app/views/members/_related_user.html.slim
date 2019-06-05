@@ -1,6 +1,6 @@
 - related_user = related_user&.member || related_user
 .row
-  .col = f.select column, [[nil, nil]] + @users.map{|u| [u.label(last_name_first: true), u.id]}, \
+  .col = f.select column, [[nil, nil]] + @users.map{|u| [u.label, u.id]}, \
       selected: user.send(column).to_s, \
       prepend: (link_to('Vis', related_user) if related_user), \
       append: (f.submit('Koble fra', class: 'btn btn-danger', \

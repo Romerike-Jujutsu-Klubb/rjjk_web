@@ -62,6 +62,8 @@ class NkfMember < ApplicationRecord
     yrke: {},
   }.freeze
 
+  has_paper_trail
+
   belongs_to :member, optional: true
 
   validates :kjonn, presence: true

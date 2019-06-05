@@ -299,8 +299,7 @@ class User < ApplicationRecord
   end
 
   def contact_email_was
-    contact_user_was&.email_was || email_was || emails_was&.first || billing_user_was&.email_was ||
-        'post@jujutsu.no'
+    contact_user_was&.email_was || email_was || emails_was&.first || billing_user_was&.email_was
   end
 
   def contact_email=(value)
