@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Certificates < Prawn::Document
+  include ApplicationHelper
+
   SENSOR_Y = 139
   CENSOR_TITLE_X = 275
   CENSOR_NAME_X = 350
@@ -165,7 +167,7 @@ class Certificates < Prawn::Document
           text c[:rank], size: 18, align: :center
         end
         bounding_box [(page_width - name_width) / 2, date_y], width: name_width, height: 20 do
-          text "#{date.day}. #{I18n.t(Date::MONTHNAMES[date.month]).downcase} #{date.year}",
+          text "#{date.day}. #{month_name(date.month)} #{date.year}",
               size: 18, align: :center
         end
         write_censor(c[:censor1], 0)
