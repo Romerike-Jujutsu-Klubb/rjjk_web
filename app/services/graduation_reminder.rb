@@ -164,7 +164,6 @@ class GraduationReminder
         .where('invitation_sent_at IS NOT NULL AND invitation_sent_at < graduates.updated_at')
         .order('graduations.held_on')
         .each do |graduate|
-
       # TODO(uwe): Solve in SQL
       next unless graduate.graduation.censors.select(&:examiner?).any?
       next unless graduate.graduation.censors.select(&:examiner?).all?(&:approved_graduates?)

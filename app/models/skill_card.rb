@@ -10,7 +10,6 @@ class SkillCard
   def self.pdf(ranks)
     Prawn::Document.new page_size: PAGE_SIZE, top_margin: MARGIN,
                         bottom_margin: MARGIN, left_margin: MARGIN, right_margin: MARGIN do
-
       create_stamp('watermark') do
         logo_width = 180
         float do
