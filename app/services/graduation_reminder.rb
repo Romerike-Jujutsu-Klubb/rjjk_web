@@ -202,8 +202,8 @@ class GraduationReminder
         GraduationMailer.congratulate_graduate(graduate)
             .store(graduate.member, tag: :graduate_gratz)
         graduate.update! gratz_sent_at: Time.current
-      rescue
-        raise "Exception congratulating graduate: #{graduate.id}"
+      rescue => e
+        raise "Exception congratulating graduate: #{graduate.id}: #{e}"
       end
     end
   end

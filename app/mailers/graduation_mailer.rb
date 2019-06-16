@@ -63,14 +63,14 @@ class GraduationMailer < ApplicationMailer
     # @email_url = { controller: :censors, action: :show, id: @censor.id }
     @confirm_url = confirm_graduate_url(@graduate)
     @decline_url = decline_graduate_url(@graduate)
-    mail to: graduate.member.email, subject: @title, from: graduate.graduation.examiner_emails
+    mail to: graduate.member.email, subject: @title, from: graduate.graduation.examiner_email
   end
 
   def send_shopping_list(graduation, appointment)
     @graduation = graduation
     @appointment = appointment
-    mail subject:
-        "Liste over belter for gradering for #{graduation.group.name} #{graduation.held_on}"
+    mail subject: "Liste over belter for gradering for #{graduation.group.name} #{graduation.held_on}",
+        from: graduation.examiner_email
   end
 
   def missing_approval(censor)
@@ -83,7 +83,8 @@ class GraduationMailer < ApplicationMailer
 
   def congratulate_graduate(graduate)
     @graduate = graduate
-    mail to: graduate.member, subject: 'Gratulerer med bestått gradering!'
+    mail to: graduate.member, subject: 'Gratulerer med bestått gradering!',
+        from: graduate.graduation.examiner_email
   end
 
   private
@@ -91,11 +92,6 @@ class GraduationMailer < ApplicationMailer
   def setup_group_date_info(graduation, member)
     @graduation = graduation
     @member = member
-    sender = graduation.examiner_emails
-    if sender.empty?
-      sender = graduation.group.current_semester.chief_instructor&.emails ||
-          Role[:Hovedinstruktør]&.emails || noreply_address
-    end
-    sender
+    graduation.examiner_email
   end
 end

@@ -198,7 +198,9 @@ class Graduation < ApplicationRecord
     passed? && non_declined_censors.any? && non_declined_censors.all?(&:approved?)
   end
 
-  def examiner_emails
-    censors.select(&:examiner?).map(&:member).map(&:emails).flatten.uniq
+  def examiner_email
+    censors.select(&:examiner?).map(&:member).max_by(&:current_rank)&.emails&.first ||
+        group.current_semester&.chief_instructor&.emails&.first ||
+        Role[:Hovedinstruktør]&.emails&.first || noreply_address
   end
 end
