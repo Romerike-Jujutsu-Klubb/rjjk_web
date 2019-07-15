@@ -3,6 +3,7 @@
 class Rank < ApplicationRecord
   include Comparable
 
+  KEI_WA_RYU_CHARACTERS = '啓 和 流 柔 術'
   UNRANKED = new(position: -99, standard_months: 0, name: 'Ugradert', colour: 'Hvitt',
                  martial_art_id: MartialArt::KWR_ID)
   SHODAN_POSITION = 15

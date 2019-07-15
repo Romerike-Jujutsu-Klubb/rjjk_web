@@ -18,19 +18,15 @@
       = f.text_field :postal_code
     .col-sm-6
       .row
-        .col-7.pr-1
-          = f.text_field :birthdate, placeholder: 'år-måned-dag', class: 'date'
-        .col-5.pl-1
-          br
-          label.mt-3 Alder
-          =< "#{user.age} år" if user.birthdate
+        .col-md-4
+          = f.text_field :birthdate, placeholder: 'år-måned-dag', class: 'date', append: "#{user.age} år" if user.birthdate
       .row
         .col = f.select :male, [[nil, ''], ['Mann', 'true'], ['Kvinne', 'false']], selected: user.male.to_s
         - if admin?
           .col = f.select :verified, [['Nei', false], ['Ja', true]], \
             help: (detour_to('Send e-post med login link', send_login_link_path(user: {identity: user.email}), method: :post) if user.email)
           .col = f.select :role, [['Medlem', ''], ['Administrator', UserSystem::ADMIN_ROLE]], selected: user.role.to_s
-      = f.text_field :kanji, help: "Kei Wa Ryu: 啓 和 流 柔 術"
+      = f.text_field :kanji, help: "Kei Wa Ryu: #{Rank::KEI_WA_RYU_CHARACTERS}"
   - if submit
     .float-right.mt-0.mb-3 = f.primary user.new_record? ? 'Meld inn' : 'Lagre'
 
