@@ -11,8 +11,8 @@
 
   .row
     .col-md-4 = f.text_field :standard_months
-    .col-md-4
     .col-md-4 = f.text_field :css_color, append: (raw("<span style='width:1.5rem;background-color:#{@rank.css_color}'>&nbsp;</span>") if @rank.css_color.present?)
+    .col-md-4.form-group.mt-md-4.pt-md-3 = f.check_box :embroydery
 
   .row
     .col-md-12 = f.text_area :description, class: :expanding

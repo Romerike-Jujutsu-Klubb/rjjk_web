@@ -146,6 +146,7 @@ nb:
         colour: Beltebeskrivelse
         decoration: Dekorasjon
         description: Beskrivelse
+        embroydery: Brodering
         group_id: Gruppe
         martial_art_id: Stil
         name: Navn
