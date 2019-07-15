@@ -24,11 +24,13 @@
           br
           label.mt-3 Alder
           =< "#{user.age} år" if user.birthdate
-      = f.select :male, [[nil, ''], ['Mann', 'true'], ['Kvinne', 'false']], selected: user.male.to_s
-      - if admin?
-        = f.select :verified, [['Nei', false], ['Ja', true]], \
-          help: (detour_to('Send e-post med login link', send_login_link_path(user: {identity: user.email}), method: :post) if user.email)
-        = f.select :role, [['Medlem', ''], ['Administrator', UserSystem::ADMIN_ROLE]], selected: user.role.to_s
+      .row
+        .col = f.select :male, [[nil, ''], ['Mann', 'true'], ['Kvinne', 'false']], selected: user.male.to_s
+        - if admin?
+          .col = f.select :verified, [['Nei', false], ['Ja', true]], \
+            help: (detour_to('Send e-post med login link', send_login_link_path(user: {identity: user.email}), method: :post) if user.email)
+          .col = f.select :role, [['Medlem', ''], ['Administrator', UserSystem::ADMIN_ROLE]], selected: user.role.to_s
+      = f.text_field :kanji
   - if submit
     .float-right.mt-0.mb-3 = f.primary user.new_record? ? 'Meld inn' : 'Lagre'
 

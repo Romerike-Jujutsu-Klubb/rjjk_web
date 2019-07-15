@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_29_061622) do
+ActiveRecord::Schema.define(version: 2019_07_15_011202) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -730,6 +730,7 @@ ActiveRecord::Schema.define(version: 2019_05_29_061622) do
     t.string 'phone', limit: 32
     t.string 'postal_code', limit: 4
     t.datetime 'deleted_at'
+    t.string 'kanji'
     t.index ['billing_user_id'], name: 'index_users_on_billing_user_id'
     t.index ['contact_user_id'], name: 'index_users_on_contact_user_id'
     t.index ['guardian_1_id'], name: 'index_users_on_guardian_1_id'
