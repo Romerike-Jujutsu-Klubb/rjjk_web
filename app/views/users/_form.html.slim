@@ -7,7 +7,7 @@
       .row
         .col = f.text_field :email, autocomplete: :off, append: (link_to('<i class="fa fa-envelope"></i>'.html_safe, %Q{mailto:"#{user.name}" <#{user.email}>}) if user.email.present?)
         - if admin?
-          .col = f.select :verified, [['Nei', false], ['Ja', true]], \
+          .col-md-3 = f.select :verified, [['Nei', false], ['Ja', true]], \
                     help: (detour_to('Send e-post med login link', send_login_link_path(user: { identity: user.email }), method: :post) if user.email)
         - if user.login.present?
           .col = f.text_field :login, autocomplete: :off
