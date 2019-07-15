@@ -30,7 +30,7 @@
           .col = f.select :verified, [['Nei', false], ['Ja', true]], \
             help: (detour_to('Send e-post med login link', send_login_link_path(user: {identity: user.email}), method: :post) if user.email)
           .col = f.select :role, [['Medlem', ''], ['Administrator', UserSystem::ADMIN_ROLE]], selected: user.role.to_s
-      = f.text_field :kanji
+      = f.text_field :kanji, help: "Kei Wa Ryu: 啓 和 流 柔 術"
   - if submit
     .float-right.mt-0.mb-3 = f.primary user.new_record? ? 'Meld inn' : 'Lagre'
 
