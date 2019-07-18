@@ -33,7 +33,7 @@
                 append: [ \
                   (link_to('Google', "https://translate.google.com/#view=home&op=translate&sl=ja&tl=no&text=#{user.kana}", target: '_blank') if user.kana.present?), \
                   (link_to(fa_icon('shopping-cart'), 'https://www.kataaro.com/Products/Embroidered-Black-Belt-Brushed-Cotton__E4941.aspx', target: '_blank') if user.member&.current_rank&.embroydery?) \
-                ].compact.presence.join.html_safe
+                ].compact.presence&.join&.html_safe
   - if submit
     .float-right.mt-0.mb-3 = f.primary user.new_record? ? 'Meld inn' : 'Lagre'
 
