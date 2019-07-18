@@ -28,7 +28,7 @@
           .col = f.select :role, [['Medlem', ''], ['Administrator', UserSystem::ADMIN_ROLE]], selected: user.role.to_s
       .row
         .col-md-6 = f.text_field :kana, help: "Kei Wa Ryu: #{Rank::KEI_WA_RYU_CHARACTERS}", prepend: link_to('Wiki', 'https://en.wikipedia.org/wiki/Katakana'),
-              append: link_to('Google', "https://translate.google.com/#view=home&op=translate&sl=ja&tl=no&text=#{user.kana}", target: 'translate') if user.kana.present?
+              append: (link_to('Google', "https://translate.google.com/#view=home&op=translate&sl=ja&tl=no&text=#{user.kana}", target: 'translate') if user.kana.present?)
   - if submit
     .float-right.mt-0.mb-3 = f.primary user.new_record? ? 'Meld inn' : 'Lagre'
 
