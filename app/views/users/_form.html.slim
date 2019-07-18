@@ -5,10 +5,11 @@
       = f.text_field :first_name
       = f.text_field :last_name
       .row
-        .col = f.text_field :email, autocomplete: :off, append: (link_to('<i class="fa fa-envelope"></i>'.html_safe, %Q{mailto:"#{user.name}" <#{user.email}>}) if user.email.present?)
+        .col = f.text_field :email, autocomplete: :off,
+                append: (link_to('<i class="fa fa-envelope"></i>'.html_safe, %Q{mailto:"#{user.name}" <#{user.email}>}) if user.email.present?),
+                help: (detour_to('Send e-post med login link', send_login_link_path(user: { identity: user.email }), method: :post) if user.email)
         - if admin?
-          .col-md-3 = f.select :verified, [['Nei', false], ['Ja', true]], \
-                    help: (detour_to('Send e-post med login link', send_login_link_path(user: { identity: user.email }), method: :post) if user.email)
+          .col-md-2 = f.select :verified, [['Nei', false], ['Ja', true]]
         - if user.login.present?
           .col = f.text_field :login, autocomplete: :off
       = f.text_field :phone, \
@@ -31,7 +32,7 @@
                 prepend: link_to('Wiki', 'https://en.wikipedia.org/wiki/Katakana'),
                 append: [ \
                   (link_to('Google', "https://translate.google.com/#view=home&op=translate&sl=ja&tl=no&text=#{user.kana}", target: '_blank') if user.kana.present?), \
-                  link_to(fa_icon('shopping-cart'), 'https://www.kataaro.com/Products/Embroidered-Black-Belt-Brushed-Cotton__E4941.aspx', target: '_blank') \
+                  (link_to(fa_icon('shopping-cart'), 'https://www.kataaro.com/Products/Embroidered-Black-Belt-Brushed-Cotton__E4941.aspx', target: '_blank') if user.member&.current_rank&.embroydery?) \
                 ].compact.presence.join.html_safe
   - if submit
     .float-right.mt-0.mb-3 = f.primary user.new_record? ? 'Meld inn' : 'Lagre'
