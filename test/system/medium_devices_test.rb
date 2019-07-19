@@ -20,7 +20,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
         # device_metrics: { width: MEDIUM_WINDOW_SIZE[0], height: MEDIUM_WINDOW_SIZE[1], pixelRatio: 1, touch: true },
         # EMXIF
         user_agent: USER_AGENT
-    )
+      )
     browser_options.headless!
     Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
   end
