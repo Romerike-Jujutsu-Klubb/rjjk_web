@@ -5,6 +5,7 @@ require 'application_system_test_case'
 class MediumDevicesTest < ApplicationSystemTestCase
   MEDIUM_WINDOW_SIZE = [640, 480].freeze
   FRONT_PAGE_PROGRESS_BAR_AREA = [0, 477, 292, 479].freeze
+  SUBNAV_OFFSET = ENV['TRAVIS'] ? -253 : -268 # FIXME(uwe): Why the difference?
   USER_AGENT = <<~UA
     Mozilla/5.0 (Linux; Android 6.0.1; Nexus 7 Build/MOB30X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36
   UA
@@ -19,7 +20,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
         # device_metrics: { width: MEDIUM_WINDOW_SIZE[0], height: MEDIUM_WINDOW_SIZE[1], pixelRatio: 1, touch: true },
         # EMXIF
         user_agent: USER_AGENT
-      )
+    )
     browser_options.headless!
     Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
   end
@@ -40,17 +41,18 @@ class MediumDevicesTest < ApplicationSystemTestCase
     screenshot_group :front_page
     login_and_visit root_path
     assert_selector 'h4', text: 'Neste trening'
-    assert_offset '.subnav', :left, -268
-    assert_offset '.main_right', :right, -268
+    assert_offset '.subnav', :left, SUBNAV_OFFSET
+    assert_offset '.main_right', :right, SUBNAV_OFFSET
     screenshot :index
 
     find('.fa-navicon').click # Display menu
     assert_offset '.subnav', :left, 0
     assert_selector 'li a', text: 'My first article'
+    find('h1', text: 'Instruksjon').hover
     assert_css '#menuShadow'
     screenshot :menu
     find('.fa-calendar').click_at # Hide menu
-    assert_offset '.subnav', :left, -268
+    assert_offset '.subnav', :left, SUBNAV_OFFSET
     assert_no_css '#menuShadow'
     screenshot :menu_closed
 
@@ -59,11 +61,9 @@ class MediumDevicesTest < ApplicationSystemTestCase
     assert_css '#sidebarShadow'
     screenshot :calendar
     find('#sidebarShadow').click # Hide calendar sidebar
-    assert_offset '.main_right', :right, -268
+    assert_offset '.main_right', :right, SUBNAV_OFFSET
     assert_no_css '#sidebarShadow'
     screenshot :calendar_closed
-  rescue => e
-    skip "FIXME: #{e}" if ENV['TRAVIS'] # FIXME(uwe)
   end
 
   test 'new front_page' do
