@@ -2,16 +2,15 @@
   .row
     .col-md-6
       = f.select :group_schedule_id, \
-              @group_schedules.sort_by { |gs| [gs.group.from_age, gs.weekday] }. \
+              @group_schedules.sort_by { |gs| [gs.group.from_age, gs.weekday] }.\
                       map { |gs| ["#{gs.group.name} #{day_name gs.weekday}", gs.id] }, \
-              {prompt: 'Velg gruppe og dag'}
+              { prompt: 'Velg gruppe og dag' }
     .col-md-6
-      = f.select :member_id, @group_instructors.map { |g| [g&.name, g&.id] }, \
-              {prompt: 'Velg instruktør'}
+      = f.grouped_collection_select :member_id, @group_instructors, :to_a, ->m{m[0]&.instructor? ? :Instruktører : :Andre}, :id, :name, { prompt: 'Velg instruktør' }
   .row
     .col-md-6
       = f.select :semester_id, @semesters.map { |s| [s.name, s.id] }, \
-                {prompt: 'Velg semester', selected: @group_instructor.group_semester.try(:semester).try(:id)}
+                { prompt: 'Velg semester', selected: @group_instructor.group_semester.try(:semester).try(:id) }
     .col-md-6.pt-2
       br
       = f.check_box :assistant

@@ -4,46 +4,17 @@
 
 h1 Gruppeinstruktører
 
-- @semesters.each do |s, instructions|
-  h3
-    - if s.future?
-      | Neste semester (#{s.name})
-    - elsif s.past?
-      | Tidligere semester (#{s.name})
-    - else
-      | Dette semester (#{s.name})
+nav
+  #nav-tab.nav.nav-tabs role="tablist"
+    a#current-tab.nav-item.nav-link.active data-toggle="tab" data-target="#current" role="tab" aria-controls="current" aria-selected="true" Dette semesteret
+    a#previous-tab.nav-item.nav-link data-toggle="tab" data-target="#previous" role="tab" aria-controls="previous" aria-selected="false" Tidligere semester
 
-  table.table.table-striped
-    thead
-      tr
-        th Gruppe
-        th Dag
-        th Instruktør
-        th Rolle
-        th
-        th
-    tbody
-      - instructions.group_by { |gi| gi.group_schedule.group }.each do |group, group_instructions|
-        - group_instruction = group_instructions.first
-        tr
-          td rowspan=group_instructions.size = link_to group_instruction.group_schedule.group.name, group_instruction.group_semester
-          td rowspan=group_instructions.select{ |gi| gi.group_schedule.weekday == group_instruction.group_schedule.weekday }.size = day_name group_instruction.group_schedule.weekday
-          td = link_to group_instruction.member.name, group_instruction.member
-          td = group_instruction.role
-          td = link_to 'Endre', edit_group_instructor_path(group_instruction)
-          td = link_to 'Slett', group_instruction, data: { confirm: 'Er du sikker?' }, method: :delete
-        - group_instructions[1..-1].group_by { |gi| gi.group_schedule.weekday }.each do |weekday, day_instructions|
-          - day_instruction = day_instructions.first
-          tr
-            - if day_instruction.group_schedule.weekday != group_instruction.group_schedule.weekday
-              td rowspan=day_instructions.size = day_name day_instruction.group_schedule.weekday
-            td = link_to day_instruction.member.name, day_instruction.member
-            td = day_instruction.role
-            td = link_to 'Endre', edit_group_instructor_path(day_instruction)
-            td = link_to 'Slett', day_instruction, data: { confirm: 'Er du sikker?' }, method: :delete
-          - day_instructions[1..-1].each do |day_instruction|
-            tr
-              td = link_to day_instruction.member.name, day_instruction.member
-              td = day_instruction.role
-              td = link_to 'Endre', edit_group_instructor_path(day_instruction)
-              td = link_to 'Slett', day_instruction, data: { confirm: 'Er du sikker?' }, method: :delete
+#nav-tabContent.tab-content
+  #current.tab-pane.fade.show.active.pt-3 role="tabpanel" aria-labelledby="current-tab"
+    - [@semesters.first].each do |s, instructions|
+      = render 'overview', s: s, instructions: instructions
+  #previous.tab-pane.fade.pt-3 role="tabpanel" aria-labelledby="previous-tab"
+    - @semesters.to_a[1..-1].each do |s, instructions|
+      = render 'overview', s: s, instructions: instructions
+
+

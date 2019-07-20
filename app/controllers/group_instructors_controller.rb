@@ -75,8 +75,10 @@ class GroupInstructorsController < ApplicationController
   def load_form_data
     @group_schedules = GroupSchedule.includes(:group).references(:groups)
         .order('weekday, groups.from_age').to_a.select { |gs| gs.group.active? }
-    @group_instructors = (Member.instructors + [nil] +
-        Rank.kwr.find_by(name: '4. kyu').members.active.sort_by(&:name)).uniq
+    instructors = Member.instructors.sort_by(&:current_rank).reverse
+    @group_instructors = [
+      instructors, Rank.kwr.find_by(name: '4. kyu').members.active.sort_by(&:name).uniq - instructors
+    ]
     @semesters ||= Semester.order('start_on DESC').limit(10).to_a
   end
 
