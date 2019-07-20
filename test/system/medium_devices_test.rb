@@ -110,7 +110,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
     loop do
       offset = evaluate_script("$('#{selector}').offset().left")
       if side == :right
-        window_width = evaluate_script('Math.max(document.documentElement.clientWidth, window.innerWidth || 0)')
+        window_width = evaluate_script('Math.max(document.documentElement.clientWidth, window.width || 0)')
         width = evaluate_script("$('#{selector}').outerWidth()")
         offset = window_width - offset - width
       end
