@@ -1,0 +1,49 @@
+= link_to new_group_instructor_path, class: 'btn btn-primary float-right'
+  i.fa.fa-plus>
+  | Registrer gruppeinstruktør
+
+h1 Gruppeinstruktører
+
+- @semesters.each do |s, instructions|
+  h3
+    - if s.future?
+      | Neste semester (#{s.name})
+    - elsif s.past?
+      | Tidligere semester (#{s.name})
+    - else
+      | Dette semester (#{s.name})
+
+  table.table.table-striped
+    thead
+      tr
+        th Gruppe
+        th Dag
+        th Instruktør
+        th Rolle
+        th
+        th
+    tbody
+      - instructions.group_by { |gi| gi.group_schedule.group }.each do |group, group_instructions|
+        - group_instruction = group_instructions.first
+        tr
+          td rowspan=group_instructions.size = link_to group_instruction.group_schedule.group.name, group_instruction.group_semester
+          td rowspan=group_instructions.select{ |gi| gi.group_schedule.weekday == group_instruction.group_schedule.weekday }.size = day_name group_instruction.group_schedule.weekday
+          td = link_to group_instruction.member.name, group_instruction.member
+          td = group_instruction.role
+          td = link_to 'Endre', edit_group_instructor_path(group_instruction)
+          td = link_to 'Slett', group_instruction, data: { confirm: 'Er du sikker?' }, method: :delete
+        - group_instructions[1..-1].group_by { |gi| gi.group_schedule.weekday }.each do |weekday, day_instructions|
+          - day_instruction = day_instructions.first
+          tr
+            - if day_instruction.group_schedule.weekday != group_instruction.group_schedule.weekday
+              td rowspan=day_instructions.size = day_name day_instruction.group_schedule.weekday
+            td = link_to day_instruction.member.name, day_instruction.member
+            td = day_instruction.role
+            td = link_to 'Endre', edit_group_instructor_path(day_instruction)
+            td = link_to 'Slett', day_instruction, data: { confirm: 'Er du sikker?' }, method: :delete
+          - day_instructions[1..-1].each do |day_instruction|
+            tr
+              td = link_to day_instruction.member.name, day_instruction.member
+              td = day_instruction.role
+              td = link_to 'Endre', edit_group_instructor_path(day_instruction)
+              td = link_to 'Slett', day_instruction, data: { confirm: 'Er du sikker?' }, method: :delete
