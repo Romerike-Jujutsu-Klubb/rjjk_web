@@ -5,7 +5,7 @@ require 'application_system_test_case'
 class MediumDevicesTest < ApplicationSystemTestCase
   MEDIUM_WINDOW_SIZE = [640, 480].freeze
   FRONT_PAGE_PROGRESS_BAR_AREA = [0, 477, 292, 479].freeze
-  SUBNAV_OFFSET = ENV['TRAVIS'] ? -253 : -268 # FIXME(uwe): Why the difference?
+  SUBNAV_OFFSET = -268
   USER_AGENT = <<~UA
     Mozilla/5.0 (Linux; Android 6.0.1; Nexus 7 Build/MOB30X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36
   UA
