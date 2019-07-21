@@ -58,9 +58,9 @@ class SmallDevicesTest < ApplicationSystemTestCase
     screenshot :menu
     begin
       article_menu_link.click
-    rescue
+    rescue => e
       tries ||= 1
-      raise "article menu click failed (#{tries}): #{$ERROR_INFO}" if tries >= 6
+      raise "article menu click failed (#{tries}): #{e}" if tries >= 6
 
       sleep 0.001
       tries += 1
@@ -76,8 +76,17 @@ class SmallDevicesTest < ApplicationSystemTestCase
     assert_css('#headermenuholder > i')
     assert_css('.fa-chevron-down')
     screenshot :index, color_distance_limit: 11
-    find('.fa-chevron-down').click
-    article_link = find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
+    begin
+      find('.fa-chevron-down').click
+      article_link = find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
+    rescue => e
+      tries ||= 1
+      raise "article link click failed (#{tries}): #{e}" if tries >= 6
+
+      sleep 0.001
+      tries += 1
+      retry
+    end
     screenshot(:scrolled, skip_area: PROGRESS_BAR_AREA) || (sleep(0.5) if ENV['TRAVIS'])
     article_link.click
     assert_css('h1', text: 'My first article')
