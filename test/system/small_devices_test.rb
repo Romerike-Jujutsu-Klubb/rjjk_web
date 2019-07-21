@@ -76,8 +76,8 @@ class SmallDevicesTest < ApplicationSystemTestCase
     assert_css('#headermenuholder > i')
     assert_css('.fa-chevron-down')
     screenshot :index, color_distance_limit: 11
+    find('.fa-chevron-down').click
     begin
-      find('.fa-chevron-down').click
       article_link = find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
     rescue => e
       tries ||= 1
