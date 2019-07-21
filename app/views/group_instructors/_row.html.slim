@@ -1,0 +1,6 @@
+td = link_to group_instruction.member.name, group_instruction.member
+td = group_instruction.role
+td = link_to edit_group_instructor_path(group_instruction)
+  i.fa.fa-edit
+td = link_to group_instruction, data: { confirm: 'Er du sikker?' }, method: :delete
+  i.fa.fa-trash

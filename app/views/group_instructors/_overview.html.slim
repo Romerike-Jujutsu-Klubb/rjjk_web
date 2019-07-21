@@ -21,28 +21,12 @@ table.table.table-sm.table-striped
       tr
         td rowspan=group_instructions.size = link_to group_instruction.group_schedule.group.name, group_instruction.group_semester
         td rowspan=group_instructions.select{ |gi| gi.group_schedule.weekday == group_instruction.group_schedule.weekday }.size = day_name group_instruction.group_schedule.weekday
-        td = link_to group_instruction.member.name, group_instruction.member
-        td = group_instruction.role
-        td = link_to edit_group_instructor_path(group_instruction)
-          i.fa.fa-edit
-        td = link_to group_instruction, data: { confirm: 'Er du sikker?' }, method: :delete
-          i.fa.fa-trash
+        = render 'row', group_instruction: group_instruction
       - group_instructions[1..-1].group_by { |gi| gi.group_schedule.weekday }.each do |weekday, day_instructions|
         - day_instruction = day_instructions.first
         tr
           - if day_instruction.group_schedule.weekday != group_instruction.group_schedule.weekday
             td rowspan=day_instructions.size = day_name day_instruction.group_schedule.weekday
-          td = link_to day_instruction.member.name, day_instruction.member
-          td = day_instruction.role
-          td = link_to edit_group_instructor_path(day_instruction)
-            i.fa.fa-edit
-          td = link_to day_instruction, data: { confirm: 'Er du sikker?' }, method: :delete
-            i.fa.fa-trash
+          = render 'row', group_instruction: day_instruction
         - day_instructions[1..-1].each do |day_instruction|
-          tr
-            td = link_to day_instruction.member.name, day_instruction.member
-            td = day_instruction.role
-            td = link_to edit_group_instructor_path(day_instruction)
-              i.fa.fa-edit
-            td = link_to day_instruction, data: { confirm: 'Er du sikker?' }, method: :delete
-              i.fa.fa-trash
+          tr = render 'row', group_instruction: day_instruction
