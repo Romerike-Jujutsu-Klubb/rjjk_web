@@ -81,15 +81,24 @@ class SmallDevicesTest < ApplicationSystemTestCase
       article_link = find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
     rescue => e
       tries ||= 1
-      raise "article link click failed (#{tries}): #{e}" if tries >= 6
+      raise "finding article link failed (#{tries}): #{e}" if tries >= 6
 
       sleep 0.001
       tries += 1
       retry
     end
     screenshot(:scrolled, skip_area: PROGRESS_BAR_AREA) || (sleep(0.5) if ENV['TRAVIS'])
-    article_link.click
-    assert_css('h1', text: 'My first article')
+    begin
+      article_link.click
+      assert_css('h1', text: 'My first article')
+    rescue => e
+      tries ||= 1
+      raise "article link click failed (#{tries}): #{e}" if tries >= 6
+
+      sleep 0.001
+      tries += 1
+      retry
+    end
     screenshot :article
   end
 end
