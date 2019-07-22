@@ -13,9 +13,15 @@ class AttendanceNotificationJob < ApplicationJob
     body = +"#{attendees} er påmeldt."
     body << "\n#{absentees} er avmeldt." if absentees > 0
     AttendanceWebpush
-        .push_all("#{member.name}: #{new_status.inspect} #{group_name} #{practice.date}",
+        .push_all(
+            "#{member.name}: #{new_status.inspect} #{group_name} #{practice.date}",
             body,
             except: member.id,
-        tag: "attendance_#{member.id}_#{practice.id}")
+            tag: "attendance_#{member.id}_#{practice.id}",
+            data: {
+                member_id: member.id,
+                practice_id: practice.id,
+            }
+        )
   end
 end

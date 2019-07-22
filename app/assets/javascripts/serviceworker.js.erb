@@ -60,17 +60,25 @@ function onFetch(event) {
 }
 
 function onPush(event) {
+    console.log('[Service Worker] Push Received.');
     var message = (event.data && event.data.json()) || {};
+    console.log('[Service Worker] message:');
+    console.trace(message);
+    var actions = [
+        {action: 'close', title: 'Close'}
+    ];
+    if (message.data.practice_id) {
+        actions.unshift({action: 'open', title: 'Åpne'});
+    }
     event.waitUntil(
         self.registration.showNotification(message.title || "<No title>", {
             body: message.body,
             icon: "/icon/192.png",
+            image: "/icon/192.png",
             badge: "/icon/96.png",
             tag: message.tag,
-            actions: [
-                {action: 'open', title: 'Åpne'},
-                {action: 'close', title: 'Close'}
-            ]
+            actions: actions,
+            data: message.data
         })
     )
 }
@@ -80,17 +88,22 @@ function onPush(event) {
 function onNotificationClick(event) {
     console.log('[Service Worker] Notification click Received.');
     console.log('On notification click: ', event.notification.tag);
-    console.log('On notification click: ', event.notification.action);
+    console.log('event.notification.action: ', event.notification.action);
+    console.log('event.action: ', event.action);
+    console.trace('event.notification: ', event.notification);
+    console.trace('event.notification.data: ', event.notification.data);
+//    console.trace('event.notification.data.practice_id: ', event.notification.data.practice_id);
+    console.trace('event.data: ', event.data);
 
-    if (event.notification.action == 'close') {
+    if (event.action == 'close') {
         event.notification.close();
-    } else if (event.notification.action == 'open' || !event.notification.action) {
+    } else if (event.action == 'open' || !event.action) {
         event.notification.close();
         event.waitUntil(
-            clients.openWindow('<%= root_url %>')
+            clients.openWindow('<%= practices_url %>/' + event.notification.data.practice_id)
         );
     } else {
-        console.log('onNotificationClick', 'Unknown action: ' + event.notification.action);
+        console.log('onNotificationClick', 'Unknown action: ' + event.action);
     }
 }
 

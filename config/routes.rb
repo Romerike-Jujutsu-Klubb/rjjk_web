@@ -155,6 +155,7 @@ Rails.application.routes.draw do
   end
 
   get 'icon/:width' => 'icons#inline'
+  get 'notification_icon' => 'icons#notification_icon'
 
   resources :images do
     member do
