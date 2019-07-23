@@ -65,7 +65,7 @@ function onPush(event) {
     console.log('[Service Worker] message:');
     console.trace(message);
     var actions = [
-        {action: 'close', title: 'Close'}
+        {action: 'close', title: 'Lukk'}
     ];
     if (message.data.practice_id) {
         actions.unshift({action: 'open', title: 'Åpne'});
