@@ -8,6 +8,6 @@ class IconsControllerTest < IntegrationTest
   end
 
   test 'should serve a notification_icon' do
-    get '/notification_icon.png'
+    get '/icon/notification.png'
   end
 end
