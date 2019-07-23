@@ -11,13 +11,13 @@ class IconsController < ActionController::Base
   end
 
   COLORS = {
-      ChunkyPNG::Color.parse('030303FF') => ChunkyPNG::Color::WHITE,
-      ChunkyPNG::Color.parse('FFFFFFFF') => ChunkyPNG::Color::TRANSPARENT,
-      ChunkyPNG::Color.parse('E10916FF') => ChunkyPNG::Color::TRANSPARENT,
-      ChunkyPNG::Color.parse('FFB403FF') => ChunkyPNG::Color::WHITE,
-      ChunkyPNG::Color.parse('026CB6FF') => ChunkyPNG::Color::TRANSPARENT,
-      ChunkyPNG::Color.parse('03145CFF') => ChunkyPNG::Color::WHITE,
-  }
+    ChunkyPNG::Color.parse('030303FF') => ChunkyPNG::Color::WHITE,
+    ChunkyPNG::Color.parse('FFFFFFFF') => ChunkyPNG::Color::TRANSPARENT,
+    ChunkyPNG::Color.parse('E10916FF') => ChunkyPNG::Color::TRANSPARENT,
+    ChunkyPNG::Color.parse('FFB403FF') => ChunkyPNG::Color::WHITE,
+    ChunkyPNG::Color.parse('026CB6FF') => ChunkyPNG::Color::TRANSPARENT,
+    ChunkyPNG::Color.parse('03145CFF') => ChunkyPNG::Color::WHITE,
+  }.freeze
 
   def notification_icon
     width = 320
@@ -28,8 +28,8 @@ class IconsController < ActionController::Base
             if ChunkyPNG::Color.a(icon[x, y]) < 0x40
               ChunkyPNG::Color::TRANSPARENT
             else
-              color = ChunkyPNG::Color.opaque!(icon[x,y])
-              COLORS.sort_by{|c, t| ChunkyPNG::Color.euclidean_distance_rgba(c, color)}.first[1]
+              color = ChunkyPNG::Color.opaque!(icon[x, y])
+              COLORS.min_by { |c, _t| ChunkyPNG::Color.euclidean_distance_rgba(c, color) }[1]
             end
       end
     end

@@ -19,9 +19,9 @@ class AttendanceNotificationJob < ApplicationJob
             except: member.id,
             tag: "attendance_#{member.id}_#{practice.id}",
             data: {
-                member_id: member.id,
-                practice_id: practice.id,
+              member_id: member.id,
+              practice_id: practice.id,
             }
-        )
+          )
   end
 end

@@ -10,7 +10,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
 
   def login(login = :admin)
     user = users(login)
-    post '/login/password', params: { user: { login: user.login, password: :atest } }
+    post '/login/password', params: { user: { login: user.login || user.email, password: :atest } }
     user
   end
 

@@ -16,7 +16,7 @@ class AttendanceNotificationsController < ApplicationController
 
   def push
     AttendanceWebpush.push_all("Hello world, the time is #{Time.zone.now}", 'All is well.', tag: :test,
-        data: {practice_id: Practice.last.id})
+        data: { practice_id: Practice.last.id })
     head :ok
   end
 end
