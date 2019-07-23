@@ -88,6 +88,17 @@ class GraduationsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_lock
+    assert_equal [nil, nil], graduations(:panda).censors.map(&:locked_at)
+    post :lock, params: { id: @first_id }
+    assert_response :redirect
+    assert_redirected_to edit_graduation_path(@first_id)
+    assert_equal [Time.current.to_f, 0.0], graduations(:panda).censors.reload
+        .order(:locked_at).map(&:locked_at).map(&:to_f)
+    assert_equal [Time.current, nil], graduations(:panda).censors.reload
+        .order(:locked_at).map(&:locked_at)
+  end
+
   def test_approve
     assert_equal [nil, nil], graduations(:panda).censors.map(&:approved_grades_at)
     post :approve, params: { id: @first_id }
