@@ -1,9 +1,9 @@
 = bootstrap_form_for(@event) do |f|
   .row
     .col-sm-3
-      = f.text_field :start_at, value: @event.start_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Fra'
+      = f.text_field :start_at, value: @event.start_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Fra', autocomplete: :off
     .col-sm-3
-      = f.text_field :end_at, value: @event.end_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Til (valgfritt)'
+      = f.text_field :end_at, value: @event.end_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Til (valgfritt)', autocomplete: :off
 
   ul#localeTab.nav.nav-tabs role="tablist"
     li.nav-item
@@ -14,7 +14,7 @@
   #localeTabContent.tab-content
     #nb-content.tab-pane.fade.show.active role="tabpanel" aria-labelledby="nb-tab"
       input type='hidden' name=:preview_locale value=:nb
-      .row
+      .row.mt-3
         .col-sm-6
           = f.text_field :name, size: 52, label: 'Tittel'
       .row
@@ -28,7 +28,7 @@
             #preview.card-body.overflow-auto style='max-height:50vh'
     #en-content.tab-pane.fade role="tabpanel" aria-labelledby="en-tab"
       input type='hidden' name=:preview_locale value=:en
-      .row
+      .row.mt-3
         .col-sm-6
           = f.text_field :name_en, size: 52, label: 'Title'
       .row
