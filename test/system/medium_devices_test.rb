@@ -13,12 +13,8 @@ class MediumDevicesTest < ApplicationSystemTestCase
   Capybara.register_driver :chrome_medium do |app|
     browser_options = ::Selenium::WebDriver::Chrome::Options.new
     browser_options.args << '--force-color-profile=srgb'
-    browser_options.args << '--force-device-scale-factor=1' # FIXME(uwe): Remove with Chrome 74
-    browser_options.args << "--window-size=#{MEDIUM_WINDOW_SIZE.join('x')}" # FIXME(uwe): Remove with Chrome 74
     browser_options.add_emulation(
-        # FIXME(uwe): Re-enable with Chrome 74
-        # device_metrics: { width: MEDIUM_WINDOW_SIZE[0], height: MEDIUM_WINDOW_SIZE[1], pixelRatio: 1, touch: true },
-        # EMXIF
+        device_metrics: { width: MEDIUM_WINDOW_SIZE[0], height: MEDIUM_WINDOW_SIZE[1], pixelRatio: 1, touch: true },
         user_agent: USER_AGENT
       )
     browser_options.headless!
@@ -33,9 +29,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
     Capybara.current_session.current_window.resize_to(*MEDIUM_WINDOW_SIZE) # FIXME(uwe): Remove with Chrome 74
   end
 
-  teardown do
-    Capybara::Screenshot.window_size = ApplicationSystemTestCase::WINDOW_SIZE
-  end
+  teardown { Capybara::Screenshot.window_size = ApplicationSystemTestCase::WINDOW_SIZE }
 
   test 'member front_page' do
     screenshot_group :front_page
