@@ -16,7 +16,7 @@ class Event < ApplicationRecord
 
   before_validation { |r| r.description = nil if r.description.blank? }
 
-  validates :name, :start_at, presence: true
+  validates :start_at, presence: true
 
   def upcoming?
     (end_at || start_at).to_date >= Date.current

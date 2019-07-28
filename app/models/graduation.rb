@@ -157,7 +157,7 @@ class Graduation < ApplicationRecord
     group.try(:martial_art) || MartialArt.find_by(name: 'Kei Wa Ryu')
   end
 
-  def localized_name
+  def title
     name
   end
 

@@ -11,4 +11,4 @@ h5.clearfix style="margin-bottom:0;color:#FFB400"
     - more_url = event_registration_path(inv.id)
   - else
     - more_url = admin? && event.persisted? ? edit_polymorphic_path(event) : event
-  = link_to event.localized_name, more_url
+  = link_to event.title, more_url

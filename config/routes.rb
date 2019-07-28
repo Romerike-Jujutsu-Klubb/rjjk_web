@@ -180,7 +180,12 @@ Rails.application.routes.draw do
       patch :preview
     end
   end
-  resources :instructor_meetings
+  resources :instructor_meetings do
+    member do
+      get :accept
+      get :decline
+    end
+  end
 
   controller :login do
     match 'login/change_password', action: :change_password, via: %i[get post], as: :change_password

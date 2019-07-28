@@ -31,7 +31,7 @@
           = event.end_at.strftime('%H:%M')
 
 h5.clearfix style="margin-bottom:0;color:#FFB400"
-  = link_to event.localized_name, event
+  = link_to event.title, event
 
 - if user?
   = render 'layouts/event_details', event: event
