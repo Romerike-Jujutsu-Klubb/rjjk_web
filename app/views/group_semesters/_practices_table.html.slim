@@ -1,0 +1,12 @@
+table.table.table-sm
+  tbody
+    - practices.sort_by!(&:date)
+    - practices.reverse! if reverse
+    - practices.each.with_index do |practice, i|
+      tr class=('bg-danger' unless practice.status == 'X')
+        td = i + 1
+        td.text-nowrap
+          = practice.date
+        td = day_name(practice.date.cwday)
+        / td: .badge.badge-info = practice.status
+        td = practice.message

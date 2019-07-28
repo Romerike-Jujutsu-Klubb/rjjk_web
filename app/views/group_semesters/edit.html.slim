@@ -13,28 +13,11 @@ ul.nav.nav-tabs role="tablist"
 .tab-content
   #form.tab-pane.active = render 'form'
   #plan.tab-pane
-    h2.mt-3 Treninger
-
-    table.table.table-sm
-      - @group_semester.practices.select{|p| p.date >= Date.current}.sort_by(&:date).each do |practice|
-        tr
-          td.text-nowrap = practice.date
-          td = day_name(practice.date.cwday)
-          td: .badge.badge-info = practice.status
-          td
-            = form_for practice do |f|
-              = f.text_area :message, rows: 1, class: 'form-control expanding', onkeyup: "$.post( '#{practice_path(practice, format: :json)}', { _method: 'patch', 'practice[message]': $(this).val() })"
+    - upcoming_practices = @group_semester.practices.select { |p| p.date >= Date.current }
+    = render 'edit_practices_table', practices: upcoming_practices, reverse: false
   #history.tab-pane
-    h2.mt-3 Treninger
-    table.table.table-sm
-      - @group_semester.practices.select{|p| p.date < Date.current}.sort_by(&:date).reverse.each do |practice|
-        tr
-          td.text-nowrap = practice.date
-          td = day_name(practice.date.cwday)
-          td: .badge.badge-info = practice.status
-          td
-            = form_for practice do |f|
-              = f.text_area :message, rows: 1, class: 'form-control', onkeyup: "$.post( '#{practice_path(practice, format: :json)}', { _method: 'patch', 'practice[message]': $(this).val() })"
+    - past_practices = @group_semester.practices.select { |p| p.date < Date.current }
+    = render 'edit_practices_table', practices: past_practices, reverse: true
 
 javascript:
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
