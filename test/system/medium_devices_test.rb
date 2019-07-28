@@ -26,7 +26,6 @@ class MediumDevicesTest < ApplicationSystemTestCase
   setup do
     screenshot_section :medium_devices
     Capybara::Screenshot.window_size = nil
-    Capybara.current_session.current_window.resize_to(*MEDIUM_WINDOW_SIZE) # FIXME(uwe): Remove with Chrome 74
   end
 
   teardown { Capybara::Screenshot.window_size = ApplicationSystemTestCase::WINDOW_SIZE }
@@ -67,8 +66,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
     screenshot :index, area_size_limit: 533, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
     find('#headermenuholder > i').click
     article_menu_link = find('.menubutton', text: 'My first article')
-    article_menu_link.hover # FIXME(uwe): Remove with Chrome 74 + mobile emulation
-    screenshot :menu
+    screenshot :menu, skip_area: [308, 73, 332, 102]
     begin
       article_menu_link.click
     rescue
