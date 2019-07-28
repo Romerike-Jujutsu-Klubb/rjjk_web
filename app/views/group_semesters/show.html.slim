@@ -39,8 +39,7 @@ h1
             tr class=('bg-danger' unless practice.status == 'X')
               td.text-nowrap
                 = practice.date
-                .d-block.d-md-inline
-                =< day_name(practice.date.cwday)
+              td = day_name(practice.date.cwday)
               / td: .badge.badge-info = practice.status
               td = practice.message
       #history.tab-pane
@@ -49,7 +48,6 @@ h1
             tr class=('bg-danger' unless practice.status == 'X')
               td.text-nowrap
                 = practice.date
-                .d-block.d-md-inline
-                =< day_name(practice.date.cwday)
+              td = day_name(practice.date.cwday)
               / td: .badge.badge-info = practice.status
               td = practice.message

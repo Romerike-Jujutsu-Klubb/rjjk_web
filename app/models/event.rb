@@ -14,47 +14,9 @@ class Event < ApplicationRecord
   has_many :groups, through: :event_groups
   has_many :users, through: :event_invitees
 
-  before_validation do |r|
-    r.description = nil if r.description.blank?
-
-    # FIXME(uwe): Remove column `invitees` and all use of it
-    if r.invitees.nil? || r.invitees.blank?
-      r.invitees = nil
-    else
-      r.invitees = r.invitees.gsub(/^\s+/, '')
-      r.invitees = r.invitees.gsub(/\s+$/, '')
-      r.invitees = r.invitees.gsub(/\s+/, ' ')
-      r.invitees = r.invitees.split(/\s*,\s*/).sort_by(&:upcase).join(",\n") + "\n"
-    end
-    # EMXIF
-  end
+  before_validation { |r| r.description = nil if r.description.blank? }
 
   validates :name, :start_at, presence: true
-
-  before_update do |r|
-    # FIXME(uwe): Remove column `invitees` and all use of it
-    if r.invitees.present?
-      r.invitees = r.invitees.gsub(/^\s+/, '')
-      r.invitees = r.invitees.gsub(/\s+$/, '')
-      r.invitees = r.invitees.gsub(/\s+/, ' ')
-      r.invitees = r.invitees.split(/\s*,\s*/).sort_by(&:upcase).join(",\n") + "\n"
-      r.invitees.split(/\s*,\s*/).each do |inv|
-        if inv =~ /^(.*)\s*<(.*@.*)>$/
-          name = Regexp.last_match(1)
-          email = Regexp.last_match(2)
-        elsif inv =~ /^(.*@.*)$/
-          name = Regexp.last_match(1)
-          email = Regexp.last_match(1)
-        else
-          name = inv
-          email = inv
-        end
-        event_invitees.create name: name, email: email
-      end
-      r.invitees = nil
-    end
-    # EMXIF
-  end
 
   def upcoming?
     (end_at || start_at).to_date >= Date.current

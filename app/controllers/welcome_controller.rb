@@ -20,7 +20,9 @@ class WelcomeController < ApplicationController
         @news_items << NewsItem.new(publish_at: @next_practice.start_at - 1.day,
             body: render_to_string(partial: 'layouts/next_practice'))
       end
-      Event.upcoming.order(:start_at).each do |event|
+      event_query = Event.upcoming.order(:start_at)
+      event_query = event_query.where.not(type: InstructorMeeting.name) unless current_user.instructor?
+      event_query.each do |event|
         @news_items << NewsItem.new(publish_at: event.publish_at,
             body: render_to_string(partial: 'layouts/event_main', locals: {
               event: event,

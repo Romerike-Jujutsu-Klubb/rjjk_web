@@ -46,6 +46,6 @@ class InstructorMeetingsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def instructor_meeting_params
-    params.require(:instructor_meeting).permit(:start_at, :end_at, :title, :agenda)
+    params.require(:instructor_meeting).permit(:description, :end_at, :name, :start_at)
   end
 end

@@ -5,23 +5,19 @@
 
 h1 Instruktørsamlinger
 
-table.table.table-striped
+table.table.table-striped data-record-path=instructor_meetings_path
   thead
     tr
       th Dato
       th Tid
       th Tema
       th Agenda
-      th
   tbody
     - @instructor_meetings.each do |instructor_meeting|
-      tr
+      tr data-record-id=instructor_meeting.id
         td nowrap=true = instructor_meeting.start_at.to_date
         td
           => instructor_meeting.start_at.strftime('%R')
           = instructor_meeting.end_at.strftime('%R')
         td = instructor_meeting.title
-        td = instructor_meeting.agenda
-        td
-          /= link_to 'Show', instructor_meeting, class: 'btn btn-link'
-          = link_to 'Endre', edit_instructor_meeting_path(instructor_meeting), class: 'btn btn-link'
+        td = instructor_meeting.description

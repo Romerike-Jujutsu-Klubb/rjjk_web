@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_25_125257) do
+ActiveRecord::Schema.define(version: 2019_07_28_214143) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -254,7 +254,6 @@ ActiveRecord::Schema.define(version: 2019_07_25_125257) do
     t.text 'description'
     t.datetime 'created_at'
     t.datetime 'updated_at'
-    t.text 'invitees'
     t.string 'name_en', limit: 80
     t.text 'description_en'
     t.string 'type'
@@ -388,15 +387,6 @@ ActiveRecord::Schema.define(version: 2019_07_25_125257) do
     t.datetime 'mailed_at'
     t.boolean 'public', null: false
     t.string 'icon_class'
-  end
-
-  create_table 'instructor_meetings', force: :cascade do |t|
-    t.datetime 'start_at', null: false
-    t.time 'end_at', null: false
-    t.string 'title', limit: 254
-    t.text 'agenda'
-    t.datetime 'created_at'
-    t.datetime 'updated_at'
   end
 
   create_table 'martial_arts', force: :cascade do |t|

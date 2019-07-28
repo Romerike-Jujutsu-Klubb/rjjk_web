@@ -3,9 +3,7 @@
 require 'controller_test'
 
 class InstructorMeetingsControllerTest < ActionController::TestCase
-  setup do
-    @instructor_meeting = instructor_meetings(:one)
-  end
+  setup { @instructor_meeting = instructor_meetings(:instructor_meeting_one) }
 
   test 'should get index' do
     get :index
@@ -20,10 +18,10 @@ class InstructorMeetingsControllerTest < ActionController::TestCase
   test 'should create instructor_meeting' do
     assert_difference('InstructorMeeting.count') do
       post :create, params: { instructor_meeting: {
-        agenda: @instructor_meeting.agenda,
+        description: @instructor_meeting.description,
         end_at: @instructor_meeting.end_at,
         start_at: @instructor_meeting.start_at,
-        title: @instructor_meeting.title,
+        name: @instructor_meeting.name,
       } }
     end
 
@@ -42,10 +40,10 @@ class InstructorMeetingsControllerTest < ActionController::TestCase
 
   test 'should update instructor_meeting' do
     patch :update, params: { id: @instructor_meeting, instructor_meeting: {
-      agenda: @instructor_meeting.agenda,
+      description: @instructor_meeting.description,
       end_at: @instructor_meeting.end_at,
       start_at: @instructor_meeting.start_at,
-      title: @instructor_meeting.title,
+      name: @instructor_meeting.name,
     } }
     assert_redirected_to instructor_meetings_path
   end

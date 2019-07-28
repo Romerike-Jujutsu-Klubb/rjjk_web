@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class InstructorMeeting < ApplicationRecord
+class InstructorMeeting < Event
   validates :end_at, :start_at, presence: true
-  validates :title, length: { maximum: 254 }
+  validates :name, length: { maximum: 254 }
 end

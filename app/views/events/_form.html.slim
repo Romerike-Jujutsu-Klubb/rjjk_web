@@ -4,6 +4,8 @@
       = f.text_field :start_at, value: @event.start_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Fra', autocomplete: :off
     .col-sm-3
       = f.text_field :end_at, value: @event.end_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Til (valgfritt)', autocomplete: :off
+    .col-sm-3
+      = f.text_field :type
 
   ul#localeTab.nav.nav-tabs role="tablist"
     li.nav-item

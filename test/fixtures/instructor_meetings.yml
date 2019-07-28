@@ -1,11 +1,13 @@
-one:
-  start_at: 2015-02-12 17:20:29
-  end_at: 2015-02-12 17:20:29
-  title: MyString
-  agenda: MyText
+instructor_meeting_one:
+  type: InstructorMeeting
+  start_at: 2013-02-12 17:30:00
+  end_at: 2013-02-12 19:30:00
+  name: Instruktørsamling
+  description: MyText
 
-two:
-  start_at: 2015-02-12 17:20:29
-  end_at: 2015-02-12 17:20:29
-  title: MyString
-  agenda: MyText
+instructor_meeting_two:
+  type: InstructorMeeting
+  start_at: 2013-11-30 17:30:00
+  end_at: 2013-09-30 19:30:00
+  name: Instruktørsamling
+  description: MyText
