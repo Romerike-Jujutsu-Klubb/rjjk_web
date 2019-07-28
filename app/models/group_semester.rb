@@ -7,6 +7,15 @@ class GroupSemester < ApplicationRecord
 
   has_many :group_instructors, dependent: :destroy
 
+  has_many :group_schedules, through: :group
+  has_many :practices, ->(gs) {
+                         where('year > :year OR (year = :year and week >= :week)',
+                             year: gs.first_session.cwyear, week: gs.first_session.cweek)
+                             .where('year < :year OR (year = :year and week <= :week)',
+                                 year: gs.last_session.cwyear, week: gs.last_session.cweek)
+                       },
+      through: :group_schedules
+
   scope :for_date, ->(date = Date.current) do
     joins(:semester).where('? BETWEEN semesters.start_on AND semesters.end_on', date)
   end
@@ -35,16 +44,5 @@ class GroupSemester < ApplicationRecord
 
   def name
     "#{semester.name} - #{group.name}"
-  end
-
-  def practices
-    return [] unless first_session && last_session
-
-    q = Practice.where('group_schedule_id IN (?)', group.group_schedules.map(&:id))
-    q = q.where('year > :year OR (year = :year and week >= :week)',
-        year: first_session.cwyear, week: first_session.cweek)
-    q = q.where('year < :year OR (year = :year and week <= :week)',
-        year: last_session.cwyear, week: last_session.cweek)
-    q
   end
 end
