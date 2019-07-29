@@ -15,6 +15,7 @@ end
 Prawn::Font::AFM.hide_m17n_warning = true
 
 # FIXME(uwe): Remove or report
+# Fixes Curriculum skill card table
 module Prawn
   class Table
     class Cell
