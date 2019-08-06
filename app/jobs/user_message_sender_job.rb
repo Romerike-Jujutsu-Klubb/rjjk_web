@@ -26,7 +26,7 @@ class UserMessageSenderJob < ApplicationJob
         .where('created_at < ?', 10.years.ago)
         .or(UserMessage.where('created_at < ?', 12.months.ago).where(tag: SHORT_STORAGE_TAGS))
         .order(:created_at)
-        .limit(5)
+        .limit(10)
         .each(&:destroy!)
   end
 end
