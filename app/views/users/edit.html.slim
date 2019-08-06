@@ -5,7 +5,7 @@ h2.float-right
       i.fa.fa-undo>
       | Gjenopprett
   - else
-    = link_to show_user_merge_path(@user), class: 'btn btn-warning'
+    = link_to user_merge_path(@user), class: 'btn btn-warning'
       i.fa.fa-undo>
       | Slå sammen med annen bruker
     a.btn.btn-secondary.mr-3 href=user_path(@user, format: :vcf)

@@ -14,8 +14,14 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_edit
+  def test_edit_member
     get :edit, params: { id: login(:admin).id }
+    assert_response :success
+  end
+
+  def test_edit_non_member
+    login(:admin)
+    get :edit, params: { id: id(:long_user) }
     assert_response :success
   end
 
