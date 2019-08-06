@@ -6,13 +6,9 @@ class NkfMemberSyncJob < ApplicationJob
   def perform(member)
     c = NkfMemberComparison.new(member)
     c.sync
-    if c.errors.any?
-      raise "Errors syncing NKF member: #{c.errors}"
-    end
+    NkfReplicationMailer.update_members(c).deliver_now if c.errors.any?
     NkfMemberImport.new(member.nkf_member.medlemsnummer)
     report_differences(member.reload)
-  rescue => e
-    ExceptionNotifier.notify_exception(e)
   end
 
   private
