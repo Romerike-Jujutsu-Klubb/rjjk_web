@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class NkfMemberComparison
+  MEMBER_ERROR_PATTERN =
+      %r{<div class=divError id="div_48_v04">\s*<ul class="ulError">(.*?)</ul>\s*</div>}.freeze
+
   attr_reader :errors, :member_changes, :members, :new_members, :orphan_members,
       :orphan_nkf_members, :outgoing_changes
 
@@ -181,6 +184,8 @@ class NkfMemberComparison
     logger.info do
       "change_response_page: code: #{change_response_page.code.inspect}\n#{change_response_page.body}"
     end
+    raise 'Error updating NKF member form: ' if MEMBER_ERROR_PATTERN.match?(change_response_page.body)
+
     change_response_page
   end
 
