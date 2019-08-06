@@ -38,6 +38,7 @@
 
 - if @errors.any?
   h2 Feil (#{@errors.size})
+  a href=sync_errors_nkf_members_url Show sync Errors
   - @errors.each do |operation, exception, record|
     h3 Operation:
     = operation
