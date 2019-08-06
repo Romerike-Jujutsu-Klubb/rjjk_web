@@ -4,9 +4,15 @@ class NkfMemberSyncJob < ApplicationJob
   queue_as :default
 
   def perform(member)
-    NkfMemberComparison.new(member).sync
+    c = NkfMemberComparison.new(member)
+    c.sync
+    if c.errors.any?
+      raise "Errors syncing NKF member: #{c.errors}"
+    end
     NkfMemberImport.new(member.nkf_member.medlemsnummer)
     report_differences(member.reload)
+  rescue => e
+    ExceptionNotifier.notify_exception(e)
   end
 
   private
