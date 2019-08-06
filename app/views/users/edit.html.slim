@@ -5,10 +5,10 @@ h2.float-right
       i.fa.fa-undo>
       | Gjenopprett
   - else
-    = link_to user_merge_path(@user), class: 'btn btn-warning'
+    a.btn.btn-warning.mr-2 href=user_merge_path(@user)
       i.fa.fa-undo>
       | Slå sammen med annen bruker
-    a.btn.btn-secondary.mr-3 href=user_path(@user, format: :vcf)
+    a.btn.btn-secondary.mr-2 href=user_path(@user, format: :vcf)
       i.fa.fa-address-card>
       | Kontaktkort
     = link_to user_path(@user), method: :delete, class: 'btn btn-danger', data: {confirm: 'Er du sikker på at du vil slette denne brukeren?'}
