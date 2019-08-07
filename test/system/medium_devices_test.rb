@@ -90,6 +90,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
     find('.fa-chevron-down').click
     find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
     screenshot(:scrolled) || (sleep(0.5) if ENV['TRAVIS'])
+    assert_equal information_page_url(id(:first)), find('#footer .menu-item a', text: 'MY FIRST ARTICLE')[:href]
     find('#footer .menu-item a', text: 'MY FIRST ARTICLE').click
     assert_current_path information_page_path(id(:first))
     assert_css('h1', text: 'My first article')
