@@ -1,9 +1,9 @@
-table.table.table-sm
+table.table.table-sm data-record-path=practices_path
   tbody
     - practices.sort_by!(&:date)
     - practices.reverse! if reverse
     - practices.each.with_index do |practice, i|
-      tr class=('bg-danger' unless practice.status == 'X')
+      tr class=('bg-danger' unless practice.status == 'X') data-record-id=practice.id
         td = i + 1
         td.text-nowrap
           = practice.date

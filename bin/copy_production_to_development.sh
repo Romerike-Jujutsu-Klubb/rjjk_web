@@ -5,7 +5,7 @@ DB_NAME=rjjk_web_development
 echo "Disconnecting clients"
 set +e
 echo "SELECT pid, (SELECT pg_terminate_backend(pid)) as killed from pg_stat_activity
-    WHERE datname = '$DB_NAME' AND state = 'idle';" | psql $DB_NAME
+    WHERE datname = '$DB_NAME' AND state = 'idle';" | psql
 set -e
 
 echo "Re-creating database"

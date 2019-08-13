@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  b> Treningstid:
+  = @practice.group_schedule
+p
+  b> År:
+  = @practice.year
+p
+  b> Uke:
+  = @practice.week
+p
+  b> Status:
+  = @practice.status
+p
+  b> Melding:
+  = @practice.message
+
+=> link_to 'Endre', edit_practice_path(@practice)
+' |
+= back_or_link_to 'Tilbake', practices_path
