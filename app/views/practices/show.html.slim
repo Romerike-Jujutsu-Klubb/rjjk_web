@@ -1,21 +1,28 @@
-p#notice = notice
+h1
+  ' Trening
+  => @practice.group_schedule.group.full_name
+  => ApplicationController.helpers.day_name @practice.group_schedule.weekday
+  => @practice.group_schedule.start_at.to_s(false)
+h3 => @practice.date
 
-p
-  b> Treningstid:
-  = @practice.group_schedule
-p
-  b> År:
-  = @practice.year
-p
-  b> Uke:
-  = @practice.week
-p
-  b> Status:
-  = @practice.status
-p
-  b> Melding:
-  = @practice.message
+- unless @practice.status == 'X'
+  .alert.alert-warning
+    ' Status:
+    b = @practice.status
 
-=> link_to 'Endre', edit_practice_path(@practice)
-' |
-= back_or_link_to 'Tilbake', practices_path
+.card-deck.mt-3
+  .card
+    h3.card-header Plan
+    .card-body = @practice.message
+  .card
+    h3.card-header
+      | Påmeldte
+      .badge.badge-info.float-right = @practice.attendances.size
+    table.table.mb-0
+      - @practice.attendances.each do |a|
+        tr: td = a.member.name
+
+.mt-3
+  - if admin? || instructor?
+    a.btn.btn-link href=edit_practice_path(@practice) Endre
+  = back_or_link_to 'Tilbake', @practice.group_semester, class: 'btn btn-link'
