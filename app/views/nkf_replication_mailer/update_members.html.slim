@@ -37,12 +37,22 @@
             li #{k}: #{v.first[0].inspect} => #{v.first[1].inspect}
 
 - if @errors.any?
+  css:
+    .card {
+      border: 1px solid black;
+    }
+
   h2 Feil (#{@errors.size})
   a href=sync_errors_nkf_members_url Show sync Errors
-  - @errors.each do |operation, exception, record|
-    h3 Operation:
-    = operation
-    h3 Exception:
-    = exception.to_s
-    h3 Record:
-    = record.inspect
+
+  - @errors.each.with_index do |(operation, exception, record), i|
+    .card
+      h3 #{i+1}. Operation: #{operation}
+      h4 Exception:
+      - error_msg = exception.to_s
+      div = error_msg.encoding
+      - error_msg.force_encoding("UTF-8")
+      div = error_msg.encoding
+      = error_msg
+      h4 Record:
+      = record.inspect
