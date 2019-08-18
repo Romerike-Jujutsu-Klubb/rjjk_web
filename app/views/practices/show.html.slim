@@ -14,15 +14,24 @@ h3 => @practice.date
   .card
     h3.card-header Plan
     .card-body = @practice.message
+  - attendances, absences = @practice.attendances.to_a.partition(&:present?)
   .card
     h3.card-header
       | Påmeldte
-      .badge.badge-info.float-right = @practice.attendances.size
+      .badge.badge-info.float-right = attendances.size
     table.table.mb-0
-      - @practice.attendances.each do |a|
+      - attendances.each do |a|
         tr: td = a.member.name
+  - if absences.any? && (admin? || instructor?)
+    .card
+      h3.card-header
+        | Avmeldte
+        .badge.badge-danger.float-right = absences.size
+      table.table.mb-0
+        - absences.each do |a|
+          tr: td = a.member.name
 
 .mt-3
   - if admin? || instructor?
     a.btn.btn-link href=edit_practice_path(@practice) Endre
-  = back_or_link_to 'Tilbake', @practice.group_semester, class: 'btn btn-link'
+  = back_or_link_to 'Plan', @practice.group_semester, class: 'btn btn-link'
