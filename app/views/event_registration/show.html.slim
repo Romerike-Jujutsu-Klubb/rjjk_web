@@ -20,7 +20,7 @@ h2 for #{@event_invitee.name}
         .alert.alert-info.m-0
           h3 Du er avmeldt.
       - elsif current_user
-        = link_to 'Jeg kommer ikke', decline_event_registration_path(@event_invitee), class: 'btn btn-secondary'
+        = link_to t(:will_not_attend), decline_event_registration_path(@event_invitee), class: 'btn btn-secondary'
 
 - if @event_invitee.will_attend && @event_invitee.user&.member
   h3.mt-5 Vil du hjelpe til på leiren?

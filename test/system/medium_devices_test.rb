@@ -38,13 +38,13 @@ class MediumDevicesTest < ApplicationSystemTestCase
     assert_offset '.main_right', :right, SUBNAV_OFFSET
     screenshot :index
 
-    find('.fa-navicon').click # Display menu
+    find('.fa-bars').click # Display menu
     assert_offset '.subnav', :left, 0
     assert_selector 'li a', text: 'My first article'
     find('h1', text: 'Instruksjon').hover
     assert_css '#menuShadow'
     screenshot :menu
-    find('.fa-calendar').click_at # Hide menu
+    find('.fa-calendar-alt').click_at # Hide menu
     assert_offset '.subnav', :left, SUBNAV_OFFSET
     assert_no_css '#menuShadow'
     screenshot :menu_closed
@@ -62,9 +62,9 @@ class MediumDevicesTest < ApplicationSystemTestCase
   test 'new front_page' do
     screenshot_group :new_front_page
     visit front_page_path
-    assert_css('#headermenuholder > i')
+    assert_css('#headermenuholder > .fa-bars')
     screenshot :index, area_size_limit: 533, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
-    find('#headermenuholder > i').click
+    find('#headermenuholder > .fa-bars').click
     article_menu_link = find('.menubutton', text: 'My first article')
     screenshot :menu, skip_area: [308, 73, 332, 102]
     begin
@@ -84,7 +84,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
   test 'new front page scroll' do
     screenshot_group :new_front_page_scroll
     visit front_page_path
-    assert_css('#headermenuholder > i')
+    assert_css('#headermenuholder > .fa-bars')
     assert_css('.fa-chevron-down')
     screenshot :index, area_size_limit: 533, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
     find('.fa-chevron-down').click

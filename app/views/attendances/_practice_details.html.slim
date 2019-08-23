@@ -47,9 +47,14 @@ css:
 
 - if other_attendees.any?
   h5 Påmeldt
-  ul
+  ul.fa-ul
     - other_attendees.sort_by { |a| [a.member.current_rank || Rank::UNRANKED, a.member.joined_on, -a.member.age] }.each do |a|
-      li class=(:key if a.member.user.card_key)
+      li
+        span.fa-li
+          - if a.member.user.card_key
+            i.fas.fa-key
+          - else
+            i.fas.fa-user
         - member_label = a.member.name
         - if admin?
           = link_to member_label, a.member

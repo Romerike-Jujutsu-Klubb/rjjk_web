@@ -35,7 +35,7 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
   - if show_invite_status
     td
       - if graduate.confirmed_at
-        span.fa.fa-thumbs-up data-toggle="tooltip" title="#{graduate.member.first_name} bekreftet #{graduate.confirmed_at.strftime('%F %R')}"
+        span.far.fa-thumbs-up data-toggle="tooltip" title="#{graduate.member.first_name} bekreftet #{graduate.confirmed_at.strftime('%F %R')}"
       - elsif graduate.invitation_sent_at
         span.fa.fa-question data-toggle="tooltip" title="Invitert #{graduate.invitation_sent_at.strftime('%F %R')}"
   - if show_passed

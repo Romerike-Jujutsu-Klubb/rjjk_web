@@ -14,7 +14,7 @@ class NkfReplicationMailerPreview < ActionMailer::Preview
   end
 
   def update_members
-    NkfReplicationMailer.update_members
+    NkfReplicationMailer.update_members(NkfMemberComparison.new.sync)
   end
 
   def update_appointments

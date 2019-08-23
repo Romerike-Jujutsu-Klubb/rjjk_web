@@ -21,20 +21,20 @@ class SmallDevicesTest < ApplicationSystemTestCase
     login_and_visit root_path
     assert_selector 'h4', text: 'Neste trening'
     screenshot :index
-    find('.fa-navicon').click
+    find('.fa-bars').click
     assert_selector 'li a', text: 'My first article'
     assert_css '#menuShadow', visible: :visible
-    find('.fa-calendar').hover # FIXME(uwe): Remove with Chrome 74 + mobile emulation
+    find('.fa-calendar-alt').hover # FIXME(uwe): Remove with Chrome 74 + mobile emulation
     screenshot :menu
-    find('.fa-calendar').click_at
+    find('.fa-calendar-alt').click_at
     assert_css '#menuShadow', visible: :hidden
     screenshot :menu_closed
 
     begin
-      find('.fa-calendar').click
+      find('.fa-calendar-alt').click
     rescue
       tries ||= 1
-      raise "fa-calendar click failed (#{tries}): #{$ERROR_INFO}" if tries >= 6
+      raise "fa-calendar-alt click failed (#{tries}): #{$ERROR_INFO}" if tries >= 6
 
       sleep 0.001
       tries += 1
@@ -42,7 +42,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
     end
 
     screenshot :calendar
-    find('.fa-navicon').click_at
+    find('.fa-bars').click_at
     screenshot :calendar_closed
   end
 
@@ -50,9 +50,9 @@ class SmallDevicesTest < ApplicationSystemTestCase
     screenshot_group :new_front_page
     visit front_page_path
     assert_selector 'h5', text: 'THE EVENT'
-    assert_css('#headermenuholder > i')
+    assert_css('#headermenuholder > .fa-bars')
     screenshot :index, color_distance_limit: 11
-    find('#headermenuholder > i').click
+    find('#headermenuholder > .fa-bars').click
     article_menu_link = find('.menubutton', text: 'My first article')
     article_menu_link.hover
     screenshot :menu
@@ -73,7 +73,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
   test 'new front page scroll' do
     screenshot_group :new_front_page_scroll
     visit front_page_path
-    assert_css('#headermenuholder > i')
+    assert_css('#headermenuholder > .fa-bars')
     assert_css('.fa-chevron-down')
     screenshot :index, color_distance_limit: 11
     find('.fa-chevron-down').click
@@ -91,7 +91,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
     begin
       article_link.click
       assert_css('h1', text: 'My first article')
-    rescue => e
+    rescue Minitest::Assertion => e
       tries ||= 1
       raise "article link click failed (#{tries}): #{e}" if tries >= 6
 

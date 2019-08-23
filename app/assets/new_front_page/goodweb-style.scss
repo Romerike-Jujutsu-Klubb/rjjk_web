@@ -120,7 +120,6 @@ html {
 }
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-
     margin: 0;
     padding: 0;
     border: 0;
@@ -1149,7 +1148,8 @@ hr {
 }
 
 .header-menu-wrapper {
-    cursor: pointer
+  cursor: pointer;
+  padding-top: 0.5rem;
 }
 
 /******************************
@@ -3004,7 +3004,7 @@ img.iclflag {
 #cinematic-navigation .cinematic-down {
     left: 50%;
     bottom: 25px;
-    margin-left: -22px;
+    margin-left: -16px;
     height: 32px;
 }
 

@@ -26,8 +26,7 @@ class NkfSynchronizationJob < ApplicationJob
 
   def compare
     ActiveRecord::Base.transaction do
-      c = NkfMemberComparison.new
-      c.sync
+      c = NkfMemberComparison.new.sync
       if c.any?
         NkfReplicationMailer.update_members(c).deliver_now
         logger.info 'Sent update_members mail.'

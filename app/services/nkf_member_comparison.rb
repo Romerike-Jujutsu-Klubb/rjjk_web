@@ -19,6 +19,7 @@ class NkfMemberComparison
     agent, front_page = setup_sync
     create_new_members
     sync_members(agent, front_page)
+    self
   end
 
   private
@@ -185,7 +186,10 @@ class NkfMemberComparison
       "change_response_page: code: #{change_response_page.code.inspect}\n#{change_response_page.body}"
     end
     if (m = MEMBER_ERROR_PATTERN.match(change_response_page.body))
-      raise "Error updating NKF member form: #{m[:message]}"
+      ms = m[:message]
+      message = "Error updating NKF member form: #{ms.encode(Enccoding::UTF_8)}"
+      logger.error "message.encoding: #{message.encoding}"
+      raise message
     end
 
     change_response_page

@@ -1,3 +1,4 @@
+//= require @fortawesome/fontawesome-free/js/all.js
 //= require jquery
 // require jquery.turbolinks
 //= require jquery_ujs

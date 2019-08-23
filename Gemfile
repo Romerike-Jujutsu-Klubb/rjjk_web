@@ -9,6 +9,9 @@ end
 
 ruby File.read("#{__dir__}/.ruby-version")[5..-1]
 
+# For Rails 6
+# https://gorails.com/episodes/how-to-use-bootstrap-with-webpack-and-rails
+
 gem 'rails', '~>5.2.0'
 
 platform :ruby do
@@ -16,6 +19,9 @@ platform :ruby do
   gem 'oily_png'
   gem 'pg'
 end
+
+# https://github.com/styd/apexcharts.rb
+# https://github.com/apexcharts
 
 gem 'actionpack-page_caching', github: 'rails/actionpack-page_caching'
 gem 'activerecord-time'
@@ -32,7 +38,6 @@ gem 'chosen-rails'
 gem 'coffee-rails'
 gem 'dynamic_form'
 gem 'exception_notification'
-gem 'font-awesome-rails'
 gem 'geocoder'
 gem 'google_drive'
 gem 'http'
@@ -85,6 +90,10 @@ group :development do
   gem 'rack-mini-profiler'
 end
 
+# group :development do
+#   gem 'meta_request'
+# end
+
 group :test do
   # gem 'bullet' # Uncomment to hunt N+1 kind of problems
   gem 'capybara-screenshot-diff' # , path: '~/work/open-source/capybara-screenshot-diff'
@@ -98,6 +107,7 @@ group :test do
   gem 'rubocop'
   gem 'rubocop-performance'
   # gem 'rubycritic', require: false
+  # https://github.com/twalpole/apparition
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'timecop'

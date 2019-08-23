@@ -83,7 +83,7 @@
               <ul id="menu-footerwidgetnavigation" class="menu">
                 <% @information_pages.select(&:public).reject(&:hidden).each do |ip| %>
                   <li id="menu-item-<%= ip.id %>" class="menu-item menu-item-type-post_type menu-item-object-page">
-                    <a href="<%= information_page_path ip %>"><i class="demoicon <%= ip.icon_class || 'fa fa-file-text' %>" style="text-align: center"></i>
+                    <a href="<%= information_page_path ip %>"><i class="demoicon <%= ip.icon_class || 'fa fa-file-alt' %>" style="text-align: center"></i>
                       <%= ip.title %>
                     </a>
                     <div class="clear"></div>
@@ -99,7 +99,7 @@
           <div class="widget-1 last divide30 footer_widget_spacer clear"></div>
           <div id="rss-2" class="widget-1 last footer_widget widget_rss">
             <h4 class="widget-title" style="margin-bottom: .5rem">
-              <i class="fa fa-newspaper-o"></i>
+              <i class="far fa-newspaper"></i>
               <a class="rsswidget" href="<%= news_items_path %>">
                 Nyheter
               </a>

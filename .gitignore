@@ -4,6 +4,7 @@
 /archive.tar.gz
 /coverage
 /log/*.log
+/node_modules
 /public/heap*.json
 /public/icon/*.png
 /public/images/inline/*.*

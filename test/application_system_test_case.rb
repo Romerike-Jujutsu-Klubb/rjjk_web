@@ -43,6 +43,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   Capybara::Screenshot::Diff.area_size_limit = 3
   Capybara::Screenshot::Diff.color_distance_limit = 12
 
+  # FIXME(uwe): Consider rack driver a default for speed
   driven_by :chrome
   Capybara.server = :puma, { Silent: true }
 

@@ -18,27 +18,27 @@ Du kommer.',
                   'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?)
 
-    first('a.btn').click
+    first('table a.btn').click
     assert has_css?('a.btn', text: 'Trente!')
     assert_equal(['Denne uken', 'Trente! Du trente.', 'Kommer! Du kommer.',
                   'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1',
                   'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?).map(&:strip).map { |s| s.gsub(/\s+/, ' ') })
 
-    first('a.btn').click
+    first('table a.btn').click
     assert has_css?('a.btn', text: 'Annet')
     assert_equal(['Denne uken', 'Annet', 'Kommer! Du kommer.', 'Neste uke',
                   'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?).map(&:strip).map { |s| s.gsub(/\s+/, ' ') })
 
-    all('a.btn')[1].click
+    all('table a.btn')[1].click
     assert_css 'a.btn', text: 'Kommer du?', count: 2
     assert has_css?('a.btn', text: 'Trener du?'), all('a.btn').map(&:text)
     assert_equal ['Denne uken', 'Annet', 'Trener du?', 'Neste uke', 'Kommer du?',
                   'Kommer du?', 'Oktober', '1', 'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?)
 
-    all('a.btn')[1].click
+    all('table a.btn')[1].click
     assert has_css?('a.btn', text: 'Kommer du?', count: 2)
     assert_equal(['Denne uken', 'Annet', 'Kommer! Du kommer.', 'Neste uke',
                   'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '1'],

@@ -2,8 +2,8 @@
 // link_to 'Do something', path_returning_partial, :remote => true, :"data-replace" => '#some_id'
 $().ready(function () {
     var iconSet = {
-        time: 'fa fa-clock-o',
-        date: 'fa fa-calendar',
+        time: 'far fa-clock',
+        date: 'fa fa-calendar-alt',
         up: 'fa fa-chevron-up',
         down: 'fa fa-chevron-down',
         previous: 'fa fa-chevron-left',

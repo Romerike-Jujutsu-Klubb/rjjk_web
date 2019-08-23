@@ -30,7 +30,10 @@
     - if user? && news_item.persisted?
       ul.controls.mb-0
         - if news_item.news_item_likes
-          li.mr-2 id="like_#{news_item.id}" = link_to fa_icon(:'thumbs-o-up', text: 'Liker'), like_news_item_path(news_item), method: :post
+          li.mr-2 id="like_#{news_item.id}"
+            a href=like_news_item_path(news_item) method=:post
+              i.far.fa-thumbs-up>
+              | Liker
         li = detour_to 'Endre', edit_polymorphic_path(news_item), class: :edit
         - if news_item.is_a? NewsItem
           - unless news_item.expired?

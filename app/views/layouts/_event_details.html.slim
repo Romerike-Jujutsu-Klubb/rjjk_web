@@ -7,9 +7,9 @@
   .details.mt-1
     - unless is_confirmed
       .btn-group.text-right.mr-2
-        a.btn.btn-secondary.btn-sm class=('active disabled' if will_attend) href=polymorphic_path([:accept, event])
+        a.btn.btn-secondary.btn-sm title=t(:will_attend) class=('active disabled' if will_attend) href=polymorphic_path([:accept, event])
           i.fa.fa-thumbs-up
-        a.btn.btn-secondary.btn-sm class=('active disabled' if will_attend == false) href=polymorphic_path([:decline, event])
+        a.btn.btn-secondary.btn-sm title=t(:will_not_attend) class=('active disabled' if will_attend == false) href=polymorphic_path([:decline, event])
           i.fa.fa-thumbs-down
     - if crowd_size > 0
       ' #{crowd_size} påmeldte.

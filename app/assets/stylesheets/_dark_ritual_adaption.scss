@@ -273,6 +273,14 @@ ul.controls li a.delete {
 
   .fb-buttons {
     float: right;
+    .btn {
+      @extend .my-2;
+      @extend .my-md-0;
+      @extend .mx-1;
+      @extend .mx-sm-2;
+      @extend .py-0;
+      font-size: 2.1rem;
+    }
   }
 }
 
@@ -358,6 +366,9 @@ body:not(.wide) .container-fluid {
     padding-right: 150px;
     .fb-buttons {
       font-size: 1.8rem;
+      .btn {
+        font-size: 1.7rem;
+      }
     }
   }
 

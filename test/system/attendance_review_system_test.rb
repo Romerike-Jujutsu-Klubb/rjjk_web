@@ -21,7 +21,7 @@ Du kommer.',
                   'Oktober', '1', 'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?)
 
-    first('a.btn').click
+    first('table a.btn').click
     assert has_css?('a.btn', text: 'Trente!', count: 1)
     assert_equal ['Forrige uke', "Trente!\nDu og 2 andre trente.", "Instruerte!\nDu og Lars trente.",
                   'Denne uken', "Ubekreftet\nDu trente.", "Kommer!\nDu kommer.",
@@ -30,7 +30,7 @@ Du kommer.',
         all('td').map(&:text).reject(&:blank?)
     screenshot('with_presence')
 
-    all('a.btn')[1].click
+    all('table a.btn')[1].click
     # wait_for_ajax
     assert has_css?('a.btn', text: 'Annet')
     assert_equal ['Forrige uke', "Trente!\nDu og 2 andre trente.", "Annet\nLars trente.",

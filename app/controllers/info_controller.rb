@@ -120,9 +120,9 @@ class InfoController < ApplicationController
     @images = Image.published.images.select('id, name, content_type').to_a
     @icon_classes = [
       'fa fa-star',
-      'fa fa-picture-o',
+      'fa fa-image',
       'fa fa-clipboard',
-      'fa fa-file-text',
+      'fa fa-file-alt',
       'fa fa-info',
       'fa fa-phone',
     ]

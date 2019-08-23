@@ -1,3 +1,4 @@
+//= require @fortawesome/fontawesome-free/js/all.js
 //= require jquery_1.12.4
 //= require jquery-migrate.min
 //= require jquery.themepunch.showbizpro.min

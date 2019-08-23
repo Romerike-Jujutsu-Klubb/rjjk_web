@@ -4,8 +4,7 @@ class NkfMemberSyncJob < ApplicationJob
   queue_as :default
 
   def perform(member)
-    c = NkfMemberComparison.new(member)
-    c.sync
+    c = NkfMemberComparison.new(member).sync
     NkfReplicationMailer.update_members(c).deliver_now if c.errors.any?
     NkfMemberImport.new(member.nkf_member.medlemsnummer)
     report_differences(member.reload)

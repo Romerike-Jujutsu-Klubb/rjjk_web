@@ -6,8 +6,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
   def test_comparison
     c = nil
     VCR.use_cassette('NKF Comparison', match_requests_on: %i[method host path query]) do
-      c = NkfMemberComparison.new
-      c.sync
+      c = NkfMemberComparison.new.sync
     end
     assert_equal([], c.errors)
     assert_equal([
@@ -72,8 +71,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
     lars_nkf.update! epost_faktura: users(:newbie).email
     c = nil
     VCR.use_cassette('NKF Comparison Single Member', match_requests_on: %i[method host path query]) do
-      c = NkfMemberComparison.new(lars)
-      c.sync
+      c = NkfMemberComparison.new(lars).sync
     end
     assert_equal([], c.errors)
     assert_equal([members(:lars)], c.members)
