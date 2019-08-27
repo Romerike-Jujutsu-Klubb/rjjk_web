@@ -15,6 +15,9 @@ before_install:
   - rm chromedriver_linux64.zip
   - mv chromedriver /home/travis/bin/
 
+install:
+  - yarn
+
 script:
   - bin/rails db:setup test:full
 
