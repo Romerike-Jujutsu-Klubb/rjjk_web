@@ -92,8 +92,17 @@ class MediumDevicesTest < ApplicationSystemTestCase
     find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
     screenshot(:scrolled, skip_area: [634, 135, 636, 266]) || (sleep(0.5) if ENV['TRAVIS'])
     assert_equal information_page_url(id(:first)), find('#footer .menu-item a', text: 'MY FIRST ARTICLE')[:href]
-    find('#footer .menu-item a', text: 'MY FIRST ARTICLE').click
-    assert_current_path information_page_path(id(:first))
+    begin
+      find('#footer .menu-item a', text: 'MY FIRST ARTICLE').click
+      assert_current_path information_page_path(id(:first))
+    rescue Minitest::Assertion => e
+      tries = (tries || 0) + 1
+      raise "article link click failed (#{tries}): #{e}" if tries >= 6
+
+      sleep 0.001
+      retry
+    end
+
     assert_css('h1', text: 'My first article')
     screenshot :article
   end
