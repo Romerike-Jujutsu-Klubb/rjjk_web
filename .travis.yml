@@ -2,6 +2,8 @@ language: ruby
 cache:
   bundler: true
   yarn: true
+  directories:
+  - node_modules # NPM packages
 
 addons:
   chrome: stable
@@ -16,7 +18,7 @@ before_install:
   - mv chromedriver /home/travis/bin/
 
 install:
-  - bundle
+  - bundle install --deployment # to cache vendor/bundle
   - yarn
 
 script:
