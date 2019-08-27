@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_28_214143) do
+ActiveRecord::Schema.define(version: 2019_08_26_161607) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 2019_07_28_214143) do
     t.integer 'rating'
     t.string 'comment', limit: 250
     t.integer 'practice_id', null: false
+    t.datetime 'rated_at'
     t.index %w[member_id practice_id], name: 'index_attendances_on_member_id_and_practice_id', unique: true
     t.index ['practice_id'], name: 'fk__attendances_practice_id'
   end

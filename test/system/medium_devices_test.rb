@@ -4,7 +4,8 @@ require 'application_system_test_case'
 
 class MediumDevicesTest < ApplicationSystemTestCase
   MEDIUM_WINDOW_SIZE = [640, 480].freeze
-  FRONT_PAGE_PROGRESS_BAR_AREA = [0, 477, 292, 479].freeze
+  MENU_BTN_AREA = [130, 20, 142, 63].freeze
+  FRONT_PAGE_PROGRESS_BAR_AREA = [0, 477, 639, 479].freeze
   SUBNAV_OFFSET = -268
   USER_AGENT = <<~UA
     Mozilla/5.0 (Linux; Android 6.0.1; Nexus 7 Build/MOB30X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36
@@ -63,7 +64,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
     screenshot_group :new_front_page
     visit front_page_path
     assert_css('#headermenuholder > .fa-bars')
-    screenshot :index, area_size_limit: 533, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
+    screenshot :index, area_size_limit: 533, skip_area: [MENU_BTN_AREA, FRONT_PAGE_PROGRESS_BAR_AREA]
     find('#headermenuholder > .fa-bars').click
     article_menu_link = find('.menubutton', text: 'My first article')
     screenshot :menu, skip_area: [308, 73, 332, 102]
@@ -86,7 +87,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
     visit front_page_path
     assert_css('#headermenuholder > .fa-bars')
     assert_css('.fa-chevron-down')
-    screenshot :index, area_size_limit: 533, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
+    screenshot :index, area_size_limit: 533, skip_area: [MENU_BTN_AREA, FRONT_PAGE_PROGRESS_BAR_AREA]
     find('.fa-chevron-down').click
     find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
     screenshot(:scrolled) || (sleep(0.5) if ENV['TRAVIS'])

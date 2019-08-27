@@ -14,7 +14,7 @@ h3 => @practice.date
   .card
     h3.card-header Plan
     .card-body = @practice.message
-  - attendances, absences = @practice.attendances.to_a.partition(&:present?)
+  - attendances, absences = @practice.attendances.sort_by{|a| a.member.current_rank || Rank::UNRANKED}.reverse.partition(&:present?)
   .card
     h3.card-header
       | Påmeldte
@@ -29,7 +29,9 @@ h3 => @practice.date
         .badge.badge-danger.float-right = absences.size
       table.table.mb-0
         - absences.each do |a|
-          tr: td = a.member.name
+          tr
+            td = a.member.name
+            td = render 'attendances/badge', status: a.status
 
 .mt-3
   - if admin? || instructor?

@@ -85,6 +85,8 @@ class Attendance < ApplicationRecord
 
   validates :member_id, :status, presence: true
   validates :member_id, uniqueness: { scope: :practice_id }
+  validates :rated_at, presence: true, if: :rating
+  validates :rating, presence: true, if: :rated_at
 
   validate on: :update do
     if status_was == Status::ATTENDED && status == Status::WILL_ATTEND

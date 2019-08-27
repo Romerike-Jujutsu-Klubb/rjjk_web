@@ -56,8 +56,18 @@ css:
           - else
             i.fas.fa-user
         - member_label = a.member.name
-        - if admin?
+        - if admin? || instructor?
           = link_to member_label, a.member
+          - if a.rated_at
+            span< title=:Bekreftet data-toggle=:tooltip
+              - if a.rating == 0
+                i.fa.fa-meh
+              - elsif a.rating == 1
+                i.fa.fa-smile
+              - elsif a.rating == 2
+                i.fa.fa-laugh
+              - else
+                i.fa.fa-check
         - else
           = member_label
 
@@ -71,3 +81,5 @@ css:
           = link_to member_label, a.member
         - else
           = member_label
+
+javascript: $('[data-toggle=tooltip]').tooltip();
