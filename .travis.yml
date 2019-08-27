@@ -16,6 +16,7 @@ before_install:
   - mv chromedriver /home/travis/bin/
 
 install:
+  - bundle
   - yarn
 
 script:
