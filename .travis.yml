@@ -1,5 +1,7 @@
 language: ruby
-cache: bundler
+cache:
+  - bundler
+  - yarn
 
 addons:
   chrome: stable
