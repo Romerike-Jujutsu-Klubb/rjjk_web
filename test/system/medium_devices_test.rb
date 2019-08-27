@@ -90,7 +90,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
     screenshot :index, area_size_limit: 533, skip_area: [MENU_BTN_AREA, FRONT_PAGE_PROGRESS_BAR_AREA]
     find('.fa-chevron-down').click
     find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
-    screenshot(:scrolled) || (sleep(0.5) if ENV['TRAVIS'])
+    screenshot(:scrolled, skip_area: [634, 135, 636, 266]) || (sleep(0.5) if ENV['TRAVIS'])
     assert_equal information_page_url(id(:first)), find('#footer .menu-item a', text: 'MY FIRST ARTICLE')[:href]
     find('#footer .menu-item a', text: 'MY FIRST ARTICLE').click
     assert_current_path information_page_path(id(:first))
