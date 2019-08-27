@@ -11,9 +11,10 @@ h3 => @practice.date
     b = @practice.status
 
 .card-deck.mt-3
-  .card
-    h3.card-header Plan
-    .card-body = @practice.message
+  - if @practice.message.present?
+    .card
+      h3.card-header Plan
+      .card-body = @practice.message
   - attendances, absences = @practice.attendances.sort_by{|a| a.member.current_rank || Rank::UNRANKED}.reverse.partition(&:present?)
   .card
     h3.card-header
@@ -31,7 +32,7 @@ h3 => @practice.date
         - absences.each do |a|
           tr
             td = a.member.name
-            td = render 'attendances/badge', status: a.status
+            td.text-right = render 'attendances/badge', status: a.status
 
 .mt-3
   - if admin? || instructor?
