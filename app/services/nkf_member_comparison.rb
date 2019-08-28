@@ -187,7 +187,7 @@ class NkfMemberComparison
     end
     if (m = MEMBER_ERROR_PATTERN.match(change_response_page.body))
       ms = m[:message]
-      message = "Error updating NKF member form: #{ms.encode(Enccoding::UTF_8)}"
+      message = "Error updating NKF member form: #{ms.encode(Encoding::UTF_8)}"
       logger.error "message.encoding: #{message.encoding}"
       raise message
     end
