@@ -104,8 +104,8 @@ group :test do
   gem 'minitest-rails'
   gem 'minitest-reporters'
   gem 'mocha', require: 'mocha/setup'
-  gem 'rubocop'
   gem 'rubocop-performance'
+  gem 'rubocop-rails'
   # gem 'rubycritic', require: false
   # https://github.com/twalpole/apparition
   gem 'selenium-webdriver'

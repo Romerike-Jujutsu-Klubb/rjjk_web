@@ -1,8 +1,11 @@
+- @content_width = 1024
 h1 Slå sammen to personer
 
 .row
   .col
     h2 Person A
-
-  .col
-    h2 Person B
+    = render 'users/form', user: @user, submit: true
+  - if @other_user
+    .col
+      h2 Person B
+      = render 'users/form', user: @other_user, submit: true
