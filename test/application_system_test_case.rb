@@ -39,7 +39,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   Capybara::Screenshot.window_size = WINDOW_SIZE
   Capybara::Screenshot.enabled = ENV['TRAVIS'].blank?
   Capybara::Screenshot.hide_caret = true
-  Capybara::Screenshot.stability_time_limit = 0.2
+  Capybara::Screenshot.stability_time_limit = 0.1
   Capybara::Screenshot::Diff.area_size_limit = 3
   Capybara::Screenshot::Diff.color_distance_limit = 12
 
