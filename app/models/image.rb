@@ -89,7 +89,7 @@ class Image < ApplicationRecord
     return if (width && height) || !image?
 
     content = load_content(no_caching: true)
-    magick_image = Magick::Image.from_blob(content).first
+    magick_image = MiniMagick::Image.read(content).first
     self.width = magick_image.columns
     self.height = magick_image.rows
 
