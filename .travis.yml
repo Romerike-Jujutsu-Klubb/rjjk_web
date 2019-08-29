@@ -18,7 +18,7 @@ before_install:
   - mv chromedriver /home/travis/bin/
 
 install:
-  - bundle install --deployment # to cache vendor/bundle
+  - bundle check || bundle install --deployment # to cache vendor/bundle
   - yarn
 
 script:
