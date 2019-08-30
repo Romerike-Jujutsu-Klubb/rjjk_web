@@ -11,8 +11,10 @@
               td => link_to u.to_s, u
               td
                 - if u.phone
-                  a.float-right href="tel:#{u.phone}"
+                  a.float-right href="sms:/#{u.phone}/" title="Send SMS"
+                    i.fa.fa-sms
+                  a.float-right href="tel:#{u.phone}" title="Ring"
                     i.fa.fa-phone
                 - else
-                  a.float-right href="mailto:#{u.email}"
+                  a.float-right href="mailto:#{u.email}" title="Send e-post"
                     i.fa.fa-envelope

@@ -16,10 +16,10 @@
                 - user = m.user
                 - phone = user.phones.first
                 - if phone
-                  a href="sms:/#{phone}/"
-                    i.fa.fa-mobile-phone
-                  a.ml-2 href="tel:#{phone}"
+                  a href="sms:/#{phone}/" title="Send SMS"
+                    i.fa.fa-sms
+                  a.ml-2 href="tel:#{phone}" title="Ring"
                     i.fa.fa-phone
                 - else
-                  a href="mailto:#{user.email}"
+                  a href="mailto:#{user.email}" title="Send e-post"
                     i.fa.fa-envelope
