@@ -7,11 +7,11 @@ h1 Registrer oppmøte
     - if @attendance.practice.nil? || @attendance.practice.new_record?
       = f.fields_for :practice do |pf|
         .col-md-4
-          = pf.select :group_schedule_id, ['', ''] + @group_schedules.map { |gs| ["#{gs.group.name} #{day_name gs.weekday}", gs.id] }
-        .col-md-4
-          = pf.text_field :year, size: 4
-        .col-md-4
-          = pf.select :week, (1..52)
+          = pf.select :group_schedule_id, @group_schedules.map { |gs| ["#{gs.group.name} #{day_name gs.weekday}", gs.id] }, prompt: true
+        .col-6.col-md-4
+          = pf.select :year, ((Date.current.cwyear - 10)..Date.current.cwyear).to_a.reverse, selected: pf.object.year || Date.current.cwyear
+        .col-6.col-md-4
+          = pf.select :week, (1..52), selected: pf.object.week || Date.current.cweek
     - else
       .col-md-12
         = f.hidden_field :practice_id
@@ -23,7 +23,7 @@ h1 Registrer oppmøte
     .col-md-6
       = f.select :status, Attendance::Status.constants.sort.map { |s| [t(s.to_s.downcase), Attendance::Status.const_get(s)] }
 
-  .btn-toolbar.float-right
+  .float-right.mb-3
     = back_or_link_to 'Tilbake', attendances_path, class: 'btn btn-link'
     = f.submit 'Lagre', class: 'btn btn-secondary'
 

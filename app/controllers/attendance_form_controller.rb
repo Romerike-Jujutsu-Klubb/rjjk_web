@@ -7,6 +7,7 @@ class AttendanceFormController < ApplicationController
 
   def index
     @groups = Group.active(Date.current).order :from_age
+    @my_groups = current_user.member.instruction_groups
   end
 
   def show

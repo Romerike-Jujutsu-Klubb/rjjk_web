@@ -26,7 +26,9 @@ class AttendancesController < ApplicationController
 
   def new
     @attendance ||= Attendance.new params[:attendance]
-    if @attendance.practice&.new_record?
+    if @attendance.practice.nil?
+      @attendance.practice = Practice.new
+    elsif @attendance.practice&.new_record?
       practice = Practice
           .where(group_schedule_id: @attendance.practice.group_schedule_id,
                  year: @attendance.practice.year, week: @attendance.practice.week)
@@ -165,8 +167,8 @@ class AttendancesController < ApplicationController
                else
                  m.groups.find_by(planning: true).next_practice
                end
-    criteria = { member_id: m.id, practice_id: practice.id }
-    @attendance = Attendance.includes(:practice).where(criteria).first_or_initialize
+    @attendance = Attendance.includes(:practice).where(member_id: m.id, practice_id: practice.id)
+        .first_or_initialize
 
     new_status = params[:status]
     if new_status == 'toggle'
@@ -194,8 +196,15 @@ class AttendancesController < ApplicationController
 
     if request.xhr?
       if params[:status] == 'toggle'
-        render partial: 'plan_practice', locals: { gs: practice.group_schedule,
-                                                   year: year, week: week, attendance: @attendance }
+        if params[:member_id]
+          render partial: 'button', locals: {
+            gs: practice.group_schedule, year: year, week: week, attendance: @attendance, member_id: m.id
+          }
+        else
+          render partial: 'plan_practice', locals: {
+            gs: practice.group_schedule, year: year, week: week, attendance: @attendance
+          }
+        end
       else
         render partial: 'attendance_form/attendance_delete_link', locals: { attendance: @attendance }
       end

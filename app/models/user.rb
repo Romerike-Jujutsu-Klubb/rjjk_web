@@ -260,7 +260,7 @@ class User < ApplicationRecord
   end
 
   def technical_committy?
-    member.try(:technical_committy?)
+    member&.technical_committy?
   end
 
   def instructor?

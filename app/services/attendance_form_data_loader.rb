@@ -27,34 +27,7 @@ module AttendanceFormDataLoader
         weekdays = @group.group_schedules.map(&:weekday)
         @dates = (first_date..last_date).select { |d| weekdays.include? d.cwday }
 
-        if (chief_instructor = @group.current_semester&.chief_instructor)
-          @instructors << chief_instructor
-        end
-        group_instructors_query = GroupInstructor
-            .includes(:group_schedule,
-                member: [{ attendances: { practice: :group_schedule } }, :nkf_member])
-            .where(group_schedules: { group_id: @group.id })
-        if @instructors.any?
-          group_instructors_query = group_instructors_query
-              .where('group_instructors.member_id NOT IN (?)', @instructors.map(&:id))
-        end
-        @instructors += group_instructors_query.to_a.select { |gi| @dates.any? { |d| gi.active?(d) } }
-            .map(&:member).uniq
-        instructors_query = Member.active(@date)
-            .includes({ attendances: { practice: :group_schedule },
-                        graduates: %i[graduation rank] }, :groups, :nkf_member)
-            .where(instructor: true)
-        if @instructors.any?
-          instructors_query = instructors_query.where('id NOT IN (?)', @instructors.map(&:id))
-        end
-        @instructors += instructors_query
-            .select { |m| m.groups.any? { |g| g.martial_art_id == @group.martial_art_id } }
-            .select do |m|
-              m.attendances.any? do |a|
-                ((@dates.first - 92.days)..@dates.last).cover?(a.date) &&
-                    a.group_schedule.group_id == @group.id
-              end
-            end
+        @instructors = @group.active_instructors(@dates)
 
         current_members = @group.members.active(first_date, last_date)
             .includes({ attendances: { practice: :group_schedule },

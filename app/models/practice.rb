@@ -32,4 +32,8 @@ class Practice < ApplicationRecord
   def to_s
     "#{group_schedule.group.full_name} #{date} #{group_schedule.start_at.to_s(false)}"
   end
+
+  def attendance_for(member_id)
+    attendances.find { |a| a.member_id == member_id }
+  end
 end

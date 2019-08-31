@@ -5,7 +5,7 @@ require 'application_system_test_case'
 class AttendanceFormFeatureTest < ApplicationSystemTestCase
   def test_index
     login_and_visit '/'
-    click_menu('Oppmøtelister')
+    click_menu('Oppmøte')
     assert_current_path attendance_forms_path
     screenshot('attendance/form/index')
     find('#group_name_Panda').click

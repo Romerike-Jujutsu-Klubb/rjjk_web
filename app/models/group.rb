@@ -84,8 +84,41 @@ class Group < ApplicationRecord
   delegate :next_practice, to: :next_schedule
 
   def instructors
-    group_schedules.map(&:active_group_instructors).flatten.map(&:member).uniq
-        .sort_by { |m| -(m.current_rank.try(:position) || -99) }
+    group_schedules.map(&:active_group_instructors).flatten.map(&:member)
+        .sort_by(&:current_rank).reverse
+  end
+
+  def active_instructors(dates = [Date.current])
+    instructors = []
+
+    if (chief_instructor = current_semester&.chief_instructor)
+      instructors << chief_instructor
+    end
+    group_instructors_query = GroupInstructor
+        .includes(:group_schedule,
+            member: [{ attendances: { practice: :group_schedule } }, :nkf_member])
+        .where(group_schedules: { group_id: id })
+    if instructors.any?
+      group_instructors_query = group_instructors_query
+          .where('group_instructors.member_id NOT IN (?)', instructors.map(&:id))
+    end
+    instructors += group_instructors_query.to_a.select { |gi| dates.any? { |d| gi.active?(d) } }
+        .map(&:member).uniq
+    instructors_query = Member.active(dates.first, dates.last)
+        .includes({ attendances: { practice: :group_schedule },
+                    graduates: %i[graduation rank] }, :groups, :nkf_member)
+        .where(instructor: true)
+    instructors_query = instructors_query.where('id NOT IN (?)', instructors.map(&:id)) if instructors.any?
+    instructors += instructors_query
+        .select { |m| m.groups.any? { |g| g.martial_art_id == martial_art_id } }
+        .select do |m|
+      m.attendances.any? do |a|
+        ((dates.first - 92.days)..dates.last).cover?(a.date) &&
+            a.group_schedule.group_id == id
+      end
+    end
+
+    instructors.uniq.sort_by(&:current_rank).reverse
   end
 
   def trials
