@@ -27,6 +27,7 @@
 //= require draggable
 //= require image_dropzone
 //= require preview
+//= require data-replace
 
 NProgress.configure({showSpinner: false,  ease: 'ease',  speed: 500});
 
