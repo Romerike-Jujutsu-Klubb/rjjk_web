@@ -1,16 +1,53 @@
-h1 Oppmøtelister
+a.btn.btn-primary.float-right href=new_attendance_path
+  i.fa.fa-plus>
+  .d-none.d-md-inline Nytt oppmøte
 
-- start_date = Date.parse('2009-08-01')
-- months = (Date.current.year - start_date.year) * 12 + Date.current.mon - start_date.mon + 1
+h1 Oppmøte
 
-form
-  table.table
-    tbody
-      - for group in @groups
-        - options = (0..months).map { |i| ["#{month_name(1 + (7 + i) % 12).capitalize} #{2009 + (8 + i) / 12}", attendance_form_path(year: (start_date + i.months).year, month: (start_date + i.months).month, group_id: group.id)] }.reverse
-        tr
-          td: label = group.name
-          td = select :group_name, group.name, options, {prompt: 'Velg måned'}, onchange: 'document.location = options[selectedIndex].value', class: 'form-control'
-      tr
-        td
-        td = link_to 'Andre', attendance_form_path(year: Time.current.year, month: Time.current.mon, group_id: 'others'), class: 'btn btn-secondary'
+ul#tab.nav.nav-tabs role="tablist"
+  - @my_groups.each do |group|
+    li.nav-item
+      a.nav-link id="instruction_#{group.id}-tab" data-toggle="tab" data-target="#instruction_#{group.id}" role="tab" aria-controls="home" aria-selected="true" = group.name
+  li.nav-item
+    a#lists-tab.nav-link.active data-toggle="tab" data-target="#lists" role="tab" aria-controls="contact" aria-selected="false" Lister
+#tabContent.tab-content
+  - @my_groups.each do |group|
+    .tab-pane.fade id="instruction_#{group.id}" role="tabpanel" aria-labelledby="home-tab"
+      - next_practice = group.next_practice
+      - group_members = group.members.active(next_practice.date).sort_by { |m| m.current_rank }.reverse
+      - active, passive = group_members.partition(&:active?)
+      .card-deck
+        .card
+          .card-body.p-sm-3.p-0.pt-1
+            table.table.mb-0 class=('table-sm' if active.size > 12)
+              - active.each do |m|
+                - attendance = next_practice.attendance_for(m.id)
+                tr
+                  td = m.name
+                  td = render 'attendances/button', gs: next_practice.group_schedule, year: next_practice.year, week: next_practice.week, member_id: m.id, attendance: attendance
+        .card
+          h3.card-header Passive
+          .card-body
+            ul
+              - passive.each do |m|
+                li = m.name
+  #lists.tab-pane.fade.show.active role="tabpanel" aria-labelledby="contact-tab"
+    - start_date = Date.parse('2009-08-01')
+    - months = (Date.current.year - start_date.year) * 12 + Date.current.mon - start_date.mon + 1
+
+    form
+      table.table
+        tbody
+          - for group in @groups
+            - options = (0..months).map { |i| ["#{month_name(1 + (7 + i) % 12).capitalize} #{2009 + (8 + i) / 12}", attendance_form_path(year: (start_date + i.months).year, month: (start_date + i.months).month, group_id: group.id)] }.reverse
+            tr
+              td: label = group.name
+              td = select :group_name, group.name, options, {prompt: 'Velg måned'}, onchange: 'document.location = options[selectedIndex].value', class: 'form-control'
+          tr
+            td
+            td = link_to 'Andre', attendance_form_path(year: Time.current.year, month: Time.current.mon, group_id: 'others'), class: 'btn btn-secondary'
+
+javascript:
+    $(".attendance_link").bind("ajax:complete", function(et, e){
+      $(this).html(e.responseText);
+    });

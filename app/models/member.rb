@@ -134,7 +134,7 @@ class Member < ApplicationRecord
   end
 
   def current_rank(martial_art = nil, date = Date.current)
-    current_graduate(martial_art, date)&.rank
+    current_graduate(martial_art, date)&.rank || Rank::UNRANKED
   end
 
   def current_rank_date(martial_art = nil, date = Date.current)
@@ -344,6 +344,17 @@ class Member < ApplicationRecord
 
   def group_instructor?
     active_group_instructors.any?
+  end
+
+  def instruction_groups
+    scheduled = group_instructors.active.map(&:group_semester).map(&:group).uniq
+    attended = attendances
+        .joins(practice: :group_schedule)
+        .after(2.months.ago)
+        .where(status: [Attendance::Status::INSTRUCTOR, Attendance::Status::ASSISTANT])
+        .where.not('group_schedules.group_id' => scheduled.map(&:id))
+        .map(&:practice).map(&:group_schedule).map(&:group).uniq
+    (scheduled + attended).sort_by(&:from_age)
   end
 
   def technical_committy?

@@ -142,7 +142,7 @@ class UserTest < ActionMailer::TestCase
     assert_equal true, users(:admin).technical_committy?
     assert_equal true, users(:lars).technical_committy?
     assert_nil users(:long_user).technical_committy?
-    assert_nil users(:newbie).technical_committy?
+    assert_equal false, users(:newbie).technical_committy?
   end
 
   test 'emails' do
