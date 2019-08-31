@@ -53,8 +53,8 @@ class AttendancesController < ApplicationController
           year: params[:attendance].delete(:year), week: params[:attendance].delete(:week)
         ).id
     end
-    @attendance = Attendance.new(params[:attendance])
-    if @attendance.save
+    @attendance = Attendance.where(params[:attendance].slice(:member_id, :practice_id)).first_or_initialize
+    if @attendance.update(params[:attendance])
       flash[:notice] = 'Attendance was successfully created.'
       if request.xhr?
         flash.clear

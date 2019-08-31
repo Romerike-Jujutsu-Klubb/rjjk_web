@@ -14,9 +14,7 @@ h1 Registrer oppmøte
           = pf.select :week, (1..52), selected: pf.object.week || Date.current.cweek
     - else
       .col-md-12
-        = f.hidden_field :practice_id
-        = f.static_control :practice_id
-          = @attendance.practice
+        = f.select :practice_id, [[@attendance.practice.to_s, @attendance.practice.id]], {}, readonly: true
   .row
     .col-md-6
       = f.select :member_id, [nil] + @members.map { |m| [m.name, m.id] }

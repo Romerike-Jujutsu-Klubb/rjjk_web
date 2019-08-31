@@ -6,6 +6,14 @@ class Practice < ApplicationRecord
   has_many :attendances, dependent: :destroy
   has_many :trial_attendances, dependent: :destroy
 
+  scope :after, ->(limit) {
+                  from_date = limit.to_date
+                  includes(:group_schedule).references(:group_schedules)
+                      .where('year > :year OR (year = :year AND week > :week) OR ' \
+                      '(year = :year AND week = :week AND group_schedules.weekday > :wday)',
+                          year: from_date.cwyear, week: from_date.cweek, wday: from_date.cwday)
+                }
+
   validates :group_schedule_id, uniqueness: { scope: %i[year week] }
 
   def group_semester
