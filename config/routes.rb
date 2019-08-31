@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get 'mitt/oppmote(/:reviewed_attendance_id)' => 'attendances#plan', as: :attendance_plan
   get 'attendances/plan' # must be after "mitt/oppmote"
   post 'attendances/announce(/:year/:week/:group_schedule_id)/:status(/:member_id)' =>
-      'attendances#announce'
+      'attendances#announce', as: :announce_attendance
   # EMXIF
 
   get 'map' => 'map#index'
