@@ -40,7 +40,8 @@ Rails.application.routes.draw do
       get 'month_per_year_chart_data(/:month)', action: :month_per_year_chart_data,
           as: :month_per_year_chart_data
       get 'report(/:year/:month)', action: :report, as: :report
-      match 'review/:year/:week/:group_schedule_id/:status', action: :review, via: %i[get post]
+      match 'review/:year/:week/:group_schedule_id/:status(/:member_id)', action: :review,
+          via: %i[get post]
       get :since_graduation
     end
     member do

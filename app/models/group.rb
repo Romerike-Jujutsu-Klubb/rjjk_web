@@ -20,8 +20,10 @@ class Group < ApplicationRecord
   has_many :group_memberships, dependent: :destroy
   has_many :group_schedules, dependent: :destroy
   has_many :group_semesters, dependent: :destroy
-  has_many :members, through: :group_memberships
   has_many :ranks, -> { order(:position) }, dependent: :destroy
+
+  has_many :members, through: :group_memberships
+  has_many :practices, through: :group_schedules
 
   accepts_nested_attributes_for :current_semester
   accepts_nested_attributes_for :next_semester

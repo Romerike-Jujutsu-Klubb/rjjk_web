@@ -291,6 +291,7 @@ class AttendancesController < ApplicationController
   end
 
   def review
+    member_id = params[:member_id] || current_user.member.id
     group_schedule_id = params[:group_schedule_id]
     year = params[:year].to_i
     week = params[:week].to_i
@@ -300,9 +301,7 @@ class AttendancesController < ApplicationController
     end
     practice = Practice.where(group_schedule_id: group_schedule_id,
                               year: year, week: week).first_or_create!
-    @attendance = Attendance
-        .where(member_id: current_user.member.id, practice_id: practice.id)
-        .first_or_create
+    @attendance = Attendance.where(member_id: member_id, practice_id: practice.id).first_or_create
     new_status = params[:status]
     if new_status == 'toggle'
       new_status =
@@ -320,8 +319,14 @@ class AttendancesController < ApplicationController
     @attendance.update! status: new_status
 
     if request.xhr?
-      render partial: 'plan_practice', locals: { gs: practice.group_schedule,
-                                                 year: year, week: week, attendance: @attendance }
+      if params[:member_id]
+        render partial: 'button', locals: { gs: practice.group_schedule, year: year, week: week,
+                                            attendance: @attendance, member_id: member_id }
+      else
+        render partial: 'plan_practice', locals: {
+          gs: practice.group_schedule, year: year, week: week, attendance: @attendance
+        }
+      end
     else
       flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  " \
           "#{t(:attendances)[@attendance.status.to_sym]}"

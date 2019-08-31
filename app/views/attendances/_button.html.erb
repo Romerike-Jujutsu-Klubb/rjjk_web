@@ -6,7 +6,12 @@
   practice_passed = Time.current > practice_end
   practice_start = Date.commercial(year, week, gs.weekday).at(gs.start_at)
   practice_imminent = Time.current > (practice_start - 15.minutes)
-  initial_text = practice_passed ? 'Trente du?' : practice_imminent ? 'Trener du?' : 'Kommer du?'
+  initial_text =
+      if local_assigns[:member_id]
+        practice_passed ? 'Trente?' : practice_imminent ? 'Trener?' : 'Kommer?'
+      else
+        practice_passed ? 'Trente du?' : practice_imminent ? 'Trener du?' : 'Kommer du?'
+      end
   link_target = { controller: :attendances,
       action: practice_passed ? :review : :announce, year: year,
       week: week, group_schedule_id: gs.id, status: 'toggle' }

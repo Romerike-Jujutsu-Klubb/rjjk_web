@@ -7,17 +7,19 @@ h1 Oppmøte
 ul#tab.nav.nav-tabs role="tablist"
   - @my_groups.each do |group|
     li.nav-item
-      a.nav-link id="instruction_#{group.id}-tab" data-toggle="tab" data-target="#instruction_#{group.id}" role="tab" aria-controls="home" aria-selected="true" = group.name
+      a.nav-link id="instruction_#{group.id}-tab" class=(:active if @practice&.group_schedule&.group_id == group.id) data-toggle="tab" data-target="#instruction_#{group.id}" role="tab" aria-controls="home" aria-selected="true" = group.name
   li.nav-item
-    a#lists-tab.nav-link.active data-toggle="tab" data-target="#lists" role="tab" aria-controls="contact" aria-selected="false" Lister
+    a#lists-tab.nav-link class=(:active unless @practice) data-toggle="tab" data-target="#lists" role="tab" aria-controls="contact" aria-selected="false" Lister
 #tabContent.tab-content
   - @my_groups.each do |group|
-    .tab-pane.fade id="instruction_#{group.id}" role="tabpanel" aria-labelledby="home-tab"
-      - next_practice = group.next_practice
+    .tab-pane.fade id="instruction_#{group.id}" class=('show active' if @practice&.group_schedule&.group_id == group.id) role="tabpanel" aria-labelledby="home-tab"
+      - next_practice = (@practice&.group_schedule&.group_id == group.id && @practice) || group.next_practice
       - group_members = group.members.active(next_practice.date).sort_by { |m| m.current_rank }.reverse
       - active, passive = group_members.partition(&:active?)
       .card-deck
         .card
+          .card-header
+            = select nil, :practice_id, group.practices.select{|pr| pr.date <= Date.current}.sort_by(&:date).reverse.map{|pr| ["#{pr} #{day_name pr.date.wday}", pr.id]}, {selected: next_practice.id}, class: 'form-control pr-0', onchange: 'window.location = "?practice_id=" + $(this).val()'
           .card-body.p-sm-3.p-0.pt-1
             table.table.mb-0 class=('table-sm' if active.size > 12)
               - active.each do |m|
