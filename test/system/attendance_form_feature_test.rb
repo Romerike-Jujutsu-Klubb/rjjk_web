@@ -3,24 +3,29 @@
 require 'application_system_test_case'
 
 class AttendanceFormFeatureTest < ApplicationSystemTestCase
+  setup do
+    screenshot_section :attendance
+  end
   def test_index
+    screenshot_group :form
     login_and_visit '/'
     click_menu('Oppmøte')
     assert_current_path attendance_forms_path
-    screenshot('attendance/form/index')
+    find('#lists-tab').click
+    screenshot :index
     find('#group_name_Panda').click
     sleep 0.5
-    screenshot('attendance/form/index_select_panda')
+    screenshot :index_select_panda
     find('#group_name_Tiger').click
     sleep 0.5
-    screenshot('attendance/form/index_select_tiger')
+    screenshot :index_select_tiger
     find('#group_name_Voksne').click
     sleep 0.5
-    screenshot('attendance/form/index_select_voksne')
+    screenshot :index_select_voksne
   end
 
   def test_select_panda_october
-    visit_with_login attendance_forms_path
+    visit_with_login attendance_forms_path(anchor: :lists_tab)
     select('Oktober 2013', from: 'group_name_Panda')
     assert_current_path attendance_form_path year: 2013, month: 10, group_id: id(:panda)
     assert has_css? 'tr td:first-child'

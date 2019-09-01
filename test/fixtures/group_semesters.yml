@@ -23,6 +23,12 @@ current_tiger:
   first_session: 2013-08-21
   last_session: 2099-12-14
 
+current_voksne:
+  group: voksne
+  semester: current
+  first_session: 2013-08-07
+  last_session: 2099-12-21
+
 next_panda:
   group: panda
   semester: next

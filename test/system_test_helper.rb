@@ -14,13 +14,12 @@ module SystemTestHelper
     end
   end
 
-  def visit_with_login(path, redirected_path: path, user: :admin)
-    visit path
-    assert_current_path '/login'
-    click_on 'logge på med passord'
-    assert_current_path login_password_path
-    fill_login_form(user)
-    assert_current_path redirected_path
+  def visit_with_login(path, redirected_path: nil, user: :admin)
+    uri = URI.parse(path)
+    uri.query = [uri.query, 'key=' + users(user).security_token].compact.join('&')
+    visit uri.to_s
+    uri.fragment = nil
+    assert_current_path redirected_path || uri.to_s
   end
 
   def login_and_visit(path, user = :admin, redirected_path: path)

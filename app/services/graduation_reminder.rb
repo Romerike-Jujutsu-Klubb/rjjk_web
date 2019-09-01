@@ -74,7 +74,7 @@ class GraduationReminder
     # FIXME(uwe): each instructor should get only one email
     overdue_graduates.group_by(&:groups).each do |groups, members|
       groups.each do |group|
-        recipient = (group.current_semester || group.next_semester)&.chief_instructor ||
+        recipient = group.current_semester&.chief_instructor || group.next_semester&.chief_instructor ||
             Role[:'Hovedinstruktør']
         GraduationMailer.overdue_graduates(members).store(recipient, tag: :overdue_graduates)
       end

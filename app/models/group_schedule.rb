@@ -3,11 +3,20 @@
 class GroupSchedule < ApplicationRecord
   belongs_to :group
 
+  has_one :last_practice, ->(gs) do
+    now = Time.current
+    date = now.to_date
+    if gs.weekday > date.cwday ||
+          (gs.weekday == date.cwday && (gs.start_at.nil? || gs.start_at > now.time_of_day))
+      date -= 1.week
+    end
+    where(year: date.cwyear, week: date.cweek)
+  end, class_name: :Practice, inverse_of: :group_schedule
   has_one :next_practice, ->(gs) do
     now = Time.current
     date = now.to_date
     if gs.weekday < date.cwday ||
-          (gs.weekday == date.cwday && (gs.end_at.nil? || gs.end_at <= now.time_of_day))
+          (gs.weekday == date.cwday && (gs.end_at.nil? || gs.end_at < now.time_of_day))
       date += 1.week
     end
     where(year: date.cwyear, week: date.cweek)

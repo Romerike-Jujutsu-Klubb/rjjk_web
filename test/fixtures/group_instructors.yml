@@ -15,3 +15,9 @@ uwe_current_panda:
   group_schedule: panda
   member: uwe
   assistant: false
+
+uwe_current_voksne:
+  group_semester: current_voksne
+  group_schedule: voksne_thursday
+  member: uwe
+  assistant: false

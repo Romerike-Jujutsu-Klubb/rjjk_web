@@ -28,12 +28,11 @@ class AttendanceNaggerTest < ActionMailer::TestCase
   end
 
   def test_send_message_reminder_day_before
-    groups(:panda).update! planning: true # Cleanup test fixtures
     Timecop.freeze(Time.zone.local(2013, 10, 16, 18, 46, 0)) do
       assert_mail_stored { AttendanceNagger.send_message_reminder }
 
       mail = UserMessage.pending[0]
-      assert_equal 'Tema for morgendagens trening for Panda',
+      assert_equal 'Tema for morgendagens trening for Voksne',
           mail.subject
       assert_equal ['uwe@example.com'], mail.to
       assert_equal %w[noreply@test.jujutsu.no], mail.from
@@ -70,19 +69,31 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_equal 'Trening i kveld: 1 ny deltaker påmeldt', mail.subject
     assert_equal ['uwe@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
-    assert_match 'Nylig påmeldt</h3><ul><li>Uwe Kubosch</li>', mail.body
+    assert_match '<h3>Nylig påmeldt</h3><ul><li>Uwe Kubosch</li>', mail.body
 
     mail = UserMessage.pending[1]
     assert_equal 'Trening i kveld: 1 ny deltaker påmeldt', mail.subject
     assert_equal ['lars@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
-    assert_match 'Nylig påmeldt</h3><ul><li>Uwe Kubosch</li>', mail.body
+    assert_match '<h3>Nylig påmeldt</h3><ul><li>Uwe Kubosch</li>', mail.body
 
     mail = UserMessage.pending[2]
     assert_equal 'Trening i kveld: 1 ny deltaker påmeldt', mail.subject
     assert_equal ['neuer@example.com', 'newbie@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
-    assert_match 'Nylig påmeldt</h3><ul><li>Uwe Kubosch</li>', mail.body
+    assert_match '<h3>Nylig påmeldt</h3><ul><li>Uwe Kubosch</li>', mail.body
+  end
+
+  def test_send_attendance_changes_with_only_new_absenses
+    Attendance.update_all updated_at: 2.hours.ago # rubocop: disable Rails/SkipsModelValidations
+    practices(:voksne_2013_42_thursday).attendances.create! member_id: id(:lars), status: Attendance::Status::ABSENT
+    assert_mail_stored(1) { AttendanceNagger.send_attendance_changes }
+
+    mail = UserMessage.pending[0]
+    assert_equal 'Trening i kveld: 1 avmelding', mail.subject
+    assert_equal ['uwe@example.com'], mail.to
+    assert_equal %w[noreply@test.jujutsu.no], mail.from
+    assert_match '<h3>Avmelding</h3><ul><li>Lars Bråten</li>', mail.body
   end
 
   def test_send_attendance_review

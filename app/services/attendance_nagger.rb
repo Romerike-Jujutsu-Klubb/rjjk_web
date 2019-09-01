@@ -90,19 +90,15 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
       attendees = attendances.map(&:member) - absentees
       new_attendees = new_attendances & attendees
       new_absentees = new_attendances & absentees
-      uwe = User.find_by(first_name: 'Uwe', last_name: 'Kubosch')&.member
+      instructors = practice.group_schedule.group.instructors
       recipients = gs.group.members.order(:joined_on).reject(&:passive?).reject(&:left?) - absentees
       recipients.each do |recipient|
-        if recipient != uwe
-          next if new_attendances.empty?
-
-          displayed_absentees = if new_absentees.size > new_attendances.size
-                                  []
-                                else
-                                  new_absentees
-                                end
-        else
+        if instructors.include? recipient
           displayed_absentees = new_absentees
+        else
+          next if new_attendees.empty?
+
+          displayed_absentees = new_absentees.size > new_attendees.size ? [] : new_absentees
         end
         AttendanceMailer
             .changes(practice, gs, recipient, new_attendees, displayed_absentees, attendees)

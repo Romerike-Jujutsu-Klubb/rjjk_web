@@ -85,6 +85,12 @@ class Group < ApplicationRecord
 
   delegate :next_practice, to: :next_schedule
 
+  def previous_schedule
+    group_schedules.max_by { |gs| gs.last_practice.date }
+  end
+
+  delegate :last_practice, to: :previous_schedule
+
   def instructors
     group_schedules.map(&:active_group_instructors).flatten.map(&:member)
         .sort_by(&:current_rank).reverse
