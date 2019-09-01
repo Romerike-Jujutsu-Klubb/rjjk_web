@@ -2,6 +2,6 @@
 .row
   .col = f.select column, [[nil, nil]] + @users.map{|u| [u.label, u.id]}, \
       selected: user.send(column).to_s, \
-      prepend: (link_to('Vis', related_user) if related_user), \
+      prepend: (detour_to('Vis', related_user) if related_user), \
       append: (f.submit('Koble fra', class: 'btn btn-danger', \
       onclick: "$(this).closest('.input-group').find('select').val('')") if related_user)
