@@ -103,7 +103,7 @@ class NkfMember < ApplicationRecord
     if new_attributes[:user][:phone]&.==(new_attributes[:guardian_1][:phone]) ||
           new_attributes[:user][:phone]&.==(new_attributes[:billing][:phone])
       if include_blank
-        new_attributes[:user][:phone] = nil
+        # new_attributes[:user][:phone] = nil
       else
         new_attributes[:user].delete(:phone)
         new_attributes.delete(:user) if new_attributes[:user].empty?
@@ -113,9 +113,10 @@ class NkfMember < ApplicationRecord
   end
 
   def self.rjjk_attribute(k, v)
-    raise "Unknown attribute: #{k}" unless FIELD_MAP.key?(k.to_sym)
+    mapping = FIELD_MAP[k.to_sym]
+    raise "Unknown attribute: #{k}" unless mapping
 
-    if (mapped_attribute = FIELD_MAP[k.to_sym][:map_to])
+    if (mapped_attribute = mapping[:map_to])
       mapped_attribute = { membership: mapped_attribute } unless mapped_attribute.is_a?(Hash)
       target, target_attribute = mapped_attribute.to_a[0]
       mapped_value =
@@ -302,5 +303,9 @@ class NkfMember < ApplicationRecord
 
   def group_names
     gren_stilart_avd_parti___gren_stilart_avd_parti.split(/ - /).map { |n| n.split('/')[3] }
+  end
+
+  def to_s
+    "#{fornavn} #{etternavn}"
   end
 end
