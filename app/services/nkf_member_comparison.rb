@@ -179,7 +179,6 @@ class NkfMemberComparison
 
     # m.restore_attributes(outgoing_changes_for_member.keys)
     logger.info 'Submitting form to NKF'
-    logger.debug member_form.pretty_inspect
     member_form['p_ks_medlprofil_action'] = 'OK'
     change_response_page = member_form.submit
     logger.info do
