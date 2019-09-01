@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 class NewsletterMailer < ApplicationMailer
-  default from: if Rails.env.production?
-                  '"Romerike Jujutsu Klubb" <post@jujutsu.no>'
-                else
-                  "#{Rails.env}@jujutsu.no"
-                end
-
   def newsletter(news_item, member)
     @news_item = news_item
     @user_email = member.user&.email
