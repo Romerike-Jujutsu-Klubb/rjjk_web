@@ -20,19 +20,11 @@ class NkfAgent
   NKF_PASSWORD = Rails.application.credentials.nkf_password
   BACKOFF_LIMIT = 15.minutes
 
-  class HtmlParser
-    def self.parse(body, url, encoding)
-      body.encode!('UTF-8', encoding, invalid: :replace, undef: :replace, replace: '')
-      Nokogiri::HTML::Document.parse(body, url, 'UTF-8')
-    end
-  end
-
   def initialize
     raise 'NKF PASSWORD required!' if NKF_PASSWORD.blank?
 
     super
     @agent = Mechanize.new
-    @agent.html_parser = HtmlParser
     @agent.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     Thread.current[:nkf_agent] = @agent
   end

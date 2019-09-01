@@ -118,7 +118,7 @@ class NkfMemberComparison
       end
       form_value = export_value.is_a?(Date) ? export_value.strftime('%d.%m.%Y') : export_value
       logger.info "set form value #{nkf_field.inspect} = #{form_value.inspect}"
-      form[nkf_field.to_s] = form_value
+      form[nkf_field.to_s] = form_value&.encode(form.encoding)
       outgoing_changes[attr_sym] = { new_value => export_value }
     elsif attr_sym == { user: :billing_user_id }
       record.billing_user.attributes.each do |billing_attr, new_billing_value|
@@ -183,11 +183,13 @@ class NkfMemberComparison
     member_form['p_ks_medlprofil_action'] = 'OK'
     change_response_page = member_form.submit
     logger.info do
-      "change_response_page: code: #{change_response_page.code.inspect}\n#{change_response_page.body}"
+      "change_response_page: code: #{change_response_page.code.inspect}" \
+      " encoding: #{change_response_page.encoding.inspect}" \
+      "\n#{change_response_page.body}"
     end
     if (m = MEMBER_ERROR_PATTERN.match(change_response_page.body))
       ms = m[:message]
-      message = "Error updating NKF member form: #{ms.encode(Encoding::UTF_8)}"
+      message = "Error updating NKF member form: #{ms.encode(Encoding::UTF_8, member_form.encoding)}"
       logger.error "message.encoding: #{message.encoding}"
       raise message
     end
