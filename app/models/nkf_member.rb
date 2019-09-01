@@ -103,7 +103,7 @@ class NkfMember < ApplicationRecord
     if new_attributes[:user][:phone]&.==(new_attributes[:guardian_1][:phone]) ||
           new_attributes[:user][:phone]&.==(new_attributes[:billing][:phone])
       if include_blank
-        # new_attributes[:user][:phone] = nil
+        new_attributes[:user][:phone] = nil
       else
         new_attributes[:user].delete(:phone)
         new_attributes.delete(:user) if new_attributes[:user].empty?
