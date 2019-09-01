@@ -12,7 +12,7 @@ class NewsPublisherTest < ActionMailer::TestCase
     mail = UserMessage.pending[0]
     assert_equal 'My first news item', mail.subject
     assert_equal ['uwe@example.com'], mail.to
-    assert_equal %w[test@jujutsu.no], mail.from
+    assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_match 'My first news item', mail.html_body
     assert_match 'src="https://example.com/images/inline/980190962.jpg"', mail.html_body
     assert_match 'src="https://example.com/images/inline/980190962.jpg"', mail.plain_body

@@ -15,7 +15,7 @@ class InformationPageMailerTest < ActionMailer::TestCase
     mail = InformationPageMailer.send_weekly_page members(:lars), information_pages(:first)
     assert_equal 'Til info: My first article', mail.subject
     assert_equal %w[lars@example.com], mail.to
-    assert_equal %w[test@jujutsu.no], mail.from
+    assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_match 'A <strong>very</strong> interresting topic!', mail.body.encoded
   end
 end
