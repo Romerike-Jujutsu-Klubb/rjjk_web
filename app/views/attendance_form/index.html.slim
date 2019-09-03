@@ -26,20 +26,21 @@ ul#tab.nav.nav-tabs role="tablist"
       .card-deck
         .card
           .card-header
-            = select nil, :practice_id, group.practices.after(1.month.ago).select{|pr| pr.date <= next_practice.date}.sort_by(&:date).reverse.map{|pr| ["#{pr} #{day_name pr.date.wday}", pr.id]}, {selected: selected_practice.id}, class: 'form-control pr-0', onchange: 'window.location = "?practice_id=" + $(this).val()'
-          .card-body.p-sm-3.p-0.pt-1
-            table.table.mb-0 class=('table-sm' if active.size > 12)
-              - active.each do |m|
-                - attendance = selected_practice.attendance_for(m.id)
+            = select nil, :practice_id, group.practices.after(1.month.ago).select { |pr| pr.date <= next_practice.date }.sort_by(&:date).reverse.map { |pr| ["#{pr} #{day_name pr.date.wday}", pr.id] }, { selected: selected_practice.id }, class: 'form-control pr-0', onchange: 'window.location = "?practice_id=" + $(this).val()'
+          = render 'member_list', members: active, selected_practice: selected_practice
+        .card
+          h3.card-header Prøvemedlemmer
+          .card-body.pt-3.pb-0
+            - trial_members = NkfMemberTrial.for_group(group)
+            table.table.mb-0 class=('table-sm' if trial_members.size > 12)
+              - trial_members.each do |tm|
                 tr
-                  td = m.name
-                  td = render 'attendances/button', gs: selected_practice.group_schedule, year: selected_practice.year, week: selected_practice.week, member_id: m.id, attendance: attendance
+                  td = tm.name
+                  td.text-nowrap = tm.created_at.to_date
         .card
           h3.card-header Passive
-          .card-body
-            ul
-              - passive.each do |m|
-                li = m.name
+          = render 'member_list', members: passive, selected_practice: selected_practice
+
   #lists.tab-pane.fade class=('show active' unless @practice) role="tabpanel" aria-labelledby="contact-tab"
     - start_date = Date.parse('2009-08-01')
     - months = (Date.current.year - start_date.year) * 12 + Date.current.mon - start_date.mon + 1
