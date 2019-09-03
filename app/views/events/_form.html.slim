@@ -5,7 +5,7 @@
     .col-sm-3
       = f.text_field :end_at, value: @event.end_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Til (valgfritt)', autocomplete: :off
     .col-sm-3
-      = f.text_field :type
+      = f.select :type, [['Arrangement', Event.name], ['Instruktørsamling', InstructorMeeting.name]]
 
   ul#localeTab.nav.nav-tabs role="tablist"
     li.nav-item

@@ -47,7 +47,7 @@ class EventsController < ApplicationController
     @event.groups = params[:group][:id].map { |group_id| Group.find(group_id) } if params[:group]
 
     if @event.save
-      flash[:notice] = 'Event was successfully created.'
+      flash[:notice] = 'Arrangement ble opprettet.'
       redirect_to edit_event_path(@event)
     else
       render action: 'new'
