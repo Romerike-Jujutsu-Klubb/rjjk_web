@@ -22,7 +22,11 @@ h3 => @practice.date
       .badge.badge-info.float-right = attendances.size
     table.table.mb-0
       - attendances.each do |a|
-        tr: td = a.member.name
+        tr
+          td.pr-0 width=1
+            - if a.member.user.card_key
+              i.fa.fa-key
+          td = a.member.name
   - if absences.any? && (admin? || instructor?)
     .card
       h3.card-header
