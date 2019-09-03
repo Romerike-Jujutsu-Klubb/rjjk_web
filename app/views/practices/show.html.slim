@@ -23,10 +23,10 @@ h3 => @practice.date
     table.table.mb-0
       - attendances.each do |a|
         tr
-          td.pr-0 width=1
+          td = a.member.name
+          td.pl-0 width=1
             - if a.member.user.card_key
               i.fa.fa-key
-          td = a.member.name
   - if absences.any? && (admin? || instructor?)
     .card
       h3.card-header

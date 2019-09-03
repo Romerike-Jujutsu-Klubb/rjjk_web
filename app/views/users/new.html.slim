@@ -5,4 +5,4 @@ h2 Ny bruker
     ' Brukeren
     = error_msgs.join('  ')
 
-= render 'form', user: @user, submit: !@user.deleted?
+= render 'form', user: @user, submit: true

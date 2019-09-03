@@ -1,10 +1,11 @@
-.card-body.p-sm-3.p-0.pt-1
-  table.table.mb-0 class=('table-sm' if members.size > 12)
-    - members.each do |m|
-      - attendance = selected_practice.attendance_for(m.id)
-      tr
-        td
-          - if m.user.card_key
-            i.fa.fa-key
-        td = m.name
-        td = render 'attendances/button', gs: selected_practice.group_schedule, year: selected_practice.year, week: selected_practice.week, member_id: m.id, attendance: attendance
+.card-body.p-sm-3.p-0.pt-3
+  .table-responsive
+    table.table.mb-0 class=('table-sm' if members.size > 12)
+      - members.each do |m|
+        - attendance = selected_practice.attendance_for(m.id)
+        tr
+          td
+            - if m.user.card_key
+              i.fa.fa-key
+          td = m.name
+          td = render 'attendances/button', gs: selected_practice.group_schedule, year: selected_practice.year, week: selected_practice.week, member_id: m.id, attendance: attendance

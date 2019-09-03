@@ -23,6 +23,13 @@ ul#tab.nav.nav-tabs role="tablist"
           .map(&:member)
       - group_members = group_members.sort_by { |m| m.current_rank }.reverse
       - active, passive = group_members.partition(&:active?)
+      / https://stackoverflow.com/a/52634662/658690
+      css:
+        .card-deck {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          grid-gap: .5rem;
+        }
       .card-deck
         .card
           .card-header
