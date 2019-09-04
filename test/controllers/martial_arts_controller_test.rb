@@ -5,7 +5,7 @@ require 'controller_test'
 class MartialArtsControllerTest < ActionController::TestCase
   def setup
     @first_id = martial_arts(:keiwaryu).id
-    login(:admin)
+    login(:uwe)
   end
 
   def test_index

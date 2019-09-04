@@ -19,7 +19,7 @@ class NewsControllerTest < ActionController::TestCase
   end
 
   def test_new
-    login(:admin)
+    login(:uwe)
     get :new
     assert_response :success
   end
@@ -27,7 +27,7 @@ class NewsControllerTest < ActionController::TestCase
   def test_create
     num_news_items = NewsItem.count
 
-    login(:admin)
+    login(:uwe)
     post :create, params: { news_item: { title: 'another news item' } }
 
     assert_response :redirect
@@ -37,7 +37,7 @@ class NewsControllerTest < ActionController::TestCase
   end
 
   def test_edit
-    login(:admin)
+    login(:uwe)
     get :edit, params: { id: news_items(:first).id }
 
     assert_response :success
@@ -46,7 +46,7 @@ class NewsControllerTest < ActionController::TestCase
   end
 
   def test_update
-    login(:admin)
+    login(:uwe)
     post :update, params: { id: news_items(:first).id, news_item: { title: 'another news item' } }
     assert_response :redirect
     assert_redirected_to action: :show, id: news_items(:first).id
@@ -54,7 +54,7 @@ class NewsControllerTest < ActionController::TestCase
 
   def test_expire
     n = news_items(:first)
-    login(:admin)
+    login(:uwe)
     post :expire, params: { id: n.id }
     assert_response :redirect
     assert_redirected_to action: :index
@@ -66,7 +66,7 @@ class NewsControllerTest < ActionController::TestCase
     n = news_items(:first)
     assert_not_nil n
 
-    login(:admin)
+    login(:uwe)
     post :destroy, params: { id: n.id }
     assert_response :redirect
     assert_redirected_to action: :index

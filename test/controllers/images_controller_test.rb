@@ -5,7 +5,7 @@ require 'controller_test'
 class ImagesControllerTest < ActionController::TestCase
   def setup
     @first_id = images(:one).id
-    login(:admin)
+    login(:uwe)
   end
 
   def test_index

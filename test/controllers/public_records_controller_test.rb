@@ -5,7 +5,7 @@ require 'controller_test'
 class PublicRecordsControllerTest < ActionController::TestCase
   setup do
     @public_record = public_records(:one)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

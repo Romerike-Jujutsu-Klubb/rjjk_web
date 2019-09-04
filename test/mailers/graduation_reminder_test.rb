@@ -155,7 +155,7 @@ class GraduationReminderTest < ActionMailer::TestCase
         mail.body)
 
     mail = UserMessage.pending[0]
-    assert_equal ['sebastian@example.com', 'uwe@example.com'], mail.to
+    assert_equal ['lise@example.com', 'sebastian@example.com', 'uwe@example.com'], mail.to
     assert_equal %w[uwe@example.com], mail.from
     assert_equal 'Invitasjon til gradering', mail.subject
     assert_match(/Hei Sebastian Kubosch!/, mail.body)

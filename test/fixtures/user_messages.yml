@@ -1,5 +1,5 @@
 one:
-  user: admin
+  user: uwe
   tag: MyString
   from: MyString
   subject: MyString
@@ -9,7 +9,7 @@ one:
   read_at: 2016-07-28 14:29:13
 
 two:
-  user: admin
+  user: uwe
   tag: MyString
   from: MyString
   subject: MyString

@@ -8,19 +8,19 @@ require 'application_system_test_case'
 
 class LoginControllerTest < ActionController::TestCase
   test 'controller test login' do
-    login(:admin)
+    login(:uwe)
   end
 
   test 'controller action login' do
     post :login_with_password, params: LoginIntegrationTest::LOGIN_PARAMS
-    assert_logged_in(:admin)
+    assert_logged_in(:uwe)
   end
 end
 
 class LoginIntegrationTest < IntegrationTest
-  LOGIN_PARAMS = { user: { login: 'admin', password: 'atest' } }.freeze
+  LOGIN_PARAMS = { user: { login: 'uwe', password: 'atest' } }.freeze
   test 'integration test login' do
-    login(:admin)
+    login(:uwe)
     assert_logged_in
   end
 
@@ -41,7 +41,7 @@ class LoginSystemTest < ApplicationSystemTestCase
     click_on 'logge på med passord'
     assert_current_path '/login/password'
     screenshot :empty_form
-    fill_in 'user_login', with: :admin
+    fill_in 'user_login', with: :uwe
     fill_in 'user_password', with: :atest
     screenshot :filled_in
     click_button 'Logg inn'
@@ -55,7 +55,7 @@ class LoginSystemTest < ApplicationSystemTestCase
     click_on 'Medlemssider'
     assert_current_path '/login?detour%5Baction%5D=index&detour%5Bcontroller%5D=welcome'
     screenshot :email_form
-    fill_in 'user_identity', with: users(:admin).email
+    fill_in 'user_identity', with: users(:uwe).email
     screenshot :email_filled_in
     click_on 'Send melding'
     assert_current_path login_link_message_sent_path identity: 'uwe@example.com'
@@ -71,6 +71,6 @@ class LoginSystemTest < ApplicationSystemTestCase
     screenshot :welcome
     click_link 'Logg ut'
     click_on 'Medlemssider'
-    assert has_field?('user[identity]', with: users(:admin).email)
+    assert has_field?('user[identity]', with: users(:uwe).email)
   end
 end

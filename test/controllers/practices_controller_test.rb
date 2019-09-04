@@ -5,7 +5,7 @@ require 'integration_test'
 class PracticesControllerTest < IntegrationTest
   setup do
     @practice = practices(:panda_2010_42)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

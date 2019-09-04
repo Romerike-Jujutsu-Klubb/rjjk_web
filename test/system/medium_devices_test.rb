@@ -3,9 +3,10 @@
 require 'application_system_test_case'
 
 class MediumDevicesTest < ApplicationSystemTestCase
+  FRONT_PAGE_PROGRESS_BAR_AREA = [0, 477, 639, 479].freeze
+  LOGO_AREA = [288, 0, 352, 63].freeze
   MEDIUM_WINDOW_SIZE = [640, 480].freeze
   MENU_BTN_AREA = [130, 20, 142, 63].freeze
-  FRONT_PAGE_PROGRESS_BAR_AREA = [0, 477, 639, 479].freeze
   SUBNAV_OFFSET = -268
   USER_AGENT = <<~UA
     Mozilla/5.0 (Linux; Android 6.0.1; Nexus 7 Build/MOB30X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36
@@ -37,27 +38,27 @@ class MediumDevicesTest < ApplicationSystemTestCase
     assert_selector 'h4', text: 'Neste trening'
     assert_offset '.subnav', :left, SUBNAV_OFFSET
     assert_offset '.main_right', :right, SUBNAV_OFFSET
-    screenshot :index
+    screenshot :index, skip_area: LOGO_AREA
 
     find('.fa-bars').click # Display menu
     assert_offset '.subnav', :left, 0
     assert_selector 'li a', text: 'My first article'
     find('h1', text: 'Instruksjon').hover
     assert_css '#menuShadow'
-    screenshot :menu
+    screenshot :menu, skip_area: LOGO_AREA
     find('.fa-calendar-alt').click_at # Hide menu
     assert_offset '.subnav', :left, SUBNAV_OFFSET
     assert_no_css '#menuShadow'
-    screenshot :menu_closed
+    screenshot :menu_closed, skip_area: LOGO_AREA
 
     find('#calendarBtn').click # Display calendar sidebar
     assert_offset '.main_right', :right, 0
     assert_css '#sidebarShadow'
-    screenshot :calendar
+    screenshot :calendar, skip_area: LOGO_AREA
     find('#sidebarShadow').click # Hide calendar sidebar
     assert_offset '.main_right', :right, SUBNAV_OFFSET
     assert_no_css '#sidebarShadow'
-    screenshot :calendar_closed
+    screenshot :calendar_closed, skip_area: LOGO_AREA
   end
 
   test 'new front_page' do
@@ -79,7 +80,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
       retry
     end
     assert_css 'h1', text: 'My first article'
-    screenshot :article
+    screenshot :article, skip_area: LOGO_AREA
   end
 
   test 'new front page scroll' do
@@ -104,7 +105,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
     end
 
     assert_css('h1', text: 'My first article')
-    screenshot :article
+    screenshot :article, skip_area: LOGO_AREA
   end
 
   private

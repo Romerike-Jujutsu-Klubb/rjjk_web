@@ -4,7 +4,7 @@ require 'controller_test'
 
 class GroupsControllerTest < ActionController::TestCase
   def setup
-    login(:admin)
+    login(:uwe)
   end
 
   def test_should_get_index

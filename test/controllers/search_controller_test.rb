@@ -14,13 +14,13 @@ class SearchControllerTest < IntegrationTest
   end
 
   test 'admin query' do
-    login :admin
+    login :uwe
     get '/search', params: { q: 'Uwe' }
     assert_response :success
   end
 
   test 'empty admin query' do
-    login :admin
+    login :uwe
     get '/search'
     assert_response :success
   end

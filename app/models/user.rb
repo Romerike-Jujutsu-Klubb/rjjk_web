@@ -377,6 +377,6 @@ class User < ApplicationRecord
   private
 
   def contact_users
-    [self, guardian_1, guardian_2, billing_user, contact_user]
+    [self, guardian_1, guardian_2, billing_user, contact_user] # FIXME(uwe): compact?
   end
 end

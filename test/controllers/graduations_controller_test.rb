@@ -5,7 +5,7 @@ require 'controller_test'
 class GraduationsControllerTest < ActionController::TestCase
   def setup
     @first_id = graduations(:panda).id
-    login(:admin)
+    login(:uwe)
   end
 
   def test_index

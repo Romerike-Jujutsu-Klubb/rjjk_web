@@ -48,7 +48,7 @@ class ActiveSupport::TestCase
     end
   end
 
-  def login(login = :admin)
+  def login(login = :uwe)
     Thread.current[:user] = users(login)
   end
 

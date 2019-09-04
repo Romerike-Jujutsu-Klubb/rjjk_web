@@ -4,7 +4,7 @@ require 'controller_test'
 
 class EventInviteesControllerTest < ActionController::TestCase
   setup do
-    login :admin
+    login :uwe
     @event_invitee = event_invitees(:one)
   end
 

@@ -5,7 +5,7 @@ require 'controller_test'
 class SurveyAnswerTranslationsControllerTest < ActionController::TestCase
   setup do
     @survey_answer_translation = survey_answer_translations(:one)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

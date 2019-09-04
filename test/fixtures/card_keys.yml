@@ -1,6 +1,6 @@
 one:
   label: First card
-  user: admin
+  user: uwe
   comment: MyText
 
 two:

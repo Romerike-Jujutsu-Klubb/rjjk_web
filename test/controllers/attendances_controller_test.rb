@@ -3,7 +3,7 @@
 require 'controller_test'
 
 class AttendancesControllerTest < ActionController::TestCase
-  setup { login(:admin) }
+  setup { login(:uwe) }
 
   def test_should_get_index
     get :index
@@ -66,7 +66,7 @@ class AttendancesControllerTest < ActionController::TestCase
   def test_should_get_review
     practice = practices(:voksne_2013_42_thursday)
     Attendance::Status.constants(false).map(&Attendance::Status.method(:const_get)).each do |status|
-      login(:admin)
+      login(:uwe)
       get :review, params: {
         group_schedule_id: practice.group_schedule_id,
         year: practice.year, week: practice.week, status: status

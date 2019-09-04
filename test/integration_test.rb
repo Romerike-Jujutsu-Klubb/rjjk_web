@@ -8,7 +8,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     assert_equal 'done', response.body
   end
 
-  def login(login = :admin)
+  def login(login = :uwe)
     user = users(login)
     post '/login/password', params: { user: { login: user.login || user.email, password: :atest } }
     user

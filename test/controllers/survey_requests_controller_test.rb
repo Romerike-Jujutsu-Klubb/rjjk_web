@@ -5,7 +5,7 @@ require 'integration_test'
 class SurveyRequestsControllerTest < IntegrationTest
   setup do
     @survey_request = survey_requests(:sent)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

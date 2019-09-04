@@ -4,7 +4,7 @@ require 'controller_test'
 
 class EventInviteeMessagesControllerTest < ActionController::TestCase
   setup do
-    login :admin
+    login :uwe
     @event_invitee_message = event_invitee_messages(:one)
   end
 

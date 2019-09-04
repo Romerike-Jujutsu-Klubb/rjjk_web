@@ -132,7 +132,7 @@ class LoginControllerTest < ActionController::TestCase
   end
 
   # def test_edit
-  #   tesla = login(:admin)
+  #   tesla = login(:uwe)
   #   post :update, params:{user: { first_name: 'Bob', form: 'edit' }}
   #   tesla.reload
   #   assert_equal 'Bob', tesla.first_name

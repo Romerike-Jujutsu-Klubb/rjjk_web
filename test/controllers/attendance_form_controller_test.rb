@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class AttendanceFormControllerTest < ActionDispatch::IntegrationTest
-  setup { login(:admin) }
+  setup { login(:uwe) }
 
   test 'should get index' do
     get attendance_forms_url

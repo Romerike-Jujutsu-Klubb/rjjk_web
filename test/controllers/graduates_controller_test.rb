@@ -6,7 +6,7 @@ class GraduatesControllerTest < ActionController::TestCase
   def setup
     @graduate = graduates(:lars_kyu_1)
     @first_id = @graduate.id
-    login(:admin)
+    login(:uwe)
   end
 
   def test_index

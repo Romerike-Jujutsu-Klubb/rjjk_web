@@ -4,7 +4,7 @@ require 'controller_test'
 
 class TrialAttendancesControllerTest < ActionController::TestCase
   def setup
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

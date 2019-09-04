@@ -5,7 +5,7 @@ require 'controller_test'
 class SemestersControllerTest < ActionController::TestCase
   setup do
     @semester = semesters(:previous)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

@@ -51,7 +51,7 @@ class MemberTest < ActiveSupport::TestCase
     assert_equal [
       ['lars@example.com'],
       ['leftie@example.com'],
-      ['sebastian@example.com', 'uwe@example.com'],
+      ['lise@example.com', 'sebastian@example.com', 'uwe@example.com'],
       ['neuer@example.com', 'newbie@example.com'],
       ['oldie@example.com'],
       ['uwe@example.com'],

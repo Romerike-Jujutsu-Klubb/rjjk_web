@@ -14,7 +14,7 @@ module SystemTestHelper
     end
   end
 
-  def visit_with_login(path, redirected_path: nil, user: :admin)
+  def visit_with_login(path, redirected_path: nil, user: :uwe)
     uri = URI.parse(path)
     uri.query = [uri.query, 'key=' + users(user).security_token].compact.join('&')
     visit uri.to_s
@@ -22,14 +22,14 @@ module SystemTestHelper
     assert_current_path redirected_path || uri.to_s
   end
 
-  def login_and_visit(path, user = :admin, redirected_path: path)
+  def login_and_visit(path, user = :uwe, redirected_path: path)
     login(user)
     assert_current_path '/'
     visit path
     assert_current_path redirected_path
   end
 
-  def login(user = :admin)
+  def login(user = :uwe)
     visit '/login/password'
     fill_login_form user
   end

@@ -6,7 +6,7 @@ class MembersControllerTest < ActionController::TestCase
   include ActiveJob::TestHelper
   def setup
     @lars = members(:lars)
-    login(:admin)
+    login(:uwe)
   end
 
   def test_index

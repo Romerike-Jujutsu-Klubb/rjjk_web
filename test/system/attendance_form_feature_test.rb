@@ -36,7 +36,8 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
 NKF_mt_two@example.com',
                   'Hans Eriksen
 faktura@eriksen.org',
-                  'Totalt 3', 'Sebastian Kubosch (Permisjon)', 'Totalt 1'],
+                  'Totalt 3', 'Sebastian Kubosch (Permisjon)
+98765432', 'Totalt 1'],
         all('tr td:first-child').map(&:text).reject(&:blank?)
   end
 
@@ -49,7 +50,8 @@ faktura@eriksen.org',
 NKF_mt_two@example.com',
                   'Hans Eriksen
 faktura@eriksen.org',
-                  'Totalt 3', 'Sebastian Kubosch (Permisjon)', 'Totalt 1'],
+                  'Totalt 3', 'Sebastian Kubosch (Permisjon)
+98765432', 'Totalt 1'],
         all('tr td:first-child').map(&:text).reject(&:blank?)
 
     uwe_row = find('table:first-of-type tbody tr:first-of-type')

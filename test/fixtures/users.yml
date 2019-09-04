@@ -1,8 +1,7 @@
-# TODO(uwe): Rename label to "uwe"
-admin:
+uwe:
   first_name: Uwe
   last_name: Kubosch
-  login: admin
+  login: uwe
   address: Møllesvingen 5
   postal_code: 1479
   salted_password: de6db7cdf638e5ba522b9e5728d551315bf750f4 # atest
@@ -44,7 +43,8 @@ sebastian:
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
   birthdate: 2004-06-03
   male: true
-  guardian_1: admin
+  guardian_1: lise
+  guardian_2: uwe
 
 long_user:
   login: long_user
@@ -129,3 +129,14 @@ leftie:
   verified: true
   birthdate: 1999-09-19
   male: true
+
+lise:
+  first_name: Lise
+  last_name: Kubosch
+  salted_password: de6db7cdf638e5ba522b9e5728d551315bf750f4 # atest
+  salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
+  email: lise@example.com
+  phone: 98765432
+  verified: true
+  birthdate: 1974-05-27
+  male: false

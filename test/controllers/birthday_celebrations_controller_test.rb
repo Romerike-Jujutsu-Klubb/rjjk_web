@@ -5,7 +5,7 @@ require 'controller_test'
 class BirthdayCelebrationsControllerTest < ActionController::TestCase
   setup do
     @birthday_celebration = birthday_celebrations(:one)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

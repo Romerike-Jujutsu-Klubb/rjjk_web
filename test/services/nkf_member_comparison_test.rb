@@ -32,8 +32,10 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
           'latitude' => [nil, 0.40714353e2], 'longitude' => [nil, -0.74005973e2]
         },
         'guardian_1' => {
-          'first_name' => %w[Uwe Lise],
-          'email' => ['uwe@example.com', nil],
+          'email' => ['lise@example.com', nil],
+        },
+        'guardian_2' => {
+          'first_name' => ['Uwe', ''], 'last_name' => ['Kubosch', nil]
         },
         'billing' => { 'email' => [nil, 'lise@example.net'] },
       }],
@@ -53,8 +55,9 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
         { user: :birthdate } => { Date.parse('2004-06-04') => Date.parse('2004-06-03') },
         { user: :phone } => { '92929292' => nil },
         { user: :email } => { 'sebastian@example.net' => 'sebastian@example.com' },
-        { guardian_1: :first_name } => { 'Lise' => 'Uwe Kubosch' },
-        { guardian_1: :email } => { nil => 'uwe@example.com' },
+        { guardian_1: :email } => { nil => 'lise@example.com' },
+        { guardian_2: :first_name } => { '' => 'Uwe Kubosch' },
+        { guardian_2: :last_name } => { nil => 'Uwe Kubosch' },
         { billing: :email } => { 'lise@example.net' => nil },
       }],
       [members(:uwe), { { user: :email } => { 'uwe@example.net' => 'uwe@example.com' } }],

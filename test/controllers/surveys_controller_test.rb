@@ -5,7 +5,7 @@ require 'controller_test'
 class SurveysControllerTest < ActionController::TestCase
   setup do
     @survey = surveys(:first_survey)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

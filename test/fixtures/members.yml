@@ -10,7 +10,7 @@ uwe:
   joined_on: 1987-01-05
   nkf_fee: true
   payment_problem: false
-  user: admin
+  user: uwe
 
 sebastian:
   instructor: false

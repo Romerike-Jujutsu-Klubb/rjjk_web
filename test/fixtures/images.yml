@@ -23,14 +23,14 @@ application_step_one:
   content_data: !binary |
     R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=
   md5_checksum: application_step_one
-  user: admin
+  user: uwe
   approved: true
 application_step_two:
   name: Step 2
   content_type: image/jpeg
   content_data:
   md5_checksum: application_step_two
-  user: admin
+  user: uwe
   approved: true
 application_step_kneeing:
   name: Step 3
@@ -38,7 +38,7 @@ application_step_kneeing:
   content_data: !binary |
     R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
   md5_checksum: application_step_kneeing
-  user: admin
+  user: uwe
   approved: true
 front_page_1:
   name: Front page 1
@@ -46,7 +46,7 @@ front_page_1:
   content_data: !binary |
     R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=
   md5_checksum: front_page_1
-  user: admin
+  user: uwe
   approved: true
 front_page_2:
   name: Front page 2
@@ -54,7 +54,7 @@ front_page_2:
   content_data: !binary |
     R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
   md5_checksum: front_page_2
-  user: admin
+  user: uwe
   approved: true
 front_page_3:
   name: Front page 3
@@ -62,7 +62,7 @@ front_page_3:
   content_data: !binary |
     R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
   md5_checksum: front_page_3
-  user: admin
+  user: uwe
   approved: true
 front_page_4:
   name: Front page 4
@@ -70,5 +70,5 @@ front_page_4:
   content_data: !binary |
     R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
   md5_checksum: front_page_4
-  user: admin
+  user: uwe
   approved: true

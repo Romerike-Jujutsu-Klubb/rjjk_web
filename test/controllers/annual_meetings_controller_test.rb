@@ -5,7 +5,7 @@ require 'integration_test'
 class AnnualMeetingsControllerTest < IntegrationTest
   setup do
     @annual_meeting = annual_meetings(:last)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

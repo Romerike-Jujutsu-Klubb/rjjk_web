@@ -5,7 +5,7 @@ require 'controller_test'
 class PageAliasesControllerTest < ActionController::TestCase
   setup do
     @page_alias = page_aliases(:one)
-    login :admin
+    login :uwe
   end
 
   test 'should get index' do

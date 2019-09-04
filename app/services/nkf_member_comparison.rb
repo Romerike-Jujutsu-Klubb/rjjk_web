@@ -76,7 +76,7 @@ class NkfMemberComparison
 
       nkf_values.each do |attribute, nkf_value|
         rjjk_value = relation.send(:"#{attribute}")
-        next unless nkf_value != rjjk_value
+        next if nkf_value == rjjk_value
 
         logger.info "Member (#{'%4d' % member.id}) #{target} #{relation.class} " \
               "(#{'%4s' % relation.id.inspect}): #{attribute}: " \

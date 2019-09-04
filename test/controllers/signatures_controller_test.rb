@@ -5,7 +5,7 @@ require 'controller_test'
 class SignaturesControllerTest < ActionController::TestCase
   setup do
     @signature = signatures(:lars)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

@@ -5,7 +5,7 @@ require 'controller_test'
 class ElectionsControllerTest < ActionController::TestCase
   setup do
     @election = elections(:chairman)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

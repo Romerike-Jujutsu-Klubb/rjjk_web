@@ -5,7 +5,7 @@ require 'controller_test'
 class BasicTechniqueLinksControllerTest < ActionController::TestCase
   setup do
     @basic_technique_link = basic_technique_links(:one)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

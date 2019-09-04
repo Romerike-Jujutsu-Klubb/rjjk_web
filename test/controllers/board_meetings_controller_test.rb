@@ -5,7 +5,7 @@ require 'controller_test'
 class BoardMeetingsControllerTest < ActionController::TestCase
   setup do
     @board_meeting = board_meetings(:one)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

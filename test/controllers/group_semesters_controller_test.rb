@@ -5,7 +5,7 @@ require 'controller_test'
 class GroupSemestersControllerTest < ActionController::TestCase
   setup do
     @group_semester = group_semesters(:previous_panda)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

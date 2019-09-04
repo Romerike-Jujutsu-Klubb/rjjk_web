@@ -5,7 +5,7 @@ require 'controller_test'
 class CensorsControllerTest < ActionController::TestCase
   def setup
     @first_id = censors(:lars_panda).id
-    login :admin
+    login :uwe
   end
 
   def test_index

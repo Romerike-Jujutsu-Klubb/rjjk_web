@@ -6,11 +6,11 @@ require 'test_helper'
 class ActionController::TestCase
   teardown { clear_user }
 
-  def login(login = :admin)
+  def login(login = :uwe)
     self.current_user = users(login)
   end
 
-  def assert_logged_in(user = :admin)
+  def assert_logged_in(user = :uwe)
     user = users(user) if user.is_a? Symbol
     assert_equal user.id, session[:user_id]
   end

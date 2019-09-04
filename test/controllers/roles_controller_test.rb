@@ -5,7 +5,7 @@ require 'controller_test'
 class RolesControllerTest < ActionController::TestCase
   setup do
     @role = roles(:chairman)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

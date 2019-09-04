@@ -15,7 +15,7 @@ class UserTest < ActionMailer::TestCase
   end
 
   def test_authenticate_by_token_from_user_message
-    user = users(:admin)
+    user = users(:uwe)
     assert_equal user, User.authenticate_by_token(user_messages(:one).key)
   end
 
@@ -139,7 +139,7 @@ class UserTest < ActionMailer::TestCase
   end
 
   def test_technical_committy
-    assert_equal true, users(:admin).technical_committy?
+    assert_equal true, users(:uwe).technical_committy?
     assert_equal true, users(:lars).technical_committy?
     assert_nil users(:long_user).technical_committy?
     assert_equal false, users(:newbie).technical_committy?
@@ -150,11 +150,12 @@ class UserTest < ActionMailer::TestCase
       ['deletable_user@example.com'],
       ['lars@example.com'],
       ['leftie@example.com'],
+      ['lise@example.com'],
+      ['lise@example.com', 'sebastian@example.com', 'uwe@example.com'],
       ['long_user@example.com'],
       ['neuer@example.com'],
       ['neuer@example.com', 'newbie@example.com'],
       ['oldie@example.com'],
-      ['sebastian@example.com', 'uwe@example.com'],
       ['unverified_user@example.com'],
       ['uwe@example.com'],
     ], User.all.map(&:emails).sort

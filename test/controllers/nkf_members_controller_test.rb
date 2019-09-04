@@ -3,7 +3,7 @@
 require 'controller_test'
 
 class NkfMembersControllerTest < ActionController::TestCase
-  setup { login(:admin) }
+  setup { login(:uwe) }
 
   test 'should get index' do
     get :index

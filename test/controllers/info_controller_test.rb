@@ -4,7 +4,7 @@ require 'controller_test'
 
 class InfoControllerTest < ActionController::TestCase
   def test_index
-    login(:admin)
+    login(:uwe)
     get :index
     assert_response :success
   end
@@ -21,7 +21,7 @@ class InfoControllerTest < ActionController::TestCase
   end
 
   def test_new
-    login(:admin)
+    login(:uwe)
     get :new
     assert_response :success
   end
@@ -29,7 +29,7 @@ class InfoControllerTest < ActionController::TestCase
   def test_create
     num_information_pages = InformationPage.count
 
-    login(:admin)
+    login(:uwe)
     post :create, params: { information_page: { title: 'an article', public: true } }
 
     assert_response :redirect
@@ -39,13 +39,13 @@ class InfoControllerTest < ActionController::TestCase
   end
 
   def test_edit
-    login(:admin)
+    login(:uwe)
     get :edit, params: { id: information_pages(:first).id }
     assert_response :success
   end
 
   def test_update
-    login(:admin)
+    login(:uwe)
     post :update, params: { id: information_pages(:first).id, information_page: { title: 'an article' } }
     assert_response :redirect
     assert_redirected_to action: 'show', id: information_pages(:first).id
@@ -55,7 +55,7 @@ class InfoControllerTest < ActionController::TestCase
     FrontPageSection.destroy_all
     information_page = information_pages(:first)
 
-    login(:admin)
+    login(:uwe)
     delete :destroy, params: { id: information_page.id }
     assert_response :redirect
     assert_redirected_to controller: :news, action: :index
@@ -68,7 +68,7 @@ class InfoControllerTest < ActionController::TestCase
   def test_destroy_fails_for_existing_front_page_section
     information_page = information_pages(:first)
 
-    login(:admin)
+    login(:uwe)
     delete :destroy, params: { id: information_page.id }
     assert_response :success
 

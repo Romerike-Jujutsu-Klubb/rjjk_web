@@ -5,7 +5,7 @@ require 'controller_test'
 class AppointmentsControllerTest < ActionController::TestCase
   setup do
     @appointment = appointments(:uwe_first)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do

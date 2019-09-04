@@ -5,7 +5,7 @@ require 'controller_test'
 class GroupInstructorsControllerTest < ActionController::TestCase
   setup do
     @group_instructor = group_instructors(:one)
-    login(:admin)
+    login(:uwe)
   end
 
   test 'should get index' do
