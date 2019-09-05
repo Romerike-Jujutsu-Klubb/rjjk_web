@@ -18,14 +18,14 @@ a icon		 			{	color: #666 !important; color:rgba(0,0,0,0.25) !important; }
 a:hover icon			{	color:#8e3233; }
 #subfooter p,
 #subfooter span,
-#subfooter 				{	color:#bbb; color: rgba(0,0,0,0.35); }
+#subfooter 				{	color:#bbb; color: rgb(0,0,0); }
 #subfooter a,
-#subfooter a:visited	{  color:#bbb; color: rgba(0,0,0,0.35);  }
+#subfooter a:visited	{  color:#bbb; color: rgb(0,0,0);  }
 #subfooter a:hover		{	color:#8e3233; }
 h1,h2,h3,h4,h5,h6		{	color:#000; color:rgba(0,0,0,0.75);}
 hr						{	border-color:#ddd; }
 .subfooter-socials,
-.subfooter-socials:visited		{	color:#666 !important;color:rgba(0,0,0,0.25) !important;}
+.subfooter-socials:visited		{	color:#666 !important;color:rgb(0,0,0) !important;}
 .subfooter-socials:hover		{   color:#8e3233;}
 
 /** SPECIAL TITLES **/
