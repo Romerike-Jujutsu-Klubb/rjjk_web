@@ -9,7 +9,7 @@
 //= require bootstrap
 //= require moment
 //= require moment/nb
-//= require bootstrap-datetimepicker
+//= require pc-bootstrap4-datetimepicker/build/js/bootstrap-datetimepicker.min
 //= require bootstrap-datetimepicker-init
 //= require nprogress
 //= require nprogress-turbolinks

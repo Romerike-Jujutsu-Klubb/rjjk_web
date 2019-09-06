@@ -36,8 +36,7 @@ class NewsFeatureTest < ApplicationSystemTestCase
 
   def test_new_news_item
     screenshot_group :new
-    login_and_visit '/'
-    assert_current_path '/'
+    visit_with_login '/'
     screenshot('front')
     click_menu 'Ny nyhet'
     assert_current_path '/news/new'

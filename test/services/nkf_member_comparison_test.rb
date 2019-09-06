@@ -97,4 +97,42 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
     assert_equal([members(:leftie), members(:newbie), members(:oldie)], c.orphan_members)
     assert_equal([nkf_members(:erik)], c.orphan_nkf_members)
   end
+
+  test 'sync single member with duplicate user phone' do
+    seb = members(:sebastian)
+    seb_nkf = seb.nkf_member
+    seb_nkf.update! foresatte_nr_2_mobil: seb.guardian_2.phone
+    c = nil
+    VCR.use_cassette('NKF Comparison Single Member', match_requests_on: %i[method host path query]) do
+      c = NkfMemberComparison.new(seb).sync
+    end
+    assert_equal([], c.errors)
+    assert_equal [members(:sebastian)], c.members
+
+    assert_equal [[seb, {
+      'joined_on' => [Date.new(2007, 8, 25), Date.new(2007, 9, 21)],
+      'user' => { 'birthdate' => [Date.new(2004, 6, 3), Date.new(2004, 6, 4)],
+                  'phone' => [nil, '92929292'],
+                  'email' => %w[sebastian@example.com sebastian@example.net],
+                  'latitude' => [nil, 0.40714353e2], 'longitude' => [nil, -0.74005973e2] },
+      'guardian_1' => { 'email' => ['lise@example.com', nil] },
+      'guardian_2' => { 'first_name' => ['Uwe', ''], 'last_name' => ['Kubosch', nil] },
+      'billing' => { 'email' => [nil, 'lise@example.net'] },
+    }]], c.member_changes
+    assert_equal([
+      [seb, {
+        { membership: :joined_on } => { Date.new(2007, 9, 21) => Date.new(2007, 8, 25) },
+        { user: :birthdate } => { Date.new(2004, 6, 4) => Date.new(2004, 6, 3) },
+        { user: :phone } => { '92929292' => nil },
+        { user: :email } => { 'sebastian@example.net' => 'sebastian@example.com' },
+        { guardian_1: :email } => { nil => 'lise@example.com' },
+        { guardian_2: :first_name } => { '' => 'Uwe Kubosch' },
+        { guardian_2: :last_name } => { nil => 'Uwe Kubosch' },
+        { billing: :email } => { 'lise@example.net' => nil },
+      }],
+    ], c.outgoing_changes)
+    assert_equal [nkf_members(:erik).member], c.new_members
+    assert_equal([members(:leftie), members(:newbie), members(:oldie)], c.orphan_members)
+    assert_equal([nkf_members(:erik)], c.orphan_nkf_members)
+  end
 end

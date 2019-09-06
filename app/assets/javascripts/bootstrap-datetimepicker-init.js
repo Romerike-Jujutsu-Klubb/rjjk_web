@@ -1,3 +1,8 @@
+// DateTime selector work in Datek Support
+// .ui-dialog-content{
+//     overflow:visible !important;
+//  }
+
 $().ready(function () {
     var iconSet = {
         time: 'far fa-clock',

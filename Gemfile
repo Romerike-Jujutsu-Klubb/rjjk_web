@@ -31,7 +31,6 @@ gem 'bcrypt'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap'
 gem 'bootstrap-chosen-rails', github: 'donv/bootstrap-chosen-rails'
-gem 'bootstrap3-datetimepicker-rails'
 gem 'bootstrap_form'
 gem 'chartkick'
 gem 'chosen-rails'
