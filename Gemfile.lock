@@ -83,8 +83,6 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.14.3, < 2)
       sassc-rails (>= 2.0.0)
-    bootstrap3-datetimepicker-rails (4.17.47)
-      momentjs-rails (>= 2.8.1)
     bootstrap_form (4.2.0)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -460,7 +458,6 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   bootstrap
   bootstrap-chosen-rails!
-  bootstrap3-datetimepicker-rails
   bootstrap_form
   capybara-screenshot-diff
   chartkick
