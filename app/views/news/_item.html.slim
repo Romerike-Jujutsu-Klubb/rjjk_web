@@ -31,7 +31,7 @@
       ul.controls.mb-0
         - if news_item.news_item_likes
           li.mr-2 id="like_#{news_item.id}"
-            a href=like_news_item_path(news_item) method=:post
+            a href=like_news_item_path(news_item) data-method=:post
               i.far.fa-thumbs-up>
               | Liker
         li = detour_to 'Endre', edit_polymorphic_path(news_item), class: :edit
