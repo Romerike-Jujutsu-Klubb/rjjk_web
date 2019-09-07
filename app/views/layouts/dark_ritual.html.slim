@@ -37,8 +37,8 @@ html lang="nb"
             = textalize flash[:notice]
       - unless @content_width
         .d-none.d-lg-block style="width:290px" &nbsp;
-    .container-fluid
-      .row
+    #main-wrapper.container-fluid.d-flex.flex-column
+      #main-top.row.flex-grow-1
         .main_left.col.d-flex.flex-column
           .row.d-print-none
             .col-12.p-0 = render 'layouts/header'

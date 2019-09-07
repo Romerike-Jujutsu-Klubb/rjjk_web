@@ -18,13 +18,15 @@ $logo_red: #E20916;
   }
 }
 
+html,
 body {
-  background-attachment: fixed;
+  height: 100%;
+  min-height: 100vh;
 }
 
-body.wide {
-  min-height: 100vh;
-  > .container-fluid {
+body {
+  background-attachment: fixed;
+  #main-wrapper {
     min-height: 100%;
   }
 }
