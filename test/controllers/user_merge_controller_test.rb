@@ -6,7 +6,7 @@ class UserMergeControllerTest < IntegrationTest
   setup { login }
 
   test 'show' do
-    get user_merge_path(id(:uwe))
+    get user_merge_path(id(:uwe), other_user_id: id(:lars))
     assert_response :success
   end
 
