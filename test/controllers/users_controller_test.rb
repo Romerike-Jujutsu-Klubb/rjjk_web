@@ -14,6 +14,17 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_show_vcf
+    get :show, params: { id: login(:uwe).id }, format: :vcf
+    assert_response :success
+  end
+
+  def test_photo
+    uwe = login(:uwe)
+    get :photo, params: { id: uwe.id }
+    assert_redirected_to uwe.member.image
+  end
+
   def test_edit_member
     get :edit, params: { id: login(:uwe).id }
     assert_response :success

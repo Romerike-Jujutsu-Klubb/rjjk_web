@@ -3,7 +3,7 @@
 require 'integration_test'
 
 class IconsControllerTest < IntegrationTest
-  setup {FileUtils.rm_rf "#{Rails.root}/public/icon" }
+  setup { FileUtils.rm_rf "#{Rails.root}/public/icon" }
 
   test 'should serve an icon' do
     get '/icon/32.png'
