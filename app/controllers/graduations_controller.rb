@@ -59,9 +59,10 @@ class GraduationsController < ApplicationController
     when 'candidates'
       unless graduation.approved?
         graduation_members = graduation.graduates.map(&:member)
-        members = graduation.group.members.active(graduation.held_on)
-            .reject { |m| m.passive? graduation.held_on, graduation.group } - graduation_members
-        graduates = members.map { |m| m.to_graduate(graduation) }
+        members = graduation.group.members.active(graduation.held_on).reject do |m|
+          m.passive?(Date.current, graduation.group) && m.passive?(graduation.held_on, graduation.group)
+        end
+        graduates = (members - graduation_members).map { |m| m.to_graduate(graduation) }
             .sort_by { |gr| [-gr.rank.position, gr.member.name] }
         title = 'Kandidater'
       end
