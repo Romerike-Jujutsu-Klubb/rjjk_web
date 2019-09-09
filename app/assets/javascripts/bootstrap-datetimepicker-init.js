@@ -4,7 +4,7 @@
 //  }
 
 $().ready(function () {
-    var iconSet = {
+    const iconSet = {
         time: 'far fa-clock',
         date: 'fa fa-calendar-alt',
         up: 'fa fa-chevron-up',
@@ -18,12 +18,12 @@ $().ready(function () {
     // http://eonasdan.github.io/bootstrap-datetimepicker/#options
     $('.date,[dateFormat]').each(function () {
         const format = 'YYYY-MM-DD';
-        var value = $(this).val();
+        const value = $(this).val();
         if (value) {
             $(this).val('');
             $(this).datetimepicker({format: format, defaultDate: value, icons: iconSet});
         } else {
-            var defaultDate = $(this).data('default-date');
+            const defaultDate = $(this).data('default-date');
             if (defaultDate) {
                 $(this).datetimepicker({format: format, defaultDate: defaultDate, icons: iconSet});
                 $(this).val('');
@@ -34,12 +34,12 @@ $().ready(function () {
         $(this).attr('autocomplete', 'off');
     });
     $('.datetime,[dateFormat][timeFormat]').each(function () {
-        var value = $(this).val();
+        const value = $(this).val();
         if (value) {
             $(this).val('');
             $(this).datetimepicker({format: 'YYYY-MM-DD HH:mm', defaultDate: value, icons: iconSet});
         } else {
-            var defaultDate = $(this).data('default-date');
+            const defaultDate = $(this).data('default-date');
             if (defaultDate) {
                 $(this).datetimepicker({format: 'YYYY-MM-DD HH:mm', defaultDate: defaultDate, icons: iconSet});
                 $(this).val('');
