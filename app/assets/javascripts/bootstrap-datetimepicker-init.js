@@ -31,6 +31,7 @@ $().ready(function () {
                 $(this).datetimepicker({format: format, useCurrent: false, icons: iconSet});
             }
         }
+        $(this).attr('autocomplete', 'off');
     });
     $('.datetime,[dateFormat][timeFormat]').each(function () {
         var value = $(this).val();
@@ -46,6 +47,7 @@ $().ready(function () {
                 $(this).datetimepicker({format: 'YYYY-MM-DD HH:mm', useCurrent: false, icons: iconSet});
             }
         }
+        $(this).attr('autocomplete', 'off');
     });
     $('.time,[timeFormat]').datetimepicker({format: 'HH:mm', icons: iconSet});
 });
