@@ -303,7 +303,7 @@ class User < ApplicationRecord
   end
 
   def contact_email=(value)
-    logger.info "user(#{id}).contact_email=(#{value.inspect})"
+    logger.info "user(#{id}).contact_email = #{value.inspect}"
     previous_contact_email = contact_email
     logger.info "previous_contact_email: #{previous_contact_email.inspect}"
     return if value == previous_contact_email
@@ -315,6 +315,7 @@ class User < ApplicationRecord
       self.contact_user_id = nil
     elsif new_contact_user
       logger.info 'set new contact user'
+      self.email = nil
       self.contact_user = new_contact_user
     elsif billing_user&.== contact_user
       logger.info 'Update billing user email'
