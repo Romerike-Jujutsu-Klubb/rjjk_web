@@ -127,6 +127,8 @@ class NkfMember < ApplicationRecord
           elsif v.blank? && (target =~ /^(billing|guardian_)/ ||
               target_attribute =~ /^guardian_|email|mobile|phone|_on$/)
             nil
+          elsif v.blank? && (target == :user && User::NILLABLE_FIELDS.include?(target_attribute))
+            nil
           elsif v.present? && target_attribute =~ /email/
             v.downcase
           else
