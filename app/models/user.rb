@@ -315,7 +315,6 @@ class User < ApplicationRecord
       self.contact_user_id = nil
     elsif new_contact_user
       logger.info 'set new contact user'
-      self.email = nil
       self.contact_user = new_contact_user
     elsif billing_user&.== contact_user
       logger.info 'Update billing user email'
@@ -378,6 +377,6 @@ class User < ApplicationRecord
   private
 
   def contact_users
-    [self, guardian_1, guardian_2, billing_user, contact_user] # FIXME(uwe): compact?
+    [contact_user, self, guardian_1, guardian_2, billing_user].compact
   end
 end
