@@ -69,6 +69,12 @@ class NkfMember < ApplicationRecord
   validates :kjonn, presence: true
   validates :member_id, uniqueness: { allow_nil: true }
 
+  def self.rjjk_field_mapping(rel_attr)
+    NkfMember::FIELD_MAP.find do |_k, v|
+      [*v[:map_from]].include?(rel_attr) || v[:map_to] == rel_attr
+    end
+  end
+
   def self.find_free_members
     Member
         .where("(left_on IS NULL OR left_on >= '2009-01-01')")
@@ -89,27 +95,6 @@ class NkfMember < ApplicationRecord
         group.update! monthly_price: monthly_price, yearly_price: yearly_price
       end
     end
-  end
-
-  def converted_attributes(include_blank: true)
-    new_attributes = Hash.new { |hash, key| hash[key] = {} }
-    attributes.each do |k, v|
-      target, target_attribute, mapped_value = self.class.rjjk_attribute(k, v)
-      next unless target && target_attribute &&
-          (include_blank || mapped_value.present? || mapped_value == false)
-
-      new_attributes[target][target_attribute] = mapped_value
-    end
-    if new_attributes[:user][:phone]&.==(new_attributes[:guardian_1][:phone]) ||
-          new_attributes[:user][:phone]&.==(new_attributes[:billing][:phone])
-      if include_blank
-        new_attributes[:user][:phone] = nil
-      else
-        new_attributes[:user].delete(:phone)
-        new_attributes.delete(:user) if new_attributes[:user].empty?
-      end
-    end
-    new_attributes
   end
 
   def self.rjjk_attribute(k, v)
@@ -136,6 +121,27 @@ class NkfMember < ApplicationRecord
           end
     end
     [target, target_attribute, mapped_value]
+  end
+
+  def converted_attributes(include_blank: true)
+    new_attributes = Hash.new { |hash, key| hash[key] = {} }
+    attributes.each do |k, v|
+      target, target_attribute, mapped_value = self.class.rjjk_attribute(k, v)
+      next unless target && target_attribute &&
+          (include_blank || mapped_value.present? || mapped_value == false)
+
+      new_attributes[target][target_attribute] = mapped_value
+    end
+    if new_attributes[:user][:phone]&.==(new_attributes[:guardian_1][:phone]) ||
+          new_attributes[:user][:phone]&.==(new_attributes[:billing][:phone])
+      if include_blank
+        new_attributes[:user][:phone] = nil
+      else
+        new_attributes[:user].delete(:phone)
+        new_attributes.delete(:user) if new_attributes[:user].empty?
+      end
+    end
+    new_attributes
   end
 
   MEMBER_DEFAULT_ATTRIBUTES = { instructor: false, nkf_fee: true, payment_problem: false }.freeze

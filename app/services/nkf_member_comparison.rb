@@ -104,9 +104,7 @@ class NkfMemberComparison
   def sync_attribute(membership, attr_sym, form, new_value, old_value, outgoing_changes, record)
     return if old_value.blank? && new_value.blank?
 
-    _nkf_column, nkf_mapping = NkfMember::FIELD_MAP.find do |_k, v|
-      [*v[:map_from]].include?(attr_sym) || v[:map_to] == attr_sym
-    end
+    _nkf_column, nkf_mapping = NkfMember.rjjk_field_mapping(attr_sym)
     return if nkf_mapping && nkf_mapping[:import]
 
     if (nkf_field = nkf_mapping&.fetch(:form_field, nil))

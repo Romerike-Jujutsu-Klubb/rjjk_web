@@ -7,16 +7,19 @@
       th RJJK value
       th RJJK attribute
   tbody
-    - @member.nkf_member.attributes.sort.each do |k,v|
-      - target, mapped_key, mapped_value = NkfMember.rjjk_attribute(k,v)
-      - rjjk_value = @member.send(target)&.send(mapped_key) if mapped_key
-      - diff_class = ('text-danger' if mapped_value != rjjk_value)
-      - v = v.strftime('%F %R') if v.is_a?(Time)
-      tr
-        th style="word-break:break-word" = k.split('___').uniq.join(' ')
-        td = v
-        td class=diff_class = mapped_value
-        td class=diff_class = rjjk_value
-        td style="word-break:break-word"
-          => target
-          = mapped_key
+    - @member.nkf_member.converted_attributes.sort.reverse.each do |target, mappings|
+      - mappings.sort.each do |mapped_key, mapped_value|
+        - rjjk_value = @member.send(target)&.send(mapped_key) if mapped_key
+        - diff_class = ('text-danger' if mapped_value != rjjk_value)
+        - nkf_mapping = NkfMember.rjjk_field_mapping(target => mapped_key)
+        - k = nkf_mapping[0]
+        - v = @member.nkf_member.send(k)
+        - v = v.strftime('%F %R') if v.is_a?(Time)
+        tr
+          th style="word-break:break-word" = k.to_s.split(/_+/).uniq.join(' ')
+          td = v
+          td class=diff_class = mapped_value
+          td class=diff_class = rjjk_value
+          td style="word-break:break-word"
+            => target
+            = mapped_key
