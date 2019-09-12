@@ -1,4 +1,5 @@
 {
+  "license": "UNLICENSED",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.10.1",
     "pc-bootstrap4-datetimepicker": "^4.17.50"
