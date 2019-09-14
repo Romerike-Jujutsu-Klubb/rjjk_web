@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
     # FIXME(uwe): Virker ikke?
     before_action { redirect_to(host: 'www.jujutsu.no') if request.host != 'www.jujutsu.no' }
   end
-  # before_action :reject_bots
   before_action :store_current_user_in_thread
   before_action :set_paper_trail_whodunnit
   before_action :set_locale
@@ -103,22 +102,6 @@ class ApplicationController < ActionController::Base
   def send_data(*)
     request.env['rack.session.options'][:skip] = true
     super
-  end
-
-  def reject_bots
-    http_headers = request.headers.to_h.select { |k, _v| /^[A-Z0-9_]+$/ =~ k }
-    referrer = http_headers['HTTP_REFERER']
-    if http_headers['HTTP_USER_AGENT'] =~ /BLEXBot/i || referrer =~ /baidu/i
-      BotMailer.reject(http_headers).deliver_now
-      if referrer.present?
-        redirect_to referrer
-      else
-        render status: :too_many_requests
-      end
-      false
-    else
-      true
-    end
   end
 
   def set_locale
