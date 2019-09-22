@@ -8,6 +8,7 @@ class NkfMemberSyncJob < ApplicationJob
     NkfReplicationMailer.update_members(c).deliver_now if c.errors.any?
     mi = NkfMemberImport.new(member.nkf_member.medlemsnummer)
     raise mi.exception if mi.exception
+
     report_differences(member.reload)
   end
 
