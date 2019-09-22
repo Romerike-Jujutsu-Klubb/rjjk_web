@@ -103,6 +103,7 @@ group :test do
   gem 'minitest-rails'
   gem 'minitest-reporters'
   gem 'mocha', require: 'mocha/setup'
+  gem 'nokogiri-diff'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   # gem 'rubycritic', require: false

@@ -268,6 +268,9 @@ GEM
     nio4r (2.5.1)
     nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
+    nokogiri-diff (0.2.0)
+      nokogiri (~> 1.5)
+      tdiff (~> 0.3, >= 0.3.2)
     nprogress-rails (0.2.0.2)
     ntlm-http (0.1.1)
     oauth2 (1.4.1)
@@ -415,6 +418,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    tdiff (0.3.4)
     temple (0.8.1)
     thor (0.20.3)
     thread_safe (0.3.6)
@@ -487,6 +491,7 @@ DEPENDENCIES
   momentjs-rails
   newrelic_rpm
   nokogiri
+  nokogiri-diff
   nprogress-rails
   oauth2
   oily_png
