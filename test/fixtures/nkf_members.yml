@@ -1,32 +1,49 @@
 erik:
-  fornavn: Erik
-  etternavn: Øyan
   adresse_2: Bøkeveien 11
-  postnr: 1470
-  kjonn: Mann
+  epost: erik@example.net
+  epost_faktura:
+  etternavn: Øyan
   fodselsdato: 01.04.1974
+  fornavn: Erik
   innmeldtdato: 01.05.1996
   gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu/Jujutsu (Ingen stilartstilknytning)/Strømmen Storsenter/Voksne
-  epost: erik@example.net
-  medlemsstatus: A
-uwe:
-  fornavn: Uwe
-  etternavn: Kubosch
-  adresse_2: Møllesvingen 5
-  fodselsdato: 25.11.1970
   kjonn: Mann
-  member: uwe
-  innmeldtdato: 05.01.1987
-  gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu/Jujutsu (Ingen stilartstilknytning)/Strømmen Storsenter/Voksne
-  medlemsnummer: <%=NkfAgent::NKF_USERNAME%>
-  epost: uwe@example.net
   medlemsstatus: A
+  postnr: 1470
+uwe:
+  adresse_2: Møllesvingen 5
+  epost: uwe@example.net
+  epost_faktura: ""
+  etternavn: Kubosch
+  fodselsdato: 25.11.1970
+  foresatte: ""
+  foresatte_epost: ""
+  foresatte_mobil: ""
+  foresatte_nr_2: ""
+  foresatte_nr_2_mobil: ""
+  fornavn: Uwe
+  gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu/Jujutsu (Ingen stilartstilknytning)/Strømmen Storsenter/Voksne
+  innmeldtdato: 05.01.1987
+  kjonn: Mann
+  medlemsnummer: <%=NkfAgent::NKF_USERNAME%>
+  medlemsstatus: A
+  member: uwe
+  mobil: ""
   postnr: 1479
+  telefon: ""
+  telefon_arbeid: ""
+  utmeldtdato: ""
 lars:
   adresse_2: Torsvei 8b
   epost: lars@example.net
+  epost_faktura: ""
   etternavn: Bråten
   fodselsdato: 01.03.1967
+  foresatte: ""
+  foresatte_epost: ""
+  foresatte_mobil: ""
+  foresatte_nr_2: ""
+  foresatte_nr_2_mobil: ""
   fornavn: Lars
   gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu/Jujutsu (Ingen stilartstilknytning)/Strømmen Storsenter/Voksne
   innmeldtdato: 01.04.2001
@@ -34,17 +51,24 @@ lars:
   medlemsnummer: 40000993
   medlemsstatus: A
   member: lars
+  mobil: ""
   postnr: 1472
+  telefon: ""
+  telefon_arbeid: ""
+  utmeldtdato: ""
 sebastian:
   adresse_2: Møllesvingen 5
   betalt_t_o_m__dato: 31.03.2018
   etternavn: Kubosch
-  fodselsdato: 04.06.2004
-  fornavn: Sebastian
   epost: sebastian@example.net
   epost_faktura: lise@example.net
+  fodselsdato: 04.06.2004
   foresatte: Lise Kubosch
+  foresatte_epost: ""
   foresatte_mobil: 98765432
+  foresatte_nr_2: ""
+  foresatte_nr_2_mobil: ""
+  fornavn: Sebastian
   gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu/Jujutsu (Ingen stilartstilknytning)/Strømmen Storsenter/Tiger
   hovedmedlem_id: 1012618
   hovedmedlem_navn: Kubosch Sebastian
@@ -68,5 +92,8 @@ sebastian:
   postnr: 1479
   sist_betalt_dato: 20.04.2017
   sted: KURLAND
+  telefon: ""
+  telefon_arbeid: ""
+  utmeldtdato: ""
   created_at: 2010-09-21 19:35:26.464000
   updated_at: 2017-05-31 09:17:00.336523

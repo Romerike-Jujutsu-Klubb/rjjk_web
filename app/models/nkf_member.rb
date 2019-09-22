@@ -2,7 +2,6 @@
 
 class NkfMember < ApplicationRecord
   # `map_to` is used to set a new value in the RJJK model.
-  # `map_from` is used to detect changes in the RJJK model.
   FIELD_MAP = {
     adresse_1: {},
     adresse_2: { map_to: { user: :address }, form_field: :frm_48_v05 },
@@ -10,21 +9,14 @@ class NkfMember < ApplicationRecord
     antall_etiketter_1: {},
     betalt_t_o_m__dato: {},
     created_at: {},
-    epost: { map_to: { user: :contact_email }, map_from: [{ user: :email }, { user: :contact_user_id }],
-             form_field: :frm_48_v10 },
+    epost: { map_to: { user: :contact_email }, form_field: :frm_48_v10 },
     epost_faktura: { map_to: { billing: :email }, form_field: :frm_48_v22 },
     etternavn: { map_to: { user: :last_name }, form_field: :frm_48_v04 },
     fodselsdato: { map_to: { user: :birthdate }, form_field: :frm_48_v08 },
-    foresatte: { map_to: { user: :guardian_1_or_billing_name }, form_field: :frm_48_v23,
-                 map_from: [
-                   { guardian_1: :first_name }, { guardian_1: :last_name }, { billing: :first_name },
-                   { billing: :last_name }
-                 ] },
+    foresatte: { map_to: { user: :guardian_1_or_billing_name }, form_field: :frm_48_v23 },
     foresatte_epost: { map_to: { guardian_1: :email }, form_field: :frm_48_v73 },
     foresatte_mobil: { map_to: { guardian_1: :phone }, form_field: :frm_48_v74 },
-    foresatte_nr_2: { map_to: { guardian_2: :name }, map_from: [
-      { guardian_2: :first_name }, { guardian_2: :last_name }
-    ], form_field: :frm_48_v72 },
+    foresatte_nr_2: { map_to: { guardian_2: :name }, form_field: :frm_48_v72 },
     foresatte_nr_2_mobil: { map_to: { guardian_2: :phone }, form_field: :frm_48_v75 },
     fornavn: { map_to: { user: :first_name }, form_field: :frm_48_v03 },
     gren_stilart_avd_parti___gren_stilart_avd_parti: {},
@@ -39,18 +31,18 @@ class NkfMember < ApplicationRecord
     klubb_id: {},
     konkurranseomrade_id: {},
     konkurranseomrade_navn: {},
-    kont_belop: {},
-    kont_sats: {},
-    kontraktsbelop: {},
-    kontraktstype: {},
-    medlemskategori: {},
-    medlemskategori_navn: {},
+    kont_belop: {}, # FIXME(uwe): Map payment values
+    kont_sats: {}, # FIXME(uwe): Map payment values
+    kontraktsbelop: {}, # FIXME(uwe): Map payment values
+    kontraktstype: {}, # FIXME(uwe): Map payment values
+    medlemskategori: {}, # FIXME(uwe): Map payment values
+    medlemskategori_navn: {}, # FIXME(uwe): Map payment values
     medlemsnummer: {},
-    medlemsstatus: {},
+    medlemsstatus: {}, # FIXME(uwe): Should be mapped: passive_from+left_on => 'A', 'P'
     member_id: {},
     mobil: { map_to: { user: :phone }, form_field: :frm_48_v20 },
     postnr: { map_to: { user: :postal_code }, form_field: :frm_48_v07 },
-    rabatt: {},
+    rabatt: {}, # FIXME(uwe): Map payment values
     sist_betalt_dato: {},
     sted: {},
     telefon: { map_to: { membership: :phone_home }, form_field: :frm_48_v19 },
@@ -68,12 +60,6 @@ class NkfMember < ApplicationRecord
 
   validates :kjonn, presence: true
   validates :member_id, uniqueness: { allow_nil: true }
-
-  def self.rjjk_field_mapping(rel_attr)
-    NkfMember::FIELD_MAP.find do |_k, v|
-      [*v[:map_from]].include?(rel_attr) || v[:map_to] == rel_attr
-    end
-  end
 
   def self.find_free_members
     Member
@@ -97,43 +83,99 @@ class NkfMember < ApplicationRecord
     end
   end
 
-  def self.rjjk_attribute(k, v)
-    mapping = FIELD_MAP[k.to_sym]
-    raise "Unknown attribute: #{k}" unless mapping
+  def mapping_attributes
+    attributes.map(&method(:rjjk_attribute))
+  end
+
+  def mapping_changes
+    mapping_attributes.select do |a|
+      a[:target] && a[:mapped_rjjk_value] != a[:nkf_value] &&
+          a[:mapped_rjjk_value] != a[:nkf_value]&.downcase
+    end
+  end
+
+  def rjjk_attribute(nkf_attr, nkf_value)
+    mapping = FIELD_MAP[nkf_attr.to_sym]
+    raise "Unknown attribute: #{nkf_attr}" unless mapping
 
     if (mapped_attribute = mapping[:map_to])
       mapped_attribute = { membership: mapped_attribute } unless mapped_attribute.is_a?(Hash)
       target, target_attribute = mapped_attribute.to_a[0]
-      mapped_value =
-          if /^\s*(?<day>\d{2})\.(?<month>\d{2})\.(?<year>\d{4})\s*$/ =~ v
+      relation = NkfMemberComparison.target_relation(member, target) if member
+      rjjk_value = relation&.send(target_attribute)
+      mapped_rjjk_value =
+          if rjjk_value.is_a?(Date)
+            rjjk_value.strftime('%d.%m.%Y')
+          elsif nkf_attr == 'kjonn'
+            rjjk_value ? 'Mann' : 'Kvinne'
+          else
+            rjjk_value.to_s
+          end
+      mapped_nkf_value =
+          if /^\s*(?<day>\d{2})\.(?<month>\d{2})\.(?<year>\d{4})\s*$/ =~ nkf_value
             Date.new(year.to_i, month.to_i, day.to_i)
-          elsif /Mann|Kvinne/.match?(v)
-            v == 'Mann'
-          elsif v.blank? && (target =~ /^(billing|guardian_)/ ||
+          elsif /Mann|Kvinne/.match?(nkf_value)
+            nkf_value == 'Mann'
+          elsif nkf_value.blank? && (target =~ /^(billing|guardian_)/ ||
               target_attribute =~ /^guardian_|email|mobile|phone|_on$/)
             nil
-          elsif v.blank? && (target == :user && User::NILLABLE_FIELDS.include?(target_attribute))
+          elsif nkf_value.blank? && (target == :user && User::NILLABLE_FIELDS.include?(target_attribute))
             nil
-          elsif v.present? && target_attribute =~ /email/
-            v.downcase
+          elsif nkf_value.present? && target_attribute =~ /email/
+            nkf_value.downcase
           else
-            v
+            nkf_value
           end
+    else
+      logger.debug "rjjk_attribute: Ignore attribute: #{nkf_attr}: #{nkf_value.inspect}"
     end
-    [target, target_attribute, mapped_value]
+    { nkf_attr: nkf_attr, target: target, target_attribute: target_attribute, nkf_value: nkf_value,
+      mapped_nkf_value: mapped_nkf_value, rjjk_value: rjjk_value, mapped_rjjk_value: mapped_rjjk_value,
+      form_field: mapping[:form_field] }
   end
 
   def converted_attributes(include_blank: true)
     new_attributes = Hash.new { |hash, key| hash[key] = {} }
-    attributes.each do |k, v|
-      target, target_attribute, mapped_value = self.class.rjjk_attribute(k, v)
+    attributes.each do |nkf_attr, nkf_value|
+      target, target_attribute, mapped_value = rjjk_attribute(nkf_attr, nkf_value)
+          .values_at(:target, :target_attribute, :mapped_nkf_value)
       next unless target && target_attribute &&
           (include_blank || mapped_value.present? || mapped_value == false)
 
       new_attributes[target][target_attribute] = mapped_value
     end
-    if new_attributes[:user][:phone]&.==(new_attributes[:guardian_1][:phone]) ||
-          new_attributes[:user][:phone]&.==(new_attributes[:billing][:phone])
+    user_email = new_attributes.dig(:user, :email)
+    email_contact_user = User.find_by(email: user_email) if user_email.present?
+    logger.info "email_contact_user: #{email_contact_user.inspect}"
+
+    if new_attributes.dig(:billing, :email)&.== new_attributes.dig(:guardian_1, :email)
+      logger.info 'converted_attributes: resetting billing email since it equals parent email'
+      new_attributes[:billing].delete(:email)
+      new_attributes.delete(:billing) if new_attributes[:billing].empty?
+    end
+
+    secondary_emails = [new_attributes.dig(:billing, :email), new_attributes.dig(:guardian_1, :email),
+                        new_attributes.dig(:guardian_2, :email)].compact
+    if secondary_emails.include?(user_email)
+      logger.error 'reset user email since it equals a secondary email: ' \
+            "#{new_attributes[:user][:email].inspect}"
+      if include_blank
+        new_attributes[:user][:email] = nil
+      else
+        new_attributes[:user].delete(:email)
+        new_attributes.delete(:user) if new_attributes[:user].empty?
+      end
+    end
+
+    user_phone = new_attributes.dig(:user, :phone)
+    phone_contact_user = User.find_by(email: user_phone) if user_phone.present?
+    logger.info "phone_contact_user: #{phone_contact_user.inspect}"
+
+    secondary_phones = [new_attributes.dig(:billing, :phone), new_attributes.dig(:guardian_1, :phone),
+                        new_attributes.dig(:guardian_2, :phone)].compact
+    if secondary_phones.include?(new_attributes.dig(:user, :phone))
+      logger.error 'reset user phone since it equals a secondary phone: ' \
+            "#{new_attributes[:user][:phone].inspect}"
       if include_blank
         new_attributes[:user][:phone] = nil
       else
@@ -154,23 +196,6 @@ class NkfMember < ApplicationRecord
       billing_attributes = attributes[:billing]
       guardian_1_attributes = attributes[:guardian_1]
       guardian_2_attributes = attributes[:guardian_2]
-
-      # if attributes.dig(:billing, :email)&.== attributes.dig(:guardian_1, :email)
-      #   logger.info 'converted_attributes: resetting billing email since it equals parent email'
-      #   attributes[:billing].delete(:email)
-      # end
-
-      secondary_phones = [attributes.dig(:billing, :phone), attributes.dig(:guardian_1, :phone),
-                          attributes.dig(:guardian_2, :phone)].compact
-      if secondary_phones.include?(attributes.dig(:user, :phone))
-        logger.error 'reset user phone since it equals a secondary phone: ' \
-            "#{attributes[:user][:phone].inspect}"
-        if include_blank
-          attributes[:user][:phone] = nil
-        else
-          attributes[:user].delete(:phone)
-        end
-      end
 
       logger.error "membership_attributes: #{membership_attributes.inspect}"
       logger.error "user_attributes: #{user_attributes.inspect}"

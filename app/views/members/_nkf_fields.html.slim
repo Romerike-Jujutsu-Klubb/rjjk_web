@@ -1,25 +1,21 @@
 .table-responsive: table.table.table-striped.table-sm
   thead
     tr
-      th NKF attribute
-      th NKF value
-      th Mapped value
-      th RJJK value
       th RJJK attribute
+      th RJJK value
+      th RJJK value (mapped)
+      th NKF value
+      th NKF attribute
   tbody
-    - @member.nkf_member.converted_attributes.sort.reverse.each do |target, mappings|
-      - mappings.sort.each do |mapped_key, mapped_value|
-        - rjjk_value = @member.send(target)&.send(mapped_key) if mapped_key
-        - diff_class = ('text-danger' if mapped_value != rjjk_value)
-        - nkf_mapping = NkfMember.rjjk_field_mapping(target => mapped_key)
-        - k = nkf_mapping[0]
-        - v = @member.nkf_member.send(k)
-        - v = v.strftime('%F %R') if v.is_a?(Time)
-        tr
-          th style="word-break:break-word" = k.to_s.split(/_+/).uniq.join(' ')
-          td = v
-          td class=diff_class = mapped_value
-          td class=diff_class = rjjk_value
-          td style="word-break:break-word"
-            => target
-            = mapped_key
+    - @member.nkf_member.mapping_attributes.select{|h| h[:target]}.sort_by{|h| h[:nkf_attr]}.each do |mapping|
+      - nkf_value = mapping[:nkf_value]
+      - mapped_rjjk_value = mapping[:mapped_rjjk_value]
+      - diff_class = ('text-danger' if nkf_value != mapped_rjjk_value)
+      tr
+        td style="word-break:break-word"
+          => mapping[:target]
+          = mapping[:target_attribute].to_s.gsub('_', ' ')
+        td = mapping[:rjjk_value]
+        td class=diff_class = mapped_rjjk_value
+        td class=diff_class = nkf_value
+        th style="word-break:break-word" = mapping[:nkf_attr].to_s.split(/_+/).uniq.join(' ')

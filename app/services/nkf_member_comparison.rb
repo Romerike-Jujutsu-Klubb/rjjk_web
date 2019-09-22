@@ -7,6 +7,36 @@ class NkfMemberComparison
   attr_reader :errors, :member_changes, :members, :new_members, :orphan_members,
       :orphan_nkf_members, :outgoing_changes
 
+  def self.target_relation(member, target, nkf_values = {})
+    case target
+    when :membership
+      member
+    when :user
+      member.user
+    when :billing
+      if nkf_values.any? { |_k, v| v.present? }
+        if nkf_values[:email] && (existing_email_user = User.find_by(email: nkf_values[:email]))
+          logger.info "Use existing billing user: #{existing_email_user}"
+          member.user.billing_user = existing_email_user
+          existing_email_user
+        elsif member.user.billing_user
+          member.user.billing_user
+        else
+          logger.info "Create new billing user: #{nkf_values}"
+          member.user.build_billing_user
+        end
+      else
+        member.user.billing_user
+      end
+    when :guardian_1
+      member.user.guardian_1 ||
+          ((nkf_values.any? { |_k, v| v.present? } || nil) && member.user.build_guardian_1)
+    when :guardian_2
+      member.user.guardian_2 ||
+          ((nkf_values.any? { |_k, v| v.present? } || nil) && member.user.build_guardian_2)
+    end
+  end
+
   def initialize(member_id = nil)
     load_changes(member_id)
   end
@@ -32,48 +62,25 @@ class NkfMemberComparison
     query = member_id ? base_query.where(member_id: member_id) : base_query.where.not(member_id: nil)
     query.each do |nkfm|
       member = nkfm.member
-      relations = assign_nkf_attributes(member)
-      @members << member if relations.any?(&:changed?)
+      mapped_changes = nkfm.mapping_changes
+      @members << [member, mapped_changes] if mapped_changes.any?
     end
   end
 
   def sync_members(agent, front_page)
-    @member_changes = @members.map do |m|
-      sync_member_with_agent(agent, front_page, m)
+    @member_changes = @members.map do |m, changes|
+      sync_member_with_agent(agent, front_page, m, changes)
     end.compact
   end
 
-  def assign_nkf_attributes(member)
+  def assign_nkf_attributes(member, _mapped_values)
     converted_attributes = member.nkf_member.converted_attributes
-    relations = []
+    relations = {}
     converted_attributes.each do |target, nkf_values|
-      relation =
-          if target == :membership
-            member
-          elsif target == :user
-            member.user
-          elsif target == :billing
-            if member.user.billing_user
-              member.user.billing_user
-            elsif nkf_values.any? { |_k, v| v.present? }
-              if nkf_values[:email] && (existing_email_user = User.find_by(email: nkf_values[:email]))
-                logger.info "Use existing billing user: #{existing_email_user}"
-                member.user.billing_user = existing_email_user
-                existing_email_user
-              else
-                logger.info "Create new billing user: #{nkf_values}"
-                member.user.build_billing_user
-              end
-            end
-          elsif target == :guardian_1
-            member.user.guardian_1 ||
-                ((nkf_values.any? { |_k, v| v.present? } || nil) && member.user.build_guardian_1)
-          elsif target == :guardian_2
-            member.user.guardian_2 ||
-                ((nkf_values.any? { |_k, v| v.present? } || nil) && member.user.build_guardian_2)
-          end
+      relation = relations[target] || self.class.target_relation(member, target, nkf_values)
       next unless relation
 
+      relations[target] = relation
       nkf_values.each do |attribute, nkf_value|
         rjjk_value = relation.send(:"#{attribute}")
         next if nkf_value == rjjk_value
@@ -83,7 +90,6 @@ class NkfMemberComparison
               "#{rjjk_value.inspect} => #{nkf_value.inspect}"
         relation.send(:"#{attribute}=", nkf_value)
       end
-      relations |= [relation]
     end
     relations
   end
@@ -101,32 +107,25 @@ class NkfMemberComparison
     @new_members = created_members.compact
   end
 
-  def sync_attribute(membership, attr_sym, form, new_value, old_value, outgoing_changes, record)
-    return if old_value.blank? && new_value.blank?
+  def sync_attribute(_membership, form, outgoing_changes, nkf_mapping)
+    mapped_rjjk_value = nkf_mapping[:mapped_rjjk_value]
+    nkf_value = nkf_mapping[:nkf_value]
 
-    _nkf_column, nkf_mapping = NkfMember.rjjk_field_mapping(attr_sym)
-    return if nkf_mapping && nkf_mapping[:import]
+    if mapped_rjjk_value.blank? && nkf_value.blank?
+      logger.error "No update needed for #{nkf_mapping[:nkf_attr]}"
+      return
+    end
 
-    if (nkf_field = nkf_mapping&.fetch(:form_field, nil))
-      if nkf_mapping[:map_to] != attr_sym
-        translation = nkf_mapping[:map_to].to_a[0]
-        export_value = membership.send(translation[0]).send("#{translation[1]}_was")
-      else
-        export_value = old_value
-      end
-      form_value = export_value.is_a?(Date) ? export_value.strftime('%d.%m.%Y') : export_value
-      logger.info "set form value #{nkf_field.inspect} = #{form_value.inspect}"
-      form[nkf_field.to_s] = form_value&.encode(form.encoding)
-      outgoing_changes[attr_sym] = { new_value => export_value }
-    elsif attr_sym == { user: :billing_user_id }
-      record.billing_user.attributes.each do |billing_attr, new_billing_value|
-        next if new_billing_value.nil?
+    # _nkf_column, nkf_mapping = NkfMember.rjjk_field_mapping(attr_sym)
+    # return if nkf_mapping && nkf_mapping[:import]
 
-        billing_attr_sym = { billing: billing_attr.to_sym }
-        sync_attribute(membership, billing_attr_sym, form, new_billing_value, nil, outgoing_changes,
-            record)
-      end
-    elsif [{ user: :latitude }, { user: :longitude }].include?(attr_sym)
+    attr_sym = { nkf_mapping[:target] => nkf_mapping[:target_attribute] }
+    if (nkf_field = nkf_mapping[:form_field]&.to_s)
+      form_value = form[nkf_field]
+      logger.info "Set form field #{nkf_field}: #{form_value.inspect} => #{mapped_rjjk_value.inspect}"
+      form[nkf_field] = mapped_rjjk_value&.encode(form.encoding)
+      outgoing_changes[attr_sym] = { nkf_value => mapped_rjjk_value }
+    # elsif [{ user: :latitude }, { user: :longitude }].include?(attr_sym)
     else
       @errors << ['Unhandled change', attr_sym, record]
     end
@@ -140,15 +139,13 @@ class NkfMemberComparison
     [agent, front_page]
   end
 
-  def sync_member_with_agent(agent, front_page, m)
+  def sync_member_with_agent(agent, front_page, m, mapped_changes)
     logger.info "Synching member: #{m.user.name} #{m.nkf_member.medlemsnummer} #{m.inspect}"
-    logger.info "m.changes: #{m.changes.pretty_inspect}"
-    verify_user(m)
-    verify_billing_user(m)
-    submit_changes_to_nkf(agent, front_page, m)
+    logger.info "mapped_changes: #{mapped_changes.pretty_inspect}"
+    submit_changes_to_nkf(agent, front_page, m, mapped_changes)
     return if Rails.env.production?
 
-    save_incoming_changes(m)
+    save_incoming_changes(m, mapped_changes)
   rescue => e
     logger.error "Exception saving member changes for #{m.attributes.inspect}"
     logger.error e.message
@@ -157,22 +154,22 @@ class NkfMemberComparison
     nil
   end
 
-  def gather_changes(m)
-    changes = m.changes
-    m.related_users.each do |relationship, u|
-      if u.changed?
-        changes[relationship] = u.changes
+  def gather_changes(m, related_users)
+    changes = {}
+    related_users.each do |relationship, user|
+      if user.changed?
+        changes[relationship] = user.changes
       elsif relationship == :billing && m.user.billing_user_id_changed?
-        # changes.delete('billing_user_id')
-        changes[relationship] = Hash[u.attributes.except('created_at', 'updated_at')
-            .reject { |_k, v| v.nil? }.map { |k, v| [k, [nil, v]] }]
+        billing_attributes = user.attributes.except('created_at', 'updated_at').reject { |_k, v| v.nil? }
+            .map { |k, v| [k, [nil, v]] }
+        changes[relationship] = Hash[billing_attributes]
       end
     end
     changes
   end
 
-  def submit_changes_to_nkf(agent, front_page, m)
-    member_form, outgoing_changes_for_member = find_outgoing_changes(agent, front_page, m)
+  def submit_changes_to_nkf(agent, front_page, m, mapped_changes)
+    member_form, outgoing_changes_for_member = find_outgoing_changes(agent, front_page, m, mapped_changes)
     return unless Rails.env.production? && outgoing_changes_for_member.any?
 
     # m.restore_attributes(outgoing_changes_for_member.keys)
@@ -194,15 +191,18 @@ class NkfMemberComparison
     change_response_page
   end
 
-  def save_incoming_changes(m)
-    changes = gather_changes(m)
+  def save_incoming_changes(membership, mapped_values)
+    relations = assign_nkf_attributes(membership, mapped_values)
+    changes = gather_changes(membership, relations)
     return if changes.empty?
 
-    m.save!
-    [m, changes]
+    logger.info "Saving local changes: #{changes.inspect}"
+    membership.save!
+    relations.values.each(&:save!)
+    [membership, changes]
   end
 
-  def find_outgoing_changes(agent, front_page, membership)
+  def find_outgoing_changes(agent, front_page, membership, mapped_changes)
     search_form = front_page.form('ks_reg_medladm') do |search|
       search.p_ks_reg_medladm_action = 'SEARCH'
       search['frm_27_v29'] = 0
@@ -214,15 +214,8 @@ class NkfMemberComparison
     member_page = agent.get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{token}")
     outgoing_changes_for_member = {}
     member_form = member_page.form('ks_medlprofil') do |form|
-      membership.changes.each do |attr, (old_value, new_value)|
-        sync_attribute(membership, { membership: attr.to_sym }, form, new_value, old_value,
-            outgoing_changes_for_member, membership)
-      end
-      membership.related_users.each do |relationship, u|
-        u.changes.each do |attr, (old_value, new_value)|
-          attr = { relationship => attr.to_sym }
-          sync_attribute(membership, attr, form, new_value, old_value, outgoing_changes_for_member, u)
-        end
+      mapped_changes.each do |mc|
+        sync_attribute(membership, form, outgoing_changes_for_member, mc)
       end
       @outgoing_changes << [membership, outgoing_changes_for_member] if outgoing_changes_for_member.any?
     end

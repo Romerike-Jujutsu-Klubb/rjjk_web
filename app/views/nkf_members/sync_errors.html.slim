@@ -12,11 +12,14 @@ table.table.table-sm
       th NKF Verdi
       th NKF Felt
   tbody
-    - @errors.each do |member_row|
-      - member_row.each.with_index do |row, i|
-        tr class=('bg-warning' if row[0].left_on)
+    - @errors.each do |member, mapped_attributes|
+      - mapped_attributes.each.with_index do |mapping, i|
+        tr class=('bg-warning' if member.left_on)
           - if i == 0
-            td rowspan=member_row.size
-              a href=member_path(row[0], anchor: :tab_nkf_tab) = row[0]
-          - row[1..-1].each do |col|
-            td = col.inspect
+            td rowspan=mapped_attributes.size
+              a href=member_path(member, anchor: :tab_nkf_tab) = member
+          td = mapping[:target]
+          td = mapping[:target_attribute]
+          td = mapping[:mapped_rjjk_value]
+          td = mapping[:nkf_value]
+          td = mapping[:nkf_attr]

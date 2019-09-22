@@ -8,16 +8,8 @@ class NkfMembersController < ApplicationController
   end
 
   def sync_errors
-    @errors = NkfMember.includes(member: { user: %i[guardian_1 guardian_2 billing_user contact_user] })
-        .references(:members).order(:left_on, :updated_at).reverse_order.map do |nkf_member|
-      nkf_member.attributes.sort.map do |k, v|
-        target, mapped_key, mapped_value = NkfMember.rjjk_attribute(k, v)
-        next unless mapped_key
-
-        rjjk_value = nkf_member.member.send(target)&.send(mapped_key)
-        [nkf_member.member, target, mapped_key, rjjk_value, mapped_value, k] if mapped_value != rjjk_value
-      end.compact
-    end.reject(&:empty?)
+    @errors = NkfMember.includes(:member).references(:members).order(:left_on, :updated_at).reverse_order
+        .map { |nkfm| [nkfm.member, nkfm.mapping_changes] }.reject { |m| m[1].empty? }
   end
 
   def show

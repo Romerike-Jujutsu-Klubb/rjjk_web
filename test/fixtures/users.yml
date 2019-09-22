@@ -1,18 +1,19 @@
 uwe:
+  address: Møllesvingen 5
+  birthdate: 1970-11-25
+  email: uwe@example.com
   first_name: Uwe
   last_name: Kubosch
   login: uwe
-  address: Møllesvingen 5
+  male: true
   postal_code: 1479
-  salted_password: de6db7cdf638e5ba522b9e5728d551315bf750f4 # atest
-  salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
-  email: uwe@example.com
-  verified: true
   role: ADMIN
+  phone: 5556666
+  salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
+  salted_password: de6db7cdf638e5ba522b9e5728d551315bf750f4 # atest
   security_token: 0123456789abcdef0123456789abcdef01234567
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
-  birthdate: 1970-11-25
-  male: true
+  verified: true
 
 lars:
   first_name: Lars

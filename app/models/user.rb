@@ -287,7 +287,7 @@ class User < ApplicationRecord
   end
 
   def contact_info
-    phones.first || emails.first
+    contact_phone || contact_email
   end
 
   def contact_phone
@@ -316,19 +316,14 @@ class User < ApplicationRecord
     elsif new_contact_user
       logger.info 'set new contact user'
       self.contact_user = new_contact_user
-    elsif billing_user&.== contact_user
-      logger.info 'Update billing user email'
-      billing_user.email = value
-    elsif guardian_1&.== contact_user
-      logger.info 'Update guardian 1 user email'
-      guardian_1.email = value
-    elsif guardian_2&.== contact_user
-      logger.info 'Update guardian 2 user email'
-      guardian_2.email = value
     else
       logger.info 'Update user email'
       self.email = value
     end
+  end
+
+  def contact_email_changed?
+    contact_email_was != contact_email
   end
 
   def guardian_1_or_billing_name
