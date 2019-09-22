@@ -17,7 +17,8 @@ class MediumDevicesTest < ApplicationSystemTestCase
     browser_options = ::Selenium::WebDriver::Chrome::Options.new
     browser_options.args << '--force-color-profile=srgb'
     browser_options.add_emulation(
-        device_metrics: { width: MEDIUM_WINDOW_SIZE[0], height: MEDIUM_WINDOW_SIZE[1], pixelRatio: 1, touch: true },
+        device_metrics:
+            { width: MEDIUM_WINDOW_SIZE[0], height: MEDIUM_WINDOW_SIZE[1], pixelRatio: 1, touch: true },
         user_agent: USER_AGENT
       )
     browser_options.headless!
@@ -93,7 +94,8 @@ class MediumDevicesTest < ApplicationSystemTestCase
     find('.fa-chevron-down').click
     find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
     screenshot(:scrolled, skip_area: SCROLL_BAR_AREA) || (sleep(0.5) if ENV['TRAVIS'])
-    assert_equal information_page_url(id(:first)), find('#footer .menu-item a', text: 'MY FIRST ARTICLE')[:href]
+    assert_equal information_page_url(id(:first)),
+        find('#footer .menu-item a', text: 'MY FIRST ARTICLE')[:href]
     begin
       find('#footer .menu-item a', text: 'MY FIRST ARTICLE').click
       assert_current_path information_page_path(id(:first))
