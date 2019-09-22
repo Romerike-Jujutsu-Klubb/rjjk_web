@@ -29,34 +29,32 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
     select('Oktober 2013', from: 'group_name_Panda')
     assert_current_path attendance_form_path year: 2013, month: 10, group_id: id(:panda)
     assert has_css? 'tr td:first-child'
-    assert_equal ['Uwe Kubosch',
+    assert_equal ["Uwe Kubosch\n5556666",
                   'Totalt 1',
                   'Lars Bråten',
-                  'Erik Hansen
-NKF_mt_two@example.com',
-                  'Hans Eriksen
-faktura@eriksen.org',
-                  'Totalt 3', 'Sebastian Kubosch (Permisjon)
-98765432', 'Totalt 1'],
+                  "Erik Hansen\nNKF_mt_two@example.com",
+                  "Hans Eriksen\nfaktura@eriksen.org",
+                  'Totalt 3',
+                  "Sebastian Kubosch (Permisjon)\n98765432 / 5556666",
+                  'Totalt 1'],
         all('tr td:first-child').map(&:text).reject(&:blank?)
   end
 
   def test_record_panda_october
     visit_with_login attendance_form_path year: 2013, month: 10, group_id: id(:panda)
-    assert_equal ['Uwe Kubosch',
+    assert_equal ["Uwe Kubosch\n5556666",
                   'Totalt 1',
                   'Lars Bråten',
-                  'Erik Hansen
-NKF_mt_two@example.com',
-                  'Hans Eriksen
-faktura@eriksen.org',
-                  'Totalt 3', 'Sebastian Kubosch (Permisjon)
-98765432', 'Totalt 1'],
+                  "Erik Hansen\nNKF_mt_two@example.com",
+                  "Hans Eriksen\nfaktura@eriksen.org",
+                  'Totalt 3',
+                  "Sebastian Kubosch (Permisjon)\n98765432 / 5556666",
+                  'Totalt 1'],
         all('tr td:first-child').map(&:text).reject(&:blank?)
 
     uwe_row = find('table:first-of-type tbody tr:first-of-type')
     assert uwe_row
-    assert_equal ['Uwe Kubosch', '42', 'svart belte', '', '', 'P', '', ''], # , '1 / 1'],
+    assert_equal ["Uwe Kubosch\n5556666", '42', 'svart belte', '', '', 'P', '', ''], # , '1 / 1'],
         uwe_row.all('td').map(&:text).map(&:strip)
     assert_difference 'Attendance.count' do
       uwe_row.find('td:nth-of-type(4)').find('a').click
