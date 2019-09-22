@@ -6,14 +6,6 @@ class NkfMemberImport
 
   attr_reader :changes, :error_records, :exception, :import_rows, :new_records, :trial_changes
 
-  def size
-    new_records.try(:size).to_i + changes.try(:size).to_i + error_records.try(:size).to_i
-  end
-
-  def any?
-    @exception || size.positive?
-  end
-
   def initialize(nkf_member_id = nil)
     super()
     @new_records = []
@@ -44,6 +36,14 @@ class NkfMemberImport
     import_member_trials(member_trial_rows)
   rescue => e
     @exception = e
+  end
+
+  def size
+    new_records.try(:size).to_i + changes.try(:size).to_i + error_records.try(:size).to_i
+  end
+
+  def any?
+    @exception || size.positive?
   end
 
   private
