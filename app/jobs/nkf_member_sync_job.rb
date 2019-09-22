@@ -15,10 +15,11 @@ class NkfMemberSyncJob < ApplicationJob
   def report_differences(member)
     nkf_member = member.nkf_member
     nkf_member.mapping_changes.each do |changes|
-      target, target_attr, rjjk_value, nkf_value =
-          changes.fetch_values(:target, :target_attribute, :mapped_rjjk_value, :nkf_value)
+      target, target_attr, rjjk_value, nkf_attribute, nkf_value =
+          changes.fetch_values(:target, :target_attribute, :mapped_rjjk_value, :nkf_attribute, :nkf_value)
       raise "Failed to synchronize value with NKF member: id: #{member.id}, " \
-          "RJJK: #{target}.#{target_attr}: #{rjjk_value.inspect}, NKF: #{k}: #{nkf_value.inspect}"
+          "RJJK: #{target}.#{target_attr}: #{rjjk_value.inspect}, " \
+          "NKF: #{nkf_attribute}: #{nkf_value.inspect}"
     rescue => e
       ExceptionNotifier.notify_exception(e)
     end
