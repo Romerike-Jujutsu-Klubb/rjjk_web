@@ -21,9 +21,13 @@ css:
 
   h3.mt-2
     | Hva skjer?
-    =< link_to image_tag('ical.png', :style => 'width: 24px;height: 24px'), \
-      {only_path: false, protocol: 'webcal', controller: :events, action: :calendar, format: :ics}, \
-      title: 'Abonnér på hendelseskalender!', class: 'float-right'
+    .float-right
+      =< link_to image_tag('ical.png', :style => 'width: 24px;height: 24px'), \
+        {only_path: false, protocol: 'webcal', controller: :events, action: :calendar, format: :ics}, \
+        title: 'Abonnér på hendelseskalender!'
+      - if admin?
+        a.btn.btn-primary.btn-sm.ml-1 href=new_event_path title="Nytt arrangement"
+          i.fa.fa-plus
   = render 'layouts/next_practice'
   = render 'layouts/events', events: @layout_events
 
