@@ -1,6 +1,6 @@
 - @content_width = 1024
 
-h1 NKF Synchronization errors (#{@errors.inject(0){|a,e| a + e.size}})
+h1 NKF Synchronization errors (#{@errors.inject(0){|a,e| a + e[1].size}})
 
 table.table.table-sm
   thead

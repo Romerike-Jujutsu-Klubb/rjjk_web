@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
+  HEADER = 'Arrangement'
+
   scope :chronological, -> { order :start_at }
   scope :upcoming, -> { where 'DATE(COALESCE(end_at, start_at)) >= ?', Date.current }
 

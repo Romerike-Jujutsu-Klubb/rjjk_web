@@ -123,6 +123,13 @@ Rails.application.routes.draw do
       get :tentative
     end
   end
+  resources :external_events do
+    member do
+      get :accept
+      get :decline
+    end
+  end
+
   resources :front_page_sections
   resources :graduates do
     member do
