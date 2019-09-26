@@ -20,7 +20,7 @@ ul#tab.nav.nav-tabs role="tablist"
           .where(practices: {group_schedule_id: group.group_schedules.map(&:id)}) \
           .where(status: Attendance::PRESENCE_STATES) \
           .where.not(member_id: group_members.map(&:id)) \
-          .map(&:member)
+          .map(&:member).uniq
       - group_members = group_members.sort_by { |m| m.current_rank }.reverse
       - active, passive = group_members.partition(&:active?)
       / https://stackoverflow.com/a/52634662/658690
