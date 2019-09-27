@@ -1,4 +1,3 @@
-- related_user = related_user&.member || related_user
 .row
   .col = f.select column, [[nil, nil]] + @users.map{|u| [u.label, u.id]}, \
       selected: user.send(column).to_s, \

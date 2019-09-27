@@ -62,7 +62,7 @@ ul.nav.nav-tabs role="tablist"
     #tab_depending_users.tab-pane.fade.pt-3
       ul
         - @user.depending_users.each do |u|
-          li = link_to u.name, member_path(u.member, anchor: :tab_contacts_tab)
+          li = link_to u.name, user_path(u, anchor: :tab_contacts_tab)
   - if @member
     #tab_graduations.tab-pane.fade = render 'graduations'
     - if @member.appointments.any? || @member.elections.any?
