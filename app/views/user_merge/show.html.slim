@@ -39,14 +39,20 @@ h1 Slå sammen to personer
                 td.align-middle
                   - if value != @other_user[attr]
                     = @other_user[attr]
+          - attendances = @user.memberships.map(&:attendances).map(&:count)
           tr
             th.text-right Attendance
-            td.text-right = @user.memberships.map(&:attendances).map(&:count)
+            td.text-right
+              - if attendances.any?
+                = attendances
             - if @other_user
+              - other_attendances = @other_user.memberships.map(&:attendances).map(&:count)
               td
-              td.text-center = (@user.memberships + @other_user.memberships).map(&:attendances).map(&:count)
+              td.text-center
+                - if attendances.any? || other_attendances.any?
+                  = attendances + other_attendances
               td
-              td = @other_user.memberships.map(&:attendances).map(&:count)
+              td =
           tr
             th.text-right card_key
             td.text-right = @user.card_key
@@ -58,16 +64,23 @@ h1 Slå sammen to personer
               td
               td = @other_user.card_key
           - UserMergeController::RELATIONS.each do |relation|
+            - value = @user.send(relation).map(&:id)
+            - if @other_user
+              - other_value = @other_user.send(relation).map(&:id)
             tr
               th.text-right = relation
-              td.text-right = @user.send(relation).map(&:id)
+              td.text-right
+                - if value.any? && (@other_user.nil? || value != other_value)
+                  = value
               - if @other_user
                 td
                 td.text-center
-                  => @user.send(relation).map(&:id)
-                  = @other_user.send(relation).map(&:id)
+                  - if value.any? || other_value.any?
+                    = value | other_value
                 td
-                td = @other_user.send(relation).map(&:id)
+                td
+                  - if other_value.any? && value != other_value
+                    = other_value
           tr
             th
             td

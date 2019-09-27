@@ -17,7 +17,7 @@
                 li: a Flytt til foresatt #{@user.guardian_2}
               - if @user.billing_user && @user.billing_user != @user.guardian_1 && @user.billing_user.email.blank?
                 li: a Flytt til betaler #{@user.billing_user}
-        - if admin?
+        - if admin? && user.email
           .col-md-2 = f.select :verified, [['Nei', false], ['Ja', true]]
         - if user.login.present?
           .col = f.text_field :login, autocomplete: :off
@@ -38,18 +38,20 @@
       = f.text_field :postal_code
     .col-sm-6
       .row
-        .col
-          = f.text_field :birthdate, placeholder: 'år-måned-dag', class: 'date', append: "#{user.age} år" if user.birthdate
+        - if user.birthdate
+          .col
+            = f.text_field :birthdate, placeholder: 'år-måned-dag', class: 'date', append: "#{user.age} år"
         .col = f.select :male, [[nil, ''], ['Mann', 'true'], ['Kvinne', 'false']], selected: user.male.to_s
         - if admin?
           .col = f.select :role, [['Medlem', ''], ['Administrator', UserSystem::ADMIN_ROLE]], selected: user.role.to_s
-      .row
-        .col-md-6 = f.text_field :kana, help: "Kei Wa Ryu: #{Rank::KEI_WA_RYU_CHARACTERS}",
-                prepend: link_to('Wiki', 'https://en.wikipedia.org/wiki/Katakana'),
-                append: [ \
-                  (link_to('Google', "https://translate.google.com/#view=home&op=translate&sl=ja&tl=no&text=#{user.kana}", target: '_blank') if user.kana.present?), \
-                  (link_to('<i class="fa fa-shopping-cart"></i>', 'https://www.kataaro.com/Products/Embroidered-Black-Belt-Brushed-Cotton__E4941.aspx', target: '_blank') if user.member&.current_rank&.embroydery?) \
-                ].compact.presence&.join&.html_safe
+      - if user.kana.present? || user.memberships.any?{|m| m.ranks.any?}
+        .row
+          .col-md-6 = f.text_field :kana, help: "Kei Wa Ryu: #{Rank::KEI_WA_RYU_CHARACTERS}",
+                  prepend: link_to('Wiki', 'https://en.wikipedia.org/wiki/Katakana'),
+                  append: [ \
+                    (link_to('Google', "https://translate.google.com/#view=home&op=translate&sl=ja&tl=no&text=#{user.kana}", target: '_blank') if user.kana.present?), \
+                    (link_to('<i class="fa fa-shopping-cart"></i>', 'https://www.kataaro.com/Products/Embroidered-Black-Belt-Brushed-Cotton__E4941.aspx', target: '_blank') if user.member&.current_rank&.embroydery?) \
+                  ].compact.presence&.join&.html_safe
   - if submit
     .float-right.mt-0.mb-3 = f.primary user.new_record? ? 'Meld inn' : 'Lagre'
 

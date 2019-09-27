@@ -26,7 +26,8 @@ class UserMergeController < ApplicationController
       end
 
       RELATIONS.each do |rel|
-        @other_user.send(rel).each { |m| m.update! user_id: @user.id }
+        fk = @other_user.class.reflections[rel.to_s].foreign_key
+        @other_user.send(rel).each { |m| m.update! fk => @user.id }
       end
       @other_user.reload
       @other_user.destroy!
