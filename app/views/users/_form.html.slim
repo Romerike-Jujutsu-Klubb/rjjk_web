@@ -8,6 +8,15 @@
         .col = f.text_field :email, autocomplete: :off,
                 append: (link_to('<i class="fa fa-envelope"></i>'.html_safe, %Q{mailto:"#{user.name}" <#{user.email}>}) if user.email.present?),
                 help: (detour_to('Send e-post med login link', send_login_link_path(user: { identity: user.email }), method: :post) if user.email)
+        - if @user.email.present? && (@user.guardian_1 || @user.guardian_2 || @user.billing_user)
+          .col
+            ul
+              - if @user.guardian_1 && @user.guardian_1.email.blank?
+                li: a href=move_attribute_user_path(@user, other_user_id: @user.guardian_1, attribute: :email) data-method=:patch Flytt til foresatt #{@user.guardian_1}
+              - if @user.guardian_2 && @user.guardian_2.email.blank?
+                li: a Flytt til foresatt #{@user.guardian_2}
+              - if @user.billing_user && @user.billing_user != @user.guardian_1 && @user.billing_user.email.blank?
+                li: a Flytt til betaler #{@user.billing_user}
         - if admin?
           .col-md-2 = f.select :verified, [['Nei', false], ['Ja', true]]
         - if user.login.present?
@@ -16,8 +25,15 @@
           prepend: (link_to('<i class="fa fa-mobile-alt"></i>'.html_safe, "sms:/#{user.phone}/", title: 'Send SMS') if user.phone.present?), \
           append: (link_to('<i class="fa fa-phone"></i>'.html_safe, "tel:#{user.phone}", title: 'Ring') if user.phone.present?), \
           help: (detour_to('Send SMS med login link', send_login_link_path(user: { identity: user.phone }), method: :post) if user.phone)
-      - unless @member
-        = link_to('(medlem)', controller: :members, action: :edit, id: user.member.id) if user.member
+      - if @user.phone.present? && (@user.guardian_1 || @user.guardian_2 || @user.billing_user)
+        .col
+          ul
+            - if @user.guardian_1 && @user.guardian_1.phone.blank?
+              li: a href=move_attribute_user_path(@user, other_user_id: @user.guardian_1, attribute: :phone) data-method=:patch Flytt til foresatt #{@user.guardian_1}
+            - if @user.guardian_2 && @user.guardian_2.phone.blank?
+              li: a Flytt til foresatt #{@user.guardian_2}
+            - if @user.billing_user && @user.billing_user != @user.guardian_1 && @user.billing_user.phone.blank?
+              li: a Flytt til betaler #{@user.billing_user}
       = f.text_field :address, append: (link_to('<i class="fa fa-map-marker-alt"></i>'.html_safe, user.map_url, target: :_blank, title: 'Vis i kart') if user.map_url)
       = f.text_field :postal_code
     .col-sm-6

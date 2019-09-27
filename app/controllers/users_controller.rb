@@ -29,13 +29,13 @@ class UsersController < ApplicationController
   def edit
     @user ||= User.with_deleted.find(params[:id])
     if (@member = @user.member)
-      @groups = Group.includes(:martial_art).order('martial_arts.name, groups.name').where(closed_on: nil)
-          .to_a
+      @groups =
+          Group.includes(:martial_art).order('martial_arts.name, groups.name').where(closed_on: nil).to_a
       @groups |= @member.groups
-      @users = User.order(:last_name, :first_name, :email, :phone).to_a
-      lookup_context.prefixes.prepend 'members'
     end
-    render action: :edit
+    @users = User.order(:last_name, :first_name, :email, :phone).to_a
+    lookup_context.prefixes.prepend 'members'
+    render :edit
   ensure
     lookup_context.prefixes.delete 'members'
   end
@@ -63,6 +63,28 @@ class UsersController < ApplicationController
     else
       flash.now.alert = "En feil oppsto ved lagring av brukeren: #{@user.errors.full_messages.join("\n")}"
       edit
+    end
+  end
+
+  def move_attribute
+    @user = User.with_deleted.find(params[:id])
+    other_user = User.with_deleted.find(params[:other_user_id])
+    attribute = params[:attribute]
+    User.transaction do
+      raise "#{attribute} not blank" if other_user[attribute].present?
+
+      other_user[attribute] = @user[attribute]
+      @user[attribute] = nil
+      @user.save! validate: false
+      other_user.save! validate: false
+      flash.notice = 'Brukeren er oppdatert.'
+      unless Rails.env.development?
+        [@user, *@user.contactees, *@user.payees, *@user.primary_wards, *@user.secondary_wards]
+            .map(&:member).compact.each do |member|
+          NkfMemberSyncJob.perform_later member
+        end
+      end
+      back_or_redirect_to edit_user_path(@user)
     end
   end
 

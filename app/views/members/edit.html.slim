@@ -1,43 +1,80 @@
 - @content_width = 1024
 
-- if (error_msgs = @member.user.errors.full_messages_for(:base)).any?
+h2.float-right
+  .btn-group
+    a.btn.btn-secondary href=user_path(@user, format: :vcf)
+      i.fa.fa-address-card
+      .d-none.d-md-inline< Kontaktkort
+    button.btn.btn-secondary.dropdown-toggle.dropdown-toggle-split type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+      span.sr-only Toggle Dropdown
+    .dropdown-menu.dropdown-menu-right
+      - if @user.deleted?
+        span.text-danger.mr-3 Brukeren er slettet
+        = link_to restore_user_path(@user), method: :patch, class: 'btn btn-warning dropdown-item'
+          i.fa.fa-undo>
+          | Gjenopprett
+      - else
+        a.btn.btn-warning.dropdown-item.mr-2 href=user_merge_path(@user) title='Slå sammen med annen bruker'
+          i.fa.fa-user-friends>
+          | Slå sammen
+        .dropdown-divider
+        = link_to user_path(@user), method: :delete, class: 'text-danger dropdown-item', data: {confirm: 'Er du sikker på at du vil slette denne brukeren?'}
+          i.fa.fa-trash>
+          | Slett bruker
+
+- if (error_msgs = @user.errors.full_messages_for(:base)).any?
   .alert.alert-danger
     ' Brukeren
     = error_msgs.join('  ')
 
 ul.nav.nav-tabs role="tablist"
   li.nav-item: a.nav-link.active data-target="#tab_user" data-toggle="tab" Personalia
-  li.nav-item: a.nav-link data-target="#tab_membership" data-toggle="tab"
-    | Medlemskap
-    - if @member.left_on
-      .badge.badge-danger.ml-1 title='Utmeldt' data-toggle='tooltip' U
+  - @user.memberships.each do |membership|
+    li.nav-item: a.nav-link data-target="#tab_membership_#{membership.id}" data-toggle="tab"
+      | Medlemskap
+      - if membership.left_on
+        .badge.badge-danger.ml-1 title='Utmeldt' data-toggle='tooltip' U
   li.nav-item: a.nav-link data-target="#tab_contacts" data-toggle="tab" Kontakter
-  - if @member.user.depending_users.any?
+  - if @user.depending_users.any?
     li.nav-item: a.nav-link data-target="#tab_depending_users" data-toggle="tab" Relasjoner
-  li.nav-item: a.nav-link data-target="#tab_graduations" data-toggle="tab" Graderinger
-  li.nav-item: a.nav-link data-target="#tab_duties" data-toggle="tab" Verv
-  li.nav-item: a.nav-link data-target="#tab_events" data-toggle="tab" Arrangement
-  li.nav-item: a.nav-link data-target="#tab_surveys" data-toggle="tab" Spørreskjema
-  li.nav-item: a.nav-link data-target="#tab_signatures" data-toggle="tab" Signaturer
-  - if @member.nkf_member
+  - if @member
+    li.nav-item: a.nav-link data-target="#tab_graduations" data-toggle="tab" Graderinger
+    - if @member.appointments.any? || @member.elections.any?
+      li.nav-item: a.nav-link data-target="#tab_duties" data-toggle="tab" Verv
+  - if @user.event_invitees.any?
+    li.nav-item: a.nav-link data-target="#tab_events" data-toggle="tab" Arrangement
+  - if @member
+    - if @member.survey_requests.any?
+      li.nav-item: a.nav-link data-target="#tab_surveys" data-toggle="tab" Spørreskjema
+    - if @member.age >= 18
+      li.nav-item: a.nav-link data-target="#tab_signatures" data-toggle="tab" Signaturer
+  - if @member&.nkf_member
     li.nav-item: a.nav-link data-target="#tab_nkf" data-toggle="tab" NKF
-  li.nav-item = link_to 'Sporing', audit_path(@member.class, @member.id), class: 'btn btn-link'
+  - if @member
+    li.nav-item = link_to 'Sporing', audit_path(@member.class, @member.id), class: 'btn btn-link'
 
 .tab-content
-  #tab_user.tab-pane.fade.show.active.pt-3 = render 'users/form', user: @member.user, submit: true
-  #tab_membership.tab-pane.fade = render 'form'
-  #tab_contacts.tab-pane.fade.pt-3 = render 'related_users', user: @member.user
-  - if @member.user.depending_users.any?
+  #tab_user.tab-pane.fade.show.active.pt-3 = render 'users/form', user: @user, submit: true
+  - @user.memberships.each do |membership|
+    .tab-pane.fade id="tab_membership_#{membership.id}" = render 'form', membership: membership
+  #tab_contacts.tab-pane.fade.pt-3 = render 'related_users', user: @user
+  - if @user.depending_users.any?
     #tab_depending_users.tab-pane.fade.pt-3
       ul
-        - @member.user.depending_users.each do |u|
+        - @user.depending_users.each do |u|
           li = link_to u.name, member_path(u.member, anchor: :tab_contacts_tab)
-  #tab_graduations.tab-pane.fade = render 'graduations'
-  #tab_duties.tab-pane.fade = render 'duties'
-  #tab_events.tab-pane.fade = render 'events'
-  #tab_surveys.tab-pane.fade = render 'surveys'
-  #tab_signatures.tab-pane.fade = render 'signatures'
-  - if @member.nkf_member
+  - if @member
+    #tab_graduations.tab-pane.fade = render 'graduations'
+    - if @member.appointments.any? || @member.elections.any?
+      #tab_duties.tab-pane.fade = render 'duties'
+  - if @user.event_invitees.any?
+    #tab_events.tab-pane.fade = render 'events'
+  - if @member
+    - if @member.survey_requests.any?
+      #tab_surveys.tab-pane.fade = render 'surveys'
+    - if @member.age >= 18
+      #tab_signatures.tab-pane.fade = render 'signatures'
+  - if @member&.nkf_member
     #tab_nkf.tab-pane.fade = render 'nkf_fields'
 
 javascript:

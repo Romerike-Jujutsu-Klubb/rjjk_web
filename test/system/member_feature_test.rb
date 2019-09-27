@@ -7,7 +7,7 @@ class MemberFeatureTest < ApplicationSystemTestCase
 
   def test_show
     screenshot_group :show
-    visit_with_login member_path(members(:sebastian))
+    visit_with_login member_path(members(:sebastian)), redirected_path: '/users/594055058'
     screenshot :person
     find('a.nav-link', text: 'Medlemskap').click
     screenshot :membership
@@ -17,7 +17,7 @@ class MemberFeatureTest < ApplicationSystemTestCase
     screenshot :graduations
     find('a.nav-link', text: 'Verv').click
     screenshot :duties
-    find('a.nav-link', text: 'Signaturer').click
+    # find('a.nav-link', text: 'Signaturer').click
     screenshot :signatures
     find('a.nav-link', text: 'NKF').click
     screenshot :nkf_tab

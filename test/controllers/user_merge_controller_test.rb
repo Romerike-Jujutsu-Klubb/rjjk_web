@@ -11,7 +11,7 @@ class UserMergeControllerTest < IntegrationTest
   end
 
   test 'update' do
-    patch user_merge_path(id(:uwe))
+    patch user_merge_path(id(:uwe), other_user_id: id(:sebastian))
     assert_redirected_to users(:uwe)
   end
 end

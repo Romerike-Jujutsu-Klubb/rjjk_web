@@ -33,6 +33,7 @@ class User < ApplicationRecord
   has_many :embus, dependent: :destroy
   has_many :event_invitees, dependent: :restrict_with_error
   has_many :images, dependent: :destroy
+  has_many :memberships, dependent: :restrict_with_error, class_name: 'Member'
   has_many :news_item_likes, dependent: :destroy
   has_many :news_items, dependent: :destroy, inverse_of: :creator, foreign_key: :created_by
   has_many :payees, dependent: :nullify, class_name: 'User', foreign_key: :billing_user_id,

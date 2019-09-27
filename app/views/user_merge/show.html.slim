@@ -3,9 +3,81 @@ h1 Slå sammen to personer
 
 .row
   .col
-    h2 Person A
-    = render 'users/form', user: @user, submit: true
-  - if @other_user
+    = bootstrap_form_for @user, url: user_merge_path(@user, other_user_id: @other_user) do |f|
+      table.table.table-sm
+        thead
+          tr
+            th
+            th.text-right
+              h2 = link_to @user.name, @user
+            - if @other_user
+              th
+              th
+              th
+              th
+                h2 = link_to @other_user.name, @other_user
+        tbody
+          - @user.attributes.except('id', 'created_at', 'deleted_at', 'gmaps', 'salt', 'salted_password', 'security_token', 'token_expiry', 'updated_at', 'verified').sort.each do |attr, value|
+            tr
+              th.align-middle.text-right = t(:activerecord)[:attributes][:user][attr.to_sym] || attr
+              td.align-middle.text-right
+                - if @other_user.nil? || value != @other_user[attr]
+                  = value
+              - if @other_user
+                td.align-middle
+                  - if value != @other_user[attr]
+                    i.fa.fa-arrow-right
+                td.align-middle.text-center
+                  - if value != @other_user[attr]
+                    = f.text_field attr, hide_label: true, wrapper: false, readonly: true
+                  - else
+                    = value
+                td.align-middle
+                  - if value != @other_user[attr]
+                    button.btn.btn-warning type=:button onclick="$('#user_#{attr}').val('#{@other_user[attr]}');$(this).removeClass('btn-warning').addClass('btn-success')"
+                      i.fa.fa-arrow-left
+                td.align-middle
+                  - if value != @other_user[attr]
+                    = @other_user[attr]
+          tr
+            th.text-right Attendance
+            td.text-right = @user.memberships.map(&:attendances).map(&:count)
+            - if @other_user
+              td
+              td.text-center = (@user.memberships + @other_user.memberships).map(&:attendances).map(&:count)
+              td
+              td = @other_user.memberships.map(&:attendances).map(&:count)
+          tr
+            th.text-right card_key
+            td.text-right = @user.card_key
+            - if @other_user
+              td
+              td.text-center
+                => @user.card_key
+                = @other_user.card_key
+              td
+              td = @other_user.card_key
+          - UserMergeController::RELATIONS.each do |relation|
+            tr
+              th.text-right = relation
+              td.text-right = @user.send(relation).map(&:id)
+              - if @other_user
+                td
+                td.text-center
+                  => @user.send(relation).map(&:id)
+                  = @other_user.send(relation).map(&:id)
+                td
+                td = @other_user.send(relation).map(&:id)
+          tr
+            th
+            td
+            - if @other_user
+              td
+              td.text-center = f.submit 'Slå sammen', class: 'btn btn-danger'
+              td
+              td
+  - unless @other_user
     .col
-      h2 Person B
-      = render 'users/form', user: @other_user, submit: true
+      ul
+        - @users.each do |u|
+          li: a href=user_merge_path(@user, other_user_id: u) = u.name

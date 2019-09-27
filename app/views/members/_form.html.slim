@@ -1,11 +1,11 @@
-= bootstrap_form_for @member, url: with_detour(@member, anchor: :tab_membership_tab) do |f|
+= bootstrap_form_for membership, url: with_detour(membership, anchor: :tab_membership_tab) do |f|
   .row
     .col-md-4
       .text-center
-        - if @member.image
-          = image_tag url_for(controller: :members, action: :thumbnail, id: @member.id, format: @member.image.format), title: @member.image.name
-        - elsif @member.persisted?
-          = link_to 'Ta bilde', photo_member_path(@member), class: 'btn btn-primary my-3'
+        - if membership.image
+          = image_tag url_for(controller: :members, action: :thumbnail, id: membership.id, format: membership.image.format), title: membership.image.name
+        - elsif membership.persisted?
+          = link_to 'Ta bilde', photo_member_path(membership), class: 'btn btn-primary my-3'
 
     .col-md-4
     .col-md-4.mt-3
@@ -18,20 +18,20 @@
 
       input value="" multiple="" type="hidden" name="member[group_ids][]" id="member_group_ids"
       - @groups.each do |g|
-        - next unless g.active? || @member.groups.include?(g)
-        - attendances_since_graduation = @member.attendances_since_graduation(Date.current, g).size
-        label for="member_group_ids_#{g.id}" style=('font-weight: bold' if g.contains_age(@member.age))
-          = check_box_tag "member[group_ids][]", g.id, @member.groups.include?(g), value: g.id, id: "member_group_ids_#{g.id}"
+        - next unless g.active? || membership.groups.include?(g)
+        - attendances_since_graduation = membership.attendances_since_graduation(Date.current, g).size
+        label for="member_group_ids_#{g.id}" style=('font-weight: bold' if g.contains_age(membership.age))
+          = check_box_tag "member[group_ids][]", g.id, membership.groups.include?(g), value: g.id, id: "member_group_ids_#{g.id}"
           =< g.martial_art.name
           =< g.name
           - if attendances_since_graduation > 0
-            =< link_to("(#{attendances_since_graduation} treninger)", controller: :attendances, action: :since_graduation, id: @member.id)
+            =< link_to("(#{attendances_since_graduation} treninger)", controller: :attendances, action: :since_graduation, id: membership.id)
         br
 
-      - if @member.group_instructor? || @member.instructor? || @member.groups.any? { |g| g.from_age >= 13 }
+      - if membership.group_instructor? || membership.instructor? || membership.groups.any? { |g| g.from_age >= 13 }
         .form-group
           label Instruktør:
-          =< link_to @member.group_instructor? ? 'Ja' : 'Nei', controller: :group_instructors
+          =< link_to membership.group_instructor? ? 'Ja' : 'Nei', controller: :group_instructors
           =< check_box :member, :instructor, title: 'Permanent instruktør'
           =< label :member, :instructor, 'fast', title: 'Permanent instruktør'
 
@@ -40,17 +40,17 @@
       = f.text_field :joined_on, class: 'date'
     .col-6.form-group
       label NKF medlemsnr
-      span.form-control = (@member.nkf_member.try(:medlemsnummer) || 'Ikke i NKF-registeret.')
+      span.form-control = (membership.nkf_member.try(:medlemsnummer) || 'Ikke i NKF-registeret.')
   .row
     .col-6
       = f.text_field :passive_on, class: 'date', placeholder: 'dato'
     .col-6
       = f.text_field :left_on, class: 'date'
   .row
-    - if @member.billing_type.present?
+    - if membership.billing_type.present?
       .col-6
         = f.select :billing_type, [%w(AvtaleGiro AvtaleGiro), %w(AutoGiro AUTOGIRO), ['Manuell Giro', 'MANUELL GIRO'], \
-            @member.billing_type && [@member.billing_type, @member.billing_type]].compact.uniq(&:second), prompt: 'Velg betalingsform'
+            membership.billing_type && [membership.billing_type, membership.billing_type]].compact.uniq(&:second), prompt: 'Velg betalingsform'
     .col-6
       = f.text_field :account_no
 
@@ -59,10 +59,10 @@
     .col = f.select :payment_problem, [['Nei', false], ['Ja', true]]
 
   .row
-    - if @member.phone_home.present?
+    - if membership.phone_home.present?
       .col-6.pr-1
         = f.text_field :phone_home
-    - if @member.phone_work.present?
+    - if membership.phone_work.present?
       .col-6.pl-1
         = f.text_field :phone_work
 

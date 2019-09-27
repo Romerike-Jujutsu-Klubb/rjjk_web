@@ -1,5 +1,5 @@
 .m-3
-- @member.user.event_invitees.sort_by { |ei | ei.event.start_at  }.reverse.each do |ei|
+- @user.event_invitees.sort_by { |ei | ei.event.start_at  }.reverse.each do |ei|
   h3
     => ei.event.start_at.year
     = ei.event.name

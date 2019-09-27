@@ -312,6 +312,7 @@ Rails.application.routes.draw do
     member do
       post :change_password
       post :forgot_password
+      patch :move_attribute
       get :photo
       patch :restore
     end

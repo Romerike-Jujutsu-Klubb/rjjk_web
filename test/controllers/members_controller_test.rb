@@ -77,7 +77,7 @@ class MembersControllerTest < ActionController::TestCase
   def test_edit
     get :edit, params: { id: @lars.id }
 
-    assert_response :success
+    assert_redirected_to @lars.user
   end
 
   def test_update
