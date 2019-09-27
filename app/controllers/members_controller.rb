@@ -68,7 +68,7 @@ class MembersController < ApplicationController
     update_memberships
     if @member.update(params[:member])
       flash[:notice] = 'Medlemmet oppdatert.'
-      NkfMemberSyncJob.perform_later @member
+      NkfMemberSyncJob.perform_later @member unless Rails.env.development?
       back_or_redirect_to action: :edit, id: @member
     else
       edit

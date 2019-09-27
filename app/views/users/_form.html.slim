@@ -1,4 +1,4 @@
-= bootstrap_form_for(user) do |f|
+= bootstrap_form_for user, url: with_detour(user_path(user)) do |f|
   = f.hidden_field :form, value: :edit
   .row
     .col-sm-6
