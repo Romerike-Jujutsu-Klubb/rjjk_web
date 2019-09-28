@@ -68,6 +68,20 @@ class ActiveSupport::TestCase
     Rack::Test::UploadedFile.new(path, mime_type, binary)
   end
   # EMXIF
+
+  def with_retries(label: 'test', attempts: nil, exceptions: [Minitest::Assertion],
+      backoff: 0.001.seconds, backoff_factor: 2, backoff_limit: Capybara.default_max_wait_time)
+    attempt ||= 1
+    yield
+  rescue *exceptions => e
+    raise e if (attempts && attempt >= attempts) || backoff > backoff_limit
+
+    attempt += 1
+    logger.info "Retrying #{label} #{attempt} #{backoff} #{e}"
+    sleep backoff
+    backoff *= backoff_factor
+    retry
+  end
 end
 
 module MailDeliveryError
