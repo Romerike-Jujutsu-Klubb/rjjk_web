@@ -1,26 +1,35 @@
 - @content_width = 1024
 
 h2.float-right
-  .btn-group
-    a.btn.btn-secondary href=user_path(@user, format: :vcf)
-      i.fa.fa-address-card
-      .d-none.d-md-inline< Kontaktkort
-    button.btn.btn-secondary.dropdown-toggle.dropdown-toggle-split type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-      span.sr-only Toggle Dropdown
-    .dropdown-menu.dropdown-menu-right
-      - if @user.deleted?
-        span.text-danger.mr-3 Brukeren er slettet
-        = link_to restore_user_path(@user), method: :patch, class: 'btn btn-warning dropdown-item'
-          i.fa.fa-undo>
-          | Gjenopprett
-      - else
-        a.btn.btn-warning.dropdown-item.mr-2 href=user_merge_path(@user) title='Slå sammen med annen bruker'
-          i.fa.fa-user-friends>
-          | Slå sammen
-        .dropdown-divider
-        = link_to user_path(@user), method: :delete, class: 'text-danger dropdown-item', data: {confirm: 'Er du sikker på at du vil slette denne brukeren?'}
-          i.fa.fa-trash>
-          | Slett bruker
+  - if @user.deleted?
+    span.text-danger.mr-3 Brukeren er slettet
+    = link_to user_path(@user), method: :delete, class: 'btn btn-danger mr-2'
+      i.fa.fa-trash>
+      | Slett permanent
+    = link_to restore_user_path(@user), method: :patch, class: 'btn btn-warning'
+      i.fa.fa-undo>
+      | Gjenopprett
+  - else
+    .btn-group
+      a.btn.btn-secondary href=user_path(@user, format: :vcf)
+        i.fa.fa-address-card
+        .d-none.d-md-inline< Kontaktkort
+      button.btn.btn-secondary.dropdown-toggle.dropdown-toggle-split type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        span.sr-only Toggle Dropdown
+      .dropdown-menu.dropdown-menu-right
+        - if @user.deleted?
+          span.text-danger.mr-3 Brukeren er slettet
+          = link_to restore_user_path(@user), method: :patch, class: 'btn btn-warning dropdown-item'
+            i.fa.fa-undo>
+            | Gjenopprett
+        - else
+          a.btn.btn-warning.dropdown-item.mr-2 href=user_merge_path(@user) title='Slå sammen med annen bruker'
+            i.fa.fa-user-friends>
+            | Slå sammen
+          .dropdown-divider
+          = link_to user_path(@user), method: :delete, class: 'text-danger dropdown-item', data: {confirm: 'Er du sikker på at du vil slette denne brukeren?'}
+            i.fa.fa-trash>
+            | Slett bruker
 
 - if (error_msgs = @user.errors.full_messages_for(:base)).any?
   .alert.alert-danger
@@ -34,7 +43,8 @@ ul.nav.nav-tabs role="tablist"
       | Medlemskap
       - if membership.left_on
         .badge.badge-danger.ml-1 title='Utmeldt' data-toggle='tooltip' U
-  li.nav-item: a.nav-link data-target="#tab_contacts" data-toggle="tab" Kontakter
+  - if @user.memberships.any? || @user.contact_users.size > 1
+    li.nav-item: a.nav-link data-target="#tab_contacts" data-toggle="tab" Kontakter
   - if @user.depending_users.any?
     li.nav-item: a.nav-link data-target="#tab_depending_users" data-toggle="tab" Relasjoner
   - if @member
@@ -57,7 +67,8 @@ ul.nav.nav-tabs role="tablist"
   #tab_user.tab-pane.fade.show.active.pt-3 = render 'users/form', user: @user, submit: true
   - @user.memberships.each do |membership|
     .tab-pane.fade id="tab_membership_#{membership.id}" = render 'form', membership: membership
-  #tab_contacts.tab-pane.fade.pt-3 = render 'related_users', user: @user
+  - if @user.memberships.any? || @user.contact_users.size > 1
+    #tab_contacts.tab-pane.fade.pt-3 = render 'related_users', user: @user
   - if @user.depending_users.any?
     #tab_depending_users.tab-pane.fade.pt-3
       ul

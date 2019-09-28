@@ -37,7 +37,7 @@ class UserMergeController < ApplicationController
         @other_user.send(rel).each { |m| m.update! fk => @user.id }
       end
       @other_user.reload
-      @other_user.destroy!
+      @other_user.really_destroy!
       @user.update! params[:user] if params[:user]
       flash.notice = 'Brukerene er slått sammen.'
       unless Rails.env.development?

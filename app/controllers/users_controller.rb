@@ -91,8 +91,12 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
-    @user.destroy!
+    @user = User.with_deleted.find(params[:id])
+    if @user.deleted?
+      @user.really_destroy!
+    else
+      @user.destroy!
+    end
     redirect_to @user
   end
 
