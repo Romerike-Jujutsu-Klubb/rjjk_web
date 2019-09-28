@@ -5,7 +5,7 @@ h2.float-right
       i.fa.fa-undo>
       | Gjenopprett
   - else
-    a.btn.btn-warning.mr-2 href=user_merge_path(@user)
+    a.btn.btn-warning.mr-2 href=with_detour(user_merge_path(@user))
       i.fa.fa-user-friends>
       | Slå sammen med annen bruker
     a.btn.btn-secondary.mr-2 href=user_path(@user, format: :vcf)

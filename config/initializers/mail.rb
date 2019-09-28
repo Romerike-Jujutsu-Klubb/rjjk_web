@@ -20,7 +20,7 @@ class Mail::Message
     title = header['X-Title']&.value
     timestamp = header['X-Message-Timestamp']&.value
 
-    UserMessage.create! user_id: user_id, tag: tag, from: from,
+    UserMessage.create! user_id: user_id, tag: tag, from: from.to_a,
                         subject: subject, email_url: email_url, user_email: user_email,
                         title: title, message_timestamp: timestamp,
                         html_body: html_part&.body&.decoded,
