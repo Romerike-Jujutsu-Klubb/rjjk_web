@@ -12,8 +12,14 @@ h1 Slå sammen to personer
               h2 = link_to @user.name, @user
             - if @other_user
               th
+              th.text-center
+                h1
+                  = link_to user_merge_path(@other_user, other_user_id: @user.id)
+                    i.fa.fa-arrows-alt-h
               th
-              th
+                h2
+                  = link_to user_merge_path(@user)
+                    i.fa.fa-user-times
               th
                 h2 = link_to @other_user.name, @other_user
         tbody
