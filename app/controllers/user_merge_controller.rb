@@ -7,8 +7,8 @@ class UserMergeController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    if (other_user_id = params[:other_user_id])
-      @other_user = User.find(other_user_id)
+    if (@other_user = User.find_by(id: params[:other_user_id]))
+
     else
       @users = User.order(:first_name, :last_name).to_a - [@user]
     end

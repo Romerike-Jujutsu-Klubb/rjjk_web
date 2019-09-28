@@ -91,6 +91,7 @@ h1 Slå sammen to personer
               td
   - unless @other_user
     .col
-      ul
-        - @users.each do |u|
-          li: a href=user_merge_path(@user, other_user_id: u) = u.name
+      table.table.table-sm
+        thead: tr: th: h2 Velg bruker
+        - @users.sort_by{|u| [u.name == @user.name ? 0 : 1, u.name.to_s.split(/\s+/).sort == @user.name.to_s.split(/\s+/).sort ? 0 : 1, u.name.to_s]}.each do |u|
+          tr: td: a href=user_merge_path(@user, other_user_id: u) = u.name || '<navn mangler>'
