@@ -108,18 +108,6 @@ class UsersController < ApplicationController
     !%w[login signup forgot_password].include?(action)
   end
 
-  # Generate a template user for certain actions on get
-  def generate_blank_form
-    case request.method
-    when 'GET'
-      @user = User.new params[:user]
-      render
-      true
-    else
-      false
-    end
-  end
-
   private
 
   # Never trust parameters from the scary internet, only allow the white list through.

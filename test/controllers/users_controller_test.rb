@@ -72,6 +72,12 @@ class UsersControllerTest < ActionController::TestCase
     assert_not user.deleted?
   end
 
+  test 'restore' do
+    login(:uwe)
+    patch :restore, params: { id: id(:deleted_user) }
+    assert_not users(:deleted_user).deleted?
+  end
+
   private
 
   def assert_logged_in(user)
