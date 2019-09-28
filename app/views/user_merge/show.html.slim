@@ -52,7 +52,9 @@ h1 Slå sammen to personer
                 - if attendances.any? || other_attendances.any?
                   = attendances + other_attendances
               td
-              td =
+              td
+                - if other_attendances.any?
+                  = other_attendances
           tr
             th.text-right card_key
             td.text-right = @user.card_key
