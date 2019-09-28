@@ -10,7 +10,16 @@ class UserMergeController < ApplicationController
     if (@other_user = User.find_by(id: params[:other_user_id]))
 
     else
-      @users = User.order(:first_name, :last_name).to_a - [@user]
+      user_names = @user.name.to_s.split(/\s+/)
+      @users = (User.order(:first_name, :last_name).to_a - [@user]).sort_by do |u|
+        other_names = u.name.to_s.split(/\s+/)
+        [
+          u.name == @user.name ? 0 : 1,
+          other_names.sort == user_names.sort ? 0 : 1,
+          -(other_names & user_names).size,
+          u.name.to_s,
+        ]
+      end
     end
     render :show
   end
