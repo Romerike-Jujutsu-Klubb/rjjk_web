@@ -20,17 +20,16 @@ class UserMergeController < ApplicationController
     @other_user = User.find(params[:other_user_id])
 
     User.transaction do
-      @user.update! params[:user] if params[:user]
       if @user.card_key.blank? && @other_user.card_key.present?
         @other_user.card_key.update! user_id: @user.id
       end
-
       RELATIONS.each do |rel|
         fk = @other_user.class.reflections[rel.to_s].foreign_key
         @other_user.send(rel).each { |m| m.update! fk => @user.id }
       end
       @other_user.reload
       @other_user.destroy!
+      @user.update! params[:user] if params[:user]
       flash.notice = 'Brukerene er slått sammen.'
       unless Rails.env.development?
         [@user, *@user.contactees, *@user.payees, *@user.primary_wards, *@user.secondary_wards]
