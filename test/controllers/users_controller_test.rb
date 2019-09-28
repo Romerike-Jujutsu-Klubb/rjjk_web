@@ -9,6 +9,19 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'should create user' do
+    login(:uwe)
+    assert_difference('User.count') do
+      post :create, params: { user: {
+        first_name: 'Uwe',
+        last_name: 'Seeler',
+        email: 'uwe@seeler.de',
+        phone: '3178',
+      } }
+    end
+    assert_redirected_to user_path(User.last)
+  end
+
   def test_show
     get :show, params: { id: login(:uwe).id }
     assert_response :success
