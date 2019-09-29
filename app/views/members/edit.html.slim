@@ -1,31 +1,27 @@
 - @content_width = 1024
 
 h2.float-right
-  - if @user.deleted?
-    span.text-danger.mr-3 Brukeren er slettet
-    = link_to user_path(@user), method: :delete, class: 'btn btn-danger mr-2'
-      i.fa.fa-trash>
-      | Slett permanent
-    = link_to restore_user_path(@user), method: :patch, class: 'btn btn-warning'
-      i.fa.fa-undo>
-      | Gjenopprett
-  - else
-    .btn-group
-      a.btn.btn-secondary href=user_path(@user, format: :vcf)
-        i.fa.fa-address-card
-        .d-none.d-md-inline< Kontaktkort
-      button.btn.btn-secondary.dropdown-toggle.dropdown-toggle-split type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-        span.sr-only Toggle Dropdown
-      .dropdown-menu.dropdown-menu-right
-        - if @user.deleted?
-          span.text-danger.mr-3 Brukeren er slettet
-          = link_to restore_user_path(@user), method: :patch, class: 'btn btn-warning dropdown-item'
-            i.fa.fa-undo>
-            | Gjenopprett
-        - else
-          a.btn.btn-warning.dropdown-item.mr-2 href=user_merge_path(@user) title='Slå sammen med annen bruker'
-            i.fa.fa-user-friends>
-            | Slå sammen
+  .btn-group
+    button.btn.btn-secondary.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+      i.fa.fa-user
+      span.sr-only Toggle Dropdown
+    .dropdown-menu.dropdown-menu-right
+      a.dropdown-item href=user_path(@user, format: :vcf) title='Kontaktkort'
+        i.fa.fa-address-card>
+        | Kontaktkort
+      - if @user.deleted?
+        span.text-danger.mr-3 Brukeren er slettet
+        = link_to restore_user_path(@user), method: :patch, class: 'btn btn-warning dropdown-item'
+          i.fa.fa-undo>
+          | Gjenopprett
+        = link_to user_path(@user), method: :delete, class: 'btn btn-danger mr-2'
+          i.fa.fa-trash>
+          | Slett permanent
+      - else
+        a.btn.btn-warning.dropdown-item.mr-2 href=user_merge_path(@user) title='Slå sammen med annen bruker'
+          i.fa.fa-user-friends>
+          | Slå sammen
+        - unless @user.member
           .dropdown-divider
           = link_to user_path(@user), method: :delete, class: 'text-danger dropdown-item', data: {confirm: 'Er du sikker på at du vil slette denne brukeren?'}
             i.fa.fa-trash>
