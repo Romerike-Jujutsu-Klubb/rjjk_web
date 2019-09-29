@@ -1,4 +1,5 @@
 //= require @fortawesome/fontawesome-free/js/all.js
+//= require @fortawesome/fontawesome-free/js/v4-shims
 //= require jquery
 // require jquery.turbolinks
 //= require jquery_ujs
@@ -17,8 +18,8 @@
 //= require bootstrap_tabs_ios
 //= require remember_tab
 //= require jquery.lazyload
-//= require fileinput
-//= require fileinput-fa-theme
+//= require bootstrap-fileinput/js/fileinput
+//= require bootstrap-fileinput/themes/fa/theme
 //= require Chart.bundle
 //= require chartkick
 //= require serviceworker-companion
