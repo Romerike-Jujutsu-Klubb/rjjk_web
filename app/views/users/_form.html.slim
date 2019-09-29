@@ -18,9 +18,7 @@
               - if @user.billing_user && @user.billing_user != @user.guardian_1 && @user.billing_user.email.blank?
                 li: a Flytt til betaler #{@user.billing_user}
         - if admin? && user.email
-          .col-md-2.pt-3
-            br
-            = f.check_box :verified
+          .col-md-2 = f.select :verified, [['Nei', false], ['Ja', true]]
         - if user.login.present?
           .col = f.text_field :login, autocomplete: :off
       = f.text_field :phone, \
