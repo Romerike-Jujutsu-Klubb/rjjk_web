@@ -21,10 +21,14 @@ class ApplicationVideosController < ApplicationController
   def edit; end
 
   def create
-    @application_video = ApplicationVideo.new(application_video_params)
+    @application_video ||= ApplicationVideo.new(application_video_params)
     if @application_video.save
       redirect_to @application_video, notice: 'Application video was successfully created.'
     else
+      if @application_video.errors.keys == [:'image.md5_checksum']
+        @application_video.image = Image.find_by!(md5_checksum: @application_video.image.md5_checksum)
+        return create
+      end
       render :new
     end
   end

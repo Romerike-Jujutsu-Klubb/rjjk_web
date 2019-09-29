@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_29_112956) do
+ActiveRecord::Schema.define(version: 2019_09_29_205527) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2019_09_29_112956) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['image_id'], name: 'index_application_videos_on_image_id'
+    t.index %w[technique_application_id image_id], name: 'idx_application_videos_on_technique_application_id_and_image_id', unique: true
     t.index ['technique_application_id'], name: 'index_application_videos_on_technique_application_id'
   end
 
