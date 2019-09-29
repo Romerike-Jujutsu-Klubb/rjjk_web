@@ -1,6 +1,6 @@
 - @content_width = 1024
 
-h3
+h3.clearfix
   = @technique_application.name
   - if @technique_application.rank_id
     |  (#{link_to("#{@technique_application.rank.label}", @technique_application.rank)})
