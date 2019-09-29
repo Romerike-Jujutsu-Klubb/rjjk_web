@@ -19,8 +19,8 @@ class ApplicationVideosTest < ApplicationSystemTestCase
     click_on 'Forsvar mot dobbelt hårtak med kneing'
     click_on 'Legg til film'
 
-    # find('form input[type="file"]', visible: false).set('test/fixtures/files/tiny.png')
-    find('form input[type="file"]', visible: false).set('test/fixtures/files/board_meeting_minutes.txt')
+    find('#application_video_image_attributes_file', visible: false).set("#{Rails.root}/test/fixtures/files/tiny.png")
+    sleep 0.1
 
     click_on 'Lagre'
 

@@ -25,7 +25,7 @@ class ApplicationVideosController < ApplicationController
     if @application_video.save
       redirect_to @application_video, notice: 'Application video was successfully created.'
     else
-      if @application_video.errors.keys == [:'image.md5_checksum']
+      if @application_video.errors.details.dig(:'image.md5_checksum', 0, :error) == :taken
         @application_video.image = Image.find_by!(md5_checksum: @application_video.image.md5_checksum)
         return create
       end
