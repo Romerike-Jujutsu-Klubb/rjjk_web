@@ -26,7 +26,7 @@ class User < ApplicationRecord
   belongs_to :guardian_2, class_name: 'User', optional: true
 
   has_one :card_key, dependent: :nullify
-  has_one :member, dependent: :restrict_with_exception
+  has_one :member, -> { order(joined_on: :desc) }, inverse_of: :user, dependent: :restrict_with_exception
 
   has_many :contactees, dependent: :nullify, class_name: 'User', foreign_key: :contact_user_id,
       inverse_of: :contact_user
