@@ -1,0 +1,23 @@
+h1 Application Videos
+
+table
+  thead
+    tr
+      th Technique application
+      th Image
+      th
+      th
+      th
+
+  tbody
+    - @application_videos.each do |application_video|
+      tr
+        td = application_video.technique_application
+        td = application_video.image
+        td = link_to 'Show', application_video
+        td = link_to 'Edit', edit_application_video_path(application_video)
+        td = link_to 'Destroy', application_video, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Application video', new_application_video_path

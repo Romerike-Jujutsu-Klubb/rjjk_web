@@ -79,6 +79,7 @@ class ImagesControllerTest < ActionController::TestCase
 
   def test_create_with_file
     FrontPageSection.destroy_all
+    ApplicationVideo.destroy_all
     images(:one).destroy! # same content
     login :lars
 
@@ -98,6 +99,7 @@ class ImagesControllerTest < ActionController::TestCase
 
   def test_create_with_file_gets_name
     FrontPageSection.destroy_all
+    application_videos(:one).destroy! # linked
     images(:one).destroy! # same content
     login :lars
 
@@ -141,6 +143,7 @@ class ImagesControllerTest < ActionController::TestCase
   end
 
   def test_destroy
+    ApplicationVideo.destroy_all
     FrontPageSection.destroy_all
     assert_nothing_raised do
       Image.find(@first_id)

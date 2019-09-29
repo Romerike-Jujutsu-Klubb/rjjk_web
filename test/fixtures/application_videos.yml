@@ -1,0 +1,7 @@
+one:
+  technique_application: defence_against_wrist_grip_in_front
+  image: one
+
+two:
+  technique_application: defence_against_wrist_grip_from_behind
+  image: two

@@ -1,0 +1,51 @@
+# frozen_string_literal: true
+
+require 'application_system_test_case'
+
+class ApplicationVideosTest < ApplicationSystemTestCase
+  setup do
+    login
+    @application_video = application_videos(:one)
+  end
+
+  test 'visiting the index' do
+    visit application_videos_url
+    assert_selector 'h1', text: 'Application Videos'
+  end
+
+  test 'creating a Application video' do
+    visit ranks_path
+    click_on '1. kyu brunt belte'
+    click_on 'Forsvar mot dobbelt hårtak med kneing'
+    click_on 'Legg til film'
+
+    # find('form input[type="file"]', visible: false).set('test/fixtures/files/tiny.png')
+    find('form input[type="file"]', visible: false).set('test/fixtures/files/board_meeting_minutes.txt')
+
+    click_on 'Lagre'
+
+    assert_text 'Application video was successfully created'
+    click_on 'Back'
+  end
+
+  test 'updating a Application video' do
+    # visit application_videos_url
+    # click_on 'Edit', match: :first
+    #
+    # fill_in 'Image', with: @application_video.image_id
+    # fill_in 'Technique application', with: @application_video.technique_application_id
+    # click_on 'Update Application video'
+    #
+    # assert_text 'Application video was successfully updated'
+    # click_on 'Back'
+  end
+
+  test 'destroying a Application video' do
+    visit application_videos_url
+    page.accept_confirm do
+      click_on 'Destroy', match: :first
+    end
+
+    assert_text 'Application video was successfully destroyed'
+  end
+end

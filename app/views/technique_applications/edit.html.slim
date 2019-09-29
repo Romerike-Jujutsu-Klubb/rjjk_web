@@ -1,3 +1,7 @@
+a.btn.btn-danger.float-right href=technique_application_path(@technique_application) data-method=:delete
+  i.fa.fa-trash>
+  | Slett applikasjkon
+
 h1 Redigere applikasjon
 
 = render 'form'
@@ -5,3 +9,17 @@ h1 Redigere applikasjon
 a.btn.btn-link href=technique_applications_path Applikasjoner
 a.btn.btn-link href=url_for(@technique_application) Vis
 a.btn.btn-link href=edit_rank_path(@technique_application.rank) = @technique_application.rank.name
+
+h3.mt-3 Bilder
+- @technique_application.application_steps.each do |as|
+  img src=image_path(as.image_id) style="width:10%"
+
+h3.mt-3
+  | Filmer
+  a.btn.btn-primary.float-right href=new_application_video_path(application_video: {technique_application_id: @technique_application.id})
+    i.fa.fa-plus>
+    | Legg til film
+
+- @technique_application.application_videos.each do |av|
+  a href=image_path(av.image_id)
+    img src=inline_image_path(av.image_id, format: av.image.format) style="width:10%"

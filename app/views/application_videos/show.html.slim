@@ -1,0 +1,13 @@
+h1 Teknikkfilm
+
+h3
+  => @application_video.technique_application.rank.name
+  = @application_video.technique_application.name
+
+= render 'images/item', image: @application_video.image
+
+div = @application_video.image.google_drive_reference
+
+=> link_to 'Edit', edit_application_video_path(@application_video)
+'|
+=< link_to 'Back', application_videos_path

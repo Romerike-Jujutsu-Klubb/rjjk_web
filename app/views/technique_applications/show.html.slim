@@ -4,16 +4,40 @@ h3
   = @technique_application.name
   - if @technique_application.rank_id
     |  (#{link_to("#{@technique_application.rank.label}", @technique_application.rank)})
-  - if admin?
-    = link_to('Rediger', edit_technique_application_path(@technique_application), class: 'btn btn-primary float-right')
+  .float-right
+    a.btn.btn-primary href=new_application_video_path(application_video: { technique_application_id: @technique_application.id })
+      i.fa.fa-plus>
+      | Legg til film
+    - if admin?
+      = link_to('Rediger', edit_technique_application_path(@technique_application), class: 'btn btn-primary ml-2')
 
-p#notice = notice
+- if @technique_application.application_steps.any? && @technique_application.application_videos.any?
+  ul#myTab.nav.nav-tabs role="tablist"
+    li.nav-item
+      a#steps-tab.nav-link.active data-toggle="tab" data-target="#steps" role="tab" aria-controls="steps" aria-selected="true" Bildeserie
+    li.nav-item
+      a#videos-tab.nav-link data-toggle="tab" data-target="#videos" role="tab" aria-controls="videos" aria-selected="false" Filmer
 
-table.table.table-striped
-  - @technique_application.application_steps.order(:position).each.with_index do |as, i|
-    tr
-      td = as.position
-      td
-        - if as.image_id
-          img.float-left.col-md-6 src=image_path(as.image_id) style="margin:0 1em 0 0;padding:4px"
-        = as.description
+scss:
+  .card {
+    @media screen and (min-width: 13cm) {
+      min-width:12cm;
+    }
+  }
+
+#myTabContent.tab-content
+  #steps.tab-pane.fade.show.active role="tabpanel" aria-labelledby="steps-tab"
+    .card-deck
+      - @technique_application.application_steps.order(:position).each.with_index do |as, i|
+        .card.mt-3
+          .card-body
+            / = as.position
+            - if as.image_id
+              img.w-100 src=image_path(as.image_id)
+            = as.description
+          / .card-footer = as.description
+  #videos.tab-pane.fade role="tabpanel" aria-labelledby="videos-tab"
+    - @technique_application.application_videos.each do |av|
+      a href=image_path(av.image_id)
+        img src=inline_image_path(av.image_id, format: av.image.format) style="width:10%"
+

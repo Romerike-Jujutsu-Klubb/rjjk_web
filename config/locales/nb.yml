@@ -3,6 +3,9 @@ nb:
     attributes:
       annual_meeting:
         start_at: Dato og tid
+      application_video:
+        image_id: Film
+        technique_application_id: Teknikk
       appointment:
         from: Fra
         guardian_index: Foresatt

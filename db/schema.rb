@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_28_152805) do
+ActiveRecord::Schema.define(version: 2019_09_29_112956) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -34,6 +34,15 @@ ActiveRecord::Schema.define(version: 2019_09_28_152805) do
     t.integer 'image_id'
     t.index %w[technique_application_id position], name: 'index_application_steps_on_technique_application_id_and_positio'
     t.index ['technique_application_id'], name: 'fk__application_steps_technique_application_id'
+  end
+
+  create_table 'application_videos', force: :cascade do |t|
+    t.bigint 'technique_application_id'
+    t.bigint 'image_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['image_id'], name: 'index_application_videos_on_image_id'
+    t.index ['technique_application_id'], name: 'index_application_videos_on_technique_application_id'
   end
 
   create_table 'appointments', force: :cascade do |t|
@@ -751,6 +760,8 @@ ActiveRecord::Schema.define(version: 2019_09_28_152805) do
   end
 
   add_foreign_key 'application_steps', 'technique_applications', name: 'fk_application_steps_technique_application_id'
+  add_foreign_key 'application_videos', 'images'
+  add_foreign_key 'application_videos', 'technique_applications'
   add_foreign_key 'appointments', 'members', name: 'fk_appointments_member_id'
   add_foreign_key 'appointments', 'roles', name: 'fk_appointments_role_id'
   add_foreign_key 'attendances', 'members', name: 'attendances_member_id_fkey'

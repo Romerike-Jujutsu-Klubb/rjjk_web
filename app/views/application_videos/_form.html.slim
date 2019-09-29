@@ -1,0 +1,31 @@
+= bootstrap_form_for @application_video do |f|
+  - if @application_video.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@application_video.errors.count, "error")} prohibited this application_video from being saved:"
+      ul
+        - @application_video.errors.full_messages.each do |message|
+          li = message
+
+  = f.select :technique_application_id, [[@application_video.technique_application&.name, @application_video.technique_application_id]], {}, readonly: true
+
+  = f.fields_for :image do |imgf|
+    = imgf.text_field :name
+
+    - if @application_video.new_record?
+      = imgf.file_field :file, class: :fileinput
+
+      javascript:
+          $('.fileinput').fileinput({
+              browseLabel: '',
+              showCancel: false,
+              showUpload: false,
+              showRemove: false,
+              theme: 'fa'
+          });
+          $('.kv-upload-progress').hide();
+    - else
+      = render 'images/item', image: @application_video.image
+
+  .float-right = f.primary
+    i.fa.fa-save>
+    | Lagre
