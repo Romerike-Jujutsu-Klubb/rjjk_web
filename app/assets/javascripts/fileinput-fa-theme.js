@@ -19,7 +19,7 @@
             uploadIcon: '<i class="fa fa-upload text-info"></i>',
             zoomIcon: '<i class="fa fa-search-plus"></i>',
             dragIcon: '<i class="fa fa-bars"></i>',
-            indicatorNew: '<i class="fa fa-hand-point-down text-warning"></i>',
+            indicatorNew: '<i class="fa fa-plus text-warning"></i>',
             indicatorSuccess: '<i class="fa fa-check-circle text-success"></i>',
             indicatorError: '<i class="fa fa-exclamation-circle text-danger"></i>',
             indicatorLoading: '<i class="fa fa-hand-point-up text-muted"></i>'

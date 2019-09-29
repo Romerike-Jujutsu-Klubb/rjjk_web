@@ -21,7 +21,7 @@ class ApplicationVideosControllerTest < ActionDispatch::IntegrationTest
   test 'should create application_video' do
     assert_difference('ApplicationVideo.count') do
       post application_videos_url, params: { application_video: {
-        image_id: @application_video.image_id,
+        image_id: id(:application_step_one),
         technique_application_id: @application_video.technique_application_id,
       } }
     end
