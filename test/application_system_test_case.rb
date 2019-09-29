@@ -44,7 +44,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   Capybara::Screenshot::Diff.color_distance_limit = 15
   Capybara::Screenshot::Diff.skip_area = [1014, 200, 1022, 300] # ignore scroll bar
 
-  # FIXME(uwe): Consider rack driver a default for speed
+  # FIXME(uwe): Consider rack driver as default for speed
   driven_by :chrome
   Capybara.server = :puma, { Silent: true }
 
