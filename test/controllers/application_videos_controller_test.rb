@@ -4,6 +4,7 @@ require 'test_helper'
 
 class ApplicationVideosControllerTest < ActionDispatch::IntegrationTest
   setup do
+    login
     @application_video = application_videos(:one)
   end
 
