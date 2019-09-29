@@ -14,13 +14,10 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
     find('#lists-tab').click
     screenshot :index
     find('#group_name_Panda').click
-    sleep 0.5
     screenshot :index_select_panda
     find('#group_name_Tiger').click
-    sleep 0.5
     screenshot :index_select_tiger
     find('#group_name_Voksne').click
-    sleep 0.5
     screenshot :index_select_voksne
   end
 

@@ -41,14 +41,7 @@ module SystemTestHelper
   end
 
   def wait_for_ajax
-    Timeout.timeout(Capybara.default_max_wait_time) do
-      loop do
-        active = page.evaluate_script('jQuery.active')
-        break if active.zero?
-
-        sleep 0.01
-      end
-    end
+    with_retries { raise unless page.evaluate_script('jQuery.active').zero? }
   end
 
   def close_alerts
@@ -64,16 +57,7 @@ module SystemTestHelper
   def click_menu(menu_item)
     open_menu
     link = find(:link, menu_item)
-    begin
-      link.click
-    rescue
-      tries ||= 1
-      raise "click menu failed (#{tries}): #{$ERROR_INFO}" if tries >= 7
-
-      sleep 0.001
-      tries += 1
-      retry
-    end
+    with_retries(label: 'click menu') { link.click }
   end
 
   def select_from_chosen(item_text, options)

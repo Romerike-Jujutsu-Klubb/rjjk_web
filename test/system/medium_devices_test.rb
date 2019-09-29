@@ -71,16 +71,7 @@ class MediumDevicesTest < ApplicationSystemTestCase
     find('#headermenuholder > .fa-bars').click
     article_menu_link = find('.menubutton', text: 'My first article')
     screenshot :menu, skip_area: [308, 73, 332, 102]
-    begin
-      article_menu_link.click
-    rescue
-      tries ||= 1
-      raise "article menu click failed (#{tries}): #{$ERROR_INFO}" if tries >= 6
-
-      sleep 0.001
-      tries += 1
-      retry
-    end
+    with_retries(label: 'article menu click') { article_menu_link.click }
     assert_css 'h1', text: 'My first article'
     screenshot :article, skip_area: LOGO_AREA
   end
@@ -93,18 +84,12 @@ class MediumDevicesTest < ApplicationSystemTestCase
     screenshot :index, area_size_limit: 533, skip_area: [MENU_BTN_AREA, FRONT_PAGE_PROGRESS_BAR_AREA]
     find('.fa-chevron-down').click
     find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
-    screenshot(:scrolled, skip_area: SCROLL_BAR_AREA) || (sleep(0.5) if ENV['TRAVIS'])
+    screenshot(:scrolled, skip_area: SCROLL_BAR_AREA)
     assert_equal information_page_url(id(:first)),
         find('#footer .menu-item a', text: 'MY FIRST ARTICLE')[:href]
-    begin
+    with_retries label: 'article link click' do
       find('#footer .menu-item a', text: 'MY FIRST ARTICLE').click
       assert_current_path information_page_path(id(:first))
-    rescue Minitest::Assertion => e
-      tries = (tries || 0) + 1
-      raise "article link click failed (#{tries}): #{e}" if tries >= 6
-
-      sleep 0.001
-      retry
     end
 
     assert_css('h1', text: 'My first article')

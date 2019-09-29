@@ -29,18 +29,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
     find('.fa-calendar-alt').click_at
     assert_css '#menuShadow', visible: :hidden
     screenshot :menu_closed
-
-    begin
-      find('.fa-calendar-alt').click
-    rescue
-      tries ||= 1
-      raise "fa-calendar-alt click failed (#{tries}): #{$ERROR_INFO}" if tries >= 6
-
-      sleep 0.001
-      tries += 1
-      retry
-    end
-
+    with_retries(label: 'fa-calendar-alt click') { find('.fa-calendar-alt').click }
     screenshot :calendar
     find('.fa-bars').click_at
     screenshot :calendar_closed
@@ -56,17 +45,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
     article_menu_link = find('.menubutton', text: 'My first article')
     article_menu_link.hover
     screenshot :menu
-    begin
-      article_menu_link.click
-    rescue => e
-      tries ||= 1
-      raise "article menu click failed (#{tries}): #{e}" if tries >= 6
-
-      sleep 0.001
-      tries += 1
-      retry
-    end
-
+    with_retries(label: 'article menu click') { article_menu_link.click }
     screenshot :article
   end
 
@@ -77,28 +56,11 @@ class SmallDevicesTest < ApplicationSystemTestCase
     assert_css('.fa-chevron-down')
     screenshot :index, color_distance_limit: 11
     find('.fa-chevron-down').click
-    begin
-      article_link = find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
-    rescue => e
-      tries ||= 1
-      raise "finding article link failed (#{tries}): #{e}" if tries >= 6
-
-      sleep 0.001
-      tries += 1
-      retry
+    article_link = with_retries label: 'finding article link' do
+      find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
     end
-    screenshot(:scrolled, skip_area: PROGRESS_BAR_AREA) || (sleep(0.5) if ENV['TRAVIS'])
-    begin
-      article_link.click
-      assert_css('h1', text: 'My first article')
-    rescue Minitest::Assertion => e
-      tries ||= 1
-      raise "article link click failed (#{tries}): #{e}" if tries >= 6
-
-      sleep 0.001
-      tries += 1
-      retry
-    end
+    screenshot(:scrolled, skip_area: PROGRESS_BAR_AREA)
+    with_retries(label: 'article link click') { article_link.click }
     screenshot :article
   end
 end
