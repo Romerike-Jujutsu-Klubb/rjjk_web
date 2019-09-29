@@ -8,7 +8,7 @@
         .col = f.text_field :email, autocomplete: :off,
                 append: (link_to('<i class="fa fa-envelope"></i>'.html_safe, %Q{mailto:"#{user.name}" <#{user.email}>}) if user.email.present?),
                 help: (detour_to('Send e-post med login link', send_login_link_path(user: { identity: user.email }), method: :post) if user.email)
-        - if @user.email.present? && (@user.guardian_1 || @user.guardian_2 || @user.billing_user)
+        - if @user.email.present? && ((@user.guardian_1 && @user.guardian_1.email.blank?) || (@user.guardian_2 && @user.guardian_2.email.blank?) || (@user.billing_user && @user.billing_user != @user.guardian_1 && @user.billing_user.email.blank?))
           .col
             ul
               - if @user.guardian_1 && @user.guardian_1.email.blank?
@@ -18,7 +18,9 @@
               - if @user.billing_user && @user.billing_user != @user.guardian_1 && @user.billing_user.email.blank?
                 li: a Flytt til betaler #{@user.billing_user}
         - if admin? && user.email
-          .col-md-2 = f.select :verified, [['Nei', false], ['Ja', true]]
+          .col-md-2.pt-3
+            br
+            = f.check_box :verified
         - if user.login.present?
           .col = f.text_field :login, autocomplete: :off
       = f.text_field :phone, \
