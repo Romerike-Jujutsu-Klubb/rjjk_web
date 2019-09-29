@@ -46,7 +46,7 @@ class UserMergeController < ApplicationController
           NkfMemberSyncJob.perform_later member
         end
       end
-      back_or_redirect_to @user
+      redirect_to @user
     end
   rescue => e
     flash.now.alert = 'En feil oppsto ved lagring av brukeren:' \
