@@ -60,7 +60,10 @@ class SmallDevicesTest < ApplicationSystemTestCase
       find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
     end
     screenshot(:scrolled, skip_area: PROGRESS_BAR_AREA)
-    with_retries(label: 'article link click') { article_link.click }
+    with_retries(label: 'article link click') do
+      article_link.click
+      assert_css('h1', text: 'My first article')
+    end
     screenshot :article
   end
 end

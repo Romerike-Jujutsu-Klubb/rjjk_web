@@ -41,7 +41,7 @@ module SystemTestHelper
   end
 
   def wait_for_ajax
-    with_retries { raise unless page.evaluate_script('jQuery.active').zero? }
+    with_retries { assert page.evaluate_script('jQuery.active').zero? }
   end
 
   def close_alerts
