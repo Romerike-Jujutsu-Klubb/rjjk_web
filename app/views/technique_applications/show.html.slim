@@ -31,13 +31,10 @@ scss:
       - @technique_application.application_steps.order(:position).each.with_index do |as, i|
         .card.mt-3
           .card-body
-            / = as.position
             - if as.image_id
               img.w-100 src=image_path(as.image_id)
             = as.description
-          / .card-footer = as.description
   #videos.tab-pane.fade role="tabpanel" aria-labelledby="videos-tab"
     - @technique_application.application_videos.each do |av|
-      a href=image_path(av.image_id)
-        img src=inline_image_path(av.image_id, format: av.image.format) style="width:10%"
+      = render 'images/item', image: av.image
 
