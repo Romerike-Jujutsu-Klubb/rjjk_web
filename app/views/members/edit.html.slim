@@ -52,7 +52,7 @@ ul.nav.nav-tabs role="tablist"
   - if @member
     - if @member.survey_requests.any?
       li.nav-item: a.nav-link data-target="#tab_surveys" data-toggle="tab" Spørreskjema
-    - if @member.age >= 18
+    - if @member.age&.>=(18)
       li.nav-item: a.nav-link data-target="#tab_signatures" data-toggle="tab" Signaturer
   - if @member&.nkf_member
     li.nav-item: a.nav-link data-target="#tab_nkf" data-toggle="tab" NKF
@@ -79,7 +79,7 @@ ul.nav.nav-tabs role="tablist"
   - if @member
     - if @member.survey_requests.any?
       #tab_surveys.tab-pane.fade = render 'surveys'
-    - if @member.age >= 18
+    - if @member.age&.>=(18)
       #tab_signatures.tab-pane.fade = render 'signatures'
   - if @member&.nkf_member
     #tab_nkf.tab-pane.fade = render 'nkf_fields'

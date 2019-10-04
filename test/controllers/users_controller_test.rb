@@ -32,6 +32,13 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_show_no_birthdate
+    users(:leftie).update! birthdate: nil
+    login(:uwe)
+    get :show, params: { id: id(:leftie) }
+    assert_response :success
+  end
+
   def test_photo
     uwe = login(:uwe)
     get :photo, params: { id: uwe.id }
