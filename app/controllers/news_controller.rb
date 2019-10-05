@@ -15,7 +15,10 @@ class NewsController < ApplicationController
 
   def show
     id = params[:id]
-    redirect_to root_path if id == 'p2'
+    if id == 'p2'
+      redirect_to root_path
+      return
+    end
     @news_item = NewsItem.find(id)
   end
 
