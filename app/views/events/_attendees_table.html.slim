@@ -46,7 +46,7 @@ table.table.table-hover.table-responsive class=('table-sm' if event_invitees.siz
           - elsif inv.will_attend.nil?
             - if inv.invitation&.sent_at
               = "Invitert #{inv.invitation.sent_at.to_date}"
-              - if (@event.end_at || @event_start_at) > Time.current && (inv.invitation.sent_at < 1.month.ago || (Time.current - inv.invitation.sent_at) > (@event.start_at - Time.current))
+              - if (@event.end_at || @event.start_at) > Time.current && (inv.invitation.sent_at < 1.month.ago || (Time.current - inv.invitation.sent_at) > (@event.start_at - Time.current))
                 br
                 = link_to('Resend invitasjon', with_detour({ controller: :event_invitee_messages, \
                                                   action: :new, \

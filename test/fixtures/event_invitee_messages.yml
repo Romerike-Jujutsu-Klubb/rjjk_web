@@ -9,3 +9,10 @@ two:
   subject: MyString
   body: MyText
   sent_at: 2012-09-25 22:31:19
+
+invited_undecided:
+  message_type: INVITATION
+  event_invitee: invited_undecided
+  subject: Come!
+  body: Now!
+  sent_at: 2012-09-25 22:31:19

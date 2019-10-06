@@ -17,3 +17,12 @@ two:
   will_attend: false
   payed: false
   user: oldie
+
+invited_undecided:
+  event: one
+  email: ei_three@example.com
+  name: Invited Undecided
+  address: Home 3
+  organization: Outsiders
+  payed: false
+  user: leftie
