@@ -18,9 +18,12 @@ h2.float-right
           i.fa.fa-trash>
           | Slett permanent
       - else
-        a.btn.btn-warning.dropdown-item.mr-2 href=user_merge_path(@user) title='Slå sammen med annen bruker'
+        a.btn.btn-warning.dropdown-item href=user_merge_path(@user) title='Slå sammen med annen bruker'
           i.fa.fa-user-friends>
           | Slå sammen
+        a.btn.btn-secondary.dropdown-item href=audit_path(User, @user.id)
+          i.fa.fa-search>
+          | Sporing
         - unless @user.member
           .dropdown-divider
           = link_to user_path(@user), method: :delete, class: 'text-danger dropdown-item', data: {confirm: 'Er du sikker på at du vil slette denne brukeren?'}
