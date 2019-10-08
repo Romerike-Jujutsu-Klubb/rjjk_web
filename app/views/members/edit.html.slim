@@ -18,15 +18,19 @@ h2.float-right
           i.fa.fa-trash>
           | Slett permanent
       - else
-        a.btn.btn-warning.dropdown-item href=user_merge_path(@user) title='Slå sammen med annen bruker'
+        a.dropdown-item.text-warning href=user_merge_path(@user) title='Slå sammen med annen bruker'
           i.fa.fa-user-friends>
           | Slå sammen
-        a.btn.btn-secondary.dropdown-item href=audit_path(User, @user.id)
+        a.dropdown-item href=audit_path(User, @user.id)
           i.fa.fa-search>
-          | Sporing
-        - unless @user.member
+          | Sporing bruker
+        - if @user.member
+          a.dropdown-item href=audit_path(@member.class, @member.id)
+            i.fa.fa-search>
+            | Sporing medlemskap
+        - else
           .dropdown-divider
-          = link_to user_path(@user), method: :delete, class: 'text-danger dropdown-item', data: {confirm: 'Er du sikker på at du vil slette denne brukeren?'}
+          a.dropdown-item.text-danger href=user_path(@user) data-method=:delete data-confirm='Er du sikker på at du vil slette denne brukeren?'
             i.fa.fa-trash>
             | Slett bruker
 
@@ -59,8 +63,6 @@ ul.nav.nav-tabs role="tablist"
       li.nav-item: a.nav-link data-target="#tab_signatures" data-toggle="tab" Signaturer
   - if @member&.nkf_member
     li.nav-item: a.nav-link data-target="#tab_nkf" data-toggle="tab" NKF
-  - if @member
-    li.nav-item = link_to 'Sporing', audit_path(@member.class, @member.id), class: 'btn btn-link'
 
 .tab-content
   #tab_user.tab-pane.fade.show.active.pt-3 = render 'users/form', user: @user, submit: true
