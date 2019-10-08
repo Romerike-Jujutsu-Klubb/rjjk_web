@@ -42,9 +42,11 @@
       label NKF medlemsnr
       span.form-control = (membership.nkf_member.try(:medlemsnummer) || 'Ikke i NKF-registeret.')
   .row
-    .col-6
+    .col-4
       = f.text_field :passive_on, class: 'date', placeholder: 'dato'
-    .col-6
+    .col-4
+      = f.text_field :honorary_on, class: 'date', placeholder: 'dato'
+    .col-4
       = f.text_field :left_on, class: 'date'
   .row
     - if membership.billing_type.present?

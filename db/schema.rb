@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_29_205527) do
+ActiveRecord::Schema.define(version: 2019_10_08_085627) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -435,6 +435,7 @@ ActiveRecord::Schema.define(version: 2019_09_29_205527) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.date 'passive_on'
+    t.datetime 'honorary_on'
   end
 
   create_table 'news_item_likes', force: :cascade do |t|
@@ -503,7 +504,7 @@ ActiveRecord::Schema.define(version: 2019_09_29_205527) do
     t.string 'kont_sats', limit: 255
     t.string 'kont_belop', limit: 255
     t.string 'kontraktstype', limit: 255
-    t.integer 'kontraktsbelop'
+    t.string 'kontraktsbelop', limit: 255
     t.string 'rabatt', limit: 255
     t.string 'gren_stilart_avd_parti___gren_stilart_avd_parti', limit: 255
     t.string 'sist_betalt_dato', limit: 255
