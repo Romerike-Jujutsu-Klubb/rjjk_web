@@ -21,5 +21,7 @@ class MemberFeatureTest < ApplicationSystemTestCase
     screenshot :signatures
     find('a.nav-link', text: 'NKF').click
     screenshot :nkf_tab
+    execute_script 'window.scrollBy(0, $(window).height())'
+    screenshot :nkf_tab_down
   end
 end
