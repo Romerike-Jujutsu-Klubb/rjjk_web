@@ -120,6 +120,7 @@ nb:
         account_no: Kontonummer
         billing_type: "Fakturerings\u00ADmåte"
         comment: Kommentar
+        honorary_on: Æresmedlem fra
         joined_on: Innmeldingsdato
         left_on: Utmeldingsdato
         nkf_fee: NKF Hovedklubb
