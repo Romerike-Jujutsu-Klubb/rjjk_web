@@ -30,9 +30,4 @@ class NkfReplicationMailer < ApplicationMailer
     @appointments = appointments
     mail subject: "Verv fra NKF: #{appointments.size}"
   end
-
-  def wrong_contracts(wrong_contracts)
-    @wrong_contracts = wrong_contracts
-    mail subject: 'Medlemmer med feil kontrakt'
-  end
 end
