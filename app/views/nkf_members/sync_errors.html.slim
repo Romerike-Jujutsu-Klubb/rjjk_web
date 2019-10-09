@@ -2,25 +2,18 @@
 
 h1 NKF Synchronization errors (#{@errors.inject(0){|a,e| a + e[1].size}})
 
-table.table.table-sm
-  thead
-    tr
-      th Medlem
-      th RJJK Bruker
-      th RJJK Felt
-      th RJJK Verdi
-      th NKF Verdi
-      th NKF Felt
-  tbody
-    - @errors.each do |member, mapped_attributes|
-      - mapped_attributes.each.with_index do |mapping, i|
-        tr class=('bg-warning' if member&.left_on)
-          - if i == 0
-            td rowspan=mapped_attributes.size
-              - if member
-                a href=member_path(member, anchor: :tab_nkf_tab) = member
-          td = mapping[:target]
-          td = mapping[:target_attribute]
-          td = mapping[:mapped_rjjk_value]
-          td = mapping[:nkf_value]
-          td = mapping[:nkf_attr]
+- left_errors, current_errors = @errors.partition{|row| row[0].left?}
+nav
+  #nav-tab.nav.nav-tabs role="tablist"
+    a#nav-home-tab.nav-item.nav-link.active data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"
+      | Medlemmer (#{current_errors.size})
+    - if left_errors.any?
+      a#nav-profile-tab.nav-item.nav-link data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"
+        | Utmeldte (#{left_errors.size})
+
+#nav-tabContent.tab-content
+  #nav-home.tab-pane.fade.show.active role="tabpanel" aria-labelledby="nav-home-tab"
+    = render 'sync_table', errors: current_errors
+  - if left_errors.any?
+    #nav-profile.tab-pane.fade role="tabpanel" aria-labelledby="nav-profile-tab"
+      = render 'sync_table', errors: left_errors

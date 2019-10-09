@@ -1,0 +1,22 @@
+table.table.table-sm
+  thead
+    tr
+      th Medlem
+      th RJJK Bruker
+      th RJJK Felt
+      th RJJK Verdi
+      th NKF Verdi
+      th NKF Felt
+  tbody
+    - errors.each do |member, mapped_attributes|
+      - mapped_attributes.each.with_index do |mapping, i|
+        tr
+          - if i == 0
+            td rowspan=mapped_attributes.size
+              - if member
+                a href=member_path(member, anchor: :tab_nkf_tab) = member
+          td = mapping[:target]
+          td = mapping[:target_attribute]
+          td = mapping[:mapped_rjjk_value]
+          td = mapping[:nkf_value]
+          td = mapping[:nkf_attr]
