@@ -6,6 +6,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.raise_delivery_errors = true
   config.action_view.raise_on_missing_translations = true
+  config.active_job.queue_adapter = ActiveJob::QueueAdapters::AsyncAdapter.new max_threads: 1
   config.active_record.migration_error = :page_load
   config.active_record.verbose_query_logs = true
   config.active_storage.service = :local
