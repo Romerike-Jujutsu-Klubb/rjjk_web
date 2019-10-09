@@ -50,7 +50,7 @@ class User < ApplicationRecord
   CHANGEABLE_FIELDS = %w[first_name last_name email].freeze
   attr_accessor :password_needs_confirmation
 
-  NILLABLE_FIELDS = %i[address email first_name login phone postal_code].freeze
+  NILLABLE_FIELDS = %i[address email first_name kana login phone postal_code role].freeze
   before_validation do
     NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? }
     self.email = email.strip.downcase if email.present?
