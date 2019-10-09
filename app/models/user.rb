@@ -101,9 +101,7 @@ class User < ApplicationRecord
     users = includes(:member)
         .where('login = :email OR email = :email', email: email)
         .where('verified = ? AND (deleted_at IS NULL)', true).to_a
-    users
-        .select { |u| u.salted_password == salted_password(u.salt, hashed(pass)) }
-        .first
+    users.find { |u| u.salted_password == salted_password(u.salt, hashed(pass)) }
   end
 
   # Allow logins for deleted accounts, but only via this method
