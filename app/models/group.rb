@@ -140,7 +140,7 @@ class Group < ApplicationRecord
     return [] unless target_size
 
     trial_list = trials.sort_by { |t| [-t.trial_attendances.size, t.reg_dato] }
-    active_size = members.select(&:active?).size
+    active_size = members.count(&:active?)
     active_trial_count = (target_size - active_size)
     trial_list[active_trial_count..-1] || []
   end
