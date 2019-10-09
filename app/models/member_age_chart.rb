@@ -15,11 +15,11 @@ class MemberAgeChart
         },
         {
           name: 'Betalende',
-          data: age_groups.map { |group, mbrs| [group, mbrs.select(&:paying?).size] }, color: :red
+          data: age_groups.map { |group, mbrs| [group, mbrs.count(&:paying?)] }, color: :red
         },
         {
           name: 'Aktive',
-          data: age_groups.map { |group, mbrs| [group, mbrs.select(&:active?).size] }, color: :green
+          data: age_groups.map { |group, mbrs| [group, mbrs.count(&:active?)] }, color: :green
         },
       ]
       [age_groups, chart_data]
