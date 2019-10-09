@@ -13,6 +13,7 @@ class Member < ApplicationRecord
 
   belongs_to :user, -> { with_deleted }, inverse_of: :member
 
+  has_one :current_election, -> { current }, class_name: :Election
   has_one :last_member_image, -> { order :created_at }, class_name: :MemberImage
   has_one :image, through: :last_member_image
   has_one :next_graduate, -> do
@@ -42,12 +43,20 @@ class Member < ApplicationRecord
 
   accepts_nested_attributes_for :user
 
+  scope :absent_since, ->(from_date = nil, to_date = nil) do
+    where.not(id: attending_since(from_date, to_date))
+  end
   scope :active, ->(from_date = nil, to_date = nil) do
     from_date ||= Date.current
     to_date ||= from_date
     references(:members)
         .where('members.joined_on <= ? AND members.left_on IS NULL OR members.left_on >= ?',
             to_date, from_date)
+  end
+  scope :attending_since, ->(from_date = nil, to_date = nil) do
+    from_date ||= Date.current
+    to_date ||= Date.current
+    merge(Attendance.from_date(from_date).to_date(to_date))
   end
   scope :search, ->(query) do
     includes(:nkf_member).references(:nkf_members)
@@ -361,6 +370,10 @@ class Member < ApplicationRecord
     current_rank && (current_rank >= Rank.kwr.find_by(name: '1. kyu')) && active?
   end
 
+  def honorary?
+    honorary_on
+  end
+
   def to_s
     name
   end
@@ -369,5 +382,49 @@ class Member < ApplicationRecord
     g = Graduate.new graduation: graduation, member: self
     g.populate_defaults!
     g
+  end
+
+  def category
+    if honorary?
+      'Æresmedlem'
+    elsif age >= 25
+      'Voksen'
+    elsif age >= 10
+      'Ungdom'
+    else
+      'Barn'
+    end
+  end
+
+  def contract
+    if category == 'Voksen'
+      groups.last&.contract || category
+    else
+      category
+    end
+  end
+
+  def monthly_fee
+    if category == 'Voksen'
+      groups.last&.contract || category
+    else
+      category
+    end
+  end
+
+  def discount
+    if honorary?
+      nil
+    elsif passive_on
+      100
+    elsif current_election
+      100
+    elsif active_group_instructors.count == 1
+      50
+    elsif active_group_instructors.count >= 2
+      100
+    elsif instructor?
+      50
+    end
   end
 end
