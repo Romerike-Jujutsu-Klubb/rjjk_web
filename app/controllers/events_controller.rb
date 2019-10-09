@@ -56,7 +56,6 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
-    @event.groups = params[:group][:id].map { |group_id| Group.find(group_id) } if params[:group]
     if @event.update(params[:event] || {})
       selected_members =
           @event.groups.map(&:members).map { |m| m.includes(:user) }.map(&:active).flatten.uniq
