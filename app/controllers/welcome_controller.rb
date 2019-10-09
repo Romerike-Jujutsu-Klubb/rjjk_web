@@ -31,7 +31,6 @@ class WelcomeController < ApplicationController
             }))
       end
       @news_items.sort_by! { |n| n.publish_at || n.created_at }.reverse!
-      render template: 'news/index'
     else
       front_page
     end

@@ -1,19 +1,19 @@
-h1 Velkommen!
+- if current_user.member && @next_practice&.group_schedule&.group&.current_semester&.chief_instructor_id == current_user.member.id
+  - attendees = @next_practice.attendances.map(&:member)
+  - active_members = @next_practice.group_schedule.group.members.active.where.not(id: attendees)
+  - recent_active_absentees = active_members.absent_since(2.weeks.ago).reject(&:passive_on)
+  - recent_passive_absentees = active_members.absent_since(2.months.ago).select(&:passive_on)
+  / h3 Oppfølging (#{recent_active_absentees.size})
+  / .row
+  /   .col-6
+  /     table.table class=('table-sm' if recent_active_absentees.size > 5)
+  /       - recent_active_absentees.each do |m|
+  /         tr
+  /           td = link_to m.name, m
+  /   .col-6
+  /     table.table class=('table-sm' if recent_passive_absentees.size > 5)
+  /       - recent_passive_absentees.each do |m|
+  /         tr
+  /           td = link_to m.name, m
 
-p Romerike Jujutsu Klubb ble stiftet i 1982 og har siden da gledet barn, ungdom
-  og voksne med undervisning i den japanske kampkunsten.
-
-p Jujutsu trenes som selfvorsvarsgren der man alltid søker å senke
-  konfliktsnivået. Gode forsvar krever gode angrep så vi har en allsidig trening
-  med varierte angrep innen slag, spark, grep og kast.
-
-p Treningen legger opp til en kontinuerlig utvikling fra første trening der du
-  får utlevert enkle øvelser du vil mestre med en gang, til svært avanserte
-  teknikker som du vil få utlevert når du er moden for dem.
-
-p
-  | Vi har 2 uker uforpliktende prøvetid. Klikk på
-  a.btn.btn-secondary.btn-sm<> href="http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162" Prøv oss
-  | linken på toppen av siden for å registrere deg, og møt opp!</a>
-    I prøvetiden trenger du bare vanlig treningstøy, men har du en
-    jujutsu/karate/judo drakt liggende, så ta den med.
+= render template: 'news/index'
