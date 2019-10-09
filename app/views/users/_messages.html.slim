@@ -1,0 +1,6 @@
+table.table class=('table-sm' if @user.user_messages.size > 20)
+  - @user.user_messages.limit(100).order(created_at: :desc).each do |um|
+    tr
+      td.text-nowrap = um.created_at.strftime('%F %R')
+      td = um.tag
+      td = um.subject

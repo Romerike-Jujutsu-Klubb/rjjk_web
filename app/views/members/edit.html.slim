@@ -56,6 +56,8 @@ ul.nav.nav-tabs role="tablist"
       li.nav-item: a.nav-link data-target="#tab_duties" data-toggle="tab" Verv
   - if @user.event_invitees.any?
     li.nav-item: a.nav-link data-target="#tab_events" data-toggle="tab" Arrangement
+  - if @user.user_messages.any?
+    li.nav-item: a.nav-link data-target="#tab_messages" data-toggle="tab" Meldinger
   - if @member
     - if @member.survey_requests.any?
       li.nav-item: a.nav-link data-target="#tab_surveys" data-toggle="tab" Spørreskjema
@@ -81,6 +83,8 @@ ul.nav.nav-tabs role="tablist"
       #tab_duties.tab-pane.fade = render 'duties'
   - if @user.event_invitees.any?
     #tab_events.tab-pane.fade = render 'events'
+  - if @user.user_messages.any?
+    #tab_messages.tab-pane.fade = render 'messages'
   - if @member
     - if @member.survey_requests.any?
       #tab_surveys.tab-pane.fade = render 'surveys'
