@@ -16,7 +16,7 @@ class MemberHistoryGraph
   ACTIVE_CLAUSE = ->(date) do
     "NOT EXISTS (
       SELECT kontraktsbelop FROM nkf_members
-      WHERE member_id = members.id AND kontraktsbelop <= 0)
+      WHERE member_id = members.id AND kontraktsbelop::integer <= 0)
         AND (joined_on IS NULL OR joined_on <= '#{date.strftime('%Y-%m-%d')}')
         AND (left_on IS NULL OR left_on > '#{date.strftime('%Y-%m-%d')}'
     )"
@@ -24,7 +24,7 @@ class MemberHistoryGraph
   NON_PAYING_CLAUSE = ->(date) do
     "EXISTS (
       SELECT kontraktsbelop FROM nkf_members
-      WHERE member_id = members.id AND kontraktsbelop <= 0)
+      WHERE member_id = members.id AND kontraktsbelop::integer <= 0)
         AND (joined_on IS NULL OR joined_on <= '#{date.strftime('%Y-%m-%d')}')
         AND (left_on IS NULL OR left_on > '#{date.strftime('%Y-%m-%d')}'
     )"
