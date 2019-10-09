@@ -92,8 +92,7 @@ class ApplicationController < ActionController::Base
     @your_attendance_next_practice = attendances_next_practice.find { |a| a.member_id == m.id }
     attendances_next_practice.delete @your_attendance_next_practice
     @other_attendees = attendances_next_practice.select do |a|
-      [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED]
-          .include? a.status
+      [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED].include? a.status
     end
     @other_absentees = attendances_next_practice - @other_attendees
     @next_practice
