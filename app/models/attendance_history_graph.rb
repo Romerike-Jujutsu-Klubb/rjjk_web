@@ -85,7 +85,7 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
     dates = attendances.map(&:date).sort.uniq
     data = groups.map do |group|
       values = dates.select { |d| group.group_schedules.map(&:weekday).include? d.cwday }.map do |d|
-        [d.day, attendances.select { |a| a.group_schedule.group == group && a.date == d }.size]
+        [d.day, attendances.count { |a| a.group_schedule.group == group && a.date == d }]
       end
       values.map! { |k, v| [k, v.positive? ? v : nil] }
       [group.name, values, group.color] if values.any? { |v| v }
