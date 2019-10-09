@@ -144,7 +144,7 @@ class Graduation < ApplicationRecord
   end
 
   def size
-    graduates.select { |g| g.passed || g.passed.nil? }.size
+    graduates.count { |g| g.passed || g.passed.nil? }
   end
 
   def group_schedule
