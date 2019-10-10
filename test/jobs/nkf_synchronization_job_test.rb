@@ -32,7 +32,7 @@ class NkfSynchronizationJobTest < ActiveJob::TestCase
     rjjk_new_count = 413
     rjjk_update_count = 3
     mail = ActionMailer::Base.deliveries[1]
-    assert_match(/Oppdateringer fra NKF: #{rjjk_new_count} nye, #{rjjk_update_count} endrede/, mail.subject)
+    assert_match(/Oppdateringer fra NKF: #{rjjk_new_count} nye/, mail.subject)
     assert_equal 'uwe@kubosch.no', mail.header[:to].value
     assert_equal 'noreply@test.jujutsu.no', mail.header[:from].value
     assert_match(/Opprettet følgende nye medlemmer \(#{rjjk_new_count}\).*Abdorahman Lutf Muhammad/,
