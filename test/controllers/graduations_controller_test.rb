@@ -73,6 +73,11 @@ class GraduationsControllerTest < ActionController::TestCase
     end
   end
 
+  def test_send_date_change_message
+    get :send_date_change_message, params: { id: @first_id }
+    assert_redirected_to edit_graduation_path(@first_id, anchor: 'form_tab')
+  end
+
   def test_certificates
     get :certificates, params: { id: @first_id }
     assert_response :success
