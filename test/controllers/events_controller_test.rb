@@ -3,9 +3,7 @@
 require 'controller_test'
 
 class EventsControllerTest < ActionController::TestCase
-  def setup
-    login(:uwe)
-  end
+  setup { login(:uwe) }
 
   def test_should_get_index
     get :index
@@ -57,5 +55,15 @@ class EventsControllerTest < ActionController::TestCase
 
   def test_calendar
     get :calendar
+  end
+
+  def test_accept
+    login :oldie
+    patch :accept, params: { id: id(:one) }
+  end
+
+  def test_decline
+    login :oldie
+    patch :decline, params: { id: id(:one) }
   end
 end
