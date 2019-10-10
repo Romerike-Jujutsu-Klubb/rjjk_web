@@ -58,27 +58,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
       ]],
     ], c.members)
 
-    assert_equal([
-      [members(:lars), {
-        membership: { 'joined_on' => [Date.parse('Thu, 21 Jun 2007'), Date.parse('Sun, 01 Apr 2001')] },
-        user: {
-          'birthdate' => [Date.parse('Wed, 21 Jun 1967'), Date.parse('Wed, 01 Mar 1967')],
-          'email' => ['lars@example.com', 'lars@example.net'],
-        },
-      }],
-      [members(:sebastian), {
-        membership: { 'joined_on' => [Date.parse('2007-08-25'), Date.parse('2007-09-21')] },
-        user: {
-          'birthdate' => [Date.parse('2004-06-03'), Date.parse('2004-06-04')],
-          'phone' => [nil, '92929292'],
-          'email' => ['sebastian@example.com', 'sebastian@example.net'],
-        },
-        guardian_1: { 'email' => ['lise@example.com', nil] },
-        guardian_2: { 'first_name' => ['Uwe', ''], 'last_name' => ['Kubosch', nil], 'phone' => ['5556666', nil] },
-        billing: { 'email' => [nil, 'lise@example.net'] },
-      }],
-      [members(:uwe), { user: { 'phone' => ['5556666', nil], 'email' => ['uwe@example.com', 'uwe@example.net'] } }],
-    ], c.member_changes)
+    assert_equal([], c.member_changes)
 
     assert_equal([
       [members(:lars), {
@@ -137,25 +117,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
           form_field: :frm_48_v45 },
       ]
     ]], c.members)
-    assert_equal [[lars, {
-      membership: {
-        'joined_on' => [Date.new(2007, 6, 21), Date.new(2001, 4, 1)],
-      },
-      user: {
-        'birthdate' => [Date.new(1967, 6, 21), Date.new(1967, 3, 1)],
-        'billing_user_id' => [226_069_790, 649_262_569],
-        'email' => %w[lars@example.com lars@example.net],
-      },
-      billing: {
-        'id' => [nil, 649_262_569], 'login' => [nil, 'newbie'],
-        'salted_password' => [nil, 'de6db7cdf638e5ba522b9e5728d551315bf750f4'],
-        'email' => [nil, 'newbie@example.com'], 'first_name' => [nil, 'Newbie'],
-        'last_name' => [nil, 'Neuer'], 'salt' => [nil, '7f8b036f9b647d46d22abdbfc8113f44a88f9889'],
-        'verified' => [nil, true], 'guardian_1_id' => [nil, 409_148_489],
-        'address' => [nil, 'Rookie Road 5'], 'birthdate' => [nil, Date.parse('Thu, 17 May 1990')],
-        'male' => [nil, true], 'postal_code' => [nil, '1472']
-      },
-    }]], c.member_changes
+    assert_equal [], c.member_changes
 
     assert_equal([[members(:lars), {
       { user: :birthdate } => { '01.03.1967' => '21.06.1967' },
@@ -202,15 +164,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
         form_field: :frm_48_v72 },
     ]]], c.members
 
-    assert_equal [[seb, {
-      membership: { 'joined_on' => [Date.new(2007, 8, 25), Date.new(2007, 9, 21)] },
-      user: { 'birthdate' => [Date.new(2004, 6, 3), Date.new(2004, 6, 4)],
-              'phone' => [nil, '92929292'],
-              'email' => %w[sebastian@example.com sebastian@example.net] },
-      guardian_1: { 'email' => ['lise@example.com', nil] },
-      guardian_2: { 'first_name' => ['Uwe', ''], 'last_name' => ['Kubosch', nil] },
-      billing: { 'email' => [nil, 'lise@example.net'] },
-    }]], c.member_changes
+    assert_equal [], c.member_changes
 
     assert_equal([
       [seb, {
