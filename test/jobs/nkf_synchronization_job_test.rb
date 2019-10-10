@@ -43,7 +43,7 @@ class NkfSynchronizationJobTest < ActiveJob::TestCase
       </ul>
       <h2>Ville ha oppdatert følgende medlemmer hos NKF (3)</h2>
       <ul>
-        <li>Lars Erling Bråten
+        <li>Lars Bråten
           <ul>
             <li>{:user=&gt;:first_name}: &quot;Lars Erling&quot; => &quot;Lars&quot;</li>
             <li>{:user=&gt;:address}: &quot;Torsvei 8B&quot; => &quot;Torsvei 8b&quot;</li>
