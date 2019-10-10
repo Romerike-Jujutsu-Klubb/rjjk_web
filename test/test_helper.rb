@@ -77,7 +77,7 @@ class ActiveSupport::TestCase
     raise e if (attempts && attempt >= attempts) || backoff > backoff_limit
 
     attempt += 1
-    logger.info "Retrying #{label} #{attempt} #{backoff} #{e}"
+    puts "Retrying #{label} #{attempt} #{backoff} #{e}"
     sleep backoff
     backoff *= backoff_factor
     retry

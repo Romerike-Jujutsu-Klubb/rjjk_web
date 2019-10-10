@@ -53,14 +53,27 @@ class SmallDevicesTest < ApplicationSystemTestCase
     screenshot_group :new_front_page_scroll
     visit front_page_path
     assert_css('#headermenuholder > .fa-bars')
-    assert_css('.fa-chevron-down')
+    chevron_btn = find('.fa-chevron-down')
     screenshot :index, color_distance_limit: 11
-    find('.fa-chevron-down').click
-    article_link = with_retries label: 'finding article link' do
-      find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
-    end
+    chevron_btn.click
+    article_link = find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
+
+    # with_retries(label: 'article link in view') do
+    #   in_view = evaluate_script(<<~JS, article_link)
+    #     (function(el) {
+    #       var rect = el.getBoundingClientRect();
+    #       return (
+    #         rect.top >= 0 && rect.left >= 0 &&
+    #         rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    #         rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    #       )
+    #     })(arguments[0]);
+    #   JS
+    #   assert in_view
+    # end
+
     screenshot(:scrolled, skip_area: PROGRESS_BAR_AREA)
-    with_retries(label: 'article link click') do
+    with_retries(label: 'article link click') do # FIXME(uwe): Remove this retry, and fix scrolling
       article_link.click
       assert_css('h1', text: 'My first article')
     end

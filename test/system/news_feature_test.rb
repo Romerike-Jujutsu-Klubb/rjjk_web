@@ -10,14 +10,12 @@ class NewsFeatureTest < ApplicationSystemTestCase
     visit '/news'
     assert_current_path '/news'
     screenshot('index')
-    all('.post img')[0].click
-    modal_selector = '.modal-backdrop'
-    assert_css(modal_selector)
+    first('.post img').click
+    modal_selector = '#imageModal .modal-header > button.close'
+    close_btn = find(modal_selector)
     screenshot('image')
-    with_retries do
-      find('#imageModal .modal-header > button.close').click
-      assert_no_css(modal_selector)
-    end
+    close_btn.click
+    assert_no_css(modal_selector)
     all('.post img')[1].click
     screenshot('image_2')
   end
@@ -38,7 +36,7 @@ class NewsFeatureTest < ApplicationSystemTestCase
 
   def test_new_news_item
     screenshot_group :new
-    visit_with_login '/'
+    visit_with_login '/?lang=nb'
     screenshot('front')
     click_menu 'Ny nyhet'
     assert_current_path '/news/new'

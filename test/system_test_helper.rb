@@ -44,6 +44,10 @@ module SystemTestHelper
     with_retries { assert page.evaluate_script('jQuery.active').zero? }
   end
 
+  def all(*args, **opts)
+    super(*args, **{ wait: false }.merge(opts))
+  end
+
   def close_alerts
     all('.alert button.close').each(&:click)
     assert has_no_css?('.alert button.close')

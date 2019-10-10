@@ -9,6 +9,9 @@
 @import 'nprogress';
 @import 'nprogress-bootstrap';
 @import 'bootstrap-fileinput/css/fileinput';
+<% if Rails.env.test? %>
+@import 'disable_animations';
+ <% end %>
 
 .clear-right {
   clear: right;
