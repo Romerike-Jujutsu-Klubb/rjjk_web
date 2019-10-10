@@ -30,7 +30,6 @@ class NkfSynchronizationJobTest < ActiveJob::TestCase
     assert_match "Nye medlemmer:\r\n\r\n    Sebastian Aagren:\r\n", mail.body.decoded
 
     rjjk_new_count = 413
-    rjjk_update_count = 3
     mail = ActionMailer::Base.deliveries[1]
     assert_match(/Oppdateringer fra NKF: #{rjjk_new_count} nye/, mail.subject)
     assert_equal 'uwe@kubosch.no', mail.header[:to].value
