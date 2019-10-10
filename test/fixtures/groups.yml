@@ -27,3 +27,11 @@ closed:
   to_age: 99
   target_size: 30
   closed_on: 2013-09-17
+
+voksne_aikido:
+  name: Aikido
+  martial_art: aikido
+  from_age: 14
+  to_age: 99
+  target_size: 30
+  closed_on: 2013-09-17

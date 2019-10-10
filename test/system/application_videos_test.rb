@@ -15,6 +15,7 @@ class ApplicationVideosTest < ApplicationSystemTestCase
 
   test 'creating a Application video' do
     visit ranks_path
+    find('a', text: 'Kei Wa Ryu').click
     click_on '1. kyu brunt belte'
     click_on 'Forsvar mot dobbelt hårtak med kneing'
     click_on 'Legg til film'

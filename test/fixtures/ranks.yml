@@ -7,7 +7,6 @@ mon_12:
   group: panda
   css_color: blue
 
-
 mon_11:
   name: '11. mon'
   colour: 'blå stripe'
@@ -81,4 +80,33 @@ sandan:
   martial_art: keiwaryu
   standard_months: 24
   group: voksne
+  css_color: black
+
+shodan_aikido:
+  name: 'shodan'
+  colour: 'svart belte'
+  position: 1
+  martial_art: aikido
+  standard_months: 24
+  group: voksne_aikido
+  css_color: grey
+
+nidan_aikido:
+  name: 'nidan'
+  colour: 'svart belte'
+  decoration: 'm/2 striper'
+  position: 2
+  martial_art: aikido
+  standard_months: 24
+  group: voksne_aikido
+  css_color: "#444"
+
+sandan_aikido:
+  name: 'sandan'
+  colour: 'svart belte'
+  decoration: 'm/3 striper'
+  position: 3
+  martial_art: aikido
+  standard_months: 24
+  group: voksne_aikido
   css_color: black

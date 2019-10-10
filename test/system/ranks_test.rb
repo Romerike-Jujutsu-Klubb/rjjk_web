@@ -4,13 +4,16 @@ require 'application_system_test_case'
 
 class RanksTest < ApplicationSystemTestCase
   setup do
+    screenshot_section :ranks
     login
     @rank = ranks(:kyu_5)
   end
 
   test 'visiting the index' do
+    screenshot_group :index
     visit ranks_path
     assert_selector 'h1', text: 'Grader'
+    screenshot :initial
   end
 
   test 'creating a Rank' do
