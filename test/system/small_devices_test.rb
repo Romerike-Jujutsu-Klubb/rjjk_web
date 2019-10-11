@@ -75,7 +75,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
     screenshot(:scrolled, skip_area: PROGRESS_BAR_AREA)
     with_retries(label: 'article link click') do # FIXME(uwe): Remove this retry, and fix scrolling
       article_link.click
-      assert_css('h1', text: 'My first article', wait: 0.2)
+      assert_css('h1', text: 'My first article', wait: 0.6)
     end
     screenshot :article
   end
