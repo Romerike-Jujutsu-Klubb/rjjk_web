@@ -88,12 +88,6 @@ unless reason
 
     # Admin Daily
 
-    # TODO(uwe): Change to update the contracts in NKF
-    scheduler.cron('0 0 * * *') do
-      Rails.application.executor.wrap { NkfReplicationNotifier.notify_wrong_contracts }
-    end
-    # ODOT
-
     scheduler.cron('0 3 * * *') do
       Rails.application.executor.wrap { SemesterReminder.create_missing_semesters }
     end
