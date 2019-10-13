@@ -17,13 +17,13 @@ ul.nav.nav-tabs
     .tab-pane class=(:active if i == 0) id=ma.name.gsub(/\s+/, '')
       ul.nav.nav-tabs
         - sorted_groups = ma.groups.sort_by { |g| [g.active? ? 0 : 1, -g.from_age] }
-        - sorted_groups.each.with_index do |group, i|
+        - sorted_groups.each.with_index do |group, j|
           li.nav-item
-            a.nav-link data-target="##{ma.name.gsub(/\s+/, '')}_#{group.name.gsub(/\s+/, '')}" data-toggle="tab" class=(:active if i == 0) = group.name
+            a.nav-link data-target="##{ma.name.gsub(/\s+/, '')}_#{group.name.gsub(/\s+/, '')}" data-toggle="tab" class=(:active if  i== 0 && j == 0) = group.name
 
       .tab-content
-        - sorted_groups.each.with_index do |group, i|
-          .tab-pane class=(:active if i == 0) id="#{ma.name.gsub(/\s+/, '')}_#{group.name.gsub(/\s+/, '')}"
+        - sorted_groups.each.with_index do |group, j|
+          .tab-pane class=(:active if i== 0 && j == 0) id="#{ma.name.gsub(/\s+/, '')}_#{group.name.gsub(/\s+/, '')}"
             table.table.table-sm
               tr
                 th Posisjon
