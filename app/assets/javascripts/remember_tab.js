@@ -93,8 +93,8 @@ $(function () {
         active_child_tab = tab_content.find('a.nav-link.active[data-toggle="tab"]');
         if (active_child_tab[0]) {
             console.log("Found active child tab: " + active_child_tab.attr("data-target"));
-            let active_child_tab_id = (active_child_tab.attr('data-target') || active_child_tab.attr('href')).substr(1);
-            let desired_hash = '#' + active_child_tab_id + '_tab';
+            var active_child_tab_id = (active_child_tab.attr('data-target') || active_child_tab.attr('href')).substr(1);
+            var desired_hash = '#' + active_child_tab_id + '_tab';
 
             if (decodeURIComponent(location.hash) !== desired_hash) {
                 if (history.pushState) {
@@ -117,7 +117,7 @@ $(function () {
                 $(child_tab[0]).tab('show');
             } else {
                 // Store tab id in the location hash
-                let desired_hash = '#' + tab_id + '_tab';
+                var desired_hash = '#' + tab_id + '_tab';
 
                 if (decodeURIComponent(location.hash) !== desired_hash) {
                     if (history.pushState) {
