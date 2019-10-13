@@ -14,6 +14,18 @@ class RanksTest < ApplicationSystemTestCase
     visit ranks_path
     assert_selector 'h1', text: 'Grader'
     screenshot :initial
+    find('a.nav-link', text: 'Kei Wa Ryu').click
+    screenshot :kwr
+    find('a.nav-link', text: 'Tiger').click
+    screenshot :tiger
+    find('a.nav-link', text: 'Panda').click
+    screenshot :panda
+    go_back
+    screenshot :back_tiger
+    go_back
+    screenshot :back_voksne
+    go_back
+    screenshot :back_aikido
   end
 
   test 'creating a Rank' do
