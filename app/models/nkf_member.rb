@@ -140,8 +140,8 @@ class NkfMember < ApplicationRecord
           else
             nkf_value
           end
-    else
-      logger.debug "rjjk_attribute: Ignore attribute: #{nkf_attr}: #{nkf_value.inspect}"
+      # else
+      #   logger.debug "rjjk_attribute: Ignore attribute: #{nkf_attr}: #{nkf_value.inspect}"
     end
     { nkf_attr: nkf_attr, target: target, target_attribute: target_attribute, nkf_value: nkf_value,
       mapped_nkf_value: mapped_nkf_value, rjjk_value: rjjk_value, mapped_rjjk_value: mapped_rjjk_value,
