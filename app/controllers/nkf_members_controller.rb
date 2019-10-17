@@ -7,12 +7,13 @@ class NkfMembersController < ApplicationController
     @nkf_members = NkfMember.order(:fornavn, :etternavn).to_a
   end
 
-  RELATED_USER_SYMS = %i[contact_user guardian_1 guardian_2 billing_user payees primary_wards
-                         secondary_wards contactees].freeze
+  RELATED_USER_SYMS = { contact_user: :member, guardian_1: :member, guardian_2: :member,
+                        billing_user: :member, payees: :member, primary_wards: :member,
+                        secondary_wards: :member, contactees: :member }.freeze
 
   def sync_errors
     @errors = NkfMember.includes(member: { user: RELATED_USER_SYMS }).references(:members)
-        .order(left_on: :desc, updated_at: :desc)
+        .order('members.left_on': :desc, updated_at: :desc)
         .map { |nkfm| [nkfm.member, nkfm.mapping_changes] }.reject { |m| m[1].empty? }
   end
 
