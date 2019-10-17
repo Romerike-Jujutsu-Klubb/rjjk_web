@@ -109,7 +109,6 @@ class NkfMember < ApplicationRecord
   end
 
   def rjjk_attribute(nkf_attr, nkf_value)
-    logger.error "rjjk_attribute: nkf_attr: #{nkf_attr.inspect}, nkf_value: #{nkf_value.inspect}"
     mapping = FIELD_MAP[nkf_attr.to_sym]
     raise "Unknown attribute: #{nkf_attr}" unless mapping
 
