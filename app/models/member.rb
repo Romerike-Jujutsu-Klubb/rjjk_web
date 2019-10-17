@@ -417,6 +417,8 @@ class Member < ApplicationRecord
   end
 
   def monthly_fee
+    return 0 if honorary?
+
     group_fee =
         groups.map(&:monthly_fee).compact.last ||
         PriceAgeGroup.find_by('from_age <= :age AND to_age >= :age', age: age)&.monthly_fee ||
