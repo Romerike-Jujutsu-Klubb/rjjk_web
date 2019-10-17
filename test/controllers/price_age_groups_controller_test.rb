@@ -5,6 +5,7 @@ require 'test_helper'
 class PriceAgeGroupsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @price_age_group = price_age_groups(:panda)
+    login :uwe
   end
 
   test 'should get index' do

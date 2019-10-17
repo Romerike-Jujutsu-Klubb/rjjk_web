@@ -5,6 +5,7 @@ require 'application_system_test_case'
 class PriceAgeGroupsTest < ApplicationSystemTestCase
   setup do
     @price_age_group = price_age_groups(:panda)
+    login
   end
 
   test 'visiting the index' do
