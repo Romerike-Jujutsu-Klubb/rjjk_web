@@ -421,9 +421,10 @@ class Member < ApplicationRecord
 
     group_fee =
         groups.map(&:monthly_fee).compact.last ||
-        PriceAgeGroup.find_by('from_age <= :age AND to_age >= :age', age: age)&.monthly_fee ||
         Group.where.not(monthly_fee: nil).find_by('from_age <= :age AND to_age >= :age', age: age)
             &.monthly_fee || 399
+    age_fee = PriceAgeGroup.find_by('from_age <= :age AND to_age >= :age', age: age)&.monthly_fee
+    group_fee = age_fee if age_fee && (group_fee.nil? || age_fee < group_fee)
     family_fee =
         if older_family?
           group_fee - 50
