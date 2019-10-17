@@ -440,8 +440,8 @@ class Member < ApplicationRecord
 
     if honorary?
       nil
-    elsif passive_on
-      100
+    # elsif passive_on
+    #   100
     elsif current_election
       100
     elsif active_group_instructors.count == 1

@@ -81,7 +81,6 @@ class NkfAgent
         search_result_body << page_body
       end
     end
-    logger.debug("more_pages: #{more_pages.inspect}")
     search_result_body
   end
 

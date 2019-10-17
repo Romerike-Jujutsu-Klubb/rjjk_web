@@ -12,8 +12,8 @@ class NkfMembersController < ApplicationController
                         secondary_wards: :member, contactees: :member }.freeze
 
   def sync_errors
-    @errors = NkfMember.includes(member: { user: RELATED_USER_SYMS }).references(:members)
-        .order('members.left_on': :desc, updated_at: :desc)
+    @errors = NkfMember.includes(member: { user: RELATED_USER_SYMS, groups: :monthly_fee })
+        .references(:members).order('members.left_on': :desc, updated_at: :desc)
         .map { |nkfm| [nkfm.member, nkfm.mapping_changes] }.reject { |m| m[1].empty? }
   end
 
