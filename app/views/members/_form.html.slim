@@ -50,11 +50,15 @@
       = f.text_field :left_on, class: 'date'
   .row
     - if membership.billing_type.present?
-      .col-6
+      .col
         = f.select :billing_type, [%w(AvtaleGiro AvtaleGiro), %w(AutoGiro AUTOGIRO), ['Manuell Giro', 'MANUELL GIRO'], \
             membership.billing_type && [membership.billing_type, membership.billing_type]].compact.uniq(&:second), prompt: 'Velg betalingsform'
-    .col-6
+    .col
       = f.text_field :account_no
+    .col
+      = f.text_field :discount_override,
+              placeholder: ("Beregnet: #{@member.discount}" if @member.discount),
+              disabled: (@member.discount == 100)
 
   .row
     .col = f.select :nkf_fee, [['Ja', true], ['Nei', false]]

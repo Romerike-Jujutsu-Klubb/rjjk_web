@@ -69,7 +69,9 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_equal 'Trening i kveld: 1 ny deltaker påmeldt', mail.subject
     assert_equal ['uwe@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
-    assert_match '<h3>Nylig påmeldt</h3><ul><li>Uwe Kubosch</li>', mail.body
+    assert_match <<~HTML.chomp, mail.body
+      <h3>Nylig påmeldt</h3><ul><li><a href="https://example.com/members/819792210">Uwe Kubosch</a></li>
+    HTML
 
     mail = UserMessage.pending[1]
     assert_equal 'Trening i kveld: 1 ny deltaker påmeldt', mail.subject

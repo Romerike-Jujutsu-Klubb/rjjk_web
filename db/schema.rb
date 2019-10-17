@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_08_085627) do
+ActiveRecord::Schema.define(version: 2019_10_16_064639) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -357,8 +357,8 @@ ActiveRecord::Schema.define(version: 2019_10_08_085627) do
     t.datetime 'created_at'
     t.datetime 'updated_at'
     t.date 'closed_on'
-    t.integer 'monthly_price'
-    t.integer 'yearly_price'
+    t.integer 'monthly_fee'
+    t.integer 'yearly_fee'
     t.string 'contract', limit: 32
     t.string 'summary', limit: 255
     t.text 'description'
@@ -436,6 +436,7 @@ ActiveRecord::Schema.define(version: 2019_10_08_085627) do
     t.datetime 'updated_at', null: false
     t.date 'passive_on'
     t.datetime 'honorary_on'
+    t.integer 'discount_override'
   end
 
   create_table 'news_item_likes', force: :cascade do |t|
@@ -550,6 +551,19 @@ ActiveRecord::Schema.define(version: 2019_10_08_085627) do
     t.datetime 'message_nagged_at'
     t.index %w[group_schedule_id year week], name: 'index_practices_on_group_schedule_id_and_year_and_week', unique: true
     t.index ['group_schedule_id'], name: 'fk__practices_group_schedule_id'
+  end
+
+  create_table 'price_age_groups', force: :cascade do |t|
+    t.string 'name', null: false
+    t.integer 'from_age', null: false
+    t.integer 'to_age', null: false
+    t.integer 'yearly_fee', null: false
+    t.integer 'monthly_fee', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['from_age'], name: 'index_price_age_groups_on_from_age', unique: true
+    t.index ['name'], name: 'index_price_age_groups_on_name', unique: true
+    t.index ['to_age'], name: 'index_price_age_groups_on_to_age', unique: true
   end
 
   create_table 'public_records', force: :cascade do |t|

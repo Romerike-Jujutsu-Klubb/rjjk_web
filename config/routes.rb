@@ -269,6 +269,7 @@ Rails.application.routes.draw do
   resources :nkf_member_trials
   resources :page_aliases
   resources :practices
+  resources :price_age_groups
   resources :public_records
   resources :ranks do
     member do

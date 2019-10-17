@@ -1,0 +1,29 @@
+h1 Price Age Groups
+
+table
+  thead
+    tr
+      th Name
+      th From age
+      th To age
+      th Yearly price
+      th Monthly price
+      th
+      th
+      th
+
+  tbody
+    - @price_age_groups.each do |price_age_group|
+      tr
+        td = price_age_group.name
+        td = price_age_group.from_age
+        td = price_age_group.to_age
+        td = price_age_group.yearly_fee
+        td = price_age_group.monthly_fee
+        td = link_to 'Show', price_age_group
+        td = link_to 'Edit', edit_price_age_group_path(price_age_group)
+        td = link_to 'Destroy', price_age_group, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Price age group', new_price_age_group_path

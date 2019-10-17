@@ -69,13 +69,14 @@ class Group < ApplicationRecord
     closed_on.nil? || closed_on >= date
   end
 
+  # FIXME(uwe): Revert sync direction:  RJJK => NKF
   def update_prices
     contracts = NkfMember.where(kontraktstype: contract).to_a
     return if contracts.empty?
 
-    self.monthly_price = contracts.map(&:kontraktsbelop).group_by { |x| x }
+    self.monthly_fee = contracts.map(&:kontraktsbelop).group_by { |x| x }
         .group_by { |_k, v| v.size }.max.last.map(&:first).first
-    self.yearly_price = contracts.map(&:kont_belop).group_by { |x| x }
+    self.yearly_fee = contracts.map(&:kont_belop).group_by { |x| x }
         .group_by { |_k, v| v.size }.max.last.map(&:first).first
   end
 

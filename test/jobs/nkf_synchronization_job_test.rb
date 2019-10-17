@@ -19,15 +19,16 @@ class NkfSynchronizationJobTest < ActiveJob::TestCase
     nkf_new_count = 412
     nkf_update_count = 3
     nkf_change_count = nkf_new_count + nkf_update_count
-    mail = ActionMailer::Base.deliveries[0]
-    assert_match(/^Hentet #{nkf_change_count} endringer fra NKF$/, mail.subject, mail.body.decoded)
-    assert_equal 'uwe@kubosch.no', mail.header[:to].value
-    assert_equal 'noreply@test.jujutsu.no', mail.header[:from].value
-    assert_match "NKF Import\r\n\r\nEndringer fra NKF-portalen.\r\n", mail.body.decoded
+    import_mail = ActionMailer::Base.deliveries[0]
+    import_body = import_mail.body.decoded
+    assert_match(/^Hentet #{nkf_change_count} endringer fra NKF$/, import_mail.subject, import_body)
+    assert_equal 'uwe@kubosch.no', import_mail.header[:to].value
+    assert_equal 'noreply@test.jujutsu.no', import_mail.header[:from].value
+    assert_match "NKF Import\r\n\r\nEndringer fra NKF-portalen.\r\n", import_body
     assert_match(/\b#{nkf_new_count} medlemmer opprettet\r\n#{nkf_update_count} medlemmer oppdatert\r\n/,
-        mail.body.decoded)
-    assert_match "Endringer prøvetid:\r\n", mail.body.decoded
-    assert_match "Nye medlemmer:\r\n\r\n    Sebastian Aagren:\r\n", mail.body.decoded
+        import_body)
+    assert_match "Endringer prøvetid:\r\n", import_body
+    assert_match "Nye medlemmer:\r\n\r\n    Sebastian Aagren:\r\n", import_body
 
     rjjk_new_count = 413
     mail = ActionMailer::Base.deliveries[1]

@@ -91,7 +91,7 @@ ul.nav.nav-tabs role="tablist"
     - if @member.age&.>=(18)
       #tab_signatures.tab-pane.fade = render 'signatures'
   - if @member&.nkf_member
-    #tab_nkf.tab-pane.fade = render 'nkf_fields'
+    #tab_nkf.tab-pane.fade = render 'nkf_fields', member: @member
 
 javascript:
     $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {

@@ -4,6 +4,7 @@ panda:
   from_age: 6
   to_age: 9
   target_size: 1
+  monthly_fee: 284
 
 tiger:
   name: Tiger
@@ -11,6 +12,7 @@ tiger:
   from_age: 10
   to_age: 14
   target_size: 30
+  monthly_fee: 349
 
 voksne:
   name: Voksne
@@ -19,6 +21,7 @@ voksne:
   to_age: 99
   target_size: 30
   planning: true
+  monthly_fee: 399
 
 closed:
   name: Closed

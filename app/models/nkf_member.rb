@@ -32,17 +32,29 @@ class NkfMember < ApplicationRecord
     konkurranseomrade_id: {},
     konkurranseomrade_navn: {},
     kont_belop: {}, # FIXME(uwe): Map payment values
-    kont_sats: {}, # FIXME(uwe): Map payment values
-    kontraktsbelop: {}, # FIXME(uwe): Map payment values
-    kontraktstype: {}, # FIXME(uwe): Map payment values
-    medlemskategori: {}, # FIXME(uwe): Map payment values
-    medlemskategori_navn: {}, # FIXME(uwe): Map payment values
+    kont_sats: {
+      map_to: { membership: :category },
+      # form_field: :frm_48_v36
+    },
+    kontraktsbelop: { map_to: { membership: :monthly_fee } },
+    kontraktstype: {
+      map_to: { membership: :contract },
+      # form_field: :frm_48_v37
+    },
+    medlemskategori: {},
+    medlemskategori_navn: {
+      map_to: { membership: :category },
+      # form_field: :frm_48_v48
+    },
     medlemsnummer: {},
     medlemsstatus: {}, # FIXME(uwe): Should be mapped: passive_from+left_on => 'A', 'P'
     member_id: {},
     mobil: { map_to: { user: :phone }, form_field: :frm_48_v20 },
     postnr: { map_to: { user: :postal_code }, form_field: :frm_48_v07 },
-    rabatt: {}, # FIXME(uwe): Map payment values
+    rabatt: {
+      map_to: { membership: :discount },
+      # form_field: :frm_48_v38
+    },
     sist_betalt_dato: {},
     sted: {},
     telefon: { map_to: { membership: :phone_home }, form_field: :frm_48_v19 },
@@ -71,14 +83,14 @@ class NkfMember < ApplicationRecord
   def self.update_group_prices
     contract_types = NkfMember.all.group_by(&:kontraktstype)
     contract_types.each do |contract_name, members_with_contracts|
-      monthly_price = members_with_contracts.map(&:kontraktsbelop)
+      monthly_fee = members_with_contracts.map(&:kontraktsbelop)
           .group_by { |x| x }.group_by { |_k, v| v.size }.max.last
           .map(&:first).first
-      yearly_price = members_with_contracts.map(&:kont_belop).group_by { |x| x }
+      yearly_fee = members_with_contracts.map(&:kont_belop).group_by { |x| x }
           .group_by { |_k, v| v.size }.max.last.map(&:first).first
       Group.where(contract: contract_name).to_a.each do |group|
-        logger.info "Update contract #{group} #{contract_name} #{monthly_price} #{yearly_price}"
-        group.update! monthly_price: monthly_price, yearly_price: yearly_price
+        logger.info "Update contract #{group} #{contract_name} #{monthly_fee} #{yearly_fee}"
+        group.update! monthly_fee: monthly_fee, yearly_fee: yearly_fee
       end
     end
   end
@@ -89,17 +101,19 @@ class NkfMember < ApplicationRecord
 
   def mapping_changes
     mapping_attributes.select do |a|
+      next if utmeldtdato.present? && a[:nkf_attr] != 'utmeldtdato'
+
       a[:target] && a[:mapped_rjjk_value] != a[:nkf_value] &&
           a[:mapped_rjjk_value] != a[:nkf_value]&.downcase
     end
   end
 
   def rjjk_attribute(nkf_attr, nkf_value)
+    logger.error "rjjk_attribute: nkf_attr: #{nkf_attr.inspect}, nkf_value: #{nkf_value.inspect}"
     mapping = FIELD_MAP[nkf_attr.to_sym]
     raise "Unknown attribute: #{nkf_attr}" unless mapping
 
     if (mapped_attribute = mapping[:map_to])
-      mapped_attribute = { membership: mapped_attribute } unless mapped_attribute.is_a?(Hash)
       target, target_attribute = mapped_attribute.to_a[0]
       relation = NkfMemberComparison.target_relation(member, target) if member
       rjjk_value = relation&.send(target_attribute)
@@ -183,6 +197,12 @@ class NkfMember < ApplicationRecord
         new_attributes.delete(:user) if new_attributes[:user].empty?
       end
     end
+
+    new_attributes[:membership].delete(:category)
+    new_attributes[:membership].delete(:contract)
+    new_attributes[:membership].delete(:discount)
+    new_attributes[:membership].delete(:monthly_fee)
+
     new_attributes
   end
 

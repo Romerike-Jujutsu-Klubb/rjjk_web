@@ -1,0 +1,34 @@
+grasshopper:
+  name: Gresshoppe
+  from_age: 5
+  to_age: 5
+  yearly_fee: 170
+  monthly_fee: 284
+
+panda:
+  name: Panda
+  from_age: 6
+  to_age: 9
+  yearly_fee: 170
+  monthly_fee: 284
+
+tiger:
+  name: Tiger
+  from_age: 10
+  to_age: 15
+  yearly_fee: 170
+  monthly_fee: 349
+
+youth:
+  name: Ungdom
+  from_age: 16
+  to_age: 25
+  yearly_fee: 250
+  monthly_fee: 349
+
+voksne:
+  name: Voksne
+  from_age: 26
+  to_age: 100
+  yearly_fee: 250
+  monthly_fee: 399

@@ -27,16 +27,16 @@ h3 = @group.name
       | aktive.
 
 .float-left.w-50
-  - unless @group.monthly_price.blank?
+  - unless @group.monthly_fee.blank?
     h4 Pris
 
     p style="line-height: 1.5"
-      - unless @group.yearly_price.blank?
+      - unless @group.yearly_fee.blank?
         | Årskontingent
-        strong< kr #{@group.yearly_price},-
+        strong< kr #{@group.yearly_fee},-
         br
       | Treningsavgift
-      strong< kr #{@group.monthly_price},-
+      strong< kr #{@group.monthly_fee},-
       | (månedlig)
       br
       | Treningsavgiften inkluderer gradering og belte og betales hele året.

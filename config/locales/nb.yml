@@ -79,13 +79,13 @@ nb:
         color: Farge i grafer
         contract: Kontraktstype
         from_age: Nedre aldersgrense
-        monthly_price: Månedspris
+        monthly_fee: Månedsavgift
         name: Navn
         planning: Påmelding
         school_breaks: Følger skoleåret
         target_size: Ønsket størrelse
         to_age: Øvre aldersgrense
-        yearly_price: Årskontingent
+        yearly_fee: Årskontingent
       group_instructor:
         assistant: Hjelpeinstruktør
         group_schedule_id: Gruppe
@@ -120,6 +120,7 @@ nb:
         account_no: Kontonummer
         billing_type: "Fakturerings\u00ADmåte"
         comment: Kommentar
+        discount_override: Rabatt (overstyring)
         honorary_on: Æresmedlem fra
         joined_on: Innmeldingsdato
         left_on: Utmeldingsdato

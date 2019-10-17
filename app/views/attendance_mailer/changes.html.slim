@@ -5,7 +5,11 @@ h1 Hei #{@recipient.first_name}!
 
   ul
     - @new_attendees.each do |m|
-      li = m.name
+      li
+        - if @group_schedule.group.instructors.include?(@recipient)
+          = link_to m.name, m
+        - else
+          = m.name
 
 - if @new_absentees.any?
   h3 Avmelding

@@ -1,21 +1,43 @@
-.table-responsive: table.table.table-striped.table-sm
-  thead
-    tr
-      th RJJK attribute
-      th RJJK value
-      th RJJK value (mapped)
-      th NKF value
-      th NKF attribute
-  tbody
-    - @member.nkf_member.mapping_attributes.select{|h| h[:target]}.sort_by{|h| h[:nkf_attr]}.each do |mapping|
-      - nkf_value = mapping[:nkf_value]
-      - mapped_rjjk_value = mapping[:mapped_rjjk_value]
-      - diff_class = ('text-danger' if nkf_value != mapped_rjjk_value)
-      tr
-        td style="word-break:break-word"
-          => mapping[:target]
-          = mapping[:target_attribute].to_s.gsub('_', ' ')
-        td = mapping[:rjjk_value]
-        td class=diff_class = mapped_rjjk_value
-        td class=diff_class = nkf_value
-        th style="word-break:break-word" = mapping[:nkf_attr].to_s.split(/_+/).uniq.join(' ')
+- mapped_fields, unmapped_fields = member.nkf_member.mapping_attributes.partition{|h| h[:target]}
+
+ul.nav.nav-tabs id="nkfFields#{member.id}Tab" role="tablist"
+  li.nav-item: a.nav-link.active id="nkfFields#{member.id}Mapped-tab" data-toggle="tab" data-target="#nkfFields#{member.id}Mapped" role="tab" aria-controls="home" aria-selected="true" Synkronisert
+  li.nav-item: a.nav-link id="nkfFields#{member.id}Unmapped-tab" data-toggle="tab" data-target="#nkfFields#{member.id}Unmapped" role="tab" aria-controls="profile" aria-selected="false" Ikke synkronisert
+
+.tab-content id="nkfFields#{member.id}TabContent"
+  .tab-pane.fade.show.active id="nkfFields#{member.id}Mapped" role="tabpanel" aria-labelledby="nkfFields#{member.id}Mapped-tab"
+    .table-responsive: table.table.table-striped.table-sm
+      thead
+        tr
+          th RJJK attribute
+          th RJJK value
+          th RJJK value (mapped)
+          th NKF value
+          th NKF attribute
+      tbody
+        - mapped_fields.sort_by{|h| h[:nkf_attr]}.each do |mapping|
+          - nkf_value = mapping[:nkf_value]
+          - mapped_rjjk_value = mapping[:mapped_rjjk_value]
+          - diff_class = ('text-danger' if nkf_value != mapped_rjjk_value)
+          tr
+            td style="word-break:break-word"
+              => mapping[:target]
+              = mapping[:target_attribute].to_s.gsub('_', ' ')
+            td = mapping[:rjjk_value]
+            td class=diff_class = mapped_rjjk_value
+            td class=diff_class = nkf_value
+            th style="word-break:break-word" = mapping[:nkf_attr].to_s.split(/_+/).uniq.join(' ')
+  .tab-pane.fade id="nkfFields#{member.id}Unmapped" role="tabpanel" aria-labelledby="nkfFields#{member.id}Unmapped-tab"
+    .table-responsive: table.table.table-striped.table-sm
+      thead
+        tr
+          th NKF attribute
+          th NKF value
+      tbody
+        - unmapped_fields.sort_by { |h| h[:nkf_attr] }.each do |mapping|
+          - nkf_value = mapping[:nkf_value]
+          - mapped_rjjk_value = mapping[:mapped_rjjk_value]
+          - diff_class = ('text-danger' if nkf_value != mapped_rjjk_value)
+          tr
+            th style="word-break:break-word" = mapping[:nkf_attr].to_s.split(/_+/).uniq.join(' ')
+            td class=diff_class = nkf_value

@@ -1,0 +1,24 @@
+= form_for @price_age_group do |f|
+  - if @price_age_group.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@price_age_group.errors.count, "error")} prohibited this price_age_group from being saved:"
+      ul
+        - @price_age_group.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :from_age
+    = f.number_field :from_age
+  .field
+    = f.label :to_age
+    = f.number_field :to_age
+  .field
+    = f.label :yearly_fee
+    = f.number_field :yearly_fee
+  .field
+    = f.label :monthly_fee
+    = f.number_field :monthly_fee
+  .actions = f.submit
