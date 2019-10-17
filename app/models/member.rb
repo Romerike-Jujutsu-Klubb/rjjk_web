@@ -399,7 +399,7 @@ class Member < ApplicationRecord
   def contract
     base_contract =
         if category == 'Voksen'
-          groups.last&.contract || category
+          groups.max_by(&:monthly_fee)&.contract || category
         else
           category
         end
@@ -412,10 +412,7 @@ class Member < ApplicationRecord
 
   def older_family?
     user.contact_users.any? do |u|
-      u.depending_users.any? do |du|
-        du.id != user_id && du.birthdate && du.member.active? &&
-            (du.birthdate < user.birthdate || (du.birthdate == user.birthdate && du.id < user_id))
-      end
+      older_member?(u) || u.depending_users.any?(&method(:older_member?))
     end
   end
 
@@ -454,5 +451,13 @@ class Member < ApplicationRecord
     elsif instructor?
       50
     end
+  end
+
+  private
+
+  def older_member?(other_user)
+    other_user.id != user_id && other_user.birthdate && other_user.member&.active? &&
+        (other_user.birthdate < user.birthdate ||
+            (other_user.birthdate == user.birthdate && other_user.id < user_id))
   end
 end
