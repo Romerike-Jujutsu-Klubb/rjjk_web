@@ -26,4 +26,5 @@ ul#myTab.nav.nav-tabs role="tablist"
             td = detour_to election.elected_name, edit_election_path(election)
             - if withdrawn
               td = election.resigned_on
-            td = link_to '', election, method: :delete, data: { confirm: 'Are you sure?' }, class: 'fa fa-trash'
+            td = link_to election, method: :delete, data: { confirm: 'Are you sure?' }
+              i.fa.fa-trash

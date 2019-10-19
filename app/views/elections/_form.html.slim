@@ -5,7 +5,7 @@
   = f.select :member_id, options_from_collection_for_select(@members, :id, :name, @election.member_id),
             label: 'Medlem', prompt: 'Velg medlem'
   - unless @election.new_record?
-    = f.text_field :resigned_on, label: 'Trukket seg'
+    = f.text_field :resigned_on, label: 'Trukket seg', class: :date
 
   .btn-toolbar.float-right
     = link_to 'Til styreoversikt', elections_path, class: 'btn btn-link'
