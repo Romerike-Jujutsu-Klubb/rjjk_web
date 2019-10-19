@@ -419,10 +419,7 @@ class Member < ApplicationRecord
   def monthly_fee
     return 0 if honorary?
 
-    group_fee =
-        groups.map(&:monthly_fee).compact.max ||
-        Group.where.not(monthly_fee: nil).find_by('from_age <= :age AND to_age >= :age', age: age)
-            &.monthly_fee || 399
+    group_fee = groups.map(&:monthly_fee).compact.max
     age_fee = PriceAgeGroup.find_by('from_age <= :age AND to_age >= :age', age: age)&.monthly_fee
     group_fee = age_fee if age_fee && (group_fee.nil? || age_fee < group_fee)
     family_fee =
