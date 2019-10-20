@@ -57,9 +57,7 @@
       = f.text_field :account_no
     .col
       = f.text_field :discount_override,
-              placeholder: ("Beregnet: #{@member.discount}" if @member.discount),
-              disabled: (@member.discount == 100)
-
+              placeholder: ("Beregnet: #{@member.discount}" if @member.discount)
   .row
     .col = f.select :nkf_fee, [['Ja', true], ['Nei', false]]
     .col = f.select :payment_problem, [['Nei', false], ['Ja', true]]

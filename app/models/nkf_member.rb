@@ -121,6 +121,8 @@ class NkfMember < ApplicationRecord
             rjjk_value.strftime('%d.%m.%Y')
           elsif nkf_attr == 'kjonn'
             rjjk_value ? 'Mann' : 'Kvinne'
+          elsif nkf_attr == 'rabatt' && rjjk_value == 0
+            ''
           else
             rjjk_value.to_s
           end
