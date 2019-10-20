@@ -210,7 +210,7 @@ class Member < ApplicationRecord
   end
 
   def active?(date = Date.current)
-    !passive?(date)
+    (date >= joined_on && (left_on.nil? || date < left_on)) && !passive?(date)
   end
 
   def passive?(date = Date.current)
@@ -425,10 +425,10 @@ class Member < ApplicationRecord
   end
 
   def older_family?
-    user.contact_users.any? do |u|
-      next if u == user
+    user.contact_users.any? do |other_user|
+      next if other_user == user
 
-      older_member?(u) || u.depending_users.any?(&method(:older_member?))
+      older_member?(other_user) || other_user.depending_users.any?(&method(:older_member?))
     end
   end
 
