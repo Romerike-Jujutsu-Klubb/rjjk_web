@@ -157,11 +157,7 @@ Rails.application.routes.draw do
   resources :group_instructors
   resources :group_schedules
   resources :group_semesters
-  resources :groups do
-    collection do
-      get :yaml
-    end
-  end
+  resources :groups
 
   get 'icon/notification' => 'icons#notification_icon'
   get 'icon/:width' => 'icons#inline'
@@ -234,7 +230,6 @@ Rails.application.routes.draw do
       get :list_inactive
       get :telephone_list
       get :trial_missing_contract
-      get :yaml
     end
     member do
       get :image

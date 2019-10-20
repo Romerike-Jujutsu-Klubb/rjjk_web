@@ -10,18 +10,6 @@ class MembersController < ApplicationController
     @members = Member.all.sort_by(&:name)
   end
 
-  def yaml
-    @members = Member.active.to_a
-    records = @members.map do |m|
-      m.attributes.update(
-          'rank_pos' => m.current_rank.try(:position),
-          'rank_name' => m.current_rank.try(:name),
-          'active' => m.active?
-        )
-    end
-    render body: records.to_yaml, content_type: 'text/yaml', layout: false
-  end
-
   def list_active
     @members = Member.active.sort_by(&:name)
     render :index

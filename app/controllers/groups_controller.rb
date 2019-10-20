@@ -13,13 +13,6 @@ class GroupsController < ApplicationController
     end
   end
 
-  def yaml
-    @groups = Group.active.to_a
-    attrs = @groups.map(&:attributes)
-    @groups.each { |g| attrs.find { |g2| g2['id'] == g.id }['members'] = g.members.map(&:id) }
-    render body: attrs.to_yaml, content_type: 'text/yaml', layout: false
-  end
-
   def show
     @group = Group.includes(members: %i[recent_attendances nkf_member]).find(params[:id])
     chief_instructor = @group.current_semester&.chief_instructor

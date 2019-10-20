@@ -111,9 +111,4 @@ class MembersControllerTest < ActionController::TestCase
     post :save_image, params: { id: id(:lars), imgBase64: 'data:content/type;base64,some data' }
     assert_response :success
   end
-
-  def test_yaml
-    get :yaml
-    assert_response :success
-  end
 end

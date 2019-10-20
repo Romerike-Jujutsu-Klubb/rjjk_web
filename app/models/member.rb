@@ -213,8 +213,15 @@ class Member < ApplicationRecord
     !passive?(date)
   end
 
-  def passive?(date = Date.current, group = nil)
-    return true if passive_on && date >= passive_on
+  def passive?(date = Date.current)
+    passive_on && date >= passive_on
+  end
+
+  def attending?(date = Date.current, group = nil)
+    !absent?(date, group)
+  end
+
+  def absent?(date = Date.current, group = nil)
     return false if date <= joined_on + 2.months
 
     start_date = date - 92
@@ -237,8 +244,16 @@ class Member < ApplicationRecord
     end
   end
 
+  def active_and_attending?(date = Date.current, group = nil)
+    active?(date) && attending?(date, group)
+  end
+
+  def passive_or_absent?(date = Date.current, group = nil)
+    passive?(date) || absent?(date, group)
+  end
+
   def paying?
-    nkf_member&.kontraktsbelop.to_i > 0
+    active? && nkf_member&.kontraktsbelop.to_i > 0
   end
 
   def senior?
@@ -257,6 +272,7 @@ class Member < ApplicationRecord
     end
   end
 
+  # FIXME(uwe): Use PriceAgeGroup?
   def age_group
     return nil unless age
 
@@ -367,7 +383,7 @@ class Member < ApplicationRecord
   end
 
   def technical_committy?
-    current_rank && (current_rank >= Rank.kwr.find_by(name: '1. kyu')) && active?
+    current_rank && (current_rank >= Rank.kwr.find_by(name: '1. kyu')) && active_and_attending?
   end
 
   def honorary?
@@ -412,6 +428,8 @@ class Member < ApplicationRecord
 
   def older_family?
     user.contact_users.any? do |u|
+      next if u == user
+
       older_member?(u) || u.depending_users.any?(&method(:older_member?))
     end
   end

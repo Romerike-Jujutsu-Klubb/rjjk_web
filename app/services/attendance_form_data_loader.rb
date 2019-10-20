@@ -66,7 +66,7 @@ module AttendanceFormDataLoader
     end
 
     @instructors -= current_members
-    @passive_members = (@members - attended_members).select { |m| m.passive?(last_date, @group) }
+    @passive_members = (@members - attended_members).select { |m| m.passive_or_absent?(last_date, @group) }
     @members -= @passive_members
     @instructors -= @passive_members
 

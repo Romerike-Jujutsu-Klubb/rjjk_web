@@ -60,7 +60,8 @@ class GraduationsController < ApplicationController
       unless graduation.approved?
         graduation_members = graduation.graduates.map(&:member)
         members = graduation.group.members.active(graduation.held_on).reject do |m|
-          m.passive?(Date.current, graduation.group) && m.passive?(graduation.held_on, graduation.group)
+          m.passive_or_absent?(Date.current, graduation.group) &&
+              m.passive_or_absent?(graduation.held_on, graduation.group)
         end
         graduates = (members - graduation_members).map { |m| m.to_graduate(graduation) }
             .sort_by { |gr| [-gr.rank.position, gr.member.name] }
@@ -156,7 +157,7 @@ class GraduationsController < ApplicationController
       Graduation.transaction do
         graduation.group.members.active(graduation.held_on).order(:id).each do |member|
           next if member.next_rank(graduation).position >= Rank::SHODAN_POSITION
-          next if member.passive?
+          next if member.absent?
 
           GraduationMailer.group_date_change(graduation, member)
               .store(member, tag: :graduation_date_change)

@@ -52,7 +52,7 @@ class GraduationReminder
         .includes(:ranks, attendances: { practice: { group_schedule: :group } })
         .to_a
     overdue_graduates = active_members.select do |m|
-      next if m.passive?
+      next if m.passive_or_absent?
 
       next_rank = m.next_rank
       next if next_rank.position >= Rank::SHODAN_POSITION
@@ -63,8 +63,7 @@ class GraduationReminder
 
       group = next_rank.group
       next if group.school_breaks? &&
-          (group.next_graduation.nil? ||
-              !m.active?(group.next_graduation.held_on))
+          (group.next_graduation.nil? || !m.active_and_attending?(group.next_graduation.held_on))
       next if m.next_graduate
 
       true
