@@ -4,51 +4,37 @@ class PriceAgeGroupsController < ApplicationController
   before_action :admin_required
   before_action :set_price_age_group, only: %i[show edit update destroy]
 
-  # GET /price_age_groups
-  # GET /price_age_groups.json
   def index
-    @price_age_groups = PriceAgeGroup.all
+    @price_age_groups = PriceAgeGroup.order(:from_age).to_a
   end
 
-  # GET /price_age_groups/1
-  # GET /price_age_groups/1.json
-  def show; end
+  def show
+    edit
+  end
 
-  # GET /price_age_groups/new
   def new
     @price_age_group = PriceAgeGroup.new
   end
 
-  # GET /price_age_groups/1/edit
-  def edit; end
+  def edit
+    render :edit
+  end
 
-  # POST /price_age_groups
-  # POST /price_age_groups.json
   def create
     @price_age_group = PriceAgeGroup.new(price_age_group_params)
 
-    respond_to do |format|
-      if @price_age_group.save
-        format.html { redirect_to @price_age_group, notice: 'Price age group was successfully created.' }
-        format.json { render :show, status: :created, location: @price_age_group }
-      else
-        format.html { render :new }
-        format.json { render json: @price_age_group.errors, status: :unprocessable_entity }
-      end
+    if @price_age_group.save
+      redirect_to @price_age_group, notice: 'Price age group was successfully created.'
+    else
+      render :new
     end
   end
 
-  # PATCH/PUT /price_age_groups/1
-  # PATCH/PUT /price_age_groups/1.json
   def update
-    respond_to do |format|
-      if @price_age_group.update(price_age_group_params)
-        format.html { redirect_to @price_age_group, notice: 'Price age group was successfully updated.' }
-        format.json { render :show, status: :ok, location: @price_age_group }
-      else
-        format.html { render :edit }
-        format.json { render json: @price_age_group.errors, status: :unprocessable_entity }
-      end
+    if @price_age_group.update(price_age_group_params)
+      redirect_to @price_age_group, notice: 'Price age group was successfully updated.'
+    else
+      edit
     end
   end
 

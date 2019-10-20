@@ -146,6 +146,12 @@ nb:
         message: Melding
         week: Uke
         year: År
+      price_age_group:
+        from_age: Nedre aldersgrense
+        monthly_fee: Månedsavgift
+        name: Navn
+        to_age: Øvre aldersgrense
+        yearly_fee: Årskontingent
       rank:
         css_color: CSS Farge
         colour: Beltebeskrivelse

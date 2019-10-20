@@ -1,29 +1,27 @@
-h1 Price Age Groups
+- @content_width = 1024
 
-table
+a.btn.btn-primary.float-right href=new_price_age_group_path
+  i.fa.fa-plus>
+  | Legg til prisgruppe
+
+h1 Prisgrupper
+
+table.table data-record-path=price_age_groups_path
   thead
     tr
-      th Name
-      th From age
-      th To age
-      th Yearly price
-      th Monthly price
-      th
-      th
+      th = t 'activerecord.attributes.price_age_group.name'
+      th = t 'activerecord.attributes.price_age_group.from_age'
+      th = t 'activerecord.attributes.price_age_group.to_age'
+      th = t 'activerecord.attributes.price_age_group.yearly_fee'
+      th = t 'activerecord.attributes.price_age_group.monthly_fee'
       th
 
   tbody
     - @price_age_groups.each do |price_age_group|
-      tr
+      tr data-record-id=price_age_group.id
         td = price_age_group.name
         td = price_age_group.from_age
         td = price_age_group.to_age
         td = price_age_group.yearly_fee
         td = price_age_group.monthly_fee
-        td = link_to 'Show', price_age_group
-        td = link_to 'Edit', edit_price_age_group_path(price_age_group)
         td = link_to 'Destroy', price_age_group, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-
-= link_to 'New Price age group', new_price_age_group_path
