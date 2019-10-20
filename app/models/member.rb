@@ -403,12 +403,10 @@ class Member < ApplicationRecord
   def category
     if honorary?
       'Æresmedlem'
-    elsif age >= 25
-      'Voksen'
-    elsif age >= 10
-      'Ungdom'
+    elsif (pag = PriceAgeGroup.find_by(':age >= from_age AND :age <= to_age', age: age))
+      pag.name
     else
-      'Barn'
+      'Ukjent'
     end
   end
 
