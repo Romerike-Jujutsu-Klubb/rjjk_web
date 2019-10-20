@@ -4,7 +4,7 @@ if Rails.env.production? || Rails.env.beta? || Rails.env.test?
   env_prefix = ("#{Rails.env}." unless Rails.env.production?)
   Rails.application.config.middleware.use(
       ExceptionNotification::Rack,
-      ignore_crawlers: %w[AhrefsBot bingbot BLEXBot Googlebot Mail.RU_Bot MJ12bot python-requests
+      ignore_crawlers: %w[AhrefsBot bingbot BLEXBot DotBot Googlebot Mail.RU_Bot MJ12bot python-requests
                           SemrushBot TinEye-bot YandexBot],
       ignore_exceptions: [],
       email: {
