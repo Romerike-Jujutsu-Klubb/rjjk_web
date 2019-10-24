@@ -52,12 +52,18 @@ class NkfSynchronizationJobTest < ActiveJob::TestCase
             <li>{:membership=&gt;:phone_home}: &quot;67919906&quot; => &quot;&quot;</li>
             <li>{:membership=&gt;:phone_work}: &quot;63807253&quot; => &quot;&quot;</li>
             <li>{:user=&gt;:phone}: &quot;91735210&quot; => &quot;&quot;</li>
+            <li>{:membership=&gt;:category}: "Passiv sats" =&gt; "Voksen"</li>
+            <li>{:membership=&gt;:contract}: "Passiv - Voksen" =&gt; "Voksen"</li>
+            <li>{:membership=&gt;:discount}: "" =&gt; "100"</li>
             <li>{:membership=&gt;:joined_on}: &quot;14.10.2003&quot; => &quot;21.06.2007&quot;</li>
           </ul>
         </li>
         <li>Sebastian Kubosch<ul>
             <li>{:user=&gt;:contact_email}: &quot;sebastian@kubosch.no&quot; => &quot;sebastian@example.com&quot;</li>
             <li>{:billing=&gt;:email}: &quot;lise@kubosch.no&quot; => &quot;&quot;</li>
+            <li>{:membership=&gt;:category}: "Passiv sats" =&gt; "Barn"</li>
+            <li>{:membership=&gt;:contract}: "Passiv - Ungdom" =&gt; "Barn - familie"</li>
+            <li>{:membership=&gt;:discount}: "" =&gt; "100"</li>
             <li>{:membership=&gt;:joined_on}: &quot;21.09.2010&quot; => &quot;25.08.2007&quot;</li>
             <li>{:guardian_1=&gt;:email}: &quot;lise@kubosch.no&quot; => &quot;lise@example.com&quot;</li>
             <li>{:guardian_1=&gt;:phone}: &quot;&quot; => &quot;98765432&quot;</li>
@@ -67,6 +73,9 @@ class NkfSynchronizationJobTest < ActiveJob::TestCase
         <li>Uwe Kubosch<ul>
             <li>{:user=&gt;:phone}: &quot;92206046&quot; => &quot;5556666&quot;</li>
             <li>{:user=&gt;:contact_email}: &quot;uwe@kubosch.no&quot; => &quot;uwe@example.com&quot;</li>
+            <li>{:membership=&gt;:category}: "Voksne sats" =&gt; "Voksen"</li>
+            <li>{:membership=&gt;:contract}: "Instruktør V2" =&gt; "Voksen"</li>
+            <li>{:membership=&gt;:discount}: "" =&gt; "100"</li>
             <li>{:membership=&gt;:joined_on}: &quot;15.12.2000&quot; => &quot;05.01.1987&quot;</li>
           </ul>
         </li>
