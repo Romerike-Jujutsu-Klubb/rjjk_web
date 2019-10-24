@@ -34,17 +34,17 @@ class NkfMember < ApplicationRecord
     kont_belop: {}, # FIXME(uwe): Map payment values
     kont_sats: {
       map_to: { membership: :category },
-      # form_field: :frm_48_v36
+      form_field: :frm_48_v36,
     },
     kontraktsbelop: { map_to: { membership: :monthly_fee } },
     kontraktstype: {
       map_to: { membership: :contract },
-      # form_field: :frm_48_v37
+      form_field: :frm_48_v37,
     },
     medlemskategori: {},
     medlemskategori_navn: {
       map_to: { membership: :category },
-      # form_field: :frm_48_v48
+      form_field: :frm_48_v48,
     },
     medlemsnummer: {},
     medlemsstatus: {}, # FIXME(uwe): Should be mapped: passive_from+left_on => 'A', 'P'
@@ -53,7 +53,7 @@ class NkfMember < ApplicationRecord
     postnr: { map_to: { user: :postal_code }, form_field: :frm_48_v07 },
     rabatt: {
       map_to: { membership: :discount },
-      # form_field: :frm_48_v38
+      form_field: :frm_48_v38,
     },
     sist_betalt_dato: {},
     sted: {},
