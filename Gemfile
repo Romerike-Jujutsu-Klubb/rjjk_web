@@ -94,6 +94,8 @@ end
 # end
 
 group :test do
+  # https://github.com/twalpole/apparition
+  # gem 'apparition', github: 'twalpole/apparition'
   # gem 'bullet' # Uncomment to hunt N+1 kind of problems
   gem 'capybara-screenshot-diff' # , path: '~/work/open-source/capybara-screenshot-diff'
   gem 'chunky_png'
@@ -107,7 +109,6 @@ group :test do
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   # gem 'rubycritic', require: false
-  # https://github.com/twalpole/apparition
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'timecop'

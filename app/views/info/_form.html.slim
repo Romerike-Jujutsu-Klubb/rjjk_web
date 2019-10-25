@@ -15,17 +15,23 @@
               i class=@information_page.icon_class
             .dropdown-menu aria-labelledby="iconDropdownBtn"
               - @icon_classes.each do |ic|
-                a class="dropdown-item" href="#" class=(:active if ic == @information_page.icon_class)
+                a class="dropdown-item" href="#" data-icon=ic class=(:active if ic == @information_page.icon_class)
                   i> class=ic
                   = ic
             javascript:
-              $('#iconDropdownBtn + .dropdown-menu a').on('click', function(e){
-                  var icon_class = $(e.target).find('i').attr('class');
-                  $('#iconDropdownBtn i').attr('class', icon_class);
-                  $('#information_page_icon_class').val(icon_class);
-                  $(e.target).closest('.dropdown-menu').find('a.active').removeClass('active');
-                  $(e.target).closest('.dropdown-menu').find('a i[class="' + icon_class + '"]').closest('a').addClass('active');
-              });
+                $('#iconDropdownBtn + .dropdown-menu a').on('click', function(e) {
+                    var icon_class = $(e.target).data('icon');
+                    $('#iconDropdownBtn i').attr('class', icon_class);
+                    FontAwesome.dom.i2svg();
+                    var icon_parts = icon_class.split(/[ -]+/);
+                    var icon_prefix = icon_parts[0];
+                    var icon_name = icon_parts[2];
+                    $('#iconDropdownBtn svg').attr('data-prefix', icon_prefix);
+                    $('#iconDropdownBtn svg').attr('data-icon', icon_name);
+                    $('#information_page_icon_class').val(icon_class);
+                    $(e.target).closest('.dropdown-menu').find('a.active').removeClass('active');
+                    $(e.target).closest('.dropdown-menu').find('a[data-icon="' + icon_class + '"]').closest('a').addClass('active');
+                });
         .float-left.ml-2.ml-sm-3
           .mt-3 &nbsp;
           = f.check_box :hidden

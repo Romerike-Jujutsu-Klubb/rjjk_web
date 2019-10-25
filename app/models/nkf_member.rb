@@ -103,8 +103,7 @@ class NkfMember < ApplicationRecord
     mapping_attributes.select do |a|
       next if utmeldtdato.present? && a[:nkf_attr] != 'utmeldtdato'
 
-      a[:target] && a[:mapped_rjjk_value] != a[:nkf_value] &&
-          a[:mapped_rjjk_value] != a[:nkf_value]&.downcase
+      a[:target] && a[:mapped_rjjk_value] != a[:nkf_value]
     end
   end
 
@@ -116,31 +115,8 @@ class NkfMember < ApplicationRecord
       target, target_attribute = mapped_attribute.to_a[0]
       relation = NkfMemberComparison.target_relation(member, target) if member
       rjjk_value = relation&.send(target_attribute)
-      mapped_rjjk_value =
-          if rjjk_value.is_a?(Date)
-            rjjk_value.strftime('%d.%m.%Y')
-          elsif nkf_attr == 'kjonn'
-            rjjk_value ? 'Mann' : 'Kvinne'
-          elsif nkf_attr == 'rabatt' && rjjk_value == 0
-            ''
-          else
-            rjjk_value.to_s
-          end
-      mapped_nkf_value =
-          if /^\s*(?<day>\d{2})\.(?<month>\d{2})\.(?<year>\d{4})\s*$/ =~ nkf_value
-            Date.new(year.to_i, month.to_i, day.to_i)
-          elsif /Mann|Kvinne/.match?(nkf_value)
-            nkf_value == 'Mann'
-          elsif nkf_value.blank? && (target =~ /^(billing|guardian_)/ ||
-              target_attribute =~ /^guardian_|email|mobile|phone|_on$/)
-            nil
-          elsif nkf_value.blank? && (target == :user && User::NILLABLE_FIELDS.include?(target_attribute))
-            nil
-          elsif nkf_value.present? && target_attribute =~ /email/
-            nkf_value.downcase
-          else
-            nkf_value
-          end
+      mapped_rjjk_value = rjjk_attribute_to_nkf(nkf_attr, rjjk_value)
+      mapped_nkf_value = nkf_attribute_to_rjjk(target, target_attribute, nkf_value)
       # else
       #   logger.debug "rjjk_attribute: Ignore attribute: #{nkf_attr}: #{nkf_value.inspect}"
     end
@@ -361,5 +337,34 @@ class NkfMember < ApplicationRecord
 
   def to_s
     "#{fornavn} #{etternavn}"
+  end
+
+  private
+
+  def rjjk_attribute_to_nkf(nkf_attr, rjjk_value)
+    if rjjk_value.is_a?(Date)
+      rjjk_value.strftime('%d.%m.%Y')
+    elsif nkf_attr == 'kjonn'
+      rjjk_value ? 'Mann' : 'Kvinne'
+    elsif nkf_attr == 'rabatt' && rjjk_value == 0
+      ''
+    else
+      rjjk_value.to_s
+    end
+  end
+
+  def nkf_attribute_to_rjjk(target, target_attribute, nkf_value)
+    if /^\s*(?<day>\d{2})\.(?<month>\d{2})\.(?<year>\d{4})\s*$/ =~ nkf_value
+      Date.new(year.to_i, month.to_i, day.to_i)
+    elsif /Mann|Kvinne/.match?(nkf_value)
+      nkf_value == 'Mann'
+    elsif nkf_value.blank? && (target =~ /^(billing|guardian_)/ ||
+        target_attribute =~ /^guardian_|email|mobile|phone|_on$/)
+      nil
+    elsif nkf_value.blank? && (target == :user && User::NILLABLE_FIELDS.include?(target_attribute))
+      nil
+    else
+      nkf_value
+    end
   end
 end

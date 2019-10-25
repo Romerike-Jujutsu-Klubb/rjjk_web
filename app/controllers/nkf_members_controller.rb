@@ -7,9 +7,14 @@ class NkfMembersController < ApplicationController
     @nkf_members = NkfMember.order(:fornavn, :etternavn).to_a
   end
 
-  RELATED_USER_SYMS = { contact_user: :member, guardian_1: :member, guardian_2: :member,
-                        billing_user: :member, payees: :member, primary_wards: :member,
-                        secondary_wards: :member, contactees: :member }.freeze
+  UPSTREAM_USER_SYMS = %i[contact_user guardian_1 guardian_2 billing_user].freeze
+  # DOWNSTREAM_USER_SYMS = %i[payees primary_wards secondary_wards contactees].freeze
+
+  # 7906.0  +5.0  2618
+  DOWNSTREAM_USER_SYMS = %i[primary_wards].freeze
+  RELATED_USER_SYMS = Hash[UPSTREAM_USER_SYMS
+      .map { |uu| [uu, [:member, Hash[DOWNSTREAM_USER_SYMS.map { |du| [du, :member] }]]] }
+  ]
 
   def sync_errors
     @errors = NkfMember.includes(member: [{ user: RELATED_USER_SYMS }, :groups])
