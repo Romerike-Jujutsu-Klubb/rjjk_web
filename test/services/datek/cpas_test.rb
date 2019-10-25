@@ -11,7 +11,6 @@ class CpasTest < ActiveSupport::TestCase
               'Connection' => 'close',
               'Content-Type' => 'application/x-www-form-urlencoded',
               'Host' => 'example.com',
-              'User-Agent' => 'http.rb/4.1.1',
             }
           )
         .to_return(status: 200, body: '', headers: {})
