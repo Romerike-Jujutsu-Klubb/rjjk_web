@@ -48,7 +48,7 @@ class MembersController < ApplicationController
 
   def edit
     @member ||= Member.find(params[:id])
-    redirect_to user_path(@member.user_id)
+    redirect_to user_path(@member.user_id, anchor: "tab_membership_#{@member.id}_tab")
   end
 
   def update
