@@ -209,9 +209,15 @@ class ImagesController < ApplicationController
     content_type = image.content_type
 
     if requested_format != image.format
-      magick_image.format requested_format
-      filename.sub!(/\.[^.]+$/, ".#{requested_format}")
-      content_type = "image/#{params[:format]}"
+      begin
+        magick_image.format requested_format
+        filename.sub!(/\.[^.]+$/, ".#{requested_format}")
+        content_type = "image/#{requested_format}"
+      rescue => e
+        logger.error "Exception converting image #{image.id} from #{image.format} to #{requested_format}"
+        logger.error e
+        logger.error e.backtrace.join("\n")
+      end
     end
     [content_type, filename]
   end
