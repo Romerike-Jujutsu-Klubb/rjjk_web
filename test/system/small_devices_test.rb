@@ -5,14 +5,18 @@ require 'application_system_test_case'
 class SmallDevicesTest < ApplicationSystemTestCase
   SMALL_WINDOW_SIZE = [412, 732].freeze
   PROGRESS_BAR_AREA = [0, 700, 320, 32].freeze
+  SCROLL_BAR_AREA = [403, 338, 409, 341].freeze
 
   setup do
     screenshot_section :small_devices
     Capybara::Screenshot.window_size = SMALL_WINDOW_SIZE
     Capybara.current_session.current_window.resize_to(*SMALL_WINDOW_SIZE)
+    @original_skip_area = Capybara::Screenshot::Diff.skip_area
+    Capybara::Screenshot::Diff.skip_area = SCROLL_BAR_AREA
   end
 
   teardown do
+    Capybara::Screenshot::Diff.skip_area = @original_skip_area
     Capybara::Screenshot.window_size = ApplicationSystemTestCase::WINDOW_SIZE
   end
 
@@ -72,7 +76,7 @@ class SmallDevicesTest < ApplicationSystemTestCase
     #   assert in_view
     # end
 
-    screenshot(:scrolled, skip_area: PROGRESS_BAR_AREA)
+    screenshot(:scrolled, skip_area: [SCROLL_BAR_AREA, PROGRESS_BAR_AREA])
     with_retries(label: 'article link click') do # FIXME(uwe): Remove this retry, and fix scrolling
       article_link.click
       assert_css('h1', text: 'My first article', wait: 0.6)

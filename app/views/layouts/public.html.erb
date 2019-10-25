@@ -96,15 +96,15 @@
 
         <article class="span4">
           <div class="widget-1 last divide30 footer_widget_spacer clear"></div>
-          <div id="rss-2" class="widget-1 last footer_widget widget_rss">
-            <h4 class="widget-title" style="margin-bottom: .5rem">
-              <i class="far fa-newspaper fa-2x" style="vertical-align:bottom"></i>
-              <a class="rsswidget" href="<%= news_items_path %>">
-                Nyheter
-              </a>
-            </h4>
+          <div id="news" class="widget-1 last footer_widget widget_rss">
             <div class="widget_nav_menu">
               <ul>
+                <li>
+                  <a class="rsswidget" href="<%= news_items_path %>">
+                    <i class="far fa-newspaper fa-2x" style="vertical-align:bottom;margin-right:1rem"></i>
+                    Nyheter
+                  </a>
+                </li>
                 <% @news_items.each do |news_item| %>
                   <li>
                     <a href='<%= news_item_path news_item %>'>
@@ -120,8 +120,8 @@
         </article>
 
         <article class="span4 last">
-          <div class="widget-1  first divide30 footer_widget_spacer clear"></div>
-          <div id="nav_menu-17" class="widget-1  first footer_widget widget_nav_menu">
+          <div class="widget-1 first divide30 footer_widget_spacer clear"></div>
+          <div id="nav_menu-17" class="widget-1 first footer_widget widget_nav_menu">
             <div class="menu-for-contact-us-widget-container">
               <ul id="menu-for-contact-us-widget" class="menu">
                 <li id="menu-item-2374" class="menu-item menu-item-type-post_type menu-item-object-page">
