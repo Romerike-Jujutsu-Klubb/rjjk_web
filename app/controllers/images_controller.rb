@@ -31,52 +31,44 @@ class ImagesController < ApplicationController
         .find(params[:id])
     return if rank_required(image)
 
-    if params[:format].nil? || params[:format] != image.format
-      redirect_to show_image_path(image, width: params[:width], format: image.format)
-      return
-    end
+    requested_format = params[:format]
+    return if !serving_webp(requested_format) &&
+        (redirected_to_webp(image, requested_format) || redirected_to_format(image, requested_format))
+
     if image.video?
       streamer = image.content_data_io
       headers['Content-Type'] = image.content_type
       headers['Content-disposition'] = "inline; filename=\"#{image.name}\""
       self.response_body = streamer
-    else
-      begin
-        image_content = image.content_data_io&.string
-        if image_content.nil?
-          icon_name = image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
-          redirect_to helpers.asset_path icon_name
-          return
-        end
-        send_data(image_content, disposition: 'inline', type: image.content_type, filename: image.name)
-      rescue => e
-        logger.error e
-        logger.error e.backtrace.join("\n")
-        redirect_to '/assets/pdficon_large.png'
-      end
+      return
     end
+
+    image_content = image.content_data_io
+    if image_content.nil?
+      icon_name = image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
+      redirect_to helpers.asset_path icon_name
+      return
+    end
+    if requested_format != image.format
+      send_image(image, MiniMagick::Image.read(image_content), requested_format)
+    else
+      send_data(image_content.string, disposition: 'inline', type: image.content_type, filename: image.name)
+    end
+  rescue => e
+    logger.error e
+    logger.error e.backtrace.join("\n")
+    redirect_to '/assets/pdficon_large.png'
   end
 
   def inline
     image = Image.select('id,name,content_type,user_id,google_drive_reference').find(params[:id])
     return if rank_required(image)
 
-    if params[:format].nil? || params[:format] != image.format
-      redirect_to width: params[:width], format: image.format
-      return
-    end
-    if image.video?
-      redirect_to helpers.asset_path 'video-icon-tran.png'
-      return
-    end
-    if image.content_type == 'application/msword'
-      redirect_to helpers.asset_path 'msword-icon.png'
-      return
-    end
-    if image.content_type == 'application/pdf'
-      redirect_to helpers.asset_path 'pdficon_large.png'
-      return
-    end
+    requested_format = params[:format]
+    return if !serving_webp(requested_format) &&
+        (redirected_to_webp(image, requested_format) || redirected_to_icon(image, requested_format) ||
+        redirected_to_format(image, requested_format))
+
     content_data_io = image.content_data_io
     if content_data_io.nil?
       icon_name = image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
@@ -88,29 +80,19 @@ class ImagesController < ApplicationController
     width = 492 if width < 8
     ratio = width.to_f / magick_image.width
     magick_image.resize("#{width}x#{(magick_image.height * ratio).round}")
-    send_data(magick_image.to_blob, disposition: 'inline', type: image.content_type, filename: image.name)
+    send_image(image, magick_image, requested_format)
   end
 
   def blurred
     image = Image.select('id,name,content_type,user_id,google_drive_reference').find(params[:id])
     return if rank_required(image)
 
-    if params[:format].nil? || params[:format] != image.format
-      redirect_to width: params[:width], format: image.format
-      return
-    end
-    if image.video?
-      redirect_to helpers.asset_path 'video-icon-tran.png'
-      return
-    end
-    if image.content_type == 'application/msword'
-      redirect_to helpers.asset_path 'msword-icon.png'
-      return
-    end
-    if image.content_type == 'application/pdf'
-      redirect_to helpers.asset_path 'pdficon_large.png'
-      return
-    end
+    requested_format = params[:format]
+
+    return if !serving_webp(requested_format) &&
+        (redirected_to_webp(image, requested_format) || redirected_to_icon(image, requested_format) ||
+        redirected_to_format(image, requested_format))
+
     content_data_io = image.content_data_io
     if content_data_io.nil?
       icon_name = image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
@@ -119,8 +101,9 @@ class ImagesController < ApplicationController
     end
     begin
       magick_image = MiniMagick::Image.read content_data_io
+      content_data_io.close
       img = magick_image.radial_blur 10
-      send_data(img.to_blob, disposition: 'inline', type: image.content_type, filename: image.name)
+      send_image(image, img, requested_format)
     rescue => e
       logger.error e
       logger.error e.backtrace.join("\n")
@@ -212,5 +195,65 @@ class ImagesController < ApplicationController
     @images = image_select.to_a
     @image = Image.find_by(id: params[:id]) || @images.first
     render action: :gallery
+  end
+
+  private
+
+  def send_image(image, magick_image, requested_format)
+    content_type, filename = convert_to_format(image, magick_image, requested_format)
+    send_data(magick_image.to_blob, disposition: 'inline', type: content_type, filename: filename)
+  end
+
+  def convert_to_format(image, magick_image, requested_format)
+    filename = image.name
+    content_type = image.content_type
+
+    if requested_format != image.format
+      magick_image.format requested_format
+      filename.sub!(/\.[^.]+$/, ".#{requested_format}")
+      content_type = "image/#{params[:format]}"
+    end
+    [content_type, filename]
+  end
+
+  def redirected_to_webp(image, requested_format)
+    return unless image.image?
+    return unless accepts_webp && !requests_webp(requested_format)
+
+    redirect_to width: params[:width], format: :webp
+    true
+  end
+
+  def accepts_webp
+    request.headers['HTTP_ACCEPT'] =~ %r{image/webp}
+  end
+
+  def requests_webp(requested_format)
+    (requested_format == 'webp')
+  end
+
+  def serving_webp(requested_format)
+    accepts_webp && requests_webp(requested_format)
+  end
+
+  def redirected_to_icon(image)
+    if image.image?
+    elsif image.video?
+      redirect_to helpers.asset_path 'video-icon-tran.png'
+      true
+    elsif image.content_type == 'application/msword'
+      redirect_to helpers.asset_path 'msword-icon.png'
+      true
+    elsif image.content_type == 'application/pdf'
+      redirect_to helpers.asset_path 'pdficon_large.png'
+      true
+    end
+  end
+
+  def redirected_to_format(image, requested_format)
+    return unless requested_format.nil? || requested_format != image.format
+
+    redirect_to width: params[:width], format: image.format
+    true
   end
 end
