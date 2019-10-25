@@ -10,7 +10,7 @@ class NkfMembersController < ApplicationController
   UPSTREAM_USER_SYMS = %i[contact_user guardian_1 guardian_2 billing_user].freeze
   # DOWNSTREAM_USER_SYMS = %i[payees primary_wards secondary_wards contactees].freeze
 
-  # 7906.0  +5.0  2618
+  # 7045.3	+3.0	2204 sql
   DOWNSTREAM_USER_SYMS = %i[primary_wards].freeze
   RELATED_USER_SYMS = Hash[UPSTREAM_USER_SYMS
       .map { |uu| [uu, [:member, Hash[DOWNSTREAM_USER_SYMS.map { |du| [du, :member] }]]] }

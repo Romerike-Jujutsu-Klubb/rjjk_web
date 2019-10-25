@@ -77,7 +77,7 @@ class MembersControllerTest < ActionController::TestCase
   def test_edit
     get :edit, params: { id: @lars.id }
 
-    assert_redirected_to @lars.user
+    assert_redirected_to user_path(@lars.user, anchor: :tab_membership_228855109_tab)
   end
 
   def test_update

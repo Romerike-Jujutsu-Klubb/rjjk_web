@@ -462,9 +462,9 @@ class Member < ApplicationRecord
     #   100
     elsif current_election
       100
-    elsif active_group_instructors.count == 1
+    elsif active_group_instructors.size == 1
       50
-    elsif active_group_instructors.count >= 2
+    elsif active_group_instructors.size >= 2
       100
     elsif instructor?
       50
