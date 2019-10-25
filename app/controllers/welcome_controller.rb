@@ -38,14 +38,14 @@ class WelcomeController < ApplicationController
 
   # https://web.archive.org/web/20190203085358/https://www.altoros.com/
   def front_page
-    @front_page_sections = FrontPageSection.all
+    @front_page_sections = FrontPageSection.includes(:image).to_a
     @event = Event.upcoming.order(:start_at).first
     @news_items = NewsItem.front_page_items.reject(&:expired?).first(5)
     render 'front_page', layout: 'public'
   end
 
   def front_parallax
-    @front_page_sections = FrontPageSection.all
+    @front_page_sections = FrontPageSection.includes(:image).to_a
     @news_items = NewsItem.front_page_items.reject(&:expired?)
     render layout: 'parallax'
   end

@@ -224,14 +224,10 @@ class ImagesController < ApplicationController
 
   def redirected_to_webp(image, requested_format)
     return unless image.image?
-    return unless accepts_webp && !requests_webp(requested_format)
+    return unless helpers.accepts_webp && !requests_webp(requested_format)
 
     redirect_to width: params[:width], format: :webp
     true
-  end
-
-  def accepts_webp
-    request.headers['HTTP_ACCEPT'] =~ %r{image/webp}
   end
 
   def requests_webp(requested_format)
@@ -239,7 +235,7 @@ class ImagesController < ApplicationController
   end
 
   def serving_webp(requested_format)
-    accepts_webp && requests_webp(requested_format)
+    helpers.accepts_webp && requests_webp(requested_format)
   end
 
   def redirected_to_icon(image)

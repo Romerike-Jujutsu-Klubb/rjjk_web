@@ -4,6 +4,10 @@ module ApplicationHelper
   include UserSystem
   include GraduationAccess
 
+  def accepts_webp
+    request.headers['HTTP_ACCEPT'] =~ %r{image/webp}
+  end
+
   def menu_item(name, options = {})
     if options.is_a? Hash
       options[:controller] ||= 'info'

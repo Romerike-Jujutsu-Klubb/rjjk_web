@@ -3,6 +3,8 @@
 class Image < ApplicationRecord
   include GoogleDriveContent
 
+  # TODO()uwe): Move image data to a separate ImageData model to avoid loading it with the image meta data
+  # Not a big deal while the image data is on Google Drive, but would be nice to be able to use the DB also
   scope :without_image, -> { select((column_names - %w[content_data]).map { |c| "images.#{c}" }) }
   scope :with_image, -> { select('*') }
   scope :published, -> { where(public: true, approved: true) }
