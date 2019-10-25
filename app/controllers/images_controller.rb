@@ -90,7 +90,7 @@ class ImagesController < ApplicationController
     requested_format = params[:format]
 
     return if !serving_webp(requested_format) &&
-        (redirected_to_webp(image, requested_format) || redirected_to_icon(image, requested_format) ||
+        (redirected_to_webp(image, requested_format) || redirected_to_icon(image) ||
         redirected_to_format(image, requested_format))
 
     content_data_io = image.content_data_io
