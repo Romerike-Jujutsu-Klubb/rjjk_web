@@ -93,8 +93,6 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
       ]],
     ], c.members)
 
-    assert_equal([], c.member_changes)
-
     assert_equal([
       [members(:lars), {
         { user: :birthdate } => { '01.03.1967' => '21.06.1967' },
@@ -174,7 +172,6 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
           form_field: :frm_48_v45 },
       ]
     ]], c.members)
-    assert_equal [], c.member_changes
 
     assert_equal([[members(:lars), {
       { user: :birthdate } => { '01.03.1967' => '21.06.1967' },
@@ -234,8 +231,6 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
         mapped_nkf_value: nil, rjjk_value: 'Uwe Kubosch', mapped_rjjk_value: 'Uwe Kubosch',
         form_field: :frm_48_v72 },
     ]]], c.members
-
-    assert_equal [], c.member_changes
 
     assert_equal([
       [seb, {

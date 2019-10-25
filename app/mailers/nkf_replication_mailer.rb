@@ -15,12 +15,10 @@ class NkfReplicationMailer < ApplicationMailer
 
   def update_members(comparison)
     @new_members = comparison.new_members
-    @member_changes = comparison.member_changes
     @outgoing_changes = comparison.outgoing_changes
     @errors = comparison.errors
     stats = [
       @new_members.any? ? "#{@new_members.size} nye" : nil,
-      @member_changes.any? ? "#{@member_changes.size} endrede" : nil,
       @errors.any? ? "#{@errors.size} feil" : nil,
     ].compact.join(', ')
     mail subject: "Oppdateringer fra NKF: #{stats}"

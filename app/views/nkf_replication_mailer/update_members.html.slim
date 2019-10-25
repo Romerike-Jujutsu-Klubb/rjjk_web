@@ -4,24 +4,6 @@
     - @new_members.each do |m|
       li = m.name
 
-- if @member_changes.any?
-  h2 Oppdaterte følgende eksisterende medlemmer (#{@member_changes.size})
-
-  ul
-    - @member_changes.each do |m, c|
-      li
-        = m.name
-        ul
-          - c.each do |k, v|
-            li
-              ' #{k}:
-              - if v.is_a? Hash
-                ul
-                  - v.each do |k,v|
-                    li #{k}: #{v[0].inspect} => #{v[1].inspect}
-              - else
-                | #{v[0].inspect} => #{v[1].inspect}
-
 - if @outgoing_changes.any?
   - if Rails.env.production?
     h2 Oppdaterte følgende medlemmer hos NKF (#{@outgoing_changes.size})

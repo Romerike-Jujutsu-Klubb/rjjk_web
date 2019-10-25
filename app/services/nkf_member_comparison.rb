@@ -4,7 +4,7 @@ class NkfMemberComparison
   MEMBER_ERROR_PATTERN =
       %r{<div class=divError id="div_48_v04">\s*<ul class="ulError">(?<message>.*?)</ul>\s*</div>}.freeze
 
-  attr_reader :errors, :member_changes, :members, :new_members, :orphan_members,
+  attr_reader :errors, :members, :new_members, :orphan_members,
       :orphan_nkf_members, :outgoing_changes
 
   def self.target_relation(member, target, nkf_values = {})
@@ -42,7 +42,7 @@ class NkfMemberComparison
   end
 
   def any?
-    [@new_members, @member_changes, @errors].any?(&:present?)
+    [@new_members, @errors].any?(&:present?)
   end
 
   def sync
@@ -68,9 +68,7 @@ class NkfMemberComparison
   end
 
   def sync_members(agent, front_page)
-    @member_changes = @members.map do |m, changes|
-      sync_member_with_agent(agent, front_page, m, changes)
-    end.compact
+    @members.each { |m, changes| sync_member_with_agent(agent, front_page, m, changes) }
   end
 
   def create_new_members
@@ -121,7 +119,6 @@ class NkfMemberComparison
     logger.error e.message
     logger.error e.backtrace.join("\n")
     @errors << ['Changes', e, m]
-    nil
   end
 
   def submit_changes_to_nkf(agent, front_page, m, mapped_changes)
