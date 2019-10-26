@@ -7,6 +7,7 @@
 /node_modules
 /public/heap*.json
 /public/icon/*.png
+/public/images/*.jpg
 /public/images/*.webp
 /public/images/inline/*.*
 /public/images/*/inline/*.*
