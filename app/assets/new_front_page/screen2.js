@@ -779,10 +779,10 @@ function initMediaWall() {
                 }
             }
         });
-        s.bind("pause", function () {
-        }), s.bind("resume", function () {
-        }), s.bind("beforeanim", function () {
-        }), s.bind("afteranim", function () {
+        s.on("pause", function () {
+        }), s.on("resume", function () {
+        }), s.on("beforeanim", function () {
+        }), s.on("afteranim", function () {
         })
     })
 }
@@ -1460,12 +1460,12 @@ function is_mobile() {
                 }, this.waypoints = {
                     horizontal: {},
                     vertical: {}
-                }, i.data(c, this.id), u[this.id] = this, i.bind(f, function () {
+                }, i.data(c, this.id), u[this.id] = this, i.on(f, function () {
                     var i;
                     if (!n.didScroll && !d) return n.didScroll = !0, i = function () {
                         return n.doScroll(), n.didScroll = !1
                     }, t.setTimeout(i, e[v].settings.scrollThrottle)
-                }), i.bind(m, function () {
+                }), i.on(m, function () {
                     var i;
                     if (!n.didResize) return n.didResize = !0, i = function () {
                         return e[v]("refresh"), n.didResize = !1
@@ -1660,7 +1660,7 @@ function is_mobile() {
         }, e[v] = function () {
             var e, t;
             return t = arguments[0], e = 2 <= arguments.length ? n.call(arguments, 1) : [], p[t] ? p[t].apply(null, e) : p.aggregate.call(null, t)
-        }, e[v].settings = {resizeThrottle: 100, scrollThrottle: 30}, a.load(function () {
+        }, e[v].settings = {resizeThrottle: 100, scrollThrottle: 30}, a.on('load', function () {
             return e[v]("refresh")
         })
     }, "function" == typeof define && define.amd ? define("waypoints", ["jquery"], function (i) {
@@ -1993,28 +1993,28 @@ function is_mobile() {
                         })), !Y && H == u && o.outerHeight() == d) return void n.width(s);
                         H = u, o.css("width", ""), n.width(s), c.find(">.jspVerticalBar,>.jspHorizontalBar").remove().end()
                     }
-                    o.css("overflow", "auto"), u = a.contentWidth ? a.contentWidth : o[0].scrollWidth, d = o[0].scrollHeight, o.css("overflow", ""), m = 1 < (h = d / l), (f = 1 < (p = u / s)) || m ? (n.addClass("jspScrollable"), (x = r.maintainPosition && (g || j)) && (B = oe(), R = se()), m && (c.append(e('<div class="jspVerticalBar" />').append(e('<div class="jspCap jspCapTop" />'), e('<div class="jspTrack" />').append(e('<div class="jspDrag" />').append(e('<div class="jspDragTop" />'), e('<div class="jspDragBottom" />'))), e('<div class="jspCap jspCapBottom" />'))), Q = c.find(">.jspVerticalBar"), T = Q.find(">.jspTrack"), y = T.find(">.jspDrag"), r.showArrows && (E = e('<a class="jspArrow jspArrowUp" />').bind("mousedown.jsp", G(0, -1)).bind("click.jsp", le), P = e('<a class="jspArrow jspArrowDown" />').bind("mousedown.jsp", G(0, 1)).bind("click.jsp", le), r.arrowScrollOnHover && (E.bind("mouseover.jsp", G(0, -1, E)), P.bind("mouseover.jsp", G(0, 1, P))), $(T, r.verticalArrowPositions, E, P)), _ = l, c.find(">.jspVerticalBar>.jspCap:visible,>.jspVerticalBar>.jspArrow").each(function () {
+                    o.css("overflow", "auto"), u = a.contentWidth ? a.contentWidth : o[0].scrollWidth, d = o[0].scrollHeight, o.css("overflow", ""), m = 1 < (h = d / l), (f = 1 < (p = u / s)) || m ? (n.addClass("jspScrollable"), (x = r.maintainPosition && (g || j)) && (B = oe(), R = se()), m && (c.append(e('<div class="jspVerticalBar" />').append(e('<div class="jspCap jspCapTop" />'), e('<div class="jspTrack" />').append(e('<div class="jspDrag" />').append(e('<div class="jspDragTop" />'), e('<div class="jspDragBottom" />'))), e('<div class="jspCap jspCapBottom" />'))), Q = c.find(">.jspVerticalBar"), T = Q.find(">.jspTrack"), y = T.find(">.jspDrag"), r.showArrows && (E = e('<a class="jspArrow jspArrowUp" />').on("mousedown.jsp", G(0, -1)).on("click.jsp", le), P = e('<a class="jspArrow jspArrowDown" />').on("mousedown.jsp", G(0, 1)).on("click.jsp", le), r.arrowScrollOnHover && (E.on("mouseover.jsp", G(0, -1, E)), P.on("mouseover.jsp", G(0, 1, P))), $(T, r.verticalArrowPositions, E, P)), _ = l, c.find(">.jspVerticalBar>.jspCap:visible,>.jspVerticalBar>.jspArrow").each(function () {
                         _ -= e(this).outerHeight()
                     }), y.hover(function () {
                         y.addClass("jspHover")
                     }, function () {
                         y.removeClass("jspHover")
-                    }).bind("mousedown.jsp", function (t) {
-                        e("html").bind("dragstart.jsp selectstart.jsp", le), y.addClass("jspActive");
+                    }).on("mousedown.jsp", function (t) {
+                        e("html").on("dragstart.jsp selectstart.jsp", le), y.addClass("jspActive");
                         var i = t.pageY - y.position().top;
-                        return e("html").bind("mousemove.jsp", function (e) {
+                        return e("html").on("mousemove.jsp", function (e) {
                             J(e.pageY - i, !1)
-                        }).bind("mouseup.jsp mouseleave.jsp", Z), !1
-                    }), U()), f && (c.append(e('<div class="jspHorizontalBar" />').append(e('<div class="jspCap jspCapLeft" />'), e('<div class="jspTrack" />').append(e('<div class="jspDrag" />').append(e('<div class="jspDragLeft" />'), e('<div class="jspDragRight" />'))), e('<div class="jspCap jspCapRight" />'))), C = c.find(">.jspHorizontalBar"), O = C.find(">.jspTrack"), v = O.find(">.jspDrag"), r.showArrows && (M = e('<a class="jspArrow jspArrowLeft" />').bind("mousedown.jsp", G(-1, 0)).bind("click.jsp", le), I = e('<a class="jspArrow jspArrowRight" />').bind("mousedown.jsp", G(1, 0)).bind("click.jsp", le), r.arrowScrollOnHover && (M.bind("mouseover.jsp", G(-1, 0, M)), I.bind("mouseover.jsp", G(1, 0, I))), $(O, r.horizontalArrowPositions, M, I)), v.hover(function () {
+                        }).on("mouseup.jsp mouseleave.jsp", Z), !1
+                    }), U()), f && (c.append(e('<div class="jspHorizontalBar" />').append(e('<div class="jspCap jspCapLeft" />'), e('<div class="jspTrack" />').append(e('<div class="jspDrag" />').append(e('<div class="jspDragLeft" />'), e('<div class="jspDragRight" />'))), e('<div class="jspCap jspCapRight" />'))), C = c.find(">.jspHorizontalBar"), O = C.find(">.jspTrack"), v = O.find(">.jspDrag"), r.showArrows && (M = e('<a class="jspArrow jspArrowLeft" />').on("mousedown.jsp", G(-1, 0)).on("click.jsp", le), I = e('<a class="jspArrow jspArrowRight" />').on("mousedown.jsp", G(1, 0)).on("click.jsp", le), r.arrowScrollOnHover && (M.on("mouseover.jsp", G(-1, 0, M)), I.on("mouseover.jsp", G(1, 0, I))), $(O, r.horizontalArrowPositions, M, I)), v.hover(function () {
                         v.addClass("jspHover")
                     }, function () {
                         v.removeClass("jspHover")
-                    }).bind("mousedown.jsp", function (t) {
-                        e("html").bind("dragstart.jsp selectstart.jsp", le), v.addClass("jspActive");
+                    }).on("mousedown.jsp", function (t) {
+                        e("html").on("dragstart.jsp selectstart.jsp", le), v.addClass("jspActive");
                         var i = t.pageX - v.position().left;
-                        return e("html").bind("mousemove.jsp", function (e) {
+                        return e("html").on("mousemove.jsp", function (e) {
                             te(e.pageX - i, !1)
-                        }).bind("mouseup.jsp mouseleave.jsp", Z), !1
+                        }).on("mouseup.jsp mouseleave.jsp", Z), !1
                     }), L = c.innerWidth(), q()), function () {
                         if (f && m) {
                             var t = O.outerHeight(), i = T.outerWidth();
@@ -2023,22 +2023,22 @@ function is_mobile() {
                             }), L -= i, l -= i, s -= t, O.parent().append(e('<div class="jspCorner" />').css("width", t + "px")), U(), q()
                         }
                         f && o.width(c.outerWidth() - D + "px"), d = o.outerHeight(), h = d / l, f && ((S = Math.ceil(1 / p * L)) > r.horizontalDragMaxWidth ? S = r.horizontalDragMaxWidth : S < r.horizontalDragMinWidth && (S = r.horizontalDragMinWidth), v.width(S + "px"), b = L - S, ie(j)), m && ((k = Math.ceil(1 / h * _)) > r.verticalDragMaxHeight ? k = r.verticalDragMaxHeight : k < r.verticalDragMinHeight && (k = r.verticalDragMinHeight), y.height(k + "px"), w = _ - k, ee(g))
-                    }(), x && (ae(ge ? u - s : B, !1), ne(we ? d - l : R, !1)), o.find(":input,a").unbind("focus.jsp").bind("focus.jsp", function (e) {
+                    }(), x && (ae(ge ? u - s : B, !1), ne(we ? d - l : R, !1)), o.find(":input,a").unbind("focus.jsp").on("focus.jsp", function (e) {
                         re(e.target, !1)
-                    }), c.unbind(W).bind(W, function (e, t, i, n) {
+                    }), c.unbind(W).on(W, function (e, t, i, n) {
                         var a = j, o = g;
                         return A.scrollBy(i * r.mouseWheelSpeed, -n * r.mouseWheelSpeed, !1), a == j && o == g
-                    }), ye = !1, c.unbind("touchstart.jsp touchmove.jsp touchend.jsp click.jsp-touchclick").bind("touchstart.jsp", function (e) {
+                    }), ye = !1, c.unbind("touchstart.jsp touchmove.jsp touchend.jsp click.jsp-touchclick").on("touchstart.jsp", function (e) {
                         var t = e.originalEvent.touches[0];
                         de = oe(), pe = se(), he = t.pageX, me = t.pageY, ye = !(fe = !1)
-                    }).bind("touchmove.jsp", function (e) {
+                    }).on("touchmove.jsp", function (e) {
                         if (ye) {
                             var t = e.originalEvent.touches[0], i = j, n = g;
                             return A.scrollTo(de + he - t.pageX, pe + me - t.pageY), fe = fe || 5 < Math.abs(he - t.pageX) || 5 < Math.abs(me - t.pageY), i == j && n == g
                         }
-                    }).bind("touchend.jsp", function (e) {
+                    }).on("touchend.jsp", function (e) {
                         ye = !1
-                    }).bind("click.jsp-touchclick", function (e) {
+                    }).on("click.jsp-touchclick", function (e) {
                         if (fe) return fe = !1
                     }), r.enableKeyboardNavigation && function () {
                         var t, i, a = [];
@@ -2070,7 +2070,7 @@ function is_mobile() {
 
                         f && a.push(C[0]), m && a.push(Q[0]), o.focus(function () {
                             n.focus()
-                        }), n.attr("tabindex", 0).unbind("keydown.jsp keypress.jsp").bind("keydown.jsp", function (n) {
+                        }), n.attr("tabindex", 0).unbind("keydown.jsp keypress.jsp").on("keydown.jsp", function (n) {
                             if (n.target === this || a.length && e(n.target).closest(a).length) {
                                 var r = j, o = g;
                                 switch (n.keyCode) {
@@ -2091,10 +2091,10 @@ function is_mobile() {
                                 }
                                 return !(i = n.keyCode == t && r != j || o != g)
                             }
-                        }).bind("keypress.jsp", function (e) {
+                        }).on("keypress.jsp", function (e) {
                             return e.keyCode == t && s(), !i
                         }), r.hideFocus ? (n.css("outline", "none"), "hideFocus" in c[0] && n.attr("hideFocus", !0)) : (n.css("outline", ""), "hideFocus" in c[0] && n.attr("hideFocus", !1))
-                    }(), r.clickOnTrack && (K(), m && T.bind("mousedown.jsp", function (t) {
+                    }(), r.clickOnTrack && (K(), m && T.on("mousedown.jsp", function (t) {
                         if (t.originalTarget === i || t.originalTarget == t.currentTarget) {
                             var n, a = e(this), o = a.offset(), s = t.pageY - o.top - g, c = !0,
                                 u = function () {
@@ -2108,9 +2108,9 @@ function is_mobile() {
                                 }, p = function () {
                                     n && clearTimeout(n), n = null, e(document).unbind("mouseup.jsp", p)
                                 };
-                            return u(), e(document).bind("mouseup.jsp", p), !1
+                            return u(), e(document).on("mouseup.jsp", p), !1
                         }
-                    }), f && O.bind("mousedown.jsp", function (t) {
+                    }), f && O.on("mousedown.jsp", function (t) {
                         if (t.originalTarget === i || t.originalTarget == t.currentTarget) {
                             var n, a = e(this), o = a.offset(), l = t.pageX - o.left - j, c = !0,
                                 d = function () {
@@ -2124,7 +2124,7 @@ function is_mobile() {
                                 }, p = function () {
                                     n && clearTimeout(n), n = null, e(document).unbind("mouseup.jsp", p)
                                 };
-                            return d(), e(document).bind("mouseup.jsp", p), !1
+                            return d(), e(document).on("mouseup.jsp", p), !1
                         }
                     })), function () {
                         if (location.hash && 1 < location.hash.length) {
@@ -2184,7 +2184,7 @@ function is_mobile() {
                             var o, s, l = !0, c = function () {
                                 0 !== t && A.scrollByX(t * r.arrowButtonSpeed), 0 !== i && A.scrollByY(i * r.arrowButtonSpeed), s = setTimeout(c, l ? r.initialDelay : r.arrowRepeatFreq), l = !1
                             };
-                            c(), o = a ? "mouseout.jsp" : "mouseup.jsp", (a = a || e("html")).bind(o, function () {
+                            c(), o = a ? "mouseout.jsp" : "mouseup.jsp", (a = a || e("html")).on(o, function () {
                                 n.removeClass("jspActive"), s && clearTimeout(s), s = null, a.unbind(o)
                             })
                         }(t, i, this, n), this.blur(), !1
@@ -2442,7 +2442,7 @@ function is_mobile() {
         }
     }, e.fn.extend({
         mousewheel: function (e) {
-            return e ? this.bind("mousewheel", e) : this.trigger("mousewheel")
+            return e ? this.on("mousewheel", e) : this.trigger("mousewheel")
         }, unmousewheel: function (e) {
             return this.unbind("mousewheel", e)
         }

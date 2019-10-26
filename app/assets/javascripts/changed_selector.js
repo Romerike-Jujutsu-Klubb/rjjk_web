@@ -13,7 +13,7 @@
      * @param   meta    metadata about the selector (unused)
      * @param   stack   a stack of the elements to loop (unused)
      */
-    $.expr[':'].changed = function(oEl, index, meta, stack)
+    $.expr.pseudos.changed = function(oEl, index, meta, stack)
     {
         // 0. drop out
         var sN = oEl.nodeName.toLowerCase();

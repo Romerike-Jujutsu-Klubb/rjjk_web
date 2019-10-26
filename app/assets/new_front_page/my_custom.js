@@ -121,7 +121,7 @@ function ga_send_event(type) {
     return false;
 }
 
-jQuery(window).bind("pageshow", function (event) {
+jQuery(window).on("pageshow", function (event) {
     if (event.originalEvent.persisted) {
         jQuery('html, body').animate({
             scrollTop: jQuery("body").offset().top
