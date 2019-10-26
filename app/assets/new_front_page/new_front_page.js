@@ -6,3 +6,4 @@
 //= require jquery.isotope.min
 //= require screen2
 //= require menu_com
+//= require serviceworker-companion
