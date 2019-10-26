@@ -1,6 +1,6 @@
 //= require @fortawesome/fontawesome-free/js/all.js
 //= require @fortawesome/fontawesome-free/js/v4-shims
-//= require jquery
+//= require jquery3
 // require jquery.turbolinks
 //= require jquery_ujs
 // require turbolinks

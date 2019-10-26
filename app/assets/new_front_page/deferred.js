@@ -1,9 +1,5 @@
 //= require jquery.color.min
-//= require widget.min
-//= require core.min
-//= require mouse.min
-//= require slider.min
-//= require sortable.min
+//= require jquery-ui
 //= require jquery.themepunch.plugins.min
 //= require bootstrap.min
 //= require jquery.themepunch.punchbox
