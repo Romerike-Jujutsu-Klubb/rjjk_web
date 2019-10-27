@@ -1183,28 +1183,31 @@ function initBackgroundSlider() {
                 height: "100%",
                 backgroundRepeat: "repeat"
             }));
-            t.append('<div class="cinematic-blurryimage-wrapper"><div class="cinematicmedia_outter_wrapper"><div class="cinematicmedia_inner_wrapper" style="visible:' + i + '"></div></div></div>');
-            1 != t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
-                backgroundRepeat: l,
-                backgroundImage: "url(" + t.data("srcblur") + ")",
-                backgroundSize: o,
-                backgroundPosition: "center center",
-                width: "100%",
-                height: "100%"
-            }));
-            1 == t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
-                backgroundImage: "url(" + t.data("srcblur") + ")",
-                backgroundPosition: "center center",
-                width: "100%",
-                height: "100%",
-                backgroundRepeat: "repeat"
-            }));
-            0 == e && jQuery(".single_blurredbg").each(function() {
-                var e = jQuery(this), i = t.data("width"), n = t.data("height");
-                e.data("width", i), e.data("height", n);
-                jQuery("body").hasClass("nobluredcontainers") ? e.css({background: "transparent"}) : e.css({backgroundImage: "url(" + t.data("srcblur") + ")"});
-                calculateBlurredBackgrounds()
-            });
+            if (!is_mobile()) {
+                t.append('<div class="cinematic-blurryimage-wrapper"><div class="cinematicmedia_outter_wrapper"><div class="cinematicmedia_inner_wrapper" style="visible:' + i + '"></div></div></div>');
+                1 != t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
+                    backgroundRepeat: l,
+                    backgroundImage: "url(" + t.data("srcblur") + ")",
+                    backgroundSize: o,
+                    backgroundPosition: "center center",
+                    width: "100%",
+                    height: "100%"
+                }));
+                1 == t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
+                    backgroundImage: "url(" + t.data("srcblur") + ")",
+                    backgroundPosition: "center center",
+                    width: "100%",
+                    height: "100%",
+                    backgroundRepeat: "repeat"
+                }));
+                0 == e && jQuery(".single_blurredbg").each(function() {
+                    var e = jQuery(this), i = t.data("width"), n = t.data("height");
+                    e.data("width", i);
+                    e.data("height", n);
+                    jQuery("body").hasClass("nobluredcontainers") ? e.css({background: "transparent"}) : e.css({backgroundImage: "url(" + t.data("srcblur") + ")"});
+                    calculateBlurredBackgrounds()
+                });
+            }
             t.waitForImages(function() {
                 jQuery(this).find(".fullscreenimgs").addClass("loaded")
             });
