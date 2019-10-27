@@ -1098,12 +1098,11 @@ function initMenuFunctions() {
             }, 200, i))
         })
     }
-    l || jQuery("#current-menu-txt").parent().width(jQuery("#current-menu-txt").width() + 65), jQuery("#current-menu-txt").data("txt", jQuery("#current-menu-txt").text()), TweenLite.fromTo(jQuery("#headerwrapper"), 1, {opacity: 0}, {
+    l || jQuery("#current-menu-txt").parent().width(jQuery("#current-menu-txt").width() + 65), jQuery("#current-menu-txt").data("txt", jQuery("#current-menu-txt").text()), TweenLite.fromTo(jQuery("#headerwrapper"), .1, {opacity: 0}, {
         visibility: "visible",
         opacity: 1,
         overwrite: "all",
-        ease: Power3.easeIn,
-        delay: 1
+        ease: Power3.easeIn
     }), jQuery("body").on("click", "a.smoothscroll", function () {
         var e = jQuery(this).attr("href"), t = jQuery(e);
         if (0 != t.length) {
