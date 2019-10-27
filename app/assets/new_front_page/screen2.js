@@ -1147,31 +1147,36 @@ function initBackgroundSlider() {
     var e;
     is_mobile() && jQuery(".cinematic").css({width: "100.39%"}), jQuery(".cinematic").addClass("original"), is_mobile() ? jQuery("#headerwrapper").css({position: "absolute"}) : (jQuery(".cinematic").clone().appendTo(jQuery("#allcontent")).addClass("overheader"), jQuery(".overheader").removeClass("original"), jQuery("overheader").data("contentholder", ""), jQuery(".overheader").find(".slidercontent").each(function () {
         jQuery(this).remove()
-    })), jQuery(".cinematic").each(function () {
+    }));
+
+    jQuery(".cinematic").each(function () {
         var e = jQuery(this);
-        e.data("atslide", 0), e.hasClass("original") && (setMainContentMargin(), jQuery("#maincontent, #footer, #subfooter").css({display: "block"}));
+        e.data("atslide", 0);
+        e.hasClass("original") && (setMainContentMargin(), jQuery("#maincontent, #footer, #subfooter").css({display: "block"}));
         var t = e.find("ul li .slide-background-image").length, i = 100 * t, n = 100 / t;
         e.find("ul").first().css({
             width: i + "%",
             left: "0px"
-        }), 0 < e.find(".slide-background-image").length && TweenLite.set(jQuery(".cinematic.original, .cinematic.overheader"), {
+        });
+        0 < e.find(".slide-background-image").length && TweenLite.set(jQuery(".cinematic.original, .cinematic.overheader"), {
             opacity: 0,
             transformPerspective: 500
-        })
-        e.find(".slide-background-image").length < 2 && jQuery("#cinematic-navigation").css({display: "none"})
+        });
+        e.find(".slide-background-image").length < 2 && jQuery("#cinematic-navigation").css({display: "none"});
 
-        e.find(".slide-background-image").each(function (e) {
+        e.find(".slide-background-image").each(function(e) {
             var t = jQuery(this);
             t.closest("li").css({width: n + "%"});
             var i = "visible";
             if (0 != e && (i = "hidden"), t.append('<div class="cinematic-basicimage-wrapper"><div class="cinematicmedia_outter_wrapper"><div class="cinematicmedia_inner_wrapper" style="visible:' + i + '"></div></div></div>'), 0 == e) {
                 var a = new Image;
-                a.onload = function () {
+                a.onload = function() {
                     TweenLite.to(jQuery(".cinematic.original, .cinematic.overheader"), .7, {
                         opacity: 1,
                         ease: Power3.easeInOut
                     })
-                }, a.src = t.data("src")
+                };
+                a.src = t.data("src")
             }
             var r = null == t.data("size") ? "cover" : t.data("size"),
                 o = null == t.data("blursize") ? "cover" : t.data("blursize"),
@@ -1184,39 +1189,52 @@ function initBackgroundSlider() {
                 backgroundPosition: "center center",
                 width: "100%",
                 height: "100%"
-            })), 1 == t.data("repeatbg") && (t.find(".cinematicmedia_inner_wrapper").append('<div class="cinematic-basicimage fullscreenimgs"></div>'), t.find(".cinematic-basicimage").css({
+            }));
+            1 == t.data("repeatbg") && (t.find(".cinematicmedia_inner_wrapper").append('<div class="cinematic-basicimage fullscreenimgs"></div>'), t.find(".cinematic-basicimage").css({
                 backgroundImage: "url(" + t.data("src") + ")",
                 backgroundPosition: "center center",
                 width: "100%",
                 height: "100%",
                 backgroundRepeat: "repeat"
-            })), t.append('<div class="cinematic-blurryimage-wrapper"><div class="cinematicmedia_outter_wrapper"><div class="cinematicmedia_inner_wrapper" style="visible:' + i + '"></div></div></div>'), 1 != t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
+            }));
+            t.append('<div class="cinematic-blurryimage-wrapper"><div class="cinematicmedia_outter_wrapper"><div class="cinematicmedia_inner_wrapper" style="visible:' + i + '"></div></div></div>');
+            1 != t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
                 backgroundRepeat: l,
                 backgroundImage: "url(" + t.data("srcblur") + ")",
                 backgroundSize: o,
                 backgroundPosition: "center center",
                 width: "100%",
                 height: "100%"
-            })), 1 == t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
+            }));
+            1 == t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
                 backgroundImage: "url(" + t.data("srcblur") + ")",
                 backgroundPosition: "center center",
                 width: "100%",
                 height: "100%",
                 backgroundRepeat: "repeat"
-            })), 0 == e && jQuery(".single_blurredbg").each(function () {
+            }));
+            0 == e && jQuery(".single_blurredbg").each(function() {
                 var e = jQuery(this), i = t.data("width"), n = t.data("height");
-                e.data("width", i), e.data("height", n), jQuery("body").hasClass("nobluredcontainers") ? e.css({background: "transparent"}) : e.css({backgroundImage: "url(" + t.data("srcblur") + ")"}), calculateBlurredBackgrounds()
-            }), t.waitForImages(function () {
+                e.data("width", i), e.data("height", n);
+                jQuery("body").hasClass("nobluredcontainers") ? e.css({background: "transparent"}) : e.css({backgroundImage: "url(" + t.data("srcblur") + ")"});
+                calculateBlurredBackgrounds()
+            });
+            t.waitForImages(function() {
                 jQuery(this).find(".fullscreenimgs").addClass("loaded")
-            }), jQuery(".cinematic.overheader .cinematic-basicimage-wrapper").height(jQuery(".cinematic.original").height()), jQuery(".cinematic.overheader .cinematic-blurryimage-wrapper").height(jQuery(".cinematic.original").height())
-        }), 100 < jQuery(window).scrollTop() && TweenLite.to(jQuery(".cinematic .cinematic-blurryimage-wrapper"), .6, {autoAlpha: 1})
+            });
+            jQuery(".cinematic.overheader .cinematic-basicimage-wrapper").height(jQuery(".cinematic.original").height());
+            jQuery(".cinematic.overheader .cinematic-blurryimage-wrapper").height(jQuery(".cinematic.original").height())
+        });
+        100 < jQuery(window).scrollTop() && TweenLite.to(jQuery(".cinematic .cinematic-blurryimage-wrapper"), .6, {autoAlpha: 1});
 
         e.hasClass("original") && (showNextSliderContent(e, 1), jQuery("#cinematic-navigation .cinematic-left").on("click", function () {
             horizontalScrollHandler(-1)
         }), jQuery("#cinematic-navigation .cinematic-right").on("click", function () {
             horizontalScrollHandler(1)
         }), document.getElementById("allcontent"), is_mobile())
-    }), jQuery("body").hasClass("withsoftedge") ? jQuery(".cinematic.overheader").height(jQuery("#headerwrapper").outerHeight() + 30) : (jQuery("body svg #m1").remove(), jQuery(".cinematic.overheader").css({"-webkit-mask-image": "none"}), jQuery(".cinematic.overheader").height(jQuery("#headerwrapper").outerHeight())), jQuery(window).on("resize", function () {
+    });
+
+    jQuery("body").hasClass("withsoftedge") ? jQuery(".cinematic.overheader").height(jQuery("#headerwrapper").outerHeight() + 30) : (jQuery("body svg #m1").remove(), jQuery(".cinematic.overheader").css({"-webkit-mask-image": "none"}), jQuery(".cinematic.overheader").height(jQuery("#headerwrapper").outerHeight())), jQuery(window).on("resize", function () {
         var t = jQuery("body");
         jQuery(".single_blurredbg").each(function () {
             TweenLite.set(jQuery(this), {opacity: 0})
@@ -2352,8 +2370,11 @@ function is_mobile() {
     }), is_mobile() && jQuery("li#menu-item-6947 ul.sub-menu,li#menu-item-7695 ul.sub-menu").css({"margin-left": "0"}), 0 == is_mobile() && screen.availWidth < 1380 ? (jQuery("#menu-item-11932 a").append('<img class="ubermenu-image ubermenu-image-size-full" src="https://web.archive.org/web/20190202220907/https://www.altoroslabs.com/wp-content/uploads/2014/06/AltorosLogo_42х42.png" width="22" height="22" alt="AltorosLogo_mini1">'), jQuery("#menu-item-7312 a").append('<img class="ubermenu-image ubermenu-image-size-full" src="https://web.archive.org/web/20190202220907/https://www.altoroslabs.com/wp-content/uploads/2014/06/AltorosLogo_42х42.png" width="22" height="22" alt="AltorosLogo_mini1">'), jQuery("#menu-item-8747 a").append('<img class="ubermenu-image ubermenu-image-size-full" src="https://web.archive.org/web/20190202220907/https://www.altoroslabs.com/wp-content/uploads/2014/06/AltorosLogo_42х42.png" width="22" height="22" alt="AltorosLogo_mini1">')) : (jQuery("#menu-item-11932 a").append('<img class="ubermenu-image ubermenu-image-size-full" src="https://web.archive.org/web/20190202220907/https://www.altoros.com/wp-content/uploads/2015/06/AltorosLogo_mini1.png" width="140" height="22" alt="AltorosLogo_mini1">'), jQuery("#menu-item-7312 a").append('<img class="ubermenu-image ubermenu-image-size-full" src="https://web.archive.org/web/20190202220907/https://www.altoros.com/wp-content/uploads/2015/06/AltorosLogo_mini1.png" width="140" height="22" alt="AltorosLogo_mini1">'), jQuery("#menu-item-8747 a").append('<img class="ubermenu-image ubermenu-image-size-full" src="https://web.archive.org/web/20190202220907/https://www.altoros.com/wp-content/uploads/2015/06/AltorosLogo_mini1.png" width="140" height="22" alt="AltorosLogo_mini1">')), jQuery("menu > div").first().attr("id", "navigation"), jQuery("#navigation li a").each(function () {
         var e = jQuery(this);
         0 == e.find(".menubutton").length && e.html('<div class="menubutton">' + e.html() + "</div>")
-    }), jQuery("body").hasClass("menuontop") && jQuery("#navigation").css({visibility: "visible"}), jQuery("#menu-footerlogo").length && (jQuery("#navigation").html(jQuery("#navigation").html() + jQuery("#menu-footerlogo").html()), jQuery("#menu-footerlogo").remove()), jQuery.support.transition || (jQuery.fn.transition = jQuery.fn.animate), 0 < jQuery(".cinematic").length ? (setMainContentMargin(), initBackgroundSlider(), jQuery(window).on("load", function () {
-    })) : (jQuery("#maincontent").css({display: "block"}), jQuery("#footer").css({display: "block"}), jQuery("#subfooter").css({display: "block"}), jQuery("body").addClass("withoutgradientheader")), initMenuFunctions(), initMediaWall(), initShowbizSimple(), initAccordions(), jQuery(window).on('scroll', function () {
+    }), jQuery("body").hasClass("menuontop") && jQuery("#navigation").css({visibility: "visible"}), jQuery("#menu-footerlogo").length && (jQuery("#navigation").html(jQuery("#navigation").html() + jQuery("#menu-footerlogo").html()), jQuery("#menu-footerlogo").remove()), jQuery.support.transition || (jQuery.fn.transition = jQuery.fn.animate)
+
+    0 < jQuery(".cinematic").length ? (setMainContentMargin(), initBackgroundSlider()) : (jQuery("#maincontent").css({display: "block"}), jQuery("#footer").css({display: "block"}), jQuery("#subfooter").css({display: "block"}), jQuery("body").addClass("withoutgradientheader"))
+
+    initMenuFunctions(), initMediaWall(), initShowbizSimple(), initAccordions(), jQuery(window).on('scroll', function () {
         jQuery("body").data("topos", jQuery(window).scrollTop())
     }), initInputFields(), initBlogOverview(), jQuery(".fitvideo").fitVids(), jQuery(window).scrollTop() < jQuery(window).height() && (is_mobile() || jQuery("body").hasClass("withoutmoduleanimations") || isIE(8) || initModuleAnims()), TweenLite.to(jQuery("#maincontent"), .3, {
         autoAlpha: 1,
