@@ -26,9 +26,7 @@
   <%#= csrf_meta_tags %>
   <%= javascript_include_tag 'new_front_page', 'data-turbolinks-track': 'reload' %>
 
-  <link rel='dns-prefetch' href='//maps.google.com'/>
-  <link rel='dns-prefetch' href='//cdnjs.cloudflare.com'/>
-  <link rel='dns-prefetch' href='//fonts.googleapis.com'/>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel='stylesheet' id='new_front_page.css' href='<%= asset_path 'new_front_page.css' %>' type='text/css' media='all'/>
   <link rel='shortlink' href='https://www.jujutsu.no/'/>
 </head>
