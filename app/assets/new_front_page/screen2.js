@@ -15,7 +15,7 @@ function preselection() {
     for (var a = 0; a < 4; a++) 0 == a ? (newbasic = n.replace("##link##", "https://web.archive.org/web/20190202220907/http://light.goodwebtheme.com/"), newbasic = newbasic.replace("##link2##", "https://web.archive.org/web/20190202220907/http://light.goodwebtheme.com/"), newbasic = newbasic.replace("##i##", "_light"), newbasic = newbasic.replace("##title##", "Light")) : 1 == a ? (newbasic = n.replace("##link##", "https://web.archive.org/web/20190202220907/http://minimallight.goodwebtheme.com/"), newbasic = newbasic.replace("##link2##", "https://web.archive.org/web/20190202220907/http://minimallight.goodwebtheme.com/"), newbasic = newbasic.replace("##i##", "_minlight"), newbasic = newbasic.replace("##title##", "Minimal Light")) : 2 == a ? (newbasic = n.replace("##link##", "https://web.archive.org/web/20190202220907/http://dark.goodwebtheme.com/"), newbasic = newbasic.replace("##link2##", "https://web.archive.org/web/20190202220907/http://dark.goodwebtheme.com/"), newbasic = newbasic.replace("##i##", "_dark"), newbasic = newbasic.replace("##title##", "Dark")) : 3 == a && (newbasic = n.replace("##link##", "https://web.archive.org/web/20190202220907/http://minimaldark.goodwebtheme.com/"), newbasic = newbasic.replace("##link2##", "https://web.archive.org/web/20190202220907/http://minimaldark.goodwebtheme.com/"), newbasic = newbasic.replace("##i##", "_mindark"), newbasic = newbasic.replace("##title##", "Minimal Dark")), t.append(newbasic);
     t.append('<a href="https://web.archive.org/web/20190202220907/http://themeforest.net/item/goodweb-one-multi-page-wordpress-theme/5896610?ref=themepunch" class="smoothscroll" target="clean" ><button style="margin-top:20px;color:#ffffff;background-color:#67ae73" class="btn noncentered txtshadow fullwidth "><i class="demoicon icon-basket-1" style="margin-top:2px"></i>Purchase Theme</button></a>');
     var r = "off";
-    i.click(function () {
+    i.on('click', function () {
         "off" == r ? TweenLite.to(e, .4, {
             x: 0, right: 0, ease: Back.easeIn, onComplete: function () {
                 r = "on"
@@ -152,12 +152,12 @@ function mapgyver() {
                     }
                 }
             }
-        }), is_mobile() ? (createMobileMaps(), jQuery(window).resize(function () {
+        }), is_mobile() ? (createMobileMaps(), jQuery(window).on('resize', function () {
             clearTimeout(u), u = setTimeout(function () {
                 var e = jQuery("#mapgyver_holder"), t = e.find(".content-behind-map");
                 e.height(t.outerHeight()), 767 < jQuery(window).width() ? e.find(".originalmap").css({maxWidth: "60%"}) : e.find(".originalmap").css({maxWidth: "100%"})
             }, 300)
-        })) : (createMapClones(), jQuery(window).resize(function () {
+        })) : (createMapClones(), jQuery(window).on('resize', function () {
             clearTimeout(u), u = setTimeout(function () {
                 var e = jQuery("#mapgyver_holder"), t = e.find(".content-behind-map");
                 e.height(t.outerHeight());
@@ -268,7 +268,7 @@ function initBlogOverview() {
         setTimeout(function () {
             reBuildBlogOverview(.8), setBoMediaHeight()
         }, 100)
-    }), jQuery(window).resize(function () {
+    }), jQuery(window).on('resize', function () {
         var e = jQuery("body");
         jQuery(".container").first().width() != e.data("bo-lastcontainerwidth") && (e.data("bo-lastcontainerwidth", jQuery(".container").first().width()), clearTimeout(void 0), setBoMediaHeight(), reBuildBlogOverview(.8))
     })
@@ -409,19 +409,19 @@ function reBuildBlogOverview(e, t) {
 }
 
 function initInputFields() {
-    jQuery("#Form_Search").focus(function () {
+    jQuery("#Form_Search").on('focus', function () {
         jQuery("#searchform").addClass("onfocus")
-    }), jQuery("#Form_Search").blur(function () {
+    }), jQuery("#Form_Search").on('blur', function () {
         jQuery("#searchform").removeClass("onfocus")
-    }), jQuery("body, html, #allcontent").click(function () {
-        jQuery("#searchfrom").blur()
+    }), jQuery("body, html, #allcontent").on('click', function () {
+        jQuery("#searchfrom").trigger('blur')
     }), jQuery(".prepared-input, .searchinput").each(function () {
         var e = jQuery(this);
         e.data("standard", e.val())
-    }), jQuery(".prepared-input, .searchinput").focus(function () {
+    }), jQuery(".prepared-input, .searchinput").on('focus', function () {
         var e = jQuery(this);
         e.val(e.val() == e.data("standard") ? "" : e.val())
-    }), jQuery(".prepared-input, .searchinput").blur(function () {
+    }), jQuery(".prepared-input, .searchinput").on('blur', function () {
         var e = jQuery(this);
         e.val("" == e.val() ? e.data("standard") : e.val())
     })
@@ -568,7 +568,7 @@ function initSkills() {
 
 function initAccordions() {
     jQuery(".accordion-toggle").each(function () {
-        jQuery(this).click(function () {
+        jQuery(this).on('click', function () {
             var e = jQuery(this).closest(".accordion");
             e.find(".accordion-toggle").addClass("collapsed"), e.find(".in.collapse").each(function () {
                 var t = jQuery(this);
@@ -614,7 +614,7 @@ function initMediaWall() {
     jQuery(".mediawall-content").each(function () {
         var e = jQuery(this);
         e.css({marginTop: (e.parent().height() - e.outerHeight()) / 2 + "px"})
-    }), jQuery(window).resize(function () {
+    }), jQuery(window).on('resize', function () {
         clearTimeout(e), e = setTimeout(function () {
             jQuery(".mediawall-content").each(function () {
                 var e = jQuery(this);
@@ -655,7 +655,7 @@ function initMediaWall() {
         }), e.find(".mediawall-content").each(function () {
             var e = jQuery(this);
             e.css({marginTop: (e.parent().height() - e.height()) / 2 + "px"})
-        }), jQuery(window).resize(function () {
+        }), jQuery(window).on('resize', function () {
             clearTimeout(n), n = setTimeout(function () {
                 t.isotope("reLayout")
             }, 1e3)
@@ -891,14 +891,14 @@ function initMenuFunctions() {
         y: 0,
         delay: 1.2,
         ease: Power3.easeInOut
-    }), jQuery("#navigation").css({overflow: "hidden"}), jQuery(window).resize(function () {
+    }), jQuery("#navigation").css({overflow: "hidden"}), jQuery(window).on('resize', function () {
         setHeightOfMenuHolder()
     }), setHeightOfMenuHolder(), jQuery(window).trigger("resize"), jQuery(".menu-item-has-children .menu-item-has-children").hover(function () {
         var e = jQuery(this);
         e.removeClass("submenutoleft"), jQuery(window).width() - (e.find(">ul").width() + e.offset().left) < 200 && e.addClass("submenutoleft")
     })) : jQuery("#navigation").css({overflow: "scroll"});
     var n, a = jQuery("#navigation ul").first();
-    if (jQuery(window).resize(function () {
+    if (jQuery(window).on('resize', function () {
         try {
             clearTimeout(e), e = setTimeout(function () {
                 a.css({height: "auto"}), a.outerHeight() > jQuery(window).height() && a.css({height: a.outerHeight() + 200 + "px"}), i && i.reinitialise()
@@ -908,7 +908,7 @@ function initMenuFunctions() {
     }), jQuery("menu #navigation li").each(function () {
         jQuery(this).find("ul").length && jQuery(this).addClass("hassubmenu")
     }), $str = window.location.href, 0 < $str.search("altoros.com") && jQuery(".menuontop menu #navigation>ul>li .menubutton").css("padding", "0px 17.5px 0px 17.5px"), jQuery(".hassubmenu a").each(function () {
-        jQuery(this).click(function () {
+        jQuery(this).on('click', function () {
             try {
                 setTimeout(function () {
                     a.css({height: "auto"}), a.outerHeight() > jQuery(window).height() && a.css({height: a.outerHeight() + 200 + "px"}), i && i.reinitialise()
@@ -921,7 +921,7 @@ function initMenuFunctions() {
                 jQuery(window).scrollTop(e)
             }, 1)
         })
-    }), jQuery(".header-menu-wrapper, .header-menu-closer").click(function () {
+    }), jQuery(".header-menu-wrapper, .header-menu-closer").on('click', function () {
         var e = jQuery("#navigation"), t = jQuery("menu"), n = jQuery("#allcontent"),
             r = jQuery(".cinematic"), o = jQuery("#headerwrapper");
         try {
@@ -1000,7 +1000,7 @@ function initMenuFunctions() {
             ease: Power2.easeInOut,
             delay: .1
         }), e.addClass("opened"), jQuery(".header-menu-wrapper").addClass("active"))
-    }), jQuery(window).resize(function () {
+    }), jQuery(window).on('resize', function () {
         clearTimeout(n), n = setTimeout(function () {
             var e = jQuery(window).width(), t = jQuery("#navigation"), i = jQuery("menu"),
                 n = jQuery("#allcontent"), a = jQuery(".cinematic"), r = jQuery("#headerwrapper");
@@ -1083,7 +1083,7 @@ function initMenuFunctions() {
                         }), jQuery("#current-menu-txt").parent().width(jQuery("#current-menu-txt").width() + 65)
                     }
                 }))) : (jQuery("#current-menu-txt-new").remove(), jQuery("#current-menu-txt").html("MENU"))
-            }, {offset: "49%"}), jQuery(window).resize(function () {
+            }, {offset: "49%"}), jQuery(window).on('resize', function () {
                 resetMenuButtonContent()
             }), t == r && (jQuery("menu .active").removeClass("active"), jQuery(this).closest("li").addClass("active"), setTimeout(function () {
                 var e = jQuery(t);
@@ -1113,9 +1113,9 @@ function initMenuFunctions() {
             return jQuery("html, body").animate({scrollTop: i}, {duration: n}), !1
         }
     }), jQuery(".internallink").each(function () {
-        jQuery(this).click(function () {
+        jQuery(this).on('click', function () {
             if (!jQuery(this).hasClass("nolink")) {
-                jQuery("#navigation").hasClass("opened") && jQuery(".header-menu-wrapper").click();
+                jQuery("#navigation").hasClass("opened") && jQuery(".header-menu-wrapper").trigger('click');
                 var e = "#" + jQuery(this).attr("href").split("#")[1], t = jQuery(e);
                 if (t.length) {
                     var i = jQuery("#headerwrapper").outerHeight() + 60;
@@ -1127,10 +1127,10 @@ function initMenuFunctions() {
                 }
             }
         })
-    }), is_mobile() ? jQuery(".cinematic-down").click(function () {
+    }), is_mobile() ? jQuery(".cinematic-down").on('click', function () {
         var e = jQuery(window).height();
         jQuery("html, body").animate({scrollTop: e}, {duration: 1e3})
-    }) : jQuery(".cinematic-down").click(function () {
+    }) : jQuery(".cinematic-down").on('click', function () {
         var e = jQuery(window).height() - 3 * jQuery("#headerwrapper").height() - jQuery("#mainmenuholder").height();
         jQuery("html, body").animate({scrollTop: e}, {duration: 1e3})
     })
@@ -1158,58 +1158,61 @@ function initBackgroundSlider() {
         }), 0 < e.find(".slide-background-image").length && TweenLite.set(jQuery(".cinematic.original, .cinematic.overheader"), {
             opacity: 0,
             transformPerspective: 500
-        }), e.find(".slide-background-image").length < 2 && jQuery("#cinematic-navigation").css({display: "none"}), jQuery(window).on("load", function () {
-            e.find(".slide-background-image").each(function (e) {
-                var t = jQuery(this);
-                t.closest("li").css({width: n + "%"});
-                var i = "visible";
-                if (0 != e && (i = "hidden"), t.append('<div class="cinematic-basicimage-wrapper"><div class="cinematicmedia_outter_wrapper"><div class="cinematicmedia_inner_wrapper" style="visible:' + i + '"></div></div></div>'), 0 == e) {
-                    var a = new Image;
-                    a.onload = function () {
-                        TweenLite.to(jQuery(".cinematic.original, .cinematic.overheader"), .7, {
-                            opacity: 1,
-                            ease: Power3.easeInOut
-                        })
-                    }, a.src = t.data("src")
-                }
-                var r = null == t.data("size") ? "cover" : t.data("size"),
-                    o = null == t.data("blursize") ? "cover" : t.data("blursize"),
-                    s = null == t.data("containrepeat") ? "no-repeat" : t.data("containrepeat"),
-                    l = null == t.data("containblurrepeat") ? "no-repeat" : t.data("containblurrepeat");
-                1 != t.data("repeatbg") && (t.find(".cinematicmedia_inner_wrapper").append('<div class="cinematic-basicimage fullscreenimgs"></div>'), t.find(".cinematic-basicimage").css({
-                    backgroundRepeat: s,
-                    backgroundImage: "url(" + t.data("src") + ")",
-                    backgroundSize: r,
-                    backgroundPosition: "center center",
-                    width: "100%",
-                    height: "100%"
-                })), 1 == t.data("repeatbg") && (t.find(".cinematicmedia_inner_wrapper").append('<div class="cinematic-basicimage fullscreenimgs"></div>'), t.find(".cinematic-basicimage").css({
-                    backgroundImage: "url(" + t.data("src") + ")",
-                    backgroundPosition: "center center",
-                    width: "100%",
-                    height: "100%",
-                    backgroundRepeat: "repeat"
-                })), t.append('<div class="cinematic-blurryimage-wrapper"><div class="cinematicmedia_outter_wrapper"><div class="cinematicmedia_inner_wrapper" style="visible:' + i + '"></div></div></div>'), 1 != t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
-                    backgroundRepeat: l,
-                    backgroundImage: "url(" + t.data("srcblur") + ")",
-                    backgroundSize: o,
-                    backgroundPosition: "center center",
-                    width: "100%",
-                    height: "100%"
-                })), 1 == t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
-                    backgroundImage: "url(" + t.data("srcblur") + ")",
-                    backgroundPosition: "center center",
-                    width: "100%",
-                    height: "100%",
-                    backgroundRepeat: "repeat"
-                })), 0 == e && jQuery(".single_blurredbg").each(function () {
-                    var e = jQuery(this), i = t.data("width"), n = t.data("height");
-                    e.data("width", i), e.data("height", n), jQuery("body").hasClass("nobluredcontainers") ? e.css({background: "transparent"}) : e.css({backgroundImage: "url(" + t.data("srcblur") + ")"}), calculateBlurredBackgrounds()
-                }), t.waitForImages(function () {
-                    jQuery(this).find(".fullscreenimgs").addClass("loaded")
-                }), jQuery(".cinematic.overheader .cinematic-basicimage-wrapper").height(jQuery(".cinematic.original").height()), jQuery(".cinematic.overheader .cinematic-blurryimage-wrapper").height(jQuery(".cinematic.original").height())
-            }), 100 < jQuery(window).scrollTop() && TweenLite.to(jQuery(".cinematic .cinematic-blurryimage-wrapper"), .6, {autoAlpha: 1})
-        }), e.hasClass("original") && (showNextSliderContent(e, 1), jQuery("#cinematic-navigation .cinematic-left").on("click", function () {
+        })
+        e.find(".slide-background-image").length < 2 && jQuery("#cinematic-navigation").css({display: "none"})
+
+        e.find(".slide-background-image").each(function (e) {
+            var t = jQuery(this);
+            t.closest("li").css({width: n + "%"});
+            var i = "visible";
+            if (0 != e && (i = "hidden"), t.append('<div class="cinematic-basicimage-wrapper"><div class="cinematicmedia_outter_wrapper"><div class="cinematicmedia_inner_wrapper" style="visible:' + i + '"></div></div></div>'), 0 == e) {
+                var a = new Image;
+                a.onload = function () {
+                    TweenLite.to(jQuery(".cinematic.original, .cinematic.overheader"), .7, {
+                        opacity: 1,
+                        ease: Power3.easeInOut
+                    })
+                }, a.src = t.data("src")
+            }
+            var r = null == t.data("size") ? "cover" : t.data("size"),
+                o = null == t.data("blursize") ? "cover" : t.data("blursize"),
+                s = null == t.data("containrepeat") ? "no-repeat" : t.data("containrepeat"),
+                l = null == t.data("containblurrepeat") ? "no-repeat" : t.data("containblurrepeat");
+            1 != t.data("repeatbg") && (t.find(".cinematicmedia_inner_wrapper").append('<div class="cinematic-basicimage fullscreenimgs"></div>'), t.find(".cinematic-basicimage").css({
+                backgroundRepeat: s,
+                backgroundImage: "url(" + t.data("src") + ")",
+                backgroundSize: r,
+                backgroundPosition: "center center",
+                width: "100%",
+                height: "100%"
+            })), 1 == t.data("repeatbg") && (t.find(".cinematicmedia_inner_wrapper").append('<div class="cinematic-basicimage fullscreenimgs"></div>'), t.find(".cinematic-basicimage").css({
+                backgroundImage: "url(" + t.data("src") + ")",
+                backgroundPosition: "center center",
+                width: "100%",
+                height: "100%",
+                backgroundRepeat: "repeat"
+            })), t.append('<div class="cinematic-blurryimage-wrapper"><div class="cinematicmedia_outter_wrapper"><div class="cinematicmedia_inner_wrapper" style="visible:' + i + '"></div></div></div>'), 1 != t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
+                backgroundRepeat: l,
+                backgroundImage: "url(" + t.data("srcblur") + ")",
+                backgroundSize: o,
+                backgroundPosition: "center center",
+                width: "100%",
+                height: "100%"
+            })), 1 == t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
+                backgroundImage: "url(" + t.data("srcblur") + ")",
+                backgroundPosition: "center center",
+                width: "100%",
+                height: "100%",
+                backgroundRepeat: "repeat"
+            })), 0 == e && jQuery(".single_blurredbg").each(function () {
+                var e = jQuery(this), i = t.data("width"), n = t.data("height");
+                e.data("width", i), e.data("height", n), jQuery("body").hasClass("nobluredcontainers") ? e.css({background: "transparent"}) : e.css({backgroundImage: "url(" + t.data("srcblur") + ")"}), calculateBlurredBackgrounds()
+            }), t.waitForImages(function () {
+                jQuery(this).find(".fullscreenimgs").addClass("loaded")
+            }), jQuery(".cinematic.overheader .cinematic-basicimage-wrapper").height(jQuery(".cinematic.original").height()), jQuery(".cinematic.overheader .cinematic-blurryimage-wrapper").height(jQuery(".cinematic.original").height())
+        }), 100 < jQuery(window).scrollTop() && TweenLite.to(jQuery(".cinematic .cinematic-blurryimage-wrapper"), .6, {autoAlpha: 1})
+
+        e.hasClass("original") && (showNextSliderContent(e, 1), jQuery("#cinematic-navigation .cinematic-left").on("click", function () {
             horizontalScrollHandler(-1)
         }), jQuery("#cinematic-navigation .cinematic-right").on("click", function () {
             horizontalScrollHandler(1)
@@ -1312,7 +1315,7 @@ function initBackgroundSlider() {
                 TweenLite.fromTo(jQuery("#slidertimera"), e, {width: "0%"}, {
                     width: "100%",
                     ease: Linear.easeNone
-                }), jQuery(".cinematic-right.cinematic-navbutton").click()
+                }), jQuery(".cinematic-right.cinematic-navbutton").trigger('click')
             }, 1e3 * e);
             null == jQuery("body").data("alwaysscroll") && jQuery(window).on("scroll", function () {
                 300 < jQuery(window).scrollTop() && (clearInterval(t), TweenLite.set(jQuery("#slidertimera"), {
@@ -2068,7 +2071,7 @@ function is_mobile() {
                             return i = e != j || n != g
                         }
 
-                        f && a.push(C[0]), m && a.push(Q[0]), o.focus(function () {
+                        f && a.push(C[0]), m && a.push(Q[0]), o.on('focus', function () {
                             n.focus()
                         }), n.attr("tabindex", 0).unbind("keydown.jsp keypress.jsp").on("keydown.jsp", function (n) {
                             if (n.target === this || a.length && e(n.target).closest(a).length) {
@@ -2187,7 +2190,7 @@ function is_mobile() {
                             c(), o = a ? "mouseout.jsp" : "mouseup.jsp", (a = a || e("html")).on(o, function () {
                                 n.removeClass("jspActive"), s && clearTimeout(s), s = null, a.unbind(o)
                             })
-                        }(t, i, this, n), this.blur(), !1
+                        }(t, i, this, n), this.trigger('blur'), !1
                     }
                 }
 
@@ -2351,7 +2354,7 @@ function is_mobile() {
         var e = jQuery(this);
         0 == e.find(".menubutton").length && e.html('<div class="menubutton">' + e.html() + "</div>")
     }), jQuery("body").hasClass("menuontop") && jQuery("#navigation").css({visibility: "visible"}), jQuery("#menu-footerlogo").length && (jQuery("#navigation").html(jQuery("#navigation").html() + jQuery("#menu-footerlogo").html()), jQuery("#menu-footerlogo").remove()), jQuery.support.transition || (jQuery.fn.transition = jQuery.fn.animate), 0 < jQuery(".cinematic").length ? (setMainContentMargin(), initBackgroundSlider(), jQuery(window).on("load", function () {
-    })) : (jQuery("#maincontent").css({display: "block"}), jQuery("#footer").css({display: "block"}), jQuery("#subfooter").css({display: "block"}), jQuery("body").addClass("withoutgradientheader")), initMenuFunctions(), initMediaWall(), initShowbizSimple(), initAccordions(), jQuery(window).scroll(function () {
+    })) : (jQuery("#maincontent").css({display: "block"}), jQuery("#footer").css({display: "block"}), jQuery("#subfooter").css({display: "block"}), jQuery("body").addClass("withoutgradientheader")), initMenuFunctions(), initMediaWall(), initShowbizSimple(), initAccordions(), jQuery(window).on('scroll', function () {
         jQuery("body").data("topos", jQuery(window).scrollTop())
     }), initInputFields(), initBlogOverview(), jQuery(".fitvideo").fitVids(), jQuery(window).scrollTop() < jQuery(window).height() && (is_mobile() || jQuery("body").hasClass("withoutmoduleanimations") || isIE(8) || initModuleAnims()), TweenLite.to(jQuery("#maincontent"), .3, {
         autoAlpha: 1,

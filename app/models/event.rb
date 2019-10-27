@@ -87,7 +87,10 @@ class Event < ApplicationRecord
   end
 
   def body
-    paragraphs&.[](1..-1)
+    body_paragraphs = paragraphs&.[](1..-1)
+    return if body_paragraphs.blank?
+
+    body_paragraphs.join("\n\n")
   end
 
   delegate :size, to: :attending_invitees

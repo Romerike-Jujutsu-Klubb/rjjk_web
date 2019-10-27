@@ -146,7 +146,7 @@
   </div>
   <script type="text/javascript">
       $ = jQuery;
-      $(".fa-angle-double-down").closest('a').click(function (e) {
+      $(".fa-angle-double-down").closest('a').on('click', function (e) {
           e.stopPropagation();
           $([document.documentElement, document.body]).animate({
               scrollTop: $($(e.target).closest('a').attr('href')).offset().top
@@ -217,7 +217,7 @@
       <div class="cinematic-right cinematic-navbutton"><i class="fa fa-chevron-right fa-3x"></i></div>
       <div class="cinematic-down cinematic-navbutton"><i class="fa fa-chevron-down fa-3x"></i></div>
       <script type="text/javascript">
-          $(".fa-chevron-down").click(function (e) {
+          $(".fa-chevron-down").on('click', function (e) {
               e.stopPropagation();
               $([document.documentElement, document.body]).animate({
                   scrollTop: $("#maincontent").offset().top

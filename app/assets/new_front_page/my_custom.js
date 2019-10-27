@@ -39,7 +39,7 @@ function step_2_forms() {
                 wrap_button();
                 jQuery('.wpcf7-response-output').html(message).addClass('wpcf7-mail-sent-ok').show();
                 jQuery('#platform-other-text').hide();
-                jQuery('#platform-other').find('input').change(function () {
+                jQuery('#platform-other').find('input').on('change', function () {
                     if (this.checked) {
                         jQuery('#platform-other-text').show();
                     } else {
@@ -144,7 +144,7 @@ jQuery(document).ready(function () {
         history.scrollRestoration = 'manual';
     }
 
-    jQuery(".wpcf7-textarea").focusout(function () {
+    jQuery(".wpcf7-textarea").on('focusout', function () {
         var str = jQuery(this).val();
         if ((jQuery.trim(str)).length == 0) {
             jQuery(this).val(jQuery.trim(str));
@@ -171,38 +171,38 @@ jQuery(document).ready(function () {
         tf_img = jQuery("#tf_download").closest('div'),
         tf_button = jQuery("#tf_download").closest('div').next('div');
 
-    cf_img.click(function () {
+    cf_img.on('click', function () {
         ga_send_event(1);
     });
-    cf_button.click(function () {
+    cf_button.on('click', function () {
         ga_send_event(1);
     });
-    cc_img.click(function () {
+    cc_img.on('click', function () {
         ga_send_event(2);
     });
-    cc_button.click(function () {
+    cc_button.on('click', function () {
         ga_send_event(2);
     });
-    pa_img.click(function () {
+    pa_img.on('click', function () {
         ga_send_event(3);
     });
-    pa_button.click(function () {
+    pa_button.on('click', function () {
         ga_send_event(3);
     });
-    hc_img.click(function () {
+    hc_img.on('click', function () {
         ga_send_event(4);
     });
-    hc_button.click(function () {
+    hc_button.on('click', function () {
         ga_send_event(4);
     });
-    tf_img.click(function () {
+    tf_img.on('click', function () {
         ga_send_event(5);
     });
-    tf_button.click(function () {
+    tf_button.on('click', function () {
         ga_send_event(5);
     });
 
-    jQuery("a.ancLinks").click(function () {
+    jQuery("a.ancLinks").on('click', function () {
         elementClick = jQuery(this).attr("href");
         destination = jQuery(elementClick).offset().top;
         jQuery('html, body').animate({scrollTop: destination}, 1100);
@@ -219,7 +219,7 @@ jQuery(document).ready(function () {
     jQuery('.formWP').css({position: "relative"});
     var my_tooltip = jQuery("#tooltip");
 
-    jQuery(".wpcf7-form-control").mouseover(function () {
+    jQuery(".wpcf7-form-control").on('mouseover', function () {
         if (jQuery(this).hasClass('wpcf7-not-valid')) {
             var text = jQuery(this).parent('.wpcf7-form-control-wrap').find('.wpcf7-not-valid-tip').text();
             my_tooltip.text(text).css({
@@ -227,7 +227,7 @@ jQuery(document).ready(function () {
                 display: "none", position: "absolute", width: "180px"
             }).fadeIn(400);
         }
-    }).mousemove(function (kmouse) {
+    }).on('mousemove', function (kmouse) {
         if (jQuery('#formWP').hasClass('formWP')) {
             var offset = jQuery('.formWP').offset();
             my_tooltip.css({
@@ -235,13 +235,13 @@ jQuery(document).ready(function () {
                 top: kmouse.pageY - offset.top + 15
             });
         }
-    }).mouseout(function () {
+    }).on('mouseout', function () {
         if (jQuery(this).hasClass('wpcf7-not-valid')) {
             my_tooltip.fadeOut(0);
         }
     });
 
-    jQuery('.management_team').click(function () {
+    jQuery('.management_team').on('click', function () {
         id = jQuery(this).attr('id');
         if (!id)
             text = jQuery(this).text();
@@ -250,7 +250,7 @@ jQuery(document).ready(function () {
         jQuery('#brief_project').val('I want to ' + text)
     });
 
-    jQuery('.request_eference').click(function () {
+    jQuery('.request_eference').on('click', function () {
         id = jQuery(this).attr('id');
         if (!id)
             text = jQuery(this).text();
@@ -259,7 +259,7 @@ jQuery(document).ready(function () {
         jQuery('#brief_project').val('I\'d like to ' + text)
     });
     if (window.location.hostname.indexOf('altoros.no') + 1) {
-        jQuery('.request_eference').click(function () {
+        jQuery('.request_eference').on('click', function () {
             id = jQuery(this).attr('id');
             if (!id)
                 text = jQuery(this).text();
@@ -270,11 +270,11 @@ jQuery(document).ready(function () {
     }
 
     /*Remove not valid class*/
-    jQuery(".formWP .wpcf7-not-valid").focus(function () {
+    jQuery(".formWP .wpcf7-not-valid").on('focus', function () {
         jQuery(this).removeClass("wpcf7-not-valid");
     });
     jQuery('#platform-other-text').hide();
-    jQuery('#platform-other').find('input').change(function () {
+    jQuery('#platform-other').find('input').on('change', function () {
         if (this.checked) {
             jQuery('#platform-other-text').show();
         } else {
@@ -371,7 +371,7 @@ jQuery(document).ready(function () {
             alert("Search term must be at least 3 characters in length");
         }
     });
-    jQuery("#searchform input").keypress(function (event) {
+    jQuery("#searchform input").on('keypress', function (event) {
         if (event.which == 13) {
             event.preventDefault();
             if (location.hostname === 'www.altoros.com') {
@@ -407,7 +407,7 @@ jQuery(document).ready(function () {
 });
 
 //Handling of sending a form containing an invitation to Slack
-jQuery('#slack-form-join').submit(function () {
+jQuery('#slack-form-join').on('submit', function () {
     var email = jQuery('.s-contact-join-field input').val();
     if (!validate_slack_email()) {
         jQuery('.s-cotact-join-input').css({
@@ -520,7 +520,7 @@ jQuery('.engineer-slack').on('click touchend', function (e) {
 
 jQuery("#slick-link").removeClass("show-contact-join")
 
-jQuery("#slick-link").click(function (e) {
+jQuery("#slick-link").on('click', function (e) {
     if (jQuery("#slick-link").hasClass("show-contact-join")) {
         jQuery("#slick-link").stop(true);
         jQuery("#slick-link").removeClass("show-contact-join");
@@ -550,7 +550,7 @@ jQuery("#slick-link").click(function (e) {
     }
 });
 
-jQuery(".slack.contact-link").click(function (e) {
+jQuery(".slack.contact-link").on('click', function (e) {
     if (jQuery("#slick-link").hasClass("show-contact-join")) {
         jQuery("#slick-link").stop(true);
         jQuery("#slick-link").removeClass("show-contact-join");
@@ -579,7 +579,7 @@ jQuery(".slack.contact-link").click(function (e) {
     }
 });
 
-jQuery(".engineer-slack").click(function (e) {
+jQuery(".engineer-slack").on('click', function (e) {
     if (jQuery("#slick-link").hasClass("show-contact-join")) {
         jQuery("#slick-link").stop(true);
         jQuery("#slick-link").removeClass("show-contact-join");
@@ -805,7 +805,7 @@ jQuery(document).ready(function () {
 
     });
 
-    jQuery(document).change(function () {
+    jQuery(document).on('change', function () {
         if (typeof ga.getAll === "function") {
             jQuery('input[name="client_id"]').val(ga.getAll()[0].get('clientId'));
         }

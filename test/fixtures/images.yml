@@ -1,3 +1,5 @@
+# TODO(uwe): Merge images with same content since we have a validation for content uniqueness
+# http://www.1x1px.me/
 one:
   name: picture_one.png
   content_type: image/png
@@ -19,16 +21,17 @@ two:
   user: lars
 application_step_one:
   name: Step 1
-  content_type: image/jpeg
+  content_type: image/png
   content_data: !binary |
-    R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=
+    iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX/TQBcNTh/AAAAAXRSTlPM0jRW/QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=
   md5_checksum: application_step_one
   user: uwe
   approved: true
 application_step_two:
   name: Step 2
   content_type: image/jpeg
-  content_data:
+  content_data: !binary |
+    iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUABP/uFBdTAAAAAXRSTlPM0jRW/QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=
   md5_checksum: application_step_two
   user: uwe
   approved: true
@@ -44,13 +47,13 @@ front_page_1:
   name: Front page 1
   content_type: image/gif
   content_data: !binary |
-    R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=
+    R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=
   md5_checksum: front_page_1
   user: uwe
   approved: true
 front_page_2:
   name: Front page 2
-  content_type: image/jpeg
+  content_type: image/gif
   content_data: !binary |
     R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
   md5_checksum: front_page_2
@@ -72,3 +75,9 @@ front_page_4:
   md5_checksum: front_page_4
   user: uwe
   approved: true
+no_content:
+  name: no_content.webp
+  content_type: image/jpeg
+  content_data:
+  md5_checksum: no_content
+  user: uwe

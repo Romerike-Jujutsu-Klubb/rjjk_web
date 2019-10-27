@@ -32,7 +32,7 @@ class ImagesControllerTest < ActionController::TestCase
 
     test "should #{action} image to unranked member" do
       login :newbie
-      get action, params: { id: id(:application_step_one), width: 320, format: :jpg }
+      get action, params: { id: id(:application_step_one), width: 320, format: :png }
       assert_response :success
     end
 
@@ -44,13 +44,13 @@ class ImagesControllerTest < ActionController::TestCase
 
     test "should #{action} image to ranked member" do
       login :lars
-      get action, params: { id: id(:application_step_one), width: 320, format: :jpg }
+      get action, params: { id: id(:application_step_one), width: 320, format: :png }
       assert_response :success
     end
 
     test "should redirect #{action} to dummy image if no image content" do
       login :lars
-      get action, params: { id: application_steps(:two).image_id, width: 320, format: :jpg }
+      get action, params: { id: id(:no_content), width: 320, format: :jpg }
       assert_response :redirect
       assert_redirected_to \
           '/assets/pdficon_large-f755e8f306b39714f4efa5d7928e1a54b29571e78af77c96c95f950528468cb4.png'
