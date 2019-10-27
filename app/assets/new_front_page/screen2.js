@@ -1143,84 +1143,87 @@ function setMainContentMargin(e) {
     0 < jQuery("#cinematic-title-wrapper").length ? t.css({marginTop: jQuery(window).height() + e + "px"}) : t.css({marginTop: i + e + "px"})
 }
 
+function drawSliders(e, n) {
+    e.find(".slide-background-image").each(function(e) {
+        var t = jQuery(this);
+        t.closest("li").css({width: n + "%"});
+        var i = "visible";
+        if (0 != e && (i = "hidden"), t.append('<div class="cinematic-basicimage-wrapper"><div class="cinematicmedia_outter_wrapper"><div class="cinematicmedia_inner_wrapper" style="visible:' + i + '"></div></div></div>'), 0 == e) {
+            var a = new Image;
+            a.onload = function() {
+                TweenLite.to(jQuery(".cinematic.original, .cinematic.overheader"), .7, {
+                    opacity: 1,
+                    ease: Power3.easeInOut
+                })
+            };
+            a.src = t.data("src")
+        }
+        var r = null == t.data("size") ? "cover" : t.data("size"),
+            o = null == t.data("blursize") ? "cover" : t.data("blursize"),
+            s = null == t.data("containrepeat") ? "no-repeat" : t.data("containrepeat"),
+            l = null == t.data("containblurrepeat") ? "no-repeat" : t.data("containblurrepeat");
+        1 != t.data("repeatbg") && (t.find(".cinematicmedia_inner_wrapper").append('<div class="cinematic-basicimage fullscreenimgs"></div>'), t.find(".cinematic-basicimage").css({
+            backgroundRepeat: s,
+            backgroundImage: "url(" + t.data("src") + ")",
+            backgroundSize: r,
+            backgroundPosition: "center center",
+            width: "100%",
+            height: "100%"
+        }));
+        1 == t.data("repeatbg") && (t.find(".cinematicmedia_inner_wrapper").append('<div class="cinematic-basicimage fullscreenimgs"></div>'), t.find(".cinematic-basicimage").css({
+            backgroundImage: "url(" + t.data("src") + ")",
+            backgroundPosition: "center center",
+            width: "100%",
+            height: "100%",
+            backgroundRepeat: "repeat"
+        }));
+        if (!is_mobile()) {
+            t.append('<div class="cinematic-blurryimage-wrapper"><div class="cinematicmedia_outter_wrapper"><div class="cinematicmedia_inner_wrapper" style="visible:' + i + '"></div></div></div>');
+            1 != t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
+                backgroundRepeat: l,
+                backgroundImage: "url(" + t.data("srcblur") + ")",
+                backgroundSize: o,
+                backgroundPosition: "center center",
+                width: "100%",
+                height: "100%"
+            }));
+            1 == t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
+                backgroundImage: "url(" + t.data("srcblur") + ")",
+                backgroundPosition: "center center",
+                width: "100%",
+                height: "100%",
+                backgroundRepeat: "repeat"
+            }));
+            0 == e && jQuery(".single_blurredbg").each(function() {
+                var e = jQuery(this), i = t.data("width"), n = t.data("height");
+                e.data("width", i);
+                e.data("height", n);
+                jQuery("body").hasClass("nobluredcontainers") ? e.css({background: "transparent"}) : e.css({backgroundImage: "url(" + t.data("srcblur") + ")"});
+                calculateBlurredBackgrounds()
+            });
+        }
+        t.waitForImages(function() {
+            jQuery(this).find(".fullscreenimgs").addClass("loaded")
+        });
+        jQuery(".cinematic.overheader .cinematic-basicimage-wrapper").height(jQuery(".cinematic.original").height());
+        jQuery(".cinematic.overheader .cinematic-blurryimage-wrapper").height(jQuery(".cinematic.original").height())
+    });
+    100 < jQuery(window).scrollTop() && TweenLite.to(jQuery(".cinematic .cinematic-blurryimage-wrapper"), .6, {autoAlpha: 1});
+}
+
 function initBackgroundSlider() {
     var e;
     is_mobile() && jQuery(".cinematic").css({width: "100.39%"}), jQuery(".cinematic").addClass("original"), is_mobile() ? jQuery("#headerwrapper").css({position: "absolute"}) : (jQuery(".cinematic").clone().appendTo(jQuery("#allcontent")).addClass("overheader"), jQuery(".overheader").removeClass("original"), jQuery("overheader").data("contentholder", ""), jQuery(".overheader").find(".slidercontent").each(function () {
         jQuery(this).remove()
     }));
 
-    function drawSliders(e, n) {
-        e.find(".slide-background-image").each(function(e) {
-            var t = jQuery(this);
-            t.closest("li").css({width: n + "%"});
-            var i = "visible";
-            if (0 != e && (i = "hidden"), t.append('<div class="cinematic-basicimage-wrapper"><div class="cinematicmedia_outter_wrapper"><div class="cinematicmedia_inner_wrapper" style="visible:' + i + '"></div></div></div>'), 0 == e) {
-                var a = new Image;
-                a.onload = function() {
-                    TweenLite.to(jQuery(".cinematic.original, .cinematic.overheader"), .7, {
-                        opacity: 1,
-                        ease: Power3.easeInOut
-                    })
-                };
-                a.src = t.data("src")
-            }
-            var r = null == t.data("size") ? "cover" : t.data("size"),
-                o = null == t.data("blursize") ? "cover" : t.data("blursize"),
-                s = null == t.data("containrepeat") ? "no-repeat" : t.data("containrepeat"),
-                l = null == t.data("containblurrepeat") ? "no-repeat" : t.data("containblurrepeat");
-            1 != t.data("repeatbg") && (t.find(".cinematicmedia_inner_wrapper").append('<div class="cinematic-basicimage fullscreenimgs"></div>'), t.find(".cinematic-basicimage").css({
-                backgroundRepeat: s,
-                backgroundImage: "url(" + t.data("src") + ")",
-                backgroundSize: r,
-                backgroundPosition: "center center",
-                width: "100%",
-                height: "100%"
-            }));
-            1 == t.data("repeatbg") && (t.find(".cinematicmedia_inner_wrapper").append('<div class="cinematic-basicimage fullscreenimgs"></div>'), t.find(".cinematic-basicimage").css({
-                backgroundImage: "url(" + t.data("src") + ")",
-                backgroundPosition: "center center",
-                width: "100%",
-                height: "100%",
-                backgroundRepeat: "repeat"
-            }));
-            if (!is_mobile()) {
-                t.append('<div class="cinematic-blurryimage-wrapper"><div class="cinematicmedia_outter_wrapper"><div class="cinematicmedia_inner_wrapper" style="visible:' + i + '"></div></div></div>');
-                1 != t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
-                    backgroundRepeat: l,
-                    backgroundImage: "url(" + t.data("srcblur") + ")",
-                    backgroundSize: o,
-                    backgroundPosition: "center center",
-                    width: "100%",
-                    height: "100%"
-                }));
-                1 == t.data("repeatbg2") && (t.find(".cinematic-blurryimage-wrapper .cinematicmedia_inner_wrapper").append('<div class="cinematic-blurryimage fullscreenimgs"></div>'), t.find(".cinematic-blurryimage").css({
-                    backgroundImage: "url(" + t.data("srcblur") + ")",
-                    backgroundPosition: "center center",
-                    width: "100%",
-                    height: "100%",
-                    backgroundRepeat: "repeat"
-                }));
-                0 == e && jQuery(".single_blurredbg").each(function() {
-                    var e = jQuery(this), i = t.data("width"), n = t.data("height");
-                    e.data("width", i);
-                    e.data("height", n);
-                    jQuery("body").hasClass("nobluredcontainers") ? e.css({background: "transparent"}) : e.css({backgroundImage: "url(" + t.data("srcblur") + ")"});
-                    calculateBlurredBackgrounds()
-                });
-            }
-            t.waitForImages(function() {
-                jQuery(this).find(".fullscreenimgs").addClass("loaded")
-            });
-            jQuery(".cinematic.overheader .cinematic-basicimage-wrapper").height(jQuery(".cinematic.original").height());
-            jQuery(".cinematic.overheader .cinematic-blurryimage-wrapper").height(jQuery(".cinematic.original").height())
-        });
-        100 < jQuery(window).scrollTop() && TweenLite.to(jQuery(".cinematic .cinematic-blurryimage-wrapper"), .6, {autoAlpha: 1});
-    }
-
     jQuery(".cinematic").each(function () {
         var e = jQuery(this);
         e.data("atslide", 0);
-        e.hasClass("original") && (setMainContentMargin(), jQuery("#maincontent, #footer, #subfooter").css({display: "block"}));
+        if (e.hasClass("original")) {
+            setMainContentMargin();
+            jQuery("#maincontent, #footer, #subfooter").css({display: "block"});
+        }
         var t = e.find("ul li .slide-background-image").length;
         i = 100 * t;
         n = 100 / t;
@@ -1234,10 +1237,8 @@ function initBackgroundSlider() {
         });
         e.find(".slide-background-image").length < 2 && jQuery("#cinematic-navigation").css({display: "none"});
         if (document.readyState === 'complete') {
-            console.log("draw after load");
             drawSliders(e, n);
         } else {
-            console.log("draw on load");
             jQuery(window).on("load", drawSliders(e, n));
         }
         e.hasClass("original") && (showNextSliderContent(e, 1), jQuery("#cinematic-navigation .cinematic-left").on("click", function () {
@@ -2385,7 +2386,15 @@ function is_mobile() {
         0 == e.find(".menubutton").length && e.html('<div class="menubutton">' + e.html() + "</div>")
     }), jQuery("body").hasClass("menuontop") && jQuery("#navigation").css({visibility: "visible"}), jQuery("#menu-footerlogo").length && (jQuery("#navigation").html(jQuery("#navigation").html() + jQuery("#menu-footerlogo").html()), jQuery("#menu-footerlogo").remove()), jQuery.support.transition || (jQuery.fn.transition = jQuery.fn.animate)
 
-    0 < jQuery(".cinematic").length ? (setMainContentMargin(), initBackgroundSlider()) : (jQuery("#maincontent").css({display: "block"}), jQuery("#footer").css({display: "block"}), jQuery("#subfooter").css({display: "block"}), jQuery("body").addClass("withoutgradientheader"))
+    if (0 < jQuery(".cinematic").length) {
+        setMainContentMargin();
+        initBackgroundSlider()
+    } else {
+        jQuery("#maincontent").css({display: "block"});
+        jQuery("#footer").css({display: "block"});
+        jQuery("#subfooter").css({display: "block"});
+        jQuery("body").addClass("withoutgradientheader")
+    }
 
     initMenuFunctions(), initMediaWall(), initShowbizSimple(), initAccordions(), jQuery(window).on('scroll', function () {
         jQuery("body").data("topos", jQuery(window).scrollTop())
