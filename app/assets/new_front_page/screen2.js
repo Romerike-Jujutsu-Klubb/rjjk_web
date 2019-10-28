@@ -25,7 +25,7 @@ function preselection() {
                 r = "off"
             }
         })
-    }), t.find(".preselectorimg").hover(function () {
+    }), t.find(".preselectorimg").on('hover', function () {
         var e = jQuery(this), t = e.find(".mediawall-mediacontainer"), i = e.find(".mediawall-overlay"),
             n = e.find(".mediawall-content"), a = e.find(".mediawall-lightbox"),
             r = e.find(".mediawall-link"), o = (1 * (o = t.width()) - o) / 2,
@@ -203,7 +203,7 @@ function foldMapHandler() {
     var e = jQuery("#mapgyver_holder"), t = e.find(".originalmap"), i = e.find(".content-behind-map");
     TweenLite.to(e, .4, {opacity: 1}), foldMaps();
     var n = !1, a = "open";
-    t.hover(function () {
+    t.on('hover', function () {
         n = !0
     }, function () {
         n = !1
@@ -662,7 +662,7 @@ function initMediaWall() {
         }), t.find(".item").each(function () {
             var e = jQuery(this).find(".mediawall-mediacontainer"), t = "0px 0px 0px 0px rgba(0,0,0,0)";
             jQuery("body").hasClass("gw_light") && (t = "0px 0px 0px 0px rgba(0,0,0,0)"), TweenLite.set(e, {boxShadow: t})
-        }), t.find(".item").hover(function () {
+        }), t.find(".item").on('hover', function () {
             var e = jQuery(this), t = e.find(".mediawall-mediacontainer"),
                 i = e.find(".mediawall-overlay"), n = e.find(".mediawall-content"),
                 a = e.find(".mediawall-lightbox"), r = e.find(".mediawall-link"),
@@ -789,7 +789,7 @@ function initMediaWall() {
 
 function initShowbizSimple() {
     jQuery(".mediawallshowbiz").find("li").each(function () {
-        jQuery(this).hover(function () {
+        jQuery(this).on('hover', function () {
             var e = jQuery(this), t = e.find(".mediawall-mediacontainer"),
                 i = e.find(".mediawall-overlay"), n = e.find(".mediawall-content"),
                 a = e.find(".mediawall-lightbox"), r = e.find(".mediawall-link");
@@ -893,7 +893,7 @@ function initMenuFunctions() {
         ease: Power3.easeInOut
     }), jQuery("#navigation").css({overflow: "hidden"}), jQuery(window).on('resize', function () {
         setHeightOfMenuHolder()
-    }), setHeightOfMenuHolder(), jQuery(window).trigger("resize"), jQuery(".menu-item-has-children .menu-item-has-children").hover(function () {
+    }), setHeightOfMenuHolder(), jQuery(window).trigger("resize"), jQuery(".menu-item-has-children .menu-item-has-children").on('hover', function () {
         var e = jQuery(this);
         e.removeClass("submenutoleft"), jQuery(window).width() - (e.find(">ul").width() + e.offset().left) < 200 && e.addClass("submenutoleft")
     })) : jQuery("#navigation").css({overflow: "scroll"});
@@ -2029,7 +2029,7 @@ function is_mobile() {
                     }
                     o.css("overflow", "auto"), u = a.contentWidth ? a.contentWidth : o[0].scrollWidth, d = o[0].scrollHeight, o.css("overflow", ""), m = 1 < (h = d / l), (f = 1 < (p = u / s)) || m ? (n.addClass("jspScrollable"), (x = r.maintainPosition && (g || j)) && (B = oe(), R = se()), m && (c.append(e('<div class="jspVerticalBar" />').append(e('<div class="jspCap jspCapTop" />'), e('<div class="jspTrack" />').append(e('<div class="jspDrag" />').append(e('<div class="jspDragTop" />'), e('<div class="jspDragBottom" />'))), e('<div class="jspCap jspCapBottom" />'))), Q = c.find(">.jspVerticalBar"), T = Q.find(">.jspTrack"), y = T.find(">.jspDrag"), r.showArrows && (E = e('<a class="jspArrow jspArrowUp" />').on("mousedown.jsp", G(0, -1)).on("click.jsp", le), P = e('<a class="jspArrow jspArrowDown" />').on("mousedown.jsp", G(0, 1)).on("click.jsp", le), r.arrowScrollOnHover && (E.on("mouseover.jsp", G(0, -1, E)), P.on("mouseover.jsp", G(0, 1, P))), $(T, r.verticalArrowPositions, E, P)), _ = l, c.find(">.jspVerticalBar>.jspCap:visible,>.jspVerticalBar>.jspArrow").each(function () {
                         _ -= e(this).outerHeight()
-                    }), y.hover(function () {
+                    }), y.on('hover', function () {
                         y.addClass("jspHover")
                     }, function () {
                         y.removeClass("jspHover")
@@ -2039,7 +2039,7 @@ function is_mobile() {
                         return e("html").on("mousemove.jsp", function (e) {
                             J(e.pageY - i, !1)
                         }).on("mouseup.jsp mouseleave.jsp", Z), !1
-                    }), U()), f && (c.append(e('<div class="jspHorizontalBar" />').append(e('<div class="jspCap jspCapLeft" />'), e('<div class="jspTrack" />').append(e('<div class="jspDrag" />').append(e('<div class="jspDragLeft" />'), e('<div class="jspDragRight" />'))), e('<div class="jspCap jspCapRight" />'))), C = c.find(">.jspHorizontalBar"), O = C.find(">.jspTrack"), v = O.find(">.jspDrag"), r.showArrows && (M = e('<a class="jspArrow jspArrowLeft" />').on("mousedown.jsp", G(-1, 0)).on("click.jsp", le), I = e('<a class="jspArrow jspArrowRight" />').on("mousedown.jsp", G(1, 0)).on("click.jsp", le), r.arrowScrollOnHover && (M.on("mouseover.jsp", G(-1, 0, M)), I.on("mouseover.jsp", G(1, 0, I))), $(O, r.horizontalArrowPositions, M, I)), v.hover(function () {
+                    }), U()), f && (c.append(e('<div class="jspHorizontalBar" />').append(e('<div class="jspCap jspCapLeft" />'), e('<div class="jspTrack" />').append(e('<div class="jspDrag" />').append(e('<div class="jspDragLeft" />'), e('<div class="jspDragRight" />'))), e('<div class="jspCap jspCapRight" />'))), C = c.find(">.jspHorizontalBar"), O = C.find(">.jspTrack"), v = O.find(">.jspDrag"), r.showArrows && (M = e('<a class="jspArrow jspArrowLeft" />').on("mousedown.jsp", G(-1, 0)).on("click.jsp", le), I = e('<a class="jspArrow jspArrowRight" />').on("mousedown.jsp", G(1, 0)).on("click.jsp", le), r.arrowScrollOnHover && (M.on("mouseover.jsp", G(-1, 0, M)), I.on("mouseover.jsp", G(1, 0, I))), $(O, r.horizontalArrowPositions, M, I)), v.on('hover', function () {
                         v.addClass("jspHover")
                     }, function () {
                         v.removeClass("jspHover")
