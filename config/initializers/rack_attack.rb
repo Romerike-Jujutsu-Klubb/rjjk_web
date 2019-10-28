@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if Rails.env.test?
+if Rails.env.development? || Rails.env.test?
   Rack::Attack.enabled = false
 else
   class Rack::Attack

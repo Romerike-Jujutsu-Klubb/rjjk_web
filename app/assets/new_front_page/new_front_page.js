@@ -1,4 +1,7 @@
-//= require @fortawesome/fontawesome-free/js/all.js
+//= require fontawesome.js
+//= require fontawesome/solid.js
+//= require fontawesome/regular.js
+//= require fontawesome/brands.js
 //= require jquery3
 //= require jquery-migrate-3.1.0
 //= require jquery.themepunch.showbizpro.min

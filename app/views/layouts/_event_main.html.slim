@@ -40,18 +40,18 @@ h5.mb-0 style="color:#FFB400"
   - if admin? && event.persisted?
     a.btn.btn-primary.d-none.d-md-inline-block href=edit_polymorphic_path(event)
       ' Admin
-      i.fa.fa-angle-double-right
+      i.fas.fa-angle-double-right
 
   = link_to event, class: 'btn btn-info ml-3'
     ' Les mer
-    i.fa.fa-angle-double-right
+    i.fas.fa-angle-double-right
 
   - if inv
     - if (inv.will_attend.nil? || inv.user.member && inv.will_work.nil?)
       = link_to event_registration_path(inv.id), class: 'btn btn-success ml-3'
         => t(:my_registration)
-        i.fa.fa-angle-double-right
+        i.fas.fa-angle-double-right
   - else # Event allows registration
     = link_to new_event_registration_path(event_invitee: {event_id: event.id}), class: 'btn btn-success ml-3'
       => t(:registration)
-      i.fa.fa-angle-double-right
+      i.fas.fa-angle-double-right
