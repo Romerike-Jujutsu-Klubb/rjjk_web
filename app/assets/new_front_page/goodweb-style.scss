@@ -1215,6 +1215,11 @@ span, p, ul li, ol li {
     position: absolute;
 }
 
+.cinematic.overheader {
+    height: 38px !important;
+    overflow: hidden;
+}
+
 .widget-title, .widget_nav_menu ul li a {
     font-size: 12px;
     padding-left: 10px;
@@ -1264,6 +1269,23 @@ span, p, ul li, ol li {
 
 .cinematic .slidercontent h2, .cinematic .slidercontent .mainTitleSlider, .cinematic .slidercontent .fbuilder_module.sliderBtn {
     display: none;
+}
+
+.cinematic .slidercontent .topTitleSlider {
+    display: block;
+    font-size: 30px;
+    line-height: 47px;
+}
+
+#slidercontent-wrapper .topTitleSlider {
+    display: none;
+}
+
+@media only screen and (min-width: 1260px) and (max-width: 1475px) {
+    .cinematic .slidercontent .topTitleSlider {
+        font-size: 26px;
+        line-height: 36px;
+    }
 }
 
 @media only screen and (max-width: 1281px) {

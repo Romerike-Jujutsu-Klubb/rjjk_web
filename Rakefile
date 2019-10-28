@@ -4,7 +4,7 @@ require File.expand_path('config/application', __dir__)
 
 Rails.application.load_tasks
 
-if Rails.env.test?
+if Rails.env.development? || Rails.env.test?
   require 'rubocop/rake_task'
   RuboCop::RakeTask.new
   # require 'rubycritic/rake_task'
@@ -17,6 +17,14 @@ if Rails.env.test?
 
     desc 'Run all tests except system tests'
     task quick: :test
+
+    desc 'Run all tests exercising the public front'
+    task public_front: 'test:prepare' do
+      require 'rails/test_unit/runner'
+      $LOAD_PATH << 'test'
+      test_files = FileList['test/system/{front_page,medium_devices,next_practice,small_devices}*_test.rb']
+      Rails::TestUnit::Runner.run(test_files)
+    end
   end
 end
 
