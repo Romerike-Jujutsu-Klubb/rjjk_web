@@ -1,7 +1,7 @@
 //= require jquery.color.min
 //= require jquery-ui
 //= require jquery.themepunch.plugins.min
-//= require bootstrap.min
+//= require bootstrap
 //= require jquery.themepunch.punchbox
 //= require scrollspy
 //= require scrollspyjquery

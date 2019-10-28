@@ -2,9 +2,9 @@
 - ingress = event.ingress.presence
 - body = event.body
 - if display_year
-  h4.mt-3.logo-red style="margin-bottom:-1rem" = event.start_at.year
+  h4.mt-3.logo-red = event.start_at.year
 - if display_times
-  h5.mt-3.mb-1
+  h5.mb-2
     - if event.end_at.nil? || event.end_at == event.start_at
       => day_name(event.start_at.wday)
       ' #{event.start_at.mday}.
@@ -30,7 +30,7 @@
           => month_name(event.end_at.mon)
           = event.end_at.strftime('%H:%M')
 
-h5.clearfix style="margin-bottom:0;color:#FFB400"
+h5.mb-0 style="color:#FFB400"
   = link_to event.title, event
 
 - if user?
@@ -38,7 +38,7 @@ h5.clearfix style="margin-bottom:0;color:#FFB400"
 = textalize ingress
 .text-right
   - if admin? && event.persisted?
-    = link_to edit_polymorphic_path(event), class: 'btn btn-primary'
+    a.btn.btn-primary.d-none.d-md-inline-block href=edit_polymorphic_path(event)
       ' Admin
       i.fa.fa-angle-double-right
 

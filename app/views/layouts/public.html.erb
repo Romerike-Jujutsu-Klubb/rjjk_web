@@ -78,72 +78,79 @@
   <footer id="footer">
     <section class="container">
       <div class="row">
-        <article class="span4" style="margin-bottom: 1rem">
-          <div class="widget-1  last divide30 footer_widget_spacer clear"></div>
-          <div id="nav_menu-11" class="widget-1 last footer_widget widget_nav_menu">
-            <div class="menu-footerwidgetnavigation-container">
-              <ul id="menu-footerwidgetnavigation" class="menu">
-                <% @information_pages.select(&:public).reject(&:hidden).each do |ip| %>
-                  <li id="menu-item-<%= ip.id %>" class="menu-item menu-item-type-post_type menu-item-object-page">
-                    <a href="<%= information_page_path ip %>"><i class="demoicon <%= ip.icon_class.presence || 'fa fa-file-alt' %> fa-fw"></i>
-                      <%= ip.title %>
+
+        <article class="col-md-4 mb-3">
+          <div class="pr-md-3">
+            <div class="widget-1 last divide30 footer_widget_spacer clear"></div>
+            <div id="nav_menu-11" class="widget-1 last widget_nav_menu">
+              <div class="menu-footerwidgetnavigation-container">
+                <ul id="menu-footerwidgetnavigation" class="menu">
+                  <% @information_pages.select(&:public).reject(&:hidden).each do |ip| %>
+                    <li id="menu-item-<%= ip.id %>" class="menu-item menu-item-type-post_type menu-item-object-page">
+                      <a href="<%= information_page_path ip %>"><i class="demoicon <%= ip.icon_class.presence || 'fa fa-file-alt' %> fa-fw"></i>
+                        <%= ip.title %>
+                      </a>
+                      <div class="clear"></div>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="col-md-4 mb-3">
+          <div class="px-md-2">
+            <div class="widget-1 last divide30 footer_widget_spacer clear"></div>
+            <div id="news" class="widget-1 last widget_rss">
+              <div class="widget_nav_menu">
+                <ul>
+                  <li>
+                    <a class="rsswidget" href="<%= news_items_path %>">
+                      <i class="far fa-newspaper fa-2x" style="vertical-align:bottom;margin-right:1rem"></i>
+                      Nyheter
                     </a>
+                  </li>
+                  <% @news_items.each do |news_item| %>
+                    <li>
+                      <a href='<%= news_item_path news_item %>'>
+                        <div class="rss-date" style="float: right"><%= news_item.created_at.to_date %></div>
+                        <%= news_item.title %>
+                      </a>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="col-md-4">
+          <div class="pl-md-3">
+            <div class="widget-1 first divide30 footer_widget_spacer clear"></div>
+            <div id="nav_menu-17" class="widget-1 first widget_nav_menu">
+              <div class="menu-for-contact-us-widget-container">
+                <ul id="menu-for-contact-us-widget" class="menu">
+                  <li id="menu-item-2374" class="menu-item menu-item-type-post_type menu-item-object-page">
+                    <a href="<%= information_page_path(6) %>"><i class="fa fa-map" style="margin-right:0.5rem"></i>
+                      Kontakt oss</a>
                     <div class="clear"></div>
                   </li>
-                <% end %>
-              </ul>
+                </ul>
+              </div>
+              <div class="clear"></div>
             </div>
-            <div class="clear"></div>
+            <div id="text-3" class="widget-2 last widget_text">
+              <div class="textwidget" style="text-align: center">
+                <a href="<%= information_page_path(6) %>"><img class="w-100" alt="RJJK kart" src="<%= asset_path accepts_webp ? 'kart.webp' : 'kart.png' %>" width="332"/></a>
+              </div>
+              <div class="clear"></div>
+            </div>
           </div>
         </article>
 
-        <article class="span4">
-          <div class="widget-1 last divide30 footer_widget_spacer clear"></div>
-          <div id="news" class="widget-1 last footer_widget widget_rss">
-            <div class="widget_nav_menu">
-              <ul>
-                <li>
-                  <a class="rsswidget" href="<%= news_items_path %>">
-                    <i class="far fa-newspaper fa-2x" style="vertical-align:bottom;margin-right:1rem"></i>
-                    Nyheter
-                  </a>
-                </li>
-                <% @news_items.each do |news_item| %>
-                  <li>
-                    <a href='<%= news_item_path news_item %>'>
-                      <div class="rss-date" style="float: right"><%= news_item.created_at.to_date %></div>
-                      <%= news_item.title %>
-                    </a>
-                  </li>
-              <% end %>
-              </ul>
-            </div>
-            <div class="clear"></div>
-          </div>
-        </article>
-
-        <article class="span4 last">
-          <div class="widget-1 first divide30 footer_widget_spacer clear"></div>
-          <div id="nav_menu-17" class="widget-1 first footer_widget widget_nav_menu">
-            <div class="menu-for-contact-us-widget-container">
-              <ul id="menu-for-contact-us-widget" class="menu">
-                <li id="menu-item-2374" class="menu-item menu-item-type-post_type menu-item-object-page">
-                  <a href="<%= information_page_path(6) %>"><i class="fa fa-map" style="margin-right:0.5rem"></i>
-                    Kontakt oss</a>
-                  <div class="clear"></div>
-                </li>
-              </ul>
-            </div>
-            <div class="clear"></div>
-          </div>
-          <div class="widget-2  last divide30 footer_widget_spacer clear"></div>
-          <div id="text-3" class="widget-2  last footer_widget widget_text">
-            <div class="textwidget" style="text-align: center">
-              <a href="<%= information_page_path(6) %>"><img alt="RJJK kart" src="<%= asset_path accepts_webp ? 'kart.webp' : 'kart.png' %>" width="332"/></a>
-            </div>
-            <div class="clear"></div>
-          </div>
-        </article>
         <div class="clear"></div>
       </div><!-- END OF THE ROW -->
     </section><!-- END OF THE FOOTER CONTAINER -->
@@ -155,19 +162,19 @@
     <div class="container">
       <!-- ROW -->
       <div class="row">
-        <div class="widget-1 last goodwebSocials rightfloat">
-          <!--            <a href="https://www.youtube.com/channel/UCFfNdnuxB3FWA2zttnLDkWA" class="subfooter-socials" target="_blank"><i class="fa fa-youtube"></i></a>-->
-          <a href="https://www.facebook.com/Romerikejujutsuklubb" class="subfooter-socials" target="_blank" rel="noreferrer"><i class="fab fa-facebook"></i></a>
-          <!--            <a href="http://plus.google.com/b/106511337358259588944/106511337358259588944/posts" class="subfooter-socials" target="_blank"><i class="fa fa-google-plus"></i></a>-->
-          <div class="clear"></div>
-        </div>
-
-        <article class="span6">
-          <div class="widget-1 last widget_text">
+        <article class="col-10">
+          <div class="widget-1 widget_text">
             <div class="textwidget">© 1999–2019 Romerike Jujutsu Klubb</div>
             <div class="clear"></div>
           </div>
         </article>
+
+        <div class="col-2 widget-1 goodwebSocials text-right">
+          <!--            <a href="https://www.youtube.com/channel/UCFfNdnuxB3FWA2zttnLDkWA" class="subfooter-socials" target="_blank"><i class="fa fa-youtube"></i></a>-->
+          <a href="https://www.facebook.com/Romerikejujutsuklubb" class="subfooter-socials mr-0" target="_blank" rel="noreferrer"><i class="fab fa-facebook"></i></a>
+          <!--            <a href="http://plus.google.com/b/106511337358259588944/106511337358259588944/posts" class="subfooter-socials" target="_blank"><i class="fa fa-google-plus"></i></a>-->
+          <div class="clear"></div>
+        </div>
 
       </div><!-- END OF ROW -->
     </div>
