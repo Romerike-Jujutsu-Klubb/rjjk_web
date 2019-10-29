@@ -2,45 +2,50 @@
 
 require 'application_system_test_case'
 
-class MediumDevicesTest < ApplicationSystemTestCase
-  FRONT_PAGE_PROGRESS_BAR_AREA = [0, 477, 639, 479].freeze
+module DeviceSystemTest
+  extend ActiveSupport::Concern
+
   LOGO_AREA = [288, 0, 352, 63].freeze
-  WINDOW_SIZE = [640, 480].freeze
   MENU_BTN_AREA = [130, 20, 142, 63].freeze
-  SCROLL_BAR_AREA = [634, 135, 636, 293].freeze
   SUBNAV_OFFSET = -268
-  USER_AGENT = <<~UA
-    Mozilla/5.0 (Linux; Android 6.0.1; Nexus 7 Build/MOB30X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36
-  UA
 
-  Capybara.register_driver :chrome_medium do |app|
-    browser_options = ::Selenium::WebDriver::Chrome::Options.new
-    browser_options.args << '--force-color-profile=srgb'
-    browser_options.add_emulation(
-        device_metrics: { width: WINDOW_SIZE[0], height: WINDOW_SIZE[1], pixelRatio: 1, touch: true },
-        user_agent: USER_AGENT
-      )
-    browser_options.headless!
-    Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+  included do
+    cattr_accessor :progress_bar_area
+    cattr_accessor :scroll_bar_area
+    setup do
+      screenshot_section :front
+      Capybara::Screenshot.window_size = nil
+    end
+    teardown { Capybara::Screenshot.window_size = ApplicationSystemTestCase::WINDOW_SIZE }
   end
 
-  driven_by :chrome_medium
+  class_methods do
+    def driver_name
+      self.name.chomp('Test').camelize
+    end
 
-  setup do
-    screenshot_section :medium_devices
-    Capybara::Screenshot.window_size = nil
+    def use_device(name, window_size:)
+      self.scroll_bar_area = [window_size[0] - 19, 0, window_size[0] - 6, window_size[1] - 1]
+      self.progress_bar_area = [0, window_size[1] - 8, window_size[0] -1 , window_size[1] - 2]
+      Capybara.register_driver driver_name do |app|
+        browser_options = ::Selenium::WebDriver::Chrome::Options.new
+        browser_options.args << '--force-color-profile=srgb'
+        browser_options.add_emulation(device_name: name)
+        browser_options.headless!
+        Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+      end
+
+      driven_by driver_name
+    end
   end
 
-  teardown { Capybara::Screenshot.window_size = ApplicationSystemTestCase::WINDOW_SIZE }
-
-  test 'member front_page' do
+  def test_member_front_page
     screenshot_group :front_page
     login_and_visit root_path
     assert_selector 'h4', text: 'Neste trening'
     assert_offset '.subnav', :left, SUBNAV_OFFSET
     assert_offset '.main_right', :right, SUBNAV_OFFSET
     screenshot :index, skip_area: LOGO_AREA
-
     find('.fa-bars').click # Display menu
     assert_offset '.subnav', :left, 0
     assert_selector 'li a', text: 'My first article'
@@ -56,17 +61,17 @@ class MediumDevicesTest < ApplicationSystemTestCase
     assert_offset '.main_right', :right, 0
     assert_css '#sidebarShadow'
     screenshot :calendar, skip_area: LOGO_AREA
-    find('#sidebarShadow').click # Hide calendar sidebar
+    find('#sidebarShadow').click(x:10, y:10) # Hide calendar sidebar
     assert_offset '.main_right', :right, SUBNAV_OFFSET
     assert_no_css '#sidebarShadow'
     screenshot :calendar_closed, skip_area: LOGO_AREA
   end
 
-  test 'new front_page' do
+  def test_new_front_page
     screenshot_group :new_front_page
     visit front_page_path
     assert_css('#headermenuholder > .fa-bars')
-    screenshot :index, area_size_limit: 533, skip_area: [MENU_BTN_AREA, FRONT_PAGE_PROGRESS_BAR_AREA]
+    screenshot :index, area_size_limit: 533, skip_area: [MENU_BTN_AREA, self.class.progress_bar_area]
     find('#headermenuholder > .fa-bars').click
     article_menu_link = find('.menubutton', text: 'My first article')
     screenshot :menu, skip_area: [308, 73, 332, 102]
@@ -75,15 +80,15 @@ class MediumDevicesTest < ApplicationSystemTestCase
     screenshot :article, skip_area: LOGO_AREA
   end
 
-  test 'new front page scroll' do
+  def test_new_front_page_scroll
     screenshot_group :new_front_page_scroll
     visit front_page_path
     assert_css('#headermenuholder > .fa-bars')
     assert_css('.fa-chevron-down')
-    screenshot :index, area_size_limit: 533, skip_area: [MENU_BTN_AREA, FRONT_PAGE_PROGRESS_BAR_AREA]
+    screenshot :index, area_size_limit: 533, skip_area: [MENU_BTN_AREA, self.class.progress_bar_area]
     find('.fa-chevron-down').click
     find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
-    screenshot(:scrolled, skip_area: SCROLL_BAR_AREA)
+    screenshot(:scrolled, skip_area: self.class.scroll_bar_area)
     assert_equal information_page_url(id(:first)),
         find('#footer .menu-item a', text: 'MY FIRST ARTICLE')[:href]
     with_retries label: 'article link click' do

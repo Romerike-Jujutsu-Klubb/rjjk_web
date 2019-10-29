@@ -61,8 +61,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       assert_text 'done'
     end
     unless passed?
-      puts 'Browser log:'
-      puts page.driver.browser.manage.logs.get(:browser).map(&:message).join("\n")
+      log = page.driver.browser.manage.logs.get(:browser).map(&:message).join("\n")
+      puts 'Browser log: ' + log if log.present?
     end
   end
 end

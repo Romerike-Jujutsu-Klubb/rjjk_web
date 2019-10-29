@@ -22,7 +22,7 @@ if Rails.env.development? || Rails.env.test?
     task public_front: 'test:prepare' do
       require 'rails/test_unit/runner'
       $LOAD_PATH << 'test'
-      test_files = FileList['test/system/{front_page,medium_devices,next_practice,small_devices}*_test.rb']
+      test_files = FileList['test/system/{front_page,next_practice,devices/}*_test.rb']
       Rails::TestUnit::Runner.run(test_files)
     end
   end

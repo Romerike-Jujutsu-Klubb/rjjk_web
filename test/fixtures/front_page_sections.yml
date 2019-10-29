@@ -12,4 +12,12 @@ two:
   subtitle: Subtitle two
   image: front_page_2
   button_text: Learn more
-  information_page: second
+  information_page: another
+
+three:
+  position: 3
+  title: Section three
+  subtitle: Subtitle three
+  image: front_page_3
+  button_text: About Mushin
+  information_page: hidden

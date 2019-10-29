@@ -53,9 +53,9 @@ front_page_1:
   approved: true
 front_page_2:
   name: Front page 2
-  content_type: image/gif
+  content_type: image/png
   content_data: !binary |
-    R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
+    iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUDawAjNTHvAAAAAXRSTlPM0jRW/QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=
   md5_checksum: front_page_2
   user: uwe
   approved: true
