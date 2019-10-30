@@ -5,28 +5,36 @@ require 'application_system_test_case'
 module DeviceSystemTest
   extend ActiveSupport::Concern
 
-  LOGO_AREA = [288, 0, 352, 63].freeze
   MENU_BTN_AREA = [130, 20, 142, 63].freeze
   SUBNAV_OFFSET = -268
 
   included do
+    cattr_accessor :logo_area
+    cattr_accessor :menu_logo_area
     cattr_accessor :progress_bar_area
     cattr_accessor :scroll_bar_area
     setup do
       screenshot_section :front
       Capybara::Screenshot.window_size = nil
+      @orig_color_distance_limit = Capybara::Screenshot::Diff.color_distance_limit
+      Capybara::Screenshot::Diff.color_distance_limit = 61.3 # Small variations in rendering...
     end
-    teardown { Capybara::Screenshot.window_size = ApplicationSystemTestCase::WINDOW_SIZE }
+    teardown do
+      Capybara::Screenshot::Diff.color_distance_limit = @orig_color_distance_limit
+      Capybara::Screenshot.window_size = ApplicationSystemTestCase::WINDOW_SIZE
+    end
   end
 
   class_methods do
     def driver_name
-      self.name.chomp('Test').camelize
+      name.chomp('Test').camelize
     end
 
-    def use_device(name, window_size:)
+    def use_device(name, window_size:, menu_logo_area:, logo_area:)
       self.scroll_bar_area = [window_size[0] - 19, 0, window_size[0] - 6, window_size[1] - 1]
-      self.progress_bar_area = [0, window_size[1] - 8, window_size[0] -1 , window_size[1] - 2]
+      self.progress_bar_area = [0, window_size[1] - 8, window_size[0] - 1, window_size[1] - 1]
+      self.menu_logo_area = menu_logo_area
+      self.logo_area = logo_area
       Capybara.register_driver driver_name do |app|
         browser_options = ::Selenium::WebDriver::Chrome::Options.new
         browser_options.args << '--force-color-profile=srgb'
@@ -45,39 +53,40 @@ module DeviceSystemTest
     assert_selector 'h4', text: 'Neste trening'
     assert_offset '.subnav', :left, SUBNAV_OFFSET
     assert_offset '.main_right', :right, SUBNAV_OFFSET
-    screenshot :index, skip_area: LOGO_AREA
+    bottom_logo_area = [703, 1820, 703, 1852]
+    screenshot :index, skip_area: [logo_area, bottom_logo_area]
     find('.fa-bars').click # Display menu
     assert_offset '.subnav', :left, 0
     assert_selector 'li a', text: 'My first article'
     find('h1', text: 'Instruksjon').hover
     assert_css '#menuShadow'
-    screenshot :menu, skip_area: LOGO_AREA
+    screenshot :menu, skip_area: logo_area
     find('.fa-calendar-alt').click_at # Hide menu
     assert_offset '.subnav', :left, SUBNAV_OFFSET
     assert_no_css '#menuShadow'
-    screenshot :menu_closed, skip_area: LOGO_AREA
+    screenshot :menu_closed, skip_area: [logo_area, bottom_logo_area]
 
     find('#calendarBtn').click # Display calendar sidebar
     assert_offset '.main_right', :right, 0
     assert_css '#sidebarShadow'
-    screenshot :calendar, skip_area: LOGO_AREA
-    find('#sidebarShadow').click(x:10, y:10) # Hide calendar sidebar
+    screenshot :calendar, skip_area: logo_area, area_size_limit: 18
+    find('#sidebarShadow').click(x: 10, y: 10) # Hide calendar sidebar
     assert_offset '.main_right', :right, SUBNAV_OFFSET
     assert_no_css '#sidebarShadow'
-    screenshot :calendar_closed, skip_area: LOGO_AREA
+    screenshot :calendar_closed, skip_area: [logo_area, bottom_logo_area]
   end
 
   def test_new_front_page
     screenshot_group :new_front_page
     visit front_page_path
     assert_css('#headermenuholder > .fa-bars')
-    screenshot :index, area_size_limit: 533, skip_area: [MENU_BTN_AREA, self.class.progress_bar_area]
+    screenshot :index, skip_area: [MENU_BTN_AREA, self.class.progress_bar_area]
     find('#headermenuholder > .fa-bars').click
     article_menu_link = find('.menubutton', text: 'My first article')
-    screenshot :menu, skip_area: [308, 73, 332, 102]
+    screenshot :menu, skip_area: menu_logo_area
     with_retries(label: 'article menu click') { article_menu_link.click }
     assert_css 'h1', text: 'My first article'
-    screenshot :article, skip_area: LOGO_AREA
+    screenshot :article, skip_area: logo_area
   end
 
   def test_new_front_page_scroll
@@ -97,7 +106,7 @@ module DeviceSystemTest
     end
 
     assert_css('h1', text: 'My first article')
-    screenshot :article, skip_area: LOGO_AREA
+    screenshot :article, skip_area: logo_area
   end
 
   private
