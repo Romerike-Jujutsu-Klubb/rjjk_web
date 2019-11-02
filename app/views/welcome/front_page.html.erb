@@ -147,27 +147,31 @@
   }
 </style>
 
-<div id="event-teaser">
-  <div>
-    <%= render('layouts/event_teaser', event: @event, display_year: false, display_month: true, display_times: true) if @event %>
-  </div>
-  <script type="text/javascript">
+<% if @event %>
+  <div id="event-teaser">
+    <div>
+      <%= render('layouts/event_teaser', event: @event, display_year: false, display_month: true, display_times: true) %>
+    </div>
+    <script type="text/javascript">
       $ = jQuery;
-      $(".fa-angle-double-down").closest('a').on('click', function (e) {
-          e.stopPropagation();
-          $([document.documentElement, document.body]).animate({
-              scrollTop: $($(e.target).closest('a').attr('href')).offset().top
-          }, 700, "swing");
-          return false;
+      $(".fa-angle-double-down").closest('a').on('click', function(e) {
+        e.stopPropagation();
+        $([document.documentElement, document.body]).animate({
+          scrollTop: $($(e.target).closest('a').attr('href')).offset().top
+        }, 700, "swing");
+        return false;
       });
-  </script>
-</div>
-
-<div id="event-splash-top" class="event-splash">
-  <div>
-    <%= render('layouts/event_main', event: @event, display_year: false, display_month: true, display_times: true) if @event %>
+    </script>
   </div>
-</div>
+<% end %>
+
+<% if @event %>
+  <div id="event-splash-top" class="event-splash">
+    <div>
+      <%= render('layouts/event_main', event: @event, display_year: false, display_month: true, display_times: true) %>
+    </div>
+  </div>
+<% end %>
 
 <section id="background-wrapper">
   <!-- THE BACKGROUND SLIDER -->
@@ -238,11 +242,13 @@
 <section id="home" class="pagestart"></section>
 
 <section id="maincontent">
-  <div id="event-splash-main" class="event-splash">
-    <div>
-      <%= render('layouts/event_main', event: @event, display_year: false, display_month: true, display_times: true) if @event %>
+  <% if @event %>
+    <div id="event-splash-main" class="event-splash">
+      <div>
+        <%= render('layouts/event_main', event: @event, display_year: false, display_month: true, display_times: true) %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <div class="onepagecontent">
     <section id="home" class="first"></section>
