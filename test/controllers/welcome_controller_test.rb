@@ -7,4 +7,9 @@ class WelcomeControllerTest < ActionDispatch::IntegrationTest
     login :neuer
     get root_path
   end
+
+  test 'get index without upcoming ecvent' do
+    events(:one).destroy!
+    get root_path
+  end
 end
