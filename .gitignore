@@ -3,6 +3,8 @@
 /.idea
 /archive.tar.gz
 /coverage
+/doc/**/*.committed.png
+/doc/**/*.latest.png
 /log/*.log
 /node_modules
 /public/heap*.json

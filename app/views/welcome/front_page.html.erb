@@ -149,7 +149,7 @@
 
 <div id="event-teaser">
   <div>
-    <%= render 'layouts/event_teaser', event: @event, display_year: false, display_month: true, display_times: true %>
+    <%= render('layouts/event_teaser', event: @event, display_year: false, display_month: true, display_times: true) if @event %>
   </div>
   <script type="text/javascript">
       $ = jQuery;
@@ -165,7 +165,7 @@
 
 <div id="event-splash-top" class="event-splash">
   <div>
-    <%= render 'layouts/event_main', event: @event, display_year: false, display_month: true, display_times: true %>
+    <%= render('layouts/event_main', event: @event, display_year: false, display_month: true, display_times: true) if @event %>
   </div>
 </div>
 
@@ -240,7 +240,7 @@
 <section id="maincontent">
   <div id="event-splash-main" class="event-splash">
     <div>
-      <%= render 'layouts/event_main', event: @event, display_year: false, display_month: true, display_times: true %>
+      <%= render('layouts/event_main', event: @event, display_year: false, display_month: true, display_times: true) if @event %>
     </div>
   </div>
 
