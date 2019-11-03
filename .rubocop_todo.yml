@@ -38,7 +38,7 @@ Metrics/MethodLength:
 # Offense count: 1
 # Configuration parameters: CountComments.
 Metrics/ModuleLength:
-  Max: 112
+  Max: 119
 
 # Offense count: 3
 # Configuration parameters: CountKeywordArgs.
@@ -62,7 +62,6 @@ Naming/UncommunicativeMethodParamName:
     - 'app/models/nkf_member.rb'
     - 'app/services/nkf_member_comparison.rb'
     - 'app/services/nkf_member_import.rb'
-    - 'bin/learn_spam.rb'
     - 'config/initializers/schedule.rb'
 
 # Offense count: 4

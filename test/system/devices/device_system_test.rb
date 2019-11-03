@@ -7,6 +7,9 @@ module DeviceSystemTest
 
   MENU_BTN_AREA = [130, 20, 142, 63].freeze
   SUBNAV_OFFSET = -268
+  USER_AGENT = <<~UA
+    Mozilla/5.0 (Linux; Android 6.0.1; Nexus 7 Build/MOB30X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36
+  UA
 
   included do
     cattr_accessor :logo_area
@@ -30,7 +33,7 @@ module DeviceSystemTest
       name.chomp('Test').camelize
     end
 
-    def use_device(name, window_size:, menu_logo_area:, logo_area:)
+    def use_device(device_name: nil, device_metrics: nil, window_size:, menu_logo_area:, logo_area:)
       self.scroll_bar_area = [window_size[0] - 19, 0, window_size[0] - 6, window_size[1] - 1]
       self.progress_bar_area = [0, window_size[1] - 8, window_size[0] - 1, window_size[1] - 1]
       self.menu_logo_area = menu_logo_area
@@ -38,7 +41,11 @@ module DeviceSystemTest
       Capybara.register_driver driver_name do |app|
         browser_options = ::Selenium::WebDriver::Chrome::Options.new
         browser_options.args << '--force-color-profile=srgb'
-        browser_options.add_emulation(device_name: name)
+        if device_name
+          browser_options.add_emulation(device_name: device_name)
+        else
+          browser_options.add_emulation(device_metrics: device_metrics, user_agent: USER_AGENT)
+        end
         browser_options.headless!
         Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
       end
@@ -97,7 +104,7 @@ module DeviceSystemTest
     screenshot :index, area_size_limit: 533, skip_area: [MENU_BTN_AREA, self.class.progress_bar_area]
     find('.fa-chevron-down').click
     find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
-    screenshot(:scrolled, skip_area: self.class.scroll_bar_area)
+    screenshot :scrolled, skip_area: self.class.scroll_bar_area
     assert_equal information_page_url(id(:first)),
         find('#footer .menu-item a', text: 'MY FIRST ARTICLE')[:href]
     with_retries label: 'article link click' do
