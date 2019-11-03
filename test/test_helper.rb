@@ -71,12 +71,11 @@ class ActiveSupport::TestCase
 
   def with_retries(label: 'test', attempts: nil, exceptions: [Minitest::Assertion],
       backoff: 0.001.seconds, backoff_factor: 2, backoff_limit: Capybara.default_max_wait_time)
-    attempt ||= 1
     yield
   rescue *exceptions => e
+    attempt = attempt&.next || 1
     raise e if (attempts && attempt >= attempts) || backoff > backoff_limit
 
-    attempt += 1
     puts "Retrying #{label} #{attempt} #{backoff} #{e}"
     sleep backoff
     backoff *= backoff_factor
