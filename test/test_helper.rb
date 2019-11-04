@@ -30,9 +30,6 @@ Geocoder::Lookup::Test.set_default_stub([{
 class ActiveSupport::TestCase
   include UserSystem
 
-  self.use_transactional_tests = true
-  self.use_instantiated_fixtures = false
-
   fixtures :all
 
   setup { Timecop.freeze(TEST_TIME) }

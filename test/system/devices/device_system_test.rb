@@ -14,8 +14,6 @@ module DeviceSystemTest
   included do
     cattr_accessor :logo_area
     cattr_accessor :menu_logo_area
-    cattr_accessor :progress_bar_area
-    cattr_accessor :scroll_bar_area
     setup do
       screenshot_section :front
       Capybara::Screenshot.window_size = nil
@@ -33,9 +31,7 @@ module DeviceSystemTest
       name.chomp('Test').camelize
     end
 
-    def use_device(device_name: nil, device_metrics: nil, window_size:, menu_logo_area:, logo_area:)
-      self.scroll_bar_area = [window_size[0] - 19, 0, window_size[0] - 6, window_size[1] - 1]
-      self.progress_bar_area = [0, window_size[1] - 8, window_size[0] - 1, window_size[1] - 1]
+    def use_device(device_name: nil, device_metrics: nil, menu_logo_area:, logo_area:)
       self.menu_logo_area = menu_logo_area
       self.logo_area = logo_area
       Capybara.register_driver driver_name do |app|
@@ -52,6 +48,33 @@ module DeviceSystemTest
 
       driven_by driver_name
     end
+  end
+
+  def window_width
+    @window_width ||= (evaluate_script(<<~JS) * device_pixel_ratio).ceil
+      window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+    JS
+    @window_width
+  end
+
+  def window_height
+    @window_height ||= (evaluate_script(<<~JS) * device_pixel_ratio).ceil
+      window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight
+    JS
+    @window_height
+  end
+
+  def device_pixel_ratio
+    @device_pixel_ratio ||= evaluate_script('window.devicePixelRatio')
+    @device_pixel_ratio
+  end
+
+  def scroll_bar_area
+    [window_width - 19, 0, window_width - 6, window_height - 1]
+  end
+
+  def progress_bar_area
+    [0, window_height - 8, window_width - 1, window_height - 1]
   end
 
   def test_member_front_page
@@ -87,7 +110,7 @@ module DeviceSystemTest
     screenshot_group :new_front_page
     visit front_page_path
     assert_css('#headermenuholder > .fa-bars')
-    screenshot :index, skip_area: [MENU_BTN_AREA, self.class.progress_bar_area]
+    screenshot :index, skip_area: [MENU_BTN_AREA, progress_bar_area]
     find('#headermenuholder > .fa-bars').click
     article_menu_link = find('.menubutton', text: 'My first article')
     screenshot :menu, skip_area: menu_logo_area
@@ -101,10 +124,10 @@ module DeviceSystemTest
     visit front_page_path
     assert_css('#headermenuholder > .fa-bars')
     assert_css('.fa-chevron-down')
-    screenshot :index, area_size_limit: 533, skip_area: [MENU_BTN_AREA, self.class.progress_bar_area]
+    screenshot :index, area_size_limit: 533, skip_area: [MENU_BTN_AREA, progress_bar_area]
     find('.fa-chevron-down').click
     find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
-    screenshot :scrolled, skip_area: self.class.scroll_bar_area
+    screenshot :scrolled, skip_area: scroll_bar_area
     assert_equal information_page_url(id(:first)),
         find('#footer .menu-item a', text: 'MY FIRST ARTICLE')[:href]
     with_retries label: 'article link click' do
