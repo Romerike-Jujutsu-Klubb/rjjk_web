@@ -1,6 +1,4 @@
 function show_tab() {
-    console.log("show_tab: " + decodeURIComponent(location.hash));
-
     if (location.hash) {
         var selected_tab = $('a[data-target="' + decodeURIComponent(location.hash).slice(0, -4) + '"]');
 
@@ -34,8 +32,6 @@ function show_tab() {
             selected_tab.tab('show');
         }
     } else {
-        console.log("location.hash empty");
-
         var default_tab = $('a.nav-link.active[data-toggle="tab"]');
         if (default_tab[0]) {
             console.log("found active tab: " + default_tab.attr("data-target"));
