@@ -29,6 +29,7 @@ class ApplicationVideosController < ApplicationController
         @application_video.image = Image.find_by!(md5_checksum: @application_video.image.md5_checksum)
         return create
       end
+      flash.alert = "Unable to save the video: #{@application_video.errors.full_messages.join(' ')}"
       render :new
     end
   end
@@ -55,7 +56,7 @@ class ApplicationVideosController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def application_video_params
-    params.require(:application_video)
-        .permit(:technique_application_id, :image_id, image_attributes: %i[file name])
+    params.require(:application_video).permit(:technique_application_id, :image_id,
+        image_attributes: %i[cloudinary_upload_id height md5_checksum name width])
   end
 end

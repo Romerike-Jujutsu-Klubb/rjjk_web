@@ -51,6 +51,14 @@ class Image < ApplicationRecord
     self.content_type = file.content_type if file.content_type.present?
   end
 
+  def cloudinary_upload_id=(upload_id)
+    preloaded = Cloudinary::PreloadedFile.new(upload_id)
+    raise 'Invalid upload signature' unless preloaded.valid?
+
+    self.content_type = "#{preloaded.resource_type}/#{preloaded.format}"
+    self.cloudinary_identifier = preloaded.identifier
+  end
+
   def format
     extensions = MIME::Types[content_type].first&.extensions
     extensions&.select { |e| e.size <= 3 }&.first || extensions&.first || name.split('.').last

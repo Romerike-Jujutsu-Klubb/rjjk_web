@@ -13,7 +13,8 @@ class ApplicationVideosTest < ApplicationSystemTestCase
     assert_selector 'h1', text: 'Application Videos'
   end
 
-  test 'creating a Application video' do
+  test 'creating an application video' do
+    skip 'Needs update for Cloudinary.'
     visit ranks_path
     find('a', text: 'Kei Wa Ryu').click
     click_on '1. kyu brunt belte'

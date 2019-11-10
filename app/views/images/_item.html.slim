@@ -1,9 +1,14 @@
-- image_url = url_for(controller: :images, action: :show, id: image.id, format: image.format)
+- if image.cloudinary_identifier
+  - image_url = "https://res.cloudinary.com/romerike-jujutsu-klubb/image/upload/#{image.cloudinary_identifier}"
+- else
+  - image_url = url_for(controller: :images, action: :show, id: image.id, format: image.format)
+
 - if image.video?
   = video_tag image_url, title: image.name || 'Film', controls: true, autobuffer: true, class: 'w-100'
 - else
   = image_tag(image_url, style: 'max-height:65vh') if image.name
 div
-  = "#{image.width}x#{image.height}"
+  - if image.width
+    = "#{image.width}x#{image.height}"
   - if image.content_data
     = " (#{image.content_data.size / 1024}KB)"

@@ -1,0 +1,17 @@
+= bootstrap_form_for(@application_step) do |f|
+  - if @application_step.errors.any?
+    div id="error_explanation"
+      h2
+        => pluralize(@application_step.errors.count, "error")
+        | prohibited this application_step from being saved:
+
+      ul
+        - @application_step.errors.full_messages.each do |msg|
+          li = msg
+
+  = f.number_field :technique_application_id
+  = f.number_field :position
+  = f.text_area :description
+  = f.text_field :image_id
+  .float-right
+    = f.submit :Lagre

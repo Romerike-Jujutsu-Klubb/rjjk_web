@@ -12,7 +12,10 @@ a.btn.btn-link href=edit_rank_path(@technique_application.rank) = @technique_app
 
 h3.mt-3 Bilder
 - @technique_application.application_steps.each do |as|
-  img src=image_path(as.image_id) style="width:10%"
+  - if as.image_id
+    img src=image_path(as.image_id) style="width:10%"
+  - else
+    .alert.alert-danger Bilde mangler: #{link_to "#{as.position} #{as.image_id.inspect}", application_step_path(as)}
 
 h3.mt-3
   | Filmer
@@ -20,6 +23,9 @@ h3.mt-3
     i.fa.fa-plus>
     | Legg til film
 
-- @technique_application.application_videos.each do |av|
-  a href=image_path(av.image_id)
-    img src=inline_image_path(av.image_id, format: av.image.format) style="width:10%"
+- if @technique_application.application_videos.any?
+  - @technique_application.application_videos.each do |av|
+    a href=image_path(av.image_id)
+      img src=inline_image_path(av.image_id, format: av.image.format) style="width:10%"
+- else
+  .alert.alert-info.my-4 Ingen filmer enda.
