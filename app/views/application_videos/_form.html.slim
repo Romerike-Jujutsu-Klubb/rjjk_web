@@ -79,86 +79,87 @@ div id="drop_zone"
       | Lagre
     .clearfix
 
-div id="info"
+- if ENV['CLOUDINARY_URL']
+  div id="info"
 
-= javascript_include_tag 'cloudinary'
-= cloudinary_js_config
+  = javascript_include_tag 'cloudinary'
+  = cloudinary_js_config
 
-javascript:
-  $(document).ready(function() {
-    // Cloudinary jQuery integration library uses jQuery File Upload widget
-    // (see http://blueimp.github.io/jQuery-File-Upload/).
-    // Any file input field with cloudinary-fileupload class is automatically
-    // wrapped using the File Upload widget and configured for Cloudinary uploads.
-    // You can further customize the configuration using .fileupload method
-    // as we do below.
-    $(".cloudinary-fileupload").cloudinary_fileupload({
-      // Uncomment the following lines to enable client side image resizing and valiation.
-      // Make sure cloudinary/processing is included the js file
-      //disableImageResize: false,
-      //imageMaxWidth: 800,
-      //imageMaxHeight: 600,
-      //acceptFileTypes: /(\.|\/)(gif|jpe?g|png|bmp|ico)$/i,
-      //maxFileSize: 20000000, // 20MB
-      dropZone: "#drop_zone",
-      start: function(e) {
-        $(".status").text("Starting upload...");
-      },
-      progress: function(e, data) {
-        console.log("Uploading... " + Math.round((data.loaded * 100.0) / data.total) + "%");
-        $(".status").text("Uploading... " + Math.round((data.loaded * 100.0) / data.total) + "%");
-      },
-      fail: function(e, data) {
-        $(".status").text("Upload failed");
-      }
-    }).off("cloudinarydone").on("cloudinarydone", function(e, data) {
-      $("#application_video_image_attributes_height").val(data.result.height);
-      $("#application_video_image_attributes_md5_checksum").val(data.result.etag);
-      $("#application_video_image_attributes_width").val(data.result.width);
-      $(".status").text("Opplasting ferdig!");
-      var preview = $(".preview").html('');
-      $($.cloudinary.video(data.result.public_id, {
-        format: data.result.format, width: 320, height: 240, crop: "fit"
-      })).appendTo(preview);
+  javascript:
+    $(document).ready(function() {
+      // Cloudinary jQuery integration library uses jQuery File Upload widget
+      // (see http://blueimp.github.io/jQuery-File-Upload/).
+      // Any file input field with cloudinary-fileupload class is automatically
+      // wrapped using the File Upload widget and configured for Cloudinary uploads.
+      // You can further customize the configuration using .fileupload method
+      // as we do below.
+      $(".cloudinary-fileupload").cloudinary_fileupload({
+        // Uncomment the following lines to enable client side image resizing and valiation.
+        // Make sure cloudinary/processing is included the js file
+        //disableImageResize: false,
+        //imageMaxWidth: 800,
+        //imageMaxHeight: 600,
+        //acceptFileTypes: /(\.|\/)(gif|jpe?g|png|bmp|ico)$/i,
+        //maxFileSize: 20000000, // 20MB
+        dropZone: "#drop_zone",
+        start: function(e) {
+          $(".status").text("Starting upload...");
+        },
+        progress: function(e, data) {
+          console.log("Uploading... " + Math.round((data.loaded * 100.0) / data.total) + "%");
+          $(".status").text("Uploading... " + Math.round((data.loaded * 100.0) / data.total) + "%");
+        },
+        fail: function(e, data) {
+          $(".status").text("Upload failed");
+        }
+      }).off("cloudinarydone").on("cloudinarydone", function(e, data) {
+        $("#application_video_image_attributes_height").val(data.result.height);
+        $("#application_video_image_attributes_md5_checksum").val(data.result.etag);
+        $("#application_video_image_attributes_width").val(data.result.width);
+        $(".status").text("Opplasting ferdig!");
+        var preview = $(".preview").html('');
+        $($.cloudinary.video(data.result.public_id, {
+          format: data.result.format, width: 320, height: 240, crop: "fit"
+        })).appendTo(preview);
 
-      $('<a/>').addClass('delete_by_token').attr({href: '#'}).data({delete_token: data.result.delete_token}).html('Slett &times;').appendTo(preview).click(function(e) {
-        e.preventDefault();
-        $.cloudinary.delete_by_token($(this).data('delete_token')).done(function() {
-          $('.preview').html('');
-          $('#info').html('');
-          $("#application_video_image_attributes_height").val('');
-          $("#application_video_image_attributes_md5_checksum").val('');
-          $("#application_video_image_attributes_width").val('');
-          $('input[name="application_video[image_attributes][cloudinary_upload_id]"]').remove();
-        }).fail(function() {
-          $('.status').text("Cannot delete image");
+        $('<a/>').addClass('delete_by_token').attr({href: '#'}).data({delete_token: data.result.delete_token}).html('Slett &times;').appendTo(preview).click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function() {
+            $('.preview').html('');
+            $('#info').html('');
+            $("#application_video_image_attributes_height").val('');
+            $("#application_video_image_attributes_md5_checksum").val('');
+            $("#application_video_image_attributes_width").val('');
+            $('input[name="application_video[image_attributes][cloudinary_upload_id]"]').remove();
+          }).fail(function() {
+            $('.status').text("Cannot delete image");
+          });
         });
+        view_upload_details(data.result);
       });
-      view_upload_details(data.result);
+      $('#drop_zone').on('dragover', function(event){
+        event.preventDefault();
+        console.log('drag over');
+        $(this).addClass('hover');
+      }).on('dragleave', function(event){
+        console.log('drag leave');
+        $(this).removeClass('hover');
+      }).on('drop', function(event) {
+        $(this).removeClass('hover');
+      });
     });
-    $('#drop_zone').on('dragover', function(event){
-      event.preventDefault();
-      console.log('drag over');
-      $(this).addClass('hover');
-    }).on('dragleave', function(event){
-      console.log('drag leave');
-      $(this).removeClass('hover');
-    }).on('drop', function(event) {
-      $(this).removeClass('hover');
-    });
-  });
 
-  function view_upload_details(upload) {
-    // Build an html table out of the upload object
-    var rows = [];
-    $.each(upload, function(k, v) {
-      rows.push(
-          $("<tr>")
-              .append($("<td>").text(k))
-              .append($("<td>").text(JSON.stringify(v))));
-    });
-    $("#info").html(
-        $("<div class=\"upload_details\">")
-            .append("<h2>Upload metadata:</h2>")
-            .append($("<table class='table table-sm'>").append(rows)));
-  }
+    function view_upload_details(upload) {
+      // Build an html table out of the upload object
+      var rows = [];
+      $.each(upload, function(k, v) {
+        rows.push(
+            $("<tr>")
+                .append($("<td>").text(k))
+                .append($("<td>").text(JSON.stringify(v))));
+      });
+      $("#info").html(
+          $("<div class=\"upload_details\">")
+              .append("<h2>Upload metadata:</h2>")
+              .append($("<table class='table table-sm'>").append(rows)));
+    }
