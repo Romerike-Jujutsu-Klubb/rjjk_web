@@ -48,16 +48,31 @@ div id="drop_zone"
       = imgf.hidden_field :md5_checksum
       = imgf.hidden_field :width
       = imgf.text_field :name
-      div class="form_line"
-        div class="form_controls"
-          div class="upload_button_holder"
-            a.btn.btn-primary.mr-3 href="#" Velg video
-            = imgf.cl_upload(:cloudinary_upload_id, :return_delete_token=>true)
-            span.status Du kan også trekke en video inn i det stiplede området.
-      div class="form_line"
-        div class="form_controls"
-          div.preview
-      = hidden_field_tag :direct, params[:direct]
+
+      - if @application_video.new_record?
+        - if ENV['CLOUDINARY_URL']
+          div class="form_line"
+            div class="form_controls"
+              div class="upload_button_holder"
+                a.btn.btn-primary.mr-3 href="#" Velg video
+                = imgf.cl_upload(:cloudinary_upload_id, :return_delete_token=>true)
+                span.status Du kan også trekke en video inn i det stiplede området.
+          div class="form_line"
+            div class="form_controls"
+              div.preview
+        - else
+          = imgf.file_field :file, class: :fileinput
+          javascript:
+            $('.fileinput').fileinput({
+              browseLabel: '',
+              showCancel: false,
+              showUpload: false,
+              showRemove: false,
+              theme: 'fa'
+            });
+            // $('.kv-upload-progress').hide();
+      - else
+        = render 'images/item', image: @application_video.image
 
     .float-right = f.primary
       i.fa.fa-save>
