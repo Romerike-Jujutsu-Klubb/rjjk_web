@@ -56,7 +56,7 @@ class ApplicationVideosController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def application_video_params
-    params.require(:application_video).permit(:technique_application_id, :image_id,
-        image_attributes: %i[cloudinary_upload_id height md5_checksum name width])
+    params.require(:application_video).permit(:image_id, :technique_application_id,
+        image_attributes: %i[cloudinary_upload_id file height md5_checksum name width])
   end
 end

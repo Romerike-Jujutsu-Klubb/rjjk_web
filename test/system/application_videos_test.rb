@@ -14,7 +14,6 @@ class ApplicationVideosTest < ApplicationSystemTestCase
   end
 
   test 'creating an application video' do
-    skip 'Needs update for Cloudinary.'
     visit ranks_path
     find('a', text: 'Kei Wa Ryu').click
     click_on '1. kyu brunt belte'
@@ -30,7 +29,7 @@ class ApplicationVideosTest < ApplicationSystemTestCase
     click_on 'Back'
   end
 
-  test 'updating a Application video' do
+  test 'updating an application video' do
     # visit application_videos_url
     # click_on 'Edit', match: :first
     #
@@ -42,7 +41,7 @@ class ApplicationVideosTest < ApplicationSystemTestCase
     # click_on 'Back'
   end
 
-  test 'destroying a Application video' do
+  test 'destroying an application video' do
     visit application_videos_url
     page.accept_confirm do
       click_on 'Destroy', match: :first
