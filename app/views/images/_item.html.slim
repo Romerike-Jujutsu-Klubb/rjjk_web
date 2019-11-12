@@ -1,5 +1,8 @@
 - if image.cloudinary_identifier
-  - image_url = "https://res.cloudinary.com/romerike-jujutsu-klubb/image/upload/#{image.cloudinary_identifier}"
+  - if request.headers['HTTP_ACCEPT'].include? %r{image/webp}
+    - image_url = "#{Cloudinary.secure_distribution}/image/upload/#{image.cloudinary_identifier.chomp('.mp4')}.webm"
+  - else
+    - image_url = "#{Cloudinary.secure_distribution}/image/upload/#{image.cloudinary_identifier}"
 - else
   - image_url = url_for(controller: :images, action: :show, id: image.id, format: image.format)
 
