@@ -84,9 +84,9 @@ class ApplicationController < ActionController::Base
 
   def load_next_practice
     return if @next_practice
-    return unless (m = current_user&.member) && (group = m.groups.find(&:planning))
+    return unless (m = current_user&.member) && (groups = m.groups.select(&:planning)).any?
 
-    @next_practice = group.next_practice
+    @next_practice = groups.map(&:next_practice).min_by(&:start_at)
     @next_schedule = @next_practice.group_schedule
     attendances_next_practice = @next_practice.attendances.to_a
     @your_attendance_next_practice = attendances_next_practice.find { |a| a.member_id == m.id }

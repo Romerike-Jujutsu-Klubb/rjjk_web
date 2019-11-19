@@ -33,6 +33,10 @@ h2.float-right
           a.dropdown-item.text-danger href=user_path(@user) data-method=:delete data-confirm='Er du sikker på at du vil slette denne brukeren?'
             i.fa.fa-trash>
             | Slett bruker
+        - if Rails.env.development? && current_user != @user
+          a.dropdown-item href=user_path(@user, key: @user.generate_security_token) title="Log på som #{@user.name}"
+            i.fa.fa-user>
+            | Log på som #{@user.name}
 
 - if (error_msgs = @user.errors.full_messages_for(:base)).any?
   .alert.alert-danger

@@ -81,13 +81,13 @@ class Group < ApplicationRecord
   end
 
   def next_schedule
-    group_schedules.min_by { |gs| gs.next_practice.date }
+    group_schedules.min_by { |gs| gs.next_practice.start_at }
   end
 
   delegate :next_practice, to: :next_schedule
 
   def previous_schedule
-    group_schedules.max_by { |gs| gs.last_practice.date }
+    group_schedules.max_by { |gs| gs.last_practice.end_at }
   end
 
   delegate :last_practice, to: :previous_schedule
