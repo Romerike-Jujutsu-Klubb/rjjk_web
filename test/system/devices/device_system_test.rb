@@ -120,7 +120,7 @@ module DeviceSystemTest
   end
 
   def test_new_front_page_scroll
-    skip "Flaky test" if ENV['TRAVIS']
+    skip 'Flaky test' if ENV['TRAVIS']
     screenshot_group :new_front_page_scroll
     visit front_page_path
     assert_css('#headermenuholder > .fa-bars')
