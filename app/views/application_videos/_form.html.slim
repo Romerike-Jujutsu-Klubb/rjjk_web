@@ -86,7 +86,7 @@ div id="drop_zone"
   = cloudinary_js_config
 
   javascript:
-    $(document).ready(function() {
+    $(function() {
       // Cloudinary jQuery integration library uses jQuery File Upload widget
       // (see http://blueimp.github.io/jQuery-File-Upload/).
       // Any file input field with cloudinary-fileupload class is automatically
@@ -103,20 +103,22 @@ div id="drop_zone"
         //maxFileSize: 20000000, // 20MB
         dropZone: "#drop_zone",
         start: function(e) {
-          $(".status").text("Starting upload...");
+          $('.cloudinary-fileupload').prop('disabled', true);
+          $(".status").text("Starter opplasting...");
         },
         progress: function(e, data) {
           console.log("Uploading... " + Math.round((data.loaded * 100.0) / data.total) + "%");
-          $(".status").text("Uploading... " + Math.round((data.loaded * 100.0) / data.total) + "%");
+          $(".status").text("Laster opp... " + Math.round((data.loaded * 100.0) / data.total) + "%");
         },
         fail: function(e, data) {
-          $(".status").text("Upload failed");
+          $(".status").text("Opplasting feilet!");
         }
       }).off("cloudinarydone").on("cloudinarydone", function(e, data) {
         $("#application_video_image_attributes_height").val(data.result.height);
         $("#application_video_image_attributes_md5_checksum").val(data.result.etag);
         $("#application_video_image_attributes_width").val(data.result.width);
         $(".status").text("Opplasting ferdig!");
+        $('.cloudinary-fileupload').prop('disabled', true);
         var preview = $(".preview").html('');
         $($.cloudinary.video(data.result.public_id, {
           format: data.result.format, width: 320, height: 240, crop: "fit"
@@ -131,8 +133,11 @@ div id="drop_zone"
             $("#application_video_image_attributes_md5_checksum").val('');
             $("#application_video_image_attributes_width").val('');
             $('input[name="application_video[image_attributes][cloudinary_upload_id]"]').remove();
+            $('.status').text("Du kan også trekke en video inn i det stiplede området.");
+            $('.cloudinary-fileupload').prop('disabled', false);
           }).fail(function() {
-            $('.status').text("Cannot delete image");
+            $('.status').text("Kunne ikke slette filmen.");
+            $('.cloudinary-fileupload').prop('disabled', false);
           });
         });
         view_upload_details(data.result);
