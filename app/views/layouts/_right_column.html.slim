@@ -28,7 +28,8 @@ css:
       - if admin?
         a.btn.btn-primary.btn-sm.ml-1 href=new_event_path title="Nytt arrangement"
           i.fa.fa-plus
-  = render 'layouts/next_practice'
+  - @next_practices&.each do |next_practice|
+    = render 'layouts/next_practice', next_practice: next_practice
   = render 'layouts/events', events: @layout_events
 
   - if admin?

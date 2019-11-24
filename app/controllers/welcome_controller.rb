@@ -16,9 +16,16 @@ class WelcomeController < ApplicationController
           @news_items.prepend graduation_news
         end
       end
-      if load_next_practice
-        @news_items << NewsItem.new(publish_at: @next_practice.start_at - 1.day,
-            body: render_to_string(partial: 'layouts/next_practice'))
+      if load_next_practices
+        @next_practices.each do |next_practice|
+          @news_items << NewsItem.new(
+              publish_at: next_practice.start_at - 1.day,
+              body: render_to_string(
+                  partial: 'layouts/next_practice',
+                  locals: { next_practice: next_practice }
+                )
+            )
+        end
       end
       event_query = Event.upcoming.order(:start_at)
       event_query = event_query.where.not(type: InstructorMeeting.name) unless current_user.instructor?

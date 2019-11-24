@@ -1,70 +1,79 @@
-- if @next_practice
-  .next-practice.mb-3
-    h4 = link_to 'Neste trening', @next_practice.group_schedule.group.current_semester
+ruby:
+  attendances_next_practice = next_practice.attendances.to_a
+  m = current_user&.member
+  your_attendance_next_practice = attendances_next_practice.find { |a| a.member_id == m.id }
+  attendances_next_practice.delete your_attendance_next_practice
+  other_attendees = attendances_next_practice.select do |a|
+    [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED].include? a.status
+  end
+  other_absentees = attendances_next_practice - other_attendees
 
-    h5 style="color: #FFB400"
-      => day_name(@next_practice.group_schedule.weekday)
-      = @next_practice.date.day
-      ' .
-      => month_name(@next_practice.date.month)
-      span.text-nowrap
-        ' kl
-        = @next_practice.group_schedule.start_at.strftime('%R')
+.next-practice.mb-3
+  h4 = link_to "Neste trening #{next_practice.group_schedule.group.name if @next_practices.size > 1}", next_practice.group_schedule.group.current_semester
 
-    - if @next_practice.message.present?
-      p = @next_practice.message
+  h5 style="color: #FFB400"
+    => day_name(next_practice.group_schedule.weekday)
+    = next_practice.date.day
+    ' .
+    => month_name(next_practice.date.month)
+    span.text-nowrap
+      ' kl
+      = next_practice.group_schedule.start_at.strftime('%R')
 
-    / TODO(uwe): Move this to service worker when available
-    - attendances = @next_practice.attendances.select { |a| Attendance::PRESENCE_STATES.include?(a.status) }
-    javascript:
-      if (window.ExperimentalBadge) {
-        $(function () {
-            window.ExperimentalBadge.set(#{attendances.size});
-        });
-      }
-    / ODOT
+  - if next_practice.message.present?
+    p = next_practice.message
 
-    - if @your_attendance_next_practice && Attendance::PRESENCE_STATES.include?(@your_attendance_next_practice.status)
-      .d-flex
-        .next-practice-txt
-          = render 'attendances/details_link', practice: @next_practice
-          - unless @other_absentees.empty?
-            span.text-nowrap
-              => @other_absentees.size
-              ' har
-            ' meldt fravær.
-        .next-practice-btn
-          = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT), \
-              class: 'btn btn-secondary btn-sm', title: 'Kan ikke allikevel...', method: :post)
-            i.fa.fa-thumbs-down>
-            | Meld av
-    - elsif @your_attendance_next_practice
-      .d-flex
-        .next-practice-txt
-          ' Du kommer ikke.
-          - unless @other_attendees.empty?
-            => @other_attendees.size
-            ' andre kommer.
-          - unless @other_absentees.empty?
-            span.text-nowrap
-              => @other_absentees.size
-              ' har
-            ' meldt fravær.
-        .next-practice-btn
-          = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::WILL_ATTEND), \
-              class: 'btn btn-secondary btn-sm', title: 'Kommer allikevel!', method: :post)
-            i.fa.fa-thumbs-up>
-            ' Kommer allikevel
-    - else
-      .input-group.input-group-sm
-        .input-group-prepend
-          span.input-group-text Kommer du?
-        .input-group-append
-          = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::WILL_ATTEND), \
-              class: 'btn btn-secondary', title: 'Kommer!', method: :post)
-            i.fa.fa-thumbs-up
-        .input-group-append
-          = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT), \
-              class: 'btn btn-secondary', title: 'Kan ikke...', method: :post)
-            i.fa.fa-thumbs-down
-      =render 'attendances/details_link', practice: @next_practice
+  / TODO(uwe): Move this to service worker when available
+  - attendances = next_practice.attendances.select { |a| Attendance::PRESENCE_STATES.include?(a.status) }
+  javascript:
+    if (window.ExperimentalBadge) {
+      $(function () {
+          window.ExperimentalBadge.set(#{attendances.size});
+      });
+    }
+  / ODOT
+
+  - if your_attendance_next_practice && Attendance::PRESENCE_STATES.include?(your_attendance_next_practice.status)
+    .d-flex
+      .next-practice-txt
+        = render 'attendances/details_link', practice: next_practice
+        - unless other_absentees.empty?
+          span.text-nowrap
+            => other_absentees.size
+            ' har
+          ' meldt fravær.
+      .next-practice-btn
+        = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT), \
+            class: 'btn btn-secondary btn-sm', title: 'Kan ikke allikevel...', method: :post)
+          i.fa.fa-thumbs-down>
+          | Meld av
+  - elsif your_attendance_next_practice
+    .d-flex
+      .next-practice-txt
+        ' Du kommer ikke.
+        - unless other_attendees.empty?
+          => other_attendees.size
+          ' andre kommer.
+        - unless other_absentees.empty?
+          span.text-nowrap
+            => other_absentees.size
+            ' har
+          ' meldt fravær.
+      .next-practice-btn
+        = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::WILL_ATTEND), \
+            class: 'btn btn-secondary btn-sm', title: 'Kommer allikevel!', method: :post)
+          i.fa.fa-thumbs-up>
+          ' Kommer allikevel
+  - else
+    .input-group.input-group-sm
+      .input-group-prepend
+        span.input-group-text Kommer du?
+      .input-group-append
+        = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::WILL_ATTEND), \
+            class: 'btn btn-secondary', title: 'Kommer!', method: :post)
+          i.fa.fa-thumbs-up
+      .input-group-append
+        = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT), \
+            class: 'btn btn-secondary', title: 'Kan ikke...', method: :post)
+          i.fa.fa-thumbs-down
+    =render 'attendances/details_link', practice: next_practice

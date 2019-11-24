@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
       @information_pages = info_query.to_a
     end
 
-    load_next_practice
+    load_next_practices
 
     group_query = Group.active(Date.current).order('to_age, from_age DESC')
     if admin?
@@ -82,20 +82,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def load_next_practice
-    return if @next_practice
+  def load_next_practices
+    return if @next_practices
     return unless (m = current_user&.member) && (groups = m.groups.select(&:planning)).any?
 
-    @next_practice = groups.map(&:next_practice).min_by(&:start_at)
-    @next_schedule = @next_practice.group_schedule
-    attendances_next_practice = @next_practice.attendances.to_a
-    @your_attendance_next_practice = attendances_next_practice.find { |a| a.member_id == m.id }
-    attendances_next_practice.delete @your_attendance_next_practice
-    @other_attendees = attendances_next_practice.select do |a|
-      [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED].include? a.status
-    end
-    @other_absentees = attendances_next_practice - @other_attendees
-    @next_practice
+    @next_practices = groups.map(&:next_practice)
   end
 
   def send_data(*)
