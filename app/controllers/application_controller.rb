@@ -86,7 +86,7 @@ class ApplicationController < ActionController::Base
     return if @next_practices
     return unless (m = current_user&.member) && (groups = m.groups.select(&:planning)).any?
 
-    @next_practices = groups.map(&:next_practice)
+    @next_practices = groups.map(&:next_practice).sort_by(&:start_at)
   end
 
   def send_data(*)

@@ -17,9 +17,10 @@ class WelcomeController < ApplicationController
         end
       end
       if load_next_practices
+        now = Time.current
         @next_practices.each do |next_practice|
           @news_items << NewsItem.new(
-              publish_at: next_practice.start_at - 1.day,
+              publish_at: now + (now - next_practice.start_at),
               body: render_to_string(
                   partial: 'layouts/next_practice',
                   locals: { next_practice: next_practice }

@@ -63,17 +63,17 @@ ruby:
         = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::WILL_ATTEND), \
             class: 'btn btn-secondary btn-sm', title: 'Kommer allikevel!', method: :post)
           i.fa.fa-thumbs-up>
-          ' Kommer allikevel
+          ' Meld på
   - else
     .input-group.input-group-sm
       .input-group-prepend
         span.input-group-text Kommer du?
       .input-group-append
-        = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::WILL_ATTEND), \
+        = link_to(with_detour(controller: :attendances, action: :announce, year: next_practice.year, week: next_practice.week, group_schedule_id: next_practice.group_schedule_id, status: Attendance::Status::WILL_ATTEND), \
             class: 'btn btn-secondary', title: 'Kommer!', method: :post)
           i.fa.fa-thumbs-up
       .input-group-append
-        = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT), \
+        = link_to(with_detour(controller: :attendances, action: :announce, year: next_practice.year, week: next_practice.week, group_schedule_id: next_practice.group_schedule_id, status: Attendance::Status::ABSENT), \
             class: 'btn btn-secondary', title: 'Kan ikke...', method: :post)
           i.fa.fa-thumbs-down
     =render 'attendances/details_link', practice: next_practice
