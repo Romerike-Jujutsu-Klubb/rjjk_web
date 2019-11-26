@@ -6,7 +6,6 @@ function onInstall(event) {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function prefill(cache) {
       return cache.addAll([
-
         // make sure serviceworker.js is not required by application.js
         // if you want to reference application.js from here
         '<%= asset_path "application.js" %>',
@@ -43,6 +42,9 @@ function onActivate(event) {
 
 // Borrowed from https://github.com/TalAter/UpUp
 function onFetch(event) {
+  if (event.request.method === "POST") {
+    return;
+  }
   event.respondWith(
     // try to return untouched request from network first
     fetch(event.request).catch(function() {
