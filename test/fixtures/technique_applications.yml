@@ -1,14 +1,17 @@
 defence_against_wrist_grip_in_front:
   name: Forsvar mot håndleddsgrep forfra
   rank: kyu_5
+  position: 1
   system: Juho
 
 defence_against_wrist_grip_from_behind:
   name: Forsvar mot håndleddsgrep bakfra
   rank: kyu_5
+  position: 2
   system: Juho
 
 defence_against_dual_hair_grip_with_kneeing:
   name: Forsvar mot dobbelt hårtak med kneing
   rank: kyu_1
+  position: 1
   system: Juho
