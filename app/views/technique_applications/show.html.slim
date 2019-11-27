@@ -35,6 +35,8 @@ scss:
               img.w-100 src=image_path(as.image_id)
             = as.description
   #videos.tab-pane.fade role="tabpanel" aria-labelledby="videos-tab"
-    - @technique_application.application_videos.each do |av|
-      = render 'images/item', image: av.image
+    .card-deck
+      - @technique_application.application_videos.each do |av|
+        .card.mt-3
+          .card-body = render 'images/item', image: av.image
 
