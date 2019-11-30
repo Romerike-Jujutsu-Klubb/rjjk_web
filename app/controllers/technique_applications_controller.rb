@@ -55,26 +55,29 @@ class TechniqueApplicationsController < ApplicationController
 
   def update
     @technique_application = TechniqueApplication.find(params[:id])
-    respond_to do |format|
-      if @technique_application.update(params[:technique_application])
-        format.html do
-          redirect_to @technique_application, notice: 'Application was successfully updated.'
-        end
-        format.json { head :no_content }
-      else
-        format.html { render :edit }
-        format.json { render json: @technique_application.errors, status: :unprocessable_entity }
-      end
+    if @technique_application.update(params[:technique_application])
+      redirect_to @technique_application, notice: 'Application was successfully updated.'
+    else
+      render :edit
     end
+  end
+
+  def move_up
+    technique_application = TechniqueApplication.find(params[:id])
+    technique_application.move_higher
+    redirect_to edit_rank_path(technique_application.rank, anchor: :applications)
+  end
+
+  def move_down
+    technique_application = TechniqueApplication.find(params[:id])
+    technique_application.move_lower
+    redirect_to edit_rank_path(technique_application.rank, anchor: :applications)
   end
 
   def destroy
     @technique_application = TechniqueApplication.find(params[:id])
-    @technique_application.destroy
-    respond_to do |format|
-      format.html { redirect_to technique_applications_url }
-      format.json { head :no_content }
-    end
+    @technique_application.destroy!
+    redirect_to technique_applications_url
   end
 
   private

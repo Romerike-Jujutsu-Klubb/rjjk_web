@@ -296,7 +296,12 @@ Rails.application.routes.draw do
   resources :survey_questions
   resources :survey_requests
   resources :surveys
-  resources :technique_applications
+  resources :technique_applications do
+    member do
+      post :move_down
+      post :move_up
+    end
+  end
   resources :trial_attendances
   resources :user_images, only: [] do
     member do

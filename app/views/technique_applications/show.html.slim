@@ -28,7 +28,7 @@ scss:
 #myTabContent.tab-content
   #steps.tab-pane.fade.show.active role="tabpanel" aria-labelledby="steps-tab"
     .card-deck
-      - @technique_application.application_steps.order(:position).each.with_index do |as, i|
+      - @technique_application.application_steps.order(:position).each do |as|
         .card.mt-3
           .card-body
             - if as.image_id

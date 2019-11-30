@@ -11,7 +11,7 @@ a.btn.btn-link href=url_for(@technique_application) Vis
 a.btn.btn-link href=edit_rank_path(@technique_application.rank) = @technique_application.rank.name
 
 h3.mt-3 Bilder
-- @technique_application.application_steps.each do |as|
+- @technique_application.application_steps.order(:position).each do |as|
   - if as.image_id
     img src=image_path(as.image_id) style="width:10%"
   - else

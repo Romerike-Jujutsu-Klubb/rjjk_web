@@ -33,10 +33,20 @@ a.btn.btn-info.float-right href=new_technique_application_path(technique_applica
   i.fa.fa-plus>
   | Ny applikasjon
 
-h3 Applikasjoner
+h3#applications Applikasjoner
 
 - if @rank.applications.any?
   table.table
-    - @rank.applications.sort_by(&:name).each do |app|
+    - @rank.applications.sort_by(&:position).each do |app|
       tr
+        td = app.position
+        td
+          - unless app.first?
+            a href=move_up_technique_application_path(app) data-method=:post
+              i.fa.fa-arrow-up
+        td
+          - unless app.last?
+            a href=move_down_technique_application_path(app) data-method=:post
+              i.fa.fa-arrow-down
+        td: a href=move_down_technique_application_path(app)
         td = link_to app.name, edit_technique_application_path(app)
