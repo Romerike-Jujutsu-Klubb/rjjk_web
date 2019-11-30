@@ -31,4 +31,4 @@ a.btn.btn-primary.float-right href=new_basic_technique_link_path(basic_technique
 
   ul
     - @basic_technique.basic_technique_links.each do |link|
-      li = link_to link.title.presence || link.url, link.url
+      li: a href=link.url target="btl#{link.id}" = link.title.presence || link.url

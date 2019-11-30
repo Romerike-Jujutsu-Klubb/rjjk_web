@@ -5,7 +5,7 @@
   .row
     .col = f.select :waza_id, @wazas.to_options, prompt:'Velg waza'
     .col = f.select :rank_id, @ranks.to_options(:label), {}, prompt: 'Velg grad'
-  = f.text_area :description
+  = f.text_area :description, class: :expanding
 
   .float-right.ml-2 = f.primary
     i.fa.fa-save>
