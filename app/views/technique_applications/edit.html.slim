@@ -13,7 +13,7 @@ a.btn.btn-link href=edit_rank_path(@technique_application.rank) = @technique_app
 h3.mt-3 Bilder
 - @technique_application.application_steps.order(:position).each do |as|
   - if as.image_id
-    img src=image_path(as.image_id) style="width:10%"
+    img src=image_path(as.image_id) style="width:10%" title=as.description
   - else
     .alert.alert-danger Bilde mangler: #{link_to "#{as.position} #{as.image_id.inspect}", application_step_path(as)}
 

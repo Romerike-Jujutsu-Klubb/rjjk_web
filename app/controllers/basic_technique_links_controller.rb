@@ -26,7 +26,7 @@ class BasicTechniqueLinksController < ApplicationController
   def create
     @basic_technique_link = BasicTechniqueLink.new(params[:basic_technique_link])
     if @basic_technique_link.save
-      redirect_to @basic_technique_link, notice: 'Basic technique link was successfully created.'
+      redirect_to @basic_technique_link.basic_technique, notice: 'Lagret lenke.'
     else
       new
     end
@@ -35,7 +35,7 @@ class BasicTechniqueLinksController < ApplicationController
   def update
     @basic_technique_link = BasicTechniqueLink.find(params[:id])
     if @basic_technique_link.update(params[:basic_technique_link])
-      redirect_to @basic_technique_link, notice: 'Basic technique link was successfully updated.'
+      redirect_to @basic_technique_link.basic_technique, notice: 'Opdaterte lenke.'
     else
       edit
     end

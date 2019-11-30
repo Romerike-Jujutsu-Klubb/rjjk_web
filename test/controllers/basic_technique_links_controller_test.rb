@@ -27,7 +27,7 @@ class BasicTechniqueLinksControllerTest < ActionController::TestCase
       } }
     end
 
-    assert_redirected_to basic_technique_link_path(BasicTechniqueLink.last)
+    assert_redirected_to basic_technique_path(BasicTechniqueLink.last.basic_technique)
   end
 
   test 'should show basic_technique_link' do
@@ -47,7 +47,7 @@ class BasicTechniqueLinksControllerTest < ActionController::TestCase
       title: @basic_technique_link.title,
       url: @basic_technique_link.url,
     } }
-    assert_redirected_to basic_technique_link_path(@basic_technique_link)
+    assert_redirected_to basic_technique_path(@basic_technique_link.basic_technique)
   end
 
   test 'should destroy basic_technique_link' do

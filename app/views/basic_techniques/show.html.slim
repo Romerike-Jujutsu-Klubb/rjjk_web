@@ -1,0 +1,34 @@
+- if current_user.technical_committy?
+  a.btn.btn-primary.float-right href=edit_basic_technique_path(@basic_technique)
+    i.fa.fa-edit>
+    | Endre
+
+h2
+  ' Grunnteknikk:
+  = @basic_technique.name
+
+h4
+  => @basic_technique.waza.name
+  ' waza,
+  a href=rank_path(@basic_technique.rank) = @basic_technique.rank.label
+
+- if @basic_technique.translation.present?
+  p = @basic_technique.translation
+- elsif current_user.technical_committy?
+  p Oversettelse mangler!
+
+- if @basic_technique.description.present?
+  p = @basic_technique.description
+- elsif current_user.technical_committy?
+  p Beskrivelse mangler!
+
+a.btn.btn-primary.float-right href=new_basic_technique_link_path(basic_technique_link: { basic_technique_id: @basic_technique.id })
+  i.fa.fa-plus>
+  | Legg til lenke
+
+- if @basic_technique.basic_technique_links.any?
+  h3 Lenker
+
+  ul
+    - @basic_technique.basic_technique_links.each do |link|
+      li = link_to link.title.presence || link.url, link.url
