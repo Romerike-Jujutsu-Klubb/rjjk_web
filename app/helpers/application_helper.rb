@@ -64,7 +64,10 @@ module ApplicationHelper
     html = Kramdown::Document.new(s.strip).to_html
     with_links = auto_link(html, link: :all, target: '_blank', sanitize: false)
     with_links.force_encoding(Encoding::UTF_8)
-    absolute_links(with_links).html_safe # rubocop: disable Rails/OutputSafety
+    with_inline_images = with_links.gsub(%r{(src=".*/images/\d+)(\.[^."])?"}) do
+      %(#{Regexp.last_match(1)}/inline#{Regexp.last_match(2) || '.jpg'}")
+    end
+    absolute_links(with_inline_images).html_safe # rubocop: disable Rails/OutputSafety
   end
 
   def textify(s)
