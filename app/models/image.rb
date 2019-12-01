@@ -56,7 +56,7 @@ class Image < ApplicationRecord
     raise 'Invalid upload signature' unless preloaded.valid?
 
     self.content_type = "#{preloaded.resource_type}/#{preloaded.format}"
-    self.cloudinary_identifier = preloaded.identifier
+    self.cloudinary_identifier = preloaded.identifier.sub(/\.[^.]+$/, '')
   end
 
   def format

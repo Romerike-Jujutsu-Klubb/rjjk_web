@@ -4,8 +4,25 @@ module ApplicationHelper
   include UserSystem
   include GraduationAccess
 
-  def accepts_webp
+  def accepts_webp?
     request.headers['HTTP_ACCEPT'] =~ %r{image/webp}
+  end
+
+  def image_url_with_cl(image)
+    format = if accepts_webp?
+               image.video? && accepts_webp? ? :webm : :webp
+             else
+               image.format
+             end
+    if image.cloudinary_identifier
+      if image.video?
+        cl_video_path(image.cloudinary_identifier, format: format)
+      else
+        cl_image_path(image.cloudinary_identifier, format: format)
+      end
+    else
+      image_path(image.id, format: format)
+    end
   end
 
   def menu_item(name, options = {})

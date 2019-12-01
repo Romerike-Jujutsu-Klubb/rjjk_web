@@ -32,7 +32,7 @@ scss:
         .card.mt-3
           .card-body
             - if as.image_id
-              img.w-100 src=image_path(as.image_id)
+              = render 'images/item', image: as.image
             = as.description
   #videos.tab-pane.fade role="tabpanel" aria-labelledby="videos-tab"
     .card-deck

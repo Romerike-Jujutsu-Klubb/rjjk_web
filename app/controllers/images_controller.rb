@@ -27,13 +27,16 @@ class ImagesController < ApplicationController
   end
 
   def show
-    image = Image.select('id, content_type, name, user_id, google_drive_reference, md5_checksum')
+    image = Image
+        .select(%i[id cloudinary_identifier content_type name user_id google_drive_reference md5_checksum])
         .find(params[:id])
     return if rank_required(image)
 
     requested_format = params[:format]
     return if !serving_webp(requested_format) &&
         (redirected_to_webp(image, requested_format) || redirected_to_format(image, requested_format))
+
+    return if redirected_to_cloudinary(image)
 
     if image.video?
       streamer = image.content_data_io
@@ -61,13 +64,16 @@ class ImagesController < ApplicationController
   end
 
   def inline
-    image = Image.select('id,name,content_type,user_id,google_drive_reference').find(params[:id])
+    image = Image.select('cloudinary_identifier,id,name,content_type,user_id,google_drive_reference')
+        .find(params[:id])
     return if rank_required(image)
 
     requested_format = params[:format]
     return if !serving_webp(requested_format) &&
         (redirected_to_webp(image, requested_format) || redirected_to_icon(image) ||
         redirected_to_format(image, requested_format))
+
+    return if redirected_to_cloudinary(image)
 
     content_data_io = image.content_data_io
     if content_data_io.nil?
@@ -199,6 +205,15 @@ class ImagesController < ApplicationController
 
   private
 
+  def redirected_to_cloudinary(image)
+    if image.cloudinary_identifier
+      redirect_to helpers.image_url_with_cl(image)
+      return true
+    end
+    CloudinaryUploadJob.perform_later(image.id)
+    false
+  end
+
   def send_image(image, magick_image, requested_format)
     content_type, filename = convert_to_format(image, magick_image, requested_format)
     send_data(magick_image.to_blob, disposition: 'inline', type: content_type, filename: filename)
@@ -224,7 +239,7 @@ class ImagesController < ApplicationController
 
   def redirected_to_webp(image, requested_format)
     return unless image.image?
-    return unless helpers.accepts_webp && !requests_webp(requested_format)
+    return unless helpers.accepts_webp? && !requests_webp(requested_format)
 
     redirect_to width: params[:width], format: :webp
     true
@@ -235,7 +250,7 @@ class ImagesController < ApplicationController
   end
 
   def serving_webp(requested_format)
-    helpers.accepts_webp && requests_webp(requested_format)
+    helpers.accepts_webp? && requests_webp(requested_format)
   end
 
   def redirected_to_icon(image)

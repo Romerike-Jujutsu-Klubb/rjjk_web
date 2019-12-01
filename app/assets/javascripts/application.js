@@ -30,34 +30,34 @@
 //= require preview
 //= require data-replace
 
-NProgress.configure({showSpinner: false,  ease: 'ease',  speed: 500});
+NProgress.configure({showSpinner: false, ease: 'ease', speed: 500});
 
-$(function () {
-    $('.chosen,.chosen-select').chosen();
+$(function() {
+  $('.chosen,.chosen-select').chosen();
 });
 
 // Lazy load marked images
-$(window).on('load', function () {
-    $("img[data-original]").each(function () {
-        var container = $(this).closest(".lazy-container")[0];
-        if (container) {
-            $(this).lazyload({container: container});
-        } else {
-            $(this).lazyload();
-        }
-    });
+$(window).on('load', function() {
+  $("img[data-original]").each(function() {
+    var container = $(this).closest(".lazy-container")[0];
+    if (container) {
+      $(this).lazyload({container: container});
+    } else {
+      $(this).lazyload();
+    }
+  });
 });
 
-$(function () {
-    $('[data-toggle=tooltip]').tooltip()
+$(function() {
+  $('[data-toggle=tooltip]').tooltip()
 });
 
-$(function () {
-    $.fn.popover.Constructor.Default.whiteList.table = [];
-    $.fn.popover.Constructor.Default.whiteList.tr = [];
-    $.fn.popover.Constructor.Default.whiteList.td = [];
-    $.fn.popover.Constructor.Default.whiteList.tbody = [];
-    $.fn.popover.Constructor.Default.whiteList.thead = [];
+$(function() {
+  $.fn.popover.Constructor.Default.whiteList.table = [];
+  $.fn.popover.Constructor.Default.whiteList.tr = [];
+  $.fn.popover.Constructor.Default.whiteList.td = [];
+  $.fn.popover.Constructor.Default.whiteList.tbody = [];
+  $.fn.popover.Constructor.Default.whiteList.thead = [];
 
-    $('[data-toggle="popover"]').popover()
+  $('[data-toggle="popover"]').popover()
 });
