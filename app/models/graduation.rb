@@ -166,7 +166,7 @@ class Graduation < ApplicationRecord
   end
 
   def passed?
-    (held_on&.< Date.current)
+    Time.current > start_at
   end
 
   def locked?

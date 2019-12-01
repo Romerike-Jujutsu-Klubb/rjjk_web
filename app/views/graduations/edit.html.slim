@@ -18,7 +18,7 @@
           b = @graduation.censors.reject(&:locked_at).select(&:examiner?).map(&:member).map(&:name).join(', ')
       - else
         .btn.btn-success.disabled Innkalling #{invite_date > Time.current ? :sendes : :sendt} #{invite_date}
-    - if @approval.graduation.held_on <= Date.current
+    - if @approval.graduation.passed?
       - if @approval.approved_grades_at.nil?
         = link_to approve_graduation_path(@graduation), class: 'btn btn-primary ml-2', method: :post
           i.fa.fa-thumbs-up>
