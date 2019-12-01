@@ -73,7 +73,9 @@ class ImagesController < ApplicationController
         (redirected_to_webp(image, requested_format) || redirected_to_icon(image) ||
         redirected_to_format(image, requested_format))
 
-    return if redirected_to_cloudinary(image)
+    width = params[:width].to_i
+    width = 492 if width < 8
+    return if redirected_to_cloudinary(image, width: width)
 
     content_data_io = image.content_data_io
     if content_data_io.nil?
@@ -82,8 +84,6 @@ class ImagesController < ApplicationController
       return
     end
     magick_image = MiniMagick::Image.read content_data_io
-    width = params[:width].to_i
-    width = 492 if width < 8
     ratio = width.to_f / magick_image.width
     magick_image.resize("#{width}x#{(magick_image.height * ratio).round}")
     send_image(image, magick_image, requested_format)
@@ -205,9 +205,9 @@ class ImagesController < ApplicationController
 
   private
 
-  def redirected_to_cloudinary(image)
+  def redirected_to_cloudinary(image, width: nil)
     if image.cloudinary_identifier
-      redirect_to helpers.image_url_with_cl(image)
+      redirect_to helpers.image_url_with_cl(image, width: width)
       return true
     end
     CloudinaryUploadJob.perform_later(image.id)

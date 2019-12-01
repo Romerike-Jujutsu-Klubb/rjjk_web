@@ -8,17 +8,19 @@ module ApplicationHelper
     request.headers['HTTP_ACCEPT'] =~ %r{image/webp}
   end
 
-  def image_url_with_cl(image)
+  def image_url_with_cl(image, width: nil)
     format = if accepts_webp?
                image.video? && accepts_webp? ? :webm : :webp
              else
                image.format
              end
     if image.cloudinary_identifier
+      options = { format: format }
+      options.merge!(width: width, height: width, crop: :fit) if width
       if image.video?
-        cl_video_path(image.cloudinary_identifier, format: format)
+        cl_video_path(image.cloudinary_identifier, options)
       else
-        cl_image_path(image.cloudinary_identifier, format: format)
+        cl_image_path(image.cloudinary_identifier, options)
       end
     else
       image_path(image.id, format: format)
