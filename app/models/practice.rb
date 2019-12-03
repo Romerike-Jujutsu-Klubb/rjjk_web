@@ -34,7 +34,7 @@ class Practice < ApplicationRecord
   end
 
   def imminent?
-    Time.current > (start_at - 15.minutes)
+    Time.current > (start_at - 30.minutes)
   end
 
   def passed?
