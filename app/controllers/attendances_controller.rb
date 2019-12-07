@@ -233,8 +233,8 @@ class AttendancesController < ApplicationController
       @weeks.unshift [@reviewed_attendance.date.cwyear, @reviewed_attendance.date.cweek]
       @weeks.sort!.uniq!
     end
-    @weeks.each do |year, week|
-      @group_schedules.each { |gs| gs.practices.where(year: year, week: week).first_or_create! }
+    @practices = @weeks.flat_map do |year, week|
+      @group_schedules.map { |gs| gs.practices.where(year: year, week: week).first_or_create! }
     end
     year_weeks = @weeks.map { |y, w| "(#{y}, #{w})" }.join(', ')
     @planned_attendances = Attendance.includes(:practice).references(:practices)
