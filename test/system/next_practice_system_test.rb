@@ -2,7 +2,7 @@
 
 require 'application_system_test_case'
 
-class NextPracticeTest < ApplicationSystemTestCase
+class NextPracticeSystemTest < ApplicationSystemTestCase
   setup { screenshot_section :next_practice }
   test 'next practice' do
     screenshot_group :next_practice

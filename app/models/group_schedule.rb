@@ -36,4 +36,8 @@ class GroupSchedule < ApplicationRecord
   def to_s
     "#{group.full_name} #{ApplicationController.helpers.day_name weekday} #{start_at.to_s(false)}"
   end
+
+  def instructor?(member)
+    active_group_instructors.map(&:member).include? member
+  end
 end

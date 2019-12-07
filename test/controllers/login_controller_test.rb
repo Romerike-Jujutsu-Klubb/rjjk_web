@@ -19,9 +19,9 @@ class LoginControllerTest < ActionController::TestCase
     assert_response :redirect
     assert_redirected_to controller: :welcome, action: :index
     assert cookies[COOKIE_NAME]
-    assert_equal ActiveRecord::FixtureSet.identify(:lars), cookies.encrypted[COOKIE_NAME]
+    assert_equal users(:lars).security_token, cookies.encrypted[COOKIE_NAME]
     assert_equal false, users(:lars).token_expired?
-    assert_equal 'random_token_string', users(:lars).security_token
+    assert_not_equal 'random_token_string', users(:lars).security_token
   end
 
   def test_autologin_with_token

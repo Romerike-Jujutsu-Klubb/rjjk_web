@@ -112,6 +112,7 @@ class LoginController < ApplicationController
   end
 
   def logout
+    current_user&.reset_security_token
     self.session_user = nil
     clear_cookie
     reset_session

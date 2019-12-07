@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
   layout DEFAULT_LAYOUT
 
   if Rails.env.production?
-    # FIXME(uwe): Virker ikke?
     before_action { redirect_to(host: 'www.jujutsu.no') if request.host != 'www.jujutsu.no' }
   end
   before_action :store_current_user_in_thread

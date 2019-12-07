@@ -46,6 +46,8 @@ class Practice < ApplicationRecord
   end
 
   def attendance_for(member_id)
-    attendances.find { |a| a.member_id == member_id }
+    attendances.find { |a| a.member_id == member_id } || attendances.build(member_id: member_id)
   end
+
+  delegate :instructor?, to: :group_schedule
 end

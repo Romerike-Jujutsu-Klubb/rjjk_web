@@ -172,25 +172,17 @@ class AttendancesController < ApplicationController
 
     new_status = params[:status]
     if new_status == 'toggle'
-      if !@attendance.practice.passed? && @attendance.status == Attendance::Status::WILL_ATTEND
-        new_status = nil
-        @attendance.destroy
-        @attendance = nil
-      elsif @attendance.status == Attendance::Status::ATTENDED
-        new_status = Attendance::Status::ABSENT
-      else
-        new_status =
-            if @attendance.practice.passed?
-              Attendance::Status::ATTENDED
-            else
-              Attendance::Status::WILL_ATTEND
-            end
-      end
+      new_status = AttendanceToggler.toggle(@attendance)
     elsif new_status == Attendance::Status::WILL_ATTEND && practice.imminent?
       new_status = Attendance::Status::ATTENDED
     end
 
-    @attendance.update!(status: new_status) if new_status
+    if new_status
+      @attendance.update!(status: new_status)
+    else
+      @attendance.status = nil
+      @attendance.destroy!
+    end
 
     AttendanceNotificationJob.perform_later(practice, m, new_status)
 
@@ -303,29 +295,14 @@ class AttendancesController < ApplicationController
                               year: year, week: week).first_or_create!
     @attendance = Attendance.where(member_id: member_id, practice_id: practice.id).first_or_create
     new_status = params[:status]
-    if new_status == 'toggle'
-      new_status =
-          case @attendance.status
-          when Attendance::Status::WILL_ATTEND, Attendance::Status::ABSENT,
-              Attendance::Status::HOLIDAY
-            Attendance::Status::ATTENDED
-          when Attendance::Status::ATTENDED, Attendance::Status::INSTRUCTOR,
-              Attendance::Status::ASSISTANT
-            Attendance::Status::ABSENT
-          when nil
-            Attendance::Status::ATTENDED
-          end
-    end
+    new_status = AttendanceToggler.toggle(@attendance) if new_status == 'toggle'
     @attendance.update! status: new_status
 
     if request.xhr?
       if params[:member_id]
-        render partial: 'button', locals: { gs: practice.group_schedule, year: year, week: week,
-                                            attendance: @attendance, member_id: member_id }
+        render partial: 'button', locals: { attendance: @attendance }
       else
-        render partial: 'plan_practice', locals: {
-          gs: practice.group_schedule, year: year, week: week, attendance: @attendance
-        }
+        render partial: 'plan_practice', locals: { attendance: @attendance }
       end
     else
       flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  " \

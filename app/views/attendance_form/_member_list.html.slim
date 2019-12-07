@@ -8,4 +8,4 @@
             - if m.user.card_key
               i.fa.fa-key
           td = link_to m.name, m
-          td = render 'attendances/button', gs: selected_practice.group_schedule, year: selected_practice.year, week: selected_practice.week, member_id: m.id, attendance: attendance
+          td = render 'attendances/button', attendance: attendance

@@ -2,22 +2,23 @@
   initial_icon = nil
   initial_class = 'secondary'
   initial_disabled = nil
-  practice_end = Date.commercial(year, week, gs.weekday).at(gs.end_at)
-  practice_passed = Time.current > practice_end
-  practice_start = Date.commercial(year, week, gs.weekday).at(gs.start_at)
-  practice_imminent = Time.current > (practice_start - 15.minutes)
+  gs = attendance.group_schedule
+  practice_passed = attendance.practice.passed?
+  practice_imminent = attendance.practice.imminent?
   initial_text =
-      if local_assigns[:member_id]
+      if attendance.member_id != current_user.id
         practice_passed ? 'Trente?' : practice_imminent ? 'Trener?' : 'Kommer?'
       else
         practice_passed ? 'Trente du?' : practice_imminent ? 'Trener du?' : 'Kommer du?'
       end
+  year = attendance.practice.year
+  week = attendance.practice.week
   link_target = { controller: :attendances,
       action: practice_passed ? :review : :announce, year: year,
       week: week, group_schedule_id: gs.id, status: 'toggle' }
   link_target[:member_id] = member_id if local_assigns[:member_id]
   states = (practice_passed ? Attendance::PAST_STATES : practice_imminent ? Attendance::CURRENT_STATES : Attendance::STATES)
-  if attendance
+  if attendance.persisted?
     states.each do |state, link_text, link_icon, link_class|
       if attendance.status == state
         initial_text = link_text

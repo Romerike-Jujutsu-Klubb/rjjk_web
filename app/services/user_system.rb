@@ -75,13 +75,22 @@ module UserSystem
   end
 
   def store_cookie(user = current_user)
-    cookies.encrypted[COOKIE_NAME] = { value: user.id, expires: 30.days.from_now }.merge(COOKIE_SCOPE)
+    cookies.encrypted[COOKIE_NAME] =
+        { value: user.generate_security_token(:login), expires: 30.days.from_now }.merge(COOKIE_SCOPE)
   end
 
   def login_from_cookie
-    if (user_id = cookies.encrypted[COOKIE_NAME])
-      logger.info "Found login cookie: #{user_id}"
-      self.session_user = User.find_by(id: user_id)
+    if (security_token = cookies.encrypted[COOKIE_NAME])
+      self.session_user = User.find_by(security_token: security_token)
+
+      # FIXME(uwe): Remove 2021-01-01
+      unless current_user
+        self.session_user = User.find_by(id: security_token)
+        logger.warn "Logged in by cookie user id: #{current_user.id}" if current_user
+      end
+      # EMXIF
+
+      logger.warn "Found stale login cookie: #{security_token.inspect}" unless current_user
     end
     current_user
   end
@@ -154,7 +163,16 @@ module UserSystem
   end
 
   def session_user
-    User.find_by(id: session[SESSION_KEY])
+    user = User.find_by(security_token: session[SESSION_KEY])
+
+    # FIXME(uwe): Remove 2021-01-01
+    unless user
+      user = User.find_by(id: session[SESSION_KEY])
+      logger.warn "Found session user by user id: #{user.id}" if user
+    end
+    # EMXIF
+
+    user
   end
 
   def session_user=(user)

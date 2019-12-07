@@ -114,7 +114,7 @@ class User < ApplicationRecord
         return nil
       end
       logger.info "Authenticated by user token: #{u.inspect}.  Extending token lifetime."
-      u.token_expiry = Time.current + token_lifetime
+      u.token_expiry = token_lifetime.from_now
     elsif (u = (um = UserMessage.includes(:user).for_login.find_by(key: CGI.unescape(token)))&.user)
       logger.info "Identified by user message token: #{u.inspect}"
       um.update!(read_at: Time.current) unless um.read_at
@@ -234,6 +234,10 @@ class User < ApplicationRecord
     else
       security_token
     end
+  end
+
+  def reset_security_token
+    update! security_token: nil, token_expiry: nil
   end
 
   def token_stale?(duration)
@@ -367,7 +371,7 @@ class User < ApplicationRecord
 
   def new_security_token(duration)
     self.security_token = self.class.hashed(salted_password + Time.current.to_i.to_s + rand.to_s)
-    self.token_expiry = Time.zone.at(Time.current.to_i + User.token_lifetime(duration))
+    self.token_expiry = User.token_lifetime(duration).from_now
     save!
     security_token
   end

@@ -12,7 +12,8 @@ css:
           h4> = [year, week] == [(Date.current - 7).cwyear, (Date.current - 7).cweek] ? 'Forrige uke' : [year, week] == [Date.current.cwyear, Date.current.cweek] ? 'Denne uken' : [year, week] == [(Date.current + 7).cwyear, (Date.current + 7).cweek] ? 'Neste uke' : "Uke #{week}#{" #{year}" if year != Date.current.cwyear}"
       tr
         - @group_schedules.each do |gs|
-          - date = Date.commercial(year, week, gs.weekday)
+          - practice = @practices.find{|pr| pr.group_schedule_id == gs.id && pr.year == year && pr.week == week}
+          - date = practice.date
           th
             => day_name(gs.weekday)
             ' #{date.day}.
@@ -21,8 +22,11 @@ css:
               =< gs.group.full_name
       tr
         - @group_schedules.each do |gs|
+          - practice = @practices.find{|pr| pr.group_schedule_id == gs.id && pr.year == year && pr.week == week}
           td valign="top"
             - attendance = @planned_attendances.find { |a| a.group_schedule == gs && a.practice.year == year && a.practice.week == week }
+            - if attendance.nil?
+              - attendance = Attendance.new(member: current_user.member, practice: practice)
             = render 'plan_practice', gs: gs, year: year, week: week, attendance: attendance
 br
 

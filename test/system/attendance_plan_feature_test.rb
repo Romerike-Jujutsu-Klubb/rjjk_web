@@ -11,9 +11,7 @@ class AttendancePlanFeatureTest < ApplicationSystemTestCase
   def test_plan
     screenshot_group :plan
     screenshot('index')
-    assert_equal ['Denne uken', 'Ubekreftet
-Du trente.', 'Kommer!
-Du kommer.',
+    assert_equal ['Denne uken', "Ubekreftet\nDu trente.", "Kommer!\nDu kommer.",
                   'Neste uke', 'Kommer du?', 'Kommer du?', 'Oktober', '1',
                   'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?)
@@ -33,14 +31,16 @@ Du kommer.',
 
     all('table a.btn')[1].click
     assert_css 'a.btn', text: 'Kommer du?', count: 2
-    assert has_css?('a.btn', text: 'Trener du?'), all('a.btn').map(&:text)
-    assert_equal ['Denne uken', 'Annet', 'Trener du?', 'Neste uke', 'Kommer du?',
-                  'Kommer du?', 'Oktober', '1', 'Siden gradering', '1'],
-        all('td').map(&:text).reject(&:blank?)
+    assert has_css?('a.btn', text: 'Trener!'), all('a.btn').map(&:text)
+    assert_equal [
+      'Denne uken', 'Annet', "Trener!\nDu kommer.",
+      'Neste uke', 'Kommer du?', 'Kommer du?',
+      'Oktober', '1', 'Siden gradering', '1'
+    ], all('td').map(&:text).reject(&:blank?)
 
     all('table a.btn')[1].click
     assert has_css?('a.btn', text: 'Kommer du?', count: 2)
-    assert_equal(['Denne uken', 'Annet', 'Kommer! Du kommer.', 'Neste uke',
+    assert_equal(['Denne uken', 'Annet', 'Annet', 'Neste uke',
                   'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?).map(&:strip).map { |s| s.gsub(/\s+/, ' ') })
   end

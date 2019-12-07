@@ -80,13 +80,24 @@ class AttendancesControllerTest < ActionController::TestCase
     I18n.with_locale(:en) { test_should_get_review }
   end
 
-  def test_should_announce_toggle_off
+  def test_should_announce_toggle_off_for_future_practice
     practice = practices(:voksne_2013_42_thursday)
-    assert_equal 1, practice.attendances.count
-    post :announce, params: { group_schedule_id: practice.group_schedule_id,
-                              year: practice.year, week: practice.week, status: 'toggle' }, xhr: true
-    assert_response :success
-    assert_equal 0, practice.attendances.count
+    Timecop.travel(practice.start_at - 1.hour) do
+      assert_difference(-> { practice.attendances.count }, -1) do
+        post :announce, params: { group_schedule_id: practice.group_schedule_id,
+                                  year: practice.year, week: practice.week, status: 'toggle' }, xhr: true
+        assert_response :success
+      end
+    end
+  end
+
+  def test_should_toggle_to_present_for_imminent_practice
+    practice = practices(:voksne_2013_42_thursday)
+    assert_no_difference(-> { practice.attendances.count }) do
+      post :announce, params: { group_schedule_id: practice.group_schedule_id,
+                                year: practice.year, week: practice.week, status: 'toggle' }, xhr: true
+      assert_response :success
+    end
   end
 
   def test_should_announce_toggle_on
