@@ -23,6 +23,7 @@ ul#tab.nav.nav-tabs role="tablist"
           .map(&:member).uniq
       - group_members = group_members.sort_by { |m| m.current_rank }.reverse
       - active, passive = group_members.partition(&:active?)
+      - attending, absent = active.partition(&:attending?)
       / https://stackoverflow.com/a/52634662/658690
       css:
         .card-deck {
@@ -43,7 +44,10 @@ ul#tab.nav.nav-tabs role="tablist"
         .card
           .card-header
             = select nil, :practice_id, group.practices.after(1.month.ago).select { |pr| pr.date <= next_practice.date }.sort_by(&:date).reverse.map { |pr| ["#{pr} #{day_name pr.date.wday}", pr.id] }, { selected: selected_practice.id }, class: 'form-control pr-0', onchange: 'window.location = "?practice_id=" + $(this).val()'
-          = render 'member_list', members: active, selected_practice: selected_practice
+          = render 'member_list', members: attending, selected_practice: selected_practice
+        .card
+          h3.card-header Fraværende
+          = render 'member_list', members: absent, selected_practice: selected_practice
         .card
           h3.card-header Passive
           = render 'member_list', members: passive, selected_practice: selected_practice

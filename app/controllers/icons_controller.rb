@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class IconsController < ActionController::Base
+class IconsController < ApplicationController
   caches_page :inline, :notification_icon
 
   def inline
