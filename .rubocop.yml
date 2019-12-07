@@ -10,33 +10,29 @@ AllCops:
     - 'tmp/**/*'
     - 'vendor/**/*'
 
-Layout/AlignHash:
-  EnforcedLastArgumentHashStyle: ignore_implicit
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, IndentationWidth.
 # SupportedStyles: with_first_argument, with_fixed_indentation
-Layout/AlignArguments:
+Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
   IndentationWidth: 4
 
-Layout/AlignParameters:
-  EnforcedStyle: with_fixed_indentation
+Layout/AssignmentIndentation:
   IndentationWidth: 4
 
-Layout/IndentFirstArgument:
+Layout/FirstArgumentIndentation:
   EnforcedStyle: consistent
   IndentationWidth: 4
 
-Layout/IndentFirstArrayElement:
+Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
 
-Layout/IndentFirstHashElement:
+Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 
-Layout/IndentAssignment:
-  IndentationWidth: 4
+Layout/HashAlignment:
+  EnforcedLastArgumentHashStyle: ignore_implicit
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
@@ -44,6 +40,10 @@ Layout/MultilineMethodCallIndentation:
 
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
+  IndentationWidth: 4
+
+Layout/ParameterAlignment:
+  EnforcedStyle: with_fixed_indentation
   IndentationWidth: 4
 
 Metrics/BlockLength:

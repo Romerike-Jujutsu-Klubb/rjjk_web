@@ -176,7 +176,7 @@ module UserSystem
   end
 
   def session_user=(user)
-    session[SESSION_KEY] = (user&.id)
+    session[SESSION_KEY] = user&.id
     self.current_user = user
   end
 

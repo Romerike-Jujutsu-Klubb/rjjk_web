@@ -52,7 +52,7 @@ Metrics/PerceivedComplexity:
 # Offense count: 19
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
 # AllowedNames: io, id, to, by, on, in, at, ip, db
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   Exclude:
     - 'app/controllers/application_controller.rb'
     - 'app/helpers/application_helper.rb'

@@ -181,7 +181,7 @@ class LoginController < ApplicationController
         else
           flash.notice = 'Du er nå logget på. Du kan nå endre passordet ditt.'
           redirect_to action: 'change_password'
-          return
+          nil
         end
       rescue => e
         report_exception e

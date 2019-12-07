@@ -28,7 +28,7 @@ if Rails.env.development? || Rails.env.test?
   end
 end
 
-task 'db:schema:dump' do
+task 'db:schema:dump' => :environment do
   sh 'rubocop --auto-correct db/schema.rb > /dev/null'
   filename = 'db/schema.rb'
   schema = File.read(filename)
