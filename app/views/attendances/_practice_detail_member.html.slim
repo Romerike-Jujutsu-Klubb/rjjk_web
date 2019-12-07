@@ -1,0 +1,21 @@
+li
+  span.fa-li
+    - if attendance.member.user.card_key
+      i.fas.fa-key
+    - else
+      i.fas.fa-user
+  - member_label = attendance.member.name
+  - if admin? || instructor?
+    = link_to member_label, attendance.member
+    - if attendance.rated_at
+      span< title=:Bekreftet data-toggle=:tooltip
+        - if attendance.rating == 0
+          i.fa.fa-meh
+        - elsif attendance.rating == 1
+          i.fa.fa-smile
+        - elsif attendance.rating == 2
+          i.fa.fa-laugh
+        - else
+          i.fa.fa-check
+  - else
+    = member_label

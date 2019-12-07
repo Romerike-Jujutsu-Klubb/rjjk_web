@@ -49,42 +49,12 @@ css:
   h5 Påmeldt
   ul.fa-ul
     - other_attendees.sort_by { |a| [a.member.current_rank || Rank::UNRANKED, a.member.joined_on, -a.member.age] }.each do |a|
-      li
-        span.fa-li
-          - if a.member.user.card_key
-            i.fas.fa-key
-          - else
-            i.fas.fa-user
-        - member_label = a.member.name
-        - if admin? || instructor?
-          = link_to member_label, a.member
-          - if a.rated_at
-            span< title=:Bekreftet data-toggle=:tooltip
-              - if a.rating == 0
-                i.fa.fa-meh
-              - elsif a.rating == 1
-                i.fa.fa-smile
-              - elsif a.rating == 2
-                i.fa.fa-laugh
-              - else
-                i.fa.fa-check
-        - else
-          = member_label
+      = render 'practice_detail_member', attendance: a
 
 - if other_absentees.any?
   h5 Avmeldt
   ul.fa-ul
     - other_absentees.each do |a|
-      li
-        span.fa-li
-          - if a.member.user.card_key
-            i.fas.fa-key
-          - else
-            i.fas.fa-user XX
-        - member_label = a.member.name
-        - if admin?
-          = link_to member_label, a.member
-        - else
-          = member_label
+      = render 'practice_detail_member', attendance: a
 
 javascript: $('[data-toggle=tooltip]').tooltip();
