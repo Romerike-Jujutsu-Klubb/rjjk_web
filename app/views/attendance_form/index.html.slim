@@ -32,25 +32,28 @@ ul#tab.nav.nav-tabs role="tablist"
           grid-gap: .5rem;
         }
       .card-deck
-        .card
-          h3.card-header Prøvemedlemmer
-          .card-body.pt-3.pb-0
-            - trial_members = NkfMemberTrial.for_group(group)
-            table.table.mb-0 class=('table-sm' if trial_members.size > 12)
-              - trial_members.each do |tm|
-                tr class=(tm.created_at < 4.weeks.ago ? 'table-danger' : tm.created_at < 2.weeks.ago ? 'table-warning' : nil)
-                  td = tm.name
-                  td.text-nowrap = tm.created_at.to_date
+        - trial_members = NkfMemberTrial.for_group(group)
+        - if trial_members.any?
+          .card
+            h3.card-header Prøvemedlemmer
+            .card-body.pt-3.pb-0
+              table.table.mb-0 class=('table-sm' if trial_members.size > 12)
+                - trial_members.each do |tm|
+                  tr class=(tm.created_at < 4.weeks.ago ? 'table-danger' : tm.created_at < 2.weeks.ago ? 'table-warning' : nil)
+                    td = tm.name
+                    td.text-nowrap = tm.created_at.to_date
         .card
           .card-header
             = select nil, :practice_id, group.practices.after(1.month.ago).select { |pr| pr.date <= next_practice.date }.sort_by(&:date).reverse.map { |pr| ["#{pr} #{day_name pr.date.wday}", pr.id] }, { selected: selected_practice.id }, class: 'form-control pr-0', onchange: 'window.location = "?practice_id=" + $(this).val()'
           = render 'member_list', members: attending, selected_practice: selected_practice
-        .card
-          h3.card-header Fraværende
-          = render 'member_list', members: absent, selected_practice: selected_practice
-        .card
-          h3.card-header Passive
-          = render 'member_list', members: passive, selected_practice: selected_practice
+        - if absent.any?
+          .card
+            h3.card-header Fraværende
+            = render 'member_list', members: absent, selected_practice: selected_practice
+        - if passive.any?
+          .card
+            h3.card-header Passive
+            = render 'member_list', members: passive, selected_practice: selected_practice
 
   #lists.tab-pane.fade class=('show active' unless @practice) role="tabpanel" aria-labelledby="contact-tab"
     - start_date = Date.parse('2009-08-01')
