@@ -129,13 +129,11 @@ class NkfMemberComparison
     member_form['p_ks_medlprofil_action'] = 'OK'
     change_response_page = member_form.submit
     if (m = MEMBER_ERROR_PATTERN.match(change_response_page.body))
-      ms = m[:message]
-      message = <<~MESSAGE
+      raise <<~MESSAGE
         Error updating NKF member form:
-        #{ms.encode(Encoding::UTF_8, member_form.encoding)}
-        #{member_form.fields.map(&:inspect)}
+        #{m[:message].encode(Encoding::UTF_8, member_form.encoding)}
+        #{member_form.fields.map { |f| "#{f.name}: #{f.value.inspect}" }.join("\n")}
       MESSAGE
-      raise message
     end
 
     change_response_page

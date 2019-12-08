@@ -34,10 +34,6 @@
     .card
       h3 #{i+1}. Operation: #{operation}
       h4 Exception:
-      - error_msg = exception.to_s
-      div = error_msg.encoding
-      / - error_msg.force_encoding("UTF-8")
-      / div = error_msg.encoding
-      = error_msg
+      pre = exception.to_s
       h4 Record:
       = link_to record.inspect, record
