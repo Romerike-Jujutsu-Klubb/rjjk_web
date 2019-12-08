@@ -128,15 +128,13 @@ class NkfMemberComparison
     logger.info 'Submitting form to NKF'
     member_form['p_ks_medlprofil_action'] = 'OK'
     change_response_page = member_form.submit
-    logger.info do
-      "change_response_page: code: #{change_response_page.code.inspect}" \
-      " encoding: #{change_response_page.encoding.inspect}" \
-      "\n#{change_response_page.body}"
-    end
     if (m = MEMBER_ERROR_PATTERN.match(change_response_page.body))
       ms = m[:message]
-      message = "Error updating NKF member form: #{ms.encode(Encoding::UTF_8, member_form.encoding)}"
-      logger.error "message.encoding: #{message.encoding}"
+      message = <<~MESSAGE
+        Error updating NKF member form:
+        #{ms.encode(Encoding::UTF_8, member_form.encoding)}
+        #{member_form.fields.map(&:inspect)}
+      MESSAGE
       raise message
     end
 
