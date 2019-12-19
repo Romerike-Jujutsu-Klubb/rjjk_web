@@ -52,8 +52,8 @@ class SignaturesController < ApplicationController
 
   def destroy
     @signature = Signature.find(params[:id])
-    @signature.destroy
-    redirect_to signatures_url
+    @signature.destroy!
+    redirect_to user_path(@signature.member.user_id, anchor: :tab_signatures_tab)
   end
 
   private

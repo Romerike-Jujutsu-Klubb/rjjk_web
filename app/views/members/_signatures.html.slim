@@ -2,6 +2,11 @@
   i.fa.fa-plus>
   | Registrer signatur
 .clearfix
-.row
+.card-deck
   - @member.signatures.each do |signature|
-    .col-3 = image_tag image_signature_path(signature), width: '100%'
+    .card
+      .card-header
+        a.float-right.text-danger href=signature_path(signature) data-method=:delete
+          i.fa.fa-trash>
+          | Slett
+      .card-body = image_tag image_signature_path(signature), width: '100%'
