@@ -52,6 +52,6 @@ class SignaturesControllerTest < ActionController::TestCase
       delete :destroy, params: { id: @signature }
     end
 
-    assert_redirected_to signatures_path
+    assert_redirected_to user_path(@signature, anchor: :tab_signatures_tab)
   end
 end
