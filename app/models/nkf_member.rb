@@ -226,7 +226,9 @@ class NkfMember < ApplicationRecord
           end
           if user_attributes[:phone]
             if (existing_phone_member = Member.find_by(user_id: existing_phone_user.id))
-              logger.info "Existing phone user already mapped to membership: #{user_attributes.inspect}: #{existing_phone_member.inspect}" # rubocop: disable Metrics/LineLength
+              logger.info <<~LINE
+                Existing phone user already mapped to membership: #{user_attributes.inspect}: #{existing_phone_member.inspect}
+              LINE
               if user_attributes[:birthdate] < existing_phone_member.birthdate
                 logger.info 'Keeping phone for new membership due to higher age'
                 existing_phone_member.user.update! phone: nil
@@ -235,7 +237,9 @@ class NkfMember < ApplicationRecord
                 user_attributes.delete(:phone)
               end
             else
-              logger.info "Using existing phone user: #{user_attributes.inspect}: #{existing_phone_user.inspect}" # rubocop: disable Metrics/LineLength
+              logger.info <<~LINE
+                Using existing phone user: #{user_attributes.inspect}: #{existing_phone_user.inspect}
+              LINE
               user = existing_phone_user
               user.update! user_attributes
             end

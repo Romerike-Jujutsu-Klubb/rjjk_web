@@ -9,7 +9,7 @@ class PublicRecordImporter
   URL = 'http://w2.brreg.no/enhet/sok/detalj.jsp?orgnr=982452716'
 
   def self.import_public_record
-    doc = Nokogiri::HTML(open(URL))
+    doc = Nokogiri::HTML(URI.open(URL))
     record = PublicRecord.where(
         contact: find_field(doc, 'Kontaktperson'),
         chairman: find_field(doc, 'Styrets leder'),

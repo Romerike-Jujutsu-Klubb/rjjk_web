@@ -140,7 +140,7 @@ class NkfMemberImport
       raise 'Could not find first name' unless trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
 
       invoice_email = Regexp.last_match(1)
-      unless trial_details_body =~ %r{<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren/stilart -</option>.*?<option selected value="\d+">([^<]*)</option>.*</select>} # rubocop: disable Metrics/LineLength
+      unless trial_details_body =~ %r{<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren/stilart -</option>.*?<option selected value="\d+">([^<]*)</option>.*</select>} # rubocop: disable Layout/LineLength
         raise 'Could not find martial art'
       end
 

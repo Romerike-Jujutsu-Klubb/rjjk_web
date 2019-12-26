@@ -6,7 +6,7 @@ class AttendanceWebpush < ApplicationRecord
   def self.push_all(title, body, except: nil, tag:, data: {})
     AttendanceWebpush.where.not(member_id: except).find_each do |subscription|
       logger.info "Notifying #{subscription.member.user.name}"
-      Webpush.payload_send subscription.webpush_params(title, body, tag: tag, data: data)
+      Webpush.payload_send(**subscription.webpush_params(title, body, tag: tag, data: data))
     rescue => e
       logger.error e
       logger.error('Failed to send push msg.  Delete subscription.')

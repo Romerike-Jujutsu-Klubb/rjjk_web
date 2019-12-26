@@ -34,6 +34,14 @@ Layout/FirstHashElementIndentation:
 Layout/HashAlignment:
   EnforcedLastArgumentHashStyle: ignore_implicit
 
+Layout/LineLength:
+  Max: 108
+  AllowHeredoc: true
+  AllowURI: true
+  IgnoreCopDirectives: true
+  Exclude:
+    - db/schema.rb
+
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
   IndentationWidth: 4
@@ -51,14 +59,6 @@ Metrics/BlockLength:
     - config/environments/development.rb
     - config/environments/production.rb
     - config/routes.rb
-    - db/schema.rb
-
-Metrics/LineLength:
-  Max: 108
-  AllowHeredoc: true
-  AllowURI: true
-  IgnoreCopDirectives: true
-  Exclude:
     - db/schema.rb
 
 Naming/MemoizedInstanceVariableName:

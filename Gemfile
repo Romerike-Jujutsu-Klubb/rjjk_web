@@ -112,6 +112,7 @@ group :test do
   # gem 'rubycritic', require: false
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
+  gem 'sprockets', '<4' # FIXME(uwe): Remove this line when sprockets 4 works
   gem 'timecop'
   gem 'vcr'
   gem 'webmock'
