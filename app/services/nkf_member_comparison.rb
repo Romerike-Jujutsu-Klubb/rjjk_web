@@ -98,7 +98,18 @@ class NkfMemberComparison
 
     form_value = form[nkf_field]
     logger.info "Set form field #{nkf_field}: #{form_value.inspect} => #{mapped_rjjk_value.inspect}"
-    form[nkf_field] = mapped_rjjk_value&.encode(form.encoding)
+    desired_value = mapped_rjjk_value&.encode(form.encoding)
+    form_field = form.field_with(name: nkf_field)
+    if form_field.is_a?(Mechanize::Form::SelectList)
+      desired_option = form_field.options.find { |o| o.text == desired_value }
+      if desired_option
+        desired_option.select
+      else
+        logger.error 'Option not found'
+      end
+    else
+      form[nkf_field] = desired_value
+    end
     outgoing_changes[attr_sym] = { nkf_value => mapped_rjjk_value }
   end
 

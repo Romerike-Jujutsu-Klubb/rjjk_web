@@ -11,7 +11,9 @@ class UserMergeControllerTest < IntegrationTest
   end
 
   test 'update' do
-    patch user_merge_path(id(:uwe), other_user_id: id(:sebastian))
+    VCR.use_cassette('NKF Comparison Single Member Uwe', match_requests_on: %i[method host path query]) do
+      patch user_merge_path(id(:uwe), other_user_id: id(:sebastian))
+    end
     assert_redirected_to users(:uwe)
   end
 end
