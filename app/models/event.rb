@@ -105,3 +105,7 @@ class Event < ApplicationRecord
     ((I18n.locale == :nb ? description : description_en.presence) || description)&.split(/\r?\n\r?\n/)
   end
 end
+
+Dir["#{__dir__}/*.rb"].each do |f|
+  require_dependency File.basename(f) if /class .* < Event/.match?(File.read(f))
+end

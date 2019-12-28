@@ -8,7 +8,7 @@ table.table.table-striped class=('table-sm' if events.size > 24)
   tbody
     - for event in events
       tr
-        td = link_to event.name, edit_event_path(event)
+        td = link_to event.title, edit_event_path(event)
         td nowrap="true" = h event.start_at.to_date
         td nowrap="true" = h event.end_at&.to_date
         td

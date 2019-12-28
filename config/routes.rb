@@ -67,6 +67,23 @@ Rails.application.routes.draw do
       get :minutes
     end
   end
+  resources :camps do
+    collection do
+      get :attendance_form
+      get :calendar
+      post :preview
+    end
+    member do
+      get :accept
+      get :calendar
+      get :decline
+      get :invite
+      get :preview
+      patch :preview
+      post :preview
+      get :tentative
+    end
+  end
   resources :card_keys
   resources :censors do
     get :confirm, on: :member
