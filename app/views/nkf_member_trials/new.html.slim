@@ -1,0 +1,19 @@
+h1 New nkf_member_trial
+
+= bootstrap_form_for(@nkf_member_trial) do |f|
+  = f.text_field :medlems_type
+  = f.text_field :etternavn
+  = f.text_field :fornavn
+  = f.date_select :fodtdato
+  = f.text_field :alder
+  = f.text_field :postnr
+  = f.text_field :sted
+  = f.text_field :adresse
+  = f.text_field :epost
+  = f.text_field :mobil
+  = f.check_box :res_sms
+  = f.date_select :reg_dato
+
+  = f.submit 'Create'
+
+= link_to 'Back', nkf_member_trials_path

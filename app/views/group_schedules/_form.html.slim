@@ -1,6 +1,4 @@
 = bootstrap_form_for(@group_schedule) do |f|
-  = f.error_messages
-
   = f.select :group_id, @groups.map{|g| ["#{g.martial_art.name} #{g.name}", g.id]}.sort, prompt: 'Velg gruppe'
 
   .row

@@ -11,14 +11,6 @@ class TrialAttendancesController < ApplicationController
     @trial_attendance = TrialAttendance.find(params[:id])
   end
 
-  def new
-    @trial_attendance = TrialAttendance.new
-  end
-
-  def edit
-    @trial_attendance = TrialAttendance.find(params[:id])
-  end
-
   def create
     if params[:trial_attendance] && params[:trial_attendance][:practice_id]
       practice_id = params[:trial_attendance][:practice_id]

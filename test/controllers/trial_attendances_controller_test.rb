@@ -12,11 +12,6 @@ class TrialAttendancesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test 'should get new' do
-    get :new
-    assert_response :success
-  end
-
   test 'should create trial_attendance' do
     assert_difference('TrialAttendance.count') do
       post :create, params: { trial_attendance: {
@@ -30,11 +25,6 @@ class TrialAttendancesControllerTest < ActionController::TestCase
 
   test 'should show trial_attendance' do
     get :show, params: { id: trial_attendances(:one).to_param }
-    assert_response :success
-  end
-
-  test 'should get edit' do
-    get :edit, params: { id: trial_attendances(:one).to_param }
     assert_response :success
   end
 

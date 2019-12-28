@@ -31,14 +31,6 @@ class NkfMembersController < ApplicationController
     @nkf_member = NkfMember.find(params[:id])
   end
 
-  def new
-    @nkf_member = NkfMember.new
-  end
-
-  def edit
-    @nkf_member = NkfMember.find(params[:id])
-  end
-
   def create
     @nkf_member = NkfMember.new(params[:nkf_member])
     if @nkf_member.save

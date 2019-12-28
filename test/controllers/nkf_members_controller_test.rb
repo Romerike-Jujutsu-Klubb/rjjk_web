@@ -10,11 +10,6 @@ class NkfMembersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test 'should get new' do
-    get :new
-    assert_response :success
-  end
-
   test 'should create nkf_member' do
     assert_difference('NkfMember.count') do
       post :create, params: { nkf_member: { kjonn: 'Mann' } }
@@ -25,11 +20,6 @@ class NkfMembersControllerTest < ActionController::TestCase
 
   test 'should show nkf_member' do
     get :show, params: { id: nkf_members(:erik).to_param }
-    assert_response :success
-  end
-
-  test 'should get edit' do
-    get :edit, params: { id: nkf_members(:erik).to_param }
     assert_response :success
   end
 

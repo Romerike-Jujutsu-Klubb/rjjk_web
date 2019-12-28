@@ -1,6 +1,4 @@
 = bootstrap_form_for @graduate do |f|
-  = error_messages_for :graduate
-
   - if @graduate.new_record?
     = f.hidden_field(:graduation_id)
     = f.hidden_field(:member_id)

@@ -1,0 +1,7 @@
+h1 New martial_art
+
+= bootstrap_form_for @martial_art do |f|
+  = render 'form', f: f
+  = f.submit "Lagre"
+
+= link_to 'Back', action: :index

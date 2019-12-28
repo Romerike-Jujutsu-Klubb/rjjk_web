@@ -1,8 +1,6 @@
 h1 Registrer oppmøte
 
 = bootstrap_form_for @attendance do |f|
-  = f.error_messages
-
   .row
     - if @attendance.practice.nil? || @attendance.practice.new_record?
       = f.fields_for :practice do |pf|
