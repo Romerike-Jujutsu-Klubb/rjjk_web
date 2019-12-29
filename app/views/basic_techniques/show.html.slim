@@ -18,7 +18,7 @@ h4
   p Oversettelse mangler!
 
 - if @basic_technique.description.present?
-  p = @basic_technique.description
+  p = textalize @basic_technique.description
 - elsif current_user.technical_committy?
   p Beskrivelse mangler!
 
