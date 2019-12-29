@@ -52,8 +52,11 @@
       = f.text_field :passive_on, class: 'date', placeholder: 'dato'
     .col-4
       = f.text_field :honorary_on, class: 'date', placeholder: 'dato'
-    .col-4
+    .col-4 class=('col-lg-2' if membership.left_on)
       = f.text_field :left_on, class: 'date'
+    - if membership.left_on
+      .col-lg-2.pt-4.d-none.d-lg-inline
+        .mt-3 = distance_of_time_in_words(membership.joined_on, membership.left_on)
   .row
     - if membership.billing_type.present?
       .col
