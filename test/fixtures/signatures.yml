@@ -1,12 +1,12 @@
 lars:
-  member: lars
+  user: lars
   name: MyString
   content_type: MyString
   image: !binary |
       iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==
 
 uwe:
-  member: uwe
+  user: uwe
   name: MyString
   content_type: MyString
   image: !binary |

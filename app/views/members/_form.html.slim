@@ -1,3 +1,9 @@
+- if membership.persisted? && membership.nkf_member.nil?
+  .clearfix
+  a.btn.btn-danger.float-right href=member_path(membership) data-method=:delete
+    i.fa.fa-trash>
+    | Slett dette medlemskapet
+
 = bootstrap_form_for membership, url: with_detour(membership, anchor: "tab_membership_#{membership.id}_tab") do |f|
   .row
     .col-md-4

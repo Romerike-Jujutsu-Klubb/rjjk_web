@@ -35,7 +35,6 @@ class Member < ApplicationRecord
   has_many :passed_graduates, -> { where graduates: { passed: true } }, class_name: 'Graduate'
   has_many :recent_attendances, -> { merge(Attendance.from_date(92.days.ago).to_date(31.days.from_now)) },
       class_name: :Attendance
-  has_many :signatures, dependent: :destroy
   has_many :survey_requests, dependent: :destroy
 
   has_many :groups, through: :group_memberships

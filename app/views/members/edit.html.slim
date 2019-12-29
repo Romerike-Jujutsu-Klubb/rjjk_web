@@ -93,7 +93,7 @@ ul.nav.nav-tabs role="tablist"
     - if @member.survey_requests.any?
       #tab_surveys.tab-pane.fade = render 'surveys'
     - if @member.age&.>=(18)
-      #tab_signatures.tab-pane.fade = render 'signatures'
+      #tab_signatures.tab-pane.fade = render 'users/signatures'
   - if @member&.nkf_member
     #tab_nkf.tab-pane.fade = render 'nkf_fields', member: @member
 

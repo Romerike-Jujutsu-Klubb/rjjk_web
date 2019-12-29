@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_26_145231) do
+ActiveRecord::Schema.define(version: 2019_12_28_235515) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -607,13 +607,13 @@ ActiveRecord::Schema.define(version: 2019_11_26_145231) do
   end
 
   create_table 'signatures', force: :cascade do |t|
-    t.integer 'member_id', null: false
     t.string 'name', limit: 255, null: false
     t.string 'content_type', limit: 255, null: false
     t.binary 'image', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index ['member_id'], name: 'fk__signatures_member_id'
+    t.bigint 'user_id'
+    t.index ['user_id'], name: 'index_signatures_on_user_id'
   end
 
   create_table 'survey_answer_translations', force: :cascade do |t|
@@ -821,7 +821,7 @@ ActiveRecord::Schema.define(version: 2019_11_26_145231) do
   add_foreign_key 'practices', 'group_schedules', name: 'fk_practices_group_schedule_id'
   add_foreign_key 'ranks', 'groups', name: 'ranks_group_id_fkey'
   add_foreign_key 'ranks', 'martial_arts', name: 'ranks_martial_art_id_fkey'
-  add_foreign_key 'signatures', 'members', name: 'fk_signatures_member_id'
+  add_foreign_key 'signatures', 'users'
   add_foreign_key 'survey_answers', 'survey_questions', name: 'fk_survey_answers_survey_question_id'
   add_foreign_key 'survey_answers', 'survey_requests', name: 'fk_survey_answers_survey_request_id'
   add_foreign_key 'survey_questions', 'surveys', name: 'fk_survey_questions_survey_id'

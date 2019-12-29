@@ -1,5 +1,5 @@
 = bootstrap_form_for(@signature, html: {multipart:true}) do |f|
-  = f.select :member_id, @members.map{|m| [m.name, m.id]}, prompt: true
+  = f.select :user_id, @members.map{|m| [m.name, m.id]}, prompt: true
   = f.file_field :file, accept: 'image/*'
 
   javascript:

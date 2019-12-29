@@ -105,19 +105,19 @@ class GraduationsController < ApplicationController
       censor_1 =
           if censors[0]
             { title: censors[0].member.title, name: censors[0].member.name,
-              signature: censors[0].member.signatures.sample.try(:image) }
+              signature: censors[0].member.user.signatures.sample&.image }
           end
       censor_2 =
           if censors[1]
             { title: censors[1].member.title,
               name: censors[1].member.name,
-              signature: censors[1].member.signatures.sample.try(:image) }
+              signature: censors[1].member.user.signatures.sample&.image }
           end
       censor_3 =
           if censors[2]
             { title: censors[2].member.title,
               name: censors[2].member.name,
-              signature: censors[2].member.signatures.sample.try(:image) }
+              signature: censors[2].member.user.signatures.sample&.image }
           end
       { name: g.member.name, rank: g.rank.label, group: g.rank.group.name,
         censor1: censor_1, censor2: censor_2, censor3: censor_3 }

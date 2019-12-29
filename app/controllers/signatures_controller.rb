@@ -20,7 +20,7 @@ class SignaturesController < ApplicationController
   end
 
   def new
-    @signature ||= Signature.new(member: current_user.member)
+    @signature ||= Signature.new(user: current_user)
     load_form_data
     render action: :new
   end
@@ -34,8 +34,7 @@ class SignaturesController < ApplicationController
   def create
     @signature = Signature.new(params[:signature])
     if @signature.save
-      redirect_to member_path(@signature.member, anchor: :tab_signatures_tab),
-          notice: 'Signatur lagret.'
+      redirect_to user_path(@signature.user, anchor: :tab_signatures_tab), notice: 'Signatur lagret.'
     else
       new
     end
@@ -53,7 +52,7 @@ class SignaturesController < ApplicationController
   def destroy
     @signature = Signature.find(params[:id])
     @signature.destroy!
-    redirect_to user_path(@signature.member.user_id, anchor: :tab_signatures_tab)
+    redirect_to user_path(@signature.user_id, anchor: :tab_signatures_tab)
   end
 
   private

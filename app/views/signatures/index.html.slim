@@ -14,7 +14,7 @@ table.table
 
   - @signatures.each do |signature|
     tr
-      td = signature.member.name
+      td = signature.user.name
       td: image src=url_for(:action => :image, :id => signature.id)
       td = link_to 'Vis', signature
       td = link_to 'Endre', edit_signature_path(signature)

@@ -3,7 +3,7 @@
   | Registrer signatur
 .clearfix
 .card-deck
-  - @member.signatures.each do |signature|
+  - @user.signatures.each do |signature|
     .card
       .card-header
         a.float-right.text-danger href=signature_path(signature) data-method=:delete
