@@ -40,7 +40,7 @@ class MartialArtsController < ApplicationController
   end
 
   def destroy
-    MartialArt.find(params[:id]).destroy
+    MartialArt.find(params[:id]).destroy!
     redirect_to action: :index
   end
 end

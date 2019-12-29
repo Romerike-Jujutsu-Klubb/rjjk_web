@@ -4,14 +4,13 @@ a.btn.btn-primary.float-right href=new_martial_art_path
 
 h1 Stiler
 
-table.table
-  tr
-    - for column in MartialArt.content_columns
-      th = column.human_name
-  - for martial_art in @martial_arts
+table.table data-record-path=martial_arts_path
+  thead
     tr
-      - for column in MartialArt.content_columns
-        td = h martial_art.send(column.name)
-      td = link_to 'Show', action: :show, id: martial_art
-      td = link_to 'Edit', action: :edit, id: martial_art
-      td = link_to 'Destroy', { action: 'destroy', id: martial_art }, data: {confirm: 'Are you sure?'}, method: :post
+      th Navn
+      th Familie
+  tbody
+    - for martial_art in @martial_arts
+      tr data-record-id=martial_art.id
+        td = martial_art.name
+        td = martial_art.family

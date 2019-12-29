@@ -1,4 +1,6 @@
 nb:
+  attributes:
+    name: Navn
   activerecord:
     attributes:
       annual_meeting:
@@ -17,7 +19,6 @@ nb:
         practice_id: Trening
       basic_technique:
         description: Beskrivelse
-        name: Navn
         rank_id: Grad
         translation: Oversettelse
       card_key:
@@ -46,7 +47,6 @@ nb:
         address: Adresse
         comment: Kommentar
         email: E-post
-        name: Navn
         organization: Organisasjon / klubb
         payed: Betalt
         phone: Telefon
@@ -85,7 +85,6 @@ nb:
         contract: Kontraktstype
         from_age: Nedre aldersgrense
         monthly_fee: Månedsavgift
-        name: Navn
         planning: Påmelding
         school_breaks: Følger skoleåret
         target_size: Ønsket størrelse
@@ -107,7 +106,6 @@ nb:
         last_session: Siste trening
       image:
         approved: Godkjent
-        name: Navn
         file: Bilde
         public: Publiser
       information_page:
@@ -154,7 +152,6 @@ nb:
       price_age_group:
         from_age: Nedre aldersgrense
         monthly_fee: Månedsavgift
-        name: Navn
         to_age: Øvre aldersgrense
         yearly_fee: Årskontingent
       rank:
@@ -165,14 +162,12 @@ nb:
         embroydery: Brodering
         group_id: Gruppe
         martial_art_id: Stil
-        name: Navn
         position: Posisjon
         standard_months: Måneder
       signature:
         member_id: Medlem
         file: Bilde
       technique_application:
-        name: Navn
         rank_id: Grad
       user:
         address: Adresse
