@@ -25,8 +25,17 @@ h3 Kata
 
 - if @rank.katas.any?
   table.table
-    - @rank.katas.sort_by(&:name).each do |app|
+    - @rank.katas.order(:position).each do |app|
       tr
+        td = app.position
+        td
+          - unless app.first?
+            a href=move_up_technique_application_path(app) data-method=:post
+              i.fa.fa-arrow-up
+        td
+          - unless app.last?
+            a href=move_down_technique_application_path(app) data-method=:post
+              i.fa.fa-arrow-down
         td = link_to app.name, edit_technique_application_path(app)
 
 a.btn.btn-info.float-right href=new_technique_application_path(technique_application: { rank_id: @rank.id })
@@ -48,5 +57,4 @@ h3#applications Applikasjoner
           - unless app.last?
             a href=move_down_technique_application_path(app) data-method=:post
               i.fa.fa-arrow-down
-        td: a href=move_down_technique_application_path(app)
         td = link_to app.name, edit_technique_application_path(app)

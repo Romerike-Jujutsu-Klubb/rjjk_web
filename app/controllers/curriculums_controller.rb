@@ -15,10 +15,14 @@ class CurriculumsController < ApplicationController
   end
 
   def card_pdf
-    @rank = current_user.member.next_rank
-    filename = "Skill_Card_#{@rank.name}.pdf"
-    send_data SkillCard.pdf(@rank.group.ranks
-        .select { |r| r.position <= @rank.position }.sort_by(&:position)),
+    if (rank_id = params[:id])
+      ranks = [Rank.find(rank_id)]
+    else
+      rank = current_user.member.next_rank
+      ranks = rank.group.ranks.select { |r| r.position <= rank.position }
+    end
+    filename = "Skill_Card_#{ranks.last.name}.pdf"
+    send_data SkillCard.pdf(ranks.sort_by(&:position)),
         type: 'text/pdf', filename: filename, disposition: 'attachment'
   end
 

@@ -9,10 +9,12 @@ class GroupSemester < ApplicationRecord
 
   has_many :group_schedules, through: :group
   has_many :practices, ->(gs) {
+                         first_session = gs.first_session || gs.semester.start_on
+                         last_session = gs.last_session || gs.semester.end_on
                          where('year > :year OR (year = :year and week >= :week)',
-                             year: gs.first_session.cwyear, week: gs.first_session.cweek)
+                             year: first_session.cwyear, week: first_session.cweek)
                              .where('year < :year OR (year = :year and week <= :week)',
-                                 year: gs.last_session.cwyear, week: gs.last_session.cweek)
+                                 year: last_session.cwyear, week: last_session.cweek)
                        },
       through: :group_schedules
 

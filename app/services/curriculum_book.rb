@@ -15,24 +15,22 @@ class CurriculumBook < Prawn::Document
 
       # Table of contents
 
-      text 'Grunnteknikker', size: 36
+      text 'Grunnteknikker', size: 18
 
       rank.basic_techniques.group_by(&:waza).each do |waza, techniques|
         group do |g|
           g.move_down 0.5.cm
-          g.text waza.name, size: 30
+          g.text waza.name, size: 14
           g.move_down 0.5.cm
-          techniques.each do |bt|
-            g.text bt.name
-          end
+          g.text techniques.map { |bt| bt.name }.join(', ')
         end
       end
 
       start_new_page
       text 'Applikasjoner', size: 18
-      rank.technique_applications.group_by(&:system).each do |system, applications|
+      rank.technique_applications.order(:position).group_by(&:system).each do |system, applications|
         move_down 0.5.cm
-        text system
+        text system, size: 14
         move_down 0.5.cm
         applications.each do |ta|
           text ta.name
