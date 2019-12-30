@@ -51,10 +51,15 @@ class CurriculumBook < Prawn::Document
           text ta.name, size: 24
           ta.application_steps[0..2].each do |as|
             move_down 0.5.cm
+            left_content =
+                if as.image
+                  { image: as.image.content_data_io, width: page_width * 0.35,
+                    fit: [page_width * 0.33, page_width * 0.45] }
+                else
+                  { content: '', width: page_width * 0.34 }
+                end
             table([[
-              { image: as.image.content_data_io, width: page_width * 0.35,
-                fit: [page_width * 0.33, page_width * 0.45] },
-              { content: as.description, width: page_width * 0.34 },
+              left_content, { content: as.description, width: page_width * 0.34 }
             ]], cell_style: { border_width: 0 })
           end
         end

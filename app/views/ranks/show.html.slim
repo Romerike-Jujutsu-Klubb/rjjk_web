@@ -1,5 +1,8 @@
 .float-right
-  a.btn.btn-warning href=card_pdf_curriculums_path(id: @rank.id)
+  a.btn.btn-outline-info href=pdf_curriculum_path(@rank.id)
+    i.fa.fa-image>
+    | PDF
+  a.btn.btn-outline-info.ml-2 href=card_pdf_curriculums_path(id: @rank.id)
     i.fa.fa-list>
     | Ferdighetskort
   - if technical_committy?
@@ -29,10 +32,11 @@ p Normert tid: #{@rank.standard_months} måneder
         td = link_to app.name, app
 
 - if @rank.applications.any?
-  h3 Applikasjoner
+  - @rank.applications.sort_by(&:position).group_by(&:system).each do |system, apps|
+    h3 = system
 
-  table.table
-    - @rank.applications.sort_by(&:position).each do |app|
-      tr
-        td = app.position
-        td = link_to app.name, app
+    table.table
+      - apps.each do |app|
+        tr
+          td = app.position
+          td = link_to app.name, app
