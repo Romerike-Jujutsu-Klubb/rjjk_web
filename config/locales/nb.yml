@@ -1,6 +1,9 @@
 nb:
   attributes:
+    basic_technique_id: Grunnteknikk
     name: Navn
+    title: Tittel
+    url: URL
   activerecord:
     attributes:
       annual_meeting:

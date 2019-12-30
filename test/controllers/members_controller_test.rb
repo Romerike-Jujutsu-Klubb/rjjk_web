@@ -4,7 +4,8 @@ require 'controller_test'
 
 class MembersControllerTest < ActionController::TestCase
   include ActiveJob::TestHelper
-  def setup
+
+  setup do
     @lars = members(:lars)
     login(:uwe)
   end
@@ -95,7 +96,7 @@ class MembersControllerTest < ActionController::TestCase
     Member.find(@lars.id)
     delete :destroy, params: { id: @lars.id }
     assert_response :redirect
-    assert_redirected_to action: :index
+    assert_redirected_to users(:lars)
 
     assert_raise(ActiveRecord::RecordNotFound) do
       Member.find(@lars.id)
