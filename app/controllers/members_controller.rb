@@ -64,8 +64,9 @@ class MembersController < ApplicationController
   end
 
   def destroy
-    Member.find(params[:id]).destroy
-    redirect_to action: :index
+    member = Member.find(params[:id])
+    member.destroy!
+    redirect_to member.user
   end
 
   def telephone_list
