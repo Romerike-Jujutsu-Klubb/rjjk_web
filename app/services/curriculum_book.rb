@@ -22,7 +22,7 @@ class CurriculumBook < Prawn::Document
           g.move_down 0.5.cm
           g.text waza.name, size: 14
           g.move_down 0.5.cm
-          g.text techniques.map { |bt| bt.name }.join(', ')
+          g.text techniques.map(&:name).join(', ')
         end
       end
 
