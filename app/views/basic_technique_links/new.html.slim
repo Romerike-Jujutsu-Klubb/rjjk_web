@@ -1,4 +1,4 @@
-h1 Ny lenke for #{@basic_technique_link.basic_technique.name}
+h1 Ny lenke for #{@basic_technique_link.basic_technique&.name || :grunnteknikk}
 
 = render 'form'
 
