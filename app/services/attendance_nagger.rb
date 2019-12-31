@@ -34,7 +34,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         .to_a
     group_schedules.each do |gs|
       attendances = Attendance.includes(:member, practice: :group_schedule)
-          .where(practices: { group_schedule_id: gs.id, year: now.year, week: now.to_date.cweek })
+          .where(practices: { group_schedule_id: gs.id, year: now.cwyear, week: now.to_date.cweek })
           .to_a
       next if attendances.empty?
 
@@ -55,7 +55,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
     practices = Practice.includes(group_schedule: :group).references(:group_schedules)
         .where('message IS NULL AND message_nagged_at IS NULL')
         .where('year = ? AND week = ? AND group_schedules.weekday = ?',
-            tomorrow.year, tomorrow.cweek, tomorrow.cwday)
+            tomorrow.cwyear, tomorrow.cweek, tomorrow.cwday)
         .where('(group_schedules.start_at <= ? OR group_schedules.start_at <= ?)',
             Time.current.time_of_day, Time.current.time_of_day + 3600)
         .where('groups.planning = ?', true) # TODO(uwe): Make a scope :with_planning
@@ -80,7 +80,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
       attendances = Attendance.includes(:member, practice: :group_schedule)
           .references(:practices)
           .where('practices.group_schedule_id = ? AND year = ? AND week = ?',
-              gs.id, now.year, now.to_date.cweek).to_a
+              gs.id, now.cwyear, now.to_date.cweek).to_a
       new_attendances = attendances.select { |a| a.updated_at >= 1.hour.ago }.map(&:member)
       next if new_attendances.empty?
 
@@ -118,7 +118,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
     planned_attendances = Attendance
         .includes(:member, practice: :group_schedule).references(:groups)
         .where('practices.group_schedule_id IN (?)', completed_group_schedules.map(&:id))
-        .where('practices.year = ? AND practices.week = ?', now.year, now.to_date.cweek)
+        .where('practices.year = ? AND practices.week = ?', now.cwyear, now.to_date.cweek)
         .where('attendances.status = ? AND sent_review_email_at IS NULL',
             Attendance::Status::WILL_ATTEND).to_a
     planned_attendances.group_by(&:member).each do |member, completed_attendances|
