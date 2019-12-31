@@ -1,7 +1,7 @@
 h1.mb-4 Søkeresultat for "#{@query}"
 
 - if @query
-  - if [@members, @former_members, @trials, @users, @pages, @news, @images, @user_messages].any?(&:present?)
+  - if [@members, @former_members, @trials, @users, @pages, @news, @images, @user_messages, @basic_techniques, @technique_applications].any?(&:present?)
     .row
       = render 'members', members: @members, title: 'Medlemmer'
       = render 'members', members: @former_members, title: 'Tidligere Medlemmer'
@@ -39,6 +39,18 @@ h1.mb-4 Søkeresultat for "#{@query}"
           ul.card-body
             - @user_messages.each do |i|
               li: a href=user_message_path(i) = i.key
+      - if @basic_techniques.present?
+        .col.mb-4: .card.h-100
+          h3.card-header Grunnteknikker
+          ul.card-body
+            - @basic_techniques.each do |bt|
+              li: a href=basic_technique_path(bt) = bt.name
+      - if @technique_applications.present?
+        .col.mb-4: .card.h-100
+          h3.card-header Applikasjoner
+          ul.card-body
+            - @technique_applications.each do |ta|
+              li: a href=technique_application_path(ta) = ta.name
   - else
     | Fant ingenting om "#{@query}".
 
