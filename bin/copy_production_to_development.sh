@@ -16,4 +16,6 @@ echo "Transferring database"
 time pg_dump `heroku config:get --app=jujutsu-no HEROKU_POSTGRESQL_CRIMSON_URL` | psql $DB_NAME
 
 export JRUBY_OPTS=--dev
-RAILS_ENV=development bundle exec rake db:migrate
+export RAILS_ENV=development
+bundle exec rake db:migrate
+bin/rails r "Image.all.each{|i| i.update!(cloudinary_identifier: nil) if i.cloudinary_identifier =~ %r{production/images}}"

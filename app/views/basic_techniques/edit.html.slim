@@ -16,4 +16,4 @@ h1 Rediger grunnteknikk
 
     ul
       - @basic_technique.basic_technique_links.each do |link|
-        li: a href=link.url target="btl#{link.id}" = link.title.presence || link.url
+        li: a href=edit_basic_technique_link_path(link) = link.title.presence || link.url

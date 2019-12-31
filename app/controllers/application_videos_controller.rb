@@ -11,11 +11,6 @@ class ApplicationVideosController < ApplicationController
 
   def new
     @application_video = ApplicationVideo.new(params[:application_video])
-    @application_video.build_image
-    return unless (technique_application = @application_video.technique_application)
-
-    @application_video.build_image.name ||=
-        "#{technique_application.rank.name} #{technique_application.name}"
   end
 
   def edit; end

@@ -1,0 +1,187 @@
+scss:
+  #drop_zone {
+    border: 4px dashed #ccc;
+    padding: 20px 20px;
+    margin: 20px 0;
+
+    &.hover {
+      background-color: rgba(255, 180, 1, 0.5);
+    }
+  }
+
+  .upload_button_holder {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+  }
+
+  .upload_button_holder .cloudinary-fileupload {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .preview video {
+    max-width: 100%;
+  }
+
+ruby:
+  f.object.build_image unless f.object.image
+  if (technique_application = f.object.technique_application)
+    f.object.image.name ||= "#{technique_application.rank.name} #{technique_application.name}"
+  end
+
+= f.fields_for :image do |imgf|
+  = imgf.text_field :name
+
+  - if f.object.new_record? || f.object.image.new_record?
+    - if ENV['CLOUDINARY_URL']
+      = imgf.hidden_field :height
+      = imgf.hidden_field :md5_checksum
+      = imgf.hidden_field :width
+      div class="form_line"
+        div class="form_controls"
+          div class="upload_button_holder"
+            a.btn.btn-primary.mr-3.mb-5.float-left href="#" Velg video
+            = imgf.cl_upload(:cloudinary_upload_id, return_delete_token: true, folder: "#{Rails.env}/images")
+            span.status Du kan også trekke en video inn i det stiplede området.
+      .progress.my-3 style="height:2rem;display:none"
+        .progress-bar.progress-bar-striped.progress-bar-animated role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"
+      .text-center.px-sm-5
+        .preview.position-relative
+    - else
+      = imgf.file_field :file, class: :fileinput
+      javascript:
+        $('.fileinput').fileinput({
+          browseLabel: '',
+          showCancel: false,
+          showUpload: false,
+          showRemove: false,
+          theme: 'fa'
+        });
+  - else
+    = render 'images/item', image: f.object.image
+
+javascript:
+  $('.cloudinary-fileupload').closest("form").wrap("<div id=\"drop_zone\"></div>");
+
+- if ENV['CLOUDINARY_URL']
+  / div id="info"
+
+  = javascript_include_tag 'cloudinary'
+  = cloudinary_js_config
+
+  javascript:
+    $(function() {
+      // Cloudinary jQuery integration library uses jQuery File Upload widget
+      // (see http://blueimp.github.io/jQuery-File-Upload/).
+      // Any file input field with cloudinary-fileupload class is automatically
+      // wrapped using the File Upload widget and configured for Cloudinary uploads.
+      // You can further customize the configuration using .fileupload method
+      // as we do below.
+      $(".cloudinary-fileupload").cloudinary_fileupload({
+        // Uncomment the following lines to enable client side image resizing and valiation.
+        // Make sure cloudinary/processing is included the js file
+        //disableImageResize: false,
+        //imageMaxWidth: 800,
+        //imageMaxHeight: 600,
+        //acceptFileTypes: /(\.|\/)(gif|jpe?g|png|bmp|ico)$/i,
+        //maxFileSize: 20000000, // 20MB
+        dropZone: "#drop_zone",
+        start: function(e) {
+          $('.cloudinary-fileupload').prop('disabled', true);
+          $('.text-right button').prop('disabled', true);
+          $(".status").text("Starter opplasting...");
+          $(".progress-bar").css('width', '0%').text('0%');
+          $(".upload_button_holder").hide();
+          $(".progress").show();
+        },
+        progress: function(e, data) {
+          let percentage = Math.round((data.loaded * 100.0) / data.total) + "%";
+          $(".status").text("Laster opp... " + percentage);
+          $(".progress-bar").css('width', percentage).text(percentage);
+        },
+        fail: function(e, data) {
+          $(".status").text("Opplasting feilet!");
+          $(".progress").hide();
+        }
+      }).off("cloudinarydone").on("cloudinarydone", function(e, data) {
+        console.trace(data);
+        console.trace(data.result);
+        $("##{f.object_name}_image_attributes_height").val(data.result.height);
+        $("##{f.object_name}_image_attributes_md5_checksum").val(data.result.etag);
+        $("##{f.object_name}_image_attributes_width").val(data.result.width);
+        $(".status").text("Opplasting ferdig!");
+        $(".progress").hide();
+        $('.cloudinary-fileupload').prop('disabled', true);
+        $('.text-right button').prop('disabled', false);
+        let preview_content;
+        if (data.result.resource_type === "image") {
+          preview_content = $($.cloudinary.image(data.result.public_id, {
+            format: data.result.format, width: 320, height: 240, crop: "fit", controls: true
+          }));
+        } else {
+          preview_content = $($.cloudinary.video(data.result.public_id, {
+            format: data.result.format, width: 320, height: 240, crop: "fit", controls: true
+          }));
+        }
+        var preview = $(".preview").html('');
+        preview_content.appendTo(preview);
+
+        $('<a/>').addClass('delete_by_token btn btn-danger position-absolute mr-sm-5').attr({href: '#'})
+            .data({delete_token: data.result.delete_token})
+            .css('right', '0')
+            .html($('<span class="d-none d-sm-inline">Slett</span> <i class="fa fa-times">')).appendTo(preview).click(function(e) {
+          e.preventDefault();
+          $.cloudinary.delete_by_token($(this).data('delete_token')).done(function() {
+            $('.preview').html('');
+            // $('#info').html('');
+            $("##{f.object_name}_image_attributes_height").val('');
+            $("##{f.object_name}_image_attributes_md5_checksum").val('');
+            $("##{f.object_name}_image_attributes_width").val('');
+            $('input[name="#{f.object_name}[image_attributes][cloudinary_upload_id]"]').remove();
+            $('.status').text("Du kan også trekke en video inn i det stiplede området.");
+            $('.cloudinary-fileupload').prop('disabled', false);
+            $(".upload_button_holder").show();
+          }).fail(function() {
+            $('.status').text("Kunne ikke slette filmen.");
+            $('.cloudinary-fileupload').prop('disabled', false);
+            $(".upload_button_holder").show();
+          });
+        });
+        // view_upload_details(data.result);
+      });
+      $('#drop_zone').on('dragover', function(event) {
+        event.preventDefault();
+        console.log('drag over');
+        $(this).addClass('hover');
+      }).on('dragleave', function(event) {
+        console.log('drag leave');
+        $(this).removeClass('hover');
+      }).on('drop', function(event) {
+        $(this).removeClass('hover');
+      });
+    });
+
+    function view_upload_details(upload) {
+      // Build an html table out of the upload object
+      var rows = [];
+      $.each(upload, function(k, v) {
+        rows.push(
+            $("<tr>")
+                .append($("<td>").text(k))
+                .append($("<td>").text(JSON.stringify(v))));
+      });
+      $("#info").html(
+          $("<div class=\"upload_details\">")
+              .append("<h2>Upload metadata:</h2>")
+              .append($("<table class='table table-sm'>").append(rows)));
+    }

@@ -10,12 +10,25 @@ a.btn.btn-link href=technique_applications_path Applikasjoner
 a.btn.btn-link href=url_for(@technique_application) Vis
 a.btn.btn-link href=edit_rank_path(@technique_application.rank) = @technique_application.rank.name
 
-h3.mt-3 Bilder
+h3.mt-3.clearfix
+  | Bilder
+  a.btn.btn-primary.float-right href=new_application_step_path(application_step: {technique_application_id: @technique_application.id})
+    i.fa.fa-plus>
+    | Legg til bilde
 - @technique_application.application_steps.order(:position).each do |as|
-  - if as.image_id
-    img src=image_path(as.image_id) style="width:10%" title=as.description
-  - else
-    .alert.alert-danger Bilde mangler: #{link_to "#{as.position} #{as.image_id.inspect}", application_step_path(as)}
+  .position-relative.float-left style="max-width:20%"
+    .badge.badge-info.position-absolute = as.position
+    - unless as.first?
+      a.badge.badge-info.position-absolute style="bottom:0" href=move_up_application_step_path(as) data-method=:patch
+        i.fa.fa-arrow-left
+    - unless as.last?
+      a.badge.badge-info.position-absolute style="right:0;bottom:0;" href=move_down_application_step_path(as) data-method=:patch
+        i.fa.fa-arrow-right
+    - if as.image_id
+      img src=image_path(as.image_id) style="width:100%" title=as.description
+    - else
+      .alert.alert-danger Bilde mangler: #{link_to "#{as.position} #{as.image_id.inspect}", edit_application_step_path(as)}
+.clearfix
 
 h3.mt-3
   | Filmer

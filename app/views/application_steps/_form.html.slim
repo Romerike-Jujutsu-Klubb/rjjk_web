@@ -9,9 +9,11 @@
         - @application_step.errors.full_messages.each do |msg|
           li = msg
 
-  = f.number_field :technique_application_id
-  = f.number_field :position
+  = f.collection_select :technique_application_id, @technique_applications, :id, :name
+  / = f.number_field :position
   = f.text_area :description
-  = f.text_field :image_id
-  .float-right
-    = f.submit :Lagre
+
+  = render 'images/inline_form', f: f
+
+  .text-right
+    = f.primary :Lagre

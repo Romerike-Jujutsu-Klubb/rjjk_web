@@ -24,7 +24,12 @@ Rails.application.routes.draw do
   get 'velkommen' => 'welcome#front_page', as: :front_page
   get 'velkommst' => 'welcome#front_parallax', as: :front_parallax
 
-  resources :application_steps
+  resources :application_steps do
+    member do
+      patch :move_up
+      patch :move_down
+    end
+  end
   resources :appointments
   resources :annual_meetings
   scope controller: :attendance_form, path: 'oppmøte/skjema' do

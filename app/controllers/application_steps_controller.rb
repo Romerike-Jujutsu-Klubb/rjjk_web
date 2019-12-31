@@ -9,70 +9,64 @@ class ApplicationStepsController < ApplicationController
 
   def index
     @application_steps = ApplicationStep.all
-    respond_to do |format|
-      format.html
-      format.json { render json: @application_steps }
-    end
   end
 
   def show
     @application_step = ApplicationStep.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.json { render json: @application_step }
-    end
   end
 
   def new
-    @application_step = ApplicationStep.new
-    respond_to do |format|
-      format.html
-      format.json { render json: @application_step }
-    end
+    @application_step ||= ApplicationStep.new(params[:application_step])
+    load_form_data
+    render :new
   end
 
   def edit
-    @application_step = ApplicationStep.find(params[:id])
+    @application_step ||= ApplicationStep.find(params[:id])
+    load_form_data
+    render :edit
   end
 
   def create
     @application_step = ApplicationStep.new(params[:application_step])
-    respond_to do |format|
-      if @application_step.save
-        format.html do
-          redirect_to @application_step, notice: 'Application step was successfully created.'
-        end
-        format.json do
-          render json: @application_step, status: :created, location: @application_step
-        end
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @application_step.errors, status: :unprocessable_entity }
-      end
+    if @application_step.save
+      redirect_to edit_technique_application_path(@application_step.technique_application),
+          notice: 'Application step was successfully created.'
+    else
+      new
     end
   end
 
   def update
     @application_step = ApplicationStep.find(params[:id])
-    respond_to do |format|
-      if @application_step.update(params[:application_step])
-        format.html do
-          redirect_to @application_step, notice: 'Application step was successfully updated.'
-        end
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @application_step.errors, status: :unprocessable_entity }
-      end
+    if @application_step.update(params[:application_step])
+      redirect_to @application_step, notice: 'Application step was successfully updated.'
+    else
+      edit
     end
+  end
+
+  def move_up
+    application_step = ApplicationStep.find(params[:id])
+    application_step.move_higher
+    redirect_to edit_technique_application_path(application_step.technique_application)
+  end
+
+  def move_down
+    application_step = ApplicationStep.find(params[:id])
+    application_step.move_lower
+    redirect_to edit_technique_application_path(application_step.technique_application)
   end
 
   def destroy
     @application_step = ApplicationStep.find(params[:id])
     @application_step.destroy
-    respond_to do |format|
-      format.html { redirect_to application_steps_url }
-      format.json { head :no_content }
-    end
+    redirect_to application_steps_url
+  end
+
+  private
+
+  def load_form_data
+    @technique_applications = TechniqueApplication.all
   end
 end
