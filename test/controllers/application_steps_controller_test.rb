@@ -32,7 +32,7 @@ class ApplicationStepsControllerTest < IntegrationTest
       } }
     end
 
-    assert_redirected_to application_step_path(ApplicationStep.last)
+    assert_redirected_to edit_technique_application_path(@application_step.technique_application_id)
   end
 
   test 'should show application_step' do
