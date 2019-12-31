@@ -14,7 +14,7 @@ class BasicTechniquesController < ApplicationController
   end
 
   def new
-    @basic_technique ||= BasicTechnique.new
+    @basic_technique ||= BasicTechnique.new(params[:basic_technique])
     load_form_data
     render :new
   end
