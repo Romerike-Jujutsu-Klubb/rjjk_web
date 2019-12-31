@@ -64,6 +64,6 @@ class ApplicationStepsControllerTest < IntegrationTest
       delete application_step_path(@application_step)
     end
 
-    assert_redirected_to application_steps_path
+    assert_redirected_to edit_technique_application_path(@application_step.technique_application)
   end
 end
