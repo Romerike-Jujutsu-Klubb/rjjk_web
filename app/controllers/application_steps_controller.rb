@@ -29,6 +29,9 @@ class ApplicationStepsController < ApplicationController
 
   def create
     @application_step = ApplicationStep.new(params[:application_step])
+    if (existing_image = Image.find_by(md5_checksum: @application_step.image.md5_checksum))
+      @application_step.image = existing_image
+    end
     if @application_step.save
       redirect_to edit_technique_application_path(@application_step.technique_application),
           notice: 'Application step was successfully created.'
@@ -39,7 +42,11 @@ class ApplicationStepsController < ApplicationController
 
   def update
     @application_step = ApplicationStep.find(params[:id])
-    if @application_step.update(params[:application_step])
+    @application_step.attributes = params[:application_step]
+    if (existing_image = Image.find_by(md5_checksum: @application_step.image.md5_checksum))
+      @application_step.image = existing_image
+    end
+    if @application_step.save
       redirect_to edit_technique_application_path(@application_step.technique_application),
           notice: 'Application step was successfully updated.'
     else
