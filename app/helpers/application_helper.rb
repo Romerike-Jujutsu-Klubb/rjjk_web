@@ -58,10 +58,13 @@ module ApplicationHelper
     name
   end
 
-  def textalize(s)
+  def textalize(s, newlines: false)
     return '' if s.blank?
 
-    html = Kramdown::Document.new(s.strip).to_html
+    s = s.strip
+    s.gsub!(/(?<!\n)\n(?!\n)/, '<br/>') if newlines
+
+    html = Kramdown::Document.new(s).to_html
     with_links = auto_link(html, link: :all, target: '_blank', sanitize: false)
     with_links.force_encoding(Encoding::UTF_8)
     with_inline_images = with_links.gsub(%r{(src=".*/images/\d+)(\.[^."])?"}) do
