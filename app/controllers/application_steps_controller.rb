@@ -60,9 +60,9 @@ class ApplicationStepsController < ApplicationController
   end
 
   def destroy
-    @application_step = ApplicationStep.find(params[:id])
-    @application_step.destroy
-    redirect_to application_steps_url
+    application_step = ApplicationStep.find(params[:id])
+    application_step.destroy
+    redirect_to edit_technique_application_path(application_step.technique_application)
   end
 
   private
