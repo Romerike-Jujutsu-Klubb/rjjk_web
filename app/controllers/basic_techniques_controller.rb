@@ -28,7 +28,7 @@ class BasicTechniquesController < ApplicationController
   def create
     @basic_technique = BasicTechnique.new(params[:basic_technique])
     if @basic_technique.save
-      redirect_to edit_basic_technique_path(@basic_technique), notice: 'Opprettet ny grunnteknikk.'
+      redirect_to edit_rank_path(@basic_technique.rank_id), notice: 'Opprettet ny grunnteknikk.'
     else
       new
     end
@@ -37,7 +37,7 @@ class BasicTechniquesController < ApplicationController
   def update
     @basic_technique = BasicTechnique.find(params[:id])
     if @basic_technique.update(params[:basic_technique])
-      redirect_to @basic_technique, notice: 'Basic technique was successfully updated.'
+      redirect_to edit_rank_path(@basic_technique.rank_id), notice: 'Oppdaterte grunnteknikk.'
     else
       edit
     end

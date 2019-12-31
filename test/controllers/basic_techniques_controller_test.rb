@@ -28,7 +28,7 @@ class BasicTechniquesControllerTest < ActionController::TestCase
       } }
     end
 
-    assert_redirected_to edit_basic_technique_path(BasicTechnique.last)
+    assert_redirected_to edit_rank_path(@basic_technique.rank_id)
   end
 
   test 'should show basic_technique' do
@@ -49,7 +49,7 @@ class BasicTechniquesControllerTest < ActionController::TestCase
       translation: @basic_technique.translation,
       waza_id: @basic_technique.waza_id,
     } }
-    assert_redirected_to basic_technique_path(@basic_technique)
+    assert_redirected_to edit_rank_path(@basic_technique.rank_id)
   end
 
   test 'should destroy basic_technique' do
