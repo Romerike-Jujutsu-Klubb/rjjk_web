@@ -26,15 +26,16 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
 
   def self.send_attendance_summary
     now = Time.current
+    today = now.to_date
     group_schedules = GroupSchedule.includes(:group).references(:groups)
         .merge(Group.active(now))
-        .where('weekday = ? AND start_at >= ?', now.to_date.cwday, now.time_of_day)
+        .where('weekday = ? AND start_at >= ?', today.cwday, now.time_of_day)
         .where('groups.planning = ?', true)
         .order('groups.from_age', 'groups.to_age')
         .to_a
     group_schedules.each do |gs|
       attendances = Attendance.includes(:member, practice: :group_schedule)
-          .where(practices: { group_schedule_id: gs.id, year: now.cwyear, week: now.to_date.cweek })
+          .where(practices: { group_schedule_id: gs.id, year: today.cwyear, week: today.cweek })
           .to_a
       next if attendances.empty?
 
@@ -71,16 +72,17 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
 
   def self.send_attendance_changes
     now = Time.current
+    today = now.to_date
     upcoming_group_schedules = GroupSchedule.includes(:group).references(:groups)
         .where('weekday = ? AND end_at >= ? AND groups.closed_on IS NULL',
-            now.to_date.cwday, now.time_of_day)
+            today.cwday, now.time_of_day)
         .where('groups.planning = ?', true)
         .to_a
     upcoming_group_schedules.each do |gs|
       attendances = Attendance.includes(:member, practice: :group_schedule)
           .references(:practices)
           .where('practices.group_schedule_id = ? AND year = ? AND week = ?',
-              gs.id, now.cwyear, now.to_date.cweek).to_a
+              gs.id, today.cwyear, today.cweek).to_a
       new_attendances = attendances.select { |a| a.updated_at >= 1.hour.ago }.map(&:member)
       next if new_attendances.empty?
 
@@ -109,16 +111,17 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
 
   def self.send_attendance_review
     now = Time.current
+    today = now.to_date
     completed_group_schedules = GroupSchedule.includes(:group).references(:groups)
         .where('weekday = ? AND end_at BETWEEN ? AND ?',
-            now.to_date.cwday, (now - 1.hour).time_of_day, now.time_of_day)
+            today.cwday, (now - 1.hour).time_of_day, now.time_of_day)
         .where('groups.closed_on IS NULL')
         .where('groups.planning = ?', true)
         .to_a
     planned_attendances = Attendance
         .includes(:member, practice: :group_schedule).references(:groups)
         .where('practices.group_schedule_id IN (?)', completed_group_schedules.map(&:id))
-        .where('practices.year = ? AND practices.week = ?', now.cwyear, now.to_date.cweek)
+        .where('practices.year = ? AND practices.week = ?', today.cwyear, today.cweek)
         .where('attendances.status = ? AND sent_review_email_at IS NULL',
             Attendance::Status::WILL_ATTEND).to_a
     planned_attendances.group_by(&:member).each do |member, completed_attendances|
