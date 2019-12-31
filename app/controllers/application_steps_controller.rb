@@ -40,7 +40,8 @@ class ApplicationStepsController < ApplicationController
   def update
     @application_step = ApplicationStep.find(params[:id])
     if @application_step.update(params[:application_step])
-      redirect_to @application_step, notice: 'Application step was successfully updated.'
+      redirect_to edit_technique_application_path(@application_step.technique_application),
+          notice: 'Application step was successfully updated.'
     else
       edit
     end
