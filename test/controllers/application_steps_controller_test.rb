@@ -56,7 +56,7 @@ class ApplicationStepsControllerTest < IntegrationTest
       },
       position: @application_step.position,
     } }
-    assert_redirected_to application_step_path(@application_step)
+    assert_redirected_to edit_technique_application_path(@application_step.technique_application)
   end
 
   test 'should destroy application_step' do
