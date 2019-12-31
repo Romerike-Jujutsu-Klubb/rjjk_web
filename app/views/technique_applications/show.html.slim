@@ -33,7 +33,7 @@ scss:
           .card-body
             - if as.image_id
               = render 'images/item', image: as.image
-            = as.description
+            = textalize as.description
   #videos.tab-pane.fade role="tabpanel" aria-labelledby="videos-tab"
     .card-deck
       - @technique_application.application_videos.each do |av|
