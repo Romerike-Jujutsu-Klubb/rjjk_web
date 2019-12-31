@@ -23,6 +23,7 @@ class SearchController < ApplicationController
     @news = news_items.group_by { |n| n.created_at.year }
     @images = Image.where('UPPER(name) LIKE :query', query: query).order(:name).to_a
     @basic_techniques = BasicTechnique.where('UPPER(name) LIKE :query', query: query).order(:name).to_a
-    @technique_applications = TechniqueApplication.where('UPPER(name) LIKE :query', query: query).order(:name).to_a
+    @technique_applications =
+        TechniqueApplication.where('UPPER(name) LIKE :query', query: query).order(:name).to_a
   end
 end
