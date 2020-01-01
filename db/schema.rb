@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_31_172614) do
+ActiveRecord::Schema.define(version: 2020_01_01_152923) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -36,14 +36,14 @@ ActiveRecord::Schema.define(version: 2019_12_31_172614) do
   end
 
   create_table 'application_steps', force: :cascade do |t|
-    t.integer 'technique_application_id', null: false
     t.integer 'position', null: false
     t.text 'description'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.integer 'image_id'
-    t.index %w[technique_application_id position], name: 'index_application_steps_on_technique_application_id_and_positio'
-    t.index ['technique_application_id'], name: 'fk__application_steps_technique_application_id'
+    t.bigint 'application_image_sequence_id'
+    t.index %w[application_image_sequence_id position], name: 'idx_application_steps__application_image_sequence_id__position', unique: true
+    t.index ['application_image_sequence_id'], name: 'index_application_steps_on_application_image_sequence_id'
   end
 
   create_table 'application_videos', force: :cascade do |t|
@@ -788,7 +788,7 @@ ActiveRecord::Schema.define(version: 2019_12_31_172614) do
   end
 
   add_foreign_key 'application_image_sequences', 'technique_applications'
-  add_foreign_key 'application_steps', 'technique_applications', name: 'fk_application_steps_technique_application_id'
+  add_foreign_key 'application_steps', 'application_image_sequences'
   add_foreign_key 'application_videos', 'images'
   add_foreign_key 'application_videos', 'technique_applications'
   add_foreign_key 'appointments', 'members', name: 'fk_appointments_member_id'

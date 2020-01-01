@@ -21,7 +21,7 @@ class ApplicationStepsControllerTest < IntegrationTest
   test 'should create application_step' do
     assert_difference('ApplicationStep.count(:all)') do
       post application_steps_path, params: { application_step: {
-        technique_application_id: @application_step.technique_application_id,
+        application_image_sequence_id: @application_step.application_image_sequence_id,
         description: @application_step.description,
         image_attributes: {
           content_data: 'image.content_data',
@@ -32,7 +32,9 @@ class ApplicationStepsControllerTest < IntegrationTest
       } }
     end
 
-    assert_redirected_to edit_technique_application_path(@application_step.technique_application_id)
+    assert_redirected_to edit_technique_application_path(
+        @application_step.application_image_sequence.technique_application_id
+      )
   end
 
   test 'should show application_step' do
@@ -47,7 +49,7 @@ class ApplicationStepsControllerTest < IntegrationTest
 
   test 'should update application_step' do
     put application_step_path(@application_step), params: { application_step: {
-      technique_application_id: @application_step.technique_application_id,
+      application_image_sequence_id: @application_step.application_image_sequence_id,
       description: @application_step.description,
       image_attributes: {
         content_data: 'content_data',
@@ -56,7 +58,9 @@ class ApplicationStepsControllerTest < IntegrationTest
       },
       position: @application_step.position,
     } }
-    assert_redirected_to edit_technique_application_path(@application_step.technique_application)
+    assert_redirected_to edit_technique_application_path(
+        @application_step.application_image_sequence.technique_application
+      )
   end
 
   test 'should destroy application_step' do
@@ -64,6 +68,8 @@ class ApplicationStepsControllerTest < IntegrationTest
       delete application_step_path(@application_step)
     end
 
-    assert_redirected_to edit_technique_application_path(@application_step.technique_application)
+    assert_redirected_to edit_technique_application_path(
+        @application_step.application_image_sequence.technique_application
+      )
   end
 end

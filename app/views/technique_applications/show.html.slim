@@ -11,7 +11,7 @@ h3.clearfix
     - if admin?
       = link_to('Rediger', edit_technique_application_path(@technique_application), class: 'btn btn-primary ml-2')
 
-- if @technique_application.application_steps.any? && @technique_application.application_videos.any?
+- if @technique_application.application_image_sequences.any? && @technique_application.application_videos.any?
   ul#myTab.nav.nav-tabs role="tablist"
     li.nav-item
       a#steps-tab.nav-link.active data-toggle="tab" data-target="#steps" role="tab" aria-controls="steps" aria-selected="true" Bildeserie
@@ -30,13 +30,16 @@ scss:
 
 #myTabContent.tab-content
   #steps.tab-pane.fade.show.active role="tabpanel" aria-labelledby="steps-tab"
-    .card-deck
-      - @technique_application.application_steps.order(:position).each do |as|
-        .card.mt-3
-          .card-body
-            - if as.image_id
-              = render 'images/item', image: as.image
-            = textalize as.description, newlines: true
+    - @technique_application.application_image_sequences.each do |ais|
+      - if ais.title
+        h3 = ais.title
+      .card-deck
+        - ais.application_steps.order(:position).each do |as|
+          .card.mt-3
+            .card-body
+              - if as.image_id
+                = render 'images/item', image: as.image
+              = textalize as.description, newlines: true
   #videos.tab-pane.fade role="tabpanel" aria-labelledby="videos-tab"
     .card-deck
       - @technique_application.application_videos.each do |av|

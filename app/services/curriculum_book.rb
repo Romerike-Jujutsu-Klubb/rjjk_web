@@ -49,18 +49,21 @@ class CurriculumBook < Prawn::Document
         applications[0..0].each.with_index do |ta, i|
           start_new_page unless i == 0
           text ta.name, size: 24
-          ta.application_steps[0..2].each do |as|
-            move_down 0.5.cm
-            left_content =
-                if as.image
-                  { image: as.image.content_data_io, width: page_width * 0.35,
-                    fit: [page_width * 0.33, page_width * 0.45] }
-                else
-                  { content: '', width: page_width * 0.34 }
-                end
-            table([[
-              left_content, { content: as.description, width: page_width * 0.34 }
-            ]], cell_style: { border_width: 0 })
+          ta.application_image_sequences.each do |ais|
+            text ais.title, size: 18 if ais.title
+            ais.application_steps[0..2].each do |as|
+              move_down 0.5.cm
+              left_content =
+                  if as.image
+                    { image: as.image.content_data_io, width: page_width * 0.35,
+                      fit: [page_width * 0.33, page_width * 0.45] }
+                  else
+                    { content: '', width: page_width * 0.34 }
+                  end
+              table([[
+                left_content, { content: as.description, width: page_width * 0.34 }
+              ]], cell_style: { border_width: 0 })
+            end
           end
         end
       end

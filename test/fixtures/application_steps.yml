@@ -1,17 +1,17 @@
 one:
-  technique_application: defence_against_wrist_grip_in_front
+  application_image_sequence: one
   position: 1
   description: Step one
   image: application_step_one
 
 two:
-  technique_application: defence_against_wrist_grip_in_front
+  application_image_sequence: one
   position: 2
   description: Step two
   image: application_step_two
 
 defence_against_dual_hair_grip_with_kneeing_step_1:
-  technique_application: defence_against_dual_hair_grip_with_kneeing
+  application_image_sequence: defence_against_dual_hair_grip_with_kneeing
   position: 1
   description: Panic!
   image: application_step_kneeing

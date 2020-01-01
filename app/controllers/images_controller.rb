@@ -14,10 +14,11 @@ class ImagesController < ApplicationController
       return false if FrontPageSection.where(image_id: image.id).exists?
     end
     image.application_steps.each do |step|
-      if current_user&.member.nil? || step.technique_application.rank > current_user.member.next_rank
-        redirect_to login_path, notice: 'Du må ha høyere grad for å se på dette pensumet.'
-        return true
-      end
+      next unless current_user&.member.nil? ||
+          step.application_image_sequence.technique_application.rank > current_user.member.next_rank
+
+      redirect_to login_path, notice: 'Du må ha høyere grad for å se på dette pensumet.'
+      return true
     end
     false
   end

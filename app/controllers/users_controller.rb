@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 
   def edit
     @user ||= User.with_deleted.find(params[:id])
-    if (@member = @user.member)
+    if (@member = @user.memberships.first)
       @groups =
           Group.includes(:martial_art).order('martial_arts.name, groups.name').where(closed_on: nil).to_a
       @groups |= @member.groups

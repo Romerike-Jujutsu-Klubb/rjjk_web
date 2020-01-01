@@ -9,7 +9,7 @@
         - @application_step.errors.full_messages.each do |msg|
           li = msg
 
-  = f.collection_select :technique_application_id, @technique_applications, :id, :name
+  = f.collection_select :application_image_sequence_id, @application_image_sequences, :id, :title
   / = f.number_field :position
   = f.text_area :description
 

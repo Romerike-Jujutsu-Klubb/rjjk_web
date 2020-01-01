@@ -9,7 +9,6 @@ class TechniqueApplication < ApplicationRecord
 
   belongs_to :rank
   has_many :application_image_sequences, dependent: :destroy
-  has_many :application_steps, dependent: :destroy
   has_many :application_videos, dependent: :destroy
 
   validates :name, presence: true

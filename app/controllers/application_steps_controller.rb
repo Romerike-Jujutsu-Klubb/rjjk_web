@@ -33,7 +33,9 @@ class ApplicationStepsController < ApplicationController
       @application_step.image = existing_image
     end
     if @application_step.save
-      redirect_to edit_technique_application_path(@application_step.technique_application),
+      redirect_to edit_technique_application_path(
+          @application_step.application_image_sequence.technique_application
+        ),
           notice: 'Application step was successfully created.'
     else
       new
@@ -47,7 +49,9 @@ class ApplicationStepsController < ApplicationController
       @application_step.image = existing_image
     end
     if @application_step.save
-      redirect_to edit_technique_application_path(@application_step.technique_application),
+      redirect_to edit_technique_application_path(
+          @application_step.application_image_sequence.technique_application
+        ),
           notice: 'Application step was successfully updated.'
     else
       edit
@@ -69,12 +73,14 @@ class ApplicationStepsController < ApplicationController
   def destroy
     application_step = ApplicationStep.find(params[:id])
     application_step.destroy
-    redirect_to edit_technique_application_path(application_step.technique_application)
+    redirect_to edit_technique_application_path(
+        application_step.application_image_sequence.technique_application
+      )
   end
 
   private
 
   def load_form_data
-    @technique_applications = TechniqueApplication.all
+    @application_image_sequences = ApplicationImageSequence.all
   end
 end
