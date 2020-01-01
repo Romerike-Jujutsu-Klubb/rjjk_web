@@ -1,0 +1,26 @@
+h1 Application Image Sequences
+
+table
+  thead
+    tr
+      th Technique application
+      th Image
+      th Position
+      th Title
+      th
+      th
+      th
+
+  tbody
+    - @application_image_sequences.each do |application_image_sequence|
+      tr
+        td = application_image_sequence.technique_application
+        td = application_image_sequence.position
+        td = application_image_sequence.title
+        td = link_to 'Show', application_image_sequence
+        td = link_to 'Edit', edit_application_image_sequence_path(application_image_sequence)
+        td = link_to 'Destroy', application_image_sequence, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Application image sequence', new_application_image_sequence_path

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :application_videos
   default_url_options Rails.application.config.action_mailer.default_url_options
 
   post 'image_dropzone/upload'
@@ -24,12 +23,14 @@ Rails.application.routes.draw do
   get 'velkommen' => 'welcome#front_page', as: :front_page
   get 'velkommst' => 'welcome#front_parallax', as: :front_parallax
 
+  resources :application_image_sequences
   resources :application_steps do
     member do
       patch :move_up
       patch :move_down
     end
   end
+  resources :application_videos
   resources :appointments
   resources :annual_meetings
   scope controller: :attendance_form, path: 'oppmøte/skjema' do

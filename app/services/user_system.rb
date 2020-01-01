@@ -39,6 +39,13 @@ module UserSystem
   end
 
   #   before_filter :admin_required
+  def membership_required
+    return false unless authenticate_user
+    return true if current_user.member
+
+    access_denied('Du må være medlem for å se denne siden.')
+  end
+
   def admin_required
     return false unless authenticate_user
     return true if admin?

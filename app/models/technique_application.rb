@@ -8,6 +8,7 @@ class TechniqueApplication < ApplicationRecord
   acts_as_list scope: :rank_id
 
   belongs_to :rank
+  has_many :application_image_sequences, dependent: :destroy
   has_many :application_steps, dependent: :destroy
   has_many :application_videos, dependent: :destroy
 

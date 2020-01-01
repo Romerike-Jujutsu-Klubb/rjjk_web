@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Technique application:
+  = @application_image_sequence.technique_application
+p
+  strong Position:
+  = @application_image_sequence.position
+p
+  strong Title:
+  = @application_image_sequence.title
+
+=> link_to 'Edit', edit_application_image_sequence_path(@application_image_sequence)
+'|
+=< link_to 'Back', application_image_sequences_path
