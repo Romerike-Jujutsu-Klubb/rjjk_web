@@ -88,6 +88,16 @@ unless reason
 
     # Admin Daily
 
+    scheduler.cron('0 2 * * *') do
+      Rails.application.executor.wrap do
+        Image.where(google_drive_reference: nil).each do |image|
+          GoogleDriveUploadJob.perform_now(image.id)
+        rescue => e
+          ExceptionNotifier.notify_exception(e)
+        end
+      end
+    end
+
     scheduler.cron('0 3 * * *') do
       Rails.application.executor.wrap { SemesterReminder.create_missing_semesters }
     end

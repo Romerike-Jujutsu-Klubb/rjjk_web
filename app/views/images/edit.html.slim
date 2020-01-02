@@ -1,3 +1,29 @@
 h1 Redigèr bilde
 
 = render 'form'
+
+h2 Referanser
+
+h3 Bruker
+
+= @image.user.name
+
+h3 Medlem
+
+= @image.member_image&.member&.name
+
+h3 Likes
+
+= @image.user_like&.user&.name
+
+h3 application_steps
+
+= @image.application_steps.map{|as| as.id}
+
+h3 embu_part_videos
+
+= @image.embu_part_videos.map{|as| as.id}
+
+h3 user_images
+
+= @image.user_images.map{|as| as.id}

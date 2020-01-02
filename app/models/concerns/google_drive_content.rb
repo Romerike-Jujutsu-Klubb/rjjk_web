@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module GoogleDriveContent
+  def self.included(clas)
+    clas.after_create { |record| GoogleDriveUploadJob.perform_later(record.id) }
+  end
+
   def content_data_io
     logger.info "get google drive io: #{id} #{google_drive_reference}"
     unless google_drive_reference
