@@ -7,4 +7,9 @@ class StatusControllerTest < IntegrationTest
     get status_url
     assert_response :success
   end
+
+  test 'should get health' do
+    get status_health_url
+    assert_response :success
+  end
 end

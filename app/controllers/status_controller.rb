@@ -16,15 +16,4 @@ class StatusController < ApplicationController
   def health
     render plain: 'OK'
   end
-
-  def heap_dump
-    public_file = "/#{HEAP_DUMP_PREFIX}#{Time.current.strftime('%F_%H%M')}#{HEAP_DUMP_SUFFIX}"
-    File.open("#{HEAP_DUMP_PATH}#{public_file}", 'w') { |file| ObjectSpace.dump_all(output: file) }
-    redirect_to public_file
-  end
-
-  def gc
-    GC.start
-    redirect_to :status, notice: 'GC started.'
-  end
 end
