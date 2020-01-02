@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   default_url_options Rails.application.config.action_mailer.default_url_options
 
   post 'image_dropzone/upload'
-  get 'info/versjon'
 
   # FIXME(uwe): Separate to MyAttendanceController
   get 'mitt/oppmote(/:reviewed_attendance_id)' => 'attendances#plan', as: :attendance_plan

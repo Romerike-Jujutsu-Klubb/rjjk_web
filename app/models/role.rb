@@ -12,16 +12,15 @@ class Role < ApplicationRecord
         elections.current.each do |a|
           am = a.annual_meeting
           a.destroy
-          appointments.create! member_id: a.member_id, from: am.start_at.try(:to_date),
-                               to: am.next.try(:start_at).try(:to_date)
+          appointments.create! member_id: a.member_id, from: am.start_at&.to_date,
+                               to: am.next&.start_at&.to_date
         end
       else
         appointments.current.each do |a|
           next unless (am = AnnualMeeting.find_by('DATE(start_at) = ?', a.from))
 
           a.destroy
-          elections.create! member_id: a.member_id, annual_meeting_id: am.id,
-                            years: years_on_the_board
+          elections.create! member_id: a.member_id, annual_meeting_id: am.id, years: years_on_the_board
         end
       end
     end

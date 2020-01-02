@@ -1,20 +1,38 @@
 h1 Status
 
+h3 Kjøretid
+
+p
+  ' #{uptime.to_i / (3600 * 24)} dager
+  ' #{(uptime.to_i % (3600 * 24)) / 3600} timer
+  ' #{(uptime.to_i % 3600) / 60} minutter
+  ' #{uptime.to_i % 60} sekunder
+
+h3 Versjon
+
+- if File.exists? 'REVISION'
+  dl
+    dt Revision
+    dd = File.read('REVISION')
+    dt Timestamp
+    dd = File.mtime('REVISION')
+- else
+  p Utvikling
+
+h3 Ruby
+
+p = RUBY_DESCRIPTION
+
+
+h3 Rails
+
+p = Rails::VERSION::STRING
+
+h2 Analysis
+
 ul
   li: a href='https://developers.google.com/speed/pagespeed/insights/?hl=no&url=https%3A%2F%2Fjujutsu.no%2F' target=:_blank PageSpeed Insights
 
 ul
   li: a href='https://www.ssllabs.com/ssltest/analyze.html?d=jujutsu.no' target=:_blank https://www.ssllabs.com/ssltest/analyze.html?d=jujutsu.no
   li: a href='https://www.ssllabs.com/ssltest/analyze.html?d=www.jujutsu.no' target=:_blank https://www.ssllabs.com/ssltest/analyze.html?d=www.jujutsu.no
-  li: a href='https://www.ssllabs.com/ssltest/analyze.html?d=beta.jujutsu.no' target=:_blank https://www.ssllabs.com/ssltest/analyze.html?d=beta.jujutsu.no
-
-- if ENV['OBJECT_SPACE'] == 'ENABLED'
-  h3 Heap dumps
-  ul
-    - @heap_dumps.each do |hd, size|
-      li: a href=hd download=true #{hd} (#{size / (1024 * 1024)}mb)
-    li: a href=status_heap_dump_path download=true New heap dump
-
-  h4: a href='http://tenderlove.github.io/heap-analyzer' target=:heap_analyser Heap Analyser
-
-h3: a href=status_gc_path GC

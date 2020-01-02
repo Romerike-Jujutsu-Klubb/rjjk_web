@@ -113,8 +113,6 @@ class InfoController < ApplicationController
     end
   end
 
-  def versjon; end
-
   private
 
   def load_images
