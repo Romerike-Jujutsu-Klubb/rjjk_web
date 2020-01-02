@@ -21,7 +21,8 @@ class NkfAppointmentsScraper
       role_name = { 'Barne og ungdomsrepresentant' => 'Foreldrerepresentant' }[r[1]] || r[1]
       role = Role.where(name: role_name).first_or_create!
       member_name = r[0]
-      m = User.where("(last_name || ' ' || first_name) = ?", member_name).map(&:member).compact.first
+      m = User.where("(last_name || ' ' || first_name) = ?", member_name)
+          .flat_map(&:memberships).compact.first
       next "Ukjent medlem: #{member_name}" if m.nil?
 
       date = Date.strptime(r[5], '%d.%m.%Y')

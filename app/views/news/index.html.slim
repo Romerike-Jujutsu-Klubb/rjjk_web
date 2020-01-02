@@ -1,5 +1,5 @@
-- if not @news_items.empty?
-  = render 'news/item', news_item: @news_items[0], full: false, focus: true
+- if (focus_item = @news_items[0])
+  = render 'news/item', news_item: focus_item, full: false, focus: true
 
   #primarycontainer
     #primarycontent

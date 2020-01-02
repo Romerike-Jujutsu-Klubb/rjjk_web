@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   private
 
   def load_layout_model
-    return if request.xhr? || _layout([]) != DEFAULT_LAYOUT
+    return if request.xhr? || _layout(lookup_context, []) != DEFAULT_LAYOUT
 
     unless @information_pages
       info_query = InformationPage.roots.order(:position)

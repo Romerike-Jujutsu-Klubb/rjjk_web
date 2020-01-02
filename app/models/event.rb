@@ -106,6 +106,4 @@ class Event < ApplicationRecord
   end
 end
 
-Dir["#{__dir__}/*.rb"].each do |f|
-  require_dependency File.basename(f) if /class .* < Event/.match?(File.read(f))
-end
+Dir["#{__dir__}/*.rb"].each { |f| require File.basename(f) if /class .* < Event/.match?(File.read(f)) }

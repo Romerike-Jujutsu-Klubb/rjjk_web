@@ -26,6 +26,10 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "rjjk_web_#{Rails.env}"
+  # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
+  # config.active_record.database_resolver_context =
+  #     ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  # config.active_record.database_selector = { delay: 2.seconds }
   config.active_record.dump_schema_after_migration = false
   config.active_storage.service = :local
   config.active_support.deprecation = :notify
@@ -37,15 +41,16 @@ Rails.application.configure do
   config.consider_all_requests_local = false
   config.eager_load = true
   config.force_ssl = true
+  config.i18n.fallbacks = true
   config.log_formatter = ::Logger::Formatter.new
   config.log_level = ENV['RAILS_LOG_LEVEL'] || :info
   config.log_tags = [:request_id]
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
   config.lograge.enabled = true
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
-  config.public_file_server.headers = {
-    'Cache-Control' => "public, max-age=#{1.year.to_i}",
-  }
+  # config.public_file_server.headers = {
+  #   'Cache-Control' => "public, max-age=#{1.year.to_i}",
+  # }
   config.require_master_key = true
   if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger = ActiveSupport::Logger.new(STDOUT)

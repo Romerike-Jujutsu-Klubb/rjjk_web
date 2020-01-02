@@ -12,7 +12,7 @@ ruby File.read("#{__dir__}/.ruby-version")[5..-1]
 # For Rails 6
 # https://gorails.com/episodes/how-to-use-bootstrap-with-webpack-and-rails
 
-gem 'rails', '~>5.2.0'
+gem 'rails', '~>6.0.0'
 
 platform :ruby do
   gem 'mini_racer'
@@ -24,7 +24,7 @@ end
 # https://github.com/apexcharts
 
 gem 'actionpack-page_caching', github: 'rails/actionpack-page_caching'
-gem 'activerecord-time'
+gem 'activerecord-time' # , path: '~/work/open-source/activerecord-time'
 gem 'acts_as_list'
 gem 'acts_as_tree'
 gem 'bcrypt'
@@ -67,7 +67,7 @@ gem 'sassc-rails'
 gem 'script_relocator'
 gem 'serviceworker-rails'
 gem 'simple_drilldown'
-gem 'simple_workflow'
+gem 'simple_workflow' # , path: '~/work/open-source/simple_workflow'
 gem 'slim-rails'
 gem 'uglifier', '<4'
 gem 'unicode_utils'
