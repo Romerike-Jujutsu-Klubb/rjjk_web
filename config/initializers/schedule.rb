@@ -88,14 +88,14 @@ unless reason
 
     # Admin Daily
 
-    scheduler.every '1d', first_in: '1m' do
+    scheduler.every '1d', first_in: '23h' do
       Rails.application.executor.wrap do
-        images_not_in_google_drive = Image.where(google_drive_reference: nil)
+        images_not_in_google_drive = Image.where(google_drive_reference: nil).pluck(:id)
         if images_not_in_google_drive.any?
           Rails.logger.info "Found images not in Google Drive: #{images_not_in_google_drive.size}"
-          images_not_in_google_drive.each do |image|
-            GoogleDriveUploadJob.perform_now(image.id)
-            Rails.logger.info "Moved image to Google Drive: #{image.id.inspect}"
+          images_not_in_google_drive.each do |image_id|
+            GoogleDriveUploadJob.perform_now(image_id)
+            Rails.logger.info "Moved image to Google Drive: #{image_id.inspect}"
           rescue => e
             ExceptionNotifier.notify_exception(e)
           end
