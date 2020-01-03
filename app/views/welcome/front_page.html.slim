@@ -165,17 +165,13 @@ css:
     div = render('layouts/event_main', event: @event, display_year: false, display_month: true, display_times: true)
 
 section#background-wrapper
-  / THE BACKGROUND SLIDER
   article.cinematic data-contentholder="#slidercontent-wrapper"
-    / SLIDER LIST
     ul
       - @front_page_sections.each do |fps|
-        / A SLIDE ITEM
         li
-          / USE  data-repeatbg="true" for Tiled BG 's
           .slide-background-image[
             data-repeatbg="false" data-repeatbg2="false"
-            data-src=image_path(fps.image_id, format: accepts_webp? ? :webp : fps.image.format)
+            data-src=image_url_with_cl(fps.image)
             data-srcblur=blurred_image_path(fps.image_id, format: accepts_webp? ? :webp : fps.image.format)
             data-width=(fps.image.width || 1920) data-height=(fps.image.height || 1080)]
           section.slidercontent
@@ -187,9 +183,6 @@ section#background-wrapper
                   button.btn.txtshadow.fullwidth style="color:#ffffff;background-color:#4e89b7;white-space:nowrap!important"
                     = fps.button_text
                     i.fa.fa-chevron-right style="float:right;margin-top:1rem;margin-left:1rem"
-        / END OF A SLIDE ITEM
-    / END OF SLIDER LIST
-/ END OF THE BACKGROUND WRAPPER
 
 section#cinematic-title-wrapper.txtshadow.empty
   .container
