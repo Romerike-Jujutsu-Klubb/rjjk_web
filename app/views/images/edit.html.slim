@@ -4,6 +4,9 @@ h1 Redigèr bilde
 
 h2 Referanser
 
+.badge.badge-info Google Drive: #{@image.google_drive_reference.inspect}
+.badge.badge-info.ml-3 Cloudinary: #{@image.cloudinary_identifier.inspect}
+
 h3 Bruker
 
 = @image.user.name
