@@ -172,10 +172,13 @@ module UserSystem
   def session_user
     user = User.find_by(security_token: session[SESSION_KEY])
 
-    # FIXME(uwe): Remove 2021-01-01
+    # FIXME(uwe): Remove 2020-03-01
     unless user
       user = User.find_by(id: session[SESSION_KEY])
-      logger.warn "Found session user by user id: #{user.id}" if user
+      if user
+        logger.warn "Found session user by user id: #{user.id}"
+        session[SESSION_KEY] = user.security_token
+      end
     end
     # EMXIF
 
