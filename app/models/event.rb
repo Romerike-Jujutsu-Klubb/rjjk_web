@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
-  SUBCLASSES = Dir["#{__dir__}/*.rb"]
-      .map { |f| /^class (?<clas>.*) < Event/ =~ File.read(f) && clas.constantize }.compact
-
   HEADER = 'Arrangement'
 
   scope :chronological, -> { order :start_at }
@@ -22,6 +19,11 @@ class Event < ApplicationRecord
   before_validation { |r| r.description = nil if r.description.blank? }
 
   validates :start_at, presence: true
+
+  def self.types
+    @types ||= Dir["#{__dir__}/*.rb"]
+        .map { |f| /^class (?<clas>.*) < Event$/ =~ File.read(f) && clas.constantize }.compact
+  end
 
   def public?
     true
