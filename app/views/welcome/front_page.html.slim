@@ -1,0 +1,234 @@
+css:
+  @media (min-height: 593px) {
+    #event-splash-top {
+      margin-left: 2rem;
+      margin-right: 2rem;
+    }
+  }
+
+  #event-splash-top {
+    float: left;
+    margin-top: 5rem;
+    padding: 2rem;
+  }
+
+  @media (max-height: 650px) {
+    #event-splash-top {
+      margin-top: 4rem;
+      padding: 1rem;
+    }
+  }
+
+  #event-teaser {
+    background-color: rgba(255, 255, 255, .67);
+    box-sizing: border-box;
+    color: black;
+    display: none;
+    width: 30rem;
+    opacity: 1.0;
+    position: absolute;
+    right: 0;
+    padding: 1rem;
+    z-index: 501;
+  }
+
+  #event-teaser > div {
+    position: relative;
+    background-color: rgba(255, 255, 255, .8);
+    color: black;
+    z-index: 1;
+    max-width: 100%;
+    margin: 0;
+    padding: 2rem;
+  }
+
+  #event-splash-main {
+    display: none;
+    box-sizing: border-box;
+    padding: 2rem;
+    width: 100%;
+  }
+
+  @media (max-height: 35rem), (max-height: 592px) and (max-width: 522px) {
+    #event-splash-top {
+      display: none;
+    }
+
+    #event-teaser {
+      display: block;
+    }
+
+    #event-splash-main {
+      display: block;
+    }
+  }
+
+  @media (max-width: 732px) {
+    #event-teaser {
+      margin-top: 3.6rem;
+      max-width: 100%;
+    }
+  }
+
+  .event-splash {
+    background-color: rgba(255, 255, 255, .67);
+    box-sizing: border-box;
+    color: black;
+    opacity: 1.0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .event-splash > div {
+    position: relative;
+    background-color: rgba(255, 255, 255, .8);
+    color: black;
+    z-index: 1;
+    max-width: 100%;
+    margin: 0;
+    padding: 2rem;
+  }
+
+  .event-splash .text-right {
+    text-align: right !important;
+  }
+
+  .event-splash a.btn, #event-teaser a.btn {
+    background-color: transparent;
+    border: 1px solid transparent !important;
+    border-radius: 0.25rem !important;
+    color: #212529;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 0.375rem 0.75rem;
+    text-align: center;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .event-splash a.btn-info, #event-teaser a.btn-info {
+    color: #fff !important;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+  }
+
+  .event-splash a.btn-primary, #event-teaser a.btn-primary {
+    color: #fff !important;
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+
+  .event-splash a.btn-success, #event-teaser a.btn-success {
+    color: #ffffff !important;
+    background-color: #5bb75b;
+    border-color: #51a351 #51a351 #387038;
+  }
+
+  .float-right {
+    float: right;
+  }
+
+  .ml-2 {
+    margin-left: 0.5rem;
+  }
+
+  .ml-3 {
+    margin-left: 1rem;
+  }
+
+  #footer {
+    margin-top: 4rem;
+  }
+
+
+- if @event
+  #event-teaser
+    div = render('layouts/event_teaser', event: @event, display_year: false, display_month: true, display_times: true)
+    javascript:
+      $ = jQuery;
+      $(".fa-angle-double-down").closest('a').on('click', function(e) {
+        e.stopPropagation();
+        $([document.documentElement, document.body]).animate({
+          scrollTop: $($(e.target).closest('a').attr('href')).offset().top
+        }, 700, "swing");
+        return false;
+      });
+
+- if @event
+  #event-splash-top.event-splash
+    div = render('layouts/event_main', event: @event, display_year: false, display_month: true, display_times: true)
+
+section#background-wrapper
+  / THE BACKGROUND SLIDER
+  article.cinematic data-contentholder="#slidercontent-wrapper"
+    / SLIDER LIST
+    ul
+      - @front_page_sections.each do |fps|
+        / A SLIDE ITEM
+        li
+          / USE  data-repeatbg="true" for Tiled BG 's
+          .slide-background-image data-repeatbg="false" data-repeatbg2="false" data-src=image_path(fps.image_id, format: accepts_webp? ? :webp : fps.image.format) \
+               data-srcblur=blurred_image_path(fps.image_id, format: accepts_webp? ? :webp : fps.image.format) \
+               data-width=(fps.image.width || 1920) \
+               data-height=(fps.image.height || 1080)
+          section.slidercontent
+            h2: a href=information_page_path(fps.information_page_id) title=fps.title = fps.title
+            div.d-none.d-md-block
+              p.mainTitleSlider = fps.subtitle
+              .fbuilder_module.sliderBtn style="width:auto" data-shortcode="tp_button" data-modid="0"
+                a.smoothscroll href=information_page_path(fps.information_page_id) target="_self"
+                  button.btn.txtshadow.fullwidth style="color:#ffffff;background-color:#4e89b7;white-space:nowrap!important"
+                    = fps.button_text
+                    i.fa.fa-chevron-right style="float:right;margin-top:1rem;margin-left:1rem"
+        / END OF A SLIDE ITEM
+    / END OF SLIDER LIST
+/ END OF THE BACKGROUND WRAPPER
+
+section#cinematic-title-wrapper.txtshadow.empty
+  / .single_blurredbg_holder.noborder
+  /   .single_blurredbg"
+  /   .single_bluroverlay
+
+  .container
+    section#slidercontent-wrapper
+    section#cinematic-navigation.txtshadow
+      .cinematic-left.cinematic-navbutton: i.fa.fa-chevron-left.fa-3x
+      .cinematic-right.cinematic-navbutton: i.fa.fa-chevron-right.fa-3x
+      .cinematic-down.cinematic-navbutton: i.fa.fa-chevron-down.fa-3x
+      javascript:
+        $(".fa-chevron-down").on('click', function(e) {
+          e.stopPropagation();
+          $([document.documentElement, document.body]).animate({
+            scrollTop: $("#maincontent").offset().top
+          }, 700, "swing");
+        });
+
+section#home.pagestart
+
+section#maincontent
+  - if @event
+    #event-splash-main.event-splash
+      div = render('layouts/event_main', event: @event, display_year: false, display_month: true, display_times: true)
+
+  .onepagecontent
+    section#home.first
+    .clear
+
+  css:
+    #wp-admin-bar-fbuilder_edit, #fbuilder_wrapper.empty {
+      display: none
+    }
+
+  / Hide dublicated text in slider on home page
+  javascript:
+    $(function() {
+      jQuery('#slidercontent-wrapper').on('DOMNodeInserted', function(e) {
+        jQuery('#slidercontent-wrapper p.topTitleSlider').remove();
+      });
+    });
