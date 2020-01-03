@@ -1,4 +1,8 @@
-h1 Editing application_video
+a.btn.btn-danger.float-right href=application_video_path(@application_video) data-method=:delete data-confirm="Er du sikker på at du vil fjerne denne filmen fra denne teknikken?"
+  i.fa.fa-remove>
+  | Fjern
+
+h1 Applikasjonsvideo for #{@application_video.technique_application.name}
 
 == render 'form'
 

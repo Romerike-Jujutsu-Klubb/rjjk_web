@@ -17,7 +17,8 @@ class Image < ApplicationRecord
     where("user_images.rel_type = 'LIKE'").where('user_images.user_id = ?', Thread.current[:user].id)
   end, class_name: 'UserImage', inverse_of: :image
 
-  has_many :application_steps, dependent: :nullify
+  has_many :application_steps, dependent: :restrict_with_error
+  has_many :application_videos, dependent: :restrict_with_error
   has_many :embu_part_videos, dependent: :destroy
   has_many :user_images, dependent: :destroy
 

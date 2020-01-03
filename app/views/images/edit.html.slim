@@ -6,8 +6,8 @@ h1 Redigèr bilde
   .card
     .card-header Referanser
     .card-body
-      .badge.badge-info Google Drive: #{@image.google_drive_reference.inspect}
-      .badge.badge-info.ml-3 Cloudinary: #{@image.cloudinary_identifier.inspect}
+      .badge.badge-info.mr-3 Google Drive: #{@image.google_drive_reference.inspect}
+      .badge.badge-info Cloudinary: #{@image.cloudinary_identifier.inspect}
 
   .card
     .card-header Lastet opp av
@@ -25,6 +25,13 @@ h1 Redigèr bilde
       .card-header Likes
       .card-body
         = @image.user_like.user.name
+
+  - if @image.application_videos.any?
+    .card
+      .card-header Application Videos
+      .card-body
+        - @image.application_videos.each do |av|
+          a href=application_video_path(av.id) = av.technique_application.name
 
   - if @image.application_steps.any?
     .card
