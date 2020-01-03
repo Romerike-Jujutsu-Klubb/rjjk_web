@@ -14,8 +14,6 @@ module GoogleDriveContent
     GoogleDriveService.new.get_file_io(google_drive_reference)
   end
 
-  private
-
   def move_to_google_drive!
     logger.info "Store image in Google Drive: #{id}, #{name}"
     loaded_content, google_reference =
@@ -31,6 +29,8 @@ module GoogleDriveContent
     end
     loaded_content
   end
+
+  private
 
   def load_content(no_caching: false)
     if content_loaded?
