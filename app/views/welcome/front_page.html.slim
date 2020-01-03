@@ -173,10 +173,11 @@ section#background-wrapper
         / A SLIDE ITEM
         li
           / USE  data-repeatbg="true" for Tiled BG 's
-          .slide-background-image data-repeatbg="false" data-repeatbg2="false" data-src=image_path(fps.image_id, format: accepts_webp? ? :webp : fps.image.format) \
-               data-srcblur=blurred_image_path(fps.image_id, format: accepts_webp? ? :webp : fps.image.format) \
-               data-width=(fps.image.width || 1920) \
-               data-height=(fps.image.height || 1080)
+          .slide-background-image[
+            data-repeatbg="false" data-repeatbg2="false"
+            data-src=image_path(fps.image_id, format: accepts_webp? ? :webp : fps.image.format)
+            data-srcblur=blurred_image_path(fps.image_id, format: accepts_webp? ? :webp : fps.image.format)
+            data-width=(fps.image.width || 1920) data-height=(fps.image.height || 1080)]
           section.slidercontent
             h2: a href=information_page_path(fps.information_page_id) title=fps.title = fps.title
             div.d-none.d-md-block
@@ -191,10 +192,6 @@ section#background-wrapper
 / END OF THE BACKGROUND WRAPPER
 
 section#cinematic-title-wrapper.txtshadow.empty
-  / .single_blurredbg_holder.noborder
-  /   .single_blurredbg"
-  /   .single_bluroverlay
-
   .container
     section#slidercontent-wrapper
     section#cinematic-navigation.txtshadow
