@@ -168,11 +168,13 @@ section#background-wrapper
   article.cinematic data-contentholder="#slidercontent-wrapper"
     ul
       - @front_page_sections.each do |fps|
+        - fps_blurred_image_url = blurred_image_url(fps.image_id, format: accepts_webp? ? :webp : fps.image.format)
+        - if Rails.env.production?
+          - fps_blurred_image_url = cl_image_path(fps_blurred_image_url, type: "fetch")
         li
           .slide-background-image[
             data-repeatbg="false" data-repeatbg2="false"
-            data-src=image_url_with_cl(fps.image)
-            data-srcblur=blurred_image_path(fps.image_id, format: accepts_webp? ? :webp : fps.image.format)
+            data-src=image_url_with_cl(fps.image) data-srcblur=fps_blurred_image_url
             data-width=(fps.image.width || 1920) data-height=(fps.image.height || 1080)]
           section.slidercontent
             h2: a href=information_page_path(fps.information_page_id) title=fps.title = fps.title
