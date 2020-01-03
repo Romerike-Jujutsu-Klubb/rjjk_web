@@ -2,31 +2,44 @@ h1 Redigèr bilde
 
 = render 'form'
 
-h2 Referanser
+.card-deck.mt-4
+  .card
+    .card-header Referanser
+    .card-body
+      .badge.badge-info Google Drive: #{@image.google_drive_reference.inspect}
+      .badge.badge-info.ml-3 Cloudinary: #{@image.cloudinary_identifier.inspect}
 
-.badge.badge-info Google Drive: #{@image.google_drive_reference.inspect}
-.badge.badge-info.ml-3 Cloudinary: #{@image.cloudinary_identifier.inspect}
+  .card
+    .card-header Lastet opp av
+    .card-body
+      = @image.user.name
 
-h3 Bruker
+  - if @image.member_image
+    .card
+      .card-header Medlem
+      .card-body
+        = @image.member_image.member.name
 
-= @image.user.name
+  - if @image.user_like
+    .card
+      .card-header Likes
+      .card-body
+        = @image.user_like.user.name
 
-h3 Medlem
+  - if @image.application_steps.any?
+    .card
+      .card-header Application Steps
+      .card-body
+        = @image.application_steps.map{|as| as.id}
 
-= @image.member_image&.member&.name
+  - if @image.embu_part_videos.any?
+    .card
+      .card-header Embu part videos
+      .card-body
+        = @image.embu_part_videos.map{|as| as.id}
 
-h3 Likes
-
-= @image.user_like&.user&.name
-
-h3 application_steps
-
-= @image.application_steps.map{|as| as.id}
-
-h3 embu_part_videos
-
-= @image.embu_part_videos.map{|as| as.id}
-
-h3 user_images
-
-= @image.user_images.map{|as| as.id}
+  - if @image.user_images.any?
+    .card
+      .card-header User images
+      .card-body
+        = @image.user_images.map{|as| as.id}
