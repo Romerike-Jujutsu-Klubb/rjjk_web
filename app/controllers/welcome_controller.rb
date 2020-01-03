@@ -47,7 +47,7 @@ class WelcomeController < ApplicationController
   # https://web.archive.org/web/20190203085358/https://www.altoros.com/
   def front_page
     @front_page_sections = FrontPageSection.includes(:image).to_a
-    @event = Event.upcoming.order(:start_at).first
+    @event = Event.upcoming.order(:start_at).find { |e| current_user&.member || e.public? }
     @news_items = NewsItem.front_page_items.reject(&:expired?).first(5)
     render 'front_page', layout: 'public'
   end

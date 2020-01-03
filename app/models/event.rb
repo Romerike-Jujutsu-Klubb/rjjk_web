@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
+  SUBCLASSES = Dir["#{__dir__}/*.rb"]
+      .map { |f| /^class (?<clas>.*) < Event/ =~ File.read(f) && clas.constantize }.compact
+
   HEADER = 'Arrangement'
 
   scope :chronological, -> { order :start_at }
@@ -19,6 +22,10 @@ class Event < ApplicationRecord
   before_validation { |r| r.description = nil if r.description.blank? }
 
   validates :start_at, presence: true
+
+  def public?
+    true
+  end
 
   def upcoming?
     (end_at || start_at).to_date >= Date.current
@@ -105,5 +112,3 @@ class Event < ApplicationRecord
     ((I18n.locale == :nb ? description : description_en.presence) || description)&.split(/\r?\n\r?\n/)
   end
 end
-
-Dir["#{__dir__}/*.rb"].each { |f| require File.basename(f) if /class .* < Event/.match?(File.read(f)) }

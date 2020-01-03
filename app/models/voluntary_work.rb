@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class InstructorMeeting < Event
-  HEADER = 'Instruktørsamling'
+class VoluntaryWork < Event
+  HEADER = 'Dugnad'
 
   def title
     name.present? ? "#{HEADER}: #{name}" : HEADER

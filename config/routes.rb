@@ -339,6 +339,24 @@ Rails.application.routes.draw do
       patch :restore
     end
   end
+  resources :voluntary_works do
+    collection do
+      get :attendance_form
+      get :calendar
+      post :preview
+    end
+    member do
+      get :accept
+      get :calendar
+      get :decline
+      get :invite
+      get :preview
+      patch :preview
+      post :preview
+      get :tentative
+    end
+  end
+
   resources :wazas
 
   root to: 'welcome#index'
