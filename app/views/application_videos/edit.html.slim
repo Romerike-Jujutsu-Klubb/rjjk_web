@@ -2,7 +2,11 @@ a.btn.btn-danger.float-right href=application_video_path(@application_video) dat
   i.fa.fa-remove>
   | Fjern
 
-h1 Applikasjonsvideo for #{@application_video.technique_application.name}
+h1 Teknikkfilm
+
+h3
+  a> href=rank_path(@application_video.technique_application.rank) = @application_video.technique_application.rank.name
+  a href=technique_application_path(@application_video.technique_application, anchor: :videos_tab) = @application_video.technique_application.name
 
 == render 'form'
 

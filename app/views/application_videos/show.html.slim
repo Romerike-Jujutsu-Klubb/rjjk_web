@@ -1,8 +1,8 @@
 h1 Teknikkfilm
 
 h3
-  => @application_video.technique_application.rank.name
-  = @application_video.technique_application.name
+  a> href=rank_path(@application_video.technique_application.rank) = @application_video.technique_application.rank.name
+  a href=technique_application_path(@application_video.technique_application, anchor: :videos_tab) = @application_video.technique_application.name
 
 = render 'images/item', image: @application_video.image
 

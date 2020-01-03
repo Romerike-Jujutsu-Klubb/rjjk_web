@@ -177,7 +177,7 @@ module UserSystem
       user = User.find_by(id: session[SESSION_KEY])
       if user
         logger.warn "Found session user by user id: #{user.id}"
-        session[SESSION_KEY] = user.security_token
+        session[SESSION_KEY] = user.generate_security_token(:login)
       end
     end
     # EMXIF

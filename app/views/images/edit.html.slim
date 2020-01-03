@@ -31,7 +31,7 @@ h1 Redigèr bilde
       .card-header Application Videos
       .card-body
         - @image.application_videos.each do |av|
-          a href=application_video_path(av.id) = av.technique_application.name
+          a href=edit_application_video_path(av.id) = av.technique_application.name
 
   - if @image.application_steps.any?
     .card
