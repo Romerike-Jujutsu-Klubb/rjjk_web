@@ -97,6 +97,8 @@ unless reason
             GoogleDriveUploadJob.perform_now(image_id)
             Rails.logger.info "Moved image to Google Drive: #{image_id.inspect}"
           rescue => e
+            logger.error e
+            logger.error e.backtrace.join("\n")
             ExceptionNotifier.notify_exception(e)
           end
         end
