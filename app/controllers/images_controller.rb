@@ -10,13 +10,14 @@ class ImagesController < ApplicationController
   cache_sweeper :image_sweeper, only: %i[update destroy]
 
   def rank_required(image)
-    if [root_url, front_page_url].include? request.headers['HTTP_REFERER']
+    referer = request.headers['HTTP_REFERER']
+    if [root_url, front_page_url].include? referer
       return false if FrontPageSection.where(image_id: image.id).exists?
     end
     image.application_steps.each do |step|
       next unless current_user&.member.nil? ||
           step.application_image_sequence.technique_application.rank > current_user.member.next_rank
-
+      logger.warn "REFERER: #{referer.inspect}"
       redirect_to login_path, notice: 'Du må ha høyere grad for å se på dette pensumet.'
       return true
     end
