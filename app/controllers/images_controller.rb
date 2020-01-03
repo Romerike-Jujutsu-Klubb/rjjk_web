@@ -9,14 +9,15 @@ class ImagesController < ApplicationController
   caches_page :show, :inline, :blurred
   cache_sweeper :image_sweeper, only: %i[update destroy]
 
-  def rank_required(image)
+  def rank_required(image, check_referer: true)
     referer = request.headers['HTTP_REFERER']
-    if [root_url, front_page_url].include? referer
+    if !check_referer || [root_url, front_page_url].include?(referer)
       return false if FrontPageSection.where(image_id: image.id).exists?
     end
     image.application_steps.each do |step|
       next unless current_user&.member.nil? ||
           step.application_image_sequence.technique_application.rank > current_user.member.next_rank
+
       logger.warn "REFERER: #{referer.inspect}"
       redirect_to login_path, notice: 'Du må ha høyere grad for å se på dette pensumet.'
       return true
@@ -93,7 +94,7 @@ class ImagesController < ApplicationController
 
   def blurred
     image = Image.select('id,name,content_type,user_id,google_drive_reference').find(params[:id])
-    return if rank_required(image)
+    return if rank_required(image, check_referer: false)
 
     requested_format = params[:format]
 
