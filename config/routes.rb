@@ -72,7 +72,7 @@ Rails.application.routes.draw do
       get :minutes
     end
   end
-  resources :camps, controller: :events do
+  resources :camps do
     collection do
       get :attendance_form
       get :calendar
@@ -339,7 +339,7 @@ Rails.application.routes.draw do
       patch :restore
     end
   end
-  resources :voluntary_works, controller: :events do
+  resources :voluntary_works do
     collection do
       get :attendance_form
       get :calendar
