@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class EventRegistrationController < ApplicationController
+  invisible_captcha only: :create
   before_action :authenticate_user, except: %i[create index new show]
   before_action except: %i[create index new show] do
     @event_invitee = EventInvitee.find(params[:id])

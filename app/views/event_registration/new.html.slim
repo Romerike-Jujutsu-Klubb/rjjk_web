@@ -1,6 +1,10 @@
 h1 Påmelding til #{@event_invitee.event&.name}
 
+- if flash[:error]
+  .alert.alert-danger = flash[:error]
+
 = bootstrap_form_for @event_invitee, url: event_registration_index_path do |f|
+  = invisible_captcha
   - if @event_invitee.event_id
     = f.hidden_field :event_id
   - else
