@@ -12,7 +12,7 @@ class ApplicationImageSequencesController < ApplicationController
   def show; end
 
   def new
-    @application_image_sequence = ApplicationImageSequence.new
+    @application_image_sequence ||= ApplicationImageSequence.new application_image_sequence_params
   end
 
   def edit; end
@@ -21,7 +21,7 @@ class ApplicationImageSequencesController < ApplicationController
     @application_image_sequence = ApplicationImageSequence.new(application_image_sequence_params)
 
     if @application_image_sequence.save
-      redirect_to @application_image_sequence,
+      redirect_to edit_technique_application_path(@application_image_sequence.technique_application_id),
           notice: 'Application image sequence was successfully created.'
     else
       render :new
@@ -39,7 +39,7 @@ class ApplicationImageSequencesController < ApplicationController
 
   def destroy
     @application_image_sequence.destroy
-    redirect_to application_image_sequences_url,
+    redirect_to edit_technique_application_path(@application_image_sequence.technique_application_id),
         notice: 'Application image sequence was successfully destroyed.'
   end
 

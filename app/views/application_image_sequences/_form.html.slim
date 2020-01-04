@@ -1,4 +1,4 @@
-= form_for @application_image_sequence do |f|
+= bootstrap_form_for @application_image_sequence do |f|
   - if @application_image_sequence.errors.any?
     #error_explanation
       h2 = "#{pluralize(@application_image_sequence.errors.count, "error")} prohibited this application_image_sequence from being saved:"
@@ -6,13 +6,6 @@
         - @application_image_sequence.errors.full_messages.each do |message|
           li = message
 
-  .field
-    = f.label :technique_application_id
-    = f.text_field :technique_application_id
-  .field
-    = f.label :position
-    = f.number_field :position
-  .field
-    = f.label :title
-    = f.text_field :title
-  .actions = f.submit
+  = f.select :technique_application_id, [[@application_image_sequence.technique_application.name, @application_image_sequence.technique_application_id]]
+  = f.text_field :title
+  .float-right = f.primary :Lagre

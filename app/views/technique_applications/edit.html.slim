@@ -14,12 +14,15 @@ a.btn.btn-link href=edit_rank_path(@technique_application.rank) = @technique_app
 
 h3.mt-3.float-left
   | Bilder
+a.btn.btn-primary.float-right.mt-3.ml-2 href=new_application_image_sequence_path(application_image_sequence: {technique_application_id: @technique_application.id})
+  i.fa.fa-plus>
+  | Legg til bildeserie
 - @technique_application.application_image_sequences.order(:position).each do |ais|
-  - if ais.title
-    h4 = ais.title
   a.btn.btn-primary.float-right.mt-3 href=new_application_step_path(application_step: {application_image_sequence_id: ais.id})
     i.fa.fa-plus>
     | Legg til bilde
+  - if ais.title
+    h4.mt-3: a href=edit_application_image_sequence_path(ais) = ais.title
   .clearfix
   - ais.application_steps.order(:position).each do |as|
     .position-relative.float-left style="max-width:20%"

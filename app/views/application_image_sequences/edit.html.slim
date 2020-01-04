@@ -1,4 +1,8 @@
-h1 Editing application_image_sequence
+a.btn.btn-danger.float-right href=application_image_sequence_path(@application_image_sequence) data-method=:delete data-confirm="Er du sikker på at du vil fjerne denne bildeserien fra denne teknikken?"
+  i.fa.fa-trash>
+  | Slett
+
+h1 Bildeserie
 
 == render 'form'
 
@@ -6,3 +10,6 @@ h1 Editing application_image_sequence
 '|
 =< link_to 'Back', application_image_sequences_path
 
+.row
+  - @application_image_sequence.application_steps.each do |as|
+    .col = as.description.presence || :Bilde
