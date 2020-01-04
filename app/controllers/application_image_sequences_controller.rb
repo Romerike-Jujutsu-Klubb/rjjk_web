@@ -12,7 +12,7 @@ class ApplicationImageSequencesController < ApplicationController
   def show; end
 
   def new
-    @application_image_sequence ||= ApplicationImageSequence.new application_image_sequence_params
+    @application_image_sequence ||= ApplicationImageSequence.new params[:application_image_sequence]
   end
 
   def edit; end
@@ -30,7 +30,7 @@ class ApplicationImageSequencesController < ApplicationController
 
   def update
     if @application_image_sequence.update(application_image_sequence_params)
-      redirect_to @application_image_sequence,
+      redirect_to edit_technique_application_path(@application_image_sequence.technique_application_id),
           notice: 'Application image sequence was successfully updated.'
     else
       render :edit

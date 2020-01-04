@@ -14,7 +14,9 @@ class ApplicationImageSequencesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get new' do
-    get new_application_image_sequence_url
+    get new_application_image_sequence_url, params: { application_image_sequence: {
+      technique_application_id: @application_image_sequence.technique_application_id,
+    } }
     assert_response :success
   end
 
@@ -27,7 +29,7 @@ class ApplicationImageSequencesControllerTest < ActionDispatch::IntegrationTest
       } }
     end
 
-    assert_redirected_to application_image_sequence_url(ApplicationImageSequence.last)
+    assert_redirected_to edit_technique_application_path(@application_image_sequence.technique_application_id)
   end
 
   test 'should show application_image_sequence' do
@@ -46,7 +48,7 @@ class ApplicationImageSequencesControllerTest < ActionDispatch::IntegrationTest
       technique_application_id: @application_image_sequence.technique_application_id,
       title: @application_image_sequence.title,
     } }
-    assert_redirected_to application_image_sequence_url(@application_image_sequence)
+    assert_redirected_to edit_technique_application_path(@application_image_sequence.technique_application_id)
   end
 
   test 'should destroy application_image_sequence' do
@@ -54,6 +56,6 @@ class ApplicationImageSequencesControllerTest < ActionDispatch::IntegrationTest
       delete application_image_sequence_url(@application_image_sequence)
     end
 
-    assert_redirected_to application_image_sequences_url
+    assert_redirected_to edit_technique_application_path(@application_image_sequence.technique_application_id)
   end
 end

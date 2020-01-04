@@ -14,29 +14,28 @@ class ApplicationImageSequencesTest < ApplicationSystemTestCase
   end
 
   test 'creating a Application image sequence' do
-    visit application_image_sequences_url
-    click_on 'New Application image sequence'
+    visit edit_technique_application_path(@application_image_sequence.technique_application_id)
+    click_on 'Legg til bildeserie'
 
-    fill_in 'Position', with: @application_image_sequence.position + 1
-    fill_in 'Technique application', with: @application_image_sequence.technique_application_id
-    fill_in 'Tittel', with: @application_image_sequence.title
-    click_on 'Lag Application image sequence'
+    select @application_image_sequence.technique_application.name, from: 'Technique application'
+    fill_in 'Tittel', with: 'A new sequence'
+    click_on 'Lagre'
 
     assert_text 'Application image sequence was successfully created'
-    click_on 'Back'
+    click_on 'A new sequence'
   end
 
   test 'updating a Application image sequence' do
-    visit application_image_sequences_url
-    click_on 'Edit', match: :first
+    visit edit_technique_application_path(@application_image_sequence.technique_application_id)
+    click_on 'Alternative ending'
 
-    fill_in 'Position', with: @application_image_sequence.position
-    fill_in 'Technique application', with: @application_image_sequence.technique_application_id
-    fill_in 'Tittel', with: @application_image_sequence.title
-    click_on 'Oppdater Application image sequence'
+    select @application_image_sequence.technique_application.name, from: 'Technique application'
+    fill_in 'Tittel', with: 'The changed series'
+    click_on 'Lagre'
 
     assert_text 'Application image sequence was successfully updated'
-    click_on 'Back'
+
+    click_on 'The changed series'
   end
 
   test 'destroying a Application image sequence' do
