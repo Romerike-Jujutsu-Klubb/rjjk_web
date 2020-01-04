@@ -4,8 +4,10 @@ module ApplicationHelper
   include UserSystem
   include GraduationAccess
 
+  WEBP_PATTERN = %r{image/webp|^\*/\*$}.freeze
+
   def accepts_webp?
-    request.headers['HTTP_ACCEPT'] =~ %r{image/webp}
+    request.headers['HTTP_ACCEPT']&.split(',')&.any? { |t| WEBP_PATTERN.match? t }
   end
 
   def image_url_with_cl(image, width: nil)
