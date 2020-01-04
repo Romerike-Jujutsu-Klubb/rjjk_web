@@ -98,6 +98,11 @@ class ImagesController < ApplicationController
 
     requested_format = params[:format]
 
+    logger.error "requested_format: #{requested_format.inspect}"
+    logger.error "helpers.accepts_webp?: #{helpers.accepts_webp?.inspect}"
+    logger.error "requests_webp(requested_format): #{requests_webp(requested_format).inspect}"
+    logger.error "serving_webp(requested_format): #{serving_webp(requested_format).inspect}"
+
     return if !serving_webp(requested_format) &&
         (redirected_to_webp(image, requested_format) || redirected_to_icon(image) ||
         redirected_to_format(image, requested_format))
