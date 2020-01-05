@@ -77,7 +77,7 @@ class TechniqueApplicationsController < ApplicationController
   def destroy
     @technique_application = TechniqueApplication.find(params[:id])
     @technique_application.destroy!
-    redirect_to technique_applications_url
+    redirect_to edit_rank_path(@technique_application.rank_id)
   end
 
   private
