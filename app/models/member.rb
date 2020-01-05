@@ -455,6 +455,10 @@ class Member < ApplicationRecord
   def discount
     return discount_override if discount_override
 
+    calculated_discount
+  end
+
+  def calculated_discount
     if honorary?
       nil
     # elsif passive_on

@@ -93,7 +93,10 @@ module UserSystem
       # FIXME(uwe): Remove 2021-01-01
       unless current_user
         self.session_user = User.find_by(id: security_token)
-        logger.warn "Logged in by cookie user id: #{current_user.id}" if current_user
+        if current_user
+          logger.warn "Logged in by cookie user id: #{current_user.id}"
+          store_cookie
+        end
       end
       # EMXIF
 
