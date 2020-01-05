@@ -10,7 +10,7 @@ class ImagesController < ApplicationController
   cache_sweeper :image_sweeper, only: %i[update destroy]
 
   def rank_required(image, check_referer: true)
-    referer = request.headers['HTTP_REFERER']
+    referer = request.headers['HTTP_REFERER']&.gsub(/\?.*$/, '')
     if !check_referer || [root_url, front_page_url].include?(referer)
       return false if FrontPageSection.where(image_id: image.id).exists?
     end
