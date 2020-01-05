@@ -52,6 +52,6 @@ class TechniqueApplicationsControllerTest < ActionController::TestCase
       delete :destroy, params: { id: @technique_application }
     end
 
-    assert_redirected_to technique_applications_path
+    assert_redirected_to edit_rank_path(@technique_application.rank_id)
   end
 end
