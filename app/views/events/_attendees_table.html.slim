@@ -63,14 +63,14 @@ table.table.table-hover.table-responsive class=('table-sm' if event_invitees.siz
                             event_invitee_message: { \
                                     message_type: EventMessage::MessageType::INVITATION, \
                                     event_invitee_id: inv.id, \
-                            }}, anchor: :invitees_tab))
+                            }}, anchor: :candidates_tab))
               - unless inv.invitation
                 - create_link = with_detour({ controller: :event_invitee_messages, action: :create, id: inv.invitation.try(:id), \
                               event_invitee_message: { \
                                       message_type: EventMessage::MessageType::INVITATION, \
                                       event_invitee_id: inv.id, \
                                       ready_at: Time.current, \
-                               } }, anchor: :invitees_tab)
+                               } }, anchor: :candidates_tab)
                 a.btn.btn-danger.btn-sm.ml-2 title='Send nå!' data-toggle=:tooltip href=create_link data-method=:post
                   i.fa.fa-angle-double-right
         td align="center"

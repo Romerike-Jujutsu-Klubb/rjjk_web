@@ -60,7 +60,7 @@ unless reason
     scheduler.cron('8/15 * * * *') do
       Rails.application.executor.wrap { AttendanceNagger.send_attendance_review }
     end
-    scheduler.cron('9 9-23 * * *') do
+    scheduler.cron('9/15 9-23 * * *') do
       Rails.application.executor.wrap { EventNotifier.send_event_messages }
     end
 

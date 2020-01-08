@@ -46,7 +46,11 @@
           li
             => u.name
             = u.email
+            - previous_attrs = nil
             - invs.sort_by{|ei|-ei.event.start_at.year}.each do |i|
-              a.btn.btn-secondary.btn-sm.mx-2.py-0 href=with_detour({ controller: :event_invitees, action: :new, event_invitee: i.attributes.except('event_id', 'comment', 'will_attend').merge(event_id: @event.id) }, anchor: :invitees_tab)
-                i.fa.fa-plus
+              - attrs = i.attributes.except('id', 'event_id', 'comment', 'will_attend', 'created_at', 'updated_at').select{|k,v| v.present?}
+              - unless attrs == previous_attrs
+                a.btn.btn-secondary.btn-sm.mx-2.py-0 href=with_detour({ controller: :event_invitees, action: :new, event_invitee: attrs.merge(event_id: @event.id) }, anchor: :invitees_tab)
+                  i.fa.fa-plus data-toggle=:tooltip title='Legg til'
               = link_to i.event.start_at.year, with_detour(edit_event_invitee_path(i), anchor: :invitees_tab)
+              - previous_attrs = attrs
