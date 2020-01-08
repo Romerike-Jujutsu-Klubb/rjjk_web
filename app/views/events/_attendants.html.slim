@@ -1,21 +1,30 @@
 .row
   .col-xl-9
     - if @event.event_invitees.any?
+      - candidates = @event.event_invitees.reject(&:confirmed?).reject(&:invitation)
+      - invited = @event.event_invitees.reject(&:confirmed?).select(&:invitation)
+      - confirmed = @event.event_invitees.select(&:confirmed?)
       ul.nav.nav-tabs.mt-3 role="tablist"
         li.nav-item
-          a#confirmed-tab.nav-link.active data-toggle="tab" data-target="#confirmed" role="tab" aria-controls="confirmed" aria-selected="true" Bekreftet
+          a#confirmed-tab.nav-link.active data-toggle="tab" data-target="#confirmed" role="tab" aria-controls="confirmed" aria-selected="true"
+            ' Bekreftet
+            .badge.badge-info = confirmed.size
         li.nav-item
-          a#invited-tab.nav-link data-toggle="tab" data-target="#invited" role="tab" aria-controls="invited" aria-selected="false" Invitert
+          a#invited-tab.nav-link data-toggle="tab" data-target="#invited" role="tab" aria-controls="invited" aria-selected="false"
+            ' Invitert
+            .badge.badge-info = invited.size
         li.nav-item
-          a#candidates-tab.nav-link data-toggle="tab" data-target="#candidates" role="tab" aria-controls="candidates" aria-selected="false" Kandidater
+          a#candidates-tab.nav-link data-toggle="tab" data-target="#candidates" role="tab" aria-controls="candidates" aria-selected="false"
+            ' Kandidater
+            .badge.badge-info = candidates.size
 
       #myTabContent.tab-content
         #confirmed.tab-pane.fade.show.active role="tabpanel" aria-labelledby="confirmed-tab"
-          = render 'attendees_table', event_invitees: @event.event_invitees.select(&:confirmed?)
+          = render 'attendees_table', event_invitees: confirmed
         #invited.tab-pane.fade role="tabpanel" aria-labelledby="invited-tab"
-          = render 'attendees_table', event_invitees: @event.event_invitees.reject(&:confirmed?).select(&:invitation)
+          = render 'attendees_table', event_invitees: invited
         #candidates.tab-pane.fade role="tabpanel" aria-labelledby="candidates-tab"
-          = render 'attendees_table', event_invitees: @event.event_invitees.reject(&:confirmed?).reject(&:invitation)
+          = render 'attendees_table', event_invitees: candidates
 
     - else
       .alert.alert-info Det er ingen påmeldte enda.
