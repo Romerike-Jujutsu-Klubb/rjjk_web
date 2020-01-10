@@ -6,19 +6,21 @@ a.btn.btn-warning.float-right href=url_for(action: :card_pdf)
 
 h2 Pensum
 
-table.table.table-sm
-  thead
-    tr
-      th.text-left Grad
-      th Kort
-      th PDF
-      th.text-center Måneder
-      th.text-center Minste alder
-  tbody
-    - for rank in @ranks
+- @ranks.group_by(&:curriculum_group).each do |curriculum_group, ranks|
+  h3 = curriculum_group.name
+  table.table.table-sm
+    thead
       tr
-        td = link_to "#{rank.name} #{rank.colour}", rank
-        td = link_to 'Kort', action: :card, id: rank.id
-        td = link_to 'PDF', action: :pdf, id: rank.id
-        td.text-center = rank.standard_months
-        td.text-center #{rank.minimum_age} år
+        th.text-left Grad
+        th Kort
+        th PDF
+        th.text-center Måneder
+        th.text-center Minste alder
+    tbody
+      - for rank in ranks
+        tr
+          td = link_to "#{rank.name} #{rank.colour}", rank
+          td = link_to 'Kort', action: :card, id: rank.id
+          td = link_to 'PDF', action: :pdf, id: rank.id
+          td.text-center = rank.standard_months
+          td.text-center #{rank.minimum_age} år

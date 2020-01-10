@@ -61,11 +61,12 @@ class GraduationReminder
       attendances_since_graduation = m.attendances_since_graduation.size
       next unless attendances_since_graduation >= minimum_attendances
 
-      group = next_rank.group
-      next if group.school_breaks? &&
-          (group.next_graduation.nil? || !m.active_and_attending?(group.next_graduation.held_on))
       next if m.next_graduate
 
+      next_rank.curriculum_group.practice_groups.all? do |group|
+        group.school_breaks? &&
+            (group.next_graduation.nil? || !m.active_and_attending?(group.next_graduation.held_on))
+      end
       true
     end
     return if overdue_graduates.empty?

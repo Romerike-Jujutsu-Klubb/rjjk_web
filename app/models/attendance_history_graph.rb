@@ -8,7 +8,7 @@ class AttendanceHistoryGraph
     weeks.reverse!
     totals = Array.new(weeks.size - 1, nil)
     totals_sessions = Array.new(weeks.size - 1, 0)
-    group_data = Group.order('martial_art_id, from_age DESC, to_age').to_a.map do |group|
+    group_data = Group.order('from_age DESC, to_age').to_a.map do |group|
       attendances = weeks.each_cons(2).map do |w1, w2|
         Attendance.by_group_id(group.id).includes(:practice)
             .where('(practices.year > ? OR (practices.year = ? AND practices.week > ?))

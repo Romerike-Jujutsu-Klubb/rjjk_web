@@ -25,7 +25,6 @@ class EventInvitee < ApplicationRecord
 
   has_many :event_invitee_messages, dependent: :destroy
 
-  # FIXME(uwe): Remove contact info (email, phone, address) when all invitees are users
   validates :event, :event_id, :name, presence: true
   validates :email, presence: { unless: ->(ei) { ei.phone.present? } },
       format: { with: EMAIL_REGEXP, allow_nil: true }
@@ -33,11 +32,10 @@ class EventInvitee < ApplicationRecord
   validates :user_id, uniqueness: { scope: :event_id, allow_nil: true }
   validates :will_work, inclusion: { in: [nil, false], if: proc { |r| r.will_attend == false } }
 
+  accepts_nested_attributes_for :user
+
   before_validation do
     if user
-      self.name ||= user.name
-      self.email ||= user.contact_email
-      self.phone ||= user.contact_phone
       self.organization ||= INTERNAL_ORG if user.member
     elsif security_token.blank?
       # FIXME(uwe): Remove all use of `security_token` and `security_token_generated_at`
@@ -46,16 +44,14 @@ class EventInvitee < ApplicationRecord
     end
   end
 
-  def name
-    user&.name || super
-  end
+  delegate :locale, :name, to: :user
 
   def email
-    user&.contact_email || super
+    user.contact_email
   end
 
   def phone
-    user&.contact_phone || super
+    user.contact_phone
   end
 
   def confirmed?
@@ -66,9 +62,6 @@ class EventInvitee < ApplicationRecord
     signup_rejection&.ready_at
   end
 
-  def locale
-    user&.locale || :nb
-  end
 
   def security_token_matches(token)
     token == security_token || security_token.blank?

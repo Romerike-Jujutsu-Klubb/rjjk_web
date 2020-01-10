@@ -1,0 +1,42 @@
+one:
+  name: MyString
+  martial_art: one
+  position: 1
+  from_age: 1
+  to_age: 1
+  color: MyString
+
+gresshoppe:
+  from_age: 5
+  martial_art: keiwaryu
+  name: Gresshoppe
+  position: 1
+  to_age: 5
+
+panda:
+  from_age: 6
+  martial_art: keiwaryu
+  name: Panda
+  position: 2
+  to_age: 9
+
+tiger:
+  from_age: 10
+  martial_art: keiwaryu
+  name: Tiger
+  position: 3
+  to_age: 14
+
+voksne:
+  from_age: 14
+  martial_art: keiwaryu
+  name: Voksne
+  position: 4
+  to_age: 99
+
+voksne_aikido:
+  from_age: 14
+  martial_art: aikido
+  name: Aikido
+  position: 1
+  to_age: 99

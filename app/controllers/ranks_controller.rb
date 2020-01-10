@@ -7,7 +7,8 @@ class RanksController < ApplicationController
 
   def index
     ma_id = current_user.member.current_rank.martial_art_id
-    @ranks = Rank.order(:martial_art_id, :position).to_a.sort_by { |r| r.martial_art_id == ma_id ? 0 : 1 }
+    @ranks = Rank.includes(:curriculum_group).references(:curriculum_groups)
+        .order(:martial_art_id, :position).to_a.sort_by { |r| r.martial_art_id == ma_id ? 0 : 1 }
     @martial_arts = @ranks.group_by(&:martial_art)
   end
 

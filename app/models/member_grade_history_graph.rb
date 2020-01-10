@@ -48,7 +48,7 @@ class MemberGradeHistoryGraph
 
     raise unless interval > 0 && step > 0
 
-    ranks = Group.find_by(name: 'Voksne').ranks.reverse + [Rank::UNRANKED]
+    ranks = CurriculumGroup.find_by(name: 'Voksne').ranks.reverse + [Rank::UNRANKED]
     # first_date = 5.years.ago.to_date
     # first_date = 10.years.ago.to_date
     first_date = Date.civil(2011, 1, 1)

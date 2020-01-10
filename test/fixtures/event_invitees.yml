@@ -1,8 +1,5 @@
 one:
   event: one
-  email: ei_one@example.com
-  name: MyString
-  address: MyString
   organization: MyString
   will_attend: true
   payed: false
@@ -10,9 +7,6 @@ one:
 
 two:
   event: one
-  email: ei_two@example.com
-  name: MyString
-  address: MyString
   organization: MyString
   will_attend: false
   payed: false
@@ -20,9 +14,6 @@ two:
 
 invited_undecided:
   event: one
-  email: ei_three@example.com
-  name: Invited Undecided
-  address: Home 3
   organization: Outsiders
   payed: false
   user: leftie

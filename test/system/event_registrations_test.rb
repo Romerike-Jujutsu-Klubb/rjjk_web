@@ -20,9 +20,9 @@ class EventRegistrationsTest < ApplicationSystemTestCase
     assert_selector 'h1', text: 'Påmelding til THE EVENT'
     screenshot :form
 
-    fill_in 'event_invitee_name', with: 'Hans Eriksen'
-    fill_in 'event_invitee_email', with: 'Hans.Eriksen@example.com'
-    fill_in 'event_invitee_phone', with: '+47 555 1234'
+    fill_in 'event_invitee[user_attributes][name]', with: 'Hans Eriksen'
+    fill_in 'event_invitee[user_attributes][email]', with: 'Hans.Eriksen@example.com'
+    fill_in 'event_invitee[user_attributes][phone]', with: '+47 555 1234'
     fill_in 'event_invitee_organization', with: 'Jotunheimen KK'
     screenshot :filled_form
 
@@ -37,15 +37,15 @@ class EventRegistrationsTest < ApplicationSystemTestCase
     assert_selector 'h1', text: 'Påmelding til THE EVENT'
     screenshot :form
 
-    fill_in 'event_invitee_name', with: 'Hans Eriksen'
-    fill_in 'event_invitee_email', with: 'Invalid Email'
-    fill_in 'event_invitee_phone', with: '+47 555 1234'
+    fill_in 'event_invitee[user_attributes][name]', with: 'Hans Eriksen'
+    fill_in 'event_invitee[user_attributes][email]', with: 'Invalid Email'
+    fill_in 'event_invitee[user_attributes][phone]', with: '+47 555 1234'
     fill_in 'event_invitee_organization', with: 'Jotunheimen KK'
     screenshot :filled_form
 
     click_on 'Registrer'
     assert_selector 'h1', text: 'Påmelding til THE EVENT'
-    assert_selector '#event_invitee_email + .invalid-feedback', text: 'er ugyldig'
+    assert_selector '#event_invitee_user_attributes_email + .invalid-feedback', text: 'er ugyldig'
     screenshot :error_message
   end
 end

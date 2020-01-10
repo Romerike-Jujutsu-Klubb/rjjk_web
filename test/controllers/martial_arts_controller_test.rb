@@ -4,7 +4,8 @@ require 'controller_test'
 
 class MartialArtsControllerTest < ActionController::TestCase
   setup do
-    @first_id = martial_arts(:keiwaryu).id
+    @kwr = martial_arts(:keiwaryu)
+    @first_id = @kwr.id
     login(:uwe)
   end
 
@@ -24,12 +25,25 @@ class MartialArtsControllerTest < ActionController::TestCase
   end
 
   def test_create
-    num_martial_arts = MartialArt.count
-
-    post :create, params: { martial_art: { family: 'Karate', name: 'Wado Ryu' } }
+    assert_difference(-> { MartialArt.count }) do
+      post :create, params: { martial_art: { family: 'Karate', name: 'Wado Ryu' } }
+    end
     assert_response :redirect
     assert_redirected_to action: :index
-    assert_equal num_martial_arts + 1, MartialArt.count
+  end
+
+  def test_copy
+    assert_difference(-> { MartialArt.count }) { post :copy, params: { id: @first_id } }
+    assert_response :redirect
+    copy = MartialArt.last
+    assert_redirected_to edit_martial_art_path(copy)
+    assert_equal @kwr.curriculum_groups.count, copy.curriculum_groups.count
+    assert_equal @kwr.curriculum_groups.map(&:ranks).map(&:count),
+        copy.curriculum_groups.map(&:ranks).map(&:count)
+    assert_equal @kwr.curriculum_groups.map(&:ranks).map(&:basic_techniques).map(&:count),
+        copy.curriculum_groups.map(&:ranks).map(&:basic_techniques).map(&:count)
+    assert_equal @kwr.curriculum_groups.map(&:ranks).map(&:technique_applications).map(&:count),
+        copy.curriculum_groups.map(&:ranks).map(&:technique_applications).map(&:count)
   end
 
   def test_edit
@@ -40,7 +54,7 @@ class MartialArtsControllerTest < ActionController::TestCase
   def test_update
     post :update, params: { id: @first_id, martial_art: { name: 'Hapkido' } }
     assert_response :redirect
-    assert_redirected_to action: 'show', id: @first_id
+    assert_redirected_to action: :show, id: @first_id
   end
 
   def test_destroy

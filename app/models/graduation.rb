@@ -7,28 +7,24 @@ class Graduation < ApplicationRecord
 
   scope :for_edit, -> do
     includes(
-        censors: { member: [{ graduates: { rank: :martial_art } }, :user] },
+        censors: { member: [{ graduates: { rank: { curriculum_group: :martial_art } } }, :user] },
         graduates: {
           graduation: {
             group: {
-              martial_art: { ranks: [{ group: %i[martial_art ranks] }, :martial_art] },
+              martial_art: { curriculum_groups: { ranks: { curriculum_group: %i[martial_art ranks] } } },
             },
           },
           member: [
             {
-              attendances: {
-                practice: :group_schedule,
-              },
+              attendances: { practice: :group_schedule },
               graduates: [
-                {
-                  graduation: :group,
-                },
+                { graduation: :group },
                 :rank,
               ],
             },
             :nkf_member,
           ],
-          rank: [{ group: %i[group_schedules ranks] }, :martial_art],
+          rank: [{ curriculum_group: %i[martial_art ranks] }],
         },
         group: { members: :nkf_member }
       )

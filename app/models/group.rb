@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
-# FIXME(uwe): Split into AgeGroup and TrainingGroup
+# FIXME(uwe): Rename to PracticeGroup
 class Group < ApplicationRecord
-  belongs_to :martial_art
+  belongs_to :curriculum_group
 
   has_one :current_semester,
-      -> {
-        joins(:semester).where('? BETWEEN semesters.start_on AND semesters.end_on', Date.current)
-      },
+      -> { joins(:semester).where('? BETWEEN semesters.start_on AND semesters.end_on', Date.current) },
       class_name: :GroupSemester
   has_one :next_graduation,
       -> { where('graduations.held_on >= ?', Date.current).order('graduations.held_on') },
@@ -16,11 +14,16 @@ class Group < ApplicationRecord
     includes(:semester).where('semesters.start_on > ?', Date.current).order('semesters.start_on')
   end, class_name: :GroupSemester
 
+  # FIXME(uwe): Allow graduation without groups?  Do not destroy dependent graduations?  Nullify?
   has_many :graduations, -> { order(:held_on) }, dependent: :destroy
+  # EMXIF
+
   has_many :group_memberships, dependent: :destroy
   has_many :group_schedules, dependent: :destroy
   has_many :group_semesters, dependent: :destroy
-  has_many :ranks, -> { order(:position) }, dependent: :destroy
+  # has_many :ranks, -> { order(:position) }, dependent: :destroy
+
+  has_one :martial_art, through: :curriculum_group
 
   has_many :members, through: :group_memberships
   has_many :practices, through: :group_schedules
@@ -35,11 +38,21 @@ class Group < ApplicationRecord
 
   before_validation { |r| r.color = nil if r.color.blank? }
 
-  validates :from_age, :martial_art, :name, :to_age, presence: true
+  validates :curriculum_group, :from_age, :name, :to_age, presence: true
   validates :contract, length: { maximum: 32 }
 
+  delegate :martial_art_id, to: :curriculum_group
+
   def full_name
-    "#{"#{martial_art.name} " if martial_art_id != MartialArt::KWR_ID}#{name}"
+    if curriculum_group.martial_art_id != MartialArt::KWR_ID
+      "#{curriculum_group.martial_art.name} #{name}"
+    else
+      name
+    end
+  end
+
+  def to_s
+    full_name
   end
 
   def contains_age(age)

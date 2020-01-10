@@ -189,7 +189,7 @@ module UserSystem
   end
 
   def session_user=(user)
-    session[SESSION_KEY] = user&.id
+    session[SESSION_KEY] = user&.generate_security_token(:login)
     self.current_user = user
   end
 

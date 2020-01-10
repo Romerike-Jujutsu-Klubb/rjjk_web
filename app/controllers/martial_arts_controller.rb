@@ -8,11 +8,12 @@ class MartialArtsController < ApplicationController
   end
 
   def show
-    @martial_art = MartialArt.find(params[:id])
+    edit
   end
 
   def new
-    @martial_art = MartialArt.new
+    @martial_art ||= MartialArt.new
+    render :new
   end
 
   def create
@@ -21,12 +22,25 @@ class MartialArtsController < ApplicationController
       flash[:notice] = 'MartialArt was successfully created.'
       redirect_to action: :index
     else
-      render action: 'new'
+      new
+    end
+  end
+
+  def copy
+    original_martial_art = MartialArt.find(params[:id])
+    martial_art = original_martial_art.copy
+    if martial_art.save
+      flash[:notice] = 'MartialArt was successfully created.'
+      redirect_to edit_martial_art_path(martial_art)
+    else
+      redirect_to edit_martial_art_path(original_martial_art),
+          alert: martial_art.errors.full_messages.join('  ')
     end
   end
 
   def edit
-    @martial_art = MartialArt.find(params[:id])
+    @martial_art ||= MartialArt.find(params[:id])
+    render :edit
   end
 
   def update
@@ -35,7 +49,7 @@ class MartialArtsController < ApplicationController
       flash[:notice] = 'MartialArt was successfully updated.'
       redirect_to action: 'show', id: @martial_art
     else
-      render action: 'edit'
+      edit
     end
   end
 

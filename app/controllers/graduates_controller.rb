@@ -120,7 +120,9 @@ class GraduatesController < ApplicationController
 
   def load_form_data
     query = Rank.order(:position)
-    query = query.where(martial_art_id: @graduate.graduation.group.martial_art_id) if @graduate.graduation
+    if @graduate.graduation
+      query = query.where(curriculum_group_id: @graduate.graduation.group.curriculum_group_id)
+    end
     @ranks = query.to_a
   end
 end

@@ -1,6 +1,10 @@
-a.btn.btn-danger.float-right href=martial_art_path(@martial_art) data-confirm='Er du helt sikker på at du vil slette denne stilarten for alltid?' data-method=:delete
-  i.fa.fa-trash>
-  | Slett
+.float-right
+  a.btn.btn-primary href=copy_martial_art_path(@martial_art) data-confirm='Er du helt sikker på at du vil kopiere denne stilarten med grader og pensum?' data-method=:post
+    i.fa.fa-copy>
+    | Kopier
+  a.btn.btn-danger.ml-2 href=martial_art_path(@martial_art) data-confirm='Er du helt sikker på at du vil slette denne stilarten for alltid?' data-method=:delete
+    i.fa.fa-trash>
+    | Slett
 
 h1 Stilart
 

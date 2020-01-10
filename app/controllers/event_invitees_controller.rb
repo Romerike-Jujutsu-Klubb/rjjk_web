@@ -4,7 +4,8 @@ class EventInviteesController < ApplicationController
   before_action :admin_required, except: %i[index show]
 
   def index
-    @event_invitees = EventInvitee.order(:name).to_a
+    @event_invitees =
+        EventInvitee.includes(:user).references(:users).order('users.first_name, users.last_name').to_a
   end
 
   def show
@@ -13,6 +14,7 @@ class EventInviteesController < ApplicationController
 
   def new
     @event_invitee ||= EventInvitee.new params[:event_invitee]
+    @event_invitee.user = User.new
     load_users
     render action: 'new'
   end

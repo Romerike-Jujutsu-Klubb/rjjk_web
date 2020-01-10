@@ -5,8 +5,12 @@ class CurriculumsController < ApplicationController
 
   def index
     next_rank = current_user.member.next_rank
-    @ranks = Rank.kwr.where('group_id = ? AND position <= ?',
-        next_rank.group_id, next_rank.position).order(:position).to_a
+    @ranks = Rank.kwr
+        .where('curriculum_groups.position < ?', next_rank.curriculum_group.position)
+        .or(Rank.kwr
+            .where('curriculum_groups.position = ?', next_rank.curriculum_group.position)
+            .where('ranks.position <= ?', next_rank.position))
+        .order(:'curriculum_groups.position', :'ranks.position').to_a
   end
 
   def card
@@ -19,7 +23,7 @@ class CurriculumsController < ApplicationController
       ranks = [Rank.find(rank_id)]
     else
       rank = current_user.member.next_rank
-      ranks = rank.group.ranks.select { |r| r.position <= rank.position }
+      ranks = rank.curriculum_group.ranks.select { |r| r.position <= rank.position }
     end
     filename = "Skill_Card_#{ranks.last.name}.pdf"
     send_data SkillCard.pdf(ranks.sort_by(&:position)),

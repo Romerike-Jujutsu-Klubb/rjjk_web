@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_01_211850) do
+ActiveRecord::Schema.define(version: 2020_01_08_145552) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -170,6 +170,18 @@ ActiveRecord::Schema.define(version: 2020_01_01_211850) do
     t.datetime 'updated_at', null: false
   end
 
+  create_table 'curriculum_groups', force: :cascade do |t|
+    t.string 'name', null: false
+    t.bigint 'martial_art_id', null: false
+    t.integer 'position', null: false
+    t.integer 'from_age', null: false
+    t.integer 'to_age', null: false
+    t.string 'color'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['martial_art_id'], name: 'index_curriculum_groups_on_martial_art_id'
+  end
+
   create_table 'documents', force: :cascade do |t|
     t.binary 'content', null: false
     t.datetime 'created_at'
@@ -242,15 +254,11 @@ ActiveRecord::Schema.define(version: 2020_01_01_211850) do
 
   create_table 'event_invitees', force: :cascade do |t|
     t.integer 'event_id', null: false
-    t.string 'email', limit: 255
-    t.string 'name', limit: 255
-    t.string 'address', limit: 255
     t.string 'organization', limit: 255
     t.boolean 'will_attend'
     t.integer 'payed'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.string 'phone', limit: 255
     t.integer 'user_id', null: false
     t.boolean 'will_work'
     t.string 'comment', limit: 255
@@ -360,7 +368,6 @@ ActiveRecord::Schema.define(version: 2020_01_01_211850) do
   end
 
   create_table 'groups', force: :cascade do |t|
-    t.integer 'martial_art_id', null: false
     t.string 'name', limit: 255, null: false
     t.integer 'from_age', null: false
     t.integer 'to_age', null: false
@@ -376,6 +383,8 @@ ActiveRecord::Schema.define(version: 2020_01_01_211850) do
     t.string 'color', limit: 16
     t.integer 'target_size'
     t.boolean 'planning'
+    t.bigint 'curriculum_group_id', null: false
+    t.index ['curriculum_group_id'], name: 'index_groups_on_curriculum_group_id'
   end
 
   create_table 'images', force: :cascade do |t|
@@ -412,7 +421,7 @@ ActiveRecord::Schema.define(version: 2020_01_01_211850) do
   end
 
   create_table 'martial_arts', force: :cascade do |t|
-    t.string 'name', limit: 16, null: false
+    t.string 'name', limit: 32, null: false
     t.string 'family', limit: 16, null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
@@ -590,15 +599,15 @@ ActiveRecord::Schema.define(version: 2020_01_01_211850) do
     t.string 'name', limit: 16, null: false
     t.string 'colour', limit: 48, null: false
     t.integer 'position', null: false
-    t.integer 'martial_art_id', null: false
     t.integer 'standard_months', null: false
-    t.integer 'group_id'
     t.text 'description'
     t.string 'decoration', limit: 16
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.string 'css_color', limit: 24
     t.boolean 'embroydery'
+    t.bigint 'curriculum_group_id', null: false
+    t.index ['curriculum_group_id'], name: 'index_ranks_on_curriculum_group_id'
   end
 
   create_table 'roles', force: :cascade do |t|
@@ -801,6 +810,7 @@ ActiveRecord::Schema.define(version: 2020_01_01_211850) do
   add_foreign_key 'card_keys', 'users'
   add_foreign_key 'censors', 'graduations', name: 'censors_graduation_id_fkey'
   add_foreign_key 'censors', 'members', name: 'censors_member_id_fkey'
+  add_foreign_key 'curriculum_groups', 'martial_arts'
   add_foreign_key 'elections', 'annual_meetings', name: 'fk_elections_annual_meeting_id'
   add_foreign_key 'elections', 'members', name: 'fk_elections_member_id'
   add_foreign_key 'elections', 'roles', name: 'fk_elections_role_id'
@@ -820,7 +830,7 @@ ActiveRecord::Schema.define(version: 2020_01_01_211850) do
   add_foreign_key 'group_semesters', 'groups', name: 'fk_group_semesters_group_id'
   add_foreign_key 'group_semesters', 'members', column: 'chief_instructor_id', name: 'fk_group_semesters_chief_instructor_id'
   add_foreign_key 'group_semesters', 'semesters', name: 'fk_group_semesters_semester_id'
-  add_foreign_key 'groups', 'martial_arts', name: 'groups_martial_art_id_fkey'
+  add_foreign_key 'groups', 'curriculum_groups'
   add_foreign_key 'information_pages', 'information_pages', column: 'parent_id', name: 'information_pages_parent_id_fkey'
   add_foreign_key 'member_images', 'images', name: 'fk_member_images_image_id'
   add_foreign_key 'member_images', 'members', name: 'fk_member_images_member_id'
@@ -830,8 +840,7 @@ ActiveRecord::Schema.define(version: 2020_01_01_211850) do
   add_foreign_key 'news_items', 'users', column: 'created_by', name: 'news_items_created_by_fkey'
   add_foreign_key 'nkf_members', 'members', name: 'nkf_members_member_id_fkey'
   add_foreign_key 'practices', 'group_schedules', name: 'fk_practices_group_schedule_id'
-  add_foreign_key 'ranks', 'groups', name: 'ranks_group_id_fkey'
-  add_foreign_key 'ranks', 'martial_arts', name: 'ranks_martial_art_id_fkey'
+  add_foreign_key 'ranks', 'curriculum_groups'
   add_foreign_key 'signatures', 'users'
   add_foreign_key 'survey_answers', 'survey_questions', name: 'fk_survey_answers_survey_question_id'
   add_foreign_key 'survey_answers', 'survey_requests', name: 'fk_survey_answers_survey_request_id'

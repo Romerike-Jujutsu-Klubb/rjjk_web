@@ -1,6 +1,6 @@
 panda:
   name: Panda
-  martial_art: keiwaryu
+  curriculum_group: panda
   from_age: 6
   to_age: 9
   target_size: 1
@@ -8,7 +8,7 @@ panda:
 
 tiger:
   name: Tiger
-  martial_art: keiwaryu
+  curriculum_group: tiger
   from_age: 10
   to_age: 14
   target_size: 30
@@ -16,7 +16,7 @@ tiger:
 
 voksne:
   name: Voksne
-  martial_art: keiwaryu
+  curriculum_group: voksne
   from_age: 14
   to_age: 99
   target_size: 30
@@ -25,7 +25,7 @@ voksne:
 
 closed:
   name: Closed
-  martial_art: keiwaryu
+  curriculum_group: voksne
   from_age: 6
   to_age: 99
   target_size: 30
@@ -33,7 +33,7 @@ closed:
 
 voksne_aikido:
   name: Aikido
-  martial_art: aikido
+  curriculum_group: voksne_aikido
   from_age: 14
   to_age: 99
   target_size: 30

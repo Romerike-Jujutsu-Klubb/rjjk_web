@@ -226,7 +226,7 @@ Rails.application.routes.draw do
     get 'logout', action: :logout, as: :logout
   end
 
-  resources :martial_arts
+  resources(:martial_arts) { member { post :copy } }
 
   controller :member_reports do
     get 'member_reports', action: :index

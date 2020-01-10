@@ -2,9 +2,8 @@ mon_12:
   name: '12. mon'
   colour: 'blå stripe'
   position: -17
-  martial_art: keiwaryu
   standard_months: 6
-  group: panda
+  curriculum_group: panda
   css_color: blue
 
 mon_11:
@@ -12,54 +11,48 @@ mon_11:
   colour: 'blå stripe'
   decoration: 'm/svart bånd'
   position: -16
-  martial_art: keiwaryu
   standard_months: 6
-  group: panda
+  curriculum_group: panda
   css_color: blue
 
 mon_10:
   name: '10. mon'
   colour: 'gule kanter'
   position: -15
-  martial_art: keiwaryu
   standard_months: 6
-  group: tiger
+  curriculum_group: tiger
   css_color: yellow
 
 kyu_5:
   name: '5. kyu'
   colour: 'gult belte'
   position: -5
-  martial_art: keiwaryu
   standard_months: 3
-  group: voksne
+  curriculum_group: voksne
   css_color: yellow
 
 kyu_4:
   name: '4. kyu'
   colour: 'oransje belte'
   position: -4
-  martial_art: keiwaryu
   standard_months: 6
-  group: voksne
+  curriculum_group: voksne
   css_color: orange
 
 kyu_1:
   name: '1. kyu'
   colour: 'brunt belte'
   position: -1
-  martial_art: keiwaryu
   standard_months: 24
-  group: voksne
+  curriculum_group: voksne
   css_color: brown
 
 shodan:
   name: 'shodan'
   colour: 'svart belte'
   position: 1
-  martial_art: keiwaryu
   standard_months: 24
-  group: voksne
+  curriculum_group: voksne
   css_color: grey
 
 nidan:
@@ -67,9 +60,8 @@ nidan:
   colour: 'svart belte'
   decoration: 'm/2 striper'
   position: 2
-  martial_art: keiwaryu
   standard_months: 24
-  group: voksne
+  curriculum_group: voksne
   css_color: "#444"
 
 sandan:
@@ -77,18 +69,16 @@ sandan:
   colour: 'svart belte'
   decoration: 'm/3 striper'
   position: 3
-  martial_art: keiwaryu
   standard_months: 24
-  group: voksne
+  curriculum_group: voksne
   css_color: black
 
 shodan_aikido:
   name: 'shodan'
   colour: 'svart belte'
   position: 1
-  martial_art: aikido
   standard_months: 24
-  group: voksne_aikido
+  curriculum_group: voksne_aikido
   css_color: grey
 
 nidan_aikido:
@@ -96,9 +86,8 @@ nidan_aikido:
   colour: 'svart belte'
   decoration: 'm/2 striper'
   position: 2
-  martial_art: aikido
   standard_months: 24
-  group: voksne_aikido
+  curriculum_group: voksne_aikido
   css_color: "#444"
 
 sandan_aikido:
@@ -106,7 +95,6 @@ sandan_aikido:
   colour: 'svart belte'
   decoration: 'm/3 striper'
   position: 3
-  martial_art: aikido
   standard_months: 24
-  group: voksne_aikido
+  curriculum_group: voksne_aikido
   css_color: black

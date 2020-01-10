@@ -22,13 +22,15 @@ class EventInviteesControllerTest < ActionController::TestCase
     assert_difference('EventInvitee.count') do
       post :create, params: { event_invitee: {
         user_id: id(:lars),
-        address: @event_invitee.address,
-        email: 'third_email',
         event_id: @event_invitee.event_id,
-        name: @event_invitee.name,
         organization: @event_invitee.organization,
         payed: @event_invitee.payed,
         will_attend: @event_invitee.will_attend,
+        user_attributes: {
+          address: @event_invitee.user.address,
+          email: 'third_email@example.org',
+          name: @event_invitee.name,
+        },
       } }
     end
 
@@ -47,14 +49,15 @@ class EventInviteesControllerTest < ActionController::TestCase
 
   test 'should update event_invitee' do
     put :update, params: { id: @event_invitee, event_invitee: {
-      user_id: id(:lars),
-      address: @event_invitee.address,
-      email: @event_invitee.email,
-      event_id: @event_invitee.event_id,
-      name: @event_invitee.name,
       organization: @event_invitee.organization,
       payed: @event_invitee.payed,
       will_attend: @event_invitee.will_attend,
+      user_attributes: {
+        id: @event_invitee.user_id,
+        address: @event_invitee.user.address,
+        email: @event_invitee.user.email,
+        name: @event_invitee.user.name,
+      },
     } }
     assert_redirected_to event_invitee_path(@event_invitee)
   end

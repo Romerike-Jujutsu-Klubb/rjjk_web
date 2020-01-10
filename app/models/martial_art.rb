@@ -4,12 +4,15 @@ class MartialArt < ApplicationRecord
   KWR_NAME = 'Kei Wa Ryu'
   KWR_ID = find_by(name: KWR_NAME)&.id || ActiveRecord::FixtureSet.identify(:keiwaryu)
 
-  has_many :graduations, -> { order(:held_on) }, through: :groups
-  has_many :groups, dependent: :destroy
-  has_many :ranks, -> { order :position }
+  copy_relations :curriculum_groups
+
+  # has_many :graduations, -> { order(:held_on) }, through: :groups
+  has_many :curriculum_groups, dependent: :destroy
+
+  has_many :ranks, -> { order 'curriculum_groups.position', 'ranks.position' }, through: :curriculum_groups
 
   validates :name, :family, presence: true
-  validates :name, :family, uniqueness: true
+  validates :name, uniqueness: true
 
   scope :kwr, -> { where(name: KWR_NAME) }
 
@@ -19,5 +22,11 @@ class MartialArt < ApplicationRecord
 
   def to_s
     name
+  end
+
+  def copy
+    copy = super
+    copy.name = "#{name} #{Date.current.strftime('%F %R')}"
+    copy
   end
 end

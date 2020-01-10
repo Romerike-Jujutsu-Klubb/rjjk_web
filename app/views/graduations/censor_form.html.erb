@@ -1,6 +1,6 @@
 <h1 style="font-family:Arial, Helvetica, sans-serif">
   Graderingsskjema <%= @graduation.held_on %>
-  <%= @graduation.graduates.map {|g| g.rank.group.name}.flatten.uniq %> (<%= @graduation.graduates.size %>
+  <%= @graduation.graduates.map {|g| g.rank.curriculum_group.name}.flatten.uniq %> (<%= @graduation.graduates.size %>
   stk)
 </h1>
 

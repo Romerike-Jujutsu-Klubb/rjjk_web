@@ -10,7 +10,8 @@ class GroupSchedule < ApplicationRecord
           (gs.weekday == date.cwday && (gs.start_at.nil? || gs.start_at > now.time_of_day))
       date -= 1.week
     end
-    where(year: date.cwyear, week: date.cweek)
+    where('year < :year OR (year = :year AND week <= :week)', year: date.cwyear, week: date.cweek)
+        .order(year: :desc, week: :desc)
   end, class_name: :Practice, inverse_of: :group_schedule
   has_one :next_practice, ->(gs) do
     now = Time.current

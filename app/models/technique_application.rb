@@ -5,6 +5,8 @@ class TechniqueApplication < ApplicationRecord
     KATA = 'Kata'
   end
 
+  copy_relations :application_image_sequences, :application_videos
+
   acts_as_list scope: :rank_id
 
   belongs_to :rank

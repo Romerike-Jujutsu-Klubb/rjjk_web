@@ -34,8 +34,7 @@ class RanksTest < ApplicationSystemTestCase
     visit ranks_path
     click_on 'Legg til grad'
 
-    select 'Kei Wa Ryu', from: :rank_martial_art_id
-    select 'Voksne', from: :rank_group_id
+    select 'Voksne', from: :rank_curriculum_group_id
     fill_in 'rank_description', with: @rank.description
     fill_in 'rank_position', with: 10
     fill_in 'rank_standard_months', with: 6

@@ -3,7 +3,7 @@
 require 'controller_test'
 
 class GraduationsControllerTest < ActionController::TestCase
-  def setup
+  setup do
     @first_id = graduations(:panda).id
     login(:uwe)
   end

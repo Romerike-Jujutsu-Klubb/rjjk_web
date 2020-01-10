@@ -5,7 +5,7 @@ ruby:
   member_age = mbr.age(graduate.graduation.held_on)
   if graduate.graduation.held_on
     below_minimum_age = member_age && member_age < graduate.rank.minimum_age
-    not_in_rank_age = !(graduate.rank.group.from_age..graduate.rank.group.to_age).include?(member_age)
+    not_in_rank_age = !(graduate.rank.curriculum_group.from_age..graduate.rank.curriculum_group.to_age).include?(member_age)
     if graduate.graduation.group
       not_in_group_age = member_age && (mbr.age(graduate.graduation.held_on - 1.month) > graduate.graduation.group.to_age || member_age < graduate.graduation.group.from_age)
     end

@@ -9,8 +9,9 @@ class GraduationsController < ApplicationController
   before_action :authenticate_user, only: CENSOR_ACTIONS
 
   def index
-    @graduations = Graduation.includes(:group).references(:groups)
-        .order('held_on DESC, group_id DESC').where('groups.martial_art_id = ?', MartialArt::KWR_ID)
+    @graduations = Graduation.includes(group: :curriculum_group).references(:groups)
+        .order('held_on DESC, group_id DESC')
+        .where('curriculum_groups.martial_art_id = ?', MartialArt::KWR_ID)
         .to_a.group_by(&:held_on)
     @groups = @graduations.values.flatten.map(&:group).uniq.sort_by(&:from_age).reverse
   end
@@ -50,7 +51,7 @@ class GraduationsController < ApplicationController
     graduation = Graduation.find(params[:id])
     return unless admin_or_censor_required(graduation, load_current_user_approval(graduation))
 
-    @ranks = Rank.where(martial_art_id: graduation.group.martial_art_id).order(:position).to_a
+    @ranks = graduation.group.curriculum_group.martial_art.ranks.to_a
     case params[:section]
     when 'added'
       graduates = graduation.graduates.reject { |g| g.passed == false }
@@ -119,7 +120,7 @@ class GraduationsController < ApplicationController
               name: censors[2].member.name,
               signature: censors[2].member.user.signatures.sample&.image }
           end
-      { name: g.member.name, rank: g.rank.label, group: g.rank.group.name,
+      { name: g.member.name, rank: g.rank.label, group: g.rank.curriculum_group.name,
         censor1: censor_1, censor2: censor_2, censor3: censor_3 }
     end
     filename = "Certificates_#{graduation.group.martial_art.name}_#{graduation.held_on}.pdf"

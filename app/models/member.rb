@@ -17,8 +17,7 @@ class Member < ApplicationRecord
   has_one :last_member_image, -> { order :created_at }, class_name: :MemberImage
   has_one :image, through: :last_member_image
   has_one :next_graduate, -> do
-    includes(:graduation).where('graduations.held_on >= ?', Date.current)
-        .order('graduations.held_on')
+    includes(:graduation).where('graduations.held_on >= ?', Date.current).order('graduations.held_on')
   end, class_name: :Graduate
   has_one :nkf_member, dependent: :nullify
 
@@ -116,10 +115,9 @@ class Member < ApplicationRecord
     end
   end
 
-  def attendances_since_graduation(before_date = Date.current, group = nil, includes: nil,
-      include_absences: false)
-    groups = group ? [group] : Group.includes(:martial_art).to_a
-    queries = groups.map do |g|
+  def attendances_since_graduation(before_date = Date.current,
+      practice_groups = Group.includes(:martial_art).to_a, includes: nil, include_absences: false)
+    queries = [*practice_groups].map do |g|
       ats = attendances
       ats = ats.where(status: Attendance::PRESENT_STATES) unless include_absences
       ats = ats.by_group_id(g.id)
@@ -161,25 +159,30 @@ class Member < ApplicationRecord
 
   def next_rank(graduation = Graduation.new(held_on: Date.current, group: groups.max_by(&:from_age)))
     age = self.age(graduation.held_on)
-    ma = graduation.group.try(:martial_art) || MartialArt.includes(:ranks).find_by(name: 'Kei Wa Ryu')
+    ma = graduation.group&.martial_art ||
+        MartialArt.includes(curriculum_groups: :ranks).find_by(name: 'Kei Wa Ryu')
     current_rank = current_rank(ma, graduation.held_on)
     future_ranks = future_ranks(graduation.held_on, ma)
-    all_ranks = ma.ranks.to_a.sort_by { |r| [r.group_id == graduation.group_id ? 0 : 1, r.position] }
+    all_ranks = ma.curriculum_groups.flat_map(&:ranks).sort_by do |r|
+      [r.curriculum_group_id == graduation.group&.curriculum_group_id ? 0 : 1, r.position]
+    end
     available_ranks = all_ranks - future_ranks
     available_ranks.select! { |r| r.position > current_rank.position } if current_rank
     next_rank = available_ranks.find do |r|
-      (r.group.from_age..r.group.to_age).cover?(age) &&
+      (r.curriculum_group.from_age..r.curriculum_group.to_age).cover?(age) &&
           age >= r.minimum_age &&
-          attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
+          attendances_since_graduation(graduation.held_on, r.curriculum_group.practice_groups)
+              .size > r.minimum_attendances
     end
     next_rank ||= available_ranks.find do |r|
-      (age.nil? || age >= r.group.from_age) &&
+      (age.nil? || age >= r.curriculum_group.from_age) &&
           (age.nil? || age >= r.minimum_age) &&
-          attendances_since_graduation(graduation.held_on, r.group).size > r.minimum_attendances
+          attendances_since_graduation(graduation.held_on, r.curriculum_group.practice_groups)
+              .size > r.minimum_attendances
     end
     if age
       next_rank ||= available_ranks.find do |r|
-        (r.group.from_age..r.group.to_age).cover?(age) && age >= r.minimum_age
+        (r.curriculum_group.from_age..r.curriculum_group.to_age).cover?(age) && age >= r.minimum_age
       end
       next_rank ||= available_ranks.find { |r| age >= r.minimum_age }
     end
@@ -382,7 +385,7 @@ class Member < ApplicationRecord
   end
 
   def technical_committy?
-    current_rank && (current_rank >= Rank.kwr.find_by(name: '1. kyu')) && active_and_attending?
+    current_rank&.>=(Rank.kwr.find_by(name: '1. kyu')) && active_and_attending?
   end
 
   def honorary?
