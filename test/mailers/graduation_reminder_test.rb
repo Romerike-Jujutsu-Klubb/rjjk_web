@@ -21,9 +21,15 @@ class GraduationReminderTest < ActionMailer::TestCase
     graduations(:voksne_upcoming).destroy!
     ranks(:kyu_5).update! standard_months: 0
 
-    assert_mail_stored { GraduationReminder.notify_overdue_graduates }
+    assert_mail_stored(2) { GraduationReminder.notify_overdue_graduates }
 
     mail = UserMessage.pending[0]
+    assert_equal ['uwe@example.com'], mail.to
+    assert_equal %w[noreply@test.jujutsu.no], mail.from
+    assert_equal 'Disse medlemmene mangler gradering', mail.subject
+    assert_match(/Voksne.*Lars Bråten.*5. kyu.*0.*4/m, mail.body)
+
+    mail = UserMessage.pending[1]
     assert_equal ['uwe@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_equal 'Disse medlemmene mangler gradering', mail.subject
@@ -36,9 +42,15 @@ class GraduationReminderTest < ActionMailer::TestCase
     GroupSemester.create! group_id: id(:voksne), semester_id: id(:next), first_session: '2014-01-09',
         last_session: '2014-06-14', chief_instructor_id: id(:lars)
 
-    assert_mail_stored { GraduationReminder.notify_overdue_graduates }
+    assert_mail_stored(2) { GraduationReminder.notify_overdue_graduates }
 
     mail = UserMessage.pending[0]
+    assert_equal ['lars@example.com'], mail.to
+    assert_equal %w[noreply@test.jujutsu.no], mail.from
+    assert_equal 'Disse medlemmene mangler gradering', mail.subject
+    assert_match(/Voksne.*Lars Bråten.*5. kyu.*0.*4/m, mail.body)
+
+    mail = UserMessage.pending[1]
     assert_equal ['lars@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_equal 'Disse medlemmene mangler gradering', mail.subject

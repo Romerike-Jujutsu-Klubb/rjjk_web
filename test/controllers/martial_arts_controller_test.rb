@@ -40,10 +40,10 @@ class MartialArtsControllerTest < ActionController::TestCase
     assert_equal @kwr.curriculum_groups.count, copy.curriculum_groups.count
     assert_equal @kwr.curriculum_groups.map(&:ranks).map(&:count),
         copy.curriculum_groups.map(&:ranks).map(&:count)
-    assert_equal @kwr.curriculum_groups.map(&:ranks).map(&:basic_techniques).map(&:count),
-        copy.curriculum_groups.map(&:ranks).map(&:basic_techniques).map(&:count)
-    assert_equal @kwr.curriculum_groups.map(&:ranks).map(&:technique_applications).map(&:count),
-        copy.curriculum_groups.map(&:ranks).map(&:technique_applications).map(&:count)
+    assert_equal @kwr.curriculum_groups.flat_map(&:ranks).map(&:basic_techniques).map(&:count),
+        copy.curriculum_groups.flat_map(&:ranks).map(&:basic_techniques).map(&:count)
+    assert_equal @kwr.curriculum_groups.flat_map(&:ranks).map(&:technique_applications).map(&:count),
+        copy.curriculum_groups.flat_map(&:ranks).map(&:technique_applications).map(&:count)
   end
 
   def test_edit

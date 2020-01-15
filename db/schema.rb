@@ -111,7 +111,6 @@ ActiveRecord::Schema.define(version: 2020_01_08_145552) do
     t.integer 'rank_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index ['name'], name: 'index_basic_techniques_on_name', unique: true
     t.index ['rank_id'], name: 'fk__basic_techniques_rank_id'
     t.index ['waza_id'], name: 'fk__basic_techniques_waza_id'
   end

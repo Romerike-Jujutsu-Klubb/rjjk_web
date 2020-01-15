@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class CurriculumGroup < ApplicationRecord
-  copy_relations :ranks
-
   acts_as_list scope: :martial_art_id
 
   belongs_to :martial_art
@@ -17,6 +15,10 @@ class CurriculumGroup < ApplicationRecord
 
   def full_name
     "#{"#{martial_art.name} " if martial_art_id != MartialArt::KWR_ID}#{name}"
+  end
+
+  def to_s
+    full_name
   end
 
   def contains_age(age)

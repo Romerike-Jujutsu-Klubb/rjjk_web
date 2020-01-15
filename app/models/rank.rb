@@ -7,8 +7,6 @@ class Rank < ApplicationRecord
   UNRANKED = new(position: -99, standard_months: 0, name: 'Ugradert', colour: 'Hvitt')
   SHODAN_POSITION = 15
 
-  copy_relations :basic_techniques, :technique_applications
-
   # belongs_to :martial_art
   belongs_to :curriculum_group
 
@@ -28,10 +26,10 @@ class Rank < ApplicationRecord
         includes(:curriculum_group).where(curriculum_groups: { martial_art_id: MartialArt.kwr.first&.id })
       }
 
+  acts_as_list scope: :curriculum_group_id
+
   validates :name, length: { maximum: 16 }
-  validates :position, :standard_months, :curriculum_group, :curriculum_group_id,
-      :martial_art, presence: true
-  validates :position, uniqueness: { scope: :curriculum_group_id }
+  validates :position, :standard_months, :martial_art, presence: true
 
   delegate :martial_art, :martial_art_id, to: :curriculum_group, allow_nil: true
 

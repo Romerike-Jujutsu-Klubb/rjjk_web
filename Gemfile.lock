@@ -137,6 +137,8 @@ GEM
     crass (1.0.5)
     declarative (0.0.10)
     declarative-option (0.1.0)
+    deep_cloneable (3.0.0)
+      activerecord (>= 3.1.0, < 7)
     derailed (0.1.0)
       derailed_benchmarks
     derailed_benchmarks (0.0.0)
@@ -490,6 +492,7 @@ DEPENDENCIES
   chosen-rails
   chunky_png
   cloudinary
+  deep_cloneable (~> 3.0)
   derailed
   exception_notification
   geocoder

@@ -4,8 +4,6 @@ class MartialArt < ApplicationRecord
   KWR_NAME = 'Kei Wa Ryu'
   KWR_ID = find_by(name: KWR_NAME)&.id || ActiveRecord::FixtureSet.identify(:keiwaryu)
 
-  copy_relations :curriculum_groups
-
   # has_many :graduations, -> { order(:held_on) }, through: :groups
   has_many :curriculum_groups, dependent: :destroy
 
@@ -22,11 +20,5 @@ class MartialArt < ApplicationRecord
 
   def to_s
     name
-  end
-
-  def copy
-    copy = super
-    copy.name = "#{name} #{Date.current.strftime('%F %R')}"
-    copy
   end
 end

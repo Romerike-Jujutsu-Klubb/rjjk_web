@@ -8,5 +8,12 @@ class BasicTechnique < ApplicationRecord
   before_validation { description.strip! }
 
   validates :name, :waza_id, presence: true
-  validates :name, uniqueness: { case_sensitive: false }
+  validate do
+    if (maid = rank&.curriculum_group&.martial_art_id)
+      query = self.class.joins(rank: :curriculum_group).where('curriculum_groups.martial_art_id': maid)
+          .where('LOWER(basic_techniques.name) = ?', name.downcase)
+      query = query.where.not('basic_techniques.id': id) if id
+      errors.add :name, :taken if query.exists?
+    end
+  end
 end

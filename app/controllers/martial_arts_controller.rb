@@ -28,7 +28,15 @@ class MartialArtsController < ApplicationController
 
   def copy
     original_martial_art = MartialArt.find(params[:id])
-    martial_art = original_martial_art.copy
+    martial_art = original_martial_art.deep_clone include: {
+      curriculum_groups: { ranks: [:basic_techniques, {
+        technique_applications: [{ application_image_sequences: :application_steps }, :application_videos],
+      }] },
+    }, validate: false do |original, copy|
+      copy.name = "#{original.name} #{Date.current.strftime('%F %R')}" if copy.is_a?(MartialArt)
+      raise "Invalid original: #{original.inspect}\n#{original.errors.full_messages}" if original.invalid?
+    end
+
     if martial_art.save
       flash[:notice] = 'MartialArt was successfully created.'
       redirect_to edit_martial_art_path(martial_art)

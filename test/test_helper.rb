@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+Warning[:deprecated] = false if ENV['TRAVIS']
+
 # require 'coveralls'
 # Coveralls.wear!
 

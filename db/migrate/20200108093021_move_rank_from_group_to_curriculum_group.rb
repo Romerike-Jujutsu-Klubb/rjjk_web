@@ -16,5 +16,6 @@ class MoveRankFromGroupToCurriculumGroup < ActiveRecord::Migration[6.0]
     change_column_null :ranks, :curriculum_group_id, false
     remove_column :ranks, :group_id, :curriculum_group_id
     remove_column :ranks, :martial_art_id, :integer
+    remove_index :basic_techniques, [:name]
   end
 end

@@ -62,7 +62,6 @@ class EventInvitee < ApplicationRecord
     signup_rejection&.ready_at
   end
 
-
   def security_token_matches(token)
     token == security_token || security_token.blank?
   end
