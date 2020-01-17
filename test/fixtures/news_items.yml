@@ -1,16 +1,16 @@
 first:
   title: My first news item
-  created_by: <%=ActiveRecord::FixtureSet.identify(:lars)%>
+  created_by: <%=id :lars%>
   created_at: 2007-07-12T00:08:23+2
   updated_at: 2007-07-12T00:08:23+2
   publication_state: PUBLISHED
   publish_at: 2007-07-12T13:37:00+2
   expire_at: 2199-12-31T23:59:59+1
-  summary: <p><img title="one.jpg" src="/images/inline/<%= ActiveRecord::FixtureSet.identify(:one) %>.jpg" alt="one.jpg" width="160" /></p>
+  summary: <p><img title="one.jpg" src="/images/inline/<%=id :one%>.jpg" alt="one.jpg" width="160" /></p>
 
 another:
   title: My second news item
-  created_by: <%=ActiveRecord::FixtureSet.identify(:lars)%>
-  created_at: 2007-07-13T00:08:23+2
+  created_by: <%=id :lars%>
+  created_at: 2013-07-13T00:08:23+2
   publication_state: PUBLISHED
   summary: "Summary: <img title='Vår vakre logo!' src='/assets/rjjk_logo_plus_txt_320.png' align='right' width='50%'/>"
