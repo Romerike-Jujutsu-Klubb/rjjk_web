@@ -12,4 +12,9 @@ class WelcomeControllerTest < ActionDispatch::IntegrationTest
     events(:one).destroy!
     get root_path
   end
+
+  test 'get index as an admin' do
+    login :uwe
+    get root_path
+  end
 end

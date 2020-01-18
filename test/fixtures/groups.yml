@@ -5,6 +5,7 @@ panda:
   to_age: 9
   target_size: 1
   monthly_fee: 284
+  school_breaks: true
 
 tiger:
   name: Tiger
@@ -13,6 +14,7 @@ tiger:
   to_age: 14
   target_size: 30
   monthly_fee: 349
+  school_breaks: true
 
 voksne:
   name: Voksne
