@@ -44,7 +44,7 @@
             class: 'float-right', title: "Sett '#{event.name}' på din kalender!"
       h5.clearfix style="margin-bottom:0;color:#FFB400"
         - if event.persisted? && (admin? || body)
-          = link_to event.title, admin? ? edit_event_path(event) : event, style: 'color: #FFB400'
+          = link_to event.title, admin? ? edit_polymorphic_path(event) : event, style: 'color: #FFB400'
         - else
           = event.title
 

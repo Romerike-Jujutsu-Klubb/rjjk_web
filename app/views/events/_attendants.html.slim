@@ -31,7 +31,7 @@
 
 
   .col-xl-3
-    = bootstrap_form_for @event, url: with_detour(event_path(@event), anchor: :invitees_tab), html: {id: 'event_groups'} do |f|
+    = bootstrap_form_for @event, url: with_detour(@event, anchor: :invitees_tab), html: {id: 'event_groups'} do |f|
       = f.collection_check_boxes :group_ids, @groups, :id, :name
       = f.primary 'Legg til grupper'
 
