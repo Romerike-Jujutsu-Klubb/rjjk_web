@@ -14,7 +14,7 @@ class EventInviteesController < ApplicationController
 
   def new
     @event_invitee ||= EventInvitee.new params[:event_invitee]
-    @event_invitee.user = User.new
+    @event_invitee.user ||= User.new
     load_users
     render action: 'new'
   end

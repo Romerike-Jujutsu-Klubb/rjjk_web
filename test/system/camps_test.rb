@@ -2,8 +2,8 @@
 
 require 'application_system_test_case'
 
-class EventsTest < ApplicationSystemTestCase
-  setup { screenshot_section :events }
+class CampsTest < ApplicationSystemTestCase
+  setup { screenshot_section :camps }
 
   test 'edit' do
     screenshot_group :edit
@@ -11,7 +11,7 @@ class EventsTest < ApplicationSystemTestCase
     visit events_url
     assert_selector 'h1', text: 'Arrangement'
     screenshot :index
-    click_on 'THE EVENT'
+    click_on 'Training camp with Soke Yamaue'
     screenshot :description
     click_on 'Lagre'
     screenshot :saved

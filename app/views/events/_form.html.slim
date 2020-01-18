@@ -1,4 +1,4 @@
-= bootstrap_form_for(@event, url: with_detour(@event, anchor: :description_tab)) do |f|
+= bootstrap_form_for(@event, url: with_detour(@event.new_record? ? events_path : event_path(@event), anchor: :description_tab)) do |f|
   .row
     .col-sm-3
       = f.text_field :start_at, value: @event.start_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Fra', autocomplete: :off
@@ -49,7 +49,7 @@
       = link_to 'Oppmøteliste', { action: :attendance_form, id: (@event.id if @event.try(:event_invitees).try(:any?)) }, class: 'btn btn-link'
     = f.primary 'Lagre'
 
-- form_id = @event.new_record? ? :new_event : "edit_event_#{@event.id}"
+- form_id = @event.new_record? ? :new_event : "edit_#{@event.class.name.underscore}_#{@event.id}"
 javascript:
     preview('##{form_id} :input:not(#en-content :input)', '#preview');
     preview('##{form_id} :input:not(#nb-content :input)', '#preview-en');

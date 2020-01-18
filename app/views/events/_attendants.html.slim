@@ -31,9 +31,9 @@
 
 
   .col-xl-3
-    = bootstrap_form_for @event, url: with_detour(@event, anchor: :invitees_tab) do |f|
+    = bootstrap_form_for @event, url: with_detour(event_path(@event), anchor: :invitees_tab), html: {id: 'event_groups'} do |f|
       = f.collection_check_boxes :group_ids, @groups, :id, :name
-      = f.primary 'Legg til'
+      = f.primary 'Legg til grupper'
 
     - no_user = EventInvitee.where(user_id: nil).where.not(event_id: @event.id).group_by(&:organization).sort_by { |o, i| [-i.size, o.to_s] }
     - if no_user.any?
@@ -59,7 +59,7 @@
             - invs.sort_by{|ei|-ei.event.start_at.year}.each do |i|
               - attrs = i.attributes.except('id', 'event_id', 'comment', 'will_attend', 'created_at', 'updated_at').select{|k,v| v.present?}
               - unless attrs == previous_attrs
-                a.btn.btn-secondary.btn-sm.mx-2.py-0 href=with_detour({ controller: :event_invitees, action: :new, event_invitee: attrs.merge(event_id: @event.id) }, anchor: :invitees_tab)
-                  i.fa.fa-plus data-toggle=:tooltip title='Legg til'
+                a.btn.btn-secondary.btn-sm.mx-2.py-0 href=with_detour({ controller: :event_invitees, action: :new, event_invitee: attrs.merge(user_id: u.id,  event_id: @event.id) }, anchor: :invitees_tab)
+                  i.fa.fa-plus data-toggle=:tooltip title='Legg til #{u.name} #{i.event.start_at.year}'
               = link_to i.event.start_at.year, with_detour(edit_event_invitee_path(i), anchor: :invitees_tab)
               - previous_attrs = attrs

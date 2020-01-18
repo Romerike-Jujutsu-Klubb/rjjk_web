@@ -5,7 +5,7 @@
 
 if defined?(Rake) && (RUBY_ENGINE != 'jruby' || org.jruby.RubyInstanceConfig.FULL_TRACE_ENABLED)
   require 'simplecov'
-  SimpleCov.start('rails') { minimum_coverage 85 }
+  SimpleCov.start('rails') { minimum_coverage 86 }
 end
 
 ENV['RAILS_ENV'] ||= 'test'
@@ -27,7 +27,15 @@ Geocoder::Lookup::Test.set_default_stub([{
   'country_code' => 'US',
 }])
 
+module FixtureFileHelpers
+  def id(symbol)
+    ActiveRecord::FixtureSet.identify(symbol)
+  end
+end
+ActiveRecord::FixtureSet.context_class.include FixtureFileHelpers
+
 class ActiveSupport::TestCase
+  include FixtureFileHelpers
   include UserSystem
 
   fixtures :all
@@ -35,6 +43,12 @@ class ActiveSupport::TestCase
   setup { Timecop.freeze(TEST_TIME) }
   teardown { Timecop.return }
   teardown { clear_user }
+
+  # Use AS::TestCase for the base class when describing a model
+  extend Minitest::Spec::DSL
+  register_spec_type(self) do |desc|
+    desc < ActiveRecord::Base if desc.is_a?(Class)
+  end
 
   if defined?(Bullet) && Bullet.enable?
     Rails.backtrace_cleaner.remove_silencers!
@@ -51,10 +65,6 @@ class ActiveSupport::TestCase
 
   def logout
     clear_user
-  end
-
-  def id(symbol)
-    ActiveRecord::FixtureSet.identify(symbol)
   end
 
   # FIXME(uwe): Remove: Added in Rails 5

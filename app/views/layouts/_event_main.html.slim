@@ -31,18 +31,18 @@
           = event.end_at.strftime('%H:%M')
 
 h5.mb-0 style="color:#FFB400"
-  = link_to event.title, event
+  = link_to event.title, event_path(event)
 
 - if user?
   = render 'layouts/event_details', event: event
 = textalize ingress
 .text-right
   - if admin? && event.persisted?
-    a.btn.btn-primary.d-none.d-md-inline-block href=edit_polymorphic_path(event)
+    a.btn.btn-primary.d-none.d-md-inline-block href=edit_event_path(event)
       ' Admin
       i.fas.fa-angle-double-right
 
-  = link_to event, class: 'btn btn-info ml-3'
+  = link_to event_path(event), class: 'btn btn-info ml-3'
     ' Les mer
     i.fas.fa-angle-double-right
 
