@@ -35,15 +35,7 @@ class EventInvitee < ApplicationRecord
 
   accepts_nested_attributes_for :user
 
-  before_validation do
-    if user
-      self.organization ||= INTERNAL_ORG if user.member
-    elsif security_token.blank?
-      # FIXME(uwe): Remove all use of `security_token` and `security_token_generated_at`
-      #             and use `User` security instead.
-      self.security_token = SecureRandom.base58(4)
-    end
-  end
+  before_validation { self.organization ||= INTERNAL_ORG if user&.member }
 
   delegate :locale, :name, to: :user
 
@@ -63,21 +55,17 @@ class EventInvitee < ApplicationRecord
     signup_rejection&.ready_at
   end
 
-  def security_token_matches(token)
-    token == security_token || security_token.blank?
-  end
-
   def replace_markers(string)
     string.gsub!('[EVENT_NAME]', event.name) if event.name.present?
     string
         .gsub('[EVENT_LINK]',
-            Rails.application.routes.url_helpers.event_url(event.id, security_token: security_token))
+            Rails.application.routes.url_helpers.event_url(event.id, key: user.security_token))
         .gsub('[EVENT_INVITEE_NAME]', name)
         .gsub('[EVENT_REGISTRATION_LINK]', registration_link)
   end
 
   def registration_link
-    url = Rails.application.routes.url_helpers.event_registration_url(id, security_token: security_token)
+    url = Rails.application.routes.url_helpers.event_registration_url(id, key: user.security_token)
     root_url = Rails.application.routes.url_helpers.root_url
     print_link = "#{I18n.t(:registration_link).chomp('.')}: #{link_to(root_url, root_url)}"
     print_span = "<span class='d-none d-print-inline'>#{print_link} .</span>"
