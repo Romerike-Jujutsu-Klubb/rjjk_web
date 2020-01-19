@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
+  extend InheritenceBaseNaming
   HEADER = 'Arrangement'
 
   scope :chronological, -> { order :start_at }

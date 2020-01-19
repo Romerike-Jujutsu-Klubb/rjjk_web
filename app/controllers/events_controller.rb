@@ -18,7 +18,7 @@ class EventsController < ApplicationController
     @event.id ||= params[:id] || 42
     @event.created_at ||= Time.current
     @event.start_at ||= @event.created_at
-    @event_invitee = EventInvitee.new(id: 0, event_id: @event.id, user: User.new(name: 'Bruce Lee'))
+    @event_invitee = EventInvitee.new(id: 0, event: @event, user: User.new(name: 'Bruce Lee'))
     render action: :show, layout: false
   end
 
