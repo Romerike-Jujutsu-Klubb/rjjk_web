@@ -83,7 +83,7 @@ class ActiveSupport::TestCase
     attempt = attempt&.next || 1
     raise e if (attempts && attempt >= attempts) || backoff > backoff_limit
 
-    puts "Retrying #{label} #{attempt} #{backoff} #{e}"
+    # puts "Retrying #{label} #{attempt} #{backoff} #{e}"
     sleep backoff
     backoff *= backoff_factor
     retry

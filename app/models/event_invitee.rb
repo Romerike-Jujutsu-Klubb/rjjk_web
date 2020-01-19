@@ -67,8 +67,8 @@ class EventInvitee < ApplicationRecord
   end
 
   def replace_markers(string)
+    string.gsub!('[EVENT_NAME]', event.name) if event.name.preset?
     string
-        .gsub('[EVENT_NAME]', event.name)
         .gsub('[EVENT_LINK]',
             Rails.application.routes.url_helpers.event_url(event.id, security_token: security_token))
         .gsub('[EVENT_INVITEE_NAME]', name)

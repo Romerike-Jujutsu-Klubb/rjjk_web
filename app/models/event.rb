@@ -26,6 +26,12 @@ class Event < ApplicationRecord
         .map { |f| /^class (?<clas>.*) < Event$/ =~ File.read(f) && clas.constantize }.compact
   end
 
+  delegate :size, to: :attending_invitees
+
+  def needs_helpers?
+    false
+  end
+
   def public?
     true
   end
@@ -102,8 +108,6 @@ class Event < ApplicationRecord
 
     body_paragraphs.join("\n\n")
   end
-
-  delegate :size, to: :attending_invitees
 
   def news_item_likes
     nil

@@ -6,4 +6,8 @@ class Camp < Event
   def title
     name.present? ? "#{HEADER}: #{name}" : HEADER
   end
+
+  def needs_helpers?
+    true
+  end
 end
