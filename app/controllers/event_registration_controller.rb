@@ -45,7 +45,7 @@ class EventRegistrationController < ApplicationController
       end
 
       if @event_invitee.user_id && (existing_registration = EventInvitee
-                .find_by(event_id: @event_invitee.event_id, user_id: @event_invitee.user_id))
+          .find_by(event_id: @event_invitee.event_id, user_id: @event_invitee.user_id))
         @event_invitee = existing_registration
         redirect_to event_registration_path(@event_invitee.id)
       elsif @event_invitee.save
@@ -70,12 +70,13 @@ class EventRegistrationController < ApplicationController
   end
 
   def decline
-    if @event_invitee.update(will_attend: false)
-      flash[:notice] = 'Du er avmeldt.'
-      redirect_to event_registration_path(@event_invitee)
-    else
-      redirect_back fallback_location: root_path
-    end
+    @event_invitee.update!(will_attend: false)
+    flash[:notice] = 'Du er avmeldt.'
+    redirect_to event_registration_path(@event_invitee)
+  rescue => e
+    ExceptionNotifier.notify_exception e
+    redirect_back fallback_location: root_path,
+        alert: "Kunne ikke oppdatere registreringen: #{@event_invitee.errors.full_messages}"
   end
 
   def will_work

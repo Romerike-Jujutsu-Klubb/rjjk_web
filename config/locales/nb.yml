@@ -333,6 +333,7 @@ nb:
   registration_link: "Du kan melde deg på på web."
   registration_request: "Jeg vil være med!"
   sick: Syk
+  unregister: Meld av
   user_login_succeeded: Login successful
   user_login_failed: Login unsuccessful
   user_signup_succeeded: Signup successful! Please check your registered email account to verify your account registration and continue with the login.

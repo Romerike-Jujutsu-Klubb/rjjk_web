@@ -30,7 +30,8 @@ class EventInvitee < ApplicationRecord
       format: { with: EMAIL_REGEXP, allow_nil: true }
   validates :phone, presence: { unless: ->(ei) { ei.email.present? } }
   validates :user_id, uniqueness: { scope: :event_id, allow_nil: true }
-  validates :will_work, inclusion: { in: [nil, false], if: proc { |r| r.will_attend == false } }
+  validates :will_work,
+      inclusion: { in: [nil, false], if: proc { |r| r.event.needs_helpers? && r.will_attend == false } }
 
   accepts_nested_attributes_for :user
 
@@ -67,7 +68,7 @@ class EventInvitee < ApplicationRecord
   end
 
   def replace_markers(string)
-    string.gsub!('[EVENT_NAME]', event.name) if event.name.preset?
+    string.gsub!('[EVENT_NAME]', event.name) if event.name.present?
     string
         .gsub('[EVENT_LINK]',
             Rails.application.routes.url_helpers.event_url(event.id, security_token: security_token))

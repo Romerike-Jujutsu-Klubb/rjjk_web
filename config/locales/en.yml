@@ -32,6 +32,7 @@ en:
   registration: "Registration"
   registration_link: "You can register on the web."
   registration_request: "I want to participate!"
+  unregister: Unregister
 
   # Controller
   user_login_succeeded: Login successful

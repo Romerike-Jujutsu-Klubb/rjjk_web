@@ -6,6 +6,10 @@
       = f.text_field :end_at, value: @event.end_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Til (valgfritt)', autocomplete: :off
     .col-sm-3
       = f.select :type, [[Event::HEADER, Event.name], *Event.types.map{|clas| [clas::HEADER, clas.name]}]
+  - if @event.type == ExternalEvent.name
+    .row
+      .col
+        = f.text_field :registration_url
 
   ul#localeTab.nav.nav-tabs role="tablist"
     li.nav-item

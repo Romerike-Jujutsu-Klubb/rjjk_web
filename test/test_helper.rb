@@ -76,14 +76,14 @@ class ActiveSupport::TestCase
   end
   # EMXIF
 
-  def with_retries(label: 'test', attempts: nil, exceptions: [Minitest::Assertion],
-      backoff: 0.001.seconds, backoff_factor: 2, backoff_limit: Capybara.default_max_wait_time)
+  def with_retries(label: 'test', attempts: nil, exceptions: [Minitest::Assertion], backoff: 0.001.seconds,
+      backoff_factor: 2, backoff_limit: Capybara.default_max_wait_time, verbose: false)
     yield
   rescue *exceptions => e
     attempt = attempt&.next || 1
     raise e if (attempts && attempt >= attempts) || backoff > backoff_limit
 
-    # puts "Retrying #{label} #{attempt} #{backoff} #{e}"
+    puts "Retrying #{label} #{attempt} #{backoff} #{e}" if verbose
     sleep backoff
     backoff *= backoff_factor
     retry
