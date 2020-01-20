@@ -17,6 +17,8 @@ class EventsTest < ApplicationSystemTestCase
     screenshot :saved
     find('a', text: 'Deltagere').click
     screenshot :participants
+    find('a', text: 'Grupper').click
+    screenshot :groups
     click_on 'Legg til grupper'
     screenshot :added_groups
   end

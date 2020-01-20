@@ -1,65 +1,61 @@
-.row
-  .col-xl-9
-    - if @event.event_invitees.any?
-      - candidates = @event.event_invitees.reject(&:confirmed?).reject(&:invitation)
-      - invited = @event.event_invitees.reject(&:confirmed?).select(&:invitation)
-      - confirmed = @event.event_invitees.select(&:confirmed?)
-      ul.nav.nav-tabs.mt-3 role="tablist"
-        li.nav-item
-          a#confirmed-tab.nav-link.active data-toggle="tab" data-target="#confirmed" role="tab" aria-controls="confirmed" aria-selected="true"
-            ' Bekreftet
-            .badge.badge-info = confirmed.size
-        li.nav-item
-          a#invited-tab.nav-link data-toggle="tab" data-target="#invited" role="tab" aria-controls="invited" aria-selected="false"
-            ' Invitert
-            .badge.badge-info = invited.size
-        li.nav-item
-          a#candidates-tab.nav-link data-toggle="tab" data-target="#candidates" role="tab" aria-controls="candidates" aria-selected="false"
-            ' Kandidater
-            .badge.badge-info = candidates.size
+ul.nav.nav-tabs.mt-3 role="tablist"
+  - confirmed = @event.event_invitees.select(&:confirmed?)
+  - invited = @event.event_invitees.reject(&:confirmed?).select(&:invitation)
+  - candidates = @event.event_invitees.reject(&:confirmed?).reject(&:invitation)
+  - if confirmed.any?
+    li.nav-item
+      a#confirmed-tab.nav-link.active data-toggle="tab" data-target="#confirmed" role="tab" aria-controls="confirmed" aria-selected="true"
+        ' Bekreftet
+        .badge.badge-info = confirmed.size
+  - if invited.any?
+    li.nav-item
+      a#invited-tab.nav-link data-toggle="tab" data-target="#invited" role="tab" aria-controls="invited" aria-selected="false"
+        ' Invitert
+        .badge.badge-info = invited.size
+  - if candidates.any?
+    li.nav-item
+      a#candidates-tab.nav-link data-toggle="tab" data-target="#candidates" role="tab" aria-controls="candidates" aria-selected="false"
+        ' Kandidater
+        .badge.badge-info = candidates.size
+  li.nav-item
+    a#groups-tab.nav-link data-toggle="tab" data-target="#groups" role="tab" aria-controls="groups" aria-selected="false"
+      ' Grupper
+  li.nav-item
+    a#historic-tab.nav-link data-toggle="tab" data-target="#historic" role="tab" aria-controls="historic" aria-selected="false"
+      ' Eksterne
 
-      #myTabContent.tab-content
-        #confirmed.tab-pane.fade.show.active role="tabpanel" aria-labelledby="confirmed-tab"
-          = render 'attendees_table', event_invitees: confirmed
-        #invited.tab-pane.fade role="tabpanel" aria-labelledby="invited-tab"
-          = render 'attendees_table', event_invitees: invited
-        #candidates.tab-pane.fade role="tabpanel" aria-labelledby="candidates-tab"
-          = render 'attendees_table', event_invitees: candidates
-
-    - else
-      .alert.alert-info Det er ingen påmeldte enda.
-
-
-  .col-xl-3
-    = bootstrap_form_for @event, url: with_detour(@event, anchor: :invitees_tab), html: {id: 'event_groups'} do |f|
-      = f.collection_check_boxes :group_ids, @groups, :id, :name
+#myTabContent.tab-content
+  #confirmed.tab-pane.fade role="tabpanel" aria-labelledby="confirmed-tab"
+    = render 'attendees_table', event_invitees: confirmed
+  #invited.tab-pane.fade role="tabpanel" aria-labelledby="invited-tab"
+    = render 'attendees_table', event_invitees: invited
+  #candidates.tab-pane.fade role="tabpanel" aria-labelledby="candidates-tab"
+    = render 'attendees_table', event_invitees: candidates
+  #groups.tab-pane.fade role="tabpanel" aria-labelledby="groups-tab"
+    = bootstrap_form_for @event, url: with_detour(@event, anchor: :invitees_tab), html: { id: 'event_groups' } do |f|
+      = f.collection_check_boxes :group_ids, @groups, :id, :name, skip_label: true
       = f.primary 'Legg til grupper'
-
-    - no_user = EventInvitee.where(user_id: nil).where.not(event_id: @event.id).group_by(&:organization).sort_by { |o, i| [-i.size, o.to_s] }
-    - if no_user.any?
-      h3.mt-4 Uten bruker (#{no_user.size})
-      - no_user.each do |org, invitees|
-        h4.mt-3 = org.presence || "Ingen klubb (#{org.inspect})"
-        ul.m-0.pl-0 style="list-style: none"
-          - invitees.sort_by(&:email).each do |i|
-            li
-              a.btn.btn-secondary.btn-sm.mr-2.py-0 href=with_detour({ controller: :event_invitees, action: :new, event_invitee: i.attributes.except('event_id', 'comment', 'will_attend').merge(event_id: @event.id) }, anchor: :invitees_tab)
-                i.fa.fa-plus
-              = link_to i.email, with_detour(edit_event_invitee_path(i), anchor: :invitees_tab)
-
-    h3.mt-4 Eksterne
-    - @external_candidates.each do |org, invitees|
-      h4.mt-3 = org.presence || "Ingen klubb (#{org.inspect})"
-      ul.m-0.pl-0 style="list-style: none"
-        - invitees.group_by(&:user).each do |u, invs|
-          li
-            => u.name
-            = u.email
-            - previous_attrs = nil
-            - invs.sort_by{|ei|-ei.event.start_at.year}.each do |i|
-              - attrs = i.attributes.except('id', 'event_id', 'comment', 'will_attend', 'created_at', 'updated_at').select{|k,v| v.present?}
-              - unless attrs == previous_attrs
-                a.btn.btn-secondary.btn-sm.mx-2.py-0 href=with_detour({ controller: :event_invitees, action: :new, event_invitee: attrs.merge(user_id: u.id,  event_id: @event.id) }, anchor: :invitees_tab)
-                  i.fa.fa-plus data-toggle=:tooltip title='Legg til #{u.name} #{i.event.start_at.year}'
-              = link_to i.event.start_at.year, with_detour(edit_event_invitee_path(i), anchor: :invitees_tab)
-              - previous_attrs = attrs
+  #historic.tab-pane.fade role="tabpanel" aria-labelledby="historic-tab"
+    .card-deck
+      - @external_candidates.each do |org, invitees|
+        .card.mt-3 style="min-width:fit-content"
+          .card-header
+            h4.mt-3
+              = org.presence || "Ingen klubb"
+              .badge.badge-info.float-right = invitees.size
+          .card-body
+            table.table.table-sm
+              - invitees.group_by(&:user).sort_by { |u, invs| u.name.to_s }.each do |u, invs|
+                tr
+                  td
+                    => u.name
+                    = u.email
+                    - previous_attrs = nil
+                  td
+                    - invs.sort_by { |ei| -ei.event.start_at.year }.each do |i|
+                      - attrs = i.attributes.except('id', 'event_id', 'comment', 'will_attend', 'created_at', 'updated_at').select { |k, v| v.present? }
+                      - unless attrs == previous_attrs
+                        a.btn.btn-secondary.btn-sm.ml-1.py-0 href=with_detour({ controller: :event_invitees, action: :new, event_invitee: attrs.merge(user_id: u.id, event_id: @event.id) }, anchor: :invitees_tab)
+                          i.fa.fa-plus data-toggle=:tooltip title='Legg til #{u.label} #{i.event.start_at.year if previous_attrs}'
+                      =< link_to i.event.start_at.year, with_detour(edit_event_invitee_path(i), anchor: :invitees_tab)
+                      - previous_attrs = attrs

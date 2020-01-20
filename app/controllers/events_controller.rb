@@ -34,12 +34,12 @@ class EventsController < ApplicationController
   def edit
     @event = Event.find(params[:id])
     @groups = Group.where('closed_on IS NULL OR closed_on >= ?', @event.start_at.to_date).to_a
-    @external_candidates = EventInvitee.includes(user: :member)
+    @external_candidates = EventInvitee.includes(user: :memberships)
         .where.not(user_id: @event.event_invitees.map(&:user_id))
         .where.not(organization: EventInvitee::INTERNAL_ORG)
+        .where(members: { id: nil })
         .group_by(&:organization)
         .sort_by { |o, i| [-i.size, o] }
-        .to_a
   end
 
   def create
