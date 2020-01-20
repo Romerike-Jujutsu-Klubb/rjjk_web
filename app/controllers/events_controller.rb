@@ -104,26 +104,33 @@ class EventsController < ApplicationController
   def invite
     event = Event.find(params[:id])
     if params[:example]
-      recipients = [current_user]
+      event_invitee = event.event_invitees.for_user(current_user.id)&.first ||
+          EventInvitee.new(event: event, name: current_user.name, email: current_user.email)
+      recipients = [event_invitee]
     elsif params[:recipients] == 'members'
       recipients = Group.all.to_a.map { |g| g.members.active(event.start_at.to_date) }
           .flatten.compact.uniq
     elsif params[:recipients] == 'candidates'
-      recipients = event.event_invitees.reject(&:invitation)
+      recipients = event.event_invitees.reject do |ei|
+        ei.will_attend || ei.invitation || ei.signup_confirmation || ei.signup_rejection
+      end
     elsif params[:recipients] == 'groups'
       recipients = event.groups.map(&:members).flatten
     end
-    recipients.each do |recipient|
-      event_invitee = event.event_invitees.for_user(current_user.id)&.first ||
-          EventInvitee.new(event: event, name: recipient.name, email: recipient.email)
+    now = Time.current
+    recipients.each do |ei|
       event_invitee_message = EventInviteeMessage.new(
-          event_invitee: event_invitee, message_type: EventMessage::MessageType::INVITATION
+          event_invitee: ei, message_type: EventMessage::MessageType::INVITATION, ready_at: now
         )
-      event_invitee_message.id = -event.id
-      EventMailer.event_invitee_message(event_invitee_message).store(recipient, tag: :event_invite)
+      if params[:example]
+        event_invitee_message.id = -event.id
+        EventMailer.event_invitee_message(event_invitee_message).store(recipient, tag: :event_invite)
+      else
+        event_invitee_message.save!
+      end
     end
     UserMessageSenderJob.perform_now if params[:example]
-    redirect_to edit_event_path(event, anchor: :messages_tab), notice: 'Invitasjon er sendt.'
+    redirect_to edit_event_path(event, anchor: :invited_tab), notice: 'Invitasjon er sendt.'
   end
 
   def calendar

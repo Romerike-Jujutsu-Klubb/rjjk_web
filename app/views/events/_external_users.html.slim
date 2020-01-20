@@ -1,14 +1,12 @@
 scss:
-  .card {
-    @media screen and (min-width: 13cm) {
-      min-width:fit-content;
-    }
+  .external-users .card {
+    min-width:fit-content;
     table:last-of-type {
       margin-bottom: 0;
     }
   }
 
-.card-deck
+.external-users.card-deck
   - @external_candidates.sort_by { |o, users| [-users.size, o] }.each do |org, users|
     .card.mt-3
       .card-header
