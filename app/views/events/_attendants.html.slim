@@ -36,26 +36,4 @@ ul.nav.nav-tabs.mt-3 role="tablist"
       = f.collection_check_boxes :group_ids, @groups, :id, :name, skip_label: true
       = f.primary 'Legg til grupper'
   #historic.tab-pane.fade role="tabpanel" aria-labelledby="historic-tab"
-    .card-deck
-      - @external_candidates.each do |org, invitees|
-        .card.mt-3 style="min-width:fit-content"
-          .card-header
-            h4.mt-3
-              = org.presence || "Ingen klubb"
-              .badge.badge-info.float-right = invitees.size
-          .card-body
-            table.table.table-sm
-              - invitees.group_by(&:user).sort_by { |u, invs| u.name.to_s }.each do |u, invs|
-                tr
-                  td
-                    => u.name
-                    = u.email
-                    - previous_attrs = nil
-                  td
-                    - invs.sort_by { |ei| -ei.event.start_at.year }.each do |i|
-                      - attrs = i.attributes.except('id', 'event_id', 'comment', 'will_attend', 'created_at', 'updated_at').select { |k, v| v.present? }
-                      - unless attrs == previous_attrs
-                        a.btn.btn-secondary.btn-sm.ml-1.py-0 href=with_detour({ controller: :event_invitees, action: :new, event_invitee: attrs.merge(user_id: u.id, event_id: @event.id) }, anchor: :invitees_tab)
-                          i.fa.fa-plus data-toggle=:tooltip title='Legg til #{u.label} #{i.event.start_at.year if previous_attrs}'
-                      =< link_to i.event.start_at.year, with_detour(edit_event_invitee_path(i), anchor: :invitees_tab)
-                      - previous_attrs = attrs
+    = render 'external_users'

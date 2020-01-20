@@ -38,8 +38,9 @@ class EventsController < ApplicationController
         .where.not(user_id: @event.event_invitees.map(&:user_id))
         .where.not(organization: EventInvitee::INTERNAL_ORG)
         .where(members: { id: nil })
-        .group_by(&:organization)
-        .sort_by { |o, i| [-i.size, o] }
+        .group_by(&:user)
+        .group_by { |_u, invs| invs[0].organization }
+        .to_a
   end
 
   def create
