@@ -41,4 +41,3 @@ ul.nav.nav-tabs
           a.btn.btn-secondary.btn-lg.w-100 href=with_detour(new_event_message_path(event_message: { event_id: @event.id }), anchor: :messages_tab)
             i.fa.fa-plus>
             | Lag melding
-          /= f.button 'Send innbydelse til de inviterte', :type => :button, :onclick => "$.get('#{url_for(:action => :invite, :id => @event.id, :recipients => :invited)}')"

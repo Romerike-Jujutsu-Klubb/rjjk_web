@@ -1,7 +1,7 @@
 - show_payment_column = event_invitees.any?{|ei| ei.payed.to_i > 0}
 - show_comment_column = event_invitees.any?{|ei| ei.comment.present?}
 .table-responsive
-  table.table.table-hover class=('table-sm' if event_invitees.size > 24)
+  table.table.table-hover class=('table-sm' if event_invitees.size > 10)
     thead
       tr
         th Navn
@@ -9,7 +9,7 @@
         th E-post
         th Telefon
         th
-          a.btn.btn-info.btn-sm.float-right.ml-1 href=invite_event_path(:all) data-method=:post Inviter alle
+          a.btn.btn-info.btn-sm.float-right.ml-1 href=invite_event_path(@event, recipients: :candidates) data-method=:post Inviter alle
           ' Vil delta
         th Medhjelper
         - if show_payment_column

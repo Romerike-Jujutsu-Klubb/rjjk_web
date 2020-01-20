@@ -25,12 +25,15 @@ ul.nav.nav-tabs.mt-3 role="tablist"
       ' Eksterne
 
 #myTabContent.tab-content
-  #confirmed.tab-pane.fade role="tabpanel" aria-labelledby="confirmed-tab"
-    = render 'attendees_table', event_invitees: confirmed
-  #invited.tab-pane.fade role="tabpanel" aria-labelledby="invited-tab"
-    = render 'attendees_table', event_invitees: invited
-  #candidates.tab-pane.fade role="tabpanel" aria-labelledby="candidates-tab"
-    = render 'attendees_table', event_invitees: candidates
+  - if confirmed.any?
+    #confirmed.tab-pane.fade role="tabpanel" aria-labelledby="confirmed-tab"
+      = render 'attendees_table', event_invitees: confirmed
+  - if invited.any?
+    #invited.tab-pane.fade role="tabpanel" aria-labelledby="invited-tab"
+      = render 'attendees_table', event_invitees: invited
+  - if candidates.any?
+    #candidates.tab-pane.fade role="tabpanel" aria-labelledby="candidates-tab"
+      = render 'attendees_table', event_invitees: candidates
   #groups.tab-pane.fade role="tabpanel" aria-labelledby="groups-tab"
     = bootstrap_form_for @event, url: with_detour(@event, anchor: :invitees_tab), html: { id: 'event_groups' } do |f|
       = f.collection_check_boxes :group_ids, @groups, :id, :name, skip_label: true

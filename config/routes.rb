@@ -122,7 +122,7 @@ Rails.application.routes.draw do
       get :accept
       get :calendar
       get :decline
-      get :invite
+      post :invite
       get :preview
       patch :preview
       post :preview
