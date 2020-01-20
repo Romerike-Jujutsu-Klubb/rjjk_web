@@ -15,7 +15,7 @@
                 - previous_attrs = nil
               td
                 - invs.sort_by { |ei| -ei.event.start_at.year }.each do |i|
-                  - attrs = i.attributes.except('id', 'event_id', 'comment', 'will_attend', 'created_at', 'updated_at').select { |k, v| v.present? }
+                  - attrs = i.attributes.except('comment', 'created_at', 'event_id', 'id', 'user_id', 'updated_at', 'will_attend').select { |k, v| v.present? }
                   - unless attrs == previous_attrs
                     a.btn.btn-secondary.btn-sm.ml-1.py-0 href=with_detour({ controller: :event_invitees, action: :new, event_invitee: attrs.merge(user_id: u.id, event_id: @event.id) }, anchor: :invitees_tab)
                       i.fa.fa-plus data-toggle=:tooltip title='Legg til #{u.label} #{i.event.start_at.year if previous_attrs} #{attrs}'
