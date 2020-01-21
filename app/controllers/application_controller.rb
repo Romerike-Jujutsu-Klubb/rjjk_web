@@ -33,12 +33,8 @@ class ApplicationController < ActionController::Base
     @information_pages_was = @information_pages
     if args[0].is_a?(Hash) && (args[0][:text] || args[0][:plain] || args[0][:html] || args[0][:body]) &&
           args[0][:layout] != false
-      warn "Skipping layout (render): #{request.path.inspect} #{args.inspect}"
       layout_skipped = 1
     elsif request.xhr? || _layout(lookup_context, []) != DEFAULT_LAYOUT
-      warn <<~LINE
-        Skipping layout (load_layout_model): #{request.path.inspect} #{request.xhr?.inspect} #{_layout(lookup_context, []).inspect} #{DEFAULT_LAYOUT.inspect}
-      LINE
       layout_skipped = 2
     else
       load_layout_model
@@ -46,7 +42,12 @@ class ApplicationController < ActionController::Base
     super
   rescue => e
     raise <<~MSG
-      Render error: #{e}:  #{request.path.inspect}: args: #{args.inspect}, xhr: #{request.xhr?.inspect}, #{_layout(lookup_context, []).inspect} #{DEFAULT_LAYOUT.inspect}
+      Render error: #{e}
+      path#{request.path.inspect}
+      args: #{args.inspect}
+      xhr: #{request.xhr?.inspect}
+      layout: #{_layout(lookup_context, []).inspect}
+      std_layout: #{DEFAULT_LAYOUT.inspect}
       default_layout: #{_layout(lookup_context, []) == DEFAULT_LAYOUT}
       @information_pages: #{@information_pages_was.inspect}
       layout_skipped: #{layout_skipped.inspect}
