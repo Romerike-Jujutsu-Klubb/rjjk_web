@@ -29,8 +29,9 @@ class ApplicationController < ActionController::Base
   end
 
   def render(*args)
-    if args[0].is_a?(Hash) && (args[0][:text] || args[0][:plain] || args[0][:html] || args[0][:body]) && args[0][:layout] != false
-      logger.info "Skipping layout (render): #{request.path.inspect} #{args.inspect}"
+    if args[0].is_a?(Hash) && (args[0][:text] || args[0][:plain] || args[0][:html] || args[0][:body]) &&
+          args[0][:layout] != false
+      warn "Skipping layout (render): #{request.path.inspect} #{args.inspect}"
     else
       load_layout_model
     end
@@ -41,7 +42,9 @@ class ApplicationController < ActionController::Base
 
   def load_layout_model
     if request.xhr? || _layout(lookup_context, []) != DEFAULT_LAYOUT
-      logger.info "Skipping layout (load_layout_model): #{request.path.inspect} #{request.xhr?.inspect} #{_layout(lookup_context, []).inspect} #{DEFAULT_LAYOUT.inspect}"
+      warn <<~LINE
+        Skipping layout (load_layout_model): #{request.path.inspect} #{request.xhr?.inspect} #{_layout(lookup_context, []).inspect} #{DEFAULT_LAYOUT.inspect}
+      LINE
       return
     end
 
