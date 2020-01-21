@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
   rescue => e
     raise <<~MSG
       Render error: #{e}
-      path#{request.path.inspect}
+      path: #{request.path.inspect}
       args: #{args.inspect}
       xhr: #{request.xhr?.inspect}
       layout: #{_layout(lookup_context, []).inspect}
