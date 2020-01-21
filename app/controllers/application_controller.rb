@@ -29,7 +29,6 @@ class ApplicationController < ActionController::Base
   end
 
   def render(*args)
-    # FIXME(uwe): Clean this method up and remove output.
     @information_pages_was = @information_pages
     if args[0].is_a?(Hash) && (args[0][:text] || args[0][:plain] || args[0][:html] || args[0][:body]) &&
           args[0][:layout] != false
@@ -38,6 +37,7 @@ class ApplicationController < ActionController::Base
       layout_skipped = 2
     else
       load_layout_model
+      @information_pages_set = @information_pages
     end
     super
   rescue => e
@@ -49,8 +49,9 @@ class ApplicationController < ActionController::Base
       layout: #{_layout(lookup_context, []).inspect}
       std_layout: #{DEFAULT_LAYOUT.inspect}
       default_layout: #{_layout(lookup_context, []) == DEFAULT_LAYOUT}
-      @information_pages: #{@information_pages_was.inspect}
+      @information_pages_was: #{@information_pages_was.inspect}
       layout_skipped: #{layout_skipped.inspect}
+      @information_pages_set: #{@information_pages_set.inspect}
       @information_pages: #{@information_pages.inspect}
     MSG
   end
