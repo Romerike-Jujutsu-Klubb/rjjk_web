@@ -39,6 +39,7 @@ class ApplicationController < ActionController::Base
   rescue => e
     raise <<~MSG
       Render error: #{e}:  #{request.path.inspect}: #{args.inspect} #{request.xhr?.inspect} #{_layout(lookup_context, []).inspect} #{DEFAULT_LAYOUT.inspect}
+      @information_pages: #{@information_pages.inspect}
     MSG
   end
 
