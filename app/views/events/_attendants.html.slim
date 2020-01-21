@@ -4,7 +4,7 @@ ul.nav.nav-tabs.mt-3 role="tablist"
   - candidates = @event.event_invitees.reject(&:confirmed?).reject(&:invitation)
   - if confirmed.any?
     li.nav-item
-      a#confirmed-tab.nav-link.active data-toggle="tab" data-target="#confirmed" role="tab" aria-controls="confirmed" aria-selected="true"
+      a#confirmed-tab.nav-link data-toggle="tab" data-target="#confirmed" role="tab" aria-controls="confirmed" aria-selected="true"
         ' Bekreftet
         .badge.badge-info = confirmed.size
   - if invited.any?

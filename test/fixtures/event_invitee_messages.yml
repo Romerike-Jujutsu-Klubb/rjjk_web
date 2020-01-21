@@ -1,7 +1,9 @@
 one:
   event_invitee: one
+  message_type: SIGNUP_CONFIRMATION
   subject: Så søte bær!
   body: SÅ SØTE BÆR!
+  ready_at: 2012-09-25 21:31:19
   sent_at: 2012-09-25 22:31:19
 
 two:
@@ -11,8 +13,8 @@ two:
   sent_at: 2012-09-25 22:31:19
 
 invited_undecided:
-  message_type: INVITATION
   event_invitee: invited_undecided
+  message_type: INVITATION
   subject: Come!
   body: Now!
   sent_at: 2012-09-25 22:31:19

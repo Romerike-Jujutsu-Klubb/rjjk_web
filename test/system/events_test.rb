@@ -22,4 +22,11 @@ class EventsTest < ApplicationSystemTestCase
     click_on 'Legg til grupper'
     screenshot :added_groups
   end
+
+  test 'participants tab directly' do
+    screenshot_group :participants_tab_directly
+    login
+    visit edit_event_path id(:one), anchor: :invitees_tab
+    screenshot :participants
+  end
 end
