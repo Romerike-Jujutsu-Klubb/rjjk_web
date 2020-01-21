@@ -42,6 +42,7 @@ class ApplicationController < ActionController::Base
   rescue => e
     raise <<~MSG
       Render error: #{e}:  #{request.path.inspect}: args: #{args.inspect}, xhr: #{request.xhr?.inspect}, #{_layout(lookup_context, []).inspect} #{DEFAULT_LAYOUT.inspect}
+      default_layout: #{_layout(lookup_context, []) != DEFAULT_LAYOUT}
       @information_pages: #{@information_pages_was.inspect}
       layout_skipped: #{layout_skipped.inspect}
       @information_pages: #{@information_pages.inspect}
