@@ -29,7 +29,9 @@ class ApplicationController < ActionController::Base
   end
 
   def render(*args)
-    unless args[0].is_a?(Hash) && (args[0][:text] || args[0][:body]) && args[0][:layout] != false
+    if args[0].is_a?(Hash) && (args[0][:text] || args[0][:plain] || args[0][:html] || args[0][:body]) && args[0][:layout] != false
+      logger.info "Skipping layout (render): #{request.path.inspect} #{args.inspect}"
+    else
       load_layout_model
     end
     super
@@ -38,7 +40,10 @@ class ApplicationController < ActionController::Base
   private
 
   def load_layout_model
-    return if request.xhr? || _layout(lookup_context, []) != DEFAULT_LAYOUT
+    if request.xhr? || _layout(lookup_context, []) != DEFAULT_LAYOUT
+      logger.info "Skipping layout (load_layout_model): #{request.path.inspect} #{request.xhr?.inspect} #{_layout(lookup_context, []).inspect} #{DEFAULT_LAYOUT.inspect}"
+      return
+    end
 
     unless @information_pages
       info_query = InformationPage.roots.order(:position)
