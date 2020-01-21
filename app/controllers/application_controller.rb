@@ -34,7 +34,12 @@ class ApplicationController < ActionController::Base
     if args[0].is_a?(Hash) && (args[0][:text] || args[0][:plain] || args[0][:html] || args[0][:body]) &&
           args[0][:layout] != false
       warn "Skipping layout (render): #{request.path.inspect} #{args.inspect}"
-      layout_skipped = true
+      layout_skipped = 1
+    elsif request.xhr? || _layout(lookup_context, []) != DEFAULT_LAYOUT
+      warn <<~LINE
+        Skipping layout (load_layout_model): #{request.path.inspect} #{request.xhr?.inspect} #{_layout(lookup_context, []).inspect} #{DEFAULT_LAYOUT.inspect}
+      LINE
+      layout_skipped = 2
     else
       load_layout_model
     end
@@ -42,7 +47,7 @@ class ApplicationController < ActionController::Base
   rescue => e
     raise <<~MSG
       Render error: #{e}:  #{request.path.inspect}: args: #{args.inspect}, xhr: #{request.xhr?.inspect}, #{_layout(lookup_context, []).inspect} #{DEFAULT_LAYOUT.inspect}
-      default_layout: #{_layout(lookup_context, []) != DEFAULT_LAYOUT}
+      default_layout: #{_layout(lookup_context, []) == DEFAULT_LAYOUT}
       @information_pages: #{@information_pages_was.inspect}
       layout_skipped: #{layout_skipped.inspect}
       @information_pages: #{@information_pages.inspect}
@@ -52,13 +57,6 @@ class ApplicationController < ActionController::Base
   private
 
   def load_layout_model
-    if request.xhr? || _layout(lookup_context, []) != DEFAULT_LAYOUT
-      warn <<~LINE
-        Skipping layout (load_layout_model): #{request.path.inspect} #{request.xhr?.inspect} #{_layout(lookup_context, []).inspect} #{DEFAULT_LAYOUT.inspect}
-      LINE
-      return
-    end
-
     unless @information_pages
       info_query = InformationPage.roots.order(:position)
       info_query = info_query.where('hidden IS NULL OR hidden = ?', false) unless admin?
