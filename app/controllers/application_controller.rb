@@ -30,8 +30,8 @@ class ApplicationController < ActionController::Base
 
   def render(*args)
     @information_pages_was = @information_pages
-    if args[0].is_a?(Hash) && (args[0][:text] || args[0][:plain] || args[0][:html] || args[0][:body]) &&
-          args[0][:layout] != false
+    if args[0].is_a?(Hash) && (args[0][:partial] || args[0][:text] || args[0][:plain] || args[0][:html] ||
+        args[0][:body]) && args[0][:layout] != false
       layout_skipped = 1
     elsif _layout(lookup_context, []) != DEFAULT_LAYOUT
       layout_skipped = 2
