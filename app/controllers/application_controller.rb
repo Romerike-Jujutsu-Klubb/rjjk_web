@@ -29,16 +29,21 @@ class ApplicationController < ActionController::Base
   end
 
   def render(*args)
+    # FIXME(uwe): Clean this method up and remove output.
+    @information_pages_was = @information_pages
     if args[0].is_a?(Hash) && (args[0][:text] || args[0][:plain] || args[0][:html] || args[0][:body]) &&
           args[0][:layout] != false
       warn "Skipping layout (render): #{request.path.inspect} #{args.inspect}"
+      layout_skipped = true
     else
       load_layout_model
     end
     super
   rescue => e
     raise <<~MSG
-      Render error: #{e}:  #{request.path.inspect}: #{args.inspect} #{request.xhr?.inspect} #{_layout(lookup_context, []).inspect} #{DEFAULT_LAYOUT.inspect}
+      Render error: #{e}:  #{request.path.inspect}: args: #{args.inspect}, xhr: #{request.xhr?.inspect}, #{_layout(lookup_context, []).inspect} #{DEFAULT_LAYOUT.inspect}
+      @information_pages: #{@information_pages_was.inspect}
+      layout_skipped: #{layout_skipped.inspect}
       @information_pages: #{@information_pages.inspect}
     MSG
   end
