@@ -36,6 +36,10 @@ class ApplicationController < ActionController::Base
       load_layout_model
     end
     super
+  rescue => e
+    raise <<~MSG
+      Render error: #{e}:  #{request.path.inspect}: #{args.inspect} #{request.xhr?.inspect} #{_layout(lookup_context, []).inspect} #{DEFAULT_LAYOUT.inspect}
+    MSG
   end
 
   private

@@ -4,7 +4,7 @@ class InfoController < ApplicationController
   before_action :admin_required, except: %i[show show_content]
 
   def index
-    @information_pages = InformationPage.order(:parent_id, :position)
+    @information_pages = InformationPage.order(:parent_id, :position).to_a
   end
 
   def show
