@@ -1,9 +1,13 @@
 nb:
   attributes:
     basic_technique_id: Grunnteknikk
+    from_age_html: Nedre alders&shy;grense
+    monthly_fee_html: Måneds&shy;avgift
     name: Navn
     title: Tittel
+    to_age_html: Øvre alders&shy;grense
     url: URL
+    yearly_fee_html: Års&shy;kontingent
   activerecord:
     attributes:
       annual_meeting:
@@ -86,13 +90,9 @@ nb:
         closed_on: Avsluttet
         color: Farge i grafer
         contract: Kontraktstype
-        from_age: Nedre aldersgrense
-        monthly_fee: Månedsavgift
         planning: Påmelding
         school_breaks: Følger skoleåret
         target_size: Ønsket størrelse
-        to_age: Øvre aldersgrense
-        yearly_fee: Årskontingent
       group_instructor:
         assistant: Hjelpeinstruktør
         group_schedule_id: Gruppe
@@ -152,11 +152,6 @@ nb:
         message: Melding
         week: Uke
         year: År
-      price_age_group:
-        from_age: Nedre aldersgrense
-        monthly_fee: Månedsavgift
-        to_age: Øvre aldersgrense
-        yearly_fee: Årskontingent
       rank:
         css_color: CSS Farge
         colour: Beltebeskrivelse
