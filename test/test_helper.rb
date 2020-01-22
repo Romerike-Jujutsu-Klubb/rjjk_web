@@ -17,6 +17,7 @@ require 'rails/test_help'
 Minitest::Reporters.use!
 
 TEST_TIME = Time.zone.local(2013, 10, 17, 18, 46, 0) # Week 42, thursday
+Timecop.freeze(TEST_TIME) # set time for fixture load
 
 Geocoder.configure(lookup: :test)
 Geocoder::Lookup::Test.set_default_stub([{
