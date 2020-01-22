@@ -1,10 +1,10 @@
 h1 Web
 
 ul
-  li = link_to 'Ny nyhet', controller: :news, action: :new
-  li = link_to 'Ny info-side', controller: :info, action: :new
-  li = link_to 'Arrangement', events_path
-  li = link_to 'Brukere', controller: :users, action: :index
+  li = menu_item 'Ny nyhet', controller: :news, action: :new
+  li = menu_item 'Ny info-side', controller: :info, action: :new
+  li = menu_item 'Arrangement', events_path
+  li = menu_item 'Brukere', controller: :users, action: :index
   li = link_to 'GitHub', 'https://github.com/Romerike-Jujutsu-Klubb/rjjk_web', target: 'github'
   li = menu_item 'Status', controller: :status
 

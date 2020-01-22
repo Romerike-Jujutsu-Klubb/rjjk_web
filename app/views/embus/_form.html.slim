@@ -1,5 +1,3 @@
-- @content_width = 1024
-
 = bootstrap_form_for @embu do |f|
   - if @embu.errors.any?
     #error_explanation
@@ -20,9 +18,7 @@
   .row
     .col-md-9
       = f.text_area :description, hide_label: true, class: :expanding, value: kramdown(@embu.description)
-      .mt-3
-        = f.submit class: 'btn btn-secondary'
-        = link_to 'Ny Embu', new_embu_path
+      .text-right.mt-3 = f.primary 'Lagre'
     .col-md-3 style="height: 90%; overflow:auto; border: 1px solid black; padding-top: 0.5em; text-align: center"
       - @embu.embu_images.order('created_at DESC').each do |e|
         - i = e.image

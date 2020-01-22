@@ -11,7 +11,7 @@ class CampsTest < ApplicationSystemTestCase
     visit events_url
     assert_selector 'h1', text: 'Arrangement'
     screenshot :index
-    click_on 'Training camp with Soke Yamaue'
+    click_on 'Training camp with Soke Yamaue', match: :first
     screenshot :description
     click_on 'Lagre'
     screenshot :saved
