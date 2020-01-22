@@ -28,32 +28,16 @@ class ApplicationController < ActionController::Base
     response.set_header('Origin-Trial', Rails.application.credentials.google_badge_origin_token)
   end
 
+  NO_LAYOUT_KEYS = %i[partial text plain html body json].freeze
   def render(*args)
-    @information_pages_was = @information_pages
-    if args[0].is_a?(Hash) && args[0][:layout] != false &&
-          (args[0][:partial] || args[0][:text] || args[0][:plain] || args[0][:html] || args[0][:body])
-      layout_skipped = 1
-    elsif _layout(lookup_context, []) != DEFAULT_LAYOUT
-      layout_skipped = 2
+    if ((opts = args[0]).is_a?(Hash) &&
+        (opts[:layout] == false || (opts.keys & NO_LAYOUT_KEYS).any?)) ||
+          _layout(lookup_context, []) != DEFAULT_LAYOUT
+      # Skip layout models
     else
       load_layout_model
-      @information_pages_set = @information_pages
     end
     super
-  rescue => e
-    raise <<~MSG
-      Render error: #{e}
-      path: #{request.path.inspect}
-      args: #{args.inspect}
-      xhr: #{request.xhr?.inspect}
-      layout: #{_layout(lookup_context, []).inspect}
-      std_layout: #{DEFAULT_LAYOUT.inspect}
-      default_layout: #{_layout(lookup_context, []) == DEFAULT_LAYOUT}
-      @information_pages_was: #{@information_pages_was.inspect}
-      layout_skipped: #{layout_skipped.inspect}
-      @information_pages_set: #{@information_pages_set.inspect}
-      @information_pages: #{@information_pages.inspect}
-    MSG
   end
 
   private
