@@ -4,6 +4,7 @@ cache:
   yarn: true
   directories:
   - node_modules # NPM packages
+  - tmp/cache
 
 addons:
   chrome: stable
