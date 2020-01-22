@@ -1,6 +1,9 @@
 function activate_table_navigation() {
   $('table[data-record-path] tr[data-record-id]').click(function(event) {
-    var row = $(event.target).closest('tr');
+    if ($(event.target).is('a, a *')) {
+      return;
+    }
+    var row = $(this);
     var record_id = row.data('record-id');
     if (!record_id) {
       return
