@@ -38,7 +38,7 @@ class SurveySenderTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[1]
     assert_equal 'First survey', mail.subject
-    assert_equal ['neuer@example.com', 'newbie@example.com'], mail.to
+    assert_equal ['newbie@example.com'], mail.to
     assert_equal ['medlem@test.jujutsu.no'], mail.from
     assert_match 'First header text', mail.body
     assert_match 'First question', mail.body

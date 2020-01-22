@@ -12,7 +12,7 @@ class EventNotifierTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[0]
     assert_equal 'Event message one subject', mail.subject
-    assert_equal ['neuer@example.com', 'newbie@example.com'], mail.to
+    assert_equal ['newbie@example.com'], mail.to
     assert_equal %w[test@jujutsu.no], mail.from
     assert_match %r{
           Har\ du\ problemer\ med\ å\ lese\ denne\ e-posten,\ klikk\ her:\s+
@@ -38,7 +38,7 @@ class EventNotifierTest < ActionMailer::TestCase
 
     mail = UserMessage.pending[2]
     assert_equal 'Event message two subject', mail.subject
-    assert_equal ['neuer@example.com', 'newbie@example.com'], mail.to
+    assert_equal ['newbie@example.com'], mail.to
     assert_equal %w[test@jujutsu.no], mail.from
     assert_match %r{
           Har\ du\ problemer\ med\ å\ lese\ denne\ e-posten,\ klikk\ her:\s+

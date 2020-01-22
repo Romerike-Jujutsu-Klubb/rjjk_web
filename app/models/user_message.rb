@@ -21,7 +21,7 @@ class UserMessage < ApplicationRecord
   validates :title, length: { maximum: 255 }
 
   def to
-    user.emails
+    user.age&.>=(15) ? [user.contact_email] : user.emails
   end
 
   def body

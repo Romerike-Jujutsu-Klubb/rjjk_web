@@ -30,7 +30,7 @@ class InformationPageNotifierTest < ActionMailer::TestCase
 
     email = UserMessage.pending[1]
     assert_equal 'Til info: My first article', email.subject
-    assert_equal ['neuer@example.com', 'newbie@example.com'], email.to
+    assert_equal ['newbie@example.com'], email.to
     assert_equal %w[noreply@test.jujutsu.no], email.from
     assert_match 'A <strong>very</strong> interresting topic!', email.body
 
@@ -69,7 +69,7 @@ class InformationPageNotifierTest < ActionMailer::TestCase
 
     email = UserMessage.pending[1]
     assert_equal 'Til info: My first article', email.subject
-    assert_equal ['neuer@example.com', 'newbie@example.com'], email.to
+    assert_equal ['newbie@example.com'], email.to
     assert_equal %w[noreply@test.jujutsu.no], email.from
     assert_match 'A <strong>very</strong> interresting topic!', email.body
 
