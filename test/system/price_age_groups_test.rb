@@ -4,6 +4,7 @@ require 'application_system_test_case'
 
 class PriceAgeGroupsTest < ApplicationSystemTestCase
   setup do
+    screenshot_section :price_age_groups
     @price_age_group = price_age_groups(:barn)
     login
   end
@@ -14,7 +15,10 @@ class PriceAgeGroupsTest < ApplicationSystemTestCase
   end
 
   test 'creating a Price age group' do
+    screenshot_group :create
     visit price_age_groups_url
+
+    screenshot :index
     click_on 'Legg til prisgruppe'
 
     fill_in 'Nedre aldersgrense', with: 1

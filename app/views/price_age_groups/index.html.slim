@@ -4,22 +4,24 @@ a.btn.btn-primary.float-right href=new_price_age_group_path
 
 h1 Prisgrupper
 
-table.table data-record-path=price_age_groups_path
-  thead
-    tr
-      th = t 'attributes.name'
-      th = t 'activerecord.attributes.price_age_group.from_age'
-      th = t 'activerecord.attributes.price_age_group.to_age'
-      th = t 'activerecord.attributes.price_age_group.yearly_fee'
-      th = t 'activerecord.attributes.price_age_group.monthly_fee'
-      th
+.table-responsive
+  table.table data-record-path=price_age_groups_path
+    thead
+      tr
+        th = t 'attributes.name'
+        th = t 'activerecord.attributes.price_age_group.from_age'
+        th = t 'activerecord.attributes.price_age_group.to_age'
+        th = t 'activerecord.attributes.price_age_group.yearly_fee'
+        th = t 'activerecord.attributes.price_age_group.monthly_fee'
+        th
 
-  tbody
-    - @price_age_groups.each do |price_age_group|
-      tr data-record-id=price_age_group.id
-        td = price_age_group.name
-        td = price_age_group.from_age
-        td = price_age_group.to_age
-        td = price_age_group.yearly_fee
-        td = price_age_group.monthly_fee
-        td = link_to 'Destroy', price_age_group, data: { confirm: 'Are you sure?' }, method: :delete
+    tbody
+      - @price_age_groups.each do |price_age_group|
+        tr data-record-id=price_age_group.id
+          td = price_age_group.name
+          td = price_age_group.from_age
+          td = price_age_group.to_age
+          td = price_age_group.yearly_fee
+          td = price_age_group.monthly_fee
+          td = link_to price_age_group, data: { confirm: 'Are you sure?' }, method: :delete, title: :Slett
+            i.fa.fa-trash
