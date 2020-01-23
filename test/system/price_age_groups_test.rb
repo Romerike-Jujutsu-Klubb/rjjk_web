@@ -49,9 +49,7 @@ class PriceAgeGroupsTest < ApplicationSystemTestCase
 
   test 'destroying a Price age group' do
     visit price_age_groups_url
-    page.accept_confirm do
-      click_on 'Destroy', match: :first
-    end
+    page.accept_confirm { first('[title=Slett]').click }
 
     assert_text 'Price age group was successfully destroyed'
   end
