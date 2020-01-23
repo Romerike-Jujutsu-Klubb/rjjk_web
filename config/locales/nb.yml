@@ -1,13 +1,13 @@
 nb:
   attributes:
     basic_technique_id: Grunnteknikk
-    from_age_html: Nedre alders&shy;grense
-    monthly_fee_html: Måneds&shy;avgift
+    from_age: "Nedre alders\xADgrense"
+    monthly_fee: "Måneds\xADavgift"
     name: Navn
     title: Tittel
-    to_age_html: Øvre alders&shy;grense
+    to_age: "Øvre alders\xADgrense"
     url: URL
-    yearly_fee_html: Års&shy;kontingent
+    yearly_fee: "Års\xADkontingent"
   activerecord:
     attributes:
       annual_meeting:

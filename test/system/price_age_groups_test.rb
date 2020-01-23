@@ -21,11 +21,11 @@ class PriceAgeGroupsTest < ApplicationSystemTestCase
     screenshot :index
     click_on 'Legg til prisgruppe'
 
-    fill_in 'Nedre aldersgrense', with: 1
-    fill_in 'Månedsavgift', with: @price_age_group.monthly_fee
+    fill_in "Nedre alders\u00ADgrense", with: 1
+    fill_in "Måneds\u00ADavgift", with: @price_age_group.monthly_fee
     fill_in 'Navn', with: 'Mygger'
-    fill_in 'Øvre aldersgrense', with: 4
-    fill_in 'Årskontingent', with: @price_age_group.yearly_fee
+    fill_in "Øvre alders\u00ADgrense", with: 4
+    fill_in "Års\u00ADkontingent", with: @price_age_group.yearly_fee
     click_on 'Lagre'
 
     assert_text 'Price age group was successfully created'
@@ -36,11 +36,11 @@ class PriceAgeGroupsTest < ApplicationSystemTestCase
     visit price_age_groups_url
     first('tbody tr').click
 
-    fill_in 'Nedre aldersgrense', with: 1
-    fill_in 'Månedsavgift', with: @price_age_group.monthly_fee
+    fill_in "Nedre alders\u00ADgrense", with: 1
+    fill_in "Måneds\u00ADavgift", with: @price_age_group.monthly_fee
     fill_in 'Navn', with: 'Mygger'
-    fill_in 'Øvre aldersgrense', with: 4
-    fill_in 'Årskontingent', with: @price_age_group.yearly_fee
+    fill_in "Øvre alders\u00ADgrense", with: 4
+    fill_in "Års\u00ADkontingent", with: @price_age_group.yearly_fee
     click_on 'Lagre'
 
     assert_text 'Price age group was successfully updated'

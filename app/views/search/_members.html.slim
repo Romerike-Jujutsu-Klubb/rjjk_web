@@ -9,7 +9,7 @@
           - members.each do |m|
             tr
               td
-                => link_to m.name, m
+                => link_to m.name, m.user
                 - if m.age
                   ' (#{m.age} år)
               td.text-right
