@@ -16,7 +16,7 @@ class EventInviteesController < ApplicationController
     @event_invitee ||= EventInvitee.new params[:event_invitee]
     @event_invitee.user ||= User.new
     load_users
-    render action: 'new'
+    render action: :new
   end
 
   def edit
@@ -52,7 +52,7 @@ class EventInviteesController < ApplicationController
   private
 
   def load_users
-    @users = User.order(:first_name, :last_name).to_a - @event_invitee.event.users
+    @users = User.order(:first_name, :last_name).to_a - @event_invitee.event&.users.to_a
     if @event_invitee.user
       @users.prepend @event_invitee.user
     else

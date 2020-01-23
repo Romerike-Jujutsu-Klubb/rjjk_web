@@ -12,7 +12,7 @@ scss:
       .card-header
         h4.mt-3
           = org.presence || "Ingen klubb"
-          .badge.badge-info.float-right = users.size
+          a.badge.badge-info.float-right href=add_org_event_path(@event, organization: org, user_ids: users.map{|u, invs| u.id}) data-method=:post data-toggle=:tooltip title="Dette vil legge til #{users.size} deltakere#{" for #{org}" if org.present?}." +#{users.size}
       .card-body
         table.table.table-sm
           - users.sort_by { |u, invs| u.name.to_s }.each do |u, invs|

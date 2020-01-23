@@ -9,7 +9,7 @@
         th E-post
         th Telefon
         th
-          a.btn.btn-info.btn-sm.float-right.ml-1 href=invite_event_path(@event, recipients: :candidates) data-method=:post data-confirm="Dette vil sende en invitasjon til alle kandidatene." Inviter alle
+          a.btn.btn-info.btn-sm.float-right.ml-1 href=invite_event_path(@event, recipients: :candidates) data-method=:post data-confirm="Dette vil sende en invitasjon til alle #{event_invitees.size} kandidatene." Inviter alle
           ' Vil delta
         th Medhjelper
         - if show_payment_column

@@ -29,22 +29,22 @@ class EventInvitee < ApplicationRecord
   validates :email, presence: { unless: ->(ei) { ei.phone.present? } },
       format: { with: EMAIL_REGEXP, allow_nil: true }
   validates :phone, presence: { unless: ->(ei) { ei.email.present? } }
-  validates :user_id, uniqueness: { scope: :event_id, allow_nil: true }
+  validates :user_id, presence: true, uniqueness: { scope: :event_id, allow_nil: true }
   validates :will_work,
-      inclusion: { in: [nil, false], if: proc { |r| r.event.needs_helpers? && r.will_attend == false } }
+      inclusion: { in: [nil, false], if: proc { |r| r.event&.needs_helpers? && r.will_attend == false } }
 
   accepts_nested_attributes_for :user
 
   before_validation { self.organization ||= INTERNAL_ORG if user&.member }
 
-  delegate :locale, :name, to: :user
+  delegate :locale, :name, to: :user, allow_nil: true
 
   def email
-    user.contact_email
+    user&.contact_email
   end
 
   def phone
-    user.contact_phone
+    user&.contact_phone
   end
 
   def confirmed?

@@ -72,6 +72,20 @@ class EventsController < ApplicationController
     end
   end
 
+  def add_org
+    event = Event.find(params[:id])
+    organization = params[:organization]
+    user_ids = params[:user_ids]
+
+    Event.transaction do
+      user_ids.each { |user_id| event.event_invitees.create! organization: organization, user_id: user_id }
+      flash.notice = "La til #{user_ids.size}#{" for #{organization}" if organization.present?}."
+    rescue => e
+      flash.alert = "Kunne ikke legge til deltakere.: #{e}"
+    end
+    redirect_to edit_event_path(event, anchor: :historic_tab)
+  end
+
   def accept
     @event = Event.find(params[:id])
     invitee = @event.event_invitees.find { |ei| ei.user_id == current_user.id }

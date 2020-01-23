@@ -79,7 +79,7 @@ Rails.application.routes.draw do
   end
 
   resources :correspondences
-  resources :curriculums, path: :pensum, only: :index do
+  resources :curriculums, path: :pensum do
     collection do
       get :card_pdf
     end
@@ -119,6 +119,7 @@ Rails.application.routes.draw do
       post :preview
     end
     member do
+      post :add_org
       get :accept
       get :calendar
       get :decline
