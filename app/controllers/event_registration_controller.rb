@@ -40,7 +40,7 @@ class EventRegistrationController < ApplicationController
         @event_invitee.user_id = user.id
       elsif @event_invitee.email.present? && @event_invitee.email.match?(User::EMAIL_REGEXP) &&
             @event_invitee.name.present?
-        user = User.create! email: @event_invitee.email, name: @event_invitee.name
+        user = User.create! email: @event_invitee.email, name: @event_invitee.name, locale: I18n.locale
         @event_invitee.user_id = user.id
       end
 

@@ -19,11 +19,23 @@ h1 Påmelding til #{@event_invitee.event&.name}
       = f.fields_for :user do |uf|
         = uf.text_field :name, required: true
         .row
-          .col-md-5 = uf.text_field :email, placeholder: t(:user_enter_valid_email_address), required: true
+          .col-md-5 = uf.text_field :email, placeholder: t(:user_enter_valid_email_address), required: uf.object.phone.blank?, onkeyup: 'update_required_inputs()'
           .col-md-2.mt-md-4.pt-md-3.text-center og / eller
-          .col-md-5 = uf.text_field :phone, required: true
+          .col-md-5 = uf.text_field :phone, required: uf.object.email.blank?, onkeyup: 'update_required_inputs()'
       = f.text_field :organization
   .text-right = f.primary t(:register)
 
 javascript:
+  function update_required_inputs() {
+    if ($("#event_invitee_user_attributes_email").val().length > 0) {
+      $("#event_invitee_user_attributes_phone").removeAttr("required");
+    } else {
+      $("#event_invitee_user_attributes_phone").attr("required", 'required');
+    }
+    if ($("#event_invitee_user_attributes_phone").val().length > 0) {
+      $("#event_invitee_user_attributes_email").removeAttr("required");
+    } else {
+      $("#event_invitee_user_attributes_email").attr("required", 'required');
+    }
+  }
   $('#event_invitee_user_attributes_name').focus();

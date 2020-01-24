@@ -38,10 +38,10 @@ class Group < ApplicationRecord
 
   before_validation { |r| r.color = nil if r.color.blank? }
 
-  validates :curriculum_group, :from_age, :name, :to_age, presence: true
+  validates :curriculum_group_id, :from_age, :name, :to_age, presence: true
   validates :contract, length: { maximum: 32 }
 
-  delegate :martial_art_id, to: :curriculum_group
+  delegate :martial_art_id, to: :curriculum_group, allow_nil: true
 
   def full_name
     if curriculum_group.martial_art_id != MartialArt::KWR_ID

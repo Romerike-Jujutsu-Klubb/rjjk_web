@@ -99,3 +99,9 @@ en:
   user_delete_account_button: Delete account
   will_attend: Will attend
   will_not_attend: "I will not attend"
+  read_more: "Read more"
+  participants: "participants"
+  confirmed: "confirmed"
+  you_are: "You are"
+  attending: "attending"
+  will_you_attend: "Will you attend?"

@@ -4,7 +4,7 @@ class Camp < Event
   HEADER = 'RJJK Leir'
 
   def title
-    name.present? ? "#{HEADER}: #{name}" : HEADER
+    localized_name.presence || HEADER
   end
 
   def needs_helpers?

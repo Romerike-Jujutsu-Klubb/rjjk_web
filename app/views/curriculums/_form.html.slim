@@ -1,0 +1,27 @@
+= form_for @curriculum do |f|
+  - if @curriculum.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@curriculum.errors.count, "error")} prohibited this curriculum from being saved:"
+      ul
+        - @curriculum.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :martial_art_id
+    = f.text_field :martial_art_id
+  .field
+    = f.label :position
+    = f.number_field :position
+  .field
+    = f.label :from_age
+    = f.number_field :from_age
+  .field
+    = f.label :to_age
+    = f.number_field :to_age
+  .field
+    = f.label :color
+    = f.text_field :color
+  .actions = f.submit

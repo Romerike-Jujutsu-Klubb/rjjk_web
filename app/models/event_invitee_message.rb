@@ -23,6 +23,12 @@ class EventInviteeMessage < ApplicationRecord
       self.subject ||= EventMessage::Templates.const_get("#{message_type}_SUBJECT")
       self.body ||= EventMessage::Templates.const_get(message_type)
     elsif message_type == EventMessage::MessageType::INVITATION
+      if event_invitee.user.locale == 'en'
+        if event_invitee.event.name_en.present?
+          self.subject ||= "Invitation to #{event_invitee.event.name_en}"
+        end
+        self.body ||= event_invitee.event.description_en if event_invitee.event.description_en.present?
+      end
       self.subject ||= "Invitasjon til #{event_invitee.event.name}"
       self.body ||= event_invitee.event.description
     end

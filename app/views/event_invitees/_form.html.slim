@@ -17,7 +17,7 @@
   - else
     a.float-right href=with_detour(users_path(user: {email: @event_invitee.email, name: @event_invitee.name, phone: @event_invitee.phone})) data-method=:post Opprett bruker
   = f.select :user_id, [['', nil]] + @users.map { |u| [u.name.presence || u.email, u.id] }, { prompt: 'Velg bruker', append: user_link }, class: 'chosen-select'
-  - if @event_invitee.user.nil?
+  - if @event_invitee.user.new_record?
     ' eller
     fieldset title="Kontaktinformasjon"
       legend Kontaktinformasjon

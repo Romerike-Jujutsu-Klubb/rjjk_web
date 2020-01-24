@@ -1,11 +1,3 @@
-one:
-  name: MyString
-  martial_art: one
-  position: 1
-  from_age: 1
-  to_age: 1
-  color: MyString
-
 gresshoppe:
   from_age: 5
   martial_art: keiwaryu

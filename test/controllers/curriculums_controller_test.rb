@@ -3,40 +3,57 @@
 require 'test_helper'
 
 class CurriculumsControllerTest < ActionDispatch::IntegrationTest
-  test 'index' do
-    login(:lars)
-    get curriculums_path
+  setup do
+    @curriculum = curriculum_groups(:voksne)
+    login
+  end
+
+  test 'should get index' do
+    get curriculums_url
     assert_response :success
   end
 
-  test 'index redirects to login for strangers' do
-    get curriculums_path
-    assert_redirected_to login_path
-  end
-
-  test 'index for beginner' do
-    login :newbie
-    get curriculums_path
+  test 'should get new' do
+    get new_curriculum_url
     assert_response :success
   end
 
-  test 'card' do
-    login(:lars)
-    get card_curriculum_path(id(:kyu_5))
+  test 'should create curriculum' do
+    assert_difference('CurriculumGroup.count') do
+      post curriculums_url, params: { curriculum: {
+        color: @curriculum.color, from_age: @curriculum.from_age,
+        martial_art_id: @curriculum.martial_art_id, name: @curriculum.name, position: @curriculum.position,
+        to_age: @curriculum.to_age
+      } }
+    end
+
+    assert_redirected_to curriculum_url(CurriculumGroup.last)
+  end
+
+  test 'should show curriculum' do
+    get curriculum_url(@curriculum)
     assert_response :success
   end
 
-  test 'card_pdf' do
-    login(:lars)
-    get card_pdf_curriculums_path
+  test 'should get edit' do
+    get edit_curriculum_url(@curriculum)
     assert_response :success
   end
 
-  test 'pdf' do
-    login(:lars)
-    get pdf_curriculum_path(id(:kyu_5))
-    assert_response :success
-  rescue Prawn::Errors::UnsupportedImageType => e
-    raise e if ENV['TRAVIS']
+  test 'should update curriculum' do
+    patch curriculum_url(@curriculum), params: { curriculum: {
+      color: @curriculum.color, from_age: @curriculum.from_age,
+      martial_art_id: @curriculum.martial_art_id, name: @curriculum.name, position: @curriculum.position,
+      to_age: @curriculum.to_age
+    } }
+    assert_redirected_to curriculum_url(@curriculum)
+  end
+
+  test 'should destroy curriculum' do
+    assert_difference('CurriculumGroup.count', -1) do
+      delete curriculum_url(@curriculum)
+    end
+
+    assert_redirected_to curriculums_url
   end
 end

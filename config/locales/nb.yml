@@ -391,4 +391,10 @@ nb:
       page_gap: ..
       previous_label: Forrige
   will_not_attend: "Jeg kommer ikke"
+  read_more: "Les mer"
+  participants: "påmeldte"
+  confirmed: "bekreftet"
+  you_are: "Du er"
+  attending: "påmeldt"
+  will_you_attend: "Kommer du?"
 

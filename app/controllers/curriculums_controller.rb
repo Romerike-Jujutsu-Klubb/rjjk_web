@@ -2,8 +2,18 @@
 
 class CurriculumsController < ApplicationController
   before_action :authenticate_user
+  before_action :admin_required, except: %i[show]
+  before_action :set_curriculum, only: %i[show edit update destroy]
 
   def index
+    if admin?
+      @curriculums = CurriculumGroup.all
+    else
+      redirect_to CurriculumGroup.first
+    end
+  end
+
+  def show
     next_rank = current_user.member.next_rank
     @ranks = Rank.kwr
         .where('curriculum_groups.position < ?', next_rank.curriculum_group.position)
@@ -30,9 +40,47 @@ class CurriculumsController < ApplicationController
         type: 'text/pdf', filename: filename, disposition: 'attachment'
   end
 
-  def pdf
-    @rank = Rank.find(params[:id])
-    filename = "Pensum_#{@rank.name}.pdf"
-    send_data CurriculumBook.pdf(@rank), type: 'text/pdf', filename: filename, disposition: 'attachment'
+  def new
+    @curriculum = CurriculumGroup.new
+  end
+
+  def edit; end
+
+  def create
+    @curriculum = CurriculumGroup.new(curriculum_params)
+    if @curriculum.save
+      redirect_to @curriculum, notice: 'Curriculum was successfully created.'
+    else
+      render :new
+    end
+  end
+
+  def update
+    if @curriculum.update(curriculum_params)
+      redirect_to @curriculum, notice: 'Curriculum was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    if @curriculum.destroy
+      flash.notice = 'Curriculum was successfully destroyed.'
+    else
+      flash.alert = "Kunne ikke slette pensumgruppen: #{@curriculum.errors.full_messages}"
+    end
+    redirect_to curriculums_url
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_curriculum
+    @curriculum = CurriculumGroup.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def curriculum_params
+    params.require(:curriculum).permit(:name, :martial_art_id, :position, :from_age, :to_age, :color)
   end
 end

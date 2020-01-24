@@ -138,7 +138,7 @@ class EventsController < ApplicationController
         )
       if params[:example]
         event_invitee_message.id = -event.id
-        EventMailer.event_invitee_message(event_invitee_message).store(recipient, tag: :event_invite)
+        EventMailer.event_invitee_message(event_invitee_message).store(ei.user, tag: :event_invite)
       else
         event_invitee_message.save!
       end

@@ -12,14 +12,14 @@
         a.btn.btn-secondary.btn-sm title=t(:will_not_attend) class=('active disabled' if will_attend == false) href=polymorphic_path([:decline, event])
           i.fa.fa-thumbs-down
     - if crowd_size > 0
-      ' #{crowd_size} påmeldte.
+      ' #{crowd_size} #{t :participants}.
     - if will_attend
-      ' Du er
+      => t :you_are
       - if is_confirmed
-        ' bekreftet
-      | påmeldt.
+        => t :confirmed
+      | #{t :attending}.
     - elsif is_invited
       - if will_attend.nil?
-        | Kommer du?
+        = t :will_you_attend
       - else
         | Du kommer ikke.

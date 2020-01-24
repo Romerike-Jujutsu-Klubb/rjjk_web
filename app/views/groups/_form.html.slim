@@ -5,9 +5,7 @@
     .col-md-6
       .row
         .col = f.text_field :name
-
-        - if @group.martial_art && @group.martial_art.name != 'Kei Wa Ryu'
-          .col = f.select :martial_art_id, @martial_arts.map { |ma| [ma.name, ma.id] }
+        .col = f.select :curriculum_group_id, @curriculum_groups.map { |cg| [cg.name, cg.id] }, prompt: 'Velg pensum'
 
       .row
         .col = f.text_field :from_age

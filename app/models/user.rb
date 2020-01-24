@@ -57,6 +57,7 @@ class User < ApplicationRecord
     NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? }
     self.email = email.strip.downcase if email.present?
     self.phone = Regexp.last_match(1) if phone =~ /^\+47\s*(.*)$/
+    self.locale ||= 'nb'
   end
   after_save { @password_needs_confirmation = false }
   after_validation :crypt_password

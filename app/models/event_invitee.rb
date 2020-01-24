@@ -29,7 +29,7 @@ class EventInvitee < ApplicationRecord
   validates :email, presence: { unless: ->(ei) { ei.phone.present? } },
       format: { with: EMAIL_REGEXP, allow_nil: true }
   validates :phone, presence: { unless: ->(ei) { ei.email.present? } }
-  validates :user_id, presence: true, uniqueness: { scope: :event_id, allow_nil: true }
+  validates :user_id, uniqueness: { scope: :event_id, allow_nil: true }
   validates :will_work,
       inclusion: { in: [nil, false], if: proc { |r| r.event&.needs_helpers? && r.will_attend == false } }
 
@@ -37,7 +37,7 @@ class EventInvitee < ApplicationRecord
 
   before_validation { self.organization ||= INTERNAL_ORG if user&.member }
 
-  delegate :locale, :name, to: :user, allow_nil: true
+  delegate :address, :locale, :name, to: :user, allow_nil: true
 
   def email
     user&.contact_email
@@ -45,6 +45,10 @@ class EventInvitee < ApplicationRecord
 
   def phone
     user&.contact_phone
+  end
+
+  def invited?
+    invitation&.ready_at || confirmed? || rejected?
   end
 
   def confirmed?

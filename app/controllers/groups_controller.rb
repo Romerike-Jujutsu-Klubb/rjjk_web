@@ -36,7 +36,6 @@ class GroupsController < ApplicationController
 
   def create
     @group = Group.new(params[:group])
-    @group.martial_art_id ||= MartialArt::KWR_ID
     @group.update_prices
     if @group.save
       flash[:notice] = 'Group was successfully created.'
@@ -91,7 +90,7 @@ class GroupsController < ApplicationController
   private
 
   def load_form_data
-    @martial_arts = MartialArt.all
+    @curriculum_groups = CurriculumGroup.all
     @contracts = NkfMember.distinct.pluck(:kontraktstype).compact.sort
   end
 end

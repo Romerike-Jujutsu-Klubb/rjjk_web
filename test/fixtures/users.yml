@@ -14,6 +14,7 @@ uwe:
   security_token: 0123456789abcdef0123456789abcdef01234567
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
   verified: true
+  locale: nb
 
 lars:
   first_name: Lars
@@ -29,6 +30,7 @@ lars:
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
   birthdate: 1967-06-21
   male: true
+  locale: nb
 
 sebastian:
   first_name: Sebastian
@@ -46,6 +48,7 @@ sebastian:
   male: true
   guardian_1: lise
   guardian_2: uwe
+  locale: nb
 
 long_user:
   login: long_user
@@ -53,6 +56,7 @@ long_user:
   salt: c068e3671780f16898c0a8295ae8d82cc59713e2
   email: long_user@example.com
   verified: true
+  locale: nb
 
 deletable_user:
   first_name: Deletable
@@ -61,6 +65,7 @@ deletable_user:
   salt: c068e3671780f16898c0a8295ae8d82cc59713e2
   email: deletable_user@example.com
   verified: true
+  locale: nb
 
 deleted_user:
   first_name: Deleted
@@ -70,6 +75,7 @@ deleted_user:
   email: deleted_user@example.com
   verified: true
   deleted_at: <%=(TEST_TIME - 1.day).utc.strftime('%Y-%m-%d %H:%M:%S') %>
+  locale: nb
 
 unverified_user:
   first_name: Unverified
@@ -80,6 +86,7 @@ unverified_user:
   verified: false
   security_token: another_random_token_string
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
+  locale: nb
 
 oldie:
   first_name: Oldie
@@ -92,6 +99,7 @@ oldie:
   verified: true
   birthdate: 1970-05-17
   male: true
+  locale: nb
 
 newbie:
   first_name: Newbie
@@ -106,6 +114,7 @@ newbie:
   birthdate: 1990-05-17
   male: true
   guardian_1: neuer
+  locale: nb
 
 neuer:
   first_name: Manuel
@@ -118,6 +127,7 @@ neuer:
   verified: true
   birthdate: 1990-05-17
   male: true
+  locale: nb
 
 leftie:
   first_name: Leftie
@@ -130,6 +140,7 @@ leftie:
   verified: true
   birthdate: 1999-09-19
   male: true
+  locale: nb
 
 lise:
   first_name: Lise
@@ -141,3 +152,4 @@ lise:
   verified: true
   birthdate: 1974-05-27
   male: false
+  locale: nb

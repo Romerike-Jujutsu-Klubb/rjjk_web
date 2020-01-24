@@ -13,6 +13,12 @@ class CurriculumGroup < ApplicationRecord
 
   validates :from_age, :martial_art, :name, :to_age, presence: true
 
+  # FIXME(uwe): Remove after renaming this class to Curriculum
+  def self.model_name
+    ActiveModel::Name.new(CurriculumGroup, nil, 'Curriculum')
+  end
+  # EMXIF
+
   def full_name
     "#{"#{martial_art.name} " if martial_art_id != MartialArt::KWR_ID}#{name}"
   end
