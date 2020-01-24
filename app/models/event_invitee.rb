@@ -51,6 +51,10 @@ class EventInvitee < ApplicationRecord
     invitation&.ready_at || confirmed? || rejected?
   end
 
+  def registered?
+    will_attend && !confirmed? && !rejected?
+  end
+
   def confirmed?
     will_attend && signup_confirmation&.ready_at
   end

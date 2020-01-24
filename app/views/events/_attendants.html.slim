@@ -1,12 +1,15 @@
 ul.nav.nav-tabs.mt-3 role="tablist"
-  - confirmed = @event.event_invitees.select(&:confirmed?)
-  - invited = @event.event_invitees.reject(&:confirmed?).select(&:invitation)
-  - candidates = @event.event_invitees.reject(&:confirmed?).reject(&:invitation)
+  - candidates = @event.event_invitees - confirmed - registered - invited
   - if confirmed.any?
     li.nav-item
       a#confirmed-tab.nav-link data-toggle="tab" data-target="#confirmed" role="tab" aria-controls="confirmed" aria-selected="true"
         ' Bekreftet
-        .badge.badge-info = confirmed.size
+        .badge.badge-success = confirmed.size
+  - if registered.any?
+    li.nav-item
+      a#registered-tab.nav-link data-toggle="tab" data-target="#registered" role="tab" aria-controls="registered" aria-selected="true"
+        ' Påmeldt
+        .badge.badge-warning = registered.size
   - if invited.any?
     li.nav-item
       a#invited-tab.nav-link data-toggle="tab" data-target="#invited" role="tab" aria-controls="invited" aria-selected="false"
@@ -28,6 +31,9 @@ ul.nav.nav-tabs.mt-3 role="tablist"
   - if confirmed.any?
     #confirmed.tab-pane.fade role="tabpanel" aria-labelledby="confirmed-tab"
       = render 'attendees_table', event_invitees: confirmed
+  - if registered.any?
+    #registered.tab-pane.fade role="tabpanel" aria-labelledby="registered-tab"
+      = render 'attendees_table', event_invitees: registered
   - if invited.any?
     #invited.tab-pane.fade role="tabpanel" aria-labelledby="invited-tab"
       = render 'attendees_table', event_invitees: invited

@@ -68,6 +68,10 @@ class Event < ApplicationRecord
     invited.map(&:user)
   end
 
+  def registered
+    attending_invitees.reject(&:confirmed?).reject(&:rejected?)
+  end
+
   def confirmed
     attending_invitees.select(&:confirmed?)
   end

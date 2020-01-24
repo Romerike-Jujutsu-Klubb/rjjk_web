@@ -12,16 +12,21 @@
 ul.nav.nav-tabs
   li.nav-item: a.nav-link.active data-target="#description" data-toggle="tab" Beskrivelse
   li.nav-item: a.nav-link data-target="#invitees" data-toggle="tab"
+    - confirmed = @event.event_invitees.select(&:confirmed?)
+    - registered = @event.event_invitees.select(&:registered?)
+    - invited = @event.event_invitees.reject(&:confirmed?).select(&:invitation)
     | Deltagere
     - if @event.event_invitees.any?
-      .badge.badge-success< => @event.confirmed.size
-      .badge.badge-info< = @event.invited.size
+      .badge.badge-success< => confirmed.size
+      - if registered.any?
+        .badge.badge-warning< => registered.size
+      .badge.badge-info< = invited.size
   li.nav-item: a.nav-link data-target="#messages" data-toggle="tab" Meldinger
 
 .tab-content
   #description.tab-pane.active
     = render 'form'
   #invitees.tab-pane
-    = render 'attendants'
+    = render 'attendants', confirmed: confirmed, registered: registered, invited: invited
   #messages.tab-pane
     = render 'messages'
