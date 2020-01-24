@@ -10,7 +10,7 @@ class CurriculumBook < Prawn::Document
 
   def self.pdf(rank)
     new page_size: 'A4', page_layout: :portrait, margin: 0.5.cm do
-      page_width = PDF::Core::PageGeometry::SIZES['A4'][1] - 1.cm
+      @page_width = PDF::Core::PageGeometry::SIZES['A4'][1] - 1.cm
       # page_height = PDF::Core::PageGeometry::SIZES['A4'][0] - 1.cm
 
       # Table of contents
@@ -51,19 +51,7 @@ class CurriculumBook < Prawn::Document
           text ta.name, size: 24
           ta.application_image_sequences.each do |ais|
             text ais.title, size: 18 if ais.title
-            ais.application_steps[0..2].each do |as|
-              move_down 0.5.cm
-              left_content =
-                  if as.image
-                    { image: as.image.content_data_io, width: page_width * 0.35,
-                      fit: [page_width * 0.33, page_width * 0.45] }
-                  else
-                    { content: '', width: page_width * 0.34 }
-                  end
-              table([[
-                left_content, { content: as.description, width: page_width * 0.34 }
-              ]], cell_style: { border_width: 0 })
-            end
+            ais.application_steps[0..2].each { |as| write_application_step(as) }
           end
         end
       end
@@ -72,15 +60,21 @@ class CurriculumBook < Prawn::Document
 
   private
 
-  def write_censor(sensor, offset, signature_offset = 0)
-    return unless sensor
-
-    text_box sensor[:title], at: [CENSOR_TITLE_X, SENSOR_Y - offset], size: 18, align: :left
-    if sensor[:signature]
-      image StringIO.new(sensor[:signature]),
-          fit: SIGNATURE_DIMENSIONS, at: [CENSOR_NAME_X, SENSOR_Y + 18 - offset - signature_offset]
-    else
-      text_box sensor[:name], at: [CENSOR_NAME_X, SENSOR_Y - offset], size: 18, align: :left
-    end
+  def write_application_step(as)
+    move_down 0.5.cm
+    left_content =
+        if as.image
+          if as.image.content_type == 'image/gif'
+            { content: 'GIF not supported.', width: @page_width * 0.34 }
+          else
+            { image: as.image.content_data_io, width: @page_width * 0.35,
+              fit: [@page_width * 0.33, @page_width * 0.45] }
+          end
+        else
+          { content: '', width: @page_width * 0.34 }
+        end
+    table([[
+      left_content, { content: as.description, width: @page_width * 0.34 }
+    ]], cell_style: { border_width: 0 })
   end
 end

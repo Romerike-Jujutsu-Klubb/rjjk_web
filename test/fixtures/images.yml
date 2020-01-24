@@ -37,7 +37,7 @@ application_step_two:
   approved: true
 application_step_kneeing:
   name: Step 3
-  content_type: image/jpeg
+  content_type: image/gif
   content_data: !binary |
     R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
   md5_checksum: application_step_kneeing
