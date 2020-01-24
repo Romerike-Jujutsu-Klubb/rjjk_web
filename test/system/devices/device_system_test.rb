@@ -128,6 +128,8 @@ module DeviceSystemTest
     screenshot :index, area_size_limit: 533, skip_area: [MENU_BTN_AREA, progress_bar_area]
     find('.fa-chevron-down').click
     find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
+    scroll_position = evaluate_script('$(window).height()')
+    with_retries { assert_equal scroll_position, evaluate_script('window.scrollY') }
     screenshot :scrolled, skip_area: scroll_bar_area
     assert_equal information_page_url(id(:first)),
         find('#footer .menu-item a', text: 'MY FIRST ARTICLE')[:href]

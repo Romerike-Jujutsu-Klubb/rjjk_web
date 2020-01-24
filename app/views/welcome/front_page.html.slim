@@ -193,13 +193,6 @@ section#cinematic-title-wrapper.txtshadow.empty
       .cinematic-left.cinematic-navbutton: i.fa.fa-chevron-left.fa-3x
       .cinematic-right.cinematic-navbutton: i.fa.fa-chevron-right.fa-3x
       .cinematic-down.cinematic-navbutton: i.fa.fa-chevron-down.fa-3x
-      javascript:
-        $(".fa-chevron-down").on('click', function(e) {
-          e.stopPropagation();
-          $([document.documentElement, document.body]).animate({
-            scrollTop: $("#maincontent").offset().top
-          }, 700, "swing");
-        });
 
 section#home.pagestart
 
