@@ -21,10 +21,11 @@
     ' eller
     fieldset title="Kontaktinformasjon"
       legend Kontaktinformasjon
-      = f.text_field :name
-      = f.text_area :address, rows: 4, cols: 64
-      = f.text_field :email
-      = f.text_field :phone
+      = f.fields_for :user do |uf|
+        = uf.text_field :name
+        = uf.text_area :address, rows: 4, cols: 64
+        = uf.text_field :email
+        = uf.text_field :phone
   - else
     / .text-danger = error_messages_for :event_invitee, header_message: nil, message: nil
   - unless @event_invitee.user&.member?
