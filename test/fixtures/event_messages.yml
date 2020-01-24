@@ -1,6 +1,6 @@
 one:
   event: one
-  message_type: Event message one type
+  message_type: REMINDER
   subject: Event message one subject
   body: Event message one body
   ready_at: 2012-09-27 18:31:58
