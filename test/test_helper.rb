@@ -5,10 +5,10 @@ Warning[:deprecated] = false
 # require 'coveralls'
 # Coveralls.wear!
 
-#if defined?(Rake) && (RUBY_ENGINE != 'jruby' || org.jruby.RubyInstanceConfig.FULL_TRACE_ENABLED)
+if defined?(Rake) && (RUBY_ENGINE != 'jruby' || org.jruby.RubyInstanceConfig.FULL_TRACE_ENABLED)
   require 'simplecov'
   SimpleCov.start('rails') { minimum_coverage 86 }
-#end
+end
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
