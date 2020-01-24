@@ -2,7 +2,7 @@
 - invite_date = [@graduation.held_on - GraduationReminder::GRADUATES_INVITATION_LIMIT, *@graduation.censors.map(&:locked_at).compact.map(&:to_date)].max
 
 .btn-toolbar.float-right
-  - if @graduation.graduates.empty?
+  - if @graduation.graduates.none?{|g| g.passed != false}
     = link_to @graduation, method: :delete, class: 'btn btn-danger'
       span.fa.fa-trash> data-toggle="tooltip" title='Slett'
       | Slett
