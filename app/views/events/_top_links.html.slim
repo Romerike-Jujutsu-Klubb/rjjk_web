@@ -1,6 +1,6 @@
 .float-right.mb-3.d-print-none
   - if event.upcoming?
-    - if (event_invitee = event.event_invitees.find { |ei| ei.user_id == current_user.id })
+    - if (event_invitee = event.event_invitees.find { |ei| ei.user_id == current_user&.id })
       a.btn.btn-info href=event_registration_path(event_invitee.id) = t :registration
     - else
       a.btn.btn-info href=event_registration_link(event) target=(:_blank if event.registration_url) = t :registration
