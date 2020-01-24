@@ -60,21 +60,21 @@ class CurriculumBook < Prawn::Document
 
   private
 
-  def write_application_step(as)
+  def write_application_step(application_step)
     move_down 0.5.cm
     left_content =
-        if as.image
-          if as.image.content_type == 'image/gif'
+        if application_step.image
+          if application_step.image.content_type == 'image/gif'
             { content: 'GIF not supported.', width: @page_width * 0.34 }
           else
-            { image: as.image.content_data_io, width: @page_width * 0.35,
+            { image: application_step.image.content_data_io, width: @page_width * 0.35,
               fit: [@page_width * 0.33, @page_width * 0.45] }
           end
         else
           { content: '', width: @page_width * 0.34 }
         end
     table([[
-      left_content, { content: as.description, width: @page_width * 0.34 }
+      left_content, { content: application_step.description, width: @page_width * 0.34 }
     ]], cell_style: { border_width: 0 })
   end
 end
