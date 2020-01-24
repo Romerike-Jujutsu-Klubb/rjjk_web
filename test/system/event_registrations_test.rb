@@ -17,7 +17,7 @@ class EventRegistrationsTest < ApplicationSystemTestCase
     screenshot :index
 
     first('a', text: 'Påmelding').click
-    assert_selector 'h1', text: 'Påmelding til THE EVENT'
+    assert_selector 'h1', text: 'Påmelding til ARRANGEMENTET'
     screenshot :form
 
     fill_in 'event_invitee[user_attributes][name]', with: 'Hans Eriksen'
@@ -27,14 +27,14 @@ class EventRegistrationsTest < ApplicationSystemTestCase
     screenshot :filled_form
 
     click_on 'Registrer'
-    assert_selector 'h1', text: 'Påmelding til THE EVENT'
+    assert_selector 'h1', text: 'Påmelding til ARRANGEMENTET'
     screenshot :options
   end
 
   test 'registering for THE EVENT with bad email' do
     screenshot_group :bad_email
     visit new_event_registration_url params: { event_invitee: { event_id: id(:one) } }
-    assert_selector 'h1', text: 'Påmelding til THE EVENT'
+    assert_selector 'h1', text: 'Påmelding til ARRANGEMENTET'
     screenshot :form
 
     fill_in 'event_invitee[user_attributes][name]', with: 'Hans Eriksen'
@@ -44,7 +44,7 @@ class EventRegistrationsTest < ApplicationSystemTestCase
     screenshot :filled_form
 
     click_on 'Registrer'
-    assert_selector 'h1', text: 'Påmelding til THE EVENT'
+    assert_selector 'h1', text: 'Påmelding til ARRANGEMENTET'
     assert_selector '#event_invitee_user_attributes_email + .invalid-feedback', text: 'er ugyldig'
     screenshot :error_message
   end

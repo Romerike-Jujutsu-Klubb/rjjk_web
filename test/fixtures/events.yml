@@ -4,6 +4,15 @@ one:
   start_at: <%=Time.zone.parse('2017-08-19 13:37').utc.to_s(:db)%>
   created_at: '2013-08-19 13:37'
   description: |
+    Dette er tidenes arrangementsingress.
+
+    Dette er den lange beskrivelsen.  Den har mye tekst.  Lorem ipsum etc.
+
+    Dette er den lange beskrivelsen.  Den har mye tekst.  Lorem ipsum etc.
+
+    Dette er den lange beskrivelsen.  Den har mye tekst.  Lorem ipsum etc.
+
+  description_en: |
     This is the teaser event of a lifetime.
 
     This is the long explanation.  It has a lot of text.  Lorem ipsum etc.

@@ -11,7 +11,7 @@ class EventsTest < ApplicationSystemTestCase
     visit events_url
     assert_selector 'h1', text: 'Arrangement'
     screenshot :index
-    click_on 'THE EVENT', match: :first
+    click_on 'ARRANGEMENTET', match: :first
     screenshot :description
     click_on 'Lagre'
     screenshot :saved

@@ -8,7 +8,7 @@ class FrontPageSystemTest < ApplicationSystemTestCase
   test 'front' do
     screenshot_group :front
     visit root_path
-    assert_selector 'h5', text: 'THE EVENT'
+    assert_selector 'h5', text: 'ARRANGEMENTET'
     assert_selector 'h2', text: 'Section 1'
     screenshot :index, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
   end
