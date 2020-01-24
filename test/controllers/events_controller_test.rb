@@ -28,6 +28,12 @@ class EventsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'should show event anonymously' do
+    logout
+    get :show, params: { id: id(:one) }
+    assert_response :success
+  end
+
   test 'should get event preview' do
     get :preview, params: { id: id(:one) }
     assert_response :success
