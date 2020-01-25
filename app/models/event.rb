@@ -103,7 +103,7 @@ class Event < ApplicationRecord
   end
 
   def localized_name
-    (I18n.locale == :nb ? name : name_en) || name
+    (I18n.locale == :nb ? name : name_en).presence || name.presence || name_en.presence || 'Arrangement'
   end
 
   def body

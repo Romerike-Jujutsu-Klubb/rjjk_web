@@ -4,7 +4,7 @@
 
 h1 = @title
 
-= render 'time_label'm label: @event
+= render 'time_label', event: @event
 
 - body = textalize(I18n.locale != :nb ? @event.description_en : @event.description)
 - if @event_invitee
