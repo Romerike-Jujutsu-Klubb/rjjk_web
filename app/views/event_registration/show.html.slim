@@ -1,8 +1,8 @@
-h1 Påmelding til #{@event_invitee.event.name}
-h2 for #{@event_invitee.name}
+h1 #{t :registration_for} #{@event_invitee.event.title} for #{@event_invitee.name}
+= render 'events/time_label', event: @event_invitee.event
 
 - unless current_user || @event_invitee.user&.verified?
-  .alert.alert-warning Du har ikke bekreftet påmeldingen enda.
+  .alert.alert-warning = t :unconfirmed_event_registration
 
 - if @event_invitee.confirmed?
   .alert.alert-success.mt-5
@@ -12,7 +12,7 @@ h2 for #{@event_invitee.name}
     .col.text-center.p-5
       - if @event_invitee.will_attend
         .alert.alert-success.m-0
-          h3 Du er påmeldt.
+          h3 = t :you_are_registered
       - elsif current_user
         = link_to 'Jeg kommer!', accept_event_registration_path(@event_invitee), class: 'btn btn-success'
     .col.text-center.p-5
@@ -42,5 +42,5 @@ h2 for #{@event_invitee.name}
 - if @event_invitee.will_attend && (!@event_invitee.user&.member || !@event_invitee.will_work.nil? )
   .text-center
     a.btn.btn-info.btn-lg href=event_path(@event_invitee.event.id)
-      ' Gå til informasjonssiden
+      => t :go_to_info_page
       i.fa.fa-angle-double-right

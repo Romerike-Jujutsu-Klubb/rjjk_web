@@ -52,6 +52,7 @@ class EventRegistrationController < ApplicationController
         unless current_user
           EventMailer.registration_confirmation(@event_invitee)
               .store(@event_invitee.user, tag: :event_registration_user)
+          flash.notice = t :event_registration_confirmation_email_sent
         end
         redirect_to event_registration_path(@event_invitee.id)
       else

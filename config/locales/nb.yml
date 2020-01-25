@@ -397,4 +397,10 @@ nb:
   you_are: "Du er"
   attending: "påmeldt"
   will_you_attend: "Kommer du?"
+  registration_for: "Påmelding til"
+  and_or: "og / eller"
+  event_registration_confirmation_email_sent: "Du vil motta en e-post med en lenke for å bekrewfte påmeldingen."
+  unconfirmed_event_registration: "Du har ikke bekreftet påmeldingen enda."
+  you_are_registered: "Du er påmeldt."
+  go_to_info_page: "Gå til informasjonssiden"
 
