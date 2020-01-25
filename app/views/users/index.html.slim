@@ -5,14 +5,16 @@
 h1 Brukere
 
 table.table.table-sm data-record-path=users_path
-  tr
-    th = t :user_last_name_form
-    th = t :user_first_name_form
-    th align="center" Admin
-    th align="center" Bekreftet
-  - for user in @users
-    tr data-record-id=user.id
-      td = user.last_name || user.member&.last_name || user.email || user.phone
-      td = user.first_name || user.member&.first_name
-      td align="center" =('*' if user.admin?)
-      td align="center" =('*' if user.verified?)
+  thead
+    tr
+      th = t :user_last_name_form
+      th = t :user_first_name_form
+      th align="center" Admin
+      th align="center" Bekreftet
+  tbody
+    - for user in @users
+      tr data-record-id=user.id
+        td = user.last_name || user.email || user.phone
+        td = user.first_name || user.member&.first_name
+        td align="center" =('*' if user.admin?)
+        td align="center" =('*' if user.verified?)

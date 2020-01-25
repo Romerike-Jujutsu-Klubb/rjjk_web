@@ -6,14 +6,16 @@
   ul
     li = ei.email
     - if ei.invitation
-      li Invited
+      li Invitert
     - if ei.will_attend?
-      li Attended
+      li Påmeldt
     - elsif ei.will_attend == false
-      li Declined
+      li Avslo
+    - else
+      li Søkte aldri
     - if ei.will_work?
-      li Worked
+      li Arbeidet
     - if ei.confirmed?
-      li Confirmed
+      li Bekreftet
     - if ei.rejected?
-      li Rejected
+      li Avslått
