@@ -18,7 +18,7 @@ h1 #{t :registration_for} #{@event_invitee.event&.title}
     .alert.alert-success.text-center.mt-5
       h3.m-0 = t(:registration_request)
   - else
-    .mt-5
+    .mt-3
       = f.fields_for :user do |uf|
         = uf.text_field :name, required: true
         .row
