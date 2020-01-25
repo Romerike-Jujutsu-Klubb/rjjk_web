@@ -63,6 +63,11 @@ class EventsControllerTest < ActionController::TestCase
     get :calendar
   end
 
+  test 'invite example' do
+    login
+    post :invite, params: { id: id(:one), example: '' }
+  end
+
   def test_accept
     login :oldie
     patch :accept, params: { id: id(:one) }

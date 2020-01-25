@@ -119,7 +119,8 @@ class EventsController < ApplicationController
     event = Event.find(params[:id])
     if params[:example]
       event_invitee = event.event_invitees.for_user(current_user.id)&.first ||
-          EventInvitee.new(event: event, name: current_user.name, email: current_user.email)
+          EventInvitee.new(event: event, user: current_user)
+      event_invitee.id = -event.id
       recipients = [event_invitee]
     elsif params[:recipients] == 'members'
       recipients = Group.all.to_a.map { |g| g.members.active(event.start_at.to_date) }

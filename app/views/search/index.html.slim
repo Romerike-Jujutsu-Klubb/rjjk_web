@@ -1,7 +1,7 @@
 h1.mb-4 Søkeresultat for "#{@query}"
 
 - if @query
-  - if [@members, @former_members, @trials, @users, @pages, @news, @images, @user_messages, @basic_techniques, @technique_applications].any?(&:present?)
+  - if [@members, @former_members, @trials, @users, @pages, @news, @events, @images, @user_messages, @basic_techniques, @technique_applications].any?(&:present?)
     .row
       = render 'members', members: @members, title: 'Medlemmer'
       = render 'members', members: @former_members, title: 'Tidligere Medlemmer'
@@ -23,6 +23,15 @@ h1.mb-4 Søkeresultat for "#{@query}"
           h3.card-header Nyheter
           .card-body style="overflow-y:auto"
             - @news.each do |year, items|
+              h4 = year
+              ul.pl-3
+                - items.each do |p|
+                  li = link_to p.title, p
+      - if @events.present?
+        .col.mb-4: .card.h-100 style="max-height:50vh"
+          h3.card-header Arrangement
+          .card-body style="overflow-y:auto"
+            - @events.each do |year, items|
               h4 = year
               ul.pl-3
                 - items.each do |p|

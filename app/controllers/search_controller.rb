@@ -14,13 +14,17 @@ class SearchController < ApplicationController
 
     query = "%#{UnicodeUtils.upcase(@query).gsub(/(_|%)/, '\\\\\\1')}%"
     @pages = InformationPage
-        .where('UPPER(title) LIKE :query OR UPPER(body) LIKE :query', query: query).order(:title).to_a
+        .where('title ILIKE :query OR body ILIKE :query', query: query).order(:title).to_a
     news_items = NewsItem
-        .where('UPPER(title) LIKE :query OR UPPER(summary) LIKE :query OR UPPER(body) LIKE :query',
-            query: query)
+        .where('title ILIKE :query OR summary ILIKE :query OR UPPER(body) LIKE :query', query: query)
         .order(created_at: :desc)
         .to_a
     @news = news_items.group_by { |n| n.created_at.year }
+    @events = Event
+        .where(%i[name name_en description description_en].map { |f| "#{f} ILIKE :query" }.join(' OR '),
+            query: query)
+        .order(start_at: :desc)
+        .group_by { |e| e.start_at.year }
     @images = Image.where('UPPER(name) LIKE :query', query: query).order(:name).to_a
     @basic_techniques = BasicTechnique.where('UPPER(name) LIKE :query', query: query).order(:name).to_a
     @technique_applications =
