@@ -41,7 +41,7 @@
         .col-sm-6
           .card
             .card-header Description
-            .card-body.p-0 = f.text_area :description_en, class: 'expanding', rows: 4, style: 'max-height:50vh', wrapper: false
+            .card-body.p-0 = f.text_area :description_en, class: 'expanding', rows: 4, style: 'max-height:50vh', wrapper: false, value: kramdown(@event.description_en)
         .col-sm-6
           .card
             .card-header Preview
