@@ -1,4 +1,6 @@
 en:
+  attributes:
+    name: Name
   activerecord:
     attributes:
       news_item:

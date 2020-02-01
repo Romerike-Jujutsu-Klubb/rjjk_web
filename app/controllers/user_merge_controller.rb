@@ -49,9 +49,10 @@ class UserMergeController < ApplicationController
       redirect_to @user
     end
   rescue => e
+    logger.error e.backtrace.join("\n")
     flash.now.alert = 'En feil oppsto ved lagring av brukeren:' \
-        " #{e} #{@user.errors.full_messages.join("\n")}" \
-        " #{e} #{@other_user.errors.full_messages.join("\n")}"
+        " #{e}<br/>#{@user.errors.full_messages.join("\n").inspect}" \
+        " #{@other_user.errors.full_messages.join("\n").inspect}"
     show
   end
 end

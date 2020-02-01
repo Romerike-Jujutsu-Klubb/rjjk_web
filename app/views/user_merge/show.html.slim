@@ -24,7 +24,7 @@ h1 Slå sammen to personer
         tbody
           - @user.attributes.except('id', 'created_at', 'deleted_at', 'gmaps', 'salt', 'salted_password', 'security_token', 'token_expiry', 'updated_at', 'verified').sort.each do |attr, value|
             tr
-              th.align-middle.text-right = t(:activerecord)[:attributes][:user][attr.to_sym] || attr
+              th.align-middle.text-right = t(:activerecord).dig(:attributes,:user,attr.to_sym) || t(:attributes)[attr.to_sym] || attr
               td.align-middle.text-right
                 - if @other_user.nil? || value != @other_user[attr]
                   = value
