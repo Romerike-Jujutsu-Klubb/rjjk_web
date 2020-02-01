@@ -33,7 +33,8 @@ class EventRegistrationController < ApplicationController
 
       if current_user
         @event_invitee.user_id = current_user.id
-      elsif @event_invitee.email.present? && (user = User.find_by(email: @event_invitee.email.strip))
+      elsif @event_invitee.email.present? &&
+            (user = User.find_by('email ILIKE ?', @event_invitee.email.strip))
         @event_invitee.user_id = user.id
       elsif @event_invitee.phone.present? &&
             (user = User.find_by(phone: @event_invitee.phone.strip.delete_prefix('+47')))
