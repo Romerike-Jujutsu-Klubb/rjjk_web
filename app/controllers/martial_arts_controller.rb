@@ -26,13 +26,17 @@ class MartialArtsController < ApplicationController
     end
   end
 
+  LIST_CLASSES = [ApplicationImageSequence, ApplicationStep, BasicTechniqueLink, CurriculumGroup,
+                  FrontPageSection, InformationPage, Rank, Role, Survey, SurveyQuestion,
+                  TechniqueApplication].freeze
+
   def copy
     original_martial_art = MartialArt.find(params[:id])
-    CurriculumGroup .acts_as_list_no_update([ApplicationImageSequence, ApplicationStep, BasicTechniqueLink, CurriculumGroup, FrontPageSection, InformationPage, Rank, Role, Survey, SurveyQuestion, TechniqueApplication]) do
+    CurriculumGroup .acts_as_list_no_update(LIST_CLASSES) do
       martial_art = original_martial_art.deep_clone include: {
-          curriculum_groups: { ranks: [:basic_techniques, {
-              technique_applications: [{ application_image_sequences: :application_steps }, :application_videos],
-          }] },
+        curriculum_groups: { ranks: [:basic_techniques, { technique_applications: [
+          { application_image_sequences: :application_steps }, :application_videos
+        ] }] },
       }, validate: false do |original, copy|
         copy.name = "#{original.name} #{Date.current.strftime('%F %R')}" if copy.is_a?(MartialArt)
         raise "Invalid original: #{original.inspect}\n#{original.errors.full_messages}" if original.invalid?
