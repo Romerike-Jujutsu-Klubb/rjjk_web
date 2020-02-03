@@ -4,7 +4,7 @@ class ApplicationStep < ApplicationRecord
   acts_as_list scope: :application_image_sequence_id
 
   belongs_to :application_image_sequence
-  belongs_to :image
+  belongs_to :image, optional: true
 
   has_one :technique_application, through: :application_image_sequence
 

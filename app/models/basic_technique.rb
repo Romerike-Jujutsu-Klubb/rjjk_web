@@ -5,7 +5,7 @@ class BasicTechnique < ApplicationRecord
   belongs_to :waza
   has_many :basic_technique_links, dependent: :destroy
 
-  before_validation { description.strip! }
+  before_validation { description&.strip! }
 
   validates :name, :waza_id, presence: true
   validate do

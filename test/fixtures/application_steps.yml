@@ -10,6 +10,16 @@ two:
   description: Step two
   image: application_step_two
 
+text_step:
+  application_image_sequence: defence_against_dual_hair_grip_with_kneeing
+  position: 2
+  description: Run away!
+
+third_step:
+  application_image_sequence: defence_against_dual_hair_grip_with_kneeing
+  position: 3
+  description: Well, this went sideways...
+
 defence_against_dual_hair_grip_with_kneeing_step_1:
   application_image_sequence: defence_against_dual_hair_grip_with_kneeing
   position: 1
