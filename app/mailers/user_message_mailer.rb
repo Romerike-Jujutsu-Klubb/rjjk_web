@@ -22,7 +22,7 @@ class UserMessageMailer < ApplicationMailer
       modify_links(plain_body, url_key)
     end
 
-    mail from: um.from, to: safe_email(um.user), subject: rjjk_prefix(um.subject) do |format|
+    mail from: um.from, to: safe_email(um.to), subject: rjjk_prefix(um.subject) do |format|
       if html_body
         format.html do
           render html: html_body.html_safe, layout: 'email' # rubocop: disable Rails/OutputSafety

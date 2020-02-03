@@ -11,12 +11,9 @@ module MailerHelper
     "[RJJK]#{"[#{Rails.env.upcase}]" unless Rails.env.production?} #{subject}".strip
   end
 
-  def safe_email(member_or_user)
-    if Rails.env.production?
-      member_or_user.emails
-    else
-      %("#{member_or_user.emails[0]}" <uwe@kubosch.no>)
-    end
+  def safe_email(recipient)
+    emails = recipient.respond_to?(:emails) ? recipient.emails : recipient
+    Rails.env.production? ? emails : %("#{emails[0]}" <uwe@kubosch.no>)
   end
 
   def noreply_address
