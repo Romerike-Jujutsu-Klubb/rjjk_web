@@ -1,58 +1,60 @@
 # frozen_string_literal: true
 
-require 'controller_test'
+require 'integration_test'
 
-class LoginControllerTest < ActionController::TestCase
+class LoginControllerTest < IntegrationTest
   include ActionMailer::TestCase::ClearTestDeliveries
-  def test_login__valid_login__redirects_as_specified
-    add_stored_detour controller: :welcome, action: :index
-    post :login_with_password, params: { user: { login: 'lars', password: 'atest' } }
+  def test_login_valid_login_redirects_as_specified
+    get root_path # build session
+    session[:detours] = [{ controller: :welcome, action: :index }]
+    post login_password_path, params: { user: { login: 'lars', password: 'atest' } }
     assert_logged_in users(:lars)
     assert_response :redirect
     assert_redirected_to controller: :welcome, action: :index
   end
 
   def test_login_with_remember_me
-    post :login_with_password, params: { user: { login: 'lars', password: 'atest' }, remember_me: '1' }
+    post login_password_path, params: { user: { login: 'lars', password: 'atest' }, remember_me: '1' }
 
     assert_logged_in users(:lars)
     assert_response :redirect
     assert_redirected_to controller: :welcome, action: :index
     assert cookies[COOKIE_NAME]
-    assert_equal users(:lars).security_token, cookies.encrypted[COOKIE_NAME]
     assert_equal false, users(:lars).token_expired?
     assert_not_equal 'random_token_string', users(:lars).security_token
   end
 
   def test_autologin_with_token
-    cookies.encrypted[COOKIE_NAME] = id(:lars)
-    get :welcome
+    login(:lars)
+    session['user_id'] = ''
+
+    get login_welcome_path
     assert_response :ok
-    assert_logged_in users(:lars)
+    assert_logged_in :lars
   end
 
-  def test_login__valid_login__shows_welcome_as_default
-    post :login_with_password, params: { user: { login: 'lars', password: 'atest' } }
+  def test_login_valid_login_shows_welcome_as_default
+    post login_password_path user: { login: 'lars', password: 'atest' }
     assert_logged_in users(:lars)
     assert_response :redirect
     assert_equal @controller.url_for(controller: :welcome, action: :index, only_path: false),
         @response.redirect_url
   end
 
-  def test_login__wrong_password
-    post :login_with_password, params: { user: { login: 'lars', password: 'wrong password' } }
+  def test_login_wrong_password
+    post login_password_path, params: { user: { login: 'lars', password: 'wrong password' } }
     assert_not_logged_in
     assert_contains 'Innlogging feilet.', flash.notice
   end
 
-  def test_login__wrong_login
-    post :login_with_password, params: { user: { login: 'wrong login', password: 'atest' } }
+  def test_login_wrong_login
+    post login_password_path, params: { user: { login: 'wrong login', password: 'atest' } }
     assert_not_logged_in
     assert_contains 'Innlogging feilet.', flash.notice
   end
 
-  def test_login__deleted_user_cant_login
-    post :login_with_password, params: { user: { login: 'deleted_tesla', password: 'atest' } }
+  def test_login_deleted_user_cant_login
+    post login_password_path, params: { user: { login: 'deleted_tesla', password: 'atest' } }
     assert_not_logged_in
     assert_contains 'Innlogging feilet.', flash.notice
   end
@@ -76,7 +78,7 @@ class LoginControllerTest < ActionController::TestCase
     assert_not user.verified
   end
 
-  def test_signup__cannot_set_arbitrary_attributes
+  def test_signup_cannot_set_arbitrary_attributes
     post_signup login: 'newuser',
                 password: 'password', password_confirmation: 'password',
                 email: 'skunk@example.com',
@@ -87,60 +89,78 @@ class LoginControllerTest < ActionController::TestCase
     assert_nil user.role
   end
 
-  def test_signup__validates_password_min_length
+  def test_signup_validates_password_min_length
     post_signup login: 'tesla_rhea', password: 'bad', password_confirmation: 'bad',
                 email: 'someone@example.com'
     assert_password_validation_fails
   end
 
-  def test_signup__mismatched_passwords
-    post :signup, params: { user: {
+  def test_signup_mismatched_passwords
+    post login_signup_path, params: { user: {
       login: 'newtesla', email: 'newtesla@example.com', password: 'newpassword', password_confirmation: 'wrong'
     } }
     assert_response :success
   end
 
-  def test_signup__bad_login
+  def test_signup_bad_login
     post_signup login: 'yo', email: 'yo@example.com', password: 'newpassword', password_confirmation: 'newpassword'
     assert_response :success
   end
 
   def test_welcome
     user = users(:unverified_user)
-    get :welcome, params: { user: { id: user.id }, key: user.security_token }
+    get login_welcome_path, params: { user: { id: user.id }, key: user.security_token }
     user.reload
     assert user.verified
     assert_logged_in(user)
   end
 
-  def test_welcome__fails_if_expired_token
+  def test_welcome_fails_if_expired_token
     user = users(:unverified_user)
     Timecop.freeze(Time.current + User.token_lifetime) do # now past verification deadline
-      get :welcome, params: { user: { id: user.id }, key: user.security_token }
+      get login_welcome_path, params: { user: { id: user.id }, key: user.security_token }
       user.reload
       assert_not user.verified
       assert_not_logged_in
     end
   end
 
-  def test_welcome__fails_if_bad_token
+  def test_welcome_fails_if_bad_token
     user = users(:unverified_user)
-    get :welcome, params: { user: { id: user.id }, key: 'boguskey' }
+    get login_welcome_path, params: { user: { id: user.id }, key: 'boguskey' }
+    assert_redirected_to_login
     user.reload
     assert_not user.verified
     assert_not_logged_in
   end
 
-  # def test_edit
-  #   tesla = login(:uwe)
-  #   post :update, params:{user: { first_name: 'Bob', form: 'edit' }}
-  #   tesla.reload
-  #   assert_equal 'Bob', tesla.first_name
-  # end
+  def test_send_login_link
+    user = users(:unverified_user)
+    user.update! security_token: nil
+    sms_key = nil
+    stub_request(:post, 'https://example.com/sms/send/mt')
+        .with { |request| sms_key = request.body[/(?<=text=http%3A%2F%2Fwww.example.com%2F%3Fkey%3D).*/] }
+        .to_return(status: 200, body: '', headers: {})
+
+    post send_login_link_path, params: { user: { identity: user.phone } }
+
+    assert_redirected_to login_link_message_sent_path(identity: user.phone)
+    assert_equal sms_key, user.reload.security_token
+
+    follow_redirect!
+    assert_equal sms_key, user.reload.security_token
+
+    get root_path(key: sms_key)
+    assert_response :success
+
+    user.reload
+    assert user.verified
+    assert_logged_in(:unverified_user)
+  end
 
   def test_change_password
     user = login(:lars)
-    post :change_password, params: { user: {
+    post change_password_path, params: { user: {
       password: 'changed_password', password_onfirmation: 'changed_password'
     } }
     UserMessageSenderJob.perform_now
@@ -152,7 +172,7 @@ class LoginControllerTest < ActionController::TestCase
 
   def test_change_password__confirms_password
     login(:lars)
-    post :change_password, params: { user: { password: 'bad', password_confirmation: 'bad' } }
+    post change_password_path, params: { user: { password: 'bad', password_confirmation: 'bad' } }
     assert_response :success
     UserMessageSenderJob.perform_now
     assert_equal 1, Mail::TestMailer.deliveries.size
@@ -160,7 +180,7 @@ class LoginControllerTest < ActionController::TestCase
 
   def test_forgot_password__when_logged_in_redirects_to_change_password
     user = login(:lars)
-    post :forgot_password, params: { user: { email: user.email } }
+    post forgot_password_path, params: { user: { email: user.email } }
     UserMessageSenderJob.perform_now
     assert_equal 0, Mail::TestMailer.deliveries.size
     assert_response :redirect
@@ -168,20 +188,20 @@ class LoginControllerTest < ActionController::TestCase
   end
 
   def test_forgot_password__requires_valid_email_address
-    post :forgot_password, params: { user: { email: '' } }
+    post forgot_password_path, params: { user: { email: '' } }
     UserMessageSenderJob.perform_now
     assert_equal 0, Mail::TestMailer.deliveries.size
     assert_match(/Skriv inn en gyldig e-postadresse./, @response.body)
   end
 
   def test_forgot_password__ignores_unknown_email_address
-    post :forgot_password, params: { user: { email: 'unknown_email@example.com' } }
+    post forgot_password_path, params: { user: { email: 'unknown_email@example.com' } }
     UserMessageSenderJob.perform_now
     assert_equal 0, Mail::TestMailer.deliveries.size
   end
 
   def test_invalid_login
-    post :login_with_password, params: { user: { login: 'lars', password: 'not_correct' } }
+    post login_password_path, params: { user: { login: 'lars', password: 'not_correct' } }
     assert_not_logged_in
     assert_response :success
   end
@@ -189,10 +209,9 @@ class LoginControllerTest < ActionController::TestCase
   def test_logout
     login(:lars)
     cookies[:user_id_test] = '1'
-    assert_equal(['user_id_test'], cookies.to_h.keys)
-    get :logout
+    assert_equal(%w[_rjjk_web_test_session user_id_test], cookies.to_hash.keys)
+    get logout_path
     assert_not_logged_in
-    assert_nil cookies['user_id_test']
   end
 
   private
@@ -202,7 +221,7 @@ class LoginControllerTest < ActionController::TestCase
   end
 
   def post_signup(user_params)
-    post :signup, params: { user: user_params }
+    post login_signup_path, params: { user: user_params }
   end
 
   def assert_password_validation_fails

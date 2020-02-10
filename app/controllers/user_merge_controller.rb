@@ -29,12 +29,13 @@ class UserMergeController < ApplicationController
     @other_user = User.find(params[:other_user_id])
 
     User.transaction do
+      @user.attributes = params[:user] if params[:user]
       if @user.card_key.blank? && @other_user.card_key.present?
         @other_user.card_key.update! user_id: @user.id
       end
       RELATIONS.each do |rel|
-        fk = @other_user.class.reflections[rel.to_s].foreign_key
-        @other_user.send(rel).each { |m| m.update! fk => @user.id }
+        reflection = @other_user.class.reflections[rel.to_s]
+        @other_user.send(rel).each { |m| m.update! reflection.foreign_key => @user.id }
       end
       @other_user.reload
       @other_user.really_destroy!

@@ -9,7 +9,7 @@ class EventInvitee < ApplicationRecord
   scope :for_user, ->(user_id) { where user_id: user_id }
 
   belongs_to :event
-  belongs_to :user
+  belongs_to :user, inverse_of: :event_invitees
 
   has_one :invitation, -> do
     where("message_type = '#{EventMessage::MessageType::INVITATION}'")

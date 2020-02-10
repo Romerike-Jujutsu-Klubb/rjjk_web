@@ -11,14 +11,14 @@ class Member < ApplicationRecord
 
   has_paper_trail
 
-  belongs_to :user, -> { with_deleted }, inverse_of: :member
+  belongs_to :user, -> { with_deleted }, inverse_of: :memberships
 
-  has_one :current_election, -> { current }, class_name: :Election
-  has_one :last_member_image, -> { order :created_at }, class_name: :MemberImage
+  has_one :current_election, -> { current }, class_name: :Election, inverse_of: :member
+  has_one :last_member_image, -> { order :created_at }, class_name: :MemberImage, inverse_of: :member
   has_one :image, through: :last_member_image
   has_one :next_graduate, -> do
     includes(:graduation).where('graduations.held_on >= ?', Date.current).order('graduations.held_on')
-  end, class_name: :Graduate
+  end, class_name: :Graduate, inverse_of: :member
   has_one :nkf_member, dependent: :nullify
 
   has_many :active_group_instructors, -> { active }, class_name: :GroupInstructor, inverse_of: :member
@@ -31,9 +31,10 @@ class Member < ApplicationRecord
   has_many :group_instructors, dependent: :destroy
   has_many :group_memberships, dependent: :destroy
   has_many :member_images, dependent: :destroy
-  has_many :passed_graduates, -> { where graduates: { passed: true } }, class_name: 'Graduate'
+  has_many :passed_graduates, -> { where graduates: { passed: true } }, class_name: 'Graduate',
+      inverse_of: :member
   has_many :recent_attendances, -> { merge(Attendance.from_date(92.days.ago).to_date(31.days.from_now)) },
-      class_name: :Attendance
+      class_name: :Attendance, inverse_of: :member
   has_many :survey_requests, dependent: :destroy
 
   has_many :groups, through: :group_memberships

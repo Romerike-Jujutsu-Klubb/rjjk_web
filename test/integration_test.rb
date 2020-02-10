@@ -10,11 +10,17 @@ class IntegrationTest < ActionDispatch::IntegrationTest
 
   def login(login = :uwe)
     user = users(login)
-    post '/login/password', params: { user: { login: user.login || user.email, password: :atest } }
+    post login_password_path user: { login: user.login || user.email, password: :atest }
     user
   end
 
-  def assert_logged_in
-    cookies[COOKIE_NAME]
+  def assert_logged_in(user = :uwe)
+    user = users(user).reload if user.is_a?(Symbol)
+    assert_equal user.security_token, session['user_id']
+  end
+
+  def assert_not_logged_in
+    assert cookies[COOKIE_NAME].blank?
+    assert_nil session['user_id']
   end
 end

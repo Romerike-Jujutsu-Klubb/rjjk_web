@@ -225,8 +225,7 @@ class LoginController < ApplicationController
   def welcome; end
 
   def like
-    UserImage.where(user_id: current_user.id, image_id: params[:id], rel_type: 'LIKE')
-        .first_or_create!
+    UserImage.where(user_id: current_user.id, image_id: params[:id], rel_type: 'LIKE').first_or_create!
     redirect_to news_items_path
   end
 

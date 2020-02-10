@@ -12,7 +12,7 @@ table.table.table-sm
   tbody
     - @versions.each do |v|
       tr
-        td = v.created_at
+        td = v.created_at.strftime('%F %R')
         td = v.event
         td = User.find_by(id: v.whodunnit) || v.whodunnit
-        td = v.object_changes.except('updated_at')
+        td = v.object_changes.except('updated_at').map{|attr, (from, to)| "#{attr}: #{from.inspect} => #{to.inspect}"}.join(", ")

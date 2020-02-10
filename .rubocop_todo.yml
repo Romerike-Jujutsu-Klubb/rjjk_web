@@ -24,7 +24,7 @@ Metrics/BlockNesting:
 # Offense count: 28
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
-  Max: 406
+  Max: 407
 
 # Offense count: 43
 Metrics/CyclomaticComplexity:
@@ -38,7 +38,7 @@ Metrics/MethodLength:
 # Offense count: 2
 # Configuration parameters: CountComments.
 Metrics/ModuleLength:
-  Max: 140
+  Max: 141
 
 # Offense count: 3
 # Configuration parameters: CountKeywordArgs.
@@ -78,5 +78,4 @@ Rails/InverseOf:
     - 'app/models/event.rb'
     - 'app/models/event_invitee.rb'
     - 'app/models/group.rb'
-    - 'app/models/member.rb'
     - 'app/models/rank.rb'

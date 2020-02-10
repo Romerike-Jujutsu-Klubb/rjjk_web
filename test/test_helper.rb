@@ -11,6 +11,7 @@ if defined?(Rake) && (RUBY_ENGINE != 'jruby' || org.jruby.RubyInstanceConfig.FUL
 end
 
 ENV['RAILS_ENV'] ||= 'test'
+ENV['CPAS_API_BASE_URL'] ||= 'https://example.com/sms'
 require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
 

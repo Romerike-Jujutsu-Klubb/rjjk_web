@@ -37,6 +37,7 @@ module DeviceSystemTest
       Capybara.register_driver driver_name do |app|
         browser_options = ::Selenium::WebDriver::Chrome::Options.new
         browser_options.args << '--force-color-profile=srgb'
+        browser_options.args << '--lang=nb'
         if device_name
           browser_options.add_emulation(device_name: device_name)
         else

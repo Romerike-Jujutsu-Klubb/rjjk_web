@@ -59,7 +59,7 @@ class UsersController < ApplicationController
           .map(&:member).compact.each do |member|
         NkfMemberSyncJob.perform_later member
       end
-      back_or_redirect_to edit_user_path(@user)
+      redirect_to edit_user_path(@user)
     else
       flash.now.alert = "En feil oppsto ved lagring av brukeren: #{@user.errors.full_messages.join("\n")}"
       edit

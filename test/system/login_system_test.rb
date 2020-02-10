@@ -1,18 +1,17 @@
 # frozen_string_literal: true
 
-require 'controller_test'
 require 'integration_test'
 require 'application_system_test_case'
 
 # This file contains different ways to log in during tests to test wether they interfere with each other.
 
-class LoginControllerTest < ActionController::TestCase
+class LoginControllerTest < IntegrationTest
   test 'controller test login' do
     login(:uwe)
   end
 
   test 'controller action login' do
-    post :login_with_password, params: LoginIntegrationTest::LOGIN_PARAMS
+    post login_password_path, params: LoginIntegrationTest::LOGIN_PARAMS
     assert_logged_in(:uwe)
   end
 end

@@ -34,7 +34,7 @@ class User < ApplicationRecord
   has_many :embus, dependent: :destroy
   has_many :event_invitees, dependent: :restrict_with_error
   has_many :images, dependent: :destroy
-  has_many :memberships, dependent: :restrict_with_error, class_name: 'Member'
+  has_many :memberships, dependent: :restrict_with_error, class_name: 'Member', inverse_of: :user
   has_many :news_item_likes, dependent: :destroy
   has_many :news_items, dependent: :destroy, inverse_of: :creator, foreign_key: :created_by
   has_many :payees, dependent: :nullify, class_name: 'User', foreign_key: :billing_user_id,
@@ -52,7 +52,7 @@ class User < ApplicationRecord
   CHANGEABLE_FIELDS = %w[first_name last_name email].freeze
   attr_accessor :password_needs_confirmation
 
-  NILLABLE_FIELDS = %i[address email first_name kana login phone postal_code role].freeze
+  NILLABLE_FIELDS = %i[address email first_name kana last_name login phone postal_code role].freeze
   before_validation do
     NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? }
     self.email = email.strip.downcase if email.present?

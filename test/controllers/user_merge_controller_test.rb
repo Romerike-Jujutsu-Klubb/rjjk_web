@@ -15,5 +15,6 @@ class UserMergeControllerTest < IntegrationTest
       patch user_merge_path(id(:uwe), other_user_id: id(:sebastian))
     end
     assert_redirected_to users(:uwe)
+    assert_raise(ActiveRecord::RecordNotFound) { users(:sebastian) }
   end
 end

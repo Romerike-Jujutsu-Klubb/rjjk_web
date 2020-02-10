@@ -4,6 +4,7 @@ uwe:
   email: uwe@example.com
   first_name: Uwe
   last_name: Kubosch
+  locale: nb
   login: uwe
   male: true
   postal_code: 1479
@@ -14,7 +15,6 @@ uwe:
   security_token: 0123456789abcdef0123456789abcdef01234567
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
   verified: true
-  locale: nb
 
 lars:
   first_name: Lars
@@ -78,15 +78,16 @@ deleted_user:
   locale: nb
 
 unverified_user:
-  first_name: Unverified
-  login: unverified_user
-  salted_password: ef94c16f6c124a4e84cc215c164767bfa25f6e92 # atest
-  salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
   email: unverified_user@example.com
-  verified: false
+  first_name: Unverified
+  locale: nb
+  login: unverified_user
+  phone: 06664269
+  salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
+  salted_password: ef94c16f6c124a4e84cc215c164767bfa25f6e92 # atest
   security_token: another_random_token_string
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
-  locale: nb
+  verified: false
 
 oldie:
   first_name: Oldie

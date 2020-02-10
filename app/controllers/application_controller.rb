@@ -109,6 +109,10 @@ class ApplicationController < ActionController::Base
         session.delete(:locale)
       end
     end
+    I18n.locale = session[:locale] || current_user&.locale || header_locale || I18n.default_locale
+  end
+
+  def header_locale
     header_locale = request.env['HTTP_ACCEPT_LANGUAGE']&.scan(/^[a-z]{2}/)&.first
     case header_locale
     when 'nb', 'en'
@@ -118,7 +122,7 @@ class ApplicationController < ActionController::Base
     else
       header_locale = nil
     end
-    I18n.locale = session[:locale] || header_locale || I18n.default_locale
+    header_locale
   end
 
   def report_exception(ex)
