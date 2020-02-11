@@ -1,6 +1,11 @@
-h1 Curriculums
+- if admin?
+  a.btn.btn-primary.float-right href=new_curriculum_path
+    i.fa.fa-plus>
+    | Nytt pensum
 
-table
+h1 Pensum
+
+table.table data-record-path=curriculums_path
   thead
     tr
       th Name
@@ -9,23 +14,19 @@ table
       th From age
       th To age
       th Color
-      th
-      th
-      th
+      - if admin?
+        th
+        th
 
   tbody
     - @curriculums.each do |curriculum|
-      tr
+      tr data-record-id=curriculum.id
         td = curriculum.name
         td = curriculum.martial_art
         td = curriculum.position
         td = curriculum.from_age
         td = curriculum.to_age
         td = curriculum.color
-        td = link_to 'Show', curriculum
-        td = link_to 'Edit', edit_curriculum_path(curriculum)
-        td = link_to 'Destroy', curriculum, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-
-= link_to 'New Curriculum', new_curriculum_path
+        - if admin?
+          td = link_to 'Edit', edit_curriculum_path(curriculum)
+          td = link_to 'Destroy', curriculum, data: { confirm: 'Are you sure?' }, method: :delete
