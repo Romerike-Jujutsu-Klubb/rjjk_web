@@ -2,7 +2,7 @@
 
 class CurriculumsController < ApplicationController
   before_action :authenticate_user
-  before_action :admin_required, except: %i[show]
+  before_action :admin_required, except: %i[index show]
   before_action :set_curriculum, only: %i[show edit update destroy]
 
   def index
