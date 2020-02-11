@@ -129,6 +129,10 @@ class EventsController < ApplicationController
       recipients = event.event_invitees.reject do |ei|
         ei.will_attend || ei.invitation || ei.signup_confirmation || ei.signup_rejection
       end
+    elsif params[:recipients] == 'invited'
+      recipients = event.event_invitees.reject do |ei|
+        ei.will_attend || ei.signup_confirmation || ei.signup_rejection
+      end
     elsif params[:recipients] == 'groups'
       recipients = event.groups.map(&:members).flatten
     end
