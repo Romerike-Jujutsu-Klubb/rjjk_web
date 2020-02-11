@@ -13,8 +13,8 @@ table.table data-record-path=curriculums_path
       th Position
       th From age
       th To age
-      th Color
       - if admin?
+        th Color
         th
         th
 
@@ -26,7 +26,7 @@ table.table data-record-path=curriculums_path
         td = curriculum.position
         td = curriculum.from_age
         td = curriculum.to_age
-        td = curriculum.color
         - if admin?
+          td = curriculum.color
           td = link_to 'Edit', edit_curriculum_path(curriculum)
           td = link_to 'Destroy', curriculum, data: { confirm: 'Are you sure?' }, method: :delete

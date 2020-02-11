@@ -10,12 +10,12 @@ class CurriculumsTest < ApplicationSystemTestCase
 
   test 'visiting the index' do
     visit curriculums_url
-    assert_selector 'h1', text: 'Curriculums'
+    assert_selector 'h1', text: 'Pensum'
   end
 
   test 'creating a Curriculum' do
     visit curriculums_url
-    click_on 'New Curriculum'
+    click_on 'Nytt pensum'
 
     fill_in 'Color', with: @curriculum.color
     fill_in 'curriculum[from_age]', with: @curriculum.from_age

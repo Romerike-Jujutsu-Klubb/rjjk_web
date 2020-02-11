@@ -5,7 +5,7 @@ class CurriculumGroup < ApplicationRecord
 
   belongs_to :martial_art
 
-  has_many :practice_groups, dependent: :destroy, inverse_of: :curriculum_group,
+  has_many :practice_groups, dependent: :restrict_with_error, inverse_of: :curriculum_group,
       class_name: :Group # FIXME(uwe): Remove this line after renaming Group => PracticeGroup
   has_many :ranks, -> { order(:position) }, dependent: :destroy, inverse_of: :curriculum_group
 
