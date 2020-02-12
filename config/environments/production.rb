@@ -28,7 +28,7 @@ Rails.application.configure do
   #     ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
   # config.active_record.database_selector = { delay: 2.seconds }
   config.active_record.dump_schema_after_migration = false
-  config.active_record.verbose_query_logs = ENV['RAILS_LOG_LEVEL'].downcase == 'debug'
+  config.active_record.verbose_query_logs = ENV['RAILS_LOG_LEVEL']&.downcase == 'debug'
   config.active_storage.service = :local
   config.active_support.deprecation = :notify
   config.assets.compile = false
