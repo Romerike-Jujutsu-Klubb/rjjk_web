@@ -117,7 +117,7 @@ class User < ApplicationRecord
         return nil
       end
       logger.info "Authenticated by user token: #{u.inspect}.  Extending token lifetime."
-      u.token_expiry = token_lifetime.from_now
+      u.token_expiry = token_lifetime(:login).from_now
     elsif (u = (um = UserMessage.includes(:user).for_login.find_by(key: CGI.unescape(token)))&.user)
       logger.info "Identified by user message token: #{u.inspect}"
       um.update!(read_at: Time.current) unless um.read_at
@@ -230,7 +230,7 @@ class User < ApplicationRecord
 
   def generate_security_token(duration = :short)
     if security_token.nil? || token_expiry.nil? || token_stale?(duration)
-      logger.debug "generate_security_token: duration: #{duration}, security_token: #{security_token.inspect}, token_expiry: #{token_expiry.inspect}, token_stale?: #{token_stale?(duration)}"
+      logger.debug "generate_security_token: duration: #{duration.inspect}, security_token: #{security_token.inspect}, token_expiry: #{token_expiry.inspect}, token_stale?: #{token_stale?(duration)}"
       self.salt ||= self.class.hashed("salt-#{Time.current}")
       self.salted_password ||=
           self.class.salted_password(salt, self.class.hashed(SecureRandom.urlsafe_base64(12)))
