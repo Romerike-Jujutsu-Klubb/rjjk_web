@@ -12,7 +12,7 @@ class Censor < ApplicationRecord
   end
 
   scope :examiners, -> { where examiner: true }
-  scope :confirmed, -> { where(declined: false) }
+  scope :confirmed, -> { where(declined: false).or(where(declined: nil)) }
 
   def confirmed?
     confirmed_at? && !declined?

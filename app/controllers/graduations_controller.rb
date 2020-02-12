@@ -101,25 +101,25 @@ class GraduationsController < ApplicationController
     graduation = Graduation.find(params[:id])
     date = graduation.held_on
 
-    content = graduation.graduates.without_failed.sort_by { |g| -g.rank.position }.map do |g|
-      censors = graduation.censors.confirmed.sort_by { |c| -(c.member.current_rank.try(:position) || 99) }
-      censor_1 =
-          if censors[0]
-            { title: censors[0].member.title, name: censors[0].member.name,
+    censors = graduation.censors.confirmed.sort_by { |c| -(c.member.current_rank&.position || 99) }
+    censor_1 =
+        if censors[0]
+          { title: censors[0].member.title, name: censors[0].member.name,
               signature: censors[0].member.user.signatures.sample&.image }
-          end
-      censor_2 =
-          if censors[1]
-            { title: censors[1].member.title,
+        end
+    censor_2 =
+        if censors[1]
+          { title: censors[1].member.title,
               name: censors[1].member.name,
               signature: censors[1].member.user.signatures.sample&.image }
-          end
-      censor_3 =
-          if censors[2]
-            { title: censors[2].member.title,
+        end
+    censor_3 =
+        if censors[2]
+          { title: censors[2].member.title,
               name: censors[2].member.name,
               signature: censors[2].member.user.signatures.sample&.image }
-          end
+        end
+    content = graduation.graduates.without_failed.sort_by { |g| -g.rank.position }.map do |g|
       { name: g.member.name, rank: g.rank.label, group: g.rank.curriculum_group.name,
         censor1: censor_1, censor2: censor_2, censor3: censor_3 }
     end
