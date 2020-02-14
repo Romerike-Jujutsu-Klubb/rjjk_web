@@ -1,0 +1,8 @@
+table.table.table-sm
+  - @nkf_member.attributes.each do |c, v|
+    tr
+      th = c
+      td = v
+
+=> link_to 'Edit', edit_nkf_member_path(@nkf_member)
+= link_to 'Back', nkf_members_path
