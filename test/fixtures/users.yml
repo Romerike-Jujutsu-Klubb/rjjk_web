@@ -17,20 +17,20 @@ uwe:
   verified: true
 
 lars:
+  address: Torsvei 8b
+  birthdate: 1967-06-21
+  email: lars@example.com
   first_name: Lars
   last_name: Bråten
-  address: Torsvei 8b
-  postal_code: 1472
+  locale: nb
   login: lars
-  salted_password: de6db7cdf638e5ba522b9e5728d551315bf750f4 # atest
+  male: true
+  postal_code: 1472
   salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
-  email: lars@example.com
-  verified: true
+  salted_password: de6db7cdf638e5ba522b9e5728d551315bf750f4 # atest
   security_token: random_token_string
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
-  birthdate: 1967-06-21
-  male: true
-  locale: nb
+  verified: true
 
 sebastian:
   first_name: Sebastian
@@ -42,7 +42,7 @@ sebastian:
   salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
   email: sebastian@example.com
   verified: true
-  security_token: random_token_string
+  security_token: secret_token_string
   token_expiry: <%=(TEST_TIME + User.token_lifetime).utc.strftime('%Y-%m-%d %H:%M:%S') %>
   birthdate: 2004-06-03
   male: true
