@@ -49,11 +49,15 @@ class CurriculumsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to curriculum_url(@curriculum)
   end
 
-  test 'should destroy curriculum' do
-    assert_difference('CurriculumGroup.count', -1) do
-      delete curriculum_url(@curriculum)
-    end
+  test 'should not destroy curriculum with dependent practice groups' do
+    assert_no_difference('CurriculumGroup.count', -1) { delete curriculum_url(@curriculum) }
+    assert_redirected_to curriculums_url
+  end
 
+  test 'should destroy curriculum' do
+    groups(:voksne).update!(curriculum_group: curriculum_groups(:voksne_aikido))
+    groups(:closed).update!(curriculum_group: curriculum_groups(:voksne_aikido))
+    assert_difference('CurriculumGroup.count', -1) { delete curriculum_url(@curriculum) }
     assert_redirected_to curriculums_url
   end
 end
