@@ -58,16 +58,17 @@ class MartialArtsControllerTest < ActionController::TestCase
   end
 
   def test_destroy
-    assert_nothing_raised do
-      MartialArt.find(@first_id)
-    end
+    assert_nothing_raised { MartialArt.find(@first_id) }
+    groups(:panda).destroy!
+    groups(:tiger).destroy!
+    groups(:voksne).destroy!
+    groups(:closed).destroy!
 
     post :destroy, params: { id: @first_id }
+
     assert_response :redirect
     assert_redirected_to action: :index
 
-    assert_raise(ActiveRecord::RecordNotFound) do
-      MartialArt.find(@first_id)
-    end
+    assert_raise(ActiveRecord::RecordNotFound) { MartialArt.find(@first_id) }
   end
 end
