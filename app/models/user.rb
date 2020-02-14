@@ -230,7 +230,6 @@ class User < ApplicationRecord
 
   def generate_security_token(duration = :short)
     if security_token.nil? || token_expiry.nil? || token_stale?(duration)
-      logger.debug "generate_security_token: duration: #{duration.inspect}, security_token: #{security_token.inspect}, token_expiry: #{token_expiry.inspect}, token_stale?: #{token_stale?(duration)}"
       self.salt ||= self.class.hashed("salt-#{Time.current}")
       self.salted_password ||=
           self.class.salted_password(salt, self.class.hashed(SecureRandom.urlsafe_base64(12)))
