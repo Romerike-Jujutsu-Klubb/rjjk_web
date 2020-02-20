@@ -119,7 +119,7 @@ class ApplicationController < ActionController::Base
     elsif current_user&.locale
       puts "Use current_user.locale: #{current_user.locale.inspect}" # rubocop: disable Rails/Output
     elsif header_locale
-      puts "Use header_locale: #{header_locale.inspect}" # rubocop: disable Rails/Output
+      puts "Use header_locale: #{header_locale.inspect} #{request.env['HTTP_ACCEPT_LANGUAGE'].inspect}" # rubocop: disable Rails/Output
     else
       puts "Use I18n.default_locale: #{I18n.default_locale}" # rubocop: disable Rails/Output
     end
