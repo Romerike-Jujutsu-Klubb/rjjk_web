@@ -102,13 +102,29 @@ class ApplicationController < ActionController::Base
     if (locale_param = params.delete(:lang))
       case locale_param
       when 'nb', 'en'
+        puts "Set session locale: #{locale_param.to_sym.inspect}" # rubocop: disable Rails/Output FIXME(uwe): Remove output
         session[:locale] = locale_param.to_sym
       when 'no'
+        puts "Set 'no' session locale" # rubocop: disable Rails/Output FIXME(uwe): Remove output
         session[:locale] = :nb
       else
+        puts 'Delete session locale' # rubocop: disable Rails/Output FIXME(uwe): Remove output
         session.delete(:locale)
       end
     end
+
+    # FIXME(uwe): Remove
+    if session[:locale]
+      puts "Use session[:locale]: #{session[:locale].inspect}" # rubocop: disable Rails/Output
+    elsif current_user&.locale
+      puts "Use current_user.locale: #{current_user.locale.inspect}" # rubocop: disable Rails/Output
+    elsif header_locale
+      puts "Use header_locale: #{header_locale.inspect}" # rubocop: disable Rails/Output
+    else
+      puts "Use I18n.default_locale: #{I18n.default_locale}" # rubocop: disable Rails/Output
+    end
+    # EMXIF
+
     I18n.locale = session[:locale] || current_user&.locale || header_locale || I18n.default_locale
   end
 
