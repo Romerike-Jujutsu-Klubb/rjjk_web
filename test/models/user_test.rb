@@ -168,4 +168,8 @@ class UserTest < ActionMailer::TestCase
   test 'label with last name first' do
     assert_equal 'Bråten, Lars', users(:lars).label(last_name_first: true)
   end
+
+  test 'valid fixtures' do
+    assert User.all.all?(&:valid?)
+  end
 end

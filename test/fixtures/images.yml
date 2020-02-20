@@ -37,9 +37,9 @@ application_step_two:
   approved: true
 application_step_kneeing:
   name: Step 3
-  content_type: image/gif
+  content_type: image/png
   content_data: !binary |
-    R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
+    iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUmnEQ3/0cXAAAAAXRSTlPM0jRW/QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=
   md5_checksum: application_step_kneeing
   user: uwe
   approved: true
@@ -61,9 +61,9 @@ front_page_2:
   approved: true
 front_page_3:
   name: Front page 3
-  content_type: image/jpeg
+  content_type: image/png
   content_data: !binary |
-    R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
+    iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUmM5yWaL3XAAAAAXRSTlPM0jRW/QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=
   md5_checksum: front_page_3
   user: uwe
   approved: true

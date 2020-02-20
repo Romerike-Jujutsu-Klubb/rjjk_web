@@ -4,7 +4,7 @@ require 'test_helper'
 
 class CardKeysControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @card_key = card_keys(:one)
+    @card_key = card_keys(:uwe)
     login
   end
 

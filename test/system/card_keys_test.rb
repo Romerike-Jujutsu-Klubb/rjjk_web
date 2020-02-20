@@ -4,7 +4,7 @@ require 'application_system_test_case'
 
 class CardKeysTest < ApplicationSystemTestCase
   setup do
-    @card_key = card_keys(:one)
+    @card_key = card_keys(:uwe)
     login
   end
 

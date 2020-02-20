@@ -30,8 +30,16 @@ class UserMergeController < ApplicationController
 
     User.transaction do
       @user.attributes = params[:user] if params[:user]
-      if @user.card_key.blank? && @other_user.card_key.present?
-        @other_user.card_key.update! user_id: @user.id
+      @user.class.reflections.each do |ref_name, reflection|
+        next unless reflection.is_a? ActiveRecord::Reflection::HasOneReflection
+
+        user_value = @user.send(ref_name)
+        other_user_value = @other_user.send(ref_name)
+        next if user_value == other_user_value
+        raise "Duplicate value for #{ref_name}" if user_value && other_user_value
+        next if other_user_value.nil?
+
+        other_user_value.update! reflection.foreign_key => @user.id
       end
       RELATIONS.each do |rel|
         reflection = @other_user.class.reflections[rel.to_s]
@@ -50,6 +58,7 @@ class UserMergeController < ApplicationController
       redirect_to @user
     end
   rescue => e
+    logger.error e
     logger.error e.backtrace.join("\n")
     flash.now.alert = 'En feil oppsto ved lagring av brukeren:' \
         " #{e}<br/>#{@user.errors.full_messages.join("\n").inspect}" \

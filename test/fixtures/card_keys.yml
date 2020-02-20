@@ -1,9 +1,9 @@
-one:
+uwe:
   label: First card
   user: uwe
   comment: MyText
 
-two:
+lars:
   label: Card two
   user: lars
   comment: MyText
