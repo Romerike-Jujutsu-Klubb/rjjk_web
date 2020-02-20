@@ -29,7 +29,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     browser_options.args << '--force-color-profile=srgb'
     browser_options.args << '--force-device-scale-factor=1'
     browser_options.args << '--headless'
-    browser_options.args << '--lang=nb_NO'
+    browser_options.args << '--lang=nb'
     browser_options.args << '--use-fake-ui-for-media-stream'
     browser_options.args << "--window-size=#{WINDOW_SIZE.join('x')}"
     Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
