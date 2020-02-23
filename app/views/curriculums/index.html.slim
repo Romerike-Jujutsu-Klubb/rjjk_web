@@ -33,7 +33,7 @@ h1 Pensum
             = curriculum.to_age
           td
             - curriculum.practice_groups.each do |pg|
-              a> href=with_detour(edit_group_path(pg)) = pg.name
+              a.btn.btn-info.btn-sm> href=with_detour(edit_group_path(pg)) = pg.name
             - if admin? && curriculum.practice_groups.empty?
               = link_to curriculum, data: { confirm: 'Dette vil slette dette pensumet.  Er du sikker?' }, method: :delete
                 i.fa.fa-trash.text-danger
