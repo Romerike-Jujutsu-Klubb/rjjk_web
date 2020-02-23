@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AttendancesController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: :announce
+  skip_before_action :verify_authenticity_token, only: %i[announce review]
 
   USER_ACTIONS = %i[announce plan practice_details review].freeze
   before_action :authenticate_user, only: USER_ACTIONS
