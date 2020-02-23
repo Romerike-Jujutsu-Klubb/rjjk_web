@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_23_232118) do
+ActiveRecord::Schema.define(version: 2020_02_22_192643) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -381,7 +381,7 @@ ActiveRecord::Schema.define(version: 2020_01_23_232118) do
     t.string 'color', limit: 16
     t.integer 'target_size'
     t.boolean 'planning'
-    t.bigint 'curriculum_group_id', null: false
+    t.bigint 'curriculum_group_id'
     t.index ['curriculum_group_id'], name: 'index_groups_on_curriculum_group_id'
   end
 

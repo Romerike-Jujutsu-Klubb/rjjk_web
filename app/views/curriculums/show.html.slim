@@ -1,24 +1,27 @@
-a.btn.btn-warning.float-right href=url_for(action: :card_pdf)
-  i.fa.fa-list>
-  | Ferdighetskort
+.float-right
+  a.btn.btn-warning> href=url_for(action: :card_pdf)
+    i.fa.fa-list>
+    | Ferdighetskort
+  - if admin? || instructor? || technical_committy?
+    a.btn.btn-primary href=edit_curriculum_path(@curriculum)
+      i.fa.fa-edit>
+      | Endre
 
-h2 Pensum
+h2 Pensum #{@curriculum_group.name}
 
-- @ranks.group_by(&:curriculum_group).each do |curriculum_group, ranks|
-  h3 = curriculum_group.name
-  table.table.table-sm
-    thead
+table.table.table-sm
+  thead
+    tr
+      th.text-left Grad
+      th Kort
+      th PDF
+      th.text-center Måneder
+      th.text-center Minste alder
+  tbody
+    - for rank in @ranks
       tr
-        th.text-left Grad
-        th Kort
-        th PDF
-        th.text-center Måneder
-        th.text-center Minste alder
-    tbody
-      - for rank in ranks
-        tr
-          td = link_to "#{rank.name} #{rank.colour}", rank
-          td = link_to 'Kort', action: :card, id: rank.id
-          td = link_to 'PDF', action: :pdf, id: rank.id
-          td.text-center = rank.standard_months
-          td.text-center #{rank.minimum_age} år
+        td = link_to "#{rank.name} #{rank.colour}", rank
+        td = link_to 'Kort', card_rank_path(rank)
+        td = link_to 'PDF', pdf_rank_path(rank)
+        td.text-center = rank.standard_months
+        td.text-center #{rank.minimum_age} år

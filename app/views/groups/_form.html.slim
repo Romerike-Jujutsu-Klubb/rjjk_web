@@ -5,7 +5,7 @@
     .col-md-6
       .row
         .col = f.text_field :name
-        .col = f.select :curriculum_group_id, @curriculum_groups.map { |cg| [cg.name, cg.id] }, prompt: 'Velg pensum'
+        .col = f.select :curriculum_group_id, @curriculum_groups.map { |cg| [cg.name, cg.id] }, prompt: ('Velg pensum' if @group.new_record?), include_blank: @group.persisted?
 
       .row
         .col = f.text_field :from_age

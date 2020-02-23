@@ -25,7 +25,7 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
         a href=graduate_path(graduate) data-method=:delete data-remote=true title="Sett som kandidat"
           i.fa.fa-arrow-left
   td
-    = link_to "#{fn} #{ln}", edit_member_path(mbr)
+    = link_to "#{fn} #{ln}", edit_user_path(mbr.user, anchor: :tab_graduations_tab)
     - if below_minimum_age || not_in_rank_age || not_in_group_age
       '
       | (<span class="text-danger text-nowrap">#{member_age} år</span>)
@@ -90,7 +90,7 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
         - if below_minimum_age
           div.text-danger Aldersgrense for #{graduate.rank.name} er #{graduate.rank.minimum_age} år.
         - elsif not_in_rank_age
-          div.text-danger Aldersgruppe for #{graduate.rank.name} er #{graduate.rank.group.from_age}-#{graduate.rank.group.to_age} år.
+          div.text-danger Aldersgruppe for #{graduate.rank.name} er #{graduate.rank.curriculum_group.from_age}-#{graduate.rank.curriculum_group.to_age} år.
         - future_graduates = mbr.future_graduates(graduate.graduation.held_on, graduate.graduation.martial_art)
         - future_graduates.select { |fg| fg.rank.position < graduate.rank.position }.each do |fg|
           div

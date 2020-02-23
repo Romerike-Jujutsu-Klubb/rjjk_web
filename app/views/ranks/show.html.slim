@@ -1,12 +1,12 @@
 .float-right
-  a.btn.btn-outline-info href=pdf_curriculum_path(@rank.id)
+  a.btn.btn-outline-info href=pdf_rank_path(@rank)
     i.fa.fa-image>
     | PDF
   a.btn.btn-outline-info.ml-2 href=card_pdf_curriculums_path(id: @rank.id)
     i.fa.fa-list>
     | Ferdighetskort
   - if technical_committy?
-    = detour_to('Rediger', {action: 'edit', id: @rank}, class: 'btn btn-primary ml-2')
+    = detour_to('Rediger', edit_rank_path(@rank), class: 'btn btn-primary ml-2')
 
 h2 = @rank.label
 

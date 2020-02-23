@@ -5,28 +5,35 @@
 
 h1 Pensum
 
-table.table data-record-path=curriculums_path
-  thead
-    tr
-      th Name
-      th Martial art
-      th Position
-      th From age
-      th To age
-      - if admin?
-        th Color
-        th
-        th
-
-  tbody
-    - @curriculums.each do |curriculum|
-      tr data-record-id=curriculum.id
-        td = curriculum.name
-        td = curriculum.martial_art
-        td = curriculum.position
-        td = curriculum.from_age
-        td = curriculum.to_age
+.table-responsive
+  table.table data-record-path=curriculums_path
+    thead
+      tr
+        th #
+        th Navn
+        th Alder
+        th Grupper
         - if admin?
-          td = curriculum.color
-          td = link_to 'Edit', edit_curriculum_path(curriculum)
-          td = link_to 'Destroy', curriculum, data: { confirm: 'Are you sure?' }, method: :delete
+          th
+
+    tbody
+      - @curriculums.each do |curriculum|
+        tr data-record-id=curriculum.id
+          td.text-center
+            => curriculum.position
+            - if curriculum.color
+              i.fa.fa-circle style="color:#{curriculum.color}" &nbsp;
+          td
+            b = curriculum.name
+            br
+            = curriculum.martial_art
+          td
+            => curriculum.from_age
+            ' -
+            = curriculum.to_age
+          td
+            - curriculum.practice_groups.each do |pg|
+              a> href=with_detour(edit_group_path(pg)) = pg.name
+            - if admin? && curriculum.practice_groups.empty?
+              = link_to curriculum, data: { confirm: 'Dette vil slette dette pensumet.  Er du sikker?' }, method: :delete
+                i.fa.fa-trash.text-danger

@@ -1,40 +1,32 @@
 # frozen_string_literal: true
 
+# FIXME(uwe): Split into MyCyrriculumController
 class CurriculumsController < ApplicationController
   before_action :authenticate_user
-  before_action :admin_required, except: %i[index show]
+  before_action :admin_required, except: %i[index show card_pdf]
   before_action :set_curriculum, only: %i[show edit update destroy]
 
   def index
-    if admin?
-      @curriculums = CurriculumGroup.all
+    if admin? || instructor? || technical_committy?
+      @curriculums = CurriculumGroup.order(:martial_art_id, :position).to_a
     else
-      redirect_to CurriculumGroup.first
+      next_rank = current_user.member.next_rank
+      redirect_to next_rank.curriculum_group
     end
   end
 
   def show
-    next_rank = current_user.member.next_rank
-    @ranks = Rank.kwr
-        .where('curriculum_groups.position < ?', next_rank.curriculum_group.position)
-        .or(Rank.kwr
-            .where('curriculum_groups.position = ?', next_rank.curriculum_group.position)
-            .where('ranks.position <= ?', next_rank.position))
-        .order(:'curriculum_groups.position', :'ranks.position').to_a
-  end
+    @curriculum_group = CurriculumGroup.find(params[:id])
+    @ranks = @curriculum_group.ranks.to_a
+    return if instructor? || technical_committy?
 
-  def card
-    @rank = Rank.find(params[:id])
-    render layout: 'print'
+    next_rank = current_user.member.next_rank
+    @ranks.select! { |r| r.position <= next_rank.position }
   end
 
   def card_pdf
-    if (rank_id = params[:id])
-      ranks = [Rank.find(rank_id)]
-    else
-      rank = current_user.member.next_rank
-      ranks = rank.curriculum_group.ranks.select { |r| r.position <= rank.position }
-    end
+    next_rank = current_user.member.next_rank
+    ranks = next_rank.curriculum_group.ranks.select { |r| r.position <= next_rank.position }
     filename = "Skill_Card_#{ranks.last.name}.pdf"
     send_data SkillCard.pdf(ranks.sort_by(&:position)),
         type: 'text/pdf', filename: filename, disposition: 'attachment'

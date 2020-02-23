@@ -2,7 +2,7 @@
 
 # FIXME(uwe): Rename to PracticeGroup
 class Group < ApplicationRecord
-  belongs_to :curriculum_group
+  belongs_to :curriculum_group, optional: true
 
   has_one :current_semester,
       -> { joins(:semester).where('? BETWEEN semesters.start_on AND semesters.end_on', Date.current) },
@@ -38,13 +38,13 @@ class Group < ApplicationRecord
 
   before_validation { |r| r.color = nil if r.color.blank? }
 
-  validates :curriculum_group_id, :from_age, :name, :to_age, presence: true
+  validates :from_age, :name, :to_age, presence: true
   validates :contract, length: { maximum: 32 }
 
   delegate :martial_art_id, to: :curriculum_group, allow_nil: true
 
   def full_name
-    if curriculum_group.martial_art_id != MartialArt::KWR_ID
+    if curriculum_group && curriculum_group.martial_art_id != MartialArt::KWR_ID
       "#{curriculum_group.martial_art.name} #{name}"
     else
       name

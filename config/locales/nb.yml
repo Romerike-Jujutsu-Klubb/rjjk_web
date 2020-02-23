@@ -1,11 +1,12 @@
 nb:
   attributes:
     basic_technique_id: Grunnteknikk
-    from_age: "Nedre alders\xADgrense"
+    curriculum_group_id: Pensum
+    from_age: "Fra alder"
     monthly_fee: "Måneds\xADavgift"
     name: Navn
     title: Tittel
-    to_age: "Øvre alders\xADgrense"
+    to_age: "Til alder"
     url: URL
     yearly_fee: "Års\xADkontingent"
   activerecord:

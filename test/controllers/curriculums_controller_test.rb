@@ -13,6 +13,12 @@ class CurriculumsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should get index as plain member' do
+    login :newbie
+    get curriculums_url
+    assert_redirected_to curriculum_path(id(:voksne))
+  end
+
   test 'should get new' do
     get new_curriculum_url
     assert_response :success
@@ -32,6 +38,18 @@ class CurriculumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show curriculum' do
     get curriculum_url(@curriculum)
+    assert_response :success
+  end
+
+  test 'should show curriculum as plain member' do
+    login :newbie
+    get curriculum_url(@curriculum)
+    assert_response :success
+  end
+
+  test 'should get card as plain member' do
+    login :newbie
+    get card_pdf_curriculums_path(@curriculum)
     assert_response :success
   end
 

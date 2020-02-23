@@ -10,7 +10,7 @@ table.table.table-striped.table-sm
       tr
         td = link_to graduate.graduation.held_on, controller: :graduations, action: :edit, id: graduate.graduation_id
         td
-          = graduate.rank.martial_art.name unless graduate.rank.martial_art.name == 'Kei Wa Ryu'
+          => graduate.rank.martial_art.name unless graduate.rank.martial_art.name == 'Kei Wa Ryu'
           = graduate.rank.label
         td align="center"
           => graduate.training_duration

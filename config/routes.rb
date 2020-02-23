@@ -79,15 +79,7 @@ Rails.application.routes.draw do
   end
 
   resources :correspondences
-  resources :curriculums, path: :pensum do
-    collection do
-      get :card_pdf
-    end
-    member do
-      get :card
-      get :pdf
-    end
-  end
+  resources(:curriculums, path: :pensum) { collection { get :card_pdf } }
   resources :elections
   resources :embus do
     member do
@@ -275,6 +267,7 @@ Rails.application.routes.draw do
   resources :ranks do
     member do
       get :card
+      get :pdf
     end
   end
   resources :roles do

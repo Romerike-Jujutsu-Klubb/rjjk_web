@@ -16,10 +16,21 @@ class RanksController < ApplicationController
     @rank = Rank.find(params[:id])
   end
 
+  def card
+    @rank = Rank.find(params[:id])
+    render layout: 'print'
+  end
+
+  def pdf
+    ranks = [Rank.find(params[:id])]
+    filename = "Skill_Card_#{ranks.last.name}.pdf"
+    send_data SkillCard.pdf(ranks.sort_by(&:position)),
+        type: 'text/pdf', filename: filename, disposition: 'attachment'
+  end
+
   def new
     @rank ||= Rank.new
-    @martial_arts = MartialArt.order(:name).to_a
-    @groups = Group.order(:from_age).to_a
+    load_form_data
   end
 
   def create
@@ -35,8 +46,7 @@ class RanksController < ApplicationController
 
   def edit
     @rank ||= Rank.find(params[:id])
-    @martial_arts = MartialArt.order(:name).to_a
-    @groups = Group.order(:from_age).to_a
+    load_form_data
     render :edit
   end
 
@@ -53,5 +63,12 @@ class RanksController < ApplicationController
   def destroy
     Rank.find(params[:id]).destroy
     redirect_to action: 'index'
+  end
+
+  private
+
+  def load_form_data
+    @martial_arts = MartialArt.order(:name).to_a
+    @curriculum_groups = CurriculumGroup.order(:from_age).to_a
   end
 end

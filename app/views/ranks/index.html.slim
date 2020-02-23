@@ -39,7 +39,7 @@ ul.nav.nav-tabs
                   td: span style='background-color:#{rank.css_color}' &nbsp;&nbsp;&nbsp;
                   td = link_to rank.label, rank
                   td = link_to 'Kort', { action: :card, id: rank.id }, class: 'btn btn-sm btn-secondary'
-                  td = link_to 'PDF', { controller: :curriculums, action: :pdf, id: rank.id }, class: 'btn btn-sm btn-secondary'
+                  td = link_to 'PDF', pdf_rank_path(rank), class: 'btn btn-sm btn-secondary'
                   td align="center" #{rank.minimum_age} år
                   td align="center" = rank.standard_months
                   td = detour_to 'Rediger', { action: 'edit', id: rank }, class: 'btn btn-primary btn-sm'

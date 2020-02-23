@@ -30,7 +30,8 @@ class CurriculumsTest < ApplicationSystemTestCase
 
   test 'updating a Curriculum' do
     visit curriculums_url
-    click_on 'Edit', match: :first
+    find('tbody tr td', match: :first).click
+    click_on 'Endre'
 
     fill_in 'Color', with: @curriculum.color
     fill_in 'curriculum[from_age]', with: @curriculum.from_age
@@ -45,10 +46,7 @@ class CurriculumsTest < ApplicationSystemTestCase
 
   test 'destroying a Curriculum' do
     visit curriculums_url
-    page.accept_confirm do
-      click_on 'Destroy', match: :first
-    end
-
+    page.accept_confirm { find('.fa-trash-alt').click }
     assert_text 'Curriculum was successfully destroyed'
   end
 end

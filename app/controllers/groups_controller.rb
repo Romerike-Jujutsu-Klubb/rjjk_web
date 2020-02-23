@@ -50,30 +50,23 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @group.attributes = params[:group]
     @group.update_prices
+    if @group.save
+      flash[:notice] = 'Group was successfully updated.'
 
-    respond_to do |format|
-      if @group.save
-        flash[:notice] = 'Group was successfully updated.'
-
-        if @group.school_breaks
-          if (current_semester = Semester.current) && !@group.current_semester
-            @group.create_current_semester(semester_id: current_semester.id)
-          end
-
-          if (next_semester = Semester.next) && !@group.next_semester
-            @group.create_next_semester(semester_id: next_semester.id)
-          end
+      if @group.school_breaks
+        if (current_semester = Semester.current) && !@group.current_semester
+          @group.create_current_semester(semester_id: current_semester.id)
         end
 
-        format.html { back_or_redirect_to(@group) }
-        format.xml { head :ok }
-      else
-        format.html do
-          edit
-          render action: :edit
+        if (next_semester = Semester.next) && !@group.next_semester
+          @group.create_next_semester(semester_id: next_semester.id)
         end
-        format.xml { render xml: @group.errors, status: :unprocessable_entity }
       end
+      back_or_redirect_to(@group)
+    else
+      flash.alert = "Kunne ikke lagre gruppen: #{@group.errors.full_messages.join(', ')}"
+      edit
+      render action: :edit
     end
   end
 
@@ -90,7 +83,7 @@ class GroupsController < ApplicationController
   private
 
   def load_form_data
-    @curriculum_groups = CurriculumGroup.all
+    @curriculum_groups = CurriculumGroup.order(:martial_art_id, :position)
     @contracts = NkfMember.distinct.pluck(:kontraktstype).compact.sort
   end
 end
