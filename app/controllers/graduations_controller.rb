@@ -11,8 +11,7 @@ class GraduationsController < ApplicationController
   def index
     @graduations = Graduation.includes(group: :curriculum_group).references(:groups)
         .order('held_on DESC, group_id DESC')
-        .to_a.group_by(&:held_on)
-    @groups = @graduations.values.flatten.map(&:group).uniq.sort_by(&:from_age).reverse
+        .to_a
   end
 
   def show

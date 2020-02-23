@@ -6,32 +6,32 @@ h1 Graderinger
 
 - year = month = date = nil
 
-table.table
-  - @graduations.each do |held_on, graduations|
-    tr
-      th
-        - if held_on.cwyear != year
-          - year = held_on.cwyear
-          = held_on.cwyear
-      th
-        - if held_on.month != month
-          - month = held_on.month
-          = month_name(held_on.month).capitalize
-      th
-        - if held_on != date
-          - date = held_on
-          = held_on
-      - @groups.each do |group|
+.table-responsive
+  table.table.table-sm
+    - @graduations.each do |graduation|
+      tr class=('border-dark' if graduation.held_on.year != year)
+        th
+          - if graduation.held_on.year != year
+            - year = graduation.held_on.year
+            = graduation.held_on.year
+        th
+          - if graduation.held_on.month != month
+            - month = graduation.held_on.month
+            = month_name(graduation.held_on.month).capitalize
+        th.text-center
+          - if graduation.held_on != date
+            - date = graduation.held_on
+            = graduation.held_on.day
         td
-          - if (g = graduations.find { |gr| gr.group_id == group.id })
-            - if g.admin?
-              => link_to g.group.name, edit_graduation_path(g)
-            - else
-              => g.group.name
-            - if g.graduates.empty?
-              = link_to g, method: :delete
-                span.fa.fa-trash.text-danger data-toggle="tooltip" title='Slett'
-            - elsif g.approved?
-              span.fa.fa-thumbs-up data-toggle="tooltip" title='Godkjent'
-            - elsif g.passed?
-              span.fa.fa-question data-toggle="tooltip" title='Ikke godkjent'
+          - if graduation.admin?
+            => link_to graduation.group.name, edit_graduation_path(graduation)
+          - else
+            => graduation.group.name
+        td
+          - if graduation.graduates.empty?
+            = link_to graduation, method: :delete, data: {confirm: "Bekreft sletting av gradering for #{graduation.group.name} #{graduation.held_on}"}
+              span.fa.fa-trash.text-danger data-toggle="tooltip" title='Slett'
+          - elsif graduation.approved?
+            span.fa.fa-thumbs-up data-toggle="tooltip" title='Godkjent'
+          - elsif graduation.passed?
+            span.fa.fa-question data-toggle="tooltip" title='Ikke godkjent'
