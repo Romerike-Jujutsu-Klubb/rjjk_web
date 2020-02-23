@@ -49,7 +49,7 @@ class Member < ApplicationRecord
     from_date ||= Date.current
     to_date ||= from_date
     references(:members)
-        .where('members.joined_on <= ? AND members.left_on IS NULL OR members.left_on >= ?',
+        .where('members.joined_on <= ? AND (members.left_on IS NULL OR members.left_on >= ?)',
             to_date, from_date)
   end
   scope :attending_since, ->(from_date = nil, to_date = nil) do
