@@ -14,7 +14,7 @@ class Graduate < ApplicationRecord
   validates :passed, inclusion: { in: [true, false], if: ->(g) { g.graduation.approved? } }
 
   before_destroy do
-    if invitation_sent_at && !declined && !graduation.approved?
+    if invitation_sent_at && !declined && (passed? || !graduation.passed?)
       errors.add :base, 'Kandidaten er allerede invitert.'
       throw :abort
     end
