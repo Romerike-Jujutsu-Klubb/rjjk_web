@@ -9,13 +9,14 @@ h1 Graderinger
 .table-responsive
   table.table.table-sm
     - @graduations.each do |graduation|
-      tr class=('border-dark' if graduation.held_on.year != year)
+      - new_year = graduation.held_on.year != year
+      tr class=('border-dark' if new_year)
         th
-          - if graduation.held_on.year != year
+          - if new_year
             - year = graduation.held_on.year
             = graduation.held_on.year
         th
-          - if graduation.held_on.month != month
+          - if new_year || graduation.held_on.month != month
             - month = graduation.held_on.month
             = month_name(graduation.held_on.month).capitalize
         th.text-center
