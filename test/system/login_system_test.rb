@@ -30,6 +30,8 @@ class LoginIntegrationTest < IntegrationTest
 end
 
 class LoginSystemTest < ApplicationSystemTestCase
+  include ActionMailer::TestCase::ClearTestDeliveries
+
   setup { screenshot_section :session }
 
   def test_login_with_password
