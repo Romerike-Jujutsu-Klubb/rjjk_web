@@ -20,7 +20,7 @@ table.table.table-sm
   tbody
     - for rank in @ranks
       tr
-        td = link_to "#{rank.name} #{rank.colour}", rank
+        td = link_to "#{rank.label}", rank
         td = link_to 'Kort', card_rank_path(rank)
         td = link_to 'PDF', pdf_rank_path(rank)
         td.text-center = rank.standard_months
