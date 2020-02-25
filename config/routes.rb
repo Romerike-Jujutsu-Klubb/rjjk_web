@@ -267,6 +267,7 @@ Rails.application.routes.draw do
   resources :ranks do
     member do
       get :card
+      get :card_pdf
       get :pdf
     end
   end

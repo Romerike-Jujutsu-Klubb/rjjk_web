@@ -21,10 +21,17 @@ class RanksController < ApplicationController
     render layout: 'print'
   end
 
-  def pdf
+  def card_pdf
     ranks = [Rank.find(params[:id])]
     filename = "Skill_Card_#{ranks.last.name}.pdf"
     send_data SkillCard.pdf(ranks.sort_by(&:position)),
+        type: 'text/pdf', filename: filename, disposition: 'attachment'
+  end
+
+  def pdf
+    rank = Rank.find(params[:id])
+    filename = "Pensum_#{rank.name}.pdf"
+    send_data CurriculumBook.pdf(rank),
         type: 'text/pdf', filename: filename, disposition: 'attachment'
   end
 
