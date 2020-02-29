@@ -10,7 +10,7 @@ class RankArticlesController < ApplicationController
   def show; end
 
   def new
-    @rank_article ||= RankArticle.new
+    @rank_article ||= RankArticle.new(params[:rank_article])
     load_form_data
   end
 
@@ -21,7 +21,9 @@ class RankArticlesController < ApplicationController
   def create
     @rank_article = RankArticle.new(rank_article_params)
     if @rank_article.save
-      redirect_to @rank_article, notice: 'Rank article was successfully created.'
+      redirect_to edit_rank_path(@rank_article.rank), notice: <<~MESSAGE
+        La til artikkel "#{@rank_article.information_page.title}" til grad "#{@rank_article.rank.label}"
+      MESSAGE
     else
       new
       render :new
@@ -30,7 +32,7 @@ class RankArticlesController < ApplicationController
 
   def update
     if @rank_article.update(rank_article_params)
-      redirect_to @rank_article, notice: 'Rank article was successfully updated.'
+      redirect_to edit_rank_path(@rank_article.rank), notice: 'Oppdaterte artikkel for grad.'
     else
       render :edit
     end

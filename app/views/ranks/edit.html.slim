@@ -2,7 +2,21 @@ h1 Rediger Grad
 
 = render 'form'
 
-.clearfix.mb-3
+.clearfix.mb-5
+
+a.btn.btn-info.float-right href=new_rank_article_path(rank_article: { rank_id: @rank.id })
+  i.fa.fa-plus>
+  | Ny artikkel
+
+h3 Artikler
+
+- if @rank.rank_articles.any?
+  .row.mb-4
+    - @rank.rank_articles.each do |ra|
+      .col
+        a href=information_page_path(ra.information_page) = ra.information_page.title
+        a.ml-2 href=rank_article_path(ra) data-method=:delete data-confirm="Er du sikker på at du vil fjerne artikkelen fra denne graden?"
+          i.fa.fa-trash
 
 a.btn.btn-info.float-right href=new_basic_technique_path(basic_technique: { rank_id: @rank.id })
   i.fa.fa-plus>

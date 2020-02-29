@@ -7,6 +7,11 @@
     | Ferdighetskort
   - if technical_committy?
     = detour_to('Rediger', edit_rank_path(@rank), class: 'btn btn-primary ml-2')
+  - if @rank.rank_articles.any?
+    .mt-2
+      ' Artikler:
+      - @rank.rank_articles.each do |ra|
+        a.badge.badge-info< href=information_page_path(ra.information_page) = ra.information_page.title
 
 h2 = @rank.label
 
