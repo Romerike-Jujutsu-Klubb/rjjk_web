@@ -5,6 +5,7 @@ require 'test_helper'
 class RankArticlesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @rank_article = rank_articles(:one)
+    login
   end
 
   test 'should get index' do
