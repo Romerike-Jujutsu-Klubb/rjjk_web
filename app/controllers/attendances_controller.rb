@@ -121,8 +121,7 @@ class AttendancesController < ApplicationController
       @monthly_summary_per_group[g][:practices] =
           @monthly_summary_per_group[g][:present].map(&:practice_id).uniq.size
     end
-    @by_group_and_member = Hash[monthly_per_group
-        .map { |g, ats| [g, ats.group_by(&:member)] }]
+    @by_group_and_member = Hash[monthly_per_group.map { |g, ats| [g, ats.group_by(&:member)] }]
   end
 
   def history_graph; end

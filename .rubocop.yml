@@ -10,10 +10,15 @@ AllCops:
     - 'tmp/**/*'
     - 'vendor/**/*'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: with_first_argument, with_fixed_indentation
+# FIXME(uwe): Remove when rubocop 1.0 is released
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
+  Enabled: true
+# EMXIF
+
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
   IndentationWidth: 4
