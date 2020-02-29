@@ -1,6 +1,6 @@
 h1 Hei #{@recipient.first_name}!
 
-span style="float: right;font-size: 30pt;background-attachment: scroll;background-clip: border-box;background-color: rgb(0, 0, 255);background-image: none;background-origin: padding-box;background-size: auto;border-bottom-color: rgb(255, 255, 255);border-bottom-left-radius: 23px;border-bottom-right-radius: 23px;border-bottom-style: solid;border-bottom-width: 3px;border-left-color: rgb(255, 255, 255);border-left-style: solid;border-left-width: 3px;border-right-color: rgb(255, 255, 255);border-right-style: solid;border-right-width: 3px;border-top-color: rgb(255, 255, 255);border-top-left-radius: 23px;border-top-right-radius: 23px;border-top-style: solid;border-top-width: 3px;color: rgb(255, 255, 255);line-height: 1;padding: 0.5rem;" = @members.size
+= render 'attendance_mailer/badge', body: @members.size
 
 p Følgende er påmeldt til trening i #{@group_schedule.start_at.day_phase}:
 

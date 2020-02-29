@@ -1,12 +1,14 @@
 h1 Hei #{@recipient.first_name}!
 
+= render 'attendance_mailer/badge', body: @attendees.size
+
 - if @new_attendees.any?
   h3 Nylig påmeldt
 
   ul
     - @new_attendees.each do |m|
       li
-        - if @group_schedule.group.instructors.include?(@recipient)
+        - if @recipient.admin? || @practice.instructor?(@recipient)
           = link_to m.name, m
         - else
           = m.name
@@ -15,7 +17,11 @@ h1 Hei #{@recipient.first_name}!
   h3 Avmelding
   ul
     - @new_absentees.each do |m|
-      li = m.name
+      li
+        - if @recipient.admin? || @practice.instructor?(@recipient)
+          = link_to m.name, m
+        - else
+          = m.name
 
 - unless @practice.message.blank?
   h3 Plan for treningen
@@ -25,6 +31,9 @@ h1 Hei #{@recipient.first_name}!
   h3 #{@attendees.size} deltakere påmeldt
   ul
     - @attendees.sort_by(&:name).each do |m|
-      li = m.name
-
+      li
+        - if @recipient.admin? || @practice.instructor?(@recipient)
+          = link_to m.name, m
+        - else
+          = m.name
 p Du kan se på og endre din påmelding på #{link_to 'Mitt oppmøte', @email_url}.
