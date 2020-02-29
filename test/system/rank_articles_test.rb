@@ -17,11 +17,11 @@ class RankArticlesTest < ApplicationSystemTestCase
     visit rank_articles_url
     click_on 'New Rank article'
 
-    select @rank_article.information_page.title, from: 'rank_article_information_page_id'
+    select information_pages(:internal).title, from: 'rank_article_information_page_id'
     select @rank_article.rank.name, from: 'rank_article_rank_id'
     click_on 'Lagre'
 
-    assert_text 'La til artikkel “My first article” til grad “5. kyu gult belte”'
+    assert_text 'La til artikkel “The secret technique” til grad “5. kyu gult belte”'
   end
 
   test 'updating a Rank article' do
@@ -41,6 +41,6 @@ class RankArticlesTest < ApplicationSystemTestCase
       click_on 'Destroy', match: :first
     end
 
-    assert_text 'Rank article was successfully destroyed'
+    assert_text 'Slettet artikkel for denne graden.'
   end
 end

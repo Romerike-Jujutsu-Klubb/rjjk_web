@@ -21,8 +21,7 @@ class RankArticlesControllerTest < ActionDispatch::IntegrationTest
   test 'should create rank_article' do
     assert_difference('RankArticle.count') do
       post rank_articles_url, params: { rank_article: {
-        information_page_id: @rank_article.information_page_id, position: @rank_article.position,
-        rank_id: @rank_article.rank_id
+        information_page_id: id(:internal), rank_id: @rank_article.rank_id
       } }
     end
 
@@ -52,6 +51,6 @@ class RankArticlesControllerTest < ActionDispatch::IntegrationTest
       delete rank_article_url(@rank_article)
     end
 
-    assert_redirected_to rank_articles_url
+    assert_redirected_to edit_rank_path(@rank_article.rank)
   end
 end

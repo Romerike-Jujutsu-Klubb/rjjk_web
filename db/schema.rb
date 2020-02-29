@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_27_170305) do
+ActiveRecord::Schema.define(version: 2020_02_29_205142) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -600,6 +600,8 @@ ActiveRecord::Schema.define(version: 2020_02_27_170305) do
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.index ['information_page_id'], name: 'index_rank_articles_on_information_page_id'
+    t.index %w[rank_id information_page_id], name: 'index_rank_articles_on_rank_id_and_information_page_id', unique: true
+    t.index %w[rank_id position], name: 'index_rank_articles_on_rank_id_and_position', unique: true
     t.index ['rank_id'], name: 'index_rank_articles_on_rank_id'
   end
 

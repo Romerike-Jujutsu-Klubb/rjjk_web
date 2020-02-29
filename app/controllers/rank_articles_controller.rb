@@ -41,7 +41,7 @@ class RankArticlesController < ApplicationController
 
   def destroy
     @rank_article.destroy
-    redirect_to rank_articles_url, notice: 'Rank article was successfully destroyed.'
+    redirect_to edit_rank_path(@rank_article.rank), notice: 'Slettet artikkel for denne graden.'
   end
 
   private
