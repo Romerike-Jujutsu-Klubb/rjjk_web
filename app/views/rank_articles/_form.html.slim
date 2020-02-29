@@ -1,0 +1,13 @@
+= bootstrap_form_for @rank_article do |f|
+  - if @rank_article.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@rank_article.errors.count, "error")} prohibited this rank_article from being saved:"
+      ul
+        - @rank_article.errors.full_messages.each do |message|
+          li = message
+
+  / = f.number_field :position
+  = f.collection_select :rank_id, @ranks, :id, :name, prompt: 'Velg grad'
+  = f.collection_select :information_page_id, @articles, :id, :title, prompt: 'Velg artikkel'
+
+  .actions = f.submit

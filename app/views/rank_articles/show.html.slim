@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Position:
+  = @rank_article.position
+p
+  strong Rank:
+  = @rank_article.rank
+p
+  strong Information page:
+  = @rank_article.information_page
+
+=> link_to 'Edit', edit_rank_article_path(@rank_article)
+'|
+=< link_to 'Back', rank_articles_path

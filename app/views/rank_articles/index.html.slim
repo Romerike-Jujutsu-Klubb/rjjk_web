@@ -1,0 +1,26 @@
+a.btn.btn-primary.float-right href=new_rank_article_path
+  i.fa.fa-plus>
+  | New Rank article
+
+h1 Rank Articles
+
+table.table
+  thead
+    tr
+      th Position
+      th Rank
+      th Information page
+      th
+      th
+      th
+
+  tbody
+    - @rank_articles.each do |rank_article|
+      tr
+        td = rank_article.position
+        td = rank_article.rank
+        td = rank_article.information_page.title
+        td = link_to 'Show', rank_article
+        td = link_to 'Edit', edit_rank_article_path(rank_article)
+        td = link_to 'Destroy', rank_article, data: { confirm: 'Are you sure?' }, method: :delete
+

@@ -17,6 +17,7 @@ class Rank < ApplicationRecord
   has_many :graduates, dependent: :destroy
   has_many :katas, -> { where 'system = ?', TechniqueApplication::System::KATA },
       class_name: TechniqueApplication.name
+  has_many :rank_articles, dependent: :destroy
   has_many :technique_applications, dependent: :nullify
 
   has_many :members, through: :graduates

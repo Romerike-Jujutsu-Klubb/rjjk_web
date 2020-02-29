@@ -1,0 +1,9 @@
+one:
+  position: 1
+  rank: kyu_5
+  information_page: first
+
+two:
+  position: 1
+  rank: shodan
+  information_page: another

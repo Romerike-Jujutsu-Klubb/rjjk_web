@@ -264,6 +264,7 @@ Rails.application.routes.draw do
   resources :practices
   resources :price_age_groups
   resources :public_records
+  resources :rank_articles
   resources :ranks do
     member do
       get :card

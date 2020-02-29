@@ -5,6 +5,7 @@ class InformationPage < ApplicationRecord
   acts_as_list scope: :parent_id
 
   has_many :front_page_sections, dependent: :restrict_with_error
+  has_many :rank_articles, dependent: :destroy
 
   before_validation { body&.strip! }
 

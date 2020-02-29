@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_22_192643) do
+ActiveRecord::Schema.define(version: 2020_02_27_170305) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -593,6 +593,16 @@ ActiveRecord::Schema.define(version: 2020_02_22_192643) do
     t.datetime 'updated_at', null: false
   end
 
+  create_table 'rank_articles', force: :cascade do |t|
+    t.integer 'position', null: false
+    t.bigint 'rank_id', null: false
+    t.bigint 'information_page_id', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['information_page_id'], name: 'index_rank_articles_on_information_page_id'
+    t.index ['rank_id'], name: 'index_rank_articles_on_rank_id'
+  end
+
   create_table 'ranks', force: :cascade do |t|
     t.string 'name', limit: 16, null: false
     t.string 'colour', limit: 48, null: false
@@ -839,6 +849,8 @@ ActiveRecord::Schema.define(version: 2020_02_22_192643) do
   add_foreign_key 'news_items', 'users', column: 'created_by', name: 'news_items_created_by_fkey'
   add_foreign_key 'nkf_members', 'members', name: 'nkf_members_member_id_fkey'
   add_foreign_key 'practices', 'group_schedules', name: 'fk_practices_group_schedule_id'
+  add_foreign_key 'rank_articles', 'information_pages'
+  add_foreign_key 'rank_articles', 'ranks'
   add_foreign_key 'ranks', 'curriculum_groups'
   add_foreign_key 'signatures', 'users'
   add_foreign_key 'survey_answers', 'survey_questions', name: 'fk_survey_answers_survey_question_id'

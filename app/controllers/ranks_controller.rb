@@ -68,7 +68,7 @@ class RanksController < ApplicationController
   end
 
   def destroy
-    Rank.find(params[:id]).destroy
+    Rank.find(params[:id]).destroy!
     redirect_to action: 'index'
   end
 
