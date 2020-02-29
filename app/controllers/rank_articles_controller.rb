@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class RankArticlesController < ApplicationController
+  before_action :technical_committy_required
   before_action :set_rank_article, only: %i[show edit update destroy]
 
   def index

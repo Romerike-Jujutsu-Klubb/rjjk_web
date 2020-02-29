@@ -25,7 +25,7 @@ class RankArticlesControllerTest < ActionDispatch::IntegrationTest
       } }
     end
 
-    assert_redirected_to rank_article_url(RankArticle.last)
+    assert_redirected_to edit_rank_path(RankArticle.last.rank)
   end
 
   test 'should show rank_article' do
@@ -43,7 +43,7 @@ class RankArticlesControllerTest < ActionDispatch::IntegrationTest
       information_page_id: @rank_article.information_page_id, position: @rank_article.position,
       rank_id: @rank_article.rank_id
     } }
-    assert_redirected_to rank_article_url(@rank_article)
+    assert_redirected_to edit_rank_url(@rank_article.rank)
   end
 
   test 'should destroy rank_article' do

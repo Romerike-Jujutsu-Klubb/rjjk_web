@@ -5,6 +5,7 @@ require 'application_system_test_case'
 class RankArticlesTest < ApplicationSystemTestCase
   setup do
     @rank_article = rank_articles(:one)
+    login
   end
 
   test 'visiting the index' do
@@ -18,10 +19,9 @@ class RankArticlesTest < ApplicationSystemTestCase
 
     select @rank_article.information_page.title, from: 'rank_article_information_page_id'
     select @rank_article.rank.name, from: 'rank_article_rank_id'
-    click_on 'Lag Rank article'
+    click_on 'Lagre'
 
-    assert_text 'Rank article was successfully created'
-    click_on 'Back'
+    assert_text 'La til artikkel “My first article” til grad “5. kyu gult belte”'
   end
 
   test 'updating a Rank article' do
@@ -30,10 +30,9 @@ class RankArticlesTest < ApplicationSystemTestCase
 
     select @rank_article.information_page.title, from: 'rank_article_information_page_id'
     select @rank_article.rank.name, from: 'rank_article_rank_id'
-    click_on 'Oppdater Rank article'
+    click_on 'Lagre'
 
-    assert_text 'Rank article was successfully updated'
-    click_on 'Back'
+    assert_text 'Oppdaterte artikkel for grad.'
   end
 
   test 'destroying a Rank article' do

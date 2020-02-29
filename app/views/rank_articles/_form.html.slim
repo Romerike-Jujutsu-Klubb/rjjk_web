@@ -10,4 +10,4 @@
   = f.collection_select :rank_id, @ranks, :id, :name, prompt: 'Velg grad'
   = f.collection_select :information_page_id, @articles, :id, :title, prompt: 'Velg artikkel'
 
-  .actions = f.submit
+  .float-right = f.primary 'Lagre'
