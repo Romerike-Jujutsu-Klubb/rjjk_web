@@ -290,7 +290,7 @@ GEM
     netrc (0.11.0)
     newrelic_rpm (6.9.0.363)
     nio4r (2.5.2)
-    nokogiri (1.10.8)
+    nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     nokogiri-diff (0.2.0)
       nokogiri (~> 1.5)
@@ -567,4 +567,4 @@ RUBY VERSION
    ruby 2.7.0p0
 
 BUNDLED WITH
-   2.1.2
+   2.1.4

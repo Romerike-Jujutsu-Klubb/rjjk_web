@@ -11,7 +11,7 @@ Bundler.require(*Rails.groups)
 module RjjkWeb
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.2
+    config.load_defaults 6.0
     # FIXME(uwe): Run `bin/rails zeitwerk:check` after loading Rails 6.0 defaults
 
     # Settings in config/environments/* take precedence over those specified here.
