@@ -2,10 +2,7 @@
 
 require 'test_helper'
 
-class NkfSynchronizationJobTest < ActiveJob::TestCase
-  include ActionMailer::TestHelper
-  include Rails::Dom::Testing::Assertions
-
+class NkfSynchronizationJobTest < ActionMailer::TestCase
   test 'perform' do
     users(:lars).update! email: 'lebraten@gmail.com'
     AnnualMeeting.create! start_at: '2015-02-12 17:45'

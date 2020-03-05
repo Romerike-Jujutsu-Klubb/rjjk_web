@@ -312,7 +312,7 @@ GEM
     parallel (1.19.1)
     paranoia (2.4.2)
       activerecord (>= 4.0, < 6.1)
-    parser (2.7.0.3)
+    parser (2.7.0.4)
       ast (~> 2.4.0)
     pdf-core (0.7.0)
     pg (1.2.2)
@@ -387,7 +387,7 @@ GEM
     retriable (3.1.2)
     rexml (3.2.4)
     ri_cal (0.8.8)
-    rubocop (0.80.0)
+    rubocop (0.80.1)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.7.0.1)
@@ -401,7 +401,7 @@ GEM
       rack (>= 1.1)
       rubocop (>= 0.72.0)
     ruby-progressbar (1.10.1)
-    ruby-statistics (2.1.1)
+    ruby-statistics (2.1.2)
     rubyzip (2.2.0)
     rufus-scheduler (3.6.0)
       fugit (~> 1.1, >= 1.1.6)
@@ -479,7 +479,7 @@ GEM
     websocket-extensions (0.1.4)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.2.2)
+    zeitwerk (2.3.0)
 
 PLATFORMS
   ruby
