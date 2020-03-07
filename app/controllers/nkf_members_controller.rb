@@ -22,6 +22,11 @@ class NkfMembersController < ApplicationController
         .map { |nkfm| [nkfm.member, nkfm.mapping_changes] }.reject { |m| m[1].empty? }
   end
 
+  def sync_with_nkf
+    NkfSynchronizationJob.perform_later
+    redirect_to sync_errors_nkf_members_path
+  end
+
   def show
     if params[:id] && respond_to?(params[:id])
       send params[:id]

@@ -1,5 +1,7 @@
 - @content_width = 1024
 
+a.btn.btn-warning.float-right href=sync_with_nkf_nkf_members_path data-method=:post Importer fra NKF
+
 h1 NKF Synchronization errors (#{@errors.inject(0){|a,e| a + e[1].size}})
 
 - left_errors, current_errors = @errors.partition{|row| row[0].left?}
