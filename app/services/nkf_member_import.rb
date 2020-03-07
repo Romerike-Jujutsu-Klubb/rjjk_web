@@ -187,11 +187,12 @@ class NkfMemberImport
       end
       record = NkfMember.find_by(medlemsnummer: row[0]) || NkfMember.new
       if record.member_id.nil?
-        member = User
+        matching_users = User
             .where('UPPER(first_name) = ? AND UPPER(last_name) = ?',
                 UnicodeUtils.upcase(attributes['fornavn']),
                 UnicodeUtils.upcase(attributes['etternavn']))
-            .to_a.map(&:member).find { |m| m.nkf_member.nil? }
+            .to_a
+        member = matching_users.map(&:member).compact.find { |m| m.nkf_member.nil? }
         attributes['member_id'] = member.id if member
       end
       begin
