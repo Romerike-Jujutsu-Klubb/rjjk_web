@@ -87,8 +87,8 @@ class User < ApplicationRecord
     # if !left_on && !billing_user&.email && user.emails.empty?
     #   errors.add :base, 'The member is missing a contact email'
     # end
-    if billing_user && billing_user&.email.blank?
-      errors.add :billing_user_id, 'requires email'
+    if billing_user && billing_user&.email.blank? && billing_user&.phone.blank?
+      errors.add :billing_user_id, 'trenger e-post eller telefon'
       billing_user.errors.add :email, I18n.t('activerecord.errors.messages.blank')
     end
   end
