@@ -56,6 +56,7 @@ class User < ApplicationRecord
   before_validation do
     NILLABLE_FIELDS.each { |f| self[f] = nil if self[f].blank? }
     self.email = email.strip.downcase if email.present?
+    self.verified = false if email_changed?
     self.phone = Regexp.last_match(1) if phone =~ /^\+47\s*(.*)$/
     self.locale ||= 'nb'
     first_name&.strip!

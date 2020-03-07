@@ -154,7 +154,7 @@ GEM
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.9.0)
-    et-orbi (1.2.2)
+    et-orbi (1.2.3)
       tzinfo
     exception_notification (4.4.0)
       actionmailer (>= 4.0, < 7)

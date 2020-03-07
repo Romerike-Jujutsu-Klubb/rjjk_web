@@ -5,8 +5,18 @@
       = f.text_field :first_name
       = f.text_field :last_name
       .row
-        .col = f.text_field :email, autocomplete: :off,
-                append: (link_to('<i class="fa fa-envelope"></i>'.html_safe, %Q{mailto:"#{user.name}" <#{user.email}>}) if user.email.present?),
+        .col
+          .input-group
+            - appendix = []
+            - if admin? && user.email && @user.verified
+              - appendix << capture
+                i.fa.fa-check.text-success data-toggle=:tooltip title='Bekreftet'
+            - if user.email.present?
+              - appendix << capture
+                a href=%Q{mailto:"#{user.name}" <#{user.email}>} data-toggle=:tooltip title='Send e-post'
+                  i.fa.fa-envelope
+            = f.text_field :email, autocomplete: :off,
+                append: appendix.join('&nbsp;&nbsp;&nbsp;').html_safe,
                 help: (detour_to('Send e-post med login link', send_login_link_path(user: { identity: user.email }), method: :post) if user.email)
         - if @user.email.present? && ((@user.guardian_1 && @user.guardian_1.email.blank?) || (@user.guardian_2 && @user.guardian_2.email.blank?) || (@user.billing_user && @user.billing_user != @user.guardian_1 && @user.billing_user.email.blank?))
           .col
@@ -17,8 +27,6 @@
                 li: a Flytt til foresatt #{@user.guardian_2}
               - if @user.billing_user && @user.billing_user != @user.guardian_1 && @user.billing_user.email.blank?
                 li: a href=move_attribute_user_path(@user, other_user_id: @user.billing_user, attribute: :email) data-method=:patch Flytt til betaler #{@user.billing_user}
-        - if admin? && user.email
-          .col-md-2 = f.select :verified, [['Nei', false], ['Ja', true]]
         - if user.login.present?
           .col = f.text_field :login, autocomplete: :off
       = f.text_field :phone, \
