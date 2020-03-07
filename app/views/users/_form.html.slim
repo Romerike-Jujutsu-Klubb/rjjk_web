@@ -16,7 +16,7 @@
                 a href=%Q{mailto:"#{user.name}" <#{user.email}>} data-toggle=:tooltip title='Send e-post'
                   i.fa.fa-envelope
             = f.text_field :email, autocomplete: :off,
-                append: appendix.join('&nbsp;&nbsp;&nbsp;').html_safe,
+                append: appendix.join('&nbsp;&nbsp;&nbsp;').html_safe.presence,
                 help: (detour_to('Send e-post med login link', send_login_link_path(user: { identity: user.email }), method: :post) if user.email)
         - if @user.email.present? && ((@user.guardian_1 && @user.guardian_1.email.blank?) || (@user.guardian_2 && @user.guardian_2.email.blank?) || (@user.billing_user && @user.billing_user != @user.guardian_1 && @user.billing_user.email.blank?))
           .col

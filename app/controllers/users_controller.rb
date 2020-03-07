@@ -93,10 +93,10 @@ class UsersController < ApplicationController
     @user = User.with_deleted.find(params[:id])
     if @user.deleted?
       @user.really_destroy!
-      redirect_to users_path, notice: "Brukeren ble slettet permanent."
+      redirect_to users_path, notice: 'Brukeren ble slettet permanent.'
     else
       @user.destroy!
-      redirect_to @user, notice: "Brukeren ble slettet."
+      redirect_to @user, notice: 'Brukeren ble slettet.'
     end
   end
 
