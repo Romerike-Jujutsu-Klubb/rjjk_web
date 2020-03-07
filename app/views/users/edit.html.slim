@@ -1,6 +1,6 @@
 h2.float-right
   - if @user.deleted?
-    span.text-danger.mr-3 Brukeren er slettet
+    span.dropdown-item.text-danger.mr-3 Brukeren er slettet
     = link_to restore_user_path(@user), method: :patch, class: 'btn btn-warning'
       i.fa.fa-undo>
       | Gjenopprett
