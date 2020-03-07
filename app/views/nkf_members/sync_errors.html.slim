@@ -6,7 +6,7 @@ a.btn.btn-warning.float-right href=sync_with_nkf_nkf_members_path data-method=:p
 
 h1 NKF Synchronization errors (#{@errors.inject(0){|a,e| a + e[1].size}})
 
-- left_errors, current_errors = @errors.partition{|row| row[0].left?}
+- left_errors, current_errors = @errors.partition{|row| row[0]&.left?}
 nav
   #nav-tab.nav.nav-tabs role="tablist"
     a#nav-home-tab.nav-item.nav-link.active data-toggle="tab" data-target="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"

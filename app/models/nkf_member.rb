@@ -198,7 +198,14 @@ class NkfMember < ApplicationRecord
       logger.error "user_attributes: #{user_attributes.inspect}"
 
       contact_email = user_attributes.delete(:contact_email)
+      logger.info "contact_email: #{contact_email.inspect}"
       guardian_1_or_billing_name = user_attributes.delete(:guardian_1_or_billing_name)
+      logger.info "guardian_1_or_billing_name: #{guardian_1_or_billing_name.inspect}"
+
+      if contact_email == billing_attributes[:email] && billing_attributes[:name].blank?
+        billing_attributes.delete(:email)
+      end
+
       unless [guardian_1_attributes[:email], guardian_2_attributes[:email], billing_attributes[:email]]
             .include?(contact_email)
         user_attributes[:email] = contact_email
