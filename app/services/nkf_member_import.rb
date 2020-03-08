@@ -28,7 +28,11 @@ class NkfMemberImport
 
     @import_rows = get_member_rows(nkf_agent, session_id)
     detail_codes = search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
-    @import_rows.select! { |row| nkf_member_ids.include? row[0] } if nkf_member_ids
+    if nkf_member_ids
+      @import_rows.select! do |row|
+        nkf_member_ids.include?(row[0].to_i) || row[0] == 'Medlemsnummer'
+      end
+    end
     add_waiting_kids(nkf_agent, @import_rows, detail_codes)
 
     extra_function_codes = search_body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
