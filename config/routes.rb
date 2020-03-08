@@ -257,6 +257,7 @@ Rails.application.routes.draw do
   resources :nkf_members do
     collection do
       get :sync_errors
+      get :sync_progress
       post :sync_with_nkf
     end
   end

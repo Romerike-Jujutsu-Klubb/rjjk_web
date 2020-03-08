@@ -1,8 +1,25 @@
 - @content_width = 1024
 
 a.btn.btn-warning.float-right href=sync_with_nkf_nkf_members_path data-method=:post
-  i.fa.fa-sync>
-  | Synkronisèr med NKF
+  i.fa.fa-sync.mr-2 class=('fa-spin' if NkfSynchronizationJob.mon_locked?)
+  | Synkronisér med NKF
+javascript:
+  setInterval(function() {
+    $.get('#{sync_progress_nkf_members_path}', function(data, textStatus, xhr) {
+      if (xhr.status === 200) {
+        $('.fa-sync').addClass('fa-spin');
+      } else if ($('.fa-sync').hasClass('fa-spin')) {
+        $('.fa-sync').removeClass('fa-spin');
+        console.log("Sync completed!");
+        window.location.reload();
+      }
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+      if (jqXHR.status === 404 && $('.fa-sync').hasClass('fa-spin')) {
+        $('.fa-sync').removeClass('fa-spin');
+        console.log("Sync completed!");
+      }
+    })
+  }, 4000);
 
 h1 NKF Synchronization errors (#{@errors.inject(0){|a,e| a + e[1].size}})
 

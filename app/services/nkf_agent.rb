@@ -52,6 +52,7 @@ class NkfAgent
 
   def search_members(nkf_member_id = nil)
     logger.debug "search members: nkf_member_id: #{nkf_member_id.inspect}"
+    start = Time.zone.now
     search_url = "#{APP_PATH}/page/portal/ks_utv/ks_reg_medladm?f_informasjon=skjul&f_utvalg=vis" \
         "&frm_27_v04=#{NkfAgent::NKF_USERNAME}&frm_27_v05=1&frm_27_v06=1&frm_27_v07=1034&frm_27_v10=162" \
         '&frm_27_v12=O&frm_27_v15=Romerike%20Jujutsu%20Klubb&frm_27_v16=Stasjonsvn.%2017' \
@@ -81,13 +82,16 @@ class NkfAgent
         search_result_body << page_body
       end
     end
+    logger.debug "search members: nkf_member_id: #{nkf_member_id.inspect}: #{Time.zone.now - start}s"
     search_result_body
   end
 
   def get(url)
     with_retries do
       url = "#{APP_PATH}/#{url}" unless url.start_with?(APP_PATH)
+      request_start = Time.zone.now
       response = thread_local_agent.get(url)
+      logger.debug("NkfAgent.get(#{url.inspect}) took #{Time.zone.now - request_start}s")
       if response.body == <<~BAD_BODY
         An error occurred while processing the request. Try refreshing your browser. If the problem persists contact the site administrator'
       BAD_BODY

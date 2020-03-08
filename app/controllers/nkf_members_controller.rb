@@ -27,6 +27,10 @@ class NkfMembersController < ApplicationController
     redirect_to sync_errors_nkf_members_path
   end
 
+  def sync_progress
+    render plain: '', status: NkfSynchronizationJob.mon_locked? ? :ok : :no_content
+  end
+
   def show
     if params[:id] && respond_to?(params[:id])
       send params[:id]

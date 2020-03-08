@@ -6,8 +6,13 @@ class NkfMemberImport
 
   attr_reader :changes, :error_records, :exception, :import_rows, :new_records, :trial_changes
 
-  def initialize(nkf_member_id = nil)
-    super()
+  # @param nkf_member_ids [Integer|Array<Integer>] only import the given NKF member id(s)
+  def initialize(nkf_member_ids = nil)
+    super() # needed for MonitorMixin
+    if nkf_member_ids
+      nkf_member_ids = [*nkf_member_ids]
+      nkf_member_id = nkf_member_ids[0] if nkf_member_ids.size == 1
+    end
     @new_records = []
     @changes = []
     @trial_changes = []
@@ -17,14 +22,14 @@ class NkfMemberImport
     nkf_agent = NkfAgent.new
     nkf_agent.login # returns front_page
 
-    # TODO(uwe): Change to use Mechanize primitives like `click` and scan using nokogiri (css/xpath)
     search_body = nkf_agent.search_members(nkf_member_id)
-
     session_id = search_body.scan(/Download27\('(.*?)'\)/)[0][0]
     raise 'Could not find session id' unless session_id
 
+    @import_rows = get_member_rows(nkf_agent, session_id)
     detail_codes = search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
-    @import_rows = get_member_rows(nkf_agent, session_id, detail_codes)
+    @import_rows.select! { |row| nkf_member_ids.include? row[0] } if nkf_member_ids
+    add_waiting_kids(nkf_agent, @import_rows, detail_codes)
 
     extra_function_codes = search_body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
     raise search_body if extra_function_codes.empty?
@@ -48,7 +53,7 @@ class NkfMemberImport
 
   private
 
-  def get_member_rows(nkf_agent, session_id, detail_codes)
+  def get_member_rows(nkf_agent, session_id)
     members_body = nkf_agent
         .get("pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{session_id}")
         .body
@@ -56,7 +61,6 @@ class NkfMemberImport
     import_rows = members_body.split("\n")
         .map { |line| CGI.unescapeHTML(line.chomp).gsub(/[^[:print:]]/, '').split(';', -1)[0..-2] }
     sort_groups(import_rows)
-    add_waiting_kids(nkf_agent, import_rows, detail_codes)
     import_rows
   end
 

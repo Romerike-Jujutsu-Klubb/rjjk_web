@@ -1,12 +1,17 @@
 # frozen_string_literal: true
 
 class NkfSynchronizationJob < ApplicationJob
+  extend MonitorMixin
+
   queue_as :default
 
   def perform
-    import
-    compare
-    import_appointments
+    self.class.synchronize do
+      import
+      comparison = compare
+      import if comparison.any?
+      import_appointments
+    end
   end
 
   private
@@ -31,6 +36,7 @@ class NkfSynchronizationJob < ApplicationJob
         NkfReplicationMailer.update_members(c).deliver_now
         logger.info 'Sent update_members mail.'
       end
+      c
     end
   rescue => e
     handle_exception('Execption sending update_members email.', e)

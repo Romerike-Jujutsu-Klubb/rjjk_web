@@ -50,9 +50,9 @@
           .col
             = f.text_field :birthdate, placeholder: 'år-måned-dag', class: 'date', append: "#{user.age} år"
         .col = f.select :male, [[nil, ''], ['Mann', 'true'], ['Kvinne', 'false']], selected: user.male.to_s
+      .row
         - if admin?
           .col = f.select :role, [['', ''], ['Administrator', UserSystem::ADMIN_ROLE]], selected: user.role.to_s
-      .row
         .col = f.select :locale, [['Norsk', 'nb'], ['English', 'en']]
       - if user.kana.present? || user.memberships.any?{|m| m.ranks.any?}
         .row
