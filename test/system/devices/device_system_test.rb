@@ -140,9 +140,6 @@ module DeviceSystemTest
 
     assert_css('h1', text: 'My first article')
     screenshot :article, skip_area: logo_area
-    skip 'Flaky test SUCCEEDED!' if ENV['TRAVIS']
-  rescue
-    skip 'Flaky test' if ENV['TRAVIS']
   end
 
   private
