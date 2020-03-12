@@ -45,7 +45,7 @@ h2.float-right
 
 ul.nav.nav-tabs role="tablist"
   li.nav-item: a.nav-link.active data-target="#tab_user" data-toggle="tab" Personalia
-  - @user.memberships.each do |membership|
+  - @user.memberships.sort_by{|m| [m.left_on || Date.current]}.reverse.each do |membership|
     li.nav-item: a.nav-link data-target="#tab_membership_#{membership.id}" data-toggle="tab"
       | Medlemskap
       - if membership.left_on

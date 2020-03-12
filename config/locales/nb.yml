@@ -3,6 +3,7 @@ nb:
     basic_technique_id: Grunnteknikk
     curriculum_group_id: Pensum
     from_age: "Fra alder"
+    locale: Språk
     monthly_fee: "Måneds\xADavgift"
     name: Navn
     title: Tittel
