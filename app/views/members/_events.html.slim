@@ -2,7 +2,7 @@
 - @user.event_invitees.sort_by { |ei | ei.event.start_at  }.reverse.each do |ei|
   h3
     => ei.event.start_at.year
-    = ei.event.name
+    a href=edit_event_path(ei.event, anchor: :invitees_tab) = ei.event.name
   ul
     li = ei.email
     - if ei.invitation
