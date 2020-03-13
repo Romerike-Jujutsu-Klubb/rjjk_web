@@ -1,0 +1,37 @@
+h2.float-right
+  .btn-group
+    button.btn.btn-secondary.dropdown-toggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+      i.fa.fa-user
+      span.sr-only Toggle Dropdown
+    .dropdown-menu.dropdown-menu-right
+      a.dropdown-item href=user_path(@user, format: :vcf) title='Kontaktkort'
+        i.fa.fa-address-card>
+        | Kontaktkort
+      - if @user.deleted?
+        span.dropdown-item.text-danger.mr-3.disabled Brukeren er slettet
+        = link_to restore_user_path(@user), method: :patch, class: 'text-warning dropdown-item'
+          i.fa.fa-undo>
+          | Gjenopprett
+        = link_to user_path(@user), method: :delete, class: 'text-danger dropdown-item'
+          i.fa.fa-trash>
+          | Slett permanent
+      - else
+        a.dropdown-item.text-warning href=user_merge_path(@user) title='Slå sammen med annen bruker'
+          i.fa.fa-user-friends>
+          | Slå sammen
+        a.dropdown-item href=audit_path(User, @user.id)
+          i.fa.fa-search>
+          | Sporing bruker
+        - if @user.last_membership
+          a.dropdown-item href=audit_path(@user.last_membership.class, @user.last_membership.id)
+            i.fa.fa-search>
+            | Sporing medlemskap
+        - else
+          .dropdown-divider
+          a.dropdown-item.text-danger href=user_path(@user) data-method=:delete data-confirm='Er du sikker på at du vil slette denne brukeren?'
+            i.fa.fa-trash>
+            | Slett bruker
+        - if Rails.env.development? && current_user != @user
+          a.dropdown-item href=user_path(@user, key: @user.security_token) title="Log på som #{@user.name}"
+            i.fa.fa-user>
+            | Log på som #{@user.name}
