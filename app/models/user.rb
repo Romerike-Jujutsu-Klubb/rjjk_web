@@ -26,6 +26,8 @@ class User < ApplicationRecord
   belongs_to :guardian_2, class_name: 'User', optional: true
 
   has_one :card_key, dependent: :nullify
+  has_one :last_membership, -> { order(joined_on: :desc, left_on: :desc) }, inverse_of: :user,
+            class_name: 'Member' # TODO(uwe): Remove line after rename Member => Membership
   has_one :member, -> { where(left_on: nil).order(joined_on: :desc) }, inverse_of: :user,
       dependent: :restrict_with_exception
 
@@ -34,7 +36,9 @@ class User < ApplicationRecord
   has_many :embus, dependent: :destroy
   has_many :event_invitees, dependent: :restrict_with_error
   has_many :images, dependent: :destroy
-  has_many :memberships, dependent: :restrict_with_error, class_name: 'Member', inverse_of: :user
+  has_many :memberships, dependent: :restrict_with_error,
+      class_name: 'Member', # TODO(uwe): Remove line after rename Member => Membership
+      inverse_of: :user
   has_many :news_item_likes, dependent: :destroy
   has_many :news_items, dependent: :destroy, inverse_of: :creator, foreign_key: :created_by
   has_many :payees, dependent: :nullify, class_name: 'User', foreign_key: :billing_user_id,
