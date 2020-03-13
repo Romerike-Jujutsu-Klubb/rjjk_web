@@ -15,4 +15,8 @@ table.table.table-sm
         td = v.created_at.strftime('%F %R')
         td = v.event
         td = User.find_by(id: v.whodunnit) || v.whodunnit
-        td = v.object_changes.except('updated_at').map{|attr, (from, to)| "#{attr}: #{from.inspect} => #{to.inspect}"}.join(", ")
+        td
+          - tags = v.object_changes.except('updated_at').map do |attr, (from, to)|
+            - capture
+              span.text-nowrap #{attr}: #{from.inspect} => #{to.inspect}
+          == tags.join(", ")
