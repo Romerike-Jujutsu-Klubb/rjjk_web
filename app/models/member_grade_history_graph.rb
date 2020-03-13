@@ -59,7 +59,7 @@ class MemberGradeHistoryGraph
   end
 
   def ranks
-    ranks = [Rank::UNRANKED] + MartialArt.kwr.first.ranks.last(9)[0..-2]
+    ranks = [Rank::UNRANKED] + MartialArt.kwr.first.curriculum_groups.find_by(name: 'Voksne').ranks
     ranks_data = ranks.map { |rank| totals(rank, [Date.current], DEFAULT_INTERVAL, nil)[0] }
     ranks.zip(ranks_data)
   end
