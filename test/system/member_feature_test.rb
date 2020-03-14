@@ -11,8 +11,6 @@ class MemberFeatureTest < ApplicationSystemTestCase
     screenshot :person
     find('a.nav-link', text: 'Medlemskap').click
     screenshot :membership
-    find('a.nav-link', text: 'Kontakter').click
-    screenshot :contacts
     find('a.nav-link', text: 'Graderinger').click
     screenshot :graduations
     find('a.nav-link', text: 'Verv').click

@@ -14,8 +14,6 @@ ul.nav.nav-tabs role="tablist"
       | Medlemskap
       - if membership.left_on
         .badge.badge-danger.ml-1 title='Utmeldt' data-toggle='tooltip' U
-  - if @user.memberships.any? || @user.contact_users.size > 1
-    li.nav-item: a.nav-link data-target="#tab_contacts" data-toggle="tab" Kontakter
   - if @user.depending_users.any?
     li.nav-item: a.nav-link data-target="#tab_depending_users" data-toggle="tab" Relasjoner
   - if @member
@@ -38,8 +36,6 @@ ul.nav.nav-tabs role="tablist"
   #tab_user.tab-pane.fade.show.active.pt-3 = render 'users/form', user: @user, submit: true
   - @user.memberships.each do |membership|
     .tab-pane.fade id="tab_membership_#{membership.id}" = render 'members/form', membership: membership
-  - if @user.memberships.any? || @user.contact_users.size > 1
-    #tab_contacts.tab-pane.fade.pt-3 = render 'related_users', user: @user
   - if @user.depending_users.any?
     #tab_depending_users.tab-pane.fade.pt-3
       ul
