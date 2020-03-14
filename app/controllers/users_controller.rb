@@ -35,10 +35,7 @@ class UsersController < ApplicationController
       @groups |= @member.groups
     end
     @users = User.order(:first_name, :last_name, :email, :phone).to_a
-    lookup_context.prefixes.prepend 'members'
     render :edit
-  ensure
-    lookup_context.prefixes.delete 'members'
   end
 
   def create
