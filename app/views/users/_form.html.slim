@@ -61,12 +61,20 @@
                     (link_to('<i class="fa fa-shopping-cart"></i>', 'https://www.kataaro.com/Products/Embroidered-Black-Belt-Brushed-Cotton__E4941.aspx', target: '_blank') if user.member&.current_rank&.embroydery?) \
                   ].compact.presence&.join&.html_safe
       - if @user.memberships.any? || @user.contact_users.size > 1
+        p
+          - if user.age < 18 && user.guardian_1_id.nil?
+            ' "Foresatt 1" er bare nødvendig hvis medlemmet er under 18 år gammel.  Alle andre kontaktpersoner er valgfrie dersom medlemmet har egen e-post eller telefon.
         .row
-          .col: p "Foresatt 1" er bare nødvendig hvis medlemmet er under 18 år gammel.  Alle andre kontaktpersoner er valgfrie dersom medlemmet har egen e-post eller telefon.
-        .row
+          scss:
+            .input-group.user {
+              min-width: 15rem;
+
+              &.user-selected {
+                min-width: 23.75rem;
+              }
+            }
           .col = render 'related_user', f: f, user: user, related_user: user.guardian_1, column: :guardian_1_id
           .col = render 'related_user', f: f, user: user, related_user: user.guardian_2, column: :guardian_2_id
-        .row
           .col = render 'related_user', f: f, user: user, related_user: user.billing_user, column: :billing_user_id
           .col = render 'related_user', f: f, user: user, related_user: user.contact_user, column: :contact_user_id
 
