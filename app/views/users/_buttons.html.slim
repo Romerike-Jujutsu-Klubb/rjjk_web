@@ -12,7 +12,7 @@ h2.float-right
         = link_to restore_user_path(@user), method: :patch, class: 'text-warning dropdown-item'
           i.fa.fa-undo>
           | Gjenopprett
-        = link_to user_path(@user), method: :delete, class: 'text-danger dropdown-item'
+        a.text-danger.dropdown-item href=user_path(@user) data-method=:delete data-confirm='Er du sikker på at du vil slette denne brukeren helt?'
           i.fa.fa-trash>
           | Slett permanent
       - else
