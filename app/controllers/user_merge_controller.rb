@@ -31,7 +31,7 @@ class UserMergeController < ApplicationController
     User.transaction do
       @user.attributes = params[:user] if params[:user]
       @user.class.reflections.each do |ref_name, reflection|
-        next if %w(last_membership member).include?(ref_name)
+        next if %w[last_membership member].include?(ref_name)
         next unless reflection.is_a? ActiveRecord::Reflection::HasOneReflection
 
         user_value = @user.send(ref_name)

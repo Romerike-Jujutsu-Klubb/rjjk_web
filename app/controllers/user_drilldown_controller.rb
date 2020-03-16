@@ -38,7 +38,7 @@ class UserDrilldownController < SimpleDrilldown::DrilldownController
       label_method: ->(day_no) { Date::DAYNAMES[day_no.to_i % 7] }
   dimension :deleted, 'deleted_at IS NOT NULL'
   dimension :hour_of_day, "date_part('hour', users.created_at)"
-  dimension :member, "members.id IS NULL", includes: :member
+  dimension :member, 'members.id IS NULL', includes: :member
   dimension :month, "date_part('month', users.created_at)",
       label_method: ->(month_no) { Date::MONTHNAMES[month_no.to_i] }
   dimension :week, "date_part('week', users.created_at)"
