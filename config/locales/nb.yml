@@ -303,6 +303,18 @@ nb:
         delimiter: ""
         precision: 4
 
+#drilldown:
+  calendar_date: Dato
+  created_at: Opprettet
+  day_of_month: Dag i måneden
+  day_of_week: Ukedag
+  hour_of_day: Time på dagen
+  month: Måned
+  name: Navn
+  updated_at: Oppdatert
+  Users: Folk
+  week: Uke
+  year: År
 
   absent: Fraværende
   access_denied: Tilgang mangler
