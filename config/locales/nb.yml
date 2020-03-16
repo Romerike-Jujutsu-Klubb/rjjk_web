@@ -310,6 +310,7 @@ nb:
   day_of_week: Ukedag
   deleted: Slettet
   hour_of_day: Time på dagen
+  member: Medlem
   month: Måned
   name: Navn
   updated_at: Oppdatert
