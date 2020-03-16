@@ -308,6 +308,7 @@ nb:
   created_at: Opprettet
   day_of_month: Dag i måneden
   day_of_week: Ukedag
+  deleted: Slettet
   hour_of_day: Time på dagen
   month: Måned
   name: Navn
