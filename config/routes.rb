@@ -309,6 +309,12 @@ Rails.application.routes.draw do
       post :like
     end
   end
+  resources(:user_drilldown, only: :index) do
+    collection do
+      get :excel_export
+      get :html_export
+    end
+  end
   resources :user_merge, only: %i[show update]
   resources :user_messages
   resources :users do

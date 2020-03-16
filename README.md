@@ -1,8 +1,9 @@
+<a href="https://travis-ci.org/Romerike-Jujutsu-Klubb/rjjk_web">
+<img align="right" src="https://travis-ci.org/Romerike-Jujutsu-Klubb/rjjk_web.svg?branch=master" alt="Build Status">
+</a>
+
 RJJK Web
 ========
-
-[![Build Status](https://travis-ci.org/Romerike-Jujutsu-Klubb/rjjk_web.svg?branch=master)](https://travis-ci.org/Romerike-Jujutsu-Klubb/rjjk_web)
-
 
 ## Tester
 
