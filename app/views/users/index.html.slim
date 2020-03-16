@@ -1,6 +1,10 @@
-.float-right = link_to login_signup_path, class: 'btn btn-primary'
-  i.fa.fa-plus>
-  | Legg til ny bruker
+.float-right
+  a.btn.btn-primary href=login_signup_path
+    i.fa.fa-plus>
+    | Legg til ny bruker
+  a.btn.btn-info.ml-2 href=user_drilldown_index_path
+    i.fa.fa-chart-bar>
+    | Drilldown
 
 h1 Brukere (#{@users.size})
 
