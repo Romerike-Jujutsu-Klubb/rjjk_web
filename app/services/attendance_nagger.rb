@@ -59,7 +59,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
 
   def self.send_message_reminder
     tomorrow = Date.tomorrow
-    practices = Practice.includes(group_schedule: :group).references(:group_schedules)
+    practices = Practice.includes(:attendances, group_schedule: :group).references(:group_schedules)
         .where('message IS NULL AND message_nagged_at IS NULL')
         .where('year = ? AND week = ? AND group_schedules.weekday = ?',
             tomorrow.cwyear, tomorrow.cweek, tomorrow.cwday)
@@ -68,6 +68,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         .where('groups.planning = ?', true) # TODO(uwe): Make a scope :with_planning
         .to_a
     practices.each do |pr|
+      next if pr.attendances.select(&:present?).empty?
       pr.group_schedule.active_group_instructors.each do |gi|
         AttendanceMailer.message_reminder(pr, gi.member)
             .store(gi.member, tag: :instructor_message_reminder)
