@@ -88,7 +88,9 @@ module DeviceSystemTest
     screenshot :index, skip_area: [logo_area, bottom_logo_area]
     find('.fa-bars').click # Display menu
     assert_offset '.subnav', :left, 0
-    find('h1', text: 'Informasjon').click
+    info_section = find('h1', text: 'Informasjon')
+    find('body').scroll_to(info_section)
+    info_section.click
     assert_selector 'li a', text: 'My first article'
     assert_css '#menuShadow'
     screenshot :menu, skip_area: logo_area

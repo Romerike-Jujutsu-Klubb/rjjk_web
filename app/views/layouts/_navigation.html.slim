@@ -37,4 +37,4 @@ javascript:
     }
     menu_section = menu_link.closest('.collapse');
   }
-  menu_section.addClass('show').prev().addClass('active').find('.fa-chevron-down').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+  menu_section.addClass('show').trigger('show.bs.collapse');

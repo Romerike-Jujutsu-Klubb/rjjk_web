@@ -112,12 +112,10 @@ body:not(.wide) {
 
     &[data-target] {
       cursor: context-menu;
-      padding-top: 5px;
       padding-bottom: 5px;
       &.active {
         background-color: #9C997C;
         border-bottom: 1px solid #696755;
-        padding-top: 5px;
         padding-bottom: 7px;
       }
     }
