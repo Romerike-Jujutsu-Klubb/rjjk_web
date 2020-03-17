@@ -98,6 +98,40 @@ body:not(.wide) {
   margin-bottom: 1em;
 }
 
+#main-menu {
+  padding-top: 5px;
+  a {
+    text-decoration: none;
+  }
+
+  h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    &[data-target] {
+      cursor: context-menu;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      &.active {
+        background-color: #9C997C;
+        border-bottom: 1px solid #696755;
+        padding-top: 5px;
+        padding-bottom: 7px;
+      }
+    }
+
+    &:hover {
+      background-color: #9C997C;
+    }
+
+  }
+  ul {
+    margin-bottom: 5px;
+  }
+}
+
 .main {
   background: asset_url('dark_ritual/bg_shadow_left.png') top left repeat-y, asset_url('dark_ritual/bg_shadow_right.png') top right repeat-y;
 

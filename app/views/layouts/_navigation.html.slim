@@ -1,7 +1,7 @@
 #main-menu.accordion
   a.text-white href=root_path class=:active
     - if current_page?(root_path)
-      i.fa.fa-smile.mx-3.position-absolute style='right:0'
+      i.fa.fa-smile.mx-3.position-absolute style='top:10px;right:-0.5px'
     h1
       i.fa.fa-home.fa-fw>
       | Forsiden
@@ -16,10 +16,10 @@
 
 javascript:
   $('.collapse').on('hide.bs.collapse', function() {
-    $(this).prev().find('.fa-chevron-up').removeClass('fa-chevron-up').addClass('fa-chevron-down')
+    $(this).prev().removeClass('active').find('.fa-chevron-up').removeClass('fa-chevron-up').addClass('fa-chevron-down')
   });
   $('.collapse').on('show.bs.collapse', function() {
-    $(this).prev().find('.fa-chevron-down').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+    $(this).prev().addClass('active').find('.fa-chevron-down').removeClass('fa-chevron-down').addClass('fa-chevron-up');
   });
 
   let path = window.location.pathname;
@@ -37,4 +37,4 @@ javascript:
     }
     menu_section = menu_link.closest('.collapse');
   }
-  menu_section.addClass('show').prev().find('.fa-chevron-down').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+  menu_section.addClass('show').prev().addClass('active').find('.fa-chevron-down').removeClass('fa-chevron-down').addClass('fa-chevron-up');
