@@ -39,7 +39,7 @@ $(function() {
 // Lazy load marked images
 $(window).on('load', function() {
   $("img[data-original]").each(function() {
-    var container = $(this).closest(".lazy-container")[0];
+    const container = $(this).closest(".lazy-container")[0];
     if (container) {
       $(this).lazyload({container: container});
     } else {
@@ -61,3 +61,5 @@ $(function() {
 
   $('[data-toggle="popover"]').popover()
 });
+
+FontAwesomeConfig.autoReplaceSvg = 'nest';

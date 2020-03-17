@@ -69,6 +69,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         .to_a
     practices.each do |pr|
       next if pr.attendances.select(&:present?).empty?
+
       pr.group_schedule.active_group_instructors.each do |gi|
         AttendanceMailer.message_reminder(pr, gi.member)
             .store(gi.member, tag: :instructor_message_reminder)

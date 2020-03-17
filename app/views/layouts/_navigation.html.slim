@@ -1,21 +1,40 @@
-ul
-  li = link_to 'Forsiden', root_path
+#main-menu.accordion
+  a.text-white href=root_path class=:active
+    - if current_page?(root_path)
+      i.fa.fa-smile.mx-3.position-absolute style='right:0'
+    h1
+      i.fa.fa-home.fa-fw>
+      | Forsiden
   - if user?
-    li = link_to 'Ny forside slides', front_page_path
-    li = link_to 'Ny forside parallax', front_parallax_path
-  li = link_to 'Nyheter', controller: :news
+    = render 'layouts/user_menu'
+  - if instructor?
+    = render 'layouts/instructor_menu'
+  - if admin?
+    = render 'layouts/web_menu'
+    = render 'layouts/admin_menu'
+  = render 'layouts/information_menu'
 
-- if user?
-  = render 'layouts/user_menu'
-- if instructor?
-  = render 'layouts/instructor_menu'
-- if admin?
-  = render 'layouts/admin_menu'
+javascript:
+  $('.collapse').on('hide.bs.collapse', function() {
+    $(this).prev().find('.fa-chevron-up').removeClass('fa-chevron-up').addClass('fa-chevron-down')
+  });
+  $('.collapse').on('show.bs.collapse', function() {
+    $(this).prev().find('.fa-chevron-down').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+  });
 
-h1 Oversikt
-ul
-  - @information_pages.each do |page|
-    li
-      = link_to page.title + (page.visible? ? '' : ' (skjult)'), controller: :info, action: :show, id: page.title
-  - unless user?
-    li = detour_to 'Logg inn', login_path
+  let path = window.location.pathname;
+  let menu_section;
+  if (path == '/') {
+    menu_section = $('#user-menu');
+  } else {
+    let menu_link = $('#main-menu a[href="' + path + '"]');
+    if (menu_link.length == 0) {
+      menu_link = $('#main-menu a[href^="' + path + '"]');
+    }
+    if (menu_link.length == 0) {
+      path = '/' + path.split('/')[1];
+      menu_link = $('#main-menu a[href^="' + path + '"]');
+    }
+    menu_section = menu_link.closest('.collapse');
+  }
+  menu_section.addClass('show').prev().find('.fa-chevron-down').removeClass('fa-chevron-down').addClass('fa-chevron-up');

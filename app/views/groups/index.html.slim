@@ -31,7 +31,9 @@ table.table
   - for group in @closed_groups
     tr
       td = detour_to group.name, edit_group_path(group)
-      td = link_to group.martial_art.name, edit_martial_art_path(group.martial_art)
+      td
+        - if group.martial_art
+          = link_to group.martial_art.name, edit_martial_art_path(group.martial_art)
       td = group.from_age
       td = group.to_age
       td = group.closed_on

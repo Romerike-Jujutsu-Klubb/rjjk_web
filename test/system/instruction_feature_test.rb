@@ -8,7 +8,7 @@ class InstructionFeatureTest < ApplicationSystemTestCase
   def test_index
     screenshot_group :index
     login_and_visit '/'
-    click_menu 'Gruppeinstruktører'
+    click_menu 'Gruppeinstruktører', section: 'Instruksjon'
     assert_current_path '/group_instructors'
     screenshot :index
   end

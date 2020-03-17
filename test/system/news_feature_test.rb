@@ -38,7 +38,7 @@ class NewsFeatureTest < ApplicationSystemTestCase
     screenshot_group :new
     visit_with_login '/?lang=nb'
     screenshot('front')
-    click_menu 'Ny nyhet'
+    click_menu 'Ny nyhet', section: 'Web'
     assert_current_path '/news/new'
     screenshot('form')
     fill_in 'news_item[title]', with: 'A new hope'

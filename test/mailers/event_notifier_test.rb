@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class EventNotifierTest < ActionMailer::TestCase
-  def test_send_attendance_plan
+  def test_send_event_messages
     assert_mail_deliveries(0) do
       assert_mail_stored(4) do
         EventNotifier.send_event_messages

@@ -1,6 +1,8 @@
-h1 Instruksjon
-
-ul
+h1 data-toggle="collapse" data-target="#instructor-menu" role="button" aria-expanded="false" aria-controls="collapseExample"
+  i.fa.fa-chevron-down.mx-3.position-absolute style='right:0'
+  i.fa.fa-running.fa-fw>
+  | Instruksjon
+ul#instructor-menu.collapse data-parent="#main-menu"
   li = menu_item 'Oppmøte', attendance_forms_path
   li = menu_item 'Graderinger', controller: :graduations
   li = menu_item 'Gruppeinstruktører', controller: :group_instructors

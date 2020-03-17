@@ -1,22 +1,14 @@
-h1 Web
-
-ul
-  li = menu_item 'Ny nyhet', controller: :news, action: :new
-  li = menu_item 'Ny info-side', controller: :info, action: :new
-  li = menu_item 'Arrangement', events_path
-  li = menu_item 'Brukere', controller: :users, action: :index
-  li = link_to 'GitHub', 'https://github.com/Romerike-Jujutsu-Klubb/rjjk_web', target: 'github'
-  li = menu_item 'Status', controller: :status
-
-h1 Administrasjon
-
-ul
+h1 data-toggle="collapse" data-target="#admin-menu" role="button" aria-expanded="false" aria-controls="collapseExample"
+  i.fa.fa-chevron-down.mx-3.position-absolute style='right:0'
+  i.fa.fa-users-cog.fa-fw>
+  | Administrasjon
+ul#admin-menu.collapse data-parent="#main-menu"
   li = menu_item 'Medlemsliste', controller: :members, action: :list_active
   li = menu_item 'Styremøter', controller: :board_meetings
   li = menu_item 'Årsmøter', controller: :annual_meetings
   li = menu_item 'Styret', controller: :elections
   li = menu_item 'Nøkler', card_keys_path
   li = menu_item 'Spørre&shy;undersøkelser'.html_safe, controller: :surveys
-  li = menu_item 'Bursdager', controller: :birthday_celebrations
+  li = menu_item 'Bursdagsfeiring', controller: :birthday_celebrations
   li = menu_item 'Roller', controller: :roles
   li = menu_item 'Verv', controller: :appointments

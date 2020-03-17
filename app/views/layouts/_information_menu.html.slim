@@ -1,0 +1,10 @@
+h1 data-toggle="collapse" data-target="#information-menu" role="button" aria-expanded="false" aria-controls="collapseExample"
+  i.fa.fa-chevron-down.mx-3.position-absolute style='right:0'
+  i.fa.fa-info.fa-fw>
+  | Informasjon
+ul#information-menu.collapse data-parent="#main-menu"
+  - @information_pages.each do |page|
+    - path = { controller: :info, action: :show, id: page.title }
+    li = link_to page.title + (page.visible? ? '' : ' (skjult)'), path, class: (:active if current_page?(path))
+  - unless user?
+    li = detour_to 'Logg inn', login_path

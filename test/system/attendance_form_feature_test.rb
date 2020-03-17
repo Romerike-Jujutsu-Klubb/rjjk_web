@@ -9,7 +9,7 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
   def test_index
     screenshot_group :form
     login_and_visit '/'
-    click_menu('Oppmøte')
+    click_menu('Oppmøte', section: 'Instruksjon')
     assert_current_path attendance_forms_path
     find('#lists-tab').click
     screenshot :index

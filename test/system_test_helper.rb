@@ -58,8 +58,9 @@ module SystemTestHelper
     find('#navBtn', wait: 30).click
   end
 
-  def click_menu(menu_item)
+  def click_menu(menu_item, section: nil)
     open_menu
+    find('#main-menu > h1', text: section).click if section
     link = find(:link, menu_item)
     with_retries(label: 'click menu') { link.click }
   end

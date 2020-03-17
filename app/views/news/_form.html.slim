@@ -21,7 +21,7 @@
         = f.submit 'Lagre', id: :save, class: 'btn btn-primary ml-2'
 
       a.btn.btn-primary data-toggle="collapse" href="#moreInfoCollapse" aria-expanded="false" aria-controls="collapseExample"
-        .fa.fa-chevron-circle-down>
+        i.fa.fa-chevron-circle-down>
         = t('activerecord.attributes.news_item.body')
       .collapse#moreInfoCollapse.mt-3 class=(:show if @news_item.body.present?)
         .text-right = link_to('https://kramdown.gettalong.org/quickref.html', target: :kramdown)
