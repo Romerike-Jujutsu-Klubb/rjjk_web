@@ -133,11 +133,11 @@ module DeviceSystemTest
     scroll_position = evaluate_script('$(window).height()')
     with_retries { assert_equal scroll_position, evaluate_script('window.scrollY') }
     screenshot :scrolled, skip_area: scroll_bar_area
-    assert_equal information_page_url(id(:first)),
+    assert_equal information_page_url(information_pages(:first).title),
         find('#footer .menu-item a', text: 'MY FIRST ARTICLE')[:href]
     with_retries label: 'article link click' do
       find('#footer .menu-item a', text: 'MY FIRST ARTICLE').click
-      assert_current_path information_page_path(id(:first))
+      assert_current_path information_page_path(information_pages(:first).title)
     end
 
     assert_css('h1', text: 'My first article')
