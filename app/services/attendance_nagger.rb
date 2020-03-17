@@ -42,6 +42,8 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
       practice = attendances[0].practice
       non_attendees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:member)
       attendees = attendances.map(&:member) - non_attendees
+      next if attendees.empty?
+
       recipients =
           gs.group.members.order(:joined_on, :id).reject(&:passive?).reject(&:left?) - non_attendees
       recipients.each do |recipient|
