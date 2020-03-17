@@ -5,6 +5,10 @@ class AttendanceNagger
 
   def self.send_attendance_plan
     today = Date.current
+    unless Attendance.joins(:practice).where(practices: { year: today.cwyear, week: today.cweek }).exists?
+      return
+    end
+
     Member.active(today)
         .where('NOT EXISTS (
 SELECT a.id FROM attendances a INNER JOIN practices p ON a.practice_id = p.id
