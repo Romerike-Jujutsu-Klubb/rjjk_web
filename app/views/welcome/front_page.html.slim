@@ -177,11 +177,11 @@ section#background-wrapper
             data-src=image_url_with_cl(fps.image) data-srcblur=fps_blurred_image_url
             data-width=(fps.image.width || 1920) data-height=(fps.image.height || 1080)]
           section.slidercontent
-            h2: a href=information_page_path(fps.information_page_id) title=fps.title = fps.title
+            h2: a href=information_page_path(fps.information_page.title) title=fps.title = fps.title
             div.d-none.d-md-block
               p.mainTitleSlider = fps.subtitle
               .fbuilder_module.sliderBtn style="width:auto" data-shortcode="tp_button" data-modid="0"
-                a.smoothscroll href=information_page_path(fps.information_page_id) target="_self"
+                a.smoothscroll href=information_page_path(fps.information_page.title) target="_self"
                   button.btn.txtshadow.fullwidth style="color:#ffffff;background-color:#4e89b7;white-space:nowrap!important"
                     = fps.button_text
                     i.fa.fa-chevron-right style="float:right;margin-top:1rem;margin-left:1rem"

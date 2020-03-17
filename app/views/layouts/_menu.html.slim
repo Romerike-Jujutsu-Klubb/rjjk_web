@@ -12,7 +12,7 @@ menu#mainmenuholder
         .clear
       - @information_pages.select(&:public).reject(&:hidden).each do |ip|
         li.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-has-children id="menu-item-#{ip.id}"
-          a href=url_for(ip) = ip.title
+          a href=information_page_path(ip.title) = ip.title
           .clear
       li#menu-item-1723.menu-item.menu-item-type-custom.menu-item-object-custom.menu-item-has-children
         a href=(current_user ? root_path : with_detour(login_path)) Medlemssider#{" (#{current_user&.name})" if current_user}

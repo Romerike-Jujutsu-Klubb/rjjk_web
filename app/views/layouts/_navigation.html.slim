@@ -30,10 +30,13 @@ javascript:
     let menu_link = $('#main-menu a[href="' + path + '"]');
     if (menu_link.length == 0) {
       menu_link = $('#main-menu a[href^="' + path + '"]');
-    }
-    if (menu_link.length == 0) {
-      path = '/' + path.split('/')[1];
-      menu_link = $('#main-menu a[href^="' + path + '"]');
+      if (menu_link.length == 0) {
+        path = '/' + path.split('/')[1];
+        menu_link = $('#main-menu a[href="' + path + '"]');
+        if (menu_link.length == 0) {
+          menu_link = $('#main-menu a[href^="' + path + '"]');
+        }
+      }
     }
     menu_section = menu_link.closest('.collapse');
   }

@@ -87,7 +87,7 @@
                 <ul id="menu-footerwidgetnavigation" class="menu">
                   <% @information_pages.select(&:public).reject(&:hidden).each do |ip| %>
                     <li id="menu-item-<%= ip.id %>" class="menu-item menu-item-type-post_type menu-item-object-page">
-                      <a href="<%= information_page_path ip %>"><i class="demoicon <%= ip.icon_class.presence || 'fa fa-file-alt' %> fa-fw"></i>
+                      <a href="<%= information_page_path ip.title %>"><i class="demoicon <%= ip.icon_class.presence || 'fa fa-file-alt' %> fa-fw"></i>
                         <%= ip.title %>
                       </a>
                       <div class="clear"></div>
@@ -134,7 +134,7 @@
               <div class="menu-for-contact-us-widget-container">
                 <ul id="menu-for-contact-us-widget" class="menu">
                   <li id="menu-item-2374" class="menu-item menu-item-type-post_type menu-item-object-page">
-                    <a href="<%= information_page_path(6) %>"><i class="fa fa-map" style="margin-right:0.5rem"></i>
+                    <a href="<%= information_page_path('Kontakt oss') %>"><i class="fa fa-map" style="margin-right:0.5rem"></i>
                       Kontakt oss</a>
                     <div class="clear"></div>
                   </li>
@@ -144,7 +144,7 @@
             </div>
             <div id="text-3" class="widget-2 last widget_text">
               <div class="textwidget" style="text-align: center">
-                <a href="<%= information_page_path(6) %>"><img class="w-100" alt="RJJK kart" src="<%= asset_path accepts_webp? ? 'kart.webp' : 'kart.png' %>" width="332"/></a>
+                <a href="<%= information_page_path('Kontakt oss') %>"><img class="w-100" alt="RJJK kart" src="<%= asset_path accepts_webp? ? 'kart.webp' : 'kart.png' %>" width="332"/></a>
               </div>
               <div class="clear"></div>
             </div>
