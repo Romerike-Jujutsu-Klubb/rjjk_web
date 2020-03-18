@@ -310,7 +310,7 @@ ul.controls li a.delete {
   border-bottom: 1px solid black;
   z-index: 2;
 
-  .fb-buttons {
+  .buttons {
     float: right;
     .btn {
       @extend .my-2;
@@ -379,7 +379,6 @@ body:not(.wide) .container-fluid {
   margin-bottom: 0.5em;
   transition: 0.5s;
   z-index: 3;
-  margin-right: 4.1rem;
 
   @media (min-width: 640px) {
     margin-right: -2rem;
@@ -403,7 +402,7 @@ body:not(.wide) .container-fluid {
   .header {
     height: 150px;
     padding-right: 150px;
-    .fb-buttons {
+    .buttons {
       font-size: 1.8rem;
       .btn {
         font-size: 1.7rem;
@@ -446,7 +445,7 @@ body:not(.wide) .container-fluid {
     .header {
       position: relative;
       padding-right: 0;
-      .fb-buttons {
+      .buttons {
         margin-right: 46px;
       }
     }

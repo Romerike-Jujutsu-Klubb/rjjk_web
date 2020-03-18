@@ -50,7 +50,8 @@ html lang="nb"
             .subnav.d-print-none style="overflow-y: scroll" = render 'layouts/navigation'
             .main.col
               = image_tag('rjjk_logo_plus_txt_320.png', class: 'd-none d-print-block float-right w-25 m-3 mb-4')
-              = render 'layouts/search'
+              - if @query
+                = render 'layouts/search'
               .padded = yield
         .main_right.lazy-container.d-print-none = render 'layouts/right_column'
 

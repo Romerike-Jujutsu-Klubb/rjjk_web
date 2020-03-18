@@ -4,18 +4,11 @@
 
   .d-none.d-md-block.mt-md-5.mb-1 Romerike Jujutsu Klubb
 
-  .fb-buttons
-    a.btn.btn-secondary href='http://www.facebook.com/home.php#!/pages/Romerike-Jujutsu-Klubb/260684570923?ref=ts' target='facebook' title='Facebook'
-      i.fab.fa-facebook-f
-    - if user?
-      a.btn.btn-secondary href='https://www.facebook.com/groups/romerikejjk' target='facebook' title='Facebook gruppe'
-        i.fab.fa-facebook-square
+  .buttons
     - unless current_user&.member
       a.btn.btn-secondary href='http://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162' target='NKF' title='Prøv oss!'
         i.fa.fa-child>
         span.d-none.d-md-inline Prøv oss
-    button.btn.btn-secondary data-toggle="collapse" data-target="#search-form" title="Søk"
-      i.fa.fa-search
     #calendarBtn.btn.btn-secondary title='Kalender'
       i.far.fa-calendar-alt
 

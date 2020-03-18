@@ -1,8 +1,9 @@
 #main-menu.accordion
+  = render 'layouts/top_nav_buttons'
   a.text-white href=root_path class=:active
-    - if current_page?(root_path)
-      i.fa.fa-smile.mx-3.position-absolute style='top:10px;right:-0.5px'
     h1
+      - if current_page?(root_path)
+        i.fa.fa-smile.mx-2.position-absolute.fa-fw style='right:4px'
       i.fa.fa-home.fa-fw>
       | Forsiden
   - if user?
