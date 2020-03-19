@@ -13,7 +13,7 @@ class SearchController < ApplicationController
       @user_messages = UserMessage.search(@query).to_a
     end
 
-    query = "%#{UnicodeUtils.upcase(@query).gsub(/(_|%)/, '\\\\\\1')}%"
+    query = "%#{@query.upcase.gsub(/(_|%)/, '\\\\\\1')}%"
     @pages = InformationPage
         .where('title ILIKE :query OR body ILIKE :query', query: query).order(:title).to_a
     news_items = NewsItem

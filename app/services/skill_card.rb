@@ -42,10 +42,10 @@ class SkillCard
           rows = [['', "Grunnteknikker #{rank.name}".upcase, 'G', 'F', 'A', 'I']]
 
           rank.basic_techniques.group_by { |bt| bt.waza.name }.each do |waza_name, techs|
-            rows << [{ content: UnicodeUtils.upcase(waza_name), rowspan: techs.size, rotate: 90 },
-                     UnicodeUtils.upcase(techs[0].name), nil, nil, nil, nil]
+            rows << [{ content: waza_name.upcase, rowspan: techs.size, rotate: 90 },
+                     techs[0].name.upcase, nil, nil, nil, nil]
             rows += techs[1..-1].sort_by(&:name).map do |bt|
-              [UnicodeUtils.upcase(bt.name), nil, nil, nil, nil]
+              [bt.name.upcase, nil, nil, nil, nil]
             end
           end
           bt_table = make_table(rows,
@@ -64,10 +64,10 @@ class SkillCard
         rank.technique_applications.sort_by(&:position).group_by(&:system).each do |system_name, apps|
           apps.each_slice(14) do |app_slice|
             rows << [
-              { content: UnicodeUtils.upcase(system_name), rowspan: app_slice.size, rotate: 90 },
-              UnicodeUtils.upcase(app_slice[0].name), nil, nil, nil, nil
+              { content: system_name.upcase, rowspan: app_slice.size, rotate: 90 },
+              app_slice[0].name.upcase, nil, nil, nil, nil
             ]
-            rows += app_slice[1..-1].map { |ta| [UnicodeUtils.upcase(ta.name), nil, nil, nil, nil] }
+            rows += app_slice[1..-1].map { |ta| [ta.name.upcase, nil, nil, nil, nil] }
           end
         end
 

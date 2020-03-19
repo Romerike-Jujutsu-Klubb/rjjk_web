@@ -197,8 +197,7 @@ class NkfMemberImport
       if record.member_id.nil?
         matching_users = User
             .where('UPPER(first_name) = ? AND UPPER(last_name) = ?',
-                UnicodeUtils.upcase(attributes['fornavn']),
-                UnicodeUtils.upcase(attributes['etternavn']))
+                attributes['fornavn'].upcase, attributes['etternavn'].upcase)
             .to_a
         member = matching_users.map(&:member).compact.find { |m| m.nkf_member.nil? }
         attributes['member_id'] = member.id if member
