@@ -6,26 +6,14 @@ class BoardMeetingsController < ApplicationController
   def index
     @board_meetings = BoardMeeting.order(:start_at).reverse_order.all
     load_form_data
-    respond_to do |format|
-      format.html
-      format.json { render json: @board_meetings }
-    end
   end
 
   def show
     @board_meeting = BoardMeeting.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.json { render json: @board_meeting }
-    end
   end
 
   def new
     load_form_data
-    respond_to do |format|
-      format.html
-      format.json { render json: @board_meeting }
-    end
   end
 
   def edit
@@ -35,41 +23,27 @@ class BoardMeetingsController < ApplicationController
 
   def create
     @board_meeting = BoardMeeting.new(params[:board_meeting])
-    respond_to do |format|
-      if @board_meeting.save
-        format.html do
-          redirect_to board_meetings_path, notice: 'Board meeting was successfully created.'
-        end
-        format.json { render json: @board_meeting, status: :created, location: @board_meeting }
-      else
-        format.html { render :new }
-        format.json { render json: @board_meeting.errors, status: :unprocessable_entity }
-      end
+    if @board_meeting.save
+      redirect_to board_meetings_path, notice: 'Board meeting was successfully created.'
+    else
+      render :new
     end
   end
 
   def update
     @board_meeting = BoardMeeting.find(params[:id])
-    respond_to do |format|
-      if @board_meeting.update(params[:board_meeting])
-        format.html do
-          redirect_to board_meetings_path, notice: 'Board meeting was successfully updated.'
-        end
-        format.json { head :no_content }
-      else
-        format.html { render :edit }
-        format.json { render json: @board_meeting.errors, status: :unprocessable_entity }
-      end
+    parameters = params[:board_meeting]
+    if parameters && @board_meeting.update(parameters)
+      redirect_to board_meetings_path, notice: 'Board meeting was successfully updated.'
+    else
+      render :edit
     end
   end
 
   def destroy
     @board_meeting = BoardMeeting.find(params[:id])
     @board_meeting.destroy
-    respond_to do |format|
-      format.html { redirect_to board_meetings_url }
-      format.json { head :no_content }
-    end
+    redirect_to board_meetings_url
   end
 
   def minutes

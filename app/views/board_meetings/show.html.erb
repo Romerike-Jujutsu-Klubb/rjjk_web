@@ -3,13 +3,17 @@
 <br/>
 
 <% if @board_meeting.minutes_content_type == 'text/plain' %>
-    <pre>
+  <pre>
       <%= @board_meeting.minutes_content_data %>
-    </pre>
-<% else %>
-    <p>
-      <%= @board_meeting.minutes_content_data %>
-    </p>
+  </pre>
+<% elsif @board_meeting.minutes_content_type == 'text/html' %>
+  <p>
+    <%= @board_meeting.minutes_content_data %>
+  </p>
+<% elsif @board_meeting.minutes_content_data %>
+  <p>
+    <%= @board_meeting.minutes_content_data.size %> bytes
+  </p>
 <% end %>
 
 <%= link_to 'Rediger', edit_board_meeting_path(@board_meeting) %> |

@@ -1,8 +1,8 @@
 one:
   start_at: 2014-03-08 12:49:11
-  minutes_filename: MyString
-  minutes_content_type: MyString
-  minutes_content_data:
+  minutes_filename: name_file.bin
+  minutes_content_type: application/octet-stream
+  minutes_content_data: "\x00\x01\x02\xAD"
 
 two:
   start_at: 2014-04-08 13:37
