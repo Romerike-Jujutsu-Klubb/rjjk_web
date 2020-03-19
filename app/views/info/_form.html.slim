@@ -42,7 +42,7 @@
       .float-right
         = back_or_link_to 'Tilbake', information_pages_path, class: 'btn btn-link'
         - unless @information_page.new_record?
-          a.btn.btn-link.mr-2 href=url_for(@information_page) Vis
+          a.btn.btn-link.mr-2 href=information_page_path(@information_page.title) Vis
         = f.submit 'Lagre', id: :save, class: 'btn btn-primary'
 
       .float-left style=('color:red' if @information_page.revised_at.nil? || @information_page.revised_at < 6.months.ago) = f.check_box :revised_at, { checked: false }, 1, nil

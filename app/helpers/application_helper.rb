@@ -37,9 +37,7 @@ module ApplicationHelper
     else
       path = options
     end
-    target_controller = Rails.application.routes.recognize_path(path)[:controller]
-    css_class = (controller.controller_name.to_s == target_controller ? 'active' : nil)
-    link_to name, path, class: css_class
+    link_to name, path
   end
 
   def yes_no(bool)
