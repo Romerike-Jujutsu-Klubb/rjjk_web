@@ -32,17 +32,17 @@ class UserDrilldownController < SimpleDrilldown::DrilldownController
   # field :comments, attr_method: ->(post) { post.comments.count }
 
   dimension :calendar_date, 'DATE(users.created_at)', interval: true
-  dimension :day_of_month, "date_part('day', users.created_at)"
-  dimension :day_of_week,
-      "CASE WHEN date_part('dow', users.created_at) = 0 THEN 7 ELSE date_part('dow', users.created_at) END",
-      label_method: ->(day_no) { Date::DAYNAMES[day_no.to_i % 7] }
+  dimension :day_of_month, "date_part('day', users.created_at)::int"
+  dimension :day_of_week, <<~SQL, label_method: ->(day_no) { Date::DAYNAMES[day_no.to_i % 7] }
+    CASE WHEN date_part('dow', users.created_at) = 0 THEN 7 ELSE date_part('dow', users.created_at)::int END
+  SQL
   dimension :deleted, 'deleted_at IS NOT NULL'
-  dimension :hour_of_day, "date_part('hour', users.created_at)"
+  dimension :hour_of_day, "date_part('hour', users.created_at)::int"
   dimension :member, 'members.id IS NULL', includes: :member
-  dimension :month, "date_part('month', users.created_at)",
+  dimension :month, "date_part('month', users.created_at)::int",
       label_method: ->(month_no) { Date::MONTHNAMES[month_no.to_i] }
-  dimension :week, "date_part('week', users.created_at)"
-  dimension :year, "date_part('year', users.created_at)"
+  dimension :week, "date_part('week', users.created_at)::int"
+  dimension :year, "date_part('year', users.created_at)::varchar"
 
   # dimension :comments, 'SELECT count(*) FROM comments c WHERE c.user_id = users.id'
   # dimension :user, 'users.name', includes: :user

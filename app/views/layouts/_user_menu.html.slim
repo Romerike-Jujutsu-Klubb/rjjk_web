@@ -4,12 +4,11 @@ h1 data-toggle="collapse" data-target="#user-menu" role="button" aria-expanded="
   = current_user.name
 ul#user-menu.collapse data-parent="#main-menu"
   li: a href=user_path(current_user) class=(:active if current_page?(user_path(current_user))) Min side
-  li = menu_item 'Nyheter', controller: :news
   - if member?
     - if current_user.member.groups.any?(&:planning)
       li = menu_item 'Mitt oppmøte', controller: :attendances, action: :plan
     li = menu_item 'Pensum', controller: :curriculums, action: :index
     li = menu_item 'Min Embu', controller: :embus, action: :index
   li = menu_item 'Mine media', controller: :images, action: :mine
-  li = link_to 'Logg på NKF', 'http://nkfwww.kampsport.no/portal/page/portal/ks_utv/st_login', onclick: 'return !window.open(this.href)'
+  li = menu_item 'Nyheter', controller: :news
   li = detour_to 'Logg ut', controller: :login, action: :logout
