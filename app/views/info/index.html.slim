@@ -8,7 +8,10 @@ table.table.table-sm data-record-path=information_pages_path
   thead
     tr valign="top"
       th
+      th
+      th
       th Tittel
+      th Tilgang
       th Oppdatert
       th Revidert
       th Utsendt
@@ -16,26 +19,29 @@ table.table.table-sm data-record-path=information_pages_path
   tbody
     - for information_page in @information_pages
       tr valign="top" data-record-id="#{information_page.id}/edit"
-        td.text-center
+        td
           - unless information_page.first?
             a.my-0 href=move_up_information_page_path(information_page)
               i.fa.fa-chevron-up
+        td.text-center
           .my-0
             = information_page.parent_id
             = information_page.position
+        td
           - if information_page.in_list?
             a.my-0 href=move_down_information_page_path(information_page)
               i.fa.fa-chevron-down
         td
           a href=information_page_path(information_page) = information_page.title
+        td
           - if information_page.public
-            .text-warning Offentlig
+            .text-warning data-toggle=:tooltip title='Vises til alle' Offentlig
           - else
-            .text-success Intern
+            .text-success data-toggle=:tooltip title='Vises bare til medlemmer' Intern
           .text-danger = information_page.hidden && :Skjult || nil
         / td = textalize(information_page.body)
         td = information_page.updated_at.strftime('%F %R')
         td = information_page.revised_at&.strftime('%F %R')
         td = information_page.mailed_at&.strftime('%F %R')
-        td: a.btn.btn-danger href=url_for(information_page) data-confirm='Er du sikker på at du vil slette denne informasjonssiden?' data-method=:post
+        td: a.btn.btn-danger.btn-sm href=url_for(information_page) data-confirm='Er du sikker på at du vil slette denne informasjonssiden?' data-method=:delete
           i.fa.fa-trash-alt
