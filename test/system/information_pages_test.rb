@@ -19,7 +19,8 @@ class InformationPagesTest < ApplicationSystemTestCase
     screenshot_group :create
     visit root_path
     # assert_selector "h1", text: "Web"
-    click_menu 'Ny info-side', section: 'Web'
+    click_menu 'Informasjonssider', section: 'Web'
+    click_on 'Ny side'
     assert_selector 'h1', text: 'Opprette ny informasjonsside'
     screenshot :new
     fill_in :information_page_title, with: 'Serenity'
