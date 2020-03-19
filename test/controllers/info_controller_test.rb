@@ -58,7 +58,7 @@ class InfoControllerTest < ActionController::TestCase
     login(:uwe)
     delete :destroy, params: { id: information_page.id }
     assert_response :redirect
-    assert_redirected_to controller: :news, action: :index
+    assert_redirected_to information_pages_path
 
     assert_raise(ActiveRecord::RecordNotFound) do
       InformationPage.find(information_page.id)
