@@ -47,6 +47,7 @@ class ApplicationController < ActionController::Base
       info_query = InformationPage.roots.order(:position)
       info_query = info_query.where('hidden IS NULL OR hidden = ?', false) unless admin?
       info_query = info_query.where('title <> ?', 'Velkommen') unless user?
+      info_query = info_query.for_all unless member?
       @information_pages = info_query.to_a
     end
 

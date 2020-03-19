@@ -8,9 +8,9 @@ class InfoController < ApplicationController
   end
 
   def show
-    @information_page ||= InformationPage
-        .where('UPPER(title) = ?', UnicodeUtils.upcase(params[:id])).first
-    @information_page ||= InformationPage.find_by(id: params[:id].to_i)
+    base_query = current_user ? InformationPage : InformationPage.for_all
+    @information_page ||= base_query.where('UPPER(title) = ?', params[:id].upcase).first
+    @information_page ||= base_query.find_by(id: params[:id].to_i)
     return if @information_page
 
     if (page_alias = PageAlias.where(old_path: request.path).first)
@@ -20,12 +20,12 @@ class InfoController < ApplicationController
     begin
       utf8_param = params[:id].encode(Encoding::ISO_8859_1)
           .force_encoding(Encoding::UTF_8)
-      utf8_title = UnicodeUtils.upcase(utf8_param)
-      if (page = InformationPage.where('UPPER(title) = ?', utf8_title).first)
+      utf8_title = utf8_param.upcase
+      if (page = base_query.where('UPPER(title) = ?', utf8_title).first)
         redirect_to page, status: :moved_permanently
         return
       end
-      if (page = InformationPage.where('UPPER(title) = ?', utf8_title.chomp("'")).first)
+      if (page = base_query.where('UPPER(title) = ?', utf8_title.chomp("'")).first)
         redirect_to page, status: :moved_permanently
         return
       end
@@ -107,7 +107,7 @@ class InfoController < ApplicationController
   def destroy
     @information_page = InformationPage.find(params[:id])
     if @information_page.destroy
-      redirect_to controller: :news, action: :index
+      redirect_to information_pages_path
     else
       edit
     end
