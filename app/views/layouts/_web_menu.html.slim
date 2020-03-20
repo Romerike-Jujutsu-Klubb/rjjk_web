@@ -3,7 +3,7 @@ h1 data-toggle="collapse" data-target="#web-menu" role="button" aria-expanded="f
   i.fa.fa-network-wired.fa-fw>
   | Web
 ul#web-menu.collapse data-parent="#main-menu"
-  li = menu_item 'Ny nyhet', controller: :news, action: :new
+  li = menu_item 'Nyheter', controller: :news
   li = menu_item 'Informasjonssider', information_pages_path
   li = menu_item 'Arrangement', events_path
   li = menu_item 'Brukere', controller: :users, action: :index

@@ -1,3 +1,7 @@
+- if admin? && NewsController === controller
+  a.btn.btn-primary.float-right href=new_news_item_path
+    i.fa.fa-plus>
+    | Ny nyhet
 - if (focus_item = @news_items[0])
   = render 'news/item', news_item: focus_item, full: false, focus: true
 

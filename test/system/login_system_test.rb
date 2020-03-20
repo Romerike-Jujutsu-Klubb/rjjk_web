@@ -68,7 +68,6 @@ class LoginSystemTest < ApplicationSystemTestCase
     assert(%r{<a href="(https://example.com/\?key=([^"]+))">#{login_link_text}</a>} =~ email.body.decoded)
     visit root_path(key: Regexp.last_match(2))
     open_menu
-    find('h1', text: 'Uwe Kubosch').hover
     screenshot :welcome
     click_link 'Logg ut'
     click_on 'Medlemssider'

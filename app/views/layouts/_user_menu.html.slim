@@ -10,5 +10,6 @@ ul#user-menu.collapse data-parent="#main-menu"
     li = menu_item 'Pensum', controller: :curriculums, action: :index
     li = menu_item 'Min Embu', controller: :embus, action: :index
   li = menu_item 'Mine media', controller: :images, action: :mine
-  li = menu_item 'Nyheter', controller: :news
+  - unless admin?
+    li = menu_item 'Nyheter', controller: :news
   li = detour_to 'Logg ut', controller: :login, action: :logout
