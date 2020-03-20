@@ -24,8 +24,8 @@ class AttendancePlanFeatureTest < ApplicationSystemTestCase
         all('td').map(&:text).reject(&:blank?).map(&:strip).map { |s| s.gsub(/\s+/, ' ') })
 
     first('table a.btn').click
-    assert_css('a.btn', text: 'Annet')
-    assert_equal(['Denne uken', 'Annet', 'Kommer! Du kommer.', 'Neste uke',
+    assert_css('a.btn', text: 'Forhindret')
+    assert_equal(['Denne uken', 'Forhindret', 'Kommer! Du kommer.', 'Neste uke',
                   'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?).map(&:strip).map { |s| s.gsub(/\s+/, ' ') })
 
@@ -33,14 +33,14 @@ class AttendancePlanFeatureTest < ApplicationSystemTestCase
     assert_css 'a.btn', text: 'Kommer du?', count: 2
     assert_css 'a.btn', text: 'Trener!'
     assert_equal [
-      'Denne uken', 'Annet', "Trener!\nDu kommer.",
+      'Denne uken', 'Forhindret', "Trener!\nDu kommer.",
       'Neste uke', 'Kommer du?', 'Kommer du?',
       'Oktober', '1', 'Siden gradering', '1'
     ], all('td').map(&:text).reject(&:blank?)
 
     all('table a.btn')[1].click
     assert_css('a.btn', text: 'Kommer du?', count: 2)
-    assert_equal(['Denne uken', 'Annet', 'Annet', 'Neste uke',
+    assert_equal(['Denne uken', 'Forhindret', 'Forhindret', 'Neste uke',
                   'Kommer du?', 'Kommer du?', 'Oktober', '1', 'Siden gradering', '1'],
         all('td').map(&:text).reject(&:blank?).map(&:strip).map { |s| s.gsub(/\s+/, ' ') })
   end
@@ -55,14 +55,14 @@ Kommer!
 Trener!
 Instruere
 Bortreist
-Syk
-Annet', next_button.text
+Sykdom
+Forhindret', next_button.text
     screenshot('dropdown')
-    next_button.click_link('Annet')
-    assert_equal 'Annet', next_button.text
+    next_button.click_link('Forhindret')
+    assert_equal 'Forhindret', next_button.text
     wait_for_ajax
     visit "/mitt/oppmote?a=#{Time.current.to_i}"
     next_button = find('#button_2013_42_545305079')
-    assert_equal 'Annet', next_button.text
+    assert_equal 'Forhindret', next_button.text
   end
 end

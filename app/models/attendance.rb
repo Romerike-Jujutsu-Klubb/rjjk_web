@@ -16,8 +16,8 @@ class Attendance < ApplicationRecord
     [Status::WILL_ATTEND, 'Kommer!', 'thumbs-up', 'success'],
     [Status::INSTRUCTOR, 'Instruere', 'thumbs-up', 'success'],
     [Status::HOLIDAY, 'Bortreist', 'hand-point-right', 'warning'],
-    [Status::SICK, 'Syk', 'plus', 'danger'],
-    [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
+    [Status::SICK, 'Sykdom', 'plus', 'danger'],
+    [Status::ABSENT, 'Forhindret', 'thumbs-down', 'info'],
   ].freeze
 
   CURRENT_STATES = [
@@ -25,8 +25,8 @@ class Attendance < ApplicationRecord
     [Status::ATTENDED, 'Trener!', 'thumbs-up', 'success'],
     [Status::INSTRUCTOR, 'Instruere', 'thumbs-up', 'success'],
     [Status::HOLIDAY, 'Bortreist', 'hand-point-right', 'warning'],
-    [Status::SICK, 'Syk', 'plus', 'danger'],
-    [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
+    [Status::SICK, 'Sykdom', 'plus', 'danger'],
+    [Status::ABSENT, 'Forhindret', 'thumbs-down', 'info'],
   ].freeze
 
   PAST_STATES = [
@@ -34,8 +34,8 @@ class Attendance < ApplicationRecord
     [Status::ATTENDED, 'Trente!', 'thumbs-up', 'success'],
     [Status::INSTRUCTOR, 'Instruerte!', 'thumbs-up', 'success'],
     [Status::HOLIDAY, 'Bortreist', 'hand-point-right', 'warning'],
-    [Status::SICK, 'Syk', 'plus', 'danger'],
-    [Status::ABSENT, 'Annet', 'thumbs-down', 'info'],
+    [Status::SICK, 'Sykdom', 'plus', 'danger'],
+    [Status::ABSENT, 'Forhindret', 'thumbs-down', 'info'],
   ].freeze
 
   PRESENT_STATES = [Status::ASSISTANT, Status::ATTENDED, Status::INSTRUCTOR, Status::PRESENT].freeze

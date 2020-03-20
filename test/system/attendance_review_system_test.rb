@@ -31,9 +31,8 @@ Du kommer.',
     screenshot('with_presence')
 
     all('table a.btn')[1].click
-    # wait_for_ajax
-    assert has_css?('a.btn', text: 'Annet')
-    assert_equal ['Forrige uke', "Trente!\nDu og 2 andre trente.", "Annet\nLars trente.",
+    assert has_css?('a.btn', text: 'Forhindret')
+    assert_equal ['Forrige uke', "Trente!\nDu og 2 andre trente.", "Forhindret\nLars trente.",
                   'Denne uken', "Ubekreftet\nDu trente.", "Kommer!\nDu kommer.",
                   'Neste uke', 'Kommer du?', 'Kommer du?',
                   'Oktober', '1', 'Siden gradering', '1'],
