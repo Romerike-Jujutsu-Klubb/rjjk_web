@@ -36,6 +36,7 @@ module DeviceSystemTest
       self.logo_area = logo_area
       Capybara.register_driver driver_name do |app|
         browser_options = ::Selenium::WebDriver::Chrome::Options.new
+        browser_options.headless!
         browser_options.args << '--force-color-profile=srgb'
         browser_options.args << '--lang=nb'
         if device_name
@@ -43,10 +44,8 @@ module DeviceSystemTest
         else
           browser_options.add_emulation(device_metrics: device_metrics, user_agent: USER_AGENT)
         end
-        browser_options.headless!
         Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
       end
-
       driven_by driver_name
     end
   end
