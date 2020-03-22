@@ -10,13 +10,10 @@ table.table data-record-path=annual_meetings_path
     th Invitation
     th Public record
     th
-    th
-    th
 
   - @annual_meetings.each do |annual_meeting|
     tr data-record-id=(annual_meeting.id)
       td = annual_meeting.start_at.strftime('%F %R')
       td = annual_meeting.invitation_sent_at
       td = annual_meeting.public_record_updated_at
-      td = link_to 'Show', annual_meeting
       td = link_to 'Destroy', annual_meeting, method: :delete, data: { confirm: 'Are you sure?' }

@@ -1,6 +1,8 @@
 .float-right
   = link_to 'Liste', annual_meetings_path, class: 'btn btn-link'
-  = link_to 'Endre', edit_annual_meeting_path(@annual_meeting), class: 'btn btn-primary'
+  a.btn.btn-primary href=edit_annual_meeting_path(@annual_meeting)
+    i.fa.fa-edit>
+    | Endre
 
 h1 Årsmøte #{@annual_meeting.start_at.strftime('%F %R')}
 
