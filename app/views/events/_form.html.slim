@@ -5,7 +5,7 @@
     .col-sm-3
       = f.text_field :end_at, value: @event.end_at&.strftime('%F %R'), class: 'datetime input-medium', label: 'Til (valgfritt)', autocomplete: :off
     .col-sm-3
-      = f.select :type, [[Event::HEADER, Event.name], *Event.types.map{|clas| [clas::HEADER, clas.name]}]
+      = f.select :type, [[Event.type_name, Event.name], *Event.types.map{|clas| [clas.type_name, clas.name]}.sort]
   - if @event.type == ExternalEvent.name
     .row
       .col

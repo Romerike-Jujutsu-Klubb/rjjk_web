@@ -2,7 +2,6 @@
 
 class Event < ApplicationRecord
   extend InheritenceBaseNaming
-  HEADER = 'Arrangement'
 
   scope :chronological, -> { order :start_at }
   scope :upcoming, -> { where 'DATE(COALESCE(end_at, start_at)) >= ?', Date.current }
@@ -24,6 +23,18 @@ class Event < ApplicationRecord
   def self.types
     @types ||= Dir["#{__dir__}/*.rb"]
         .map { |f| /^class (?<clas>.*) < Event$/ =~ File.read(f) && clas.constantize }.compact
+  end
+
+  def self.type_name
+    I18n.t(name.underscore, name)
+  end
+
+  def type_name
+    self.class.type_name
+  end
+
+  def typed_title
+    "#{type_name}#{": #{name}" if name.present?}"
   end
 
   delegate :size, to: :attending_invitees

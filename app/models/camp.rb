@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class Camp < Event
-  HEADER = 'RJJK Leir'
-
   def title
-    localized_name.presence || HEADER
+    localized_name.presence || type_name
   end
 
   def needs_helpers?

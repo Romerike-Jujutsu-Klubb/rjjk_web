@@ -320,19 +320,24 @@ nb:
 
   absent: Fraværende
   access_denied: Tilgang mangler
+  annual_meeting: Årsmøte
   assistant: Hjelpeinstruktør
   attendances:
     X: Deltok
   attended: Deltok
+  camp: RJJK Leir
   connect: Koble
   create: Opprett
   description: Beskrivelse
   draft: Kladd
+  event: Arrangement
   expired: Utdatert
+  external_event: Eksternt arrangement
   graduation_title: "Gradering %{name}"
   holiday: Ferie
   image: Bilde
   instructor: Instruktør
+  instructor_meeting: Instruktørsamling
   member_created: Nytt medlem opprettet OK.
   my_registration: "Min påmelding"
   present: Tilstede
@@ -401,6 +406,7 @@ nb:
   user_edit_head: Rediger bruker
   user_change_settings_button: Change settings
   user_delete_account_button: Delete account
+  voluntary_work: Dugnad
   will_attend: Kommer
   will_paginate:
       next_label: Neste

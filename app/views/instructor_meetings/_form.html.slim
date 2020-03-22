@@ -14,7 +14,7 @@
       = f.text_field :start_at, class: 'datetime'
     .col-md-6
       = f.text_field :end_at, class: 'time'
-  = f.text_area :name, class: 'expanding', maxlength: 254, placeholder: InstructorMeeting::HEADER
+  = f.text_area :name, class: 'expanding', maxlength: 254, placeholder: InstructorMeeting.type_name
   = f.text_area :description, rows: 10, class: 'expanding'
   .float-right
     = link_to 'Tilbake', instructor_meetings_path, class: 'btn btn-secondary mr-2'

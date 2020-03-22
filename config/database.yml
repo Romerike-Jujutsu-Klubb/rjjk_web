@@ -25,11 +25,5 @@ test:
   <<: *default
   database: rjjk_web_test
 
-beta:
-  <<: *default
-  database: rjjk_web_beta
-  username: capistrano
-  port: 5433
-
 production: &production
   <<: *default

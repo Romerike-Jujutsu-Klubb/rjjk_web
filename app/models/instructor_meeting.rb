@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class InstructorMeeting < Event
-  HEADER = 'Instruktørsamling'
-
   def title
-    name.present? ? "#{HEADER}: #{name}" : HEADER
+    typed_title
   end
 
   def public?

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class VoluntaryWork < Event
-  HEADER = 'Dugnad'
-
   def title
-    name.present? ? "#{HEADER}: #{name}" : HEADER
+    typed_title
   end
 
   def public?
