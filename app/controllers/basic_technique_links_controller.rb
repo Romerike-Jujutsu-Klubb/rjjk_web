@@ -44,6 +44,6 @@ class BasicTechniqueLinksController < ApplicationController
   def destroy
     @basic_technique_link = BasicTechniqueLink.find(params[:id])
     @basic_technique_link.destroy
-    redirect_to basic_technique_links_url
+    redirect_to edit_basic_technique_path(@basic_technique_link.basic_technique_id)
   end
 end
