@@ -55,6 +55,6 @@ class BasicTechniqueLinksControllerTest < ActionController::TestCase
       delete :destroy, params: { id: @basic_technique_link }
     end
 
-    assert_redirected_to basic_technique_links_path
+    assert_redirected_to edit_basic_technique_path(@basic_technique_link.basic_technique_id)
   end
 end
