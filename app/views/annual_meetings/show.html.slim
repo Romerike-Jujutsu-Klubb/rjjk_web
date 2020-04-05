@@ -29,3 +29,6 @@ table.table.mt-3
       td = detour_to election.elected_name, election.member
       - if withdrawn
         td = election.resigned_on
+
+.card
+  .card-body = @annual_meeting.invitation
