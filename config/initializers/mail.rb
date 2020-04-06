@@ -47,6 +47,8 @@ end
 delivery_method = Rails.application.config.action_mailer.delivery_method
 Rails.logger.info "Sending email using: #{delivery_method.inspect}"
 if delivery_method == :smtp
-  smtp_user_name = Rails.application.config.action_mailer.smtp_settings[:user_name]
-  Rails.logger.info "Sending email using SMTP user name: #{smtp_user_name}"
+  smtp_settings = Rails.application.config.action_mailer.smtp_settings
+  Rails.logger.info <<~MSG
+    Sending email using SMTP server: #{smtp_settings[:address]} user: #{smtp_settings[:user_name]}
+  MSG
 end
