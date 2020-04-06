@@ -32,15 +32,18 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = Event.find(params[:id])
-    @groups = Group.where('closed_on IS NULL OR closed_on >= ?', @event.start_at.to_date).to_a
-    @external_candidates = EventInvitee.includes(user: :memberships)
+    @event ||= Event.includes(event_invitees: %i[invitation signup_confirmation signup_rejection user])
+        .find(params[:id])
+    @groups =
+        Group.where('closed_on IS NULL OR closed_on >= ?', @event.start_at&.to_date || Date.current).to_a
+    @external_candidates = EventInvitee.includes(:event, user: :memberships)
         .where.not(user_id: @event.event_invitees.map(&:user_id))
         .where.not(organization: EventInvitee::INTERNAL_ORG)
         .where(members: { id: nil })
         .group_by(&:user)
         .group_by { |_u, invs| invs[0].organization }
         .to_a
+    render action: 'edit'
   end
 
   def create
@@ -57,7 +60,9 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
-    if @event.update(params[:event] || {})
+    @event.attributes = params[:event] if params[:event]
+    @event = @event.becomes(@event.type.constantize) if @event.type_changed?
+    if @event.save
       selected_members =
           @event.groups.map(&:members).map { |m| m.includes(:user) }.map(&:active).flatten.uniq
       selected_users = selected_members.map(&:user).compact
@@ -68,7 +73,8 @@ class EventsController < ApplicationController
       flash[:notice] = 'Event was successfully updated.'
       back_or_redirect_to action: :edit
     else
-      render action: 'edit'
+      flash.now.alert = "Kunne ikke lagre arrangementet: #{@event.errors.full_messages.join('  ')}"
+      edit
     end
   end
 

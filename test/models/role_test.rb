@@ -18,7 +18,7 @@ class RoleTest < ActiveSupport::TestCase
     assert_equal 0, r.appointments.reload.size
     assert_equal 2, r.elections.reload.size
     assert_equal 42,
-        r.elections.includes(:annual_meeting).order('annual_meetings.start_at')[0].years
-    assert_equal 2, r.elections.includes(:annual_meeting).order('annual_meetings.start_at')[1].years
+        r.elections.includes(:annual_meeting).order('events.start_at')[0].years
+    assert_equal 2, r.elections.includes(:annual_meeting).order('events.start_at')[1].years
   end
 end

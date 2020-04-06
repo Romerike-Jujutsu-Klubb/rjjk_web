@@ -76,6 +76,7 @@ class NkfMemberComparison
       logger.info "Create member from NKF: #{nkf_member.inspect}"
       nkf_member.create_corresponding_member!
     rescue => e
+      logger.error "Exception creating new member: #{e.class}: #{e.message}"
       logger.error e
       logger.error e.backtrace.join("\n")
       @errors << ['New member', e, nkf_member]

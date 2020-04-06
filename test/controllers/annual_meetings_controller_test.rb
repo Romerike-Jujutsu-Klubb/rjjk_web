@@ -21,8 +21,6 @@ class AnnualMeetingsControllerTest < IntegrationTest
   test 'should create annual_meeting' do
     assert_difference('AnnualMeeting.count') do
       post annual_meetings_path, params: { annual_meeting: {
-        invitation_sent_at: @annual_meeting.invitation_sent_at,
-        public_record_updated_at: @annual_meeting.public_record_updated_at,
         start_at: @annual_meeting.start_at,
       } }
     end
@@ -42,8 +40,6 @@ class AnnualMeetingsControllerTest < IntegrationTest
 
   test 'should update annual_meeting' do
     put annual_meeting_path(@annual_meeting), params: { annual_meeting: {
-      invitation_sent_at: @annual_meeting.invitation_sent_at,
-      public_record_updated_at: @annual_meeting.public_record_updated_at,
       start_at: @annual_meeting.start_at,
     } }
     assert_redirected_to annual_meeting_path(@annual_meeting)

@@ -17,7 +17,7 @@ class EventRegistrationsTest < ApplicationSystemTestCase
     screenshot :index
 
     first('a', text: 'Påmelding').click
-    assert_selector 'h1', text: 'Påmelding til ARRANGEMENTET'
+    assert_selector 'h1', text: 'Påmelding til Årsmøte'
     screenshot :form
 
     fill_in 'event_invitee[user_attributes][name]', with: 'Hans Eriksen'
@@ -27,7 +27,7 @@ class EventRegistrationsTest < ApplicationSystemTestCase
     screenshot :filled_form
 
     click_on 'Registrer'
-    assert_selector 'h1', text: 'Påmelding til ARRANGEMENTET'
+    assert_selector 'h1', text: 'Påmelding til Årsmøte'
     screenshot :options
   end
 

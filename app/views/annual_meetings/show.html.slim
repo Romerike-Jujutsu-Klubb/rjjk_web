@@ -6,14 +6,6 @@
 
 h1 Årsmøte #{@annual_meeting.start_at.strftime('%F %R')}
 
-.row
-  .col
-    b> Invitation sent at:
-    = @annual_meeting.invitation_sent_at
-  .col
-    b> Public record updated at:
-    = @annual_meeting.public_record_updated_at
-
 - withdrawn = @annual_meeting.elections.any?(&:resigned_on)
 
 table.table.mt-3

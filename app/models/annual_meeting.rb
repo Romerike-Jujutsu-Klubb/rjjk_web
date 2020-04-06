@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
-class AnnualMeeting < ApplicationRecord
+class AnnualMeeting < Event
   has_many :elections, dependent: :destroy
+
+  before_validation do
+    self.name = '' if name.nil?
+  end
 
   validate do
     if id && start_at && self.class

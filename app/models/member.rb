@@ -213,7 +213,7 @@ class Member < ApplicationRecord
   end
 
   def active?(date = Date.current)
-    (date >= joined_on && (left_on.nil? || date < left_on)) && !passive?(date)
+    (date >= joined_on && (left_on.nil? || date <= left_on)) && !passive?(date)
   end
 
   def passive?(date = Date.current)
@@ -349,12 +349,7 @@ class Member < ApplicationRecord
   delegate :emails, to: :user
 
   def phones
-    phones = []
-    phones << phone_home
-    phones << phone_work
-    phones += user.phones
-    phones << billing_phone_home
-    phones.reject(&:blank?).uniq
+    [phone_home, phone_work, *user.phones, billing_phone_home].reject(&:blank?).uniq
   end
 
   def title(date = Date.current)

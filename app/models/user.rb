@@ -27,7 +27,7 @@ class User < ApplicationRecord
 
   has_one :card_key, dependent: :nullify
   has_one :last_membership, -> { order(joined_on: :desc, left_on: :desc) }, inverse_of: :user,
-            class_name: 'Member' # TODO(uwe): Remove line after rename Member => Membership
+            class_name: 'Member'
   has_one :member, -> { where(left_on: nil).order(joined_on: :desc) }, inverse_of: :user,
       dependent: :restrict_with_exception
 
@@ -171,15 +171,15 @@ class User < ApplicationRecord
   end
 
   def emails
-    contact_users.map(&:email).compact.uniq.sort
+    contact_users.map(&:email).reject(&:nil?).uniq.sort
   end
 
   def emails_was
-    contact_users.map(&:email_was).compact.uniq.sort
+    contact_users.map(&:email_was).reject(&:nil?).uniq.sort
   end
 
   def phones
-    contact_users.map(&:phone).compact.uniq
+    contact_users.map(&:phone).reject(&:nil?).uniq
   end
 
   def label(last_name_first: false)
@@ -296,7 +296,7 @@ class User < ApplicationRecord
   end
 
   def contact_info?
-    emails.present? || phones.present?
+    emails.any? || phones.any?
   end
 
   def contact_info
@@ -304,7 +304,7 @@ class User < ApplicationRecord
   end
 
   def contact_phone
-    contact_user&.phone || phones&.first
+    phones.first
   end
 
   def contact_email
@@ -363,7 +363,7 @@ class User < ApplicationRecord
   end
 
   def contact_users
-    [contact_user, self, guardian_1, guardian_2, billing_user].compact
+    %i[contact_user itself guardian_1 guardian_2 billing_user].lazy.map { |m| send(m) }.reject(&:nil?)
   end
 
   protected

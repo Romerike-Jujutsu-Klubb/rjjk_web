@@ -5,7 +5,7 @@ class ElectionsController < ApplicationController
 
   def index
     @meetings = Election.includes(:annual_meeting, :role)
-        .order('annual_meetings.start_at DESC, years, roles.name').to_a
+        .order('events.start_at DESC, years, roles.name').to_a
         .group_by(&:annual_meeting)
     respond_to do |format|
       format.html

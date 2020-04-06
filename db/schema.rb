@@ -12,18 +12,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_05_202429) do
+ActiveRecord::Schema.define(version: 2020_03_22_115812) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
-
-  create_table 'annual_meetings', force: :cascade do |t|
-    t.datetime 'start_at'
-    t.text 'invitation'
-    t.datetime 'invitation_sent_at'
-    t.datetime 'public_record_updated_at'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-  end
 
   create_table 'application_image_sequences', force: :cascade do |t|
     t.bigint 'technique_application_id', null: false
@@ -822,7 +813,7 @@ ActiveRecord::Schema.define(version: 2020_03_05_202429) do
   add_foreign_key 'censors', 'graduations', name: 'censors_graduation_id_fkey'
   add_foreign_key 'censors', 'members', name: 'censors_member_id_fkey'
   add_foreign_key 'curriculum_groups', 'martial_arts'
-  add_foreign_key 'elections', 'annual_meetings', name: 'fk_elections_annual_meeting_id'
+  add_foreign_key 'elections', 'events', column: 'annual_meeting_id'
   add_foreign_key 'elections', 'members', name: 'fk_elections_member_id'
   add_foreign_key 'elections', 'roles', name: 'fk_elections_role_id'
   add_foreign_key 'embu_part_videos', 'embu_parts'

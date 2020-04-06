@@ -22,7 +22,7 @@ class AnnualMeetingsController < ApplicationController
   def create
     @annual_meeting = AnnualMeeting.new(params[:annual_meeting])
     if @annual_meeting.save
-      redirect_to @annual_meeting, notice: 'Annual meeting was successfully created.'
+      redirect_to annual_meeting_path(@annual_meeting), notice: 'Annual meeting was successfully created.'
     else
       render action: 'new'
     end
@@ -31,7 +31,7 @@ class AnnualMeetingsController < ApplicationController
   def update
     @annual_meeting = AnnualMeeting.find(params[:id])
     if @annual_meeting.update(params[:annual_meeting])
-      redirect_to @annual_meeting, notice: 'Annual meeting was successfully updated.'
+      redirect_to annual_meeting_path(@annual_meeting), notice: 'Annual meeting was successfully updated.'
     else
       render action: 'edit'
     end
