@@ -18,7 +18,7 @@ Rails.application.configure do
     port: 587,
     authentication: :cram_md5,
     enable_starttls_auto: true,
-    openssl_verify_mode: :none,
+    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE,
   }
   config.action_mailer.perform_caching = true
   # config.action_mailer.raise_delivery_errors = false
