@@ -11,6 +11,10 @@ AllCops:
     - 'vendor/**/*'
 
 # FIXME(uwe): Remove when rubocop 1.0 is released
+Lint/RaiseException:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
 Style/HashEachMethods:
   Enabled: true
 Style/HashTransformKeys:

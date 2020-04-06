@@ -8,8 +8,8 @@
 //= require expanding
 //= require popper
 //= require bootstrap
-//= require moment
-//= require moment/nb
+//= require moment/moment
+//= require moment/locale/nb
 //= require pc-bootstrap4-datetimepicker/build/js/bootstrap-datetimepicker.min
 //= require bootstrap-datetimepicker-init
 //= require nprogress
