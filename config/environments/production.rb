@@ -11,9 +11,9 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { protocol: 'https', host: 'www.jujutsu.no' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    user_name: ENV['SMTP_USERNAME'].gsub('@', "-#{Date.current.cwday}@"),
+    user_name: ENV['SMTP_USERNAME'].gsub('@', "#{Date.current.cwday}@"),
     password: ENV['SMTP_PASSWORD'],
-    address: 'smtp.webhuset.no',
+    address: 'smtp.domeneshop.no',
     domain: 'jujutsu.no',
     port: 587,
     authentication: :plain,
