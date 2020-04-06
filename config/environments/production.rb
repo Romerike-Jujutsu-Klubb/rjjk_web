@@ -13,7 +13,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     user_name: ENV['SMTP_USERNAME'].sub('@', "#{Date.current.cwday}@"),
     password: ENV['SMTP_PASSWORD'],
-    address: 'smtp.domeneshop.no',
+    address: ENV['SMTP_SERVER'],
     domain: 'jujutsu.no',
     port: 587,
     authentication: :login,
