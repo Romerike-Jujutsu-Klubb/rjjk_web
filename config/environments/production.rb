@@ -16,7 +16,7 @@ Rails.application.configure do
     address: 'smtp.domeneshop.no',
     domain: 'jujutsu.no',
     port: 587,
-    authentication: :cram_md5,
+    authentication: :login,
     enable_starttls_auto: true,
     openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE,
   }
