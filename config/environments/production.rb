@@ -11,13 +11,14 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { protocol: 'https', host: 'www.jujutsu.no' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    user_name: ENV['SMTP_USERNAME'].gsub('@', "#{Date.current.cwday}@"),
+    user_name: ENV['SMTP_USERNAME'].sub('@', "#{Date.current.cwday}@"),
     password: ENV['SMTP_PASSWORD'],
     address: 'smtp.domeneshop.no',
     domain: 'jujutsu.no',
     port: 587,
-    authentication: :plain,
+    authentication: :cram_md5,
     enable_starttls_auto: true,
+    openssl_verify_mode: :none,
   }
   config.action_mailer.perform_caching = true
   # config.action_mailer.raise_delivery_errors = false
