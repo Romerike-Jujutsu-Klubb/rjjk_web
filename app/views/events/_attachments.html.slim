@@ -1,0 +1,19 @@
+h2 Vedlegg
+
+.row
+  .col-md-9.offset-md-1.col-lg-6.offset-lg-2
+    = bootstrap_form_for(@event, url: with_detour(@event, anchor: :attachments_tab)) do |f|
+      = f.file_field :attachments, multiple: true
+      - if @event.attachments.attached?
+        - @event.attachments.each do |a|
+          = f.hidden_field :attachments, multiple: true, value: a.signed_id
+      .text-right = f.primary 'Last opp fil'
+    .row
+      - @event.attachments.map do |file|
+        .col.text-nowrap.mt-4
+          .btn-group.mt-4.w-100
+            a.btn.btn-info.w-100 href=rails_blob_path(file) target='_blank'
+              i.fa.fa-file-alt>
+              = file.filename
+            a.btn.btn-danger href=with_detour(attachment_path(file), anchor: :attachments_tab) data-method=:delete data-confirm="Er du sikker på at du vil slette dette vedlegget?"
+              i.fa.fa-trash

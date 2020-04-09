@@ -16,6 +16,8 @@ class Event < ApplicationRecord
   has_many :groups, through: :event_groups
   has_many :users, through: :event_invitees
 
+  has_many_attached :attachments
+
   before_validation { |r| r.description = nil if r.description.blank? }
 
   validates :start_at, presence: true

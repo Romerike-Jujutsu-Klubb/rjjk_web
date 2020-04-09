@@ -29,6 +29,7 @@
 //= require image_dropzone
 //= require preview
 //= require data-replace
+//= require bs-custom-file-input/dist/bs-custom-file-input
 
 NProgress.configure({showSpinner: false, ease: 'ease', speed: 500});
 
@@ -63,3 +64,7 @@ $(function() {
 });
 
 FontAwesomeConfig.autoReplaceSvg = 'nest';
+
+$(function() {
+  bsCustomFileInput.init()
+});

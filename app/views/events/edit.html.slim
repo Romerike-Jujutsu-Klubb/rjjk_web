@@ -22,11 +22,10 @@ ul.nav.nav-tabs
         .badge.badge-warning< => registered.size
       .badge.badge-info< = invited.size
   li.nav-item: a.nav-link data-target="#messages" data-toggle="tab" Meldinger
+  li.nav-item: a.nav-link data-target="#attachments" data-toggle="tab" Vedlegg
 
 .tab-content
-  #description.tab-pane.active
-    = render 'form'
-  #invitees.tab-pane
-    = render 'attendants', confirmed: confirmed, registered: registered, invited: invited
-  #messages.tab-pane
-    = render 'messages'
+  #description.tab-pane.active = render 'form'
+  #invitees.tab-pane = render 'attendants', confirmed: confirmed, registered: registered, invited: invited
+  #messages.tab-pane = render 'messages'
+  #attachments.tab-pane = render 'attachments'

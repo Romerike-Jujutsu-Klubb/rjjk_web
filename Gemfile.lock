@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/TitovDigital/activestorage-database-service.git
+  revision: f04c537f6a6c2cafe90d37845bce7310d2ed5bf0
+  specs:
+    activestorage-database-service (1.0.0)
+      rails (>= 5.2.1.1)
+
+GIT
   remote: https://github.com/donv/bootstrap-chosen-rails.git
   revision: b01198d0aded025e426cd2d39c5eeacbdaa20754
   specs:
@@ -86,7 +93,7 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     ansi (1.5.0)
     ast (2.4.0)
-    autoprefixer-rails (9.7.5)
+    autoprefixer-rails (9.7.6)
       execjs
     aws_cf_signer (0.1.3)
     bcrypt (3.1.13)
@@ -290,7 +297,7 @@ GEM
     net-http-persistent (3.1.0)
       connection_pool (~> 2.2)
     netrc (0.11.0)
-    newrelic_rpm (6.9.0.363)
+    newrelic_rpm (6.10.0.364)
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
@@ -492,6 +499,7 @@ PLATFORMS
 DEPENDENCIES
   actionpack-page_caching!
   activerecord-time
+  activestorage-database-service!
   acts_as_list
   acts_as_tree
   bcrypt

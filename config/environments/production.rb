@@ -29,7 +29,7 @@ Rails.application.configure do
   #     ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
   # config.active_record.database_selector = { delay: 2.seconds }
   config.active_record.dump_schema_after_migration = false
-  config.active_storage.service = :local
+  config.active_storage.service = :db
   config.active_support.deprecation = :notify
   config.assets.compile = false
   # config.assets.css_compressor = :sass

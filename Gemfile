@@ -25,6 +25,7 @@ end
 
 gem 'actionpack-page_caching', github: 'rails/actionpack-page_caching'
 gem 'activerecord-time' # , path: '~/work/open-source/activerecord-time'
+gem 'activestorage-database-service', github: 'TitovDigital/activestorage-database-service'
 gem 'acts_as_list'
 gem 'acts_as_tree'
 gem 'bcrypt'
