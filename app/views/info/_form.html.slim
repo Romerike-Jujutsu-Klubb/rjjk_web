@@ -1,7 +1,11 @@
 - @content_width = 1024
 
 .row
-  .col
+  .col-lg-6
+    - if @information_page.persisted?
+      a.btn.btn-danger.float-right href=url_for(@information_page) data-method=:delete data-confirm='Er du sikker?'
+        i.fa.fa-trash>
+        | Slett
     = bootstrap_form_for @information_page do |f|
       .row
         .col-5.col-sm-6 = f.text_field :title
@@ -49,7 +53,7 @@
       - if @information_page.revised_at
         span.mx-3 style=('color:red' if @information_page.revised_at.nil? || @information_page.revised_at < 6.months.ago)
           = @information_page.revised_at.strftime('%Y-%m-%d %H:%M')
-  .col
+  .col-lg-6
     .card
       .card-header Forhåndsvisning
       #preview.card-body

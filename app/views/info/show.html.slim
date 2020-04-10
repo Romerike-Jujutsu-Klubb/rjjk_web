@@ -1,12 +1,10 @@
-- @title = @information_page.title
+- if admin? && @information_page.persisted?
+  a.btn.btn-primary.float-right href=edit_information_page_path(@information_page)
+    i.fa.fa-edit>
+    | Rediger
 
 h1 = @information_page.title
 
 .md == textalize(@information_page.body).gsub('<nøkkelpersoner>'){|match| render 'key_personell'}
-
-- if admin? && @information_page.persisted?
-  ul.controls
-    li = link_to 'Rediger', { controller: :info, action: :edit, id: @information_page }, class: :edit
-    li = link_to 'Slett', { controller: :info, action: :destroy, id: @information_page }, class: :edit, data: { confirm: 'Er du sikker?' }, method: :post
 
 = render 'layouts/modal_image'

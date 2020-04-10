@@ -230,6 +230,12 @@ body:not(.wide) {
   @extend .ml-2;
 }
 
+.md {
+  table {
+    @extend .table;
+  }
+}
+
 .post {
   h3 {
     margin-bottom: 0;
@@ -240,11 +246,6 @@ body:not(.wide) {
     max-width: 100%;
   }
 
-  .md {
-    table {
-      @extend .table;
-    }
-  }
   .next-practice-btn {
     flex-grow: 1;
    }
