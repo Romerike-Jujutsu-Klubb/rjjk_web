@@ -5,26 +5,44 @@
   a.btn.btn-info.ml-2 href=user_drilldown_index_path
     i.fa.fa-chart-bar>
     | Drilldown
+  - if current_user.name == 'Uwe Kubosch'
+    - show_valid = params[:valid] == 'true'
+    a.btn.ml-2 class=(show_valid ? 'btn-danger' : 'btn-outline-danger') href=users_path(valid: !show_valid) title='Dette tar omtrent ett minutt' data-toggle=(:tooltip unless show_valid)
+      i.fa.fa-user-check>
+      | Validation
 
 h1 Brukere (#{@users.size})
 
-table.table.table-sm data-record-path=users_path
-  thead
-    tr
-      th = t :user_last_name_form
-      th = t :user_first_name_form
-      th align="center" Admin
-      th
-      th E-post
-  tbody
-    - for user in @users
-      tr data-record-id=user.id
-        td = user.last_name || user.email || user.phone
-        td = user.first_name || user.member&.first_name
-        td align="center"
-          - if user.admin?
-            i.fa.fa-user-cog title=:Administrator data-toggle=:tooltip
-        td
-          - if user.verified?
-            i.fa.fa-check.text-success< title='Bekreftet e-post' data-toggle=:tooltip
-        td = user.email
+.table-responsive
+  table.table.table-sm data-record-path=users_path
+    thead
+      tr
+        th = t :user_last_name_form
+        th = t :user_first_name_form
+        th align="center" Rolle
+        th
+        th E-post
+    tbody
+      - for user in @users
+        tr data-record-id=user.id
+          td = user.last_name || user.email || user.phone
+          td = user.first_name || user.member&.first_name
+          td align="center"
+            - if user.admin?
+              i.fa.fa-user-cog title=:Administrator data-toggle=:tooltip
+            - elsif user.member?
+              i.fa.fa-user title=:Medlem data-toggle=:tooltip
+            - elsif user.last_membership
+              i.fa.fa-user-slash title=:Utmeldt data-toggle=:tooltip
+          td
+            - if user.verified?
+              i.fa.fa-check.text-success< title='Bekreftet e-post' data-toggle=:tooltip
+          td = user.email
+          - if show_valid
+            td
+              - if user.valid?
+                i.fa.fa-check
+              - else
+                i.fa.fa-times.text-danger>
+                = user.errors.full_messages.join(', ')
+-

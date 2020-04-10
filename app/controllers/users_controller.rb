@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :admin_required
 
   def index
-    @users = User.includes(:member)
+    @users = User.includes(:last_membership, :member)
         .order(Arel.sql('UPPER(last_name), UPPER(first_name), email, phone, id')).to_a
   end
 
