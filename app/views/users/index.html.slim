@@ -22,6 +22,8 @@ h1 Brukere (#{@users.size})
         th align="center" Rolle
         th
         th E-post
+        - if show_valid
+          th
     tbody
       - for user in @users
         tr data-record-id=user.id
@@ -43,6 +45,4 @@ h1 Brukere (#{@users.size})
               - if user.valid?
                 i.fa.fa-check
               - else
-                i.fa.fa-times.text-danger>
-                = user.errors.full_messages.join(', ')
--
+                i.fa.fa-times.text-danger> title=user.errors.full_messages.join(', ') data-toggle=:tooltip
