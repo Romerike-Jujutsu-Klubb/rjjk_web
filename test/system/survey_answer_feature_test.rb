@@ -12,6 +12,6 @@ class SurveyAnswerFeatureTest < ApplicationSystemTestCase
 
     second_select = find('#survey_request_survey_answers_attributes_1_answer', visible: false)
     assert_equal 'Velg et svar eller "Annet"', second_select['data-placeholder']
-    screenshot('surveys/answer_form')
+    screenshot('answer_form')
   end
 end

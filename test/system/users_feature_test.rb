@@ -3,16 +3,12 @@
 require 'application_system_test_case'
 
 class UsersFeatureTest < ApplicationSystemTestCase
-  setup { screenshot_section :users }
-
   def test_index
-    screenshot_group :index
     visit_with_login users_path
     screenshot(:index)
   end
 
   def test_index_unauthorized
-    screenshot_group :index_unauthorized
     visit users_path
     screenshot(:index)
   end

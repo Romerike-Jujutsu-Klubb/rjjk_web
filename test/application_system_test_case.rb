@@ -54,6 +54,9 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
     Rails.application.routes.default_url_options =
         { host: Capybara.current_session.server.host, port: Capybara.current_session.server.port }
+
+    screenshot_section class_name.underscore.sub(/(_feature|_system)?_test$/, '')
+    screenshot_group name[5..-1]
   end
 
   teardown do
