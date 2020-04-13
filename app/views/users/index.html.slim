@@ -40,8 +40,17 @@ h1 Brukere (#{@users.size})
               i.fa.fa-check.text-success< title='Bekreftet e-post' data-toggle=:tooltip
           td = user.email
           - if show_valid
-            td
-              - if user.valid?
-                i.fa.fa-check
-              - else
-                i.fa.fa-times.text-danger> title=user.errors.full_messages.join(', ') data-toggle=:tooltip
+            td.valid.text-center.text-success
+
+- if show_valid
+  javascript:
+    $(function() {
+      $('tr[data-record-id]').each(function(i, tr) {
+        let row = $(tr);
+        let user_id = row.data('record-id');
+        let cell = row.find('td.valid');
+        cell.load("#{users_path}/" + user_id + "/valid", function() {
+          cell.find('[data-toggle=tooltip]').tooltip();
+        });
+      });
+    });

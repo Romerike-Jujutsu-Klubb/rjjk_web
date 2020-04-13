@@ -1,0 +1,4 @@
+- if @user.valid?
+  i.fa.fa-check
+- else
+  i.fa.fa-times.text-danger> title=@user.errors.full_messages.join(', ') data-toggle=:tooltip

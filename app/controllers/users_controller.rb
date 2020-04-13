@@ -8,6 +8,11 @@ class UsersController < ApplicationController
         .order(Arel.sql('UPPER(last_name), UPPER(first_name), email, phone, id')).to_a
   end
 
+  def valid
+    @user = User.find(params[:id])
+    render layout: false
+  end
+
   def show
     respond_to do |format|
       format.vcf do

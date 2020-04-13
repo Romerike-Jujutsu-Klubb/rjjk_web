@@ -325,6 +325,7 @@ Rails.application.routes.draw do
       patch :move_attribute
       get :photo
       patch :restore
+      get :valid
     end
   end
 
