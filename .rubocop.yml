@@ -11,15 +11,23 @@ AllCops:
     - 'vendor/**/*'
 
 # FIXME(uwe): Remove when rubocop 1.0 is released
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
 Lint/RaiseException:
   Enabled: true
 Lint/StructNewOverride:
+  Enabled: true
+Style/ExponentialNotation:
   Enabled: true
 Style/HashEachMethods:
   Enabled: true
 Style/HashTransformKeys:
   Enabled: true
 Style/HashTransformValues:
+  Enabled: true
+Style/SlicingWithRange:
   Enabled: true
 # EMXIF
 
@@ -44,7 +52,7 @@ Layout/HashAlignment:
   EnforcedLastArgumentHashStyle: ignore_implicit
 
 Layout/LineLength:
-  Max: 108
+  Max: 107
   AllowHeredoc: true
   AllowURI: true
   IgnoreCopDirectives: true
