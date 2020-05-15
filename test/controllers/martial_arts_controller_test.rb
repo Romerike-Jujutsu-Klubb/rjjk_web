@@ -37,6 +37,7 @@ class MartialArtsControllerTest < ActionController::TestCase
     assert_response :redirect
     copy = MartialArt.last
     assert_redirected_to edit_martial_art_path(copy)
+    assert_equal @first_id, copy.original_martial_art_id
     assert_equal @kwr.curriculum_groups.count, copy.curriculum_groups.count
     assert_equal @kwr.curriculum_groups.map(&:ranks).map(&:count),
         copy.curriculum_groups.map(&:ranks).map(&:count)

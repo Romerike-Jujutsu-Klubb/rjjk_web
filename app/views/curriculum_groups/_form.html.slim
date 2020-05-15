@@ -1,9 +1,9 @@
-= form_for @curriculum do |f|
-  - if @curriculum.errors.any?
+= form_for @curriculum_group do |f|
+  - if @curriculum_group.errors.any?
     #error_explanation
-      h2 = "#{pluralize(@curriculum.errors.count, "error")} prohibited this curriculum from being saved:"
+      h2 = "#{pluralize(@curriculum_group.errors.count, "error")} prohibited this curriculum from being saved:"
       ul
-        - @curriculum.errors.full_messages.each do |message|
+        - @curriculum_group.errors.full_messages.each do |message|
           li = message
 
   .field

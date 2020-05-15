@@ -1,7 +1,12 @@
 .float-right
-  a.btn.btn-primary href=copy_martial_art_path(@martial_art) data-confirm='Er du helt sikker på at du vil kopiere denne stilarten med grader og pensum?' data-method=:post
-    i.fa.fa-copy>
-    | Kopier
+  - if @martial_art.original_martial_art
+    a.btn.btn-primary href=martial_art_path(@martial_art.original_martial_art_id)
+      i.fa.fa-torii-gate>
+      = @martial_art.original_martial_art.name
+  - else
+    a.btn.btn-primary href=copy_martial_art_path(@martial_art) data-confirm='Er du helt sikker på at du vil kopiere denne stilarten med grader og pensum?' data-method=:post
+      i.fa.fa-copy>
+      | Kopiér
   a.btn.btn-danger.ml-2 href=martial_art_path(@martial_art) data-confirm='Er du helt sikker på at du vil slette denne stilarten for alltid?' data-method=:delete
     i.fa.fa-trash>
     | Slett
@@ -15,3 +20,21 @@ h1 Stilart
     = f.submit 'Lagre'
 
 = link_to 'Tilbake', action: :index
+
+.row
+
+  - if @martial_art.curriculum_groups.any?
+    .col
+      h2.mt-4 Pensumgrupper
+      ul
+        - @martial_art.curriculum_groups.each do |cg|
+          li
+            a href=curriculum_group_path(cg) = cg.name
+
+  - if @martial_art.copies.any?
+    .col
+      h2.mt-4 Arkiv
+      ul
+        - @martial_art.copies.each do |m|
+          li
+            a href=martial_art_path(m) = m.name

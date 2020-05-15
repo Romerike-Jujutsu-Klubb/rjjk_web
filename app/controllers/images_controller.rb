@@ -58,7 +58,8 @@ class ImagesController < ApplicationController
     if requested_format != image.format
       send_image(image, MiniMagick::Image.read(image_content), requested_format)
     else
-      send_data(image_content.string, disposition: 'inline', type: image.content_type, filename: image.name)
+      send_data(image_content.string, disposition: 'inline', type: image.content_type,
+          filename: image.name)
     end
   rescue => e
     logger.error e

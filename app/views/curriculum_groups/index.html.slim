@@ -1,12 +1,12 @@
 - if admin?
-  a.btn.btn-primary.float-right href=new_curriculum_path
+  a.btn.btn-primary.float-right href=new_curriculum_group_path
     i.fa.fa-plus>
     | Nytt pensum
 
 h1 Pensum
 
 .table-responsive
-  table.table data-record-path=curriculums_path
+  table.table data-record-path=curriculum_groups_path
     thead
       tr
         th #
@@ -15,7 +15,7 @@ h1 Pensum
         th Grupper
 
     tbody
-      - @curriculums.each do |curriculum|
+      - @curriculum_groups.each do |curriculum|
         tr data-record-id=curriculum.id
           td.text-center
             => curriculum.position
