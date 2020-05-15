@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_08_070427) do
+ActiveRecord::Schema.define(version: 2020_05_15_072609) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -443,6 +443,9 @@ ActiveRecord::Schema.define(version: 2020_04_08_070427) do
     t.string 'family', limit: 16, null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.bigint 'original_martial_art_id'
+    t.index ['name'], name: 'index_martial_arts_on_name', unique: true
+    t.index ['original_martial_art_id'], name: 'index_martial_arts_on_original_martial_art_id'
   end
 
   create_table 'member_images', force: :cascade do |t|
@@ -864,6 +867,7 @@ ActiveRecord::Schema.define(version: 2020_04_08_070427) do
   add_foreign_key 'group_semesters', 'semesters', name: 'fk_group_semesters_semester_id'
   add_foreign_key 'groups', 'curriculum_groups'
   add_foreign_key 'information_pages', 'information_pages', column: 'parent_id', name: 'information_pages_parent_id_fkey'
+  add_foreign_key 'martial_arts', 'martial_arts', column: 'original_martial_art_id'
   add_foreign_key 'member_images', 'images', name: 'fk_member_images_image_id'
   add_foreign_key 'member_images', 'members', name: 'fk_member_images_member_id'
   add_foreign_key 'members', 'users'

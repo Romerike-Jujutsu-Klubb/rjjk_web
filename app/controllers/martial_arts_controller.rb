@@ -4,7 +4,7 @@ class MartialArtsController < ApplicationController
   before_action :admin_required
 
   def index
-    @martial_arts = MartialArt.all
+    @martial_arts = MartialArt.where(original_martial_art_id: nil).to_a
   end
 
   def show
@@ -34,14 +34,19 @@ class MartialArtsController < ApplicationController
     original_martial_art = MartialArt.find(params[:id])
     CurriculumGroup .acts_as_list_no_update(LIST_CLASSES.dup) do
       martial_art = original_martial_art.deep_clone include: {
-        curriculum_groups: { ranks: [:basic_techniques, { technique_applications: [
-          { application_image_sequences: :application_steps }, :application_videos
-        ] }] },
+        curriculum_groups: { ranks: [
+          { basic_techniques: :basic_technique_links }, { technique_applications: [
+            { application_image_sequences: :application_steps }, :application_videos
+          ] }
+        ] },
       }, validate: false do |original, copy|
-        copy.name = "#{original.name} #{Date.current.strftime('%F %R')}" if copy.is_a?(MartialArt)
-        raise "Invalid original: #{original.inspect}\n#{original.errors.full_messages}" if original.invalid?
+        copy.name = "#{original.name} #{Time.current.strftime('%F %R')}" if copy.is_a?(MartialArt)
+        if original.invalid?
+          raise "Invalid original: #{original.inspect}\n#{original.errors.full_messages}"
+        end
       end
 
+      martial_art.original_martial_art = original_martial_art
       if martial_art.save
         flash.notice = 'Stilarten ble kopiert.'
         redirect_to edit_martial_art_path(martial_art)
