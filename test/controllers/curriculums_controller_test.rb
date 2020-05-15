@@ -13,6 +13,12 @@ class CurriculumsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to curriculum_group_path(id(:voksne))
   end
 
+  test 'should get index as admin' do
+    login
+    get curriculums_url
+    assert_response :success
+  end
+
   test 'should show curriculum' do
     get curriculum_url(@curriculum)
     assert_redirected_to curriculum_group_path(id(:voksne))

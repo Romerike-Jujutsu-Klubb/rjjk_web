@@ -8,8 +8,9 @@ class CurriculumsController < ApplicationController
 
   def index
     if admin? || instructor? || technical_committy?
-      @curriculums = CurriculumGroup.includes(:martial_art).references(:martial_arts)
+      @curriculum_groups = CurriculumGroup.includes(:martial_art).references(:martial_arts)
           .where(martial_arts: { original_martial_art_id: nil }).order(:martial_art_id, :position).to_a
+      render 'curriculum_groups/index'
     else
       next_rank = current_user.member.next_rank
       redirect_to next_rank.curriculum_group
