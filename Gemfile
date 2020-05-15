@@ -71,7 +71,7 @@ gem 'serviceworker-rails'
 gem 'simple_drilldown' # , path: '~/work/open-source/simple_drilldown'
 gem 'simple_workflow' # , path: '~/work/open-source/simple_workflow'
 gem 'slim-rails'
-gem 'uglifier', '<4'
+gem 'uglifier'
 gem 'webpush'
 
 group :beta, :production do
@@ -111,7 +111,6 @@ group :test do
   # gem 'rubycritic', require: false
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
-  gem 'sprockets', '<4' # FIXME(uwe): Remove this line when sprockets 4 works
   gem 'timecop'
   gem 'vcr'
   gem 'webmock'

@@ -1,16 +1,16 @@
-@import "dark_ritual";
-@import "bootstrap_adaption";
+@import "includes/dark_ritual";
 @import "bootstrap";
+@import "includes/bootstrap_adaption";
 @import "chosen";
-@import "bootstrap-chosen";
+@import "includes/bootstrap-chosen";
 @import "rails_bootstrap_forms";
-@import 'dark_ritual_adaption';
+@import 'includes/dark_ritual_adaption';
 @import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker';
 @import 'nprogress';
 @import 'nprogress-bootstrap';
 @import 'bootstrap-fileinput/css/fileinput';
 <% if Rails.env.test? %>
-@import 'disable_animations';
+@import 'includes/disable_animations';
  <% end %>
 
 .clear-right {
