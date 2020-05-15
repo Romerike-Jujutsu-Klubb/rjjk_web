@@ -80,7 +80,8 @@ Rails.application.routes.draw do
   end
 
   resources :correspondences
-  resources(:curriculums, path: :pensum) { collection { get :card_pdf } }
+  resources(:curriculums, path: :pensum, only: %i[index show]) { collection { get :card_pdf } }
+  resources(:curriculum_groups) { collection { get :card_pdf } }
   resources :elections
   resources :embus do
     member do
@@ -310,12 +311,6 @@ Rails.application.routes.draw do
       post :like
     end
   end
-  resources(:user_drilldown, only: :index) do
-    collection do
-      get :excel_export
-      get :html_export
-    end
-  end
   resources :user_merge, only: %i[show update]
   resources :user_messages
   resources :users do
@@ -330,6 +325,12 @@ Rails.application.routes.draw do
   end
 
   resources :wazas
+
+  require 'simple_drilldown/routing'
+  ActionDispatch::Routing::Mapper.include SimpleDrilldown::Routing
+
+  draw_drilldown :member_drilldown
+  draw_drilldown :user_drilldown
 
   root to: 'welcome#index'
 

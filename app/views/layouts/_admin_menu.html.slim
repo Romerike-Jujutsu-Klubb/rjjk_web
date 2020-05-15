@@ -3,7 +3,7 @@ h1 data-toggle="collapse" data-target="#admin-menu" role="button" aria-expanded=
   i.fa.fa-users-cog.fa-fw>
   | Administrasjon
 ul#admin-menu.collapse data-parent="#main-menu"
-  li = menu_item 'Medlemsliste', controller: :members, action: :list_active
+  li = menu_item 'Medlemmer', controller: :members, action: :list_active
   li = menu_item 'Styremøter', controller: :board_meetings
   li = menu_item 'Årsmøter', controller: :annual_meetings
   li = menu_item 'Styret', controller: :elections
