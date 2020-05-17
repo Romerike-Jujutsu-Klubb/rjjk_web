@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class BasicTechnique < ApplicationRecord
+  include Linkable
+
   belongs_to :rank
   belongs_to :waza
-  has_many :basic_technique_links, dependent: :destroy
 
   before_validation { description&.strip! }
 

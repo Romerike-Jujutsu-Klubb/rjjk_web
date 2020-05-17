@@ -7,13 +7,13 @@ h1 Rediger grunnteknikk
 = link_to @basic_technique.rank.name, edit_rank_path(@basic_technique.rank), class: 'btn btn-link'
 
 .mt-5
-  a.btn.btn-primary.float-right href=new_basic_technique_link_path(basic_technique_link: { basic_technique_id: @basic_technique.id })
+  a.btn.btn-primary.float-right href=new_technique_link_path(technique_link: { linkable_type: :BasicTechnique, linkable_id: @basic_technique.id })
     i.fa.fa-plus>
     | Legg til lenke
 
-  - if @basic_technique.basic_technique_links.any?
+  - if @basic_technique.technique_links.any?
     h3 Lenker
 
     ul
-      - @basic_technique.basic_technique_links.each do |link|
-        li: a href=edit_basic_technique_link_path(link) = link.title.presence || link.url
+      - @basic_technique.technique_links.each do |link|
+        li: a href=edit_technique_link_path(link) = link.title.presence || link.url

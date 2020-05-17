@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TechniqueApplication < ApplicationRecord
+  include Linkable
+
   module System
     KATA = 'Kata'
   end
@@ -8,6 +10,7 @@ class TechniqueApplication < ApplicationRecord
   acts_as_list scope: :rank_id
 
   belongs_to :rank
+
   has_many :application_image_sequences, dependent: :destroy
   has_many :application_videos, dependent: :destroy
 

@@ -5,18 +5,27 @@ h3.clearfix
   - if @technique_application.rank_id
     |  (#{link_to("#{@technique_application.rank.label}", @technique_application.rank)})
   .float-right
-    a.btn.btn-primary href=new_application_video_path(application_video: { technique_application_id: @technique_application.id })
+    a.btn.btn-primary href=new_technique_link_path(technique_link: { linkable_type: :TechniqueApplication, linkable_id: @technique_application.id })
+      i.fa.fa-plus>
+      | Legg til lenke
+    a.btn.btn-primary.ml-2 href=new_application_video_path(application_video: { technique_application_id: @technique_application.id })
       i.fa.fa-plus>
       | Legg til film
     - if admin?
-      = link_to('Rediger', edit_technique_application_path(@technique_application), class: 'btn btn-primary ml-2')
+      a.btn.btn-primary.ml-2 href=edit_technique_application_path(@technique_application) Rediger
 
-- if @technique_application.application_image_sequences.any? && @technique_application.application_videos.any?
+- if [@technique_application.application_image_sequences, @technique_application.application_videos, \
+      @technique_application.technique_links].reduce(0){|a,e| e.any? ? a + 1 : a} >= 2
   ul#myTab.nav.nav-tabs role="tablist"
-    li.nav-item
-      a#steps-tab.nav-link.active data-toggle="tab" data-target="#steps" role="tab" aria-controls="steps" aria-selected="true" Bildeserie
-    li.nav-item
-      a#videos-tab.nav-link data-toggle="tab" data-target="#videos" role="tab" aria-controls="videos" aria-selected="false" Filmer
+    - if @technique_application.application_image_sequences.any?
+      li.nav-item
+        a#steps-tab.nav-link.active data-toggle="tab" data-target="#steps" role="tab" aria-controls="steps" aria-selected="true" Bildeserie
+    - if @technique_application.application_videos.any?
+      li.nav-item
+        a#videos-tab.nav-link data-toggle="tab" data-target="#videos" role="tab" aria-controls="videos" aria-selected="false" Filmer
+    - if @technique_application.technique_links.any?
+      li.nav-item
+        a#links-tab.nav-link data-toggle="tab" data-target="#links" role="tab" aria-controls="links" aria-selected="false" Lenker
 
 scss:
   .card {
@@ -45,4 +54,10 @@ scss:
       - @technique_application.application_videos.each do |av|
         .card.mt-3
           .card-body = render 'images/item', image: av.image
-
+  #links.tab-pane.fade role="tabpanel" aria-labelledby="links-tab"
+    .card.mt-3
+      .card-body
+        ul.mb-0
+          - @technique_application.technique_links.each do |link|
+            li
+              a href=link.url target=link.url = link.label

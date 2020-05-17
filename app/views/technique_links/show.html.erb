@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Linkable type:</b>
+  <%= @technique_link.linkable_type %>
+</p>
+
+<p>
+  <b>Linkable:</b>
+  <%= @technique_link.linkable_id %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @technique_link.title %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%= @technique_link.url %>
+</p>
+
+<p>
+  <b>Position:</b>
+  <%= @technique_link.position %>
+</p>
+
+
+<%= link_to 'Edit', edit_technique_link_path(@technique_link) %> |
+<%= link_to 'Back', technique_links_path %>

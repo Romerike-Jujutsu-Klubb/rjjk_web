@@ -24,6 +24,6 @@ class NextPracticeSystemTest < ApplicationSystemTestCase
     first(:link, 'Du og 2 andre').click
     assert_selector 'h5', text: 'Påmeldt'
     assert_selector 'li', text: 'Uwe Kubosch'
-    screenshot :modale
+    screenshot :modale, skip_area: [734, 115, 735, 162]
   end
 end

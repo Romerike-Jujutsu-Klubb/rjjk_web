@@ -1,11 +1,11 @@
 one:
-  basic_technique: osoto_otoshi
+  linkable: osoto_otoshi (BasicTechnique)
   title: MyString
   url: http://MySite/1
   position: 1
 
 two:
-  basic_technique: osoto_otoshi
+  linkable: osoto_otoshi (BasicTechnique)
   title: MyString
   url: http://MySite/2
   position: 2

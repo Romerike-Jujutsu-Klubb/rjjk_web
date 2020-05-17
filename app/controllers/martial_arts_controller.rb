@@ -26,7 +26,7 @@ class MartialArtsController < ApplicationController
     end
   end
 
-  LIST_CLASSES = [ApplicationImageSequence, ApplicationStep, BasicTechniqueLink, CurriculumGroup,
+  LIST_CLASSES = [ApplicationImageSequence, ApplicationStep, TechniqueLink, CurriculumGroup,
                   FrontPageSection, InformationPage, Rank, Role, Survey, SurveyQuestion,
                   TechniqueApplication].freeze
 
@@ -35,7 +35,7 @@ class MartialArtsController < ApplicationController
     CurriculumGroup .acts_as_list_no_update(LIST_CLASSES.dup) do
       martial_art = original_martial_art.deep_clone include: {
         curriculum_groups: { ranks: [
-          { basic_techniques: :basic_technique_links }, { technique_applications: [
+          { basic_techniques: :technique_links }, { technique_applications: [
             { application_image_sequences: :application_steps }, :application_videos
           ] }
         ] },

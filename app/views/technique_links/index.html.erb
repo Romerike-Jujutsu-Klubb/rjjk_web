@@ -1,0 +1,31 @@
+<h1>Listing basic_technique_links</h1>
+
+<table>
+  <tr>
+    <th>Linkable</th>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Url</th>
+    <th>Position</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @technique_links.each do |technique_link| %>
+  <tr>
+    <td><%= technique_link.linkable_type %></td>
+    <td><%= technique_link.linkable_id %></td>
+    <td><%= technique_link.title %></td>
+    <td><%= technique_link.url %></td>
+    <td><%= technique_link.position %></td>
+    <td><%= link_to 'Show', technique_link %></td>
+    <td><%= link_to 'Edit', edit_technique_link_path(technique_link) %></td>
+    <td><%= link_to 'Destroy', technique_link, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Basic technique link', new_technique_link_path %>

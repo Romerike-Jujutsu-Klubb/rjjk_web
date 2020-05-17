@@ -1,0 +1,10 @@
+a.btn.btn-danger.float-right href=technique_link_path(@technique_link) data-method=:delete data-confirm='Er du sikker?'
+  i.fa.fa-trash>
+  | Slett
+
+h1 Lenke til grunnteknikk
+
+= render 'form'
+
+=> link_to 'Show', @technique_link
+= link_to 'Back', technique_links_path

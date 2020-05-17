@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_15_072609) do
+ActiveRecord::Schema.define(version: 2020_05_17_173520) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -109,18 +109,6 @@ ActiveRecord::Schema.define(version: 2020_05_15_072609) do
     t.datetime 'rated_at'
     t.index %w[member_id practice_id], name: 'index_attendances_on_member_id_and_practice_id', unique: true
     t.index ['practice_id'], name: 'fk__attendances_practice_id'
-  end
-
-  create_table 'basic_technique_links', force: :cascade do |t|
-    t.integer 'basic_technique_id', null: false
-    t.string 'title', limit: 64
-    t.string 'url', limit: 128, null: false
-    t.integer 'position', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index %w[basic_technique_id position], name: 'index_basic_technique_links_on_basic_technique_id_and_position', unique: true
-    t.index %w[basic_technique_id url], name: 'index_basic_technique_links_on_basic_technique_id_and_url', unique: true
-    t.index ['basic_technique_id'], name: 'fk__basic_technique_links_basic_technique_id'
   end
 
   create_table 'basic_techniques', force: :cascade do |t|
@@ -739,6 +727,21 @@ ActiveRecord::Schema.define(version: 2020_05_15_072609) do
     t.index ['rank_id'], name: 'fk__technique_applications_rank_id'
   end
 
+  create_table 'technique_links', force: :cascade do |t|
+    t.integer 'linkable_id', null: false
+    t.string 'title', limit: 64
+    t.string 'url', limit: 128, null: false
+    t.integer 'position', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.string 'linkable_type', null: false
+    t.index %w[linkable_id position], name: 'index_technique_links_on_linkable_id_and_position', unique: true
+    t.index %w[linkable_id url], name: 'index_technique_links_on_linkable_id_and_url', unique: true
+    t.index ['linkable_id'], name: 'fk__basic_technique_links_basic_technique_id'
+    t.index %w[linkable_type linkable_id url], name: 'index_technique_links_on_linkable_type_and_linkable_id_and_url', unique: true
+    t.index %w[linkable_type linkable_id], name: 'index_technique_links_on_linkable_type_and_linkable_id'
+  end
+
   create_table 'trial_attendances', force: :cascade do |t|
     t.integer 'nkf_member_trial_id', null: false
     t.datetime 'created_at'
@@ -839,7 +842,6 @@ ActiveRecord::Schema.define(version: 2020_05_15_072609) do
   add_foreign_key 'appointments', 'roles', name: 'fk_appointments_role_id'
   add_foreign_key 'attendances', 'members', name: 'attendances_member_id_fkey'
   add_foreign_key 'attendances', 'practices', name: 'fk_attendances_practice_id'
-  add_foreign_key 'basic_technique_links', 'basic_techniques', name: 'fk_basic_technique_links_basic_technique_id'
   add_foreign_key 'basic_techniques', 'ranks', name: 'fk_basic_techniques_rank_id'
   add_foreign_key 'basic_techniques', 'wazas', name: 'fk_basic_techniques_waza_id'
   add_foreign_key 'card_keys', 'users'
@@ -887,6 +889,7 @@ ActiveRecord::Schema.define(version: 2020_05_15_072609) do
   add_foreign_key 'survey_requests', 'surveys', name: 'fk_survey_requests_survey_id'
   add_foreign_key 'surveys', 'groups', name: 'fk_surveys_group_id'
   add_foreign_key 'technique_applications', 'ranks', name: 'fk_technique_applications_rank_id'
+  add_foreign_key 'technique_links', 'basic_techniques', column: 'linkable_id', name: 'fk_basic_technique_links_basic_technique_id'
   add_foreign_key 'trial_attendances', 'nkf_member_trials', name: 'trial_attendances_nkf_member_trial_id_fkey'
   add_foreign_key 'trial_attendances', 'practices', name: 'fk_trial_attendances_practice_id'
   add_foreign_key 'user_messages', 'users', name: 'fk_user_messages_user_id'

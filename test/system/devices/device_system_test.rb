@@ -5,7 +5,6 @@ require 'application_system_test_case'
 module DeviceSystemTest
   extend ActiveSupport::Concern
 
-  MENU_BTN_AREA = [130, 20, 142, 63].freeze
   SUBNAV_OFFSET = -268
   USER_AGENT = <<~UA
     Mozilla/5.0 (Linux; Android 6.0.1; Nexus 7 Build/MOB30X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36
@@ -14,6 +13,8 @@ module DeviceSystemTest
   included do
     cattr_accessor :logo_area
     cattr_accessor :menu_logo_area
+    cattr_accessor :public_menu_btn_area
+    cattr_accessor :public_menu_logo_area
     setup do
       screenshot_section :front
       Capybara::Screenshot.window_size = nil
@@ -31,9 +32,12 @@ module DeviceSystemTest
       name.chomp('Test').camelize
     end
 
-    def use_device(device_name: nil, device_metrics: nil, menu_logo_area:, logo_area:)
-      self.menu_logo_area = menu_logo_area
-      self.logo_area = logo_area
+    def use_device(device_name: nil, device_metrics: nil, menu_logo_area:, logo_area:, public_menu_btn_area:,
+        public_menu_logo_area:)
+      self.menu_logo_area = menu_logo_area.freeze
+      self.logo_area = logo_area.freeze
+      self.public_menu_btn_area = public_menu_btn_area.freeze
+      self.public_menu_logo_area = public_menu_logo_area.freeze
       Capybara.register_driver driver_name do |app|
         browser_options = ::Selenium::WebDriver::Chrome::Options.new
         browser_options.headless!
@@ -92,7 +96,7 @@ module DeviceSystemTest
     info_section.click
     assert_selector 'li a', text: 'My first article'
     assert_css '#menuShadow'
-    screenshot :menu, skip_area: logo_area
+    screenshot :menu, skip_area: [menu_logo_area, logo_area]
     find('.fa-calendar-alt').click_at # Hide menu
     assert_offset '.subnav', :left, SUBNAV_OFFSET
     assert_no_css '#menuShadow'
@@ -112,10 +116,10 @@ module DeviceSystemTest
     screenshot_group :new_front_page
     visit front_page_path
     assert_css('#headermenuholder > .fa-bars')
-    screenshot :index, skip_area: [MENU_BTN_AREA, progress_bar_area]
+    screenshot :index, skip_area: [public_menu_btn_area, progress_bar_area].compact
     find('#headermenuholder > .fa-bars').click
     article_menu_link = find('.menubutton', text: 'My first article')
-    screenshot :menu, skip_area: menu_logo_area
+    screenshot :menu, skip_area: public_menu_logo_area
     with_retries(label: 'article menu click') { article_menu_link.click }
     assert_css 'h1', text: 'My first article'
     screenshot :article, skip_area: logo_area
@@ -126,7 +130,7 @@ module DeviceSystemTest
     visit front_page_path
     assert_css('#headermenuholder > .fa-bars')
     assert_css('.fa-chevron-down')
-    screenshot :index, area_size_limit: 533, skip_area: [MENU_BTN_AREA, progress_bar_area]
+    screenshot :index, area_size_limit: 533, skip_area: [public_menu_btn_area, progress_bar_area].compact
     find('.fa-chevron-down').click
     find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
     scroll_position = evaluate_script('$(window).height()')

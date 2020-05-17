@@ -1,0 +1,7 @@
+h1 Ny lenke for #{@technique_link.linkable&.name || :grunnteknikk}
+
+= render 'form'
+
+javascript: $('#technique_link_url').focus();
+
+= link_to 'Back', technique_links_path

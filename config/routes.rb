@@ -63,7 +63,6 @@ Rails.application.routes.draw do
   end
   resources :attendance_webpushes
   get 'audit/index/:item_type/:item_id' => 'audit#index', as: :audit
-  resources :basic_technique_links
   resources :basic_techniques
   resources :birthday_celebrations do
     member { get :certificates }
@@ -305,6 +304,7 @@ Rails.application.routes.draw do
       post :move_up
     end
   end
+  resources :technique_links
   resources :trial_attendances
   resources :user_images, only: [] do
     member do

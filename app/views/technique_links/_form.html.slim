@@ -1,0 +1,7 @@
+= bootstrap_form_for @technique_link do |f|
+  = f.text_field :linkable_type
+  = f.collection_select :linkable_id, @linkables, :id, :label
+  = f.text_field :title
+  = f.text_field :url
+  .float-right
+    = f.primary 'Lagre'
