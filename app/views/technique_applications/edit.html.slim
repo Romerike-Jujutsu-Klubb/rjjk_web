@@ -57,8 +57,8 @@ a.btn.btn-primary.float-right.mt-3.ml-2 href=new_application_image_sequence_path
 a.btn.btn-primary.float-right.mt-3 href=new_application_video_path(application_video: {technique_application_id: @technique_application.id})
   i.fa.fa-plus>
   | Legg til film
+.clearfix
 - if @technique_application.application_videos.any?
-  .clearfix
   - @technique_application.application_videos.each do |av|
     a href=image_path(av.image_id)
       img src=inline_image_path(av.image_id, format: av.image.format) style="width:10%"
