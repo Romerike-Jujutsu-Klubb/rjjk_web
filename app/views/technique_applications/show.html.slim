@@ -12,12 +12,14 @@ h3.clearfix
       i.fa.fa-plus>
       | Legg til film
     - if admin?
-      a.btn.btn-primary.ml-2 href=edit_technique_application_path(@technique_application) Rediger
+      a.btn.btn-primary.ml-2 href=edit_technique_application_path(@technique_application)
+        i.fa.fa-edit>
+        | Rediger
 
 - if [@technique_application.application_image_sequences, @technique_application.application_videos, \
       @technique_application.technique_links].reduce(0){|a,e| e.any? ? a + 1 : a} >= 2
   ul#myTab.nav.nav-tabs role="tablist"
-    - if @technique_application.application_image_sequences.any?
+    - if @technique_application.application_image_sequences.any?{|is| is.application_steps.any?}
       li.nav-item
         a#steps-tab.nav-link.active data-toggle="tab" data-target="#steps" role="tab" aria-controls="steps" aria-selected="true" Bildeserie
     - if @technique_application.application_videos.any?
