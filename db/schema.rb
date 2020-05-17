@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_17_173520) do
+ActiveRecord::Schema.define(version: 2020_05_17_220619) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -735,9 +735,7 @@ ActiveRecord::Schema.define(version: 2020_05_17_173520) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.string 'linkable_type', null: false
-    t.index %w[linkable_id position], name: 'index_technique_links_on_linkable_id_and_position', unique: true
-    t.index %w[linkable_id url], name: 'index_technique_links_on_linkable_id_and_url', unique: true
-    t.index ['linkable_id'], name: 'fk__basic_technique_links_basic_technique_id'
+    t.index %w[linkable_type linkable_id position], name: 'idx_technique_links_on_linkable_type_et_linkable_id_et_position', unique: true
     t.index %w[linkable_type linkable_id url], name: 'index_technique_links_on_linkable_type_and_linkable_id_and_url', unique: true
     t.index %w[linkable_type linkable_id], name: 'index_technique_links_on_linkable_type_and_linkable_id'
   end
