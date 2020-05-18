@@ -19,10 +19,12 @@ h3.clearfix
 - if [@technique_application.application_image_sequences, @technique_application.application_videos, \
       @technique_application.technique_links].reduce(0){|a,e| e.any? ? a + 1 : a} >= 2
   ul#myTab.nav.nav-tabs role="tablist"
-    - if @technique_application.application_image_sequences.any?{|is| is.application_steps.any?}
+    - image_sequences_present = @technique_application.application_image_sequences.any? { |is| is.application_steps.any? }
+    - if image_sequences_present
       li.nav-item
         a#steps-tab.nav-link.active data-toggle="tab" data-target="#steps" role="tab" aria-controls="steps" aria-selected="true" Bildeserie
-    - if @technique_application.application_videos.any?
+    - videos_present = @technique_application.application_videos.any?
+    - if videos_present
       li.nav-item
         a#videos-tab.nav-link data-toggle="tab" data-target="#videos" role="tab" aria-controls="videos" aria-selected="false" Filmer
     - if @technique_application.technique_links.any?
@@ -51,12 +53,12 @@ scss:
               - if as.image_id
                 = render 'images/item', image: as.image
               = textalize as.description, newlines: true
-  #videos.tab-pane.fade role="tabpanel" aria-labelledby="videos-tab"
+  #videos.tab-pane.fade class=('show active' unless image_sequences_present) role="tabpanel" aria-labelledby="videos-tab"
     .card-deck
       - @technique_application.application_videos.each do |av|
         .card.mt-3
           .card-body = render 'images/item', image: av.image
-  #links.tab-pane.fade role="tabpanel" aria-labelledby="links-tab"
+  #links.tab-pane.fade class=('show active' unless image_sequences_present || videos_present) role="tabpanel" aria-labelledby="links-tab"
     .card.mt-3
       .card-body
         ul.mb-0
