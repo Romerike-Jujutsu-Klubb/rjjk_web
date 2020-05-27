@@ -156,7 +156,7 @@ class Group < ApplicationRecord
     trial_list = trials.sort_by { |t| [-t.trial_attendances.size, t.reg_dato] }
     active_size = members.count(&:active?)
     active_trial_count = (target_size - active_size)
-    trial_list[active_trial_count..-1] || []
+    trial_list[active_trial_count..] || []
   end
 
   def suggested_graduation_date(date = Date.current)
