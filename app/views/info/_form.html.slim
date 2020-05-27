@@ -36,10 +36,10 @@
                 });
         .float-left.ml-2.ml-sm-3
           .mt-3 &nbsp;
-          = f.check_box :hidden
+          = f.check_box :hidden, custom: true
         .float-left.ml-2.ml-sm-3
           .mt-3 &nbsp;
-          = f.check_box :public
+          = f.check_box :public, custom: true
       = render 'layouts/textarea_input_buttons', images: @images
       = f.text_area :body, class: :expanding, value: @information_page.body && (document = Kramdown::Document.new(@information_page.body, html_to_native: true)) && document.to_kramdown
 
@@ -49,7 +49,8 @@
           a.btn.btn-link.mr-2 href=information_page_path(@information_page.title) Vis
         = f.submit 'Lagre', id: :save, class: 'btn btn-primary'
 
-      .float-left style=('color:red' if @information_page.revised_at.nil? || @information_page.revised_at < 6.months.ago) = f.check_box :revised_at, { checked: false }, 1, nil
+      .float-left style=('color:red' if @information_page.revised_at.nil? || @information_page.revised_at < 6.months.ago)
+        = f.check_box :revised_at, { checked: false, custom: true }, 1, nil
       - if @information_page.revised_at
         span.mx-3 style=('color:red' if @information_page.revised_at.nil? || @information_page.revised_at < 6.months.ago)
           = @information_page.revised_at.strftime('%Y-%m-%d %H:%M')
