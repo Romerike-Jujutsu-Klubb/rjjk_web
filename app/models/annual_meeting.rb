@@ -40,4 +40,8 @@ class AnnualMeeting < Event
   def self.board_contacts
     [*current_board, Role[:Hovedinstruktør, return_record: true]].map(&:elected_contact)
   end
+
+  def public?
+    false
+  end
 end

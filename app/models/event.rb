@@ -49,6 +49,10 @@ class Event < ApplicationRecord
     true
   end
 
+  def private?
+    !public?
+  end
+
   def upcoming?
     (end_at || start_at).to_date >= Date.current
   end

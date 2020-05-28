@@ -9,7 +9,12 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-    @event_invitee = @event.event_invitees.find { |ei| ei.user_id == current_user.id } if current_user
+
+    if current_user
+      @event_invitee = @event.event_invitees.find { |ei| ei.user_id == current_user.id }
+    elsif @event.private?
+      render file: "#{Rails.root}/public/404", layout: false, status: :not_found
+    end
   end
 
   def preview
