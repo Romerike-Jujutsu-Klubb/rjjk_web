@@ -9,7 +9,7 @@ h2 Vedlegg
           = f.hidden_field :attachments, multiple: true, value: a.signed_id
       .text-right = f.primary 'Last opp fil'
     .row
-      - @event.attachments.map do |file|
+      - @event.attachments.each do |file|
         .col.text-nowrap.mt-4
           .btn-group.mt-4.w-100
             a.btn.btn-info.w-100 href=rails_blob_path(file) target='_blank'
