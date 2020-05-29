@@ -6,8 +6,8 @@ h1 = @title
 
 = render 'time_label', event: @event
 
-- @event.attachments.each.with_index do |file, i|
-  a.btn.btn-info.mb-3 class=('ml-3' unless i == 0) href=rails_blob_path(file) target='_blank'
+- @event.attachments.each do |file|
+  a.btn.btn-info.mb-3.mr-3 href=rails_blob_path(file) target='_blank'
     i.fa.fa-file-alt>
     = file.filename
 - body = textalize(I18n.locale != :nb ? @event.description_en : @event.description)
