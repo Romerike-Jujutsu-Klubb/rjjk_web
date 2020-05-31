@@ -5,6 +5,7 @@ require 'test_helper'
 class EmbuPartVideosControllerTest < ActionDispatch::IntegrationTest
   setup do
     @embu_part_video = embu_part_videos(:one)
+    login
   end
 
   test 'should get index' do

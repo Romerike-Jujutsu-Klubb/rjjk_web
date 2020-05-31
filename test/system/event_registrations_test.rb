@@ -16,7 +16,7 @@ class EventRegistrationsTest < ApplicationSystemTestCase
     assert_selector 'h1', text: 'Påmelding til arrangement'
     screenshot :index
 
-    first('a', text: 'Påmelding').click
+    first('a', text: 'PÅMELDING').click
     assert_selector 'h1', text: 'Påmelding til Årsmøte'
     screenshot :form
 

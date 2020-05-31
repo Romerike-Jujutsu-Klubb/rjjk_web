@@ -23,7 +23,7 @@ h1 #{t :registration_for} #{@event_invitee.event&.title}
         = uf.text_field :name, required: true
         .row
           .col-md-5 = uf.text_field :email, placeholder: t(:user_enter_valid_email_address), required: uf.object.phone.blank?, onkeyup: 'update_required_inputs()'
-          .col-md-2.mt-md-4.pt-md-3.text-center = t :and_or
+          .col-md-2.mt-md-3.pt-md-3.text-center = t :and_or
           .col-md-5 = uf.text_field :phone, required: uf.object.email.blank?, onkeyup: 'update_required_inputs()'
       = f.text_field :organization
   .text-right = f.primary t(:register)

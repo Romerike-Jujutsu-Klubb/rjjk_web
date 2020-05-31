@@ -874,7 +874,7 @@ function setHeightOfMenuHolder() {
     var e = jQuery("#navigation").height();
     jQuery("#headerwrapper").css({paddingTop: 30 + e}), jQuery("#maincontent").css({marginTop: 50 + e}), setTimeout(function() {
       jQuery("#mainmenuholder").css({height: e})
-    }, 1e3)
+    }, 1)
   }
 }
 
@@ -883,20 +883,24 @@ function initMenuFunctions() {
   if (t = -1 != navigator.userAgent.indexOf("Mac OS X") ? 3 : 30, !is_mobile() && jQuery("body").hasClass("menuonleft")) {
     jQuery("#navigation").jScrollPane({mouseWheelSpeed: t});
     var i = jQuery("#navigation").data("jsp")
-  } else is_mobile() && jQuery("body").removeClass("menuontop"), jQuery("body").hasClass("menuontop") ? (TweenLite.fromTo(jQuery(".menuontop menu"), .4, {
-    y: -200,
-    autoAlpha: 0
-  }, {
-    autoAlpha: 1,
-    y: 0,
-    delay: 1.2,
-    ease: Power3.easeInOut
-  }), jQuery("#navigation").css({overflow: "hidden"}), jQuery(window).on('resize', function() {
-    setHeightOfMenuHolder()
-  }), setHeightOfMenuHolder(), jQuery(window).trigger("resize"), jQuery(".menu-item-has-children .menu-item-has-children").on('hover', function() {
-    var e = jQuery(this);
-    e.removeClass("submenutoleft"), jQuery(window).width() - (e.find(">ul").width() + e.offset().left) < 200 && e.addClass("submenutoleft")
-  })) : jQuery("#navigation").css({overflow: "scroll"});
+  } else {
+    is_mobile() && jQuery("body").removeClass("menuontop");
+    if (jQuery("body").hasClass("menuontop")) {
+      jQuery("#navigation").css({overflow: "hidden"});
+      jQuery(window).on('resize', function() {
+        setHeightOfMenuHolder()
+      });
+      setHeightOfMenuHolder();
+      jQuery(window).trigger("resize");
+      jQuery(".menu-item-has-children .menu-item-has-children").on('hover', function() {
+        var e = jQuery(this);
+        e.removeClass("submenutoleft");
+        jQuery(window).width() - (e.find(">ul").width() + e.offset().left) < 200 && e.addClass("submenutoleft");
+      });
+    } else {
+      jQuery("#navigation").css({overflow: "scroll"});
+    }
+  }
 
   var n, a = jQuery("#navigation ul").first();
   if (jQuery(window).on('resize', function() {

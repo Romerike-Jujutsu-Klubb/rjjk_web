@@ -1,4 +1,11 @@
 css:
+  a {
+    color: #8e3233 !important
+  }
+  a, a:visited {
+    color: #8e3233;
+  }
+
   @media (min-height: 593px) {
     #event-splash-top {
       margin-left: 2rem;
@@ -144,6 +151,34 @@ css:
 
   #footer {
     margin-top: 4rem;
+  }
+
+  select, textarea, input[type="text"],
+  input[type="password"],
+  input[type="datetime"],
+  input[type="datetime-local"],
+  input[type="date"],
+  input[type="month"],
+  input[type="time"],
+  input[type="week"],
+  input[type="number"],
+  input[type="email"],
+  input[type="url"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="color"],
+  input[type="submit"],
+  .uneditable-input {
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.25);
+    color: #bbb;
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  input[type="submit"] {
+    color: #fff;
+    border: 0;
   }
 
 

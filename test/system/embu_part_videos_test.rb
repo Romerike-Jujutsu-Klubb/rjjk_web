@@ -5,6 +5,7 @@ require 'application_system_test_case'
 class EmbuPartVideosTest < ApplicationSystemTestCase
   setup do
     @embu_part_video = embu_part_videos(:one)
+    login
   end
 
   test 'visiting the index' do

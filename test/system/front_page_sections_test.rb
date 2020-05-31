@@ -29,7 +29,8 @@ class FrontPageSectionsTest < ApplicationSystemTestCase
 
   test 'updating a front page section' do
     visit front_page_sections_url
-    click_on 'Edit', match: :first
+    find('tbody tr', match: :first).click
+    click_on 'Endre'
 
     fill_in 'front_page_section_button_text', with: @front_page_section.button_text
     select_from_chosen @front_page_section.image.name, from: 'Bilde'
@@ -44,10 +45,7 @@ class FrontPageSectionsTest < ApplicationSystemTestCase
 
   test 'destroying a Front page section' do
     visit front_page_sections_url
-    page.accept_confirm do
-      click_on 'Destroy', match: :first
-    end
-
+    page.accept_confirm { find('.fa-trash-alt', match: :first).click }
     assert_text 'Front page section was successfully destroyed'
   end
 end

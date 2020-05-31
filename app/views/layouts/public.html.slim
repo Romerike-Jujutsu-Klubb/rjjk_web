@@ -1,0 +1,158 @@
+doctype html
+html lang="nb" prefix="og: http://ogp.me/ns#"
+  head
+    meta name="format-detection" content="telephone=no"
+    meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1"
+    meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+    /!--[if IE]
+      meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"
+    title Trening - Teknikk - Trygghet | Romerike Jujutsu Klubb
+    meta name="description" content="Martial arts club with over 40 years of experience in Jujutsu, Kung Fu, and Aikijutsu."
+    meta name="theme-color" content="#000000"
+    meta property="og:locale" content="en_US"
+    meta property="og:type" content="website"
+    meta property="og:title" content="Trening - Teknikk - Trygghet | Romerike Jujutsu Klubb"
+    meta property="og:description" content="Martial arts club with over 40 years of experience in Jujutsu, Kung Fu, and Aikijutsu."
+    meta property="og:url" content="https://www.jujutsu.no/"
+    meta property="og:site_name" content="Romerike Jujutsu Klubb"
+    link rel="manifest" href='/manifest.json'
+    link rel="icon" sizes="192x192" href="/favicon.ico"
+    link rel="apple-touch-icon" href="/apple-touch-icon.png"
+    link rel="apple-touch-startup-image" href="/rjjk_logo_&_txt_320.png"
+    script type='application/ld+json' {"@context":"https:\/\/schema.org","@type":"WebSite","@id":"#website","url":"https:\/\/www.jujutsu.no\/","name":"Romerike Jujutsu Klubb","potentialAction":{"@type":"SearchAction","target":"https:\/\/www.jujutsu.no\/search?q={search_term_string}","query-input":"required name=search_term_string"}}
+
+    = javascript_include_tag 'new_front_page', 'data-turbolinks-track': 'reload'
+
+    link rel="preconnect" href="https://fonts.gstatic.com"
+    link rel='stylesheet' id='new_front_page.css' href=asset_path('new_front_page.css') type='text/css' media='all'
+    link rel='shortlink' href='https://www.jujutsu.no/'
+
+  body.home.page-template.page-template-one_page.page-template-one_page-php.page.page-id-240.withoutmoduleanimations.menuontop.gw_light.wpb-js-composer.vc_responsive class='js-comp-ver-5.4.7' data-menutitle="Home" data-autoslider="7"
+
+    / THE FIREFOX FALL BACK GRADIENT HEADER
+    svg height="0"
+      mask#m1 maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox"
+        linearGradient#g gradientUnits="objectBoundingBox" x2="0" y2="1"
+          stop stop-color="white" stop-opacity="1" offset="0"
+          stop stop-color="white" stop-opacity="1" offset="0.80"
+          stop stop-color="white" stop-opacity="0" offset="1"
+        rect x="0" y="0" width="1" height="1" fill="url(#g)"
+    / END OF GRADIENT HEADER FALL BACK
+
+    = render 'layouts/public/menu'
+
+    / TO BE ABLE TO SCROLL ALL THE CONTENT IN CASE MENU HAS BEEN PRESSED
+    section#allcontent
+
+      / HEADER
+      header#headerwrapper
+        .header_innerwrapper.container
+          #headermenuholder.header-menu-wrapper.txtshadow.pull-left.bgholderparent style="width: 113px"
+            .single_blurredbg_holder
+              .single_bluroverlay
+            i.fa.fa-bars.menu-toggler
+            #current-menu-txt style="" Home
+            .clear
+          .clear
+      / END OF HEADER
+
+      - if flash.notice
+        .alert.alert-info
+          = flash.notice
+
+      - if controller_name == 'welcome'
+        = yield
+      - else
+        css:
+          body {
+            background-color: #fff !important;
+          }
+
+          p {
+            font-size: 1.5rem;
+            line-height: 2.2rem;
+          }
+
+          #footer {
+            background-color: #e3e3e3;
+          }
+        .container-lg.p-3.mt-5.pt-4.pt-md-0
+          = yield
+          .clear
+
+      footer#footer
+        section.container
+          .row
+
+            article.col-md-4.mb-3
+              .pr-md-3
+                .widget-1.last.divide30.footer_widget_spacer.clear
+                #nav_menu-11.widget-1.last.widget_nav_menu
+                  .menu-footerwidgetnavigation-container
+                    ul#menu-footerwidgetnavigation.menu
+                      - @information_pages.select(&:public).reject(&:hidden).each do |ip|
+                        li.menu-item.menu-item-type-post_type.menu-item-object-page id="menu-item-#{ip.id}"
+                          a href=information_page_path(ip.title)
+                            i.demoicon.fa-fw> class=(ip.icon_class.presence || 'fa fa-file-alt')
+                            = ip.title
+                          .clear
+                  .clear
+
+            article.col-md-4.mb-3
+              .px-md-2
+                .widget-1.last.divide30.footer_widget_spacer.clear
+                #news.widget-1.last.widget_rss
+                  .widget_nav_menu
+                    ul
+                      li
+                        a.rsswidget href=news_items_path
+                          .far.fa-newspaper.fa-2x> style="vertical-align:bottom;margin-right:1rem"
+                          | Nyheter
+                      - @news_items.each do |news_item|
+                        li
+                          a href=news_item_path(news_item)
+                            .rss-date style="float: right" = news_item.created_at.to_date
+                            = news_item.title
+                  .clear
+
+            article.col-md-4
+              .pl-md-3
+                .widget-1.first.divide30.footer_widget_spacer.clear
+                #nav_menu-17.widget-1.first.widget_nav_menu
+                  .menu-for-contact-us-widget-container
+                    ul#menu-for-contact-us-widget.menu
+                      li#menu-item-2374.menu-item.menu-item-type-post_type.menu-item-object-page
+                        a href=information_page_path('Kontakt oss')
+                          .fa.fa-map> style="margin-right:0.5rem"
+                          | Kontakt oss
+                        .clear
+                  .clear
+                #text-3.widget-2.last.widget_text
+                  .textwidget style="text-align: center"
+                    a href=information_page_path('Kontakt oss')
+                      img.w-100 alt="RJJK kart" src=asset_path(accepts_webp? ? 'kart.webp' : 'kart.png') width="332"
+                  .clear
+
+            .clear
+
+      / SUBFOOTER
+      section#subfooter
+        .container
+          / ROW
+          .row
+            article.col-10
+              .widget-1.widget_text
+                .textwidget © 1999–#{Date.current.year} Romerike Jujutsu Klubb
+                .clear
+
+            .col-2.widget-1.goodwebSocials.text-right
+              / <a href="https://www.youtube.com/channel/UCFfNdnuxB3FWA2zttnLDkWA" class="subfooter-socials" target="_blank"><i class="fa fa-youtube"></i></a>
+              a.subfooter-socials href="https://www.facebook.com/Romerikejujutsuklubb" target="_blank" rel="noreferrer"
+                i.fab.fa-facebook
+              / <a href="http://plus.google.com/b/106511337358259588944/106511337358259588944/posts" class="subfooter-socials" target="_blank"><i class="fa fa-google-plus"></i></a>
+              .clear
+
+    script src="https://cdn.polyfill.io/v3/polyfill.min.js"
+    = javascript_include_tag 'deferred', 'data-turbolinks-track': 'reload', defer: 'defer'
+
+    = yield :modals

@@ -3,11 +3,12 @@
 class ApplicationController < ActionController::Base
   include UserSystem
 
-  DEFAULT_LAYOUT = 'dark_ritual'
+  MEMBER_LAYOUT = 'dark_ritual'
+  PUBLIC_LAYOUT = 'public'
 
   protect_from_forgery prepend: true, with: :exception
 
-  layout DEFAULT_LAYOUT
+  layout -> { current_user ? MEMBER_LAYOUT : PUBLIC_LAYOUT }
 
   if Rails.env.production?
     before_action { redirect_to(host: 'www.jujutsu.no') if request.host != 'www.jujutsu.no' }
@@ -29,12 +30,13 @@ class ApplicationController < ActionController::Base
   end
 
   NO_LAYOUT_KEYS = %i[partial text plain html body json].freeze
-  def render(*args)
-    if ((opts = args[0]).is_a?(Hash) &&
-        (opts[:layout] == false || (opts.keys & NO_LAYOUT_KEYS).any?)) ||
-          _layout(lookup_context, []) != DEFAULT_LAYOUT
+  def render(*args, **opts)
+    if opts[:layout] == false || (opts.keys & NO_LAYOUT_KEYS).any?
       # Skip layout models
-    else
+    elsif _layout(lookup_context, []) == PUBLIC_LAYOUT || opts.dig(:layout) == PUBLIC_LAYOUT
+      load_information_pages
+      @news_items = NewsItem.front_page_items.reject(&:expired?).first(5)
+    elsif _layout(lookup_context, []) == MEMBER_LAYOUT
       load_layout_model
     end
     super
@@ -42,15 +44,18 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def load_layout_model
-    unless @information_pages
-      info_query = InformationPage.roots.order(:position)
-      info_query = info_query.where('hidden IS NULL OR hidden = ?', false) unless admin?
-      info_query = info_query.where('title <> ?', 'Velkommen') unless user?
-      info_query = info_query.for_all unless user?
-      @information_pages = info_query.to_a
-    end
+  def load_information_pages
+    return if @information_pages
 
+    info_query = InformationPage.roots.order(:position)
+    info_query = info_query.where('hidden IS NULL OR hidden = ?', false) unless admin?
+    info_query = info_query.where('title <> ?', 'Velkommen') unless user?
+    info_query = info_query.for_all unless user?
+    @information_pages = info_query.to_a
+  end
+
+  def load_layout_model
+    load_information_pages
     load_next_practices
 
     group_query = Group.active(Date.current).order('to_age, from_age DESC')

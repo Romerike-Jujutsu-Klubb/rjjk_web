@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class EmbuPartVideosController < ApplicationController
+  before_action :authenticate_user
   before_action :set_embu_part_video, only: %i[show edit update destroy]
 
   def index

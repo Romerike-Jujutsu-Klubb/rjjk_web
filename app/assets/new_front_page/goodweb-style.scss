@@ -226,7 +226,6 @@ h5 {
 ********************************/
 #footer {
     display: none;
-    margin-top: 200px;
     padding: 50px 0px;
     position: relative;
 }
@@ -551,17 +550,12 @@ menu #navigation ul li a {
         width: 100% !important;
         display: block !important;
         width: 100%;
-        height: 30px;
+        height: auto;
         z-index: 550;
         padding: 0px;
         background-image: none !important;
         left: 0px !important;
         top: 0;
-        /*top: 0px !important;*/
-
-        transform: translateY(-300px);
-        -webkit-transform: translateY(-300px);
-        -moz-transform: translateY(-300px);
     }
 
     .menuontop menu:after {

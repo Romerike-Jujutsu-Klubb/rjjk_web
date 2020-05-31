@@ -35,7 +35,10 @@ h5.mb-0 style="color:#FFB400"
 
 - if user?
   = render 'layouts/event_details', event: event
-= textalize ingress
+- if ingress
+  = textalize ingress
+- else
+  .mb-2
 .text-right
   - if admin? && event.persisted?
     a.btn.btn-primary.d-none.d-md-inline-block href=edit_polymorphic_path(event)
