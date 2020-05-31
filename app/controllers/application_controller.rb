@@ -33,7 +33,8 @@ class ApplicationController < ActionController::Base
   def render(*args, **opts)
     if opts[:layout] == false || (opts.keys & NO_LAYOUT_KEYS).any?
       # Skip layout models
-    elsif _layout(lookup_context, []) == PUBLIC_LAYOUT || opts.dig(:layout) == PUBLIC_LAYOUT
+    elsif _layout(lookup_context, []) == PUBLIC_LAYOUT || opts[:layout] == PUBLIC_LAYOUT ||
+          _layout(lookup_context, []) == 'parallax' || opts[:layout] == 'parallax'
       load_information_pages
       @news_items = NewsItem.front_page_items.reject(&:expired?).first(5)
     elsif _layout(lookup_context, []) == MEMBER_LAYOUT

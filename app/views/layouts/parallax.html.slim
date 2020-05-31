@@ -36,6 +36,13 @@ html lang="nb"
         font-family: Nunito;
       }
 
+      body.modal-open {
+        overflow: visible;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+
       h1 {
         font-size: 250%
       }
@@ -56,26 +63,30 @@ html lang="nb"
         transform-style: inherit;
       }
 
-      img {
+      .slide:not(.header):not(footer) img {
         position: absolute;
         top: 50%;
         left: 35%;
         width: 320px;
         height: 240px;
-        transform: translateZ(.25px) scale(.75) translateX(-94%) translateY(-100%) rotate(2deg);
+        transform: translateZ(.4px) scale(.6) translateX(-104%) translateY(-40%) rotate(-5deg);
         padding: 10px;
         border-radius: 5px;
         background: rgba(240, 230, 220, .7);
         box-shadow: 0 0 8px rgba(0, 0, 0, .7);
       }
 
-      .slide:nth-of-type(2n) img {
+      .slide:not(.header):not(footer):nth-of-type(2n) img {
         right: 15%;
         left: unset;
       }
 
-      img:last-of-type {
-        transform: translateZ(.4px) scale(.6) translateX(-104%) translateY(-40%) rotate(-5deg);
+      .slide:not(.header):not(footer) img:last-of-type {
+        transform: translateZ(.25px) scale(.75) translateX(-94%) translateY(-100%) rotate(2deg);
+      }
+
+      body:not(.modal-open) .slide.header img {
+        transform: translateZ(.4px) scale(.6);
       }
 
       .slide:before {
@@ -97,6 +108,10 @@ html lang="nb"
         border-radius: 5px;
         background: rgba(240, 230, 220, .7);
         box-shadow: 0 0 8px rgba(0, 0, 0, .7);
+      }
+
+      .slide:not(.header):nth-child(2n+1) {
+        z-index: 2;
       }
 
       .slide:nth-child(2n) .title {
@@ -124,29 +139,17 @@ html lang="nb"
         z-index: 2;
       }
 
-      #title h1, h2 {
+      body:not(.modal-open) #title h1, h2 {
         transform: translateZ(.25px) scale(.75);
         transform-origin: 50% 100%;
 
       }
 
-      #slide1:before {
-        transform: translateZ(-1px) scale(2);
-      }
-
-      #slide2 {
-        z-index: 2;
-      }
-
-      #slide3:before {
-        background-image: url("https://lorempixel.com/640/480/abstract/5/");
-        transform: translateZ(-1px) scale(2);
-      }
-
-      #slide4 {
+      #footer {
         background: #222;
       }
 
   body class=(:wide if @content_width)
-
     = yield
+    = yield :modals
+    = render 'layouts/parallax/footer', information_pages: @information_pages, news_items: @news_items

@@ -1,0 +1,41 @@
+footer#footer.slide
+  .card-deck
+
+    - if information_pages.any?
+      .card
+        .card-header
+          i.fa.fa-file-alt.mr-3
+          | Informasjon
+        .card-body
+          table.table.mb-0
+            tbody
+              - information_pages.select(&:public).reject(&:hidden).each do |ip|
+                tr
+                  td
+                    a href=information_page_path(ip.title)
+                      i.fa-fw> class=(ip.icon_class.presence || 'fa fa-file-alt')
+                      = ip.title
+
+    - if news_items.any?
+      .card
+        .card-header
+          a href=news_items_path
+            i.far.fa-newspaper.mr-3
+            | Nyheter
+        .card-body
+          #news
+            ul
+              - news_items.each do |news_item|
+                li
+                  a href=news_item_path(news_item)
+                    .rss-date style="float: right" = news_item.created_at.to_date
+                    = news_item.title
+
+    .card
+      .card-header
+        a href=information_page_path('Kontakt oss')
+          i.fa.fa-map.mr-3
+          | Kontakt oss
+      .card-body.text-center
+        a href=information_page_path('Kontakt oss')
+          img.w-100 alt="RJJK kart" src=asset_path(accepts_webp? ? 'kart.webp' : 'kart.png') style="max-height: 100vh"
