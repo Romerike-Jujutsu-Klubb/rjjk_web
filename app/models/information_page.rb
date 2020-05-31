@@ -16,4 +16,15 @@ class InformationPage < ApplicationRecord
   def visible?
     !hidden
   end
+
+  def ingress
+    paragraphs&.first
+  end
+
+  private
+
+  def paragraphs
+    body&.split(/\r?\n\r?\n/)
+  end
+
 end
