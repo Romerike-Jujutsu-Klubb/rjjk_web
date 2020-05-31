@@ -26,5 +26,4 @@ class InformationPage < ApplicationRecord
   def paragraphs
     body&.split(/\r?\n\r?\n/)
   end
-
 end
