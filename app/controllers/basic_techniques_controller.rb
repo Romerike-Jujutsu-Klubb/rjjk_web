@@ -20,7 +20,7 @@ class BasicTechniquesController < ApplicationController
   end
 
   def edit
-    @basic_technique = BasicTechnique.find(params[:id])
+    @basic_technique ||= BasicTechnique.find(params[:id])
     load_form_data
     render :edit
   end
