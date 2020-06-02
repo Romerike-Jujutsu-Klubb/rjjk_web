@@ -27,7 +27,10 @@ class SearchController < ApplicationController
         .order(start_at: :desc)
         .group_by { |e| e.start_at.year }
     @images = Image.where('UPPER(name) LIKE :query', query: query).order(:name).to_a
-    @basic_techniques = BasicTechnique.where('UPPER(name) LIKE :query', query: query).order(:name).to_a
+    @basic_techniques = BasicTechnique.includes(rank: {curriculum_group: :martial_art})
+        .where('UPPER(basic_techniques.name) LIKE :query', query: query)
+        .where(martial_arts: {original_martial_art_id: nil})
+        .order(:name).to_a
     @technique_applications =
         TechniqueApplication.where('UPPER(name) LIKE :query', query: query).order(:name).to_a
   end
