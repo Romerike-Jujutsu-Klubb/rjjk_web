@@ -18,7 +18,7 @@ class InformationPage < ApplicationRecord
   end
 
   def ingress
-    paragraphs&.first
+    paragraphs&.reject{_1 =~ /^!\[|^#/}&.first
   end
 
   private

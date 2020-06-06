@@ -2,7 +2,7 @@
 #title.slide.header style='background-image: url("#{image_path(fps.image_id)}");'
   h1 = fps.title
   a href="/"
-    img#rjjk_logo src=asset_path('rjjk_logo_plus_txt_320.png') style="height:20rem" alt="RJJK Logo"
+    img#rjjk_logo src=asset_path('rjjk_logo_plus_txt_320.png') style="max-width:100%" alt="RJJK Logo"
 
 - @front_page_sections[1..-1].each.with_index do |fps, i|
   .slide id="slide#{i + 1}" style=("background-image: url('#{image_path(fps.image_id)}')" if (i+1).even?)
