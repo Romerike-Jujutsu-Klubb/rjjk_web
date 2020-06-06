@@ -9,7 +9,7 @@ cache:
 
 addons:
   chrome: stable
-  postgresql: "9.6"
+  postgresql: "10"
 
 before_install:
   - CHROME_VERSION=`/opt/google/chrome/chrome --version | grep -Po '(?<=Google Chrome )[^.]+'`
