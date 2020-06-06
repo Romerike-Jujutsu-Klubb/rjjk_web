@@ -72,6 +72,7 @@ gem 'simple_drilldown' # , path: '~/work/open-source/simple_drilldown'
 gem 'simple_workflow' # , path: '~/work/open-source/simple_workflow'
 gem 'slim-rails'
 gem 'uglifier'
+gem 'webpacker'
 gem 'webpush'
 
 group :beta, :production do
