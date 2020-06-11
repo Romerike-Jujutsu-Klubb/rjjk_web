@@ -224,10 +224,10 @@ class Member < ApplicationRecord
     !absent?(date, group)
   end
 
-  def absent?(date = Date.current, group = nil)
+  def absent?(date = Date.current, group = nil, days: 92)
     return false if date <= joined_on + 2.months
 
-    start_date = date - 92
+    start_date = date - days
     end_date = date + 31
     if date >= Date.current && recent_attendances.loaded?
       set = recent_attendances

@@ -1,0 +1,8 @@
+.clearfix style="margin:0 0 10px 0;padding-bottom:5px"
+  = textalize @event_invitee_message.body
+  br clear="all"
+
+p
+  ' Du finner påmelding og mer informasjon på
+  a> href=event_url(@event_invitee_message.event_invitee.event) = event_url(@event_invitee_message.event_invitee.event)
+  | .

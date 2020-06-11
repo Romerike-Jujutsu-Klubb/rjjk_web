@@ -7,17 +7,6 @@ class EventMailer < ApplicationMailer
                   "#{Rails.env}@jujutsu.no"
                 end
 
-  def event_invitation(event, email)
-    @event = event
-    @email = email
-    @title = event.name
-    @email_url = { controller: :events, action: :show, id: @event.id }
-    @user_email = @email
-    @timestamp = event.start_at
-    @email_end_at = event.end_at
-    mail to: @email, subject: "Invitasjon til #{@event.name}"
-  end
-
   def registration_confirmation(event_registration)
     @event_registration = event_registration
     @email = event_registration.email

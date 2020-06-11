@@ -1,8 +1,0 @@
-Har du problemer med å lese denne e-posten, klikk her:
-<%= url_for :only_path => false, :controller => :events, :action => :show, :id => @event.id %>
-
-<%= textify @event.name %>
-
-<%= textify @event.ingress %>
-
-<%= textify @event.body if @event.body %>

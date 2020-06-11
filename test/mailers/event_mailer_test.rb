@@ -2,15 +2,7 @@
 
 require 'test_helper'
 
-class NewsletterMailerTest < ActionMailer::TestCase
-  test 'event_invitation' do
-    mail = EventMailer.event_invitation(events(:one), 'test@example.com')
-    assert_equal 'Invitasjon til ARRANGEMENTET', mail.subject
-    assert_equal ['test@example.com'], mail.to
-    assert_equal %w[test@jujutsu.no], mail.from
-    mail.deliver_now
-  end
-
+class EventMailerTest < ActionMailer::TestCase
   test 'registration_confirmation' do
     mail = EventMailer.registration_confirmation(event_invitees(:one))
     assert_equal 'Bekreftelse av påmelding til ARRANGEMENTET', mail.subject

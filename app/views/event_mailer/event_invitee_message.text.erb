@@ -1,6 +1,8 @@
 Har du problemer med å lese denne e-posten, klikk her:
-<%= url_for :only_path => false, :controller => :events, :action => :show, :id => @event_invitee.event.id %>
+<%= url_for only_path: false, controller: :events, action: :show, id: @event_invitee.event.id %>
 
 <%= textify @event_invitee_message.subject %>
 
 <%= textify @event_invitee_message.body %>
+
+Du finner påmelding og mer informasjon på <%= event_url(@event_invitee_message.event_invitee.event) %> .

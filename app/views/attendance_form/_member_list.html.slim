@@ -1,9 +1,9 @@
-.card-body.p-sm-3.p-0.pt-3
+.card-body.p-0.pt-3.p-sm-3
   .table-responsive
     table.table.mb-0 class=('table-sm' if members.size > 12)
       - members.each do |m|
         - attendance = selected_practice.attendance_for(m.id)
-        tr
+        tr class=("table-danger" if !m.absent? && m.absent?(days: 14))
           td
             - if m.user.card_key
               i.fa.fa-key
