@@ -55,14 +55,25 @@ table.table
     - @members_after.group_by { |m| m.groups.sort_by(&:to_age).last }.each do |group, members|
       - non_paying = members.reject(&:paying?)
       - passive, active = members.select(&:paying?).partition(&:passive?)
-      - active_diff = active.size - active_before_by_group[group]&.size.to_i
+      - active_diff = {added: active - active_before_by_group[group].to_a, removed: active_before_by_group[group].to_a - active}
+      - active_changes = active_diff.values.inject(&:+).size
+      - active_trend = active_diff[:added].size - active_diff[:removed].size
       - passive_diff = passive.size - passive_before_by_group[group]&.size.to_i
-      - non_paying_diff = non_paying.size - non_paying_before_by_group[group]&.size.to_i
+      - non_paying_diff = {added: non_paying - non_paying_before_by_group[group].to_a, removed: non_paying_before_by_group[group].to_a - non_paying}
+      - non_paying_trend = non_paying_diff[:added].size - non_paying_diff[:removed].size
+      - non_paying_changes = non_paying_diff.values.inject(&:+).size
       tr
         td = group&.name || 'Uten gruppe'
         td.text-center
-          = active.size
-          = active_diff != 0 ? " (#{active_diff > 0 ? '+' : nil}#{active_diff})" : nil
+          - if active.size > 0 || active_diff != 0
+            - if passive.size > 0
+              a href='#' data-toggle=:popover data-trigger=:hover data-content=render('popover_list', title: nil, members: active).to_str data-html=:true = active.size
+            - else
+              = active.size
+            - if active_trend != 0
+              = " ("
+              a href='#' data-toggle=:popover data-trigger=:hover data-content=escape_once(render('popver_diff_list', members_in: active_diff[:added], members_out: active_diff[:removed])) data-html=:true = "#{active_trend == 0 ? '+-' : active_trend > 0 ? '+' : nil}#{active_trend}"
+              = ")"
         td.text-center
           - if passive.size > 0 || passive_diff != 0
             - if passive.size > 0
@@ -71,9 +82,15 @@ table.table
               = passive.size
             = passive_diff != 0 ? " (#{passive_diff > 0 ? '+' : nil}#{passive_diff})" : nil
         td.text-center
-          - if non_paying.size > 0 || non_paying_diff != 0
-            a href='#' data-toggle=:popover data-trigger=:hover data-content="<table class='table table-sm mb-0'><tbody>#{non_paying.map{|m| "<tr><td>#{m.name}</td></tr>"}.sort.join("\n")}</tbody></table>" data-html=:true = non_paying.size
-            = non_paying_diff != 0 ? " (#{non_paying_diff > 0 ? '+' : nil}#{non_paying_diff})" : nil
+          - if non_paying.size > 0 || non_paying_changes != 0
+            - if non_paying.size > 0
+              a href='#' data-toggle=:popover data-trigger=:hover data-content=escape_once(render('popover_list', title: nil, members: non_paying)) data-html=:true = non_paying.size
+            - else
+              = non_paying.size
+            - if non_paying_trend != 0
+              = " ("
+              a href='#' data-toggle=:popover data-trigger=:hover data-content=escape_once(render('popver_diff_list', members_in: non_paying_diff[:added], members_out: non_paying_diff[:removed])) data-html=:true = "#{non_paying_trend == 0 ? '+-' : non_paying_trend > 0 ? '+' : nil}#{non_paying_trend}"
+              = ")"
         td.text-center = members.size
 
 .mb-5 = line_chart member_reports_history_graph_data_path, points: false, height: '24rem', title: 'Antall aktive medlemmer'
