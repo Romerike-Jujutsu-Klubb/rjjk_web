@@ -43,13 +43,16 @@ class BasicTechniquesControllerTest < ActionController::TestCase
 
   test 'should update basic_technique' do
     put :update, params: { id: @basic_technique, basic_technique: {
-      description: @basic_technique.description,
+      description: 'A nice new technique',
       name: @basic_technique.name,
       rank_id: @basic_technique.rank_id,
-      translation: @basic_technique.translation,
+      translation: 'Ny teknikk',
       waza_id: @basic_technique.waza_id,
     } }
     assert_redirected_to edit_rank_path(@basic_technique.rank_id)
+    @basic_technique.reload
+    assert_equal 'A nice new technique', @basic_technique.description
+    assert_equal 'Ny teknikk', @basic_technique.translation
   end
 
   test 'should destroy basic_technique' do
