@@ -1,0 +1,6 @@
+= bootstrap_form_for @role do |f|
+  = f.text_field :name
+  = f.select :years_on_the_board, [['Sitter ikke i styret', nil], ['1 år', 1], ['2 år', 2]]
+  .text-right
+    = back_or_link_to 'Tilbake', roles_path, class: 'btn btn-secondary mr-2'
+    = f.submit 'Lagre', class: 'btn btn-primary'

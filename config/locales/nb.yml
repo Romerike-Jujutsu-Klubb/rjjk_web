@@ -10,6 +10,7 @@ nb:
     to_age: "Til alder"
     url: URL
     yearly_fee: "Års\xADkontingent"
+    years_on_the_board: År i styret
   activerecord:
     attributes:
       annual_meeting:
