@@ -52,7 +52,7 @@ p {
 .slide {
   position: relative;
   padding: 10%;
-  @media all and (min-height: 992px) {
+  @media all and (min-width: 992px) {
     padding: 25vh 10%;
   }
   min-height: 100vh;
@@ -102,6 +102,9 @@ p {
 
 body:not(.modal-open) .slide.header img {
   transform: translateZ(.4px) scale(.6) translateY(-3rem);
+  @media all and (max-height: 400px) {
+    transform: translateZ(.4px) scale(.6) translateY(-10rem);
+  }
 }
 
 .slide:before {
@@ -156,10 +159,14 @@ body:not(.modal-open) .slide.header img {
   z-index: 2;
 }
 
-body:not(.modal-open) #title h1, h2 {
-  transform: translateZ(.25px) scale(.75);
-  transform-origin: 50% 100%;
+body:not(.modal-open) #title {
+  h1 {
+    margin-top: 2rem;
+  }
 
+  h1, h2 {
+    transform: translateZ(.25px) scale(.75);
+  }
 }
 
 #footer {

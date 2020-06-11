@@ -113,7 +113,6 @@ module DeviceSystemTest
   end
 
   def test_new_front_page
-    screenshot_group :new_front_page
     visit front_page_path
     assert_css('#headermenuholder > .fa-bars')
     screenshot :index, skip_area: [public_menu_btn_area, progress_bar_area].compact
@@ -126,7 +125,6 @@ module DeviceSystemTest
   end
 
   def test_new_front_page_scroll
-    screenshot_group :new_front_page_scroll
     visit front_page_path
     assert_css('#headermenuholder > .fa-bars')
     assert_css('.fa-chevron-down')
@@ -147,7 +145,43 @@ module DeviceSystemTest
     screenshot :article, skip_area: logo_area
   end
 
+  def test_parallax_front_page
+    visit front_parallax_path
+    screenshot :index
+    landscape { screenshot :index_landscape }
+    2.times do |i|
+      scroll_to find("#slide#{i + 1}")
+      screenshot "slide#{i + 1}"
+      landscape do
+        scroll_to find("#slide#{i + 1}")
+        screenshot "slide#{i + 1}_landscape"
+      end
+    end
+    scroll_to find('footer')
+    screenshot :footer
+    landscape do
+      scroll_to find('footer')
+      screenshot :footer_landscape
+    end
+  end
+
   private
+
+  def landscape
+    original_width = window_width
+    original_height = window_height
+    page.driver.send(:execute_cdp, 'Emulation.setDeviceMetricsOverride',
+        width: original_height,
+        height: original_width,
+        deviceScaleFactor: 1,
+        mobile: true)
+    yield
+    page.driver.send(:execute_cdp, 'Emulation.setDeviceMetricsOverride',
+        width: original_width,
+        height: original_height,
+        deviceScaleFactor: 1,
+        mobile: true)
+  end
 
   def assert_offset(selector, side, expected_offset)
     start = Time.current
