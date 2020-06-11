@@ -10,10 +10,15 @@ class AttendanceFormController < ApplicationController
     @my_groups = current_user.member.instruction_groups
     if params[:practice_id]
       @practice = Practice.find(params[:practice_id])
-    elsif (last_practice = @my_groups.map(&:last_practice).max_by(&:date)).date == Date.current
-      @practice = last_practice
-    elsif (next_practice = @my_groups.map(&:next_practice).min_by(&:date)).date == Date.current
-      @practice = next_practice
+    else
+      next_practice = @my_groups.map(&:next_practice).min_by(&:date)
+      if next_practice.date == Date.current
+        @practice = next_practice
+      elsif (last_practice = @my_groups.map(&:last_practice).max_by(&:date)).date >= Date.yesterday
+        @practice = last_practice
+      else
+        @practice = next_practice
+      end
     end
   end
 
