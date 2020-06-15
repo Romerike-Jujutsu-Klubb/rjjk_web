@@ -172,4 +172,10 @@ class UserTest < ActionMailer::TestCase
   test 'valid fixtures' do
     assert User.all.all?(&:valid?)
   end
+
+  test 'normalize phone' do
+    u = users(:lars)
+    u.update! phone: '+47 12 34 56 78'
+    assert_equal '12345678', u.phone
+  end
 end
