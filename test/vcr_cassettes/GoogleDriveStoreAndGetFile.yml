@@ -5,10 +5,10 @@ http_interactions:
     uri: https://oauth2.googleapis.com/token
     body:
       encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=1%2FKV3YUjopq2llrdhp1DlmDuhBbRxYWx5H-Z05uT5diDAcPXIwTFPF3BOp3sn46Dra&client_id=452925651630-egr1f18o96acjjvphpbbd1qlsevkho1d.apps.googleusercontent.com&client_secret=1U3-Krii5x1oLPrwD5zgn-ry
+      string: grant_type=refresh_token&refresh_token=1%2ForvJ1bFkYgUsUDrYmOYbb6IkefVdJWZWZsWxLAPLSA-dqMe1JoTKw_-ixpiuIx4N&client_id=452925651630-egr1f18o96acjjvphpbbd1qlsevkho1d.apps.googleusercontent.com&client_secret=1U3-Krii5x1oLPrwD5zgn-ry
     headers:
       User-Agent:
-      - Faraday v0.15.0
+      - Faraday v1.0.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,61 +20,59 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Thu, 03 May 2018 16:06:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
       Vary:
       - Origin
+      - Referer
       - X-Origin
-      Content-Type:
-      - application/json; charset=UTF-8
-      X-Content-Type-Options:
-      - nosniff
+      Date:
+      - Thu, 11 Jun 2020 15:13:05 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      Cache-Control:
+      - private
+      X-Xss-Protection:
+      - '0'
       X-Frame-Options:
       - SAMEORIGIN
-      X-Xss-Protection:
-      - 1; mode=block
-      Server:
-      - GSE
+      X-Content-Type-Options:
+      - nosniff
       Alt-Svc:
-      - hq=":443"; ma=2592000; quic=51303433; quic=51303432; quic=51303431; quic=51303339;
-        quic=51303335,quic=":443"; ma=2592000; v="43,42,41,39,35"
+      - h3-27=":443"; ma=2592000,h3-25=":443"; ma=2592000,h3-T050=":443"; ma=2592000,h3-Q050=":443";
+        ma=2592000,h3-Q049=":443"; ma=2592000,h3-Q048=":443"; ma=2592000,h3-Q046=":443";
+        ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-         "access_token": "ya29.GlywBf22mqu9kbif5wp3rNGLS5-dpWWKPWm2h8KVS-3HgmesaqvjQ9kICPOwWinSos59T8HviLpdCplwJF0wb8KWiowDt3A25jjaholG1J9L6oS05VT4oHkeiupj6g",
-         "token_type": "Bearer",
-         "expires_in": 3600
+          "access_token": "ya29.a0AfH6SMAom8rv72j9rKHljKhmxAivSyCSdDaWgxo_KLsgrNTsfRZcMsYCu_T1xOh1T7OjUG5rLoHY4xbylNJBprug_LoRc7ehPJ8QvmSmSaNyUMMXFzjneXflyCr0mnHuz_3l5iAYwKVDZyG1Y95v-TXvn3AvU7uPr96Zxw",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive",
+          "token_type": "Bearer"
         }
-    http_version: 
   recorded_at: Thu, 17 Oct 2013 16:46:00 GMT
 - request:
     method: get
-    uri: https://www.googleapis.com/drive/v3/files?fields=*&pageSize=1&q=name%20=%20%27Web%20Images%27&supportsTeamDrives=true
+    uri: https://www.googleapis.com/drive/v3/files?fields=*&includeItemsFromAllDrives=true&pageSize=1&q=name%20=%20%27Web%20Images%27&supportsAllDrives=true
     body:
       encoding: UTF-8
       string: ''
     headers:
       User-Agent:
-      - |-
-        unknown/0.0.0 google-api-ruby-client/0.19.8 Mac OS X/10.13.4
-         (gzip)
+      - unknown/0.0.0 google-api-ruby-client/0.40.1 Mac OS X/10.14.6 (gzip)
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
       - Thu, 17 Oct 2013 16:46:00 GMT
+      X-Goog-Api-Client:
+      - gl-ruby/2.7.1 gdcl/0.40.1
       Authorization:
-      - Bearer ya29.GlywBf22mqu9kbif5wp3rNGLS5-dpWWKPWm2h8KVS-3HgmesaqvjQ9kICPOwWinSos59T8HviLpdCplwJF0wb8KWiowDt3A25jjaholG1J9L6oS05VT4oHkeiupj6g
+      - Bearer ya29.a0AfH6SMAom8rv72j9rKHljKhmxAivSyCSdDaWgxo_KLsgrNTsfRZcMsYCu_T1xOh1T7OjUG5rLoHY4xbylNJBprug_LoRc7ehPJ8QvmSmSaNyUMMXFzjneXflyCr0mnHuz_3l5iAYwKVDZyG1Y95v-TXvn3AvU7uPr96Zxw
       Content-Type:
       - application/x-www-form-urlencoded
   response:
@@ -83,9 +81,9 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Thu, 03 May 2018 16:06:43 GMT
+      - Thu, 11 Jun 2020 15:13:06 GMT
       Date:
-      - Thu, 03 May 2018 16:06:43 GMT
+      - Thu, 11 Jun 2020 15:13:06 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Vary:
@@ -99,13 +97,16 @@ http_interactions:
       - nosniff
       X-Frame-Options:
       - SAMEORIGIN
+      Content-Security-Policy:
+      - frame-ancestors 'self'
       X-Xss-Protection:
       - 1; mode=block
       Server:
       - GSE
       Alt-Svc:
-      - hq=":443"; ma=2592000; quic=51303433; quic=51303432; quic=51303431; quic=51303339;
-        quic=51303335,quic=":443"; ma=2592000; v="43,42,41,39,35"
+      - h3-27=":443"; ma=2592000,h3-25=":443"; ma=2592000,h3-T050=":443"; ma=2592000,h3-Q050=":443";
+        ma=2592000,h3-Q049=":443"; ma=2592000,h3-Q048=":443"; ma=2592000,h3-Q046=":443";
+        ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
       Transfer-Encoding:
       - chunked
     body:
@@ -129,22 +130,22 @@ http_interactions:
            "spaces": [
             "drive"
            ],
-           "version": "21",
+           "version": "40",
            "webViewLink": "https://drive.google.com/drive/folders/1ZiPjFMlZw4bsdOGLNQ13UD22DU3O59ph",
-           "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.folder",
+           "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.folder+shared",
            "hasThumbnail": false,
            "thumbnailVersion": "0",
            "viewedByMe": true,
-           "viewedByMeTime": "2018-05-02T20:26:58.210Z",
+           "viewedByMeTime": "2019-01-14T17:42:34.172Z",
            "createdTime": "2018-05-02T18:22:22.590Z",
-           "modifiedTime": "2018-05-02T18:22:22.590Z",
+           "modifiedTime": "2019-01-14T17:42:53.471Z",
            "modifiedByMeTime": "2018-05-02T18:22:22.590Z",
            "modifiedByMe": true,
            "owners": [
             {
              "kind": "drive#user",
              "displayName": "Romerike Jujutsu Klubb",
-             "photoLink": "https://lh4.googleusercontent.com/--PcZI8Hw-DI/AAAAAAAAAAI/AAAAAAAAABI/mJZo1zjmwhw/s64/photo.jpg",
+             "photoLink": "https://lh3.googleusercontent.com/a-/AOh14Gh_H2g_6A-GKy1GwF5ndoveAjCixp916A2psJFs=s64",
              "me": true,
              "permissionId": "05225065351206691434",
              "emailAddress": "post@jujutsu.no"
@@ -153,33 +154,50 @@ http_interactions:
            "lastModifyingUser": {
             "kind": "drive#user",
             "displayName": "Romerike Jujutsu Klubb",
-            "photoLink": "https://lh4.googleusercontent.com/--PcZI8Hw-DI/AAAAAAAAAAI/AAAAAAAAABI/mJZo1zjmwhw/s64/photo.jpg",
+            "photoLink": "https://lh3.googleusercontent.com/a-/AOh14Gh_H2g_6A-GKy1GwF5ndoveAjCixp916A2psJFs=s64",
             "me": true,
             "permissionId": "05225065351206691434",
             "emailAddress": "post@jujutsu.no"
            },
-           "shared": false,
+           "shared": true,
            "ownedByMe": true,
            "capabilities": {
             "canAddChildren": true,
-            "canChangeViewersCanCopyContent": true,
+            "canAddMyDriveParent": false,
+            "canChangeCopyRequiresWriterPermission": false,
+            "canChangeViewersCanCopyContent": false,
             "canComment": true,
             "canCopy": false,
             "canDelete": true,
             "canDownload": true,
             "canEdit": true,
             "canListChildren": true,
+            "canModifyContent": true,
+            "canMoveChildrenWithinDrive": true,
             "canMoveItemIntoTeamDrive": true,
+            "canMoveItemOutOfDrive": true,
+            "canMoveItemWithinDrive": true,
             "canReadRevisions": false,
             "canRemoveChildren": true,
+            "canRemoveMyDriveParent": true,
             "canRename": true,
             "canShare": true,
             "canTrash": true,
             "canUntrash": true
            },
            "viewersCanCopyContent": true,
+           "copyRequiresWriterPermission": false,
            "writersCanShare": true,
            "permissions": [
+            {
+             "kind": "drive#permission",
+             "id": "12157425362991278509",
+             "type": "user",
+             "emailAddress": "atle.tollefsen@gmail.com",
+             "role": "writer",
+             "displayName": "Atle Tollefsen",
+             "deleted": false
+            },
             {
              "kind": "drive#permission",
              "id": "05225065351206691434",
@@ -187,11 +205,12 @@ http_interactions:
              "emailAddress": "post@jujutsu.no",
              "role": "owner",
              "displayName": "Romerike Jujutsu Klubb",
-             "photoLink": "https://lh4.googleusercontent.com/--PcZI8Hw-DI/AAAAAAAAAAI/AAAAAAAAABI/mJZo1zjmwhw/s64/photo.jpg",
+             "photoLink": "https://lh3.googleusercontent.com/a-/AOh14Gh_H2g_6A-GKy1GwF5ndoveAjCixp916A2psJFs=s64",
              "deleted": false
             }
            ],
            "permissionIds": [
+            "12157425362991278509",
             "05225065351206691434"
            ],
            "folderColorRgb": "#8f8f8f",
@@ -200,27 +219,26 @@ http_interactions:
           }
          ]
         }
-    http_version: 
   recorded_at: Thu, 17 Oct 2013 16:46:00 GMT
 - request:
     method: get
-    uri: https://www.googleapis.com/drive/v3/files?fields=*&pageSize=1&q=(%271ZiPjFMlZw4bsdOGLNQ13UD22DU3O59ph%27%20in%20parents)%20and%20(name%20=%20%27test%27)&supportsTeamDrives=true
+    uri: https://www.googleapis.com/drive/v3/files?fields=*&includeItemsFromAllDrives=true&pageSize=1&q=(%271ZiPjFMlZw4bsdOGLNQ13UD22DU3O59ph%27%20in%20parents)%20and%20(name%20=%20%27test%27)&supportsAllDrives=true
     body:
       encoding: UTF-8
       string: ''
     headers:
       User-Agent:
-      - |-
-        unknown/0.0.0 google-api-ruby-client/0.19.8 Mac OS X/10.13.4
-         (gzip)
+      - unknown/0.0.0 google-api-ruby-client/0.40.1 Mac OS X/10.14.6 (gzip)
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
       - Thu, 17 Oct 2013 16:46:00 GMT
+      X-Goog-Api-Client:
+      - gl-ruby/2.7.1 gdcl/0.40.1
       Authorization:
-      - Bearer ya29.GlywBf22mqu9kbif5wp3rNGLS5-dpWWKPWm2h8KVS-3HgmesaqvjQ9kICPOwWinSos59T8HviLpdCplwJF0wb8KWiowDt3A25jjaholG1J9L6oS05VT4oHkeiupj6g
+      - Bearer ya29.a0AfH6SMAom8rv72j9rKHljKhmxAivSyCSdDaWgxo_KLsgrNTsfRZcMsYCu_T1xOh1T7OjUG5rLoHY4xbylNJBprug_LoRc7ehPJ8QvmSmSaNyUMMXFzjneXflyCr0mnHuz_3l5iAYwKVDZyG1Y95v-TXvn3AvU7uPr96Zxw
       Content-Type:
       - application/x-www-form-urlencoded
   response:
@@ -229,9 +247,9 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Thu, 03 May 2018 16:06:43 GMT
+      - Thu, 11 Jun 2020 15:13:06 GMT
       Date:
-      - Thu, 03 May 2018 16:06:43 GMT
+      - Thu, 11 Jun 2020 15:13:06 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Vary:
@@ -245,13 +263,16 @@ http_interactions:
       - nosniff
       X-Frame-Options:
       - SAMEORIGIN
+      Content-Security-Policy:
+      - frame-ancestors 'self'
       X-Xss-Protection:
       - 1; mode=block
       Server:
       - GSE
       Alt-Svc:
-      - hq=":443"; ma=2592000; quic=51303433; quic=51303432; quic=51303431; quic=51303339;
-        quic=51303335,quic=":443"; ma=2592000; v="43,42,41,39,35"
+      - h3-27=":443"; ma=2592000,h3-25=":443"; ma=2592000,h3-T050=":443"; ma=2592000,h3-Q050=":443";
+        ma=2592000,h3-Q049=":443"; ma=2592000,h3-Q048=":443"; ma=2592000,h3-Q046=":443";
+        ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
       Transfer-Encoding:
       - chunked
     body:
@@ -275,9 +296,9 @@ http_interactions:
            "spaces": [
             "drive"
            ],
-           "version": "24",
+           "version": "27",
            "webViewLink": "https://drive.google.com/drive/folders/1viL9fBzQt-yG4Fh3gK_64GJ_TrGTuBMc",
-           "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.folder",
+           "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.folder+shared",
            "hasThumbnail": false,
            "thumbnailVersion": "0",
            "viewedByMe": true,
@@ -290,7 +311,7 @@ http_interactions:
             {
              "kind": "drive#user",
              "displayName": "Romerike Jujutsu Klubb",
-             "photoLink": "https://lh4.googleusercontent.com/--PcZI8Hw-DI/AAAAAAAAAAI/AAAAAAAAABI/mJZo1zjmwhw/s64/photo.jpg",
+             "photoLink": "https://lh3.googleusercontent.com/a-/AOh14Gh_H2g_6A-GKy1GwF5ndoveAjCixp916A2psJFs=s64",
              "me": true,
              "permissionId": "05225065351206691434",
              "emailAddress": "post@jujutsu.no"
@@ -299,33 +320,50 @@ http_interactions:
            "lastModifyingUser": {
             "kind": "drive#user",
             "displayName": "Romerike Jujutsu Klubb",
-            "photoLink": "https://lh4.googleusercontent.com/--PcZI8Hw-DI/AAAAAAAAAAI/AAAAAAAAABI/mJZo1zjmwhw/s64/photo.jpg",
+            "photoLink": "https://lh3.googleusercontent.com/a-/AOh14Gh_H2g_6A-GKy1GwF5ndoveAjCixp916A2psJFs=s64",
             "me": true,
             "permissionId": "05225065351206691434",
             "emailAddress": "post@jujutsu.no"
            },
-           "shared": false,
+           "shared": true,
            "ownedByMe": true,
            "capabilities": {
             "canAddChildren": true,
-            "canChangeViewersCanCopyContent": true,
+            "canAddMyDriveParent": false,
+            "canChangeCopyRequiresWriterPermission": false,
+            "canChangeViewersCanCopyContent": false,
             "canComment": true,
             "canCopy": false,
             "canDelete": true,
             "canDownload": true,
             "canEdit": true,
             "canListChildren": true,
+            "canModifyContent": true,
+            "canMoveChildrenWithinDrive": true,
             "canMoveItemIntoTeamDrive": true,
+            "canMoveItemOutOfDrive": true,
+            "canMoveItemWithinDrive": true,
             "canReadRevisions": false,
             "canRemoveChildren": true,
+            "canRemoveMyDriveParent": true,
             "canRename": true,
             "canShare": true,
             "canTrash": true,
             "canUntrash": true
            },
            "viewersCanCopyContent": true,
+           "copyRequiresWriterPermission": false,
            "writersCanShare": true,
            "permissions": [
+            {
+             "kind": "drive#permission",
+             "id": "12157425362991278509",
+             "type": "user",
+             "emailAddress": "atle.tollefsen@gmail.com",
+             "role": "writer",
+             "displayName": "Atle Tollefsen",
+             "deleted": false
+            },
             {
              "kind": "drive#permission",
              "id": "05225065351206691434",
@@ -333,11 +371,12 @@ http_interactions:
              "emailAddress": "post@jujutsu.no",
              "role": "owner",
              "displayName": "Romerike Jujutsu Klubb",
-             "photoLink": "https://lh4.googleusercontent.com/--PcZI8Hw-DI/AAAAAAAAAAI/AAAAAAAAABI/mJZo1zjmwhw/s64/photo.jpg",
+             "photoLink": "https://lh3.googleusercontent.com/a-/AOh14Gh_H2g_6A-GKy1GwF5ndoveAjCixp916A2psJFs=s64",
              "deleted": false
             }
            ],
            "permissionIds": [
+            "12157425362991278509",
             "05225065351206691434"
            ],
            "folderColorRgb": "#8f8f8f",
@@ -346,27 +385,26 @@ http_interactions:
           }
          ]
         }
-    http_version: 
   recorded_at: Thu, 17 Oct 2013 16:46:00 GMT
 - request:
     method: get
-    uri: https://www.googleapis.com/drive/v3/files?fields=*&pageSize=1&q=(%271viL9fBzQt-yG4Fh3gK_64GJ_TrGTuBMc%27%20in%20parents)%20and%20(name%20=%20%27images%27)&supportsTeamDrives=true
+    uri: https://www.googleapis.com/drive/v3/files?fields=*&includeItemsFromAllDrives=true&pageSize=1&q=(%271viL9fBzQt-yG4Fh3gK_64GJ_TrGTuBMc%27%20in%20parents)%20and%20(name%20=%20%27images%27)&supportsAllDrives=true
     body:
       encoding: UTF-8
       string: ''
     headers:
       User-Agent:
-      - |-
-        unknown/0.0.0 google-api-ruby-client/0.19.8 Mac OS X/10.13.4
-         (gzip)
+      - unknown/0.0.0 google-api-ruby-client/0.40.1 Mac OS X/10.14.6 (gzip)
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
       - Thu, 17 Oct 2013 16:46:00 GMT
+      X-Goog-Api-Client:
+      - gl-ruby/2.7.1 gdcl/0.40.1
       Authorization:
-      - Bearer ya29.GlywBf22mqu9kbif5wp3rNGLS5-dpWWKPWm2h8KVS-3HgmesaqvjQ9kICPOwWinSos59T8HviLpdCplwJF0wb8KWiowDt3A25jjaholG1J9L6oS05VT4oHkeiupj6g
+      - Bearer ya29.a0AfH6SMAom8rv72j9rKHljKhmxAivSyCSdDaWgxo_KLsgrNTsfRZcMsYCu_T1xOh1T7OjUG5rLoHY4xbylNJBprug_LoRc7ehPJ8QvmSmSaNyUMMXFzjneXflyCr0mnHuz_3l5iAYwKVDZyG1Y95v-TXvn3AvU7uPr96Zxw
       Content-Type:
       - application/x-www-form-urlencoded
   response:
@@ -375,9 +413,9 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Thu, 03 May 2018 16:06:44 GMT
+      - Thu, 11 Jun 2020 15:13:07 GMT
       Date:
-      - Thu, 03 May 2018 16:06:44 GMT
+      - Thu, 11 Jun 2020 15:13:07 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Vary:
@@ -391,13 +429,16 @@ http_interactions:
       - nosniff
       X-Frame-Options:
       - SAMEORIGIN
+      Content-Security-Policy:
+      - frame-ancestors 'self'
       X-Xss-Protection:
       - 1; mode=block
       Server:
       - GSE
       Alt-Svc:
-      - hq=":443"; ma=2592000; quic=51303433; quic=51303432; quic=51303431; quic=51303339;
-        quic=51303335,quic=":443"; ma=2592000; v="43,42,41,39,35"
+      - h3-27=":443"; ma=2592000,h3-25=":443"; ma=2592000,h3-T050=":443"; ma=2592000,h3-Q050=":443";
+        ma=2592000,h3-Q049=":443"; ma=2592000,h3-Q048=":443"; ma=2592000,h3-Q046=":443";
+        ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
       Transfer-Encoding:
       - chunked
     body:
@@ -421,12 +462,13 @@ http_interactions:
            "spaces": [
             "drive"
            ],
-           "version": "1",
+           "version": "5",
            "webViewLink": "https://drive.google.com/drive/folders/1UFCR4dUtSyg1IgTPSM86G8fEA1ortDxB",
-           "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.folder",
+           "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.folder+shared",
            "hasThumbnail": false,
            "thumbnailVersion": "0",
-           "viewedByMe": false,
+           "viewedByMe": true,
+           "viewedByMeTime": "2020-01-02T16:20:47.415Z",
            "createdTime": "2018-05-03T16:05:49.259Z",
            "modifiedTime": "2018-05-03T16:05:49.259Z",
            "modifiedByMeTime": "2018-05-03T16:05:49.259Z",
@@ -435,7 +477,7 @@ http_interactions:
             {
              "kind": "drive#user",
              "displayName": "Romerike Jujutsu Klubb",
-             "photoLink": "https://lh4.googleusercontent.com/--PcZI8Hw-DI/AAAAAAAAAAI/AAAAAAAAABI/mJZo1zjmwhw/s64/photo.jpg",
+             "photoLink": "https://lh3.googleusercontent.com/a-/AOh14Gh_H2g_6A-GKy1GwF5ndoveAjCixp916A2psJFs=s64",
              "me": true,
              "permissionId": "05225065351206691434",
              "emailAddress": "post@jujutsu.no"
@@ -444,33 +486,50 @@ http_interactions:
            "lastModifyingUser": {
             "kind": "drive#user",
             "displayName": "Romerike Jujutsu Klubb",
-            "photoLink": "https://lh4.googleusercontent.com/--PcZI8Hw-DI/AAAAAAAAAAI/AAAAAAAAABI/mJZo1zjmwhw/s64/photo.jpg",
+            "photoLink": "https://lh3.googleusercontent.com/a-/AOh14Gh_H2g_6A-GKy1GwF5ndoveAjCixp916A2psJFs=s64",
             "me": true,
             "permissionId": "05225065351206691434",
             "emailAddress": "post@jujutsu.no"
            },
-           "shared": false,
+           "shared": true,
            "ownedByMe": true,
            "capabilities": {
             "canAddChildren": true,
-            "canChangeViewersCanCopyContent": true,
+            "canAddMyDriveParent": false,
+            "canChangeCopyRequiresWriterPermission": false,
+            "canChangeViewersCanCopyContent": false,
             "canComment": true,
             "canCopy": false,
             "canDelete": true,
             "canDownload": true,
             "canEdit": true,
             "canListChildren": true,
+            "canModifyContent": true,
+            "canMoveChildrenWithinDrive": true,
             "canMoveItemIntoTeamDrive": true,
+            "canMoveItemOutOfDrive": true,
+            "canMoveItemWithinDrive": true,
             "canReadRevisions": false,
             "canRemoveChildren": true,
+            "canRemoveMyDriveParent": true,
             "canRename": true,
             "canShare": true,
             "canTrash": true,
             "canUntrash": true
            },
            "viewersCanCopyContent": true,
+           "copyRequiresWriterPermission": false,
            "writersCanShare": true,
            "permissions": [
+            {
+             "kind": "drive#permission",
+             "id": "12157425362991278509",
+             "type": "user",
+             "emailAddress": "atle.tollefsen@gmail.com",
+             "role": "writer",
+             "displayName": "Atle Tollefsen",
+             "deleted": false
+            },
             {
              "kind": "drive#permission",
              "id": "05225065351206691434",
@@ -478,11 +537,12 @@ http_interactions:
              "emailAddress": "post@jujutsu.no",
              "role": "owner",
              "displayName": "Romerike Jujutsu Klubb",
-             "photoLink": "https://lh4.googleusercontent.com/--PcZI8Hw-DI/AAAAAAAAAAI/AAAAAAAAABI/mJZo1zjmwhw/s64/photo.jpg",
+             "photoLink": "https://lh3.googleusercontent.com/a-/AOh14Gh_H2g_6A-GKy1GwF5ndoveAjCixp916A2psJFs=s64",
              "deleted": false
             }
            ],
            "permissionIds": [
+            "12157425362991278509",
             "05225065351206691434"
            ],
            "folderColorRgb": "#8f8f8f",
@@ -491,29 +551,28 @@ http_interactions:
           }
          ]
         }
-    http_version: 
   recorded_at: Thu, 17 Oct 2013 16:46:00 GMT
 - request:
     method: post
-    uri: https://www.googleapis.com/upload/drive/v3/files?fields=*&supportsTeamDrives=true
+    uri: https://www.googleapis.com/upload/drive/v3/files?fields=*&supportsAllDrives=true
     body:
       encoding: UTF-8
       string: '{"name":"images_42","parents":["1UFCR4dUtSyg1IgTPSM86G8fEA1ortDxB"]}'
     headers:
       User-Agent:
-      - |-
-        unknown/0.0.0 google-api-ruby-client/0.19.8 Mac OS X/10.13.4
-         (gzip)
+      - unknown/0.0.0 google-api-ruby-client/0.40.1 Mac OS X/10.14.6 (gzip)
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
       - Thu, 17 Oct 2013 16:46:00 GMT
+      X-Goog-Api-Client:
+      - gl-ruby/2.7.1 gdcl/0.40.1
       Content-Type:
       - application/json
       Authorization:
-      - Bearer ya29.GlywBf22mqu9kbif5wp3rNGLS5-dpWWKPWm2h8KVS-3HgmesaqvjQ9kICPOwWinSos59T8HviLpdCplwJF0wb8KWiowDt3A25jjaholG1J9L6oS05VT4oHkeiupj6g
+      - Bearer ya29.a0AfH6SMAom8rv72j9rKHljKhmxAivSyCSdDaWgxo_KLsgrNTsfRZcMsYCu_T1xOh1T7OjUG5rLoHY4xbylNJBprug_LoRc7ehPJ8QvmSmSaNyUMMXFzjneXflyCr0mnHuz_3l5iAYwKVDZyG1Y95v-TXvn3AvU7uPr96Zxw
       X-Goog-Upload-Protocol:
       - resumable
       X-Goog-Upload-Command:
@@ -527,23 +586,25 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Content-Type:
+      - text/plain; charset=utf-8
       X-Guploader-Uploadid:
-      - AEnB2Ur6sfRzx4Aagxi8313op5cn87-fkwD5FmAeLctT0gXjuTxt77WdPVpVNLYL7-Xibv4-KdZSY01sYY0exQUslB2BmCD4rg
+      - AAANsUnVY8LVoXWWiwr7vF7beODBFDKHgHFh66CWE4LCDAgZeM5aeWuRbZ8IdskGyhn2Y3b2HPkEShRCmmCGRN6DAw
       X-Goog-Upload-Status:
       - active
       X-Goog-Upload-Url:
-      - https://www.googleapis.com/upload/drive/v3/files?fields=%2A&supportsTeamDrives=true&upload_id=AEnB2Ur6sfRzx4Aagxi8313op5cn87-fkwD5FmAeLctT0gXjuTxt77WdPVpVNLYL7-Xibv4-KdZSY01sYY0exQUslB2BmCD4rg&upload_protocol=resumable
+      - https://www.googleapis.com/upload/drive/v3/files?fields=%2A&supportsAllDrives=true&upload_id=AAANsUnVY8LVoXWWiwr7vF7beODBFDKHgHFh66CWE4LCDAgZeM5aeWuRbZ8IdskGyhn2Y3b2HPkEShRCmmCGRN6DAw&upload_protocol=resumable
       X-Goog-Upload-Control-Url:
-      - https://www.googleapis.com/upload/drive/v3/files?fields=%2A&supportsTeamDrives=true&upload_id=AEnB2Ur6sfRzx4Aagxi8313op5cn87-fkwD5FmAeLctT0gXjuTxt77WdPVpVNLYL7-Xibv4-KdZSY01sYY0exQUslB2BmCD4rg&upload_protocol=resumable
+      - https://www.googleapis.com/upload/drive/v3/files?fields=%2A&supportsAllDrives=true&upload_id=AAANsUnVY8LVoXWWiwr7vF7beODBFDKHgHFh66CWE4LCDAgZeM5aeWuRbZ8IdskGyhn2Y3b2HPkEShRCmmCGRN6DAw&upload_protocol=resumable
       X-Goog-Upload-Chunk-Granularity:
       - '262144'
       X-Goog-Upload-Header-Vary:
       - Origin
       - X-Origin
       X-Goog-Upload-Header-X-Google-Backends:
-      - vsam89:4467
+      - lfii186:4397
       X-Goog-Upload-Header-X-Google-Session-Info:
-      - CIqY2I7WChoCGAY6bwoPZHJpdmUtcm9zeS1wcm9kEgVkcml2ZRiu9eOjlw0iSDQ1MjkyNTY1MTYzMC1lZ3IxZjE4bzk2YWNqanZwaHBiYmQxcWxzZXZraG8xZC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbTDxDjDvDkqXARKDAXlhMjkuR2x5d0JmMjJtcXU5a2JpZjV3cDNyTkdMUzUtZHBXV0tQV20yaDhLVlMtM0hnbWVzYXF2alE5a0lDUE93V2luU29zNTlUOEh2aUxwZENwbHdKRjB3YjhLV2lvd0R0M0EyNWpqYWhvbEcxSjlMNm9TMDVWVDRvSGtlaXVwajZnMAQ6DTEvS1YzWVVqb3BxMn4
+      - CIqY2I7WChoCGAY6iQEKKWFwcHMtZHJpdmUtY29tcGFzcy1zdHViYnktZGlzcGF0Y2hlci1wcm9kEgVkcml2ZRiu9eOjlw0iSDQ1MjkyNTY1MTYzMC1lZ3IxZjE4bzk2YWNqanZwaHBiYmQxcWxzZXZraG8xZC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbTDxDjDvDkrBARKtAXlhMjkuYTBBZkg2U01Bb204cnY3Mmo5cktIbGpLaG14QWl2U3lDU2REYVdneG9fS0xzZ3JOVHNmUlpjTXNZQ3VfVDF4T2gxVDdPalVHNXJMb0hZNHhieWxOSkJwcnVnX0xvUmM3ZWhQSjhRdm1TbVNhTnlVTU1YRnpqbmVYZmx5Q3IwbW5IdXpfM2w1aUFZd0tWRFp5RzFZOTV2LVRYdm4zQXZVN3VQcjk2Wnh3MAQ6DTEvb3J2SjFiRmtZZ34
       X-Goog-Upload-Header-Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       X-Goog-Upload-Header-Pragma:
@@ -551,45 +612,43 @@ http_interactions:
       X-Goog-Upload-Header-Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       X-Goog-Upload-Header-Date:
-      - Thu, 03 May 2018 16:06:45 GMT
+      - Thu, 11 Jun 2020 15:13:07 GMT
       Content-Length:
       - '0'
       Date:
-      - Thu, 03 May 2018 16:06:45 GMT
+      - Thu, 11 Jun 2020 15:13:07 GMT
       Server:
       - UploadServer
-      Content-Type:
-      - text/html; charset=UTF-8
       Alt-Svc:
-      - hq=":443"; ma=2592000; quic=51303433; quic=51303432; quic=51303431; quic=51303339;
-        quic=51303335,quic=":443"; ma=2592000; v="43,42,41,39,35"
+      - h3-27=":443"; ma=2592000,h3-25=":443"; ma=2592000,h3-T050=":443"; ma=2592000,h3-Q050=":443";
+        ma=2592000,h3-Q049=":443"; ma=2592000,h3-Q048=":443"; ma=2592000,h3-Q046=":443";
+        ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
     body:
       encoding: UTF-8
       string: ''
-    http_version: 
   recorded_at: Thu, 17 Oct 2013 16:46:00 GMT
 - request:
     method: post
-    uri: https://www.googleapis.com/upload/drive/v3/files?fields=*&supportsTeamDrives=true&upload_id=AEnB2Ur6sfRzx4Aagxi8313op5cn87-fkwD5FmAeLctT0gXjuTxt77WdPVpVNLYL7-Xibv4-KdZSY01sYY0exQUslB2BmCD4rg&upload_protocol=resumable
+    uri: https://www.googleapis.com/upload/drive/v3/files?fields=*&supportsAllDrives=true&upload_id=AAANsUnVY8LVoXWWiwr7vF7beODBFDKHgHFh66CWE4LCDAgZeM5aeWuRbZ8IdskGyhn2Y3b2HPkEShRCmmCGRN6DAw&upload_protocol=resumable
     body:
       encoding: ASCII-8BIT
       string: !binary |-
         iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==
     headers:
       User-Agent:
-      - |-
-        unknown/0.0.0 google-api-ruby-client/0.19.8 Mac OS X/10.13.4
-         (gzip)
+      - unknown/0.0.0 google-api-ruby-client/0.40.1 Mac OS X/10.14.6 (gzip)
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
       - Thu, 17 Oct 2013 16:46:00 GMT
+      X-Goog-Api-Client:
+      - gl-ruby/2.7.1 gdcl/0.40.1
       Content-Type:
       - image/png
       Authorization:
-      - Bearer ya29.GlywBf22mqu9kbif5wp3rNGLS5-dpWWKPWm2h8KVS-3HgmesaqvjQ9kICPOwWinSos59T8HviLpdCplwJF0wb8KWiowDt3A25jjaholG1J9L6oS05VT4oHkeiupj6g
+      - Bearer ya29.a0AfH6SMAom8rv72j9rKHljKhmxAivSyCSdDaWgxo_KLsgrNTsfRZcMsYCu_T1xOh1T7OjUG5rLoHY4xbylNJBprug_LoRc7ehPJ8QvmSmSaNyUMMXFzjneXflyCr0mnHuz_3l5iAYwKVDZyG1Y95v-TXvn3AvU7uPr96Zxw
       X-Goog-Upload-Command:
       - upload, finalize
       X-Goog-Upload-Offset:
@@ -600,7 +659,7 @@ http_interactions:
       message: OK
     headers:
       X-Guploader-Uploadid:
-      - AEnB2Ur6sfRzx4Aagxi8313op5cn87-fkwD5FmAeLctT0gXjuTxt77WdPVpVNLYL7-Xibv4-KdZSY01sYY0exQUslB2BmCD4rg
+      - AAANsUnVY8LVoXWWiwr7vF7beODBFDKHgHFh66CWE4LCDAgZeM5aeWuRbZ8IdskGyhn2Y3b2HPkEShRCmmCGRN6DAw
       X-Goog-Upload-Status:
       - final
       Vary:
@@ -615,20 +674,21 @@ http_interactions:
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Thu, 03 May 2018 16:06:46 GMT
+      - Thu, 11 Jun 2020 15:13:09 GMT
       Content-Length:
-      - '2791'
+      - '3288'
       Server:
       - UploadServer
       Alt-Svc:
-      - hq=":443"; ma=2592000; quic=51303433; quic=51303432; quic=51303431; quic=51303339;
-        quic=51303335,quic=":443"; ma=2592000; v="43,42,41,39,35"
+      - h3-27=":443"; ma=2592000,h3-25=":443"; ma=2592000,h3-T050=":443"; ma=2592000,h3-Q050=":443";
+        ma=2592000,h3-Q049=":443"; ma=2592000,h3-Q048=":443"; ma=2592000,h3-Q046=":443";
+        ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
     body:
       encoding: UTF-8
       string: |
         {
          "kind": "drive#file",
-         "id": "1_5t78ZFtdzfnOFqVOW9WI0wfo8YNrKqy",
+         "id": "1WwObVRtdPh4CVcZUS7bGLfyq0LULl3Gd",
          "name": "images_42",
          "mimeType": "image/png",
          "starred": false,
@@ -640,23 +700,23 @@ http_interactions:
          "spaces": [
           "drive"
          ],
-         "version": "2",
-         "webContentLink": "https://drive.google.com/uc?id=1_5t78ZFtdzfnOFqVOW9WI0wfo8YNrKqy&export=download",
-         "webViewLink": "https://drive.google.com/file/d/1_5t78ZFtdzfnOFqVOW9WI0wfo8YNrKqy/view?usp=drivesdk",
+         "version": "1",
+         "webContentLink": "https://drive.google.com/uc?id=1WwObVRtdPh4CVcZUS7bGLfyq0LULl3Gd&export=download",
+         "webViewLink": "https://drive.google.com/file/d/1WwObVRtdPh4CVcZUS7bGLfyq0LULl3Gd/view?usp=drivesdk",
          "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
          "hasThumbnail": true,
-         "thumbnailLink": "https://lh6.googleusercontent.com/-_2nUYuCdywWCbNeTWeQJrLxqSWuVD5CpOB3ixeiO1J6GW6qdCaz4D57CGkY8ERB9C0MuLiVcvQ=s220",
+         "thumbnailLink": "https://lh3.googleusercontent.com/McCXrdSOLnoOPK73YfVpvTXJKTLW3O5ajrLjm0jxOrlGAPqqWl8ao3YPr2Mpcfj6tFhDqVsWSGw=s220",
          "thumbnailVersion": "1",
          "viewedByMe": false,
-         "createdTime": "2018-05-03T16:06:46.046Z",
-         "modifiedTime": "2018-05-03T16:06:46.046Z",
-         "modifiedByMeTime": "2018-05-03T16:06:46.046Z",
+         "createdTime": "2020-06-11T15:13:08.131Z",
+         "modifiedTime": "2020-06-11T15:13:08.131Z",
+         "modifiedByMeTime": "2020-06-11T15:13:08.131Z",
          "modifiedByMe": true,
          "owners": [
           {
            "kind": "drive#user",
            "displayName": "Romerike Jujutsu Klubb",
-           "photoLink": "https://lh4.googleusercontent.com/--PcZI8Hw-DI/AAAAAAAAAAI/AAAAAAAAABI/mJZo1zjmwhw/s64/photo.jpg",
+           "photoLink": "https://lh3.googleusercontent.com/a-/AOh14Gh_H2g_6A-GKy1GwF5ndoveAjCixp916A2psJFs=s64",
            "me": true,
            "permissionId": "05225065351206691434",
            "emailAddress": "post@jujutsu.no"
@@ -665,15 +725,17 @@ http_interactions:
          "lastModifyingUser": {
           "kind": "drive#user",
           "displayName": "Romerike Jujutsu Klubb",
-          "photoLink": "https://lh4.googleusercontent.com/--PcZI8Hw-DI/AAAAAAAAAAI/AAAAAAAAABI/mJZo1zjmwhw/s64/photo.jpg",
+          "photoLink": "https://lh3.googleusercontent.com/a-/AOh14Gh_H2g_6A-GKy1GwF5ndoveAjCixp916A2psJFs=s64",
           "me": true,
           "permissionId": "05225065351206691434",
           "emailAddress": "post@jujutsu.no"
          },
-         "shared": false,
+         "shared": true,
          "ownedByMe": true,
          "capabilities": {
           "canAddChildren": false,
+          "canAddMyDriveParent": false,
+          "canChangeCopyRequiresWriterPermission": true,
           "canChangeViewersCanCopyContent": true,
           "canComment": true,
           "canCopy": true,
@@ -681,17 +743,32 @@ http_interactions:
           "canDownload": true,
           "canEdit": true,
           "canListChildren": false,
+          "canModifyContent": true,
+          "canMoveChildrenWithinDrive": false,
           "canMoveItemIntoTeamDrive": true,
+          "canMoveItemOutOfDrive": true,
+          "canMoveItemWithinDrive": true,
           "canReadRevisions": true,
           "canRemoveChildren": false,
+          "canRemoveMyDriveParent": true,
           "canRename": true,
           "canShare": true,
           "canTrash": true,
           "canUntrash": true
          },
          "viewersCanCopyContent": true,
+         "copyRequiresWriterPermission": false,
          "writersCanShare": true,
          "permissions": [
+          {
+           "kind": "drive#permission",
+           "id": "12157425362991278509",
+           "type": "user",
+           "emailAddress": "atle.tollefsen@gmail.com",
+           "role": "writer",
+           "displayName": "Atle Tollefsen",
+           "deleted": false
+          },
           {
            "kind": "drive#permission",
            "id": "05225065351206691434",
@@ -699,11 +776,12 @@ http_interactions:
            "emailAddress": "post@jujutsu.no",
            "role": "owner",
            "displayName": "Romerike Jujutsu Klubb",
-           "photoLink": "https://lh4.googleusercontent.com/--PcZI8Hw-DI/AAAAAAAAAAI/AAAAAAAAABI/mJZo1zjmwhw/s64/photo.jpg",
+           "photoLink": "https://lh3.googleusercontent.com/a-/AOh14Gh_H2g_6A-GKy1GwF5ndoveAjCixp916A2psJFs=s64",
            "deleted": false
           }
          ],
          "permissionIds": [
+          "12157425362991278509",
           "05225065351206691434"
          ],
          "originalFilename": "images_42",
@@ -712,7 +790,7 @@ http_interactions:
          "md5Checksum": "93ca32a536da1698ea979f183679af29",
          "size": "67",
          "quotaBytesUsed": "67",
-         "headRevisionId": "0B7mZVeuqnKRdcEFzamhuU1FOaGFsYXFPZloxOFVpU2luWjNnPQ",
+         "headRevisionId": "0B7mZVeuqnKRdczAzZHlITlpvQkhpVG4wU2JoWVVQWXZIa2Y0PQ",
          "imageMediaMetadata": {
           "width": 1,
           "height": 1,
@@ -720,17 +798,16 @@ http_interactions:
          },
          "isAppAuthorized": true
         }
-    http_version: 
   recorded_at: Thu, 17 Oct 2013 16:46:00 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
     body:
       encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=1%2FKV3YUjopq2llrdhp1DlmDuhBbRxYWx5H-Z05uT5diDAcPXIwTFPF3BOp3sn46Dra&client_id=452925651630-egr1f18o96acjjvphpbbd1qlsevkho1d.apps.googleusercontent.com&client_secret=1U3-Krii5x1oLPrwD5zgn-ry
+      string: grant_type=refresh_token&refresh_token=1%2ForvJ1bFkYgUsUDrYmOYbb6IkefVdJWZWZsWxLAPLSA-dqMe1JoTKw_-ixpiuIx4N&client_id=452925651630-egr1f18o96acjjvphpbbd1qlsevkho1d.apps.googleusercontent.com&client_secret=1U3-Krii5x1oLPrwD5zgn-ry
     headers:
       User-Agent:
-      - Faraday v0.15.0
+      - Faraday v1.0.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -742,61 +819,59 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Thu, 03 May 2018 16:06:47 GMT
+      Content-Type:
+      - application/json; charset=utf-8
       Vary:
       - Origin
+      - Referer
       - X-Origin
-      Content-Type:
-      - application/json; charset=UTF-8
-      X-Content-Type-Options:
-      - nosniff
+      Date:
+      - Thu, 11 Jun 2020 15:13:10 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      Cache-Control:
+      - private
+      X-Xss-Protection:
+      - '0'
       X-Frame-Options:
       - SAMEORIGIN
-      X-Xss-Protection:
-      - 1; mode=block
-      Server:
-      - GSE
+      X-Content-Type-Options:
+      - nosniff
       Alt-Svc:
-      - hq=":443"; ma=2592000; quic=51303433; quic=51303432; quic=51303431; quic=51303339;
-        quic=51303335,quic=":443"; ma=2592000; v="43,42,41,39,35"
+      - h3-27=":443"; ma=2592000,h3-25=":443"; ma=2592000,h3-T050=":443"; ma=2592000,h3-Q050=":443";
+        ma=2592000,h3-Q049=":443"; ma=2592000,h3-Q048=":443"; ma=2592000,h3-Q046=":443";
+        ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-         "access_token": "ya29.GlywBUPovqStksNEXkR0ickAKqKm-bkYbSvoMnhBBd6OPEPntntsyeiRrK0u-u7lvlCDxN9Qyp_ni2YBIiMarTZduJ52eMsgtFnESWEhYWwuPnE5N6c6oCbkZad6yQ",
-         "token_type": "Bearer",
-         "expires_in": 3600
+          "access_token": "ya29.a0AfH6SMCU8KKA3t1OTP2lZgQzJgmRr25CcpEXJqsQFwtPHrgNxCpfoIMvUtcdJsPVV-8gjjj-na5CtwEfpwhbo8WZOAno_JzOQWhWkG7zEogQFjBrt91wRhDTC7xrd_3EwTyhk1d7FRb0JIsGz-6pxfkOaJz3u2I86Kwe2g",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets",
+          "token_type": "Bearer"
         }
-    http_version: 
   recorded_at: Thu, 17 Oct 2013 16:46:00 GMT
 - request:
     method: get
-    uri: https://www.googleapis.com/drive/v3/files/1_5t78ZFtdzfnOFqVOW9WI0wfo8YNrKqy?fields=*&supportsTeamDrives=true
+    uri: https://www.googleapis.com/drive/v3/files/1WwObVRtdPh4CVcZUS7bGLfyq0LULl3Gd?fields=*&supportsAllDrives=true
     body:
       encoding: UTF-8
       string: ''
     headers:
       User-Agent:
-      - |-
-        unknown/0.0.0 google-api-ruby-client/0.19.8 Mac OS X/10.13.4
-         (gzip)
+      - unknown/0.0.0 google-api-ruby-client/0.40.1 Mac OS X/10.14.6 (gzip)
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
       - Thu, 17 Oct 2013 16:46:00 GMT
+      X-Goog-Api-Client:
+      - gl-ruby/2.7.1 gdcl/0.40.1
       Authorization:
-      - Bearer ya29.GlywBUPovqStksNEXkR0ickAKqKm-bkYbSvoMnhBBd6OPEPntntsyeiRrK0u-u7lvlCDxN9Qyp_ni2YBIiMarTZduJ52eMsgtFnESWEhYWwuPnE5N6c6oCbkZad6yQ
+      - Bearer ya29.a0AfH6SMCU8KKA3t1OTP2lZgQzJgmRr25CcpEXJqsQFwtPHrgNxCpfoIMvUtcdJsPVV-8gjjj-na5CtwEfpwhbo8WZOAno_JzOQWhWkG7zEogQFjBrt91wRhDTC7xrd_3EwTyhk1d7FRb0JIsGz-6pxfkOaJz3u2I86Kwe2g
       Content-Type:
       - application/x-www-form-urlencoded
   response:
@@ -805,9 +880,9 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Thu, 03 May 2018 16:06:47 GMT
+      - Thu, 11 Jun 2020 15:13:10 GMT
       Date:
-      - Thu, 03 May 2018 16:06:47 GMT
+      - Thu, 11 Jun 2020 15:13:10 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Vary:
@@ -821,13 +896,16 @@ http_interactions:
       - nosniff
       X-Frame-Options:
       - SAMEORIGIN
+      Content-Security-Policy:
+      - frame-ancestors 'self'
       X-Xss-Protection:
       - 1; mode=block
       Server:
       - GSE
       Alt-Svc:
-      - hq=":443"; ma=2592000; quic=51303433; quic=51303432; quic=51303431; quic=51303339;
-        quic=51303335,quic=":443"; ma=2592000; v="43,42,41,39,35"
+      - h3-27=":443"; ma=2592000,h3-25=":443"; ma=2592000,h3-T050=":443"; ma=2592000,h3-Q050=":443";
+        ma=2592000,h3-Q049=":443"; ma=2592000,h3-Q048=":443"; ma=2592000,h3-Q046=":443";
+        ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
       Transfer-Encoding:
       - chunked
     body:
@@ -835,7 +913,7 @@ http_interactions:
       string: |
         {
          "kind": "drive#file",
-         "id": "1_5t78ZFtdzfnOFqVOW9WI0wfo8YNrKqy",
+         "id": "1WwObVRtdPh4CVcZUS7bGLfyq0LULl3Gd",
          "name": "images_42",
          "mimeType": "image/png",
          "starred": false,
@@ -847,23 +925,23 @@ http_interactions:
          "spaces": [
           "drive"
          ],
-         "version": "2",
-         "webContentLink": "https://drive.google.com/uc?id=1_5t78ZFtdzfnOFqVOW9WI0wfo8YNrKqy&export=download",
-         "webViewLink": "https://drive.google.com/file/d/1_5t78ZFtdzfnOFqVOW9WI0wfo8YNrKqy/view?usp=drivesdk",
+         "version": "1",
+         "webContentLink": "https://drive.google.com/uc?id=1WwObVRtdPh4CVcZUS7bGLfyq0LULl3Gd&export=download",
+         "webViewLink": "https://drive.google.com/file/d/1WwObVRtdPh4CVcZUS7bGLfyq0LULl3Gd/view?usp=drivesdk",
          "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
          "hasThumbnail": true,
-         "thumbnailLink": "https://lh3.googleusercontent.com/njZeeW6QteZwXT0FXyjlZZlYPBehn4LVTI80rueHVKwu9qYSwYeJShvCGKK0xzMNBIHrIrOowN8=s220",
+         "thumbnailLink": "https://lh3.googleusercontent.com/Mwxx0dL4Ggg2tAEOzKPlhoUX8S1xLRgDen7HroDyvxM-HgzVDvJHlyxcra-7h0uTq-oeF3rCQRA=s220",
          "thumbnailVersion": "1",
          "viewedByMe": false,
-         "createdTime": "2018-05-03T16:06:46.046Z",
-         "modifiedTime": "2018-05-03T16:06:46.046Z",
-         "modifiedByMeTime": "2018-05-03T16:06:46.046Z",
+         "createdTime": "2020-06-11T15:13:08.131Z",
+         "modifiedTime": "2020-06-11T15:13:08.131Z",
+         "modifiedByMeTime": "2020-06-11T15:13:08.131Z",
          "modifiedByMe": true,
          "owners": [
           {
            "kind": "drive#user",
            "displayName": "Romerike Jujutsu Klubb",
-           "photoLink": "https://lh4.googleusercontent.com/--PcZI8Hw-DI/AAAAAAAAAAI/AAAAAAAAABI/mJZo1zjmwhw/s64/photo.jpg",
+           "photoLink": "https://lh3.googleusercontent.com/a-/AOh14Gh_H2g_6A-GKy1GwF5ndoveAjCixp916A2psJFs=s64",
            "me": true,
            "permissionId": "05225065351206691434",
            "emailAddress": "post@jujutsu.no"
@@ -872,15 +950,17 @@ http_interactions:
          "lastModifyingUser": {
           "kind": "drive#user",
           "displayName": "Romerike Jujutsu Klubb",
-          "photoLink": "https://lh4.googleusercontent.com/--PcZI8Hw-DI/AAAAAAAAAAI/AAAAAAAAABI/mJZo1zjmwhw/s64/photo.jpg",
+          "photoLink": "https://lh3.googleusercontent.com/a-/AOh14Gh_H2g_6A-GKy1GwF5ndoveAjCixp916A2psJFs=s64",
           "me": true,
           "permissionId": "05225065351206691434",
           "emailAddress": "post@jujutsu.no"
          },
-         "shared": false,
+         "shared": true,
          "ownedByMe": true,
          "capabilities": {
           "canAddChildren": false,
+          "canAddMyDriveParent": false,
+          "canChangeCopyRequiresWriterPermission": true,
           "canChangeViewersCanCopyContent": true,
           "canComment": true,
           "canCopy": true,
@@ -888,17 +968,32 @@ http_interactions:
           "canDownload": true,
           "canEdit": true,
           "canListChildren": false,
+          "canModifyContent": true,
+          "canMoveChildrenWithinDrive": false,
           "canMoveItemIntoTeamDrive": true,
+          "canMoveItemOutOfDrive": true,
+          "canMoveItemWithinDrive": true,
           "canReadRevisions": true,
           "canRemoveChildren": false,
+          "canRemoveMyDriveParent": true,
           "canRename": true,
           "canShare": true,
           "canTrash": true,
           "canUntrash": true
          },
          "viewersCanCopyContent": true,
+         "copyRequiresWriterPermission": false,
          "writersCanShare": true,
          "permissions": [
+          {
+           "kind": "drive#permission",
+           "id": "12157425362991278509",
+           "type": "user",
+           "emailAddress": "atle.tollefsen@gmail.com",
+           "role": "writer",
+           "displayName": "Atle Tollefsen",
+           "deleted": false
+          },
           {
            "kind": "drive#permission",
            "id": "05225065351206691434",
@@ -906,11 +1001,12 @@ http_interactions:
            "emailAddress": "post@jujutsu.no",
            "role": "owner",
            "displayName": "Romerike Jujutsu Klubb",
-           "photoLink": "https://lh4.googleusercontent.com/--PcZI8Hw-DI/AAAAAAAAAAI/AAAAAAAAABI/mJZo1zjmwhw/s64/photo.jpg",
+           "photoLink": "https://lh3.googleusercontent.com/a-/AOh14Gh_H2g_6A-GKy1GwF5ndoveAjCixp916A2psJFs=s64",
            "deleted": false
           }
          ],
          "permissionIds": [
+          "12157425362991278509",
           "05225065351206691434"
          ],
          "originalFilename": "images_42",
@@ -919,7 +1015,7 @@ http_interactions:
          "md5Checksum": "93ca32a536da1698ea979f183679af29",
          "size": "67",
          "quotaBytesUsed": "67",
-         "headRevisionId": "0B7mZVeuqnKRdcEFzamhuU1FOaGFsYXFPZloxOFVpU2luWjNnPQ",
+         "headRevisionId": "0B7mZVeuqnKRdczAzZHlITlpvQkhpVG4wU2JoWVVQWXZIa2Y0PQ",
          "imageMediaMetadata": {
           "width": 1,
           "height": 1,
@@ -927,34 +1023,33 @@ http_interactions:
          },
          "isAppAuthorized": true
         }
-    http_version: 
   recorded_at: Thu, 17 Oct 2013 16:46:00 GMT
 - request:
     method: get
-    uri: https://www.googleapis.com/drive/v3/files/1_5t78ZFtdzfnOFqVOW9WI0wfo8YNrKqy?alt=media&supportsTeamDrives=true
+    uri: https://www.googleapis.com/drive/v3/files/1WwObVRtdPh4CVcZUS7bGLfyq0LULl3Gd?alt=media&supportsAllDrives=true
     body:
       encoding: UTF-8
       string: ''
     headers:
       User-Agent:
-      - |-
-        unknown/0.0.0 google-api-ruby-client/0.19.8 Mac OS X/10.13.4
-         (gzip)
+      - unknown/0.0.0 google-api-ruby-client/0.40.1 Mac OS X/10.14.6 (gzip)
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
       - Thu, 17 Oct 2013 16:46:00 GMT
+      X-Goog-Api-Client:
+      - gl-ruby/2.7.1 gdcl/0.40.1
       Authorization:
-      - Bearer ya29.GlywBUPovqStksNEXkR0ickAKqKm-bkYbSvoMnhBBd6OPEPntntsyeiRrK0u-u7lvlCDxN9Qyp_ni2YBIiMarTZduJ52eMsgtFnESWEhYWwuPnE5N6c6oCbkZad6yQ
+      - Bearer ya29.a0AfH6SMCU8KKA3t1OTP2lZgQzJgmRr25CcpEXJqsQFwtPHrgNxCpfoIMvUtcdJsPVV-8gjjj-na5CtwEfpwhbo8WZOAno_JzOQWhWkG7zEogQFjBrt91wRhDTC7xrd_3EwTyhk1d7FRb0JIsGz-6pxfkOaJz3u2I86Kwe2g
   response:
     status:
       code: 200
       message: OK
     headers:
       X-Guploader-Uploadid:
-      - AEnB2UoyxbKewp7L2UzHu5i6UxqcBDaUIYcA_Hk6J2MhgU3vIMqXDoL1OFrTaWHIhxVmsyNqtqbF_3Xjxb4Bnsrvkn3umtvpVydfftrFnJ7tLAXKUtMa_78
+      - AAANsUnktoHmW7a1g1_2rzsMx2irLJdoZq3v2E0QBM-tU2q7a7w-vAhTkcPJHwDV3nNrJUyJBQx0Y797Xux6FGhz_J2XYe824g
       Content-Type:
       - image/png
       Content-Disposition:
@@ -963,9 +1058,9 @@ http_interactions:
       - Origin
       - X-Origin
       Expires:
-      - Thu, 03 May 2018 16:06:48 GMT
+      - Thu, 11 Jun 2020 15:13:11 GMT
       Date:
-      - Thu, 03 May 2018 16:06:48 GMT
+      - Thu, 11 Jun 2020 15:13:11 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate
       Content-Length:
@@ -975,12 +1070,12 @@ http_interactions:
       Server:
       - UploadServer
       Alt-Svc:
-      - hq=":443"; ma=2592000; quic=51303433; quic=51303432; quic=51303431; quic=51303339;
-        quic=51303335,quic=":443"; ma=2592000; v="43,42,41,39,35"
+      - h3-27=":443"; ma=2592000,h3-25=":443"; ma=2592000,h3-T050=":443"; ma=2592000,h3-Q050=":443";
+        ma=2592000,h3-Q049=":443"; ma=2592000,h3-Q048=":443"; ma=2592000,h3-Q046=":443";
+        ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
         iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==
-    http_version: 
   recorded_at: Thu, 17 Oct 2013 16:46:00 GMT
-recorded_with: VCR 4.0.0
+recorded_with: VCR 6.0.0

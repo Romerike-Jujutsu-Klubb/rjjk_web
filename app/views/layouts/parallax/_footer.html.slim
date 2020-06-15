@@ -2,12 +2,12 @@ footer#footer.slide.pt-4.pt-md-5.px-5.pb-2 style="display:table-cell;vertical-al
   .row
 
     - if information_pages.any?
-      .col.mb-3.mb-md-5
-        .card.h-100.text-nowrap
+      .col.mb-3.mb-md-5 style="min-width:12rem"
+        .card.h-100
           .card-header
             i.fa.fa-file-alt.mr-3
             | Informasjon
-          .card-body.pb-2
+          .card-body.pb-2.text-nowrap
             table.table.mb-0
               tbody
                 - information_pages.select(&:public).reject(&:hidden).each do |ip|
@@ -16,7 +16,6 @@ footer#footer.slide.pt-4.pt-md-5.px-5.pb-2 style="display:table-cell;vertical-al
                       a href=information_page_path(ip.title)
                         i.fa-fw> class=(ip.icon_class.presence || 'fa fa-file-alt')
                         = ip.title
-
     - if news_items.any?
       #news.col.mb-3.mb-md-5.d-none.d-md-block style="min-width:14rem"
         .card.h-100

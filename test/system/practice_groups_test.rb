@@ -3,13 +3,9 @@
 require 'application_system_test_case'
 
 class PracticeGroupsTest < ApplicationSystemTestCase
-  setup do
-    screenshot_section :practice_groups
-    login
-  end
+  setup { login }
 
   test 'new' do
-    screenshot_group :new
     visit groups_url
     assert_selector 'h1', text: 'Treningsgrupper'
     screenshot :index

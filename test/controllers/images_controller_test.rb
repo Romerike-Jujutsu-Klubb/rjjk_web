@@ -53,7 +53,7 @@ class ImagesControllerTest < ActionController::TestCase
       get action, params: { id: id(:no_content), width: 320, format: :jpg }
       assert_response :redirect
       assert_redirected_to \
-          '/assets/pdficon_large-f755e8f306b39714f4efa5d7928e1a54b29571e78af77c96c95f950528468cb4.png'
+          '/assets/pdficon_large-7c31e5c1d5f7d3e8938fea0182959ef48dcc2c9c4e40c8a7912c7e033f04e5f3.png'
     end
   end
 
