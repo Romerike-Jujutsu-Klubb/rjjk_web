@@ -50,7 +50,10 @@ ul#tab.nav.nav-tabs role="tablist"
           = render 'member_list', members: attending, selected_practice: selected_practice
         - if instructors.any?
           .card
-            h3.card-header Instruktører
+            h3.card-header
+              | Instruktører
+              a.btn.btn-primary.float-right href=with_detour(new_attendance_path(attendance: { practice_id: @practice&.id }))
+                i.fa.fa-plus
             = render 'member_list', members: instructors, selected_practice: selected_practice
         - if absent.any?
           .card
