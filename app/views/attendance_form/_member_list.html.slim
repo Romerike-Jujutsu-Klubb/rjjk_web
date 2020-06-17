@@ -11,5 +11,5 @@
             = link_to m.name, m
             - if m.absent?
               br
-              = m.attendances.last.date
+              = m.attendances.last&.date || 'Oppmøte ikke registret'
           td = render 'attendances/button', attendance: attendance, member_id: m.id
