@@ -63,15 +63,15 @@
       - if @user.memberships.any? || @user.contact_users.take(2).count > 1
         - if user.age&.<(18) && user.guardian_1_id.nil?
           p "Foresatt 1" er bare nødvendig hvis medlemmet er under 18 år gammel.  Alle andre kontaktpersoner er valgfrie dersom medlemmet har egen e-post eller telefon.
-        .row
-          scss:
-            .input-group.user {
-              min-width: 15rem;
+        scss:
+          .input-group.user {
+            min-width: 15rem;
 
-              &.user-selected {
-                min-width: 23.75rem;
-              }
+            &.user-selected {
+              min-width: 23.75rem;
             }
+          }
+        .row
           .col = render 'related_user', f: f, user: user, related_user: user.guardian_1, column: :guardian_1_id
           .col = render 'related_user', f: f, user: user, related_user: user.guardian_2, column: :guardian_2_id
           .col = render 'related_user', f: f, user: user, related_user: user.billing_user, column: :billing_user_id
