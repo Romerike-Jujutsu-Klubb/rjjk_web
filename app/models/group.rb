@@ -106,8 +106,8 @@ class Group < ApplicationRecord
   delegate :last_practice, to: :previous_schedule
 
   def instructors
-    group_schedules.map(&:active_group_instructors).flatten.map(&:member)
-        .sort_by(&:current_rank).reverse
+    group_schedules.map(&:active_group_instructors).flatten.map(&:member).uniq.sort_by(&:current_rank)
+        .reverse
   end
 
   def active_instructors(dates = [Date.current])
