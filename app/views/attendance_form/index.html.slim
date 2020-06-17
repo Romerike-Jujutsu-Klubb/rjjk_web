@@ -22,12 +22,14 @@ ul#tab.nav.nav-tabs role="tablist"
     .tab-pane.fade id="instruction_#{group.id}" class=('show active' if @practice&.group_schedule&.group_id == group.id) role="tabpanel" aria-labelledby="home-tab"
       - next_practice = group.next_practice
       - selected_practice = (@practice&.group_schedule&.group_id == group.id && @practice) || next_practice
+      - instructors = next_practice.group_semester.group_instructors.map(&:member).uniq
       - group_members = group.members.active(selected_practice.date).to_a
       - group_members += Attendance.joins(:practice).after(2.months.ago) \
           .where(practices: {group_schedule_id: group.group_schedules.map(&:id)}) \
           .where(status: Attendance::PRESENCE_STATES) \
           .where.not(member_id: group_members.map(&:id)) \
           .map(&:member).uniq
+      - group_members -= instructors
       - group_members = group_members.sort_by { |m| m.current_rank }.reverse
       - active, passive = group_members.partition(&:active?)
       - attending, absent = active.partition(&:attending?)
@@ -46,6 +48,10 @@ ul#tab.nav.nav-tabs role="tablist"
           .card-header
             = select nil, :practice_id, group.practices.after(1.month.ago).select { |pr| pr.date <= next_practice.date }.sort_by(&:date).reverse.map { |pr| ["#{pr} #{day_name pr.date.wday}", pr.id] }, { selected: selected_practice.id }, class: 'form-control pr-0', onchange: 'window.location = "?practice_id=" + $(this).val()'
           = render 'member_list', members: attending, selected_practice: selected_practice
+        - if instructors.any?
+          .card
+            h3.card-header Instruktører
+            = render 'member_list', members: instructors, selected_practice: selected_practice
         - if absent.any?
           .card
             h3.card-header Fraværende
