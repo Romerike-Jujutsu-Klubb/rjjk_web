@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # # frozen_string_literal: true
 #
 # require 'simple_drilldown/drilldown_controller'
@@ -34,7 +35,8 @@
 #   dimension :calendar_date, 'DATE(members.created_at)', interval: true
 #   dimension :day_of_month, "date_part('day', members.created_at)::int"
 #   dimension :day_of_week, <<~SQL, label_method: ->(day_no) { Date::DAYNAMES[day_no.to_i % 7] }
-#     CASE WHEN date_part('dow', members.created_at) = 0 THEN 7 ELSE date_part('dow', members.created_at)::int END
+#     CASE WHEN date_part('dow', members.created_at) = 0 THEN 7
+#       ELSE date_part('dow', members.created_at)::int END
 #   SQL
 #   dimension :hour_of_day, "date_part('hour', members.created_at)::int"
 #   dimension :month, "date_part('month', members.created_at)::int",
