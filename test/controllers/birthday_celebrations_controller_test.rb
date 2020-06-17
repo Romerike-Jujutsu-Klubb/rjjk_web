@@ -34,6 +34,11 @@ class BirthdayCelebrationsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'should show certificates' do
+    get :certificates, params: { id: @birthday_celebration }
+    assert_response :success
+  end
+
   test 'should get edit' do
     get :edit, params: { id: @birthday_celebration }
     assert_response :success

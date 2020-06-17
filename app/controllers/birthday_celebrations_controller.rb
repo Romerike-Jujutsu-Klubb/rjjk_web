@@ -19,11 +19,11 @@ class BirthdayCelebrationsController < ApplicationController
       {
         rank: 'Innføring i Jujutsu', group: '',
         censor1: bc.sensor1 && { title: bc.sensor1.title, name: bc.sensor1.name,
-                                 signature: bc.sensor1.signatures.sample.try(:image) },
+                                 signature: bc.sensor1.user.signatures.sample.try(:image) },
         censor2: bc.sensor1 && { title: bc.sensor2.title, name: bc.sensor2.name,
-                                 signature: bc.sensor2.signatures.sample.try(:image) },
+                                 signature: bc.sensor2.user.signatures.sample.try(:image) },
         censor3: bc.sensor1 && { title: bc.sensor3.title, name: bc.sensor3.name,
-                                 signature: bc.sensor3.signatures.sample.try(:image) }
+                                 signature: bc.sensor3.user.signatures.sample.try(:image) }
       }
     end
     content = participants.map { |n| general.call.update(name: n) }
