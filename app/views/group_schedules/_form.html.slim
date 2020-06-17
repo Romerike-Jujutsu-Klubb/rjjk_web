@@ -1,5 +1,5 @@
 = bootstrap_form_for(@group_schedule) do |f|
-  = f.select :group_id, @groups.map{|g| ["#{g.martial_art.name} #{g.name}", g.id]}.sort, prompt: 'Velg gruppe'
+  = f.select :group_id, @groups.map{|g| ["#{g.martial_art&.name} #{g.name}", g.id]}.sort, prompt: 'Velg gruppe'
 
   .row
     .col-4

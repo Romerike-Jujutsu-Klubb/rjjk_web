@@ -40,3 +40,8 @@ voksne_aikido:
   to_age: 99
   target_size: 30
   closed_on: 2013-09-17
+
+no_martial_art:
+  name: Rogue-fu
+  from_age: 42
+  to_age: 99
