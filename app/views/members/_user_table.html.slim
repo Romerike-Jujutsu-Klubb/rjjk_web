@@ -14,7 +14,7 @@
         tr class=cycle('odd', 'even')
           td = link_to member.first_name, member
           td = link_to member.last_name, member
-          td = member.groups.map { |g| "#{g.name}#{" (#{g.martial_art.family})" if g.martial_art.family != 'Jujutsu'}" } * ', '
+          td = member.groups.map { |g| "#{g.name}#{" (#{g.martial_art.family})" if g.martial_art&.family&.!=('Jujutsu')}" } * ', '
           td = member.current_rank && member.current_rank.name
           td = member.left_on ? 'Utmeldt' : (member.instructor ? 'Instruktør' : 'Aktiv')
           td: a href="mailto:#{h member.email}" = h member.email
