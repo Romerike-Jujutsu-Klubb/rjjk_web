@@ -48,20 +48,20 @@ ul#tab.nav.nav-tabs role="tablist"
           .card-header
             = select nil, :practice_id, group.practices.after(1.month.ago).select { |pr| pr.date <= next_practice.date }.sort_by(&:date).reverse.map { |pr| ["#{pr} #{day_name pr.date.wday}", pr.id] }, { selected: selected_practice.id }, class: 'form-control pr-0', onchange: 'window.location = "?practice_id=" + $(this).val()'
           = render 'member_list', members: attending, selected_practice: selected_practice
-        - if instructors.any?
-          .card
-            h3.card-header
-              | Instruktører
-              a.btn.btn-primary.float-right href=with_detour(new_attendance_path(attendance: { practice_id: @practice&.id }))
-                i.fa.fa-plus
+        .card
+          h3.card-header
+            | Instruktører
+            a.btn.btn-primary.float-right href=with_detour(new_attendance_path(attendance: { practice_id: @practice&.id }))
+              i.fa.fa-plus
+          - if instructors.any?
             = render 'member_list', members: instructors, selected_practice: selected_practice
-        - if absent.any?
-          .card
-            h3.card-header Fraværende
+        .card
+          h3.card-header Fraværende
+          - if absent.any?
             = render 'member_list', members: absent, selected_practice: selected_practice
-        - if passive.any?
-          .card
-            h3.card-header Passive
+        .card
+          h3.card-header Passive
+          - if passive.any?
             = render 'member_list', members: passive, selected_practice: selected_practice
 
   #lists.tab-pane.fade class=('show active' unless @practice) role="tabpanel" aria-labelledby="contact-tab"
