@@ -4,3 +4,4 @@
 //= link cloudinary.js
 //= link new_front_page.css
 //= link_directory ../stylesheets .css
+//= link simple_drilldown/application.css
