@@ -34,3 +34,7 @@ tr.border-dark {
     @extend .border-dark;
   }
 }
+
+.col {
+  min-width: inherit;
+}
