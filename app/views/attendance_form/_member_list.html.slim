@@ -9,7 +9,7 @@
               i.fa.fa-key
           td
             = link_to m.name, m
-            - if m.absent?
+            - if m.absent?(days: 14)
               br
               = m.attendances.last&.date || 'Oppmøte ikke registret'
           td = render 'attendances/button', attendance: attendance, member_id: m.id
