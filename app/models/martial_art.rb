@@ -25,4 +25,8 @@ class MartialArt < ApplicationRecord
   def to_s
     name
   end
+
+  def archived?
+    original_martial_art_id
+  end
 end
