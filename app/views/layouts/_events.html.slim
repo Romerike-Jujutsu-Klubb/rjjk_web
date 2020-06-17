@@ -11,28 +11,30 @@
       - if event.start_at.year != last_year
         - last_year = event.start_at.year
         h4.mt-3.logo-red style="margin-bottom:-1rem" = last_year
-      - if event.start_at.mon != last_mon
-        - last_mon = event.start_at.mon
-        h5.mt-3 style="color: #E20916" = month_name(last_mon).capitalize
+      - last_mon = event.start_at.mon
       - if event.start_at != last_start_at || event.end_at != last_end_at
         - last_start_at = event.start_at
         - last_end_at = event.end_at
         h5.mt-3.mb-1
           - if event.end_at.nil? || event.end_at == event.start_at
+            => day_name(event.start_at.wday)
             ' #{event.start_at.mday}.
-            = day_name(event.start_at.wday)
+            => month_name(last_mon)
             - if event.start_at.min != 0 || event.start_at.hour != 0
               =< event.start_at.strftime('kl. %H:%M')
           - else
             - if event.end_at.to_date == event.start_at.to_date
               => day_name(event.start_at.wday)
               ' #{event.start_at.mday}.
-              | #{event.start_at.strftime('%H:%M')} - #{event.end_at.strftime('%H:%M')}
+              => month_name(last_mon)
+              span.text-nowrap #{event.start_at.strftime('%H:%M')} - #{event.end_at.strftime('%H:%M')}
             - else
               - if event.start_at.min == 0 && event.start_at.hour == 0 && event.end_at.hour == 0 && event.end_at.min == 0
-                ' #{event.start_at.mday}-#{event.end_at.mday}.
+                span.text-nowrap #{event.start_at.mday}-#{event.end_at.mday}.
+                => month_name(last_mon)
               - else
                 ' #{day_name(event.start_at.wday)} #{event.start_at.mday}.
+                => month_name(last_mon)
                 = event.start_at.strftime('%H:%M')
                 | -
                 ' #{day_name(event.end_at.wday)}  #{event.end_at.mday}.
