@@ -15,7 +15,7 @@
       - if event.start_at != last_start_at || event.end_at != last_end_at
         - last_start_at = event.start_at
         - last_end_at = event.end_at
-        h5.mt-3.mb-1
+        h5.mt-3.mb-1 style='color: #FFB400'
           - if event.end_at.nil? || event.end_at == event.start_at
             => day_name(event.start_at.wday)
             ' #{event.start_at.mday}.
@@ -44,9 +44,9 @@
         = link_to image_tag('ical.png', style: 'width: 24px;height: 24px'), \
             {controller: :events, action: :calendar, id: event.id, format: :ics}, \
             class: 'float-right', title: "Sett '#{event.name}' på din kalender!"
-      h5.clearfix style="margin-bottom:0;color:#FFB400"
+      h5.clearfix style="margin-bottom:0"
         - if event.persisted? && (admin? || body)
-          = link_to event.title, admin? ? edit_polymorphic_path(event) : event, style: 'color: #FFB400'
+          = link_to event.title, admin? ? edit_polymorphic_path(event) : event
         - else
           = event.title
 
