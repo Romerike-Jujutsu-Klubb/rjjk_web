@@ -57,7 +57,7 @@
           = textalize ingress
         - control_links = []
         - if body
-          - control_links << link_to('Les mer', { controller: :events, action: :show, id: event.id }, class: :edit)
+          - control_links << link_to('Les mer', admin? ? edit_polymorphic_path(event) : event, class: :edit)
         - if control_links.any?
           ul.controls
             - control_links.each do |link|
