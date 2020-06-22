@@ -15,4 +15,4 @@
         td
           - m.next_rank.curriculum_group.practice_groups.each do |group|
             - if (next_graduation = group.next_graduation)
-              = link_to(next_graduation.held_on, edit_graduation_url(next_graduation))
+              => link_to(next_graduation.held_on, edit_graduation_url(next_graduation))
