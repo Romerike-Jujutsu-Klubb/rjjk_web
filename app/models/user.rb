@@ -50,7 +50,7 @@ class User < ApplicationRecord
   has_many :signatures, dependent: :destroy
   has_many :user_messages, dependent: :destroy
 
-  search_scope %i[address email first_name last_name login phone postal_code],
+  search_scope %i[address email first_name last_name login phone postal_code security_token],
       order: %i[first_name last_name]
 
   CHANGEABLE_FIELDS = %w[first_name last_name email].freeze
