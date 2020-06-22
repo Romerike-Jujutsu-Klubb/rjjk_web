@@ -80,7 +80,7 @@ Rails.application.routes.draw do
 
   resources :correspondences
   resources(:curriculums, path: :pensum, only: %i[index show]) { collection { get :card_pdf } }
-  resources(:curriculum_groups) { collection { get :card_pdf } }
+  resources(:curriculum_groups)
   resources :elections
   resources :embus do
     member do
