@@ -14,7 +14,8 @@ ul.nav.nav-tabs
   li.nav-item: a.nav-link data-target="#invitees" data-toggle="tab"
     - confirmed = @event.event_invitees.select(&:confirmed?)
     - registered = @event.event_invitees.select(&:registered?)
-    - invited = @event.event_invitees.reject(&:confirmed?).select(&:invitation)
+    - not_attending = @event.event_invitees.select{|ei| ei.will_attend == false}
+    - invited = @event.event_invitees.reject(&:confirmed?).select(&:invitation) - not_attending
     | Deltagere
     - if @event.event_invitees.any?
       .badge.badge-success< => confirmed.size
@@ -26,6 +27,6 @@ ul.nav.nav-tabs
 
 .tab-content
   #description.tab-pane.active = render 'form'
-  #invitees.tab-pane = render 'attendants', confirmed: confirmed, registered: registered, invited: invited
+  #invitees.tab-pane = render 'attendants', confirmed: confirmed, registered: registered, invited: invited, not_attending: not_attending
   #messages.tab-pane = render 'messages'
   #attachments.tab-pane = render 'attachments'

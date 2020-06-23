@@ -26,6 +26,11 @@ ul.nav.nav-tabs.mt-3 role="tablist"
   li.nav-item
     a#historic-tab.nav-link data-toggle="tab" data-target="#historic" role="tab" aria-controls="historic" aria-selected="false"
       ' Eksterne
+  - if not_attending.any?
+    li.nav-item
+      a#not-attending-tab.nav-link data-toggle="tab" data-target="#not-attending" role="tab" aria-controls="not-attending" aria-selected="false"
+        ' Avmeldt
+        .badge.badge-info = not_attending.size
 
 #myTabContent.tab-content
   - if confirmed.any?
@@ -46,3 +51,6 @@ ul.nav.nav-tabs.mt-3 role="tablist"
       = f.primary 'Legg til grupper'
   #historic.tab-pane.fade role="tabpanel" aria-labelledby="historic-tab"
     = render 'external_users'
+  - if not_attending.any?
+    #not-attending.tab-pane.fade role="tabpanel" aria-labelledby="not-attending-tab"
+      = render 'attendees_table', event_invitees: not_attending
