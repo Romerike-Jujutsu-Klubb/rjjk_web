@@ -15,7 +15,7 @@ class NewsController < ApplicationController
 
   def show
     id = params[:id]
-    if id == 'p2'
+    if %w[p2 p3].include?(id)
       redirect_to root_path
       return
     end
