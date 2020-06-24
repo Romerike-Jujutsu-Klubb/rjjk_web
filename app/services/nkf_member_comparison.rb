@@ -103,11 +103,11 @@ class NkfMemberComparison
     form_field = form.field_with(name: nkf_field)
     if form_field.is_a?(Mechanize::Form::SelectList)
       desired_option = form_field.options.find { |o| o.text == desired_value }
-      if desired_option
-        desired_option.select
-      else
-        logger.error 'Option not found'
+      unless desired_option
+        raise "Option #{desired_value.inspect} not found in #{form_field.options.map(&:text).inspect}"
       end
+
+      desired_option.select
     else
       form[nkf_field] = desired_value
     end
