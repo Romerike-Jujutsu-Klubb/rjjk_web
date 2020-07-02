@@ -97,8 +97,6 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
       [members(:lars), {
         { user: :birthdate } => { '01.03.1967' => '21.06.1967' },
         { user: :contact_email } => { 'lars@example.net' => 'lars@example.com' },
-        { membership: :category } => { nil => 'Voksen' },
-        { membership: :contract } => { nil => 'Voksen' },
         { membership: :discount } => { nil => '100' },
         { membership: :joined_on } => { '01.04.2001' => '21.06.2007' },
       }],
@@ -107,7 +105,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
         { user: :phone } => { '92929292' => '' },
         { user: :contact_email } => { 'sebastian@example.net' => 'sebastian@example.com' },
         { billing: :email } => { 'lise@example.net' => '' },
-        { membership: :category } => { 'Passiv sats' => 'Barn' },
+        { membership: :category } => { 'Passiv' => 'Barn' },
         { membership: :contract } => { 'Passiv - Ungdom' => 'Barn - familie' },
         { membership: :discount } => { nil => '100' },
         { membership: :joined_on } => { '21.09.2007' => '25.08.2007' },
@@ -118,8 +116,6 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
       [members(:uwe), {
         { user: :phone } => { '' => '5556666' },
         { user: :contact_email } => { 'uwe@example.net' => 'uwe@example.com' },
-        { membership: :category } => { nil => 'Voksen' },
-        { membership: :contract } => { nil => 'Voksen' },
         { membership: :discount } => { nil => '100' },
       }],
     ], c.outgoing_changes)
@@ -177,8 +173,6 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
       { user: :birthdate } => { '01.03.1967' => '21.06.1967' },
       { user: :contact_email } => { 'lars@example.net' => 'lars@example.com' },
       { billing: :email } => { 'newbie@example.com' => 'long_user@example.com' },
-      { membership: :category } => { nil => 'Voksen' },
-      { membership: :contract } => { nil => 'Voksen' },
       { membership: :discount } => { nil => '100' },
       { membership: :joined_on } => { '01.04.2001' => '21.06.2007' },
     }]], c.outgoing_changes)
@@ -191,7 +185,8 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
   test 'sync single member with duplicate user phone' do
     seb = members(:sebastian)
     seb.nkf_member.update! foresatte_nr_2_mobil: seb.guardian_2.phone
-    c = VCR.use_cassette('NKF Comparison Single Member', match_requests_on: %i[method host path query]) do
+    c = VCR.use_cassette('NKF Comparison Single Member duplicate user phone',
+        match_requests_on: %i[method host path query]) do
       NkfMemberComparison.new(seb).sync
     end
     assert_equal([], c.errors)
@@ -238,7 +233,7 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
         { user: :phone } => { '92929292' => '' },
         { user: :contact_email } => { 'sebastian@example.net' => 'sebastian@example.com' },
         { billing: :email } => { 'lise@example.net' => '' },
-        { membership: :category } => { 'Passiv sats' => 'Barn' },
+        { membership: :category } => { 'Passiv' => 'Barn' },
         { membership: :contract } => { 'Passiv - Ungdom' => 'Barn - familie' },
         { membership: :discount } => { nil => '100' },
         { membership: :joined_on } => { '21.09.2007' => '25.08.2007' },

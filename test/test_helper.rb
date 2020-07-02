@@ -73,9 +73,7 @@ class ActiveSupport::TestCase
 
   # FIXME(uwe): Remove: Added in Rails 5
   def fixture_file_upload(path, mime_type = nil, binary = false)
-    if self.class.respond_to?(:fixture_path) && self.class.fixture_path
-      path = File.join(self.class.fixture_path, path)
-    end
+    path = File.join(self.class.fixture_path, path) if self.class.respond_to?(:fixture_path) && self.class.fixture_path
     Rack::Test::UploadedFile.new(path, mime_type, binary)
   end
   # EMXIF

@@ -107,7 +107,46 @@ class NkfMemberComparison
         raise "Option #{desired_value.inspect} not found in #{form_field.options.map(&:text).inspect}"
       end
 
+      if form_value == desired_option.value
+        logger.info <<~LINE
+          Set form field #{form_field.name}: #{form_value.inspect} => #{desired_option.value.inspect}: Unchanged
+        LINE
+        return
+      end
+      logger.info <<~LINE
+        Set form field #{form_field.name}: #{form_value.inspect} => #{desired_option.value.inspect}
+      LINE
       desired_option.select
+      if form_field.name == 'frm_48_v48'
+        options_uri = URI('https://nkfwww.kampsport.no/portal/pls/portal/myports.ks_ajax.main')
+        http = Net::HTTP.new(options_uri.host, options_uri.port)
+        http.use_ssl = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+        options_uri.query = <<~URL
+          p_type=4&p_para1=#{desired_option.value}&p_para2=undefined&p_field_id=frm_48_v36&p_first_line_txt=-%20Velg%20sats%20-&p_class_name=inputTextFull
+        URL
+        request = Net::HTTP::Get.new(options_uri.request_uri)
+        response = http.request(request).body
+        response_doc = Nokogiri::HTML(response)
+        form_field_36 = form.field_with(name: 'frm_48_v36')
+        response_options =
+            response_doc.css('option').map { |o| Mechanize::Form::Option.new(o, form_field_36) }
+        form_field_36.node.replace(response)
+        form_field_36.options = response_options
+
+        options_uri.query = <<~URL
+          p_type=11&p_para1=#{desired_option.value}&p_para2=undefined&p_field_id=frm_48_v37&p_first_line_txt=-%20Velg%20kontraktstype%20-&p_class_name=inputTextFull
+        URL
+        request_37 = Net::HTTP::Get.new(options_uri.request_uri)
+        response_37 = http.request(request_37).body
+        response_doc_37 = Nokogiri::HTML(response_37)
+        form_field_37 = form.field_with(name: 'frm_48_v37')
+        response_options_37 =
+            response_doc_37.css('option').map { |o| Mechanize::Form::Option.new(o, form_field_37) }
+        form_field_37.node.replace(response_37)
+        form_field_37.options = response_options_37
+      end
     else
       form[nkf_field] = desired_value
     end
