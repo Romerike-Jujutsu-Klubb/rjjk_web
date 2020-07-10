@@ -102,7 +102,7 @@ class NkfMemberComparison
     desired_value = mapped_rjjk_value&.encode(form.encoding)
     form_field = form.field_with(name: nkf_field)
     if form_field.is_a?(Mechanize::Form::SelectList)
-      desired_option = form_field.options.find { |o| o.text == desired_value }
+      desired_option = form_field.options.find { |o| o.text.strip == desired_value }
       unless desired_option
         raise "Option #{desired_value.inspect} not found in #{form_field.options.map(&:text).inspect}"
       end
