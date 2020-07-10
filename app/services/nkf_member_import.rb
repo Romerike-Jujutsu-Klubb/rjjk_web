@@ -101,7 +101,7 @@ class NkfMemberImport
     end
 
     member_id = Regexp.last_match(1)
-    active = (details_body =~ /<input type="text" class="displayTextFull" value="Aktiv ">/)
+    active = details_body.include?('<input type="text" class="displayTextFull" value="Aktiv ">')
     if details_body =~ %r{<span class="kid_1">(\d+)</span><span class="kid_2">(\d+)</span>}
       waiting_kid = "#{Regexp.last_match(1)}#{Regexp.last_match(2)}"
     end

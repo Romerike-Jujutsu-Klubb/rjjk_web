@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_paper_trail
   acts_as_paranoid
 
-  attr_accessor :password, :password_confirmation
+  attr_accessor :password, :password_confirmation, :password_needs_confirmation
 
   geocoded_by :full_address
   after_validation :geocode, if: ->(u) do
@@ -54,7 +54,6 @@ class User < ApplicationRecord
       order: %i[first_name last_name]
 
   CHANGEABLE_FIELDS = %w[first_name last_name email].freeze
-  attr_accessor :password_needs_confirmation
 
   NILLABLE_FIELDS = %i[address email first_name kana last_name login phone postal_code role].freeze
   before_validation do

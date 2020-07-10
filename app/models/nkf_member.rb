@@ -374,7 +374,7 @@ class NkfMember < ApplicationRecord
       nil
     elsif nkf_value.blank? && (target == :user && User::NILLABLE_FIELDS.include?(target_attribute))
       nil
-    elsif nkf_value.present? && target_attribute =~ /email/
+    elsif nkf_value.present? && target_attribute.to_s.include?('email')
       nkf_value.downcase
     else
       nkf_value
