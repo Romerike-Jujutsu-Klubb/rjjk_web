@@ -61,14 +61,14 @@ ruby:
       .next-practice-btn
         - accept_text = 'Kommer!'
         - accept_url = { controller: :attendances, action: :announce, year: next_practice.year, week: next_practice.week, group_schedule_id: next_practice.group_schedule_id, status: Attendance::Status::WILL_ATTEND }
-        - decline_text = 'Kan ikke...'
+        - decline_text = 'Meld av'
         - decline_url = { controller: :attendances, action: :announce, year: next_practice.year, week: next_practice.week, group_schedule_id: next_practice.group_schedule_id, status: Attendance::Status::ABSENT }
         = render 'layouts/attendance_thumbs', will_attend: will_attend, query_text: nil, accept_text: accept_text, accept_url: accept_url, decline_text: decline_text, decline_url: decline_url
   - else
     - query_text = 'Kommer du?'
     - accept_text = 'Kommer!'
     - accept_url = {controller: :attendances, action: :announce, year: next_practice.year, week: next_practice.week, group_schedule_id: next_practice.group_schedule_id, status: Attendance::Status::WILL_ATTEND}
-    - decline_text = 'Kan ikke...'
+    - decline_text = 'Kommer ikke'
     - decline_url = {controller: :attendances, action: :announce, year: next_practice.year, week: next_practice.week, group_schedule_id: next_practice.group_schedule_id, status: Attendance::Status::ABSENT}
     .clearfix = render 'layouts/attendance_thumbs', will_attend: nil, query_text: query_text, accept_text: accept_text, accept_url: accept_url, decline_text: decline_text, decline_url: decline_url
     = render 'attendances/details_link', practice: next_practice
