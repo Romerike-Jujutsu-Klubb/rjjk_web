@@ -11,7 +11,8 @@ class GraduationReminder
   def self.notify_missing_graduations
     today = Date.current
     groups = Group.active(today).to_a
-    planned_groups = Graduation.where('held_on >= ?', today).to_a.map(&:group)
+    planned_groups =
+        Graduation.where('held_on >= ? AND group_notification = ?', today, true).to_a.map(&:group)
     missing_groups = groups - planned_groups
     month_start = Date.civil(today.year, today.mon >= 7 ? 12 : 6)
     return if month_start > 4.months.from_now
