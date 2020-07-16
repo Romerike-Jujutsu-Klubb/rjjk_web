@@ -117,9 +117,14 @@ class GraduationReminderTest < ActionMailer::TestCase
       )
     assert_match(/Har du mulighet til delta\?  Klikk på en av linkene nedenfor for å gi beskjed\r\n  om du kan eller ikke./, # rubocop: disable Layout/LineLength
         mail.body)
-    assert_match(%r{<a href="https://example.com/censors/306982868/confirm">Jeg kommer :\)</a>}, mail.body)
-    assert_match(%r{<a href="https://example.com/censors/306982868/decline">Beklager, jeg kommer ikke.</a>},
-        mail.body)
+    assert_match(
+        %r{<a rel="nofollow" data-method="post" href="https://example.com/censors/306982868/accept">Jeg kommer :\)</a>},
+        mail.body
+      )
+    assert_match(
+        %r{<a [^>]*href="https://example.com/censors/306982868/decline">Beklager, jeg kommer ikke.</a>},
+        mail.body
+      )
   end
 
   def test_notify_missing_locks
@@ -160,7 +165,7 @@ class GraduationReminderTest < ActionMailer::TestCase
         /Har du mulighet til delta\? {2}Klikk på en av linkene nedenfor for å gi beskjed om du kan eller ikke./,
         mail.body
       )
-    assert_match(%r{<a href="https://example.com/graduates/397971580/confirm">Jeg kommer :\)</a>}, mail.body)
+    assert_match(%r{<a href="https://example.com/graduates/397971580/accept">Jeg kommer :\)</a>}, mail.body)
     assert_match(%r{<a href="https://example.com/graduates/397971580/decline">Beklager, jeg kommer ikke.</a>},
         mail.body)
     assert_match(/Krav til gradering er 10-20 treninger. Vi har registrert 1 trening på deg siden du startet./,
@@ -177,7 +182,7 @@ class GraduationReminderTest < ActionMailer::TestCase
         mail.body
       )
     seb_id = id :sebastian_kyu_5
-    assert_match(%r{<a href="https://example.com/graduates/#{seb_id}/confirm">Jeg kommer :\)</a>}, mail.body)
+    assert_match(%r{<a href="https://example.com/graduates/#{seb_id}/accept">Jeg kommer :\)</a>}, mail.body)
     assert_match(%r{<a href="https://example.com/graduates/#{seb_id}/decline">Beklager, jeg kommer ikke.</a>},
         mail.body)
     assert_match(

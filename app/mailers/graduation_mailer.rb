@@ -44,7 +44,7 @@ class GraduationMailer < ApplicationMailer
     @title = "Invitasjon til å være #{@censor.role_name}"
     @timestamp = censor.graduation.held_on
     @email_url = { controller: :censors, action: :show, id: @censor.id }
-    @confirm_url = { controller: :censors, action: :confirm, id: @censor.id }
+    @confirm_url = { controller: :censors, action: :accept, id: @censor.id }
     @decline_url = { controller: :censors, action: :decline, id: @censor.id }
     mail to: censor.member.email, subject: @title
   end
@@ -61,7 +61,7 @@ class GraduationMailer < ApplicationMailer
     @title = 'Invitasjon til gradering'
     @timestamp = graduate.graduation.held_on
     # @email_url = { controller: :censors, action: :show, id: @censor.id }
-    @confirm_url = confirm_graduate_url(@graduate)
+    @confirm_url = accept_graduate_url(@graduate)
     @decline_url = decline_graduate_url(@graduate)
     mail to: graduate.member.email, subject: @title, from: graduate.graduation.examiner_email
   end

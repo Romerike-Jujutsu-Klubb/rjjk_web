@@ -102,7 +102,7 @@ class EventsController < ApplicationController
     invitee = @event.event_invitees.find { |ei| ei.user_id == current_user.id }
     if invitee.update(will_attend: true)
       flash[:notice] = 'Du er påmeldt.'
-      redirect_to @event
+      back_or_redirect_to @event
     else
       redirect_back fallback_location: root_path
     end
@@ -113,7 +113,7 @@ class EventsController < ApplicationController
     invitee = @event.event_invitees.find { |ei| ei.user_id == current_user.id }
     if invitee.update(will_attend: false, will_work: nil)
       flash[:notice] = 'Du er avmeldt.'
-      redirect_to @event
+      back_or_redirect_to @event
     else
       flash.alert = 'Beklager!  Kunne ikke melde deg av.'
       redirect_back fallback_location: root_path

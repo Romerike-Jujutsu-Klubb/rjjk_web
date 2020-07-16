@@ -13,11 +13,11 @@ class EventInviteeUsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
   test('should get accept') do
-    get accept_event_registration_path id(:one)
+    post accept_event_registration_path id(:one)
     assert_redirected_to event_registration_path(id(:one))
   end
   test('should get decline') do
-    get decline_event_registration_path id(:one)
+    post decline_event_registration_path id(:one)
     assert_redirected_to event_registration_path(id(:one))
   end
   test('should get will_work') do

@@ -33,23 +33,17 @@ ruby:
     }
   / ODOT
 
-  - if your_attendance_next_practice && Attendance::PRESENCE_STATES.include?(your_attendance_next_practice.status)
-    .d-flex
-      .next-practice-txt
-        = render 'attendances/details_link', practice: next_practice
-        - unless other_absentees.empty?
+  - if your_attendance_next_practice
+    - will_attend = Attendance::PRESENCE_STATES.include?(your_attendance_next_practice.status)
+    - if will_attend
+      - unless other_absentees.empty?
+        - details_text = capture
           span.text-nowrap
             => other_absentees.size
             ' har
           ' meldt fravær.
-      .next-practice-btn
-        = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::ABSENT), \
-            class: 'btn btn-secondary btn-sm', title: 'Kan ikke allikevel...', method: :post)
-          i.fa.fa-thumbs-down>
-          | Meld av
-  - elsif your_attendance_next_practice
-    .d-flex
-      .next-practice-txt
+    - else
+      - details_text = capture
         ' Du kommer ikke.
         - unless other_attendees.empty?
           => other_attendees.size
@@ -59,21 +53,22 @@ ruby:
             => other_absentees.size
             ' har
           ' meldt fravær.
+    .d-flex
+      .next-practice-txt
+        - if will_attend
+          = render 'attendances/details_link', practice: next_practice
+        = details_text
       .next-practice-btn
-        = link_to(with_detour(controller: :attendances, action: :announce, status: Attendance::Status::WILL_ATTEND), \
-            class: 'btn btn-secondary btn-sm', title: 'Kommer allikevel!', method: :post)
-          i.fa.fa-thumbs-up>
-          ' Meld på
+        - accept_text = 'Kommer!'
+        - accept_url = { controller: :attendances, action: :announce, year: next_practice.year, week: next_practice.week, group_schedule_id: next_practice.group_schedule_id, status: Attendance::Status::WILL_ATTEND }
+        - decline_text = 'Kan ikke...'
+        - decline_url = { controller: :attendances, action: :announce, year: next_practice.year, week: next_practice.week, group_schedule_id: next_practice.group_schedule_id, status: Attendance::Status::ABSENT }
+        = render 'layouts/attendance_thumbs', will_attend: will_attend, query_text: nil, accept_text: accept_text, accept_url: accept_url, decline_text: decline_text, decline_url: decline_url
   - else
-    .input-group.input-group-sm
-      .input-group-prepend
-        span.input-group-text Kommer du?
-      .input-group-append
-        = link_to(with_detour(controller: :attendances, action: :announce, year: next_practice.year, week: next_practice.week, group_schedule_id: next_practice.group_schedule_id, status: Attendance::Status::WILL_ATTEND), \
-            class: 'btn btn-secondary', title: 'Kommer!', method: :post)
-          i.fa.fa-thumbs-up
-      .input-group-append
-        = link_to(with_detour(controller: :attendances, action: :announce, year: next_practice.year, week: next_practice.week, group_schedule_id: next_practice.group_schedule_id, status: Attendance::Status::ABSENT), \
-            class: 'btn btn-secondary', title: 'Kan ikke...', method: :post)
-          i.fa.fa-thumbs-down
-    =render 'attendances/details_link', practice: next_practice
+    - query_text = 'Kommer du?'
+    - accept_text = 'Kommer!'
+    - accept_url = {controller: :attendances, action: :announce, year: next_practice.year, week: next_practice.week, group_schedule_id: next_practice.group_schedule_id, status: Attendance::Status::WILL_ATTEND}
+    - decline_text = 'Kan ikke...'
+    - decline_url = {controller: :attendances, action: :announce, year: next_practice.year, week: next_practice.week, group_schedule_id: next_practice.group_schedule_id, status: Attendance::Status::ABSENT}
+    .clearfix = render 'layouts/attendance_thumbs', will_attend: nil, query_text: query_text, accept_text: accept_text, accept_url: accept_url, decline_text: decline_text, decline_url: decline_url
+    = render 'attendances/details_link', practice: next_practice

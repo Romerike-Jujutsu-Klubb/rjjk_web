@@ -48,8 +48,8 @@ class CensorsControllerTest < ActionController::TestCase
     assert_redirected_to action: 'show', id: @first_id
   end
 
-  def test_confirm
-    post :confirm, params: { id: @first_id }
+  def test_accept
+    post :accept, params: { id: @first_id }
     assert_response :redirect
   end
 

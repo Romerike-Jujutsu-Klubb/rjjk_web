@@ -74,8 +74,8 @@ Rails.application.routes.draw do
   end
   resources :card_keys
   resources :censors do
-    get :confirm, on: :member
-    get :decline, on: :member
+    post :accept, on: :member
+    post :decline, on: :member
   end
 
   resources :correspondences
@@ -94,8 +94,8 @@ Rails.application.routes.draw do
   resources :event_invitees
   resources :event_registration, path: 'event/registration' do
     member do
-      get :accept
-      get :decline
+      post :accept
+      post :decline
       get :will_work
       get :will_not_work
     end
@@ -113,9 +113,9 @@ Rails.application.routes.draw do
     end
     member do
       post :add_org
-      get :accept
+      post :accept
       get :calendar
-      get :decline
+      post :decline
       post :invite
       get :preview
       patch :preview
@@ -125,27 +125,27 @@ Rails.application.routes.draw do
   end
   resources :external_events do
     member do
-      get :accept
-      get :decline
+      post :accept
+      post :decline
     end
   end
 
   resources :front_page_sections
   resources :graduates do
     member do
-      get :confirm
-      get :decline
+      post :accept
+      post :decline
     end
   end
   resources :graduations do
     member do
-      get :accept
+      post :accept
       patch :add_group
       post :approve
       get :censor_form
       get :censor_form_pdf
       get :certificates
-      get :decline
+      post :decline
       post :disapprove
       get 'graduates_list/:section', action: :graduates_list, as: :graduates_list
       post :lock
@@ -186,8 +186,8 @@ Rails.application.routes.draw do
   end
   resources :instructor_meetings do
     member do
-      get :accept
-      get :decline
+      post :accept
+      post :decline
     end
   end
 

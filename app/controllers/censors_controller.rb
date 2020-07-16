@@ -54,7 +54,7 @@ class CensorsController < ApplicationController
   end
 
   # From email link
-  def confirm
+  def accept
     @censor = Censor.find(params[:id])
     return unless admin_or_censor_required(@censor.graduation)
 

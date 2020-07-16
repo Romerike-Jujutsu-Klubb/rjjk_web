@@ -11,6 +11,6 @@
   om du kan eller ikke.
 </p>
 <ul>
-  <li><%= link_to 'Jeg kommer :)', @confirm_url %></li>
-  <li><%= link_to 'Beklager, jeg kommer ikke.', @decline_url %></li>
+  <li><%= link_to 'Jeg kommer :)', @confirm_url, method: :post %></li>
+  <li><%= link_to 'Beklager, jeg kommer ikke.', @decline_url, method: :post %></li>
 </ul>

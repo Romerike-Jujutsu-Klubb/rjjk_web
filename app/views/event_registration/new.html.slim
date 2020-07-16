@@ -3,8 +3,8 @@ h1 #{t :registration_for} #{@event_invitee.event&.title}
 - if @event_invitee.event
   = render 'events/time_label', event: @event_invitee.event
 
-- if flash[:error]
-  .alert.alert-danger = flash[:error]
+- if flash.alert
+  .alert.alert-danger = flash.alert
 
 = bootstrap_form_for @event_invitee, url: event_registration_index_path do |f|
   = invisible_captcha

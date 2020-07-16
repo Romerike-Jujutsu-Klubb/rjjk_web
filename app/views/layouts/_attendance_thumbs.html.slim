@@ -1,0 +1,8 @@
+/ .input-group.input-group-sm
+.btn-group.mr-2
+  - if query_text
+    span.btn.btn-light = query_text
+  a.btn href=with_detour(accept_url) class=(will_attend ? 'active disabled btn-success opacity-5' : 'btn-secondary') title=accept_text data-method=:post data-toggle=:tooltip
+    i.fa.fa-thumbs-up
+  a.btn href=with_detour(decline_url) class=(will_attend == false ? 'active disabled btn-danger opacity-5' : 'btn-secondary') title=decline_text data-method=:post data-toggle=:tooltip
+    i.fa.fa-thumbs-down

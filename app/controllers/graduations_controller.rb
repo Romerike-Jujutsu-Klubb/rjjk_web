@@ -99,6 +99,37 @@ class GraduationsController < ApplicationController
     end
   end
 
+  def accept
+    graduation = Graduation.find(params[:id])
+    graduate = graduation.graduates.find_by(member_id: current_user.member.id)
+    unless graduate
+      flash.alert = 'Beklager, men du er ikke invitert til denne graderingen.'
+      back_or_redirect_to graduation
+      return
+    end
+    return unless admin_or_graduate_required(graduate)
+
+    if graduate.update(confirmed_at: Time.zone.now, declined: false)
+      flash[:notice] = 'Din deltakelse på gradering er bekreftet.'
+    else
+      flash.alert = 'Beklager, men noe gikk galt under registreringen av din bekreftelse.'
+    end
+    back_or_redirect_to graduation
+  end
+
+  def decline
+    graduation = Graduation.find(params[:id])
+    graduate = graduation.graduates.find_by(member_id: current_user.member.id)
+    return unless admin_or_graduate_required(graduate)
+
+    if graduate.update(confirmed_at: Time.zone.now, declined: true)
+      flash[:notice] = 'Ditt avslag på gradering er bekreftet.'
+    else
+      flash.alert = 'Beklager, men noe gikk galt under registreringen av ditt avslag.'
+    end
+    back_or_redirect_to graduation
+  end
+
   def certificates
     graduation = Graduation.find(params[:id])
     date = graduation.held_on
@@ -230,7 +261,7 @@ class GraduationsController < ApplicationController
       if failures.any?
         failure_list = failures.map(&:member).map(&:name).join(', ')
         flash[:notice] += "#{failure_list} kunne ikke legges til."
-        flash[:error] = "Disse kunne ikke legges til: #{failure_list}"
+        flash.alert = "Disse kunne ikke legges til: #{failure_list}"
         failures.each do |fg|
           logger.error "Failed record: #{fg.member.name}: " \
               "#{fg.errors.full_messages} #{fg.rank.name} #{fg.inspect}"

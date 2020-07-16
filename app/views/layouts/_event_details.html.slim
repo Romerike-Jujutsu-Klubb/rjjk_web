@@ -1,25 +1,30 @@
 - has_declined = event.declined_users.include?(current_user)
 - will_attend = has_declined ? false : event.attendees.include?(current_user) || nil
 - is_invited = event.invited_users.include?(current_user)
+- is_candidate = is_invited || will_attend || has_declined
 - is_confirmed = event.confirmed_users.include?(current_user)
-- if will_attend || is_invited
+- if is_candidate && !is_confirmed
   - crowd_size = event.size
-  .details.mt-1
-    - unless is_confirmed
-      .btn-group.text-right.mr-2
-        a.btn.btn-secondary.btn-sm title=t(:will_attend) class=('active disabled' if will_attend) href=polymorphic_path([:accept, event])
-          i.fa.fa-thumbs-up
-        a.btn.btn-secondary.btn-sm title=t(:will_not_attend) class=('active disabled' if will_attend == false) href=polymorphic_path([:decline, event])
-          i.fa.fa-thumbs-down
-    - if crowd_size > 0
-      ' #{crowd_size} #{t :participants}.
-    - if will_attend
-      => t :you_are
-      - if is_confirmed
-        => t :confirmed
-      | #{t :attending}.
-    - elsif is_invited
-      - if will_attend.nil?
-        = t :will_you_attend
-      - else
-        | Du kommer ikke.
+  .mt-1
+    .d-flex
+      .next-practice-txt
+        - if crowd_size > 0
+          ' #{crowd_size} #{t :participants}.
+        - if will_attend
+          => t :you_are
+          - if is_confirmed
+            => t :confirmed
+          | #{t :attending}.
+        - elsif is_invited
+          - if will_attend.nil?
+            = t :will_you_attend
+          - else
+            | Du kommer ikke.
+      .next-practice-btn
+        - if event.persisted?
+          - query_text = will_attend.nil? ? 'Kommer du?' : nil
+          - accept_text = 'Kommer!'
+          - accept_url = polymorphic_path(event, action: :accept)
+          - decline_text = 'Kan ikke...'
+          - decline_url = polymorphic_path(event, action: :decline)
+          = render 'layouts/attendance_thumbs', will_attend: will_attend, query_text: query_text, accept_text: accept_text, accept_url: accept_url, decline_text: decline_text, decline_url: decline_url

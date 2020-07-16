@@ -3,7 +3,7 @@
 class GraduatesController < ApplicationController
   include GraduationAccess
 
-  before_action :admin_required, except: %i[confirm create decline destroy show update]
+  before_action :admin_required, except: %i[accept create decline destroy show update]
 
   cache_sweeper :grade_history_image_sweeper, only: %i[create update destroy]
 
@@ -80,14 +80,14 @@ class GraduatesController < ApplicationController
   end
 
   # From email link
-  def confirm
+  def accept
     @graduate = Graduate.find(params[:id])
     return unless admin_or_graduate_required(@graduate)
 
     if @graduate.update(confirmed_at: Time.zone.now, declined: false)
       flash[:notice] = 'Din deltakelse på gradering er bekreftet.'
     else
-      flash[:error] = 'Beklager, men noe gikk galt under registreringen av din bekreftelse.'
+      flash.alert = 'Beklager, men noe gikk galt under registreringen av din bekreftelse.'
     end
     redirect_to @graduate
   end
@@ -100,7 +100,7 @@ class GraduatesController < ApplicationController
     if @graduate.update(confirmed_at: Time.zone.now, declined: true)
       flash[:notice] = 'Ditt avslag på gradering er bekreftet.'
     else
-      flash[:error] = 'Beklager, men noe gikk galt under registreringen av ditt avslag.'
+      flash.alert = 'Beklager, men noe gikk galt under registreringen av ditt avslag.'
     end
     redirect_to @graduate
   end

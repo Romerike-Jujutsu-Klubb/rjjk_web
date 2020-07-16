@@ -15,13 +15,13 @@ h2 for #{@event_invitee.name}
         .alert.alert-success.m-0
           h3 = t :you_are_registered
       - elsif current_user
-        = link_to 'Jeg kommer!', accept_event_registration_path(@event_invitee), class: 'btn btn-success'
+        = link_to 'Jeg kommer!', accept_event_registration_path(@event_invitee), class: 'btn btn-success', method: :post
     .col.text-center.p-5
       - if @event_invitee.will_attend == false
         .alert.alert-info.m-0
           h3 Du er avmeldt.
       - elsif current_user
-        = link_to t(:unregister), decline_event_registration_path(@event_invitee), class: 'btn btn-secondary'
+        = link_to t(:unregister), decline_event_registration_path(@event_invitee), class: 'btn btn-secondary', method: :post
 
 - if @event_invitee.event.needs_helpers? && @event_invitee.will_attend && @event_invitee.user&.member
   h3.mt-5 Vil du hjelpe til på leiren?
