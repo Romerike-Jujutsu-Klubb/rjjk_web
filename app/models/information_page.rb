@@ -21,6 +21,10 @@ class InformationPage < ApplicationRecord
     paragraphs&.reject{_1 =~ /^!\[|^#/}&.first
   end
 
+  def images
+    paragraphs&.select{_1 =~ /^!\[/}.join("\n")
+  end
+
   private
 
   def paragraphs

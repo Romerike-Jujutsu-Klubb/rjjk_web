@@ -9,7 +9,9 @@
     .title
       h1 = fps.title
       h3 = fps.information_page.title
-      p = textalize fps.information_page.ingress
+      p
+        = textalize fps.information_page.ingress
+        = textalize fps.information_page.images
       a.float-right.btn.btn-info href=information_page_path(fps.information_page) = fps.button_text
 
 - @front_page_sections[1..-1].each.with_index do |fps, i|
