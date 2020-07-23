@@ -1,3 +1,8 @@
+- Oppmøte: "Stjerner" i listen for Panda/Tiger for bra oppmøte
+- Oppmøte: Vise bursdager (siden forrige oppmøte)
+- Administrasjon=>Medlemmer=>Drilldown: Lage ferdig
+- Instruksjon=> Gruppeinstruktører=>Neste Semester som egen tab
+
 <a href="https://travis-ci.org/Romerike-Jujutsu-Klubb/rjjk_web">
 <img align="right" src="https://travis-ci.org/Romerike-Jujutsu-Klubb/rjjk_web.svg?branch=master" alt="Build Status">
 </a>

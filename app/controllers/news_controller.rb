@@ -15,11 +15,11 @@ class NewsController < ApplicationController
 
   def show
     id = params[:id]
-    if %w[p2 p3].include?(id)
-      redirect_to root_path
-      return
-    end
     @news_item = NewsItem.find(id)
+  rescue ActiveRecord::RecordNotFound
+    raise unless %w[p2 p3 page2].include?(id)
+
+    redirect_to root_path
   end
 
   def new
