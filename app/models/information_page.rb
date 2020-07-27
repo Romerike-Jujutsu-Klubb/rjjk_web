@@ -22,7 +22,7 @@ class InformationPage < ApplicationRecord
   end
 
   def images
-    paragraphs&.select{_1 =~ /^!\[/}.join("\n")
+    paragraphs&.select{_1 =~ /^!\[/}&.join("\n")
   end
 
   private
