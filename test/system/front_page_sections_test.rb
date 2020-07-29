@@ -22,7 +22,7 @@ class FrontPageSectionsTest < ApplicationSystemTestCase
     select_from_chosen @front_page_section.information_page.title, from: 'Informasjonsside'
     fill_in 'Undertittel', with: @front_page_section.subtitle
     fill_in 'Tittel', with: @front_page_section.title
-    click_on 'Lag Front page section'
+    click_on 'Lagre'
 
     assert_text 'Front page section was successfully created'
   end
@@ -30,17 +30,16 @@ class FrontPageSectionsTest < ApplicationSystemTestCase
   test 'updating a front page section' do
     visit front_page_sections_url
     find('tbody tr', match: :first).click
-    click_on 'Endre'
 
     fill_in 'front_page_section_button_text', with: @front_page_section.button_text
     select_from_chosen @front_page_section.image.name, from: 'Bilde'
     select_from_chosen @front_page_section.information_page.title, from: 'Informasjonsside'
     fill_in 'Undertittel', with: @front_page_section.subtitle
     fill_in 'Tittel', with: @front_page_section.title
-    click_on 'Oppdater Front page section'
+    click_on 'Lagre'
 
     assert_text 'Front page section was successfully updated'
-    click_on 'Back'
+    click_on 'Oversikt'
   end
 
   test 'destroying a Front page section' do

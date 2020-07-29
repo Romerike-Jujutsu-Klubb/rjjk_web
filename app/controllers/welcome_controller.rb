@@ -52,7 +52,7 @@ class WelcomeController < ApplicationController
   end
 
   def front_parallax
-    @front_page_sections = FrontPageSection.includes(:image).to_a
+    @front_page_sections = FrontPageSection.includes(:image).order(:position).to_a
     @news_items = NewsItem.front_page_items.reject(&:expired?)
     render layout: 'parallax'
   end

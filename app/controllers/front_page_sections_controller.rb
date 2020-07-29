@@ -8,7 +8,9 @@ class FrontPageSectionsController < ApplicationController
     @front_page_sections = FrontPageSection.order(:position).to_a
   end
 
-  def show; end
+  def show
+    edit
+  end
 
   def new
     @front_page_section = FrontPageSection.new
@@ -17,6 +19,7 @@ class FrontPageSectionsController < ApplicationController
 
   def edit
     load_form_data
+    render :edit
   end
 
   def create

@@ -60,33 +60,43 @@ p {
   box-sizing: border-box;
   transform-style: inherit;
   border: thin solid black;
-}
 
-.slide:not(.header):not(footer) img {
-  @extend .d-lg-block;
-  position: absolute;
-  top: 67%;
-  left: 67%;
-  width: 320px;
-  height: 240px;
-  transform: translateZ(.4px) scale(.6) translateX(-104%) translateY(-40%) rotate(-5deg);
-  padding: 10px;
-  border-radius: 5px;
-  background: rgba(240, 230, 220, .7);
-  box-shadow: 0 0 8px rgba(0, 0, 0, .7);
-}
+  &:not(.header):not(footer) {
+    img {
+      @extend .d-none;
+      @extend .d-lg-block;
+      position: absolute;
+      top: 67%;
+      left: 67%;
+      width: 320px;
+      transform: translateZ(.4px) scale(.6) translateX(-104%) translateY(-40%) rotate(-5deg);
+      padding: 10px;
+      border-radius: 5px;
+      background: rgba(240, 230, 220, .7);
+      box-shadow: 0 0 8px rgba(0, 0, 0, .7);
 
-@media all and (min-width: 992px) {
-  .slide:not(.header):not(footer) img {
-    top: 50%;
-    left: 35%;
+      &:first-of-type {
+        transform: translateZ(.25px) scale(.75) translateX(-94%) translateY(-100%) rotate(2deg);
+      }
+    }
   }
 }
 
 @media all and (min-width: 992px) {
-  .slide:not(.header):not(footer):nth-of-type(2n) img {
-    right: 0;
-    left: unset;
+  .slide:not(.header):not(footer) {
+    img {
+      top: 50%;
+      left: 35%;
+    }
+
+    &:nth-of-type(2n) img {
+      right: 0;
+      left: unset;
+
+      &:first-of-type {
+        transform: translateZ(.25px) scale(.75) translateX(-56%) translateY(-100%) rotate(2deg);
+      }
+    }
   }
 }
 
@@ -94,10 +104,6 @@ p {
   .slide:not(.header):not(footer):nth-of-type(2n) img {
     right: 10%;
   }
-}
-
-.slide:not(.header):not(footer) img:first-of-type {
-  transform: translateZ(.25px) scale(.75) translateX(-94%) translateY(-100%) rotate(2deg);
 }
 
 body:not(.modal-open) .slide.header img {
@@ -113,7 +119,6 @@ body:not(.modal-open) .slide.header img {
   top: 0;
   bottom: 0;
   right: 0;
-  box-shadow: 0 0 8px 1px rgba(0, 0, 0, .7);
 }
 
 .slide:nth-of-type(2n):before {

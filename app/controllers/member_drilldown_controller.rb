@@ -21,7 +21,7 @@ class MemberDrilldownController < SimpleDrilldown::DrilldownController
   #   list_order 'members.created_at'
   #
   #   # Field definitions when listing records
-  #   field :created_at
+  field :created_at
   #   field :name
   #   field :updated_at
   #

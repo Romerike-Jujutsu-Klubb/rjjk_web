@@ -42,7 +42,7 @@ class NkfMemberComparison
   end
 
   def any?
-    [@new_members, @members, @errors].any?(&:present?)
+    [@new_members, @outgoing_changes, @errors].any?(&:present?)
   end
 
   def sync
