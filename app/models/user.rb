@@ -277,7 +277,7 @@ class User < ApplicationRecord
   end
 
   def instructor?
-    member.&instructor?
+    member&.instructor?
   end
 
   # describe how to retrieve the address from your model, if you use directly a

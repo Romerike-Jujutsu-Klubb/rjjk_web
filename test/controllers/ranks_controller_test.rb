@@ -23,6 +23,16 @@ class RanksControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_card
+    get :card, params: { id: @first_id }
+    assert_response :success
+  end
+
+  def test_card_pdf
+    get :card_pdf, params: { id: @first_id }
+    assert_response :success
+  end
+
   def test_new
     get :new
     assert_response :success
