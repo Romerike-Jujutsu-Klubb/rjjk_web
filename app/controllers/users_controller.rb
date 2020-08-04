@@ -111,7 +111,7 @@ class UsersController < ApplicationController
   protected
 
   def protect?(action)
-    !%w[login signup forgot_password].include?(action)
+    %w[login signup forgot_password].exclude?(action)
   end
 
   private

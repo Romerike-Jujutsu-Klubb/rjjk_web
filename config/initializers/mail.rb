@@ -4,9 +4,10 @@ require 'mail'
 
 class Mail::Message
   def store(recipient, tag:)
-    user_id = if recipient.is_a?(Member)
+    user_id = case recipient
+              when Member
                 recipient.user.id
-              elsif recipient.is_a?(User)
+              when User
                 recipient.id
               else
                 recipient
@@ -32,9 +33,10 @@ class Mail::Message
     parts = body.parts.any? ? body.parts : [self]
     html_part = plain_part = nil
     parts.each do |part|
-      if %r{text/html}.match?(part.content_type)
+      case part.content_type
+      when %r{text/html}
         html_part = part
-      elsif %r{text/plain}.match?(part.content_type)
+      when %r{text/plain}
         plain_part = part
       else
         raise "Unknown content type: #{part.content_type.inspect}"

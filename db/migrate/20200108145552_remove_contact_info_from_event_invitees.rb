@@ -17,12 +17,12 @@ class RemoveContactInfoFromEventInvitees < ActiveRecord::Migration[6.0]
         ei.user.update! field => ei_value
       end
       ei_email = ei.email
-      if ei_email.present? && !ei.user.emails.include?(ei_email)
+      if ei_email.present? && ei.user.emails.exclude?(ei_email)
         raise "User.email differs (#{ei.id}): #{ei_email.inspect} <=> #{ei.user.emails.inspect}"
       end
 
       ei_phone = ei.phone
-      if ei_phone.present? && !ei.user.phones.include?(ei_phone)
+      if ei_phone.present? && ei.user.phones.exclude?(ei_phone)
         if (existing_user = User.find_by(phone: ei_phone))
           ei.user.update! contact_user_id: existing_user.id
         else

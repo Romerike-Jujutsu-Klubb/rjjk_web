@@ -8,9 +8,8 @@ class AnnualMeeting < Event
   end
 
   validate do
-    if id && start_at && self.class
-          .where('id <> ? AND EXTRACT(YEAR FROM start_at) = ?', id, start_at.year)
-          .exists?
+    if id && start_at &&
+        self.class.exists?(['id <> ? AND EXTRACT(YEAR FROM start_at) = ?', id, start_at.year])
       errors.add(:start_at, 'kan bare ha et årsmøte per år.')
     end
   end
@@ -34,7 +33,7 @@ class AnnualMeeting < Event
   end
 
   def self.board_emails
-    board_contacts.map { |c| c[:email] }
+    board_contacts.pluck(:email)
   end
 
   def self.board_contacts

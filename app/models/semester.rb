@@ -9,14 +9,14 @@ class Semester < ApplicationRecord
     if start_on && end_on && start_on > end_on
       errors.add(:end_on, 'Du må avslutte semesteret etter at det er startet.')
     end
-    if Semester.where('id <> ? AND (start_on BETWEEN ? AND ? OR end_on BETWEEN ? AND ?)',
-        id, start_on, end_on, start_on, end_on).exists?
+    if Semester.exists?(['id <> ? AND (start_on BETWEEN ? AND ? OR end_on BETWEEN ? AND ?)',
+                         id, start_on, end_on, start_on, end_on])
       errors.add(:start_on, 'Semestre får ikke overlappe.')
     end
-    if Semester.where('id <> ? AND start_on <= ? AND end_on >= ?', id, start_on, start_on).exists?
+    if Semester.exists?(['id <> ? AND start_on <= ? AND end_on >= ?', id, start_on, start_on])
       errors.add(:start_on, 'Du kan ikke starte et semester inni et annet semester.')
     end
-    if Semester.where('id <> ? AND start_on <= ? AND end_on >= ?', id, end_on, end_on).exists?
+    if Semester.exists?(['id <> ? AND start_on <= ? AND end_on >= ?', id, end_on, end_on])
       errors.add(:end_on, 'Du kan ikke avslutte et semester inni et annet semester.')
     end
   end

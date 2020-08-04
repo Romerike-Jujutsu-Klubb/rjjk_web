@@ -78,11 +78,11 @@ class MemberGradeHistoryGraph
                  date.cwyear, date.cwyear, date.cweek, (@practices[date] * percentage) / 100,
                  date, date]
               else
-                [ACTIVE_CLAUSE, current_date: Date.current,
-                                prev_date_year: prev_date.cwyear, prev_date_week: prev_date.cweek,
-                                date_year: date.cwyear, date_week: date.cweek,
-                                next_date: next_date, next_year: next_date.cwyear,
-                                next_week: next_date.cweek, date: date]
+                [ACTIVE_CLAUSE, { current_date: Date.current,
+                                  prev_date_year: prev_date.cwyear, prev_date_week: prev_date.cweek,
+                                  date_year: date.cwyear, date_week: date.cweek,
+                                  next_date: next_date, next_year: next_date.cwyear,
+                                  next_week: next_date.cweek, date: date }]
               end
             )
           .includes(graduates: [{ graduation: { group: :martial_art } }, :rank]).to_a

@@ -23,7 +23,7 @@ class GroupInstructorsController < ApplicationController
       ]
     end
     @semesters = group_instructors.group_by { |gi| gi.group_semester.semester }
-    return unless Semester.current && !@semesters.include?(Semester.current)
+    return unless Semester.current && @semesters.exclude?(Semester.current)
 
     @semesters = { Semester.current => [] }.update @semesters
   end

@@ -2,7 +2,7 @@
 
 class SemesterReminder
   def self.create_missing_semesters
-    return if Semester.where('? BETWEEN start_on AND end_on', Date.current + 3.months).exists?
+    return if Semester.exists?(['? BETWEEN start_on AND end_on', Date.current + 3.months])
 
     logger.warn 'The next semester is missing.  Creating it.'
     last_end_date = Semester.order(:end_on).last&.end_on || Date.current.beginning_of_year - 1.day

@@ -118,7 +118,7 @@ class Member < ApplicationRecord
 
   def attendances_since_graduation(before_date = Date.current,
       practice_groups = Group.includes(:martial_art).to_a, includes: nil, include_absences: false)
-    queries = [*practice_groups].map do |g|
+    queries = Array(practice_groups).map do |g|
       ats = attendances
       ats = ats.where(status: Attendance::PRESENT_STATES) unless include_absences
       ats = ats.by_group_id(g.id)

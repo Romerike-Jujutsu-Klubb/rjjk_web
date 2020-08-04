@@ -4,7 +4,7 @@ class AnnualMeetingReminder
   def self.notify_missing_date
     month = Date.current.mon
     return if month >= 3 && month < 11
-    return if AnnualMeeting.where('start_at >= ?', Date.current).exists?
+    return if AnnualMeeting.exists?(['start_at >= ?', Date.current])
 
     am = AnnualMeeting.order(:start_at).last
     board_members = am.board_members

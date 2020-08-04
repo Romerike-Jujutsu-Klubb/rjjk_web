@@ -202,7 +202,7 @@ class LoginController < ApplicationController
               if current_user.admin?
                 unclean_params
               else
-                unclean_params.delete_if { |k, *| !User::CHANGEABLE_FIELDS.include?(k) }
+                unclean_params.delete_if { |k, *| User::CHANGEABLE_FIELDS.exclude?(k) }
               end
           @user.attributes = user_params
           flash.now['notice'] = 'User has been updated.' if @user.save
@@ -232,7 +232,7 @@ class LoginController < ApplicationController
   protected
 
   def protect?(action)
-    !%w[login signup forgot_password].include?(action)
+    %w[login signup forgot_password].exclude?(action)
   end
 
   # Generate a template user for certain actions on get

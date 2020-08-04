@@ -10,7 +10,7 @@ class NkfMemberImport
   def initialize(nkf_member_ids = nil)
     super() # needed for MonitorMixin
     if nkf_member_ids
-      nkf_member_ids = [*nkf_member_ids]
+      nkf_member_ids = Array(nkf_member_ids)
       nkf_member_id = nkf_member_ids[0] if nkf_member_ids.size == 1
     end
     @new_records = []

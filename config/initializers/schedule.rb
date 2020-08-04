@@ -10,7 +10,7 @@ reason =
     elsif caller.any? { |l| l =~ %r{/lib/rake/task.rb:\d+:in `execute'} }
       Rails.logger.info('Disable scheduler since we are running Rake')
       :rack
-    elsif !%w[development beta production].include?(Rails.env)
+    elsif %w[development beta production].exclude?(Rails.env)
       Rails.logger.info("Disable scheduler since env == #{Rails.env}")
       :bad_env
     elsif ENV['DISABLE_SCHEDULER'].present?
