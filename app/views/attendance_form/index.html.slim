@@ -42,7 +42,7 @@ ul#tab.nav.nav-tabs role="tablist"
               table.table.mb-0 class=('table-sm' if trial_members.size > 12)
                 - trial_members.each do |tm|
                   tr class=(tm.created_at < 4.weeks.ago ? 'table-danger' : tm.created_at < 2.weeks.ago ? 'table-warning' : nil)
-                    td = tm.name
+                    td: a href=nkf_member_trial_path(tm) = tm.name
                     td.text-nowrap = tm.created_at.to_date
         .card
           .card-header

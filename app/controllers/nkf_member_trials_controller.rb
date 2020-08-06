@@ -30,10 +30,6 @@ class NkfMemberTrialsController < ApplicationController
     end
   end
 
-  def edit
-    @nkf_member_trial = NkfMemberTrial.find(params[:id])
-  end
-
   def create
     @nkf_member_trial = NkfMemberTrial.new(params[:nkf_member_trial])
 
@@ -42,31 +38,6 @@ class NkfMemberTrialsController < ApplicationController
       redirect_to(@nkf_member_trial)
     else
       render action: 'new'
-    end
-  end
-
-  def update
-    @nkf_member_trial = NkfMemberTrial.find(params[:id])
-
-    respond_to do |format|
-      if @nkf_member_trial.update(params[:nkf_member_trial])
-        flash[:notice] = 'NkfMemberTrial was successfully updated.'
-        format.html { redirect_to(@nkf_member_trial) }
-        format.xml  { head :ok }
-      else
-        format.html { render action: 'edit' }
-        format.xml  { render xml: @nkf_member_trial.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def destroy
-    @nkf_member_trial = NkfMemberTrial.find(params[:id])
-    @nkf_member_trial.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(nkf_member_trials_url) }
-      format.xml  { head :ok }
     end
   end
 end
