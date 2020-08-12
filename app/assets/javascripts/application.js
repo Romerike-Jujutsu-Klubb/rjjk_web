@@ -1,12 +1,12 @@
 //= require @fortawesome/fontawesome-free/js/all.js
 //= require @fortawesome/fontawesome-free/js/v4-shims
-//= require jquery3
+//= require jquery/dist/jquery
 // require jquery.turbolinks
-//= require jquery_ujs
+//= require rails-ujs
 // require turbolinks
 //= require isMobile
 //= require expanding
-//= require popper
+//= require popper.js/dist/umd/popper.js
 //= require bootstrap
 //= require moment/moment
 //= require moment/locale/nb

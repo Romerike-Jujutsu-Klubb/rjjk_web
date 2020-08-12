@@ -3,5 +3,6 @@
 //= link_directory ../new_front_page
 //= link cloudinary.js
 //= link new_front_page.css
+//= link new_front_page.js
 //= link_directory ../stylesheets .css
 //= link simple_drilldown/application.css

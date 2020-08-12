@@ -74,8 +74,8 @@ Rails.application.routes.draw do
   end
   resources :card_keys
   resources :censors do
-    post :accept, on: :member
-    post :decline, on: :member
+    match :accept, on: :member, via: %i[get post] # GET from emails
+    match :decline, on: :member, via: %i[get post] # GET from emails
   end
 
   resources :correspondences

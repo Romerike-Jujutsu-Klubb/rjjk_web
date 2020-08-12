@@ -9,7 +9,7 @@ class AnnualMeeting < Event
 
   validate do
     if id && start_at &&
-        self.class.exists?(['id <> ? AND EXTRACT(YEAR FROM start_at) = ?', id, start_at.year])
+          self.class.exists?(['id <> ? AND EXTRACT(YEAR FROM start_at) = ?', id, start_at.year])
       errors.add(:start_at, 'kan bare ha et årsmøte per år.')
     end
   end

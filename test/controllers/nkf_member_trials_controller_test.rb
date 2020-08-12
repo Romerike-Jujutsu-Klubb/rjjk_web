@@ -32,23 +32,4 @@ class NkfMemberTrialsControllerTest < ActionController::TestCase
     get :show, params: { id: nkf_member_trials(:one).to_param }
     assert_response :success
   end
-
-  test 'should get edit' do
-    get :edit, params: { id: nkf_member_trials(:one).to_param }
-    assert_response :success
-  end
-
-  test 'should update nkf_member_trial' do
-    nkf_member_trial = nkf_member_trials(:one)
-    put :update, params: { id: nkf_member_trial.to_param, nkf_member_trial: { etternavn: 'Madsen' } }
-    assert_redirected_to nkf_member_trial_path(nkf_member_trial)
-  end
-
-  test 'should destroy nkf_member_trial' do
-    assert_difference('NkfMemberTrial.count', -1) do
-      delete :destroy, params: { id: nkf_member_trials(:one).to_param }
-    end
-
-    assert_redirected_to nkf_member_trials_path
-  end
 end

@@ -22,7 +22,7 @@ class BasicTechniquesControllerTest < ActionController::TestCase
     assert_difference('BasicTechnique.count') do
       post :create, params: { basic_technique: {
         description: @basic_technique.description,
-        name: @basic_technique.name + ' 2', rank_id: @basic_technique.rank_id,
+        name: "#{@basic_technique.name} 2", rank_id: @basic_technique.rank_id,
         translation: @basic_technique.translation,
         waza_id: @basic_technique.waza_id
       } }

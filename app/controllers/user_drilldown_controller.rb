@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'simple_drilldown/drilldown_controller'
-
 class UserDrilldownController < SimpleDrilldown::DrilldownController
   before_action { @content_width = 1024 }
 
@@ -9,10 +7,10 @@ class UserDrilldownController < SimpleDrilldown::DrilldownController
   default_fields %w[name created_at updated_at] # TODO(uwe): Read fields from schema?
 
   # The main focus of the drilldown
-  target_class User
+  # target_class User
 
   # How should we count the reords?
-  select 'count(*) as count'
+  # select 'count(*) as count'
 
   # When listing records, what relations should be included for optimization?
   # list_includes :user, :comments # TODO(uwe): Read relations from schema?

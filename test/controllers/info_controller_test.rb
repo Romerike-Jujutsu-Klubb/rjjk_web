@@ -14,10 +14,16 @@ class InfoControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test 'show with unknown utf8 title' do
+  def test_show_with_unknown_utf8_title
     assert_raises ActiveRecord::RecordNotFound do
       get :show, params: { id: 'Nøkjelpersoner' }
     end
+  end
+
+  def test_show_with_plus_for_spaces
+    get :show, params: { id: 'My+first+article' }
+    assert_response :success
+    assert_select 'h1', text: 'My first article'
   end
 
   def test_new

@@ -15,8 +15,6 @@ ENV['CPAS_API_BASE_URL'] ||= 'https://example.com/sms'
 require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
 
-Minitest::Reporters.use!
-
 TEST_TIME = Time.zone.local(2013, 10, 17, 18, 46, 0) # Week 42, thursday
 Timecop.freeze(TEST_TIME) # set time for fixture load
 

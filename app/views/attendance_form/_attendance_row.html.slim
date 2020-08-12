@@ -47,8 +47,9 @@ tr class=cycle('odd', 'even')
         - else
           = render 'attendance_create_link', member_id: member.id, group_schedule: group_schedule, date: d
         javascript:
-            $("#attendance_#{member.id}_#{d.day}").bind("ajax:complete", function (et, e) {
-                $(this).html(e.responseText);
-            });
+          $("#attendance_#{member.id}_#{d.day}").bind("ajax:complete", function(e) {
+            data = e.originalEvent.detail[0].response
+            $(this).html(data);
+          });
     - else
       td &nbsp;

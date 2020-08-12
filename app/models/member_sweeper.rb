@@ -30,7 +30,7 @@ class MemberSweeper < ActionController::Caching::Sweeper
         ))
     end
     cache_dir = ActionController::Base.page_cache_directory
-    cached_files = Dir.glob(cache_dir + '/members/**/{age_chart,history_graph}/**/*.png')
+    cached_files = Dir.glob("#{cache_dir}/members/**/{age_chart,history_graph}/**/*.png")
     Rails.logger.info("Expire cached files: #{cached_files}")
     begin
       FileUtils.rm_f(cached_files)

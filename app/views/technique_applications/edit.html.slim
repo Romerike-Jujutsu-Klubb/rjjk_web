@@ -47,7 +47,7 @@ a.btn.btn-primary.float-right.mt-3.ml-2 href=new_application_image_sequence_path
         a.badge.badge-secondary.position-absolute style="right:0;bottom:0" href=move_down_application_step_path(as) data-method=:patch
           i.fa.fa-arrow-right
       - if as.image_id
-        img src=image_path(as.image_id) style="width:100%" title=as.description
+        img src=image_url_with_cl(as.image) style="width:100%" title=as.description
       - else
         .alert.alert-danger Bilde mangler: #{link_to "#{as.position} #{as.image_id.inspect}", edit_application_step_path(as)}
   .clearfix
@@ -59,8 +59,12 @@ a.btn.btn-primary.float-right.mt-3 href=new_application_video_path(application_v
   | Legg til film
 .clearfix
 - if @technique_application.application_videos.any?
-  - @technique_application.application_videos.each do |av|
-    a href=image_path(av.image_id)
-      img src=inline_image_path(av.image_id, format: av.image.format) style="width:10%"
+  .row
+    - @technique_application.application_videos.each do |av|
+      .col.position-relative
+        = video_tag image_url_with_cl(av.image), title: av.image.name || 'Film', controls: true, autobuffer: true, class: 'w-100', format: av.image.format
+        a.btn.btn-danger.position-absolute.mr-3 style="right:0" href=image_path(av.image_id) data-method=:delete data-confirm="Er du sikker?  Dette vil slette koblingen av videoen til denne applikasjonen."
+          i.fa.fa-remove>
+          | Slett
 - else
   .alert.alert-info.my-4 Ingen filmer enda.

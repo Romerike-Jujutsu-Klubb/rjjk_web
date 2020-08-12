@@ -81,6 +81,7 @@ ul#tab.nav.nav-tabs role="tablist"
             td = link_to 'Andre', attendance_form_path(year: Time.current.year, month: Time.current.mon, group_id: 'others'), class: 'btn btn-secondary'
 
 javascript:
-    $(".attendance_link").bind("ajax:complete", function(et, e){
-      $(this).html(e.responseText);
+    $(".attendance_link").bind("ajax:complete", function(e){
+      data = e.originalEvent.detail[0].response
+      $(this).html(data);
     });

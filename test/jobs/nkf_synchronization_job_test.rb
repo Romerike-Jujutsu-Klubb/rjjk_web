@@ -52,7 +52,7 @@ class NkfSynchronizationJobTest < ActionMailer::TestCase
     expected_doc.diff(actual_doc) do |change, node|
       next if change == ' '
 
-      diff << "#{change} #{node.to_html}".ljust(30) + ' ' + node.parent.path + "\n"
+      diff << "#{"#{change} #{node.to_html}".ljust(30)} #{node.parent.path}\n"
     end
     assert_empty diff, mail.body.decoded
 

@@ -16,7 +16,7 @@ module SystemTestHelper
 
   def visit_with_login(path, redirected_path: nil, user: :uwe)
     uri = URI.parse(path)
-    uri.query = [uri.query, 'key=' + users(user).security_token].compact.join('&')
+    uri.query = [uri.query, "key=#{users(user).security_token}"].compact.join('&')
     visit uri.to_s
     uri.fragment = nil
     assert_current_path redirected_path || uri.to_s

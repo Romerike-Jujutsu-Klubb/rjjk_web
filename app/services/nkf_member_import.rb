@@ -113,7 +113,7 @@ class NkfMemberImport
 
   def get_member_trial_rows(nkf_agent, session_id, extra_function_code)
     logger.debug 'get_member_trial_rows'
-    trial_csv_url = 'pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=' + session_id
+    trial_csv_url = "pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=#{session_id}"
     member_trials_csv_body = nkf_agent.get(trial_csv_url).body
         .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
     member_trial_rows = member_trials_csv_body.split("\n").map { |line| line.chomp.split(';') }

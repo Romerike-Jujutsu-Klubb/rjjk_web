@@ -28,14 +28,12 @@ class GraduationCensorForm
               'Ugradert'
             end
         [
-          "<font size='18'>" + member.first_name + '</font> ' +
-              member.last_name +
-              (member.birthdate && " (#{member.age} år)" || '') + "\n" +
-              rank_color +
-              "\n" \
-              "Treninger: #{member.attendances_since_graduation(graduation.held_on).count}" \
-              ' (' + graduate.current_rank_age + ")\n" \
-              "Til: #{graduate.rank.name} #{graduate.rank.colour}",
+          <<~TXT,
+            <font size='18'>#{member.first_name}</font> #{member.last_name}#{(member.birthdate && " (#{member.age} år)" || '')}
+            #{rank_color}
+            Treninger: #{member.attendances_since_graduation(graduation.held_on).count} (#{graduate.current_rank_age})
+            Til: #{graduate.rank.name} #{graduate.rank.colour}
+          TXT
           '',
           '',
         ]

@@ -1,32 +1,32 @@
 # frozen_string_literal: true
 
-require 'controller_test'
+require 'integration_test'
 
-class CensorsControllerTest < ActionController::TestCase
+class CensorsControllerTest < IntegrationTest
   def setup
     @first_id = censors(:lars_panda).id
     login :uwe
   end
 
   def test_index
-    get :index
+    get censors_path
     assert_response :success
   end
 
   def test_show
-    get :show, params: { id: @first_id }
+    get censor_path(@first_id)
     assert_response :success
   end
 
   def test_new
-    get :new
+    get new_censor_path
     assert_response :success
   end
 
   def test_create
     num_censors = Censor.count
 
-    post :create, params: { censor: { graduation_id: graduations(:tiger).id, member_id: members(:uwe).id } }
+    post censors_path, params: { censor: { graduation_id: graduations(:tiger).id, member_id: members(:uwe).id } }
     assert_response :redirect
     assert_redirected_to action: :index
 
@@ -34,27 +34,37 @@ class CensorsControllerTest < ActionController::TestCase
   end
 
   def test_create_without_member_id
-    post :create, params: { censor: { graduation_id: graduations(:tiger).id } }
+    post censors_path, params: { censor: { graduation_id: graduations(:tiger).id } }
   end
 
   def test_edit
-    get :edit, params: { id: @first_id }
+    get edit_censor_path(@first_id)
     assert_response :success
   end
 
   def test_update
-    post :update, params: { id: @first_id, censor: { member_id: members(:lars).id } }
+    patch censor_path(@first_id), params: { censor: { member_id: members(:lars).id } }
     assert_response :redirect
     assert_redirected_to action: 'show', id: @first_id
   end
 
   def test_accept
-    post :accept, params: { id: @first_id }
+    post accept_censor_path(@first_id)
+    assert_response :redirect
+  end
+
+  def test_accept_get
+    get accept_censor_path(@first_id)
     assert_response :redirect
   end
 
   def test_decline
-    post :decline, params: { id: @first_id }
+    post decline_censor_path(@first_id)
+    assert_response :redirect
+  end
+
+  def test_decline_get
+    get decline_censor_path(@first_id)
     assert_response :redirect
   end
 
@@ -63,7 +73,7 @@ class CensorsControllerTest < ActionController::TestCase
       Censor.find(@first_id)
     end
 
-    post :destroy, params: { id: @first_id }
+    delete censor_path(@first_id)
     assert_response :redirect
     assert_redirected_to action: 'index'
 

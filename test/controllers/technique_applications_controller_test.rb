@@ -21,7 +21,7 @@ class TechniqueApplicationsControllerTest < ActionController::TestCase
   test 'should create application' do
     assert_difference('TechniqueApplication.count') do
       post :create, params: { technique_application: {
-        name: @technique_application.name + '_2',
+        name: "#{@technique_application.name}_2",
         rank_id: @technique_application.rank_id, system: 'Goho'
       } }
     end
