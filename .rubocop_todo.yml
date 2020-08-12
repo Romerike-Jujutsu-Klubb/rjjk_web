@@ -19,12 +19,6 @@ Lint/EmptyConditionalBody:
     - 'app/controllers/images_controller.rb'
     - 'app/controllers/user_merge_controller.rb'
 
-# Offense count: 2
-Lint/MissingSuper:
-  Exclude:
-    - 'app/helpers/mailer_helper.rb'
-    - 'app/models/concerns/google_drive_content.rb'
-
 # Offense count: 220
 # Configuration parameters: IgnoredMethods.
 Metrics/AbcSize:
@@ -165,8 +159,3 @@ Style/SlicingWithRange:
     - 'app/services/nkf_member_import.rb'
     - 'app/services/skill_card.rb'
     - 'test/application_system_test_case.rb'
-
-# Offense count: 23
-# Cop supports --auto-correct.
-Style/StringConcatenation:
-  Enabled: false
