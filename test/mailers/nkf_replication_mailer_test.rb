@@ -30,7 +30,7 @@ class NkfReplicationMailerTest < ActionMailer::TestCase
     assert_equal 'Oppdateringer fra NKF: 1 nye', mail.subject
     assert_equal ['uwe@kubosch.no'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
-    assert_match(/Opprettet følgende nye medlemmer.*Erik Hansen.*Ville ha oppdatert følgende medlemmer hos NKF.*Hans Eriksen.*email.*"H@ans" => \"Ha@ns\"/, # rubocop: disable Layout/LineLength
+    assert_match(/Opprettet følgende nye medlemmer.*Erik Hansen.*Ville ha oppdatert følgende medlemmer hos NKF.*Hans Eriksen.*email.*"H@ans" => "Ha@ns"/, # rubocop: disable Layout/LineLength
         mail.body.decoded.gsub('&quot;', '"').gsub('&gt;', '>'))
   end
 end

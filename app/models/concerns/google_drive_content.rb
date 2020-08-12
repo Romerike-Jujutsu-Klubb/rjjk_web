@@ -17,7 +17,7 @@ module GoogleDriveContent
   def move_to_google_drive!
     logger.info "Store image in Google Drive: #{id}, #{name}"
     loaded_content, google_reference =
-        self.class.where(id: id).pluck(:content_data, :google_drive_reference).first
+        self.class.where(id: id).pick(:content_data, :google_drive_reference)
     if loaded_content.nil? && google_reference
       self.google_drive_reference = google_reference
       return
@@ -39,7 +39,7 @@ module GoogleDriveContent
       logger.info "Image found in Google Drive: #{id}, #{name}, #{google_drive_reference}"
       GoogleDriveService.new.get_file_content(google_drive_reference)
     elsif no_caching || Rails.env.test? # TODO(uwe): How can we test this?  WebMock?
-      self.class.where(id: id).pluck(:content_data).first
+      self.class.where(id: id).pick(:content_data)
     else
       move_to_google_drive!
     end

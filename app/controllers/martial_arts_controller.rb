@@ -32,7 +32,7 @@ class MartialArtsController < ApplicationController
 
   def copy
     original_martial_art = MartialArt.find(params[:id])
-    CurriculumGroup .acts_as_list_no_update(LIST_CLASSES.dup) do
+    CurriculumGroup.acts_as_list_no_update(LIST_CLASSES.dup) do
       martial_art = original_martial_art.deep_clone include: {
         curriculum_groups: { ranks: [
           { basic_techniques: :technique_links }, { technique_applications: [

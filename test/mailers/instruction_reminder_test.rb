@@ -9,7 +9,7 @@ class InstructionReminderTest < ActionMailer::TestCase
     mail = UserMessage.pending[0]
     assert_equal ['uwe@example.com'], mail.to
     assert_match(/Grupper som mangler hovedinstruktør/, mail.body)
-    assert_match %r{/group_semesters/56175819/edit\">Tiger</a>}, mail.body
+    assert_match %r{/group_semesters/56175819/edit">Tiger</a>}, mail.body
     assert_match(/Grupper som mangler instruktør/, mail.body)
     assert_match %r{/group_instructors/new\?
           group_instructor%5Bgroup_schedule_id%5D=767635258

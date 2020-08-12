@@ -35,7 +35,7 @@ class Rank < ApplicationRecord
   delegate :martial_art, :martial_art_id, to: :curriculum_group, allow_nil: true
 
   def minimum_age
-    curriculum_group.from_age + (curriculum_group.ranks.select { |r| r.position <= position }[0..-1]
+    curriculum_group.from_age + (curriculum_group.ranks.select { |r| r.position <= position }[0..]
         .inject(0.0) { |s, r| s + r.standard_months.to_f } / 12.0).to_i
   end
 

@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby File.read("#{__dir__}/.ruby-version")[5..-1]
+ruby File.read("#{__dir__}/.ruby-version")[5..]
 
 # For Rails 6
 # https://gorails.com/episodes/how-to-use-bootstrap-with-webpack-and-rails

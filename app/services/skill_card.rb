@@ -44,7 +44,7 @@ class SkillCard
           rank.basic_techniques.group_by { |bt| bt.waza.name }.each do |waza_name, techs|
             rows << [{ content: waza_name.upcase, rowspan: techs.size, rotate: 90 },
                      techs[0].name.upcase, nil, nil, nil, nil]
-            rows += techs[1..-1].sort_by(&:name).map do |bt|
+            rows += techs[1..].sort_by(&:name).map do |bt|
               [bt.name.upcase, nil, nil, nil, nil]
             end
           end
@@ -67,7 +67,7 @@ class SkillCard
               { content: system_name.upcase, rowspan: app_slice.size, rotate: 90 },
               app_slice[0].name.upcase, nil, nil, nil, nil
             ]
-            rows += app_slice[1..-1].map { |ta| [ta.name.upcase, nil, nil, nil, nil] }
+            rows += app_slice[1..].map { |ta| [ta.name.upcase, nil, nil, nil, nil] }
           end
         end
 

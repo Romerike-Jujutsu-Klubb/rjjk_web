@@ -13,7 +13,7 @@ class NkfAppointmentsScraper
     board_admin_page = board_admin_front_page.link_with(text: 'Vis administrator').click
 
     tables = board_admin_page.search('table')
-    rows = tables[4].search('tr')[1..-1].map { |tr| tr.search('td').map(&:text).map(&:strip) }
+    rows = tables[4].search('tr')[1..].map { |tr| tr.search('td').map(&:text).map(&:strip) }
 
     # FIXME(uwe):  Download CSV instead of scraping.
 

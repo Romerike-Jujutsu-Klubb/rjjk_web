@@ -56,7 +56,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
         { host: Capybara.current_session.server.host, port: Capybara.current_session.server.port }
 
     screenshot_section class_name.underscore.sub(/(_feature|_system)?_test$/, '')
-    screenshot_group name[5..-1]
+    screenshot_group name[5..]
   end
 
   teardown do

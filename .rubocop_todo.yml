@@ -6,12 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Layout/SpaceAroundMethodCallOperator:
-  Exclude:
-    - 'app/controllers/martial_arts_controller.rb'
-
 # Offense count: 2
 # Configuration parameters: AllowComments.
 Lint/EmptyConditionalBody:
@@ -86,12 +80,6 @@ Rails/HelperInstanceVariable:
   Exclude:
     - 'app/helpers/application_helper.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Rails/IndexWith:
-  Exclude:
-    - 'app/controllers/nkf_members_controller.rb'
-
 # Offense count: 11
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
@@ -101,12 +89,6 @@ Rails/InverseOf:
     - 'app/models/event_invitee.rb'
     - 'app/models/group.rb'
     - 'app/models/rank.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Rails/Pick:
-  Exclude:
-    - 'app/models/concerns/google_drive_content.rb'
 
 # Offense count: 13
 # Configuration parameters: Include.
@@ -126,12 +108,6 @@ Rails/UniqueValidationWithoutIndex:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/GlobalStdStream:
-  Exclude:
-    - 'config/environments/production.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
 Style/HashTransformValues:
   Exclude:
     - 'app/controllers/attendances_controller.rb'
@@ -140,22 +116,3 @@ Style/HashTransformValues:
 Style/OptionalBooleanParameter:
   Exclude:
     - 'test/test_helper.rb'
-
-# Offense count: 7
-# Cop supports --auto-correct.
-Style/RedundantRegexpEscape:
-  Exclude:
-    - 'test/mailers/instruction_reminder_test.rb'
-    - 'test/mailers/nkf_member_trial_reminder_test.rb'
-    - 'test/mailers/nkf_replication_mailer_test.rb'
-
-# Offense count: 7
-# Cop supports --auto-correct.
-Style/SlicingWithRange:
-  Exclude:
-    - 'Gemfile'
-    - 'app/models/rank.rb'
-    - 'app/services/nkf_appointments_scraper.rb'
-    - 'app/services/nkf_member_import.rb'
-    - 'app/services/skill_card.rb'
-    - 'test/application_system_test_case.rb'

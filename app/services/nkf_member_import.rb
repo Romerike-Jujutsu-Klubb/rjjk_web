@@ -72,7 +72,7 @@ class NkfMemberImport
     groups_index = import_rows[0].index { |f| f =~ %r{^Gren/Stilart/Avd/Parti} }
     raise 'Column not found' unless groups_index
 
-    import_rows[1..-1].each do |row|
+    import_rows[1..].each do |row|
       groups_names = row[groups_index].split(' - ')
       groups_names.each do |gn|
         unless /^(Jujutsu|Aikido)/.match?(gn)
