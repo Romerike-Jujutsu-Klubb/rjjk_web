@@ -133,8 +133,8 @@ Rails.application.routes.draw do
   resources :front_page_sections
   resources :graduates do
     member do
-      post :accept
-      post :decline
+      match :accept, via: %i[get post] # GET from emails
+      match :decline, via: %i[get post] # GET from emails
     end
   end
   resources :graduations do
