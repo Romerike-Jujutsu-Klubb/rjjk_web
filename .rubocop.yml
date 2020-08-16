@@ -205,6 +205,9 @@ Style/Encoding:
 Style/FormatString:
   EnforcedStyle: percent
 
+Style/FrozenStringLiteralComment:
+  Safe: true
+
 Style/Lambda:
   EnforcedStyle: literal
 
