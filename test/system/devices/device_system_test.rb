@@ -75,7 +75,7 @@ module DeviceSystemTest
   end
 
   def scroll_bar_area
-    [window_width - 19, 0, window_width - 6, window_height - 1]
+    [window_width - 19, 0, window_width - 1, window_height - 1]
   end
 
   def progress_bar_area
@@ -84,7 +84,7 @@ module DeviceSystemTest
 
   def test_parallax_front_page
     visit front_parallax_path
-    screenshot :index
+    screenshot :index, skip_area: scroll_bar_area
     landscape { screenshot :index_landscape }
     2.times do |i|
       scroll_to find("#slide#{i + 1}")
@@ -95,10 +95,10 @@ module DeviceSystemTest
       end
     end
     scroll_to find('footer')
-    screenshot :footer
+    screenshot :footer, skip_area: scroll_bar_area
     landscape do
       scroll_to find('footer')
-      screenshot :footer_landscape
+      screenshot :footer_landscape, skip_area: scroll_bar_area
     end
   end
 
@@ -107,15 +107,18 @@ module DeviceSystemTest
   def landscape
     original_width = window_width
     original_height = window_height
-    page.driver.send(:execute_cdp, 'Emulation.setDeviceMetricsOverride',
-        width: original_height,
-        height: original_width,
+    @window_width = original_height
+    @window_height = original_width
+    page.driver.browser.execute_cdp('Emulation.setDeviceMetricsOverride',
+        width: @window_width,
+        height: @window_height,
         deviceScaleFactor: 1,
         mobile: true)
     yield
-    page.driver.send(:execute_cdp, 'Emulation.setDeviceMetricsOverride',
-        width: original_width,
-        height: original_height,
+    @window_width, @window_height = @window_height, @window_width
+    page.driver.browser.execute_cdp('Emulation.setDeviceMetricsOverride',
+        width: @window_width,
+        height: @window_height,
         deviceScaleFactor: 1,
         mobile: true)
   end

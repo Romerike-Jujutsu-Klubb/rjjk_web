@@ -9,6 +9,7 @@ class NextPracticeSystemTest < ApplicationSystemTestCase
     visit root_path
     assert_selector 'h2', text: 'Section 1'
     assert_no_selector 'h4', text: 'Neste trening'
+    find('.newwrap').assert_matches_style(opacity: '1')
     screenshot :anonymous, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
     login
     assert_selector 'h4', text: 'Neste trening'

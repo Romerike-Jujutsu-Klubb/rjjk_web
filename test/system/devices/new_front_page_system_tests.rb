@@ -37,19 +37,22 @@ module NewFrontPageSystemTests
   def test_new_front_page
     visit front_page_path
     assert_css('#headermenuholder > .fa-bars')
+    find('.newwrap').assert_matches_style(opacity: '1')
     screenshot :index, skip_area: [public_menu_btn_area, progress_bar_area].compact
     find('#headermenuholder > .fa-bars').click
     article_menu_link = find('.menubutton', text: 'My first article')
+    find('#mainmenuholder').assert_matches_style(left: '0px')
     screenshot :menu, skip_area: public_menu_logo_area
     with_retries(label: 'article menu click') { article_menu_link.click }
     assert_css 'h1', text: 'My first article'
-    screenshot :article, skip_area: logo_area
+    screenshot :article, skip_area: [logo_area, scroll_bar_area]
   end
 
   def test_new_front_page_scroll
     visit front_page_path
     assert_css('#headermenuholder > .fa-bars')
     assert_css('.fa-chevron-down')
+    find('.newwrap').assert_matches_style(opacity: '1')
     screenshot :index, area_size_limit: 533, skip_area: [public_menu_btn_area, progress_bar_area].compact
     find('.fa-chevron-down').click
     find('#footer .menu-item a', text: 'MY FIRST ARTICLE')
@@ -64,6 +67,6 @@ module NewFrontPageSystemTests
     end
 
     assert_css('h1', text: 'My first article')
-    screenshot :article, skip_area: logo_area
+    screenshot :article, skip_area: [logo_area, scroll_bar_area]
   end
 end
