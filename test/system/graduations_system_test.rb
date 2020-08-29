@@ -10,6 +10,7 @@ class GraduationsSystemTest < ApplicationSystemTestCase
     visit_with_login graduations_path
     screenshot :index
     find('table > tbody > tr:nth-child(1) > td:nth-child(4) > a').click
+    assert_no_css '.fa-circle-notch'
     screenshot :graduates
     find('a.nav-link', text: 'Eksaminatorer / Sensorer').click
     screenshot :censors
