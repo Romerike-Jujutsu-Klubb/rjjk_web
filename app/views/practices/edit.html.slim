@@ -1,0 +1,40 @@
+h1
+  ' Trening
+  => @practice.group_schedule.group.full_name
+  => ApplicationController.helpers.day_name @practice.group_schedule.weekday
+  => @practice.group_schedule.start_at.to_s(false)
+h3 => @practice.date
+
+.card-deck.mt-3
+  .card
+    h3.card-header Plan
+    .card-body
+      = bootstrap_form_for(@practice) do |f|
+        = f.select :status, ['X']
+        = f.text_area :message, rows: 5,
+              placeholder: 'Skriv en liten melding til utøverne om denne treningen.'
+        .float-right = f.primary
+
+
+  - attendances, absences = @practice.attendances.sort_by{|a| a.member.current_rank || Rank::UNRANKED}.reverse.partition(&:present?)
+  .card
+    h3.card-header
+      | Påmeldte
+      .badge.badge-info.float-right = attendances.size
+    table.table.mb-0
+      - attendances.each do |a|
+        tr
+          td = a.member.name
+          td.pl-0 width=1
+            - if a.member.user.card_key
+              i.fa.fa-key
+  - if absences.any? && (admin? || instructor?)
+    .card
+      h3.card-header
+        | Avmeldte
+        .badge.badge-danger.float-right = absences.size
+      table.table.mb-0
+        - absences.each do |a|
+          tr
+            td = a.member.name
+            td.text-right = render 'attendances/badge', status: a.status

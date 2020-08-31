@@ -9,7 +9,7 @@ ruby:
   other_absentees = attendances_next_practice - other_attendees
 
 .next-practice.mb-3
-  h4 = link_to "Neste trening #{next_practice.group_schedule.group.name if @next_practices.size > 1}", next_practice.group_schedule.group.current_semester
+  h4: a href=(next_practice.admin? ? edit_practice_path(next_practice) : practice_path(next_practice)) Neste trening #{next_practice.group_schedule.group.name if @next_practices.size > 1}
 
   h5 style="color: #FFB400"
     => day_name(next_practice.group_schedule.weekday)
