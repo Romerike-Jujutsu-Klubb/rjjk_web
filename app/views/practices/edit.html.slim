@@ -38,3 +38,5 @@ h3 => @practice.date
           tr
             td = a.member.name
             td.text-right = render 'attendances/badge', status: a.status
+
+.mt-3 = link_to('Vis', @practice) unless @practice.new_record?
