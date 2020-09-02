@@ -288,8 +288,8 @@ Rails.application.routes.draw do
     end
   end
 
-  scope controller: :signup, path: 'innmelding' do
-    root action: :index, as: :signup
+  scope controller: :signup, as: :signup_guide, path: 'innmelding' do
+    root action: :index
     get :basics
     get :guardians
     get :complete
