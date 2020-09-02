@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong User:
+  = @signup.user
+p
+  strong Nkf member trial:
+  = @signup.nkf_member_trial
+
+=> link_to 'Edit', edit_signup_path(@signup)
+'|
+=< link_to 'Index', signups_path

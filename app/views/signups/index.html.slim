@@ -1,0 +1,22 @@
+a.btn.btn-primary.float-right href=new_signup_path
+  i.fa.fa-plus>
+  | New Signup
+h1 Signups
+
+table.table
+  thead
+    tr
+      th User
+      th Nkf member trial
+      th
+      th
+      th
+
+  tbody
+    - @signups.each do |signup|
+      tr
+        td = signup.user
+        td = signup.nkf_member_trial
+        td = link_to 'Show', signup
+        td = link_to 'Edit', edit_signup_path(signup)
+        td = link_to 'Destroy', signup, data: { confirm: 'Are you sure?' }, method: :delete

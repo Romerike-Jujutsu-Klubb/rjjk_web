@@ -287,6 +287,7 @@ Rails.application.routes.draw do
       get :image
     end
   end
+  resources :signups
 
   controller :status do
     get 'status', action: :index

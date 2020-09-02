@@ -3,14 +3,15 @@
 class NkfMemberTrial < ApplicationRecord
   include Searching
 
+  has_one :signup, dependent: :destroy
   has_many :trial_attendances, dependent: :destroy
 
   scope :for_group, ->(group) { where('alder BETWEEN ? AND ?', group.from_age, group.to_age) }
 
   search_scope %i[fornavn etternavn epost], order: %i[fornavn etternavn]
 
-  validates :alder, :epost, :etternavn, :fodtdato, :fornavn, :medlems_type, :postnr, :reg_dato,
-      :stilart, :tid, presence: true
+  validates :alder, :epost, :etternavn, :fodtdato, :fornavn, :medlems_type, :postnr, :reg_dato, :stilart,
+      :tid, presence: true
   validates :res_sms, inclusion: { in: [true, false] }
 
   def age
@@ -29,5 +30,9 @@ class NkfMemberTrial < ApplicationRecord
 
   def emails
     [epost, epost_faktura].compact.map(&:strip).uniq.sort
+  end
+
+  def to_s
+    name
   end
 end
