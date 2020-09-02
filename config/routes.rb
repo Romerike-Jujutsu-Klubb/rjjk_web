@@ -287,6 +287,13 @@ Rails.application.routes.draw do
       get :image
     end
   end
+
+  scope controller: :signup, path: 'innmelding' do
+    root action: :index, as: :signup
+    get :basics
+    get :guardians
+    get :complete
+  end
   resources :signups
 
   controller :status do

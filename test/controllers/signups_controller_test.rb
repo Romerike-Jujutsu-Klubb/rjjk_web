@@ -5,6 +5,7 @@ require 'test_helper'
 class SignupsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @signup = signups(:one)
+    login
   end
 
   test 'should get index' do
