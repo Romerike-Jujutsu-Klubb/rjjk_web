@@ -12,5 +12,5 @@ class RemoveVersionFromImagesCloudinaryIdentifier < ActiveRecord::Migration[6.0]
     end
   end
 
-  class Image < ActiveRecord::Base; end
+  class Image < ApplicationRecord; end
 end
