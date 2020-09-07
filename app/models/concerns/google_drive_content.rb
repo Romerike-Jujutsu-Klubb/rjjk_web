@@ -2,32 +2,46 @@
 
 module GoogleDriveContent
   def self.included(clas)
-    clas.after_create { |record| GoogleDriveUploadJob.perform_later(record.id) }
+    clas.after_create_commit { |record| GoogleDriveUploadJob.perform_later(record.id) }
   end
 
   def content_data_io
-    logger.info "get google drive io: #{id} #{google_drive_reference}"
     unless google_drive_reference
       stored_content = move_to_google_drive!
       return stored_content && StringIO.new(stored_content) if Rails.env.test?
     end
+    google_drive_io
+  end
+
+  def google_drive_io
+    logger.info "get google drive io: #{id} #{google_drive_reference}"
     GoogleDriveService.new.get_file_io(google_drive_reference)
   end
 
+  def cloudinary_io
+    Cloudinary::Downloader.download(cloudinary_identifier)
+  end
+
   def move_to_google_drive!
-    logger.info "Store image in Google Drive: #{id}, #{name}"
     loaded_content, google_reference =
         self.class.where(id: id).pick(:content_data, :google_drive_reference)
-    if loaded_content.nil? && google_reference
-      self.google_drive_reference = google_reference
+    if loaded_content.blank?
+      if google_reference
+        self.google_drive_reference = google_reference
+        return
+      end
+      GoogleDriveUploadJob.perform_now(id)
       return
     end
-    unless Rails.env.test?
-      file = GoogleDriveService.new
-          .store_file(self.class.name.pluralize.underscore, id, loaded_content, content_type)
-      update! google_drive_reference: file.id, content_data: nil, md5_checksum: file.md5_checksum
-    end
+    upload_to_google_drive(loaded_content) unless Rails.env.test?
     loaded_content
+  end
+
+  def upload_to_google_drive(loaded_content)
+    logger.info "Store image in Google Drive: #{id}, #{name}"
+    file = GoogleDriveService.new
+        .store_file(self.class.name.pluralize.underscore, id, loaded_content, content_type)
+    update! google_drive_reference: file.id, content_data: nil, md5_checksum: file.md5_checksum
   end
 
   private
