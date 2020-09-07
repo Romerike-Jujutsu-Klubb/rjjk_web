@@ -6,8 +6,12 @@ h1 Redigèr bilde
   .card
     .card-header Referanser
     .card-body
-      .badge.badge-info.mr-3 Google Drive: #{@image.google_drive_reference.inspect}
-      .badge.badge-info Cloudinary: #{@image.cloudinary_identifier.inspect}
+      - if @image.google_drive_reference
+        .badge.badge-info.mr-3 Google Drive: #{@image.google_drive_reference.inspect}
+        .badge.badge-info.mr-3 google size: #{@image.google_drive_io.size.inspect} bytes
+      - if @image.cloudinary_identifier
+        .badge.badge-info Cloudinary: #{@image.cloudinary_identifier.inspect}
+        .badge.badge-info Cloudinary: #{@image.cloudinary_io.size.inspect} bytes
 
   .card
     .card-header Lastet opp av
