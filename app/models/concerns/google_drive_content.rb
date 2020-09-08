@@ -19,7 +19,8 @@ module GoogleDriveContent
   end
 
   def cloudinary_io
-    Cloudinary::Downloader.download(cloudinary_identifier, type: 'upload', resource_type: video? ? 'video': 'image')
+    Cloudinary::Downloader
+        .download(cloudinary_identifier, type: 'upload', resource_type: video? ? 'video' : 'image')
   end
 
   def move_to_google_drive!
