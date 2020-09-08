@@ -10,19 +10,20 @@ h1 Redigèr bilde
         .badge.badge-info.mr-3 Google Drive: #{@image.google_drive_reference.inspect}
         .badge.badge-info.mr-3 google size: #{@image.google_drive_io.size.inspect} bytes
       - if @image.cloudinary_identifier
-        .badge.badge-info Cloudinary: #{@image.cloudinary_identifier.inspect}
-        .badge.badge-info Cloudinary: #{@image.cloudinary_io.size.inspect} bytes
+        .badge.badge-info.mr-3 Cloudinary: #{@image.cloudinary_identifier.inspect}
+        .badge.badge-info.mr-3 Cloudinary: #{@image.cloudinary_io.size.inspect} bytes
 
   .card
     .card-header Lastet opp av
     .card-body
-      = @image.user.name
+      .badge.badge-info.mr-3 = @image.user.name
+      .badge.badge-info.mr-3 = @image.created_at.strftime('%F %R')
 
   - if @image.member_image
     .card
       .card-header Medlem
       .card-body
-        = @image.member_image.member.name
+        .badge.badge-info.mr-3 = @image.member_image.member.name
 
   - if @image.user_like
     .card
@@ -35,22 +36,26 @@ h1 Redigèr bilde
       .card-header Application Videos
       .card-body
         - @image.application_videos.each do |av|
-          a href=edit_application_video_path(av.id) = av.technique_application.name
+          .badge.badge-info.mr-3
+            a href=edit_application_video_path(av.id) = av.technique_application.name
 
   - if @image.application_steps.any?
     .card
       .card-header Application Steps
       .card-body
-        = @image.application_steps.map{|as| as.id}
+        .badge.badge-info.mr-3
+          = @image.application_steps.map{|as| as.id}
 
   - if @image.embu_part_videos.any?
     .card
       .card-header Embu part videos
       .card-body
-        = @image.embu_part_videos.map{|as| as.id}
+        .badge.badge-info.mr-3
+          = @image.embu_part_videos.map{|as| as.id}
 
   - if @image.user_images.any?
     .card
       .card-header User images
       .card-body
-        = @image.user_images.map{|as| as.id}
+        .badge.badge-info.mr-3
+          = @image.user_images.map{|as| as.id}
