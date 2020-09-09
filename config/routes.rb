@@ -167,6 +167,7 @@ Rails.application.routes.draw do
       get :blurred
       get 'inline(/:width).:format', action: :inline, as: :inline
       get 'show(/:width).:format', action: :show, as: :show
+      patch :reset_google_drive_reference
     end
     collection do
       get :gallery

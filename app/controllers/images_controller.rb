@@ -75,7 +75,7 @@ class ImagesController < ApplicationController
     requested_format = params[:format]
     return if !serving_webp(requested_format) &&
         (redirected_to_webp(image, requested_format) || redirected_to_icon(image) ||
-        redirected_to_format(image, requested_format))
+            redirected_to_format(image, requested_format))
 
     width = params[:width].to_i
     width = 492 if width < 8
@@ -110,7 +110,7 @@ class ImagesController < ApplicationController
 
     return if !serving_webp(requested_format) &&
         (redirected_to_webp(image, requested_format) || redirected_to_icon(image) ||
-        redirected_to_format(image, requested_format))
+            redirected_to_format(image, requested_format))
 
     content_data_io = image.content_data_io
     if content_data_io.nil?
@@ -169,6 +169,25 @@ class ImagesController < ApplicationController
       flash.now.alert = 'Bildet kunne ikke oppdateres.'
       render action: 'edit'
     end
+  end
+
+  def reset_google_drive_reference
+    @image = Image.find(params[:id])
+    if @image.google_drive_reference.present?
+      if @image.google_drive_io.empty?
+        if @image.update(google_drive_reference: nil)
+          flash.notice = 'Bildet ble oppdatert.'
+          GoogleDriveUploadJob.perform_later(@image.id)
+        else
+          flash.alert = 'Kunne ikke nullstille Google Drive referansen.'
+        end
+      else
+        flash.alert = 'Bildet er ikke tomt.'
+      end
+    else
+      flash.alert = 'Bildet har ingen Google Drive referanse.'
+    end
+    redirect_to :edit
   end
 
   def destroy
