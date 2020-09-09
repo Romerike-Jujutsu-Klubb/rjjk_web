@@ -174,7 +174,7 @@ class ImagesController < ApplicationController
   def reset_google_drive_reference
     @image = Image.find(params[:id])
     if @image.google_drive_reference.present?
-      if @image.google_drive_io.empty?
+      if @image.google_drive_io.size == 0
         if @image.update(google_drive_reference: nil)
           flash.notice = 'Google drive referanse er nullstilt.'
           GoogleDriveUploadJob.perform_later(@image.id)
