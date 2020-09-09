@@ -176,7 +176,7 @@ class ImagesController < ApplicationController
     if @image.google_drive_reference.present?
       if @image.google_drive_io.empty?
         if @image.update(google_drive_reference: nil)
-          flash.notice = 'Bildet ble oppdatert.'
+          flash.notice = 'Google drive referanse er nullstilt.'
           GoogleDriveUploadJob.perform_later(@image.id)
         else
           flash.alert = 'Kunne ikke nullstille Google Drive referansen.'
@@ -186,6 +186,7 @@ class ImagesController < ApplicationController
       end
     else
       flash.alert = 'Bildet har ingen Google Drive referanse.'
+      GoogleDriveUploadJob.perform_later(@image.id)
     end
     redirect_to :edit
   end

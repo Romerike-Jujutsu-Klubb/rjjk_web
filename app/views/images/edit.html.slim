@@ -11,7 +11,9 @@ h1 Redigèr bilde
         - google_drive_io = @image.google_drive_io
         .badge.badge-info.mr-3 google size: #{google_drive_io.size.inspect} bytes
         - if google_drive_io.size == 0
-          a.badge.badge-danger.mr-3 href=reset_google_drive_reference_image_path(@image.id) Upload to Google Drive
+          a.badge.badge-danger.mr-3 href=reset_google_drive_reference_image_path(@image.id) Reset Google Drive
+      - else
+        a.badge.badge-danger.mr-3 href=reset_google_drive_reference_image_path(@image.id) Upload to Google Drive
       - if @image.cloudinary_identifier
         .badge.badge-info.mr-3 Cloudinary: #{@image.cloudinary_identifier.inspect}
         .badge.badge-info.mr-3 Cloudinary size: #{@image.cloudinary_io.size.inspect} bytes
