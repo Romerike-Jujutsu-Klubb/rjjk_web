@@ -188,7 +188,7 @@ class ImagesController < ApplicationController
       flash.alert = 'Bildet har ingen Google Drive referanse.'
       GoogleDriveUploadJob.perform_later(@image.id)
     end
-    redirect_to :edit
+    redirect_to edit_image_path(@image.id)
   end
 
   def destroy
