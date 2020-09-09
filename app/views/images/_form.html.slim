@@ -23,7 +23,9 @@
   - if @image.new_record?
     = f.file_field :file, class: :fileinput
   - if @image.persisted? && current_user.admin?
-    = link_to 'Slett', @image, class: 'btn btn-danger', method: :delete, data: { confirm: 'Er du sikker?  Bildet kan ikke gjenskapes etter sletting.' }
+    a.btn.btn-danger href=image_path(@image.id) data-method=:delete data-confirm='Er du sikker?  Bildet kan ikke gjenskapes etter sletting.'
+      i.fa.fa-trash>
+      | Slett
   .float-right
     = back_or_link_to 'Tilbake', images_path, class: 'btn btn-link'
     = f.primary 'Lagre'
