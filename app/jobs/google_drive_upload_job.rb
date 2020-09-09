@@ -33,5 +33,6 @@ class GoogleDriveUploadJob < ApplicationJob
   rescue => e
     logger.error "Job failed: #{e}"
     logger.error e.backtrace.join("\n")
+    ExceptionNotifier.notify_exception(e)
   end
 end
