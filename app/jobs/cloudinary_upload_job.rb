@@ -7,12 +7,11 @@ class CloudinaryUploadJob < ApplicationJob
     image = Image.find(image_id)
     if image.cloudinary_identifier
       logger.error "Image already uploaded: #{image_id.inspect}"
-      return
-    end
-    result = Cloudinary::Uploader.upload_large(
-        image.content_data_io,
-        resource_type: image.video? ? 'video' : 'image',
-        public_id: "#{Rails.env}/images/#{image.id}"
+    else
+      result = Cloudinary::Uploader.upload_large(
+          image.content_data_io,
+          resource_type: image.video? ? 'video' : 'image',
+          public_id: "#{Rails.env}/images/#{image.id}"
       )
       logger.info "Cloudinary upload result: #{result.inspect}"
       image.cloudinary_identifier = result['public_id']
