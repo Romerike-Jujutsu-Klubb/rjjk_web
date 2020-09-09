@@ -15,10 +15,10 @@ class GoogleDriveUploadJob < ApplicationJob
         content_data = image.cloudinary_io
         if content_data.present?
           image.update! content_data: content_data
-          if image.content_length != content_data.size
-            logger.error "Image content length mismatch: #{image.content_length} => #{content_data.size}"
-            image.update! content_length: content_data.size
-          end
+          # if image.content_length != content_data.size
+          #   logger.error "Image content length mismatch: #{image.content_length} => #{content_data.size}"
+          #   image.update! content_length: content_data.size
+          # end
         else
           logger.error "Cloudinary content data is missing: #{content_data.inspect}"
           return
