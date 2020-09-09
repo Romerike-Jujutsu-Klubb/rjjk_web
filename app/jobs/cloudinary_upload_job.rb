@@ -14,12 +14,14 @@ class CloudinaryUploadJob < ApplicationJob
         resource_type: image.video? ? 'video' : 'image',
         public_id: "#{Rails.env}/images/#{image.id}"
       )
-    logger.info "Cloudinary upload result: #{result}"
-    image.cloudinary_identifier = "v#{result['version']}/#{result['public_id']}"
-    image.width ||= result['width']
-    image.height ||= result['height']
+      logger.info "Cloudinary upload result: #{result.inspect}"
+      image.cloudinary_identifier = result['public_id']
+      image.width ||= result['width']
+      image.height ||= result['height']
 
-    image.save!
+      image.save!
+    end
+    CloudinaryTransformJob.perform_later(image.id)
   rescue => e
     logger.error "Job failed: #{e}"
     logger.error e.backtrace.join("\n")
