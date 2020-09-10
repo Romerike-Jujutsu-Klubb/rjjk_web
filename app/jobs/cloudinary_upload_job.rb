@@ -12,7 +12,7 @@ class CloudinaryUploadJob < ApplicationJob
           image.content_data_io,
           resource_type: image.video? ? 'video' : 'image',
           public_id: "#{Rails.env}/images/#{image.id}"
-      )
+        )
       logger.info "Cloudinary upload result: #{result.inspect}"
       image.cloudinary_identifier = result['public_id']
       image.width ||= result['width']

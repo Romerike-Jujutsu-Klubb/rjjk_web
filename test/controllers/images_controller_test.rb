@@ -4,7 +4,7 @@ require 'controller_test'
 
 class ImagesControllerTest < ActionController::TestCase
   def setup
-    @first_id = images(:one).id
+    @first_id = id(:one)
     login(:uwe)
   end
 
@@ -133,6 +133,30 @@ class ImagesControllerTest < ActionController::TestCase
     post :update, params: { id: @first_id, image: { approved: true } }
     assert_response :redirect
     assert_redirected_to action: :edit, id: @first_id
+  end
+
+  def test_reset_google_drive_reference_without_reference
+    post :reset_google_drive_reference, params: { id: @first_id }
+    assert_redirected_to action: :edit, id: @first_id
+    assert_equal 'Bildet har ingen Google Drive referanse.', flash.alert
+  end
+
+  def test_reset_google_drive_reference_with_content
+    images(:one).update! google_drive_reference: '127EAyqzeJaMogPtwNE1xfTFVtElFJuAy'
+    VCR.use_cassette('GoogleDriveImage', match_requests_on: %i[method host path query]) do
+      post :reset_google_drive_reference, params: { id: @first_id }
+    end
+    assert_redirected_to action: :edit, id: @first_id
+    assert_equal 'Bildet er ikke tomt.', flash.alert
+  end
+
+  def test_reset_google_drive_reference_with_empty_file
+    images(:one).update! google_drive_reference: '127EAyqzeJaMogPtwNE1xfTFVtElFJuAy'
+    VCR.use_cassette('GoogleDriveEmptyFile', match_requests_on: %i[method host path query]) do
+      post :reset_google_drive_reference, params: { id: @first_id }
+    end
+    assert_redirected_to action: :edit, id: @first_id
+    assert_equal 'Google drive referanse er nullstilt.', flash.notice
   end
 
   def test_destroy
