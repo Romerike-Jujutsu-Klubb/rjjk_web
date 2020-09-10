@@ -44,6 +44,7 @@ ruby:
 
   - if f.object.new_record? || f.object.image.new_record?
     - if ENV['CLOUDINARY_URL']
+      = imgf.hidden_field :content_length
       = imgf.hidden_field :height
       = imgf.hidden_field :md5_checksum
       = imgf.hidden_field :width
@@ -116,6 +117,7 @@ javascript:
       }).off("cloudinarydone").on("cloudinarydone", function(e, data) {
         console.trace(data);
         console.trace(data.result);
+        $("##{f.object_name}_image_attributes_content_length").val(data.result.bytes);
         $("##{f.object_name}_image_attributes_height").val(data.result.height);
         $("##{f.object_name}_image_attributes_md5_checksum").val(data.result.etag);
         $("##{f.object_name}_image_attributes_width").val(data.result.width);
@@ -144,6 +146,7 @@ javascript:
           $.cloudinary.delete_by_token($(this).data('delete_token')).done(function() {
             $('.preview').html('');
             // $('#info').html('');
+            $("##{f.object_name}_image_attributes_content_length").val('');
             $("##{f.object_name}_image_attributes_height").val('');
             $("##{f.object_name}_image_attributes_md5_checksum").val('');
             $("##{f.object_name}_image_attributes_width").val('');

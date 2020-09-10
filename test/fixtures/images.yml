@@ -3,8 +3,9 @@
 one:
   name: picture_one.png
   content_type: image/png
-  content_data: !binary |
+  content_data: !binary |-
     iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==
+  content_length: 67
   md5_checksum: 93ca32a536da1698ea979f183679af29
   user: lars
   approved: true
@@ -12,72 +13,74 @@ one:
 two:
   name: picture two
   content_type: image/gif
-  content_data: !binary |
-                 R0lGODlhDAAMAIQAAP//9/X17unp5WZmZgAAAOfn515eXvPz7Y6OjuDg4J+fn5
-                 OTk6enp56enmlpaWNjY6Ojo4SEhP/++f/++f/++f/++f/++f/++f/++f/++f/+
-                 +f/++f/++f/++f/++f/++SH+Dk1hZGUgd2l0aCBHSU1QACwAAAAADAAMAAAFLC
-                 AgjoEwnuNAFOhpEMTRiggcz4BNJHrv/zCFcLiwMWYNG84BwwEeECcgggoBADs=
+  content_data: !binary |-
+    R0lGODlhDAAMAIQAAP//9/X17unp5WZmZgAAAOfn515eXvPz7Y6OjuDg4J+fn5
+    OTk6enp56enmlpaWNjY6Ojo4SEhP/++f/++f/++f/++f/++f/++f/++f/++f/+
+    +f/++f/++f/++f/++f/++SH+Dk1hZGUgd2l0aCBHSU1QACwAAAAADAAMAAAFLC
+    AgjoEwnuNAFOhpEMTRiggcz4BNJHrv/zCFcLiwMWYNG84BwwEeECcgggoBADs=
+  content_length: 185
   md5_checksum: checksum
   user: lars
 application_step_one:
   name: Step 1
   content_type: image/png
-  content_data: !binary |
+  content_data: !binary |-
     iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX/TQBcNTh/AAAAAXRSTlPM0jRW/QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=
+  content_length: 95
   md5_checksum: application_step_one
   user: uwe
   approved: true
 application_step_two:
   name: Step 2
   content_type: image/jpeg
-  content_data: !binary |
+  content_data: !binary |-
     iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUABP/uFBdTAAAAAXRSTlPM0jRW/QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=
+  content_length: 95
   md5_checksum: application_step_two
   user: uwe
   approved: true
 application_step_kneeing:
   name: Step 3
   content_type: image/png
-  content_data: !binary |
+  content_data: !binary |-
     iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUmnEQ3/0cXAAAAAXRSTlPM0jRW/QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=
+  content_length: 95
   md5_checksum: application_step_kneeing
   user: uwe
   approved: true
 front_page_1:
   name: Front page 1
   content_type: image/gif
-  content_data: !binary |
+  content_data: !binary |-
     R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=
+  content_length: 35
   md5_checksum: front_page_1
   user: uwe
   approved: true
 front_page_2:
   name: Front page 2
   content_type: image/png
-  content_data: !binary |
+  content_data: !binary |-
     iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUDawAjNTHvAAAAAXRSTlPM0jRW/QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=
+  content_length: 95
   md5_checksum: front_page_2
   user: uwe
   approved: true
 front_page_3:
   name: Front page 3
   content_type: image/png
-  content_data: !binary |
+  content_data: !binary |-
     iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUmM5yWaL3XAAAAAXRSTlPM0jRW/QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=
+  content_length: 95
   md5_checksum: front_page_3
   user: uwe
   approved: true
 front_page_4:
   name: Front page 4
   content_type: image/jpeg
-  content_data: !binary |
+  content_data: !binary |-
     R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
+  content_length: 42
   md5_checksum: front_page_4
   user: uwe
   approved: true
-no_content:
-  name: no_content.webp
-  content_type: image/jpeg
-  content_data:
-  md5_checksum: no_content
-  user: uwe

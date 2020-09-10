@@ -31,6 +31,7 @@ class Image < ApplicationRecord
   end
 
   validates :md5_checksum, presence: true, uniqueness: true
+  validates :content_length, presence: true, numericality: { greater_than: 0 }
   validates :name, presence: true
   validate do
     errors.add :file, 'må velges.' if content_type.blank?
@@ -50,6 +51,7 @@ class Image < ApplicationRecord
     self.name = file.original_filename if name.blank?
     self.content_data = file.read
     self.content_type = file.content_type if file.content_type.present?
+    self.content_length = content_data.length
   end
 
   def cloudinary_upload_id=(upload_id)

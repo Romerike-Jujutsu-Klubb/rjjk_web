@@ -92,7 +92,7 @@ class MembersController < ApplicationController
     content_type = Regexp.last_match(1)
     MemberImage.transaction do
       image = Image.create! user_id: @member.user_id, name: "Foto #{Date.current}",
-          content_type: content_type, content_data: content
+          content_type: content_type, content_data: content, content_length: content.length
       @member.member_images.create! image: image
     end
     render plain: content.hash

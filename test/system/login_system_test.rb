@@ -62,7 +62,8 @@ class LoginSystemTest < ApplicationSystemTestCase
     assert_current_path login_link_message_sent_path identity: 'uwe@example.com'
     screenshot :email_sent
     UserMessageSenderJob.perform_now
-    assert_equal 1, Mail::TestMailer.deliveries.size, -> { Mail::TestMailer.deliveries.map(&:subject).to_s }
+    assert_equal 1, Mail::TestMailer.deliveries.size,
+        -> { Mail::TestMailer.deliveries.map(&:subject).to_s }
     email = Mail::TestMailer.deliveries[0]
     login_link_text = 'Klikk meg for å logge på Romerike Jujutsu Klubb!'
     assert(%r{<a href="(https://example.com/\?key=([^"]+))">#{login_link_text}</a>} =~ email.body.decoded)

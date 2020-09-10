@@ -18,7 +18,7 @@ class NkfReplicationMailerPreview < ActionMailer::Preview
   end
 
   def update_appointments
-    NkfReplicationMailer.update_appointments(Practice.where.not(message: nil).first, GroupSchedule.first, User.first,
-        Member.first(5), Member.last(5))
+    NkfReplicationMailer.update_appointments(Practice.where.not(message: nil).first,
+        GroupSchedule.first, User.first, Member.first(5), Member.last(5))
   end
 end

@@ -26,6 +26,7 @@ class ApplicationStepsControllerTest < IntegrationTest
         image_attributes: {
           content_data: 'image.content_data',
           content_type: @application_step.image.content_type,
+          content_length: 18,
           name: @application_step.image.name,
         },
         position: 3,
@@ -54,6 +55,7 @@ class ApplicationStepsControllerTest < IntegrationTest
       image_attributes: {
         content_data: 'content_data',
         content_type: @application_step.image.content_type,
+        content_length: 12,
         name: @application_step.image.name,
       },
       position: @application_step.position,

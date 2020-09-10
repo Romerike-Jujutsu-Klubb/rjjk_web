@@ -310,8 +310,9 @@ class Member < ApplicationRecord
     return if file.blank?
 
     transaction do
+      content_data = file.read
       image = Image.create! user_id: user.id, name: file.original_filename,
-          content_type: file.content_type, content_data: file.read
+          content_type: file.content_type, content_data: content_data, content_length: content_data.size
       member_images << MemberImage.new(image_id: image.id)
     end
   end

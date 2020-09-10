@@ -62,8 +62,8 @@ a.btn.btn-primary.float-right.mt-3 href=new_application_video_path(application_v
   .row
     - @technique_application.application_videos.each do |av|
       .col.position-relative
-        = video_tag image_url_with_cl(av.image), title: av.image.name || 'Film', controls: true, autobuffer: true, class: 'w-100', format: av.image.format
-        a.btn.btn-danger.position-absolute.mr-3 style="right:0" href=image_path(av.image_id) data-method=:delete data-confirm="Er du sikker?  Dette vil slette koblingen av videoen til denne applikasjonen."
+        = render 'images/item', image: av.image
+        a.btn.btn-danger.position-absolute.mr-3 style="right:0" href=application_video_path(av.id) data-method=:delete data-confirm="Er du sikker?  Dette vil slette koblingen av videoen til denne applikasjonen."
           i.fa.fa-remove>
           | Slett
 - else

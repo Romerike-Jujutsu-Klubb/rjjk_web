@@ -4,8 +4,8 @@ require "#{File.dirname(__FILE__)}/../test_helper"
 
 class GroupTest < ActiveSupport::TestCase
   test 'suggested_graduation_date' do
-    assert_equal [Date.parse('2013-12-12'), nil, Date.parse('2013-12-10'), Date.parse('2013-12-10'), nil, nil],
-        Group.order(:from_age, :to_age, :id).map(&:suggested_graduation_date)
+    dates = [Date.parse('2013-12-12'), nil, Date.parse('2013-12-10'), Date.parse('2013-12-10'), nil, nil]
+    assert_equal dates, Group.order(:from_age, :to_age, :id).map(&:suggested_graduation_date)
   end
 
   test 'suggested_graduation_date spring 2019' do

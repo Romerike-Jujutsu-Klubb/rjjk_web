@@ -335,9 +335,6 @@ Rails.application.routes.draw do
 
   resources :wazas
 
-  require 'simple_drilldown/routing'
-  ActionDispatch::Routing::Mapper.include SimpleDrilldown::Routing
-
   draw_drilldown :member_drilldown
   draw_drilldown :user_drilldown
 

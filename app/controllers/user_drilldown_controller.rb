@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserDrilldownController < SimpleDrilldown::DrilldownController
+class UserDrilldownController < SimpleDrilldown::Controller
   before_action { @content_width = 1024 }
 
   # What fields should be displayed as default when listing actual User records.

@@ -5,17 +5,32 @@ module ApplicationHelper
   include GraduationAccess
 
   WEBP_PATTERN = %r{image/webp|^\*/\*$}.freeze
+  WEBM_PATTERN = %r{image/webp|^\*/\*$}.freeze
 
   def accepts_webp?
     request.headers['HTTP_ACCEPT']&.split(',')&.any? { |t| WEBP_PATTERN.match? t }
   end
 
-  def image_url_with_cl(image, width: nil)
-    format = if accepts_webp?
-               image.video? && accepts_webp? ? :webm : :webp
-             else
-               image.format
-             end
+  def accepts_webm?
+    request.headers['HTTP_ACCEPT']&.split(',')&.any? { |t| WEBM_PATTERN.match? t }
+  end
+
+  def image_url_with_cl(image, width: nil, action: :show, format: nil)
+    format ||=
+        if accepts_webp? && image.cloudinary_identifier
+          if image.video?
+            if image.content_length <= 40.megabytes || image.cloudinary_transformed_at
+              :webm
+            else
+              CloudinaryTransformJob.perform_later(image.id)
+              image.format
+            end
+          else
+            :webp
+          end
+        else
+          image.format
+        end
     if image.cloudinary_identifier
       options = { format: format }
       options.merge!(width: width, height: width, crop: :fit) if width
@@ -25,7 +40,7 @@ module ApplicationHelper
         cl_image_path(image.cloudinary_identifier, options)
       end
     else
-      image_path(image.id, format: format)
+      image_path(image.id, format: format, action: action)
     end
   end
 

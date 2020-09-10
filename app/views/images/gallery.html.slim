@@ -4,7 +4,7 @@
   - else
     div style="position: relative;overflow: hidden;padding-top:#{100 / @image.aspect_ratio}%"
       - media_style = "position:absolute;max-width:100%;top:0;bottom:0;left:0;right:0;max-height:100%"
-      = image_tag url_for(controller: :images, action: :inline, id: @image.id, format: @image.format, width: 762), title: @image.name || 'Bilde', class: 'img-thumbnail w-100 p-1', style: media_style
+      = image_tag image_url_with_cl(@image, width: 762), title: @image.name || 'Bilde', class: 'img-thumbnail w-100 p-1', style: media_style
   .w-100 align="center"
     => @image.description || @image.name
     | av #{@image.user.name}
@@ -31,7 +31,7 @@
       - height = image_height + 10
       .col
         = link_to id: i.id do
-          = image_tag url_for(controller: :images, action: :inline, id: i.id, format: i.format, width: image_width), \
+          = image_tag image_url_with_cl(i, action: :inline, width: image_width, format: :webp), \
                 title: i.name || 'Bilde', style: "width:#{width}px;height:#{height}px;object-fit:cover", class: 'img-thumbnail', lazy: true
   .row.text-center
     - slice.each do |i|

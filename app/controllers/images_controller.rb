@@ -9,35 +9,21 @@ class ImagesController < ApplicationController
   caches_page :show, :inline, :blurred
   cache_sweeper :image_sweeper, only: %i[update destroy]
 
-  def rank_required(image, check_referer: true)
-    referer = request.headers['HTTP_REFERER']&.gsub(/\?.*$/, '')
-    if !check_referer || [root_url, front_page_url, front_parallax_url].include?(referer)
-      return false if FrontPageSection.exists?(image_id: image.id)
-    end
-    image.application_steps.each do |step|
-      next unless current_user&.member.nil? ||
-          step.application_image_sequence.technique_application.rank > current_user.member.next_rank
-
-      logger.warn "REFERER: #{referer.inspect}"
-      redirect_to login_path, notice: 'Du må ha høyere grad for å se på dette pensumet.'
-      return true
-    end
-    false
-  end
-
   def index
     @images = Image.without_image.order(created_at: :desc).to_a
   end
 
   def show
     image = Image
-        .select(%i[id cloudinary_identifier content_type name user_id google_drive_reference md5_checksum])
+        .select(%i[id cloudinary_identifier cloudinary_transformed_at content_length content_type name
+                   user_id google_drive_reference md5_checksum])
         .find(params[:id])
     return if rank_required(image)
 
     requested_format = params[:format]
-    return if !serving_webp(requested_format) &&
-        (redirected_to_webp(image, requested_format) || redirected_to_format(image, requested_format))
+    return if !serving_webp(requested_format) && !serving_webm(requested_format) &&
+        (redirected_to_webp(image, requested_format) || redirected_to_webm(image, requested_format) ||
+            redirected_to_format(image, requested_format))
 
     return if redirected_to_cloudinary(image)
 
@@ -50,11 +36,8 @@ class ImagesController < ApplicationController
     end
 
     image_content = image.content_data_io
-    if image_content.nil?
-      icon_name = image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
-      redirect_to helpers.asset_path icon_name
-      return
-    end
+    return redirect_to_icon(image) if image_content.nil?
+
     if requested_format != image.format
       send_image(image, MiniMagick::Image.read(image_content), requested_format)
     else
@@ -64,7 +47,7 @@ class ImagesController < ApplicationController
   rescue => e
     logger.error e
     logger.error e.backtrace.join("\n")
-    redirect_to '/assets/pdficon_large.png'
+    redirect_to_icon(image)
   end
 
   def inline
@@ -82,11 +65,8 @@ class ImagesController < ApplicationController
     return if redirected_to_cloudinary(image, width: width)
 
     content_data_io = image.content_data_io
-    if content_data_io.nil?
-      icon_name = image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
-      redirect_to helpers.asset_path icon_name
-      return
-    end
+    return redirect_to_icon(image) if content_data_io.nil?
+
     magick_image = MiniMagick::Image.read content_data_io
     ratio = width.to_f / magick_image.width
     magick_image.resize("#{width}x#{(magick_image.height * ratio).round}")
@@ -113,11 +93,8 @@ class ImagesController < ApplicationController
             redirected_to_format(image, requested_format))
 
     content_data_io = image.content_data_io
-    if content_data_io.nil?
-      icon_name = image.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
-      redirect_to helpers.asset_path icon_name
-      return
-    end
+    return redirect_to_icon(image) if content_data_io.nil?
+
     begin
       magick_image = MiniMagick::Image.read content_data_io
       content_data_io.close
@@ -192,7 +169,7 @@ class ImagesController < ApplicationController
   end
 
   def destroy
-    Image.find(params[:id]).destroy
+    Image.find(params[:id]).destroy!
     back_or_redirect_to action: :index
   end
 
@@ -210,12 +187,7 @@ class ImagesController < ApplicationController
   end
 
   def gallery
-    image_select = Image
-        .select(%i[approved content_type description google_drive_reference height id name public user_id
-                   width])
-        .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
-        .order('created_at DESC')
-    image_select = image_select.includes(:user)
+    image_select = gallery_query
     image_select = image_select.where('approved = ?', true) unless admin?
     image_select = image_select.where('public = ?', true) unless user?
     @image = image_select.where(id: params[:id]).first || image_select.first
@@ -223,20 +195,38 @@ class ImagesController < ApplicationController
   end
 
   def mine
-    image_select = Image
-        .select(%i[approved content_type description google_drive_reference height id name public user_id
-                   width])
-        .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
-        .order('created_at DESC')
-        .includes(:user_like)
-    image_select = image_select.where('user_id = ?', current_user.id)
-    image_select = image_select.includes(:user)
+    image_select = gallery_query.includes(:user_like).where('user_id = ?', current_user.id)
     @images = image_select.to_a
     @image = Image.find_by(id: params[:id]) || @images.first
     render action: :gallery
   end
 
   private
+
+  def gallery_query
+    Image
+        .select(%i[approved cloudinary_identifier cloudinary_transformed_at content_length content_type
+                   description google_drive_reference height id name public user_id width])
+        .where("content_type LIKE 'image/%' OR content_type LIKE 'video/%'")
+        .order('created_at DESC')
+        .includes(:user)
+  end
+
+  def rank_required(image, check_referer: true)
+    referer = request.headers['HTTP_REFERER']&.gsub(/\?.*$/, '')
+    if !check_referer || [root_url, front_page_url, front_parallax_url].include?(referer)
+      return false if FrontPageSection.exists?(image_id: image.id)
+    end
+    image.application_steps.each do |step|
+      next unless current_user&.member.nil? ||
+          step.application_image_sequence.technique_application.rank > current_user.member.next_rank
+
+      logger.warn "REFERER: #{referer.inspect}"
+      redirect_to login_path, notice: 'Du må ha høyere grad for å se på dette pensumet.'
+      return true
+    end
+    false
+  end
 
   def redirected_to_cloudinary(image, width: nil)
     if image.cloudinary_identifier
@@ -278,12 +268,38 @@ class ImagesController < ApplicationController
     true
   end
 
+  def redirected_to_webm(image, requested_format)
+    return unless image.video?
+    return if requests_webm(requested_format) || !helpers.accepts_webm?
+
+    if image.content_length > 40.megabytes && image.cloudinary_transformed_at.nil?
+      CloudinaryTransformJob.perform_later(image.id)
+      return
+    end
+
+    redirect_to width: params[:width], format: :webm
+    true
+  end
+
   def requests_webp(requested_format)
     (requested_format == 'webp')
   end
 
+  def requests_webm(requested_format)
+    (requested_format == 'webm')
+  end
+
   def serving_webp(requested_format)
     helpers.accepts_webp? && requests_webp(requested_format)
+  end
+
+  def serving_webm(requested_format)
+    helpers.accepts_webm? && requests_webm(requested_format)
+  end
+
+  def redirect_to_icon(image)
+    icon_name = image&.video? ? 'video-icon-tran.png' : 'pdficon_large.png'
+    redirect_to helpers.asset_path icon_name
   end
 
   def redirected_to_icon(image)
@@ -301,7 +317,7 @@ class ImagesController < ApplicationController
   end
 
   def redirected_to_format(image, requested_format)
-    return unless requested_format.nil? || requested_format != image.format
+    return if requested_format && requested_format == image.format
 
     redirect_to width: params[:width], format: image.format
     true

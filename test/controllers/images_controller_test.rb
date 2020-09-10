@@ -47,14 +47,6 @@ class ImagesControllerTest < ActionController::TestCase
       get action, params: { id: id(:application_step_one), width: 320, format: :png }
       assert_response :success
     end
-
-    test "should redirect #{action} to dummy image if no image content" do
-      login :lars
-      get action, params: { id: id(:no_content), width: 320, format: :jpg }
-      assert_response :redirect
-      assert_redirected_to \
-          '/assets/pdficon_large-7c31e5c1d5f7d3e8938fea0182959ef48dcc2c9c4e40c8a7912c7e033f04e5f3.png'
-    end
   end
 
   def test_new
@@ -66,7 +58,8 @@ class ImagesControllerTest < ActionController::TestCase
     login :lars
 
     assert_difference('Image.count') do
-      post :create, params: { image: { name: 'new file', content_type: 'image/png', content_data: 'qwerty' } }
+      post :create, params: { image: { name: 'new file', content_type: 'image/png', content_data: 'qwerty',
+                                       content_length: 6 } }
     end
 
     assert_response :redirect

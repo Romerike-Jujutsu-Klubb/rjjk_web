@@ -11,6 +11,7 @@
 /public/icon/*.png
 /public/images/*.jpg
 /public/images/*.webp
+/public/images/*.webm
 /public/images/inline/*.*
 /public/images/*/inline/*.*
 /public/images/*/blurred.*

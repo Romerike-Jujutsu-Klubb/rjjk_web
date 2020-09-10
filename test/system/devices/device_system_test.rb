@@ -33,8 +33,8 @@ module DeviceSystemTest
       name.chomp('Test').camelize
     end
 
-    def use_device(device_name: nil, device_metrics: nil, menu_logo_area:, logo_area:, public_menu_btn_area:,
-        public_menu_logo_area:)
+    def use_device(device_name: nil, device_metrics: nil, menu_logo_area:, logo_area:,
+        public_menu_btn_area:, public_menu_logo_area:)
       self.menu_logo_area = menu_logo_area.freeze
       self.logo_area = logo_area.freeze
       self.public_menu_btn_area = public_menu_btn_area.freeze

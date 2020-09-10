@@ -5,7 +5,7 @@ require 'test_helper'
 class ImageTest < ActiveSupport::TestCase
   def test_create
     login
-    Image.create! name: 'new file', content_type: 'image/png', content_data: 'qwerty'
+    Image.create! name: 'new file', content_type: 'image/png', content_data: 'qwerty', content_length: 6
   end
 
   test 'valid fixtures' do

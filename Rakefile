@@ -29,8 +29,8 @@ if Rails.env.development? || Rails.env.test?
 end
 
 task 'db:schema:dump' => :environment do
-  sh 'rubocop --auto-correct db/schema.rb > /dev/null'
   filename = 'db/schema.rb'
+  sh "rubocop --auto-correct-all #{filename} > /dev/null"
   schema = File.read(filename)
       .gsub(', id: :serial', '')
       .gsub(/, id: :integer, default: -> { "nextval\('instructions_id_seq'::regclass\)" }/, '')

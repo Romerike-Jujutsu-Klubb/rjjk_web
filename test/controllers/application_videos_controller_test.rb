@@ -52,6 +52,6 @@ class ApplicationVideosControllerTest < ActionDispatch::IntegrationTest
       delete application_video_url(@application_video)
     end
 
-    assert_redirected_to application_videos_url
+    assert_redirected_to edit_technique_application_path(id(:defence_against_wrist_grip_in_front))
   end
 end
