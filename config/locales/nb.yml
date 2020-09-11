@@ -3,6 +3,7 @@ nb:
     basic_technique_id: Grunnteknikk
     curriculum_group_id: Pensum
     from_age: "Fra alder"
+    joined_on: Innmeldingsdato
     locale: Språk
     monthly_fee: "Måneds\xADavgift"
     name: Navn
@@ -78,7 +79,6 @@ nb:
         image_id: Bilde
         information_page_id: Informasjonsside
         subtitle: Undertittel
-        title: Tittel
       graduate:
         member_id: Medlem
         paid_belt: Betalt belte
@@ -120,7 +120,6 @@ nb:
         icon_class: Ikon
         public: Offentlig
         revised_at: Revidert
-        title: Tittel
       instructor_meeting:
         end_at: Slutt
         start_at: Start
@@ -131,7 +130,6 @@ nb:
         comment: Kommentar
         discount_override: Rabatt (overstyring)
         honorary_on: Æresmedlem fra
-        joined_on: Innmeldingsdato
         left_on: Utmeldingsdato
         nkf_fee: NKF Hovedklubb
         passive_on: Passiv fra
@@ -144,7 +142,6 @@ nb:
         publish_at: Publiser fra
         publication_state: Publiseringsstatus
         summary: Sammendrag
-        title: Tittel
       next_semester:
         first_session: Første trening neste semester
       page_alias:
@@ -323,6 +320,7 @@ nb:
 
   absent: Fraværende
   access_denied: Tilgang mangler
+  active: Aktiv
   annual_meeting: Årsmøte
   assistant: Hjelpeinstruktør
   attendances:
@@ -338,9 +336,11 @@ nb:
   external_event: Eksternt arrangement
   graduation_title: "Gradering %{name}"
   holiday: Ferie
+  honorary_member: Æresmedlem
   image: Bilde
   instructor: Instruktør
   instructor_meeting: Instruktørsamling
+  internal_event: Internt arrangement
   member_created: Nytt medlem opprettet OK.
   my_registration: "Min påmelding"
   present: Tilstede
