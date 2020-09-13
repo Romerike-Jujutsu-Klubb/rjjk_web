@@ -341,6 +341,9 @@ nb:
   instructor: Instruktør
   instructor_meeting: Instruktørsamling
   internal_event: Internt arrangement
+  joined_on_month: Innmeldingsmåned
+  joined_on_week: Innmeldingsuke
+  joined_on_year: Innmeldingsår
   member_created: Nytt medlem opprettet OK.
   my_registration: "Min påmelding"
   present: Tilstede

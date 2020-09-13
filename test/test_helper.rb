@@ -43,8 +43,10 @@ class ActiveSupport::TestCase
   fixtures :all
 
   setup { Timecop.freeze(TEST_TIME) }
-  teardown { Timecop.return }
-  teardown { clear_user }
+  teardown do
+    Timecop.return
+    clear_user
+  end
 
   # Use AS::TestCase for the base class when describing a model
   extend Minitest::Spec::DSL
