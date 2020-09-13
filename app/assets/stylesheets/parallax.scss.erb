@@ -30,13 +30,17 @@ body {
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
-}
 
-body.modal-open {
-  overflow: visible;
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  &.modal-open {
+    overflow: visible;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  &:not(.wide) .container-xl {
+    padding-top: 2rem;
+  }
 }
 
 h1 {

@@ -322,19 +322,24 @@ nb:
   absent: Fraværende
   access_denied: Tilgang mangler
   active: Aktiv
+  and_or: "og / eller"
   annual_meeting: Årsmøte
   assistant: Hjelpeinstruktør
   attendances:
     X: Deltok
   attended: Deltok
+  attending: "påmeldt"
   camp: RJJK Leir
+  confirmed: "bekreftet"
   connect: Koble
   create: Opprett
   description: Beskrivelse
   draft: Kladd
   event: Arrangement
+  event_registration_confirmation_email_sent: "Du vil motta en e-post med en lenke for å bekrefte påmeldingen."
   expired: Utdatert
   external_event: Eksternt arrangement
+  go_to_info_page: "Gå til informasjonssiden"
   graduation_title: "Gradering %{name}"
   holiday: Ferie
   honorary_member: Æresmedlem
@@ -347,15 +352,20 @@ nb:
   joined_on_year: Innmeldingsår
   member_created: Nytt medlem opprettet OK.
   my_registration: "Min påmelding"
+  participants: "påmeldte"
   present: Tilstede
   published: Publisert
   rank: Grad
   rank_id: Grad
+  read_more: "Les mer"
   register: "Registrer deg"
   registration: "Påmelding"
+  registration_for: "Påmelding til"
   registration_link: "Du kan melde deg på på web."
   registration_request: "Jeg vil være med!"
+  search: Søk
   sick: Syk
+  unconfirmed_event_registration: "Du har ikke bekreftet påmeldingen enda."
   unregister: Meld av
   user_login_succeeded: Login successful
   user_login_failed: Login unsuccessful
@@ -420,16 +430,7 @@ nb:
       page_gap: ..
       previous_label: Forrige
   will_not_attend: "Jeg kommer ikke"
-  read_more: "Les mer"
-  participants: "påmeldte"
-  confirmed: "bekreftet"
-  you_are: "Du er"
-  attending: "påmeldt"
   will_you_attend: "Kommer du?"
-  registration_for: "Påmelding til"
-  and_or: "og / eller"
-  event_registration_confirmation_email_sent: "Du vil motta en e-post med en lenke for å bekrefte påmeldingen."
-  unconfirmed_event_registration: "Du har ikke bekreftet påmeldingen enda."
+  you_are: "Du er"
   you_are_registered: "Du er påmeldt."
-  go_to_info_page: "Gå til informasjonssiden"
 

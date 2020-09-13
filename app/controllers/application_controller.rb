@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   include UserSystem
 
   MEMBER_LAYOUT = 'dark_ritual'
-  PUBLIC_LAYOUT = 'public'
+  PUBLIC_LAYOUT = 'parallax'
 
   protect_from_forgery prepend: true, with: :exception
 

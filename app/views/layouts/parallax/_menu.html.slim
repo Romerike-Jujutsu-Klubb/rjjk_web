@@ -1,7 +1,8 @@
-nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+nav.navbar.navbar-expand-xl.navbar-light.bg-light.fixed-top
   a.navbar-brand href="/"
     img.mr-2 src=asset_path('rjjk_logo_plus_txt_320.png') width="30" height="30" class="d-inline-block align-top" alt="RJJK Logo" loading="lazy"
-    | Romerike Jujutsu Klubb
+    - unless current_user
+      | Romerike Jujutsu Klubb
   button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
     span.navbar-toggler-icon
   #navbarSupportedContent.collapse.navbar-collapse
@@ -12,5 +13,5 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
       li.nav-item
         a.nav-link href=(current_user ? root_path : with_detour(login_path)) Medlemssider#{" (#{current_user&.name})" if current_user}
     form.form-inline.my-2.my-lg-0 action=search_path
-      input.form-control.mr-sm-2 type="search" name=:q placeholder="Search" aria-label="Search"
-      button.btn.btn-outline-success.my-2.my-sm-0 type="submit" Search
+      input.form-control.mr-sm-2 type="search" name=:q placeholder=t(:search) aria-label=t(:search)
+      button.btn.btn-outline-success.my-2.my-sm-0 type="submit" = t(:search)
