@@ -1,3 +1,7 @@
+a.btn.btn-secondary.float-right href=with_detour(new_event_invitee_path(event_invitee: { event_id: @event.id }), anchor: :invitees_tab)
+  i.fa.fa-plus>
+  | Legg til deltaker
+
 ul.nav.nav-tabs.mt-3 role="tablist"
   - candidates = @event.event_invitees - confirmed - registered - invited
   - if confirmed.any?

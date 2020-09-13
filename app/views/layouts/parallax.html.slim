@@ -23,4 +23,5 @@ html lang="nb"
   body class=(:wide if @content_width)
     = yield
     = yield :modals
+    = render 'layouts/parallax/menu'
     = render 'layouts/parallax/footer', information_pages: @information_pages, news_items: @news_items

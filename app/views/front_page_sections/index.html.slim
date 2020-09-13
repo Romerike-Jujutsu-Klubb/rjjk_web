@@ -22,6 +22,6 @@ table.table data-record-path=front_page_sections_path
         td = fps.title
         td = fps.subtitle
         td = fps.button_text
-        td = fps.information_page&.title
+        td: a href=information_page_path(fps.information_page) = fps.information_page&.title
         td: a href=front_page_section_path(fps) data-confirm='Are you sure?' data-method=:delete
           i.fa.fa-trash.text-danger

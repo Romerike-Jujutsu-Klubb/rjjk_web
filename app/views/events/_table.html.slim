@@ -1,18 +1,14 @@
-table.table.table-striped class=('table-sm' if events.size > 24)
+table.table.table-striped class=('table-sm' if events.size > 24) data-record-path=events_path
   thead
     tr
       th Hendelse
       th Start
       th Slutt
-      th Beskrivelse
   tbody
     - for event in events
-      tr
+      tr data-record-id="#{event.id}/edit"
         td = link_to event.title, current_user&.admin? ? edit_event_path(event) : event_path(event)
         td nowrap="true" = h event.start_at.to_date
         td nowrap="true" = h event.end_at&.to_date
-        td
-          = link_to 'Endre', edit_event_path(event)
-          = link_to 'Slett', event_path(event), data: { confirm: 'Er du sikker på at du vil endre denne hendelsen?' }, method: :delete, class: 'ml-3'
-      tr
-        td colspan="4" = event.ingress
+      tr data-record-id="#{event.id}/edit"
+        td colspan="3" = event.ingress

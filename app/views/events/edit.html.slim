@@ -1,12 +1,12 @@
 - @content_width = 880
 
 .float-md-right.mb-3.mb-md-0
-  a.btn.btn-secondary.mr-3 href=with_detour(new_event_invitee_path(event_invitee: { event_id: @event.id }), anchor: :invitees_tab)
-    i.fa.fa-plus>
-    | Legg til deltaker
-  a.btn.btn-primary href=event_path(@event)
+  a.btn.btn-primary.ml-3 href=event_path(@event)
     i.fa.fa-users>
     | Arrangementsside
+  a.btn.btn-danger.ml-3 href=event_path(@event) data-confirm='Er du sikker på at du vil slette denne hendelsen?' data-method=:delete
+    i.fa.fa-trash>
+    | Slett
 .clear-xl-right
 
 ul.nav.nav-tabs

@@ -58,7 +58,8 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
 
   def self.send_message_reminder
     tomorrow = Date.tomorrow
-    practices = Practice.includes(:attendances, group_schedule: :group).references(:group_schedules)
+    practices = Practice.includes(:attendances, group_schedule: { group: :current_semester })
+        .references(:group_schedules)
         .where('message IS NULL AND message_nagged_at IS NULL')
         .where('year = ? AND week = ? AND group_schedules.weekday = ?',
             tomorrow.cwyear, tomorrow.cweek, tomorrow.cwday)
@@ -81,7 +82,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
   def self.send_attendance_changes
     now = Time.current
     today = now.to_date
-    upcoming_group_schedules = GroupSchedule.includes(:group).references(:groups)
+    upcoming_group_schedules = GroupSchedule.includes(group: :current_semester).references(:groups)
         .where('weekday = ? AND end_at >= ? AND groups.closed_on IS NULL',
             today.cwday, now.time_of_day)
         .where('groups.planning = ?', true)

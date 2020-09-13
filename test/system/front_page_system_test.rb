@@ -9,8 +9,7 @@ class FrontPageSystemTest < ApplicationSystemTestCase
     screenshot_group :front
     visit root_path
     assert_selector 'h5', text: 'ARRANGEMENTET'
-    assert_selector 'h2', text: 'Section 1'
-    find('.newwrap').assert_matches_style(opacity: '1')
+    assert_selector 'h1,h2', text: 'Section 1'
     screenshot :index, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
   end
 

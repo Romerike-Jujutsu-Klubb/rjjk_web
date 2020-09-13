@@ -168,6 +168,6 @@ class Group < ApplicationRecord
   end
 
   def on_break?
-    !school_breaks || current_semester.interval.includes?(today)
+    school_breaks && current_semester.interval.excludes?(today)
   end
 end

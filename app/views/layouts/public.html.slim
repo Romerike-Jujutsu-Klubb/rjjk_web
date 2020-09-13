@@ -6,7 +6,7 @@ html lang="nb" prefix="og: http://ogp.me/ns#"
     meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
     /!--[if IE]
       meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"
-    title Trening - Teknikk - Trygghet | Romerike Jujutsu Klubb
+    title #{"#{Rails.env.upcase} " unless Rails.env.production?}#{ @layout_title || 'Trening - Teknikk - Trygghet'} | Romerike Jujutsu Klubb
     meta name="description" content="Martial arts club with over 40 years of experience in Jujutsu, Kung Fu, and Aikijutsu."
     meta name="theme-color" content="#000000"
     meta property="og:locale" content="en_US"

@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
     elsif _layout(lookup_context, []) == PUBLIC_LAYOUT || opts[:layout] == PUBLIC_LAYOUT ||
           _layout(lookup_context, []) == 'parallax' || opts[:layout] == 'parallax'
       load_information_pages
-      @news_items = NewsItem.front_page_items.reject(&:expired?).first(5)
+      @news_items = NewsItem.front_page_items.first(5)
     elsif _layout(lookup_context, []) == MEMBER_LAYOUT
       load_layout_model
     end

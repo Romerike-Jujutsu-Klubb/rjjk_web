@@ -34,10 +34,7 @@ class EventAttachmentsTest < ApplicationSystemTestCase
     event.attachments.attach(io: StringIO.new('Test Data'), filename: 'file.pdf')
 
     visit_with_login edit_event_path(id(:one), anchor: :attachments_tab)
-
-    page.accept_confirm do
-      find('a.btn[data-method=delete]').click
-    end
+    page.accept_confirm { find('#attachments a.btn[data-method=delete]').click }
 
     assert_text 'Vedlegget ble slettet.'
     screenshot :deleted

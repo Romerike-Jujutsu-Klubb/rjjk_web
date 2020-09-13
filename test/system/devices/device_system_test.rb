@@ -59,19 +59,16 @@ module DeviceSystemTest
     @window_width ||= (evaluate_script(<<~JS) * device_pixel_ratio).ceil
       window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
     JS
-    @window_width
   end
 
   def window_height
     @window_height ||= (evaluate_script(<<~JS) * device_pixel_ratio).ceil
       window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight
     JS
-    @window_height
   end
 
   def device_pixel_ratio
     @device_pixel_ratio ||= evaluate_script('window.devicePixelRatio')
-    @device_pixel_ratio
   end
 
   def scroll_bar_area
@@ -85,15 +82,24 @@ module DeviceSystemTest
   def test_parallax_front_page
     visit front_parallax_path
     screenshot :index, skip_area: scroll_bar_area
-    landscape { screenshot :index_landscape }
-    2.times do |i|
-      scroll_to find("#slide#{i + 1}")
-      screenshot "slide#{i + 1}"
+    landscape { screenshot :index_landscape, skip_area: scroll_bar_area }
+
+    (1..2).each do |i|
+      scroll_to find("#slide#{i}")
+      screenshot "slide#{i}"
       landscape do
-        scroll_to find("#slide#{i + 1}")
-        screenshot "slide#{i + 1}_landscape"
+        scroll_to find("#slide#{i}")
+        screenshot "slide#{i}_landscape"
       end
     end
+
+    scroll_to find('#slide-event')
+    screenshot 'slide-event'
+    landscape do
+      scroll_to find('#slide-event')
+      screenshot 'slide-event_landscape'
+    end
+
     scroll_to find('footer')
     screenshot :footer, skip_area: scroll_bar_area
     landscape do
@@ -115,10 +121,11 @@ module DeviceSystemTest
         deviceScaleFactor: 1,
         mobile: true)
     yield
-    @window_width, @window_height = @window_height, @window_width
+    @window_width = original_width
+    @window_height = original_height
     page.driver.browser.execute_cdp('Emulation.setDeviceMetricsOverride',
-        width: @window_width,
-        height: @window_height,
+        width: original_width,
+        height: original_height,
         deviceScaleFactor: 1,
         mobile: true)
   end

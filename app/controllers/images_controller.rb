@@ -78,15 +78,6 @@ class ImagesController < ApplicationController
     return if rank_required(image, check_referer: false)
 
     requested_format = params[:format]
-    referer = request.headers['HTTP_REFERER']
-    accepts_header = request.headers['HTTP_ACCEPT']
-
-    logger.error "referer: #{referer.inspect}"
-    logger.error "accepts_header: #{accepts_header.inspect}"
-    logger.error "requested_format: #{requested_format.inspect}"
-    logger.error "helpers.accepts_webp?: #{helpers.accepts_webp?.inspect}"
-    logger.error "requests_webp(requested_format): #{requests_webp(requested_format).inspect}"
-    logger.error "serving_webp(requested_format): #{serving_webp(requested_format).inspect}"
 
     return if !serving_webp(requested_format) &&
         (redirected_to_webp(image, requested_format) || redirected_to_icon(image) ||
@@ -103,7 +94,7 @@ class ImagesController < ApplicationController
     rescue => e
       logger.error e
       logger.error e.backtrace.join("\n")
-      redirect_to helpers.asset_path 'pdficon_large.png'
+      redirect_to_icon(image)
     end
   end
 
