@@ -4,13 +4,16 @@
   .card
     h5.card-header = form_header
     .card-body = bootstrap_form_for @news_item, html: {role: 'form'} do |f|
-      = f.text_field :title
       .row
-        .col-md-4
+        .col-md-8 = f.text_field :title
+        .col-md
+          = f.select :user_selection, [['For alle', nil], ['For medlemmer', true]]
+      .row
+        .col-md
           = f.select :publication_state, NewsItem::PublicationState.constants.map { |s| [t(s.downcase), s] }
-        .col-md-4
+        .col-md
           = f.text_field :publish_at, value: @news_item.publish_at.try(:strftime, '%F %R'), class: 'datetime', data: {:'default-date' => Time.current.strftime('%F %R') }
-        .col-md-4
+        .col-md
           = f.text_field :expire_at, value: @news_item.expire_at&.strftime('%F %R'), class: 'datetime', data: {'default-date': 1.week.from_now.strftime('%F %R')}
 
       = render 'layouts/textarea_input_buttons', images: @images

@@ -15,6 +15,7 @@ class NewsItem < ApplicationRecord
         .where('publish_at IS NULL OR publish_at <= CURRENT_TIMESTAMP')
         .where('expire_at IS NULL OR expire_at >= CURRENT_TIMESTAMP')
   }
+  scope :for_all, -> { where(user_selection: nil) }
 
   # TODO(uwe): Rename to "author"?
   belongs_to :creator, class_name: 'User', foreign_key: :created_by, inverse_of: :news_items
@@ -33,8 +34,10 @@ class NewsItem < ApplicationRecord
   validates :publication_state, inclusion: { in: PublicationState.constants.map(&:to_s) }
 
   def self.front_page_items
-    (admin? ? self : current).order(Arel.sql('COALESCE(publish_at, created_at) DESC')).limit(10)
-        .includes(:news_item_likes, creator: :member).to_a
+    query = (admin? ? self : current).order(Arel.sql('COALESCE(publish_at, created_at) DESC')).limit(10)
+        .includes(:news_item_likes, creator: :member)
+    query = query.for_all unless current_user&.member?
+    query.to_a
   end
 
   def initialize(*args)

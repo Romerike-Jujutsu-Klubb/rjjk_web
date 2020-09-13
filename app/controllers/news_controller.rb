@@ -9,13 +9,16 @@ class NewsController < ApplicationController
   end
 
   def list
-    @news_items = NewsItem.order('created_at DESC').limit(30).includes(creator: :member).to_a
+    query = NewsItem.order('created_at DESC').limit(30).includes(creator: :member)
+    query = query.for_all unless current_user&.member?
+    @news_items = query.to_a
     render action: :index
   end
 
   def show
     id = params[:id]
     @news_item = NewsItem.find(id)
+    redirect_to root_path if @news_item.user_selection && !current_user.member?
   rescue ActiveRecord::RecordNotFound
     raise unless %w[p2 p3 page2].include?(id)
 
