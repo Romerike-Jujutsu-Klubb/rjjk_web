@@ -4,6 +4,7 @@ nb:
     curriculum_group_id: Pensum
     from_age: "Fra alder"
     joined_on: Innmeldingsdato
+    left_on: Utmeldingsdato
     locale: Språk
     monthly_fee: "Måneds\xADavgift"
     name: Navn
@@ -130,7 +131,6 @@ nb:
         comment: Kommentar
         discount_override: Rabatt (overstyring)
         honorary_on: Æresmedlem fra
-        left_on: Utmeldingsdato
         nkf_fee: NKF Hovedklubb
         passive_on: Passiv fra
         payment_problem: Betalingsproblem

@@ -296,6 +296,7 @@ Rails.application.routes.draw do
     get :complete
   end
   resources :signups
+  resources :sms, only: %i[index show create]
 
   controller :status do
     get 'status', action: :index

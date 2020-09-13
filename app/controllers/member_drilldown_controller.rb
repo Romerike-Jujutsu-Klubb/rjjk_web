@@ -5,7 +5,8 @@ class MemberDrilldownController < SimpleDrilldown::Controller
 
   field :name
   field :joined_on
-  default_fields %w[name joined_on]
+  field :left_on
+  default_fields %w[name joined_on left_on]
   list_order 'members.joined_on, members.created_at'
 
   dimension :active, <<~SQL

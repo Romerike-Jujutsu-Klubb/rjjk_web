@@ -1,0 +1,14 @@
+h3 Sende SMS
+
+.form-padding
+  p Velg mottakere og skriv en melding.
+  = bootstrap_form_for :user, url: sms_path do |f|
+    = f.select :id, @users.map{|u| [u.name, u.id]}, {label: "Mottakere #{@recipients.size if @recipients}", selected: @recipients}, class: :chosen, multiple: true
+    = f.text_field :text
+
+    .float-right.mb-3
+      = f.primary 'Send melding'
+      = back_or_link_to 'Avbryt', root_path, class: 'btn btn-secondary ml-2', maxlength: 159
+
+javascript:
+    $('#user_text').focus();
