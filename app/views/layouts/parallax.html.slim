@@ -24,7 +24,12 @@ html lang="nb"
     - if @content_width
       = yield
     - else
-      .container-xl = yield
+      .container-md
+        - if flash.notice
+          .alert.alert-info
+            = flash.notice
+        = yield
+    .clearfix
     = yield :modals
     = render 'layouts/parallax/menu'
     = render 'layouts/parallax/footer', information_pages: @information_pages, news_items: @news_items

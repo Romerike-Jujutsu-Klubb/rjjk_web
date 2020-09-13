@@ -1,8 +1,9 @@
-nav.navbar.navbar-expand-xl.navbar-light.bg-light.fixed-top
+nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
   a.navbar-brand href="/"
     img.mr-2 src=asset_path('rjjk_logo_plus_txt_320.png') width="30" height="30" class="d-inline-block align-top" alt="RJJK Logo" loading="lazy"
     - unless current_user
-      | Romerike Jujutsu Klubb
+      .d-inline.d-lg-none.d-xl-inline Romerike Jujutsu Klubb
+      .d-none.d-lg-inline.d-xl-none RJJK
   button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
     span.navbar-toggler-icon
   #navbarSupportedContent.collapse.navbar-collapse

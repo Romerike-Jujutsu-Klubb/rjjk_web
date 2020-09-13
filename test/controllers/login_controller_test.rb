@@ -189,9 +189,9 @@ class LoginControllerTest < IntegrationTest
 
   def test_forgot_password__requires_valid_email_address
     post forgot_password_path, params: { user: { email: '' } }
+    assert_match(/Skriv inn en gyldig e-postadresse./, @response.body)
     UserMessageSenderJob.perform_now
     assert_equal 0, Mail::TestMailer.deliveries.size
-    assert_match(/Skriv inn en gyldig e-postadresse./, @response.body)
   end
 
   def test_forgot_password__ignores_unknown_email_address
