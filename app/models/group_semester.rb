@@ -47,4 +47,8 @@ class GroupSemester < ApplicationRecord
   def name
     "#{semester.name} - #{group.name}"
   end
+
+  def interval
+    first_session..last_session
+  end
 end

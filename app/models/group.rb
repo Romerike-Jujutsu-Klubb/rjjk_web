@@ -166,4 +166,8 @@ class Group < ApplicationRecord
     second_week = Date.civil(date.year, date.mon >= 7 ? 12 : 6, 11).beginning_of_week
     second_week + group_schedule.weekday - 1
   end
+
+  def on_break?
+    !school_breaks || current_semester.interval.includes?(today)
+  end
 end

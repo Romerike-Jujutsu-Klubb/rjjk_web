@@ -13,7 +13,7 @@ SELECT a.id FROM attendances a INNER JOIN practices p ON a.practice_id = p.id
 WHERE member_id = members.id AND year = ? AND week = ?)',
             today.cwyear, today.cweek)
         .order(:joined_on)
-        .select { |m| m.groups.any?(&:planning) }
+        .select { |m| m.groups.any? { |g| g.planning && !g.on_break? } }
         .select(&:active?)
         .each do |member|
       if member.user.nil?
@@ -29,10 +29,11 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
   def self.send_attendance_summary
     now = Time.current
     today = now.to_date
-    group_schedules = GroupSchedule.includes(:group).references(:groups)
+    group_schedules = GroupSchedule.includes(group: :current_semester).references(:groups)
         .merge(Group.active(now))
         .where('weekday = ? AND start_at >= ?', today.cwday, now.time_of_day)
         .where('groups.planning = ?', true)
+        .where('((NOT groups.school_breaks) OR ? BETWEEN first_session AND last_session)', today)
         .order('groups.from_age', 'groups.to_age')
         .to_a
     group_schedules.each do |gs|
@@ -64,6 +65,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         .where('(group_schedules.start_at <= ? OR group_schedules.start_at <= ?)',
             Time.current.time_of_day, Time.current.time_of_day + 3600)
         .where('groups.planning = ?', true) # TODO(uwe): Make a scope :with_planning
+        .where('((NOT groups.school_breaks) OR ? BETWEEN first_session AND last_session)', tomorrow)
         .to_a
     practices.each do |pr|
       next if pr.attendances.select(&:present?).empty?
@@ -83,6 +85,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         .where('weekday = ? AND end_at >= ? AND groups.closed_on IS NULL',
             today.cwday, now.time_of_day)
         .where('groups.planning = ?', true)
+        .where('((NOT groups.school_breaks) OR ? BETWEEN first_session AND last_session)', today)
         .to_a
     upcoming_group_schedules.each do |gs|
       attendances = Attendance.includes(:member, practice: :group_schedule)
