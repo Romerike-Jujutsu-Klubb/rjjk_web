@@ -29,7 +29,7 @@ html lang="nb"
           .alert.alert-info
             = flash.notice
         = yield
-    .clearfix
     = yield :modals
     = render 'layouts/parallax/menu'
+    .clearfix
     = render 'layouts/parallax/footer', information_pages: @information_pages, news_items: @news_items
