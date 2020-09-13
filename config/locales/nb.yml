@@ -11,6 +11,7 @@ nb:
     title: Tittel
     to_age: "Til alder"
     url: URL
+    user_selection: Synlighet
     yearly_fee: "Års\xADkontingent"
     years_on_the_board: År i styret
   activerecord:
