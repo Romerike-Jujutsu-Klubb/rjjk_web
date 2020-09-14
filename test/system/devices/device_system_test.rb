@@ -86,15 +86,15 @@ module DeviceSystemTest
 
     (1..2).each do |i|
       scroll_to find("#slide#{i}")
-      screenshot "slide#{i}"
+      screenshot "slide#{i}", skip_area: scroll_bar_area
       landscape do
         scroll_to find("#slide#{i}")
-        screenshot "slide#{i}_landscape"
+        screenshot "slide#{i}_landscape", skip_area: scroll_bar_area
       end
     end
 
     scroll_to find('#slide-event')
-    screenshot 'slide-event'
+    screenshot 'slide-event', skip_area: scroll_bar_area
     landscape do
       scroll_to find('#slide-event')
       screenshot 'slide-event_landscape', skip_area: scroll_bar_area
