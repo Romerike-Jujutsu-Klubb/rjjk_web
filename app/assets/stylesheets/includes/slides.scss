@@ -74,26 +74,31 @@ body:not(.modal-open) .slide.header img {
   left: 0;
 }
 
+.slide:nth-of-type(2n):before {
+  transform: translateZ(-1px) scale(2);
+  z-index: -1;
+}
+
 .title {
   @extend .col-lg-6;
   @extend .col-xl-7;
   @extend .position-static;
   padding: 5%;
   border-radius: 5px;
-  background: rgba(240, 230, 220, .7);
-  box-shadow: 0 0 8px rgba(0, 0, 0, .9);
+  background: rgba(240, 230, 220, .9);
+  box-shadow: 0 0 8px rgba(0, 0, 0, .7);
 }
 
-.slide:not(.header):nth-child(2n+1) {
+.slide:not(.header):nth-of-type(2n+1) {
   z-index: 2;
 }
 
-.slide:nth-child(2n) .title {
+.slide:nth-of-type(2n) .title {
   margin-left: 0;
   margin-right: auto;
 }
 
-.slide:nth-child(2n+1) .title {
+.slide:nth-of-type(2n+1) .title {
   margin-left: auto;
   margin-right: 0;
 }

@@ -21,14 +21,10 @@ html lang="nb"
     = csrf_meta_tags
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body class=(:wide if @content_width)
-    - if @content_width
-      = yield
-    - else
-      .container-md
-        - if flash.notice
-          .alert.alert-info
-            = flash.notice
-        = yield
-    = yield :modals
     = render 'layouts/parallax/menu'
+    = yield :modals
+    div.clearfix class=('container-md mb-3' unless @content_width)
+      - if flash.notice
+        .alert.alert-info = flash.notice
+      = yield
     = render 'layouts/parallax/footer', information_pages: @information_pages, news_items: @news_items

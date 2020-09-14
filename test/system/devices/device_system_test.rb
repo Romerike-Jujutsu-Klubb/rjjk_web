@@ -97,7 +97,7 @@ module DeviceSystemTest
     screenshot 'slide-event'
     landscape do
       scroll_to find('#slide-event')
-      screenshot 'slide-event_landscape'
+      screenshot 'slide-event_landscape', skip_area: scroll_bar_area
     end
 
     scroll_to find('footer')
