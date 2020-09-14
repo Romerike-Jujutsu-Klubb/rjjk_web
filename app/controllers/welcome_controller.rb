@@ -60,6 +60,7 @@ class WelcomeController < ApplicationController
   def load_front_page_content
     @front_page_sections = FrontPageSection.includes(:image).order(:position).to_a
     @event = Event.upcoming.order(:start_at).find { |e| current_user&.member || e.public? }
+    @event_image = Image.find(1054)
   end
 
   def graduation_body(graduations)

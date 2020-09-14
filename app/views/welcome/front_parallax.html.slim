@@ -6,17 +6,17 @@
     img#rjjk_logo.mt-lg-4 src=asset_path('rjjk_logo_plus_txt_320.png') style="max-width:100%" alt="RJJK Logo"
 
 - if @event
-  .slide id="slide-event"  style="background-image: url('#{image_path(1054)}')"
+  .slide id="slide-event"  style="background-image: url('#{image_url_with_cl(@event_image)}')"
     .title
       = render('layouts/event_main', event: @event, display_year: false, display_month: true, display_times: true)
 
 - @front_page_sections[1..-1].each.with_index do |fps, i|
-  .slide id="slide#{i + 1}" style=("background-image: url('#{image_path(fps.image_id)}')" if @event ? i.even? : i.odd?)
+  .slide id="slide#{i + 1}" style=("background-image: url('#{image_url_with_cl(fps.image)}')" if @event ? i.even? : i.odd?)
     .title
       h1 = fps.title
       h2 = fps.subtitle
       p
-        img src=image_path(fps.image_id)
+        img src=image_url_with_cl(fps.image)
         == textalize(fps.information_page.images).strip[3..-5]
       a.float-right.btn.btn-info href=information_page_path(fps.information_page) = fps.button_text.presence || fps.information_page.title
 
@@ -24,7 +24,7 @@
   - next if (i + (@event ? 0 : 1)).even?
   css:
     #slide#{i+1}:before {
-      background-image: url("#{image_path(fps.image_id)}");
+      background-image: url("#{image_url_with_cl(fps.image)}");
       transform: translateZ(-1px) scale(2);
     }
 
