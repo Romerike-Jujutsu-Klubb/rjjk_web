@@ -134,6 +134,10 @@ class Event < ApplicationRecord
     nil
   end
 
+  def image
+    Image.find(Rails.env.test? ? 980_190_962 : 1054)
+  end
+
   private
 
   def paragraphs

@@ -6,7 +6,7 @@
     img#rjjk_logo.mt-lg-4 src=asset_path('rjjk_logo_plus_txt_320.png') style="max-width:100%" alt="RJJK Logo"
 
 - if @event
-  .slide id="slide-event"  style="background-image: url('#{image_url_with_cl(@event_image)}')"
+  .slide id="slide-event"  style="background-image: url('#{image_url_with_cl(@event.image)}')"
     .title
       = render('layouts/event_main', event: @event, display_year: false, display_month: true, display_times: true)
 
