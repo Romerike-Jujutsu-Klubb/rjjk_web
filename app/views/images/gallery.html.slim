@@ -1,6 +1,6 @@
 - if @image
   - if @image.video?
-    = video_tag url_for(controller: :images, action: :show, id: @image.id, format: @image.format), title: @image.name || 'Film', controls: true, autobuffer: true, class: 'w-100'
+    = video_tag image_url_with_cl(@image), title: @image.name || 'Film', controls: true, autobuffer: true, class: 'w-100'
   - else
     div style="position: relative;overflow: hidden;padding-top:#{100 / @image.aspect_ratio}%"
       - media_style = "position:absolute;max-width:100%;top:0;bottom:0;left:0;right:0;max-height:100%"
