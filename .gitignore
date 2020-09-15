@@ -10,6 +10,7 @@
 /public/heap*.json
 /public/icon/*.png
 /public/images/*.jpg
+/public/images/*.mp4
 /public/images/*.webp
 /public/images/*.webm
 /public/images/inline/*.*
