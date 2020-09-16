@@ -11,6 +11,11 @@
 @import 'includes/disable_animations';
 <% end %>
 
+#navbar {
+  transition: opacity 0.5s; /* Transition effect when hiding/showing */
+  position: sticky;
+}
+
 .md {
   table {
     @extend .table;
@@ -24,7 +29,7 @@ html {
 
 body {
   margin: 0;
-  padding: 3rem 0 0 0;
+  padding: 0 0 0 0;
   perspective: 1px;
   transform-style: preserve-3d;
   height: 100%;

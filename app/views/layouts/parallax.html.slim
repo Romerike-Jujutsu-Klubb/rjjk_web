@@ -23,7 +23,7 @@ html lang="nb"
   body class=(:wide if @content_width)
     = render 'layouts/parallax/menu'
     = yield :modals
-    div.clearfix class=('container-md mb-3' unless @content_width)
+    div.clearfix class=('container-md pt-4 mb-3' unless @content_width)
       - if flash.notice
         .alert.alert-info = flash.notice
       = yield

@@ -1,4 +1,4 @@
-nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+nav#navbar.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
   a.navbar-brand href="/"
     img.mr-2 src=asset_path('rjjk_logo_plus_txt_320.png') width="30" height="30" class="d-inline-block align-top" alt="RJJK Logo" loading="lazy"
     - unless current_user
@@ -16,3 +16,18 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
     form.form-inline.my-2.my-lg-0 action=search_path
       input.form-control.mr-sm-2 type="search" name=:q placeholder=t(:search) aria-label=t(:search)
       button.btn.btn-outline-success.my-2.my-sm-0 type="submit" = t(:search)
+
+- if @content_width
+  javascript:
+    /* When the user scrolls down, hide the navbar. When the user scrolls up, show the navbar */
+    var prevScrollpos = window.pageYOffset;
+    document.body.addEventListener('scroll', function() {
+      var currentScrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+      console.log("Scroll: " + currentScrollPos);
+      if (prevScrollpos > currentScrollPos) {
+        document.getElementById("navbar").style.opacity = "1"; // Try opacity 0.8
+      } else if (currentScrollPos >= 56) {
+        document.getElementById("navbar").style.opacity = "0";
+      }
+      prevScrollpos = currentScrollPos;
+    });
