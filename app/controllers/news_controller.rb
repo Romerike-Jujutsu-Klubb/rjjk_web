@@ -18,7 +18,7 @@ class NewsController < ApplicationController
   def show
     id = params[:id]
     @news_item = NewsItem.find(id)
-    redirect_to root_path if @news_item.user_selection && !current_user.member?
+    redirect_to root_path if @news_item.user_selection && !current_user&.member?
   rescue ActiveRecord::RecordNotFound
     raise unless %w[p2 p3 page2].include?(id)
 
