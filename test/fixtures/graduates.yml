@@ -5,6 +5,7 @@ lars_kyu_1:
   rank: kyu_1
   paid_graduation: true
   paid_belt: true
+  updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 uwe_kyu_5:
   member: uwe
@@ -13,6 +14,7 @@ uwe_kyu_5:
   rank: kyu_5
   paid_graduation: true
   paid_belt: false
+  updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 sebastian_12_mon:
   member: sebastian
@@ -21,6 +23,7 @@ sebastian_12_mon:
   rank: mon_12
   paid_graduation: true
   paid_belt: false
+  updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 uwe_nidan:
   member: uwe
@@ -29,6 +32,7 @@ uwe_nidan:
   rank: nidan
   paid_graduation: true
   paid_belt: true
+  updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 newbie_kyu_5:
   member: newbie
@@ -37,6 +41,7 @@ newbie_kyu_5:
   rank: kyu_5
   paid_graduation: true
   paid_belt: true
+  updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 sebastian_kyu_5:
   member: sebastian
@@ -44,3 +49,4 @@ sebastian_kyu_5:
   rank: kyu_5
   paid_graduation: true
   paid_belt: true
+  updated_at: <%=TEST_TIME.utc.to_s(:db) %>
