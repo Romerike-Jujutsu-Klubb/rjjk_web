@@ -4,6 +4,7 @@ lars:
   nkf_fee: true
   payment_problem: false
   user: lars
+  updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 uwe:
   instructor: true
@@ -11,6 +12,7 @@ uwe:
   nkf_fee: true
   payment_problem: false
   user: uwe
+  updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 sebastian:
   instructor: false
@@ -18,6 +20,7 @@ sebastian:
   nkf_fee: true
   payment_problem: false
   user: sebastian
+  updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 oldie:
   instructor: false
@@ -25,6 +28,7 @@ oldie:
   nkf_fee: true
   payment_problem: false
   user: oldie
+  updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 newbie:
   instructor: false
@@ -32,6 +36,7 @@ newbie:
   nkf_fee: true
   payment_problem: false
   user: newbie
+  updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 leftie:
   instructor: false
@@ -40,3 +45,4 @@ leftie:
   nkf_fee: true
   payment_problem: false
   user: leftie
+  updated_at: <%=TEST_TIME.utc.to_s(:db) %>
