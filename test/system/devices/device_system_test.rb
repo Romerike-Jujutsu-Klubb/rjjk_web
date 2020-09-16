@@ -84,6 +84,13 @@ module DeviceSystemTest
     screenshot :index, skip_area: scroll_bar_area
     landscape { screenshot :index_landscape, skip_area: scroll_bar_area }
 
+    scroll_to find('#slide-event')
+    screenshot 'slide-event', skip_area: scroll_bar_area
+    landscape do
+      scroll_to find('#slide-event')
+      screenshot 'slide-event_landscape', skip_area: scroll_bar_area
+    end
+
     (1..2).each do |i|
       scroll_to find("#slide#{i}")
       screenshot "slide#{i}", skip_area: scroll_bar_area
@@ -91,13 +98,6 @@ module DeviceSystemTest
         scroll_to find("#slide#{i}")
         screenshot "slide#{i}_landscape", skip_area: scroll_bar_area
       end
-    end
-
-    scroll_to find('#slide-event')
-    screenshot 'slide-event', skip_area: scroll_bar_area
-    landscape do
-      scroll_to find('#slide-event')
-      screenshot 'slide-event_landscape', skip_area: scroll_bar_area
     end
 
     scroll_to find('footer')
