@@ -35,4 +35,16 @@ class NkfMemberTrial < ApplicationRecord
   def to_s
     name
   end
+
+  def user_attributes
+    {
+      address: adresse,
+      birthdate: fodtdato,
+      email: epost,
+      first_name: fornavn,
+      last_name: etternavn,
+      phone: mobil,
+      postal_code: postnr,
+    }
+  end
 end

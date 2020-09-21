@@ -156,7 +156,7 @@ class NkfMemberComparison
   def setup_sync
     @errors = []
     @outgoing_changes = []
-    agent = NkfAgent.new
+    agent = NkfAgent.new(:comparison)
     front_page = agent.login
     [agent, front_page]
   end

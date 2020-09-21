@@ -4,7 +4,7 @@ class NkfMemberTrialsController < ApplicationController
   before_action :admin_required
 
   def index
-    @nkf_member_trials = NkfMemberTrial.order(:fornavn, :etternavn).to_a
+    @nkf_member_trials = NkfMemberTrial.order(:reg_dato, :fornavn, :etternavn).to_a
 
     respond_to do |format|
       format.html

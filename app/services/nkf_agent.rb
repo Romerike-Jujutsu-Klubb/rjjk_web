@@ -20,13 +20,14 @@ class NkfAgent
   NKF_PASSWORD = Rails.application.credentials.nkf_password
   BACKOFF_LIMIT = 15.minutes
 
-  def initialize
+  def initialize(key)
     raise 'NKF PASSWORD required!' if NKF_PASSWORD.blank?
 
-    super
+    super()
     @agent = Mechanize.new
     @agent.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    Thread.current[:nkf_agent] = @agent
+    @thread_key = :"nkf_agent_#{key}"
+    Thread.current[@thread_key] = @agent
   end
 
   # Returns the front page
@@ -122,6 +123,6 @@ class NkfAgent
   private
 
   def thread_local_agent
-    (Thread.current[:nkf_agent] ||= @agent.clone)
+    (Thread.current[@thread_key] ||= @agent.clone)
   end
 end

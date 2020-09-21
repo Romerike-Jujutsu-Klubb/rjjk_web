@@ -295,7 +295,12 @@ Rails.application.routes.draw do
     get :guardians
     get :complete
   end
-  resources :signups
+  resources :signups do
+    member do
+      patch :close
+      patch :complete
+    end
+  end
   resources :sms, only: %i[index show create]
 
   controller :status do

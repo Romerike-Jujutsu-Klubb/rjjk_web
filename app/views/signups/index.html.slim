@@ -1,22 +1,16 @@
 a.btn.btn-primary.float-right href=new_signup_path
   i.fa.fa-plus>
-  | New Signup
-h1 Signups
+  | Nytt prøvemedlemskap
+h1 Prøvemedlemskap
 
-table.table
+table.table data-record-path=signups_path
   thead
     tr
-      th User
-      th Nkf member trial
-      th
-      th
-      th
+      th Bruker
+      th NKF Prøvemedlem
 
   tbody
     - @signups.each do |signup|
-      tr
+      tr data-record-id=signup.id
         td = signup.user
         td = signup.nkf_member_trial
-        td = link_to 'Show', signup
-        td = link_to 'Edit', edit_signup_path(signup)
-        td = link_to 'Destroy', signup, data: { confirm: 'Are you sure?' }, method: :delete

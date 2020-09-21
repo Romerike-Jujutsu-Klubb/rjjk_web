@@ -11,6 +11,7 @@ nb:
     title: Tittel
     to_age: "Til alder"
     url: URL
+    user_id: Bruker
     user_selection: Synlighet
     yearly_fee: "Års\xADkontingent"
     years_on_the_board: År i styret
@@ -63,7 +64,6 @@ nb:
         organization: Organisasjon / klubb
         payed: Betalt
         phone: Telefon
-        user_id: Bruker
         will_attend: Vil delta
         will_work: Vil hjelpe til
       event_invitee_message:

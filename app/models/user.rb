@@ -48,6 +48,7 @@ class User < ApplicationRecord
   has_many :secondary_wards, dependent: :nullify, class_name: 'User', foreign_key: :guardian_2_id,
       inverse_of: :guardian_2
   has_many :signatures, dependent: :destroy
+  has_many :signups, dependent: :destroy
   has_many :user_messages, dependent: :destroy
 
   search_scope %i[address email first_name last_name login phone postal_code security_token],

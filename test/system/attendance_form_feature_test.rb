@@ -30,8 +30,9 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
                   'Totalt 1',
                   'Lars Bråten',
                   "Erik Hansen\nNKF_mt_two@example.com",
+                  "Even Jensen\nNKF_mt_three@example.com",
                   "Hans Eriksen\nfaktura@eriksen.org",
-                  'Totalt 3',
+                  'Totalt 4',
                   "Sebastian Kubosch (Permisjon)\n98765432 / 5556666",
                   'Totalt 1'],
         all('tr td:first-child').map(&:text).reject(&:blank?)
@@ -43,8 +44,9 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
                   'Totalt 1',
                   'Lars Bråten',
                   "Erik Hansen\nNKF_mt_two@example.com",
+                  "Even Jensen\nNKF_mt_three@example.com",
                   "Hans Eriksen\nfaktura@eriksen.org",
-                  'Totalt 3',
+                  'Totalt 4',
                   "Sebastian Kubosch (Permisjon)\n98765432 / 5556666",
                   'Totalt 1'],
         all('tr td:first-child').map(&:text).reject(&:blank?)
@@ -96,7 +98,7 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
       end
     end
     assert_difference 'TrialAttendance.count' do
-      hans_row = find('table:first-of-type tbody tr:nth-of-type(7)')
+      hans_row = find('table:first-of-type tbody tr:nth-of-type(8)')
       assert hans_row
       assert_equal(['Hans Eriksen faktura@eriksen.org', '6',
                     'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', 'X', '', ''], # , '2'],

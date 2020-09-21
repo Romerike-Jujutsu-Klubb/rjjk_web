@@ -32,3 +32,20 @@ two:
   tid: 2
   stilart: Jujutsu
   medlems_type: Enkeltmedlem
+
+three:
+  medlems_type: MyString
+  etternavn: Jensen
+  fornavn: Even
+  fodtdato: 2007-11-04
+  alder: 6
+  postnr: 4322
+  sted: MyStringer
+  adresse: MyString 3
+  epost: NKF_mt_three@example.com
+  mobil: MyString4
+  res_sms: false
+  reg_dato: 2010-10-02
+  tid: 3
+  stilart: Jujutsu
+  medlems_type: Enkeltmedlem

@@ -21,7 +21,7 @@ class SignupsControllerTest < ActionDispatch::IntegrationTest
   test 'should create signup' do
     assert_difference('Signup.count') do
       post signups_url, params: { signup: {
-        nkf_member_trial_id: @signup.nkf_member_trial_id, user_id: id(:uwe)
+        nkf_member_trial_id: id(:three), user_id: id(:uwe)
       } }
     end
 

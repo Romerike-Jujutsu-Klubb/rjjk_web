@@ -1,12 +1,16 @@
-p#notice = notice
+.float-right
+  => link_to 'Oversikt', signups_path, class: 'btn btn-link'
+  =< link_to edit_signup_path(@signup), class: 'btn btn-primary'
+    i.fa.fa-edit>
+    | Endre
 
-p
-  strong User:
-  = @signup.user
-p
-  strong Nkf member trial:
-  = @signup.nkf_member_trial
+h1 Prøvemedlemskap
+h2 = @signup.user
 
-=> link_to 'Edit', edit_signup_path(@signup)
-'|
-=< link_to 'Index', signups_path
+.text-center.my-5
+  a.btn.btn-success.btn-lg.ml-3 href=complete_signup_path(@signup.id) data-method=:patch
+    i.fa.fa-sign-in>
+    | Meld inn (mottatt kontrakt)
+  a.btn.btn-danger.btn-lg.ml-3 href=close_signup_path(@signup.id) data-method=:patch
+    i.fa.fa-remove>
+    | Avslutt prøvemedlemskap

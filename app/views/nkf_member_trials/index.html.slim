@@ -1,0 +1,31 @@
+- @content_width = 1024
+h1 Folk i prøvetid (#{@nkf_member_trials.size})
+
+table.table
+  thead
+    tr
+      th Navn
+      th Alder
+      th
+      th Adresse
+      th Epost
+      th Mobil
+      th Reg dato
+      th Registrering
+  tbody
+    - @nkf_member_trials.each do |nkf_member_trial|
+      tr
+        td = link_to nkf_member_trial.name, nkf_member_trial
+        td.text-right #{nkf_member_trial.alder} år
+        td = nkf_member_trial.fodtdato
+        td
+          span.nowrap = nkf_member_trial.adresse
+          span.nowrap
+            => nkf_member_trial.postnr
+            = nkf_member_trial.sted
+        td = nkf_member_trial.epost
+        td = nkf_member_trial.mobil
+        td style=('color: red' if nkf_member_trial.reg_dato < 2.months.ago.to_date) = nkf_member_trial.reg_dato
+        td
+          - if nkf_member_trial.signup
+            a href=signup_path(nkf_member_trial.signup.id) Reg

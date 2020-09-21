@@ -4,7 +4,7 @@ class NkfAppointmentsScraper
   def self.import_appointments
     tries ||= 1
     logger.info 'Import appointments'
-    agent = NkfAgent.new
+    agent = NkfAgent.new(:appointments)
     front_page = agent.login
 
     admin_form = front_page.form('ks_reg_medladm')

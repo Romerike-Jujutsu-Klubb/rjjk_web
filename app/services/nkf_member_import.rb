@@ -19,8 +19,8 @@ class NkfMemberImport
     @error_records = []
     @cookies = []
 
-    nkf_agent = NkfAgent.new
-    nkf_agent.login # returns front_page
+    nkf_agent = NkfAgent.new(:import)
+    front_page = nkf_agent.login # returns front_page
 
     search_body = nkf_agent.search_members(nkf_member_id)
     session_id = search_body.scan(/Download27\('(.*?)'\)/)[0][0]
@@ -35,13 +35,12 @@ class NkfMemberImport
     end
     add_waiting_kids(nkf_agent, @import_rows, detail_codes)
 
-    extra_function_codes = search_body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
-    raise search_body if extra_function_codes.empty?
-
-    extra_function_code = extra_function_codes[0][0]
-    member_trial_rows = get_member_trial_rows(nkf_agent, session_id, extra_function_code)
+    extra_function_codes = front_page.body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
+    raise front_page.body if extra_function_codes.empty?
 
     import_member_rows(@import_rows)
+
+    member_trial_rows = get_member_trial_rows(nkf_agent, session_id, extra_function_codes[0][0])
     import_member_trials(member_trial_rows)
   rescue => e
     @exception = e
@@ -267,8 +266,8 @@ class NkfMemberImport
       end
       record = NkfMemberTrial.find_by(tid: row[columns.index('tid')])
       record ||= NkfMemberTrial.find_by(reg_dato: row[columns.index('reg_dato')],
-                                        fornavn: row[columns.index('fornavn')],
-                                        etternavn: row[columns.index('etternavn')])
+          fornavn: row[columns.index('fornavn')],
+          etternavn: row[columns.index('etternavn')])
       record ||= NkfMemberTrial.new
       record.attributes = attributes
       next unless record.changed?

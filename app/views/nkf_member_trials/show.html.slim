@@ -1,6 +1,11 @@
-a.btn.btn-primary.float-right href="https://nkfwww.kampsport.no/portal/page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_cr_par=DBD1D096CD9CD9B19493E398A29CD9D9D0B09987E197D59D94DC94A5979E969692D5D3E1A6C5DAD4D1A098A7959A6A63AD9AA399A7A4A3A093A1A8A39E9CA3999FA29A9CA6" target=:nkf
-  i.fa.fa-external-link>
-  | Se hos NKF
+.float-right
+  a.btn.btn-link href=nkf_member_trials_path
+    i.fa.fa-table>
+    | NKF Prøvemedlemmer
+  - if @nkf_member_trial.signup.nil?
+    a.btn.btn-primary.ml-3 href=new_signup_path(signup: {nkf_member_trial_id: @nkf_member_trial.id})
+      i.fa.fa-sign-in>
+      | Registrer #{@nkf_member_trial.name}
 
 p
   b Medlems type:
@@ -38,5 +43,3 @@ p
 p
   b Reg dato:
   = h @nkf_member_trial.reg_dato
-
-=< link_to 'Back', nkf_member_trials_path
