@@ -12,6 +12,7 @@ class NkfMemberTrial < ApplicationRecord
 
   validates :alder, :epost, :etternavn, :fodtdato, :fornavn, :medlems_type, :postnr, :reg_dato, :stilart,
       :tid, presence: true
+  validates :kjonn, inclusion: { in: %w[M K I] }
   validates :res_sms, inclusion: { in: [true, false] }
 
   def age
@@ -43,6 +44,7 @@ class NkfMemberTrial < ApplicationRecord
       email: epost,
       first_name: fornavn,
       last_name: etternavn,
+      male: kjonn == 'M',
       phone: mobil,
       postal_code: postnr,
     }

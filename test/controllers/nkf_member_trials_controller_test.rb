@@ -21,7 +21,7 @@ class NkfMemberTrialsControllerTest < ActionController::TestCase
         adresse: 'vei', alder: 16, epost: 'werwer@ertrt.br', epost_faktura: 'sefsdfd@sdfsdf.com',
         etternavn: 'Hansen', fodtdato: '2000-01-01', fornavn: 'Erik',
         medlems_type: 'EnkeltMedlem', mobil: '12345678', postnr: '1234', reg_dato: '2012.03.14',
-        res_sms: '0', sted: 'sted', stilart: 'Jujutsu', tid: '12345678'
+        res_sms: '0', sted: 'sted', stilart: 'Jujutsu', tid: '12345678', kjonn: 'M'
       } }
     end
 

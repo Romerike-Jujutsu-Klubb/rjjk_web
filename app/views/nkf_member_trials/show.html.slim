@@ -7,39 +7,11 @@
       i.fa.fa-sign-in>
       | Registrer #{@nkf_member_trial.name}
 
-p
-  b Medlems type:
-  = h @nkf_member_trial.medlems_type
-p
-  b Etternavn:
-  = h @nkf_member_trial.etternavn
-p
-  b Fornavn:
-  = h @nkf_member_trial.fornavn
-p
-  b Fodtdato:
-  = h @nkf_member_trial.fodtdato
-p
-  b Alder:
-  = h @nkf_member_trial.alder
-p
-  b Postnr:
-  = h @nkf_member_trial.postnr
-p
-  b Sted:
-  = h @nkf_member_trial.sted
-p
-  b Adresse:
-  = h @nkf_member_trial.adresse
-p
-  b Epost:
-  = h @nkf_member_trial.epost
-p
-  b Mobil:
-  = h @nkf_member_trial.mobil
-p
-  b Res sms:
-  = h @nkf_member_trial.res_sms
-p
-  b Reg dato:
-  = h @nkf_member_trial.reg_dato
+h1 NKF Prøvemedlem (#{@nkf_member_trial.id})
+
+table.table.table-sm
+  tbody
+    - @nkf_member_trial.attributes.except('id', 'created_at', 'updated_at').sort.each do |k,v|
+      tr
+        th = k
+        td = v

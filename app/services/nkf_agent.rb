@@ -19,8 +19,11 @@ class NkfAgent
   NKF_USERNAME = '40001062'
   NKF_PASSWORD = Rails.application.credentials.nkf_password
   BACKOFF_LIMIT = 15.minutes
+  BAD_BODY = <<~BAD_BODY
+    An error occurred while processing the request. Try refreshing your browser. If the problem persists contact the site administrator'
+  BAD_BODY
 
-  attr_reader :extra_function_codes
+  attr_reader :extra_function_codes, :session_id
 
   def initialize(key)
     raise 'NKF PASSWORD required!' if NKF_PASSWORD.blank?
@@ -50,6 +53,9 @@ class NkfAgent
       login_form.password = NKF_PASSWORD
       login_form.site2pstoretoken = token
       response = submit(login_form)
+      @session_id = response.body.scan(/var p_cr_par = "([^"]*)";/)[0][0]
+      raise 'Could not find session id' unless @session_id
+
       @extra_function_codes = response.body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
       raise response.body if @extra_function_codes.empty?
 
@@ -89,8 +95,15 @@ class NkfAgent
         search_result_body << page_body
       end
     end
+    @session_id = search_result_body.scan(/Download27\('(.*?)'\)/)[0][0]
+    raise 'Could not find session id' unless @session_id
+
     logger.debug "search members: nkf_member_id: #{nkf_member_id.inspect}: #{Time.zone.now - start}s"
     search_result_body
+  end
+
+  def trial_index
+    get "page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_cr_par=#{session_id}"
   end
 
   def get(url)
@@ -99,11 +112,7 @@ class NkfAgent
       request_start = Time.zone.now
       response = thread_local_agent.get(url)
       logger.debug("NkfAgent.get(#{url.inspect}) took #{Time.zone.now - request_start}s")
-      if response.body == <<~BAD_BODY
-        An error occurred while processing the request. Try refreshing your browser. If the problem persists contact the site administrator'
-      BAD_BODY
-        raise Mechanize::ResponseReadError
-      end
+      raise Mechanize::ResponseReadError if response.body == BAD_BODY
 
       response
     end

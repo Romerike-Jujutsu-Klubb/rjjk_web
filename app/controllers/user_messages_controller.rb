@@ -32,7 +32,14 @@ class UserMessagesController < ApplicationController
     @user_message = UserMessage.new(user_message_params)
     if @user_message.save
       UserMessageSenderJob.perform_later
-      redirect_to @user_message, notice: 'User message was successfully created.'
+      flash.notice = 'User message was successfully created.'
+      return_page =
+          if @user_message.tag == 'membership_signup'
+            signup_path(Signup.find_by(user_id: @user_message.user_id))
+          else
+            @user_message
+          end
+      redirect_to return_page
     else
       render :new
     end
@@ -56,6 +63,7 @@ class UserMessagesController < ApplicationController
   def load_form_data
     @users = User.order(:first_name, :last_name).to_a
     @tags = UserMessage.order(:tag).distinct.pluck(:tag)
+    @tags.prepend @user_message.tag if @user_message.tag.present? && @tags.exclude?(@user_message.tag)
     @senders = UserMessage.distinct.pluck(:from).flatten.uniq.sort
   end
 

@@ -4,6 +4,7 @@ one:
   fornavn: Hans
   fodtdato: 2007-10-03
   alder: 6
+  kjonn: M
   postnr: 1234
   sted: MyString
   adresse: MyString
@@ -22,6 +23,7 @@ two:
   fornavn: Erik
   fodtdato: 2006-10-03
   alder: 7
+  kjonn: M
   postnr: 4321
   sted: MyString
   adresse: MyString
@@ -39,6 +41,7 @@ three:
   fornavn: Even
   fodtdato: 2007-11-04
   alder: 6
+  kjonn: M
   postnr: 4322
   sted: MyStringer
   adresse: MyString 3

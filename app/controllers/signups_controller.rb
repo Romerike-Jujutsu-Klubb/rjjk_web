@@ -61,6 +61,7 @@ class SignupsController < ApplicationController
   def terminate
     nkf_agent = NkfAgent.new(:complete_signup)
     nkf_agent.login
+    nkf_agent.trial_index
   end
 
   def destroy

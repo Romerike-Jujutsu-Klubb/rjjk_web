@@ -20,13 +20,11 @@ class NkfMemberImport
     @cookies = []
 
     nkf_agent = NkfAgent.new(:import)
-    nkf_agent.login # returns front_page
+    nkf_agent.login
 
     search_body = nkf_agent.search_members(nkf_member_id)
-    session_id = search_body.scan(/Download27\('(.*?)'\)/)[0][0]
-    raise 'Could not find session id' unless session_id
 
-    @import_rows = get_member_rows(nkf_agent, session_id)
+    @import_rows = get_member_rows(nkf_agent)
     detail_codes = search_body.scan(/edit_click27\('(.*?)'\)/).map { |dc| dc[0] }
     if nkf_member_ids
       @import_rows.select! do |row|
@@ -35,9 +33,7 @@ class NkfMemberImport
     end
     add_waiting_kids(nkf_agent, @import_rows, detail_codes)
     import_member_rows(@import_rows)
-
-    member_trial_rows = get_member_trial_rows(nkf_agent, session_id)
-    import_member_trials(member_trial_rows)
+    import_member_trials(get_member_trial_rows(nkf_agent))
   rescue => e
     @exception = e
   end
@@ -52,9 +48,9 @@ class NkfMemberImport
 
   private
 
-  def get_member_rows(nkf_agent, session_id)
+  def get_member_rows(nkf_agent)
     members_body = nkf_agent
-        .get("pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{session_id}")
+        .get("pls/portal/myports.ks_reg_medladm_proc.download?p_cr_par=#{nkf_agent.session_id}")
         .body
         .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
     import_rows = members_body.split("\n")
@@ -103,13 +99,18 @@ class NkfMemberImport
     raise 'Both Active status and waiting kid were found' if active && waiting_kid
     raise "Neither active status nor waiting kid were found:\n#{details_body}" if !active && !waiting_kid
 
-    import_rows.find { |ir| ir[0] == member_id } << waiting_kid
+    unless (import_row_for_member_id = import_rows.find { |ir| ir[0] == member_id })
+      raise "Missing import_row for member_id: #{member_id.inspect}\n#{import_rows.pretty_inspect}"
+    end
+
+    import_row_for_member_id << waiting_kid
   end
 
-  def get_member_trial_rows(nkf_agent, session_id)
+  def get_member_trial_rows(nkf_agent)
     extra_function_code = nkf_agent.extra_function_codes[0][0]
     logger.debug 'get_member_trial_rows'
-    trial_csv_url = "pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=#{session_id}"
+    trial_csv_url =
+        "pls/portal/myports.ks_godkjenn_medlem_proc.exceleksport?p_cr_par=#{nkf_agent.session_id}"
     member_trials_csv_body = nkf_agent.get(trial_csv_url).body
         .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
     member_trial_rows = member_trials_csv_body.split("\n").map { |line| line.chomp.split(';') }
@@ -126,6 +127,7 @@ class NkfMemberImport
     member_trial_rows[0] << 'tid'
     member_trial_rows[0] << 'epost_faktura'
     member_trial_rows[0] << 'stilart'
+    member_trial_rows[0] << 'kjonn'
 
     trial_ids.each do |tid|
       trial_details_url = 'page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem' \
@@ -133,22 +135,33 @@ class NkfMemberImport
           extra_function_code
       trial_details_body = nkf_agent.get(trial_details_url).body
           .force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
-      raise 'Could not find invoice email' unless trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
+
+      raise 'Could not find first_name' unless trial_details_body =~ /name="frm_28_v08" value="(.*?)"/
 
       first_name = Regexp.last_match(1)
+
       unless trial_details_body =~ /name="frm_28_v09" value="(.*?)"/
         logger.error trial_details_body
         raise 'Could not find last name'
       end
       last_name = Regexp.last_match(1)
-      raise 'Could not find first name' unless trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
+
+      raise 'Could not find invoice_email' unless trial_details_body =~ /name="frm_28_v25" value="(.*?)"/
 
       invoice_email = Regexp.last_match(1)
+
       unless trial_details_body =~ %r{<select class="inputTextFull" name="frm_28_v28" id="frm_28_v28"><option value="-1">- Velg gren/stilart -</option>.*?<option selected value="\d+">([^<]*)</option>.*</select>} # rubocop: disable Layout/LineLength
         raise 'Could not find martial art'
       end
 
       martial_art = Regexp.last_match(1)
+
+      unless trial_details_body =~ /<select [^>]* id="frm_28_v15"[^>]*>.*?<option value="([MKI])" selected>/m # rubocop: disable Layout/LineLength
+        raise "Could not find sex:\n#{trial_details_body}"
+      end
+
+      sex = Regexp.last_match(1)
+
       trial_row = member_trial_rows.find do |ir|
         ir.size < member_trial_rows[0].size && ir[1] == last_name && ir[2] == first_name
       end
@@ -156,6 +169,7 @@ class NkfMemberImport
         trial_row << tid
         trial_row << invoice_email.presence
         trial_row << martial_art
+        trial_row << sex
       else
         logger.error '*' * 80
         logger.error "Fant ikke prøvetidsmedlem:  #{tid.inspect}"
@@ -225,9 +239,8 @@ class NkfMemberImport
     logger.debug "Found #{member_trial_rows.size} member trials"
     logger.debug "Columns: #{columns.inspect}"
     tid_col_idx = header_fields.index 'tid'
-    # email_col_idx  = header_fields.index 'epost'
-    missing_trials = NkfMemberTrial
-        .where('tid NOT IN (?)', member_trial_rows.map { |t| t[tid_col_idx] }).to_a
+    missing_trials =
+        NkfMemberTrial.where('tid NOT IN (?)', member_trial_rows.map { |t| t[tid_col_idx] }).to_a
     missing_trials.each do |t|
       m = User.find_by(email: t.epost)&.member
       t.trial_attendances.each do |ta|
