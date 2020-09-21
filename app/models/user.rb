@@ -71,7 +71,7 @@ class User < ApplicationRecord
   after_validation :crypt_password
 
   validates :birthdate, presence: true, if: -> { member && member.left_on.nil? }
-  validates :male, inclusion: { in: [true, false] }, if: -> { member && member.left_on.nil? }
+  validates :male, inclusion: { in: [true, false] }, if: -> { signups.any? || member&.left_on&.nil? }
   validates :email,
       format: { with: EMAIL_REGEXP, allow_nil: true },
       uniqueness: { case_sensitive: false, scope: :deleted_at, unless: :deleted_at, allow_nil: true }
@@ -365,6 +365,12 @@ class User < ApplicationRecord
 
   def contact_users
     %i[contact_user itself guardian_1 guardian_2 billing_user].lazy.map { |m| send(m) }.reject(&:nil?)
+  end
+
+  def sex_label
+    return if male.nil?
+
+    male ? 'Mann' : 'Kvinne'
   end
 
   protected
