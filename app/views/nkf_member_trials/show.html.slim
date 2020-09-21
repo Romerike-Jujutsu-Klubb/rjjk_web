@@ -2,7 +2,11 @@
   a.btn.btn-link href=nkf_member_trials_path
     i.fa.fa-table>
     | NKF Prøvemedlemmer
-  - if @nkf_member_trial.signup.nil?
+  - if @nkf_member_trial.signup
+    a.btn.btn-success.ml-3 href=signup_path(@nkf_member_trial.signup.id)
+      i.fa.fa-sign-in>
+      | Innmelding
+  - else
     a.btn.btn-primary.ml-3 href=new_signup_path(signup: {nkf_member_trial_id: @nkf_member_trial.id})
       i.fa.fa-sign-in>
       | Registrer #{@nkf_member_trial.name}

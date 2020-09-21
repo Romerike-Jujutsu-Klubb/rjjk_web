@@ -4,7 +4,7 @@
     i.fa.fa-edit>
     | Endre
 
-h1 Prøvemedlemskap
+h1 Innmelding
 h2 = @signup.user
 
 table.table
@@ -17,7 +17,9 @@ table.table
       td #{@signup.user.age} år (#{@signup.user.birthdate})
     tr
       th E-post
-      td: a href=new_user_message_path(user_message: {user_id:@signup.user_id, tag: :membership_signup, from: current_user.email, subject: 'Innmelding Romerike Jujutsu Klubb', plain_body: "Hei #{@signup.user.first_name}!\n\nI januar meldte du interesse for å trene hos oss.\n\nMye har skjedd siden da og vi har måttet holde stengt under store deler av pandemien.  Nå har vi åpnet for trening igjen, og vi vil gjerne invitere deg til å delta.\n\nVoksne trener tirsdager og torsdager kl 19:00-20:30 og søndager kl 10:30-12:00.  Treningsavgift er kr 399,- pr måned.  Dette inkluderer graderinger og belter.  Har du en drakt fra før kan du bruke denne, ellers har vi et tilbud på gratis drakt mot 6 måneders bindingstid.\n\nIkke nøl med å spørre hvis det er noe du lurer på.  Håper du vil trene med oss!\n\nMed vennlig hilsen\nRomerike Jujutsu Klubb\n"}) = @signup.user.email
+      td: a href=new_user_message_path(user_message: {user_id:@signup.user_id, tag: :membership_signup, from: current_user.email, subject: 'Innmelding Romerike Jujutsu Klubb', plain_body: "Hei #{@signup.user.first_name}!\n\nI januar meldte du interesse for å trene hos oss.\n\nMye har skjedd siden da og vi har måttet holde stengt under store deler av pandemien.  Nå har vi åpnet for trening igjen, og vi vil gjerne invitere deg til å delta.\n\nVoksne trener tirsdager og torsdager kl 19:00-20:30 og søndager kl 10:30-12:00.  Treningsavgift er kr 399,- pr måned.  Dette inkluderer graderinger og belter.  Har du en drakt fra før kan du bruke denne, ellers har vi et tilbud på gratis drakt mot 6 måneders bindingstid.\n\nIkke nøl med å spørre hvis det er noe du lurer på.  Håper du vil trene med oss!\n\nMed vennlig hilsen\nRomerike Jujutsu Klubb\n"})
+        i.far.fa-envelope>
+        = @signup.user.email
     tr
       th Telefon
       td = @signup.user.phone
@@ -31,7 +33,7 @@ table.table
     | Avslutt prøvemedlemskap
 
 - if @signup.user.user_messages.any?
-  h3 Meldinger
+  h3 Meldinger til #{@signup.user.name}
 
   table.table
     tbody
