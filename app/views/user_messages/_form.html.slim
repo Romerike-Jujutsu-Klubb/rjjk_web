@@ -9,4 +9,4 @@
   = f.text_area :html_body, class: :expanding if @user_message.html_body.present?
   = f.datetime_select :sent_at if @user_message.sent_at.present?
   = f.datetime_select :read_at if @user_message.read_at.present?
-  .float-right = f.primary :Lagre
+  .float-right = f.primary @user_message.new_record? ? :Send : :Lagre

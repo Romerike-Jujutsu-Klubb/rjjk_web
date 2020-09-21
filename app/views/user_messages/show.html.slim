@@ -11,7 +11,7 @@ p#notice = notice
       strong Fra:
       =< [*@user_message.from].join(', ')
   .card-body.pb-0
-    = textalize @user_message.plain_body
+    = textalize @user_message.plain_body, newlines: true
     = @user_message.html_body
 
 - if current_user.admin?
