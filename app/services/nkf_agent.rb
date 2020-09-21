@@ -20,6 +20,8 @@ class NkfAgent
   NKF_PASSWORD = Rails.application.credentials.nkf_password
   BACKOFF_LIMIT = 15.minutes
 
+  attr_reader :extra_function_codes
+
   def initialize(key)
     raise 'NKF PASSWORD required!' if NKF_PASSWORD.blank?
 
@@ -47,7 +49,11 @@ class NkfAgent
       login_form.ssousername = NKF_USERNAME
       login_form.password = NKF_PASSWORD
       login_form.site2pstoretoken = token
-      submit(login_form)
+      response = submit(login_form)
+      @extra_function_codes = response.body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
+      raise response.body if @extra_function_codes.empty?
+
+      response
     end
   end
 

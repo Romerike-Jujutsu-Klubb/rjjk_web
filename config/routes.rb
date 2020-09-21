@@ -297,8 +297,8 @@ Rails.application.routes.draw do
   end
   resources :signups do
     member do
-      patch :close
       patch :complete
+      patch :terminate
     end
   end
   resources :sms, only: %i[index show create]

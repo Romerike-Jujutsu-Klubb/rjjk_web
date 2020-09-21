@@ -1,5 +1,13 @@
-h1 New user_message
+h1 Ny brukermelding
 
 == render 'form'
+
+javascript:
+  let value = $('#user_message_body').val();
+  $('#user_message_body').val('');
+  $('#user_message_body').val(value);
+  $(function() {
+    $('#user_message_body').focus();
+  });
 
 = link_to 'Back', user_messages_path

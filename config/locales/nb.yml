@@ -8,6 +8,7 @@ nb:
     locale: Språk
     monthly_fee: "Måneds\xADavgift"
     name: Navn
+    nkf_member_trial_id: NKF Prøvemedlem
     title: Tittel
     to_age: "Til alder"
     url: URL

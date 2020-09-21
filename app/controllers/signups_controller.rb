@@ -58,6 +58,11 @@ class SignupsController < ApplicationController
     raise front_page.body if extra_function_codes.empty?
   end
 
+  def terminate
+    nkf_agent = NkfAgent.new(:complete_signup)
+    nkf_agent.login
+  end
+
   def destroy
     @signup.destroy
     redirect_to signups_url, notice: 'Signup was successfully destroyed.'

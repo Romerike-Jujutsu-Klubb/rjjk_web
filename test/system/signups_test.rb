@@ -10,12 +10,12 @@ class SignupsTest < ApplicationSystemTestCase
 
   test 'visiting the index' do
     visit signups_url
-    assert_selector 'h1', text: 'Prøvemedlemskap'
+    assert_selector 'h1', text: 'Innmeldinger'
   end
 
   test 'creating a Signup' do
     visit signups_url
-    click_on 'Nytt prøvemedlemskap'
+    click_on 'Ny innmelding'
     assert_current_path new_signup_path
 
     select_from_chosen 'Even Jensen', from: :signup_nkf_member_trial_id

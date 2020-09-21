@@ -1,4 +1,5 @@
 = bootstrap_form_for @signup do |f|
-  = f.select :user_id, (@signup.new_record? ? [['Ny bruker', :new_user]] : []) + @users.map{|u| [u.name, u.id]}, {prompt: true}, class: :chosen
-  = f.collection_select :nkf_member_trial_id, @nkf_member_trials, :id, :name, {prompt: true}, class: :chosen
+  .row
+    .col = f.select :user_id, (@signup.new_record? ? [['Ny bruker', :new_user]] : []) + @users.map{|u| [u.name, u.id]}, {prompt: true}, class: :chosen
+    .col = f.collection_select :nkf_member_trial_id, @nkf_member_trials, :id, :name, {prompt: true}, class: :chosen
   .float-right = f.primary 'Lagre'

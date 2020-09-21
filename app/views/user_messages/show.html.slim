@@ -10,8 +10,9 @@ p#notice = notice
     div
       strong Fra:
       =< [*@user_message.from].join(', ')
-  .card-block.p-3
-    == @user_message.body
+  .card-body.pb-0
+    = textalize @user_message.plain_body
+    = @user_message.html_body
 
 - if current_user.admin?
   .float-right.mt-3

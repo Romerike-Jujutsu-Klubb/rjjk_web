@@ -7,10 +7,35 @@
 h1 Prøvemedlemskap
 h2 = @signup.user
 
+table.table
+  tbody
+    tr
+      th Registrert
+      td = [@signup.created_at, @signup.nkf_member_trial.reg_dato].min
+    tr
+      th Alder
+      td #{@signup.user.age} år (#{@signup.user.birthdate})
+    tr
+      th E-post
+      td: a href=new_user_message_path(user_message: {user_id:@signup.user_id, tag: :signup, from: current_user.email, subject: 'Innmelding Romerike Jujutsu Klubb', plain_body: "Hei #{@signup.user.first_name}!\n\nI januar meldte du interesse for å trene hos oss.\n\nMye har skjedd siden da og vi har måttet holde stengt under store deler av pandemien.  Nå har vi åpnet for trening igjen, og vi vil gjerne invitere deg til å delta.\n\nVoksne trener tirsdager og torsdager kl 19:00-20:30 og søndager kl 10:30-12:00.  Treningsavgift er kr 399,- pr måned.  Dette inkluderer graderinger og belter.  Har du en drakt fra før kan du bruke denne, ellers har vi et tilbud på gratis drakt mot 6 måneders bindingstid.\n\nIkke nøl med å spørre hvis det er noe du lurer på.  Håper du vil trene med oss!\n\nMed vennlig hilsen\nRomerike Jujutsu Klubb\n"}) = @signup.user.email
+    tr
+      th Telefon
+      td = @signup.user.phone
+
 .text-center.my-5
   a.btn.btn-success.btn-lg.ml-3 href=complete_signup_path(@signup.id) data-method=:patch
     i.fa.fa-sign-in>
     | Meld inn (mottatt kontrakt)
-  a.btn.btn-danger.btn-lg.ml-3 href=close_signup_path(@signup.id) data-method=:patch
+  a.btn.btn-danger.btn-lg.ml-3 href=terminate_signup_path(@signup.id) data-method=:patch
     i.fa.fa-remove>
     | Avslutt prøvemedlemskap
+
+- if @signup.user.user_messages.any?
+  h3 Meldinger
+
+  table.table
+    tbody
+      - @signup.user.user_messages.sort_by(&:created_at).reverse.each do |um|
+        tr
+          th: a href=user_message_path(um) = um.subject
+          th = um.created_at.strftime('%F %R')
