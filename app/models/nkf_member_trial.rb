@@ -6,7 +6,10 @@ class NkfMemberTrial < ApplicationRecord
   has_one :signup, dependent: :destroy
   has_many :trial_attendances, dependent: :destroy
 
-  scope :for_group, ->(group) { where('alder BETWEEN ? AND ?', group.from_age, group.to_age) }
+  scope :for_group,
+      ->(group) {
+        where('alder BETWEEN ? AND ?', group.from_age, group.to_age).order(:reg_dato, :fornavn, :etternavn)
+      }
 
   search_scope %i[fornavn etternavn epost], order: %i[fornavn etternavn]
 
