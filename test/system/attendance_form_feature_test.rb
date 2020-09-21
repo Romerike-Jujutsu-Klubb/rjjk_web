@@ -29,8 +29,8 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
     assert_equal ["Uwe Kubosch\n5556666",
                   'Totalt 1',
                   'Lars Bråten',
-                  "Erik Hansen\nNKF_mt_two@example.com",
                   "Even Jensen\nNKF_mt_three@example.com",
+                  "Erik Hansen\nNKF_mt_two@example.com",
                   "Hans Eriksen\nfaktura@eriksen.org",
                   'Totalt 4',
                   "Sebastian Kubosch (Permisjon)\n98765432 / 5556666",
@@ -43,8 +43,8 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
     assert_equal ["Uwe Kubosch\n5556666",
                   'Totalt 1',
                   'Lars Bråten',
-                  "Erik Hansen\nNKF_mt_two@example.com",
                   "Even Jensen\nNKF_mt_three@example.com",
+                  "Erik Hansen\nNKF_mt_two@example.com",
                   "Hans Eriksen\nfaktura@eriksen.org",
                   'Totalt 4',
                   "Sebastian Kubosch (Permisjon)\n98765432 / 5556666",
@@ -87,7 +87,7 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
     end
 
     assert_difference 'TrialAttendance.count' do
-      erik_row = find('table:first-of-type tbody tr:nth-of-type(6)')
+      erik_row = find('table:first-of-type tbody tr:nth-of-type(7)')
       assert erik_row
       assert_equal(['Erik Hansen NKF_mt_two@example.com', '7',
                     'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', '', '', ''], # , ''],
