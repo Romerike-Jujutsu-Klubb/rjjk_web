@@ -2,7 +2,7 @@ h3 Sende SMS
 
 .form-padding
   p Velg mottakere og skriv en melding.
-  = bootstrap_form_for :user, url: sms_path do |f|
+  = bootstrap_form_with url: sms_path do |f|
     = f.select :id, @users.map{|u| [u.name, u.id]}, {label: "Mottakere #{@recipients.size if @recipients}", selected: @recipients}, class: :chosen, multiple: true
     = f.text_field :text
 
