@@ -85,8 +85,24 @@ class Graduation < ApplicationRecord
   end
 
   def end_at
-    held_on.try(:at, group_schedule.try(:end_at) || TimeOfDay.new(20, 30))
+    held_on&.at(group_schedule&.end_at || TimeOfDay.new(20, 30))
   end
+
+  def creator; end
+
+  def publish_at
+    start_at - 1.month
+  end
+
+  def expire_at
+    end_at
+  end
+
+  def publication_state
+    NewsItem::PublicationState::PUBLISHED
+  end
+
+  def summary; end
 
   def human_time
     return unless held_on
@@ -127,7 +143,7 @@ class Graduation < ApplicationRecord
   end
 
   def body
-    admin?
+    admin? ? '' : nil
   end
 
   def admin?(user: current_user, approval: nil)

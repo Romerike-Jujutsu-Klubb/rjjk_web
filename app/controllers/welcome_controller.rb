@@ -15,6 +15,18 @@ class WelcomeController < ApplicationController
               body: graduation_body(graduations))
           @news_items.prepend graduation_news
         end
+        graduates = Graduate.includes(:graduation).references(:graduations)
+            .where(member_id: current_user.member.id)
+            .where.not(graduation_id: graduations.map(&:id))
+            .where('graduations.held_on BETWEEN ? AND ?', Date.current, 1.month.from_now)
+            .to_a.map(&:graduation)
+        @news_items.concat graduates
+        censors = Censor.includes(:graduation).references(:graduations)
+            .where(member_id: current_user.member.id)
+            .where.not(graduation_id: graduations.map(&:id))
+            .where('graduations.held_on BETWEEN ? AND ?', Date.current, 1.month.from_now)
+            .to_a.map(&:graduation)
+        @news_items.concat censors
       end
       if load_next_practices
         now = Time.current

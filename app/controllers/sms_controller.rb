@@ -4,7 +4,7 @@ class SmsController < ApplicationController
   before_action :admin_required
 
   def index
-    @recipients = params.dig(:id).to_a.reject(&:blank?).map(&:to_i)
+    @recipients = params[:id].to_a.reject(&:blank?).map(&:to_i)
     @users = User.order(:first_name, :last_name).to_a
   end
 

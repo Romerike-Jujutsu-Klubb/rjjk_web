@@ -1,6 +1,6 @@
 .row.mt-3
-  .col-md-6.col-md-offset-3
-    .btn-toolbar
-      = link_to 'Diplomer', {action: :certificates, id: @graduation.id}, class: 'btn btn-success mr-2'
-      = link_to 'Sensor PDF', {action: :censor_form_pdf, id: @graduation.id}, class: 'btn btn-primary mr-2'
-      = link_to 'Sensor HTML', {action: :censor_form, id: @graduation.id}, class: 'btn btn-primary mr-2'
+  .col-md-6.offset-md-3
+    .row
+      .col: a.btn.btn-success.text-center.h-100.w-100 href=certificates_graduation_path(@graduation) Diplomer
+      .col: a.btn.btn-primary.h-100.w-100 href=censor_form_pdf_graduation_path(@graduation) Sensor PDF
+      .col: a.btn.btn-primary.h-100.w-100 href=censor_form_graduation_path(@graduation) Sensor HTML
