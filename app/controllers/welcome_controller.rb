@@ -56,12 +56,6 @@ class WelcomeController < ApplicationController
     end
   end
 
-  # https://web.archive.org/web/20190203085358/https://www.altoros.com/
-  def front_page
-    load_front_page_content
-    render 'front_page', layout: 'public'
-  end
-
   def front_parallax
     load_front_page_content
     render 'front_parallax', layout: 'parallax'

@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   patch 'svar/:id', controller: :survey_requests, action: :save_answers
   post 'svar/:id', controller: :survey_requests, action: :save_answers
   get 'takk/:id', controller: :survey_requests, action: :thanks
-  get 'velkommen' => 'welcome#front_page', as: :front_page
   get 'velkommst' => 'welcome#front_parallax', as: :front_parallax
 
   resources :application_image_sequences
