@@ -47,7 +47,7 @@ class MemberHistoryGraph
 
   def self.totals_jj(dates)
     dates.map do |date|
-      Member.includes(groups: :martial_art).references(:martial_arts)
+      Member.includes(user: { groups: :martial_art }).references(:martial_arts)
           .where(ACTIVE_CLAUSE.call(date))
           .where("martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai'")
           .count
@@ -60,7 +60,7 @@ class MemberHistoryGraph
           .where("(#{ACTIVE_CLAUSE.call(date)})")
           .where('birthdate IS NOT NULL AND users.birthdate < ?', senior_birthdate(date))
           .where("(martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')")
-          .references(:martial_arts, :users).includes(:user, groups: :martial_art).count
+          .references(:martial_arts, :users).includes(user: { groups: :martial_art }).count
     end
   end
 
@@ -71,7 +71,7 @@ class MemberHistoryGraph
           .where('users.birthdate IS NOT NULL AND users.birthdate BETWEEN ? AND ?',
               senior_birthdate(date), junior_birthdate(date))
           .where("(martial_arts.name IS NULL OR martial_arts.name <> 'Aikikai')")
-          .references(:martial_arts, :users).includes(:user, groups: :martial_art).count
+          .references(:martial_arts, :users).includes(user: { groups: :martial_art }).count
     end
   end
 

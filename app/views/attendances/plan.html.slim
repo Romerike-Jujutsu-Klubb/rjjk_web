@@ -26,7 +26,7 @@ css:
           td valign="top"
             - attendance = @planned_attendances.find { |a| a.group_schedule == gs && a.practice.year == year && a.practice.week == week }
             - if attendance.nil?
-              - attendance = Attendance.new(member: current_user.member, practice: practice)
+              - attendance = Attendance.new(user: current_user, practice: practice)
             = render 'plan_practice', gs: gs, year: year, week: week, attendance: attendance
 br
 

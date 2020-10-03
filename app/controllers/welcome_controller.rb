@@ -58,7 +58,7 @@ class WelcomeController < ApplicationController
 
   def front_parallax
     load_front_page_content
-    render 'front_parallax', layout: 'parallax'
+    render 'front_parallax', layout: 'public'
   end
 
   private

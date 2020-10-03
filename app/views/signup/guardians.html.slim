@@ -1,2 +1,26 @@
-h1 Signup#guardians
-p Find me in app/views/signup/guardians.html.slim
+.card
+  .card-header Siden #{@user.first_name} er #{@user.age} år trenger vi en <b>foresatt</b>.
+  .card-body
+    = bootstrap_form_for @user, url: signup_guide_contact_info_path do |f|
+      = f.hidden_field :name
+      = f.hidden_field :birthdate
+
+      = f.fields_for :guardian_1 do |gf|
+        = gf.text_field :name, required: true
+        .row
+          .col = gf.date_field :birthdate, required: true
+          .col
+            .control-label &nbsp;
+            = render 'layouts/tri_state_switch', f: gf, field_id: "user_guardian_1_attributes_male", field_name: "user[guardian_1_attributes][male]", state: @user.guardian_1&.male, true_label: 'Mann', false_label: 'Kvinne'
+        .row
+          .col = gf.text_field :email, required: true
+          .col = gf.text_field :phone, required: true
+        .row
+          .col = gf.text_field :address
+          .col = gf.text_field :postal_code
+
+      .float-right = f.primary
+        ' Neste
+        i.fa.fa-angle-double-right
+javascript:
+  $('#user_guardian_1_attributes_name').focus();

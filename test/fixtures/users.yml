@@ -154,3 +154,15 @@ lise:
   birthdate: 1974-05-27
   male: false
   locale: nb
+
+sandra:
+  first_name: Sandra
+  last_name: Kubosch
+  salted_password: de6db7cdf638e5ba522b9e5728d551315bf750f4 # atest
+  salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
+  email: sandra@example.com
+  phone: 98765433
+  verified: false
+  birthdate: 2004-06-03
+  male: false
+  locale: nb

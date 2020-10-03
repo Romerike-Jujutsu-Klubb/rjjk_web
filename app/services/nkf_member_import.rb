@@ -239,22 +239,9 @@ class NkfMemberImport
     logger.debug "Found #{member_trial_rows.size} member trials"
     logger.debug "Columns: #{columns.inspect}"
     tid_col_idx = header_fields.index 'tid'
-    missing_trials =
+    orphaned_trials =
         NkfMemberTrial.where('tid NOT IN (?)', member_trial_rows.map { |t| t[tid_col_idx] }).to_a
-    missing_trials.each do |t|
-      m = User.find_by(email: t.epost)&.member
-      t.trial_attendances.each do |ta|
-        if m
-          attrs = ta.attributes
-          attrs.delete_if { |k, _| %w[id created_at updated_at].include? k }
-          attrs['member_id'] = m.id
-          attrs.delete('nkf_member_trial_id')
-          m.attendances << Attendance.new(attrs)
-        end
-        ta.destroy
-      end
-      t.destroy
-    end
+    orphaned_trials.each(&:destroy)
     member_trial_rows.each do |row|
       attributes = {}
       columns.each_with_index do |column, i|

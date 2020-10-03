@@ -43,7 +43,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
   def test_send_attendance_summary
     assert_mail_stored(3) { AttendanceNagger.send_attendance_summary }
 
-    mail = UserMessage.pending[0]
+    mail = UserMessage.pending[2]
     assert_equal 'Trening i kveld: 1 deltaker påmeldt', mail.subject
     assert_equal ['uwe@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
@@ -55,7 +55,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_match '<ul><li>Uwe Kubosch</li></ul>', mail.html_body
 
-    mail = UserMessage.pending[2]
+    mail = UserMessage.pending[0]
     assert_equal 'Trening i kveld: 1 deltaker påmeldt', mail.subject
     assert_equal ['newbie@example.com'], mail.to
     assert_equal ['noreply@test.jujutsu.no'], mail.from
@@ -65,7 +65,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
   def test_send_attendance_changes
     assert_mail_stored(3) { AttendanceNagger.send_attendance_changes }
 
-    mail = UserMessage.pending[0]
+    mail = UserMessage.pending[2]
     assert_equal 'Trening i kveld: 1 ny deltaker påmeldt', mail.subject
     assert_equal ['uwe@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
@@ -81,7 +81,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
       <h3>Nylig påmeldt</h3><ul><li><a href="https://example.com/members/819792210">Uwe Kubosch</a></li></ul>
     HTML
 
-    mail = UserMessage.pending[2]
+    mail = UserMessage.pending[0]
     assert_equal 'Trening i kveld: 1 ny deltaker påmeldt', mail.subject
     assert_equal ['newbie@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
@@ -90,7 +90,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
 
   def test_send_attendance_changes_with_only_new_absenses
     Attendance.update_all updated_at: 2.hours.ago # rubocop: disable Rails/SkipsModelValidations
-    practices(:voksne_2013_42_thursday).attendances.create! member_id: id(:lars), status: Attendance::Status::ABSENT
+    practices(:voksne_2013_42_thursday).attendances.create! user_id: id(:lars), status: Attendance::Status::ABSENT
     assert_mail_stored(1) { AttendanceNagger.send_attendance_changes }
 
     mail = UserMessage.pending[0]

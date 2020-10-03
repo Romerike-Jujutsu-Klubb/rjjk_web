@@ -191,7 +191,7 @@ class GraduationsController < ApplicationController
       Graduation.transaction do
         graduation.group.members.active(graduation.held_on).order(:id).each do |member|
           next if member.next_rank(graduation).position >= Rank::SHODAN_POSITION
-          next if member.absent?
+          next if member.user.absent?
 
           GraduationMailer.group_date_change(graduation, member)
               .store(member, tag: :graduation_date_change)

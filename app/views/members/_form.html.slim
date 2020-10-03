@@ -15,26 +15,7 @@
 
     .col-md-4
     .col-md-4.mt-3
-      / FIXME(uwe): Convert to collection_check_boxes
-      / / https://edgeapi.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html
-      / = f.collection_check_boxes(:group_ids, @groups, :id, :name, hide_label: true) do |group|
-      /   = group.check_box
-      /   = group.label(class: 'text-bold')
-      /   ' xxx
-
-      input value="" multiple="" type="hidden" name="member[group_ids][]" id="member_group_ids"
-      - @groups.each do |g|
-        - next unless g.active? || membership.groups.include?(g)
-        - attendances_since_graduation = membership.attendances_since_graduation(Date.current, g).size
-        label for="member_group_ids_#{g.id}" style=('font-weight: bold' if g.contains_age(membership.age))
-          = check_box_tag "member[group_ids][]", g.id, membership.groups.include?(g), value: g.id, id: "member_group_ids_#{g.id}"
-          =< g.martial_art&.name
-          =< g.name
-          - if attendances_since_graduation > 0
-            =< link_to("(#{attendances_since_graduation} treninger)", controller: :attendances, action: :since_graduation, id: membership.id)
-        br
-
-      - if membership.group_instructor? || membership.instructor? || membership.groups.any? { |g| g.from_age >= 13 }
+      - if membership.group_instructor? || membership.instructor? || membership.user&.groups&.any? { |g| g.from_age >= 13 }
         .form-group
           label Instruktør:
           =< link_to membership.group_instructor? ? 'Ja' : 'Nei', controller: :group_instructors
@@ -66,7 +47,7 @@
       = f.text_field :account_no
     .col
       = f.text_field :discount_override,
-              placeholder: ("Beregnet: #{@member.calculated_discount}" if @member.calculated_discount)
+              placeholder: ("Beregnet: #{membership.calculated_discount}" if membership.calculated_discount)
   .row
     .col = f.select :nkf_fee, [['Ja', true], ['Nei', false]]
     .col = f.select :payment_problem, [['Nei', false], ['Ja', true]]

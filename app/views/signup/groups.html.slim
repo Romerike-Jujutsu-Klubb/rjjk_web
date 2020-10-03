@@ -1,0 +1,40 @@
+.card
+  .card-header Kontaktinfo for #{@user.first_name}
+  .card-body
+    - if @groups.size == 0
+      p Vi har ingen grupper i #{@user.first_name} sin aldergruppe.
+    - elsif @groups.size == 1
+      p #{@user.first_name} vil bli medlt inn i gruppen <b>#{@groups.first.name}</b>.
+    - elsif @user.guardian_1
+      p Hvilke grupper skal #{@user.first_name} meldes inn i?
+        Hvis du er usikker kan du bare la forslget stå.  Dette kan endres senere.
+    - else
+      p Hvilke grupper vil du starte i?  Dette kan endres senere.
+
+    = f.collection_check_boxes(:group_ids, @groups, :id, :name) do |group|
+      = group.label { group.check_box }
+
+    = bootstrap_form_for @user, url: signup_guide_contact_info_path do |f|
+      = f.hidden_field :name
+      = f.hidden_field :birthdate
+      = f.hidden_field :male
+      = f.hidden_field :email
+      = f.hidden_field :phone
+      = f.hidden_field :address
+      = f.hidden_field :postal_code
+
+      - if @user.guardian_1
+        = f.fields_for :guardian_1 do |gf|
+          = gf.hidden_field :name
+          = gf.hidden_field :birthdate
+          = gf.hidden_field :male
+          = gf.hidden_field :email
+          = gf.hidden_field :phone
+          = gf.hidden_field :address
+          = gf.hidden_field :postal_code
+
+      .float-right = f.primary
+        ' Neste
+        i.fa.fa-angle-double-right
+javascript:
+  $('#user_email').focus();

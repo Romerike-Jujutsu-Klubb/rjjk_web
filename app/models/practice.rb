@@ -4,7 +4,6 @@ class Practice < ApplicationRecord
   belongs_to :group_schedule
 
   has_many :attendances, dependent: :destroy
-  has_many :trial_attendances, dependent: :destroy
 
   scope :after, ->(limit) {
                   from_date = limit.to_date
@@ -45,8 +44,8 @@ class Practice < ApplicationRecord
     "#{group_schedule.group.full_name} #{date} #{group_schedule.start_at.to_s(false)}"
   end
 
-  def attendance_for(member_id)
-    attendances.find { |a| a.member_id == member_id } || attendances.build(member_id: member_id)
+  def attendance_for(user_id)
+    attendances.find { |a| a.user_id == user_id } || attendances.build(user_id: user_id)
   end
 
   delegate :instructor?, to: :group_schedule

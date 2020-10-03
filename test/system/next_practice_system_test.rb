@@ -16,8 +16,8 @@ class NextPracticeSystemTest < ApplicationSystemTestCase
     screenshot :logged_in
 
     practice = practices(:voksne_2013_42_thursday)
-    practice.attendances.create! member_id: id(:lars), status: 'X'
-    practice.attendances.create! member_id: id(:newbie), status: 'X'
+    practice.attendances.create! user_id: id(:lars), status: 'X'
+    practice.attendances.create! user_id: id(:newbie), status: 'X'
     visit root_path
     screenshot :with_others
 

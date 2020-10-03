@@ -7,7 +7,7 @@ table.table
       th Completeted
       th Answers
   tbody
-    - @member.survey_requests.each do |request|
+    - member.survey_requests.each do |request|
       tr
         td = link_to request.survey.title, request.survey
         td = request.sent_at&.to_date

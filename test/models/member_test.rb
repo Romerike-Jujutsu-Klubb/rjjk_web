@@ -28,25 +28,6 @@ class MemberTest < ActiveSupport::TestCase
         Member.order(:joined_on).all.map(&:next_rank).map(&:name)
   end
 
-  test 'absent?' do
-    assert_equal false, members(:lars).absent?
-    assert_equal false, members(:newbie).absent?
-    assert_equal true, members(:sebastian).absent?
-    assert_equal false, members(:uwe).absent?
-  end
-
-  test 'absent? preloaded attendances for group' do
-    members = Member.includes(:attendances).order(:id)
-    assert_equal [false, true, true, false, false, false],
-        (members.map { |m| m.absent?(Date.current, groups(:voksne)) })
-  end
-
-  test 'absent? preloaded recent_attendances' do
-    members = Member.includes(:recent_attendances).order(:id)
-    assert_equal [false, true, true, false, false, false],
-        (members.map { |m| m.absent?(Date.current, groups(:voksne)) })
-  end
-
   test 'emails' do
     assert_equal [
       ['lars@example.com'],

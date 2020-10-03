@@ -74,7 +74,7 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
     assert_difference 'Attendance.count' do
       new_instructor_row.find('td:nth-of-type(2)').click
       assert_current_path '/attendances/new', ignore_query: true
-      select('Lars Bråten', from: 'attendance_member_id')
+      select('Lars Bråten', from: 'attendance_user_id')
       click_button('Lagre')
       assert_current_path attendance_form_path year: 2013, month: 10, group_id: id(:panda)
 
@@ -86,24 +86,24 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
       lars_row.find('td:nth-of-type(4)').find('a', text: 'X')
     end
 
-    assert_difference 'TrialAttendance.count' do
+    assert_difference 'Attendance.count' do
       erik_row = find('table:first-of-type tbody tr:nth-of-type(7)')
       assert erik_row
       assert_equal(['Erik Hansen NKF_mt_two@example.com', '7',
                     'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', '', '', ''], # , ''],
           erik_row.all('td').map(&:text).map(&:strip).map { |s| s.gsub(/\s+/, ' ') })
-      assert_difference 'TrialAttendance.count' do
+      assert_difference 'Attendance.count' do
         erik_row.find('td:nth-of-type(4)').find('a').click
         erik_row.find('td:nth-of-type(4)').find('a', text: 'X')
       end
     end
-    assert_difference 'TrialAttendance.count' do
+    assert_difference 'Attendance.count' do
       hans_row = find('table:first-of-type tbody tr:nth-of-type(8)')
       assert hans_row
       assert_equal(['Hans Eriksen faktura@eriksen.org', '6',
                     'Prøvetid til 2010-10-17 Mangler kontrakt', '', '', 'X', '', ''], # , '2'],
           hans_row.all('td').map(&:text).map(&:strip).map { |s| s.gsub(/\s+/, ' ') })
-      assert_difference 'TrialAttendance.count' do
+      assert_difference 'Attendance.count' do
         hans_row.find('td:nth-of-type(4)').find('a').click
         hans_row.find('td:nth-of-type(4)').find('a', text: 'X')
       end

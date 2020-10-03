@@ -17,7 +17,8 @@ class MemberDrilldownController < SimpleDrilldown::Controller
     ELSE 'Aktiv'
     END
   SQL
-  dimension :group, "COALESCE(groups.name, 'Uten gruppe')", includes: { group_memberships: :group }
+  dimension :group, "COALESCE(groups.name, 'Uten gruppe')",
+      includes: { user: { group_memberships: :group } }
   dimension :instructor, 'EXISTS(SELECT id FROM group_instructors WHERE member_id = members.id)',
       label_method: ->(bool) { bool ? 'Ja' : 'Nei' }
   dimension :joined_on_month,

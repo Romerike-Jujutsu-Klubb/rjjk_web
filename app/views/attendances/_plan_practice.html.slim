@@ -3,7 +3,7 @@
 - year = practice.year
 - week = practice.week
 div id="practice_#{week}_#{gs.id}"
-  = render 'attendances/button', attendance: attendance || practice.attendances.build(member_id: @member.id)
+  = render 'attendances/button', attendance: attendance || practice.attendances.build(user_id: @member.user_id)
   - if @reviewed_attendance && @reviewed_attendance.group_schedule == gs && @reviewed_attendance.practice.year == year && @reviewed_attendance.practice.week == week
     javascript:
       $(function() {

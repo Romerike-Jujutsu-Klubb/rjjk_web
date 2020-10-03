@@ -1,13 +1,13 @@
-- if @member.appointments.empty? && @member.elections.empty?
+- if member.appointments.empty? && member.elections.empty?
   .alert.alert-info.mt-3 Ingen verv.
-- @member.elections.each do |election|
+- member.elections.each do |election|
   = link_to election.elected_name, election
   ul
     li = election.elected_name
     li = election.role
     li = election.from
     li = election.to
-- @member.appointments.each do |appointment|
+- member.appointments.each do |appointment|
   = link_to appointment.label, appointment
   ul
     li = appointment.label

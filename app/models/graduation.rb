@@ -16,7 +16,7 @@ class Graduation < ApplicationRecord
           },
           member: [
             {
-              attendances: { practice: :group_schedule },
+              user: { attendances: { practice: :group_schedule } },
               graduates: [
                 { graduation: :group },
                 :rank,

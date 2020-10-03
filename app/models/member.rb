@@ -23,39 +23,26 @@ class Member < ApplicationRecord
 
   has_many :active_group_instructors, -> { active }, class_name: :GroupInstructor, inverse_of: :member
   has_many :appointments, dependent: :destroy
-  has_many :attendances, dependent: :destroy
   has_many :censors, dependent: :destroy
   has_many :correspondences, dependent: :destroy
   has_many :elections, dependent: :destroy
   has_many :graduates, dependent: :destroy
   has_many :group_instructors, dependent: :destroy
-  has_many :group_memberships, dependent: :destroy
   has_many :member_images, dependent: :destroy
   has_many :passed_graduates, -> { where graduates: { passed: true } }, class_name: 'Graduate',
       inverse_of: :member
-  has_many :recent_attendances, -> { merge(Attendance.from_date(92.days.ago).to_date(31.days.from_now)) },
-      class_name: :Attendance, inverse_of: :member
   has_many :survey_requests, dependent: :destroy
 
-  has_many :groups, through: :group_memberships
   has_many :ranks, through: :passed_graduates
 
   accepts_nested_attributes_for :user
 
-  scope :absent_since, ->(from_date = nil, to_date = nil) do
-    where.not(id: attending_since(from_date, to_date))
-  end
   scope :active, ->(from_date = nil, to_date = nil) do
     from_date ||= Date.current
     to_date ||= from_date
     references(:members)
         .where('members.joined_on <= ? AND (members.left_on IS NULL OR members.left_on >= ?)',
             to_date, from_date)
-  end
-  scope :attending_since, ->(from_date = nil, to_date = nil) do
-    from_date ||= Date.current
-    to_date ||= Date.current
-    merge(Attendance.from_date(from_date).to_date(to_date))
   end
   scope :search, ->(query) do
     includes(:nkf_member).references(:nkf_members)
@@ -92,7 +79,9 @@ class Member < ApplicationRecord
     SQL
   end
 
-  delegate :age, :birthdate, :email, :first_name, :last_name, :male, :name, to: :user, allow_nil: true
+  delegate :age, :attendances, :attendances_since_graduation, :birthdate, :email, :first_name, :groups,
+      :last_name, :male, :name, :recent_attendances,
+      to: :user, allow_nil: true
 
   def gmaps4rails_infowindow
     html = +''
@@ -114,30 +103,6 @@ class Member < ApplicationRecord
       g.passed? && g.graduation.held_on < date &&
           (martial_art.nil? || g.rank.martial_art_id == martial_art.id)
     end
-  end
-
-  def attendances_since_graduation(before_date = Date.current,
-      practice_groups = Group.includes(:martial_art).to_a, includes: nil, include_absences: false)
-    queries = Array(practice_groups).map do |g|
-      ats = attendances
-      ats = ats.where(status: Attendance::PRESENT_STATES) unless include_absences
-      ats = ats.by_group_id(g.id)
-      if (c = current_graduate(g.martial_art, before_date))
-        ats = ats.after(c.graduation.held_on)
-      end
-      ats = ats.to_date(before_date)
-      ats = ats.includes(includes) if includes
-      ats
-    end
-    query = case queries.size
-            when 0
-              Attendance.none
-            when 1
-              queries.first
-            else
-              queries.inject(:or)
-            end
-    query.order('practices.year, practices.week').reverse_order
   end
 
   def current_rank(martial_art = nil, date = Date.current)
@@ -172,13 +137,13 @@ class Member < ApplicationRecord
     next_rank = available_ranks.find do |r|
       (r.curriculum_group.from_age..r.curriculum_group.to_age).cover?(age) &&
           age >= r.minimum_age &&
-          attendances_since_graduation(graduation.held_on, r.curriculum_group.practice_groups)
+          user.attendances_since_graduation(graduation.held_on, r.curriculum_group.practice_groups)
               .size > r.minimum_attendances
     end
     next_rank ||= available_ranks.find do |r|
       (age.nil? || age >= r.curriculum_group.from_age) &&
           (age.nil? || age >= r.minimum_age) &&
-          attendances_since_graduation(graduation.held_on, r.curriculum_group.practice_groups)
+          user.attendances_since_graduation(graduation.held_on, r.curriculum_group.practice_groups)
               .size > r.minimum_attendances
     end
     if age
@@ -220,39 +185,12 @@ class Member < ApplicationRecord
     passive_on && date >= passive_on
   end
 
-  def attending?(date = Date.current, group = nil)
-    !absent?(date, group)
-  end
-
-  def absent?(date = Date.current, group = nil, days: 92)
-    return false if date <= joined_on + 2.months
-
-    start_date = date - days
-    end_date = date + 31
-    if date >= Date.current && recent_attendances.loaded?
-      set = recent_attendances
-          .select { |a| Attendance::PRESENT_STATES.include?(a.status) && a.date > start_date }
-      set = set.select { |a| a.group_schedule.group_id == group.id } if group
-      set.empty?
-    elsif attendances.loaded?
-      set = attendances.select { |a| Attendance::PRESENT_STATES.include? a.status }
-      set = set.select { |a| a.group_schedule.group_id == group.id } if group
-      set = set.select { |a| a.date > start_date && a.date <= end_date }
-      set.empty?
-    else
-      query = attendances.where('attendances.status IN (?)', Attendance::PRESENCE_STATES)
-      query = query.by_group_id(group.id) if group
-      query = query.from_date(start_date).to_date(end_date)
-      query.empty?
-    end
-  end
-
   def active_and_attending?(date = Date.current, group = nil)
-    active?(date) && attending?(date, group)
+    active?(date) && user.attending?(date, group)
   end
 
   def passive_or_absent?(date = Date.current, group = nil)
-    passive?(date) || absent?(date, group)
+    passive?(date) || user.absent?(date, group)
   end
 
   def paying?

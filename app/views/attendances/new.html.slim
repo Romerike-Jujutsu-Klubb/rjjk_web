@@ -15,7 +15,7 @@ h1 Registrer oppmøte
         = f.select :practice_id, [[@attendance.practice.to_s, @attendance.practice.id]], {}, readonly: true
   .row
     .col-md-6
-      = f.select :member_id, [nil] + @members.map { |m| [m.name, m.id] }
+      = f.select :user_id, [nil] + @users.map { |m| [m.name, m.id] }
     .col-md-6
       = f.select :status, Attendance::Status.constants.sort.map { |s| [t(s.to_s.downcase), Attendance::Status.const_get(s)] }
 

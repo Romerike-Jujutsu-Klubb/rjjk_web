@@ -1,0 +1,12 @@
+/ FIXME(uwe): Prettier 3-way button
+/= f.radio_button :passed, true, label: :Ja, class: 'mr-1', label_class: 'mr-2', onchange: "$('#passed_btn_#{graduate.id}').click()"
+/= f.radio_button :passed, false, label: :Nei, class: 'mr-1', onchange: "$('#passed_btn_#{graduate.id}').click()"
+/ https://codepen.io/Davide_sd/pen/AmazD
+.btn-group.mt-2 data-toggle="buttons"
+  label.btn.btn-sm.p-2 class=("btn-#{'outline-' unless state}success")
+    = true_label
+    input.ml-1 type="radio" name=field_name id="#{field_id}_true" value=:true autocomplete="off" checked=state onchange="$('##{field_id}_btn').click()"
+  label.btn.btn-sm.p-2 class=("btn-#{'outline-' unless state == false}danger")
+    input.mr-1 type="radio" name=field_name id="#{field_id}_false" value=:false autocomplete="off" checked=state==false onchange="$('##{field_id}_btn').click()"
+    = false_label
+  = f.submit id: "#{field_id}_btn", class: 'sr-only'

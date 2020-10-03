@@ -11,7 +11,7 @@
         td = m.name
         td align="center" = m.next_rank.name
         td align="center" = m.next_rank.minimum_attendances
-        td align="center" = link_to m.attendances_since_graduation.size, controller: :attendances, action: :since_graduation, id: m.id, only_path: false
+        td align="center" = link_to m.attendances_since_graduation.size, controller: :attendances, action: :since_graduation, id: m.user_id, only_path: false
         td
           - m.next_rank.curriculum_group.practice_groups.each do |group|
             - if (next_graduation = group.next_graduation)

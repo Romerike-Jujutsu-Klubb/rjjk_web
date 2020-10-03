@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   include UserSystem
 
   MEMBER_LAYOUT = 'dark_ritual'
-  PUBLIC_LAYOUT = 'parallax'
+  PUBLIC_LAYOUT = 'public'
 
   protect_from_forgery prepend: true, with: :exception
 
@@ -33,8 +33,7 @@ class ApplicationController < ActionController::Base
   def render(*args, **opts)
     if opts[:layout] == false || (opts.keys & NO_LAYOUT_KEYS).any?
       # Skip layout models
-    elsif _layout(lookup_context, []) == PUBLIC_LAYOUT || opts[:layout] == PUBLIC_LAYOUT ||
-          _layout(lookup_context, []) == 'parallax' || opts[:layout] == 'parallax'
+    elsif _layout(lookup_context, []) == PUBLIC_LAYOUT || opts[:layout] == PUBLIC_LAYOUT
       load_information_pages
       @news_items = NewsItem.front_page_items.first(5)
     elsif _layout(lookup_context, []) == MEMBER_LAYOUT

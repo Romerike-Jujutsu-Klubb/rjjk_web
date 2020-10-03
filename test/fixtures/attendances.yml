@@ -1,53 +1,63 @@
 lars_panda_2010_42:
-  member: lars
+  user: lars
   practice: panda_2010_42
   status: X
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 lars_panda_2013_41:
-  member: lars
+  user: lars
   practice: panda_2013_41
   status: X
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 lars_voksne_2013_41_tuesday_attended:
-  member: lars
+  user: lars
   practice: voksne_2013_41_tuesday
   status: X
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 lars_voksne_2013_41_thursday_attended:
-  member: lars
+  user: lars
   practice: voksne_2013_41_thursday
   status: X
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 uwe_voksne_2013_41_thursday_attended:
-  member: uwe
+  user: uwe
   practice: voksne_2013_41_thursday
   status: X
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 newbie_voksne_2013_41_tuesday_absent:
-  member: newbie
+  user: newbie
   practice: voksne_2013_41_tuesday
   status: X
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 uwe_voksne_2013_42_tuesday_planned:
-  member: uwe
+  user: uwe
   practice: voksne_2013_42_tuesday
   status: P
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 uwe_panda_2013_42_planned:
-  member: uwe
+  user: uwe
   practice: panda_2013_42
   status: P
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
 uwe_voksne_2013_42_thursday_planned:
-  member: uwe
+  user: uwe
   practice: voksne_2013_42_thursday
   status: P
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>
+
+trial_one:
+  user: lise
+  practice: panda_2010_42
+  status: X
+
+two:
+  user: lise
+  practice: panda_2013_42
+  status: X

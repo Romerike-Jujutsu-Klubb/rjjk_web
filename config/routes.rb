@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # FIXME(uwe): Separate to MyAttendanceController
   get 'mitt/oppmote(/:reviewed_attendance_id)' => 'attendances#plan', as: :attendance_plan
   get 'attendances/plan' # must be after "mitt/oppmote"
-  post 'attendances/announce(/:year/:week/:group_schedule_id)/:status(/:member_id)' =>
+  post 'attendances/announce(/:year/:week/:group_schedule_id)/:status(/:user_id)' =>
       'attendances#announce', as: :announce_attendance
   # EMXIF
 
@@ -46,7 +46,7 @@ Rails.application.routes.draw do
       get 'month_per_year_chart_data(/:month)', action: :month_per_year_chart_data,
           as: :month_per_year_chart_data
       get 'report(/:year/:month)', action: :report, as: :report
-      match 'review/:year/:week/:group_schedule_id/:status(/:member_id)', action: :review,
+      match 'review/:year/:week/:group_schedule_id/:status(/:user_id)', action: :review,
           via: %i[get post]
       get :since_graduation
     end
@@ -289,11 +289,13 @@ Rails.application.routes.draw do
   end
 
   scope controller: :signup, as: :signup_guide, path: 'innmelding' do
-    root action: :index
-    get :basics
-    get :guardians
-    get :complete
+    root action: :name_and_birthdate
+    post :contact_info
+    post :guardians
+    post :groups
+    post :complete
   end
+
   resources :signups do
     member do
       patch :complete
@@ -319,7 +321,6 @@ Rails.application.routes.draw do
     end
   end
   resources :technique_links
-  resources :trial_attendances
   resources :user_images, only: [] do
     member do
       post :like

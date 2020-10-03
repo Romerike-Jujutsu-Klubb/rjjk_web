@@ -1,0 +1,30 @@
+.card
+  .card-header Kontaktinfo for #{@user.first_name}
+  .card-body
+    - if @user.guardian_1 && @user.age >= 13
+      p For medlemmer over 13 år anbefaler vi at de har egen kontaktinfo.
+    = bootstrap_form_for @user, url: signup_guide_contact_info_path do |f|
+      = f.hidden_field :name
+      = f.hidden_field :birthdate
+      = f.hidden_field :male
+      .row
+        .col = f.text_field :email, required: @user.guardian_1.nil?
+        .col = f.text_field :phone, required: @user.guardian_1.nil?
+      .row
+        .col = f.text_field :address
+        .col = f.text_field :postal_code
+
+      = f.fields_for :guardian_1 do |gf|
+        = gf.hidden_field :name
+        = gf.hidden_field :birthdate
+        = gf.hidden_field :male
+        = gf.hidden_field :email
+        = gf.hidden_field :phone
+        = gf.hidden_field :address
+        = gf.hidden_field :postal_code
+
+      .float-right = f.primary
+        ' Neste
+        i.fa.fa-angle-double-right
+javascript:
+  $('#user_email').focus();

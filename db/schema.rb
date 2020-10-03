@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_21_190610) do
+ActiveRecord::Schema.define(version: 2020_10_03_114855) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -98,7 +98,6 @@ ActiveRecord::Schema.define(version: 2020_09_21_190610) do
   end
 
   create_table 'attendances', force: :cascade do |t|
-    t.integer 'member_id', null: false
     t.datetime 'created_at'
     t.datetime 'updated_at'
     t.string 'status', limit: 1, null: false
@@ -107,8 +106,10 @@ ActiveRecord::Schema.define(version: 2020_09_21_190610) do
     t.string 'comment', limit: 250
     t.integer 'practice_id', null: false
     t.datetime 'rated_at'
-    t.index %w[member_id practice_id], name: 'index_attendances_on_member_id_and_practice_id', unique: true
+    t.bigint 'user_id', null: false
     t.index ['practice_id'], name: 'fk__attendances_practice_id'
+    t.index %w[user_id practice_id], name: 'index_attendances_on_user_id_and_practice_id', unique: true
+    t.index ['user_id'], name: 'index_attendances_on_user_id'
   end
 
   create_table 'basic_techniques', force: :cascade do |t|
@@ -346,8 +347,11 @@ ActiveRecord::Schema.define(version: 2020_09_21_190610) do
 
   create_table 'group_memberships', force: :cascade do |t|
     t.integer 'group_id', null: false
-    t.integer 'member_id', null: false
-    t.index %w[group_id member_id], name: 'index_group_memberships_on_group_id_and_member_id', unique: true
+    t.bigint 'user_id', null: false
+    t.datetime 'created_at'
+    t.datetime 'updated_at'
+    t.index %w[group_id user_id], name: 'index_group_memberships_on_group_id_and_user_id', unique: true
+    t.index ['user_id'], name: 'index_group_memberships_on_user_id'
   end
 
   create_table 'group_schedules', force: :cascade do |t|
@@ -753,15 +757,6 @@ ActiveRecord::Schema.define(version: 2020_09_21_190610) do
     t.index %w[linkable_type linkable_id], name: 'index_technique_links_on_linkable_type_and_linkable_id'
   end
 
-  create_table 'trial_attendances', force: :cascade do |t|
-    t.integer 'nkf_member_trial_id', null: false
-    t.datetime 'created_at'
-    t.datetime 'updated_at'
-    t.integer 'practice_id', null: false
-    t.index %w[nkf_member_trial_id practice_id], name: 'index_trial_attendances_on_nkf_member_trial_id_and_practice_id', unique: true
-    t.index ['practice_id'], name: 'fk__trial_attendances_practice_id'
-  end
-
   create_table 'user_images', force: :cascade do |t|
     t.integer 'user_id', null: false
     t.integer 'image_id', null: false
@@ -818,6 +813,7 @@ ActiveRecord::Schema.define(version: 2020_09_21_190610) do
     t.datetime 'deleted_at'
     t.string 'kana'
     t.string 'locale', limit: 2, null: false
+    t.integer 'height', limit: 2
     t.index ['billing_user_id'], name: 'index_users_on_billing_user_id'
     t.index ['contact_user_id'], name: 'index_users_on_contact_user_id'
     t.index ['guardian_1_id'], name: 'index_users_on_guardian_1_id'
@@ -851,8 +847,8 @@ ActiveRecord::Schema.define(version: 2020_09_21_190610) do
   add_foreign_key 'application_videos', 'technique_applications'
   add_foreign_key 'appointments', 'members', name: 'fk_appointments_member_id'
   add_foreign_key 'appointments', 'roles', name: 'fk_appointments_role_id'
-  add_foreign_key 'attendances', 'members', name: 'attendances_member_id_fkey'
   add_foreign_key 'attendances', 'practices', name: 'fk_attendances_practice_id'
+  add_foreign_key 'attendances', 'users'
   add_foreign_key 'basic_techniques', 'ranks', name: 'fk_basic_techniques_rank_id'
   add_foreign_key 'basic_techniques', 'wazas', name: 'fk_basic_techniques_waza_id'
   add_foreign_key 'card_keys', 'users'
@@ -873,7 +869,7 @@ ActiveRecord::Schema.define(version: 2020_09_21_190610) do
   add_foreign_key 'graduates', 'ranks', name: 'graduates_rank_id_fkey'
   add_foreign_key 'group_instructors', 'group_semesters', name: 'fk_group_instructors_group_semester_id'
   add_foreign_key 'group_memberships', 'groups', name: 'group_memberships_group_id_fkey'
-  add_foreign_key 'group_memberships', 'members', name: 'group_memberships_member_id_fkey'
+  add_foreign_key 'group_memberships', 'users'
   add_foreign_key 'group_schedules', 'groups', name: 'group_schedules_group_id_fkey'
   add_foreign_key 'group_semesters', 'groups', name: 'fk_group_semesters_group_id'
   add_foreign_key 'group_semesters', 'members', column: 'chief_instructor_id', name: 'fk_group_semesters_chief_instructor_id'
@@ -903,8 +899,6 @@ ActiveRecord::Schema.define(version: 2020_09_21_190610) do
   add_foreign_key 'surveys', 'groups', name: 'fk_surveys_group_id'
   add_foreign_key 'technique_applications', 'ranks', name: 'fk_technique_applications_rank_id'
   add_foreign_key 'technique_links', 'basic_techniques', column: 'linkable_id', name: 'fk_basic_technique_links_basic_technique_id'
-  add_foreign_key 'trial_attendances', 'nkf_member_trials', name: 'trial_attendances_nkf_member_trial_id_fkey'
-  add_foreign_key 'trial_attendances', 'practices', name: 'fk_trial_attendances_practice_id'
   add_foreign_key 'user_messages', 'users', name: 'fk_user_messages_user_id'
   add_foreign_key 'users', 'users', column: 'billing_user_id'
   add_foreign_key 'users', 'users', column: 'contact_user_id'

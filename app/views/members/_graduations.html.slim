@@ -6,7 +6,7 @@ table.table.table-striped.table-sm
       th Tid før grad
       th Treninger
   tbody
-    - for graduate in @member.graduates.without_failed.sort_by { |g| g.graduation.held_on }.reverse
+    - for graduate in member.graduates.without_failed.sort_by { |g| g.graduation.held_on }.reverse
       tr
         td = link_to graduate.graduation.held_on, controller: :graduations, action: :edit, id: graduate.graduation_id
         td
@@ -19,8 +19,8 @@ table.table.table-striped.table-sm
           ' mnd
           | (#{graduate.training_period.to_s.gsub('..', ' - ')})
         td.text-center
-          = link_to graduate.training_attendances, controller: :attendances, action: :since_graduation, id: graduate.member_id, date: graduate.graduation.held_on
-    - if @member.graduates.empty?
+          = link_to graduate.training_attendances, controller: :attendances, action: :since_graduation, id: graduate.member.user_id, date: graduate.graduation.held_on
+    - if member.graduates.empty?
       tr
         td colspan="4" align="center"
           = link_to 'Graderinger', controller: :graduations

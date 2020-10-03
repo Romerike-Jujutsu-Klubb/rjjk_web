@@ -18,7 +18,7 @@ class AttendancesControllerTest < ActionController::TestCase
   def test_should_create_attendance
     assert_difference('Attendance.count') do
       post :create, params: { attendance: {
-        member_id: members(:uwe).id, practice_id: practices(:panda_2010_42).id, status: 'X'
+        user_id: id(:uwe), practice_id: practices(:panda_2010_42).id, status: 'X'
       } }
     end
 
@@ -27,7 +27,7 @@ class AttendancesControllerTest < ActionController::TestCase
 
   def test_create_with_group_schedule_id_and_year_and_week
     assert_difference('Attendance.count') do
-      post :create, params: { attendance: { member_id: members(:uwe).id,
+      post :create, params: { attendance: { user_id: id(:uwe),
                                             group_schedule_id: group_schedules(:panda).id, year: 2010, week: 42,
                                             status: 'X' } }
     end

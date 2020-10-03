@@ -11,7 +11,7 @@ ul
   li = link_to 'Jeg kommer :)', @confirm_url
   li = link_to 'Beklager, jeg kommer ikke.', @decline_url
 
-- attended = @graduate.member.attendances_since_graduation.count
+- attended = @graduate.member.user.attendances_since_graduation.count
 - limit = @graduate.minimum_attendances
 - needed = limit - attended
 - current_graduate = @graduate.member.current_graduate(@graduate.graduation.martial_art, @graduate.graduation.held_on)

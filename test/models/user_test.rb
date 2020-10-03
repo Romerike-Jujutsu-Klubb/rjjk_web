@@ -156,6 +156,7 @@ class UserTest < ActionMailer::TestCase
       ['neuer@example.com'],
       ['neuer@example.com', 'newbie@example.com'],
       ['oldie@example.com'],
+      ['sandra@example.com'],
       ['unverified_user@example.com'],
       ['uwe@example.com'],
     ], User.all.map(&:emails).sort
@@ -177,5 +178,24 @@ class UserTest < ActionMailer::TestCase
     u = users(:lars)
     u.update! phone: '+47 12 34 56 78'
     assert_equal '12345678', u.phone
+  end
+
+  test 'absent?' do
+    assert_equal false, users(:lars).absent?
+    assert_equal false, users(:newbie).absent?
+    assert_equal true, users(:sebastian).absent?
+    assert_equal false, users(:uwe).absent?
+  end
+
+  test 'absent? preloaded attendances for group' do
+    users = User.includes(:attendances).order(:id)
+    assert_equal [true, false, true, true, true, false, false, true, true, false, true, true],
+        (users.map { |m| m.absent?(Date.current, groups(:voksne)) })
+  end
+
+  test 'absent? preloaded recent_attendances' do
+    users = User.includes(:recent_attendances).order(:id)
+    assert_equal [true, false, true, true, true, false, false, true, true, false, true, true],
+        (users.map { |m| m.absent?(Date.current, groups(:voksne)) })
   end
 end

@@ -1,0 +1,18 @@
+h1 Innmelding / prøvetime
+
+p Før du bestemmer deg for om du vil trene med oss har du 2 uker uforpliktende prøvetid.
+  Vi ønsker allikevel at du registrerer deg slik at vi vet hvem som er på trening.
+  Dette dekker også forsikring på trening.
+
+.card
+  .card-header Først trenger vi å vi hvem som skal meldes inn.
+  .card-body
+    = bootstrap_form_for @user, url: signup_guide_contact_info_path do |f|
+      = f.text_field :name, required: true
+      = f.date_field :birthdate, required: true
+      = render 'layouts/tri_state_switch', f: f, field_id: "user_male", field_name: "user[male]", state: @user.male, true_label: 'Mann', false_label: 'Kvinne'
+      = f.number_field :height, required: true
+
+      .float-right = f.primary
+        ' Neste
+        i.fa.fa-angle-double-right

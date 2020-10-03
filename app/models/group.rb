@@ -25,8 +25,9 @@ class Group < ApplicationRecord
 
   has_one :martial_art, through: :curriculum_group
 
-  has_many :members, through: :group_memberships
   has_many :practices, through: :group_schedules
+  has_many :users, through: :group_memberships
+  has_many :members, through: :users
 
   accepts_nested_attributes_for :current_semester
   accepts_nested_attributes_for :next_semester
@@ -118,7 +119,7 @@ class Group < ApplicationRecord
     end
     group_instructors_query = GroupInstructor
         .includes(:group_schedule,
-            member: [{ attendances: { practice: :group_schedule } }, :nkf_member])
+            member: [{ user: { attendances: { practice: :group_schedule } } }, :nkf_member])
         .where(group_schedules: { group_id: id })
     if instructors.any?
       group_instructors_query = group_instructors_query
@@ -127,14 +128,14 @@ class Group < ApplicationRecord
     instructors += group_instructors_query.to_a.select { |gi| dates.any? { |d| gi.active?(d) } }
         .map(&:member).uniq
     instructors_query = Member.active(dates.first, dates.last)
-        .includes({ attendances: { practice: :group_schedule },
-                    graduates: %i[graduation rank] }, :groups, :nkf_member)
+        .includes({ user: [{ attendances: { practice: :group_schedule } }, :groups],
+                    graduates: %i[graduation rank] }, :nkf_member)
         .where(instructor: true)
     instructors_query = instructors_query.where('id NOT IN (?)', instructors.map(&:id)) if instructors.any?
     instructors += instructors_query
-        .select { |m| m.groups.any? { |g| g.martial_art_id == martial_art_id } }
+        .select { |m| m.user.groups.any? { |g| g.martial_art_id == martial_art_id } }
         .select do |m|
-      m.attendances.any? do |a|
+      m.user.attendances.any? do |a|
         ((dates.first - 92.days)..dates.last).cover?(a.date) &&
             a.group_schedule.group_id == id
       end
@@ -145,7 +146,7 @@ class Group < ApplicationRecord
 
   def trials
     NkfMemberTrial.for_group(self)
-        .includes(trial_attendances: { practice: :group_schedule })
+        .includes(signup: { user: { attendances: { practice: :group_schedule } } })
         .order('fornavn, etternavn')
         .to_a
   end
@@ -153,7 +154,7 @@ class Group < ApplicationRecord
   def waiting_list
     return [] unless target_size
 
-    trial_list = trials.sort_by { |t| [-t.trial_attendances.size, t.reg_dato] }
+    trial_list = trials.sort_by { |t| [-t.signup.user.attendances.size, t.reg_dato] }
     active_size = members.count(&:active?)
     active_trial_count = (target_size - active_size)
     trial_list[active_trial_count..] || []

@@ -13,10 +13,7 @@ class AttendanceHistoryGraph
         Attendance.by_group_id(group.id).includes(:practice)
             .where('(practices.year > ? OR (practices.year = ? AND practices.week > ?))
 AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
-                w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).to_a +
-            TrialAttendance.by_group_id(group.id)
-            .where('year > ? OR (year = ? AND week > ?)', w1[0], w1[0], w1[1])
-            .where('year < ? OR (year = ? AND week <= ?)', w2[0], w2[0], w2[1]).to_a
+                w1[0], w1[0], w1[1], w2[0], w2[0], w2[1]).to_a
       end
       sessions = attendances.map { |ats| ats.map(&:practice_id).uniq.size }
       values = attendances.map

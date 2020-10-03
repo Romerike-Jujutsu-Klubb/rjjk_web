@@ -9,6 +9,7 @@ class NkfMemberSyncJobTest < ActionMailer::TestCase
       assert_equal <<~SUBJECTS.chomp, ActionMailer::Base.deliveries.map(&:subject).join("\n")
         [RJJK][TEST]  (RuntimeError) \"Failed to synchronize value with NKF member: id: 228855109, RJJK: membership.left_on: \\\"\\\"...
       SUBJECTS
+      assert_equal ['Voksne'], members(:lars).reload.groups.map(&:name)
     end
   end
 end

@@ -3,5 +3,9 @@ one:
   nkf_member_trial: one
 
 two:
-  user: two
+  user: leftie
   nkf_member_trial: two
+
+three:
+  user: sandra
+  nkf_member_trial: three

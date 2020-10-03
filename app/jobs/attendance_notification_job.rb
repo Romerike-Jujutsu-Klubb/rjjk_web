@@ -5,7 +5,7 @@ class AttendanceNotificationJob < ApplicationJob
 
   # FIXME(uwe): Only send about practice later today after 0800.
   # FIXME(uwe): Do this in a background job to avoid slow response
-  def perform(practice, member, new_status)
+  def perform(practice, user, new_status)
     attendances = practice.attendances
     attendees = attendances.count { |a| Attendance::PRESENCE_STATES.include?(a.status) }
     absentees = attendances.count { |a| Attendance::ABSENT_STATES.include?(a.status) }
@@ -14,12 +14,12 @@ class AttendanceNotificationJob < ApplicationJob
     body << "\n#{absentees} er avmeldt." if absentees > 0
     AttendanceWebpush
         .push_all(
-            "#{member.name}: #{new_status.inspect} #{group_name} #{practice.date}",
+            "#{user.name}: #{new_status.inspect} #{group_name} #{practice.date}",
             body,
-            except: member.id,
-            tag: "attendance_#{member.id}_#{practice.id}",
+            except: user.id,
+            tag: "attendance_#{user.id}_#{practice.id}",
             data: {
-              member_id: member.id,
+              user_id: user.id,
               practice_id: practice.id,
             }
           )

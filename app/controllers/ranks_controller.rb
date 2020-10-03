@@ -6,7 +6,7 @@ class RanksController < ApplicationController
   before_action :technical_committy_required, except: USER_ACTIONS
 
   def index
-    ma_id = current_user.member.current_rank.martial_art_id
+    ma_id = current_user.current_rank.martial_art_id
     @ranks = Rank.includes(:curriculum_group).references(:curriculum_groups)
         .order(:martial_art_id, :position).to_a.sort_by { |r| r.martial_art_id == ma_id ? 0 : 1 }
     @martial_arts = @ranks.group_by(&:martial_art).reject { |ma, _ranks| ma.archived? }

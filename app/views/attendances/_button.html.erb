@@ -6,7 +6,7 @@
   practice_passed = attendance.practice.passed?
   practice_imminent = attendance.practice.imminent?
   initial_text =
-      if attendance.member_id != current_user.id
+      if attendance.user_id != current_user.id
         practice_passed ? 'Trente?' : practice_imminent ? 'Trener?' : 'Kommer?'
       else
         practice_passed ? 'Trente du?' : practice_imminent ? 'Trener du?' : 'Kommer du?'
@@ -16,7 +16,7 @@
   link_target = { controller: :attendances,
       action: practice_passed ? :review : :announce, year: year,
       week: week, group_schedule_id: gs.id, status: 'toggle' }
-  link_target[:member_id] = member_id if local_assigns[:member_id]
+  link_target[:user_id] = user_id if local_assigns[:user_id]
   states = (practice_passed ? Attendance::PAST_STATES : practice_imminent ? Attendance::CURRENT_STATES : Attendance::STATES)
   if attendance.persisted?
     states.each do |state, link_text, link_icon, link_class|
@@ -29,23 +29,23 @@
     end
   end
 %>
-<div id="button_<%= year %>_<%= week %>_<%= gs.id %><%= local_assigns[:member_id] && "_#{member_id}" %>" class="btn-group">
+<div id="button_<%= year %>_<%= week %>_<%= gs.id %><%= local_assigns[:user_id] && "_#{user_id}" %>" class="btn-group">
   <%= link_to(link_target, method: :post, remote: !initial_disabled,
-      id: "btn_#{year}_#{week}_#{gs.id}#{local_assigns[:member_id] && "_#{member_id}"}", class: "btn btn-#{initial_class} pr-0",
+      id: "btn_#{year}_#{week}_#{gs.id}#{local_assigns[:user_id] && "_#{user_id}"}", class: "btn btn-#{initial_class} pr-0",
       style: 'width: 6.9em', onclick: initial_disabled ? 'return false' : nil,
-      data: { replace: initial_disabled || local_assigns[:member_id] ? "#button_#{year}_#{week}_#{gs.id}_#{member_id}" : "#practice_#{week}_#{gs.id}" }) do %>
+      data: { replace: initial_disabled || local_assigns[:user_id] ? "#button_#{year}_#{week}_#{gs.id}_#{user_id}" : "#practice_#{week}_#{gs.id}" }) do %>
     <% if initial_icon %>
       <i class="fa fa-<%= initial_icon %>"></i>
     <% end %>
     <span><%= initial_text %></span>
   <% end %>
-  <button id="btn_<%= "#{year}_#{week}_#{gs.id}#{local_assigns[:member_id] && "_#{member_id}"}" %>_tgl" type="button" class="<%= 'disabled' if initial_disabled %> btn btn-<%= initial_class %> dropdown-toggle dropdown-toggle-split" <%= 'data-toggle="dropdown"'.html_safe unless initial_disabled %>>
+  <button id="btn_<%= "#{year}_#{week}_#{gs.id}#{local_assigns[:user_id] && "_#{user_id}"}" %>_tgl" type="button" class="<%= 'disabled' if initial_disabled %> btn btn-<%= initial_class %> dropdown-toggle dropdown-toggle-split" <%= 'data-toggle="dropdown"'.html_safe unless initial_disabled %>>
   </button>
   <div class="dropdown-menu dropdown-menu-right">
     <% states.each do |state, link_text, link_icon, link_class| %>
       <%= link_to(link_target.merge(status: state),
           method: :post, remote: true,
-          onclick: "$('#btn_#{year}_#{week}_#{gs.id}#{local_assigns[:member_id] && "_#{member_id}"}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('btn-#{link_class}').html($(this).html()); $(this).closest('.btn-group.show').find('[data-toggle=dropdown]').dropdown('toggle'); $(this).closest('.btn-group').find('[data-toggle=dropdown]').removeClass('btn-info btn-success btn-warning btn-danger').addClass('btn-#{link_class}'); return true",
+          onclick: "$('#btn_#{year}_#{week}_#{gs.id}#{local_assigns[:user_id] && "_#{user_id}"}').removeClass('btn-info btn-success btn-warning btn-danger').addClass('btn-#{link_class}').html($(this).html()); $(this).closest('.btn-group.show').find('[data-toggle=dropdown]').dropdown('toggle'); $(this).closest('.btn-group').find('[data-toggle=dropdown]').removeClass('btn-info btn-success btn-warning btn-danger').addClass('btn-#{link_class}'); return true",
           class: "dropdown-item text-#{link_class}") do %>
         <i class="fa fa-<%= link_icon %>"></i>
         <span><%= link_text %></span>

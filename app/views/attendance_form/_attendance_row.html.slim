@@ -45,7 +45,7 @@ tr class=cycle('odd', 'even')
             - @date_totals[d] += 1
           = render 'attendance_delete_link', attendance: attendance
         - else
-          = render 'attendance_create_link', member_id: member.id, group_schedule: group_schedule, date: d
+          = render 'attendance_create_link', user_id: member.user_id, group_schedule_id: group_schedule.id, date: d
         javascript:
           $("#attendance_#{member.id}_#{d.day}").bind("ajax:complete", function(e) {
             data = e.originalEvent.detail[0].response

@@ -1,23 +1,23 @@
 lars_voksne:
   group: voksne
-  member: lars
+  user: lars
 
 newbie_voksne:
   group: voksne
-  member: newbie
+  user: newbie
 
 sebastian_panda:
   group: panda
-  member: sebastian
+  user: sebastian
 
 sebastian_tiger:
   group: tiger
-  member: sebastian
+  user: sebastian
 
 uwe_voksne:
   group: voksne
-  member: uwe
+  user: uwe
 
 leftie_voksne:
   group: voksne
-  member: leftie
+  user: leftie

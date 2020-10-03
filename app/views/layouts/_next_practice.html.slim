@@ -1,7 +1,7 @@
 ruby:
   attendances_next_practice = next_practice.attendances.to_a
   m = current_user&.member
-  your_attendance_next_practice = attendances_next_practice.find { |a| a.member_id == m.id }
+  your_attendance_next_practice = attendances_next_practice.find { |a| a.user_id == m.user_id }
   attendances_next_practice.delete your_attendance_next_practice
   other_attendees = attendances_next_practice.select do |a|
     [Attendance::Status::WILL_ATTEND, Attendance::Status::ATTENDED].include? a.status

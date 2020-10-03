@@ -15,7 +15,7 @@ module AttendanceToggler
       Attendance::Status::ABSENT if attendance.practice.imminent?
     elsif attendance.practice.imminent?
       Attendance::Status::ATTENDED
-    elsif attendance.practice.instructor?(attendance.member)
+    elsif attendance.practice.instructor?(attendance.user.member)
       Attendance::Status::INSTRUCTOR
     else
       Attendance::Status::WILL_ATTEND

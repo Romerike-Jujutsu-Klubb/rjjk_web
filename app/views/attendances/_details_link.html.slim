@@ -1,17 +1,17 @@
 - if practice
   - attendances = practice.attendances.select { |a| Attendance::PRESENCE_STATES.include?(a.status) }
   - absences = practice.attendances.select { |a| Attendance::ABSENT_STATES.include?(a.status) }
-  - others = attendances.select { |a| a.member_id != current_user.member.id }
+  - others = attendances.select { |a| a.user_id != current_user.id }
   - if others.size >= 2
-    - others = others.sort_by { |a| a.member.current_rank || Rank::UNRANKED }.reverse
-  - attendance = practice.attendances.find { |a| a.member_id == current_user.member.id }
+    - others = others.sort_by { |a| a.user.current_rank }.reverse
+  - attendance = practice.attendances.find { |a| a.user_id == current_user.id }
   - if attendances.any?
     - if attendances.size > 2
       a data-toggle="modal" data-target="#attendance_details_#{practice.id}" href="#" title="#{practice.passed? ? 'Oppmøte' : 'Påmeldt til'} trening #{day_name(practice.group_schedule.weekday).downcase} #{practice.date.day}. #{month_name(practice.date.mon).downcase}"
         - if attendance.present?
           ' Du
         - else
-          => others.shift.member.first_name
+          => others.shift.user.first_name
         ' og
         = others.size == 1 ? others.first.member.first_name : "#{others.size} andre"
       = render 'layouts/modal', id: "attendance_details_#{practice.id}"
@@ -26,12 +26,12 @@
       ' Du
       - if others.any?
         ' og
-        = others.first.member.first_name
+        = others.first.user.first_name
     - elsif others.any?
-      => others.shift.member.first_name
+      => others.shift.user.first_name
       - if others.any?
         ' og
-        = others.first.member.first_name
+        = others.first.user.first_name
     - else
       ' Ingen
     =< practice.passed? ? 'trente' : 'kommer'

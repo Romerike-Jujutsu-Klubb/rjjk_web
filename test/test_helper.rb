@@ -40,7 +40,7 @@ class ActiveSupport::TestCase
   include FixtureFileHelpers
   include UserSystem
 
-  parallelize
+  # parallelize
   fixtures :all
 
   setup { Timecop.freeze(TEST_TIME) }

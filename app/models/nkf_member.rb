@@ -135,7 +135,7 @@ class NkfMember < ApplicationRecord
 
       new_attributes[target][target_attribute] = mapped_value
     end
-    user_email = new_attributes.dig(:user, :email)
+    user_email = new_attributes.dig(:user, :contact_email)
     email_contact_user = User.find_by(email: user_email) if user_email.present?
     logger.info "email_contact_user: #{email_contact_user.inspect}"
 
@@ -332,11 +332,11 @@ class NkfMember < ApplicationRecord
                         logger.info "Adding groups from NKF: #{nkf_group_names}"
                         Group.where(name: nkf_group_names)
                       else
-                        logger.info "Adding groups by age: #{member.age}"
-                        Group.active.where(from_age: 0..member.age, to_age: member.age..100)
+                        logger.info "Adding groups by age: #{user.age}"
+                        Group.active.where(from_age: 0..user.age, to_age: user.age..100)
                       end
-      member.groups = member_groups.to_a
-      member.save!
+      user.groups = member_groups.to_a
+      user.save!
 
       member
     end

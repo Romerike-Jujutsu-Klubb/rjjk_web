@@ -2,5 +2,5 @@
 br
 - Attendance::PAST_STATES[1..-1].each do |status, text, icon, text_class|
   | [
-  = link_to text, UserSystem.with_login(@member.user, controller: :attendances, action: :review, year: a.practice.year, week: a.practice.week, status: status, group_schedule_id: a.practice.group_schedule_id)
+  = link_to text, UserSystem.with_login(@user, controller: :attendances, action: :review, year: a.practice.year, week: a.practice.week, status: status, group_schedule_id: a.practice.group_schedule_id)
   | ]&nbsp;&nbsp;

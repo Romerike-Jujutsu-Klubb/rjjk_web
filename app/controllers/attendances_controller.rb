@@ -13,10 +13,10 @@ class AttendancesController < ApplicationController
   end
 
   def since_graduation
-    @member = Member.find(params[:id])
-    @date = params[:date].try(:to_date) || Date.current
+    @member = User.find(params[:id]).member
+    @date = params[:date]&.to_date || Date.current
     @graduate = @member.current_graduate(nil, @date)
-    @attendances = @member.attendances_since_graduation(@date, include_absences: true).sort_by(&:date)
+    @attendances = @member.user.attendances_since_graduation(@date, include_absences: true).sort_by(&:date)
         .reverse
   end
 
@@ -37,7 +37,7 @@ class AttendancesController < ApplicationController
     end
     @attendance.status ||= Attendance::Status::ATTENDED
     group_id = params[:group]
-    @members = Member.all.sort_by(&:name)
+    @users = User.all.sort_by(&:label)
     @group_schedules = GroupSchedule.where(group_id ? { group_id: group_id } : {}).to_a
     render action: 'new'
   end
@@ -53,7 +53,7 @@ class AttendancesController < ApplicationController
           year: params[:attendance].delete(:year), week: params[:attendance].delete(:week)
         ).id
     end
-    @attendance = Attendance.where(params[:attendance].slice(:member_id, :practice_id)).first_or_initialize
+    @attendance = Attendance.where(params[:attendance].slice(:user_id, :practice_id)).first_or_initialize
     if @attendance.update(params[:attendance])
       flash[:notice] = 'Attendance was successfully created.'
       if request.xhr?
@@ -80,12 +80,12 @@ class AttendancesController < ApplicationController
   def destroy
     @attendance = Attendance.find(params[:id])
     @attendance.destroy
-    AttendanceNotificationJob.perform_later(@attendance.practice, @attendance.member, nil)
+    AttendanceNotificationJob.perform_later(@attendance.practice, @attendance.user, nil)
     if request.xhr?
       flash.clear
       render partial: 'attendance_form/attendance_create_link', locals: {
-        member_id: @attendance.member_id,
-        group_schedule: @attendance.practice.group_schedule,
+        user_id: @attendance.user_id,
+        group_schedule_id: @attendance.practice.group_schedule_id,
         date: @attendance.date,
       }
     else
@@ -121,7 +121,7 @@ class AttendancesController < ApplicationController
       @monthly_summary_per_group[g][:practices] =
           @monthly_summary_per_group[g][:present].map(&:practice_id).uniq.size
     end
-    @by_group_and_member = Hash[monthly_per_group.map { |g, ats| [g, ats.group_by(&:member)] }]
+    @by_group_and_member = Hash[monthly_per_group.map { |g, ats| [g, ats.group_by(&:user)] }]
   end
 
   def history_graph; end
@@ -157,16 +157,16 @@ class AttendancesController < ApplicationController
   end
 
   def announce
-    m = (params[:member_id] && Member.find(params[:member_id])) || current_user.member
+    u = (params[:user_id] && User.find(params[:user_id])) || current_user
     year = params[:year].to_i
     week = params[:week].to_i
     gs_id = params[:group_schedule_id]
     practice = if year.positive? && week.positive? && gs_id
                  Practice.where(group_schedule_id: gs_id, year: year, week: week).first_or_create!
                else
-                 m.groups.find_by(planning: true).next_practice
+                 u.groups.find_by(planning: true).next_practice
                end
-    @attendance = Attendance.includes(:practice).where(member_id: m.id, practice_id: practice.id)
+    @attendance = Attendance.includes(:practice).where(user_id: u.id, practice_id: practice.id)
         .first_or_initialize
 
     new_status = params[:status]
@@ -183,13 +183,14 @@ class AttendancesController < ApplicationController
       @attendance.destroy!
     end
 
-    AttendanceNotificationJob.perform_later(practice, m, new_status)
+    AttendanceNotificationJob.perform_later(practice, u, new_status)
 
     if request.xhr?
       if params[:status] == 'toggle'
-        if params[:member_id]
+        if params[:user_id]
           render partial: 'button', locals: {
-            gs: practice.group_schedule, year: year, week: week, attendance: @attendance, member_id: m.id
+            gs: practice.group_schedule, year: year, week: week, attendance: @attendance,
+            user_id: u.id
           }
         else
           render partial: 'plan_practice', locals: {
@@ -237,13 +238,12 @@ class AttendancesController < ApplicationController
     end
     year_weeks = @weeks.map { |y, w| "(#{y}, #{w})" }.join(', ')
     @planned_attendances = Attendance.includes(:practice).references(:practices)
-        .where("member_id = ? AND (practices.year, practices.week) IN (#{year_weeks})",
-            @member.id)
+        .where("user_id = ? AND (practices.year, practices.week) IN (#{year_weeks})", @member.user_id)
         .to_a
     start_date = 6.months.ago.to_date.beginning_of_month
     attendances = Attendance.includes(practice: { group_schedule: :group }).references(:practices)
-        .where('member_id = ? AND attendances.status IN (?)',
-            @member, Attendance::PRESENT_STATES)
+        .where('user_id = ? AND attendances.status IN (?)',
+            @member.user_id, Attendance::PRESENT_STATES)
         .where('(practices.year = ? AND practices.week >= ?) OR (practices.year = ?)',
             start_date.cwyear, start_date.cweek, today.cwyear)
         .to_a
@@ -259,7 +259,7 @@ class AttendancesController < ApplicationController
     end
     return unless @member.current_rank
 
-    attendances_since_graduation = @member
+    attendances_since_graduation = @member.user
         .attendances_since_graduation(includes: { group_schedule: :group })
         .to_a
     return if attendances_since_graduation.empty?
@@ -270,7 +270,7 @@ class AttendancesController < ApplicationController
 
   def practice_details
     practice = Practice
-        .includes(attendances: { member: [{ graduates: %i[graduation rank] }, :user] })
+        .includes(attendances: { user: { member: [{ graduates: %i[graduation rank] }] } })
         .find(params[:id])
     attendances = practice.attendances.to_a
     other_attendees = attendances.select { |a| Attendance::PRESENCE_STATES.include? a.status }
@@ -282,7 +282,7 @@ class AttendancesController < ApplicationController
   end
 
   def review
-    member_id = params[:member_id] || current_user.member.id
+    user_id = params[:user_id] || current_user.id
     group_schedule_id = params[:group_schedule_id]
     year = params[:year].to_i
     week = params[:week].to_i
@@ -292,13 +292,13 @@ class AttendancesController < ApplicationController
     end
     practice = Practice.where(group_schedule_id: group_schedule_id,
                               year: year, week: week).first_or_create!
-    @attendance = Attendance.where(member_id: member_id, practice_id: practice.id).first_or_create
+    @attendance = Attendance.where(user_id: user_id, practice_id: practice.id).first_or_create
     new_status = params[:status]
     new_status = AttendanceToggler.toggle(@attendance) if new_status == 'toggle'
     @attendance.update! status: new_status
 
     if request.xhr?
-      if params[:member_id]
+      if params[:user_id]
         render partial: 'button', locals: { attendance: @attendance }
       else
         render partial: 'plan_practice', locals: { attendance: @attendance }

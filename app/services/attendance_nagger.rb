@@ -10,10 +10,10 @@ class AttendanceNagger
     Member.active(today)
         .where('NOT EXISTS (
 SELECT a.id FROM attendances a INNER JOIN practices p ON a.practice_id = p.id
-WHERE member_id = members.id AND year = ? AND week = ?)',
+WHERE user_id = members.user_id AND year = ? AND week = ?)',
             today.cwyear, today.cweek)
         .order(:joined_on)
-        .select { |m| m.groups.any? { |g| g.planning && !g.on_break? } }
+        .select { |m| m.user.groups.any? { |g| g.planning && !g.on_break? } }
         .select(&:active?)
         .each do |member|
       if member.user.nil?
@@ -22,7 +22,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         ExceptionNotifier.notify_exception(ActiveRecord::RecordNotFound.new(msg))
         next
       end
-      AttendanceMailer.plan(member).store(member, tag: :attendance_plan)
+      AttendanceMailer.plan(member).store(member.user, tag: :attendance_plan)
     end
   end
 
@@ -37,14 +37,14 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         .order('groups.from_age', 'groups.to_age')
         .to_a
     group_schedules.each do |gs|
-      attendances = Attendance.includes(:member, practice: :group_schedule)
+      attendances = Attendance.includes(user: :member, practice: :group_schedule)
           .where(practices: { group_schedule_id: gs.id, year: today.cwyear, week: today.cweek })
           .to_a
       next if attendances.empty?
 
       practice = attendances[0].practice
       non_attendees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:member)
-      attendees = attendances.map(&:member) - non_attendees
+      attendees = attendances.map(&:user).map(&:member) - non_attendees
       next if attendees.empty?
 
       recipients =
@@ -79,6 +79,7 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
     end
   end
 
+  # FIXME(uwe): Send to signups as well!
   def self.send_attendance_changes
     now = Time.current
     today = now.to_date
@@ -89,17 +90,17 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         .where('((NOT groups.school_breaks) OR ? BETWEEN first_session AND last_session)', today)
         .to_a
     upcoming_group_schedules.each do |gs|
-      attendances = Attendance.includes(:member, practice: :group_schedule)
+      attendances = Attendance.includes(user: :member, practice: :group_schedule)
           .references(:practices)
           .where('practices.group_schedule_id = ? AND year = ? AND week = ?',
               gs.id, today.cwyear, today.cweek).to_a
-      new_attendances = attendances.select { |a| a.updated_at >= 1.hour.ago }.map(&:member)
+      new_attendances = attendances.select { |a| a.updated_at >= 1.hour.ago }.map(&:user).map(&:member)
       next if new_attendances.empty?
 
       practice = attendances[0].practice
-      absentees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }
-          .map(&:member)
-      attendees = attendances.map(&:member) - absentees
+      absentees =
+          attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:user).map(&:member)
+      attendees = attendances.map(&:user).map(&:member) - absentees
       new_attendees = new_attendances & attendees
       new_absentees = new_attendances & absentees
       instructors = practice.group_schedule.group.instructors
@@ -129,20 +130,20 @@ WHERE member_id = members.id AND year = ? AND week = ?)',
         .where('groups.planning = ?', true)
         .to_a
     planned_attendances = Attendance
-        .includes(:member, practice: :group_schedule).references(:groups)
+        .includes(user: :member, practice: :group_schedule).references(:groups)
         .where('practices.group_schedule_id IN (?)', completed_group_schedules.map(&:id))
         .where('practices.year = ? AND practices.week = ?', today.cwyear, today.cweek)
         .where('attendances.status = ? AND sent_review_email_at IS NULL',
             Attendance::Status::WILL_ATTEND).to_a
-    planned_attendances.group_by(&:member).each do |member, completed_attendances|
+    planned_attendances.group_by(&:user).each do |user, completed_attendances|
       older_attendances =
-          Attendance.where('member_id = ? AND attendances.id NOT IN (?) AND attendances.status = ?',
-              member.id, completed_attendances.map(&:id), Attendance::Status::WILL_ATTEND)
+          Attendance.where('user_id = ? AND attendances.id NOT IN (?) AND attendances.status = ?',
+              user.id, completed_attendances.map(&:id), Attendance::Status::WILL_ATTEND)
               .includes(practice: :group_schedule).references(:practices)
               .order('practices.year, practices.week, group_schedules.weekday').to_a
               .select { |a| a.date <= Date.current && a.date >= 1.year.ago }.reverse
-      AttendanceMailer.review(member, completed_attendances, older_attendances)
-          .store(member, tag: :attendance_review)
+      AttendanceMailer.review(user, completed_attendances, older_attendances)
+          .store(user, tag: :attendance_review)
       completed_attendances.each { |a| a.update sent_review_email_at: now }
     end
   end

@@ -14,6 +14,7 @@ class SignupsTest < ApplicationSystemTestCase
   end
 
   test 'creating a Signup' do
+    signups(:three).delete
     visit signups_url
     click_on 'Ny innmelding'
     assert_current_path new_signup_path

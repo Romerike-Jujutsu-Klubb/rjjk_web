@@ -31,10 +31,12 @@ class User < ApplicationRecord
   has_one :member, -> { where(left_on: nil).order(joined_on: :desc) }, inverse_of: :user,
       dependent: :restrict_with_exception
 
+  has_many :attendances, dependent: :destroy
   has_many :contactees, dependent: :nullify, class_name: 'User', foreign_key: :contact_user_id,
       inverse_of: :contact_user
   has_many :embus, dependent: :destroy
   has_many :event_invitees, dependent: :restrict_with_error
+  has_many :group_memberships, dependent: :destroy
   has_many :images, dependent: :destroy
   has_many :memberships, dependent: :restrict_with_error,
       class_name: 'Member', # TODO(uwe): Remove line after rename Member => Membership
@@ -45,11 +47,26 @@ class User < ApplicationRecord
       inverse_of: :billing_user
   has_many :primary_wards, dependent: :nullify, class_name: 'User', foreign_key: :guardian_1_id,
       inverse_of: :guardian_1
+  has_many :recent_attendances, -> { merge(Attendance.from_date(92.days.ago).to_date(31.days.from_now)) },
+      class_name: :Attendance, inverse_of: :user
   has_many :secondary_wards, dependent: :nullify, class_name: 'User', foreign_key: :guardian_2_id,
       inverse_of: :guardian_2
   has_many :signatures, dependent: :destroy
   has_many :signups, dependent: :destroy
   has_many :user_messages, dependent: :destroy
+
+  has_many :groups, through: :group_memberships
+
+  scope :absent_since, ->(from_date = nil, to_date = nil) do
+    where.not(id: attending_since(from_date, to_date))
+  end
+  scope :attending_since, ->(from_date = nil, to_date = nil) do
+    from_date ||= Date.current
+    to_date ||= Date.current
+    merge(Attendance.from_date(from_date).to_date(to_date))
+  end
+
+  accepts_nested_attributes_for :guardian_1
 
   search_scope %i[address email first_name last_name login phone postal_code security_token],
       order: %i[first_name last_name]
@@ -371,6 +388,61 @@ class User < ApplicationRecord
     return if male.nil?
 
     male ? 'Mann' : 'Kvinne'
+  end
+
+  def attending?(date = Date.current, group = nil)
+    !absent?(date, group)
+  end
+
+  def absent?(date = Date.current, group = nil, days: 92)
+    return false if member && date <= member.joined_on + 2.months
+
+    start_date = date - days
+    end_date = date + 31
+    if date >= Date.current && recent_attendances.loaded?
+      set = recent_attendances
+          .select { |a| Attendance::PRESENT_STATES.include?(a.status) && a.date > start_date }
+      set = set.select { |a| a.group_schedule.group_id == group.id } if group
+      set.empty?
+    elsif attendances.loaded?
+      set = attendances.select { |a| Attendance::PRESENT_STATES.include? a.status }
+      set = set.select { |a| a.group_schedule.group_id == group.id } if group
+      set = set.select { |a| a.date > start_date && a.date <= end_date }
+      set.empty?
+    else
+      query = attendances.where('attendances.status IN (?)', Attendance::PRESENCE_STATES)
+      query = query.by_group_id(group.id) if group
+      query = query.from_date(start_date).to_date(end_date)
+      query.empty?
+    end
+  end
+
+  def attendances_since_graduation(before_date = Date.current,
+      practice_groups = Group.includes(:martial_art).to_a, includes: nil, include_absences: false)
+    queries = Array(practice_groups).map do |g|
+      ats = attendances
+      ats = ats.where(status: Attendance::PRESENT_STATES) unless include_absences
+      ats = ats.by_group_id(g.id)
+      if (c = last_membership&.current_graduate(g.martial_art, before_date))
+        ats = ats.after(c.graduation.held_on)
+      end
+      ats = ats.to_date(before_date)
+      ats = ats.includes(includes) if includes
+      ats
+    end
+    query = case queries.size
+            when 0
+              Attendance.none
+            when 1
+              queries.first
+            else
+              queries.inject(:or)
+            end
+    query.order('practices.year, practices.week').reverse_order
+  end
+
+  def current_rank
+    last_membership&.current_rank || Rank::UNRANKED
   end
 
   protected

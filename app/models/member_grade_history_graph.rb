@@ -8,7 +8,7 @@ class MemberGradeHistoryGraph
       SELECT 1
       FROM attendances a
         INNER JOIN practices p ON p.id = a.practice_id
-      WHERE member_id = members.id
+      WHERE user_id = users.id
         AND (p.year > :prev_date_year OR (p.year = :prev_date_year AND p.week >= :prev_date_week))
         AND (p.year < :date_year OR (p.year = :date_year AND p.week <= :date_week))
     )
@@ -18,7 +18,7 @@ class MemberGradeHistoryGraph
         SELECT 1
         FROM attendances a
           INNER JOIN practices p ON p.id = a.practice_id
-        WHERE member_id = members.id
+        WHERE user_id = users.id
           AND (p.year > :date_year OR (p.year = :date_year AND p.week >= :date_week))
           AND (p.year < :next_year OR (p.year = :next_year AND p.week <= :next_week))))
     AND (joined_on IS NULL OR joined_on <= :date)
@@ -28,7 +28,7 @@ class MemberGradeHistoryGraph
   ATTENDANCE_CLAUSE = '(SELECT COUNT(*)
                         FROM attendances a
                           INNER JOIN practices p ON p.id = a.practice_id
-                        WHERE member_id = members.id
+                        WHERE user_id = users.id
                           AND (p.year > ? OR (p.year = ? AND p.week >= ?))
                           AND (p.year < ? OR (p.year = ? AND p.week <= ?))
                         ) >= ?
@@ -72,6 +72,8 @@ class MemberGradeHistoryGraph
       next_date = date + interval
       @practices[date] ||= @group.trainings_in_period(prev_date..date)
       @active_members[date] ||= Member
+          .includes(:user, graduates: [{ graduation: { group: :martial_art } }, :rank])
+          .references(:users)
           .where(
               if percentage
                 [ATTENDANCE_CLAUSE, prev_date.cwyear, prev_date.cwyear, prev_date.cweek,
@@ -85,7 +87,7 @@ class MemberGradeHistoryGraph
                                   next_week: next_date.cweek, date: date }]
               end
             )
-          .includes(graduates: [{ graduation: { group: :martial_art } }, :rank]).to_a
+          .to_a
       @active_members[date].select do |m|
         m.graduates.select { |g| g.passed? && g.graduation.held_on <= date }
             .max_by { |g| g.graduation.held_on }&.rank == rank

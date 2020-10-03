@@ -44,19 +44,7 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
         = graduate.passed ? 'Ja' : 'Nei'
       - else
         = bootstrap_form_for graduate, html: { remote: true, class: 'form-inline' } do |f|
-          / FIXME(uwe): Prettier 3-way button
-          /= f.radio_button :passed, true, label: :Ja, class: 'mr-1', label_class: 'mr-2', onchange: "$('#passed_btn_#{graduate.id}').click()"
-          /= f.radio_button :passed, false, label: :Nei, class: 'mr-1', onchange: "$('#passed_btn_#{graduate.id}').click()"
-          / https://codepen.io/Davide_sd/pen/AmazD
-          .btn-group data-toggle="buttons"
-            label.btn.btn-sm.p-1 class=("btn-#{'outline-' unless graduate.passed}success")
-              | Ja
-              input.ml-1 type="radio" name="graduate[passed]" id="graduate_passed_true" value=:true autocomplete="off" checked=graduate.passed onchange="$('#passed_btn_#{graduate.id}').click()"
-            label.btn.btn-sm.p-1 class=("btn-#{'outline-' unless graduate.passed == false}danger")
-              input.mr-1 type="radio" name="graduate[passed]" id="graduate_passed_false" value=:false autocomplete="off" checked=graduate.passed==false onchange="$('#passed_btn_#{graduate.id}').click()"
-              | Nei
-
-          = f.submit id: "passed_btn_#{graduate.id}", class: 'sr-only'
+          = render 'layouts/tri_state_switch', f: f, field_id: "graduate_passed_#{graduate.id}", field_name: "graduate[passed]", state: graduate.passed, true_label: 'Ja', false_label: 'Nei'
   td
     - if graduate.graduation.approved?
       = graduate.rank.label
@@ -103,7 +91,7 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
         - elsif training_attendances < minimum_attendances
           div
             ' Har bare vært på
-            => link_to "#{training_attendances} trening#{'er' if training_attendances > 1}", { controller: :attendances, action: :since_graduation, id: mbr.id, date: graduate.graduation.held_on }, class: "text-danger"
+            => link_to "#{training_attendances} trening#{'er' if training_attendances > 1}", { controller: :attendances, action: :since_graduation, id: mbr.user_id, date: graduate.graduation.held_on }, class: "text-danger"
             ' siden
             - if current_graduate
               ' forrige gradering (#{current_graduate.graduation.held_on}).

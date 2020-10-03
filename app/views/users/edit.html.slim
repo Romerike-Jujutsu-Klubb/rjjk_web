@@ -16,20 +16,20 @@ ul.nav.nav-tabs role="tablist"
         .badge.badge-danger.ml-1 title='Utmeldt' data-toggle='tooltip' U
   - if @user.depending_users.any?
     li.nav-item: a.nav-link data-target="#tab_depending_users" data-toggle="tab" Relasjoner
-  - if @member
+  - if @user.member
     li.nav-item: a.nav-link data-target="#tab_graduations" data-toggle="tab" Graderinger
-    - if @member.appointments.any? || @member.elections.any?
+    - if @user.member.appointments.any? || @user.member.elections.any?
       li.nav-item: a.nav-link data-target="#tab_duties" data-toggle="tab" Verv
   - if @user.event_invitees.any?
     li.nav-item: a.nav-link data-target="#tab_events" data-toggle="tab" Arrangement
   - if @user.user_messages.any?
     li.nav-item: a.nav-link data-target="#tab_messages" data-toggle="tab" Meldinger
-  - if @member
-    - if @member.survey_requests.any?
+  - if @user.member
+    - if @user.member.survey_requests.any?
       li.nav-item: a.nav-link data-target="#tab_surveys" data-toggle="tab" Spørreskjema
-    - if @member.age&.>=(18)
+    - if @user.age&.>=(18)
       li.nav-item: a.nav-link data-target="#tab_signatures" data-toggle="tab" Signaturer
-  - if @member&.nkf_member
+  - if @user.member&.nkf_member
     li.nav-item: a.nav-link data-target="#tab_nkf" data-toggle="tab" NKF
 
 .tab-content
@@ -38,24 +38,26 @@ ul.nav.nav-tabs role="tablist"
     .tab-pane.fade id="tab_membership_#{membership.id}" = render 'members/form', membership: membership
   - if @user.depending_users.any?
     #tab_depending_users.tab-pane.fade.pt-3
-      ul
+      .row
         - @user.depending_users.each do |u|
-          li = link_to u.name, user_path(u, anchor: :tab_contacts_tab)
-  - if @member
-    #tab_graduations.tab-pane.fade = render 'members/graduations'
-    - if @member.appointments.any? || @member.elections.any?
-      #tab_duties.tab-pane.fade = render 'members/duties'
+          .col: a.btn.btn-info.btn-lg href=user_path(u)
+            i.fa.fa-user>
+            = u.name
+  - if @user.member
+    #tab_graduations.tab-pane.fade = render 'members/graduations', member: @user.member
+    - if @user.member.appointments.any? || @user.member.elections.any?
+      #tab_duties.tab-pane.fade = render 'members/duties', member: @user.member
   - if @user.event_invitees.any?
     #tab_events.tab-pane.fade = render 'events'
   - if @user.user_messages.any?
     #tab_messages.tab-pane.fade = render 'messages'
-  - if @member
-    - if @member.survey_requests.any?
-      #tab_surveys.tab-pane.fade = render 'members/surveys'
-    - if @member.age&.>=(18)
+  - if @user.member
+    - if @user.member.survey_requests.any?
+      #tab_surveys.tab-pane.fade = render 'members/surveys', member: @user.member
+    - if @user.member.age&.>=(18)
       #tab_signatures.tab-pane.fade = render 'users/signatures'
-  - if @member&.nkf_member
-    #tab_nkf.tab-pane.fade = render 'members/nkf_fields', member: @member
+  - if @user.member&.nkf_member
+    #tab_nkf.tab-pane.fade = render 'members/nkf_fields', member: @user.member
 
 javascript:
     $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {

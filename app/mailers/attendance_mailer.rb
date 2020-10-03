@@ -49,12 +49,12 @@ class AttendanceMailer < ApplicationMailer
     mail to: recipient.email, subject: @title
   end
 
-  def review(member, completed_attendances, older_attendances)
-    @member = member
+  def review(user, completed_attendances, older_attendances)
+    @user = user
     @completed_attendances = completed_attendances
     @older_attendances = older_attendances
     @title = 'Hvordan var treningen?'
     @timestamp = completed_attendances[0].date
-    mail to: member.email, subject: @title
+    mail to: user.email, subject: @title
   end
 end

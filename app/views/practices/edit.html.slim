@@ -16,7 +16,7 @@ h3 => @practice.date
         .float-right = f.primary
 
 
-  - attendances, absences = @practice.attendances.sort_by{|a| a.member.current_rank || Rank::UNRANKED}.reverse.partition(&:present?)
+  - attendances, absences = @practice.attendances.sort_by{|a| a.user.current_rank}.reverse.partition(&:present?)
   .card
     h3.card-header
       | Påmeldte
@@ -24,9 +24,9 @@ h3 => @practice.date
     table.table.mb-0
       - attendances.each do |a|
         tr
-          td = a.member.name
+          td = a.user.name
           td.pl-0 width=1
-            - if a.member.user.card_key
+            - if a.user.card_key
               i.fa.fa-key
   - if absences.any? && (admin? || instructor?)
     .card
@@ -36,7 +36,7 @@ h3 => @practice.date
       table.table.mb-0
         - absences.each do |a|
           tr
-            td = a.member.name
+            td = a.user.name
             td.text-right = render 'attendances/badge', status: a.status
 
 .mt-3 = link_to('Vis', @practice) unless @practice.new_record?

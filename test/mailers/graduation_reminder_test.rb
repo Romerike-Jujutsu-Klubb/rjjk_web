@@ -73,7 +73,7 @@ class GraduationReminderTest < ActionMailer::TestCase
   def test_notify_groups
     assert_mail_stored(3) { GraduationReminder.notify_groups }
 
-    mail = UserMessage.pending[0]
+    mail = UserMessage.pending[1]
     assert_equal ['lars@example.com'], mail.to
     assert_equal %w[uwe@example.com], mail.from
     assert_equal 'Gradering for Voksne 2013-10-24', mail.subject
@@ -82,7 +82,7 @@ class GraduationReminderTest < ActionMailer::TestCase
     assert_match(%r{Din nåværende registrerte grad hos oss er <b>1. kyu brunt belte</b>.}, mail.body)
     assert_match(%r{Din neste grad er <b>shodan svart belte</b>.}, mail.body)
 
-    mail = UserMessage.pending[1]
+    mail = UserMessage.pending[0]
     assert_equal ['newbie@example.com'], mail.to
     assert_equal %w[uwe@example.com], mail.from
     assert_equal 'Gradering for Voksne 2013-10-24', mail.subject

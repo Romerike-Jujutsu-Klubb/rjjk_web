@@ -50,7 +50,7 @@ class GraduationReminder
   def self.notify_overdue_graduates
     today = Date.current
     active_members = Member.active(today)
-        .includes(:ranks, attendances: { practice: { group_schedule: :group } })
+        .includes(:ranks, user: { attendances: { practice: { group_schedule: :group } } })
         .to_a
     overdue_graduates = active_members.select do |m|
       next if m.passive_or_absent?

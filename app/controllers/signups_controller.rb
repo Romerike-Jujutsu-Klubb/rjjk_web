@@ -12,7 +12,11 @@ class SignupsController < ApplicationController
 
   def new
     @signup ||= Signup.new(params[:signup])
-    load_form_data
+    @users ||= User.with_deleted.includes(:member, :signups)
+        .where(members: { id: nil }, signups: { id: nil })
+        .order(:first_name, :last_name).to_a
+    @nkf_member_trials ||=
+        NkfMemberTrial.includes(:signup).where(signups: { id: nil }).order(:fornavn, :etternavn).to_a
     if @signup.nkf_member_trial
       @q = [@signup.nkf_member_trial.attributes.fetch_values('fornavn', 'etternavn', 'epost', 'mobil')]
           .join(' ')
@@ -79,13 +83,5 @@ class SignupsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def signup_params
     params.require(:signup).permit(:user_id, :nkf_member_trial_id)
-  end
-
-  def load_form_data
-    @users ||= User.with_deleted.includes(:member, :signups)
-        .where(members: { id: nil }, signups: { id: nil })
-        .order(:first_name, :last_name).to_a
-    @nkf_member_trials ||=
-        NkfMemberTrial.includes(:signup).where(signups: { id: nil }).order(:fornavn, :etternavn).to_a
   end
 end

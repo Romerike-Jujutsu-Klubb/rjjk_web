@@ -8,6 +8,6 @@ ul
       ul
         li Registrert: #{trial.reg_dato}
         li
-          => trial.trial_attendances.select { |a| a.date >= 2.months.ago.to_date }.size
+          => trial.signup.user.attendances.select { |a| a.date >= 2.months.ago.to_date }.size
           | treninger siste 2 måneder
-        li #{trial.trial_attendances.size} treninger totalt
+        li #{trial.signup.user.attendances.size} treninger totalt

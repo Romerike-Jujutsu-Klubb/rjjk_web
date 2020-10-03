@@ -45,20 +45,43 @@
       = f.text_field :postal_code
     .col-md
       .row
-        - if user.birthdate
+        - if user.birthdate || admin?
           .col
-            = f.text_field :birthdate, placeholder: 'år-måned-dag', class: 'date', append: "#{user.age} år"
-        .col = f.select :male, [[nil, ''], ['Mann', 'true'], ['Kvinne', 'false']], selected: user.male.to_s
+            - if user.birthdate
+              = f.text_field :birthdate, placeholder: 'år-måned-dag', class: 'date', append: "#{user.age} år"
+            - if admin?
+              = f.select :role, [['', ''], ['Administrator', UserSystem::ADMIN_ROLE]], selected: user.role.to_s
+        .col
+          = f.select :male, [[nil, ''], ['Mann', 'true'], ['Kvinne', 'false']], selected: user.male.to_s
+          = f.select :locale, [['Norsk', 'nb'], ['English', 'en']]
+        .col
+          h5 Grupper
+
+          / FIXME(uwe): Convert to collection_check_boxes
+          / / https://edgeapi.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html
+          / = f.collection_check_boxes(:group_ids, @groups, :id, :name, hide_label: true) do |group|
+          /   = group.check_box
+          /   = group.label(class: 'text-bold')
+          /   ' xxx
+
+          input value="" multiple="" type="hidden" name="user[group_ids][]" id="user_group_ids"
+          - @groups.each do |g|
+            - next unless g.active? || user.groups.include?(g)
+            - attendances_since_graduation = user.attendances_since_graduation(Date.current, g).size
+            label for="user_group_ids_#{g.id}" style=('font-weight: bold' if g.contains_age(user.age))
+              = check_box_tag "user[group_ids][]", g.id, user.groups.include?(g), value: g.id, id: "user_group_ids_#{g.id}"
+              =< g.martial_art&.name
+              =< g.name
+              - if attendances_since_graduation > 0
+                =< link_to("(#{attendances_since_graduation} treninger)", controller: :attendances, action: :since_graduation, id: user.id)
+
       .row
-        - if admin?
-          .col = f.select :role, [['', ''], ['Administrator', UserSystem::ADMIN_ROLE]], selected: user.role.to_s
-        .col = f.select :locale, [['Norsk', 'nb'], ['English', 'en']]
       - if user.kana.present? || user.memberships.any?{|m| m.ranks.any?}
         = f.text_field :kana, help: "Kei Wa Ryu: #{Rank::KEI_WA_RYU_CHARACTERS}",
                   prepend: link_to('Wiki', 'https://en.wikipedia.org/wiki/Katakana'),
                   append: [ \
                     (link_to('Google', "https://translate.google.com/#view=home&op=translate&sl=ja&tl=no&text=#{user.kana}", target: '_blank') if user.kana.present?), \
-                    (link_to('<i class="fa fa-shopping-cart"></i>', 'https://www.kataaro.com/Products/Embroidered-Black-Belt-Brushed-Cotton__E4941.aspx', target: '_blank') if user.member&.current_rank&.embroydery?) \
+                    (link_to('<i class="fa fa-shopping-cart"></i>', 'https://www.kataaro.com/Products/Embroidered-Black-Belt-Brushed-Cotton__E4941.aspx', target: '_blank') if user.current_rank.embroydery?) \
                   ].compact.presence&.join&.html_safe
       - if @user.memberships.any? || @user.contact_users.take(2).count > 1
         - if user.age&.<(18) && user.guardian_1_id.nil?

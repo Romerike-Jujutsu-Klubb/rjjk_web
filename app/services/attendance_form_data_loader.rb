@@ -13,8 +13,8 @@ module AttendanceFormDataLoader
     @instructors = []
     if group_id
       if group_id == 'others'
-        @members = Member.includes(attendances: { group_schedule: :group })
-            .where('id NOT in (SELECT DISTINCT member_id FROM group_memberships)')
+        @members = Member.includes(user: { attendances: { group_schedule: :group } })
+            .where('user_id NOT in (SELECT DISTINCT user_id FROM group_memberships)')
             .where('left_on IS NULL OR left_on > ?', @date)
             .to_a
         @trials = []
@@ -30,11 +30,11 @@ module AttendanceFormDataLoader
         @instructors = @group.active_instructors(@dates)
 
         current_members = @group.members.active(first_date, last_date)
-            .includes({ attendances: { practice: :group_schedule },
-                        graduates: %i[graduation rank], groups: :group_schedules },
+            .includes({ user: { attendances: { practice: :group_schedule }, groups: :group_schedules },
+                        graduates: %i[graduation rank] },
                 :nkf_member)
         attended_query = Member.references(:practices)
-            .includes(attendances: { practice: :group_schedule }, graduates: %i[graduation rank])
+            .includes(user: { attendances: { practice: :group_schedule } }, graduates: %i[graduation rank])
             .where('practices.group_schedule_id IN (?)', @group.group_schedules.map(&:id))
             .where('year > ? OR ( year = ? AND week >= ?)',
                 first_date.cwyear, first_date.cwyear, first_date.cweek)

@@ -77,16 +77,16 @@ class Attendance < ApplicationRecord
             year: to_date.cwyear, week: to_date.cweek, wday: to_date.cwday)
   }
 
-  belongs_to :member
+  belongs_to :user
   belongs_to :practice
   has_one :group_schedule, through: :practice
 
   accepts_nested_attributes_for :practice
 
-  validates :member_id, :status, presence: true
-  validates :member_id, uniqueness: { scope: :practice_id }
   validates :rated_at, presence: true, if: :rating
   validates :rating, presence: true, if: :rated_at
+  validates :status, presence: true
+  validates :user_id, presence: true, uniqueness: { scope: :practice_id }
 
   validate on: :update do
     if status_was == Status::ATTENDED && status == Status::WILL_ATTEND
@@ -101,7 +101,7 @@ class Attendance < ApplicationRecord
   end
 
   def to_s
-    "#{member} #{practice} (#{status})"
+    "#{user} #{practice} (#{status})"
   end
 
   def status_label

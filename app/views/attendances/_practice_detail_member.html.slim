@@ -1,12 +1,12 @@
 li
   span.fa-li
-    - if attendance.member.user.card_key
+    - if attendance.user.card_key
       i.fas.fa-key
     - else
       i.fas.fa-user
-  - member_label = attendance.member.name
+  - user_label = attendance.user.name
   - if admin? || instructor?
-    = link_to member_label, attendance.member
+    = link_to user_label, attendance.user
     - if attendance.rated_at
       span< title=:Bekreftet data-toggle=:tooltip
         - if attendance.rating == 0
@@ -18,4 +18,4 @@ li
         - else
           i.fa.fa-check
   - else
-    = member_label
+    = user_label
