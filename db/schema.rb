@@ -567,6 +567,7 @@ ActiveRecord::Schema.define(version: 2020_10_03_114855) do
     t.string 'foresatte_mobil', limit: 255
     t.string 'foresatte_nr_2', limit: 64
     t.string 'foresatte_nr_2_mobil', limit: 255
+    t.integer 'hoyde', limit: 2
   end
 
   create_table 'page_aliases', force: :cascade do |t|

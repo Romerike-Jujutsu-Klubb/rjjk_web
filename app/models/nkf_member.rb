@@ -22,6 +22,7 @@ class NkfMember < ApplicationRecord
     gren_stilart_avd_parti___gren_stilart_avd_parti: {},
     hovedmedlem_id: {},
     hovedmedlem_navn: {},
+    hoyde: {map_to: { user: :height }, form_field: :frm_48_v13},
     id: {},
     innmeldtarsak: {},
     innmeldtdato: { map_to: { membership: :joined_on }, form_field: :frm_48_v45 },
