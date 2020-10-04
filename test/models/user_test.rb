@@ -156,6 +156,7 @@ class UserTest < ActionMailer::TestCase
       ['neuer@example.com'],
       ['neuer@example.com', 'newbie@example.com'],
       ['oldie@example.com'],
+      ["post@jujutsu.no"],
       ['sandra@example.com'],
       ['unverified_user@example.com'],
       ['uwe@example.com'],
@@ -189,13 +190,13 @@ class UserTest < ActionMailer::TestCase
 
   test 'absent? preloaded attendances for group' do
     users = User.includes(:attendances).order(:id)
-    assert_equal [true, false, true, true, true, false, false, true, true, false, true, true],
+    assert_equal [true, false, true, true, true, true, false, false, true, true, false, true, true],
         (users.map { |m| m.absent?(Date.current, groups(:voksne)) })
   end
 
   test 'absent? preloaded recent_attendances' do
     users = User.includes(:recent_attendances).order(:id)
-    assert_equal [true, false, true, true, true, false, false, true, true, false, true, true],
+    assert_equal [true, false, true, true, true, true, false, false, true, true, false, true, true],
         (users.map { |m| m.absent?(Date.current, groups(:voksne)) })
   end
 end

@@ -166,3 +166,14 @@ sandra:
   birthdate: 2004-06-03
   male: false
   locale: nb
+
+rjjk:
+  first_name: Romeerike Jujutsu
+  last_name: Klubb
+  salted_password: de6db7cdf638e5ba522b9e5728d551315bf750f4 # atest
+  salt: 7f8b036f9b647d46d22abdbfc8113f44a88f9889
+  email: post@jujutsu.no
+  verified: false
+  birthdate: 1982-02-12
+  male: false
+  locale: nb
