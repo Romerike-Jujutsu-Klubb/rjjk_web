@@ -28,6 +28,7 @@ class NkfMemberTest < ActiveSupport::TestCase
         contact_email: 'erik@example.net',
         first_name: 'Erik',
         guardian_1_or_billing_name: nil,
+        height: nil,
         last_name: 'Øyan',
         male: true,
         phone: nil,
