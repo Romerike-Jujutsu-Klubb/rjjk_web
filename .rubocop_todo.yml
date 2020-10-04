@@ -16,13 +16,13 @@ Lint/EmptyConditionalBody:
 # Offense count: 227
 # Configuration parameters: IgnoredMethods.
 Metrics/AbcSize:
-  Max: 197
+  Max: 237
 
 # Offense count: 22
 # Configuration parameters: CountComments, CountAsOne, ExcludedMethods.
 # ExcludedMethods: refine
 Metrics/BlockLength:
-  Max: 145
+  Max: 158
 
 # Offense count: 4
 # Configuration parameters: CountBlocks.
@@ -37,12 +37,12 @@ Metrics/ClassLength:
 # Offense count: 83
 # Configuration parameters: IgnoredMethods.
 Metrics/CyclomaticComplexity:
-  Max: 42
+  Max: 53
 
 # Offense count: 224
 # Configuration parameters: CountComments, CountAsOne, ExcludedMethods.
 Metrics/MethodLength:
-  Max: 147
+  Max: 160
 
 # Offense count: 3
 # Configuration parameters: CountComments, CountAsOne.
@@ -57,7 +57,7 @@ Metrics/ParameterLists:
 # Offense count: 72
 # Configuration parameters: IgnoredMethods.
 Metrics/PerceivedComplexity:
-  Max: 50
+  Max: 62
 
 # Offense count: 11
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.

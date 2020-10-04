@@ -16,10 +16,10 @@ Rails.application.configure do
   config.consider_all_requests_local = true
   config.eager_load = false
 
-  # unless ENV['RAILS_ENABLE_TEST_LOG']
-  #   config.logger = Logger.new(nil)
-  #   config.log_level = :fatal
-  # end
+  unless ENV['RAILS_ENABLE_TEST_LOG']
+    config.logger = Logger.new(nil)
+    config.log_level = :fatal
+  end
 
   config.public_file_server.enabled = true
   config.public_file_server.headers = {

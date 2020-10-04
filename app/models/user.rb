@@ -223,7 +223,7 @@ class User < ApplicationRecord
   end
 
   def to_s
-    name || email
+    label
   end
 
   def to_vcard

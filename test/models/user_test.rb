@@ -156,7 +156,7 @@ class UserTest < ActionMailer::TestCase
       ['neuer@example.com'],
       ['neuer@example.com', 'newbie@example.com'],
       ['oldie@example.com'],
-      ["post@jujutsu.no"],
+      ['post@jujutsu.no'],
       ['sandra@example.com'],
       ['unverified_user@example.com'],
       ['uwe@example.com'],

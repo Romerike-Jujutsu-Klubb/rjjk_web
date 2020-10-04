@@ -148,18 +148,17 @@ class NkfMember < ApplicationRecord
     secondary_emails = [new_attributes.dig(:billing, :email), new_attributes.dig(:guardian_1, :email),
                         new_attributes.dig(:guardian_2, :email)].compact
     if secondary_emails.include?(user_email)
-      logger.error 'reset user email since it equals a secondary email: ' \
-            "#{new_attributes[:user][:email].inspect}"
+      logger.error "reset user email since it equals a secondary email: #{user_email.inspect}"
       if include_blank
-        new_attributes[:user][:email] = nil
+        new_attributes[:user][:contact_email] = nil
       else
-        new_attributes[:user].delete(:email)
+        new_attributes[:user].delete(:contact_email)
         new_attributes.delete(:user) if new_attributes[:user].empty?
       end
     end
 
     user_phone = new_attributes.dig(:user, :phone)
-    phone_contact_user = User.find_by(email: user_phone) if user_phone.present?
+    phone_contact_user = User.find_by(phone: user_phone) if user_phone.present?
     logger.info "phone_contact_user: #{phone_contact_user.inspect}"
 
     secondary_phones = [new_attributes.dig(:billing, :phone), new_attributes.dig(:guardian_1, :phone),
@@ -316,6 +315,28 @@ class NkfMember < ApplicationRecord
       end
 
       user.guardian_1_or_billing_name = guardian_1_or_billing_name
+      if (u = user.guardian_1) && u.new_record? && !u.contact_info?
+        if user.email.present? && (u2 = User.find_by(email: user.email))
+          user.email = nil
+          if u2.phone.nil? || u2.phone == user.phone
+            u2.phone = user.phone
+            user.phone = nil
+          end
+          user.guardian_1 = u2
+        elsif user.phone.present? && (u2 = User.find_by(phone: user.phone))
+          user.phone = nil
+          if u2.email.nil? || u2.email == user.email
+            u2.email = user.email
+            user.email = nil
+          end
+          user.guardian_1 = u2
+        else
+          u.email = user.email
+          u.phone = user.phone
+          user.email = nil
+          user.phone = nil
+        end
+      end
 
       user.save!
 
