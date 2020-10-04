@@ -49,12 +49,6 @@ class ActiveSupport::TestCase
     clear_user
   end
 
-  # Use AS::TestCase for the base class when describing a model
-  extend Minitest::Spec::DSL
-  register_spec_type(self) do |desc|
-    desc < ActiveRecord::Base if desc.is_a?(Class)
-  end
-
   if defined?(Bullet) && Bullet.enable?
     Rails.backtrace_cleaner.remove_silencers!
     setup { Bullet.start_request }
