@@ -7,6 +7,7 @@ class SignupController < ApplicationController
 
   before_action do
     @layout_menu_title = 'Innmelding'
+    @layout_no_footer = true
   end
 
   def name_and_birthdate
@@ -28,7 +29,18 @@ class SignupController < ApplicationController
 
   def groups
     @user = User.new(params[:user])
+    @groups = Group.active.to_a
+    return unless @user.groups.empty?
+
+    @groups.each do |g|
+      @user.group_ids << g.id if (g.from_age..g.to_age).cover? @user.age
+    end
   end
 
-  def complete; end
+  def complete
+    Signup.transaction do
+      user = User.create! params[:user]
+      @signup = Signup.create(user: user)
+    end
+  end
 end

@@ -1,9 +1,9 @@
 .card
-  .card-header Kontaktinfo for #{@user.first_name}
+  h5.card-header Kontaktinfo for #{@user.first_name}
   .card-body
     - if @user.guardian_1 && @user.age >= 13
       p For medlemmer over 13 år anbefaler vi at de har egen kontaktinfo.
-    = bootstrap_form_for @user, url: signup_guide_contact_info_path do |f|
+    = bootstrap_form_for @user, url: signup_guide_groups_path do |f|
       = f.hidden_field :name
       = f.hidden_field :birthdate
       = f.hidden_field :male

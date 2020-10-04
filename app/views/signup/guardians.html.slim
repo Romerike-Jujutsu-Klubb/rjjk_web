@@ -1,5 +1,5 @@
 .card
-  .card-header Siden #{@user.first_name} er #{@user.age} år trenger vi en <b>foresatt</b>.
+  h5.card-header Siden #{@user.first_name} er #{@user.age} år trenger vi en <b>foresatt</b>.
   .card-body
     = bootstrap_form_for @user, url: signup_guide_contact_info_path do |f|
       = f.hidden_field :name

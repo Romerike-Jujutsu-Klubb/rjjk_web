@@ -5,7 +5,7 @@ p Før du bestemmer deg for om du vil trene med oss har du 2 uker uforpliktende 
   Dette dekker også forsikring på trening.
 
 .card
-  .card-header Først trenger vi å vi hvem som skal meldes inn.
+  h5.card-header Først trenger vi å vi hvem som skal meldes inn.
   .card-body
     = bootstrap_form_for @user, url: signup_guide_contact_info_path do |f|
       = f.text_field :name, required: true

@@ -56,6 +56,10 @@ class Group < ApplicationRecord
     full_name
   end
 
+  def extended_label
+    "#{full_name} (#{from_age}-#{to_age} år)"
+  end
+
   def contains_age(age)
     return false if age.nil?
 
