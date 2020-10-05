@@ -13,7 +13,7 @@ SELECT a.id FROM attendances a INNER JOIN practices p ON a.practice_id = p.id
 WHERE user_id = members.user_id AND year = ? AND week = ?)',
             today.cwyear, today.cweek)
         .order(:joined_on)
-        .select { |m| m.user.groups.any? { |g| g.planning && !g.on_break? } }
+        .select { |m| m.user.groups.any? { |g| g.planning && !g.on_break?(today) } }
         .select(&:active?)
         .each do |member|
       if member.user.nil?

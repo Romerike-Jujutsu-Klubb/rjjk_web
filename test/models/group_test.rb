@@ -15,4 +15,11 @@ class GroupTest < ActiveSupport::TestCase
         Group.order(:from_age, :to_age, :id).map { |g| g.suggested_graduation_date(new_year) }
       )
   end
+
+  test 'on_break?' do
+    assert_equal(
+        [false, nil, false, nil, nil, nil],
+        Group.order(:from_age, :to_age, :id).map(&:on_break?)
+      )
+  end
 end

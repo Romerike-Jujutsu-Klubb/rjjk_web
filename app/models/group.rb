@@ -172,7 +172,7 @@ class Group < ApplicationRecord
     second_week + group_schedule.weekday - 1
   end
 
-  def on_break?
-    school_breaks && current_semester.interval.excludes?(today)
+  def on_break?(today = Date.current)
+    school_breaks && current_semester.interval.exclude?(today)
   end
 end
