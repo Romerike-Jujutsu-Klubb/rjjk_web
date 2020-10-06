@@ -39,7 +39,10 @@ class SignupController < ApplicationController
 
   def complete
     Signup.transaction do
+      group_ids = params[:user].delete(:group_ids)
       user = User.create! params[:user]
+      user.group_ids = group_ids
+      user.save!
       @signup = Signup.create(user: user)
     end
   end

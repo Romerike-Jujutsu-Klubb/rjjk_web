@@ -1,3 +1,3 @@
 h1 Gratulerer!
 
-p #{@signup.user.first_name} er nå registrert hos oss og kan møte opp og trene.
+p #{@user.age < 18 ? @user.first_name : @user.name} er nå registrert hos oss og kan møte opp og trene.

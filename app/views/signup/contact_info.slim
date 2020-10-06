@@ -1,5 +1,5 @@
 .card
-  h5.card-header Kontaktinfo for #{@user.first_name}
+  h5.card-header Kontaktinfo for #{@user.age < 18 ? @user.first_name : @user.name}
   .card-body
     - if @user.guardian_1 && @user.age >= 13
       p For medlemmer over 13 år anbefaler vi at de har egen kontaktinfo.

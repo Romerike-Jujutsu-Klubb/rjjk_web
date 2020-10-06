@@ -1,5 +1,5 @@
 .card
-  h5.card-header Treningsgrupper for #{@user.first_name}
+  h5.card-header Treningsgrupper for #{@user.age < 18 ? @user.first_name : @user.name}
   .card-body
     - if @groups.size == 0
       p Vi har ingen grupper i #{@user.first_name} sin aldergruppe.
@@ -34,7 +34,7 @@
         = group.label { group.check_box }
 
       .float-right = f.primary
-        ' Neste
-        i.fa.fa-angle-double-right
+        ' Meld inn
+        i.fa.fa-thumbs-up
 javascript:
   $('#user_email').focus();

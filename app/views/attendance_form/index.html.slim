@@ -34,26 +34,32 @@ ul#tab.nav.nav-tabs role="tablist"
       - active, passive = group_members.partition{|u| u.member&.active?}
       - attending, absent = active.partition{|u| u.attending?}
       .card-deck
-        - trial_members = NkfMemberTrial.for_group(group)
+        - trial_members = NkfMemberTrial.for_group(group).to_a.reject(&:signup)
         - if trial_members.any?
           .card
-            h3.card-header Prøvemedlemmer
-            .card-body.pt-3.pb-0
-              table.table.mb-0 class=('table-sm' if trial_members.size > 12)
-                - trial_members.each do |tm|
-                  tr class=(tm.created_at < 4.weeks.ago ? 'table-danger' : tm.created_at < 2.weeks.ago ? 'table-warning' : nil)
-                    td: a href=(tm.signup ? signup_path(tm.signup) : nkf_member_trial_path(tm)) = tm.name
-                    td.text-nowrap = tm.created_at.to_date
+            h3.card-header Prøvemedlemmer (#{trial_members.size})
+            - if trial_members.any?
+              .card-body.pt-3
+                table.table.mb-0 class=('table-sm' if trial_members.size > 12)
+                  - trial_members.each do |tm|
+                    tr class=(tm.created_at < 4.weeks.ago ? 'table-danger' : tm.created_at < 2.weeks.ago ? 'table-warning' : nil)
+                      td: a href=(tm.signup ? signup_path(tm.signup) : nkf_member_trial_path(tm)) = tm.name
+                      td.text-nowrap = tm.created_at.to_date
+        - signups = Signup.for_group(group).to_a.map(&:user)
+        - if signups.any?
+          .card
+            h3.card-header Prøvemedlemmer (#{signups.size})
+            = render 'user_list', users: signups, selected_practice: selected_practice
         .card
           .card-header
             = select nil, :practice_id, group.practices.after(1.month.ago).select { |pr| pr.date <= next_practice.date }.sort_by(&:date).reverse.map { |pr| ["#{pr} #{day_name pr.date.wday}", pr.id] }, { selected: selected_practice.id }, class: 'form-control pr-0', onchange: 'window.location = "?practice_id=" + $(this).val()'
           = render 'user_list', users: attending, selected_practice: selected_practice
-        .card
-          h3.card-header
-            | Instruktører
-            a.btn.btn-primary.float-right href=with_detour(new_attendance_path(attendance: { practice_id: @practice&.id }))
-              i.fa.fa-plus
-          - if instructors.any?
+        - if instructors.any?
+          .card
+            h3.card-header
+              | Instruktører
+              a.btn.btn-primary.float-right href=with_detour(new_attendance_path(attendance: { practice_id: @practice&.id }))
+                i.fa.fa-plus
             = render 'user_list', users: instructors, selected_practice: selected_practice
         .card
           h3.card-header Fraværende
