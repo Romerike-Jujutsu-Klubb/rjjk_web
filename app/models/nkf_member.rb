@@ -387,7 +387,9 @@ class NkfMember < ApplicationRecord
   end
 
   def nkf_attribute_to_rjjk(target, target_attribute, nkf_value)
-    if /^\s*(?<day>\d{2})\.(?<month>\d{2})\.(?<year>\d{4})\s*$/ =~ nkf_value
+    if nkf_value.is_a?(Integer)
+      nkf_value
+    elsif /^\s*(?<day>\d{2})\.(?<month>\d{2})\.(?<year>\d{4})\s*$/ =~ nkf_value
       Date.new(year.to_i, month.to_i, day.to_i)
     elsif /Mann|Kvinne/.match?(nkf_value)
       nkf_value == 'Mann'

@@ -19,7 +19,7 @@ class SignupControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get complete' do
-    post signup_guide_complete_url params: { user: { email: 'ny@test.org' } }
+    post signup_guide_complete_url params: { user: { email: 'ny@test.org', birthdate: '1999-12-31' } }
     assert_response :success
   end
 end

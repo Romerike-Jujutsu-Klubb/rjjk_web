@@ -31,7 +31,7 @@ class NkfMemberImport
         nkf_member_ids.include?(row[0].to_i) || row[0] == 'Medlemsnummer'
       end
     end
-    add_waiting_kids(nkf_agent, @import_rows, detail_codes)
+    add_details(nkf_agent, @import_rows, detail_codes)
     import_member_rows(@import_rows)
     import_member_trials(get_member_trial_rows(nkf_agent))
   rescue => e
@@ -74,17 +74,18 @@ class NkfMemberImport
     end
   end
 
-  def add_waiting_kids(nkf_agent, import_rows, detail_codes)
+  def add_details(nkf_agent, import_rows, detail_codes)
     import_rows[0] << 'ventekid'
+    import_rows[0] << 'hoyde'
     awk_start = Time.current
     in_parallel(detail_codes) do |dc, queue|
       logger.debug "add member ventekid: #{queue.size}" if queue.size % 50 == 0
-      add_waiting_kid(nkf_agent, import_rows, dc)
+      add_row_details(nkf_agent, import_rows, dc)
     end
     logger.debug "add member ventekid...ok...#{Time.current - awk_start}s"
   end
 
-  def add_waiting_kid(nkf_agent, import_rows, dc)
+  def add_row_details(nkf_agent, import_rows, dc)
     details_page = nkf_agent.get("page/portal/ks_utv/ks_medlprofil?p_cr_par=#{dc}")
     details_body = details_page.body
     unless details_body =~ /class="inputTextFullRO" id="frm_48_v02" name="frm_48_v02" value="(\d+?)"/
@@ -92,6 +93,11 @@ class NkfMemberImport
     end
 
     member_id = Regexp.last_match(1)
+
+    unless (import_row_for_member_id = import_rows.find { |ir| ir[0] == member_id })
+      raise "Missing import_row for member_id: #{member_id.inspect}\n#{import_rows.pretty_inspect}"
+    end
+
     active = details_body.include?('<input type="text" class="displayTextFull" value="Aktiv ">')
     if details_body =~ %r{<span class="kid_1">(\d+)</span><span class="kid_2">(\d+)</span>}
       waiting_kid = "#{Regexp.last_match(1)}#{Regexp.last_match(2)}"
@@ -99,11 +105,12 @@ class NkfMemberImport
     raise 'Both Active status and waiting kid were found' if active && waiting_kid
     raise "Neither active status nor waiting kid were found:\n#{details_body}" if !active && !waiting_kid
 
-    unless (import_row_for_member_id = import_rows.find { |ir| ir[0] == member_id })
-      raise "Missing import_row for member_id: #{member_id.inspect}\n#{import_rows.pretty_inspect}"
-    end
-
     import_row_for_member_id << waiting_kid
+
+    details_page.form('ks_medlprofil') do |form|
+      height = form[NkfMember::FIELD_MAP[:hoyde][:form_field].to_s]
+      import_row_for_member_id << height
+    end
   end
 
   def get_member_trial_rows(nkf_agent)
