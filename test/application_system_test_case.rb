@@ -8,7 +8,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   include SystemTestHelper
 
   WINDOW_SIZE = [1024, 768].freeze
-  FRONT_PAGE_PROGRESS_BAR_AREA = [0, 765, 927, 767].freeze
 
   # options explained https://peter.sh/experiments/chromium-command-line-switches/
   # no-sandbox
@@ -42,7 +41,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   Capybara::Screenshot.hide_caret = true
   Capybara::Screenshot::Diff.area_size_limit = 6
   Capybara::Screenshot::Diff.color_distance_limit = 12
-  Capybara::Screenshot::Diff.skip_area = [1014, 200, 1022, 350] # ignore scroll bar
 
   # FIXME(uwe): Consider rack driver as default for speed
   driven_by :chrome

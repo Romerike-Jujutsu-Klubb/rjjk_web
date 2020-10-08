@@ -10,6 +10,6 @@ class FrontPageSystemTest < ApplicationSystemTestCase
     visit root_path
     assert_selector 'h5', text: 'ARRANGEMENTET'
     assert_selector 'h1,h2', text: 'Trening - Teknikk - Trygghet'
-    screenshot :index, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
+    screenshot :index
   end
 end

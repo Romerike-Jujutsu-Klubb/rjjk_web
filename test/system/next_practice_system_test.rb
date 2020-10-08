@@ -9,7 +9,7 @@ class NextPracticeSystemTest < ApplicationSystemTestCase
     visit root_path
     assert_selector 'h1,h2', text: 'Trening - Teknikk - Trygghet'
     assert_no_selector 'h4', text: 'Neste trening'
-    screenshot :anonymous, skip_area: FRONT_PAGE_PROGRESS_BAR_AREA
+    screenshot :anonymous
     login
     assert_selector 'h4', text: 'Neste trening'
     assert_text 'Du kommer.'
