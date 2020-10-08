@@ -70,7 +70,7 @@ class EventsController < ApplicationController
     if @event.save
       selected_members =
           @event.groups.map(&:members).map { |m| m.includes(:user) }.map(&:active).flatten.uniq
-      selected_users = selected_members.map(&:user).compact
+      selected_users = selected_members.map(&:user).compact.uniq
       missing_users = selected_users - @event.users
       missing_users.each do |u|
         EventInvitee.create!(event: @event, user_id: u.id)
