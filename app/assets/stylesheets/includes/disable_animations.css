@@ -1,8 +1,12 @@
 * {
-    -webkit-transition: .0s !important;
-    transition: .0s !important;
-    -webkit-transform: .0s !important;
-    transform: .0s !important;
-    -webkit-animation: .0s !important;
-    animation: .0s !important;
+  -webkit-transition: .0s !important;
+  transition: .0s !important;
+  -webkit-transform: .0s !important;
+  transform: .0s !important;
+  -webkit-animation: .0s !important;
+  animation: .0s !important;
+}
+
+::-webkit-scrollbar {
+  display: none !important;
 }
