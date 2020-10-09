@@ -381,6 +381,8 @@ class NkfMember < ApplicationRecord
       rjjk_value ? 'Mann' : 'Kvinne'
     elsif nkf_attr == 'rabatt' && rjjk_value == 0
       ''
+    elsif nkf_attr == 'hoyde'
+      rjjk_value
     else
       rjjk_value.to_s
     end
