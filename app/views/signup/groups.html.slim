@@ -12,6 +12,7 @@
       p Hvilke grupper vil du starte i?  Dette kan endres senere.
 
     = bootstrap_form_for @user, url: signup_guide_complete_path do |f|
+      = f.hidden_field :id
       = f.hidden_field :name
       = f.hidden_field :birthdate
       = f.hidden_field :male

@@ -11,7 +11,7 @@ nav#navbar.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
       - @information_pages.select(&:public).reject(&:hidden).each do |ip|
         li.nav-item id="menu-item-#{ip.id}"
           a.nav-link href=information_page_path(ip.title) = ip.title
-      - if current_user&.name&.== 'Uwe Kubosch'
+      - if Rails.env.development? || current_user&.name&.==('Uwe KLubosch')
         li.nav-item
           a.nav-link.btn.btn-warning href=signup_guide_root_path Prøv oss!
       li.nav-item

@@ -6,11 +6,15 @@ h1 Innmeldinger
 table.table data-record-path=signups_path
   thead
     tr
+      th Dato
+      th Tid
       th Bruker
       th NKF Prøvemedlem
 
   tbody
     - @signups.each do |signup|
       tr data-record-id=signup.id
+        td = signup.created_at.to_date
+        td = signup.created_at.strftime '%R'
         td = signup.user
         td = signup.nkf_member_trial

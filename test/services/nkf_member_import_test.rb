@@ -19,6 +19,5 @@ class NkfMemberImportTest < ActionMailer::TestCase
     assert(i.new_records
         .any? { |m| m[:record].etternavn == 'Aagren' && m[:record].fornavn == 'Sebastian' })
     assert(i.new_records.any? { |m| m[:record].etternavn == 'Øyan' && m[:record].fornavn == 'Erik' })
-    assert_equal 4, i.trial_changes.size
   end
 end

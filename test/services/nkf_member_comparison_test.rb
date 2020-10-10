@@ -34,8 +34,6 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
           nkf_value: '01.04.2001', mapped_nkf_value: Date.parse('Sun, 01 Apr 2001'),
           rjjk_value: Date.parse('Thu, 21 Jun 2007'), mapped_rjjk_value: '21.06.2007',
           form_field: :frm_48_v45 },
-        { nkf_attr: 'hoyde', target: :user, target_attribute: :height, nkf_value: nil,
-          mapped_nkf_value: nil, rjjk_value: nil, mapped_rjjk_value: '', form_field: :frm_48_v13 },
       ]],
       [members(:sebastian), [
         { nkf_attr: 'fodselsdato', target: :user, target_attribute: :birthdate, nkf_value: '04.06.2004',
@@ -74,8 +72,6 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
         { nkf_attr: 'foresatte_nr_2_mobil', target: :guardian_2, target_attribute: :phone, nkf_value: '',
           mapped_nkf_value: nil, rjjk_value: '5556666', mapped_rjjk_value: '5556666',
           form_field: :frm_48_v75 },
-        { nkf_attr: 'hoyde', target: :user, target_attribute: :height, nkf_value: nil,
-          mapped_nkf_value: nil, rjjk_value: nil, mapped_rjjk_value: '', form_field: :frm_48_v13 },
       ]],
       [members(:uwe), [
         { nkf_attr: 'mobil', target: :user, target_attribute: :phone, nkf_value: '', mapped_nkf_value: nil,
@@ -96,8 +92,6 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
           mapped_nkf_value: nil, rjjk_value: 0, mapped_rjjk_value: '0', form_field: nil },
         { nkf_attr: 'rabatt', target: :membership, target_attribute: :discount, nkf_value: nil,
           mapped_nkf_value: nil, rjjk_value: 100, mapped_rjjk_value: '100', form_field: :frm_48_v38 },
-        { nkf_attr: 'hoyde', target: :user, target_attribute: :height, nkf_value: nil,
-          mapped_nkf_value: nil, rjjk_value: nil, mapped_rjjk_value: '', form_field: :frm_48_v13 },
       ]],
     ], c.members)
 
@@ -174,8 +168,6 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
           nkf_value: '01.04.2001', mapped_nkf_value: Date.parse('Sun, 01 Apr 2001'),
           rjjk_value: Date.parse('Thu, 21 Jun 2007'), mapped_rjjk_value: '21.06.2007',
           form_field: :frm_48_v45 },
-        { nkf_attr: 'hoyde', target: :user, target_attribute: :height, nkf_value: nil,
-          mapped_nkf_value: nil, rjjk_value: nil, mapped_rjjk_value: '', form_field: :frm_48_v13 },
       ]
     ]], c.members)
 
@@ -235,8 +227,6 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
       { nkf_attr: 'foresatte_nr_2', target: :guardian_2, target_attribute: :name, nkf_value: '',
         mapped_nkf_value: nil, rjjk_value: 'Uwe Kubosch', mapped_rjjk_value: 'Uwe Kubosch',
         form_field: :frm_48_v72 },
-      { nkf_attr: 'hoyde', target: :user, target_attribute: :height, nkf_value: nil, mapped_nkf_value: nil,
-        rjjk_value: nil, mapped_rjjk_value: '', form_field: :frm_48_v13 },
     ]]], c.members
 
     assert_equal([

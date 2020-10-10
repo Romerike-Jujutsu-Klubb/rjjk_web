@@ -5,7 +5,7 @@ class SignupsController < ApplicationController
   before_action :set_signup, only: %i[show edit update destroy]
 
   def index
-    @signups = Signup.all
+    @signups = Signup.order(created_at: :desc)
   end
 
   def show; end
@@ -56,10 +56,9 @@ class SignupsController < ApplicationController
   end
 
   def complete
-    nkf_agent = NkfAgent.new(:complete_signup)
-    front_page = nkf_agent.login # returns front_page
-    extra_function_codes = front_page.body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
-    raise front_page.body if extra_function_codes.empty?
+    # nkf_agent = NkfAgent.new(:complete_signup)
+    # front_page = nkf_agent.login # returns front_page
+    # trial_index_page = nkf_agent.trial_index
   end
 
   def terminate

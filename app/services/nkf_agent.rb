@@ -106,6 +106,14 @@ class NkfAgent
     get "page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_cr_par=#{session_id}"
   end
 
+  def new_trial_form
+    get 'https://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162'
+  end
+
+  def new_member_form
+    get "page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_cr_par=#{session_id}"
+  end
+
   def get(url)
     with_retries do
       url = "#{APP_PATH}/#{url}" unless url.start_with?(APP_PATH)

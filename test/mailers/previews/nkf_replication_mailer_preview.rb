@@ -10,7 +10,8 @@ class NkfReplicationMailerPreview < ActionMailer::Preview
     import.stubs(:error_records).returns([])
     import.stubs(:import_rows).returns([1])
     import.stubs(:exception).returns(nil)
-    NkfReplicationMailer.import_changes(import)
+    trial_import = Mocha::Mock.new('trial_import')
+    NkfReplicationMailer.import_changes(import, trial_import)
   end
 
   def update_members

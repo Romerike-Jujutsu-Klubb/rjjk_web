@@ -32,6 +32,8 @@ html lang="nb"
     .clearfix class=('container-md pt-4 mb-3' unless @content_width) style="min-height:35vh"
       - if flash.notice
         .alert.alert-info = flash.notice
+      - if flash.alert
+        .alert.alert-warning = flash.alert
       = yield
     - unless @layout_no_footer
       = render 'layouts/public/footer', information_pages: @information_pages, news_items: @news_items

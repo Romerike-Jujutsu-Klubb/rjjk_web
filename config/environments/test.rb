@@ -16,7 +16,7 @@ Rails.application.configure do
   config.consider_all_requests_local = true
   config.eager_load = false
 
-  unless ENV['RAILS_ENABLE_TEST_LOG']
+  unless ENV['RAILS_ENABLE_TEST_LOG'] || caller.none? { |l| l =~ %r{/lib/rake/task.rb:\d+:in `execute'} }
     config.logger = Logger.new(nil)
     config.log_level = :fatal
   end

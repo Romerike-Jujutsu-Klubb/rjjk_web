@@ -8,12 +8,13 @@ class NkfReplicationMailerTest < ActionMailer::TestCase
     import.stubs(:size).returns(1)
     import.stubs(:new_records).returns([])
     import.stubs(:changes).returns({})
-    import.stubs(:trial_changes).returns([])
     import.stubs(:error_records).returns([])
     import.stubs(:import_rows).returns([1])
     import.stubs(:exception).returns(nil)
+    trial_import = mock('trial_import')
+    trial_import.stubs(:trial_changes).returns([])
 
-    mail = NkfReplicationMailer.import_changes(import)
+    mail = NkfReplicationMailer.import_changes(import, trial_import)
     assert_equal 'Hentet 1 endringer fra NKF', mail.subject
     assert_equal ['uwe@kubosch.no'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from

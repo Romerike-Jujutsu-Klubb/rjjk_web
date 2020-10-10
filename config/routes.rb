@@ -294,6 +294,7 @@ Rails.application.routes.draw do
     post :guardians
     post :groups
     post :complete
+    patch :complete
   end
 
   resources :signups do

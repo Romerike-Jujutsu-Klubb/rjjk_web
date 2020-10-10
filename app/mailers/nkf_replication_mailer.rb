@@ -3,12 +3,13 @@
 class NkfReplicationMailer < ApplicationMailer
   default to: 'uwe@kubosch.no'
 
-  def import_changes(nkf_member_import)
+  def import_changes(nkf_member_import, nkf_member_trial_import)
     @import = nkf_member_import
-    @title = if @import.exception
+    @trial_import = nkf_member_trial_import
+    @title = if @import&.exception || @trial_import&.exception
                'Det oppsto en feil ved henting av endringer fra NKF'
              else
-               "Hentet #{@import.size} endringer fra NKF"
+               "Hentet #{@import&.size.to_i + @trial_import&.size.to_i} endringer fra NKF"
              end
     mail subject: @title
   end

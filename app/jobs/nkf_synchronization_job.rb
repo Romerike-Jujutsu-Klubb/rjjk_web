@@ -19,8 +19,9 @@ class NkfSynchronizationJob < ApplicationJob
   def import
     logger.info 'Import memberships from NKF'
     i = NkfMemberImport.new
-    if i.any?
-      NkfReplicationMailer.import_changes(i).deliver_now
+    trial_import = NkfMemberTrialImport.new i.nkf_agent
+    if i.any? || trial_import.any?
+      NkfReplicationMailer.import_changes(i, trial_import).deliver_now
       logger.info 'Sent NKF member import mail.'
       logger.info 'Oppdaterer kontrakter'
       NkfMember.update_group_prices

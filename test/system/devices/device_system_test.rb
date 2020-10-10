@@ -20,7 +20,7 @@ module DeviceSystemTest
       screenshot_section :front
       Capybara::Screenshot.window_size = nil
       @orig_color_distance_limit = Capybara::Screenshot::Diff.color_distance_limit
-      Capybara::Screenshot::Diff.color_distance_limit = 61.3 # Small variations in rendering...
+      Capybara::Screenshot::Diff.color_distance_limit = 432 # Small variations in rendering...
     end
     teardown do
       Capybara::Screenshot::Diff.color_distance_limit = @orig_color_distance_limit
