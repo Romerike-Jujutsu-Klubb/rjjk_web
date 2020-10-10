@@ -3,7 +3,7 @@
 ul
   - @trials.each do |trial|
     li
-      => link_to trial.name, trial
+      => link_to trial.name, trial.signup || trial
       | (#{trial.alder} år)
       ul
         li Registrert: #{trial.reg_dato}

@@ -17,13 +17,7 @@ class SignupsTest < ApplicationSystemTestCase
     signups(:three).delete
     visit signups_url
     click_on 'Ny innmelding'
-    assert_current_path new_signup_path
-
-    select_from_chosen 'Even Jensen', from: :signup_nkf_member_trial_id
-    select_from_chosen 'Deletable', from: :signup_user_id
-    click_on 'Lagre'
-
-    assert_text 'Signup was successfully created'
+    assert_current_path signup_guide_root_path
   end
 
   test 'updating a Signup' do
