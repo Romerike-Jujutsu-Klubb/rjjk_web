@@ -62,18 +62,23 @@ class SignupsController < ApplicationController
   end
 
   def terminate
-    trial = NkfMemberTrial.find(params[:id])
-    nkf_agent = NkfAgent.new(:complete_signup)
-    nkf_agent.login
-    trial_index_page = nkf_agent.trial_index
-    form = trial_index_page.form('ks_godkjenn_medlem')
-    form['p_ks_godkjenn_medlem_action'] = 'DELETE'
-    form['frm_28_v04'] = trial.tid
-    response_page = nkf_agent.submit(form)
-    logger.info response_page.inspect
-    logger.info Nokogiri::XML(response_page.body.force_encoding('ISO-8859-1').encode('UTF-8'), &:noblanks)
-        .to_s
-    NkfImportTrialMembersJob.perform_later
+    Signup.transaction do
+      @signup = Signup.find(params[:id])
+      if (trial = @signup.nkf_member_trial)
+        nkf_agent = NkfAgent.new(:complete_signup)
+        nkf_agent.login
+        trial_index_page = nkf_agent.trial_index
+        form = trial_index_page.form('ks_godkjenn_medlem')
+        form['p_ks_godkjenn_medlem_action'] = 'DELETE'
+        form['frm_28_v04'] = trial.tid
+        response_page = nkf_agent.submit(form)
+        logger.info response_page.inspect
+        body = response_page.body.force_encoding('ISO-8859-1').encode('UTF-8')
+        logger.info Nokogiri::XML(body, &:noblanks).to_s
+        NkfImportTrialMembersJob.perform_later
+      end
+      @signup.destroy!
+    end
   end
 
   def destroy
