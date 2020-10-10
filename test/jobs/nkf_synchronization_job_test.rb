@@ -15,7 +15,8 @@ class NkfSynchronizationJobTest < ActionMailer::TestCase
 
     nkf_new_count = 461
     nkf_update_count = 3
-    nkf_change_count = nkf_new_count + nkf_update_count
+    trial_changes = 5
+    nkf_change_count = nkf_new_count + nkf_update_count + trial_changes
     import_mail = ActionMailer::Base.deliveries[0]
     import_body = import_mail.body.decoded
     assert_match(/^Hentet #{nkf_change_count} endringer fra NKF$/, import_mail.subject, import_body)
