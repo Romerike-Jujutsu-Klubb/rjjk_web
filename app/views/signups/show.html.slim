@@ -11,7 +11,7 @@ table.table
   tbody
     tr
       th Registrert
-      td = [@signup.created_at, @signup.nkf_member_trial.reg_dato].min
+      td = [@signup.created_at, @signup.nkf_member_trial&.reg_dato].compact.min
     tr
       th Alder
       td #{@signup.user.sex_label} #{@signup.user.age} år (#{@signup.user.birthdate})
