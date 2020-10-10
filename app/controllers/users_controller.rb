@@ -55,8 +55,6 @@ class UsersController < ApplicationController
 
   def update
     @user = User.with_deleted.find(params[:id])
-    form = params[:user].delete(:form)
-    logger.warn "User form: #{form}" if form
     if @user.update params[:user]
       flash.notice = 'Brukeren er oppdatert.'
       [@user, *@user.contactees, *@user.payees, *@user.primary_wards, *@user.secondary_wards]
