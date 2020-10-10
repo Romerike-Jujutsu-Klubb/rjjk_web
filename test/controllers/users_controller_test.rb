@@ -59,7 +59,7 @@ class UsersControllerTest < ActionController::TestCase
   def test_update
     uwe = login(:uwe)
     VCR.use_cassette('NKF Comparison Single Member Uwe', match_requests_on: %i[method host path query]) do
-      post :update, params: { id: uwe.id, user: { first_name: 'Bob', form: 'edit' } }
+      post :update, params: { id: uwe.id, user: { first_name: 'Bob' } }
     end
     assert_equal 'Bob', uwe.reload.first_name
   end
