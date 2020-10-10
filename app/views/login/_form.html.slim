@@ -1,4 +1,4 @@
-=bootstrap_form_for(@user) do |f|
+= bootstrap_form_for(@user) do |f|
   = f.hidden_field :form, value: :edit
   = @user.new_record? ? f.text_field(:login) : f.static_control(:login)
   = link_to('(medlem)', controller: :members, action: :edit, id: @user.member.id) if @user.member
@@ -12,8 +12,9 @@
   - if admin?
     .row
       .col-sm-6
-        = f.select :verified, [['Nei', false], ['Ja', true]], \
-          help: link_to('Send e-post med login link', {action: :forgot_password, user: {identity: @user.email}}, method: :post)
+        - if user.persisted? && user.email
+          - login_email_link = detour_to('Send e-post med login link', send_login_link_path(user: { identity: user.email }), method: :post)
+        = f.select :verified, [['Nei', false], ['Ja', true]], help: login_email_link
       .col-sm-6
         = f.select :role, [['Medlem', nil], ['Administrator', UserSystem::ADMIN_ROLE]]
   - if submit

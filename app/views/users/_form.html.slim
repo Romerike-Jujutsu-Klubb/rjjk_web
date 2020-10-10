@@ -1,5 +1,4 @@
 = bootstrap_form_for user do |f|
-  = f.hidden_field :form, value: :edit
   .row
     .col-md
       = f.text_field :first_name
@@ -14,9 +13,9 @@
             - appendix << capture
               a href=%Q{mailto:"#{user.name}" <#{user.email}>} data-toggle=:tooltip title='Send e-post'
                 i.fa.fa-envelope
-          = f.text_field :email, autocomplete: :off,
-              append: appendix,
-              help: (detour_to('Send e-post med login link', send_login_link_path(user: { identity: user.email }), method: :post) if user.email)
+          - if user.persisted? && user.email
+            - login_email_link = detour_to('Send e-post med login link', send_login_link_path(user: { identity: user.email }), method: :post)
+          = f.text_field :email, autocomplete: :off, append: appendix, help: login_email_link
         - if @user.email.present? && ((@user.guardian_1 && @user.guardian_1.email.blank?) || (@user.guardian_2 && @user.guardian_2.email.blank?) || (@user.billing_user && @user.billing_user != @user.guardian_1 && @user.billing_user.email.blank?))
           .col
             ul
@@ -83,22 +82,21 @@
                     (link_to('Google', "https://translate.google.com/#view=home&op=translate&sl=ja&tl=no&text=#{user.kana}", target: '_blank') if user.kana.present?), \
                     (link_to('<i class="fa fa-shopping-cart"></i>', 'https://www.kataaro.com/Products/Embroidered-Black-Belt-Brushed-Cotton__E4941.aspx', target: '_blank') if user.current_rank.embroydery?) \
                   ].compact.presence&.join&.html_safe
-      - if @user.memberships.any? || @user.contact_users.take(2).count > 1
-        - if user.age&.<(18) && user.guardian_1_id.nil?
-          p "Foresatt 1" er bare nødvendig hvis medlemmet er under 18 år gammel.  Alle andre kontaktpersoner er valgfrie dersom medlemmet har egen e-post eller telefon.
-        scss:
-          .input-group.user {
-            min-width: 15rem;
+      - if user.age&.<(18) && user.guardian_1_id.nil?
+        p "Foresatt 1" er bare nødvendig hvis medlemmet er under 18 år gammel.  Alle andre kontaktpersoner er valgfrie dersom medlemmet har egen e-post eller telefon.
+      scss:
+        .input-group.user {
+          min-width: 15rem;
 
-            &.user-selected {
-              min-width: 23.75rem;
-            }
+          &.user-selected {
+            min-width: 23.75rem;
           }
-        .row
-          .col = render 'related_user', f: f, user: user, related_user: user.guardian_1, column: :guardian_1_id
-          .col = render 'related_user', f: f, user: user, related_user: user.guardian_2, column: :guardian_2_id
-          .col = render 'related_user', f: f, user: user, related_user: user.billing_user, column: :billing_user_id
-          .col = render 'related_user', f: f, user: user, related_user: user.contact_user, column: :contact_user_id
+        }
+      .row
+        .col = render 'related_user', f: f, user: user, related_user: user.guardian_1, column: :guardian_1_id
+        .col = render 'related_user', f: f, user: user, related_user: user.guardian_2, column: :guardian_2_id
+        .col = render 'related_user', f: f, user: user, related_user: user.billing_user, column: :billing_user_id
+        .col = render 'related_user', f: f, user: user, related_user: user.contact_user, column: :contact_user_id
 
   - if submit
     .float-right.mt-0.mb-3 = f.primary user.new_record? ? 'Meld inn' : 'Lagre'

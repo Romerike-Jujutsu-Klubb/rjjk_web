@@ -32,12 +32,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def new
+    @user ||= User.new params[:user] && user_params
+    load_form_data
+    render :new
+  end
+
   def edit
     @user ||= User.with_deleted.find(params[:id])
-    @groups =
-        Group.includes(:martial_art).order('martial_arts.name, groups.name').where(closed_on: nil).to_a
-    @groups |= @user.groups
-    @users = User.order(:first_name, :last_name, :email, :phone).to_a
+    load_form_data
     render :edit
   end
 
@@ -46,7 +49,7 @@ class UsersController < ApplicationController
     if @user.save
       back_or_redirect_to @user, notice: 'User was successfully created.'
     else
-      render :new
+      new
     end
   end
 
@@ -114,9 +117,16 @@ class UsersController < ApplicationController
 
   private
 
+  def load_form_data
+    @groups =
+        Group.includes(:martial_art).order('martial_arts.name, groups.name').where(closed_on: nil).to_a
+    @groups |= @user.groups
+    @users = User.order(:first_name, :last_name, :email, :phone).to_a
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user)
-        .permit(:name, :email, :phone)
+    params.require(:user).permit(:name, :email, :phone, :first_name, :last_name, :address, :postal_code,
+        :role, :male, :locale, :group_ids)
   end
 end

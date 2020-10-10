@@ -45,6 +45,12 @@ tr id="graduate_#{graduate.id || "m#{graduate.member_id}"}"
       - else
         = bootstrap_form_for graduate, html: { remote: true, class: 'form-inline' } do |f|
           = render 'layouts/tri_state_switch', f: f, field_id: "graduate_passed_#{graduate.id}", field_name: "graduate[passed]", state: graduate.passed, true_label: 'Ja', false_label: 'Nei'
+          javascript:
+            $('input[name="graduate[passed]"]').on('change', function() {
+              $('#graduate_passed_#{graduate.id}_btn').click()
+            });
+          = f.submit id: "graduate_passed_#{graduate.id}_btn", class: 'sr-only'
+
   td
     - if graduate.graduation.approved?
       = graduate.rank.label

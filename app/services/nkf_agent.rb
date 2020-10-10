@@ -24,6 +24,7 @@ class NkfAgent
   BAD_BODY
 
   attr_reader :extra_function_codes, :session_id
+
   delegate :submit, to: :thread_local_agent
 
   def initialize(key)
