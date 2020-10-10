@@ -46,8 +46,7 @@
       .row
         - if user.birthdate || admin?
           .col
-            - if user.birthdate
-              = f.text_field :birthdate, placeholder: 'år-måned-dag', class: 'date', append: "#{user.age} år"
+            = f.text_field :birthdate, placeholder: 'år-måned-dag', class: 'date', append: "#{user.age} år", required: (user.member.present? && user.member.left_on.nil?)
             - if admin?
               = f.select :role, [['', ''], ['Administrator', UserSystem::ADMIN_ROLE]], selected: user.role.to_s
         .col
