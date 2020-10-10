@@ -116,7 +116,7 @@ class NkfMember < ApplicationRecord
       target, target_attribute = mapped_attribute.to_a[0]
       relation = NkfMemberComparison.target_relation(member, target) if member
       rjjk_value = relation&.send(target_attribute)
-      mapped_rjjk_value = rjjk_attribute_to_nkf(nkf_attr, rjjk_value)
+      mapped_rjjk_value = rjjk_attribute_to_nkf(nkf_attr, rjjk_value, nkf_value)
       mapped_nkf_value = nkf_attribute_to_rjjk(target, target_attribute, nkf_value)
       # else
       #   logger.debug "rjjk_attribute: Ignore attribute: #{nkf_attr}: #{nkf_value.inspect}"
@@ -374,7 +374,7 @@ class NkfMember < ApplicationRecord
 
   private
 
-  def rjjk_attribute_to_nkf(nkf_attr, rjjk_value)
+  def rjjk_attribute_to_nkf(nkf_attr, rjjk_value, nkf_value)
     if rjjk_value.is_a?(Date)
       rjjk_value.strftime('%d.%m.%Y')
     elsif nkf_attr == 'kjonn'
@@ -382,7 +382,7 @@ class NkfMember < ApplicationRecord
     elsif nkf_attr == 'rabatt' && rjjk_value == 0
       ''
     elsif nkf_attr == 'hoyde'
-      rjjk_value
+      rjjk_value.presence || nkf_value
     else
       rjjk_value.to_s
     end

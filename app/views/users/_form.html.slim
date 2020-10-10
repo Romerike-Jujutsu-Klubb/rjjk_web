@@ -41,7 +41,9 @@
             - if @user.billing_user && @user.billing_user != @user.guardian_1 && @user.billing_user.phone.blank?
               li: a href=move_attribute_user_path(@user, other_user_id: @user.billing_user, attribute: :phone) data-method=:patch Flytt til betaler #{@user.billing_user}
       = f.text_field :address, append: (link_to('<i class="fa fa-map-marker-alt"></i>'.html_safe, user.map_url, target: :_blank, title: 'Vis i kart') if user.map_url)
-      = f.text_field :postal_code
+      .row
+        .col = f.text_field :postal_code
+        .col = f.text_field :height
     .col-md
       .row
         - if user.birthdate || admin?

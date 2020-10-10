@@ -16,7 +16,7 @@ ul.nav.nav-tabs role="tablist"
         .badge.badge-danger.ml-1 title='Utmeldt' data-toggle='tooltip' U
   - if @user.depending_users.any?
     li.nav-item: a.nav-link data-target="#tab_depending_users" data-toggle="tab" Relasjoner
-  - if @user.member
+  - if @user.member&.graduates&.any?
     li.nav-item: a.nav-link data-target="#tab_graduations" data-toggle="tab" Graderinger
     - if @user.member.appointments.any? || @user.member.elections.any?
       li.nav-item: a.nav-link data-target="#tab_duties" data-toggle="tab" Verv
@@ -43,7 +43,7 @@ ul.nav.nav-tabs role="tablist"
           .col: a.btn.btn-info.btn-lg href=user_path(u)
             i.fa.fa-user>
             = u.name
-  - if @user.member
+  - if @user.member&.graduates&.any?
     #tab_graduations.tab-pane.fade = render 'members/graduations', member: @user.member
     - if @user.member.appointments.any? || @user.member.elections.any?
       #tab_duties.tab-pane.fade = render 'members/duties', member: @user.member
