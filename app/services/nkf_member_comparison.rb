@@ -99,7 +99,7 @@ class NkfMemberComparison
 
     form_value = form[nkf_field]
     logger.info "Set form field #{nkf_field}: #{form_value.inspect} => #{mapped_rjjk_value.inspect}"
-    desired_value = mapped_rjjk_value&.encode(form.encoding)
+    desired_value = mapped_rjjk_value&.to_s&.encode(form.encoding)
     form_field = form.field_with(name: nkf_field)
     if form_field.is_a?(Mechanize::Form::SelectList)
       desired_option = form_field.options.find { |o| o.text.strip == desired_value }

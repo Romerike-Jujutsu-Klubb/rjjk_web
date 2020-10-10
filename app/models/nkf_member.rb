@@ -382,7 +382,7 @@ class NkfMember < ApplicationRecord
     elsif nkf_attr == 'rabatt' && rjjk_value == 0
       ''
     elsif nkf_attr == 'hoyde'
-      (rjjk_value.presence || nkf_value).to_s
+      rjjk_value.presence || nkf_value
     else
       rjjk_value.to_s
     end
