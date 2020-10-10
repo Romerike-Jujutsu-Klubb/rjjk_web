@@ -4,6 +4,7 @@ nb:
     curriculum_group_id: Pensum
     from_age: "Fra alder"
     group_ids: Grupper
+    height: Høyde
     joined_on: Innmeldingsdato
     left_on: Utmeldingsdato
     locale: Språk
