@@ -22,8 +22,6 @@ class SignupControllerTest < ActionDispatch::IntegrationTest
     VCR.use_cassette 'register_nkf_trial' do
       post signup_guide_complete_url params: { user: { email: 'ny@test.org', birthdate: '1999-12-31' } }
       assert_response :success
-      puts response.body
-      puts Nokogiri::XML(response.body, &:noblanks)
     end
   end
 end
