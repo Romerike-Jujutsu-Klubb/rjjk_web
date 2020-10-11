@@ -43,7 +43,8 @@ WHERE user_id = members.user_id AND year = ? AND week = ?)',
       next if attendances.empty?
 
       practice = attendances[0].practice
-      non_attendees = attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:member)
+      non_attendees =
+          attendances.select { |a| Attendance::ABSENT_STATES.include? a.status }.map(&:user).map(&:member)
       attendees = attendances.map(&:user).map(&:member) - non_attendees
       next if attendees.empty?
 

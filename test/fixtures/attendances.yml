@@ -52,6 +52,12 @@ uwe_voksne_2013_42_thursday_planned:
   status: P
   updated_at: <%=TEST_TIME.utc.to_s(:db) %>
 
+leftie_voksne_2013_42_thursday_sick:
+  user: leftie
+  practice: voksne_2013_42_thursday
+  status: <%=Attendance::Status::SICK%>
+  updated_at: <%=TEST_TIME.utc.to_s(:db) %>
+
 trial_one:
   user: lise
   practice: panda_2010_42
