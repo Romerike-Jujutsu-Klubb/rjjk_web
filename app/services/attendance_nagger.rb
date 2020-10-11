@@ -70,7 +70,7 @@ WHERE user_id = members.user_id AND year = ? AND week = ?)',
         .where('((NOT groups.school_breaks) OR ? BETWEEN first_session AND last_session)', tomorrow)
         .to_a
     practices.each do |pr|
-      next if pr.attendances.select(&:present?).empty?
+      next if pr.attendances.none?(&:present?)
 
       pr.group_schedule.active_group_instructors.each do |gi|
         AttendanceMailer.message_reminder(pr, gi.member)

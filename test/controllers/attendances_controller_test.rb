@@ -103,11 +103,11 @@ class AttendancesControllerTest < ActionController::TestCase
   def test_should_announce_toggle_on
     login(:lars)
     practice = practices(:voksne_2013_42_thursday)
-    assert_equal 1, practice.attendances.count
+    assert_equal 2, practice.attendances.count
     post :announce, params: { group_schedule_id: practice.group_schedule_id,
                               year: practice.year, week: practice.week, status: 'toggle' }, xhr: true
     assert_response :success
-    assert_equal 2, practice.attendances.count
+    assert_equal 3, practice.attendances.count
   end
 
   def test_should_get_report

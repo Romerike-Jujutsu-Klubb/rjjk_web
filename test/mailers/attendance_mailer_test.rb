@@ -31,7 +31,7 @@ class AttendanceMailerTest < ActionMailer::TestCase
   test 'changes' do
     mail = AttendanceMailer.changes(practices(:panda_2010_42), group_schedules(:panda), users(:lars),
         [members(:uwe)], [members(:lars)], Member.all)
-    assert_equal 'Trening i kveld: 1 ny deltaker påmeldt, 1 avmelding', mail.subject
+    assert_equal 'Trening i kveld: 1 ny deltaker påmeldt, 1 avmeldt ', mail.subject
     assert_equal ['lars@example.com'], mail.to
     assert_equal ['noreply@test.jujutsu.no'], mail.from
     assert_match 'Nylig påmeldt', mail.body.encoded

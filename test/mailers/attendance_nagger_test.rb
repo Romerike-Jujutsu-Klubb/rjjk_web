@@ -94,7 +94,7 @@ class AttendanceNaggerTest < ActionMailer::TestCase
     assert_mail_stored(1) { AttendanceNagger.send_attendance_changes }
 
     mail = UserMessage.pending[0]
-    assert_equal 'Trening i kveld: 1 avmelding', mail.subject
+    assert_equal 'Trening i kveld: 1 avmeldt', mail.subject
     assert_equal ['uwe@example.com'], mail.to
     assert_equal %w[noreply@test.jujutsu.no], mail.from
     assert_match <<~HTML.chomp, mail.body
