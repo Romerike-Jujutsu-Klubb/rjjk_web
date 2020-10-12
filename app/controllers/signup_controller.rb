@@ -62,24 +62,25 @@ class SignupController < ApplicationController
       end
       user.group_ids = group_ids
       user.save!
-      agent = NkfAgent.new(:signup)
-      trial_form_page = agent.new_trial_form
-      trial_form = trial_form_page.form('ks_bli_medlem')
-      trial_form.frm_29_v03 = user.first_name
-      trial_form.frm_29_v04 = user.last_name
-      trial_form.frm_29_v07 = user.postal_code
-      trial_form.frm_29_v08 = user.birthdate.strftime('%d.%m.%Y')
-      trial_form.radiobutton_with(name: 'frm_29_v11', value: user.male ? 'M' : 'K').check
-      trial_form.frm_29_v13 = user.height || 10
-      trial_form.frm_29_v10 = user.contact_email
-      trial_form['frm_29_v16'] = 524 # Jujutsu (Ingen stilartstilknytning)
-      trial_form['p_ks_bli_medlem_action'] = 'OK'
 
-      reg_response = agent.submit(trial_form)
-      logger.info reg_response.inspect
-      logger.info Nokogiri::XML(reg_response.body.force_encoding('ISO-8859-1').encode('UTF-8'), &:noblanks)
-          .to_s
-      # raise unless reg_response.statu
+      # agent = NkfAgent.new(:signup)
+      # trial_form_page = agent.new_trial_form
+      # trial_form = trial_form_page.form('ks_bli_medlem')
+      # trial_form.frm_29_v03 = user.first_name
+      # trial_form.frm_29_v04 = user.last_name
+      # trial_form.frm_29_v07 = user.postal_code
+      # trial_form.frm_29_v08 = user.birthdate.strftime('%d.%m.%Y')
+      # trial_form.radiobutton_with(name: 'frm_29_v11', value: user.male ? 'M' : 'K').check
+      # trial_form.frm_29_v13 = user.height || 10
+      # trial_form.frm_29_v10 = user.contact_email
+      # trial_form['frm_29_v16'] = 524 # Jujutsu (Ingen stilartstilknytning)
+      # trial_form['p_ks_bli_medlem_action'] = 'OK'
+      # reg_response = agent.submit(trial_form)
+      # logger.info reg_response.inspect
+      # logger.info Nokogiri::XML(reg_response.body.force_encoding('ISO-8859-1').encode('UTF-8'),
+      # &:noblanks)
+      #     .to_s
+
       @signup = Signup.create!(user: user)
 
       NkfImportTrialMembersJob.perform_later

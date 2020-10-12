@@ -120,7 +120,7 @@ class NkfMemberTrialImport
     tid_col_idx = header_fields.index 'tid'
     orphaned_trials =
         NkfMemberTrial.where.not(tid: member_trial_rows.map { |t| t[tid_col_idx] }).to_a
-    orphaned_trials.each(&:destroy)
+    orphaned_trials.each(&:destroy!)
     member_trial_rows.each do |row|
       attributes = {}
       columns.each_with_index do |column, i|
@@ -141,16 +141,21 @@ class NkfMemberTrialImport
         attributes[column] = row[i]
       end
       record = NkfMemberTrial.find_by(tid: row[columns.index('tid')])
-      record ||= NkfMemberTrial.find_by(reg_dato: row[columns.index('reg_dato')],
-          fornavn: row[columns.index('fornavn')],
-          etternavn: row[columns.index('etternavn')])
+      # record ||= NkfMemberTrial.find_by(reg_dato: row[columns.index('reg_dato')],
+      #     fornavn: row[columns.index('fornavn')],
+      #     etternavn: row[columns.index('etternavn')])
       record ||= NkfMemberTrial.new
       record.attributes = attributes
-      next unless record.changed?
+      next unless record.changed? || record.signup.nil?
 
       c = record.changes
       if record.save
         @trial_changes << { record: record, changes: c }
+        if record.signup.nil?
+          user = User.find_by(email: record.epost) || User.find_by(phone: record.mobil) ||
+              User.create!(record.user_attributes)
+          Signup.create! user: user, nkf_member_trial: record
+        end
       else
         logger.error "ERROR: #{columns}"
         logger.error "ERROR: #{row}"

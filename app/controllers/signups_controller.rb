@@ -2,7 +2,7 @@
 
 class SignupsController < ApplicationController
   before_action :admin_required
-  before_action :set_signup, only: %i[show edit update destroy]
+  before_action :set_signup, only: %i[show edit update destroy complete terminate]
 
   def index
     @signups = Signup.order(created_at: :desc)
@@ -56,18 +56,39 @@ class SignupsController < ApplicationController
   end
 
   def complete
-    # nkf_agent = NkfAgent.new(:complete_signup)
-    # front_page = nkf_agent.login # returns front_page
-    # trial_index_page = nkf_agent.trial_index
+    nkf_agent = NkfAgent.new(:complete_signup)
+    nkf_agent.login # returns front_page
+    trial_index_page = nkf_agent.trial_index
+
+    if @signup.nkf_member_trial
+      # Complete the trial
+    else
+      form = trial_index_page.form('ks_godkjenn_medlem')
+
+      form['p_ks_godkjenn_medlem_action'].value = 'UPDATE'
+      form['frm_28_v04'] = ''
+      new_member_page = nkf_agent.submit(form)
+      logger.info new_member_page.inspect
+      body = new_member_page.body.force_encoding('ISO-8859-1').encode('UTF-8')
+      logger.info Nokogiri::XML(body, &:noblanks).to_s
+
+      member_form = new_member_page.form('')
+      member_form['frm_28_v04'] = ''
+
+      NkfImportTrialMembersJob.perform_later
+    end
   end
 
   def terminate
     Signup.transaction do
-      @signup = Signup.find(params[:id])
       if (trial = @signup.nkf_member_trial)
         nkf_agent = NkfAgent.new(:complete_signup)
         nkf_agent.login
         trial_index_page = nkf_agent.trial_index
+
+        logger.info Nokogiri::XML(trial_index_page.body.force_encoding('ISO-8859-1').encode('UTF-8'),
+            &:noblanks).to_s
+
         form = trial_index_page.form('ks_godkjenn_medlem')
         form['p_ks_godkjenn_medlem_action'] = 'DELETE'
         form['frm_28_v04'] = trial.tid
@@ -79,6 +100,7 @@ class SignupsController < ApplicationController
       end
       @signup.destroy!
     end
+    redirect_to signups_path, notice: 'Prøvemedlemmet er slettet.'
   end
 
   def destroy

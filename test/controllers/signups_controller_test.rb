@@ -22,7 +22,7 @@ class SignupsControllerTest < ActionDispatch::IntegrationTest
     signups(:three).delete
     assert_difference('Signup.count') do
       post signups_url, params: { signup: {
-        nkf_member_trial_id: id(:three), user_id: id(:uwe)
+        nkf_member_trial_id: id(:three), user_id: id(:sandra)
       } }
     end
 
@@ -41,7 +41,7 @@ class SignupsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update signup' do
     patch signup_url(@signup), params: { signup: {
-      nkf_member_trial_id: @signup.nkf_member_trial_id, user_id: id(:uwe)
+      nkf_member_trial_id: @signup.nkf_member_trial_id, user_id: id(:sandra)
     } }
     assert_redirected_to signups_url
   end
