@@ -12,7 +12,7 @@
       = f.text_field :end_on, label: 'Til', class: 'date form-control', size: 18
   .float-right
     = back_or_link_to semesters_path, class: 'btn btn-secondary mr-3' do
-      i.fa.fa-back>
+      i.fa.fa-arrow-left>
       | Tilbake
     = link_to('Show', @semester, class: 'btn btn-secondary mr-3') unless @semester.new_record?
     = f.primary 'Lagre'
