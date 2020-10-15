@@ -1,4 +1,4 @@
-#!/bin/bash -el
+#!/bin/bash -e
 
 DB_NAME=rjjk_web_development
 
@@ -10,7 +10,7 @@ set -e
 
 echo "Re-creating database"
 dropdb --if-exists $DB_NAME
-bin/rake db:create
+bin/rails db:create
 
 echo "Transferring database"
 time pg_dump "$(heroku config:get --app=jujutsu-no HEROKU_POSTGRESQL_CRIMSON_URL)" | psql $DB_NAME
