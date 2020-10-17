@@ -12,3 +12,11 @@ preload_app!
 plugin :tmp_restart
 
 # on_worker_boot { ActiveRecord::Base.establish_connection }
+
+require 'barnes'
+
+before_fork do
+  # worker specific setup
+
+  Barnes.start # Must have enabled worker mode for this to block to be called
+end

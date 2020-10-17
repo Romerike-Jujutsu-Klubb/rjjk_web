@@ -28,6 +28,7 @@ gem 'activerecord-time' # , path: '~/work/open-source/activerecord-time'
 gem 'activestorage-database-service', github: 'TitovDigital/activestorage-database-service'
 gem 'acts_as_list'
 gem 'acts_as_tree'
+gem "barnes"
 gem 'bcrypt'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap-chosen-rails', github: 'donv/bootstrap-chosen-rails'
