@@ -48,25 +48,33 @@ ul#tab.nav.nav-tabs role="tablist"
         - signups = Signup.for_group(group).to_a.map(&:user)
         - if signups.any?
           .card
-            h3.card-header Prøvemedlemmer (#{signups.size})
+            h3.card-header.pr-2
+              | Prøvemedlemmer
+              .badge.badge-info.ml-2.float-right #{signups.size}
             = render 'user_list', users: signups, selected_practice: selected_practice
         .card
-          .card-header
-            = select nil, :practice_id, group.practices.after(1.month.ago).select { |pr| pr.date <= next_practice.date }.sort_by(&:date).reverse.map { |pr| ["#{pr} #{day_name pr.date.wday}", pr.id] }, { selected: selected_practice.id }, class: 'form-control pr-0', onchange: 'window.location = "?practice_id=" + $(this).val()'
+          h3.card-header.px-2.d-flex
+            - practice_options = group.practices.after(1.month.ago).select { |pr| pr.date <= next_practice.date }.sort_by(&:date).reverse.map { |pr| [pr.to_s(weekday: true, time: false), pr.id] }
+            = select nil, :practice_id, practice_options, { selected: selected_practice.id }, class: 'form-control pr-0 flex-grow-1', onchange: 'window.location = "?practice_id=" + $(this).val()'
+            .badge.badge-info.ml-2 style="font-size:90%" #{attending.size}
           = render 'user_list', users: attending, selected_practice: selected_practice
         - if instructors.any?
           .card
-            h3.card-header
+            h3.card-header.pr-2
               | Instruktører
               a.btn.btn-primary.float-right href=with_detour(new_attendance_path(attendance: { practice_id: @practice&.id }))
                 i.fa.fa-plus
             = render 'user_list', users: instructors, selected_practice: selected_practice
         .card
-          h3.card-header Fraværende (#{absent.size})
+          h3.card-header.pr-2
+            | Fraværende
+            .badge.badge-info.ml-2.float-right #{absent.size}
           - if absent.any?
             = render 'user_list', users: absent, selected_practice: selected_practice
         .card
-          h3.card-header Passive (#{passive.size})
+          h3.card-header.pr-2
+            | Passive
+            .badge.badge-info.ml-2.float-right #{passive.size}
           - if passive.any?
             = render 'user_list', users: passive, selected_practice: selected_practice
 
