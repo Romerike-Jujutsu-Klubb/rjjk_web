@@ -31,8 +31,8 @@ ul#tab.nav.nav-tabs role="tablist"
           .map(&:user).uniq
       - group_members -= instructors
       - group_members = group_members.sort_by { |u| u.current_rank }.reverse
-      - active, passive = group_members.partition{|u| u.member&.active?}
-      - attending, absent = active.partition{|u| u.attending?}
+      - attending, absent = group_members.partition{|u| u.attending?}
+      - active, passive = absent.partition{|u| u.member&.active?}
       .card-deck
         - trial_members = NkfMemberTrial.for_group(group).to_a.reject(&:signup)
         - if trial_members.any?
@@ -62,11 +62,11 @@ ul#tab.nav.nav-tabs role="tablist"
                 i.fa.fa-plus
             = render 'user_list', users: instructors, selected_practice: selected_practice
         .card
-          h3.card-header Fraværende
+          h3.card-header Fraværende (#{absent.size})
           - if absent.any?
             = render 'user_list', users: absent, selected_practice: selected_practice
         .card
-          h3.card-header Passive
+          h3.card-header Passive (#{passive.size})
           - if passive.any?
             = render 'user_list', users: passive, selected_practice: selected_practice
 
