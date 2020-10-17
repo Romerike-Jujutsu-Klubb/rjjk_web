@@ -65,17 +65,17 @@ ul#tab.nav.nav-tabs role="tablist"
               a.btn.btn-primary.float-right href=with_detour(new_attendance_path(attendance: { practice_id: @practice&.id }))
                 i.fa.fa-plus
             = render 'user_list', users: instructors, selected_practice: selected_practice
-        .card
-          h3.card-header.pr-2
-            | Fraværende
-            .badge.badge-info.ml-2.float-right #{absent.size}
-          - if absent.any?
+        - if absent.any?
+          .card
+            h3.card-header.pr-2
+              | Fraværende
+              .badge.badge-info.ml-2.float-right #{absent.size}
             = render 'user_list', users: absent, selected_practice: selected_practice
-        .card
-          h3.card-header.pr-2
-            | Passive
-            .badge.badge-info.ml-2.float-right #{passive.size}
-          - if passive.any?
+        - if passive.any?
+          .card
+            h3.card-header.pr-2
+              | Passive
+              .badge.badge-info.ml-2.float-right #{passive.size}
             = render 'user_list', users: passive, selected_practice: selected_practice
 
   #lists.tab-pane.fade class=('show active' unless @practice) role="tabpanel" aria-labelledby="contact-tab"
