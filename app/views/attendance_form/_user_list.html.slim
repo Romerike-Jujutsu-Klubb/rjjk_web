@@ -1,15 +1,14 @@
 .card-body.p-0.pt-3.p-sm-3
-  .table-responsive
-    table.table.mb-0.table-sm
-      - users.each do |u|
-        - attendance = selected_practice.attendance_for(u.id)
-        tr class=("table-danger" if u.attending? && u.absent?(days: 14))
-          td
-            - if u.card_key
-              i.fa.fa-key
-          td
-            = link_to u.name, u
-            - if u.absent?(days: 14)
-              br
-              = u.attendances.last&.date || 'Oppmøte ikke registret'
-          td = render 'attendances/button', attendance: attendance, user_id: u.id
+  table.table.mb-0.table-sm
+    - users.each do |u|
+      - attendance = selected_practice.attendance_for(u.id)
+      tr class=("table-danger" if u.attending? && u.absent?(days: 14))
+        td
+          - if u.card_key
+            i.fa.fa-key
+        td
+          = link_to u.name, u
+          - if u.absent?(days: 14)
+            br
+            = u.attendances.last&.date || 'Oppmøte ikke registret'
+        td.text-right = render 'attendances/button', attendance: attendance, user_id: u.id
