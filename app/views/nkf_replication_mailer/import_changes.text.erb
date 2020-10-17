@@ -2,10 +2,10 @@ NKF Import
 
 Endringer fra NKF-portalen.
 
-<% if @import&.new_records.any? -%>
+<% if @import&.new_records&.any? -%>
 <%=@import.new_records.size %> medlemmer opprettet
 <% end -%>
-<% if @import&.changes.any? -%>
+<% if @import&.changes&.any? -%>
 <%=@import.changes.size %> medlemmer oppdatert
 <% end -%>
 <%="#{@import.error_records.size} feilet" if @import&.error_records&.any? %>

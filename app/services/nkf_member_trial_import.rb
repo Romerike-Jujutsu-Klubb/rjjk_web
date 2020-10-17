@@ -16,7 +16,6 @@ class NkfMemberTrialImport
     unless nkf_agent
       nkf_agent = NkfAgent.new(:trial_import)
       nkf_agent.login
-      nkf_agent.search_members
     end
     import_member_trials(get_member_trial_rows(nkf_agent))
   rescue => e

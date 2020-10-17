@@ -55,7 +55,7 @@ class NkfAgent
       login_form.password = NKF_PASSWORD
       login_form.site2pstoretoken = token
       response = submit(login_form)
-      @session_id = response.body.scan(/var p_cr_par = "([^"]*)";/)[0][0]
+      @session_id = response.body.scan(/start_tilleggsfunk27\('([^"]*)'\)/)[0][0]
       raise 'Could not find session id' unless @session_id
 
       @extra_function_codes = response.body.scan(/start_tilleggsfunk27\('(.*?)'\)/)

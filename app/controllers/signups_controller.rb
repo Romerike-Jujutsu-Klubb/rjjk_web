@@ -85,17 +85,10 @@ class SignupsController < ApplicationController
         nkf_agent = NkfAgent.new(:complete_signup)
         nkf_agent.login
         trial_index_page = nkf_agent.trial_index
-
-        logger.info Nokogiri::XML(trial_index_page.body.force_encoding('ISO-8859-1').encode('UTF-8'),
-            &:noblanks).to_s
-
         form = trial_index_page.form('ks_godkjenn_medlem')
         form['p_ks_godkjenn_medlem_action'] = 'DELETE'
         form['frm_28_v04'] = trial.tid
-        response_page = nkf_agent.submit(form)
-        logger.info response_page.inspect
-        body = response_page.body.force_encoding('ISO-8859-1').encode('UTF-8')
-        logger.info Nokogiri::XML(body, &:noblanks).to_s
+        nkf_agent.submit(form)
         NkfImportTrialMembersJob.perform_later
       end
       @signup.destroy!
