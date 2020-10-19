@@ -4,9 +4,8 @@
 $(function() {
   $('[data-remote][data-replace]').data('type', 'html');
   $(document).on('ajax:success', '[data-remote][data-replace]', function(event) {
-    const $this = $(this);
-    data = event.originalEvent.detail[2].response
-    $($this.data('replace')).replaceWith(data);
-    $this.trigger('ajax:replaced');
+    const data = $(event.originalEvent.detail[2].response);
+    $($(this).data('replace')).replaceWith(data);
+    data.trigger('ajax:replaced');
   });
 });

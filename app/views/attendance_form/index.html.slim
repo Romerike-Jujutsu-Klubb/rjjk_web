@@ -22,6 +22,7 @@ ul#tab.nav.nav-tabs role="tablist"
     .tab-pane.fade id="instruction_#{group.id}" class=('show active' if @practice&.group_schedule&.group_id == group.id) role="tabpanel" aria-labelledby="home-tab"
       - next_practice = group.next_practice
       - selected_practice = (@practice&.group_schedule&.group_id == group.id && @practice) || next_practice
+      - signups = Signup.for_group(group).to_a.map(&:user)
       - instructors = next_practice.group_semester&.group_instructors.to_a.map(&:member).map(&:user).uniq
       - group_members = group.members.active(selected_practice.date).to_a.map(&:user)
       - group_members += Attendance.joins(:practice).after(2.months.ago) \
@@ -29,53 +30,48 @@ ul#tab.nav.nav-tabs role="tablist"
           .where(status: Attendance::PRESENCE_STATES) \
           .where.not(user_id: group_members.map(&:id)) \
           .map(&:user).uniq
+      - group_members -= signups
       - group_members -= instructors
       - group_members = group_members.sort_by { |u| u.current_rank }.reverse
       - attending, absent = group_members.partition{|u| u.attending?}
-      - active, passive = absent.partition{|u| u.member&.active?}
+      - absent, passive = absent.partition{|u| u.member&.active?}
       .card-deck
         - trial_members = NkfMemberTrial.for_group(group).to_a.reject(&:signup)
         - if trial_members.any?
           .card
             h3.card-header Prøvemedlemmer (#{trial_members.size})
-            - if trial_members.any?
-              .card-body.pt-3
-                table.table.mb-0 class=('table-sm' if trial_members.size > 12)
-                  - trial_members.each do |tm|
-                    tr class=(tm.created_at < 4.weeks.ago ? 'table-danger' : tm.created_at < 2.weeks.ago ? 'table-warning' : nil)
-                      td: a href=(tm.signup ? signup_path(tm.signup) : nkf_member_trial_path(tm)) = tm.name
-                      td.text-nowrap = tm.created_at.to_date
-        - signups = Signup.for_group(group).to_a.map(&:user)
+            .card-body.pt-3
+              table.table.mb-0 class=('table-sm' if trial_members.size > 12)
+                - trial_members.each do |tm|
+                  tr class=(tm.created_at < 4.weeks.ago ? 'table-danger' : tm.created_at < 2.weeks.ago ? 'table-warning' : nil)
+                    td: a href=(tm.signup ? signup_path(tm.signup) : nkf_member_trial_path(tm)) = tm.name
+                    td.text-nowrap = tm.created_at.to_date
         - if signups.any?
           .card
             h3.card-header.pr-2
-              | Prøvemedlemmer
-              .badge.badge-info.ml-2.float-right #{signups.size}
+              span.flex-grow-1 Prøvemedlemmer
             = render 'user_list', users: signups, selected_practice: selected_practice
         .card
-          h3.card-header.px-2.d-flex
+          h3.card-header.px-2
             - practice_options = group.practices.after(1.month.ago).select { |pr| pr.date <= next_practice.date }.sort_by(&:date).reverse.map { |pr| [pr.to_s(weekday: true, time: false), pr.id] }
             = select nil, :practice_id, practice_options, { selected: selected_practice.id }, class: 'form-control pr-0 flex-grow-1', onchange: 'window.location = "?practice_id=" + $(this).val()'
-            .badge.badge-info.ml-2 style="font-size:90%" #{attending.size}
           = render 'user_list', users: attending, selected_practice: selected_practice
         - if instructors.any?
           .card
             h3.card-header.pr-2
-              | Instruktører
+              span.flex-grow-1 Instruktører
               a.btn.btn-primary.float-right href=with_detour(new_attendance_path(attendance: { practice_id: @practice&.id }))
                 i.fa.fa-plus
             = render 'user_list', users: instructors, selected_practice: selected_practice
         - if absent.any?
           .card
             h3.card-header.pr-2
-              | Fraværende
-              .badge.badge-info.ml-2.float-right #{absent.size}
+              span.flex-grow-1 Fraværende
             = render 'user_list', users: absent, selected_practice: selected_practice
         - if passive.any?
           .card
             h3.card-header.pr-2
-              | Passive
-              .badge.badge-info.ml-2.float-right #{passive.size}
+              span.flex-grow-1 Passive
             = render 'user_list', users: passive, selected_practice: selected_practice
 
   #lists.tab-pane.fade class=('show active' unless @practice) role="tabpanel" aria-labelledby="contact-tab"
@@ -94,8 +90,48 @@ ul#tab.nav.nav-tabs role="tablist"
             td
             td = link_to 'Andre', attendance_form_path(year: Time.current.year, month: Time.current.mon, group_id: 'others'), class: 'btn btn-secondary'
 
+css:
+  .card-header {
+      display: flex;
+  }
+  select ~ .status-badge {
+      font-size:89.5%;
+  }
 javascript:
-    $(".attendance_link").bind("ajax:complete", function(e){
-      data = e.originalEvent.detail[0].response
-      $(this).html(data);
-    });
+  function updateBadges() {
+    let closestCard = $(this).closest('.card');
+    if (closestCard.length > 0) {
+      cards = closestCard;
+    } else {
+      cards = $('.card')
+    }
+    cards.each(function(i, card) {
+      card = $(card);
+      card.find('.status-badge').text('0')
+      card.find('.status-badge').each(function(i, b) {
+        if ($(b).text() === '0') {
+          $(b).remove();
+        }
+      })
+      card.find('.card-body a[data-status]').each(function(i, button) {
+        let btn_status = $(button).data('status');
+        if (#{{Attendance::PRESENCE_STATES}}.includes(btn_status)) {
+          btn_status = '#{Attendance::Status::ATTENDED}';
+        }
+        const btn_color = $(button).attr('class').match(/btn-(.+?)\b/)[1];
+        badge = card.find('.status-badge[data-status=' + btn_status + ']')[0]
+        if (badge) {
+          badge = $(badge);
+          badge.text(Number(badge.text()) + 1);
+        } else {
+          let new_badge = $("<div class='status-badge badge ml-2 badge-" + btn_color + "' data-status=" + btn_status + ">1</div>");
+          card.find('.card-header').append(new_badge);
+        }
+      })
+    })
+  }
+
+  $(function() {
+    $('.card').on('ajax:replaced', updateBadges);
+    updateBadges();
+  });

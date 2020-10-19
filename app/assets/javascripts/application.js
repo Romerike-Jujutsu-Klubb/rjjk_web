@@ -68,3 +68,20 @@ FontAwesomeConfig.autoReplaceSvg = 'nest';
 $(function() {
   bsCustomFileInput.init()
 });
+
+function setAttendanceBtn(btn) {
+  $btn = $(btn);
+  const btnColor = $btn.attr('class').match(/(?:btn|text)-(.+?)\b/)[1];
+  var match = $btn.attr('href').match(/\/(\d{4})\/(\d{1,2})\/(\d+)\/([A-Z])\/(\d+)/);
+  const year = match[1];
+  const week = match[2];
+  const gs_id = match[3];
+  const state = match[4];
+  const user_id = match[5];
+  $('#btn_' + year + '_' + week + '_' + gs_id + '_' + user_id)
+      .removeClass('btn-info btn-success btn-warning btn-danger').addClass('btn-' + btnColor).html($(btn).html())
+      .data('status', state).find('i').attr('class', 'fa fa-sync fa-spin');
+  $(btn).closest('.btn-group.show').find('[data-toggle=dropdown]').dropdown('toggle');
+  $(btn).closest('.btn-group').find('[data-toggle=dropdown]')
+      .removeClass('btn-info btn-success btn-warning btn-danger').addClass('btn-' + btnColor);
+}

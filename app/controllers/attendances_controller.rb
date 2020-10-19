@@ -186,19 +186,12 @@ class AttendancesController < ApplicationController
     AttendanceNotificationJob.perform_later(practice, u, new_status)
 
     if request.xhr?
-      if params[:status] == 'toggle'
-        if params[:user_id]
-          render partial: 'button', locals: {
-            gs: practice.group_schedule, year: year, week: week, attendance: @attendance,
-            user_id: u.id
-          }
-        else
-          render partial: 'plan_practice', locals: {
-            gs: practice.group_schedule, year: year, week: week, attendance: @attendance
-          }
-        end
+      if params[:user_id]
+        render partial: 'button', locals: { attendance: @attendance }
       else
-        render partial: 'attendance_form/attendance_delete_link', locals: { attendance: @attendance }
+        render partial: 'plan_practice', locals: {
+          gs: practice.group_schedule, year: year, week: week, attendance: @attendance
+        }
       end
     else
       back_or_redirect_to(@attendance)

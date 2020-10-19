@@ -12,31 +12,31 @@ class Attendance < ApplicationRecord
     WILL_ATTEND = 'P'
   end
 
-  STATES = [
-    [Status::WILL_ATTEND, 'Kommer!', 'thumbs-up', 'success'],
-    [Status::INSTRUCTOR, 'Instruere', 'thumbs-up', 'success'],
-    [Status::HOLIDAY, 'Bortreist', 'hand-point-right', 'warning'],
-    [Status::SICK, 'Sykdom', 'plus', 'danger'],
-    [Status::ABSENT, 'Forhindret', 'thumbs-down', 'info'],
-  ].freeze
+  STATES = {
+    Status::ABSENT => %w[Forhindret thumbs-down info],
+    Status::HOLIDAY => %w[Bortreist hand-point-right warning],
+    Status::INSTRUCTOR => %w[Instruere thumbs-up success],
+    Status::SICK => %w[Sykdom plus danger],
+    Status::WILL_ATTEND => ['Kommer!', 'thumbs-up', 'success'],
+  }.freeze
 
-  CURRENT_STATES = [
-    [Status::WILL_ATTEND, 'Kommer!', 'thumbs-up', 'success'],
-    [Status::ATTENDED, 'Trener!', 'thumbs-up', 'success'],
-    [Status::INSTRUCTOR, 'Instruere', 'thumbs-up', 'success'],
-    [Status::HOLIDAY, 'Bortreist', 'hand-point-right', 'warning'],
-    [Status::SICK, 'Sykdom', 'plus', 'danger'],
-    [Status::ABSENT, 'Forhindret', 'thumbs-down', 'info'],
-  ].freeze
+  CURRENT_STATES = {
+    Status::ABSENT => %w[Forhindret thumbs-down info],
+    Status::ATTENDED => ['Trener!', 'thumbs-up', 'success'],
+    Status::HOLIDAY => %w[Bortreist hand-point-right warning],
+    Status::INSTRUCTOR => %w[Instruere thumbs-up success],
+    Status::SICK => %w[Sykdom plus danger],
+    Status::WILL_ATTEND => ['Kommer!', 'thumbs-up', 'success'],
+  }.freeze
 
-  PAST_STATES = [
-    [Status::WILL_ATTEND, 'Ubekreftet', 'question', 'warning'],
-    [Status::ATTENDED, 'Trente!', 'thumbs-up', 'success'],
-    [Status::INSTRUCTOR, 'Instruerte!', 'thumbs-up', 'success'],
-    [Status::HOLIDAY, 'Bortreist', 'hand-point-right', 'warning'],
-    [Status::SICK, 'Sykdom', 'plus', 'danger'],
-    [Status::ABSENT, 'Forhindret', 'thumbs-down', 'info'],
-  ].freeze
+  PAST_STATES = {
+    Status::ABSENT => %w[Forhindret thumbs-down info],
+    Status::ATTENDED => ['Trente!', 'thumbs-up', 'success'],
+    Status::HOLIDAY => %w[Bortreist hand-point-right warning],
+    Status::INSTRUCTOR => ['Instruerte!', 'thumbs-up', 'success'],
+    Status::SICK => %w[Sykdom plus danger],
+    Status::WILL_ATTEND => %w[Ubekreftet question warning],
+  }.freeze
 
   PRESENT_STATES = [Status::ASSISTANT, Status::ATTENDED, Status::INSTRUCTOR, Status::PRESENT].freeze
   ABSENT_STATES = [Status::HOLIDAY, Status::SICK, Status::ABSENT].freeze
@@ -105,6 +105,6 @@ class Attendance < ApplicationRecord
   end
 
   def status_label
-    (Time.current < practice.start_at ? STATES : PAST_STATES).find { |s| s[0] == status }&.at(1) || status
+    (Time.current < practice.start_at ? STATES : PAST_STATES)[status]&.at(1) || status
   end
 end

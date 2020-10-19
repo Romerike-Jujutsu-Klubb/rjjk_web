@@ -30,6 +30,7 @@ class User < ApplicationRecord
             class_name: 'Member'
   has_one :member, -> { where(left_on: nil).order(joined_on: :desc) }, inverse_of: :user,
       dependent: :restrict_with_exception
+  has_one :signup, -> { order(created_at: :desc) }, inverse_of: :user
 
   has_many :attendances, dependent: :destroy
   has_many :contactees, dependent: :nullify, class_name: 'User', foreign_key: :contact_user_id,

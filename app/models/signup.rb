@@ -6,7 +6,7 @@ class Signup < ApplicationRecord
 
   scope :for_group, ->(group) {
     includes(user: :groups).references(:users)
-        .where('(users.birthdate BETWEEN ? AND ?) OR (groups.id = ?)',
+        .where('(groups.id IS NULL AND users.birthdate BETWEEN ? AND ?) OR (groups.id = ?)',
             group.to_age.years.ago, group.from_age.years.ago, group.id)
         .order(:created_at, :first_name, :last_name)
   }
