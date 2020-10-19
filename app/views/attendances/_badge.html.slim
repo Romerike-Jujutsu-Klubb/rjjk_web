@@ -1,4 +1,4 @@
-- state = Attendance::STATES.find { |s| s[0] == status }
+- state = Attendance::STATES[status]
 .badge class="badge-#{state[3]}" title=state[1] data-toggle=:tooltip
   i.fa> class="fa-#{state[2]}"
   .d-none.d-md-inline= state[1]
