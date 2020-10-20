@@ -68,9 +68,10 @@
           - @groups.each do |g|
             - next unless g.active? || user.groups.include?(g)
             - attendances_since_graduation = user.attendances_since_graduation(Date.current, g).size
-            label for="user_group_ids_#{g.id}" style=('font-weight: bold' if g.contains_age(user.age))
+            label.d-block for="user_group_ids_#{g.id}" style=('font-weight: bold' if g.contains_age(user.age))
               = check_box_tag "user[group_ids][]", g.id, user.groups.include?(g), value: g.id, id: "user_group_ids_#{g.id}"
-              =< g.martial_art&.name
+              - if g.martial_art && !g.martial_art.kwr?
+                =< g.martial_art&.name
               =< g.name
               - if attendances_since_graduation > 0
                 =< link_to("(#{attendances_since_graduation} treninger)", controller: :attendances, action: :since_graduation, id: user.id)
