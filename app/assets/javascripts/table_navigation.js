@@ -9,11 +9,7 @@ function activate_table_navigation() {
       return
     }
     window.location = row.closest('table').data('record-path') + '/' + record_id
-  }).css('cursor', 'pointer').addClass('table-hover').hover(function() {
-    $(this).css('background-color', 'rgba(0,0,0,.075)')
-  }, function() {
-    $(this).css('background-color', '')
-  });
+  }).css('cursor', 'pointer').closest('table').addClass('table-hover')
 }
 
 if (typeof Turbolinks !== 'undefined' && Turbolinks.supported) {
