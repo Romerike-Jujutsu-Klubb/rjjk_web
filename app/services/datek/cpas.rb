@@ -13,14 +13,14 @@ module Datek
           raise('CPAS_API_BASE_URL not set')
     end
 
-    def self.send_sms(to:, text:)
+    def self.send_sms(to:, text:, from:)
       ctx = OpenSSL::SSL::SSLContext.new
       ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE
       request = HTTP.headers('content_type' => 'application/x-www-form-urlencoded')
       uri = URI(base_url)
       request = request.basic_auth(user: uri.user, pass: uri.password) if uri.userinfo
       request.post("#{uri}/send/mt", ssl_context: ctx,
-          body: "to=#{CGI.escape to.to_s}&text=#{CGI.escape text}")
+          body: "to=#{CGI.escape to.to_s}&id=#{CGI.escape from}&text=#{CGI.escape text}")
     end
   end
 end

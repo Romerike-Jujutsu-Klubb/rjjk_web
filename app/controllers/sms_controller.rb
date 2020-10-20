@@ -23,7 +23,7 @@ class SmsController < ApplicationController
           users.each do |user|
             raise 'Huh?' unless user.contact_phone
 
-            Datek::Cpas.send_sms to: user.contact_phone, text: text
+            Datek::Cpas.send_sms to: user.contact_phone, text: text, from: current_user.phone || '92206046'
           end
           flash.notice = "SMS er sendt til #{users.size} mottakere."
         end

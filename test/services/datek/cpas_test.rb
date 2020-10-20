@@ -15,6 +15,6 @@ class CpasTest < ActiveSupport::TestCase
           )
         .to_return(status: 200, body: '', headers: {})
 
-    Datek::Cpas.send_sms to: 5_551_234, text: 'Gratz!'
+    Datek::Cpas.send_sms to: 5_551_234, text: 'Gratz!', from: '92206046'
   end
 end

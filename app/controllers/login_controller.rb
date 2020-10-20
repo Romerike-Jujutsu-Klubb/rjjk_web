@@ -47,7 +47,8 @@ class LoginController < ApplicationController
             users.each do |user|
               if phone
                 if Datek::Cpas.base_url
-                  Datek::Cpas.send_sms to: phone, text: root_url(key: user.generate_security_token)
+                  Datek::Cpas.send_sms to: phone, from: phone,
+                                       text: root_url(key: user.generate_security_token)
                 else
                   flash.notice = 'SMS-utsending er ikke aktiv.'
                 end
