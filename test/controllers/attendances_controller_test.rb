@@ -63,9 +63,9 @@ class AttendancesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_should_get_review
-    practice = practices(:voksne_2013_42_thursday)
-    Attendance::Status.constants(false).map(&Attendance::Status.method(:const_get)).each do |status|
+  Attendance::Status.constants(false).map(&Attendance::Status.method(:const_get)).each do |status|
+    test "should get review #{status}" do
+      practice = practices(:voksne_2013_42_thursday)
       login(:uwe)
       get :review, params: {
         group_schedule_id: practice.group_schedule_id,
@@ -74,10 +74,10 @@ class AttendancesControllerTest < ActionController::TestCase
       assert_response :redirect
       assert_redirected_to 'http://test.host/mitt/oppmote/911313225'
     end
-  end
 
-  def test_should_get_review_en
-    I18n.with_locale(:en) { test_should_get_review }
+    test "should_get_review_en #{status}" do
+      I18n.with_locale(:en) { send "test_should_get_review_#{status}" }
+    end
   end
 
   def test_should_announce_toggle_off_for_future_practice
