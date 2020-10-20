@@ -13,7 +13,7 @@
       end
   year = attendance.practice.year
   week = attendance.practice.week
-  link_target = { controller: :attendances, action: practice_passed ? :review : :announce,
+  link_target = { controller: :attendances, action: practice_passed ? :review : :announce, details: local_assigns[:details],
                   year: year, week: week, group_schedule_id: gs.id, status: 'toggle', user_id: attendance.user_id }
   states = (practice_passed ? Attendance::PAST_STATES : practice_imminent ? Attendance::CURRENT_STATES : Attendance::STATES)
   if attendance.persisted?
@@ -28,10 +28,11 @@
   end
 %>
 <div id="button_<%= year %>_<%= week %>_<%= gs.id %>_<%= attendance.user_id %>" class="btn-group">
+  <% replace_element = initial_disabled || local_assigns[:details] ? "#practice_#{week}_#{gs.id}" : "#button_#{year}_#{week}_#{gs.id}_#{attendance.user_id}" %>
   <%= link_to(link_target, method: :post, remote: !initial_disabled,
       id: "btn_#{year}_#{week}_#{gs.id}_#{attendance.user_id}", class: "btn btn-#{initial_class} pr-0",
       style: 'width: 6.9em', onclick: initial_disabled ? 'return false' : "$(this).find('i').attr('class', 'fa fa-sync fa-spin')",
-      data: { status: attendance.status || :nil, replace: initial_disabled || "#button_#{year}_#{week}_#{gs.id}_#{attendance.user_id}" }) do %>
+      data: { status: attendance.status || :nil, replace: replace_element }) do %>
     <i class="<%= "fa fa-#{initial_icon}" if initial_icon %>" <%= 'data-fa-i2svg' unless initial_icon %>></i>
     <span><%= initial_text %></span>
   <% end %>
@@ -41,7 +42,7 @@
     <% states.each do |state, (link_text, link_icon, link_class)| %>
       <%= link_to(link_target.merge(status: state),
                   method: :post, remote: true, onclick: "setAttendanceBtn(this)",
-                  data: { replace: "#button_#{year}_#{week}_#{gs.id}_#{attendance.user_id}" },
+                  data: { replace: replace_element },
                   class: "dropdown-item text-#{link_class}") do %>
         <i class="fa fa-<%= link_icon %>"></i>
         <span><%= link_text %></span>

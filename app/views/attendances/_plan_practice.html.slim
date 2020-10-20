@@ -3,17 +3,17 @@
 - year = practice.year
 - week = practice.week
 div id="practice_#{week}_#{gs.id}"
-  = render 'attendances/button', attendance: attendance || practice.attendances.build(user_id: @member.user_id)
+  = render 'attendances/button', attendance: attendance || practice.attendances.build(user_id: @member.user_id), details: true
   - if @reviewed_attendance && @reviewed_attendance.group_schedule == gs && @reviewed_attendance.practice.year == year && @reviewed_attendance.practice.week == week
     javascript:
       $(function() {
-        $('#button_#{year}_#{week}_#{gs.id}').popover({
+        $('#button_#{year}_#{week}_#{gs.id}_#{@member.user_id}').popover({
           content: 'Oppmøte registrert',
           placement: 'top',
           container: 'body'
         }).popover('show');
         $('body').one('click', function() {
-          $('#button_#{year}_#{week}_#{gs.id}').popover('hide')
+          $('#button_#{year}_#{week}_#{gs.id}_#{@member.user_id}').popover('hide')
         });
       });
   .clearfix

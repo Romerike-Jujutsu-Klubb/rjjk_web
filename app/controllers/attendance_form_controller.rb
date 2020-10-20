@@ -21,9 +21,4 @@ class AttendanceFormController < ApplicationController
       end
     end
   end
-
-  def show
-    load_form_data(params[:year], params[:month], params[:group_id])
-    render layout: 'print'
-  end
 end

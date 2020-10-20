@@ -47,7 +47,7 @@ class AttendancePlanFeatureTest < ApplicationSystemTestCase
 
   def test_dropdown_changes_are_persistent
     screenshot_group :persistence
-    next_button = find('#button_2013_42_545305079')
+    next_button = find("#button_2013_42_545305079_#{id :uwe}")
     assert_equal 'Kommer!', next_button.text
     next_button.find('button.dropdown-toggle').click
     assert_equal 'Kommer!
@@ -62,7 +62,7 @@ Forhindret', next_button.text
     assert_equal 'Forhindret', next_button.text
     wait_for_ajax
     visit "/mitt/oppmote?a=#{Time.current.to_i}"
-    next_button = find('#button_2013_42_545305079')
+    next_button = find("#button_2013_42_545305079_#{id :uwe}")
     assert_equal 'Forhindret', next_button.text
   end
 end

@@ -81,16 +81,7 @@ class AttendancesController < ApplicationController
     @attendance = Attendance.find(params[:id])
     @attendance.destroy
     AttendanceNotificationJob.perform_later(@attendance.practice, @attendance.user, nil)
-    if request.xhr?
-      flash.clear
-      render partial: 'attendance_form/attendance_create_link', locals: {
-        user_id: @attendance.user_id,
-        group_schedule_id: @attendance.practice.group_schedule_id,
-        date: @attendance.date,
-      }
-    else
-      redirect_to(attendances_url)
-    end
+    redirect_to(attendances_url)
   end
 
   def report
@@ -186,12 +177,12 @@ class AttendancesController < ApplicationController
     AttendanceNotificationJob.perform_later(practice, u, new_status)
 
     if request.xhr?
-      if params[:user_id]
-        render partial: 'button', locals: { attendance: @attendance }
-      else
+      if params[:details]
         render partial: 'plan_practice', locals: {
           gs: practice.group_schedule, year: year, week: week, attendance: @attendance
         }
+      else
+        render partial: 'button', locals: { attendance: @attendance }
       end
     else
       back_or_redirect_to(@attendance)
@@ -291,10 +282,10 @@ class AttendancesController < ApplicationController
     @attendance.update! status: new_status
 
     if request.xhr?
-      if params[:user_id]
-        render partial: 'button', locals: { attendance: @attendance }
-      else
+      if params[:details]
         render partial: 'plan_practice', locals: { attendance: @attendance }
+      else
+        render partial: 'button', locals: { attendance: @attendance }
       end
     else
       flash[:notice] = "Bekreftet oppmøte #{@attendance.date}:  " \

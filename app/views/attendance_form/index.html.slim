@@ -8,8 +8,7 @@ ul#tab.nav.nav-tabs role="tablist"
   - @my_groups.each do |group|
     li.nav-item
       a.nav-link id="instruction_#{group.id}-tab" class=(:active if @practice&.group_schedule&.group_id == group.id) data-toggle="tab" data-target="#instruction_#{group.id}" role="tab" aria-controls="home" aria-selected="true" = group.name
-  li.nav-item
-    a#lists-tab.nav-link class=(:active unless @practice) data-toggle="tab" data-target="#lists" role="tab" aria-controls="contact" aria-selected="false" Lister
+
 #tabContent.tab-content
   / https://stackoverflow.com/a/52634662/658690
   css:
@@ -73,22 +72,6 @@ ul#tab.nav.nav-tabs role="tablist"
             h3.card-header.pr-2
               span.flex-grow-1 Passive
             = render 'user_list', users: passive, selected_practice: selected_practice
-
-  #lists.tab-pane.fade class=('show active' unless @practice) role="tabpanel" aria-labelledby="contact-tab"
-    - start_date = Date.parse('2009-08-01')
-    - months = (Date.current.year - start_date.year) * 12 + Date.current.mon - start_date.mon + 1
-
-    form
-      table.table
-        tbody
-          - for group in @groups
-            - options = (0..months).map { |i| ["#{month_name(1 + (7 + i) % 12).capitalize} #{2009 + (8 + i) / 12}", attendance_form_path(year: (start_date + i.months).year, month: (start_date + i.months).month, group_id: group.id)] }.reverse
-            tr
-              td: label = group.name
-              td = select :group_name, group.name, options, {prompt: 'Velg måned'}, onchange: 'document.location = options[selectedIndex].value', class: 'form-control'
-          tr
-            td
-            td = link_to 'Andre', attendance_form_path(year: Time.current.year, month: Time.current.mon, group_id: 'others'), class: 'btn btn-secondary'
 
 css:
   .card-header {
