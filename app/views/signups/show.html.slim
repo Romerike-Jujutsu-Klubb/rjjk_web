@@ -11,7 +11,12 @@ table.table
   tbody
     tr
       th Registrert
-      td = [@signup.created_at, @signup.nkf_member_trial&.reg_dato].compact.min
+      td
+        - date_text = [@signup.created_at, @signup.nkf_member_trial&.reg_dato].compact.min
+        - if @signup.nkf_member_trial_id
+          a href=nkf_member_trial_path(@signup.nkf_member_trial_id) = date_text
+        - else
+          = date_text
     tr
       th Alder
       td #{@signup.user.sex_label} #{@signup.user.age} år (#{@signup.user.birthdate})
