@@ -17,12 +17,22 @@ table.table
       td #{@signup.user.sex_label} #{@signup.user.age} år (#{@signup.user.birthdate})
     tr
       th E-post
-      td: a href=new_user_message_path(user_message: {user_id:@signup.user_id, tag: :membership_signup, from: current_user.email, subject: 'Innmelding Romerike Jujutsu Klubb', plain_body: "Hei #{@signup.user.first_name}!\n\nI januar meldte du interesse for å trene hos oss.\n\nMye har skjedd siden da og vi har måttet holde stengt under store deler av pandemien.  Nå har vi åpnet for trening igjen, og vi vil gjerne invitere deg til å delta.\n\nVoksne trener tirsdager og torsdager kl 19:00-20:30 og søndager kl 10:30-12:00.  Treningsavgift er kr 399,- pr måned.  Dette inkluderer graderinger og belter.  Har du en drakt fra før kan du bruke denne, ellers har vi et tilbud på gratis drakt mot 6 måneders bindingstid.\n\nIkke nøl med å spørre hvis det er noe du lurer på.  Håper du vil trene med oss!\n\nMed vennlig hilsen\nRomerike Jujutsu Klubb\n"})
-        i.far.fa-envelope>
-        = @signup.user.email
+      td
+        a href=new_user_message_path(user_message: {user_id:@signup.user_id, tag: :membership_signup, from: current_user.email, subject: 'Innmelding Romerike Jujutsu Klubb', plain_body: "Hei #{@signup.user.first_name}!\n\nI januar meldte du interesse for å trene hos oss.\n\nMye har skjedd siden da og vi har måttet holde stengt under store deler av pandemien.  Nå har vi åpnet for trening igjen, og vi vil gjerne invitere deg til å delta.\n\nVoksne trener tirsdager og torsdager kl 19:00-20:30 og søndager kl 10:30-12:00.  Treningsavgift er kr 399,- pr måned.  Dette inkluderer graderinger og belter.  Har du en drakt fra før kan du bruke denne, ellers har vi et tilbud på gratis drakt mot 6 måneders bindingstid.\n\nIkke nøl med å spørre hvis det er noe du lurer på.  Håper du vil trene med oss!\n\nMed vennlig hilsen\nRomerike Jujutsu Klubb\n"})
+          i.far.fa-envelope>
+          = @signup.user.email
     tr
       th Telefon
-      td = @signup.user.phone
+      td
+        a.btn.btn-info.btn-sm href="tel://#{@signup.user.phone}"
+          i.fa.fa-mobile>
+          = @signup.user.phone
+        a.btn.btn-info.btn-sm.ml-3 href="sms://#{@signup.user.phone}"
+          i.fa.fa-sms>
+          | Fra deg
+        a.btn.btn-info.btn-sm.ml-3 href=sms_path(id: [@signup.user_id])
+          i.fa.fa-sms>
+          | Fra klubben
 
 .text-center.my-5
   a.btn.btn-success.btn-lg.ml-3 href=complete_signup_path(@signup.id) data-method=:patch

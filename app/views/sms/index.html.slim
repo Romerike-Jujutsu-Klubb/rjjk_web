@@ -4,7 +4,7 @@ h3 Sende SMS
   p Velg mottakere og skriv en melding.
   = bootstrap_form_with url: sms_path do |f|
     = f.select :id, @users.map{|u| [u.name, u.id]}, {label: "Mottakere #{@recipients.size if @recipients}", selected: @recipients}, class: :chosen, multiple: true
-    = f.text_field :text
+    = f.text_area :text, class: :expanding
 
     .float-right.mb-3
       = f.primary 'Send melding'
