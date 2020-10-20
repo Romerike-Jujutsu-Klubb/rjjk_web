@@ -275,7 +275,6 @@ GEM
     net-http-persistent (4.0.0)
       connection_pool (~> 2.2)
     netrc (0.11.0)
-    newrelic_rpm (6.13.1)
     nio4r (2.5.4)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
@@ -512,7 +511,6 @@ DEPENDENCIES
   mini_racer
   minitest-capybara
   mocha
-  newrelic_rpm
   nokogiri
   nokogiri-diff
   nprogress-rails
