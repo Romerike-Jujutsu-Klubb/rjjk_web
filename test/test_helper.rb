@@ -2,13 +2,10 @@
 
 Warning[:deprecated] = false
 
-# require 'coveralls'
-# Coveralls.wear!
-
-if defined?(Rake) && (RUBY_ENGINE != 'jruby' || org.jruby.RubyInstanceConfig.FULL_TRACE_ENABLED)
-  require 'simplecov'
-  SimpleCov.start('rails') { minimum_coverage 85 }
-end
+# if defined?(Rake) && (RUBY_ENGINE != 'jruby' || org.jruby.RubyInstanceConfig.FULL_TRACE_ENABLED)
+#   require 'simplecov'
+#   SimpleCov.start('rails') { minimum_coverage 85 }
+# end
 
 ENV['RAILS_ENV'] ||= 'test'
 ENV['CPAS_API_BASE_URL'] ||= 'https://example.com/sms'

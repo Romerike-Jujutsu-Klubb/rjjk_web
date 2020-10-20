@@ -98,7 +98,6 @@ group :test do
   # gem 'bullet' # Uncomment to hunt N+1 kind of problems
   gem 'capybara-screenshot-diff' # , path: '~/work/open-source/capybara-screenshot-diff'
   gem 'chunky_png'
-  # gem 'coveralls', require: false
   gem 'minitest-capybara'
   gem 'mocha', require: 'mocha/minitest'
   gem 'nokogiri-diff'
@@ -106,7 +105,7 @@ group :test do
   gem 'rubocop-rails'
   # gem 'rubycritic', require: false
   gem 'selenium-webdriver'
-  gem 'simplecov', require: false
+  # gem 'simplecov', require: false
   gem 'timecop'
   gem 'vcr'
   gem 'webmock'
