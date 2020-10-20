@@ -23,8 +23,8 @@ class Attendance < ApplicationRecord
 
   # Listed in display order
   CURRENT_STATES = {
-    Status::WILL_ATTEND => ['Kommer!', 'thumbs-up', 'success'],
-    Status::ATTENDED => ['Trener!', 'thumbs-up', 'success'],
+    Status::WILL_ATTEND => %w[Kommer! thumbs-up success],
+    Status::ATTENDED => %w[Trener! thumbs-up success],
     Status::INSTRUCTOR => %w[Instruere thumbs-up success],
     Status::HOLIDAY => %w[Bortreist hand-point-right warning],
     Status::SICK => %w[Sykdom plus danger],
@@ -32,11 +32,11 @@ class Attendance < ApplicationRecord
   }.freeze
 
   PAST_STATES = {
-    Status::ABSENT => %w[Forhindret thumbs-down info],
-    Status::ATTENDED => ['Trente!', 'thumbs-up', 'success'],
+    Status::ATTENDED => %w[Trente! thumbs-up success],
+    Status::INSTRUCTOR => %w[Instruerte! thumbs-up success],
     Status::HOLIDAY => %w[Bortreist hand-point-right warning],
-    Status::INSTRUCTOR => ['Instruerte!', 'thumbs-up', 'success'],
     Status::SICK => %w[Sykdom plus danger],
+    Status::ABSENT => %w[Forhindret thumbs-down info],
     Status::WILL_ATTEND => %w[Ubekreftet question warning],
   }.freeze
 

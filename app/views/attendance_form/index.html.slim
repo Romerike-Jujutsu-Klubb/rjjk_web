@@ -22,7 +22,7 @@ ul#tab.nav.nav-tabs role="tablist"
       - next_practice = group.next_practice
       - selected_practice = (@practice&.group_schedule&.group_id == group.id && @practice) || next_practice
       - signups = Signup.for_group(group).to_a.map(&:user)
-      - instructors = next_practice.group_semester&.group_instructors.to_a.map(&:member).map(&:user).uniq
+      - instructors = selected_practice.group_semester&.group_instructors.to_a.map(&:member).map(&:user).uniq
       - group_members = group.members.active(selected_practice.date).to_a.map(&:user)
       - group_members += Attendance.joins(:practice).after(2.months.ago) \
           .where(practices: {group_schedule_id: group.group_schedules.map(&:id)}) \
@@ -80,6 +80,8 @@ css:
   select ~ .status-badge {
       font-size:89.5%;
   }
+- states = (@practice.passed? ? Attendance::PAST_STATES : @practice.imminent? ? Attendance::CURRENT_STATES : Attendance::STATES)
+- attendance_state_text = states[Attendance::Status::ATTENDED][0]
 javascript:
   function updateBadges() {
     let closestCard = $(this).closest('.card');
@@ -98,8 +100,10 @@ javascript:
       })
       card.find('.card-body a[data-status]').each(function(i, button) {
         let btn_status = $(button).data('status');
+        let btn_text = $(button).text();
         if (#{{Attendance::PRESENCE_STATES}}.includes(btn_status)) {
           btn_status = '#{Attendance::Status::ATTENDED}';
+          btn_text = '#{attendance_state_text}';
         }
         const btn_color = $(button).attr('class').match(/btn-(.+?)\b/)[1];
         badge = card.find('.status-badge[data-status=' + btn_status + ']')[0]
@@ -107,8 +111,9 @@ javascript:
           badge = $(badge);
           badge.text(Number(badge.text()) + 1);
         } else {
-          let new_badge = $("<div class='status-badge badge ml-2 badge-" + btn_color + "' data-status=" + btn_status + ">1</div>");
+          let new_badge = $("<div class='status-badge badge ml-2 badge-" + btn_color + "' data-toggle='tooltip' data-status='" + btn_status + "' title='" + btn_text + "'>1</div>");
           card.find('.card-header').append(new_badge);
+          new_badge.tooltip();
         }
       })
     })
