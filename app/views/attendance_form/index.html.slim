@@ -81,7 +81,7 @@ css:
       font-size:89.5%;
   }
 - states = (@practice.passed? ? Attendance::PAST_STATES : @practice.imminent? ? Attendance::CURRENT_STATES : Attendance::STATES)
-- attendance_state_text = states[Attendance::Status::ATTENDED][0]
+- attendance_state_text = (states[Attendance::Status::ATTENDED] || states[Attendance::Status::WILL_ATTEND])[0]
 javascript:
   function updateBadges() {
     let closestCard = $(this).closest('.card');
