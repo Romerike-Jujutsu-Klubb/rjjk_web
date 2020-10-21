@@ -1,0 +1,4 @@
+<%= link_to attendance.status,
+            { controller: :attendances, action: :destroy, id: attendance.id },
+            class: attendance.status == Attendance::Status::ATTENDED ? nil : :'no-print',
+            style: 'text-decoration: none', method: :delete, remote: true %>

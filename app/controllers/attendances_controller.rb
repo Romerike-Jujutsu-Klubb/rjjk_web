@@ -81,7 +81,16 @@ class AttendancesController < ApplicationController
     @attendance = Attendance.find(params[:id])
     @attendance.destroy
     AttendanceNotificationJob.perform_later(@attendance.practice, @attendance.user, nil)
-    redirect_to(attendances_url)
+    if request.xhr?
+      flash.clear
+      render partial: 'attendance_form/attendance_create_link', locals: {
+        user_id: @attendance.user_id,
+        group_schedule_id: @attendance.practice.group_schedule_id,
+        date: @attendance.date,
+      }
+    else
+      redirect_to(attendances_url)
+    end
   end
 
   def report
@@ -181,6 +190,8 @@ class AttendancesController < ApplicationController
         render partial: 'plan_practice', locals: {
           gs: practice.group_schedule, year: year, week: week, attendance: @attendance
         }
+      elsif %r{oppm%C3%B8te/skjema}.match?(URI(request.referer).path)
+        render partial: 'attendance_form/attendance_delete_link', locals: { attendance: @attendance }
       else
         render partial: 'button', locals: { attendance: @attendance }
       end
