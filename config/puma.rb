@@ -11,4 +11,4 @@ workers ENV.fetch('WEB_CONCURRENCY', 2) if HOSTED
 preload_app!
 plugin :tmp_restart
 
-# on_worker_boot { ActiveRecord::Base.establish_connection }
+on_worker_boot { ActiveRecord::Base.establish_connection }
