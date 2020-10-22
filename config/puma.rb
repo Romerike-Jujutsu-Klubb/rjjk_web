@@ -7,8 +7,10 @@ threads min_threads_count, max_threads_count
 port ENV.fetch('PORT', 3000)
 environment ENV.fetch('RAILS_ENV', 'development')
 pidfile ENV.fetch('PIDFILE', 'tmp/pids/server.pid')
-workers ENV.fetch('WEB_CONCURRENCY', 2) if HOSTED
-preload_app!
+worker_count = Integer(ENV.fetch('WEB_CONCURRENCY', 2))
+workers worker_count if HOSTED
+preload_app! if worker_count > 1
 plugin :tmp_restart
-
-on_worker_boot { ActiveRecord::Base.establish_connection }
+if worker_count > 1
+  on_worker_boot { ActiveRecord::Base.establish_connection }
+end
