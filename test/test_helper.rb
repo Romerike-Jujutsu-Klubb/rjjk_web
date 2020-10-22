@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Warning[:deprecated] = false
+Warning[:deprecated] = true
 
 # if defined?(Rake) && (RUBY_ENGINE != 'jruby' || org.jruby.RubyInstanceConfig.FULL_TRACE_ENABLED)
 #   require 'simplecov'

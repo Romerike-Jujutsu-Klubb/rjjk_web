@@ -147,11 +147,11 @@ class MembersController < ApplicationController
   private
 
   def year_end(offset = 0)
-    Date.parse("#{(Date.current.year - offset)}-12-31").strftime('%Y-%m-%d')
+    Date.parse("#{Date.current.year - offset}-12-31").strftime('%Y-%m-%d')
   end
 
   def year_start(offset = 0)
-    Date.parse("#{(Date.current.year - offset)}-01-01").strftime('%Y-%m-%d')
+    Date.parse("#{Date.current.year - offset}-01-01").strftime('%Y-%m-%d')
   end
 
   def update_memberships

@@ -15,7 +15,6 @@ ruby File.read("#{__dir__}/.ruby-version")[5..]
 gem 'rails', '~>6.0.0'
 
 platform :ruby do
-  gem 'mini_racer'
   gem 'oily_png'
   gem 'pg'
 end
