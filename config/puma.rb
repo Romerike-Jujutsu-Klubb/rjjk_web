@@ -8,9 +8,9 @@ port ENV.fetch('PORT', 3000)
 environment ENV.fetch('RAILS_ENV', 'development')
 pidfile ENV.fetch('PIDFILE', 'tmp/pids/server.pid')
 worker_count = Integer(ENV.fetch('WEB_CONCURRENCY', 2))
-workers worker_count if HOSTED
-preload_app! if worker_count > 1
-plugin :tmp_restart
 if worker_count > 1
+  workers worker_count if HOSTED
+  preload_app!
   on_worker_boot { ActiveRecord::Base.establish_connection }
 end
+plugin :tmp_restart
