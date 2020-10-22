@@ -104,7 +104,7 @@ class Certificates < Prawn::Document
         bounding_box [org_right_center - org_name_width / 2, name_y - 4.5],
             width: org_name_width, height: 40 do
           font 'Helvetica'
-          text 'Scandinavian Budo Association', align: :center
+          text 'International Bujutsu University', align: :center
         end
 
         fill_color 'ffffff'
