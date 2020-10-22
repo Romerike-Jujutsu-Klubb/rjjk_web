@@ -6,7 +6,7 @@ class CpasTest < ActiveSupport::TestCase
   test 'send_sms' do
     stub_request(:post, 'https://example.com/sms/send/mt')
         .with(
-            body: { 'text' => 'Gratz!', 'to' => '5551234' },
+            body: { 'text' => 'Gratz!', 'id' => '92206046', 'to' => '5551234' },
             headers: {
               'Connection' => 'close',
               'Content-Type' => 'application/x-www-form-urlencoded',
