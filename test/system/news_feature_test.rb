@@ -44,6 +44,7 @@ class NewsFeatureTest < ApplicationSystemTestCase
     screenshot('form')
     fill_in 'news_item[title]', with: 'A new hope'
     select 'Kladd', from: 'news_item[publication_state]'
+    assert_css 'h3', text: 'A new hope (Kladd)'
     select_date(:news_item_publish_at, 15)
     select_date(:news_item_expire_at, 16)
     fill_in 'news_item_summary', with: 'A new hope is rising in the tortured galaxy.'
