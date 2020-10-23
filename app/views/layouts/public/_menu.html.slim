@@ -26,7 +26,6 @@ nav#navbar.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
     var prevScrollpos = window.pageYOffset;
     document.body.addEventListener('scroll', function() {
       var currentScrollPos = document.documentElement.scrollTop || document.body.scrollTop;
-      console.log("Scroll: " + currentScrollPos);
       if (prevScrollpos > currentScrollPos) {
         document.getElementById("navbar").style.opacity = "1"; // Try opacity 0.8
         document.getElementById("navbar").style.top = "0";
