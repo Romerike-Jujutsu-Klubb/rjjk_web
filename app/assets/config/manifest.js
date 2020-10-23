@@ -3,3 +3,4 @@
 //= link cloudinary.js
 //= link_directory ../stylesheets .css
 //= link simple_drilldown/application.css
+//= link manifest.json
