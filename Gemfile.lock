@@ -119,7 +119,7 @@ GEM
       coffee-rails (>= 3.2)
       railties (>= 3.0)
       sassc-rails (>= 2.1.2)
-    chunky_png (1.3.12)
+    chunky_png (1.3.13)
     cloudinary (1.18.1)
       aws_cf_signer
       rest-client
@@ -278,7 +278,6 @@ GEM
     nokogiri-diff (0.2.0)
       nokogiri (~> 1.5)
       tdiff (~> 0.3, >= 0.3.2)
-    nprogress-rails (0.2.0.2)
     ntlm-http (0.1.1)
     oauth2 (1.4.4)
       faraday (>= 0.8, < 2.0)
@@ -380,7 +379,7 @@ GEM
       rubocop-ast (>= 0.6.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 2.0)
-    rubocop-ast (1.0.0)
+    rubocop-ast (1.0.1)
       parser (>= 2.7.1.5)
     rubocop-performance (1.8.1)
       rubocop (>= 0.87.0)
@@ -509,7 +508,6 @@ DEPENDENCIES
   mocha
   nokogiri
   nokogiri-diff
-  nprogress-rails
   oauth2
   oily_png
   paper_trail

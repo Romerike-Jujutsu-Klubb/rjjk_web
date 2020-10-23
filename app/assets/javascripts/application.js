@@ -12,8 +12,6 @@
 //= require moment/locale/nb
 //= require pc-bootstrap4-datetimepicker/build/js/bootstrap-datetimepicker.min
 //= require bootstrap-datetimepicker-init
-//= require nprogress
-//= require nprogress-turbolinks
 //= require chosen-jquery
 //= require bootstrap_tabs_ios
 //= require remember_tab
@@ -30,8 +28,6 @@
 //= require preview
 //= require data-replace
 //= require bs-custom-file-input/dist/bs-custom-file-input
-
-NProgress.configure({showSpinner: false, ease: 'ease', speed: 500});
 
 $(function() {
   $('.chosen,.chosen-select').chosen();
