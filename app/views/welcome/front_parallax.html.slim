@@ -16,7 +16,7 @@
       h1 = fps.title
       h2 = fps.subtitle
       p
-        img src=image_url_with_cl(fps.image)
+        img src=image_url_with_cl(fps.image) title=fps.title alt=fps.title
         == textalize(fps.information_page.images).strip[3..-5]
       a.float-right.btn.btn-info href=information_page_path(fps.information_page) = fps.button_text.presence || fps.information_page.title
 
