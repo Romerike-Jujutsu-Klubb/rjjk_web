@@ -12,5 +12,8 @@ if worker_count > 1
   workers worker_count if HOSTED
   preload_app!
   on_worker_boot { ActiveRecord::Base.establish_connection }
+else
+  workers 0
+  prune_bundler
 end
 plugin :tmp_restart
