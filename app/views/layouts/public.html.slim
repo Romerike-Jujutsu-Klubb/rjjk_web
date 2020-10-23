@@ -22,7 +22,7 @@ html lang="nb"
 
     = stylesheet_link_tag 'public', media: 'all', 'data-turbolinks-track': 'reload'
     = csrf_meta_tags
-    = javascript_include_tag 'public', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'public', 'data-turbolinks-track': 'reload'
   body class=(:wide if @content_width)
     - if @layout_menu_title
       = render 'layouts/public/top_banner'
