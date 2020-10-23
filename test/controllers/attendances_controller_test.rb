@@ -64,8 +64,7 @@ class AttendancesControllerTest < ActionController::TestCase
   end
 
   def test_practice_details
-    practices(:voksne_2013_42_thursday).attendances.create! user_id: id(:sandra), status: Attendance::Status::ATTENDED
-    get :practice_details, params: {id: id(:voksne_2013_42_thursday)}
+    get :practice_details, params: {id: id(:panda_2010_42)}
     assert_response :success
   end
 
