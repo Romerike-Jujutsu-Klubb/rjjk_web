@@ -1,6 +1,6 @@
 = render layout: 'layouts/modal', locals: { id: :imageModal } do
   .text-center
-    a#modalFullscreen title="Full screen"
+    a#modalFullscreen href='#modalImage' title="Full screen"
       img#modalImage src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" style="max-width: 100%; max-height: 100%" alt='modal image'
 
 javascript:
@@ -9,6 +9,6 @@ javascript:
     $('#modalImage').attr('src', $(this).attr('src').replace("inline", "show"));
     $('#modalFullscreen').attr('href', $('#modalImage').attr('src'));
     $('#imageModal').modal().on('hidden.bs.modal', function(event) {
-      $('#modalFullscreen').attr('href', '#')
+      $('#modalFullscreen').attr('href', '#modalImage')
     });
   });
