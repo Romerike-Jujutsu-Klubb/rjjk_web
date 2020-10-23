@@ -7,7 +7,7 @@ threads min_threads_count, max_threads_count
 port ENV.fetch('PORT', 3000)
 environment ENV.fetch('RAILS_ENV', 'development')
 pidfile ENV.fetch('PIDFILE', 'tmp/pids/server.pid')
-worker_count = Integer(ENV.fetch('WEB_CONCURRENCY', 2))
+worker_count = ENV.fetch('WEB_CONCURRENCY', 2).to_i
 if worker_count > 1
   workers worker_count if HOSTED
   preload_app!
