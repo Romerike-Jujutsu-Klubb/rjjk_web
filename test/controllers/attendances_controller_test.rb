@@ -63,6 +63,12 @@ class AttendancesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_practice_details
+    practices(:voksne_2013_42_thursday).attendances.create! user_id: id(:sandra), status: Attendance::Status::ATTENDED
+    get :practice_details, params: {id: id(:voksne_2013_42_thursday)}
+    assert_response :success
+  end
+
   Attendance::Status.constants(false).map(&Attendance::Status.method(:const_get)).each do |status|
     test "should get review #{status}" do
       practice = practices(:voksne_2013_42_thursday)
