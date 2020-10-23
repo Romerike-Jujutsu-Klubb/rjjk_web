@@ -157,8 +157,8 @@ class GraduationsController < ApplicationController
         censor1: censor_1, censor2: censor_2, censor3: censor_3 }
     end
     filename = "Certificates_#{graduation.group.martial_art.name}_#{graduation.held_on}.pdf"
-    send_data Certificates.pdf(date, content), type: 'text/pdf',
-        filename: filename, disposition: 'attachment'
+    send_data Certificates.pdf(date, content), type: 'text/pdf', filename: filename,
+              disposition: 'attachment'
   end
 
   def censor_form

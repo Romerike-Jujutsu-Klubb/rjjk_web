@@ -16,7 +16,7 @@ class SkillCard
       create_stamp('watermark') do
         float do
           transparent(0.05) do
-            image "#{Rails.root}/app/views/graduations/logo_RJJK_notext.jpg",
+            image "#{Rails.root}/app/views/certificates/logo_RJJK_notext.jpg",
                 width: logo_width, position: :center, vposition: :center
           end
         end
@@ -32,7 +32,7 @@ class SkillCard
                 character_spacing: 2
           end
         end
-        image "#{Rails.root}/app/views/graduations/logo_RJJK_notext.jpg",
+        image "#{Rails.root}/app/views/certificates/logo_RJJK_notext.jpg",
             width: logo_width, position: :center, vposition: :center
       end
 

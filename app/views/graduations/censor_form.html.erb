@@ -1,6 +1,7 @@
 <h1 style="font-family:Arial, Helvetica, sans-serif">
   Graderingsskjema <%= @graduation.held_on %>
-  <%= @graduation.graduates.map {|g| g.rank.curriculum_group.name}.flatten.uniq %> (<%= @graduation.graduates.size %>
+  <%= @graduation.graduates.map { |g| g.rank.curriculum_group.name }.flatten.uniq %>
+  (<%= @graduation.graduates.size %>
   stk)
 </h1>
 
@@ -22,22 +23,22 @@
   <tbody>
   <% per_page = 7 %>
   <% @graduation.graduates.map(&:member).each_with_index do |member, i| %>
-      <tr <%= 'style="page-break-before: always"' if i % per_page == (per_page - 1) %> onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';" onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'">
-        <td><%= image_tag(url_for(controller: :members, action: :thumbnail, id: member.id, format: member.image.format), width: '120px') if member.image? %></td>
-        <td nowrap="true">
-          <b><%= h member.first_name %></b> <%= h member.last_name %>
-          <%= member.birthdate && "(#{member.age} år)" %>
-          <br/>
-          <% member_current_rank = member.current_rank(@graduation.martial_art, @graduation.held_on) %>
-          <%= member_current_rank && member_current_rank.colour || 'Ugradert' %>
-          i
-          <%= member.current_rank_age(@graduation.martial_art, @graduation.held_on) %>
-          <br/>
-          Treninger: <%= member.attendances_since_graduation(@graduation.held_on).count %>
-        </td>
-        <td width="45%" style="height: 8em">&nbsp;</td>
-        <td width="45%" style="height: 8em">&nbsp;</td>
-      </tr>
+    <tr <%= 'style="page-break-before: always"' if i % per_page == (per_page - 1) %> onmouseover="this.style.backgroundColor='#dddddd';" onmouseout="this.style.backgroundColor='#ffffff';" onclick="window.location = '<%=url_for(:controller => :members, :action => :edit, :id => member.id) %>'">
+      <td><%= image_tag(url_for(controller: :members, action: :thumbnail, id: member.id, format: member.image.format), width: '120px') if member.image? %></td>
+      <td nowrap="true">
+        <b><%= h member.first_name %></b> <%= h member.last_name %>
+        <%= member.birthdate && "(#{member.age} år)" %>
+        <br/>
+        <% member_current_rank = member.current_rank(@graduation.martial_art, @graduation.held_on) %>
+        <%= member_current_rank && member_current_rank.colour || 'Ugradert' %>
+        i
+        <%= member.current_rank_age(@graduation.martial_art, @graduation.held_on) %>
+        <br/>
+        Treninger: <%= member.attendances_since_graduation(@graduation.held_on).count %>
+      </td>
+      <td width="45%" style="height: 8em">&nbsp;</td>
+      <td width="45%" style="height: 8em">&nbsp;</td>
+    </tr>
   <% end %>
 
   </tbody>

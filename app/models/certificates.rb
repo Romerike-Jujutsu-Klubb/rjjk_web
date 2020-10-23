@@ -24,7 +24,7 @@ class Certificates < Prawn::Document
         case layout
         when 1
           rotate 0.5 do
-            image "#{Rails.root}/app/views/graduations/Sertifikat_Kei_Wa_Ryu.jpg",
+            image "#{Rails.root}/app/views/certificates/Sertifikat_Kei_Wa_Ryu.jpg",
                 at: [1, PAGE_HEIGHT - 4],
                 width: PAGE_WIDTH,
                 height: PAGE_HEIGHT
@@ -36,7 +36,7 @@ class Certificates < Prawn::Document
               logo_width
           fill_color '000000'
 
-          image "#{Rails.root}/app/views/graduations/logo_RJJK_notext.jpg",
+          image "#{Rails.root}/app/views/certificates/logo_RJJK_notext.jpg",
               at: [(PAGE_WIDTH - logo_width) / 2, PAGE_HEIGHT - 5],
               width: logo_width
           # Mask old labels
@@ -48,29 +48,29 @@ class Certificates < Prawn::Document
           fill_color '000000'
         when 2
           scale = -0.05
-          image "#{Rails.root}/app/views/graduations/Style_of_Phoenix_border_A4_Landscape.jpg",
+          image "#{Rails.root}/app/views/certificates/Style_of_Phoenix_border_A4_Landscape.jpg",
               at: [PAGE_WIDTH * (0 - scale) - 1, PAGE_HEIGHT * (1 + scale / 2) - 1],
               width: PAGE_WIDTH * (1 + scale),
               height: PAGE_HEIGHT * (1 + scale)
           logo_width = 85 * (1 + scale)
 
-          image "#{Rails.root}/app/views/graduations/logo_RJJK_notext.jpg",
+          image "#{Rails.root}/app/views/certificates/logo_RJJK_notext.jpg",
               at: [(PAGE_WIDTH - logo_width) / 2, PAGE_HEIGHT - 5],
               width: logo_width
         when 3
           scale = -0.025
           logo_width = 120
-          image "#{Rails.root}/app/views/graduations/logo_RJJK_notext.jpg",
+          image "#{Rails.root}/app/views/certificates/logo_RJJK_notext.jpg",
               at: [(PAGE_WIDTH - logo_width) / 2 - 2, PAGE_HEIGHT - 1],
               width: logo_width
-          image "#{Rails.root}/app/views/graduations/custome_rank_certificate.png",
+          image "#{Rails.root}/app/views/certificates/custome_rank_certificate.png",
               at: [0, PAGE_HEIGHT * (1 + scale) - 1],
               width: PAGE_WIDTH,
               height: PAGE_HEIGHT * (1 + scale)
           kanji_scale = 2.5
           kanji_width = 126 / kanji_scale
           kanji_height = 674 / kanji_scale
-          image "#{Rails.root}/app/views/graduations/KeiWaRyuKanji.png",
+          image "#{Rails.root}/app/views/certificates/KeiWaRyuKanji.png",
               at: [org_right_center - kanji_width / 2, (PAGE_HEIGHT * 0.4) + kanji_height / 2],
               width: kanji_width, height: kanji_height
         end
@@ -104,7 +104,7 @@ class Certificates < Prawn::Document
         bounding_box [org_right_center - org_name_width / 2, name_y - 4.5],
             width: org_name_width, height: 40 do
           font 'Helvetica'
-          text 'Scandinavian Budo Association', align: :center
+          text 'International Bujutsu University', align: :center
         end
 
         fill_color 'ffffff'
