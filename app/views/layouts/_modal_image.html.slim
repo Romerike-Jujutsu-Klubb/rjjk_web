@@ -8,5 +8,7 @@ javascript:
     $('#imageModal .modal-title').html($(this).attr('title'));
     $('#modalImage').attr('src', $(this).attr('src').replace("inline", "show"));
     $('#modalFullscreen').attr('href', $('#modalImage').attr('src'));
-    $('#imageModal').modal();
+    $('#imageModal').modal().on('hidden.bs.modal', function(event) {
+      $('#modalFullscreen').attr('href', '#')
+    });
   });
