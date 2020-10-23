@@ -1,3 +1,4 @@
 doc
+public/assets/manifest*.json*
 test
 vendor/bundle/ruby/2.7.0/gems/google-api-client-0.46.2/generated/google/apis/compute_alpha
