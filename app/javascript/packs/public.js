@@ -1,6 +1,7 @@
-//= require serviceworker-companion
-//= require @fortawesome/fontawesome-free/js/all.js
-//= require @fortawesome/fontawesome-free/js/v4-shims
-//= require jquery/dist/jquery
-//= require bootstrap/js/dist/util
-//= require bootstrap/js/dist/modal
+console.log('Hello World from PUBLIC Webpacker')
+
+import "serviceworker-companion"
+import "@fortawesome/fontawesome-free/js/all.js"
+import "@fortawesome/fontawesome-free/js/v4-shims"
+import "bootstrap/js/dist/util"
+import "bootstrap/js/dist/modal"
