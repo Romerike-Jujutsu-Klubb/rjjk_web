@@ -3,18 +3,19 @@ html lang="nb"
   head
     title #{"#{Rails.env.upcase} " unless Rails.env.production?}#{ @layout_title || 'Romerike Jujutsu Klubb'}
     meta http-equiv="Content-Type" content="text/html;charset=utf-8"
-    meta name="description" content="Martial arts club with over 40 years of experience in Jujutsu, Kung Fu, and Aikijutsu."
-    meta name="keywords" content="jujutsu aikijutsu jujitsu jiu jitsu strømmen lørenskog skedsmo lillestrøm romerike kampsport kampkunst selvforsvar trygghet trening trim"
-    meta name="author" content="author"
-    meta name="theme-color" content="#000000"
-    meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"
     meta http-equiv="x-ua-compatible" content="ie=edge"
     /!--[if IE]
       meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"
-    link rel="manifest" href='/manifest.json'
-    link rel="icon" sizes="192x192" href="/favicon.ico"
+    meta name="apple-mobile-web-app-capable" content="yes"
+    meta name="author" content="author"
+    meta name="description" content="Martial arts club with over 40 years of experience in Jujutsu, Kung Fu, and Aikijutsu."
+    meta name="keywords" content="jujutsu aikijutsu jujitsu jiu jitsu strømmen lørenskog skedsmo lillestrøm romerike kampsport kampkunst selvforsvar trygghet trening trim"
+    meta name="theme-color" content="#000000"
+    meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"
     link rel="apple-touch-icon" href="/apple-touch-icon.png"
     link rel="apple-touch-startup-image" href="/rjjk_logo_&_txt_320.png"
+    link rel="icon" sizes="192x192" href="/favicon.ico"
+    link rel="manifest" href='/manifest.json'
     script type='application/ld+json' {"@context":"https:\/\/schema.org","@type":"WebSite","@id":"#website","url":"https:\/\/www.jujutsu.no\/","name":"Romerike Jujutsu Klubb","potentialAction":{"@type":"SearchAction","target":"https:\/\/www.jujutsu.no\/search?q={search_term_string}","query-input":"required name=search_term_string"}}
 
     - if Rails.env.production?
