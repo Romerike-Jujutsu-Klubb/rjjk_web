@@ -15,7 +15,7 @@ nav#navbar.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
         li.nav-item
           a.nav-link.btn.btn-warning href=signup_guide_root_path Prøv oss!
       li.nav-item
-        a.nav-link href=(current_user ? root_path : with_detour(login_path)) Medlemssider#{" (#{current_user&.name})" if current_user}
+        a.nav-link href=(current_user ? root_path : with_detour(login_path)) Medlemssider
     form.form-inline.my-2.my-lg-0 action=search_path
       input.form-control.mr-sm-2 type="search" name=:q placeholder=t(:search) aria-label=t(:search)
       button.btn.btn-outline-success.my-2.my-sm-0 type="submit" = t(:search)
