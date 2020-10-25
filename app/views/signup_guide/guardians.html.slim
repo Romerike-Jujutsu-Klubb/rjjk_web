@@ -1,7 +1,7 @@
 .card
   h5.card-header Siden #{@user.first_name} er #{@user.age} år trenger vi en <b>foresatt</b>.
   .card-body
-    = bootstrap_form_for @user, url: signup_guide_contact_info_path do |f|
+    = bootstrap_form_for @user, url: signup_guide_guardians_path do |f|
       = f.hidden_field :name
       = f.hidden_field :birthdate
 
@@ -19,8 +19,12 @@
           .col = gf.text_field :address
           .col = gf.text_field :postal_code
 
-      .float-right = f.primary
-        ' Neste
-        i.fa.fa-angle-double-right
+      .float-right
+        button.mr-3 name="back" type="submit" class="btn btn-secondary" onclick="$('input').attr('required', null)"
+          i.fa.fa-chevron-left>
+          | Tilbake
+        = f.primary
+          ' Neste
+          i.fa.fa-angle-double-right
 javascript:
   $('#user_guardian_1_attributes_name').focus();

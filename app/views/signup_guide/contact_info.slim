@@ -1,0 +1,49 @@
+.card
+  h5.card-header Kontaktinfo for #{@user.age < 18 ? @user.first_name : @user.name}
+  .card-body
+    - if @user.guardian_1 && @user.age >= 13
+      p For medlemmer over 13 år anbefaler vi at de har egen kontaktinfo.
+    = bootstrap_form_for @user, url: signup_guide_contact_info_path do |f|
+      = f.hidden_field :name
+      = f.hidden_field :birthdate
+      = f.hidden_field :male
+      .row
+        .col = f.text_field :email
+        .col = f.text_field :phone
+        javascript:
+          let $inputs = $('input#user_email,input#user_phone');
+          console.log("inputs: " + $inputs.length);
+          $inputs.closest('form').on('submit', function() {
+            console.log('submiting');
+            $inputs.not(this).prop('required', !$(this).val().length);
+          });
+          $inputs.on('input', function() {
+            console.log('inputing');
+            $inputs.not(this).prop('required', !$(this).val().length);
+          });
+      .row
+        .col = f.text_field :address
+        .col = f.text_field :postal_code
+
+      = f.fields_for :guardian_1 do |gf|
+        = gf.hidden_field :name
+        = gf.hidden_field :birthdate
+        = gf.hidden_field :male
+        = gf.hidden_field :email
+        = gf.hidden_field :phone
+        = gf.hidden_field :address
+        = gf.hidden_field :postal_code
+
+      button.btn.btn-primary.float-right name="next" type="submit"
+        ' Neste
+        i.fa.fa-angle-double-right
+      button.btn.btn-secondary.mr-3.float-right name="back" type="submit"
+        i.fa.fa-chevron-left>
+        | Tilbake
+javascript:
+  const $invalid_input = $('input.is-invalid')[0];
+  if ($invalid_input) {
+    $invalid_input.select().focus();
+  } else {
+    $('#user_email').focus();
+  }

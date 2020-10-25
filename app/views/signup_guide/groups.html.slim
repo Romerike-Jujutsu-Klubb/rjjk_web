@@ -1,17 +1,18 @@
 .card
   h5.card-header Treningsgrupper for #{@user.age < 18 ? @user.first_name : @user.name}
   .card-body
-    - if @groups.size == 0
-      p Vi har ingen grupper i #{@user.first_name} sin aldergruppe.
-    - elsif @groups.size == 1
-      p #{@user.first_name} vil bli medlt inn i gruppen <b>#{@groups.first.name}</b>.
-    - elsif @user.guardian_1
-      p Hvilke grupper skal #{@user.first_name} meldes inn i?
-        Hvis du er usikker kan du bare la forslaget stå.  Dette kan endres senere.
-    - else
-      p Hvilke grupper vil du starte i?  Dette kan endres senere.
+    p
+      - if @groups.size == 0
+        ' Vi har ingen grupper i #{@user.first_name} sin aldergruppe.
+      - elsif @groups.size == 1
+        ' #{@user.first_name} vil bli medlt inn i gruppen <b>#{@groups.first.name}</b>.
+      - elsif @user.guardian_1
+        ' Hvilke grupper skal #{@user.first_name} meldes inn i?
+      - else
+        ' Hvilke grupper vil du starte i?
+      | Hvis du er usikker kan du bare la forslaget stå.  Dette kan endres senere.
 
-    = bootstrap_form_for @user, url: signup_guide_complete_path do |f|
+    = bootstrap_form_for @user, url: signup_guide_groups_path do |f|
       = f.hidden_field :id
       = f.hidden_field :name
       = f.hidden_field :birthdate
@@ -34,8 +35,12 @@
       = f.collection_check_boxes(:group_ids, @groups, :id, :extended_label) do |group|
         = group.label { group.check_box }
 
-      .float-right = f.primary
-        ' Meld inn
-        i.fa.fa-thumbs-up
+      .float-right
+        button.mr-3 name="back" type="submit" class="btn btn-secondary"
+          i.fa.fa-chevron-left>
+          | Tilbake
+        button name="submit" type="submit" class="btn btn-primary"
+          ' Meld inn
+          i.fa.fa-thumbs-up
 javascript:
   $('#user_email').focus();

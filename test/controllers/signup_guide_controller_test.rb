@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class SignupControllerTest < ActionDispatch::IntegrationTest
+class SignupGuideControllerTest < ActionDispatch::IntegrationTest
   test 'should get index' do
     get signup_guide_root_url
     assert_response :success
@@ -10,7 +10,7 @@ class SignupControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get contact_info' do
     post signup_guide_contact_info_url, params: { user: { birthdate: '2004-06-03' } }
-    assert_response :success
+    assert_redirected_to signup_guide_guardians_path
   end
 
   test 'should get guardians' do

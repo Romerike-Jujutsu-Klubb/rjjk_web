@@ -16,7 +16,7 @@ class UsersControllerTest < ActionController::TestCase
         first_name: 'Uwe',
         last_name: 'Seeler',
         email: 'uwe@seeler.de',
-        phone: '3178',
+        phone: '31783178',
       } }
     end
     assert_redirected_to user_path(User.last)

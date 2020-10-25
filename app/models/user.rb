@@ -27,31 +27,31 @@ class User < ApplicationRecord
 
   has_one :card_key, dependent: :nullify
   has_one :last_membership, -> { order(joined_on: :desc, left_on: :desc) }, inverse_of: :user,
-            class_name: 'Member'
+          class_name: 'Member'
   has_one :member, -> { where(left_on: nil).order(joined_on: :desc) }, inverse_of: :user,
-      dependent: :restrict_with_exception
+          dependent: :restrict_with_exception
   has_one :signup, -> { order(created_at: :desc) }, inverse_of: :user
 
   has_many :attendances, dependent: :destroy
   has_many :contactees, dependent: :nullify, class_name: 'User', foreign_key: :contact_user_id,
-      inverse_of: :contact_user
+           inverse_of: :contact_user
   has_many :embus, dependent: :destroy
   has_many :event_invitees, dependent: :restrict_with_error
   has_many :group_memberships, dependent: :destroy
   has_many :images, dependent: :destroy
   has_many :memberships, dependent: :restrict_with_error,
-      class_name: 'Member', # TODO(uwe): Remove line after rename Member => Membership
-      inverse_of: :user
+           class_name: 'Member', # TODO(uwe): Remove line after rename Member => Membership
+           inverse_of: :user
   has_many :news_item_likes, dependent: :destroy
   has_many :news_items, dependent: :destroy, inverse_of: :creator, foreign_key: :created_by
   has_many :payees, dependent: :nullify, class_name: 'User', foreign_key: :billing_user_id,
-      inverse_of: :billing_user
+           inverse_of: :billing_user
   has_many :primary_wards, dependent: :nullify, class_name: 'User', foreign_key: :guardian_1_id,
-      inverse_of: :guardian_1
+           inverse_of: :guardian_1
   has_many :recent_attendances, -> { merge(Attendance.from_date(92.days.ago).to_date(31.days.from_now)) },
       class_name: :Attendance, inverse_of: :user
   has_many :secondary_wards, dependent: :nullify, class_name: 'User', foreign_key: :guardian_2_id,
-      inverse_of: :guardian_2
+           inverse_of: :guardian_2
   has_many :signatures, dependent: :destroy
   has_many :signups, dependent: :destroy
   has_many :user_messages, dependent: :destroy
@@ -88,7 +88,9 @@ class User < ApplicationRecord
   after_save { @password_needs_confirmation = false }
   after_validation :crypt_password
 
-  validates :birthdate, presence: true, if: -> { member && member.left_on.nil? }
+  validates :birthdate,
+      presence: { if: -> { member && member.left_on.nil? } },
+      inclusion: { in: (Date.new(1920, 1, 1)..4.years.ago), if: -> { new_record? }, allow_blank: true }
   validates :male, inclusion: { in: [true, false] }, if: -> { signups.any? || member&.left_on&.nil? }
   validates :email,
       format: { with: EMAIL_REGEXP, allow_nil: true },
@@ -96,11 +98,11 @@ class User < ApplicationRecord
   # validates :guardian_1_id, presence: { if: -> {age && age < 18} }
   validates :login, length: { within: 3..64 }, uniqueness: { case_sensitive: false }, allow_nil: true
   validates :password, presence: { if: :validate_password? },
-      confirmation: { if: :validate_password? },
-      length: { within: 5..40, if: :validate_password? }
-  validates :phone, uniqueness: { allow_nil: true }, length: { minimum: 4, allow_nil: true }
+            confirmation: { if: :validate_password? },
+            length: { within: 5..40, if: :validate_password? }
+  validates :phone, uniqueness: { allow_nil: true }, length: { minimum: 8, allow_nil: true }
   # presence: { unless: ->{email || member} } # TODO(uwe): Activate this?  Ensure contact method!
-  validates :postal_code, length: { is: 4, allow_blank: true }
+  validates :postal_code, length: { within: 4..4, allow_blank: true }
 
   validate do
     if will_save_change_to_role? && role.present? && !current_user&.admin?
@@ -225,6 +227,23 @@ class User < ApplicationRecord
 
   def to_s
     label
+  end
+
+  def as_json(options = {})
+    options = options.dup
+    includes = options[:include]
+    case includes
+    when Hash
+      group_ids_included = includes.delete(:group_ids)
+    when :group_ids
+      group_ids_included = options.delete(:include)
+    end
+
+    json_hash = super.as_json(options)
+
+    json_hash['group_ids'] = group_ids if group_ids_included
+
+    json_hash # don't forget to return this at the end
   end
 
   def to_vcard

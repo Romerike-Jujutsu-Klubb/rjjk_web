@@ -46,6 +46,7 @@ class EventRegistrationsTest < ApplicationSystemTestCase
     click_on 'Registrer'
     assert_selector 'h1', text: 'Påmelding til ARRANGEMENTET'
     assert_selector '#event_invitee_user_attributes_email + .invalid-feedback', text: 'er ugyldig'
-    screenshot :error_message
+    assert_selector '#event_invitee_user_attributes_phone + .invalid-feedback', text: 'er for kort (minimum 8 tegn)'
+    screenshot :error_message, color_distance_limit: 18
   end
 end

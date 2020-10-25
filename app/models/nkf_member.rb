@@ -307,7 +307,7 @@ class NkfMember < ApplicationRecord
           guardian_2.attributes = guardian_2_attributes
           if guardian_2.contact_info?
             logger.info 'Create new guardian_2 user' if guardian_2.new_record?
-            guardian_2.save!(guardian_2_attributes)
+            guardian_2.save!(**guardian_2_attributes)
             user.guardian_2 = guardian_2
           else
             logger.info 'Ignoring guardian_2 user without contact information.'

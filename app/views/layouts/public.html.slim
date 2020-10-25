@@ -31,9 +31,9 @@ html lang="nb"
       = render 'layouts/public/menu'
     = yield :modals
     .clearfix class=('container-md pt-4 mb-3' unless @content_width) style="min-height:35vh"
-      - if flash.notice
+      - if flash.notice.present?
         .alert.alert-info = flash.notice
-      - if flash.alert
+      - if flash.alert.present?
         .alert.alert-warning = flash.alert
       = yield
     - unless @layout_no_footer

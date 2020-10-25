@@ -7,7 +7,7 @@ p Før du bestemmer deg for om du vil trene med oss har du 2 uker uforpliktende 
 .card
   h5.card-header Først trenger vi å vi hvem som skal meldes inn.
   .card-body
-    = bootstrap_form_for @user, url: signup_guide_contact_info_path do |f|
+    = bootstrap_form_for @user, url: signup_guide_basics_path do |f|
       = f.text_field :name, required: true
       .row
         .col = f.date_field :birthdate, required: true
@@ -20,3 +20,4 @@ p Før du bestemmer deg for om du vil trene med oss har du 2 uker uforpliktende 
       .float-right = f.primary
         ' Neste
         i.fa.fa-angle-double-right
+javascript: $('#user_name').focus()
