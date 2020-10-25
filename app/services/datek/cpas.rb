@@ -14,6 +14,7 @@ module Datek
     end
 
     def self.send_sms(to:, text:, from:)
+      to = '92206046' unless Rails.env.production?
       ctx = OpenSSL::SSL::SSLContext.new
       ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE
       request = HTTP.headers('content_type' => 'application/x-www-form-urlencoded')

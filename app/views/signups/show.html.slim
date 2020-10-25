@@ -35,7 +35,7 @@ table.table
         a.btn.btn-info.btn-sm.ml-3 href="sms://#{@signup.user.phone}"
           i.fa.fa-sms>
           | Fra deg
-        a.btn.btn-info.btn-sm.ml-3 href=sms_path(id: [@signup.user_id])
+        a.btn.btn-info.btn-sm.ml-3 href=with_detour(sms_path(id: [@signup.user_id]))
           i.fa.fa-sms>
           | Fra klubben
 
