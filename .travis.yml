@@ -18,6 +18,7 @@ before_install:
   - unzip chromedriver_linux64.zip
   - rm chromedriver_linux64.zip
   - mv chromedriver /home/travis/bin/
+  - nvm install 10
 
 install:
   - bundle config set deployment 'true'
