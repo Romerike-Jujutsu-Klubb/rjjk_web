@@ -5,7 +5,7 @@ class InstructionMailer < ApplicationMailer
 
   def missing_instructors(missing_chief_instructions, missing_instructions)
     @chief_semesters = missing_chief_instructions
-    @semesters = missing_instructions.group_by(&:group_semester)
+    @semesters = missing_instructions.group_by { |i| i.group_semester.semester }
     @title = 'Treningsgrupper som mangler instruktør'
     mail subject: @title
   end

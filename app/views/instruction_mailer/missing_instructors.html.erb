@@ -1,57 +1,57 @@
 <% if @chief_semesters.any? %>
-    <h1>Grupper som mangler hovedinstruktør</h1>
+  <h1>Grupper som mangler hovedinstruktør</h1>
 
-    <% @chief_semesters.each do |gs| %>
-        <h3>
-          <% if gs.semester.start_on <= Date.current %>
-              Dette semesteret
-          <% else %>
-              Neste semester
-          <% end %>
-          (<%= gs.semester.name %>)
-        </h3>
+  <% @chief_semesters.each do |gs| %>
+    <h3>
+      <% if gs.semester.start_on <= Date.current %>
+        Dette semesteret
+      <% else %>
+        Neste semester
+      <% end %>
+      (<%= gs.semester.name %>)
+    </h3>
 
-        <table>
-          <tr>
-            <th>Gruppe</th>
-          </tr>
-          <tr>
-            <td>
-              <%= gs.group.name %>
-              <%= link_to gs.group.name, :only_path => false,
+    <table>
+      <tr>
+        <th>Gruppe</th>
+      </tr>
+      <tr>
+        <td>
+          <%= gs.group.name %>
+          <%= link_to gs.group.name, :only_path => false,
                       :controller => :group_semesters,
                       :action => :edit, :id => gs.id %>
-            </td>
-          </tr>
-        </table>
-    <% end %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
 <% end %>
 
 <% if @semesters.any? %>
-    <h1>Grupper som mangler instruktør</h1>
+  <h1>Grupper som mangler instruktør</h1>
 
-    <% @semesters.each do |gs, instructions| %>
-        <h3>
-          <% if gs.semester.start_on <= Date.current %>
-              Dette semesteret
-          <% else %>
-              Neste semester
-          <% end %>
-          (<%= gs.semester.name %>)
-        </h3>
+  <% @semesters.each do |semester, instructions| %>
+    <h3>
+      <% if semester.start_on <= Date.current %>
+        Dette semesteret
+      <% else %>
+        Neste semester
+      <% end %>
+      (<%= semester.name %>)
+    </h3>
 
-        <table>
-          <tr>
-            <th>Gruppe</th>
-            <th>Dag</th>
-          </tr>
-          <% instructions.each do |gi| %>
-              <tr>
-                <td><%= link_to gi.group_schedule.group.name, only_path: false, controller: :group_instructors,
-                    action: :new, group_instructor: gi.attributes.except('id').select { |k, v| v } %></td>
-                <td><%= day_name gi.group_schedule.weekday %></td>
-              </tr>
-          <% end %>
-        </table>
-    <% end %>
+    <table>
+      <tr>
+        <th>Gruppe</th>
+        <th>Dag</th>
+      </tr>
+      <% instructions.each do |gi| %>
+        <tr>
+          <td><%= link_to gi.group_schedule.group.name, only_path: false, controller: :group_instructors,
+                          action: :new, group_instructor: gi.attributes.except('id').select { |k, v| v } %></td>
+          <td><%= day_name gi.group_schedule.weekday %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
 <% end %>

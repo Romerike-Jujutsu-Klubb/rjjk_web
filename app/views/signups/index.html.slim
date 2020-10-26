@@ -16,5 +16,5 @@ table.table data-record-path=signups_path
       tr data-record-id=signup.id
         td = signup.created_at.to_date
         td = signup.created_at.strftime '%R'
-        td = signup.user
-        td = signup.nkf_member_trial
+        td = link_to(signup.user,signup.user)
+        td = link_to(signup.nkf_member_trial,signup.nkf_member_trial)
