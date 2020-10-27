@@ -22,8 +22,8 @@ table.table class=('table-sm' if @signups.size > 12) data-record-path=signups_pa
         td = link_to(signup.nkf_member_trial,signup.nkf_member_trial)
         td.text-right
           a.btn.btn-info.btn-sm href=signup_path(signup) data-toggle=:tooltip title="Detaljer"
-            i.fa.fa-info
-          a.btn.btn-success.btn-sm.ml-2 href=complete_signup_path(signup) data-toggle=:tooltip title="Godkjenn medlem, kontrakt mottatt." data-confirm="Har du mottatt kontrakt for #{signup.user.name}?"
-            i.fa.fa-check
+            i.fa.fa-info.fa-fw
+          a.btn.btn-success.btn-sm.ml-2 href=complete_signup_path(signup) data-toggle=:tooltip title="Godkjenn #{signup.user.name}, kontrakt mottatt." data-confirm="Har du mottatt kontrakt for #{signup.user.name}?"
+            i.fa.fa-check.fa-fw
           a.btn.btn-danger.btn-sm.ml-2 href=terminate_signup_path(signup) data-toggle=:tooltip title="Avslutt prøvemedlemskap for #{signup.user.name}" data-confirm="Er du helt sikker på at du vil avslutte prøvemedlemskapet til #{signup.user.name}?"
-            i.fa.fa-trash
+            i.fa.fa-trash.fa-fw
