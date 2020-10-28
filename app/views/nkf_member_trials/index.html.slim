@@ -1,7 +1,7 @@
 - @content_width = 1024
 h1 Folk i prøvetid (#{@nkf_member_trials.size})
 
-table.table
+table.table class=('table-sm' if @nkf_member_trials.size > 12)
   thead
     tr
       th Navn

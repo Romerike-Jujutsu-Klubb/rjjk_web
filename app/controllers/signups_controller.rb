@@ -91,6 +91,7 @@ class SignupsController < ApplicationController
         nkf_agent.submit(form)
         NkfImportTrialMembersJob.perform_later
       end
+      @signup.nkf_member_trial.destroy!
       @signup.destroy!
     end
     redirect_to signups_path, notice: 'Prøvemedlemmet er slettet.'
