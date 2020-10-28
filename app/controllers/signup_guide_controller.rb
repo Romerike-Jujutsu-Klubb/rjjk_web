@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SignupGuideController < ApplicationController
-  # FIXME(uwe): Bruke egen layout uten distraherende elementer?
+  include NkfForm
 
   layout PUBLIC_LAYOUT
 
@@ -93,12 +93,11 @@ class SignupGuideController < ApplicationController
       else
         user = User.create! params[:user]
       end
-      # user.group_ids = group_ids
-      # user.save!
 
-      # agent = NkfAgent.new(:signup)
-      # trial_form_page = agent.new_trial_form
-      # trial_form = trial_form_page.form('ks_bli_medlem')
+      agent = NkfAgent.new(:signup)
+      trial_form_page = agent.new_trial_form
+      submit_form(trial_form_page, 'ks_bli_medlem', mapped_changes, :new_trial)
+
       # trial_form.frm_29_v03 = user.first_name
       # trial_form.frm_29_v04 = user.last_name
       # trial_form.frm_29_v07 = user.postal_code
@@ -109,10 +108,11 @@ class SignupGuideController < ApplicationController
       # trial_form['frm_29_v16'] = 524 # Jujutsu (Ingen stilartstilknytning)
       # trial_form['p_ks_bli_medlem_action'] = 'OK'
       # reg_response = agent.submit(trial_form)
-      # logger.info reg_response.inspect
-      # logger.info Nokogiri::XML(reg_response.body.force_encoding('ISO-8859-1').encode('UTF-8'),
-      # &:noblanks)
-      #     .to_s
+
+      logger.info reg_response.inspect
+      response_doc =
+          Nokogiri::XML(reg_response.body.force_encoding('ISO-8859-1').encode('UTF-8'), &:noblanks)
+      logger.info response_doc.to_s
 
       @signup = Signup.create!(user: user)
 

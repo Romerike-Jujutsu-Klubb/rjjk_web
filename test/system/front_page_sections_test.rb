@@ -10,7 +10,7 @@ class FrontPageSectionsTest < ApplicationSystemTestCase
 
   test 'visiting the index' do
     visit front_page_sections_url
-    assert_selector 'h1', text: 'Seksjoner på forsiden'
+    assert_selector 'h1', text: 'Seksjoner på Forsiden'
   end
 
   test 'creating a front page section' do

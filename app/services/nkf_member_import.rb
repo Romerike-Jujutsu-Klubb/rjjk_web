@@ -106,7 +106,7 @@ class NkfMemberImport
     import_row_for_member_id << waiting_kid
 
     details_page.form('ks_medlprofil') do |form|
-      height = form[NkfMember::FIELD_MAP[:hoyde][:form_field].to_s]
+      height = form[NkfMember::FIELD_MAP[:hoyde][:form_field][:member].to_s]
       import_row_for_member_id << height
     end
   end

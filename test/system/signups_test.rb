@@ -22,7 +22,7 @@ class SignupsTest < ApplicationSystemTestCase
 
   test 'updating a Signup' do
     visit signups_url
-    first('tbody tr').click
+    first('tbody tr').click x: 1, y: 1
     click_on 'Endre'
 
     select_from_chosen 'Hans Eriksen', from: :signup_nkf_member_trial_id
@@ -34,7 +34,7 @@ class SignupsTest < ApplicationSystemTestCase
 
   test 'destroying a Signup' do
     visit signups_url
-    first('tbody tr').click
+    first('tbody tr').click x: 1, y: 1
     click_on 'Endre'
     page.accept_confirm do
       click_on 'Slett'
