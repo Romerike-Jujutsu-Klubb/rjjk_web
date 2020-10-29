@@ -11,12 +11,12 @@ module NkfAttributeConversion
     betalt_t_o_m__dato: {},
     created_at: {},
     epost: { map_to: { user: :contact_email },
-      form_field: { member: :frm_48_v10, new_trial: :frm_29_v10 } },
+             form_field: { member: :frm_48_v10, new_trial: :frm_29_v10 } },
     epost_faktura: { map_to: { billing: :email }, form_field: { member: :frm_48_v22 } },
     etternavn: { map_to: { user: :last_name },
-      form_field: { member: :frm_48_v04, new_trial: :frm_29_v04 } },
+                 form_field: { member: :frm_48_v04, new_trial: :frm_29_v04 } },
     fodselsdato: { map_to: { user: :birthdate },
-      form_field: { member: :frm_48_v08, new_trial: :frm_29_v08 } },
+                   form_field: { member: :frm_48_v08, new_trial: :frm_29_v08 } },
     foresatte: { map_to: { user: :guardian_1_or_billing_name }, form_field: { member: :frm_48_v23 } },
     foresatte_epost: { map_to: { guardian_1: :email }, form_field: { member: :frm_48_v73 } },
     foresatte_mobil: { map_to: { guardian_1: :phone }, form_field: { member: :frm_48_v74 } },
@@ -25,7 +25,7 @@ module NkfAttributeConversion
     fornavn: { map_to: { user: :first_name },
                form_field: { member: :frm_48_v03, new_trial: :frm_29_v03, trial: :frm_28_v08 } },
     # 524 : Jujutsu (Ingen stilartstilknytning)
-    gren_stilart_avd_parti___gren_stilart_avd_parti: {form_field: {new_trial: :frm_29_v16}},
+    gren_stilart_avd_parti___gren_stilart_avd_parti: { form_field: { new_trial: :frm_29_v16 } },
     hovedmedlem_id: {},
     hovedmedlem_navn: {},
     hoyde: { map_to: { user: :height }, form_field: { member: :frm_48_v13, new_trial: :frm_29_v13 } },
@@ -33,7 +33,8 @@ module NkfAttributeConversion
     innmeldtarsak: {},
     innmeldtdato: { map_to: { membership: :joined_on }, form_field: { member: :frm_48_v45 } },
     kjonn: { map_to: { user: :male },
-      form_field: { member: :frm_48_v112, new_trial: :frm_29_v11 }, values: { true: 'M', false: 'K' } },
+             form_field: { member: :frm_48_v112, new_trial: :frm_29_v11 },
+             values: { true => 'M', false => 'K' } },
     klubb: {},
     klubb_id: {},
     konkurranseomrade_id: {},
@@ -48,7 +49,8 @@ module NkfAttributeConversion
     medlemsstatus: {}, # FIXME(uwe): Should be mapped: passive_from+left_on => 'A', 'P'
     member_id: {},
     mobil: { map_to: { user: :phone }, form_field: { member: :frm_48_v20 } },
-    postnr: { map_to: { user: :postal_code }, form_field: { member: :frm_48_v07, new_trial: :frm_29_v07 } },
+    postnr: { map_to: { user: :postal_code },
+              form_field: { member: :frm_48_v07, new_trial: :frm_29_v07 } },
     rabatt: { map_to: { membership: :discount }, form_field: { member: :frm_48_v38 } },
     sist_betalt_dato: {},
     sted: {},
@@ -61,7 +63,7 @@ module NkfAttributeConversion
     yrke: {},
   }.freeze
 
-  MAPPED_FIELDS = FIELD_MAP.select{|nkf_attr, mapping| mapping[:map_to]}
+  MAPPED_FIELDS = FIELD_MAP.select { |_nkf_attr, mapping| mapping[:map_to] }
 
   def mapping_attributes
     MAPPED_FIELDS.each(&method(:rjjk_attribute)).compact

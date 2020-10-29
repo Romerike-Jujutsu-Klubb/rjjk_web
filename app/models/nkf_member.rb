@@ -277,7 +277,4 @@ class NkfMember < ApplicationRecord
   def to_s
     "#{fornavn} #{etternavn}"
   end
-
-  private
-
 end
