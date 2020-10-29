@@ -6,36 +6,6 @@ class NkfMemberComparison
   attr_reader :errors, :members, :new_members, :orphan_members,
       :orphan_nkf_members, :outgoing_changes
 
-  def self.target_relation(member, target, nkf_values = {})
-    case target
-    when :membership
-      member
-    when :user
-      member.user
-    when :billing
-      if nkf_values.any? { |_k, v| v.present? }
-        if nkf_values[:email] && (existing_email_user = User.find_by(email: nkf_values[:email]))
-          logger.info "Use existing billing user: #{existing_email_user}"
-          member.user.billing_user = existing_email_user
-          existing_email_user
-        elsif member.user.billing_user
-          member.user.billing_user
-        else
-          logger.info "Create new billing user: #{nkf_values}"
-          member.user.build_billing_user
-        end
-      else
-        member.user.billing_user
-      end
-    when :guardian_1
-      member.user.guardian_1 ||
-          ((nkf_values.any? { |_k, v| v.present? } || nil) && member.user.build_guardian_1)
-    when :guardian_2
-      member.user.guardian_2 ||
-          ((nkf_values.any? { |_k, v| v.present? } || nil) && member.user.build_guardian_2)
-    end
-  end
-
   def initialize(member_id = nil)
     load_changes(member_id)
   end

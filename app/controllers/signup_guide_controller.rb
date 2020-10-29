@@ -96,6 +96,7 @@ class SignupGuideController < ApplicationController
 
       agent = NkfAgent.new(:signup)
       trial_form_page = agent.new_trial_form
+      mapped_changes = user.mapping_attributes
       submit_form(trial_form_page, 'ks_bli_medlem', mapped_changes, :new_trial)
 
       # trial_form.frm_29_v03 = user.first_name
