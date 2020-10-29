@@ -94,28 +94,19 @@ class SignupGuideController < ApplicationController
         user = User.create! params[:user]
       end
 
+      @signup = Signup.new(user: user)
+
       agent = NkfAgent.new(:signup)
       trial_form_page = agent.new_trial_form
-      mapped_changes = user.mapping_attributes
-      submit_form(trial_form_page, 'ks_bli_medlem', mapped_changes, :new_trial)
-
-      # trial_form.frm_29_v03 = user.first_name
-      # trial_form.frm_29_v04 = user.last_name
-      # trial_form.frm_29_v07 = user.postal_code
-      # trial_form.frm_29_v08 = user.birthdate.strftime('%d.%m.%Y')
-      # trial_form.radiobutton_with(name: 'frm_29_v11', value: user.male ? 'M' : 'K').check
-      # trial_form.frm_29_v13 = user.height || 10
-      # trial_form.frm_29_v10 = user.contact_email
-      # trial_form['frm_29_v16'] = 524 # Jujutsu (Ingen stilartstilknytning)
-      # trial_form['p_ks_bli_medlem_action'] = 'OK'
-      # reg_response = agent.submit(trial_form)
+      mapped_changes = @signup.mapping_attributes
+      reg_response = submit_form(trial_form_page, 'ks_bli_medlem', mapped_changes, :new_trial)
 
       logger.info reg_response.inspect
       response_doc =
           Nokogiri::XML(reg_response.body.force_encoding('ISO-8859-1').encode('UTF-8'), &:noblanks)
       logger.info response_doc.to_s
 
-      @signup = Signup.create!(user: user)
+      @signup = Signup.save!
 
       NkfImportTrialMembersJob.perform_later
       render :complete

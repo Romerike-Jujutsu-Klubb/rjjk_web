@@ -20,7 +20,11 @@ class SignupGuideControllerTest < ActionDispatch::IntegrationTest
 
   test 'post complete' do
     VCR.use_cassette 'register_nkf_trial' do
-      post signup_guide_complete_url params: { user: { email: 'ny@test.org', birthdate: '1999-12-31' } }
+      post signup_guide_complete_url params: { user: {
+        address: "Nyveien 5",
+        birthdate: '1999-12-31',
+        email: 'ny@test.org',
+      } }
       assert_response :success
     end
   end

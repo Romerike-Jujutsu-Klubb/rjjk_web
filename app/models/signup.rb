@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Signup < ApplicationRecord
+  include NkfAttributeConversion
+
   belongs_to :nkf_member_trial, optional: true
   belongs_to :user, -> { with_deleted }, inverse_of: :signups
 

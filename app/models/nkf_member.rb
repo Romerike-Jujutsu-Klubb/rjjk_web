@@ -280,36 +280,4 @@ class NkfMember < ApplicationRecord
 
   private
 
-  def rjjk_attribute_to_nkf(nkf_attr, rjjk_value, nkf_value)
-    if rjjk_value.is_a?(Date)
-      rjjk_value.strftime('%d.%m.%Y')
-    elsif nkf_attr == :kjonn
-      rjjk_value ? 'Mann' : 'Kvinne'
-    elsif nkf_attr == :rabatt && rjjk_value == 0
-      ''
-    elsif nkf_attr == :hoyde
-      rjjk_value.presence || nkf_value
-    else
-      rjjk_value.to_s
-    end
-  end
-
-  def nkf_attribute_to_rjjk(target, target_attribute, nkf_value)
-    if nkf_value.is_a?(Integer)
-      nkf_value
-    elsif /^\s*(?<day>\d{2})\.(?<month>\d{2})\.(?<year>\d{4})\s*$/ =~ nkf_value
-      Date.new(year.to_i, month.to_i, day.to_i)
-    elsif /Mann|Kvinne/.match?(nkf_value)
-      nkf_value == 'Mann'
-    elsif nkf_value.blank? && (target =~ /^(billing|guardian_)/ ||
-        target_attribute =~ /^guardian_|email|mobile|phone|_on$/)
-      nil
-    elsif nkf_value.blank? && (target == :user && User::NILLABLE_FIELDS.include?(target_attribute))
-      nil
-    elsif nkf_value.present? && target_attribute.to_s.include?('email')
-      nkf_value.downcase
-    else
-      nkf_value
-    end
-  end
 end

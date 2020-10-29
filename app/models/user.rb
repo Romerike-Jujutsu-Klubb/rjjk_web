@@ -6,7 +6,6 @@ class User < ApplicationRecord
   include UserSystem
   include Rails.application.routes.url_helpers
   include Searching
-  include NkfAttributeConversion
 
   EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i.freeze
 
