@@ -5,6 +5,7 @@ class Signup < ApplicationRecord
 
   belongs_to :nkf_member_trial, optional: true
   belongs_to :user, -> { with_deleted }, inverse_of: :signups
+  has_one :member, through: :user
 
   scope :for_group, ->(group) {
     includes(user: :groups).references(:users)

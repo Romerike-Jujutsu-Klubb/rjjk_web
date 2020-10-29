@@ -99,14 +99,9 @@ class SignupGuideController < ApplicationController
       agent = NkfAgent.new(:signup)
       trial_form_page = agent.new_trial_form
       mapped_changes = @signup.mapping_attributes
-      reg_response = submit_form(trial_form_page, 'ks_bli_medlem', mapped_changes, :new_trial)
+      submit_form(trial_form_page, 'ks_bli_medlem', mapped_changes, :new_trial)
 
-      logger.info reg_response.inspect
-      response_doc =
-          Nokogiri::XML(reg_response.body.force_encoding('ISO-8859-1').encode('UTF-8'), &:noblanks)
-      logger.info response_doc.to_s
-
-      @signup = Signup.save!
+      @signup.save!
 
       NkfImportTrialMembersJob.perform_later
       render :complete
