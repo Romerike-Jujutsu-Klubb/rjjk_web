@@ -63,10 +63,10 @@ module NkfAttributeConversion
     yrke: {},
   }.freeze
 
-  MAPPED_FIELDS = FIELD_MAP.select { |_nkf_attr, mapping| mapping[:map_to] }
+  MAPPED_FIELDS = FIELD_MAP.select { |_nkf_attr, mapping| mapping[:map_to] }.freeze
 
   def mapping_attributes
-    MAPPED_FIELDS.each(&method(:rjjk_attribute)).compact
+    MAPPED_FIELDS.map(&method(:rjjk_attribute)).compact
   end
 
   def mapping_changes
@@ -98,14 +98,14 @@ module NkfAttributeConversion
           user.build_billing_user
         end
       else
-        user.billing_user
+        user&.billing_user
       end
     when :guardian_1
-      user.guardian_1 ||
-          ((nkf_values.any? { |_k, v| v.present? } || nil) && user.build_guardian_1)
+      user&.guardian_1 ||
+          ((nkf_values.any? { |_k, v| v.present? } || nil) && user&.build_guardian_1)
     when :guardian_2
-      user.guardian_2 ||
-          ((nkf_values.any? { |_k, v| v.present? } || nil) && user.build_guardian_2)
+      user&.guardian_2 ||
+          ((nkf_values.any? { |_k, v| v.present? } || nil) && user&.build_guardian_2)
     end
   end
 

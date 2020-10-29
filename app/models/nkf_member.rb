@@ -6,6 +6,7 @@ class NkfMember < ApplicationRecord
   has_paper_trail
 
   belongs_to :member, optional: true
+  has_one :user, through: :member
 
   validates :kjonn, presence: true
   validates :member_id, uniqueness: { allow_nil: true }
@@ -34,8 +35,8 @@ class NkfMember < ApplicationRecord
 
   def converted_attributes(include_blank: true)
     new_attributes = Hash.new { |hash, key| hash[key] = {} }
-    attributes.each do |nkf_attr, nkf_value|
-      target, target_attribute, mapped_value = rjjk_attribute(nkf_attr, nkf_value)
+    MAPPED_FIELDS.each do |nkf_attr, mapping|
+      target, target_attribute, mapped_value = rjjk_attribute(nkf_attr, mapping)
           .values_at(:target, :target_attribute, :mapped_nkf_value)
       next unless target && target_attribute &&
           (include_blank || mapped_value.present? || mapped_value == false)
