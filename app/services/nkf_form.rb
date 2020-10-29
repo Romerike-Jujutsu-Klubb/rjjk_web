@@ -107,7 +107,14 @@ module NkfForm
 
   def synchronize_form(mapped_changes, form, form_key)
     outgoing_changes_for_member = {}
-    mapped_changes.each { |mc| sync_attribute(form, outgoing_changes_for_member, mc, form_key) }
+    mapped_changes.each do |mapped_change|
+      parent_change = mapped_change
+      while (parent_key = NkfAttributeConversion::MAPPED_FIELDS[parent_change[:nkf_attr]][:depends])
+        parent_change = mapped_changes.find { |mc| mc[:nkf_attr] == parent_key }
+        sync_attribute(form, outgoing_changes_for_member, parent_change, form_key)
+      end
+      sync_attribute(form, outgoing_changes_for_member, mapped_change, form_key)
+    end
     logger.info "outgoing_changes: #{outgoing_changes_for_member}"
     outgoing_changes_for_member
   end

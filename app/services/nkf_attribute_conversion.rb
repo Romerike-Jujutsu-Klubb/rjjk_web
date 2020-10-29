@@ -40,9 +40,11 @@ module NkfAttributeConversion
     konkurranseomrade_id: {},
     konkurranseomrade_navn: {},
     kont_belop: {}, # FIXME(uwe): Map payment values
-    kont_sats: { map_to: { membership: :category }, form_field: { member: :frm_48_v36 } },
+    kont_sats: { map_to: { membership: :category }, form_field: { member: :frm_48_v36 },
+                 depends: :medlemskategori_navn },
     kontraktsbelop: { map_to: { membership: :monthly_fee } },
-    kontraktstype: { map_to: { membership: :contract }, form_field: { member: :frm_48_v37 } },
+    kontraktstype: { map_to: { membership: :contract }, form_field: { member: :frm_48_v37 },
+                     depends: :kont_sats },
     medlemskategori: {},
     medlemskategori_navn: { map_to: { membership: :category }, form_field: { member: :frm_48_v48 } },
     medlemsnummer: {},
