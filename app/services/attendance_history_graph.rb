@@ -75,7 +75,7 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
     last_date = [Date.civil(year, month, -1), Date.current].min
     attendances = Attendance.includes(:practice).references(:practices)
         .from_date(first_date).to_date(last_date)
-        .where('attendances.status NOT IN (?)', Attendance::ABSENT_STATES)
+        .where.not('attendances.status' => Attendance::ABSENT_STATES)
         .to_a
     group_schedules = attendances.map(&:group_schedule).uniq
     groups = group_schedules.map(&:group).uniq.sort_by(&:from_age)

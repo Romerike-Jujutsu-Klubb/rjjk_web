@@ -10,7 +10,7 @@ class Rank < ApplicationRecord
   # belongs_to :martial_art
   belongs_to :curriculum_group
 
-  has_many :applications, -> { where('system <> ?', TechniqueApplication::System::KATA) },
+  has_many :applications, -> { where.not(system: TechniqueApplication::System::KATA) },
       class_name: TechniqueApplication.name
   has_many :basic_techniques, dependent: :nullify
   has_many :embus, dependent: :destroy

@@ -3,7 +3,7 @@
 class AttendanceWebpush < ApplicationRecord
   belongs_to :member
 
-  def self.push_all(title, body, except: nil, tag:, data: {})
+  def self.push_all(title, body, tag:, except: nil, data: {})
     AttendanceWebpush.where.not(member_id: except).find_each do |subscription|
       logger.info "Notifying #{subscription.member.user.name}"
       Webpush.payload_send(**subscription.webpush_params(title, body, tag: tag, data: data))

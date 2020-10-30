@@ -105,7 +105,7 @@ class AttendancesController < ApplicationController
     @last_date = @date.end_of_month
     @attendances = Attendance.includes(practice: :group_schedule).references(:practices)
         .from_date(@first_date).to_date(@last_date)
-        .where('attendances.status NOT IN (?)', Attendance::ABSENT_STATES)
+        .where.not('attendances.status' => Attendance::ABSENT_STATES)
         .to_a
     monthly_per_group = @attendances.group_by { |a| a.group_schedule.group }
         .sort_by { |g, _ats| g.from_age }
@@ -121,7 +121,7 @@ class AttendancesController < ApplicationController
       @monthly_summary_per_group[g][:practices] =
           @monthly_summary_per_group[g][:present].map(&:practice_id).uniq.size
     end
-    @by_group_and_member = Hash[monthly_per_group.map { |g, ats| [g, ats.group_by(&:user)] }]
+    @by_group_and_member = monthly_per_group.transform_values { |ats| ats.group_by(&:user) }
   end
 
   def history_graph; end

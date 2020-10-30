@@ -41,7 +41,7 @@ module AttendanceFormDataLoader
             .where('year < ? OR ( year = ? AND week <= ?)',
                 last_date.cwyear, last_date.cwyear, last_date.cweek)
         if @instructors.any?
-          attended_query = attended_query.where('members.id NOT IN (?)', @instructors.map(&:id))
+          attended_query = attended_query.where.not('members.id' => @instructors.map(&:id))
         end
         attended_members = attended_query.to_a
         @members = current_members | attended_members

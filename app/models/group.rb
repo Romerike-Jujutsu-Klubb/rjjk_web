@@ -127,7 +127,7 @@ class Group < ApplicationRecord
         .where(group_schedules: { group_id: id })
     if instructors.any?
       group_instructors_query = group_instructors_query
-          .where('group_instructors.member_id NOT IN (?)', instructors.map(&:id))
+          .where.not('group_instructors.member_id' => instructors.map(&:id))
     end
     instructors += group_instructors_query.to_a.select { |gi| dates.any? { |d| gi.active?(d) } }
         .map(&:member).uniq
@@ -135,7 +135,7 @@ class Group < ApplicationRecord
         .includes({ user: [{ attendances: { practice: :group_schedule } }, :groups],
                     graduates: %i[graduation rank] }, :nkf_member)
         .where(instructor: true)
-    instructors_query = instructors_query.where('id NOT IN (?)', instructors.map(&:id)) if instructors.any?
+    instructors_query = instructors_query.where.not(id: instructors.map(&:id)) if instructors.any?
     instructors += instructors_query
         .select { |m| m.user.groups.any? { |g| g.martial_art_id == martial_art_id } }
         .select do |m|

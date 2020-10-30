@@ -113,43 +113,10 @@ Rails/UniqueValidationWithoutIndex:
     - 'app/models/nkf_member.rb'
     - 'app/models/user.rb'
 
-# Offense count: 9
-# Cop supports --auto-correct.
-Rails/WhereNot:
-  Exclude:
-    - 'app/controllers/attendances_controller.rb'
-    - 'app/controllers/members_controller.rb'
-    - 'app/models/annual_meeting.rb'
-    - 'app/models/group.rb'
-    - 'app/models/rank.rb'
-    - 'app/services/attendance_form_data_loader.rb'
-    - 'app/services/attendance_history_graph.rb'
-
 # Offense count: 1
 Security/Open:
   Exclude:
     - 'app/services/public_record_importer.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoredMethods.
-# IgnoredMethods: ==, equal?, eql?
-Style/ClassEqualityComparison:
-  Exclude:
-    - 'test/services/nkf_appointments_scraper_test.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/HashTransformValues:
-  Exclude:
-    - 'app/controllers/attendances_controller.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/KeywordParametersOrder:
-  Exclude:
-    - 'app/models/attendance_webpush.rb'
-    - 'test/system/devices/device_system_test.rb'
 
 # Offense count: 1
 # Configuration parameters: AllowedMethods.

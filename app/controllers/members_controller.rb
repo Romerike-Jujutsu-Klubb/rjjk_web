@@ -16,7 +16,7 @@ class MembersController < ApplicationController
   end
 
   def list_inactive
-    @members = Member.includes(:user).where('left_on IS NOT NULL').order('users.last_name').to_a
+    @members = Member.includes(:user).where.not(left_on: nil).order('users.last_name').to_a
     render :index
   end
 
@@ -75,7 +75,7 @@ class MembersController < ApplicationController
 
   def email_list
     @groups = Group.active(Date.current).includes(:members).to_a
-    @former_members = Member.where('left_on IS NOT NULL').to_a
+    @former_members = Member.where.not(left_on: nil).to_a
     @administrators = User.find_administrators
     @administrator_emails = @administrators.map(&:email).compact.uniq
     @missing_administrator_emails = @administrators.size - @administrator_emails.size

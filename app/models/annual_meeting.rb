@@ -29,7 +29,7 @@ class AnnualMeeting < Event
 
   def board_members
     elections.includes(:role).references(:roles)
-        .where('roles.years_on_the_board IS NOT NULL').to_a.map(&:member)
+        .where.not('roles.years_on_the_board' => nil).to_a.map(&:member)
   end
 
   def self.board_emails
