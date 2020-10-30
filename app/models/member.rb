@@ -74,7 +74,7 @@ class Member < ApplicationRecord
   end
 
   def self.instructors(date = Date.current, includes: [])
-    active(date).where(<<~SQL).order(:id).includes(includes)
+    active(date).where(<<~SQL.squish).order(:id).includes(includes)
       instructor = true OR id IN (SELECT member_id FROM group_instructors GROUP BY member_id)
     SQL
   end

@@ -51,7 +51,7 @@ AND (practices.year < ? OR (practices.year = ? AND practices.week <= ?))',
   end
 
   def self.month_per_year_chart_data(month)
-    result = Attendance.connection.execute <<~SQL
+    result = Attendance.connection.execute <<~SQL.squish
       SELECT g.name, p.year as year, count(*) as count
       FROM attendances a
         LEFT JOIN practices p ON p.id = a.practice_id

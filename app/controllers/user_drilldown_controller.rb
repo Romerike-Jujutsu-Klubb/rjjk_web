@@ -31,7 +31,7 @@ class UserDrilldownController < SimpleDrilldown::Controller
 
   dimension :calendar_date, 'DATE(users.created_at)', interval: true
   dimension :day_of_month, "date_part('day', users.created_at)::int"
-  dimension :day_of_week, <<~SQL, label_method: ->(day_no) { Date::DAYNAMES[day_no.to_i % 7] }
+  dimension :day_of_week, <<~SQL.squish, label_method: ->(day_no) { Date::DAYNAMES[day_no.to_i % 7] }
     CASE WHEN date_part('dow', users.created_at) = 0 THEN 7 ELSE date_part('dow', users.created_at)::int END
   SQL
   dimension :deleted, 'deleted_at IS NOT NULL'

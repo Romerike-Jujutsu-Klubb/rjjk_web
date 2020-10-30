@@ -30,7 +30,7 @@ class Graduation < ApplicationRecord
       )
   end
   scope :censors_confirmed,
-      ->(date) { where(<<~SQL, date) }
+      ->(date) { where(<<~SQL.squish, date) }
         NOT EXISTS (
           SELECT confirmed_at
           FROM censors WHERE graduation_id = graduations.id
@@ -38,7 +38,7 @@ class Graduation < ApplicationRecord
         )
       SQL
   scope :has_examiners,
-      -> { where <<~SQL }
+      -> { where <<~SQL.squish }
         EXISTS (
           SELECT id
           FROM censors WHERE graduation_id = graduations.id
@@ -46,7 +46,7 @@ class Graduation < ApplicationRecord
         )
       SQL
   scope :ready,
-      ->(date) { has_examiners.where(<<~SQL, date: date) }
+      ->(date) { has_examiners.where(<<~SQL.squish, date: date) }
         NOT EXISTS (
           SELECT locked_at
           FROM censors WHERE graduation_id = graduations.id
@@ -55,7 +55,7 @@ class Graduation < ApplicationRecord
         )
       SQL
   scope :approved,
-      ->(date) { where(<<~SQL, date, false) }
+      ->(date) { where(<<~SQL.squish, date, false) }
         NOT EXISTS (
           SELECT approved_grades_at
           FROM censors WHERE graduation_id = graduations.id

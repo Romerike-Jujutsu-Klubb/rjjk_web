@@ -9,7 +9,7 @@ class MemberDrilldownController < SimpleDrilldown::Controller
   default_fields %w[name joined_on left_on]
   list_order 'members.joined_on, members.created_at'
 
-  dimension :active, <<~SQL
+  dimension :active, <<~SQL.squish
     CASE
     WHEN left_on IS NOT NULL AND left_on < CURRENT_DATE THEN 'Utmeldt'
     WHEN honorary_on IS NOT NULL AND honorary_on < CURRENT_DATE THEN 'Æresmedlem'

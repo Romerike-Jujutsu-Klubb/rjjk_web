@@ -3,7 +3,7 @@
 class MemberGradeHistoryGraph
   DEFAULT_INTERVAL = 2.months
 
-  ACTIVE_CLAUSE = <<~SQL
+  ACTIVE_CLAUSE = <<~SQL.squish
     EXISTS (
       SELECT 1
       FROM attendances a

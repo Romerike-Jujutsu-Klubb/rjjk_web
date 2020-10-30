@@ -97,19 +97,6 @@ Rails/ReflectionClassName:
   Exclude:
     - 'app/models/rank.rb'
 
-# Offense count: 12
-# Cop supports --auto-correct.
-Rails/SquishedSQLHeredocs:
-  Exclude:
-    - 'app/controllers/member_drilldown_controller.rb'
-    - 'app/controllers/user_drilldown_controller.rb'
-    - 'app/models/election.rb'
-    - 'app/models/graduation.rb'
-    - 'app/models/member.rb'
-    - 'app/models/member_grade_history_graph.rb'
-    - 'app/services/attendance_history_graph.rb'
-    - 'app/services/image_streamer.rb'
-
 # Offense count: 13
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb

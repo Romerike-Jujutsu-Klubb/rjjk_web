@@ -10,7 +10,7 @@ class Election < ApplicationRecord
 
   scope :current, -> {
     includes(:annual_meeting).references(:annual_meetings)
-        .where(<<~SQL, now: Time.current)
+        .where(<<~SQL.squish, now: Time.current)
           events.start_at <= :now
             AND (events.start_at + interval '1 year' * years + interval '1 month') >= :now
             AND NOT EXISTS (
