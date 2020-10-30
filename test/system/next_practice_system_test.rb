@@ -3,9 +3,7 @@
 require 'application_system_test_case'
 
 class NextPracticeSystemTest < ApplicationSystemTestCase
-  setup { screenshot_section :next_practice }
   test 'next practice' do
-    screenshot_group :next_practice
     visit root_path
     assert_selector 'h1,h2', text: 'Trening - Teknikk - Trygghet'
     assert_no_selector 'h4', text: 'Neste trening'
