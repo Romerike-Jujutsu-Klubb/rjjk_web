@@ -4,9 +4,6 @@
 module Searching
   extend ActiveSupport::Concern
 
-  included do
-  end
-
   class_methods do
     def search_scope(fields, text: nil, order: nil)
       scope :search, ->(query) do
