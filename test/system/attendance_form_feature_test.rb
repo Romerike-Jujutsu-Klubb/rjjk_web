@@ -73,7 +73,7 @@ class AttendanceFormFeatureTest < ApplicationSystemTestCase
     assert_difference 'Attendance.count' do
       new_instructor_row.find('td:nth-of-type(2)').click
       assert_current_path '/attendances/new', ignore_query: true
-      select('Lars Bråten', from: 'attendance_user_id')
+      select_from_chosen('Lars Bråten', from: 'attendance_user_id')
       click_button('Lagre')
       assert_current_path attendance_form_path year: 2013, month: 10, group_id: id(:panda)
 
