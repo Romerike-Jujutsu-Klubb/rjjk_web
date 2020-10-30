@@ -75,12 +75,6 @@ Performance/CollectionLiteralInLoop:
     - 'app/services/nkf_appointments_scraper.rb'
     - 'app/services/nkf_member_import.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Performance/Sum:
-  Exclude:
-    - 'app/models/user.rb'
-
 # Offense count: 4
 # Configuration parameters: Include.
 # Include: app/helpers/**/*.rb

@@ -397,7 +397,7 @@ class User < ApplicationRecord
   end
 
   def depending_users
-    [payees, primary_wards, secondary_wards, contactees].inject(&:+).uniq
+    [payees, primary_wards, secondary_wards, contactees].sum.uniq
   end
 
   def contact_users
