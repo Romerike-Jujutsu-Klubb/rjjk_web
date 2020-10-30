@@ -6,13 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 2
-# Configuration parameters: AllowComments.
-Lint/EmptyConditionalBody:
-  Exclude:
-    - 'app/controllers/images_controller.rb'
-    - 'app/controllers/user_merge_controller.rb'
-
 # Offense count: 237
 # Configuration parameters: IgnoredMethods.
 Metrics/AbcSize:

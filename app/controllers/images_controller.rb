@@ -295,6 +295,7 @@ class ImagesController < ApplicationController
 
   def redirected_to_icon(image)
     if image.image?
+      # No redirect
     elsif image.video?
       redirect_to helpers.asset_path 'video-icon-tran.png'
       true
