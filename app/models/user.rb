@@ -204,7 +204,7 @@ class User < ApplicationRecord
   end
 
   def label(last_name_first: false)
-    name(last_name_first: last_name_first) || email || phone
+    name(last_name_first: last_name_first) || email || phone || "User: #{id}"
   end
 
   def name(last_name_first: false)
