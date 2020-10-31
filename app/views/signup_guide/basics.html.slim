@@ -15,7 +15,7 @@ p Før du bestemmer deg for om du vil trene med oss har du 2 uker uforpliktende 
           .form-group
             br
             = render 'layouts/tri_state_switch', f: f, field_id: "user_male", field_name: "user[male]", state: @user.male, true_label: 'Mann', false_label: 'Kvinne', required: true
-      = f.hidden_field :height, value: 99
+      = f.hidden_field :height, value: 0
 
       .float-right = f.primary
         ' Neste

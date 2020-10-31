@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# Mix into User
 module NkfAttributeConversion
   # `map_to` is used to set a new value in the RJJK model.
   FIELD_MAP = {

@@ -79,9 +79,7 @@ class SignupGuideController < ApplicationController
     @groups = Group.active.to_a
     return if @user.groups.any?
 
-    @groups.each do |g|
-      @user.groups << g if (g.from_age..g.to_age).cover?(@user.age)
-    end
+    @groups.each { |g| @user.groups << g if (g.from_age..g.to_age).cover?(@user.age) }
   end
 
   def complete
@@ -91,7 +89,11 @@ class SignupGuideController < ApplicationController
         user = User.find(existing_user_id)
         user.update! params[:user]
       else
-        user = User.create! params[:user]
+        user = @user
+        group_ids = @user.group_ids
+        @user.group_ids = nil
+        @user.save!
+        @user.update! group_ids: group_ids
       end
 
       @signup = Signup.new(user: user)

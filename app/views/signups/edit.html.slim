@@ -1,4 +1,4 @@
-a.btn.btn-danger.float-right href=signup_path(@signup) data-confirm='Are you sure?' data-method=:delete
+a.btn.btn-danger.float-right href=signup_path(@signup) data-confirm="Er du sikker på at du vil slette innmeldingen for #{@signup.user.label}?" data-method=:delete
   i.fa.fa-trash>
   | Slett
 
@@ -9,4 +9,3 @@ h1 Prøvemedlem
 => link_to 'Show', @signup
 '|
 =< link_to 'Index', signups_path
-

@@ -28,7 +28,7 @@ class SignupsController < ApplicationController
 
   def edit
     @users = [@signup.user]
-    @nkf_member_trials = [@signup.nkf_member_trial]
+    @nkf_member_trials = [@signup.nkf_member_trial].compact
     render :edit
   end
 
