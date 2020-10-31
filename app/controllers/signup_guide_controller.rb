@@ -11,7 +11,7 @@ class SignupGuideController < ApplicationController
   end
 
   def basics
-    return if load_signup
+    return unless load_signup
 
     return unless request.post?
 
@@ -27,7 +27,7 @@ class SignupGuideController < ApplicationController
   end
 
   def guardians
-    return if load_signup
+    return unless load_signup
 
     @user.guardian_1 ||= User.new
     return unless request.post?
@@ -38,7 +38,7 @@ class SignupGuideController < ApplicationController
 
   # Posted after name_and_birthdate and guardians
   def contact_info
-    return if load_signup
+    return unless load_signup
     return unless request.post?
 
     store_signup
@@ -68,7 +68,7 @@ class SignupGuideController < ApplicationController
   end
 
   def groups
-    return if load_signup
+    return unless load_signup
 
     if request.post?
       store_signup
@@ -84,7 +84,6 @@ class SignupGuideController < ApplicationController
 
   def complete
     Signup.transaction do
-      # group_ids = params[:user].delete(:group_ids)
       if (existing_user_id = params[:user][:id].presence)
         user = User.find(existing_user_id)
         user.update! params[:user]
@@ -101,7 +100,8 @@ class SignupGuideController < ApplicationController
       agent = NkfAgent.new(:signup)
       trial_form_page = agent.new_trial_form
       mapped_changes = @signup.mapping_attributes
-      submit_form(trial_form_page, 'ks_bli_medlem', mapped_changes, :new_trial)
+      submit_form(trial_form_page, 'ks_bli_medlem', mapped_changes, :new_trial,
+          submit_in_development: true)
 
       @signup.save!
 
@@ -123,12 +123,12 @@ class SignupGuideController < ApplicationController
       @user.attributes = new_attributes
     end
     @user.valid? if flash.alert
-    false
+    true
   rescue => e
     logger.error e
     cookies.delete(:signup)
     redirect_to signup_guide_root_path, alert: 'Beklager!  Noe gikk galt.  Vennligst prøv på nytt.'
-    true
+    false
   end
 
   def store_signup

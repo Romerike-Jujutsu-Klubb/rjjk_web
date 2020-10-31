@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module NkfForm
-  MEMBER_ERROR_PATTERN = %r{<ul class="ulError">(?<message>.*?)</ul>}.freeze
+  MEMBER_ERROR_PATTERN = %r{<ul class="ulError">(?<message>.*?)</ul>}m.freeze
 
   private
 
@@ -83,10 +83,10 @@ module NkfForm
     submit_form(member_page, 'ks_medlprofil', mapped_changes, form_key)
   end
 
-  def submit_form(member_page, form_name, mapped_changes, form_key)
+  def submit_form(member_page, form_name, mapped_changes, form_key, submit_in_development: false)
     form = member_page.form(form_name)
     outgoing_changes_for_member = find_outgoing_changes(mapped_changes, form, form_key)
-    if Rails.env.production? && outgoing_changes_for_member.any?
+    if outgoing_changes_for_member.any? && (Rails.env.production? || submit_in_development)
       logger.info 'Submitting form to NKF'
       form["p_#{form_name}_action"] = 'OK'
       change_response_page = form.submit

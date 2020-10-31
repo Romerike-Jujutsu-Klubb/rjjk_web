@@ -15,8 +15,14 @@ scss:
 h1.mb-4 Søkeresultat for "#{@query}"
 
 - if @query
-  - if [@members, @former_members, @trials, @users, @pages, @news, @events, @images, @user_messages, @basic_techniques, @technique_applications].any?(&:present?)
+  - if [@members, @former_members, @signups, @trials, @users, @pages, @news, @events, @images, @user_messages, @basic_techniques, @technique_applications].any?(&:present?)
     .row
+      - if @signups.present?
+        .col.mb-4: .card
+          h3.card-header Innmeldinger
+          ul.card-body
+            - @signups.each do |signup|
+              li = link_to signup.user.name, signup
       = render 'members', members: @members, title: 'Medlemmer'
       = render 'members', members: @former_members, title: 'Tidligere Medlemmer'
       - if @trials.present?

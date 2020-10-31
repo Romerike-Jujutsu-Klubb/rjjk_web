@@ -151,8 +151,9 @@ class NkfMemberTrialImport
       if record.save
         @trial_changes << { record: record, changes: c }
         if record.signup.nil?
-          user = User.find_by(email: record.epost) || User.find_by(phone: record.mobil) ||
-              User.create!(record.user_attributes)
+          user = User.find_by(email: record.epost) if record.epost.present?
+          user ||= User.find_by(phone: record.mobil) if record.mobil.present?
+          user ||= User.create!(record.user_attributes)
           Signup.create! user: user, nkf_member_trial: record
         end
       else

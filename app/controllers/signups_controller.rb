@@ -89,12 +89,12 @@ class SignupsController < ApplicationController
         form['p_ks_godkjenn_medlem_action'] = 'DELETE'
         form['frm_28_v04'] = trial.tid
         nkf_agent.submit(form)
+        trial.destroy!
         NkfImportTrialMembersJob.perform_later
       end
-      @signup.nkf_member_trial.destroy!
       @signup.destroy!
     end
-    redirect_to signups_path, notice: 'Prøvemedlemmet er slettet.'
+    redirect_to signups_path, notice: 'Prøvemedlemskapet er avsluttet.'
   end
 
   def destroy
