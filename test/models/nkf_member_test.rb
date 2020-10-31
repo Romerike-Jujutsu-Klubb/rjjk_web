@@ -19,6 +19,7 @@ class NkfMemberTest < ActiveSupport::TestCase
       membership: {
         joined_on: Date.parse('1996-05-01'),
         left_on: nil,
+        martial_art_name: 'Jujutsu/Jujutsu (Ingen stilartstilknytning)/Strømmen Storsenter/Voksne',
         phone_home: nil,
         phone_work: nil,
       },
