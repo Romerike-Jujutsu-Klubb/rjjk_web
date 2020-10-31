@@ -49,6 +49,7 @@ class NkfSynchronizationJobTest < ActionMailer::TestCase
         <li>Uwe Kubosch<ul>
           <li>{:user=&gt;:contact_email}: &quot;uwe@kubosch.no&quot; => &quot;uwe@example.com&quot;</li>
           <li>{:membership=&gt;:joined_on}: &quot;15.12.2000&quot; => &quot;05.01.1987&quot;</li>
+          <li>{:user=&gt;:male}: &quot;Mann&quot; =&gt; &quot;M&quot;</li>
           <li>{:user=&gt;:phone}: &quot;92206046&quot; => &quot;55569666&quot;</li>
           <li>{:membership=&gt;:discount}: &quot;&quot; => &quot;100&quot;</li>
          </ul></li>

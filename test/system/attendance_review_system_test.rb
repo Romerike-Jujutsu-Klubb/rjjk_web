@@ -41,6 +41,7 @@ Du kommer.',
 
     first('a', text: 'Du og 2 andre').click
     assert has_css? '.modal'
+    assert has_text? 'Oppmøte trening tirsdag'
     screenshot('popup')
   end
 end

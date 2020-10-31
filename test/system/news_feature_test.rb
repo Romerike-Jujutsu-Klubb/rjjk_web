@@ -29,8 +29,7 @@ class NewsFeatureTest < ApplicationSystemTestCase
 
   def test_index_admin
     screenshot_group :index_admin
-    login_and_visit '/news'
-    assert_current_path '/news'
+    visit_with_login '/news'
     screenshot('index')
   end
 
