@@ -412,6 +412,15 @@ class Member < ApplicationRecord
     end
   end
 
+  # Used to synchronize vs NKF
+  def martial_art_name
+    MartialArt::KWR_NAME
+  end
+
+  def martial_art_name=(value)
+    # Ignore
+  end
+
   private
 
   def older_member?(other_user)
