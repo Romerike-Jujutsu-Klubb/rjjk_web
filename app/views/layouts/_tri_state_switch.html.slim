@@ -5,7 +5,19 @@
 .btn-group.mt-2 data-toggle="buttons"
   label.btn.btn-sm.p-2 class=("btn-#{'outline-' unless state}success")
     = true_label
-    input.ml-1 type="radio" name=field_name id="#{field_id}_true" value=:true checked=state
+    input.ml-1 type="radio" name=field_name id="#{field_id}_true" value=:true checked=state required=local_assigns[:required]
   label.btn.btn-sm.p-2 class=("btn-#{'outline-' unless state == false}danger")
-    input.mr-1 type="radio" name=field_name id="#{field_id}_false" value=:false checked=(state == false)
+    input.mr-1 type="radio" name=field_name id="#{field_id}_false" value=:false checked=(state == false) required=local_assigns[:required]
     = false_label
+  javascript:
+    $('input[name="#{field_name}"]').change(function(e){
+      const trueLabel = $('##{field_id}_true').closest('label');
+      const falseLabel = $('##{field_id}_false').closest('label');
+      if (this.value === 'true') {
+        trueLabel.removeClass('btn-outline-success').addClass('btn-success')
+        falseLabel.removeClass('btn-danger').addClass('btn-outline-danger')
+      } else {
+        trueLabel.removeClass('btn-success').addClass('btn-outline-success')
+        falseLabel.removeClass('btn-outline-danger').addClass('btn-danger')
+      }
+    });
