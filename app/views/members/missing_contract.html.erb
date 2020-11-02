@@ -1,5 +1,5 @@
 
-<%=image_tag @trial.try(:stilart) == 'Aikikan Norge' ? 'http://romerikeaikido.org/Bilder/san_gen-logo-rak.jpg' : 'rjjk_logo_plus_txt_320.png', :width=> '33%', :align => :right %>
+<%=image_tag @trial&.gren_stilart_avd_parti___gren_stilart_avd_parti == 'Aikikan Norge' ? 'http://romerikeaikido.org/Bilder/san_gen-logo-rak.jpg' : 'rjjk_logo_plus_txt_320.png', :width=> '33%', :align => :right %>
 
 <h1>Innmelding for<br/><%=@name%></h1>
 

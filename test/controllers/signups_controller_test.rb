@@ -19,7 +19,7 @@ class SignupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create signup' do
-    signups(:three).delete
+    signups(:three).really_destroy!
     assert_difference('Signup.count') do
       post signups_url, params: { signup: {
         nkf_member_trial_id: id(:three), user_id: id(:sandra)

@@ -4,9 +4,9 @@ ul
   - @trials.each do |trial|
     li
       => link_to trial.name, trial.signup || trial
-      | (#{trial.alder} år)
+      | (#{trial.age} år)
       ul
-        li Registrert: #{trial.reg_dato}
+        li Registrert: #{trial.innmeldtdato}
         - attendances = trial.signup.user.attendances.present
         li
           => attendances.select { |a| a.date >= 2.months.ago.to_date }.size

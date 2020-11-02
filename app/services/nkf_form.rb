@@ -5,22 +5,50 @@ module NkfForm
 
   private
 
+  def read_attribute(form, nkf_attr, nkf_mapping, form_key)
+    nkf_field = nkf_mapping.dig(:form_field, form_key)&.to_s
+    unless nkf_field
+      logger.info "Missing form field: #{form_key}: :#{nkf_attr}"
+      return
+    end
+    field_node = form.page.css("##{nkf_field}")[0]
+    if field_node.name == 'select'
+      form_field = Mechanize::Form::SelectList.new(field_node)
+      selected_option = form_field.selected_options.first
+      if selected_option
+        form_value = if /^\d+$/.match?(selected_option.value)
+                       selected_option.text
+                     else
+                       selected_option.value
+                     end
+      else
+        logger.info "No selected option found in #{form_field.options.map(&:text).inspect}"
+      end
+    else
+      form_value = field_node.attr('value')
+    end
+
+    [nkf_attr, form_value]
+  end
+
   def sync_attribute(form, outgoing_changes, nkf_mapping, form_key)
     mapped_rjjk_value = nkf_mapping[:mapped_rjjk_value]
-    nkf_value = nkf_mapping[:nkf_value]
+    return unless (nkf_field = nkf_mapping.dig(:form_field, form_key)&.to_s)
 
+    form_field = form.page.css("##{nkf_field}")
+    form_value = form_field.attr('value')&.value
+    nkf_value = nkf_mapping[:nkf_value]
+    if nkf_value != form_value
+      logger.info "Updated NKF value: #{nkf_value.inspect} => #{form_value.inspect}"
+      nkf_value = form_value
+    end
     if mapped_rjjk_value.blank? && nkf_value.blank?
       logger.error "No update needed for #{nkf_mapping[:nkf_attr]}"
       return
     end
 
-    attr_sym = { nkf_mapping[:target] => nkf_mapping[:target_attribute] }
-    return unless (nkf_field = nkf_mapping.dig(:form_field, form_key)&.to_s)
-
-    form_value = form[nkf_field]
     logger.info "Set form field #{nkf_field}: #{form_value.inspect} => #{mapped_rjjk_value.inspect}"
     desired_value = mapped_rjjk_value&.to_s&.encode(form.encoding)
-    form_field = form.field_with(name: nkf_field)
     if form_field.is_a?(Mechanize::Form::SelectList)
       desired_option = form_field.options.find { |o| o.text.strip == desired_value }
       unless desired_option
@@ -72,6 +100,7 @@ module NkfForm
     else
       form[nkf_field] = desired_value
     end
+    attr_sym = { nkf_mapping[:target] => nkf_mapping[:target_attribute] }
     outgoing_changes[attr_sym] = { nkf_value => mapped_rjjk_value }
   end
 
@@ -83,9 +112,9 @@ module NkfForm
     submit_form(member_page, 'ks_medlprofil', mapped_changes, form_key)
   end
 
-  def submit_form(member_page, form_name, mapped_changes, form_key, submit_in_development: false)
-    form = member_page.form(form_name)
-    outgoing_changes_for_member = find_outgoing_changes(mapped_changes, form, form_key)
+  def submit_form(page, form_name, mapped_changes, form_key, submit_in_development: false)
+    form = page.form(form_name)
+    outgoing_changes_for_member = synchronize_form(mapped_changes, form, form_key)
     if outgoing_changes_for_member.any? && (Rails.env.production? || submit_in_development)
       logger.info 'Submitting form to NKF'
       form["p_#{form_name}_action"] = 'OK'
@@ -101,10 +130,6 @@ module NkfForm
     outgoing_changes_for_member
   end
 
-  def find_outgoing_changes(mapped_changes, form, form_key)
-    synchronize_form(mapped_changes, form, form_key)
-  end
-
   def synchronize_form(mapped_changes, form, form_key)
     outgoing_changes_for_member = {}
     mapped_changes.each do |mapped_change|
@@ -117,6 +142,13 @@ module NkfForm
     end
     logger.info "outgoing_changes: #{outgoing_changes_for_member}"
     outgoing_changes_for_member
+  end
+
+  def read_form(form, form_key)
+    form_values = NkfAttributeConversion::MAPPED_FIELDS.map do |nkf_attr, mapping|
+      read_attribute(form, nkf_attr, mapping, form_key)
+    end
+    Hash[form_values.compact]
   end
 
   def find_member_form_page(front_page, membership)

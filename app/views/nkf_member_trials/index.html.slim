@@ -16,16 +16,14 @@ table.table class=('table-sm' if @nkf_member_trials.size > 12)
     - @nkf_member_trials.each do |nkf_member_trial|
       tr
         td = link_to nkf_member_trial.name, nkf_member_trial
-        td.text-right #{nkf_member_trial.alder} år
-        td = nkf_member_trial.fodtdato
+        td.text-right #{nkf_member_trial.age} år
+        td = nkf_member_trial.fodselsdato
         td
-          span.nowrap = nkf_member_trial.adresse
-          span.nowrap
-            => nkf_member_trial.postnr
-            = nkf_member_trial.sted
+          span.nowrap = nkf_member_trial.adresse_2
+          span.nowrap = nkf_member_trial.postnr
         td = nkf_member_trial.epost
         td = nkf_member_trial.mobil
-        td style=('color: red' if nkf_member_trial.reg_dato < 2.months.ago.to_date) = nkf_member_trial.reg_dato
+        td style=('color: red' if nkf_member_trial.innmeldtdato < 2.months.ago.to_date) = nkf_member_trial.innmeldtdato
         td
           - if nkf_member_trial.signup
             a href=signup_path(nkf_member_trial.signup.id) Reg

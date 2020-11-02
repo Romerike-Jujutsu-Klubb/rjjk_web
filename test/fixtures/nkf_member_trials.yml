@@ -1,54 +1,39 @@
 one:
-  medlems_type: MyString
   etternavn: Eriksen
   fornavn: Hans
-  fodtdato: 2007-10-03
-  alder: 6
+  fodselsdato: 2007-10-03
   kjonn: M
   postnr: 1234
-  sted: MyString
-  adresse: MyString
+  adresse_2: MyString
   epost: hans@eriksen.org
   epost_faktura: faktura@eriksen.org
   mobil: MyString
-  res_sms: false
-  reg_dato: 2010-10-03
+  innmeldtdato: 2010-10-03
   tid: 1
-  stilart: Jujutsu
-  medlems_type: Enkeltmedlem
+  gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu
 
 two:
-  medlems_type: MyString
   etternavn: Hansen
   fornavn: Erik
-  fodtdato: 2006-10-03
-  alder: 7
+  fodselsdato: 2006-10-03
   kjonn: M
   postnr: 4321
-  sted: MyString
-  adresse: MyString
+  adresse_2: MyString
   epost: NKF_mt_two@example.com
   mobil: MyString
-  res_sms: false
-  reg_dato: 2010-10-03
+  innmeldtdato: 2010-10-03
   tid: 2
-  stilart: Jujutsu
-  medlems_type: Enkeltmedlem
+  gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu
 
 three:
-  medlems_type: MyString
   etternavn: Jensen
   fornavn: Even
-  fodtdato: 2007-11-04
-  alder: 6
+  fodselsdato: 2007-11-04
   kjonn: M
   postnr: 4322
-  sted: MyStringer
-  adresse: MyString 3
+  adresse_2: MyString 3
   epost: NKF_mt_three@example.com
   mobil: MyString4
-  res_sms: false
-  reg_dato: 2010-10-02
+  innmeldtdato: 2010-10-02
   tid: 3
-  stilart: Jujutsu
-  medlems_type: Enkeltmedlem
+  gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu

@@ -36,7 +36,7 @@ class SignupsController < ApplicationController
     @signup = Signup.new(signup_params)
     Signup.transaction do
       if @signup.user_id_before_type_cast == 'new_user' && @signup.nkf_member_trial.present?
-        @signup.user = User.create! @signup.nkf_member_trial.user_attributes
+        @signup.user = User.create! @signup.nkf_member_trial.converted_attributes(include_blank: false)
       end
       @signup.user&.restore!
       if @signup.save

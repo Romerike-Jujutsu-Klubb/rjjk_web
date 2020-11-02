@@ -126,7 +126,7 @@ class MemberHistoryGraph
       'Panda' => [aspirants(dates), Group.find_by(name: 'Panda').color],
       'Gratis' => [gratis(dates), :red],
       'Prøvetid' => [
-        dates.map { |d| NkfMemberTrial.where('reg_dato <= ?', d).count }.without_consecutive_zeros,
+        dates.map { |d| NkfMemberTrial.where('innmeldtdato <= ?', d).count }.without_consecutive_zeros,
         :yellow,
       ],
     }

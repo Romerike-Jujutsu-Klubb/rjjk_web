@@ -13,7 +13,7 @@ table.table
     tr
       th Registrert
       td
-        - date_text = [@signup.created_at, @signup.nkf_member_trial&.reg_dato].compact.min.to_date
+        - date_text = [@signup.created_at, @signup.nkf_member_trial&.innmeldtdato].compact.min.to_date
         - if @signup.nkf_member_trial_id
           a href=nkf_member_trial_path(@signup.nkf_member_trial_id) = date_text
         - else

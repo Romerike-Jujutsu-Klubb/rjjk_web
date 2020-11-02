@@ -158,7 +158,7 @@ class Group < ApplicationRecord
   def waiting_list
     return [] unless target_size
 
-    trial_list = trials.sort_by { |t| [-t.signup.user.attendances.size, t.reg_dato] }
+    trial_list = trials.sort_by { |t| [-t.signup.user.attendances.size, t.innmeldtdato] }
     active_size = members.count(&:active?)
     active_trial_count = (target_size - active_size)
     trial_list[active_trial_count..] || []

@@ -48,7 +48,7 @@ css:
 - if other_attendees.any?
   h5 Påmeldt
   ul.fa-ul
-    - other_attendees.sort_by { |a| [a.user.current_rank, a.user.member&.joined_on || a.user.signup.nkf_member_trial.reg_dato || a.user.signup.created_at || a.user.created_at, -a.user.age] }.each do |a|
+    - other_attendees.sort_by { |a| [a.user.current_rank, a.user.member&.joined_on || a.user.signup.nkf_member_trial.innmeldtdato || a.user.signup.created_at || a.user.created_at, -a.user.age] }.each do |a|
       = render 'practice_detail_member', attendance: a
 
 - if other_absentees.any?

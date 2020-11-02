@@ -112,6 +112,16 @@ class NkfAgent
     get 'https://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_bli_medlem?p_o3_pk_id=162'
   end
 
+  def trial_page(tid)
+    trial_details_url = 'page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem' \
+          "?p_ks_godkjenn_medlem_action=UPDATE&frm_28_v04=#{tid}&p_cr_par=#{session_id}"
+    get(trial_details_url)
+  end
+
+  def get_trial(tid)
+    trial_page(tid).body.force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8)
+  end
+
   def new_member_form
     get "page/portal/ks_utv/vedl_portlets/ks_godkjenn_medlem?p_cr_par=#{session_id}"
   end

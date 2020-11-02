@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_27_063156) do
+ActiveRecord::Schema.define(version: 2020_11_01_164451) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -498,24 +498,33 @@ ActiveRecord::Schema.define(version: 2020_10_27_063156) do
   end
 
   create_table 'nkf_member_trials', force: :cascade do |t|
-    t.string 'medlems_type', limit: 16, null: false
     t.string 'etternavn', limit: 32, null: false
     t.string 'fornavn', limit: 32, null: false
-    t.date 'fodtdato', null: false
-    t.integer 'alder', null: false
+    t.date 'fodselsdato', null: false
     t.string 'postnr', limit: 4, null: false
-    t.string 'sted', limit: 32, null: false
-    t.string 'adresse', limit: 64
+    t.string 'adresse_2', limit: 64
     t.string 'epost', limit: 64, null: false
     t.string 'mobil', limit: 16
-    t.boolean 'res_sms', null: false
-    t.date 'reg_dato', null: false
+    t.date 'innmeldtdato', null: false
     t.datetime 'created_at'
     t.datetime 'updated_at'
     t.integer 'tid', null: false
     t.string 'epost_faktura', limit: 64
-    t.string 'stilart', limit: 64, null: false
+    t.string 'gren_stilart_avd_parti___gren_stilart_avd_parti', limit: 64, null: false
     t.string 'kjonn', null: false
+    t.string 'foresatte', limit: 64
+    t.string 'foresatte_epost', limit: 64
+    t.string 'foresatte_mobil', limit: 25
+    t.string 'foresatte_nr_2', limit: 64
+    t.string 'foresatte_nr_2_mobil', limit: 25
+    t.integer 'hoyde', limit: 2
+    t.string 'kont_sats'
+    t.string 'kontraktsbelop'
+    t.string 'kontraktstype'
+    t.string 'medlemskategori_navn'
+    t.string 'rabatt'
+    t.string 'telefon', limit: 25
+    t.string 'telefon_arbeid', limit: 25
     t.index ['tid'], name: 'index_nkf_member_trials_on_tid', unique: true
   end
 
