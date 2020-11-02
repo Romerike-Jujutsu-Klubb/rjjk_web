@@ -27,7 +27,7 @@ h1 Ny innmelding
   - if @signup.nkf_member_trial
     .card
       .card-header
-        ' NKF Prøvemedlem: #{[@signup.nkf_member_trial, @signup.nkf_member_trial.adresse,  @signup.nkf_member_trial.postnr,  @signup.nkf_member_trial.epost,  @signup.nkf_member_trial.mobil].select(&:present?).join(', ')}
+        ' NKF Prøvemedlem: #{[@signup.nkf_member_trial, @signup.nkf_member_trial.adresse_2,  @signup.nkf_member_trial.postnr,  @signup.nkf_member_trial.epost,  @signup.nkf_member_trial.mobil].select(&:present?).join(', ')}
         button.btn.btn-outline-secondary.btn-sm.float-right type="button" data-toggle="collapse" data-target="#trial" aria-expanded="false" aria-controls="trial"
           i.fa.fa-chevron-down
       #trial.card-body.table-responsive.collapse
