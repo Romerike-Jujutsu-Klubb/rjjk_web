@@ -23,6 +23,7 @@ class NkfMemberTest < ActiveSupport::TestCase
         phone_home: nil,
         phone_work: nil,
       },
+      trial: { reg_dato: nil },
       user: {
         address: 'Bøkeveien 11',
         birthdate: Date.parse('1974-04-01'),
