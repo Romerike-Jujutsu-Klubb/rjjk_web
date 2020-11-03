@@ -10,5 +10,5 @@
           = link_to u.name, u.signup || u
           - if u.absent?(days: 14)
             br
-            = u.attendances.select(&:present?).sort_by(&:date).last&.date || u.member&.innmeldtdato || u.signup&.nkf_member_trial&.reg_dato || 'Oppmøte ikke registret'
+            = u.attendances.select(&:present?).sort_by(&:date).last&.date || u.member&.joined_on || u.signup&.nkf_member_trial&.reg_dato || 'Oppmøte ikke registret'
         td.text-right = render 'attendances/button', attendance: attendance

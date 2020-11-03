@@ -1,19 +1,1 @@
-- @next_practices&.each do |next_practice|
-  - if current_user.name == 'Uwe Kubosch' && current_user.member && next_practice&.group_schedule&.group&.current_semester&.chief_instructor_id == current_user.member.id
-    - attendees = next_practice.attendances.map(&:user)
-    - active_members = next_practice.group_schedule.group.users.includes(:member).merge(Member.active).where.not(id: attendees)
-    - recent_passive_absentees, recent_active_absentees = active_members.absent_since(2.weeks.ago).partition{|u| u.member.passive_on}
-    h3 Oppfølging (#{recent_active_absentees.size})
-    .row
-      .col-6
-        table.table class=('table-sm' if recent_active_absentees.size > 5)
-          - recent_active_absentees.each do |m|
-            tr
-              td = link_to m.name, m
-      .col-6
-        table.table class=('table-sm' if recent_passive_absentees.size > 5)
-          - recent_passive_absentees.each do |m|
-            tr
-              td = link_to m.name, m
-
 = render template: 'news/index'
