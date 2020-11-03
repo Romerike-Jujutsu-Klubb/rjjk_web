@@ -40,4 +40,13 @@ class NkfMemberTrialsController < ApplicationController
       render action: 'new'
     end
   end
+
+  def sync_with_nkf
+    NkfImportTrialMembersJob.perform_later
+    redirect_to signups_path
+  end
+
+  def sync_progress
+    render plain: '', status: NkfSynchronizationJob.mon_locked? ? :ok : :no_content
+  end
 end

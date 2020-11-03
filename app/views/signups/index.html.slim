@@ -1,7 +1,31 @@
 - @content_width = 1024
-a.btn.btn-primary.float-right href=signup_guide_root_path
-  i.fa.fa-plus>
-  | Ny innmelding
+
+.float-right
+  a.btn.btn-primary href=signup_guide_root_path
+    i.fa.fa-plus>
+    | Ny innmelding
+  a.btn.btn-warning.ml-2 href=sync_with_nkf_nkf_member_trials_path data-method=:post
+    i.fa.fa-sync.mr-2 class=('fa-spin' if NkfImportTrialMembersJob.mon_locked?)
+    | Synkronisér med NKF
+  javascript:
+    setInterval(function() {
+      $.get('#{sync_progress_nkf_member_trials_path}', function(data, textStatus, xhr) {
+        if (xhr.status === 200) {
+          $('.fa-sync').addClass('fa-spin');
+        } else if ($('.fa-sync').hasClass('fa-spin')) {
+          $('.fa-sync').removeClass('fa-spin');
+          console.log("Sync completed!");
+          window.location.reload();
+        }
+      }).fail(function(jqXHR, textStatus, errorThrown) {
+        if (jqXHR.status === 404 && $('.fa-sync').hasClass('fa-spin')) {
+          $('.fa-sync').removeClass('fa-spin');
+          console.log("Sync completed!");
+        }
+      })
+    }, 4000);
+
+
 h1 Innmeldinger (#{@signups.size})
 
 table.table class=('table-sm' if @signups.size > 12) data-record-path=signups_path

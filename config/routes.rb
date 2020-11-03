@@ -262,7 +262,12 @@ Rails.application.routes.draw do
       post :sync_with_nkf
     end
   end
-  resources :nkf_member_trials
+  resources :nkf_member_trials do
+    collection do
+      get :sync_progress
+      post :sync_with_nkf
+    end
+  end
   resources :page_aliases
   resources :practices
   resources :price_age_groups

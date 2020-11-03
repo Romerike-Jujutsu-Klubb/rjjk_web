@@ -23,7 +23,7 @@ class NkfMembersController < ApplicationController
 
   def sync_with_nkf
     NkfSynchronizationJob.perform_later
-    redirect_to sync_errors_nkf_members_path
+    redirect_to signups_path
   end
 
   def sync_progress
