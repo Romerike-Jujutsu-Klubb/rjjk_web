@@ -64,9 +64,12 @@ class NkfMemberTrialImport
             user ||= User.create!(nkf_trial.converted_attributes(include_blank: false))
             signup = Signup.create! user: user, nkf_member_trial: nkf_trial
           end
-          mapped_changes = signup.mapping_attributes
-          changes = submit_form(trial_details_page, 'ks_godkjenn_medlem', mapped_changes, :trial)
-          logger.info "changes: #{changes}"
+          # mapped_changes = signup.mapping_attributes
+          # changes = submit_form(trial_details_page, 'ks_godkjenn_medlem', mapped_changes, :trial)
+          # logger.info "changes: #{changes}"
+
+          nkf_trial_attributes = read_form(form, :trial)
+          nkf_trial.update!(nkf_trial_attributes)
         else
           # New trial
           form = trial_details_page.form('ks_godkjenn_medlem')
