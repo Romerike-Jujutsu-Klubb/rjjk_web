@@ -30,7 +30,7 @@ class NkfMemberTrialsControllerTest < ActionController::TestCase
   end
 
   test 'should show nkf_member_trial' do
-    get :show, params: { id: nkf_member_trials(:one).to_param }
+    get :show, params: { id: nkf_member_trials(:hans).to_param }
     assert_response :success
   end
 end

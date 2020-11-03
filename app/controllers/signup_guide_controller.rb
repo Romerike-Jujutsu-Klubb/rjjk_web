@@ -62,7 +62,7 @@ class SignupGuideController < ApplicationController
       return redirect_to signup_guide_contact_info_path, alert: ''
     end
 
-    return redirect_to signup_guide_guardians_path if @user.age < 18 && !@user.guardian_1&.contact_info?
+    return redirect_to signup_guide_guardians_path if @user.age&.<(18) && !@user.guardian_1&.contact_info?
 
     redirect_to signup_guide_groups_path
   end
@@ -102,9 +102,8 @@ class SignupGuideController < ApplicationController
       mapped_changes = @signup.mapping_attributes
       submit_form(trial_form_page, 'ks_bli_medlem', mapped_changes, :new_trial,
           submit_in_development: true)
-
       @signup.save!
-
+      clear_signup
       NkfImportTrialMembersJob.perform_later
       render :complete
     end
@@ -134,6 +133,11 @@ class SignupGuideController < ApplicationController
   def store_signup
     json = @user.to_json(include: :group_ids)
     logger.info "store_signup: #{json}"
-    cookies[:signup] = { value: json, expires: 4.years.from_now }
+    cookies[:signup] = { value: json, expires: 100.years.from_now }
+  end
+
+  def clear_signup
+    logger.info 'clear_signup'
+    cookies.delete(:signup)
   end
 end

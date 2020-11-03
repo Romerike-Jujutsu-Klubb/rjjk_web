@@ -46,6 +46,9 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
         { nkf_attr: :rabatt, target: :membership, target_attribute: :discount, nkf_value: nil,
           mapped_nkf_value: nil, rjjk_value: 100, mapped_rjjk_value: '100',
           form_field: { member: :frm_48_v38, trial: :frm_28_v35 } },
+        { nkf_attr: :reg_dato, target: :trial, target_attribute: :reg_dato, nkf_value: nil,
+          mapped_nkf_value: nil, rjjk_value: nil, mapped_rjjk_value: '',
+          form_field: { trial: :frm_28_v32 } },
       ]],
       [members(:sebastian), [
         { nkf_attr: :epost, target: :user, target_attribute: :contact_email,
@@ -97,6 +100,9 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
         { nkf_attr: :rabatt, target: :membership, target_attribute: :discount, nkf_value: nil,
           mapped_nkf_value: nil, rjjk_value: 100, mapped_rjjk_value: '100',
           form_field: { member: :frm_48_v38, trial: :frm_28_v35 } },
+        { nkf_attr: :reg_dato, target: :trial, target_attribute: :reg_dato, nkf_value: nil,
+          mapped_nkf_value: nil, rjjk_value: nil, mapped_rjjk_value: '',
+          form_field: { trial: :frm_28_v32 } },
       ]],
       [members(:uwe), [
         { nkf_attr: :epost, target: :user, target_attribute: :contact_email, nkf_value: 'uwe@example.net',
@@ -129,6 +135,9 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
         { nkf_attr: :rabatt, target: :membership, target_attribute: :discount, nkf_value: nil,
           mapped_nkf_value: nil, rjjk_value: 100, mapped_rjjk_value: '100',
           form_field: { member: :frm_48_v38, trial: :frm_28_v35 } },
+        { nkf_attr: :reg_dato, target: :trial, target_attribute: :reg_dato, nkf_value: nil,
+          mapped_nkf_value: nil, rjjk_value: nil, mapped_rjjk_value: '',
+          form_field: { trial: :frm_28_v32 } },
       ]],
     ], c.members)
 
@@ -221,6 +230,9 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
         { nkf_attr: :rabatt, target: :membership, target_attribute: :discount, nkf_value: nil,
           mapped_nkf_value: nil, rjjk_value: 100, mapped_rjjk_value: '100',
           form_field: { member: :frm_48_v38, trial: :frm_28_v35 } },
+        { nkf_attr: :reg_dato, target: :trial, target_attribute: :reg_dato, nkf_value: nil,
+          mapped_nkf_value: nil, rjjk_value: nil, mapped_rjjk_value: '',
+          form_field: { trial: :frm_28_v32 } },
       ]
     ]], c.members)
 
@@ -296,6 +308,9 @@ class NkfMemberComparisonTest < ActionMailer::TestCase
       { nkf_attr: :rabatt, target: :membership, target_attribute: :discount, nkf_value: nil,
         mapped_nkf_value: nil, rjjk_value: 100, mapped_rjjk_value: '100',
         form_field: { member: :frm_48_v38, trial: :frm_28_v35 } },
+      { nkf_attr: :reg_dato, target: :trial, target_attribute: :reg_dato, nkf_value: nil,
+        mapped_nkf_value: nil, rjjk_value: nil, mapped_rjjk_value: '',
+        form_field: { trial: :frm_28_v32 } },
     ]]], c.members
 
     assert_equal([

@@ -1,4 +1,4 @@
-one:
+hans:
   etternavn: Eriksen
   fornavn: Hans
   fodselsdato: 2007-10-03
@@ -13,7 +13,7 @@ one:
   tid: 1
   gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu
 
-two:
+erik:
   etternavn: Hansen
   fornavn: Erik
   fodselsdato: 2006-10-03
@@ -27,7 +27,7 @@ two:
   tid: 2
   gren_stilart_avd_parti___gren_stilart_avd_parti: Jujutsu
 
-three:
+even:
   etternavn: Jensen
   fornavn: Even
   fodselsdato: 2007-11-04

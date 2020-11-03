@@ -7,6 +7,9 @@ class CloudinaryUploadJob < ApplicationJob
     image = Image.find(image_id)
     if image.cloudinary_identifier
       logger.error "Image already uploaded: #{image_id.inspect}"
+    elsif Rails.env.test?
+      logger.info "Cloudinary upload skipped: #{image_id}"
+      return
     else
       result = Cloudinary::Uploader.upload_large(
           image.content_data_io,

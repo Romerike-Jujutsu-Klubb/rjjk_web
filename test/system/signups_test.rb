@@ -25,8 +25,8 @@ class SignupsTest < ApplicationSystemTestCase
     first('tbody tr').click x: 1, y: 1
     click_on 'Endre'
 
-    select_from_chosen 'Hans Eriksen', from: :signup_nkf_member_trial_id
-    select_from_chosen 'Lise Kubosch', from: :signup_user_id
+    select_from_chosen 'Manuel Neuer', from: :signup_user_id
+    select_from_chosen 'Even Jensen', from: :signup_nkf_member_trial_id
     click_on 'Lagre'
 
     assert_text 'Signup was successfully updated'

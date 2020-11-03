@@ -1,11 +1,11 @@
 one:
   user: lise
-  nkf_member_trial: one
+  nkf_member_trial: hans
 
 two:
   user: leftie
-  nkf_member_trial: two
+  nkf_member_trial: erik
 
 three:
   user: sandra
-  nkf_member_trial: three
+  nkf_member_trial: even

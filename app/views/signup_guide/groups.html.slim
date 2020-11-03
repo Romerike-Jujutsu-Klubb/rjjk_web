@@ -1,5 +1,5 @@
 .card
-  h5.card-header Treningsgrupper for #{@user.age < 18 ? @user.first_name : @user.name}
+  h5.card-header Treningsgrupper for #{@user.age&.<(18) ? @user.first_name : @user.name}
   .card-body
     p
       - if @groups.size == 0

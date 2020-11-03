@@ -90,17 +90,18 @@ class NkfMemberTrialImport
           # New trial
           form = trial_details_page.form('ks_godkjenn_medlem')
           nkf_trial_attributes = read_form(form, :trial)
-          nkf_trial = NkfMemberTrial.new(tid: tid, **nkf_trial_attributes)
+          nkf_trial = NkfMemberTrial.create!(tid: tid, **nkf_trial_attributes)
           user = User.find_by(email: nkf_trial_attributes[:epost]) if nkf_trial_attributes[:epost].present?
           if nkf_trial_attributes[:mobil].present?
             user ||= User.find_by(phone: nkf_trial_attributes[:mobil])
           end
-          if user.nil?
-            # user = User.create!(nkf_trial.user_attributes)
-            user =
-                nkf_trial.create_corresponding_user!(nkf_trial.converted_attributes(include_blank: false))
+          user ||=
+              nkf_trial.create_corresponding_user!(nkf_trial.converted_attributes(include_blank: false))
+          if user.signup
+            user.signup.update! nkf_member_trial: nkf_trial
+          else
+            Signup.create! user: user, nkf_member_trial: nkf_trial
           end
-          Signup.create! user: user, nkf_member_trial: nkf_trial
           @trial_changes << { record: nkf_trial, changes: :new }
         end
       end

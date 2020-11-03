@@ -28,10 +28,11 @@ class SignupsController < ApplicationController
   end
 
   def edit
-    @users ||= [@signup.user] + User.with_deleted.includes(:member, :signups)
+    @users ||= [@signup.user].compact + User.with_deleted.includes(:member, :signups)
         .where(members: { id: nil }, signups: { id: nil })
         .order(:first_name, :last_name).to_a
-    @nkf_member_trials = [@signup.nkf_member_trial].compact
+    @nkf_member_trials = [@signup.nkf_member_trial].compact +
+        NkfMemberTrial.includes(:signup).where(signups: { id: nil }).order(:fornavn, :etternavn).to_a
     render :edit
   end
 

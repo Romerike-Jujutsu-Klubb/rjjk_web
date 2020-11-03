@@ -16,41 +16,38 @@ require 'application_system_test_case'
 # New user under 18 years with two guardians and a separate billing user
 
 class SignupGuideTest < ApplicationSystemTestCase
-  setup do
-    @signup = signups(:one)
-    login
-  end
+  test 'New user over 18 years' do
+    visit root_path
+    click_on 'Prøv oss!'
 
-  test 'visiting the index' do
-    visit signups_url
-    assert_selector 'h1', text: 'Innmeldinger'
-  end
+    screenshot :basics
+    fill_in :user_name, with: 'Bruce Lee'
+    fill_in :user_birthdate, with: '27111940'
+    find('label', text: 'Mann').click
+    screenshot :basics_filled
+    click_on 'Neste'
 
-  test 'creating a Signup' do
-    signups(:three).delete
-    visit signups_url
-    click_on 'Ny innmelding'
-    assert_current_path signup_guide_root_path
-  end
+    screenshot :contact_info
+    fill_in :user_email, with: 'bruce.lee@test.com'
+    fill_in :user_phone, with: '+1 206 322 1582'
+    fill_in :user_address, with: '1554 15th Ave E, Seattle, WA 98112-2805'
+    fill_in :user_postal_code, with: '2805'
+    screenshot :contact_info_filled
+    click_on 'Neste'
 
-  test 'updating a Signup' do
-    visit signups_url
-    first('tbody tr').click x: 1, y: 1
-    click_on 'Endre'
+    screenshot :groups
+    screenshot :groups_filled
 
-    select_from_chosen 'Lise Kubosch', from: :signup_user_id
-    select_from_chosen 'Hans Eriksen', from: :signup_nkf_member_trial_id
-    click_on 'Lagre'
+    assert_difference(-> { Signup.count }, 13) do
+      assert_difference(-> { User.count }, 32) do
+        assert_difference(-> { NkfMemberTrial.count }, 12) do
+          VCR.use_cassette('NKF_Create_Trial', match_requests_on: %i[method host path query]) do
+            click_on 'Meld inn'
+          end
+        end
+      end
+    end
 
-    assert_text 'Signup was successfully updated'
-  end
-
-  test 'destroying a Signup' do
-    visit signups_url
-    first('tbody tr').click x: 1, y: 1
-    click_on 'Endre'
-    page.accept_confirm { click_on 'Slett' }
-
-    assert_text 'Signup was successfully destroyed'
+    screenshot :complete
   end
 end
