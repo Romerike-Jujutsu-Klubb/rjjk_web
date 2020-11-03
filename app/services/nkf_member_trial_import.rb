@@ -82,7 +82,7 @@ class NkfMemberTrialImport
                 nkf_trial.create_corresponding_user!(nkf_trial.converted_attributes(include_blank: false))
           end
           Signup.create! user: user, nkf_member_trial: nkf_trial
-          @trial_changes << { record: nkf_trial, changes: {} }
+          @trial_changes << { record: nkf_trial, changes: :new }
         end
 
         next unless nkf_trial.changed?
