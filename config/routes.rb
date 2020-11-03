@@ -306,7 +306,7 @@ Rails.application.routes.draw do
   resources :signups do
     member do
       patch :complete
-      patch :terminate
+      delete :terminate
     end
   end
   resources :sms, only: %i[index show create]
