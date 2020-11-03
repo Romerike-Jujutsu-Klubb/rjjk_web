@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_01_164451) do
+ActiveRecord::Schema.define(version: 2020_11_03_102820) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -525,6 +525,7 @@ ActiveRecord::Schema.define(version: 2020_11_01_164451) do
     t.string 'rabatt'
     t.string 'telefon', limit: 25
     t.string 'telefon_arbeid', limit: 25
+    t.date 'reg_dato', null: false
     t.index ['tid'], name: 'index_nkf_member_trials_on_tid', unique: true
   end
 

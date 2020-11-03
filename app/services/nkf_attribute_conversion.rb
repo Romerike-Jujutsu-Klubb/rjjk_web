@@ -70,6 +70,7 @@ module NkfAttributeConversion
     postnr: { map_to: { user: :postal_code },
               form_field: { member: :frm_48_v07, new_trial: :frm_29_v07, trial: :frm_28_v12 } },
     rabatt: { map_to: { membership: :discount }, form_field: { member: :frm_48_v38, trial: :frm_28_v35 } },
+    reg_dato: { map_to: { trial: :reg_dato }, form_field: { trial: :frm_28_v32 } },
     sist_betalt_dato: {},
     sted: {},
     telefon: { map_to: { membership: :phone_home },
@@ -337,6 +338,14 @@ module NkfAttributeConversion
     when :guardian_2
       user&.guardian_2 ||
           ((nkf_values.any? { |_k, v| v.present? } || nil) && user&.build_guardian_2)
+    when :trial
+      begin
+        nkf_member_trial
+      rescue
+        nil
+      end
+    else
+      raise "Unknown target: #{target.inspect}"
     end
   end
 

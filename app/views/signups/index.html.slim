@@ -37,11 +37,7 @@ table.table class=('table-sm' if @signups.size > 12) data-record-path=signups_pa
   tbody
     - @signups.each do |signup|
       tr data-record-id=signup.id
-        td
-          - if signup.nkf_member_trial&.innmeldtdato
-            = signup.nkf_member_trial.innmeldtdato
-          - else
-            = signup.created_at.to_date
+        td = signup.nkf_member_trial&.reg_dato || signup.created_at.to_date
         td = link_to(signup.user,signup.user)
         td
           - if signup.nkf_member_trial

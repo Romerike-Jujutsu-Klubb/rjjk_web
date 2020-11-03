@@ -5,7 +5,8 @@ class SignupsController < ApplicationController
   before_action :set_signup, only: %i[show edit update destroy complete terminate]
 
   def index
-    @signups = Signup.order(created_at: :desc)
+    @signups = Signup.includes(:nkf_member_trial, :user).references(:nkf_member_trials)
+        .order(:reg_dato, :created_at).to_a
   end
 
   def show; end

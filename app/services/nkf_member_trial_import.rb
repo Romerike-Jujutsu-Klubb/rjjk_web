@@ -58,18 +58,34 @@ class NkfMemberTrialImport
       Signup.transaction do
         trial_details_page = nkf_agent.trial_page(tid)
         if (nkf_trial = NkfMemberTrial.find_by(tid: tid))
-          if (signup = nkf_trial.signup).nil?
+          if nkf_trial.signup.nil?
             user = User.find_by(email: changes[:epost]) if changes[:epost].present?
             user ||= User.find_by(phone: changes[:mobil]) if changes[:mobil].present?
             user ||= User.create!(nkf_trial.converted_attributes(include_blank: false))
-            signup = Signup.create! user: user, nkf_member_trial: nkf_trial
+            nkf_trial.create_signup! user: user
           end
+
+          # FIXME(uwe): Change to submitting the form when we are sure it is safe
           # mapped_changes = signup.mapping_attributes
           # changes = submit_form(trial_details_page, 'ks_godkjenn_medlem', mapped_changes, :trial)
           # logger.info "changes: #{changes}"
+          # @trial_changes << { record: nkf_trial, changes: changes }
+          # EMXIF
 
-          nkf_trial_attributes = read_form(form, :trial)
-          nkf_trial.update!(nkf_trial_attributes)
+          # FIXME(uwe): Remove when we submit the form
+          form = trial_details_page.form('ks_godkjenn_medlem')
+          nkf_trial.attributes = read_form(form, :trial)
+          next unless nkf_trial.changed?
+
+          changes = nkf_trial.changes
+          if nkf_trial.save
+            @trial_changes << { record: nkf_trial, changes: changes }
+          else
+            logger.error "ERROR: #{nkf_trial.attributes}"
+            logger.error "ERROR: #{nkf_trial.errors.to_a.join(', ')}"
+            @error_records << nkf_trial
+          end
+          # EMXIF
         else
           # New trial
           form = trial_details_page.form('ks_godkjenn_medlem')
@@ -86,17 +102,6 @@ class NkfMemberTrialImport
           end
           Signup.create! user: user, nkf_member_trial: nkf_trial
           @trial_changes << { record: nkf_trial, changes: :new }
-        end
-
-        next unless nkf_trial.changed?
-
-        c = nkf_trial.changes
-        if nkf_trial.save
-          @trial_changes << { record: nkf_trial, changes: c }
-        else
-          logger.error "ERROR: #{nkf_trial.attributes}"
-          logger.error "ERROR: #{nkf_trial.errors.to_a.join(', ')}"
-          @error_records << nkf_trial
         end
       end
     end
