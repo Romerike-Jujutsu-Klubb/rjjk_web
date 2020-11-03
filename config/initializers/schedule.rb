@@ -79,7 +79,7 @@ unless reason
     end
 
     # Admin Hourly
-    scheduler.cron('35 23 * * *') do
+    scheduler.cron('25 23 * * *') do
       Rails.application.executor.wrap { NkfSynchronizationJob.perform_now }
     end
     scheduler.cron('10 * * * *') do
