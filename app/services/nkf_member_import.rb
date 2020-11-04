@@ -127,6 +127,7 @@ class NkfMemberImport
         next if %w[aktivitetsomrade_id aktivitetsomrade_navn alder avtalegiro
                    beltefarge dan_graderingsserifikat forbundskontingent].include? column
 
+        row[i] = row[i][0] if column == 'kjonn'
         attributes[column] = row[i]&.strip
       end
       record = NkfMember.find_by(medlemsnummer: row[0]) || NkfMember.new

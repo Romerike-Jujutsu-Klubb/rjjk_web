@@ -99,7 +99,7 @@ class SignupGuideController < ApplicationController
 
       agent = NkfAgent.new(:signup)
       trial_form_page = agent.new_trial_form
-      mapped_changes = @signup.mapping_attributes
+      mapped_changes = @signup.mapping_attributes(:new_trial)
       submit_form(trial_form_page, 'ks_bli_medlem', mapped_changes, :new_trial,
           submit_in_development: true)
       @signup.save!

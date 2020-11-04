@@ -12,8 +12,8 @@ class NkfMembersController < ApplicationController
 
   # 7045.3  +3.0  2204 sql
   DOWNSTREAM_USER_SYMS = %i[primary_wards].freeze
-  RELATED_USER_SYMS = UPSTREAM_USER_SYMS
-      .index_with { |_uu| [:member, DOWNSTREAM_USER_SYMS.index_with { |_du| :member }] }
+  RELATED_USER_SYMS =
+      UPSTREAM_USER_SYMS.index_with { |_uu| [:member, DOWNSTREAM_USER_SYMS.index_with { |_du| :member }] }
 
   def sync_errors
     @errors = NkfMember.includes(member: { user: [RELATED_USER_SYMS, :groups] })
@@ -23,7 +23,7 @@ class NkfMembersController < ApplicationController
 
   def sync_with_nkf
     NkfSynchronizationJob.perform_later
-    redirect_to signups_path
+    redirect_to sync_errors_nkf_members_path
   end
 
   def sync_progress

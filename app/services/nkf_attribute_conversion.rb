@@ -86,12 +86,12 @@ module NkfAttributeConversion
 
   MAPPED_FIELDS = FIELD_MAP.select { |_nkf_attr, mapping| mapping[:map_to] }.freeze
 
-  def mapping_attributes
-    MAPPED_FIELDS.map(&method(:rjjk_attribute)).compact
+  def mapping_attributes(form)
+    MAPPED_FIELDS.select { |_nkf_attr, mapping| mapping[:form_field][form] }.map(&method(:rjjk_attribute))
   end
 
   def mapping_changes
-    mapping_attributes.select do |a|
+    mapping_attributes(:member).select do |a|
       next if utmeldtdato.present? && a[:nkf_attr] != :utmeldtdato
 
       a[:target] && a[:mapped_rjjk_value] != a[:nkf_value]

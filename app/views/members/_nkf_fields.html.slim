@@ -1,4 +1,4 @@
-- mapped_fields, unmapped_fields = member.nkf_member.mapping_attributes.partition{|h| h[:target]}
+- mapped_fields, unmapped_fields = member.nkf_member.mapping_attributes(:member).partition{|h| h[:target]}
 
 ul.nav.nav-tabs id="nkfFields#{member.id}Tab" role="tablist"
   li.nav-item: a.nav-link.active id="nkfFields#{member.id}Mapped-tab" data-toggle="tab" data-target="#nkfFields#{member.id}Mapped" role="tab" aria-controls="home" aria-selected="true" Synkronisert

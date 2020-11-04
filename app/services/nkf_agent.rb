@@ -55,14 +55,14 @@ class NkfAgent
       login_form.password = NKF_PASSWORD
       login_form.site2pstoretoken = token
       response = submit(login_form)
-      @session_id = response.body.scan(/start_tilleggsfunk27\('([^"]*)'\)/)[0][0]
-      raise 'Could not find session id' unless @session_id
-
-      @extra_function_codes = response.body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
-      raise response.body if @extra_function_codes.empty?
-
+      store_session_id(response)
       response
     end
+  end
+
+  def main_page(_nkf_agent)
+    response = get('https://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_reg_medladm')
+    store_session_id(response)
   end
 
   def search_members(nkf_member_id = nil)
@@ -97,6 +97,7 @@ class NkfAgent
         search_result_body << page_body
       end
     end
+    store_session_id(search_result_page)
     @session_id = search_result_body.scan(/Download27\('(.*?)'\)/)[0][0]
     raise 'Could not find session id' unless @session_id
 
@@ -154,6 +155,14 @@ class NkfAgent
   end
 
   private
+
+  def store_session_id(response)
+    @session_id = response.body.scan(/start_tilleggsfunk27\('([^"]*)'\)/)[0][0]
+    raise 'Could not find session id' unless @session_id
+
+    @extra_function_codes = response.body.scan(/start_tilleggsfunk27\('(.*?)'\)/)
+    raise response.body if @extra_function_codes.empty?
+  end
 
   def thread_local_agent
     (Thread.current[@thread_key] ||= @agent.clone)

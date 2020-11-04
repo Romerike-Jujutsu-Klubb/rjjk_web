@@ -14,7 +14,9 @@ class NkfMemberTrialImport
     @error_records = []
     @cookies = []
 
-    unless nkf_agent
+    if nkf_agent
+      nkf_agent.main_page
+    else
       nkf_agent = NkfAgent.new(:trial_import)
       nkf_agent.login
     end
@@ -41,7 +43,8 @@ class NkfMemberTrialImport
     trial_ids = []
 
     # FIXME(uwe): Add pagination when reading NKF member trials
-    member_trials_body = nkf_agent.trial_index.body
+    trial_index_page = nkf_agent.trial_index
+    member_trials_body = trial_index_page.body
     new_trial_ids = member_trials_body.scan(/edit_click28\('(.*?)'\)/).map(&:first)
     trial_ids += new_trial_ids
 
