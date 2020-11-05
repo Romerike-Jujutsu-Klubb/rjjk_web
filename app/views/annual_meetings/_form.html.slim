@@ -1,6 +1,7 @@
 .row
   .offset-md-2.col-md-8
     = bootstrap_form_for(@annual_meeting) do |f|
+      = f.hidden_field :type
       - if @annual_meeting.errors.any?
         #error_explanation
           h2 #{pluralize(@annual_meeting.errors.count, 'error')} prohibited this annual_meeting from being saved:
