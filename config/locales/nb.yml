@@ -1,5 +1,6 @@
 nb:
   attributes:
+    address: Adresse
     basic_technique_id: Grunnteknikk
     curriculum_group_id: Pensum
     from_age: "Fra alder"
@@ -60,7 +61,6 @@ nb:
       event:
         invitees: Inviter
       event_invitee:
-        address: Adresse
         comment: Kommentar
         email: E-post
         organization: Organisasjon / klubb
@@ -171,7 +171,6 @@ nb:
       technique_application:
         rank_id: Grad
       user:
-        address: Adresse
         birthdate: Fødselsdato
         billing_user_id: Betaler
         contact_user_id: Kontakt
