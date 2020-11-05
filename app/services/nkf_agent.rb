@@ -60,7 +60,7 @@ class NkfAgent
     end
   end
 
-  def main_page(_nkf_agent)
+  def main_page
     response = get('https://nkfwww.kampsport.no/portal/page/portal/ks_utv/ks_reg_medladm')
     store_session_id(response)
   end
