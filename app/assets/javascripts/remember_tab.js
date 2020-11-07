@@ -135,7 +135,7 @@ $(function() {
 
     // Load remote content
     if (!tab.html()) {
-      var target = tab.attr('data-target');
+      var target = tab.data('target');
       if (target) {
         tab.html('<div class="text-center" style="padding: 3em"><i class="fa fa-circle-notch fa-spin fa-5x mb-3"/><br/>Et øyeblikk...</div>');
         tab.load(target, function(responseText, textStatus) {

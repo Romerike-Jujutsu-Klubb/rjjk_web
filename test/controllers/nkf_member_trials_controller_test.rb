@@ -20,9 +20,8 @@ class NkfMemberTrialsControllerTest < ActionController::TestCase
       post :create, params: { nkf_member_trial: {
         adresse_2: 'vei', epost: 'werwer@ertrt.br', epost_faktura: 'sefsdfd@sdfsdf.com',
         etternavn: 'Hansen', fodselsdato: '2000-01-01', fornavn: 'Erik',
-        mobil: '12345678', postnr: '1234', innmeldtdato: '2012.03.14',
-        gren_stilart_avd_parti___gren_stilart_avd_parti: 'Jujutsu',
-        tid: '12345678', kjonn: 'M'
+        gren_stilart_avd_parti___gren_stilart_avd_parti: 'Jujutsu', innmeldtdato: '2012.03.14', kjonn: 'M',
+        mobil: '12345678', postnr: '1234', reg_dato: '1999-12-31', tid: '12345678'
       } }
     end
 

@@ -15,7 +15,7 @@ class NkfMemberTrial < ApplicationRecord
   search_scope %i[fornavn etternavn epost], order: %i[fornavn etternavn]
 
   validates :epost, :etternavn, :fodselsdato, :fornavn, :postnr, :innmeldtdato,
-      :gren_stilart_avd_parti___gren_stilart_avd_parti, :tid,
+      :gren_stilart_avd_parti___gren_stilart_avd_parti, :reg_dato, :tid,
       presence: true
   validates :kjonn, inclusion: { in: %w[M K I] }
 
