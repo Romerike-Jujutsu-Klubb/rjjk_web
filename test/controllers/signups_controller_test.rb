@@ -22,7 +22,7 @@ class SignupsControllerTest < ActionDispatch::IntegrationTest
     signups(:three).really_destroy!
     assert_difference('Signup.count') do
       post signups_url, params: { signup: {
-        nkf_member_trial_id: id(:three), user_id: id(:sandra)
+        nkf_member_trial_id: id(:even), user_id: id(:sandra)
       } }
     end
 
