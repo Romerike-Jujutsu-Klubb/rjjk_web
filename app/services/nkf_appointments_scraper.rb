@@ -42,7 +42,7 @@ class NkfAppointmentsScraper
     end
     appointments.select { |a| a.is_a?(String) } +
         appointments.select { |a| !a.is_a?(String) && a.changed? }
-        .each(&:save!).sort_by(&:from)
+            .each(&:save!).sort_by { |a| [a.from, a.to || a.from, a.member.name, a.role.name] }
   rescue => e
     logger.warn "Exception scraping appointments (#{tries}): #{e}"
     if (tries += 1) <= 3

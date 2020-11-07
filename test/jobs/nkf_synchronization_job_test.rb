@@ -83,10 +83,10 @@ class NkfSynchronizationJobTest < ActionMailer::TestCase
       '<tr> <td>Svein Robert Rolijordet</td> <td>Leder (2 år)</td> <td>2014-02-25</td> <td>2015-02-12</td> </tr>',
       '<tr> <td>Bastian Filip Krohn</td> <td>Kasserer (2 år)</td> <td>2015-02-12</td> <td></td> </tr>',
       '<tr> <td>Bastian Filip Krohn</td> <td>Kasserer (2 år)</td> <td>2015-02-12</td> <td></td> </tr>',
-      '<tr> <td>Sara Madelen Musæus</td> <td>Materialforvalter</td> <td>2015-02-12</td> <td>2018-03-15</td> </tr>',
       '<tr> <td>Scott Jåfs Evensen</td> <td>Nestleder</td> <td>2015-02-12</td> <td>2017-02-28</td> </tr>',
-      '<tr> <td>Atle Tollefsen</td> <td>Påmeldingsansvarlig</td> <td>2018-03-21</td> <td>2018-12-31</td> </tr>',
+      '<tr> <td>Sara Madelen Musæus</td> <td>Materialforvalter</td> <td>2015-02-12</td> <td>2018-03-15</td> </tr>',
       '<tr> <td>Atle Tollefsen</td> <td>Medlemsansvarlig</td> <td>2018-03-21</td> <td>2018-12-31</td> </tr>',
+      '<tr> <td>Atle Tollefsen</td> <td>Påmeldingsansvarlig</td> <td>2018-03-21</td> <td>2018-12-31</td> </tr>',
       '<tr> <td>Curt Mekiassen</td> <td>Medlem</td> <td>2019-03-24</td> <td></td> </tr>',
     ], mail.body.decoded.gsub(/\s+/, ' ').scan(%r{<tr>.*?</tr>}m)
   end

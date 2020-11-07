@@ -1,3 +1,11 @@
+/ https://stackoverflow.com/a/52634662/658690
+css:
+  .card-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-gap: .5rem;
+  }
+
 a.btn.btn-primary.float-right href=with_detour(new_attendance_path(attendance: {practice_id: @practice&.id}))
   i.fa.fa-plus>
   .d-none.d-sm-inline Nytt oppmøte
@@ -10,14 +18,8 @@ ul#tab.nav.nav-tabs role="tablist"
       a.nav-link id="instruction_#{group.id}-tab" class=(:active if @practice&.group_schedule&.group_id == group.id) data-toggle="tab" data-target="#instruction_#{group.id}" role="tab" aria-controls="home" aria-selected="true" = group.name
   li.nav-item
     a#lists-tab.nav-link class=(:active unless @practice) data-toggle="tab" data-target="#lists" role="tab" aria-controls="contact" aria-selected="false" Lister
+
 #tabContent.tab-content
-  / https://stackoverflow.com/a/52634662/658690
-  css:
-    .card-deck {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      grid-gap: .5rem;
-    }
   - @my_groups.each do |group|
     .tab-pane.fade id="instruction_#{group.id}" class=('show active' if @practice&.group_schedule&.group_id == group.id) role="tabpanel" aria-labelledby="home-tab"
       - next_practice = group.next_practice
@@ -77,7 +79,6 @@ ul#tab.nav.nav-tabs role="tablist"
   #lists.tab-pane.fade class=('show active' unless @practice) role="tabpanel" aria-labelledby="contact-tab"
     - start_date = Date.parse('2009-08-01')
     - months = (Date.current.year - start_date.year) * 12 + Date.current.mon - start_date.mon + 1
-
     form
       table.table
         tbody
