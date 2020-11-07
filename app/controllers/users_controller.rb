@@ -58,7 +58,7 @@ class UsersController < ApplicationController
     if @user.update params[:user]
       flash.notice = 'Brukeren er oppdatert.'
       [@user, *@user.contactees, *@user.payees, *@user.primary_wards, *@user.secondary_wards]
-          .map(&:member).compact.each do |member|
+          .map(&:last_membership).compact.each do |member|
         NkfMemberSyncJob.perform_later member
       end
       redirect_to edit_user_path(@user)

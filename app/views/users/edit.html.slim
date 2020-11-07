@@ -29,7 +29,7 @@ ul.nav.nav-tabs role="tablist"
       li.nav-item: a.nav-link data-target="#tab_surveys" data-toggle="tab" Spørreskjema
     - if @user.age&.>=(18)
       li.nav-item: a.nav-link data-target="#tab_signatures" data-toggle="tab" Signaturer
-  - if @user.member&.nkf_member
+  - if @user.last_membership&.nkf_member
     li.nav-item: a.nav-link data-target="#tab_nkf" data-toggle="tab" NKF
 
 .tab-content
@@ -56,8 +56,8 @@ ul.nav.nav-tabs role="tablist"
       #tab_surveys.tab-pane.fade = render 'members/surveys', member: @user.member
     - if @user.member.age&.>=(18)
       #tab_signatures.tab-pane.fade = render 'users/signatures'
-  - if @user.member&.nkf_member
-    #tab_nkf.tab-pane.fade = render 'members/nkf_fields', member: @user.member
+  - if @user.last_membership&.nkf_member
+    #tab_nkf.tab-pane.fade = render 'members/nkf_fields', member: @user.last_membership
 
 javascript:
     $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {
