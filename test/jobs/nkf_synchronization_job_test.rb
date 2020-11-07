@@ -3,6 +3,8 @@
 require 'test_helper'
 
 class NkfSynchronizationJobTest < ActionMailer::TestCase
+  setup { [:nkf_members].each { |t| ActiveRecord::Base.connection.reset_pk_sequence!(t) } }
+
   test 'perform' do
     users(:lars).update! email: 'lebraten@gmail.com'
     AnnualMeeting.create! start_at: '2015-02-12 17:45'
