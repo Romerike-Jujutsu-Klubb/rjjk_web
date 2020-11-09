@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class MartialArt < ApplicationRecord
-  KWR_NAME = 'Kei Wa Ryu'
-  KWR_ID = find_by(name: KWR_NAME)&.id || ActiveRecord::FixtureSet.identify(:keiwaryu)
-
   belongs_to :original_martial_art, class_name: :MartialArt, optional: true
 
   # has_many :graduations, -> { order(:held_on) }, through: :groups
@@ -17,6 +14,10 @@ class MartialArt < ApplicationRecord
   validates :name, uniqueness: { case_sensitive: false }
 
   scope :kwr, -> { where(name: KWR_NAME) }
+  scope :originals, -> { references(:martial_arts).where(original_martial_art_id: nil) }
+
+  KWR_NAME = 'Kei Wa Ryu'
+  KWR_ID = originals.find_by(name: KWR_NAME)&.id || ActiveRecord::FixtureSet.identify(:keiwaryu)
 
   def kwr?
     name == KWR_NAME

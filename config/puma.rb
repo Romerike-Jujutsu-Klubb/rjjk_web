@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
+env = ENV.fetch('RAILS_ENV', 'development')
+hosted = %w[production beta].include?(env)
+
 max_threads_count = ENV.fetch('RAILS_MAX_THREADS', 6)
 min_threads_count = ENV.fetch('RAILS_MIN_THREADS') { max_threads_count }
 threads min_threads_count, max_threads_count
 port ENV.fetch('PORT', 3000)
-environment ENV.fetch('RAILS_ENV', 'development')
+environment env
 pidfile ENV.fetch('PIDFILE', 'tmp/pids/server.pid')
-worker_count = ENV.fetch('WEB_CONCURRENCY', 2).to_i
+worker_count = ENV.fetch('WEB_CONCURRENCY', hosted ? 2 : 0).to_i
 if worker_count > 1
   workers worker_count
   preload_app!

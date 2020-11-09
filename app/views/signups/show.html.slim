@@ -20,7 +20,7 @@ table.table
           = date_text
     tr
       th Alder
-      td #{@signup.user.sex_label} #{@signup.user.age} år (#{@signup.user.birthdate})
+      td #{@signup.user.sex_label} #{@signup.user.age || @signup.nkf_member_trial&.age} år (#{@signup.user.birthdate || @signup.nkf_member_trial&.fodselsdato})
     tr
       th E-post
       td

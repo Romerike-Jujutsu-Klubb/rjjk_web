@@ -32,16 +32,19 @@ table.table class=('table-sm' if @signups.size > 12) data-record-path=signups_pa
   thead
     tr
       th Dato
-      th Bruker
-      th NKF Prøvemedlem
+      th Navn
+      th Alder
+      th Grupper
   tbody
     - @signups.each do |signup|
       tr data-record-id=signup.id
         td = signup.nkf_member_trial&.reg_dato || signup.created_at.to_date
-        td = link_to(signup.user,signup.user)
         td
-          - if signup.nkf_member_trial
-            = link_to(signup.nkf_member_trial,signup.nkf_member_trial)
+          = signup.user.name
+          - if signup.nkf_member_trial && signup.nkf_member_trial.name != signup.user.name
+            = signup.nkf_member_trial.name
+        td.text-center = signup.user.age || signup.nkf_member_trial&.age
+        td = signup.user.groups.map(&:name).join(', ')
         td.text-right
           a.btn.btn-info.btn-sm href=signup_path(signup) data-toggle=:tooltip title="Detaljer"
             i.fa.fa-info.fa-fw
