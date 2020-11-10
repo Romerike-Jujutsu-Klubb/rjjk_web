@@ -84,7 +84,7 @@ group :development do
   gem 'listen'
 end
 
-group :development, :production do
+group :development do
   gem 'flamegraph'
   gem 'memory_profiler'
   gem 'rack-mini-profiler'
