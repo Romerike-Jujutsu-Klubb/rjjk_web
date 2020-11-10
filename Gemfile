@@ -80,9 +80,10 @@ group :production do
 end
 
 group :development do
-  gem 'derailed'
+  # gem 'derailed'
   gem 'listen'
   gem 'rack-mini-profiler'
+  # gem 'stackprof'
 end
 
 # group :development do

@@ -35,7 +35,7 @@ ul#tab.nav.nav-tabs role="tablist"
           .map(&:user).uniq
         group_members -= signups
         group_members -= instructors
-        group_members = group_members.sort_by { |u| [u.current_rank, u.birtdate, u.name] }.reverse
+        group_members = group_members.sort_by { |u| [u.current_rank, u.birthdate, u.name] }.reverse
         attending, absent = group_members.partition{|u| u.attending?}
         absent, passive = absent.partition{|u| u.member&.active?}
       .card-deck

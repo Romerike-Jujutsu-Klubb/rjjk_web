@@ -56,7 +56,7 @@ class Rank < ApplicationRecord
   end
 
   def <=>(other)
-    return 1 if other.nil? || other == UNRANKED
+    return 1 if other.nil?
     return nil unless other.is_a? Rank
     return kwr? ? 1 : -1 if other.martial_art_id != martial_art_id
 
