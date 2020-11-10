@@ -153,6 +153,7 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
+    flamegraph (0.9.5)
     fugit (1.4.0)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.4)
@@ -231,6 +232,7 @@ GEM
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (>= 0.0.9, < 0.2)
     memoist (0.16.2)
+    memory_profiler (0.9.14)
     method_source (1.0.0)
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
@@ -414,6 +416,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stackprof (0.2.16)
     tdiff (0.3.4)
     temple (0.8.2)
     thor (1.0.1)
@@ -471,6 +474,7 @@ DEPENDENCIES
   cloudinary
   deep_cloneable (~> 3.0)
   exception_notification
+  flamegraph
   geocoder
   google_drive
   http
@@ -482,6 +486,7 @@ DEPENDENCIES
   listen
   lograge
   mechanize
+  memory_profiler
   mini_magick
   minitest-capybara
   mocha
@@ -515,6 +520,7 @@ DEPENDENCIES
   simple_drilldown
   simple_workflow
   slim-rails
+  stackprof
   timecop
   uglifier
   vcr

@@ -82,8 +82,13 @@ end
 group :development do
   # gem 'derailed'
   gem 'listen'
+end
+
+group :development, :production do
+  gem 'flamegraph'
+  gem 'memory_profiler'
   gem 'rack-mini-profiler'
-  # gem 'stackprof'
+  gem 'stackprof'
 end
 
 # group :development do
