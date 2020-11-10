@@ -26,6 +26,12 @@ class User < ApplicationRecord
   belongs_to :guardian_2, class_name: 'User', optional: true
 
   has_one :card_key, dependent: :nullify
+  has_one :last_attendance,
+      -> {
+        joins(practice: :group_schedule).references(:practices).where(status: Attendance::PRESENCE_STATES)
+            .order('practices.year DESC, practices.week DESC, group_schedules.weekday DESC')
+      },
+      class_name: :Attendance, inverse_of: :user
   has_one :last_membership, -> { order(joined_on: :desc, left_on: :desc) }, inverse_of: :user,
           class_name: 'Member'
   has_one :member, -> { where(left_on: nil).order(joined_on: :desc) }, inverse_of: :user,

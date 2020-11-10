@@ -46,8 +46,8 @@ class Practice < ApplicationRecord
                                         end} #{date}#{" #{group_schedule.start_at.to_s(false)}" if time}"
   end
 
-  def attendance_for(user_id)
-    attendances.find { |a| a.user_id == user_id } || attendances.build(user_id: user_id)
+  def attendance_for(user)
+    attendances.find { |a| a.user_id == user.id } || attendances.build(user: user)
   end
 
   delegate :instructor?, to: :group_schedule

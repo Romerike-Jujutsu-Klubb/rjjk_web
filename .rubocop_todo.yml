@@ -6,36 +6,36 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 237
+# Offense count: 232
 # Configuration parameters: IgnoredMethods.
 Metrics/AbcSize:
-  Max: 237
+  Max: 208
 
 # Offense count: 22
 # Configuration parameters: CountComments, CountAsOne, ExcludedMethods.
 # ExcludedMethods: refine
 Metrics/BlockLength:
-  Max: 158
+  Max: 145
 
 # Offense count: 4
 # Configuration parameters: CountBlocks.
 Metrics/BlockNesting:
   Max: 5
 
-# Offense count: 31
+# Offense count: 28
 # Configuration parameters: CountComments, CountAsOne.
 Metrics/ClassLength:
-  Max: 393
+  Max: 399
 
-# Offense count: 86
+# Offense count: 84
 # Configuration parameters: IgnoredMethods.
 Metrics/CyclomaticComplexity:
-  Max: 53
+  Max: 52
 
-# Offense count: 233
+# Offense count: 228
 # Configuration parameters: CountComments, CountAsOne, ExcludedMethods.
 Metrics/MethodLength:
-  Max: 171
+  Max: 147
 
 # Offense count: 5
 # Configuration parameters: CountComments, CountAsOne.
@@ -47,10 +47,10 @@ Metrics/ModuleLength:
 Metrics/ParameterLists:
   Max: 7
 
-# Offense count: 74
+# Offense count: 73
 # Configuration parameters: IgnoredMethods.
 Metrics/PerceivedComplexity:
-  Max: 62
+  Max: 60
 
 # Offense count: 10
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.

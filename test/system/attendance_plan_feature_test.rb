@@ -55,7 +55,7 @@ Kommer!
 Trener!
 Instruere
 Bortreist
-Sykdom
+Pandemi
 Forhindret', next_button.text
     screenshot('dropdown')
     next_button.click_link('Forhindret')

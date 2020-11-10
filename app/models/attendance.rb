@@ -17,7 +17,7 @@ class Attendance < ApplicationRecord
     Status::WILL_ATTEND => %w[Kommer! thumbs-up success],
     Status::INSTRUCTOR => %w[Instruere thumbs-up success],
     Status::HOLIDAY => %w[Bortreist hand-point-right warning],
-    Status::SICK => %w[Sykdom plus danger],
+    Status::SICK => %w[Pandemi plus danger],
     Status::ABSENT => %w[Forhindret thumbs-down info],
   }.freeze
 
@@ -27,7 +27,7 @@ class Attendance < ApplicationRecord
     Status::ATTENDED => %w[Trener! thumbs-up success],
     Status::INSTRUCTOR => %w[Instruere thumbs-up success],
     Status::HOLIDAY => %w[Bortreist hand-point-right warning],
-    Status::SICK => %w[Sykdom plus danger],
+    Status::SICK => %w[Pandemi plus danger],
     Status::ABSENT => %w[Forhindret thumbs-down info],
   }.freeze
 
@@ -35,7 +35,7 @@ class Attendance < ApplicationRecord
     Status::ATTENDED => %w[Trente! thumbs-up success],
     Status::INSTRUCTOR => %w[Instruerte! thumbs-up success],
     Status::HOLIDAY => %w[Bortreist hand-point-right warning],
-    Status::SICK => %w[Sykdom plus danger],
+    Status::SICK => %w[Pandemi plus danger],
     Status::ABSENT => %w[Forhindret thumbs-down info],
     Status::WILL_ATTEND => %w[Ubekreftet question warning],
   }.freeze
@@ -64,7 +64,7 @@ class Attendance < ApplicationRecord
   }
   scope :from_date, ->(limit) {
     from_date = limit.to_date
-    includes(practice: :group_schedule).references(:group_schedules)
+    left_outer_joins(practice: :group_schedule).references(:group_schedules, :practices)
         .where('practices.year > :year OR (practices.year = :year AND practices.week > :week) OR ' \
         '(practices.year = :year AND practices.week = :week AND group_schedules.weekday >= :wday)',
             year: from_date.cwyear, week: from_date.cweek, wday: from_date.cwday)
@@ -73,7 +73,7 @@ class Attendance < ApplicationRecord
   scope :present, -> { where status: PRESENCE_STATES }
   scope :to_date, ->(limit) {
     to_date = limit.to_date
-    includes(practice: :group_schedule).references(:group_schedules)
+    left_outer_joins(practice: :group_schedule).references(:group_schedules, :practices)
         .where('practices.year < :year OR (practices.year = :year AND practices.week < :week) OR ' \
             '(practices.year = :year AND practices.week = :week AND group_schedules.weekday <= :wday)',
             year: to_date.cwyear, week: to_date.cweek, wday: to_date.cwday)

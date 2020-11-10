@@ -1,7 +1,8 @@
 .card-body.p-0.pt-3.p-sm-3
   table.table.mb-0.table-sm
+    / Sort users: Instructors, helpers, attended, not registered, away, sick
     - users.each do |u|
-      - attendance = selected_practice.attendance_for(u.id)
+      - attendance = selected_practice.attendance_for(u)
       tr class=("table-danger" if u.attending? && u.absent?(days: 14))
         td
           - if u.card_key
@@ -10,5 +11,5 @@
           = link_to u.name, u.signup || u
           - if u.absent?(days: 14)
             br
-            = u.attendances.select(&:present?).sort_by(&:date).last&.date || u.member&.joined_on || u.signup&.nkf_member_trial&.reg_dato || 'Oppmøte ikke registret'
+            = u.last_attendance&.date || u.member&.joined_on || u.signup&.nkf_member_trial&.reg_dato || 'Oppmøte ikke registret'
         td.text-right = render 'attendances/button', attendance: attendance

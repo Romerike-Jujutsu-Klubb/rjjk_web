@@ -22,21 +22,22 @@ ul#tab.nav.nav-tabs role="tablist"
 #tabContent.tab-content
   - @my_groups.each do |group|
     .tab-pane.fade id="instruction_#{group.id}" class=('show active' if @practice&.group_schedule&.group_id == group.id) role="tabpanel" aria-labelledby="home-tab"
-      - next_practice = group.next_practice
-      - selected_practice = (@practice&.group_schedule&.group_id == group.id && @practice) || next_practice
-      - signups = Signup.for_group(group).to_a.map(&:user)
-      - instructors = selected_practice.group_semester&.group_instructors.to_a.map(&:member).map(&:user).uniq
-      - group_members = group.members.active(selected_practice.date).to_a.map(&:user)
-      - group_members += Attendance.joins(:practice).after(2.months.ago) \
-          .where(practices: {group_schedule_id: group.group_schedules.map(&:id)}) \
-          .where(status: Attendance::PRESENCE_STATES) \
-          .where.not(user_id: group_members.map(&:id)) \
+      ruby:
+        next_practice = group.next_practice
+        selected_practice = (@practice&.group_schedule&.group_id == group.id && @practice) || next_practice
+        signups = Signup.for_group(group).to_a.map(&:user)
+        instructors = selected_practice.group_semester&.group_instructors.to_a.map(&:member).map(&:user).uniq
+        group_members = group.users.includes(:card_key, member: {graduates: [:graduation, :rank]}).merge(Member.active(selected_practice.date)).to_a
+        group_members += Attendance.joins(:practice).after(2.months.ago)
+          .where(practices: {group_schedule_id: group.group_schedules.map(&:id)})
+          .where(status: Attendance::PRESENCE_STATES)
+          .where.not(user_id: group_members.map(&:id))
           .map(&:user).uniq
-      - group_members -= signups
-      - group_members -= instructors
-      - group_members = group_members.sort_by { |u| u.current_rank }.reverse
-      - attending, absent = group_members.partition{|u| u.attending?}
-      - absent, passive = absent.partition{|u| u.member&.active?}
+        group_members -= signups
+        group_members -= instructors
+        group_members = group_members.sort_by { |u| u.current_rank }.reverse
+        attending, absent = group_members.partition{|u| u.attending?}
+        absent, passive = absent.partition{|u| u.member&.active?}
       .card-deck
         - trial_members = NkfMemberTrial.for_group(group).to_a.reject(&:signup)
         - if trial_members.any?

@@ -83,7 +83,8 @@ class GroupsController < ApplicationController
   private
 
   def load_form_data
-    @curriculum_groups = CurriculumGroup.includes(:martial_art).references(:martial_arts).merge(MartialArt.originals).order(:martial_art_id, :position).to_a
+    @curriculum_groups = CurriculumGroup.includes(:martial_art).references(:martial_arts)
+        .merge(MartialArt.originals).order(:martial_art_id, :position).to_a
     @contracts = NkfMember.distinct.pluck(:kontraktstype).compact.sort
   end
 end
