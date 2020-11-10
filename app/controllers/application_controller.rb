@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
 
   if defined?(Rack::MiniProfiler) && (Rails.env.beta? || ENV['RACK_MINI_PROFILER'] == 'ENABLED')
-    before_action { Rack::MiniProfiler.authorize_request if current_user.try(:admin?) }
+    before_action { Rack::MiniProfiler.authorize_request if current_user&.admin? }
   end
 
   # FIXME(uwe):  Set permitted params in each controller/action
