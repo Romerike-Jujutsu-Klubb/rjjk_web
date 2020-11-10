@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
   def load_information_pages
     return if @information_pages
 
-    info_query = InformationPage.roots.order(:position)
+    info_query = InformationPage.roots.select(:hidden, :icon_class, :public, :title).order(:position)
     info_query = info_query.where('hidden IS NULL OR hidden = ?', false) unless admin?
     info_query = info_query.for_all unless user?
     @information_pages = info_query.to_a

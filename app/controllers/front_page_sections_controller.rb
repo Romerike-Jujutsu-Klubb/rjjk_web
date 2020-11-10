@@ -15,6 +15,7 @@ class FrontPageSectionsController < ApplicationController
   def new
     @front_page_section = FrontPageSection.new
     load_form_data
+    render :new
   end
 
   def edit
@@ -28,7 +29,7 @@ class FrontPageSectionsController < ApplicationController
     if @front_page_section.save
       redirect_to front_page_sections_path, notice: 'Front page section was successfully created.'
     else
-      render :new
+      new
     end
   end
 
@@ -60,5 +61,6 @@ class FrontPageSectionsController < ApplicationController
 
   def load_form_data
     @images = Image.order(:name).to_a
+    @information_pages = InformationPage.order(:title).to_a
   end
 end
