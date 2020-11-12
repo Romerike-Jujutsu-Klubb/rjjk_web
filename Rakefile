@@ -4,6 +4,8 @@ require File.expand_path('config/application', __dir__)
 
 Rails.application.load_tasks
 
+task 'assets:precompile' => 'webpacker:compile'
+
 if Rails.env.development? || Rails.env.test?
   require 'rubocop/rake_task'
   RuboCop::RakeTask.new
