@@ -10,7 +10,8 @@
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.31",
     "pc-bootstrap4-datetimepicker": "^4.17.50",
-    "popper.js": "^1.16.1"
+    "popper.js": "^1.16.1",
+    "webpack": "^4.0.0"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.11.0"
