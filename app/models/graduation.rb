@@ -215,4 +215,8 @@ class Graduation < ApplicationRecord
         group.current_semester&.chief_instructor&.emails&.first ||
         Role[:Hovedinstruktør]&.emails&.first || noreply_address
   end
+
+  def news_item_likes
+    nil
+  end
 end
