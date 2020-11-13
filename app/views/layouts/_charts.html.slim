@@ -1,5 +1,5 @@
 - chart_width = column_width_sm
-- if true || !Rails.env.development?
+- if Rails.env.test?
   - chart_opts = {points: false, legend: false, width: '258px', height: '194px', defer: true, library: {hover: {mode: nil}, tooltips: {enabled: false}}}
   - history_chart_link = line_chart member_reports_history_graph_data_path, **chart_opts.merge(title: 'Medlemmer')
   - attendance_chart_link = line_chart history_graph_data_attendances_path, **chart_opts.merge(title: 'Oppmøte')
