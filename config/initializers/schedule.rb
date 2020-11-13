@@ -13,7 +13,7 @@ reason =
     elsif %w[development beta production].exclude?(Rails.env)
       Rails.logger.info("Disable scheduler since env == #{Rails.env}")
       :bad_env
-    elsif ENV['DISABLE_SCHEDULER'].present?
+    elsif %w[1 AFFIRMATIVE ENABLED ON POSITIVE TRUE YEAH YES].include?(ENV['DISABLE_SCHEDULER']&.upcase)
       Rails.logger.info("Disable scheduler since ENV['DISABLE_SCHEDULER'] is set")
       :disabled
     end
