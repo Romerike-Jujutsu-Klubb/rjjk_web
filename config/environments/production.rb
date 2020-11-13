@@ -35,12 +35,7 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass
   config.assets.js_compressor = Uglifier.new(harmony: true)
   config.cache_classes = true
-  if ENV['REDIS_URL']
-    config.cache_store = :redis_cache_store, {
-      url: ENV['REDIS_URL'] ,
-      'maxmemory-policy': 'allkeys-lru',
-    }
-  end
+  config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] } if ENV['REDIS_URL']
   config.consider_all_requests_local = false
   config.eager_load = true
   config.force_ssl = true
