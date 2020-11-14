@@ -167,13 +167,19 @@ class EventsController < ApplicationController
     event_id = params[:id]
     cal = RiCal.Calendar do
       if event_id
-        events = [Event, Graduation].flat_map { |clas| clas.where(id: event_id).to_a }
+        events = []
+        if (event = Event.find_by(id: event_id))
+          events << event
+        end
+        if (graduation = Graduation.find_by(id: event_id))
+          events << GraduationEvent.new(graduation)
+        end
       else
         today = Time.zone.today
         events = Event
             .where('(end_at IS NOT NULL AND end_at >= ?) OR start_at >= ?', today, today)
             .order(:start_at, :end_at).to_a +
-            Graduation.where('held_on >= ?', today).order(:held_on).to_a
+            Graduation.where('held_on >= ?', today).order(:held_on).map { |g| GraduationEvent.new(g) }
       end
       events.each do |e|
         event do

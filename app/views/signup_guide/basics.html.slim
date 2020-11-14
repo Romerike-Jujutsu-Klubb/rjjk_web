@@ -8,6 +8,7 @@ p Før du bestemmer deg for om du vil trene med oss har du 2 uker uforpliktende 
   h5.card-header Først trenger vi å vi hvem som skal meldes inn.
   .card-body
     = bootstrap_form_for @user, url: signup_guide_basics_path do |f|
+      = invisible_captcha
       = f.text_field :name, required: true
       .row
         .col = f.date_field :birthdate, required: true

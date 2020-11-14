@@ -8,12 +8,15 @@ class InfoController < ApplicationController
   end
 
   def show
-    base_query = current_user ? InformationPage : InformationPage.for_all
-    @information_page ||= base_query.find_by('UPPER(title) = ?', params[:id].upcase)
-    @information_page ||= base_query.find_by(id: params[:id].to_i)
+    @information_page ||= InformationPage.find_by('UPPER(title) = ?', params[:id].upcase)
+    @information_page ||= InformationPage.find_by(id: params[:id].to_i)
     @information_page ||=
-        base_query.find_by('UPPER(title) = ?', URI.decode_www_form_component(params[:id]).upcase)
-    return if @information_page
+        InformationPage.find_by('UPPER(title) = ?', URI.decode_www_form_component(params[:id]).upcase)
+    if @information_page
+      return if @information_page.public? || current_user
+
+      redirect_to login_path, notice: 'Vennligst log på for å se denne siden.'
+    end
 
     if (page_alias = PageAlias.find_by(old_path: request.path))
       redirect_to page_alias.new_path, status: :moved_permanently
@@ -23,11 +26,11 @@ class InfoController < ApplicationController
     begin
       utf8_param = params[:id].encode(Encoding::ISO_8859_1).force_encoding(Encoding::UTF_8)
       utf8_title = utf8_param.upcase
-      if (page = base_query.find_by('UPPER(title) = ?', utf8_title))
+      if (page = InformationPage.find_by('UPPER(title) = ?', utf8_title))
         redirect_to page, status: :moved_permanently
         return
       end
-      if (page = base_query.find_by('UPPER(title) = ?', utf8_title.chomp("'")))
+      if (page = InformationPage.find_by('UPPER(title) = ?', utf8_title.chomp("'")))
         redirect_to page, status: :moved_permanently
         return
       end

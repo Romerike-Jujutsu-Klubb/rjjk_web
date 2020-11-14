@@ -88,22 +88,6 @@ class Graduation < ApplicationRecord
     held_on&.at(group_schedule&.end_at || TimeOfDay.new(20, 30))
   end
 
-  def creator; end
-
-  def publish_at
-    start_at - 1.month
-  end
-
-  def expire_at
-    end_at
-  end
-
-  def publication_state
-    NewsItem::PublicationState::PUBLISHED
-  end
-
-  def summary; end
-
   def human_time
     return unless held_on
 
@@ -115,35 +99,6 @@ class Graduation < ApplicationRecord
     else
       "For #{(now - held_on).to_i} dager siden."
     end
-  end
-
-  def name
-    I18n.t('graduation_title', name: group.name)
-  end
-
-  def invited_users
-    (graduates.select { |g| g.passed || g.passed.nil? } + censors).map(&:member).map(&:user)
-  end
-
-  def attendees
-    invited_users
-  end
-
-  def declined_users
-    graduates.select(&:declined)
-  end
-
-  def confirmed_users
-    (graduates.select { |g| g.passed || g.passed.nil? } + censors)
-        .select(&:confirmed?).map(&:member).map(&:user)
-  end
-
-  def ingress
-    nil
-  end
-
-  def body
-    admin? ? '' : nil
   end
 
   def admin?(user: current_user, approval: nil)
@@ -167,14 +122,6 @@ class Graduation < ApplicationRecord
 
   def martial_art
     group.try(:martial_art) || MartialArt.find_by(name: 'Kei Wa Ryu')
-  end
-
-  def title
-    name
-  end
-
-  def description
-    name
   end
 
   def passed?

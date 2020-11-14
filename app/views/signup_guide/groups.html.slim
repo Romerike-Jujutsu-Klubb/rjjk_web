@@ -13,6 +13,7 @@
       | Hvis du er usikker kan du bare la forslaget stå.  Dette kan endres senere.
 
     = bootstrap_form_for @user, url: signup_guide_groups_path do |f|
+      = invisible_captcha
       = f.hidden_field :id
       = f.hidden_field :name
       = f.hidden_field :birthdate
