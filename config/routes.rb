@@ -297,7 +297,7 @@ Rails.application.routes.draw do
     root action: :basics
     match :basics, via: %i[get post]
     match :contact_info, via: %i[get post]
-    post :guardians
+    match :guardians, via: %i[get post]
     match :groups, via: %i[get post]
     post :complete
     patch :complete

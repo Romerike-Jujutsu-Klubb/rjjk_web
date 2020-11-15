@@ -22,6 +22,7 @@ class SignupGuideController < ApplicationController
     store_signup
 
     return unless @user.valid? || (@user.errors.keys & %i[birthdate first_name last_name male name]).empty?
+    return redirect_to signup_guide_guardians_path if @user.age&.<(18) && !@user.guardian_1&.contact_info?
 
     redirect_to signup_guide_contact_info_path
   end
@@ -34,6 +35,11 @@ class SignupGuideController < ApplicationController
 
     store_signup
     return redirect_to signup_guide_basics_path if params[:back]
+    if @user.invalid? && (@user.errors.keys & %i[guardian_1_id]).any?
+      return redirect_to signup_guide_guardians_path, alert: ''
+    end
+
+    redirect_to signup_guide_contact_info_path
   end
 
   # Posted after name_and_birthdate and guardians
@@ -62,8 +68,6 @@ class SignupGuideController < ApplicationController
       return redirect_to signup_guide_contact_info_path, alert: ''
     end
 
-    return redirect_to signup_guide_guardians_path if @user.age&.<(18) && !@user.guardian_1&.contact_info?
-
     redirect_to signup_guide_groups_path
   end
 
@@ -79,7 +83,7 @@ class SignupGuideController < ApplicationController
     @groups = Group.active.to_a
     return if @user.groups.any?
 
-    @groups.each { |g| @user.groups << g if (g.from_age..g.to_age).cover?(@user.age) }
+    @groups.each { |g| @user.groups << g if g.conains_age(@user.age) }
   end
 
   def complete
@@ -118,6 +122,10 @@ class SignupGuideController < ApplicationController
             else
               User.new
             end
+    if (guardian_1_json = cookies[:signup_guardian_1])
+      logger.info "load_signup: guardian_1: #{guardian_1_json}"
+      @user.guardian_1 = User.new JSON.parse(guardian_1_json)
+    end
     if (new_attributes = params[:user])
       @user.attributes = new_attributes
     end
@@ -134,6 +142,11 @@ class SignupGuideController < ApplicationController
     json = @user.to_json(include: :group_ids)
     logger.info "store_signup: #{json}"
     cookies[:signup] = { value: json, expires: 100.years.from_now }
+    return unless @user.guardian_1&.new_record?
+
+    guardian_1_json = @user.guardian_1.to_json
+    logger.info "store_signup: guardian_1: #{guardian_1_json}"
+    cookies[:signup_guardian_1] = { value: guardian_1_json, expires: 100.years.from_now }
   end
 
   def clear_signup

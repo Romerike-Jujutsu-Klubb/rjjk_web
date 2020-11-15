@@ -8,14 +8,14 @@ class SignupGuideControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should get contact_info' do
+  test 'post contact_info' do
     post signup_guide_contact_info_url, params: { user: { birthdate: '2004-06-03' } }
-    assert_redirected_to signup_guide_guardians_path
+    assert_redirected_to signup_guide_groups_path
   end
 
-  test 'should get guardians' do
+  test 'post guardians' do
     post signup_guide_guardians_url
-    assert_response :success
+    assert_redirected_to signup_guide_contact_info_path
   end
 
   test 'post complete' do
