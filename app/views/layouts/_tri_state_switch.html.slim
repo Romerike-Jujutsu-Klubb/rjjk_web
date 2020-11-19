@@ -5,9 +5,9 @@
 .btn-group.mt-2 data-toggle="buttons"
   label.btn.btn-sm.p-2 class=("btn-#{'outline-' unless state}success")
     = true_label
-    input.ml-1 type="radio" name=field_name id="#{field_id}_true" value=:true checked=state required=local_assigns[:required]
+    input.ml-1 type="radio" name=field_name id="#{field_id}_true" value=:true checked=state required=local_assigns[:required] disabled=local_assigns[:disabled]
   label.btn.btn-sm.p-2 class=("btn-#{'outline-' unless state == false}danger")
-    input.mr-1 type="radio" name=field_name id="#{field_id}_false" value=:false checked=(state == false) required=local_assigns[:required]
+    input.mr-1 type="radio" name=field_name id="#{field_id}_false" value=:false checked=(state == false) required=local_assigns[:required] disabled=local_assigns[:disabled]
     = false_label
   javascript:
     $('input[name="#{field_name}"]').change(function(e){
