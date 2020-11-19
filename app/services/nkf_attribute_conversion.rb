@@ -379,6 +379,8 @@ module NkfAttributeConversion
       ''
     elsif nkf_attr == :hoyde
       rjjk_value.presence || nkf_value
+    elsif nkf_attr == :postnr
+      rjjk_value.presence || nkf_value.to_i
     elsif nkf_attr == :gren_stilart_avd_parti___gren_stilart_avd_parti
       'Jujutsu (Ingen stilartstilknytning)' # '524'
     else
