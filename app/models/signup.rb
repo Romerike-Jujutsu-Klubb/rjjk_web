@@ -17,7 +17,7 @@ class Signup < ApplicationRecord
   }
 
   validates :user_id, presence: true
-  validates :nkf_member_trial_id, uniqueness: true
+  validates :nkf_member_trial_id, uniqueness: true, allow_nil: true
   validate do
     errors.add(:user_id, 'is already a member') if user.member
   end
