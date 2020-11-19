@@ -380,7 +380,7 @@ module NkfAttributeConversion
     elsif nkf_attr == :hoyde
       rjjk_value.presence || nkf_value
     elsif nkf_attr == :postnr
-      rjjk_value.presence || nkf_value.to_i
+      rjjk_value.presence || nkf_value.presence || '9999'
     elsif nkf_attr == :gren_stilart_avd_parti___gren_stilart_avd_parti
       'Jujutsu (Ingen stilartstilknytning)' # '524'
     else
@@ -389,7 +389,11 @@ module NkfAttributeConversion
   end
 
   def nkf_attribute_to_rjjk(target, target_attribute, nkf_value)
-    if nkf_value.is_a?(Integer) || nkf_value.is_a?(Date)
+    if target == :user && target_attribute == :height
+      nkf_value == 0 ? nil : nkf_value
+    elsif target == :user && target_attribute == :postal_code
+      nkf_value == 9999 ? nil : nkf_value
+    elsif nkf_value.is_a?(Integer) || nkf_value.is_a?(Date)
       nkf_value
     elsif /^\s*(?<day>\d{2})\.(?<month>\d{2})\.(?<year>\d{4})\s*$/ =~ nkf_value
       Date.new(year.to_i, month.to_i, day.to_i)

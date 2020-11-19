@@ -118,7 +118,12 @@ module NkfForm
     if outgoing_changes_for_member.any? && (Rails.env.production? || submit_in_development)
       logger.info 'Submitting form to NKF'
       form["p_#{form_name}_action"] = 'OK'
+      str = StringIO.new
+      PP.pp(form.fields, str)
+      logger.info str.string
       change_response_page = form.submit
+      logger.info 'Response from NKF:'
+      logger.info change_response_page.body
       if (m = MEMBER_ERROR_PATTERN.match(change_response_page.body))
         raise <<~MESSAGE
           Error updating NKF member form:
